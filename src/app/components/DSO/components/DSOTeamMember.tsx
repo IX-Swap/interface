@@ -2,7 +2,6 @@ import { Box, Grid } from '@mui/material'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { RichTextEditor } from 'components/form/RichTextEditor'
 import { TypedField } from 'components/form/TypedField'
 import { VSpacer } from 'components/VSpacer'
@@ -11,6 +10,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues, DsoTeamMember } from 'types/dso'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface DSOTeamMemberProps {
@@ -39,9 +39,9 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             customRenderer
             key={fieldId}
             control={control}
-            component={Dropzone}
-            label=''
-            defaultValue={defaultValue?.photo ?? ''}
+            component={FileUpload}
+            label='Upload photo'
+            defaultValue={defaultValue?.photo}
             valueExtractor={documentValueExtractor}
             documentInfo={{
               title: 'Photo',

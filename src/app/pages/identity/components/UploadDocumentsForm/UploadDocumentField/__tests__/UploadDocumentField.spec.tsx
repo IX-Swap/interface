@@ -19,14 +19,12 @@ describe('UploadDocumentField', () => {
   })
 
   it('renders props correctly', async () => {
-    const { container, getByText, getByTestId } = render(
-      <Form>
+    const { getByText, getByTestId } = render(
+      <Form defaultValues={{ proofOfIdentity: [{ value: {} }] }}>
         <UploadDocumentField {...props} />
       </Form>
     )
 
-    const inputField = container.querySelector('input') as HTMLInputElement
-    expect(inputField.name).toEqual('proofOfIdentity')
     expect(getByText('Proof Of Identity')).toBeTruthy()
     expect(getByText('This is the proof.')).toBeTruthy()
 

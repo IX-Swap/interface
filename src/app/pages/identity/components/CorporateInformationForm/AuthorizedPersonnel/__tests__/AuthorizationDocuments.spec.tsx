@@ -30,11 +30,6 @@ describe('AuthorizationDocuments', () => {
       </Form>
     )
 
-    const input = container.querySelector(
-      'input[name="representatives[0].documents"]'
-    ) as HTMLInputElement
-
-    expect(input).toBeInTheDocument()
     expect(
       getByText(
         'Board resolution, power of attorney, partnership deed, trust deed, and others.'

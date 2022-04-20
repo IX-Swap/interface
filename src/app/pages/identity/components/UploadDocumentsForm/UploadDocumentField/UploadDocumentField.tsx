@@ -1,12 +1,13 @@
-import { Grid, Typography, Box } from '@mui/material'
-import { Dropzone } from 'components/dataroom/Dropzone'
+import { Grid, Typography, Box, Button } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
-import { documentValueExtractor } from 'app/components/DSO/utils'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DataroomFileType } from 'config/dataroom'
-import { DocumentList } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentList'
 import { Tooltip } from 'app/pages/identity/components/UploadDocumentsForm/Tooltip/Tooltip'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
+import { FieldsArray } from 'components/form/FieldsArray'
+import { plainValueExtractor } from 'helpers/forms'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface UploadDocumentFieldProps {
   name: any
@@ -21,12 +22,9 @@ export const UploadDocumentField = ({
   name,
   label,
   helperElement,
-  tooltipContent,
-  fieldId,
-  defaultValue
+  tooltipContent
 }: UploadDocumentFieldProps) => {
   const { control } = useFormContext()
-
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -44,26 +42,45 @@ export const UploadDocumentField = ({
         </Box>
         {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
       </Grid>
-      <DocumentList name={name} />
       <Grid item xs={12}>
-        <TypedField
-          key={fieldId}
-          control={control}
-          customRenderer
-          component={Dropzone}
-          name={name}
-          label=''
-          valueExtractor={documentValueExtractor}
-          multiple
-          fullWidth
-          accept={DataroomFileType.report}
-          documentInfo={{
-            title: label,
-            type: label
-          }}
-          showAcceptable
-          defaultValue={defaultValue}
-        />
+        <FieldsArray name={name} control={control}>
+          {({ fields, append, remove }) => (
+            <Grid container spacing={1}>
+              {fields.map((field, index) => {
+                return (
+                  <Grid item xs={12} key={field.id}>
+                    <TypedField
+                      customRenderer
+                      name={[name, index, 'value']}
+                      control={control}
+                      component={FileUpload}
+                      label='Upload File'
+                      valueExtractor={plainValueExtractor}
+                      accept={DataroomFileType.document}
+                      fullWidth
+                      maxSize={10}
+                      documentInfo={{
+                        type: label,
+                        title: label
+                      }}
+                      remove={() => remove(index)}
+                    />
+                  </Grid>
+                )
+              })}
+              <Grid item xs={12}>
+                <Button
+                  onClick={() => append({ value: {} })}
+                  variant='outlined'
+                  startIcon={<Icon name='plus' />}
+                  sx={{ width: '100%' }}
+                >
+                  Add More
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+        </FieldsArray>
       </Grid>
     </Grid>
   )
