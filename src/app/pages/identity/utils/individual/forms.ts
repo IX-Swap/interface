@@ -94,8 +94,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-          ? [...evidenceOfAccreditation, document]
-          : [document]
+          ? [...evidenceOfAccreditation, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -103,8 +103,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         proofOfAddress: Array.isArray(proofOfAddress)
-          ? [...proofOfAddress, document]
-          : [document]
+          ? [...proofOfAddress, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -112,8 +112,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         proofOfIdentity: Array.isArray(proofOfIdentity)
-          ? [...proofOfIdentity, document]
-          : [document]
+          ? [...proofOfIdentity, { value: document }]
+          : [{ value: document }]
       }
     }
 
