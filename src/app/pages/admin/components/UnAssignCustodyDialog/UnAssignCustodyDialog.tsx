@@ -1,22 +1,20 @@
 import React from 'react'
 import {
   Typography,
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
   DialogActions,
   Box,
   useMediaQuery,
-  useTheme,
-  IconButton
+  useTheme
 } from '@mui/material'
 import useStyles from 'app/pages/admin/components/UnAssignCustodyDialog/UnAssignCustodyDialog.styles'
 import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPForm'
 import { VSpacer } from 'components/VSpacer'
-import { Close as CloseIcon } from '@mui/icons-material'
 import { useUnAssignCustody } from 'app/pages/admin/hooks/useUnAssignCustody'
 import { CloseDealArgs } from 'types/dso'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface UnAssignCustodyDialogProps extends Partial<DialogProps> {
   open?: boolean
@@ -43,7 +41,7 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
   } = useUnAssignCustody()
 
   return (
-    <MUIDialog
+    <UIDialog
       data-testid={'dialog'}
       maxWidth={'md'}
       fullWidth
@@ -53,13 +51,6 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
       onClose={() => onClose()}
     >
       <DialogTitle className={classes.titleRoot}>
-        <IconButton
-          size='small'
-          onClick={() => onClose()}
-          className={classes.closeBtn}
-        >
-          <CloseIcon />
-        </IconButton>
         <Typography
           variant='h4'
           component='span'
@@ -92,7 +83,7 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
           onSubmit={handleSubmit}
         />
       </DialogActions>
-    </MUIDialog>
+    </UIDialog>
   )
 }
 

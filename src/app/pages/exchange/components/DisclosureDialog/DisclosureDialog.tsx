@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Box,
   Button,
-  Dialog,
   DialogActions,
   DialogContentText,
   DialogTitle,
@@ -18,6 +17,7 @@ import { useAcceptMASDisclosure } from 'app/pages/exchange/hooks/useAcceptMASDis
 import { generatePath, useHistory } from 'react-router-dom'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface DisclosureDialogProps {
   content: any
@@ -40,7 +40,7 @@ export const DisclosureDialog = ({
   }
 
   return (
-    <Dialog open={isOpen} maxWidth={'md'} classes={{ paper: classes.root }}>
+    <UIDialog open={isOpen} maxWidth={'md'} classes={{ paper: classes.root }}>
       <DialogTitle classes={{ root: classes.title }}>Disclosures</DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
         <Box className={classes.scrollable}>{renderStringToHTML(content)}</Box>
@@ -97,6 +97,6 @@ export const DisclosureDialog = ({
           </Grid>
         </Grid>
       </DialogActions>
-    </Dialog>
+    </UIDialog>
   )
 }

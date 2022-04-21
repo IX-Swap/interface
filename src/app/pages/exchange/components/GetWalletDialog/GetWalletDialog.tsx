@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Typography,
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
@@ -11,14 +10,13 @@ import {
   useTheme
 } from '@mui/material'
 import { Actions } from './Actions'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
 import useStyles from './GetWalletDialog.styles'
 import { LoadingMessage } from './LoadingMessage'
 import { DialogText } from './DialogText'
 import { useCreateCustodianWallet } from '../../hooks/useCreateCustodianWallet'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -40,7 +38,7 @@ export const GetWalletDialog = (props: ModalProps) => {
   const handleCreateWallet = async () => await createCustodianWallet()
 
   return (
-    <MUIDialog
+    <UIDialog
       maxWidth={'md'}
       fullWidth
       fullScreen={fullScreen}
@@ -53,14 +51,6 @@ export const GetWalletDialog = (props: ModalProps) => {
       <Box py={3} px={2.5}>
         <DialogTitle className={classes.titleRoot}>
           <Box justifyContent='center' alignItems='center'>
-            <IconButton
-              aria-label='close'
-              onClick={() => toggleOpen(false)}
-              className={classes.closeButton}
-              size='large'
-            >
-              <CloseIcon />
-            </IconButton>
             <Typography variant='h6' component='span' align='center'>
               You need a custody wallet address to trade
             </Typography>
@@ -79,6 +69,6 @@ export const GetWalletDialog = (props: ModalProps) => {
           </Box>
         </DialogActions>
       </Box>
-    </MUIDialog>
+    </UIDialog>
   )
 }

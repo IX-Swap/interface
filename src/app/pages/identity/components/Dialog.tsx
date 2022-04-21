@@ -1,12 +1,12 @@
 import React, { cloneElement, CSSProperties, useState } from 'react'
 import {
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
   DialogActions,
   Box
 } from '@mui/material'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   button: JSX.Element
@@ -39,7 +39,7 @@ export const Dialog = (props: ModalProps) => {
   return (
     <>
       {cloneElement(button, { onClick: handleOpen })}
-      <MUIDialog
+      <UIDialog
         {...rest}
         maxWidth={maxWidth}
         open={isOpened}
@@ -54,7 +54,7 @@ export const Dialog = (props: ModalProps) => {
           </DialogContent>
           <DialogActions>{renderActions()}</DialogActions>
         </Box>
-      </MUIDialog>
+      </UIDialog>
     </>
   )
 }

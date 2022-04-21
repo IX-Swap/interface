@@ -1,6 +1,5 @@
 import {
   Box,
-  Dialog as MUIDialog,
   DialogActions,
   DialogContent,
   DialogProps,
@@ -13,6 +12,7 @@ import {
 import React from 'react'
 import { Actions } from 'app/pages/exchange/components/ExchangeDeactivatedDialog/Actions'
 import useStyles from './ExchangeDeactivatedDialog.styles'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -26,7 +26,7 @@ export const ExchangeDeactivatedDialog = (props: ModalProps) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <MUIDialog
+    <UIDialog
       maxWidth={'md'}
       fullScreen={fullScreen}
       open={open}
@@ -64,6 +64,6 @@ export const ExchangeDeactivatedDialog = (props: ModalProps) => {
           </Box>
         </DialogActions>
       </Box>
-    </MUIDialog>
+    </UIDialog>
   )
 }

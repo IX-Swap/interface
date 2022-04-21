@@ -1,17 +1,11 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  Grid,
-  Typography
-} from '@mui/material'
+import { Box, Button, DialogActions, Grid, Typography } from '@mui/material'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { history } from 'config/history'
 import React, { useState } from 'react'
 import { MutationResultPair } from 'react-query'
 import { DetailsOfIssuanceFormValues } from 'types/detailsOfIssuance'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface SkipButtonProps {
   mutation: MutationResultPair<any, any, any, any>
@@ -66,7 +60,7 @@ export const SkipButton = ({ mutation }: SkipButtonProps) => {
       >
         SKIP THIS
       </Button>
-      <Dialog open={open}>
+      <UIDialog open={open}>
         <Box p={4}>
           <Typography variant='subtitle1' align='center'>
             Are You Sure You Want To Skip This?
@@ -97,7 +91,7 @@ export const SkipButton = ({ mutation }: SkipButtonProps) => {
             </Grid>
           </DialogActions>
         </Box>
-      </Dialog>
+      </UIDialog>
     </>
   )
 }

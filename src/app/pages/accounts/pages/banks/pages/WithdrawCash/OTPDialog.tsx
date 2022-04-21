@@ -1,6 +1,5 @@
 import {
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -15,6 +14,7 @@ import { VSpacer } from 'components/VSpacer'
 import { plainValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export const OTPDialogContent = ({
   close,
@@ -82,7 +82,7 @@ export const OTPDialog = (props: OTPDialogProps) => {
   const { close, open, title } = props
 
   return (
-    <Dialog disablePortal open={open} maxWidth='md' onClose={close}>
+    <UIDialog disablePortal open={open} maxWidth='md' onClose={close}>
       <Box py={4} px={10}>
         <DialogTitle>
           <Typography
@@ -95,6 +95,6 @@ export const OTPDialog = (props: OTPDialogProps) => {
         </DialogTitle>
       </Box>
       <OTPDialogContent {...props} />
-    </Dialog>
+    </UIDialog>
   )
 }

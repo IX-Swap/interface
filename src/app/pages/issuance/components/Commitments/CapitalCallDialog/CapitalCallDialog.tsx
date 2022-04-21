@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {
   Typography,
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
@@ -13,11 +12,10 @@ import {
   Grid
 } from '@mui/material'
 import useStyles from './CapitalCallDialog.styles'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
 import { ReactMultiEmail, isEmail } from 'react-multi-email'
 import 'react-multi-email/style.css'
 import { useCapitalCall } from 'app/pages/issuance/hooks/useCapitalCall'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -45,7 +43,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
   }
 
   return (
-    <MUIDialog
+    <UIDialog
       maxWidth={'sm'}
       fullWidth
       fullScreen={fullScreen}
@@ -64,14 +62,6 @@ export const CapitalCallDialog = (props: ModalProps) => {
         >
           Capital Call
         </Typography>
-        <IconButton
-          aria-label='close'
-          onClick={() => toggleOpen(false)}
-          className={classes.closeButton}
-          size='large'
-        >
-          <CloseIcon />
-        </IconButton>
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Typography variant={'body1'} align={'left'}>
@@ -146,6 +136,6 @@ export const CapitalCallDialog = (props: ModalProps) => {
           </Button>
         </Grid>
       </DialogActions>
-    </MUIDialog>
+    </UIDialog>
   )
 }

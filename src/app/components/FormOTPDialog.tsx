@@ -3,11 +3,9 @@ import { useFormContext } from 'react-hook-form'
 import {
   Button,
   ButtonProps,
-  Dialog,
   DialogActions,
   DialogContent,
   Grid,
-  IconButton,
   Typography
 } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
@@ -16,7 +14,7 @@ import { plainValueExtractor } from 'helpers/forms'
 import { VSpacer } from 'components/VSpacer'
 import { Submit } from 'components/form/Submit'
 import { CenteredDialogTitle } from 'ui/CenteredDialogTitle'
-import CloseIcon from '@mui/icons-material/Close'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface FormOTPDialogProps {
   triggerButtonProps: ButtonProps
@@ -47,13 +45,8 @@ export const FormOTPDialog = (props: FormOTPDialogProps) => {
         {...props.triggerButtonProps}
         disabled={isTriggerDisabled}
       />
-      <Dialog disablePortal open={isOpen} maxWidth='md' onClose={closeDialog}>
-        <CenteredDialogTitle>
-          Please Enter Your 2FA
-          <IconButton onClick={closeDialog} size='large'>
-            <CloseIcon />
-          </IconButton>
-        </CenteredDialogTitle>
+      <UIDialog disablePortal open={isOpen} maxWidth='md' onClose={closeDialog}>
+        <CenteredDialogTitle>Please Enter Your 2FA</CenteredDialogTitle>
         <DialogContent>
           <TypedField
             control={control}
@@ -92,7 +85,7 @@ export const FormOTPDialog = (props: FormOTPDialogProps) => {
           </Grid>
         </DialogActions>
         <VSpacer size='medium' />
-      </Dialog>
+      </UIDialog>
     </>
   )
 }

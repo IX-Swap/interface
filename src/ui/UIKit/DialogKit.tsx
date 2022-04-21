@@ -33,14 +33,19 @@ export const DialogKit = () => {
 
       <UIDialog onClose={() => setOpen1(false)} open={open1}>
         <DialogTitle id='alert-dialog-title'>Dialog Title</DialogTitle>
+
         <DialogContent>
-          <Grid container justifyContent='center'>
+          <Grid
+            container
+            justifyContent='center'
+            style={{ marginBottom: '1rem' }}
+          >
             Content or text
-            <br />
-            <br />
           </Grid>
         </DialogContent>
+
         <VSpacer size='small' />
+
         <DialogActions>
           <Grid container rowSpacing={2} columnSpacing={2} direction='column'>
             <Grid item xs={12}>
@@ -72,7 +77,7 @@ export const DialogKit = () => {
             <p>Some text about the action</p>
           </Grid>
           <Grid container direction='column'>
-            <Grid item>
+            <Grid item style={{ marginBottom: '1rem' }}>
               <TextField
                 placeholder='select label'
                 fullWidth
@@ -82,7 +87,6 @@ export const DialogKit = () => {
                 size='small'
               />
             </Grid>
-            <br />
             <Grid item>
               <TextField
                 placeholder='placeholder'

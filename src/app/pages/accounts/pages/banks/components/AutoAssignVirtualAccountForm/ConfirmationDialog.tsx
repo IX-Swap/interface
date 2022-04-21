@@ -1,7 +1,8 @@
-import { Box, Button, Dialog, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ConfirmationDialogProps {
   onClose: () => void
@@ -30,7 +31,7 @@ export const ConfirmationDialog = ({
   const confirmLabel = isAdditional ? 'Send request' : 'Yes'
 
   return (
-    <Dialog open={open} disablePortal onClose={onClose}>
+    <UIDialog open={open} disablePortal onClose={onClose}>
       <Box py='40px' px='60px' textAlign='center'>
         <Grid container direction='column' spacing={2}>
           <Grid item>
@@ -69,6 +70,6 @@ export const ConfirmationDialog = ({
           </Grid>
         </Grid>
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

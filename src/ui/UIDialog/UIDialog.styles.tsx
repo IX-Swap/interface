@@ -10,9 +10,11 @@ export const useStyles = makeStyles(theme => {
     },
     iconWrapper: {
       position: 'absolute',
-      right: 6,
-      top: 6,
+      right: 10,
+      top: 10,
       marginLeft: '20px',
+      cursor: 'pointer',
+
       '& .MuiSvgIcon-root': {
         width: '20px',
         height: '20px'

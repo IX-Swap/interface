@@ -1,12 +1,12 @@
 import {
   Box,
-  Dialog,
   DialogContent,
   DialogActions,
   Typography,
   Button
 } from '@mui/material'
 import React from 'react'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface IdentitySubmitConfirmationDialogProps {
   open: boolean
@@ -22,7 +22,7 @@ export const IdentitySubmitConfirmationDialog = ({
   }
 
   return (
-    <Dialog open={open}>
+    <UIDialog open={open}>
       <Box p={6}>
         <Typography variant='h5' style={{ textAlign: 'center' }}>
           Thanks For Submitting Your Identity!
@@ -46,6 +46,6 @@ export const IdentitySubmitConfirmationDialog = ({
           </Button>
         </DialogActions>
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

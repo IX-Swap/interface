@@ -2,7 +2,6 @@
 import React from 'react'
 import {
   Button,
-  Dialog as MUIDialog,
   DialogTitle,
   Box,
   Typography,
@@ -18,6 +17,7 @@ import useStyles from 'app/pages/admin/components/CustodyDetailsDialog/CustodyDe
 import { useGetCustodianDetails } from 'app/pages/admin/hooks/useGetCustodianDetails'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { Wallet } from 'types/custodyAccount'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export const getWalletsWithOrderedDetails = (wallets: Wallet[]) =>
   wallets.map(({ asset_tickers, wallet_name }) => ({
@@ -51,7 +51,7 @@ export const CustodyDetailsDialog = () => {
   }
 
   return (
-    <MUIDialog
+    <UIDialog
       open
       fullWidth
       maxWidth={'md'}
@@ -91,6 +91,6 @@ export const CustodyDetailsDialog = () => {
           Close
         </Button>
       </DialogActions>
-    </MUIDialog>
+    </UIDialog>
   )
 }

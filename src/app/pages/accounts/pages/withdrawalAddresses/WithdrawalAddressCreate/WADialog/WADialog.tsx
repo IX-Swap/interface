@@ -1,9 +1,10 @@
 import React from 'react'
-import Dialog, { DialogProps } from '@mui/material/Dialog'
+import { DialogProps } from '@mui/material/Dialog'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
 import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 import { useHistory } from 'react-router-dom'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export const WADialog: React.FC<DialogProps> = ({
   children,
@@ -15,7 +16,7 @@ export const WADialog: React.FC<DialogProps> = ({
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <Dialog
+    <UIDialog
       fullWidth
       open={open}
       fullScreen={fullScreen}
@@ -23,6 +24,6 @@ export const WADialog: React.FC<DialogProps> = ({
       {...rest}
     >
       {children}
-    </Dialog>
+    </UIDialog>
   )
 }

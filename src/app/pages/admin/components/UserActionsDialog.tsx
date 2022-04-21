@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Dialog,
   DialogActions,
   DialogProps,
   DialogTitle,
@@ -12,6 +11,7 @@ import {
 } from '@mui/material'
 import { ButtonTransparent } from 'app/components/ButtonTransparent'
 import { withStyles } from '@mui/styles'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 const styles: (theme: Theme) => any = theme => {
   return {
@@ -50,7 +50,7 @@ export const UserActionsDialog = withStyles(styles)(
     }
 
     return (
-      <Dialog {...rest}>
+      <UIDialog {...rest}>
         <DialogTitle>
           <Typography component='div' variant='h6' align='center'>
             {title}
@@ -76,7 +76,7 @@ export const UserActionsDialog = withStyles(styles)(
             {actionLabel}
           </Button>
         </DialogActions>
-      </Dialog>
+      </UIDialog>
     )
   }
 )

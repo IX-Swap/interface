@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Dialog, DialogProps, IconButton } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import { Dialog, DialogProps } from '@mui/material'
 import { useStyles } from 'ui/UIDialog/UIDialog.styles'
+import { Icon } from 'ui/Icons/Icon'
 
 interface UIDialogAction {
   callback?: () => void
@@ -24,13 +24,11 @@ export const UIDialog = ({ onClose, children, ...rest }: DialogProps) => {
       onClose={onClose}
       {...rest}
     >
-      <IconButton
+      <Icon
         className={classes.iconWrapper}
-        aria-label='close'
+        name='close'
         onClick={() => onClose?.({}, 'escapeKeyDown')}
-      >
-        <CloseIcon />
-      </IconButton>
+      />
       {children}
     </Dialog>
   )

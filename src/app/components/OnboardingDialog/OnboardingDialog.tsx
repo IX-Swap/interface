@@ -1,6 +1,5 @@
 import {
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -13,6 +12,7 @@ import React, { useState } from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import classnames from 'classnames'
 import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface OnboardingDialogProps {
   message: string[]
@@ -35,7 +35,7 @@ export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
 
   return (
     <>
-      <Dialog
+      <UIDialog
         open={opened}
         onClose={handleClose}
         classes={{
@@ -73,7 +73,7 @@ export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
             </Button>
           ) : null}
         </DialogActions>
-      </Dialog>
+      </UIDialog>
       <BackDrop onClick={handleClose} opened={opened} />
     </>
   )
