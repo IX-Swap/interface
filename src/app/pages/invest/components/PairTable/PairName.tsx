@@ -6,6 +6,7 @@ import { useMarkPairAsFavorite } from 'app/pages/invest/hooks/useMarkPairAsFavor
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
 import { generatePath } from 'react-router-dom'
+import { useStyles } from 'app/pages/exchange/components/PairTable/PairTable.styles'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
 export interface PairNameProps {
@@ -15,13 +16,14 @@ export interface PairNameProps {
 export const PairName = ({ pair }: PairNameProps) => {
   const { markAsFavorite } = useMarkPairAsFavorite()
   const { data: favoritePairs } = useFavoritePairs()
+  const { wrapper } = useStyles({})
 
   const handleClick = () => {
     markAsFavorite(pair._id)
   }
 
   return (
-    <Grid container spacing={1} alignItems='center'>
+    <Grid className={wrapper} container spacing={1} alignItems='center'>
       <Grid item>
         <IconButton size='small' onClick={handleClick}>
           {favoritePairs?.includes(pair._id) ?? false ? (

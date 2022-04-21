@@ -17,7 +17,7 @@ export default makeStyles(theme => ({
   paper: {
     width: '100%',
     padding: 16,
-    maxWidth: 400,
+    maxWidth: 500,
     height: 700,
     overflow: 'scroll'
   }
