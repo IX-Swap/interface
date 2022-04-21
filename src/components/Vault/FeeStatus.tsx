@@ -4,7 +4,7 @@ import { t } from '@lingui/macro'
 
 import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
 
-import { ActionHistoryStatus } from './enum'
+import { WithdrawStatus } from './enum'
 
 interface Props {
   status: string
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
-  const paid = status === ActionHistoryStatus.FEE_ACCEPTED
+  const paid = status === WithdrawStatus.FEE_ACCEPTED
 
   const feeText = useMemo(() => {
     if (paid || feePrice) {
@@ -50,7 +50,7 @@ const Container = styled.div<{ status: string }>`
   }
   > :first-child {
     ${({ status }) =>
-      status === ActionHistoryStatus.FEE_ACCEPTED &&
+      status === WithdrawStatus.FEE_ACCEPTED &&
       css`
         color: ${({ theme }) => theme.green1};
       `}

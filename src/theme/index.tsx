@@ -164,6 +164,7 @@ export function colors(darkMode: boolean): Colors {
     yellow1: '#e3a507',
     yellow2: '#ff8f00',
     yellow3: '#F3B71E',
+    yellow4: '#F2F99D',
     blue1: '#2172E5',
     blue2: '#5199FF',
 

@@ -8,19 +8,23 @@ const Wrap = styled.div`
   padding: 16px;
   background: #fff;
   border-radius: 10px;
+  position: relative;
 `
 export const QRCodeWrap = ({
   value,
   size = 256,
   level = 'Q',
+  info = '',
 }: {
   value: string
   size?: number
   level?: 'H' | 'L' | 'M' | 'Q'
+  info?: string | JSX.Element
 }) => {
   return (
     <Wrap>
       <QRCode value={value} size={size} level={level} />
+      {!!info && info}
     </Wrap>
   )
 }

@@ -30,7 +30,8 @@ import {
   payFee,
 } from './actions'
 import walletValidator from 'multicoin-address-validator'
-import { useAddPopup } from 'state/application/hooks'
+import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
+import { setLogItem } from 'state/eventLog/actions'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -156,8 +157,10 @@ export function useWithdrawCallback(
   const { tokenId } = useEventState()
   const addTransaction = useTransactionAdder()
   const cancelAction = useCancelDepositCallback()
+  const toggle = useToggleTransactionModal()
+
   return useCallback(
-    async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
+    async ({ id, amount, onError, receiver }: WithdrawProps) => {
       dispatch(withdrawCurrency.pending())
       let withdrawId = null
       try {
@@ -184,7 +187,8 @@ export function useWithdrawCallback(
         addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
         dispatch(setTransaction({ tx: burned.hash }))
         dispatch(withdrawCurrency.fulfilled())
-        onSuccess()
+        dispatch(setLogItem({ logItem: withdrawRequest }))
+        toggle()
       } catch (error: any) {
         if (withdrawId) {
           await cancelAction({ requestId: withdrawId })
