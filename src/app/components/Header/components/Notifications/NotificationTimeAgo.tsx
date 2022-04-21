@@ -8,7 +8,7 @@ export interface NotificationTimeAgoProps {
 
 export const NotificationTimeAgo = (props: NotificationTimeAgoProps) => {
   return (
-    <Typography variant='caption' color='textSecondary'>
+    <Typography variant='caption' fontSize={12} color='textSecondary'>
       {getTimeAgo(props.createdAt)}
     </Typography>
   )

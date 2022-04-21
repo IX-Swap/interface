@@ -100,7 +100,7 @@ export const getTimeAgo = (datetime: string) => {
     const days = differenceInDays(now, from)
 
     if (minutes === 0) {
-      return 'Just now'
+      return 'Now'
     } else if (hours === 0) {
       return `${minutes} m`
     } else if (days === 0) {

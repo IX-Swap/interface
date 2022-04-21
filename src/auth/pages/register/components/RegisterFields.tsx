@@ -14,6 +14,8 @@ import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { useStyles } from 'auth/pages/register/Register.styles'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { SingPassButton } from 'auth/pages/register/components/SingPassButton'
 
 export interface CheckboxLabelProps {
   isError: boolean
@@ -54,6 +56,10 @@ const CheckboxLabel = ({ isError }: CheckboxLabelProps) => {
 }
 
 export const RegisterFields = () => {
+  const { getFilterValue } = useQueryFilter()
+  const identity = getFilterValue('identityType')
+  const isIndividual = identity === 'individual'
+
   const { control, errors } = useFormContext<SignupArgs>()
   const { bottomBlock, topBlock } = useStyles({})
   const nameErrors = errors.name
@@ -62,13 +68,14 @@ export const RegisterFields = () => {
 
   return (
     <Grid container spacing={6} direction='column'>
+      <Grid item>{isIndividual ? <SingPassButton /> : null}</Grid>
       <Grid item>
         <TypedField
           control={control}
           component={TextField}
           name='name'
-          label='Full Name'
-          placeholder={'Full Name'}
+          label={isIndividual ? 'Full Name' : 'Corporate Name'}
+          placeholder={isIndividual ? 'Full Name' : 'Corporate Name'}
           fullWidth
           InputLabelProps={{
             shrink: true

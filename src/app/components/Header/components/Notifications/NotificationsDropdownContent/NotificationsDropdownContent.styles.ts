@@ -2,17 +2,24 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    paddingLeft: 5,
-    paddingRight: 5,
-    paddingTop: 10,
-    paddingBottom: 5,
-    backgroundColor: theme.palette.backgrounds.light
+    backgroundColor: theme.palette.notificationsDropdown.bg,
+    borderRadius: '0px 0px 8px 8px'
+  },
+  topBlock: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: theme.spacing(1.25, 2, 1.25, 3),
+    borderBottom: `1px solid ${theme.palette.notificationsDropdown.divider}`
+  },
+  bottomBlock: {
+    padding: theme.spacing(0.5, 0),
+    marginTop: -1,
+    zIndex: 2,
+    borderTop: `1px solid ${theme.palette.notificationsDropdown.divider}`
   },
   list: {
     position: 'relative',
-    width: 400,
-    height: 300,
-    marginTop: 10,
-    marginBottom: 5
+    width: 375,
+    height: 'max-content'
   }
 }))

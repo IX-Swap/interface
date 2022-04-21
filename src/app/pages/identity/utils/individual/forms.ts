@@ -15,7 +15,7 @@ export const getPersonalInfoFormValues = (
     firstName: data?.firstName,
     middleName: data?.middleName,
     lastName: data?.lastName,
-    dob: data?.dob ?? '',
+    dob: data?.dob,
     email: data?.email,
     contactNumber: data?.contactNumber,
     nationality: data?.nationality,
@@ -46,8 +46,13 @@ export const getFinancialInfoFormValues = (
 export const getTaxDeclarationFormValues = (
   data: IndividualIdentity
 ): Partial<IndividualTaxDeclarationFormValues> => {
-  const { taxResidencies, declarations } = data
   const result: Partial<IndividualTaxDeclarationFormValues> = {}
+
+  if (data === undefined) {
+    return result
+  }
+
+  const { taxResidencies, declarations } = data
 
   if (taxResidencies !== undefined && taxResidencies.length > 0) {
     result.taxResidencies = taxResidencies.map(({ _id, ...rest }: any) => rest)
@@ -74,6 +79,14 @@ export const getInvestorDeclarationFormValues = (
 export const getDocumentsFormValues = (
   data: IndividualIdentity
 ): IndividualDocumentsFormValues => {
+  if (data === undefined) {
+    return {
+      evidenceOfAccreditation: [],
+      proofOfAddress: [],
+      proofOfIdentity: []
+    }
+  }
+
   return data.documents.reduce((result: any, document) => {
     const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } = result
 
@@ -81,8 +94,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-          ? [...evidenceOfAccreditation, document]
-          : [document]
+          ? [...evidenceOfAccreditation, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -90,8 +103,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         proofOfAddress: Array.isArray(proofOfAddress)
-          ? [...proofOfAddress, document]
-          : [document]
+          ? [...proofOfAddress, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -99,8 +112,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         proofOfIdentity: Array.isArray(proofOfIdentity)
-          ? [...proofOfIdentity, document]
-          : [document]
+          ? [...proofOfIdentity, { value: document }]
+          : [{ value: document }]
       }
     }
 

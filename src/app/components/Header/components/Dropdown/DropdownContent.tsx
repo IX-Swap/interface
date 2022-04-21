@@ -12,7 +12,7 @@ export interface DropdownContentProps {
 
 export const DropdownContent = (props: DropdownContentProps) => {
   const { popupState, placement, children } = props
-  const classes = useStyles()
+  const classes = useStyles({ placement: placement })
   const popperProps = bindPopper(popupState)
   const handleClickAway = () => {
     if (popupState.isOpen) {

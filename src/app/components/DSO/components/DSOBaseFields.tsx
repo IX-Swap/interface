@@ -1,7 +1,6 @@
 import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { CorporateSelect } from 'components/form/CorporateSelect'
@@ -13,6 +12,7 @@ import { dateTimeValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface DSOBaseFieldsProps {
@@ -33,7 +33,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         <Grid item>
           <TypedField
             customRenderer
-            component={Dropzone}
+            component={FileUpload}
             name='logo'
             label='Upload Logo'
             control={control}

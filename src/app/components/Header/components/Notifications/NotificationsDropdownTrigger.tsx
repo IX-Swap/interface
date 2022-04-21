@@ -2,7 +2,7 @@ import React from 'react'
 import { Badge, IconButton } from '@mui/material'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
 import { useNotifications } from 'app/pages/notifications/hooks/useNotifications'
-import { useStyles } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger/NotificationsDropdownTrigger.styles'
+import { useStyles } from 'app/components/Header/components/Dropdown/DropdownTrigger.styles'
 import { Icon } from 'ui/Icons/Icon'
 import classnames from 'classnames'
 
