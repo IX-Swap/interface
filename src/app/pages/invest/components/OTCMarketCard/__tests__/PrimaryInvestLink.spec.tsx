@@ -5,9 +5,6 @@ import {
   PrimaryInvestLink,
   PrimaryInvestLinkProps
 } from 'app/pages/invest/components/OTCMarketCard/PrimaryInvestLink'
-import * as Button from '@mui/material/Button'
-
-jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
 describe('PrimaryInvestLink', () => {
   const primaryProps: PrimaryInvestLinkProps = {
@@ -23,54 +20,38 @@ describe('PrimaryInvestLink', () => {
     type: 'Primary',
     data: dso
   }
-  const defaultPrimaryInvestProps = {
-    style: { fontSize: 16, marginTop: 16 },
-    variant: 'contained',
-    color: 'primary'
-  }
+
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
   it('renders Button with correct props when type is Primary', () => {
-    render(<PrimaryInvestLink {...primaryProps} />)
+    const { getByTestId } = render(<PrimaryInvestLink {...primaryProps} />)
 
-    expect(Button).toHaveBeenCalledTimes(1)
-    expect(Button).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ...defaultPrimaryInvestProps,
-        disabled: false,
-        children: 'Invest'
-      }),
-      {}
-    )
+    const button = getByTestId('otc-card-link')
+
+    expect(button).toBeInTheDocument()
+    expect(button).not.toHaveAttribute('disabled')
+    expect(button).toHaveTextContent('Invest')
   })
 
   it('renders Button with correct props when type is Primary', () => {
-    render(<PrimaryInvestLink {...TopOffersProps} />)
+    const { getByTestId } = render(<PrimaryInvestLink {...TopOffersProps} />)
 
-    expect(Button).toHaveBeenCalledTimes(1)
-    expect(Button).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ...defaultPrimaryInvestProps,
-        disabled: false,
-        children: 'Invest'
-      }),
-      {}
-    )
+    const button = getByTestId('otc-card-link')
+
+    expect(button).toBeInTheDocument()
+    expect(button).not.toHaveAttribute('disabled')
+    expect(button).toHaveTextContent('Invest')
   })
 
   it('renders Button with correct props when type is OTC', () => {
-    render(<PrimaryInvestLink {...OTCProps} />)
+    const { getByTestId } = render(<PrimaryInvestLink {...OTCProps} />)
 
-    expect(Button).toHaveBeenCalledTimes(1)
-    expect(Button).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ...defaultPrimaryInvestProps,
-        disabled: true,
-        children: 'Trade'
-      }),
-      {}
-    )
+    const button = getByTestId('otc-card-link')
+
+    expect(button).toBeInTheDocument()
+    expect(button).toHaveAttribute('disabled')
+    expect(button).toHaveTextContent('Trade')
   })
 })

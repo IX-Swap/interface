@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrimaryInvestLink should match snapshot on button click 1`] = `
+<div>
+  <button
+    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-13e45tm-MuiButtonBase-root-MuiButton-root"
+    data-testid="otc-card-link"
+    disabled=""
+    style="font-size: 16px; margin-top: 16px;"
+    tabindex="-1"
+    type="button"
+  >
+    Trade
+  </button>
+</div>
+`;

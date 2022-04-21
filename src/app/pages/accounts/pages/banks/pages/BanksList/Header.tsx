@@ -10,6 +10,7 @@ export const Header = () => {
       <TwoFADialogWrapper>
         {({ enable2Fa, showDialog }) => (
           <Button
+            data-testid={'button'}
             variant='contained'
             color='primary'
             disableElevation
