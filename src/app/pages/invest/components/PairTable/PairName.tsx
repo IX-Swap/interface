@@ -6,7 +6,7 @@ import { useMarkPairAsFavorite } from 'app/pages/invest/hooks/useMarkPairAsFavor
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
 import { generatePath } from 'react-router-dom'
-import { useStyles } from 'app/pages/exchange/components/PairTable/PairTable.styles'
+import { useStyles } from './PairTable.styles'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
 export interface PairNameProps {
