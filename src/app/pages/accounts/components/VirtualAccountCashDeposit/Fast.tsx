@@ -46,7 +46,7 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
     <Grid direction='column'>
       <Grid item>
         <Box px={3} pb={3}>
-          <Grid container spacing={1}>
+          <Grid container spacing={5}>
             <CashDepositDetails data={extendedFastDetails} />
           </Grid>
         </Box>
