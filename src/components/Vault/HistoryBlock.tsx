@@ -16,7 +16,7 @@ import { HistoryWrapper } from './styleds'
 import { TransactionDetails } from './TransactionDetails'
 
 interface Props {
-  currency?: Currency
+  currency?: Currency & { originalSymbol: string }
   account?: string | null
 }
 
@@ -37,7 +37,7 @@ export const HistoryBlock = ({ currency }: Props) => {
     if (tokenId) {
       interval = setInterval(() => {
         getEvents({ tokenId, page: page || 1, filter: filter || 'all' })
-      }, 30000)
+      }, 15000)
 
       return () => {
         clearInterval(interval)
@@ -57,8 +57,8 @@ export const HistoryBlock = ({ currency }: Props) => {
         </RowStart>
 
         {eventLogLoading ? (
-          <RowCenter style={{ marginTop: '53px', marginBottom: '84px' }}>
-            <LoaderThin size={64} />
+          <RowCenter style={{ marginTop: '26px' }}>
+            <LoaderThin size={48} />
           </RowCenter>
         ) : (
           <Column>

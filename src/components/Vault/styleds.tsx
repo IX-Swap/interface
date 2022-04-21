@@ -1,13 +1,14 @@
+import React from 'react'
+import styled, { css } from 'styled-components'
+
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
-import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowBetween } from 'components/Row'
-import React from 'react'
-import styled from 'styled-components'
-import { gradientBorder, TYPE } from 'theme'
-import { ActionHistoryStatus, ActionTypes, isDeposit } from './enum'
+import { gradientBorder, MEDIA_WIDTHS, TYPE } from 'theme'
+
+import { WithdrawStatus, DepositStatus } from './enum'
 
 export const NoVaultWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -112,7 +113,7 @@ export const StyledTitle = styled(TYPE.title4)`
 `
 
 export const DateBox = styled.div`
-  width: 123px;
+  /* width: 123px; */
 `
 
 export const WaitingWitdrawalFee = styled.div`
@@ -123,25 +124,101 @@ export const WaitingWitdrawalFee = styled.div`
 
 /* eslint-disable react/display-name */
 export const StatusIcons = {
-  [ActionHistoryStatus.PENDING]: () => <LoaderThin size={20} />,
-  [ActionHistoryStatus.SETTLED]: () => <Passed />,
-  [ActionHistoryStatus.APPROVED]: () => <Passed />,
-  [ActionHistoryStatus.REJECTED]: () => <Attention />,
-  [ActionHistoryStatus.FAILED]: () => <Attention />,
-  [ActionHistoryStatus.REQUESTED]: () => <LoaderThin size={20} />,
-  [ActionHistoryStatus.CANCELLED]: () => <Attention />,
-  [ActionHistoryStatus.PROCESSING]: () => <LoaderThin size={20} />,
-  [ActionHistoryStatus.NON_TRADABLE]: () => <NonTradable />,
-  [ActionHistoryStatus.DRAFT]: () => <LoaderThin size={20} />,
-  [ActionHistoryStatus.FEE_ACCEPTED]: () => <LoaderThin size={20} />,
-  [ActionHistoryStatus.WHITELISTED]: () => <LoaderThin size={20} />,
-  [ActionHistoryStatus.ON_WHITELIST]: () => <LoaderThin size={20} />,
-  [ActionHistoryStatus.BURNED]: () => <LoaderThin size={20} />,
+  // -- Withdraw Status Color --
+  [WithdrawStatus.APPROVED]: <Passed />,
+  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: <Passed />,
+  [WithdrawStatus.FB_TX_CANCELLED]: <Attention />,
+  [WithdrawStatus.FB_TX_BLOCKED]: <Attention />,
+  [WithdrawStatus.FB_TX_TIMEOUT]: <Attention />,
+  [WithdrawStatus.FB_TX_FAILED]: <Attention />,
+  // -- End Withdraw Status Color --
+
+  // -- Deposit Status Color --
+  [DepositStatus.APPROVED]: <Passed />,
+  [DepositStatus.SETTLED]: <Passed />,
+  [DepositStatus.FAILED]: <Attention />,
+  [DepositStatus.CANCELLED]: <Attention />,
+  // -- End Deposit Status Color --
+} as Record<string, JSX.Element>
+
+export const getStatusIcon = (status: string) => {
+  return StatusIcons[status] || <LoaderThin size={20} />
 }
 
-export const getStatusIcon = (action = ActionTypes.DEPOSIT, status: ActionHistoryStatus) => {
-  if (isDeposit(action) && status === ActionHistoryStatus.PENDING) {
-    return StatusIcons[ActionHistoryStatus.PENDING]
+export const InfoModalHeader = styled.div`
+  padding: 24px 32px;
+  border-radius: 20px 20px 0px 0px;
+  background: ${({ theme }) => theme.bgG4};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 22px;
+  color: white;
+`
+export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  background: ${({ theme }) => theme.bg11};
+  border-radius: 0px 0px 20px 20px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 16px;
   }
-  return StatusIcons[status]
-}
+  > div {
+    background: ${({ theme }) => theme.bgG4};
+    border-radius: 20px;
+    padding: 16px;
+    label {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+  > div:first-child {
+    label {
+      font-size: 14px;
+      color: ${({ theme }) => theme.text2};
+    }
+    > hr {
+      margin: 8px 0px;
+      border: none;
+      height: 1px;
+      background-color: rgba(237, 206, 255, 0.5);
+    }
+    > div {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      ${({ isSuccess }) =>
+        isSuccess &&
+        css`
+          svg {
+            path {
+              fill: ${({ theme }) => theme.green1};
+            }
+          }
+        `}
+    }
+    > span {
+      display: block;
+      margin-top: 8px;
+      font-weight: 300;
+      color: ${({ theme }) => theme.text2};
+    }
+  }
+`
+
+export const StyledQrInfo = styled.div`
+  font-size: 12px;
+  position: absolute;
+  bottom: 0px;
+  z-index: 2;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+`

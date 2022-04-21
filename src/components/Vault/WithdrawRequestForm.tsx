@@ -29,7 +29,7 @@ import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
 import { FeeStatus } from './FeeStatus'
-import { ActionHistoryStatus } from './enum'
+import { WithdrawStatus } from './enum'
 import { WaitingWitdrawalFee } from './styleds'
 
 interface Props {
@@ -68,8 +68,8 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
   }, [networkName, onSetNetWorkName])
 
   const onClick = () => {
-    if (withdrawStatus && withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED && account && tokenInfo) {
-      if (withdrawStatus.status !== ActionHistoryStatus.DRAFT && receiver && tokenInfo) {
+    if (withdrawStatus && withdrawStatus.status !== WithdrawStatus.FEE_ACCEPTED && receiver && tokenInfo) {
+      if (withdrawStatus.status !== WithdrawStatus.DRAFT && receiver && tokenInfo) {
         createDraftWithdraw({
           tokenId: tokenInfo.id,
           fromAddress: receiver,
@@ -172,7 +172,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
           ) : (
             <>
               {inputError ??
-                t`${withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED ? 'Pay withdraw fee' : 'Withdraw'}`}
+                t`${withdrawStatus.status !== WithdrawStatus.FEE_ACCEPTED ? 'Pay withdraw fee' : 'Withdraw'}`}
             </>
           )}
         </ButtonIXSWide>
