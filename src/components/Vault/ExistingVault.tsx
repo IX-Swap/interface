@@ -14,7 +14,7 @@ import { HistoryBlock } from './HistoryBlock'
 import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './styleds'
 
 interface Props {
-  currency?: Currency
+  currency?: Currency & { originalSymbol: string }
   custodian?: CustodianInfo
   token: any
 }
@@ -34,7 +34,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
             <Trans>on {custodian?.name} custodian</Trans>
           </TYPE.description2>
         </ExistingTitle>
-        <MouseoverTooltip text={!token.allowDeposit ? 'Deposit are not available yet for this token' : ''}>
+        <MouseoverTooltip text={!token.allowDeposit ? 'Deposits are not available yet for this token' : ''}>
           <ButtonIXSGradient
             data-testid="deposit"
             style={{ width: '230px' }}

@@ -38,6 +38,7 @@ const TextWrap = styled(TYPE.titleBig)`
 export const BalanceRow = ({ currency, account, token }: Props) => {
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const toggle = useWithdrawModalToggle()
+
   return (
     <TitleStatusRow>
       <ExistingTitle>
@@ -51,7 +52,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
         <ButtonGradientBorder
           data-testid="withdraw"
           style={{ width: '230px' }}
-          onClick={() => {
+          onClick={async () => {
             toggle()
           }}
           disabled={!token.allowWithdrawal}

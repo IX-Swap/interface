@@ -4,8 +4,7 @@ import React, { FC, useState, useCallback } from 'react'
 import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { TYPE } from 'theme'
-import { StatusIcons } from 'components/Vault/styleds'
-import { ActionHistoryStatus } from 'components/Vault/enum'
+import { ReactComponent as Passed } from 'assets/images/check-success.svg'
 
 import { FormCard, PageLink } from './styleds'
 
@@ -66,7 +65,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
                   key={`page-nav-${index}`}
                 >
                   {title}
-                  {passed && StatusIcons[ActionHistoryStatus.SETTLED]()}
+                  {passed && <Passed />}
                 </PageLink>
               )
           )}

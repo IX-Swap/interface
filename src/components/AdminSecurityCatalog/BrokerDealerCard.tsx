@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
+import { isMobile } from 'react-device-detect'
 
 import { ExternalLink, TYPE } from 'theme'
-import { ActionHistoryStatus } from 'components/Vault/enum'
-import { StatusIcons } from 'components/Vault/styleds'
+import { ReactComponent as Passed } from 'assets/images/check-success.svg'
+import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
 
 import { CardHeader, EditButton, TokensList, TokensListItem } from './styleds'
-import { isMobile } from 'react-device-detect'
 export interface BrokerDealerFakeProps {
   issuer: any
   handleEditClick: (editIssuer: any) => void
@@ -60,14 +60,14 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
               <div>
                 {wrappedToken ? (
                   <>
-                    {StatusIcons[ActionHistoryStatus.SETTLED]()}
+                    <Passed />
                     <TYPE.title6 marginLeft="10px" fontWeight={400} color="#9DF9B1">
                       <Trans>Tradable</Trans>
                     </TYPE.title6>
                   </>
                 ) : (
                   <>
-                    {StatusIcons[ActionHistoryStatus.NON_TRADABLE]()}
+                    <NonTradable />
                     <TYPE.title6 marginLeft="10px" fontWeight={400} color="#EDCEFF">
                       <Trans>Non Tradable</Trans>
                     </TYPE.title6>

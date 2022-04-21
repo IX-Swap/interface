@@ -1,20 +1,44 @@
 import { t } from '@lingui/macro'
 
-export enum ActionHistoryStatus {
+export enum WithdrawStatus {
   DRAFT = 'draft',
-  BURNED = 'burned',
+  FEE_ACCEPTED = 'feeAccepted',
   PENDING = 'pending',
-  APPROVED = 'approved',
-  REJECTED = 'rejected',
-  SETTLED = 'settled',
-  FAILED = 'failed',
-  REQUESTED = 'requested',
-  CANCELLED = 'cancelled',
-  PROCESSING = 'processing',
-  NON_TRADABLE = 'non_tradable',
+  BURNED = 'burned',
   ON_WHITELIST = 'onWhitelist',
   WHITELISTED = 'whitelisted',
-  FEE_ACCEPTED = 'feeAccepted',
+  FB_TX_SUBMITTED = 'fbTxSubmitted',
+  FB_TX_PENDING_AML_SCREENING = 'fbTxPendingAmlScreening',
+  FB_TX_PENDING_AUTHORIZATION = 'fbTxPendingAuthorization',
+  FB_TX_REJECTED = 'fbTxRejected',
+  FB_TX_QUEUED = 'fbTxQueued',
+  FB_TX_PENDING_SIGNATURE = 'fbTxPendingSignature',
+  FB_TX_PENDING3RD_PARTY_MANUAL_APPROVAL = 'fbTxPending3rdPartyManualApproval',
+  FB_TX_PENDING3RD_PARTY = 'fbTxPending3rdParty',
+  FB_TX_PENDING = 'fbTxPending',
+  FB_TX_BROADCASTING = 'fbTxBroadcasting',
+  FB_TX_CONFIRMING = 'fbTxConfirming',
+  FB_TX_CONFIRMED = 'fbTxConfirmed',
+  FB_TX_PARTIALLY_COMPLETED = 'fbTxPartiallyCompleted',
+  FB_TX_COMPLETED = 'fbTxCompleted',
+  FB_TX_CANCELLING = 'fbTxCancelling',
+  FB_TX_CANCELLED = 'fbTxCancelled',
+  FB_TX_BLOCKED = 'fbTxBlocked',
+  FB_TX_TIMEOUT = 'fbTxTimeout',
+  FB_TX_FAILED = 'fbTxFailed',
+  APPROVED = 'approved',
+  CANCELLED = 'cancelled',
+}
+
+export enum DepositStatus {
+  PENDING = 'pending',
+  CANCELLED = 'cancelled',
+  FAILED = 'failed',
+  APPROVED = 'approved',
+  REQUESTED = 'requested',
+  PROCESSING = 'processing',
+  SETTLED = 'settled',
+  NON_TRADABLE = 'non_tradable',
 }
 
 export enum ActionTypes {
@@ -23,73 +47,117 @@ export enum ActionTypes {
 }
 
 export type ActionFilterTabs = ActionTypes | 'all'
+
 export const filterTabs: ActionFilterTabs[] = [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW, 'all']
+
 export const ActionTypeTextHeader: { [key in ActionFilterTabs]: string } = {
   [ActionTypes.DEPOSIT]: t`Deposit`,
   [ActionTypes.WITHDRAW]: t`Withdraw`,
   ['all']: t`All`,
 }
 
-export const isPendingDeposit = (status: ActionHistoryStatus) => {
-  return [ActionHistoryStatus.PENDING, ActionHistoryStatus.APPROVED].includes(status)
-}
-export const isSuccessTransaction = (action: ActionTypes, status: ActionHistoryStatus) => {
+export const isSuccessTransaction = (action: ActionTypes, status: string) => {
   if (action == ActionTypes.DEPOSIT) {
-    return status === ActionHistoryStatus.SETTLED
+    return status === DepositStatus.SETTLED
   }
-  return status === ActionHistoryStatus.APPROVED
+  return status === WithdrawStatus.APPROVED
 }
 
-const TransactionHistoryStatusText = {
-  [ActionHistoryStatus.PENDING]: t`Pending...`,
-  [ActionHistoryStatus.APPROVED]: t`Completed`,
-  [ActionHistoryStatus.SETTLED]: t`Completed`,
-  [ActionHistoryStatus.REJECTED]: t`Declined`,
-  [ActionHistoryStatus.FAILED]: t`Failed`,
-  [ActionHistoryStatus.REQUESTED]: t`Requested`,
-  [ActionHistoryStatus.CANCELLED]: t`Cancelled`,
-  [ActionHistoryStatus.PROCESSING]: t`Processing...`,
-  [ActionHistoryStatus.NON_TRADABLE]: t`Processing...`,
-  [ActionHistoryStatus.DRAFT]: t`Fee Payment required! `,
-  [ActionHistoryStatus.BURNED]: t`wMSTO burned, whitelisting in progress...`,
-  [ActionHistoryStatus.ON_WHITELIST]: t`Whitelisting your wallet...`,
-  [ActionHistoryStatus.WHITELISTED]: t`Whitelisted, sending MSTO`,
-  [ActionHistoryStatus.FEE_ACCEPTED]: t`Fee paid, withdrawal on hold`,
-}
+const WithdrawStatusText = {
+  [WithdrawStatus.DRAFT]: 'Waiting for fee payment...',
+  [WithdrawStatus.FEE_ACCEPTED]: 'Fee accepted, ready for withdrawal...',
+  [WithdrawStatus.PENDING]: 'Waiting for w${originalSymbol} burning...',
+  [WithdrawStatus.BURNED]: 'w${originalSymbol} Burned, checking whitelists... ',
+  [WithdrawStatus.ON_WHITELIST]: 'Whitelisting your wallet...',
+  [WithdrawStatus.WHITELISTED]: 'Wallet whitelisted, sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_SUBMITTED]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_PENDING_AML_SCREENING]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_PENDING_AUTHORIZATION]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_REJECTED]: 'Withdrawal rejected (contact support)',
+  [WithdrawStatus.FB_TX_QUEUED]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_PENDING_SIGNATURE]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_PENDING3RD_PARTY_MANUAL_APPROVAL]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_PENDING3RD_PARTY]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_PENDING]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_BROADCASTING]: 'Sending ${originalSymbol}...',
+  [WithdrawStatus.FB_TX_CONFIRMING]: 'Sending ${originalSymbol}, confirming on blockchain...',
+  [WithdrawStatus.FB_TX_CONFIRMED]: 'Sending MSTO, txn confirmed..',
+  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: 'Withdrawal Completed!',
+  [WithdrawStatus.FB_TX_CANCELLING]: 'Cancelling...',
+  [WithdrawStatus.FB_TX_CANCELLED]: 'Withdrawal canceled (contact support if needed)',
+  [WithdrawStatus.CANCELLED]: 'Withdrawal canceled (contact support if needed)',
+  [WithdrawStatus.FB_TX_BLOCKED]: 'Withdrawal blocked (contact support)',
+  [WithdrawStatus.FB_TX_TIMEOUT]: 'Withdrawal timeout (contact support)',
+  [WithdrawStatus.FB_TX_FAILED]: 'Withdrawal failed (contact support)',
+  [WithdrawStatus.APPROVED]: 'Withdrawal Completed!',
+} as Record<string, string>
+
+const DepositStatusText = {
+  [DepositStatus.PENDING]: 'Waiting for deposit...',
+  [DepositStatus.CANCELLED]: 'Deposit cancelled due timeout (72h)',
+  [DepositStatus.FAILED]: 'Deposit failed (contact support)',
+  [DepositStatus.APPROVED]: 'Deposit received, minting w${originalSymbol}...',
+  [DepositStatus.REQUESTED]: 'Requested',
+  [DepositStatus.PROCESSING]: 'Processing',
+  [DepositStatus.SETTLED]: 'Deposited and minted successfully!',
+} as Record<string, string>
 
 const StatusColors = {
-  [ActionHistoryStatus.PENDING]: 'text2',
-  [ActionHistoryStatus.APPROVED]: 'green1',
-  [ActionHistoryStatus.SETTLED]: 'green1',
-  [ActionHistoryStatus.REJECTED]: 'error',
-  [ActionHistoryStatus.FAILED]: 'error',
-  [ActionHistoryStatus.REQUESTED]: t`text2`,
-  [ActionHistoryStatus.CANCELLED]: t`error`,
-  [ActionHistoryStatus.PROCESSING]: t`text2`,
-  [ActionHistoryStatus.NON_TRADABLE]: t`text2`,
-  [ActionHistoryStatus.DRAFT]: t`text2`,
-  [ActionHistoryStatus.BURNED]: t`text2`,
-  [ActionHistoryStatus.ON_WHITELIST]: t`text2`,
-  [ActionHistoryStatus.WHITELISTED]: t`text2`,
-  [ActionHistoryStatus.FEE_ACCEPTED]: t`text2`,
-}
+  // -- Withdraw Status Color --
+  [WithdrawStatus.APPROVED]: 'green1',
+  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: 'green1',
+  [WithdrawStatus.FB_TX_CANCELLED]: 'error',
+  [WithdrawStatus.FB_TX_BLOCKED]: 'error',
+  [WithdrawStatus.FB_TX_TIMEOUT]: 'error',
+  [WithdrawStatus.FB_TX_FAILED]: 'error',
+  [WithdrawStatus.CANCELLED]: 'error',
+  // -- End Withdraw Status Color --
+
+  // -- Deposit Status Color --
+  [DepositStatus.APPROVED]: 'green1',
+  [DepositStatus.SETTLED]: 'green1',
+  [DepositStatus.FAILED]: 'error',
+  [DepositStatus.CANCELLED]: 'error',
+  // -- End Deposit Status Color --
+} as Record<string, string>
+
+export const withdrawErrorStatuses = [
+  WithdrawStatus.FB_TX_CANCELLED,
+  WithdrawStatus.FB_TX_BLOCKED,
+  WithdrawStatus.FB_TX_TIMEOUT,
+  WithdrawStatus.FB_TX_FAILED,
+  WithdrawStatus.CANCELLED,
+] as string[]
+
+export const withdrawSuccessStatuses = [WithdrawStatus.APPROVED, WithdrawStatus.FB_TX_PARTIALLY_COMPLETED] as string[]
+
+export const depositErrorStatuses = [DepositStatus.FAILED, DepositStatus.CANCELLED] as string[]
+
+export const depositSuccessStatuses = [DepositStatus.APPROVED, DepositStatus.SETTLED] as string[]
+
+export const endedStatuses = [
+  ...withdrawErrorStatuses,
+  ...withdrawSuccessStatuses,
+  ...depositErrorStatuses,
+  ...depositSuccessStatuses,
+] as string[]
 
 export const ActionTypeText = {
   [ActionTypes.DEPOSIT]: t`Deposit`,
-  [ActionTypes.WITHDRAW]: t`Withdraw`,
+  [ActionTypes.WITHDRAW]: t`Withdrawal`,
 }
 
-export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus) => {
-  return StatusColors[status]
+export const getStatusColor = (status: string) => {
+  return StatusColors[status] || 'yellow4'
 }
-export const getActionStatusText = (action: ActionTypes, status: ActionHistoryStatus) => {
-  return TransactionHistoryStatusText[status]
+export const getActionStatusText = (action: ActionTypes, status: string, originalSymbol = '') => {
+  const StatusText = action === ActionTypes.DEPOSIT ? DepositStatusText : WithdrawStatusText
+
+  return (StatusText[status] || status).replace('${originalSymbol}', originalSymbol)
 }
 
-export const isPending = (action: ActionTypes, status: ActionHistoryStatus) => {
-  return (
-    (isDeposit(action) && isPendingDeposit(status)) || (isWithdraw(action) && status === ActionHistoryStatus.PENDING)
-  )
+export const isPending = (status: string) => {
+  return !endedStatuses.includes(status)
 }
 
 export const isWithdraw = (action: ActionTypes) => {

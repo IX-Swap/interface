@@ -1,5 +1,5 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
-import { ActionFilterTabs, ActionHistoryStatus, ActionTypes } from 'components/Vault/enum'
+import { ActionFilterTabs, ActionTypes } from 'components/Vault/enum'
 import { PaginateResponse, PaginationDetails } from 'types/pagination'
 
 export interface TimeStamps {
@@ -14,11 +14,11 @@ export interface LogItem extends TimeStamps {
   params?: {
     token: string
     tokenId: number
-    status: ActionHistoryStatus
+    status: string
   }
   amount?: string | null
   tokenId?: number
-  status?: ActionHistoryStatus
+  status?: string
   custodianAccountId?: number | null
   custodianType?: string
   deadline?: string
@@ -26,6 +26,8 @@ export interface LogItem extends TimeStamps {
   ethTransactionId?: number | null
   fromAddress?: string | null
   requestId?: null | number
+  feeTxHash?: string | null
+  feeAmount?: number | null
 }
 
 export const setEventLog = createAction<{ eventLog: Array<LogItem> }>('eventLog/setLog')
