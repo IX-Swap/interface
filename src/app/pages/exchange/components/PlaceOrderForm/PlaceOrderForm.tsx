@@ -15,6 +15,7 @@ import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/or
 import { useParams } from 'react-router-dom'
 import { isEmptyString } from 'helpers/strings'
 import { OrderSide } from 'types/order'
+import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -122,16 +123,26 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
           )
         })}
         <Grid item className={classes.buttonWrapper}>
-          <Submit
-            createOrderStatus={createOrderStatus}
-            disabled={isFetching}
-            data-testid='submit'
-            size='large'
-            variant='contained'
-            className={classes.button}
-          >
-            PLACE ORDER
-          </Submit>
+          <TwoFADialogWrapper>
+            {({ enable2Fa, showDialog }) => (
+              <Submit
+                createOrderStatus={createOrderStatus}
+                disabled={isFetching}
+                data-testid='submit'
+                size='large'
+                variant='contained'
+                onClick={e => {
+                  if (enable2Fa !== true) {
+                    e.preventDefault()
+                    showDialog()
+                  }
+                }}
+                className={classes.button}
+              >
+                PLACE ORDER
+              </Submit>
+            )}
+          </TwoFADialogWrapper>
         </Grid>
       </Grid>
     </Form>

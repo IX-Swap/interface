@@ -5,6 +5,7 @@ import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { UIRadio } from 'components/UIRadio/UIRadio'
+import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 
 export interface AutoAssignVirtualAccountFormFieldsProps {
   handleOpen: () => void
@@ -72,15 +73,25 @@ export const AutoAssignVirtualAccountFormFields = ({
         </TypedField>
       </Grid>
       <Grid item>
-        <Button
-          onClick={handleOpen}
-          type='button'
-          variant={noData ? 'contained' : 'outlined'}
-          color='primary'
-          disableElevation
-        >
-          {noData ? 'Confirm' : 'Add account'}
-        </Button>
+        <TwoFADialogWrapper>
+          {({ enable2Fa, showDialog }) => (
+            <Button
+              onClick={() => {
+                if (enable2Fa !== true) {
+                  showDialog()
+                } else {
+                  handleOpen()
+                }
+              }}
+              type='button'
+              variant={noData ? 'contained' : 'outlined'}
+              color='primary'
+              disableElevation
+            >
+              {noData ? 'Confirm' : 'Add account'}
+            </Button>
+          )}
+        </TwoFADialogWrapper>
       </Grid>
     </Grid>
   )
