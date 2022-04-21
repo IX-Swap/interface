@@ -2,11 +2,12 @@ import { Theme } from '@mui/material'
 
 export const dialog = (theme: Theme) => {
   // eslint-disable-next-line
-  const chipPalette = theme.palette.chip!
   return {
     styleOverrides: {
       paper: {
-        padding: '2rem'
+        padding: '2rem',
+        borderRadius: '16px',
+        minWidth: 380
       }
     }
   }
@@ -24,7 +25,7 @@ export const dialogContent = (theme: Theme) => {
         fontSize: '14px',
         lineHeight: '17px',
         color: textPalette.secondary,
-        padding: '1rem',
+        padding: 4,
         marginTop: '1rem'
       }
     }
@@ -35,7 +36,7 @@ export const dialogActions = (theme: Theme) => {
   return {
     styleOverrides: {
       root: {
-        padding: '1rem'
+        padding: 4
       }
     }
   }
@@ -54,7 +55,9 @@ export const dialogTitle = (theme: Theme) => {
         lineHeight: '27px',
         letterSpacing: '-0.02em',
         color: textPalette.primary,
-        padding: '1rem'
+        padding: 4,
+        display: 'flex',
+        justifyContent: 'center'
       }
     }
   }
