@@ -12,6 +12,7 @@ export interface FileProps {
   isFileTooLarge?: boolean
   hasValue?: boolean
   label?: string
+  placeHolder?: string
   name?: string
   multiple?: boolean
   rootProps?: any

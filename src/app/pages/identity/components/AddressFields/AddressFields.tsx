@@ -1,4 +1,4 @@
-import { Grid, Hidden } from '@mui/material'
+import { Grid } from '@mui/material'
 import { Address } from 'app/pages/identity/types/forms'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { TypedField } from 'components/form/TypedField'
@@ -17,7 +17,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
 
   return (
     <Grid container spacing={3} className={privateClassNames()}>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} md={6}>
         <TypedField
           customRenderer
           component={TextInput}
@@ -30,7 +30,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.line1 ?? ''}
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} md={6}>
         <TypedField
           customRenderer
           component={TextInput}
@@ -43,10 +43,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.line2 ?? ''}
         />
       </Grid>
-      <Hidden mdDown>
-        <Grid item xs={12} sm={6} md={4} />
-      </Hidden>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} md={6}>
         <TypedField
           customRenderer
           fullWidth
@@ -59,7 +56,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.city ?? ''}
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} md={6}>
         <TypedField
           customRenderer
           fullWidth
@@ -72,10 +69,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.state ?? ''}
         />
       </Grid>
-      <Hidden mdDown>
-        <Grid item xs={12} sm={6} md={4} />
-      </Hidden>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} md={6}>
         <TypedField
           component={CountrySelect}
           control={control}
@@ -86,7 +80,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.country ?? ''}
         />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12} md={6}>
         <TypedField
           customRenderer
           fullWidth

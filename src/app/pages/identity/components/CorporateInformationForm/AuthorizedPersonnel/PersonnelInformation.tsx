@@ -25,7 +25,7 @@ export const PersonnelInformation = ({
     <Grid container direction='column' spacing={5}>
       <Grid item>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               defaultValue={defaultValue?.fullName ?? ''}
@@ -36,7 +36,7 @@ export const PersonnelInformation = ({
               label='Full Name'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               component={TextInput}
@@ -51,7 +51,7 @@ export const PersonnelInformation = ({
       </Grid>
       <Grid item>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               component={TextInput}
@@ -62,7 +62,7 @@ export const PersonnelInformation = ({
               label='Email Address'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               component={PhoneInput}
