@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { Address } from 'app/pages/identity/types/forms'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { TypedField } from 'components/form/TypedField'
@@ -93,6 +94,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.postalCode ?? ''}
         />
       </Grid>
+      <ValidateOnMount />
     </Grid>
   )
 }

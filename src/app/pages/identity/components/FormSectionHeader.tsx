@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 
 export interface FormSectionHeaderProps {
@@ -26,7 +25,6 @@ export const FormSectionHeader = ({
           </Typography>
         </>
       ) : null}
-      {variant === 'section' ? <VSpacer size='small' /> : null}
     </Box>
   )
 }

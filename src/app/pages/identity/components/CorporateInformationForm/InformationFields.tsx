@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
 import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
@@ -102,6 +103,7 @@ export const InformationFields = ({
             label='Legal Entity'
           />
         </Grid>
+        <ValidateOnMount />
       </Grid>
     </>
   )

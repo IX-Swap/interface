@@ -1,13 +1,11 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import { Grid, Button, IconButton } from '@mui/material'
 import { PersonnelInformation } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
+import { AuthorizationDocuments } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/AuthorizationDocuments'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { Personnel } from 'app/pages/identity/types/forms'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { TypedField } from 'components/form/TypedField'
-import { useFormContext } from 'react-hook-form'
-import { FileUpload } from 'ui/FileUpload/FileUpload'
-import { plainValueExtractor } from 'helpers/forms'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface AuthorizedPersonnelProps {
   fieldId: string
@@ -22,54 +20,68 @@ export interface AuthorizedPersonnelProps {
 }
 
 export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
-  const { control } = useFormContext()
-  const { rootName, index } = props
-  return (
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <FieldContainer>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <FormSectionHeader title='Company Authorized Personnel' />
-            </Grid>
-            <Grid item xs={12}>
-              <PersonnelInformation {...props} />
-            </Grid>
-          </Grid>
-        </FieldContainer>
-      </Grid>
+  const { append, remove, index, isLast, total, max } = props
+  const handleAppend = () => {
+    append({
+      fullName: '',
+      designation: '',
+      email: '',
+      contactNumber: '',
+      documents: []
+    })
+  }
 
-      <Grid item xs={12}>
-        <FieldContainer>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <FormSectionHeader title='Authorization Document' />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography variant='caption'>
-                Board Resolution, Power of Attorney, Partnership Deed, Trust
-                Deed, and Others.
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TypedField
-                fullWidth
-                customRenderer
-                control={control}
-                component={FileUpload}
-                label='Upload File'
-                placeHolder='Upload File'
-                valueExtractor={plainValueExtractor}
-                documentInfo={{
-                  title: 'Authorization Document',
-                  type: 'Authorization Document'
-                }}
-                name={[rootName, index, 'documents', 0, 'value']}
-              />
-            </Grid>
+  const handleRemove = () => {
+    remove(index)
+  }
+
+  return (
+    <FieldContainer>
+      <Grid container spacing={3}>
+        <Grid
+          item
+          container
+          xs={12}
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Grid item>
+            <FormSectionHeader
+              title={`${
+                total > 1 ? `(${props.index + 1}) ` : ''
+              }Company Authorized Personnel`}
+            />
           </Grid>
-        </FieldContainer>
+          {total > 1 ? (
+            <Grid item>
+              <IconButton onClick={handleRemove} size='large'>
+                <Icon name='trash' />
+              </IconButton>
+            </Grid>
+          ) : null}
+        </Grid>
+
+        <Grid item xs={12}>
+          <PersonnelInformation {...props} />
+        </Grid>
+        <Grid item xs={12}>
+          <AuthorizationDocuments {...props} />
+        </Grid>
+        <Grid item xs={12} container justifyContent='flex-end' spacing={2}>
+          {isLast && total < max ? (
+            <Grid item>
+              <Button
+                variant='outlined'
+                color='primary'
+                onClick={handleAppend}
+                startIcon={<Icon name='plus' />}
+              >
+                Company Authorized Personnel
+              </Button>
+            </Grid>
+          ) : null}
+        </Grid>
       </Grid>
-    </Grid>
+    </FieldContainer>
   )
 }

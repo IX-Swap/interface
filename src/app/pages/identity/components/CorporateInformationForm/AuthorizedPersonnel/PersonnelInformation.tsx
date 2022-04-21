@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { Personnel } from 'app/pages/identity/types/forms'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { TypedField } from 'components/form/TypedField'
@@ -77,6 +78,7 @@ export const PersonnelInformation = ({
           </Grid>
         </Grid>
       </Grid>
+      <ValidateOnMount />
     </Grid>
   )
 }

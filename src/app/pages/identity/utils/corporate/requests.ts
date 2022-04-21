@@ -1,3 +1,4 @@
+import { DataroomFile } from 'types/dataroomFile'
 import {
   AgreementsAndDisclosures,
   CorporateInvestorDeclarationFormValues,
@@ -9,12 +10,13 @@ import {
 export const getCorporateInfoRequestPayload = (
   data: InvestorCorporateInfoFormValues
 ) => {
-  const { otherLegalEntityStatus, legalEntityStatus, ...rest } = data
+  const { otherLegalEntityStatus, legalEntityStatus, logo, ...rest } = data
   const customLegalEntityStatus =
     otherLegalEntityStatus !== undefined && otherLegalEntityStatus.trim() !== ''
 
   return {
     ...rest,
+    logo: (logo as DataroomFile)?._id,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus
       : legalEntityStatus

@@ -24,6 +24,7 @@ export interface FormStepProps {
   shouldSaveOnMove: boolean
   setCompleted?: () => void
   skippable?: boolean
+  completed: number[]
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -39,7 +40,8 @@ export const FormStep = (props: FormStepProps) => {
     submitMutation,
     shouldSaveOnMove,
     setCompleted,
-    skippable
+    skippable,
+    completed
   } = props
 
   const isCurrentStep = activeStep === index
@@ -83,11 +85,24 @@ export const FormStep = (props: FormStepProps) => {
     return await mutation(payload).then(onSubmitSuccess)
   }
 
+  const getValidationSchema = () => {
+    if (isLastStep) {
+      return step.validationSchema
+    }
+
+    if (completed.includes(index)) {
+      return step.validationSchema
+    }
+
+    return undefined
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={isLastStep ? step.validationSchema : undefined}
+      validationSchema={getValidationSchema()}
       onSubmit={handleSubmit}
+      allowInvalid
     >
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='large' />

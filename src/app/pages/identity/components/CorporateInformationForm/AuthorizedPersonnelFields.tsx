@@ -20,11 +20,10 @@ export const AuthorizedPersonnelFields = () => {
     <FieldsArray name='representatives' control={control}>
       {({ fields, append, remove }) => (
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            {fields.map((field, index) => (
+          {fields.map((field, index) => (
+            <Grid item xs={12} key={field.id}>
               <AuthorizedPersonnel
                 fieldId={field.id}
-                key={field.id}
                 rootName='representatives'
                 index={index}
                 append={append}
@@ -34,8 +33,8 @@ export const AuthorizedPersonnelFields = () => {
                 max={5}
                 defaultValue={field as Personnel}
               />
-            ))}
-          </Grid>
+            </Grid>
+          ))}
         </Grid>
       )}
     </FieldsArray>

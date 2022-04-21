@@ -30,7 +30,7 @@ export const UploadDocumentField = ({
       <Grid item xs={12}>
         <Box>
           <Grid item container alignItems='center'>
-            <Typography variant='subtitle1'>{label}</Typography>
+            <Typography variant='h5'>{label}</Typography>
             <Box pr={1}></Box>
             {tooltipContent !== undefined ? (
               <Tooltip

@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { BusinessOwnerSelect } from 'components/form/BusinessOwnerSelect'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
@@ -38,6 +39,7 @@ export const OwnershipStructureFields = () => {
             }
           />
         </Grid>
+        <ValidateOnMount />
       </Grid>
     </>
   )
