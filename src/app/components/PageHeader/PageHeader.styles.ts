@@ -25,9 +25,9 @@ export const useStyles = makeStyles(theme => ({
     right: `50%`,
     marginLeft: `-50vw`,
     marginRight: `-50vw`,
-    marginTop: `-3vw`,
+    marginTop: `-1vw`,
     padding: `3% 16% 10% 16%`,
-    marginBottom: `2vw`,
+    marginBottom: `3vw`,
 
     [theme.breakpoints.down('md')]: {
       width: `102vw`
