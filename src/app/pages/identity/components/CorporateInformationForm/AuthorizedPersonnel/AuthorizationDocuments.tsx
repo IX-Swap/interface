@@ -39,7 +39,8 @@ export const AuthorizationDocuments = ({
           valueExtractor={plainValueExtractor}
           accept={DataroomFileType.document}
           documentInfo={{
-            type: 'DSO Logo'
+            type: 'Authorization Documents',
+            title: 'Authorization Documents'
           }}
         />
       </Grid>
