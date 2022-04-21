@@ -76,6 +76,7 @@ export const AutoAssignVirtualAccountFormFields = ({
         <TwoFADialogWrapper>
           {({ enable2Fa, showDialog }) => (
             <Button
+              data-testid={'button'}
               onClick={() => {
                 if (enable2Fa !== true) {
                   showDialog()
