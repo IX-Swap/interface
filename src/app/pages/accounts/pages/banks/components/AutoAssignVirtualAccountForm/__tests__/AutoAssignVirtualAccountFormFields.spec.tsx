@@ -32,7 +32,7 @@ describe('AutoAssignVirtualAccountFormFields', () => {
       </Form>
     )
 
-    expect(container.children[0]).toBeEmptyDOMElement()
+    expect(container.firstElementChild).toBeEmptyDOMElement()
   })
 
   it('renders empty component if virtual account list length more than 1', () => {
@@ -47,7 +47,7 @@ describe('AutoAssignVirtualAccountFormFields', () => {
       </Form>
     )
 
-    expect(container.children[0]).toBeEmptyDOMElement()
+    expect(container.firstElementChild).toBeEmptyDOMElement()
   })
 
   it('invokes handleOpen function and renders dialog with correct props on button click when enable2Fa is true', async () => {
