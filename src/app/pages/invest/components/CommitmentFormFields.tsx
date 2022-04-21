@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, OutlinedInput, InputAdornment } from '@mui/material'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { useFormContext } from 'react-hook-form'
@@ -11,17 +11,18 @@ import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSign
 import { privateClassNames } from 'helpers/classnames'
 import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect'
 import { ETHEREUM_DECIMAL_PLACES } from 'config'
-import { CreateCustodyWithdrawalAddressButton } from 'app/pages/invest/components/CreateCustodyWithdrawalAddressButton/CreateCustodyWithdrawalAddressButton'
 import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
+import { AddMetamaskWallet } from './AddMetamaskWallet'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
   network?: string
   decimalScale?: number
+  isCampaign?: boolean
 }
 
 export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
-  const { control } = useFormContext<CommitmentFormValues>()
+  const { control, setValue } = useFormContext<CommitmentFormValues>()
   const handleNumOfUnitsChange = (value: number, path: string) => {
     const { pricePerUnit } = control.getValues()
     const nextValue = value * (pricePerUnit ?? 1)
@@ -32,12 +33,17 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
 
   const decimalScale = props.decimalScale ?? ETHEREUM_DECIMAL_PLACES
 
-  const { data, status } = useWithdrawalAddresses({ network: props.network })
+  const { data, status } = useWithdrawalAddresses({})
   const filteredAddresses = data.list.filter(
     ({ status }) => status === 'Approved'
   )
   const hasFilteredAddresses = filteredAddresses.length > 0
-
+  const { isCampaign = false } = props
+  useEffect(() => {
+    if (isCampaign) {
+      setValue('numberOfUnits', 1)
+    }
+  }, [isCampaign, setValue])
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
@@ -61,6 +67,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           component={NumericInput}
           control={control}
           name='numberOfUnits'
+          disabled={isCampaign}
           label='Number of Units'
           numberFormat={{ ...moneyNumberFormat, decimalScale }}
           valueExtractor={numericValueExtractor}
@@ -114,7 +121,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
       </Grid>
 
       <Grid item>
-        <CreateCustodyWithdrawalAddressButton />
+        <AddMetamaskWallet />
       </Grid>
 
       <Grid item>

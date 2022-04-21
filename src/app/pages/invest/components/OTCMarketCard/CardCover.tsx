@@ -13,7 +13,7 @@ export interface CardCoverProps {
   data: DigitalSecurityOffering
   viewURL: string
 }
-
+const typeWithLogo = ['OTC', 'TopOffers']
 export const CardCover = (props: CardCoverProps) => {
   const { data, type } = props
   const classes = useStyles()
@@ -46,7 +46,7 @@ export const CardCover = (props: CardCoverProps) => {
         </Grid>
         <Grid item>
           <DSOLogo
-            uri={type === 'OTC' ? '/dataroom/raw/' : undefined}
+            uri={typeWithLogo.includes(type) ? '/dataroom/raw/' : undefined}
             size={62}
             dsoId={type === 'Primary' ? data._id : data.logo}
             variant='rounded'

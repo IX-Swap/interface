@@ -33,7 +33,6 @@ export const useRoleManagement = (initialRoles: string[]) => {
   }
 
   const handleUpdate = async () => {
-    console.log(params)
     await requestUpdateRoles({
       userId: params.userId,
       roles: selectedRoles.join(',')
