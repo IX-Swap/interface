@@ -96,15 +96,15 @@ export default createReducer<SwapState>(initialState, (builder) =>
       state.approvalSubmitted = approvalSubmitted
     })
     .addCase(clearSwapState, (state) => {
-      // state.independentField = Field.INPUT
-      // state.typedValue = ''
-      // state[Field.INPUT] = {
-      //   currencyId: '',
-      // }
-      // state[Field.OUTPUT] = {
-      //   currencyId: '',
-      // }
-      // state.recipient = null
-      // state.approvalSubmitted = false
+      state.independentField = Field.INPUT
+      state.typedValue = ''
+      state[Field.INPUT] = {
+        currencyId: '',
+      }
+      state[Field.OUTPUT] = {
+        currencyId: '',
+      }
+      state.recipient = null
+      state.approvalSubmitted = false
     })
 )
