@@ -11,7 +11,7 @@ import { issuanceURL } from 'config/apiURL'
 describe('useMakeCommitment', () => {
   const makeInvestmentArgs: MakeInvestmentArgs = {
     dso: dso._id,
-    signedSubscriptionDocument: commitment.signedSubscriptionDocument._id,
+    signedSubscriptionDocument: commitment?.signedSubscriptionDocument?._id,
     currency: '1000',
     withdrawalAddress: commitment.withdrawalAddress?.address,
     numberOfUnits: 1,
@@ -72,7 +72,10 @@ describe('useMakeCommitment', () => {
           const [mutate] = result.current.invest
           void mutate(makeInvestmentArgs)
 
-          expect(showSnackbar).toHaveBeenCalledWith("Success. Please wait for the authorizer's approval", 'success')
+          expect(showSnackbar).toHaveBeenCalledWith(
+            "Success. Please wait for the authorizer's approval",
+            'success'
+          )
         },
         { timeout: 1000 }
       )
