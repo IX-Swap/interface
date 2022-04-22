@@ -8,25 +8,31 @@ export interface ChildrenProps {
 }
 
 export interface TwoFADialogWrapperProps {
-  children:
-    | ReactElement
-    | ReactElement[]
-    | (({ enable2Fa, showDialog }: ChildrenProps) => ReactElement)
+  children: ReactElement
+  extraCheck?: boolean
 }
 
-export const TwoFADialogWrapper = ({ children }: TwoFADialogWrapperProps) => {
+export const TwoFADialogWrapper = ({
+  children,
+  extraCheck = true
+}: TwoFADialogWrapperProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const { user = { enable2Fa: undefined } } = useAuth()
   const { enable2Fa } = user
 
+  const handleClick = (e: any) => {
+    e.preventDefault()
+    setIsOpen(true)
+  }
+
   return (
     <>
-      {typeof children === 'function'
-        ? children({
-            enable2Fa: enable2Fa,
-            showDialog: () => setIsOpen(true)
-          })
-        : children}
+      {React.cloneElement(
+        children,
+        extraCheck && enable2Fa !== true
+          ? { onClick: (e: any) => handleClick(e) }
+          : {}
+      )}
       <TwoFADialog
         isOpen={isOpen}
         enable2Fa={enable2Fa}

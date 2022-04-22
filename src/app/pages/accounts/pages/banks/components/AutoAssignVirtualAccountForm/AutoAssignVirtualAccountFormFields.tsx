@@ -74,24 +74,16 @@ export const AutoAssignVirtualAccountFormFields = ({
       </Grid>
       <Grid item>
         <TwoFADialogWrapper>
-          {({ enable2Fa, showDialog }) => (
-            <Button
-              data-testid={'button'}
-              onClick={() => {
-                if (enable2Fa !== true) {
-                  showDialog()
-                } else {
-                  handleOpen()
-                }
-              }}
-              type='button'
-              variant={noData ? 'contained' : 'outlined'}
-              color='primary'
-              disableElevation
-            >
-              {noData ? 'Confirm' : 'Add account'}
-            </Button>
-          )}
+          <Button
+            data-testid={'button'}
+            onClick={handleOpen}
+            type='button'
+            variant={noData ? 'contained' : 'outlined'}
+            color='primary'
+            disableElevation
+          >
+            {noData ? 'Confirm' : 'Add account'}
+          </Button>
         </TwoFADialogWrapper>
       </Grid>
     </Grid>

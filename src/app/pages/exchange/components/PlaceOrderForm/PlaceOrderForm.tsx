@@ -124,24 +124,16 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         })}
         <Grid item className={classes.buttonWrapper}>
           <TwoFADialogWrapper>
-            {({ enable2Fa, showDialog }) => (
-              <Submit
-                createOrderStatus={createOrderStatus}
-                disabled={isFetching}
-                data-testid='submit'
-                size='large'
-                variant='contained'
-                onClick={e => {
-                  if (enable2Fa !== true) {
-                    e.preventDefault()
-                    showDialog()
-                  }
-                }}
-                className={classes.button}
-              >
-                PLACE ORDER
-              </Submit>
-            )}
+            <Submit
+              createOrderStatus={createOrderStatus}
+              disabled={isFetching}
+              data-testid='submit'
+              size='large'
+              variant='contained'
+              className={classes.button}
+            >
+              PLACE ORDER
+            </Submit>
           </TwoFADialogWrapper>
         </Grid>
       </Grid>

@@ -46,30 +46,17 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   }
 
   return (
-    <TwoFADialogWrapper>
-      {({ enable2Fa, showDialog }) => (
-        <Link
-          to={link}
-          className={classes.wrapper}
-          onClick={e => {
-            if (
-              (link === IssuanceRoute.create ||
-                link === OTCMarketRoute.createListing) &&
-              enable2Fa !== true
-            ) {
-              e.preventDefault()
-              showDialog()
-            } else {
-              handleClick(e)
-            }
-          }}
-        >
-          <Typography className={classes.text} variant={'body1'}>
-            {label}
-          </Typography>
-          {disabled ? <ArrowDropDownIcon className={classes.icon} /> : null}
-        </Link>
-      )}
+    <TwoFADialogWrapper
+      extraCheck={
+        link === IssuanceRoute.create || link === OTCMarketRoute.createListing
+      }
+    >
+      <Link to={link} className={classes.wrapper} onClick={handleClick}>
+        <Typography className={classes.text} variant={'body1'}>
+          {label}
+        </Typography>
+        {disabled ? <ArrowDropDownIcon className={classes.icon} /> : null}
+      </Link>
     </TwoFADialogWrapper>
   )
 }

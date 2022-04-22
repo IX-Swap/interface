@@ -19,6 +19,9 @@ describe('DSOInvestButton', () => {
     jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
     const { container } = render(<DSOInvestButton dso={dso} />)
 
-    expect(container?.firstElementChild).toHaveAttribute('disabled')
+    expect(container?.firstElementChild).toHaveAttribute(
+      'aria-disabled',
+      'true'
+    )
   })
 })
