@@ -44,7 +44,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
       <ExistingTitle>
         <TextWrap>
           <span style={{ marginRight: '10px' }}>{formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)}</span>
-          <span>{token?.ticker ?? currency?.symbol}</span>
+          <span>{currency?.symbol}</span>
         </TextWrap>
         <AddWrappedToMetamask token={token} />
       </ExistingTitle>

@@ -28,6 +28,7 @@ export enum WithdrawStatus {
   FB_TX_FAILED = 'fbTxFailed',
   APPROVED = 'approved',
   CANCELLED = 'cancelled',
+  FAILED = 'failed',
 }
 
 export enum DepositStatus {
@@ -66,8 +67,8 @@ export const isSuccessTransaction = (action: ActionTypes, status: string) => {
 const WithdrawStatusText = {
   [WithdrawStatus.DRAFT]: 'Waiting for fee payment...',
   [WithdrawStatus.FEE_ACCEPTED]: 'Fee accepted, ready for withdrawal...',
-  [WithdrawStatus.PENDING]: 'Waiting for w${originalSymbol} burning...',
-  [WithdrawStatus.BURNED]: 'w${originalSymbol} Burned, checking whitelists... ',
+  [WithdrawStatus.PENDING]: 'Waiting for ${symbol} burning...',
+  [WithdrawStatus.BURNED]: '${symbol} Burned, checking whitelists... ',
   [WithdrawStatus.ON_WHITELIST]: 'Whitelisting your wallet...',
   [WithdrawStatus.WHITELISTED]: 'Wallet whitelisted, sending ${originalSymbol}...',
   [WithdrawStatus.FB_TX_SUBMITTED]: 'Sending ${originalSymbol}...',
@@ -81,7 +82,7 @@ const WithdrawStatusText = {
   [WithdrawStatus.FB_TX_PENDING]: 'Sending ${originalSymbol}...',
   [WithdrawStatus.FB_TX_BROADCASTING]: 'Sending ${originalSymbol}...',
   [WithdrawStatus.FB_TX_CONFIRMING]: 'Sending ${originalSymbol}, confirming on blockchain...',
-  [WithdrawStatus.FB_TX_CONFIRMED]: 'Sending MSTO, txn confirmed..',
+  [WithdrawStatus.FB_TX_CONFIRMED]: 'Sending ${originalSymbol}, txn confirmed..',
   [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: 'Withdrawal Completed!',
   [WithdrawStatus.FB_TX_CANCELLING]: 'Cancelling...',
   [WithdrawStatus.FB_TX_CANCELLED]: 'Withdrawal canceled (contact support if needed)',
@@ -89,6 +90,7 @@ const WithdrawStatusText = {
   [WithdrawStatus.FB_TX_BLOCKED]: 'Withdrawal blocked (contact support)',
   [WithdrawStatus.FB_TX_TIMEOUT]: 'Withdrawal timeout (contact support)',
   [WithdrawStatus.FB_TX_FAILED]: 'Withdrawal failed (contact support)',
+  [WithdrawStatus.FAILED]: 'Withdrawal failed (contact support)',
   [WithdrawStatus.APPROVED]: 'Withdrawal Completed!',
 } as Record<string, string>
 
@@ -96,7 +98,7 @@ const DepositStatusText = {
   [DepositStatus.PENDING]: 'Waiting for deposit...',
   [DepositStatus.CANCELLED]: 'Deposit cancelled due timeout',
   [DepositStatus.FAILED]: 'Deposit failed (contact support)',
-  [DepositStatus.APPROVED]: 'Deposit received, minting w${originalSymbol}...',
+  [DepositStatus.APPROVED]: 'Deposit received, minting ${symbol}...',
   [DepositStatus.REQUESTED]: 'Requested',
   [DepositStatus.PROCESSING]: 'Processing',
   [DepositStatus.SETTLED]: 'Deposited and minted successfully!',
@@ -110,6 +112,7 @@ const WithdrawStatusColors = {
   [WithdrawStatus.FB_TX_TIMEOUT]: 'error',
   [WithdrawStatus.FB_TX_FAILED]: 'error',
   [WithdrawStatus.CANCELLED]: 'error',
+  [WithdrawStatus.FAILED]: 'error',
 } as Record<string, string>
 
 const DepositStatusColors = {
@@ -124,6 +127,7 @@ export const withdrawErrorStatuses = [
   WithdrawStatus.FB_TX_TIMEOUT,
   WithdrawStatus.FB_TX_FAILED,
   WithdrawStatus.CANCELLED,
+  WithdrawStatus.FAILED,
 ] as string[]
 
 export const withdrawSuccessStatuses = [WithdrawStatus.APPROVED, WithdrawStatus.FB_TX_PARTIALLY_COMPLETED] as string[]
@@ -171,6 +175,7 @@ const WithdrawStatusPercents = {
   [WithdrawStatus.FB_TX_TIMEOUT]: 100,
   [WithdrawStatus.FB_TX_FAILED]: 100,
   [WithdrawStatus.APPROVED]: 100,
+  [WithdrawStatus.FAILED]: 100,
 } as Record<string, number>
 
 const DepositStatusPercents = {
@@ -188,10 +193,10 @@ export const getStatusColor = (action: ActionTypes, status: string) => {
 
   return StatusColors[status] || 'yellow4'
 }
-export const getActionStatusText = (action: ActionTypes, status: string, originalSymbol = '') => {
+export const getActionStatusText = (action: ActionTypes, status: string, originalSymbol = '', symbol = '') => {
   const StatusText = action === ActionTypes.DEPOSIT ? DepositStatusText : WithdrawStatusText
 
-  return (StatusText[status] || status).replace('${originalSymbol}', originalSymbol)
+  return (StatusText[status] || status).replace('${originalSymbol}', originalSymbol).replace('${symbol}', symbol)
 }
 
 export const getActionStatusPercent = (action: ActionTypes, status: string) => {

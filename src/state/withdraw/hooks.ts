@@ -160,8 +160,9 @@ export function useWithdrawCallback(
   const toggle = useToggleTransactionModal()
 
   return useCallback(
-    async ({ id, amount, onError, receiver }: WithdrawProps) => {
+    async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
       dispatch(withdrawCurrency.pending())
+      dispatch(setLogItem({ logItem: null }))
       let withdrawId = null
       try {
         const response = await withdrawToken({ id, amount, receiver })
@@ -188,6 +189,7 @@ export function useWithdrawCallback(
         dispatch(setTransaction({ tx: burned.hash }))
         dispatch(withdrawCurrency.fulfilled())
         dispatch(setLogItem({ logItem: withdrawRequest }))
+        onSuccess()
         toggle()
       } catch (error: any) {
         if (withdrawId) {

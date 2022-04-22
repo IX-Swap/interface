@@ -27,7 +27,7 @@ interface Props {
 
 export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
   const status = row?.status ?? row?.params?.status ?? 'pending'
-  const statusText = getActionStatusText(row.type, status, currency?.originalSymbol)
+  const statusText = getActionStatusText(row.type, status, currency?.originalSymbol, currency?.symbol)
   const { width } = useWindowSize()
   const dateFormat = width && width <= MEDIA_WIDTHS.upToLarge ? 'MMM D, YYYY' : 'MMM D, YYYY HH:mm'
   const formattedDate = dayjs(row.createdAt).format(dateFormat)
@@ -42,6 +42,7 @@ export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
   }, [row])
 
   const openModal = useCallback(() => {
+    dispatch(setLogItem({ logItem: null }))
     if (
       row.type === ActionTypes.WITHDRAW &&
       [WithdrawStatus.DRAFT, WithdrawStatus.FEE_ACCEPTED].includes(row.status as WithdrawStatus)
