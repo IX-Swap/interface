@@ -4,10 +4,8 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering } from 'types/dso'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
-
-import { history } from 'config/history'
-import { safeGeneratePath } from 'helpers/router'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
 export interface PrimaryInvestLinkProps {
   type: 'Primary' | 'OTC' | 'TopOffers'
@@ -37,14 +35,14 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
   return (
     <TwoFADialogWrapper>
       <Button
+        component={AppRouterLinkComponent}
         color='primary'
         variant={'contained'}
+        to={link}
+        params={params}
         data-testid='otc-card-link'
         disabled={isDisabled}
         style={{ fontSize: 16, marginTop: 16 }}
-        onClick={() => {
-          history.push(safeGeneratePath(link, params), { ...params })
-        }}
       >
         {type !== 'OTC' ? 'Invest' : 'Trade'}
       </Button>

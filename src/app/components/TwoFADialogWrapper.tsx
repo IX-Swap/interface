@@ -20,7 +20,7 @@ export const TwoFADialogWrapper = ({
   const { user = { enable2Fa: undefined } } = useAuth()
   const { enable2Fa } = user
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault()
     setIsOpen(true)
   }
@@ -30,8 +30,10 @@ export const TwoFADialogWrapper = ({
       {React.cloneElement(
         children,
         extraCheck && enable2Fa !== true
-          ? { onClick: (e: any) => handleClick(e) }
-          : {}
+          ? {
+              onClick: handleClick
+            }
+          : undefined
       )}
       <TwoFADialog
         isOpen={isOpen}

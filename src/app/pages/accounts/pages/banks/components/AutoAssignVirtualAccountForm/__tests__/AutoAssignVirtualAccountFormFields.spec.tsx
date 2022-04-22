@@ -7,11 +7,6 @@ import * as useAuth from 'hooks/auth/useAuth'
 import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import { virtualAccount } from '__fixtures__/virtualAccount'
 import { user } from '__fixtures__/user'
-import { TwoFADialog } from 'app/components/TwoFADialog/TwoFADialog'
-
-jest.mock('app/components/TwoFADialog/TwoFADialog', () => ({
-  TwoFADialog: jest.fn(() => null)
-}))
 
 describe('AutoAssignVirtualAccountFormFields', () => {
   const handleOpen = jest.fn()
@@ -50,7 +45,7 @@ describe('AutoAssignVirtualAccountFormFields', () => {
     expect(container.firstElementChild).toBeEmptyDOMElement()
   })
 
-  it('invokes handleOpen function and renders dialog with correct props on button click when enable2Fa is true', async () => {
+  it('invokes handleOpen function on button click when enable2Fa is true', async () => {
     const objResponse = {
       user: { ...user, enable2Fa: true }
     }
@@ -72,17 +67,10 @@ describe('AutoAssignVirtualAccountFormFields', () => {
 
     await waitFor(() => {
       expect(handleOpen).toHaveBeenCalled()
-      expect(TwoFADialog).toHaveBeenCalledWith(
-        expect.objectContaining({
-          isOpen: false,
-          enable2Fa: objResponse.user.enable2Fa
-        }),
-        {}
-      )
     })
   })
 
-  it('not invokes handleOpen function and renders dialog with correct props on button click when enable2Fa is false', async () => {
+  it('not invokes handleOpen function on button click when enable2Fa is false', async () => {
     const objResponse = {
       user: { ...user, enable2Fa: false }
     }
@@ -104,13 +92,6 @@ describe('AutoAssignVirtualAccountFormFields', () => {
 
     await waitFor(() => {
       expect(handleOpen).toHaveBeenCalledTimes(0)
-      expect(TwoFADialog).toHaveBeenCalledWith(
-        expect.objectContaining({
-          isOpen: true,
-          enable2Fa: objResponse.user.enable2Fa
-        }),
-        {}
-      )
     })
   })
 })
