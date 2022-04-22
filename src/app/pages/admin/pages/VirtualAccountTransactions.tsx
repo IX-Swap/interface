@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VirtualTransactionsTable } from 'app/pages/admin/components/VirtualTransactionsTable/VirtualTransactionsTable'
 import { VirtualTransactionsFilters } from 'app/pages/admin/components/VirtualTransactionsFilters'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'

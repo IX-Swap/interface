@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { Banner } from 'app/pages/admin/pages/Banner'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import * as useBannersList from 'app/pages/admin/hooks/useBannersList'
 import { emptyBanner } from '__fixtures__/banner'
 import { BannerForm } from 'app/pages/admin/components/BannerForm'

@@ -1,6 +1,6 @@
 import { MasDisclosureForm } from 'app/pages/admin/components/MasDisclosureForm'
 import { Grid, Typography } from '@mui/material'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { MasDisclosurePreviewCard } from 'app/pages/admin/components/MasDisclosurePreviewCard'

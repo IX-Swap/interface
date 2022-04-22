@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { UploadReportForm } from 'app/pages/issuance/components/UploadReportForm/UploadReportForm'
 
 export const UploadReport = () => {

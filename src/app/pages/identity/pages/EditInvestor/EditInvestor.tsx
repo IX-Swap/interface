@@ -5,7 +5,7 @@ import {
   CorporateInvestorForm,
   CorporateType
 } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 

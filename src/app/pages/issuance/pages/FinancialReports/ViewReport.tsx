@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { ReportDetails } from 'app/pages/issuance/components/ReportDetails/ReportDetails'
 import React from 'react'
 

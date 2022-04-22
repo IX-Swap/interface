@@ -3,7 +3,7 @@ import { MyDSOsTable } from 'app/pages/issuance/components/MyDSOsTable'
 import { Button, Grid } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const DSOList = () => {
   return (

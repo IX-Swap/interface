@@ -3,7 +3,7 @@ import { TransactionsFilter } from 'app/pages/accounts/pages/transactions/compon
 import { TransactionFilterForm } from 'app/pages/accounts/pages/transactions/components/TransactionFilterForm'
 import { TransactionsTable } from 'app/pages/accounts/pages/transactions/components/TransactionsTable'
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const Transactions = () => {
   return (

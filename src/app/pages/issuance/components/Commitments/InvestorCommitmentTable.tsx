@@ -7,7 +7,7 @@ import { issuanceURL } from 'config/apiURL'
 import { useTheme } from '@mui/material/styles'
 import { CommitmentTableFilter } from 'app/pages/issuance/components/Commitments/CommitmentTableFilters'
 import { columns } from 'app/pages/issuance/components/Commitments/columns'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useParams } from 'react-router-dom'
 
 export const InvestorCommitmentTable = () => {

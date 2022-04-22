@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@mui/material'
 import { LandingPageItem } from './LandingPageItem'
 import { InternalRouteProps } from 'types/util'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
 
 export interface LandingPageProps extends Partial<InternalRouteProps> {

@@ -2,7 +2,7 @@ import React from 'react'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useParams } from 'react-router-dom'
 import { DSOInvestorView } from 'app/components/DSO/components/DSOInvestorView'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Grid } from '@mui/material'
 
 export const ViewDSO = () => {

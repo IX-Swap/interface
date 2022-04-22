@@ -5,7 +5,7 @@ import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 import { useParams } from 'react-router-dom'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { UserIdentitiesStatus } from 'app/pages/admin/components/UserIdentitiesStatus'
 
 export const ViewUser: React.FC = () => {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { render } from 'test-utils'
 import { CustodyManagement } from 'app/pages/admin/pages/CustodyManagement/CustodyManagement'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'

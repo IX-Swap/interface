@@ -9,7 +9,7 @@ import { AuthorizableLevel } from 'app/pages/authorizer/components/AuthorizableL
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { AuthorizerIdentities } from 'app/pages/authorizer/components/AuthorizerIdentities'
 import { PromotionSwitch } from 'app/pages/authorizer/components/PromotionSwitch'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Form } from 'components/form/Form'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { AuthorizerCategory } from 'types/app'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const BuyerList = () => {
   return (

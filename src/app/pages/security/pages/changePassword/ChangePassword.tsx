@@ -6,7 +6,7 @@ import { useChangePassword } from './hooks/useChangePassword'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
 import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 const defaultValues = {
   oldPassword: '',

@@ -5,7 +5,7 @@ import { SettingsRow } from './components/SettingsRow'
 import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
 import { useHistory } from 'react-router-dom'
 import { SecurityRoute } from 'app/pages/security/router/config'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import useStyles from 'app/pages/security/pages/landing/Landing.styles'
 import { VSpacer } from 'components/VSpacer'
 

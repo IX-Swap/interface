@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Typography } from '@mui/material'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { MasDisclosureForm } from 'app/pages/admin/components/MasDisclosureForm'

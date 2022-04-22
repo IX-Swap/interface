@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { IndividualInvestorForm } from 'app/pages/identity/components/IndividualInvestorForm/IndividualInvestorForm'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const CreateIndividual: React.FC = () => {
   return (

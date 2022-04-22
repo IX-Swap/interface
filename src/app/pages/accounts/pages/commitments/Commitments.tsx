@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CommitmentsTable } from 'app/pages/accounts/components/Commitments/CommitmentsTable'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'

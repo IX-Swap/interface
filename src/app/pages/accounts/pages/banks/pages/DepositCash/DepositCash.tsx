@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Grid } from '@mui/material'
 import { RecentDeposits } from 'app/pages/accounts/pages/banks/pages/DepositCash/RecentDeposits'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CashDepositButton } from 'app/pages/accounts/components/CashDepositButton/CashDepositButton'
 import { CashDepositVirtualAccountDetails } from 'app/pages/accounts/components/CashDepositVirtualAccountDetails/CashDepositVirtualAccountDetails'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'

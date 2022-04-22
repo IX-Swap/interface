@@ -7,7 +7,7 @@ import { TopInvestorsTable } from 'app/pages/issuance/components/TopInvestorsTab
 import { InvestmentsOverview } from 'app/pages/issuance/components/InvestmentsOverview/InvestmentsOverview'
 import { InvestorsChart } from 'app/pages/issuance/components/InvestorsChart/InvestorsChart'
 import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'

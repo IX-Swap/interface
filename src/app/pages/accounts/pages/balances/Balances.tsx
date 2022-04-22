@@ -5,7 +5,7 @@ import { columns } from 'app/pages/accounts/pages/balances/columns'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { balanceQueryKeys } from 'config/queryKeys'
-import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Grid } from '@mui/material'
 
 export const Balances: React.FC = () => {
