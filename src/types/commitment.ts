@@ -22,7 +22,7 @@ export interface Commitment extends Authorizable {
   hold: string
   createdAt: string
   updatedAt: string
-  signedSubscriptionDocument: DataroomFile
+  signedSubscriptionDocument?: DataroomFile
   user: User
   identity: {
     individual: IndividualIdentity
