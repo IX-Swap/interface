@@ -141,7 +141,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <AmountInput
               token={token}
               currency={currency}
-              value={amount ? `${amount} ${currency?.originalSymbol || currency?.symbol}` : ''}
+              value={amount ? `${amount} ${currency?.symbol || currency?.originalSymbol}` : ''}
               onUserInput={onTypeAmount}
               amount={parsedAmount}
               rightItem={
