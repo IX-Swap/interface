@@ -31,7 +31,7 @@ export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
   const { width } = useWindowSize()
   const dateFormat = width && width <= MEDIA_WIDTHS.upToLarge ? 'MMM D, YYYY' : 'MMM D, YYYY HH:mm'
   const formattedDate = dayjs(row.createdAt).format(dateFormat)
-  const textColor = getStatusColor(status)
+  const textColor = getStatusColor(row.type, status)
   const toggle = useToggleTransactionModal()
   const dispatch = useDispatch<AppDispatch>()
   const toggleWithdrawModal = useWithdrawModalToggle()

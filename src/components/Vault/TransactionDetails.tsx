@@ -67,7 +67,7 @@ export const TransactionDetails = ({ currency }: Props) => {
   const formattedDate = dayjs(data?.createdAt).format('MMM D, YYYY HH:mm')
   const icon = getStatusIcon(status)
   const isSuccess = [...withdrawSuccessStatuses, ...depositSuccessStatuses].includes(status)
-  const statusColor = getStatusColor(status)
+  const statusColor = getStatusColor(data.type, status)
 
   return (
     <RedesignedWideModal
