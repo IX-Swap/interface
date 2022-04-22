@@ -11,7 +11,9 @@ interface Props {
   placeholder?: string
   name?: string
   isMulti?: boolean
+  isSearchable?: boolean
   error?: string
+  borderRadius?: string
 }
 
 const colourStyles = {
@@ -53,7 +55,17 @@ const colourStyles = {
   },
 }
 
-export const Select = ({ onSelect, value, options, placeholder = '', name, isMulti = false, error = '' }: Props) => {
+export const Select = ({
+  onSelect,
+  value,
+  options,
+  placeholder = '',
+  name,
+  isSearchable = true,
+  isMulti = false,
+  error = '',
+  borderRadius = '36px',
+}: Props) => {
   const selectedValue = useMemo(
     () =>
       options.find((option) => option.label === (value?.label || value) || option.value === (value?.value || value)),
@@ -65,6 +77,7 @@ export const Select = ({ onSelect, value, options, placeholder = '', name, isMul
       error={error}
       options={options}
       isMulti={isMulti}
+      isSearchable={isSearchable}
       onChange={(option: unknown) => {
         onSelect(option as Option)
       }}
@@ -72,16 +85,17 @@ export const Select = ({ onSelect, value, options, placeholder = '', name, isMul
       placeholder={placeholder}
       name={name}
       styles={colourStyles as StylesConfig}
+      borderRadius={borderRadius}
     />
   )
 }
 
-const StyledReactSelect = styled(ReactSelect)<{ error: string }>`
+const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: string }>`
   *[class*='control'] {
     box-shadow: none;
     cursor: pointer;
     height: 60px;
-    border-radius: 36px;
+    border-radius: ${({ borderRadius }) => borderRadius};
     padding: 0px 16px;
     background: rgba(39, 31, 74, 0.4);
     border: none;
