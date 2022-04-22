@@ -156,12 +156,14 @@ export function useDepositCallback(): ({ id, amount }: DepositProps) => Promise<
     async ({ id, amount, fromAddress }: DepositProps) => {
       dispatch(setModalView({ view: DepositModalView.PENDING }))
       dispatch(depositSecTokens.pending())
+      dispatch(setLogItem({ logItem: null }))
       try {
         const response = await depositToken({ tokenId: id, amount, fromAddress })
         if (!response?.data) {
           throw new Error(t`Something went wrong. Could not deposit amount`)
         }
         dispatch(setLogItem({ logItem: response.data }))
+        dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
         toggle()
 
         getEvents({ tokenId, filter: 'all' })

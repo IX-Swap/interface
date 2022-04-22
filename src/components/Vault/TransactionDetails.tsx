@@ -66,7 +66,7 @@ export const TransactionDetails = ({ currency }: Props) => {
   if (!data) return null
 
   const status = data?.status ?? data?.params?.status ?? 'pending'
-  const statusText = getActionStatusText(data.type, status, currency?.originalSymbol)
+  const statusText = getActionStatusText(data.type, status, currency?.originalSymbol, currency?.symbol)
   const formattedDate = dayjs(data?.createdAt).format('MMM D, YYYY HH:mm')
   const isSuccess = [...withdrawSuccessStatuses, ...depositSuccessStatuses].includes(status)
   const statusColor = getStatusColor(data.type, status)
