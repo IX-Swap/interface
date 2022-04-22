@@ -37,14 +37,4 @@ describe('GetWalletDialog', () => {
       expect(createCustodianWallet).toHaveBeenCalledTimes(1)
     })
   })
-
-  it('renders icon button with correct props', () => {
-    render(<GetWalletDialog {...props} />)
-    expect(IconButton).toHaveBeenCalledWith(
-      expect.objectContaining({
-        'aria-label': 'close'
-      }),
-      {}
-    )
-  })
 })
