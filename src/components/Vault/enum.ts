@@ -94,7 +94,7 @@ const WithdrawStatusText = {
 
 const DepositStatusText = {
   [DepositStatus.PENDING]: 'Waiting for deposit...',
-  [DepositStatus.CANCELLED]: 'Deposit cancelled due timeout (72h)',
+  [DepositStatus.CANCELLED]: 'Deposit cancelled due timeout',
   [DepositStatus.FAILED]: 'Deposit failed (contact support)',
   [DepositStatus.APPROVED]: 'Deposit received, minting w${originalSymbol}...',
   [DepositStatus.REQUESTED]: 'Requested',
@@ -102,8 +102,7 @@ const DepositStatusText = {
   [DepositStatus.SETTLED]: 'Deposited and minted successfully!',
 } as Record<string, string>
 
-const StatusColors = {
-  // -- Withdraw Status Color --
+const WithdrawStatusColors = {
   [WithdrawStatus.APPROVED]: 'green1',
   [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: 'green1',
   [WithdrawStatus.FB_TX_CANCELLED]: 'error',
@@ -111,14 +110,12 @@ const StatusColors = {
   [WithdrawStatus.FB_TX_TIMEOUT]: 'error',
   [WithdrawStatus.FB_TX_FAILED]: 'error',
   [WithdrawStatus.CANCELLED]: 'error',
-  // -- End Withdraw Status Color --
+} as Record<string, string>
 
-  // -- Deposit Status Color --
-  [DepositStatus.APPROVED]: 'green1',
+const DepositStatusColors = {
   [DepositStatus.SETTLED]: 'green1',
   [DepositStatus.FAILED]: 'error',
   [DepositStatus.CANCELLED]: 'error',
-  // -- End Deposit Status Color --
 } as Record<string, string>
 
 export const withdrawErrorStatuses = [
@@ -133,7 +130,7 @@ export const withdrawSuccessStatuses = [WithdrawStatus.APPROVED, WithdrawStatus.
 
 export const depositErrorStatuses = [DepositStatus.FAILED, DepositStatus.CANCELLED] as string[]
 
-export const depositSuccessStatuses = [DepositStatus.APPROVED, DepositStatus.SETTLED] as string[]
+export const depositSuccessStatuses = [DepositStatus.SETTLED] as string[]
 
 export const endedStatuses = [
   ...withdrawErrorStatuses,
@@ -147,7 +144,9 @@ export const ActionTypeText = {
   [ActionTypes.WITHDRAW]: t`Withdrawal`,
 }
 
-export const getStatusColor = (status: string) => {
+export const getStatusColor = (action: ActionTypes, status: string) => {
+  const StatusColors = action === ActionTypes.DEPOSIT ? DepositStatusColors : WithdrawStatusColors
+
   return StatusColors[status] || 'yellow4'
 }
 export const getActionStatusText = (action: ActionTypes, status: string, originalSymbol = '') => {
