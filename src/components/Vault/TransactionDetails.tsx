@@ -22,6 +22,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Colors } from 'theme/styled'
 
 import {
+  ActionTypes,
   ActionTypeText,
   DepositStatus,
   depositSuccessStatuses,
@@ -68,7 +69,9 @@ export const TransactionDetails = ({ currency }: Props) => {
   const status = data?.status ?? data?.params?.status ?? 'pending'
   const statusText = getActionStatusText(data.type, status, currency?.originalSymbol, currency?.symbol)
   const formattedDate = dayjs(data?.createdAt).format('MMM D, YYYY HH:mm')
-  const isSuccess = [...withdrawSuccessStatuses, ...depositSuccessStatuses].includes(status)
+  const isSuccess = (data.type === ActionTypes.DEPOSIT ? depositSuccessStatuses : withdrawSuccessStatuses).includes(
+    status
+  )
   const statusColor = getStatusColor(data.type, status)
   const percent = getActionStatusPercent(data.type, status)
 
