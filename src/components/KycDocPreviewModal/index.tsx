@@ -55,7 +55,9 @@ export const KycDocPreviewModal = ({ isOpen, onClose, data, downloadFile }: Prop
                   {file.type === AcceptFiles.PDF ? (
                     <div>
                       <div className="file-viewer-title">
-                        <EllipsisText style={{ width: 'calc(100% - 40px)' }}>{file.name}</EllipsisText>
+                        <EllipsisText style={{ width: 'calc(100% - 40px)', whiteSpace: 'pre-wrap' }}>
+                          {file.name}
+                        </EllipsisText>
                         <StyledDocPreviewButton onClick={() => downloadFile(preview, file.name)}>
                           <IconWrapper style={{ margin: 0 }} size={18}>
                             <StyledDownload />
@@ -96,7 +98,7 @@ const Body = styled.div`
   row-gap: 35px;
   overflow: auto;
   &.file-viewer-canvas-wrapper {
-    height: 700px;
+    height: 580px;
     overflow-y: auto;
     overflow-x: hidden;
     canvas {
@@ -109,6 +111,7 @@ const Body = styled.div`
     justify-content: space-between;
     width: calc(100% - 14px);
     align-items: center;
+    margin-bottom: 12px;
   }
 `
 
