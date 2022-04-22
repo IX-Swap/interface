@@ -25,12 +25,16 @@ export const CommitmentFormWrapper = () => {
   }
 
   const isCampaign = data?.isCampaign === true
+  const downloadButton = isCampaign
+    ? 'Download Investment Agreement'
+    : 'Download Subscription Document'
 
   return (
     <CommitmentForm
       dso={data._id}
+      isCampaign={Boolean(data?.isCampaign)}
       currency={data.currency._id}
-      defaultValues={{ pricePerUnit: data.pricePerUnit }}
+      defaultValues={{ pricePerUnit: data.pricePerUnit, tnc: false }}
     >
       <Grid container direction='column' spacing={3}>
         <Grid item>
@@ -49,7 +53,7 @@ export const CommitmentFormWrapper = () => {
                 size='medium'
                 fullWidth
               >
-                Download Subscription Document
+                {downloadButton}
               </DownloadDSOSubscriptionDocument>
               <VSpacer size='small' />
               <CommitmentFormFields

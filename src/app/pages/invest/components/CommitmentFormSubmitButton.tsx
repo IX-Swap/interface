@@ -30,16 +30,17 @@ export const CommitmentFormSubmitButton = ({
   const { handleSubmit } = useFormContext()
   const submit = handleSubmit(async (data: CommitmentFormValues) => {
     if (dsoId === undefined) return
-
-    await makeInvestment({
+    const investment = {
       numberOfUnits: data.numberOfUnits,
       otp: data.otp,
       withdrawalAddress:
         data.withdrawalAddress === '' ? undefined : data.withdrawalAddress,
       signedSubscriptionDocument: data.signedSubscriptionDocument?._id,
       dso: dsoId,
-      currency
-    })
+      currency,
+      tnc: data.tnc
+    }
+    await makeInvestment(investment)
   })
 
   const handleClick = () => {
