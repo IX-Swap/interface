@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react'
-import { Grid, OutlinedInput, InputAdornment } from '@mui/material'
-import { moneyNumberFormat } from 'config/numberFormat'
-import { useFormContext } from 'react-hook-form'
-import { CommitmentFormValues } from 'types/commitment'
-import { TypedField } from 'components/form/TypedField'
+import { Grid, InputAdornment, OutlinedInput } from '@mui/material'
+import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
-import { NumericInput } from 'components/form/NumericInput'
-import { numericValueExtractor, plainValueExtractor } from 'helpers/forms'
 import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSignedSubscriptionDocument'
-import { privateClassNames } from 'helpers/classnames'
+import { Checkbox } from 'components/form/Checkbox'
+import { NumericInput } from 'components/form/NumericInput'
+import { TypedField } from 'components/form/TypedField'
 import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect'
 import { ETHEREUM_DECIMAL_PLACES } from 'config'
-import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
+import { moneyNumberFormat } from 'config/numberFormat'
+import { privateClassNames } from 'helpers/classnames'
+import {
+  booleanValueExtractor,
+  numericValueExtractor,
+  plainValueExtractor
+} from 'helpers/forms'
+import React, { useEffect } from 'react'
+import { useFormContext } from 'react-hook-form'
+import { CommitmentFormValues } from 'types/commitment'
 import { AddMetamaskWallet } from './AddMetamaskWallet'
 
 export interface CommitmentFormFieldsProps {
@@ -46,21 +51,23 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
   }, [isCampaign, setValue])
   return (
     <Grid container direction='column' spacing={2}>
-      <Grid item>
-        <TypedField
-          customRenderer
-          control={control}
-          component={DataroomUploader}
-          name='signedSubscriptionDocument'
-          label='Subscription Document'
-          render={UploadSignedSubscriptionDocument}
-          valueExtractor={plainValueExtractor}
-          documentInfo={{
-            title: 'Signed Subscription Document',
-            type: 'Signed Subscription Document'
-          }}
-        />
-      </Grid>
+      {!isCampaign && (
+        <Grid item>
+          <TypedField
+            customRenderer
+            control={control}
+            component={DataroomUploader}
+            name='signedSubscriptionDocument'
+            label='Subscription Document'
+            render={UploadSignedSubscriptionDocument}
+            valueExtractor={plainValueExtractor}
+            documentInfo={{
+              title: 'Signed Subscription Document',
+              type: 'Signed Subscription Document'
+            }}
+          />
+        </Grid>
+      )}
 
       <Grid item>
         <TypedField
@@ -134,6 +141,19 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           autoComplete='off'
         />
       </Grid>
+      {isCampaign && (
+        <Grid item>
+          <TypedField
+            customRenderer
+            valueExtractor={booleanValueExtractor}
+            component={Checkbox}
+            control={control}
+            label='I have read, fully understand the contents and agree to be bound by the Terms of Investment Agreement.'
+            name='tnc'
+            style={{ marginRight: 0 }}
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }

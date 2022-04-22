@@ -37,9 +37,10 @@ export interface CommitmentFormValues {
   totalAmount?: Commitment['totalAmount']
   pricePerUnit?: Commitment['pricePerUnit']
   numberOfUnits: Commitment['numberOfUnits']
-  withdrawalAddress?: string
-  signedSubscriptionDocument: DataroomFile
+  withdrawalAddress: string
+  signedSubscriptionDocument?: DataroomFile
   otp: string
+  tnc?: boolean
 }
 
 export interface CommitmentIssuanceFormValues {
@@ -54,9 +55,10 @@ export interface CommitmentIssuanceArgs {
 
 export interface MakeInvestmentArgs {
   dso?: string
-  signedSubscriptionDocument: string
+  signedSubscriptionDocument?: string
   currency: string
   withdrawalAddress?: string
   numberOfUnits: number
   otp: string
+  tnc?: boolean
 }
