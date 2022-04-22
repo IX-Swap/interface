@@ -16,9 +16,6 @@ export const IdentitySelectionView = () => {
           image={<CorporateImage />}
           actionButton={
             <Button
-              onClick={e => {
-                console.log(e)
-              }}
               disableElevation
               fullWidth
               variant='outlined'
