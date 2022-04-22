@@ -36,14 +36,23 @@ interface Props {
   currency?: SecCurrency
   changeModal: (param: WithdrawModalView) => void
   token: any
+  onRedirect: () => void
 }
-export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => {
+export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }: Props) => {
   const theme = useTheme()
   const getWithdrawStatus = useGetWithdrawStatus()
   const createDraftWithdraw = useCreateDraftWitdraw()
   const getFeePrice = useGetFeePrice()
   const payFee = usePayFee()
-  const { amount, receiver, currencyId: cid, withdrawStatus, feePrice, loadingFee } = useWithdrawState()
+  const {
+    amount,
+    receiver,
+    currencyId: cid,
+    withdrawStatus,
+    feePrice,
+    loadingFee,
+    loadingWithdraw,
+  } = useWithdrawState()
   const { account } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
@@ -90,12 +99,8 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
     }
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && receiver) {
-      withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess, onError, receiver })
+      withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess: onRedirect, onError, receiver })
     }
-  }
-
-  const onSuccess = () => {
-    changeModal(WithdrawModalView.SUCCESS)
   }
 
   const onError = () => {
@@ -163,7 +168,11 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
       </Column>
       <FeeStatus status={withdrawStatus.status} feePrice={withdrawStatus.feeAmount} estimatedPrice={feePrice} />
       <Row>
-        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError || loadingFee} onClick={onClick}>
+        <ButtonIXSWide
+          style={{ textTransform: 'unset' }}
+          disabled={!!inputError || loadingFee || loadingWithdraw}
+          onClick={onClick}
+        >
           {loadingFee ? (
             <WaitingWitdrawalFee>
               <LoaderThin size={20} />
