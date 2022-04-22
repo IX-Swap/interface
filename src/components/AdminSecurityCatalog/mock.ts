@@ -54,5 +54,6 @@ export const industries = [
   { id: 3, name: 'Finance' },
   { id: 4, name: 'Technology' },
   { id: 5, name: 'Energy & Mining' },
-  { id: 6, name: 'Other' },
+  { id: 6, name: 'Collectibles' },
+  { id: 7, name: 'Other' },
 ].sort((a, b) => a.name.localeCompare(b.name))
