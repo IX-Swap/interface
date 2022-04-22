@@ -6,6 +6,7 @@ exports[`SupportInfo should match snapshot 1`] = `
     class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
   >
     If you have any further questions, you can always contact our
+     
     <a
       class="makeStyles-link-1"
       href="https://investax.io/contact/"
