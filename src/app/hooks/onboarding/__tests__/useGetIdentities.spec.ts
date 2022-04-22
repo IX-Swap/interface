@@ -12,7 +12,12 @@ describe('useGetIdentities', () => {
   const allCorporateIdentities = {
     data: { list: [corporate] }
   }
-  beforeEach(() => {
+
+  afterEach(async () => {
+    jest.clearAllMocks()
+  })
+
+  it('returns correct values', async () => {
     jest
       .spyOn(useIndividualIdentity, 'useIndividualIdentity')
       .mockImplementation(() => individualIdentityResponse as any)
@@ -20,13 +25,7 @@ describe('useGetIdentities', () => {
     jest
       .spyOn(useAllCorporateIdentities, 'useAllCorporates')
       .mockImplementation(() => allCorporateIdentities as any)
-  })
 
-  afterEach(async () => {
-    jest.clearAllMocks()
-  })
-
-  it('returns correct values', async () => {
     await act(async () => {
       const { result } = renderHook(() => useGetIdentities())
 
@@ -39,6 +38,50 @@ describe('useGetIdentities', () => {
           expect(result.current.corporateIdentities).toEqual({
             list: [corporate]
           })
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns correct identityLoaded value', async () => {
+    jest
+      .spyOn(useIndividualIdentity, 'useIndividualIdentity')
+      .mockReturnValue({ data: undefined } as any)
+
+    jest
+      .spyOn(useAllCorporateIdentities, 'useAllCorporates')
+      .mockImplementation(() => allCorporateIdentities as any)
+
+    await act(async () => {
+      const { result } = renderHook(() => useGetIdentities())
+
+      await waitFor(
+        () => {
+          expect(result.current.identityLoaded).toEqual(corporate)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('returns correct values if individualIdentity is undefined and corporateIdentities length < 1', async () => {
+    jest
+      .spyOn(useIndividualIdentity, 'useIndividualIdentity')
+      .mockReturnValue({ data: undefined } as any)
+
+    jest.spyOn(useAllCorporateIdentities, 'useAllCorporates').mockReturnValue({
+      data: { list: [] }
+    } as any)
+
+    await act(async () => {
+      const { result } = renderHook(() => useGetIdentities())
+
+      await waitFor(
+        () => {
+          expect(result.current.hasIdentity).toEqual(false)
+          expect(result.current.identityTypeLoaded).toEqual('corporate')
+          expect(result.current.identityLoaded).toEqual(undefined)
         },
         { timeout: 1000 }
       )
