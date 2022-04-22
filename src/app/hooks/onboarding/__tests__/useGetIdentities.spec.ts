@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import * as useAllCorporateIdentities from 'app/pages/identity/hooks/useAllCorporates'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import { waitFor } from 'test-utils'

@@ -3,7 +3,7 @@ import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { useParams } from 'react-router-dom'
 import { DSO } from 'app/pages/issuance/components/DSO'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 
 export const EditDSO = () => {

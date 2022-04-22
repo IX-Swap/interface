@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { WithdrawForm } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/WithdrawForm'
 import React from 'react'
 

@@ -10,7 +10,7 @@ import { CommitmentFormCancelButton } from 'app/pages/invest/components/Commitme
 import { useCommitmentActivity } from '../hooks/useCommitmentActivity'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { useParams } from 'react-router-dom'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { CommitmentFormCommitButton } from 'app/pages/invest/components/CommitFormCommitButton'
 import { capitalStructureWithFunds } from 'types/dso'
 

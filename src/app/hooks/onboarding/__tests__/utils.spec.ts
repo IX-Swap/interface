@@ -1,7 +1,7 @@
 import {
   getIdentityOnboardingSteps,
   getIdentityStatus
-} from 'app/components/OnboardingPanel/hooks/utils'
+} from 'app/hooks/onboarding/utils'
 
 import { individual } from '__fixtures__/identity'
 

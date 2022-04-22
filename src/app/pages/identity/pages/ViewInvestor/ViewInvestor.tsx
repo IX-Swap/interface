@@ -4,7 +4,7 @@ import { VSpacer } from 'components/VSpacer'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { CorporateIdentityView } from 'app/pages/identity/components/CorporateIdentityView/CorporateIdentityView'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 

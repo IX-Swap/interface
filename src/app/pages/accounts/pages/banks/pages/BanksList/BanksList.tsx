@@ -3,7 +3,7 @@ import { Grid } from '@mui/material'
 import { Header } from 'app/pages/accounts/pages/banks/pages/BanksList/Header'
 import { Table } from 'app/pages/accounts/pages/banks/pages/BanksList/Table'
 import { VSpacer } from 'components/VSpacer'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const BanksList: React.FC = () => {
   return (

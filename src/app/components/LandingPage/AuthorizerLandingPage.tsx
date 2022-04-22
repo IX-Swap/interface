@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { InternalRouteProps } from 'types/util'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
 import { DataCard } from 'app/components/LandingPage/DataCard'
 

@@ -2,7 +2,7 @@ import React, { ComponentType, createElement } from 'react'
 import { Grid } from '@mui/material'
 import { useStyles } from 'app/components/LayoutWithSidebar.styles'
 import { privateClassNames } from 'helpers/classnames'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { SidebarWrapper } from 'ui/Sidebar/SidebarWrapper'
 import { useAppState } from 'app/hooks/useAppState'
 import {

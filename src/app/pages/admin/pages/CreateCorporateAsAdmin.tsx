@@ -4,7 +4,7 @@ import { VSpacer } from 'components/VSpacer'
 import { AdminCorporateInvestorForm } from 'app/pages/admin/components/AdminCorporateInvestorForm/AdminCorporateInvestorForm'
 import { useParams } from 'react-router-dom'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const CreateCorporateAsAdmin = () => {
   const params = useParams<{ userId: string }>()

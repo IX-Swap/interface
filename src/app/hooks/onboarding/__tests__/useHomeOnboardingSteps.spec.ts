@@ -2,10 +2,10 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import {
   defaultOnboardingSteps,
   getIdentityOnboardingSteps
-} from 'app/components/OnboardingPanel/hooks/utils'
+} from 'app/hooks/onboarding/utils'
 import { waitFor } from 'test-utils'
-import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
-import { useHomeOnboardingSteps } from 'app/components/OnboardingPanel/hooks/useHomeOnboardingSteps'
+import * as useOnboardingJourneys from 'app/hooks/onboarding/useOnboardingJourneys'
+import { useHomeOnboardingSteps } from 'app/hooks/onboarding/useHomeOnboardingSteps'
 
 describe('useHomeOnboardingSteps', () => {
   afterEach(async () => {

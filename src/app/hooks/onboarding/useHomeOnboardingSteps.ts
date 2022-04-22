@@ -1,8 +1,8 @@
-import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
 import {
   defaultOnboardingSteps,
   getIdentityOnboardingSteps
-} from 'app/components/OnboardingPanel/hooks/utils'
+} from 'app/hooks/onboarding/utils'
 import { AuthorizableStatus } from 'types/util'
 
 export const useHomeOnboardingSteps = () => {

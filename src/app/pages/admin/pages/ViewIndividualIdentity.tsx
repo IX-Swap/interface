@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'

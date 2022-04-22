@@ -1,8 +1,8 @@
-import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import {
   defaultOnboardingSteps,
   getIdentityOnboardingSteps
-} from 'app/components/OnboardingPanel/hooks/utils'
+} from 'app/hooks/onboarding/utils'
 import { AuthorizableStatus } from 'types/util'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 

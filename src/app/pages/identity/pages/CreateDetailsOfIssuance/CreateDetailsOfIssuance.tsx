@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { DetailsOfIssuanceForm } from 'app/pages/identity/components/DetailsOfIssuanceForm/DetailsOfIssuanceForm'
 import React from 'react'

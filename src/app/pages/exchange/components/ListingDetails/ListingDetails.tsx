@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { DetailsTab } from 'app/pages/exchange/components/ListingDetails/DetailsTab'
 import { ListingHeader } from 'app/pages/exchange/components/ListingDetails/ListingHeader'
 import { ListingStatusAndActions } from 'app/pages/exchange/components/ListingDetails/ListingStatusAndActions'

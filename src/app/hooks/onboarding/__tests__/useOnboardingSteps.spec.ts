@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import * as useGetIdentities from 'app/components/OnboardingPanel/hooks/useGetIdentities'
-import { useOnboardingSteps } from 'app/components/OnboardingPanel/hooks/useOnboardingSteps'
-import { getIdentityOnboardingSteps } from 'app/components/OnboardingPanel/hooks/utils'
+import * as useGetIdentities from 'app/hooks/onboarding/useGetIdentities'
+import { useOnboardingSteps } from 'app/hooks/onboarding/useOnboardingSteps'
+import { getIdentityOnboardingSteps } from 'app/hooks/onboarding/utils'
 import { waitFor } from 'test-utils'
 import { individual, corporate } from '__fixtures__/identity'
 

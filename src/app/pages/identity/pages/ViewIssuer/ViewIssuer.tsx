@@ -1,6 +1,6 @@
 import React from 'react'
 import { CorporateIssuerView } from 'app/pages/identity/components/CorporateIssuerView/CorporateIssuerView'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { Grid } from '@mui/material'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'

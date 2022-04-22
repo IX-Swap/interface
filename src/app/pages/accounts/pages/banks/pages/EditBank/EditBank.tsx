@@ -5,7 +5,7 @@ import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { BankFormValues } from 'app/pages/accounts/types'
 import { useParams } from 'react-router-dom'
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const EditBank: React.FC = () => {
   const { bankId } = useParams<{ bankId: string }>()

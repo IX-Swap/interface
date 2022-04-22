@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { AdminIdentityList } from 'app/pages/admin/components/AdminIdentityList/AdminIdentityList'
 import { IdentityStatsCards } from 'app/pages/admin/components/IdentityStatsCards/IdentityStatsCards'
 import React from 'react'

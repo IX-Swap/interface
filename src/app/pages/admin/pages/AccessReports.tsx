@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Grid } from '@mui/material'
 import { AccessReports as AccessReportsTable } from 'app/pages/educationCentre/components/AccessReports'
 import { UploadAccessReport } from 'app/pages/admin/components/UploadAccessReport'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const AccessReports = () => {
   return (

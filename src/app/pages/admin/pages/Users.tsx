@@ -9,7 +9,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const Users = () => {
   const { getFilterValue } = useQueryFilter()

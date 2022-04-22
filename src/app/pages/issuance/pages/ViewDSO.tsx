@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid } from '@mui/material'
 import { DSO } from 'app/pages/issuance/components/DSO'
 import { useParams } from 'react-router-dom'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 
 export const ViewDSO = () => {

@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { HoldingsTables } from 'app/pages/exchange/components/HoldingsTables/HoldingsTables'
 import { VSpacer } from 'components/VSpacer'
 import React, { useState } from 'react'

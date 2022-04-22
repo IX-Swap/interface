@@ -17,7 +17,7 @@ import { VSpacer } from 'components/VSpacer'
 import { isValidDSOId } from 'helpers/isValidDSOId'
 import { useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 import { IssuanceLandingCard } from 'ui/SecondaryCard'
 
 export const IssuanceLanding = () => {

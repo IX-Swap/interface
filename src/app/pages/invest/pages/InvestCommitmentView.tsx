@@ -4,7 +4,7 @@ import { CommitmentPreview } from 'app/components/CommitmentPreview/CommitmentPr
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { useParams } from 'react-router-dom'
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const InvestCommitmentView = () => {
   const { commitmentId } = useParams<{ commitmentId: string }>()

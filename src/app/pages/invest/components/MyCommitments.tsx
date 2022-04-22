@@ -8,7 +8,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { privateClassNames } from 'helpers/classnames'
 import { investQueryKeys } from 'config/queryKeys'
 import { Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const MyCommitments = () => {
   const { user } = useAuth()

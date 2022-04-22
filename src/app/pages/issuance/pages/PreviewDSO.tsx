@@ -5,7 +5,7 @@ import { Grid } from '@mui/material'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
 import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
 import { useParams } from 'react-router-dom'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { PageHeader } from 'app/hooks/onboarding/PageHeader/PageHeader'
 
 export const PreviewDSO = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
