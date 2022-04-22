@@ -11,7 +11,7 @@ export const TwoFAConnectInfo = () => {
   const { enable2Fa } = user
   const classes = useStyles()
 
-  if (enable2Fa !== true) {
+  if (enable2Fa === true) {
     return null
   }
 
