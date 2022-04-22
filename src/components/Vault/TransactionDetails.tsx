@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
+import { LinearProgress } from '@material-ui/core'
 
 import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -18,11 +19,13 @@ import { ReactComponent as SuccessIcon } from 'assets/images/check-2.svg'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { LogItem } from 'state/eventLog/actions'
 import { useActiveWeb3React } from 'hooks/web3'
+import { Colors } from 'theme/styled'
 
 import {
   ActionTypeText,
   DepositStatus,
   depositSuccessStatuses,
+  getActionStatusPercent,
   getActionStatusText,
   getStatusColor,
   isDeposit,
@@ -30,7 +33,7 @@ import {
   withdrawSuccessStatuses,
 } from './enum'
 
-import { InfoModalHeader, InfoModalBody, getStatusIcon, StyledQrInfo } from './styleds'
+import { InfoModalHeader, InfoModalBody, StyledQrInfo, LiniarProgressContainer, PendingDepositInfo } from './styleds'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -65,9 +68,9 @@ export const TransactionDetails = ({ currency }: Props) => {
   const status = data?.status ?? data?.params?.status ?? 'pending'
   const statusText = getActionStatusText(data.type, status, currency?.originalSymbol)
   const formattedDate = dayjs(data?.createdAt).format('MMM D, YYYY HH:mm')
-  const icon = getStatusIcon(status)
   const isSuccess = [...withdrawSuccessStatuses, ...depositSuccessStatuses].includes(status)
   const statusColor = getStatusColor(data.type, status)
+  const percent = getActionStatusPercent(data.type, status)
 
   return (
     <RedesignedWideModal
@@ -93,12 +96,15 @@ export const TransactionDetails = ({ currency }: Props) => {
             </label>
             <hr />
             <TYPE.descriptionThin color={statusColor}>
-              {statusText} {isSuccess ? <SuccessIcon /> : icon}
+              {statusText} {isSuccess && <SuccessIcon />}
             </TYPE.descriptionThin>
+            <LiniarProgressContainer statusColor={statusColor as keyof Colors}>
+              <LinearProgress variant="buffer" value={percent} />
+            </LiniarProgressContainer>
             {isDeposit(data.type) && status === DepositStatus.PENDING && (
-              <span>
+              <PendingDepositInfo>
                 <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-start', marginTop: '8px' }}>
-                  <span style={{ flex: '1', minWidth: '60%' }}>
+                  <div style={{ flex: '1', minWidth: '60%' }}>
                     Make deposit by sending{' '}
                     <b>
                       {data.amount} {currency?.originalSymbol}
@@ -112,7 +118,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                       {isCopiedTo ? 'Copied!' : shortenAddress(data?.depositAddress || '')}
                     </b>{' '}
                     in next 1h.
-                  </span>
+                  </div>
                   <div style={{ margin: '0 auto' }}>
                     <QRCodeWrap
                       value={data.depositAddress ?? ''}
@@ -131,7 +137,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                     </TYPE.description2>
                   </RowCenter>
                 )}
-              </span>
+              </PendingDepositInfo>
             )}
           </div>
           <Column style={{ rowGap: '8px' }}>

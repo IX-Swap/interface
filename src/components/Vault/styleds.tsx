@@ -1,5 +1,5 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
@@ -7,8 +7,9 @@ import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowBetween } from 'components/Row'
 import { gradientBorder, MEDIA_WIDTHS, TYPE } from 'theme'
+import { Colors } from 'theme/styled'
 
-import { WithdrawStatus, DepositStatus } from './enum'
+import { WithdrawStatus, DepositStatus, ActionTypes } from './enum'
 
 export const NoVaultWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -122,26 +123,24 @@ export const WaitingWitdrawalFee = styled.div`
   column-gap: 8px;
 `
 
-/* eslint-disable react/display-name */
-export const StatusIcons = {
-  // -- Withdraw Status Color --
+export const WithdrawStatusIcons = {
   [WithdrawStatus.APPROVED]: <Passed />,
   [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: <Passed />,
   [WithdrawStatus.FB_TX_CANCELLED]: <Attention />,
   [WithdrawStatus.FB_TX_BLOCKED]: <Attention />,
   [WithdrawStatus.FB_TX_TIMEOUT]: <Attention />,
   [WithdrawStatus.FB_TX_FAILED]: <Attention />,
-  // -- End Withdraw Status Color --
+} as Record<string, JSX.Element>
 
-  // -- Deposit Status Color --
-  [DepositStatus.APPROVED]: <Passed />,
+export const DepositStatusIcons = {
   [DepositStatus.SETTLED]: <Passed />,
   [DepositStatus.FAILED]: <Attention />,
   [DepositStatus.CANCELLED]: <Attention />,
-  // -- End Deposit Status Color --
 } as Record<string, JSX.Element>
 
-export const getStatusIcon = (status: string) => {
+export const getStatusIcon = (action: ActionTypes, status: string) => {
+  const StatusIcons = action === ActionTypes.DEPOSIT ? DepositStatusIcons : WithdrawStatusIcons
+
   return StatusIcons[status] || <LoaderThin size={20} />
 }
 
@@ -204,12 +203,6 @@ export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
           }
         `}
     }
-    > span {
-      display: block;
-      margin-top: 8px;
-      font-weight: 300;
-      color: ${({ theme }) => theme.text2};
-    }
   }
 `
 
@@ -221,4 +214,45 @@ export const StyledQrInfo = styled.div`
   left: 50%;
   transform: translateX(-50%);
   color: black;
+`
+
+export const PendingDepositInfo = styled.div`
+  margin-top: 8px;
+  font-weight: 300;
+  color: ${({ theme }) => theme.text2};
+  display: flex;
+  flex-direction: column;
+`
+
+const progressBarAnimation = keyframes`
+ 0% { background-position: 0 -26px; }
+ 50% { background-position: -100px -26px; }
+ 100% { background-position: -200px -26px; }
+`
+
+export const LiniarProgressContainer = styled.div<{ statusColor: keyof Colors }>`
+  > div {
+    width: 100%;
+  }
+  margin-top: 8px;
+  .MuiLinearProgress-root {
+    height: 8px;
+    border-radius: 8px;
+  }
+  .MuiLinearProgress-bar1Buffer {
+    border-radius: 8px;
+    background-color: ${({ statusColor, theme }) => theme[statusColor]};
+  }
+  .MuiLinearProgress-dashedColorPrimary {
+    background-image: ${({ statusColor, theme }) =>
+      `radial-gradient(${theme[statusColor]} 0%, ${theme[statusColor]} 20%, transparent 29%)`};
+    background-size: 20px 20px;
+    background-position-y: -26px;
+  }
+  .MuiLinearProgress-dashed {
+    animation: ${progressBarAnimation} 3s infinite 0s;
+  }
+  .MuiLinearProgress-bar2Buffer {
+    background-color: transparent;
+  }
 `

@@ -91,7 +91,7 @@ export const HistoryTable = ({ currency }: { currency?: Currency & { originalSym
           currency &&
           eventLog.map((row) => {
             const status = row?.status ?? row?.params?.status ?? 'pending'
-            const statusIcon = getStatusIcon(status)
+            const statusIcon = getStatusIcon(row.type, status)
             return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} currency={currency} />
           })}
         {eventLog.length === 0 && (

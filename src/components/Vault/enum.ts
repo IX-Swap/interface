@@ -144,6 +144,45 @@ export const ActionTypeText = {
   [ActionTypes.WITHDRAW]: t`Withdrawal`,
 }
 
+const WithdrawStatusPercents = {
+  [WithdrawStatus.DRAFT]: 1,
+  [WithdrawStatus.FEE_ACCEPTED]: 5,
+  [WithdrawStatus.PENDING]: 10,
+  [WithdrawStatus.BURNED]: 20,
+  [WithdrawStatus.ON_WHITELIST]: 25,
+  [WithdrawStatus.WHITELISTED]: 30,
+  [WithdrawStatus.FB_TX_SUBMITTED]: 50,
+  [WithdrawStatus.FB_TX_PENDING_AML_SCREENING]: 50,
+  [WithdrawStatus.FB_TX_PENDING_AUTHORIZATION]: 50,
+  [WithdrawStatus.FB_TX_REJECTED]: 100,
+  [WithdrawStatus.FB_TX_QUEUED]: 60,
+  [WithdrawStatus.FB_TX_PENDING_SIGNATURE]: 70,
+  [WithdrawStatus.FB_TX_PENDING3RD_PARTY_MANUAL_APPROVAL]: 70,
+  [WithdrawStatus.FB_TX_PENDING3RD_PARTY]: 70,
+  [WithdrawStatus.FB_TX_PENDING]: 70,
+  [WithdrawStatus.FB_TX_BROADCASTING]: 80,
+  [WithdrawStatus.FB_TX_CONFIRMING]: 85,
+  [WithdrawStatus.FB_TX_CONFIRMED]: 90,
+  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: 100,
+  [WithdrawStatus.FB_TX_CANCELLING]: 80,
+  [WithdrawStatus.FB_TX_CANCELLED]: 100,
+  [WithdrawStatus.CANCELLED]: 100,
+  [WithdrawStatus.FB_TX_BLOCKED]: 100,
+  [WithdrawStatus.FB_TX_TIMEOUT]: 100,
+  [WithdrawStatus.FB_TX_FAILED]: 100,
+  [WithdrawStatus.APPROVED]: 100,
+} as Record<string, number>
+
+const DepositStatusPercents = {
+  [DepositStatus.PENDING]: 10,
+  [DepositStatus.CANCELLED]: 100,
+  [DepositStatus.FAILED]: 100,
+  [DepositStatus.APPROVED]: 50,
+  [DepositStatus.REQUESTED]: 50,
+  [DepositStatus.PROCESSING]: 50,
+  [DepositStatus.SETTLED]: 100,
+} as Record<string, number>
+
 export const getStatusColor = (action: ActionTypes, status: string) => {
   const StatusColors = action === ActionTypes.DEPOSIT ? DepositStatusColors : WithdrawStatusColors
 
@@ -153,6 +192,12 @@ export const getActionStatusText = (action: ActionTypes, status: string, origina
   const StatusText = action === ActionTypes.DEPOSIT ? DepositStatusText : WithdrawStatusText
 
   return (StatusText[status] || status).replace('${originalSymbol}', originalSymbol)
+}
+
+export const getActionStatusPercent = (action: ActionTypes, status: string) => {
+  const StatusPercents = action === ActionTypes.DEPOSIT ? DepositStatusPercents : WithdrawStatusPercents
+
+  return StatusPercents[status] || 50
 }
 
 export const isPending = (status: string) => {
