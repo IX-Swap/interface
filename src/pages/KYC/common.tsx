@@ -143,7 +143,7 @@ export const Uploader: FC<UploaderProps> = ({
           ))}
         </Flex>
       )}
-      <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.DOCUMENTS}` as AcceptFiles} file={null} onDrop={onDrop}>
+      <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles} file={null} onDrop={onDrop}>
         <UploaderCard>
           <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
             <UploadLogo />

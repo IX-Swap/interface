@@ -5,7 +5,7 @@ import apiService from 'services/apiService'
 import { secCatalog } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
-import { validateSecTokenFields } from 'components/AdminSecurityCatalog/mock'
+import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { fetchAddIssuer, fetchEditIssuer, fetchIssuers, fetchIssuersTokens } from './actions'
 import { Issuer } from './reducer'
 import { isValidAddress } from 'utils'
@@ -240,7 +240,7 @@ const isEmptyObject = (value: Record<string, any>) => {
 
 const urlValidator = (url: string) => {
   if (
-    url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) ===
+    url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) ===
     null
   )
     return { url: 'Must be a valid URL' }
@@ -248,7 +248,7 @@ const urlValidator = (url: string) => {
 }
 
 const logoValidator = (logo: any) => {
-  if (logo?.size > 10 ** 7) return { logo: 'Max size of 10Mb' }
+  if (logo?.size > MAX_FILE_UPLOAD_SIZE) return { logo: MAX_FILE_UPLOAD_SIZE_ERROR }
   else return null
 }
 

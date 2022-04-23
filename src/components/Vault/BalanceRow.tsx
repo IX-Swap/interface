@@ -38,12 +38,13 @@ const TextWrap = styled(TYPE.titleBig)`
 export const BalanceRow = ({ currency, account, token }: Props) => {
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const toggle = useWithdrawModalToggle()
+
   return (
     <TitleStatusRow>
       <ExistingTitle>
         <TextWrap>
           <span style={{ marginRight: '10px' }}>{formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)}</span>
-          <span>{token?.ticker ?? currency?.symbol}</span>
+          <span>{currency?.symbol}</span>
         </TextWrap>
         <AddWrappedToMetamask token={token} />
       </ExistingTitle>
@@ -51,7 +52,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
         <ButtonGradientBorder
           data-testid="withdraw"
           style={{ width: '230px' }}
-          onClick={() => {
+          onClick={async () => {
             toggle()
           }}
           disabled={!token.allowWithdrawal}

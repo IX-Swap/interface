@@ -1,16 +1,18 @@
+import React, { useRef } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
+
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
 import { RowCenter, RowFixed } from 'components/Row'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useTheme from 'hooks/useTheme'
 import useToggle from 'hooks/useToggle'
-import React, { useRef } from 'react'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { DesktopAndTablet, LinkStyledButton, TYPE } from 'theme'
-import { ActionFilterTabs, ActionHistoryStatus, ActionTypeTextHeader, filterTabs } from './enum'
+
+import { ActionFilterTabs, ActionTypeTextHeader, filterTabs } from './enum'
 import { getStatusIcon, HistoryHeaderWrapper } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
 
@@ -78,7 +80,7 @@ const HistoryHeader = () => {
   )
 }
 
-export const HistoryTable = ({ currency }: { currency?: Currency }) => {
+export const HistoryTable = ({ currency }: { currency?: Currency & { originalSymbol: string } }) => {
   const { eventLog } = useEventState()
   const theme = useTheme()
   return (
@@ -88,8 +90,8 @@ export const HistoryTable = ({ currency }: { currency?: Currency }) => {
         {eventLog.length > 0 &&
           currency &&
           eventLog.map((row) => {
-            const status = row?.status ?? row?.params?.status ?? ActionHistoryStatus.PENDING
-            const statusIcon = getStatusIcon(row?.type, status)
+            const status = row?.status ?? row?.params?.status ?? 'pending'
+            const statusIcon = getStatusIcon(row.type, status)
             return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} currency={currency} />
           })}
         {eventLog.length === 0 && (

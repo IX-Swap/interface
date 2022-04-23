@@ -72,6 +72,7 @@ export function colors(darkMode: boolean): Colors {
     bg17: darkMode ? '#1C112D' : '#1C112D',
     bg18: darkMode ? '#27204666' : '#27204666',
     bg19: darkMode ? '#271F4A66' : '#271F4A66',
+    bg20: darkMode ? '#7B42A9' : '#7B42A9',
     bgG1: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -163,6 +164,7 @@ export function colors(darkMode: boolean): Colors {
     yellow1: '#e3a507',
     yellow2: '#ff8f00',
     yellow3: '#F3B71E',
+    yellow4: '#F2F99D',
     blue1: '#2172E5',
     blue2: '#5199FF',
 

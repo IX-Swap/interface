@@ -23,6 +23,7 @@ import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
+import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -113,6 +114,11 @@ export default function CorporateKycForm() {
     const beneficiar = owners[index]
     const newData = [...owners]
 
+    if (value && typeof value === 'object' && value?.size > MAX_FILE_UPLOAD_SIZE) {
+      showError(MAX_FILE_UPLOAD_SIZE_ERROR)
+      return
+    }
+
     if (beneficiar[fieldName]?.id) {
       setFieldValue('removedDocuments', [beneficiar[fieldName].id])
     }
@@ -190,8 +196,8 @@ export default function CorporateKycForm() {
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
-    if (file?.size > 10 ** 7) {
-      showError(t`Max size of 10Mb`)
+    if (file?.size > MAX_FILE_UPLOAD_SIZE) {
+      showError(MAX_FILE_UPLOAD_SIZE_ERROR)
     } else {
       const arrayOfFiles = [...values[key]]
       arrayOfFiles.push(file)
@@ -299,7 +305,6 @@ export default function CorporateKycForm() {
                 !errors.typeOfLegalEntity &&
                 !errors.registrationNumber &&
                 !errors.countryOfIncorporation &&
-                !errors.otherEntity &&
                 !errors.businessActivity
               const authorizedPersonnelFilled =
                 shouldValidate &&
@@ -380,18 +385,6 @@ export default function CorporateKycForm() {
                               onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
                               error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
                             />
-                          </FormGrid>
-                          <FormGrid columns={1}>
-                            {values.typeOfLegalEntity?.value === legalEntityTypes.length && (
-                              <TextInput
-                                label="Other Entity"
-                                onChange={(e) =>
-                                  onChangeInput('otherEntity', e.currentTarget.value, values, setFieldValue)
-                                }
-                                value={values.otherEntity}
-                                error={errors.otherEntity && errors.otherEntity}
-                              />
-                            )}
                           </FormGrid>
                         </Column>
                       </FormCard>

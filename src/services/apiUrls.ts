@@ -3,6 +3,7 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 export const admin = {
   login: 'auth/login',
   me: 'auth/me',
+  adminList: 'users/admin',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
   accreditationList: '/kyc/list',
@@ -83,6 +84,11 @@ export const secCatalog = {
   issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,
   checkWrappedAddress: (address: string) => `/token/address/${address}`,
 }
+
+export const users = {
+  update: (address: string) => `/users/settings/address/${address}`,
+}
+
 export interface PaginateWithFilter {
   tokenId?: number | null
   page?: number
@@ -103,6 +109,10 @@ export const custody = {
     filters += getQueryParam({ param: 'page', value: page, isFirst: !Boolean(tokenId || filter) })
     return `/custody/request?${filters}`
   },
+  feePrice: (id: number | string) => `/token/price/${id}`,
+  withdrawStatus: (id: number | string) => `/custody/withdraw/fee-status/${id}`,
+  draftWithdraw: '/custody/withdraw/prepare-whitelist',
+  paidFee: `/custody/withdraw/fee-whitelist`,
 }
 
 export const eventLog = {

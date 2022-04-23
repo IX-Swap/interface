@@ -20,6 +20,8 @@ import {
   BrokerDealerSwaps,
   getKycList,
   postResubmitKyc,
+  getAdminList,
+  AdminList,
 } from './actions'
 
 export interface AdminState {
@@ -29,6 +31,7 @@ export interface AdminState {
   adminIsAuthenticated: boolean
   adminError: string | null
   adminData: RawGetMePayload | null
+  adminList: AdminList | null
   accreditationList: AccreditationList
   kycList: KycList
   brokerDealerList: BrokerDealerList
@@ -41,6 +44,7 @@ const initialState: AdminState = {
   adminLoading: false,
   adminError: null,
   adminData: null,
+  adminList: null,
   adminIsAuthenticated: Boolean(localStorage.getItem('adminAccessToken')),
   accreditationList: {
     page: 0,
@@ -191,6 +195,19 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.kycList = data
     })
     .addCase(getKycList.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(getAdminList.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(getAdminList.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.adminList = data
+    })
+    .addCase(getAdminList.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })

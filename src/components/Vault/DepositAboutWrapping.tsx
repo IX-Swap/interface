@@ -5,25 +5,11 @@ import { TYPE } from 'theme'
 
 export const DepositAboutWrapping: FC = () => {
   const info = [
-    t`At the moment, security tokens are kept by the custodian and can only be regulated by him. This is done to
-    prevent theft and fraudulent transactions. Your security tokens (further as a SEC) cannot be controlled or
-    moved, but you have the rights to own them. Relatively speaking, you can dispose of your rights to your own
-    security tokens. First reason to do this, we tokenize your token ownership and call it wrapped tokens (further
-    as a wSEC).`,
-    t`
-    Second reason you need wSEC is to be able to trade SEC for other ERC-20 tokens on decentralized platforms like
-    IXS. Because decentralized platforms running on Ethereum use smart contracts to facilitate trades directly
-    between users, every user needs to have the same standardized format for every token they trade. This ensures
-    tokens don’t get lost in translation.
-    `,
-    t`
-    When you “wrap” SEC, you are actually not so much wrapping as trading through a smart contract for an equal
-    token called wSEC. If you want to get back a simple SEC, you need to "unfold" it. AKA will exchange
-    it for a simple SEC.
-    `,
-    t`When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have the
-    ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)
-    `,
+    t`Wrapping allows a non-native token to be used on a different blockchain or on DeFi platforms, essentially making unsupported assets interoperable with other tokens under a different token standard.
+    When your security token (SEC) is deposited on IX Swap, the asset will be sent to a custodian address for safekeeping. In exchange, you will get a wrapped token (wSEC) that represents your asset and is worth exactly the same.`,
+    t`By using wSEC, you will be able to leverage your original asset to participate in DeFi transactions or any other decentralized application within the Ethereum network, such as trading it with other ERC-20 tokens on IX Swap.`,
+    t`Once you deposit your SEC, its corresponding wSEC will be minted and transferred to your balance. Meanwhile, you simply have to unfold/unwrap your wSEC to exchange it for its SEC equivalent and get your original asset back.`,
+    t`In our upcoming updates, you can expect more functionalities to become available on the platform, such as managing your assets, trading, staking, etc.`,
   ]
 
   return (

@@ -1,7 +1,5 @@
 import * as yup from 'yup'
 
-import { legalEntityTypes } from './mock'
-
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
@@ -33,7 +31,7 @@ export const individualErrorsSchema = yup.object().shape({
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  occupation: yup.string().required('Required'),
+  occupation: yup.object().nullable().required('Required'),
   employmentStatus: yup.object().nullable().required('Required'),
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
@@ -46,11 +44,6 @@ export const corporateErrorsSchema = yup.object().shape({
   typeOfLegalEntity: yup.object().nullable().required('Required'),
   registrationNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   countryOfIncorporation: yup.object().nullable().required('Required'),
-  otherEntity: yup.string().when('typeOfLegalEntity', {
-    is: (typeOfLegalEntity: any) => typeOfLegalEntity?.id === legalEntityTypes.length,
-    then: yup.string().required('Required'),
-    otherwise: yup.string(),
-  }),
   businessActivity: yup.string().required('Required'),
   personnelName: yup.string().required('Required'),
   designation: yup.string().required('Required'),

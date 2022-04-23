@@ -23,8 +23,18 @@ import {
   typeReceiver,
   withdrawCurrency,
   resetWithdraw,
+  getWithdrawStatus,
+  getFeePrice,
+  postCreateDraftWithdraw,
+  postPaidFee,
+  payFee,
 } from './actions'
 import walletValidator from 'multicoin-address-validator'
+import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
+import { setLogItem } from 'state/eventLog/actions'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
 
 export function useWithdrawState(): AppState['withdraw'] {
   return useSelector<AppState, AppState['withdraw']>((state) => state.withdraw)
@@ -147,9 +157,12 @@ export function useWithdrawCallback(
   const { tokenId } = useEventState()
   const addTransaction = useTransactionAdder()
   const cancelAction = useCancelDepositCallback()
+  const toggle = useToggleTransactionModal()
+
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
       dispatch(withdrawCurrency.pending())
+      dispatch(setLogItem({ logItem: null }))
       let withdrawId = null
       try {
         const response = await withdrawToken({ id, amount, receiver })
@@ -175,7 +188,9 @@ export function useWithdrawCallback(
         addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
         dispatch(setTransaction({ tx: burned.hash }))
         dispatch(withdrawCurrency.fulfilled())
+        dispatch(setLogItem({ logItem: withdrawRequest }))
         onSuccess()
+        toggle()
       } catch (error: any) {
         if (withdrawId) {
           await cancelAction({ requestId: withdrawId })
@@ -186,5 +201,162 @@ export function useWithdrawCallback(
       }
     },
     [dispatch, router, addTransaction, currencySymbol, tokenId, getEvents]
+  )
+}
+
+export const getWithdrawStatusReq = async (id: string | number) => {
+  const response = await apiService.get(custody.withdrawStatus(id))
+  return response.data
+}
+
+export const useGetWithdrawStatus = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async (id: string | number) => {
+      try {
+        dispatch(getWithdrawStatus.pending())
+        const response = await getWithdrawStatusReq(id)
+        dispatch(getWithdrawStatus.fulfilled(response))
+      } catch (error: any) {
+        dispatch(getWithdrawStatus.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch]
+  )
+}
+
+export const getFeePriceReq = async (id: string | number) => {
+  const response = await apiService.get(custody.feePrice(id))
+  return response.data
+}
+
+export const useGetFeePrice = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async (id: string | number) => {
+      try {
+        dispatch(getFeePrice.pending())
+        const response = await getFeePriceReq(id)
+        dispatch(getFeePrice.fulfilled(response))
+      } catch (error: any) {
+        dispatch(getFeePrice.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch]
+  )
+}
+
+interface Draft {
+  tokenId: number
+  feeContractAddress: string
+  amount: string
+  fromAddress: string
+}
+
+export const postCreateDraftWithdrawReq = async (data: Draft) => {
+  const response = await apiService.post(custody.draftWithdraw, data)
+  return response.data
+}
+
+export const useCreateDraftWitdraw = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const getEvents = useGetEventCallback()
+  const payfee = usePayFee()
+  const addPopup = useAddPopup()
+
+  return useCallback(
+    async (data: Draft) => {
+      try {
+        dispatch(postCreateDraftWithdraw.pending())
+
+        const response = await postCreateDraftWithdrawReq(data)
+
+        dispatch(postCreateDraftWithdraw.fulfilled(response))
+
+        getEvents({ tokenId: data.tokenId, filter: 'all' })
+        payfee({
+          feeContractAddress: data.feeContractAddress,
+          feeAmount: response.feeAmount,
+          tokenId: data.tokenId,
+          id: response.id,
+        })
+      } catch (error: any) {
+        addPopup({
+          info: {
+            success: false,
+            summary: error.message || 'Faild to create withdrawal request',
+          },
+        })
+        dispatch(postCreateDraftWithdraw.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch, payfee, getEvents, addPopup]
+  )
+}
+
+export const usePayFee = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const { library, account } = useActiveWeb3React()
+  const web3 = new Web3(library?.provider)
+  const paidFee = usePaidWithdrawFee()
+  const getEvents = useGetEventCallback()
+
+  return useCallback(
+    async ({ feeContractAddress, feeAmount, tokenId, id }) => {
+      try {
+        dispatch(payFee.pending())
+
+        const gasPriceResponse = await apiService.get('', { baseURL: 'https://gasstation-mainnet.matic.network/' })
+        const gasPrice = gasPriceResponse.data
+
+        const tx = {
+          from: account,
+          to: feeContractAddress,
+          value: web3.utils.toWei(`${feeAmount}`, 'ether'),
+          gasPrice: web3.utils.toWei(((gasPrice?.standard || 80) * 1.5).toFixed(2), 'gwei'),
+        }
+
+        const txRes = await web3.eth.sendTransaction(tx)
+
+        if (txRes.transactionHash) {
+          await paidFee({ tokenId, id, feeTxHash: txRes.transactionHash })
+        }
+        getEvents({ tokenId, filter: 'all' })
+        dispatch(payFee.fulfilled())
+      } catch (error: any) {
+        dispatch(payFee.rejected({ errorMessage: error.message }))
+      }
+    },
+    [account, dispatch, paidFee]
+  )
+}
+
+interface PaidFee {
+  id: number
+  tokenId: number
+  feeTxHash: string
+}
+
+export const postPaidFeeReq = async (data: PaidFee) => {
+  const response = await apiService.post(custody.paidFee, data)
+  return response.data
+}
+
+export const usePaidWithdrawFee = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async (data: PaidFee) => {
+      try {
+        dispatch(postPaidFee.pending())
+        const response = await postPaidFeeReq(data)
+        dispatch(postPaidFee.fulfilled(response))
+      } catch (error: any) {
+        dispatch(postPaidFee.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch]
   )
 }

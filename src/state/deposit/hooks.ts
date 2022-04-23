@@ -23,7 +23,7 @@ import {
 import { DepositModalView } from './reducer'
 import walletValidator from 'multicoin-address-validator'
 import { ApplicationModal } from 'state/application/actions'
-import { useModalOpen, useToggleModal } from 'state/application/hooks'
+import { useModalOpen, useToggleModal, useToggleTransactionModal } from 'state/application/hooks'
 
 export function useDepositState(): AppState['deposit'] {
   return useSelector<AppState, AppState['deposit']>((state) => state.deposit)
@@ -150,17 +150,21 @@ export function useDepositCallback(): ({ id, amount }: DepositProps) => Promise<
   const dispatch = useDispatch<AppDispatch>()
   const getEvents = useGetEventCallback()
   const { tokenId } = useEventState()
+  const toggle = useToggleTransactionModal()
+
   return useCallback(
     async ({ id, amount, fromAddress }: DepositProps) => {
       dispatch(setModalView({ view: DepositModalView.PENDING }))
       dispatch(depositSecTokens.pending())
+      dispatch(setLogItem({ logItem: null }))
       try {
         const response = await depositToken({ tokenId: id, amount, fromAddress })
         if (!response?.data) {
           throw new Error(t`Something went wrong. Could not deposit amount`)
         }
         dispatch(setLogItem({ logItem: response.data }))
-        dispatch(setModalView({ view: DepositModalView.SEND_INFO }))
+        dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
+        toggle()
 
         getEvents({ tokenId, filter: 'all' })
         dispatch(depositSecTokens.fulfilled())

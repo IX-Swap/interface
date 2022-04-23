@@ -12,7 +12,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import apiService from 'services/apiService'
-import { broker, kyc, tokens } from 'services/apiUrls'
+import { broker, kyc, tokens, users } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
 import { LOGIN_STATUS, useLogin, useUserisLoggedIn } from 'state/auth/hooks'
 import { useAuthState } from 'state/auth/hooks'
@@ -433,6 +433,11 @@ export const restartAccreditation = async ({ accreditationId }: { accreditationI
 
 export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
   const result = await apiService.post(broker.choose(pairId), {})
+  return result.data
+}
+
+export const updateUser = async (address: string, updatedUser: any) => {
+  const result = await apiService.patch(users.update(address), updatedUser)
   return result.data
 }
 

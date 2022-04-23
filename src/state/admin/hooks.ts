@@ -18,6 +18,7 @@ import {
   postRejectKyc,
   postResetKyc,
   postResubmitKyc,
+  getAdminList,
 } from './actions'
 
 export enum BROKER_DEALERS_STATUS {
@@ -62,6 +63,30 @@ export function useAdminState(): AppState['admin'] {
 export const me = async () => {
   const result = await apiService.get(admin.me)
   return result.data
+}
+
+export const adminList = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.adminList, undefined, params)
+  return result.data
+}
+
+export function useGetAdminList() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(getAdminList.pending())
+        const data = await adminList(params)
+        dispatch(getAdminList.fulfilled({ data }))
+        return data
+      } catch (error: any) {
+        dispatch(getAdminList.rejected({ errorMessage: 'Could not get me' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+  return callback
 }
 
 export function useGetMe() {
@@ -414,4 +439,13 @@ export const getAtlasIdByTicker = async (ticker: string) => {
 export const addAdmin = async (address: string) => {
   const result = await apiService.post(admin.addAdmin(), { address })
   return result.data
+}
+
+export const useOnlyAdminAccess = () => {
+  const { adminData } = useAdminState()
+  const history = useHistory()
+
+  if (adminData?.role !== 'admin') {
+    history.push('/admin/kyc')
+  }
 }

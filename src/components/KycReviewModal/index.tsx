@@ -10,6 +10,7 @@ import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
 import { useApproveKyc, useRejectKyc, useResetKyc, useResubmitKyc } from 'state/admin/hooks'
 
+
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
 import { getCynopsisRisks } from 'state/kyc/hooks'
@@ -43,7 +44,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
     fetchCynopsisRisks()
   }, [])
 
-  const kyc = (data.individualKycId ? data.individual : data.corporate) || ({} as IndividualKyc | CorporateKyc)
+  const kyc = (data?.individualKycId ? data?.individual : data?.corporate) || ({} as IndividualKyc | CorporateKyc)
 
   const approve = async () => {
     onClose()
@@ -98,7 +99,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
         scrollable
         isLarge
       >
-        <ModalBlurWrapper data-testid="kyc-review">
+        <ModalBlurWrapper touchable data-testid="kyc-review">
           <ModalContent>
             <TitleContainer>
               <Title>

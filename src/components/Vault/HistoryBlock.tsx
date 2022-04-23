@@ -1,36 +1,49 @@
+import React, { useEffect } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+
 import Column from 'components/Column'
 import { Line } from 'components/Line'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter, RowStart } from 'components/Row'
-import React, { useEffect } from 'react'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { useSecTokenId } from 'state/secTokens/hooks'
-import { useCurrencyBalance } from 'state/wallet/hooks'
 import { TYPE } from 'theme'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+
 import { HistoryTable } from './HistoryTable'
 import { Pagination } from './Pagination'
 import { HistoryWrapper } from './styleds'
 import { TransactionDetails } from './TransactionDetails'
+
 interface Props {
-  currency?: Currency
+  currency?: Currency & { originalSymbol: string }
   account?: string | null
 }
 
-export const HistoryBlock = ({ currency, account }: Props) => {
-  const { eventLogLoading } = useEventState()
+let interval = null as any
+
+export const HistoryBlock = ({ currency }: Props) => {
+  const { eventLogLoading, page, filter } = useEventState()
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const getEvents = useGetEventCallback()
-  const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const balance = formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)
 
   useEffect(() => {
-    if (tokenId && balance !== '-') {
+    if (tokenId) {
       getEvents({ tokenId, filter: 'all' })
     }
-  }, [getEvents, tokenId, balance])
+  }, [getEvents, tokenId])
+
+  useEffect(() => {
+    if (tokenId) {
+      interval = setInterval(() => {
+        getEvents({ tokenId, page: page || 1, filter: filter || 'all' })
+      }, 15000)
+
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  }, [getEvents, tokenId, page, filter])
 
   return (
     <>
@@ -43,16 +56,15 @@ export const HistoryBlock = ({ currency, account }: Props) => {
           </TYPE.title5>
         </RowStart>
 
-        {!eventLogLoading && balance !== '-' && (
+        {eventLogLoading ? (
+          <RowCenter style={{ marginTop: '26px' }}>
+            <LoaderThin size={48} />
+          </RowCenter>
+        ) : (
           <Column>
             <HistoryTable currency={currency} />
             <Pagination />
           </Column>
-        )}
-        {eventLogLoading && (
-          <RowCenter style={{ marginTop: '53px', marginBottom: '84px' }}>
-            <LoaderThin size={64} />
-          </RowCenter>
         )}
       </HistoryWrapper>
     </>

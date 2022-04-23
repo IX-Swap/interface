@@ -1,31 +1,55 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import styled from 'styled-components'
 import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
 import { Trans } from '@lingui/macro'
 
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient } from 'components/Button'
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { RowCenter } from 'components/Row'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { isValidAddress } from 'utils'
+import { isValidAddress, shortAddress } from 'utils'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { addAdmin } from 'state/admin/hooks'
 import { useAddPopup } from 'state/application/hooks'
+import { Select } from 'pages/KYC/common'
+import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
+import { updateUser } from 'state/user/hooks'
 
-export const AddAdmin = () => {
-  const [isOpen, handleIsOpen] = useState(false)
+import { StyledButtonGradientBorder } from './styleds'
+import { adminRoles } from './mock'
+ 
+interface Props {
+  isOpen: boolean
+  address: string
+  isUpdating: boolean
+  error: string
+  role: any
+  refreshCallback: () => void
+  handleError: (value: string) => void
+  close: () => void
+  handleAddress: (value: string) => void
+  open: () => void
+  handleRole: (value: string) => void
+}
+
+export const EditAdmin: FC<Props> = ({
+  isOpen,
+  isUpdating,
+  address,
+  error,
+  role,
+  handleRole,
+  handleError,
+  handleAddress,
+  close,
+  open,
+  refreshCallback,
+}) => {
   const [isLoading, handleIsLoading] = useState(false)
-  const [address, handleAddress] = useState('')
-  const [error, handleError] = useState('')
-  const addPopup = useAddPopup()
 
-  const open = () => handleIsOpen(true)
-  const close = () => {
-    handleIsOpen(false)
-    handleAddress('')
-  }
+  const addPopup = useAddPopup()
 
   const onAddressChange = (value: string) => {
     handleAddress(value)
@@ -36,15 +60,27 @@ export const AddAdmin = () => {
       try {
         handleError('')
         handleIsLoading(true)
-        await addAdmin(address)
+
+        if (isUpdating) {
+          await updateUser(address, {
+            role: role.label ? role.label.toLowerCase() : role.toLowerCase(),
+            language: 'en',
+            active: true,
+            photoId: 0,
+          })
+        } else {
+          await addAdmin(address)
+        }
+
         handleIsLoading(false)
         close()
         addPopup({
           info: {
             success: true,
-            summary: 'Admin was added successfully',
+            summary: `Admin was ${isUpdating ? 'updated' : 'added'} successfully`,
           },
         })
+        refreshCallback()
       } catch (err: any) {
         handleIsLoading(false)
         handleError('Address is already admin or exists user with this address')
@@ -56,16 +92,18 @@ export const AddAdmin = () => {
 
   return (
     <>
-      <AddButton onClick={open}>Add Admin</AddButton>
+      <StyledButtonGradientBorder onClick={open}>
+        <Trans>Add Admin</Trans>
+      </StyledButtonGradientBorder>
       <RedesignedWideModal isOpen={isOpen} onDismiss={close}>
         <ModalBlurWrapper data-testid="areYouSureModal" style={{ minWidth: '360px', position: 'relative' }}>
           <LoadingIndicator isLoading={isLoading} isRelative />
           <ModalContent>
             <Title>
-              <Trans>Add Admin</Trans>
+              <Trans>{isUpdating ? 'Update Admin Role' : 'Add Admin'}</Trans>
               <CloseIcon data-testid="cross" onClick={close} />
             </Title>
-            <Box>
+            <Box marginBottom="16px">
               <Label marginBottom="11px" htmlFor="token-address">
                 <TYPE.title11 color="text2">
                   <Trans>Wallet Address</Trans>
@@ -74,10 +112,11 @@ export const AddAdmin = () => {
               <AddressInput
                 {...{
                   id: 'address',
-                  value: address,
+                  value: isUpdating ? shortAddress(address) : address,
                   error: Boolean(error),
                   onChange: onAddressChange,
                   placeholder: ' ',
+                  disabled: isUpdating,
                 }}
               />
               {error && (
@@ -86,9 +125,18 @@ export const AddAdmin = () => {
                 </TYPE.small>
               )}
             </Box>
+            {isUpdating && (
+              <Select
+                withScroll
+                label="Role of Admin"
+                selectedItem={role.length > 0 ? capitalizeFirstLetter(role) : ''}
+                items={adminRoles}
+                onSelect={(selectedRole) => handleRole(selectedRole)}
+              />
+            )}
             <RowCenter>
               <AddAdminButton onClick={onAdd}>
-                <Trans>Add</Trans>
+                <Trans>{isUpdating ? 'Update' : 'Add'}</Trans>
               </AddAdminButton>
             </RowCenter>
           </ModalContent>
@@ -97,13 +145,6 @@ export const AddAdmin = () => {
     </>
   )
 }
-
-const AddButton = styled(ButtonGradientBorder)`
-  min-height: 40px;
-  height: 40px;
-  font-size: 16px;
-  margin-left: 16px;
-`
 
 const AddAdminButton = styled(ButtonIXSGradient)`
   margin-top: 32px;

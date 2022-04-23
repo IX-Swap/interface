@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { Formik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
@@ -24,14 +24,23 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { countriesList } from 'constants/countriesList'
 
-import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue } from './mock'
+import {
+  empleymentStatuses,
+  individualFormInitialValues,
+  genders,
+  incomes,
+  sourceOfFunds,
+  promptValue,
+  occupationList,
+} from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
-import { useAddPopup } from 'state/application/hooks'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses } from './enum'
 
@@ -59,6 +68,7 @@ export default function IndividualKycForm() {
   const addPopup = useAddPopup()
   const history = useHistory()
   const createIndividualKYC = useCreateIndividualKYC()
+  const showError = useShowError()
   const updateIndividualKYC = useUpdateIndividualKYC()
   const { kyc, loadingRequest } = useKYCState()
   const { account } = useActiveWeb3React()
@@ -162,11 +172,15 @@ export default function IndividualKycForm() {
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
-    const arrayOfFiles = [...values[key]]
-    arrayOfFiles.push(file)
+    if (file?.size > MAX_FILE_UPLOAD_SIZE) {
+      showError(MAX_FILE_UPLOAD_SIZE_ERROR)
+    } else {
+      const arrayOfFiles = [...values[key]]
+      arrayOfFiles.push(file)
 
-    setFieldValue(key, arrayOfFiles, false)
-    validationSeen(key)
+      setFieldValue(key, arrayOfFiles, false)
+      validationSeen(key)
+    }
   }
 
   const handleImageDelete =
@@ -540,10 +554,11 @@ export default function IndividualKycForm() {
                           {employmentInfoFilled && <BigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
-                          <TextInput
-                            onChange={(e) => onChangeInput('occupation', e.currentTarget.value, values, setFieldValue)}
-                            value={values.occupation}
+                          <Select
                             label="Occupation"
+                            selectedItem={values.occupation}
+                            items={occupationList}
+                            onSelect={(status) => onSelectChange('occupation', status, setFieldValue)}
                             error={errors.occupation && errors.occupation}
                           />
                           <Select
