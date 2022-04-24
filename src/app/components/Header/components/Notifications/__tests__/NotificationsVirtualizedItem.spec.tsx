@@ -3,6 +3,11 @@ import { render } from 'test-utils'
 import { notification } from '__fixtures__/notification'
 import { ListChildComponentProps } from 'react-window'
 import { NotificationsVirtualizedItem } from 'app/components/Header/components/Notifications/NotificationsVirtualizedItem'
+import { getTimeAgo } from 'helpers/dates'
+
+jest.mock('helpers/dates', () => ({
+  getTimeAgo: jest.fn(() => 'Now')
+}))
 
 describe('NotificationsVirtualizedItem', () => {
   const props: ListChildComponentProps = {
