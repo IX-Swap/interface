@@ -96,6 +96,7 @@ export const OverviewPageFilters = () => {
           <Select
             fullWidth
             variant='outlined'
+            style={{ marginTop: 0, height: 53 }}
             defaultValue={defaultSelectValue()}
             onChange={handleChange as any}
           >

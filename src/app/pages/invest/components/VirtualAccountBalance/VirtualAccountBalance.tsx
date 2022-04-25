@@ -43,7 +43,7 @@ export const VirtualAccountBalance = () => {
   )
 
   const menuItems = list.map(item => (
-    <SelectItem key={item._id} value={item.currency}>
+    <SelectItem key={item._id} value={item.currency} style={{ minWidth: 100 }}>
       {item.currency}
     </SelectItem>
   ))
@@ -81,6 +81,7 @@ export const VirtualAccountBalance = () => {
                 <Select
                   value={selected}
                   onChange={handleSelect}
+                  style={{ marginTop: 0, height: 50 }}
                   className={classes.currencySelect}
                 >
                   {menuItems}
@@ -92,6 +93,7 @@ export const VirtualAccountBalance = () => {
                 component={Link}
                 to={AccountsRoute.depositCash}
                 variant='outlined'
+                size='large'
                 className={classes.depositLink}
                 disableRipple
               >
