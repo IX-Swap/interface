@@ -1,7 +1,8 @@
 import { FormControl } from '@mui/material'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const industries = [
@@ -17,12 +18,14 @@ export const IndustryFilter = () => {
     <SearchQueryFilter<'industry'> name='industry' defaultValue=''>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
-          <TextFieldSelect
-            label='Industry'
+          <InputLabel>Industry</InputLabel>
+          <Select
             onChange={event => {
-              onChange(event.target?.value)
+              onChange(event.target?.value as string)
             }}
-            value={value}
+            value={
+              value === '' || value === undefined ? 'All Industries' : value
+            }
           >
             <SelectItem value=''>All Industries</SelectItem>
             {industries.map(industry => (
@@ -30,7 +33,7 @@ export const IndustryFilter = () => {
                 {industry}
               </SelectItem>
             ))}
-          </TextFieldSelect>
+          </Select>
         </FormControl>
       )}
     </SearchQueryFilter>

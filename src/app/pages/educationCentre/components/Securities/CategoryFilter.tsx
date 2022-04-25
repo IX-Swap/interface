@@ -16,7 +16,6 @@ export const CategoryFilter = () => {
             onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}
-            label='Filter By'
           >
             <SelectItem value='Industry'>Industry</SelectItem>
             <SelectItem value='Country'>Country</SelectItem>
