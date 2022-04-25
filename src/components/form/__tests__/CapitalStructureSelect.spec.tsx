@@ -5,6 +5,7 @@ import { capitalStructures } from 'config/defaults'
 import { renderSelectItems } from 'helpers/rendering'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 jest.mock('@mui/material', () => ({
   useMediaQuery: jest.fn()
@@ -15,7 +16,11 @@ jest.mock('helpers/rendering', () => ({
 }))
 
 jest.mock('ui/Select/Select', () => ({
-  Select: jest.fn(({ children }) => <select>{children}</select>)
+  Select: jest.fn(({ children }) => <div>{children}</div>)
+}))
+
+jest.mock('ui/Select/InputLabel/InputLabel', () => ({
+  InputLabel: jest.fn(({ children }) => <span>{children}</span>)
 }))
 
 jest.mock('ui/Select/SelectItem/SelectItem', () => ({
@@ -31,6 +36,7 @@ describe('CapitalStructureSelect', () => {
     render(<CapitalStructureSelect />)
 
     expect(Select).toHaveBeenCalled()
+    expect(InputLabel).toHaveBeenCalled()
     expect(renderSelectItems).toHaveBeenCalledWith(
       capitalStructures.map(option => ({ label: option, value: option }))
     )
