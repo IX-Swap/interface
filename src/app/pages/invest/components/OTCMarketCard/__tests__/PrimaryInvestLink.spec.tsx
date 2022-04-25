@@ -7,7 +7,6 @@ import {
 } from 'app/pages/invest/components/OTCMarketCard/PrimaryInvestLink'
 import * as Button from '@mui/material/Button'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('@mui/material/Button', () => jest.fn(() => null))
@@ -84,7 +83,7 @@ describe('PrimaryInvestLink', () => {
       expect.objectContaining({
         ...defaultPrimaryInvestProps,
         disabled: true,
-        to: OTCMarketRoute.market,
+        to: InvestRoute.exchange,
         params: {
           pairId: dso._id
         },

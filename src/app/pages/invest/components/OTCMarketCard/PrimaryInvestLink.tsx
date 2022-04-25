@@ -3,7 +3,6 @@ import { Button } from '@mui/material'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering } from 'types/dso'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
@@ -20,7 +19,7 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
 
   const link =
     // TODO Change route for OTC after complete OTC page
-    type !== 'OTC' ? InvestRoute.makeInvestment : OTCMarketRoute.market
+    type !== 'OTC' ? InvestRoute.makeInvestment : InvestRoute.exchange
 
   const params =
     type !== 'OTC'
