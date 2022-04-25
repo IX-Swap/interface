@@ -135,8 +135,6 @@ export const FormStepper = (props: FormStepperProps) => {
     }
   }
 
-  console.log(getStepStatus(steps[activeStep], activeStep, activeStep).error)
-
   return (
     <Grid
       container
