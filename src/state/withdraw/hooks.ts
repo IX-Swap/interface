@@ -250,7 +250,6 @@ export const useGetFeePrice = () => {
 
 interface Draft {
   tokenId: number
-  feeContractAddress: string
   amount: string
   fromAddress: string
 }
