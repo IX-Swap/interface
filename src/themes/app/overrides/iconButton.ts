@@ -7,7 +7,7 @@ export const iconButton = (theme: Theme) => {
     styleOverrides: {
       root: {
         height: 'auto',
-        svg: { fill: iconButtonPalette.fill, width: 14, height: 14 },
+        svg: { fill: iconButtonPalette.fill, minWidth: 14, minHeight: 14 },
         ':hover': {
           backgroundColor: iconButtonPalette.bgHover,
           svg: { fill: '#4C88FF' }
