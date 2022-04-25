@@ -35,7 +35,7 @@ export const TradeHistoryTable = () => {
 
   return (
     <Grid container direction='column' spacing={2}>
-      <Grid item style={{ maxHeight: 70 }}>
+      <Grid item>
         <Filters />
       </Grid>
       <Grid item>
