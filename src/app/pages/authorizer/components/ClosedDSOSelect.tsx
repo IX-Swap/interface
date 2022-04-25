@@ -10,12 +10,7 @@ export const ClosedDSOSelect = (props: any) => {
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select
-        label={undefined}
-        placeholder={String(props.label)}
-        displayEmpty
-        {...props}
-      >
+      <Select placeholder={String(props.label)} {...props} label={undefined}>
         <SelectItem value={undefined}>Closed DSO</SelectItem>
         {data.list.map(({ _id, tokenName }) => {
           return (
@@ -28,3 +23,5 @@ export const ClosedDSOSelect = (props: any) => {
     </>
   )
 }
+
+ClosedDSOSelect.displayName = 'Select_ClosedDSOSelect'
