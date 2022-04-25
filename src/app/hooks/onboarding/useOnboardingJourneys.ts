@@ -44,7 +44,9 @@ export const useOnboardingJourneys = () => {
   )
 
   const getIsJourneyCompleted = (identityType: IdentityType) => {
-    if (identityType === 'individual') return isIndividualJourneyCompleted
+    if (identityType === 'individual') {
+      return isIndividualJourneyCompleted
+    }
 
     return isCorporateJourneyCompleted
   }

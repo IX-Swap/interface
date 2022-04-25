@@ -59,4 +59,43 @@ describe('useOnboardingJourneys', () => {
       )
     })
   })
+
+  it('returns correct values when in identities authorizations has items with approved status', async () => {
+    const identitiesResult = {
+      ...getIdentitiesResult,
+      individualIdentity: {
+        ...individual,
+        authorizations: [{ status: 'Approved' }]
+      },
+      corporateIdentities: {
+        list: [
+          {
+            ...corporate,
+            authorizations: [
+              {
+                status: 'Approved'
+              }
+            ]
+          }
+        ]
+      }
+    }
+
+    jest
+      .spyOn(useGetIdentities, 'useGetIdentities')
+      .mockImplementation(() => identitiesResult as any)
+
+    await act(async () => {
+      const { result } = renderHook(() => useOnboardingJourneys())
+
+      await waitFor(
+        () => {
+          expect(result.current.isIndividualJourneyCompleted).toEqual(true)
+
+          expect(result.current.isCorporateJourneyCompleted).toEqual(true)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
 })
