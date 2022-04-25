@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useHistory, generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { ListingFinishLaterButton } from 'app/pages/issuance/components/ListingForm/ListinfFInishLaterButton'
+import { ListingFinishLaterButton } from 'app/pages/issuance/components/ListingForm/ListingFInishLaterButton'
 import { getIdFromObj } from 'helpers/strings'
 import { Listing } from 'app/pages/issuance/types/listings'
 
