@@ -37,3 +37,4 @@ export const WalletAddressSelect = React.forwardRef(
     )
   }
 )
+WalletAddressSelect.displayName = 'Select_ WalletAddressSelect'
