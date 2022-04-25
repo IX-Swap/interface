@@ -39,10 +39,15 @@ export const StepButton = ({
   children,
   ...props
 }: StepButtonProps) => {
+  const cn = Object.keys(variantsConditions).filter((key: string) => {
+    return variantsConditions[key as keyof VariantsConditions]
+  })
+
   return (
     <MuiStepButton
       {...props}
       icon={<StepIcon step={step} type={getIconType(variantsConditions)} />}
+      className={cn.join(' ')}
     >
       <StepLabel error={variantsConditions.error}>{children}</StepLabel>
     </MuiStepButton>

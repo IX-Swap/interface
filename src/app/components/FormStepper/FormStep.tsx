@@ -88,6 +88,7 @@ export const FormStep = (props: FormStepProps) => {
       defaultValues={step.getFormValues(data)}
       validationSchema={isLastStep ? step.validationSchema : undefined}
       onSubmit={handleSubmit}
+      id={`${step.formId ?? 'form'}-${index}`}
     >
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='large' />
