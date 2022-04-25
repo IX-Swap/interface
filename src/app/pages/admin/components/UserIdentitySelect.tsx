@@ -4,14 +4,21 @@ import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React, { useState } from 'react'
 import { UserIdentityCreatedStatus } from 'types/user'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
-
 export interface UserIdentitySelectProps {
   userIdentities: UserIdentityCreatedStatus
   userId: string
 }
+type IdentityType = 'no identity' | 'individual' | 'investors' | 'issuers'
 
+const labelMap: { [key in IdentityType]: string } = {
+  'no identity': 'No Identity Created Yet',
+  individual: 'Individual Investor',
+  investors: 'Corporate Investor',
+  issuers: 'Issuer (Raise Capital)'
+}
 export const UserIdentitySelect = ({
   userIdentities,
   userId
@@ -22,7 +29,7 @@ export const UserIdentitySelect = ({
   const hasIdentity = hasIndividual || hasInvestor || hasIssuer
 
   const { active, root } = useStyles()
-  const [identity, setIdentity] = useState(
+  const [identity, setIdentity] = useState<IdentityType>(
     !hasIdentity ? 'no identity' : 'individual'
   )
 
@@ -58,11 +65,11 @@ export const UserIdentitySelect = ({
   return (
     <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
       <Grid item xs={7}>
-        <FormControl fullWidth>
-          <TextFieldSelect
-            label='Identity Status'
-            value={identity}
-            onChange={value => setIdentity(value?.target.value)}
+        <FormControl>
+          <InputLabel>Identity Status</InputLabel>
+          <Select
+            value={labelMap[identity]}
+            onChange={value => setIdentity(value?.target.value as IdentityType)}
             fullWidth
           >
             {!hasIdentity ? (
@@ -87,10 +94,10 @@ export const UserIdentitySelect = ({
                 Issuer (Raise Capital)
               </Typography>
             </SelectItem>
-          </TextFieldSelect>
+          </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={12}>
         <Button
           component={AppRouterLinkComponent}
           to={getPath()}

@@ -20,11 +20,11 @@ export const VTCurrencyFilter = () => {
         <Typography style={{ fontWeight: 600 }}>Currency:</Typography>
       </Grid>
       {!isMobile && <Box pr={1} />}
-      <Grid item xs={4} sm={'auto'}>
+      <Grid item xs={4} sm={'auto'} lg={3}>
         <CurrencyFilter currency='SGD' defaultValue={null} />
       </Grid>
       {!isMobile && <Box pr={2} />}
-      <Grid item xs={4} sm={'auto'}>
+      <Grid item xs={4} sm={'auto'} lg={3}>
         <CurrencyFilter currency='USD' defaultValue={null} />
       </Grid>
     </Grid>
