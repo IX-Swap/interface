@@ -1,5 +1,4 @@
 import { makeURL } from 'config/appURL'
-import { InternalRouteProps } from 'types/util'
 
 export const IssuanceRoute = {
   root: makeURL(['app', 'issuance']),
@@ -51,11 +50,3 @@ export const IssuanceRoute = {
   viewListing: '/app/issuance/my-listings/:listingId/view',
   previewListing: '/app/issuance/my-listings/:issuerId/:listingId/preview'
 }
-
-export const issuanceLandingLinks: InternalRouteProps[] = [
-  { label: 'Create New DSO', path: IssuanceRoute.create },
-  { label: 'View DSO Listings', path: IssuanceRoute.list },
-  { label: 'Create Exchange Listings', path: IssuanceRoute.createListing },
-  { label: 'View Exchange Listings', path: IssuanceRoute.myListings },
-  { label: 'Financial Reports', path: IssuanceRoute.financialReports }
-]

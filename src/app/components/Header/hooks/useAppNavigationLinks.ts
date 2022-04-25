@@ -9,14 +9,11 @@ import {
   AccountsRoute
 } from 'app/pages/accounts/router/config'
 import {
-  issuanceLandingLinks,
-  IssuanceRoute
-} from 'app/pages/issuance/router/config'
-import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
 import { AppRoute } from 'app/router/config'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { educationCentreLinks } from 'app/pages/educationCentre/router/config'
 import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
@@ -24,15 +21,23 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+import { InternalRouteProps } from 'types/util'
 
 export const useAppNavigationLinks = () => {
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
   const isAdmin = useIsAdmin()
   const isFundManager = useIsFundManager()
-
   const isSuperUser = isAuthorizer || isAdmin
   const educationCenterLabel = 'Education Centre'
+  const issuanceLandingLinks: InternalRouteProps[] = [
+    { label: 'Create New DSO', path: IssuanceRoute.create },
+    { label: 'View DSO Listings', path: IssuanceRoute.list },
+    { label: 'Create Exchange Listings', path: IssuanceRoute.createListing },
+    { label: 'View Exchange Listings', path: IssuanceRoute.myListings },
+    { label: 'Financial Reports', path: IssuanceRoute.financialReports }
+  ]
+
   const links = [
     {
       label: 'Accounts',
