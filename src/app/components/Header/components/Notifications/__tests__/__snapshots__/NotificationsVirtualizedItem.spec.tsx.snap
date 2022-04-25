@@ -48,6 +48,7 @@ exports[`NotificationsVirtualizedItem should match snapshot 1`] = `
               class="MuiTypography-root MuiTypography-caption css-1fbb6wu-MuiTypography-root"
             >
               555 d
+              Now
             </span>
           </div>
         </div>
