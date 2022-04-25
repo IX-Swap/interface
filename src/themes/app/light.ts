@@ -213,6 +213,18 @@ export const lightTheme: DeprecatedThemeOptions = {
       divider: '#EDF2FA',
       bgHover: tinycolor('#EDF2FA').setAlpha(0.4).toRgbString()
     },
+    otpInput: {
+      bg: '#FFFFFF',
+      color: '#3B4251',
+      colorError: '#F56283',
+      border: tinycolor('#d3d9e5').setAlpha(0.6).toRgbString(),
+      borderFocus: '#78A5FF',
+      borderError: tinycolor('#f56283').setAlpha(0.6).toRgbString(),
+      placeholder: '#DBE2EC',
+      placeholderFocus: '#77A5FE',
+      placeholderError: '#F56283',
+      boxShadow: tinycolor('#3b4251').setAlpha(0.04).toRgbString()
+    },
     success: {
       main: '#7DD320'
     },
