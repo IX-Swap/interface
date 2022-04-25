@@ -151,6 +151,7 @@ export function useWithdrawCallback(
   currencyId?: string,
   currencySymbol?: string
 ): ({ id, amount, onSuccess, onError }: WithdrawProps) => Promise<void> {
+  const { library } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const router = useBurnWSecContract(currencyId)
   const getEvents = useGetEventCallback()
@@ -161,6 +162,7 @@ export function useWithdrawCallback(
 
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
+      const web3 = new Web3(library?.provider)
       dispatch(withdrawCurrency.pending())
       dispatch(setLogItem({ logItem: null }))
       let withdrawId = null
@@ -173,13 +175,18 @@ export function useWithdrawCallback(
         const { withdrawRequest, signature } = data
         withdrawId = withdrawRequest.id
         const { operator, amount: sum, deadline, v, r, s } = signature
+
+        const gasPrice = await web3.eth.getGasPrice()
         const burned = await router?.burn(
           operator,
           BigNumber.from(sum.hex),
           deadline,
           v,
           utils.hexlify(r.data),
-          utils.hexlify(s.data)
+          utils.hexlify(s.data),
+          {
+            gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei')
+          }
         )
         if (!burned.hash) {
           throw new Error(t`An error occured. Could not submit withdraw request`)
