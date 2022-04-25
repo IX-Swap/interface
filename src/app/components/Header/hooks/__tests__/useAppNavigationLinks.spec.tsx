@@ -4,10 +4,7 @@ import {
   accountsLandingLinks,
   AccountsRoute
 } from 'app/pages/accounts/router/config'
-import {
-  issuanceLandingLinks,
-  IssuanceRoute
-} from 'app/pages/issuance/router/config'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { AppRoute } from 'app/router/config'
 import {
   authorizerLandingLinks,
@@ -183,7 +180,17 @@ describe('useAppNavigationLinks', () => {
       ...authorizerLandingLinks
     ])
     expect(current.dropdownLinksItems('Accounts')).toEqual(accountsLandingLinks)
-    expect(current.dropdownLinksItems('Issuance')).toEqual(issuanceLandingLinks)
+    expect(current.dropdownLinksItems('Issuance')).toEqual([
+      {
+        label: 'Overview',
+        path: IssuanceRoute.insight
+      },
+      { label: 'Create New DSO', path: IssuanceRoute.create },
+      { label: 'View DSO Listings', path: IssuanceRoute.list },
+      { label: 'Create Exchange Listings', path: IssuanceRoute.createListing },
+      { label: 'View Exchange Listings', path: IssuanceRoute.myListings },
+      { label: 'Financial Reports', path: IssuanceRoute.financialReports }
+    ])
     expect(current.dropdownLinksItems('Invest')).toEqual(investLandingLinks)
     expect(current.dropdownLinksItems('')).toEqual([])
   })
