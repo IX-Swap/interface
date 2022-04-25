@@ -30,7 +30,9 @@ export const IdentityRouter = () => {
       </AppRoute>
 
       <AppRoute path={IdentityRoute.list}>
-        <IdentitiesList />
+        <RootContainer background='default'>
+          <IdentitiesList />
+        </RootContainer>
       </AppRoute>
     </Switch>
   )

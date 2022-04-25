@@ -24,8 +24,8 @@ describe('RegisterFields', () => {
       1,
       expect.objectContaining({
         name: 'name',
-        label: 'Full Name',
-        placeholder: 'Full Name',
+        label: 'Corporate Name',
+        placeholder: 'Corporate Name',
         InputLabelProps: {
           shrink: true
         }

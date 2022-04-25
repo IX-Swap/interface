@@ -3,7 +3,7 @@ import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
 import { MasDisclosureConfirmDialog } from 'app/pages/admin/components/MasDisclosureConfirmDialog'
-import * as useCreateOrUpdateMASDisclosure from 'app/pages/exchange/hooks/useCreateOrUpdateMASDisclosure'
+import * as useCreateOrUpdateMASDisclosure from 'app/pages/admin/hooks/useCreateOrUpdateMASDisclosure'
 
 describe('MasDisclosureConfirmDialog', () => {
   const onCloseMock = jest.fn()
