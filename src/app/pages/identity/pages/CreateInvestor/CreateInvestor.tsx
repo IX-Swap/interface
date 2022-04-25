@@ -35,16 +35,16 @@ export const CreateCorporateIdentity = ({
   }
 
   return (
-    <Grid container>
-      <Grid item>
-        <PageHeader title={title} />
+    <>
+      <PageHeader title={title} />
+      <Grid container>
+        <Grid container item>
+          <VSpacer size='medium' />
+        </Grid>
+        <Grid item>
+          <CorporateInvestorForm type={type} />
+        </Grid>
       </Grid>
-      <Grid container item>
-        <VSpacer size='medium' />
-      </Grid>
-      <Grid item>
-        <CorporateInvestorForm type={type} />
-      </Grid>
-    </Grid>
+    </>
   )
 }

@@ -6,16 +6,16 @@ import React from 'react'
 
 export const CreateDetailsOfIssuance = () => {
   return (
-    <Grid container>
-      <Grid container item xs={12}>
-        <PageHeader title='Create Details of Issuance' />
+    <>
+      <PageHeader title='Create Details of Issuance' />
+      <Grid container>
+        <Grid container item xs={12}>
+          <VSpacer size='medium' />
+        </Grid>
+        <Grid item xs={12}>
+          <DetailsOfIssuanceForm />
+        </Grid>
       </Grid>
-      <Grid container item xs={12}>
-        <VSpacer size='medium' />
-      </Grid>
-      <Grid item xs={12}>
-        <DetailsOfIssuanceForm />
-      </Grid>
-    </Grid>
+    </>
   )
 }

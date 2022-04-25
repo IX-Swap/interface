@@ -6,16 +6,16 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const CreateIndividual: React.FC = () => {
   return (
-    <Grid container>
-      <Grid container item xs={12}>
-        <PageHeader title='Create Individual Identity' />
+    <>
+      <PageHeader title='Create Individual Identity' />
+      <Grid container>
+        <Grid container item xs={12}>
+          <VSpacer size='medium' />
+        </Grid>
+        <Grid item xs={12}>
+          <IndividualInvestorForm />
+        </Grid>
       </Grid>
-      <Grid container item xs={12}>
-        <VSpacer size='medium' />
-      </Grid>
-      <Grid item xs={12}>
-        <IndividualInvestorForm />
-      </Grid>
-    </Grid>
+    </>
   )
 }

@@ -20,7 +20,8 @@ export const useStyles = makeStyles(theme => ({
     background: 'rgba(255, 255, 255, 0.75)',
     border: 'none',
     height: '120px',
-    width: '100vw',
+    width: 'auto',
+    maxWidth: '100vw',
     left: `50%`,
     right: `50%`,
     marginLeft: `-50vw`,
@@ -29,20 +30,17 @@ export const useStyles = makeStyles(theme => ({
     padding: `3% 16% 10% 16%`,
     marginBottom: `3vw`,
 
-    [theme.breakpoints.down('md')]: {
-      width: `102vw`
-    },
-
-    [theme.breakpoints.down('sm')]: {
-      width: `125vw`
-    },
-
-    [theme.breakpoints.down('600')]: {
-      width: `105vw`
+    [theme.breakpoints.down('700')]: {
+      left: `30%`,
+      right: `70%`,
+      marginLeft: `-35%`,
+      marginRight: `0%`,
+      maxWidth: '130%',
+      minWidth: '100%'
     },
 
     [theme.breakpoints.down('400')]: {
-      width: `31rem`
+      marginTop: `-2vw`
     }
   }
 }))
