@@ -5,6 +5,7 @@ import { SelectProps } from '@mui/material'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export interface AssetSelectProps {
   assetType?: AssetType
@@ -20,15 +21,24 @@ export const AssetSelect = (
   queryStatusRenderer(status)
 
   return (
-    <Select {...rest} style={{ minWidth: 80 }} label={label}>
-      <SelectItem disabled value={undefined}>
-        {assetType}
-      </SelectItem>
-      {data.list.map(({ _id, numberFormat }) => (
-        <SelectItem key={_id} value={_id}>
-          {numberFormat.currency}
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select
+        {...rest}
+        style={{ minWidth: 80 }}
+        placeholder={String(props.label)}
+        displayEmpty
+        label={undefined}
+      >
+        <SelectItem disabled value={undefined}>
+          {assetType}
         </SelectItem>
-      ))}
-    </Select>
+        {data.list.map(({ _id, numberFormat }) => (
+          <SelectItem key={_id} value={_id}>
+            {numberFormat.currency}
+          </SelectItem>
+        ))}
+      </Select>
+    </>
   )
 }

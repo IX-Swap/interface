@@ -2,6 +2,7 @@ import React from 'react'
 import { renderSelectItems } from 'helpers/rendering'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 const CURRENCIES = [
   {
@@ -16,11 +17,19 @@ const CURRENCIES = [
 
 export const CurrencySelect = (props: any): JSX.Element => {
   return (
-    <Select {...props}>
-      <SelectItem disabled value={undefined}>
-        Currency
-      </SelectItem>
-      {renderSelectItems(CURRENCIES)}
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select
+        {...props}
+        label={undefined}
+        placeholder={String(props.label)}
+        displayEmpty
+      >
+        <SelectItem disabled value={undefined}>
+          Currency
+        </SelectItem>
+        {renderSelectItems(CURRENCIES)}
+      </Select>
+    </>
   )
 }
