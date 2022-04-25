@@ -5,7 +5,6 @@ import { Typography } from '@mui/material'
 import { useStyles } from 'app/components/Header/components/Navigation/TopbarLinkContainer/TopbarLinkContainer.styles'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export interface TopbarLinkProps {
   link: string
@@ -60,7 +59,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   return (
     <TwoFADialogWrapper
       extraCheck={
-        link === IssuanceRoute.create || link === OTCMarketRoute.createListing
+        link === IssuanceRoute.create || link === IssuanceRoute.createListing
       }
     >
       <Link to={link} className={classes.wrapper} onClick={handleClick}>
