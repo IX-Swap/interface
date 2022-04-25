@@ -85,6 +85,11 @@ export const step = (theme: Theme) => {
               background: '#4C88FF'
             }
           }
+        },
+        [theme.breakpoints.down('md')]: {
+          '& .MuiStepLabel-label': {
+            padding: theme.spacing(2)
+          }
         }
       }
     }

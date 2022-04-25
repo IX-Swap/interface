@@ -16,7 +16,7 @@ export const StepperKit = () => {
         </Grid>
 
         <Grid item xs={12}>
-          <Box width={175}>
+          <Box width={200}>
             <StepperExample orientation='vertical' formTitle='Vertical' />
           </Box>
         </Grid>

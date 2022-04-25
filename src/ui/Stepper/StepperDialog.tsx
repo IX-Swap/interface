@@ -32,7 +32,7 @@ export const StepperDialog = ({ el, open, onClose }: StepperDialogProps) => {
         }
       }}
     >
-      <Box display='flex' alignItems='flex-end' height='100%' width='100%'>
+      <Box display='flex' alignItems='flex-end' height='100%' width='100vw'>
         <Box position='relative' width='100%'>
           <Paper
             sx={{

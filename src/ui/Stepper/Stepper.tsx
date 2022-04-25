@@ -38,13 +38,18 @@ export const Stepper = ({
       <Box>
         {stepInfo !== undefined && matches ? <StepInfo {...stepInfo} /> : null}
         {title !== undefined ? (
-          <Box display='flex' justifyContent='space-between'>
+          <Box
+            display='flex'
+            justifyContent='space-between'
+            minHeight={40}
+            alignItems='center'
+          >
             <Typography
               variant='body1'
               sx={{
                 mb: { xs: 0, md: 2 },
                 pl: { xs: 0, md: 3 },
-                lineHeight: { xs: '40px', md: undefined },
+                lineHeight: { xs: '20px', md: undefined },
                 fontSize: {
                   xs: 16,
                   md: undefined

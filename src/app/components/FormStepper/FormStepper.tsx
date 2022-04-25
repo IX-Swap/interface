@@ -189,8 +189,14 @@ export const FormStepper = (props: FormStepperProps) => {
                 isLastStep={activeStep === steps.length - 1}
                 formId={`${steps[activeStep].formId ?? 'form'}-${activeStep}`}
                 disabled={
-                  activeStep === steps.length - 1 &&
-                  getStepStatus(steps[activeStep], activeStep, activeStep).error
+                  (activeStep === steps.length - 1 &&
+                    !(
+                      (steps[activeStep].validationSchema?.isValidSync(
+                        steps[activeStep].getFormValues(data)
+                      ) as boolean) ?? true
+                    )) ||
+                  data.status === 'Submitted' ||
+                  data.status === 'Approved'
                 }
               />
             }
