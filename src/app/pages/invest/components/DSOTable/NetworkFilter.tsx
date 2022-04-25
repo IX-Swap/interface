@@ -34,7 +34,11 @@ export const NetworkFilter = () => {
       variant={'outlined'}
       onChange={handleChange}
       defaultValue={value ?? 'All'}
-      style={{ fontSize: 15, fontWeight: 'normal' }}
+      style={{
+        fontSize: 15,
+        fontWeight: 'normal',
+        marginTop: 0
+      }}
     >
       <SelectItem value={'All'}>Network</SelectItem>
       {data?.map(({ name, _id }) => (
