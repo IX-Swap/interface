@@ -1,5 +1,5 @@
 import { Order, OrderSide } from 'types/order'
-import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
+import { PlaceOrderArgs } from 'app/pages/invest/types/form'
 
 export const orders: Order[] = [
   {
