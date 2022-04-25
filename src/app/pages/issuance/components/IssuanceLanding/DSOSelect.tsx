@@ -12,7 +12,7 @@ export const DSOSelect = (props: DSOSelectProps): JSX.Element => {
   const { options, ...rest } = props
 
   return (
-    <TextFieldSelect variant='outlined' fullWidth {...(rest as TextFieldProps)}>
+    <TextFieldSelect fullWidth {...(rest as TextFieldProps)}>
       {options.length < 1 && <SelectItem disabled>No Deals Found</SelectItem>}
       {options.map(({ _id, tokenName, user }) => (
         <SelectItem key={_id} value={[_id, user].join(':')}>
