@@ -1,12 +1,12 @@
-import React from 'react'
 import { SelectProps } from '@mui/material'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { privateClassNames } from 'helpers/classnames'
-import { WithdrawalAddress } from 'types/withdrawalAddress'
+import React from 'react'
 import { QueryStatus } from 'react-query'
+import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
-import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export interface WithdrawalAddressSelectProps extends SelectProps {
   list: WithdrawalAddress[]
@@ -24,7 +24,7 @@ export const WithdrawalAddressSelect: React.FC<
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select label={undefined} displayEmpty {...rest}>
+      <Select displayEmpty {...rest} label={undefined}>
         {list.map(({ label, _id }) => (
           <SelectItem key={_id} value={_id} className={privateClassNames()}>
             {label}
@@ -34,3 +34,5 @@ export const WithdrawalAddressSelect: React.FC<
     </>
   )
 }
+
+WithdrawalAddressSelect.displayName = 'Select_WithdrawalAddressSelect'
