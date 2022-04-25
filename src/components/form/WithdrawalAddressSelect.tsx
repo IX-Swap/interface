@@ -6,6 +6,7 @@ import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { QueryStatus } from 'react-query'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export interface WithdrawalAddressSelectProps extends SelectProps {
   list: WithdrawalAddress[]
@@ -21,12 +22,15 @@ export const WithdrawalAddressSelect: React.FC<
   if (queryStatus !== undefined) return queryStatus
 
   return (
-    <Select {...rest}>
-      {list.map(({ label, _id }) => (
-        <SelectItem key={_id} value={_id} className={privateClassNames()}>
-          {label}
-        </SelectItem>
-      ))}
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select label={undefined} displayEmpty {...rest}>
+        {list.map(({ label, _id }) => (
+          <SelectItem key={_id} value={_id} className={privateClassNames()}>
+            {label}
+          </SelectItem>
+        ))}
+      </Select>
+    </>
   )
 }
