@@ -250,7 +250,6 @@ export const useGetFeePrice = () => {
 
 interface Draft {
   tokenId: number
-  feeContractAddress: string
   amount: string
   fromAddress: string
 }
@@ -277,7 +276,7 @@ export const useCreateDraftWitdraw = () => {
 
         getEvents({ tokenId: data.tokenId, filter: 'all' })
         payfee({
-          feeContractAddress: data.feeContractAddress,
+          feeContractAddress: response.feeContractAddress,
           feeAmount: response.feeAmount,
           tokenId: data.tokenId,
           id: response.id,
