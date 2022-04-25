@@ -122,7 +122,7 @@ export const FormStepper = (props: FormStepperProps) => {
       active: index === activeStep,
       completed: lastStep
         ? data !== undefined
-          ? data.status === 'Submitted' || data.status === 'Approved'
+          ? data?.status === 'Submitted' || data?.status === 'Approved'
           : false
         : completed.includes(index)
         ? isValid
@@ -195,8 +195,8 @@ export const FormStepper = (props: FormStepperProps) => {
                         steps[activeStep].getFormValues(data)
                       ) as boolean) ?? true
                     )) ||
-                  data.status === 'Submitted' ||
-                  data.status === 'Approved'
+                  data?.status === 'Submitted' ||
+                  data?.status === 'Approved'
                 }
               />
             }
