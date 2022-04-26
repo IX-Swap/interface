@@ -14,6 +14,7 @@ import { HistoryTable } from './HistoryTable'
 import { Pagination } from './Pagination'
 import { HistoryWrapper } from './styleds'
 import { TransactionDetails } from './TransactionDetails'
+import { useGetWithdrawStatus } from 'state/withdraw/hooks'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -26,16 +27,19 @@ export const HistoryBlock = ({ currency }: Props) => {
   const { eventLogLoading, page, filter } = useEventState()
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const getEvents = useGetEventCallback()
+  const getWithdrawStatus = useGetWithdrawStatus()
 
   useEffect(() => {
     if (tokenId) {
+      getWithdrawStatus(tokenId)
       getEvents({ tokenId, filter: 'all' })
     }
-  }, [getEvents, tokenId])
+  }, [getEvents, tokenId, getWithdrawStatus])
 
   useEffect(() => {
     if (tokenId) {
       interval = setInterval(() => {
+        getWithdrawStatus(tokenId)
         getEvents({ tokenId, page: page || 1, filter: filter || 'all' })
       }, 15000)
 
@@ -43,7 +47,7 @@ export const HistoryBlock = ({ currency }: Props) => {
         clearInterval(interval)
       }
     }
-  }, [getEvents, tokenId, page, filter])
+  }, [getEvents, tokenId, page, filter, getWithdrawStatus])
 
   return (
     <>

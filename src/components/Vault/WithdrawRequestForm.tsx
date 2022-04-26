@@ -29,7 +29,7 @@ import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
 import { FeeStatus } from './FeeStatus'
-import { WithdrawStatus } from './enum'
+import { isPending, WithdrawStatus } from './enum'
 import { WaitingWitdrawalFee } from './styleds'
 
 interface Props {
@@ -62,6 +62,8 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
   const networkName = getNetworkFromToken(tokenInfo)
   const { address, loading } = useENS(receiver)
   const error = Boolean(receiver.length > 0 && !loading && !address && networkName === 'Ethereum')
+
+  const haveActiveWithdrawal = isPending(withdrawStatus.status || 'pending')
 
   useEffect(() => {
     if (tokenInfo.id) {
@@ -165,7 +167,11 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
           />
         </Column>
       </Column>
-      <FeeStatus status={withdrawStatus.status} feePrice={withdrawStatus.feeAmount} estimatedPrice={feePrice} />
+      <FeeStatus
+        status={withdrawStatus.status}
+        feePrice={haveActiveWithdrawal ? withdrawStatus.feeAmount : ''}
+        estimatedPrice={feePrice}
+      />
       <Row>
         <ButtonIXSWide
           style={{ textTransform: 'unset' }}

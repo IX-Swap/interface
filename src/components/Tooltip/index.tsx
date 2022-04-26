@@ -42,9 +42,9 @@ export function TooltipContent({ content, ...rest }: TooltipContentProps) {
 
 export function MouseoverTooltip({ children, ...rest }: Omit<TooltipProps, 'show'>) {
   const [show, setShow] = useState(false)
-  const open = useCallback(() => rest.text && setShow(true), [setShow])
+  const open = useCallback(() => rest.text && setShow(true), [setShow, rest.text])
   const close = useCallback(() => setShow(false), [setShow])
-  const toggle = useCallback(() => rest.text && setShow((state) => !state), [setShow])
+  const toggle = useCallback(() => rest.text && setShow((state) => !state), [setShow, rest.text])
 
   useEffect(() => {
     window.addEventListener('scroll', close)

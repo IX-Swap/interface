@@ -19,7 +19,7 @@ export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
     if (paid || feePrice) {
       return `Withdrawal fee: ${(+feePrice).toFixed(4)} Matic`
     }
-    return `Expected withdrawal fees: ${estimatedPrice ? `0.01 ETH (~${estimatedPrice.toFixed(4)} Matic)` : ' - '}`
+    return `Expected withdrawal fees: ${estimatedPrice ? `~${estimatedPrice.toFixed(4)} Matic` : ' - '}`
   }, [estimatedPrice, feePrice, paid])
 
   return (
