@@ -7,7 +7,12 @@ export const BusinessOwnerSelect = (props: any): JSX.Element => {
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select {...props} placeholder={String(props.label)} displayEmpty>
+      <Select
+        {...props}
+        placeholder={String(props.label)}
+        displayEmpty
+        label={undefined}
+      >
         <SelectItem disabled value={undefined}>
           Business owners
         </SelectItem>

@@ -2,6 +2,7 @@ import React from 'react'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { useFormContext } from 'react-hook-form'
 
 export const LEGAL_ENTITY_STATUS_LIST = [
   { name: 'Public Company', value: 'publicCompany' },
@@ -39,10 +40,20 @@ export const LEGAL_ENTITY_STATUS_LIST = [
 ]
 
 export const LegalEntityStatusSelect = (props: any) => {
+  const { watch } = useFormContext()
+  const legalEntityStatus = watch('legalEntityStatus')
+  const selectValue = LEGAL_ENTITY_STATUS_LIST.find(
+    item => item.value === legalEntityStatus
+  )?.name
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select {...props} style={{ minWidth: 100 }} label={undefined}>
+      <Select
+        {...props}
+        style={{ minWidth: 100 }}
+        label={undefined}
+        value={selectValue}
+      >
         <SelectItem disabled value={undefined}>
           Legal Entity
         </SelectItem>

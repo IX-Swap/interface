@@ -1,5 +1,4 @@
 import React from 'react'
-// import { MenuItem, Select } from '@mui/material'
 import { renderSelectItems } from 'helpers/rendering'
 import { GENDERS_OPTS } from 'app/pages/identity/const'
 import { Select } from 'ui/Select/Select'
