@@ -17,8 +17,8 @@ interface ParsedAmounts {
   OUTPUT: CurrencyAmount<Currency> | undefined
 }
 interface Currencies {
-  INPUT?: Currency
-  OUTPUT?: Currency
+  INPUT?: Currency & { tokenInfo: { decimals?: number } }
+  OUTPUT?: Currency & { tokenInfo: { decimals?: number } }
 }
 interface Props {
   parsedAmounts: ParsedAmounts

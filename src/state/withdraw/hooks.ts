@@ -185,7 +185,7 @@ export function useWithdrawCallback(
           utils.hexlify(r.data),
           utils.hexlify(s.data),
           {
-            gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei')
+            gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
           }
         )
         if (!burned.hash) {
@@ -314,14 +314,13 @@ export const usePayFee = () => {
       try {
         dispatch(payFee.pending())
 
-        const gasPriceResponse = await apiService.get('', { baseURL: 'https://gasstation-mainnet.matic.network/' })
-        const gasPrice = gasPriceResponse.data
+        const gasPrice = await web3.eth.getGasPrice()
 
         const tx = {
           from: account,
           to: feeContractAddress,
           value: web3.utils.toWei(`${feeAmount}`, 'ether'),
-          gasPrice: web3.utils.toWei(((gasPrice?.standard || 80) * 1.5).toFixed(2), 'gwei'),
+          gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
         }
 
         const txRes = await web3.eth.sendTransaction(tx)
