@@ -16,7 +16,7 @@ export const FieldsDisplay = ({ fields }: FieldsDisplayProps) => {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={'18px'}
       style={{ display: 'flex', justifyContent: 'center' }}
     >
       {fields.map((field, i) => (
