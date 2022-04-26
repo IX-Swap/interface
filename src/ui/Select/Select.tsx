@@ -8,7 +8,11 @@ import { useStyles } from './Select.styles'
 
 export interface SelectProps extends MuiSelectProps {}
 
-export const Select = ({ multiple = false, ...props }: SelectProps) => {
+export const Select = ({
+  multiple = false,
+  MenuProps,
+  ...props
+}: SelectProps) => {
   const classes = useStyles()
 
   const renderValue = (selected: any | any[]) => {
@@ -36,7 +40,8 @@ export const Select = ({ multiple = false, ...props }: SelectProps) => {
       className={classes.wrapper}
       classes={{ select: classes.select }}
       MenuProps={{
-        classes: { list: classes.list, paper: classes.paper }
+        classes: { list: classes.list, paper: classes.paper },
+        ...MenuProps
       }}
     />
   )
