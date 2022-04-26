@@ -5,6 +5,15 @@ export const useStyles = makeStyles({
     justifyContent: 'center',
     display: 'flex'
   },
+  whiteBackground: {
+    position: 'absolute',
+    top: '0',
+    right: '0',
+    width: '100%',
+    height: '277px',
+    backgroundColor: '#FFFFFF',
+    zIndex: 1
+  },
   textName: {
     fontFamily: 'Inter',
     fontStyle: 'normal',

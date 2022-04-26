@@ -31,14 +31,17 @@ export const DataPreview = ({
             maxWidth={150}
             marginBottom={'24px'}
           >
-            <Avatar
-              documentId={avatar}
-              ownerId={userId}
-              variant='circular'
-              size={120}
-              borderRadius={100}
-            />
+            <div style={{ zIndex: 5 }}>
+              <Avatar
+                documentId={avatar}
+                ownerId={userId}
+                variant='circular'
+                size={120}
+                borderRadius={100}
+              />
+            </div>
           </Grid>
+          <div className={classes.whiteBackground}></div>
           <Grid item style={{ textAlign: 'center' }}>
             <Typography className={classes.textName}>{name}</Typography>
           </Grid>
