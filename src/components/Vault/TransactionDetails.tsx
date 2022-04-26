@@ -3,13 +3,16 @@ import { Currency } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { LinearProgress } from '@material-ui/core'
+import { Flex } from 'rebass'
 
 import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { QRCodeWrap } from 'components/QRCodeWrap'
 import Row, { RowCenter, RowBetween } from 'components/Row'
 import useCopyClipboard from 'hooks/useCopyClipboard'
+import { StyledCopy } from 'components/AdminTransactionsTable'
 import { ApplicationModal } from 'state/application/actions'
+import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
 import { useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
@@ -113,12 +116,38 @@ export const TransactionDetails = ({ currency }: Props) => {
                       {data.amount} {currency?.originalSymbol}
                     </b>{' '}
                     from the wallet{' '}
-                    <b style={{ cursor: 'pointer' }} onClick={() => setCopiedFrom(data.depositAddress ?? '')}>
-                      {isCopiedFrom ? 'Copied!' : shortenAddress(data?.fromAddress || '')}
+                    <b>
+                      {isCopiedFrom ? (
+                        'Copied!'
+                      ) : (
+                        <>
+                          {shortenAddress(data?.fromAddress || '')}
+                          <IconWrapper
+                            style={{ display: 'inline' }}
+                            size={14}
+                            onClick={() => setCopiedFrom(data?.fromAddress || '')}
+                          >
+                            <StyledCopy />
+                          </IconWrapper>
+                        </>
+                      )}
                     </b>{' '}
                     to Custodian wallet{' '}
-                    <b style={{ cursor: 'pointer' }} onClick={() => setCopiedTo(data.depositAddress ?? '')}>
-                      {isCopiedTo ? 'Copied!' : shortenAddress(data?.depositAddress || '')}
+                    <b>
+                      {isCopiedTo ? (
+                        'Copied!'
+                      ) : (
+                        <>
+                          {shortenAddress(data?.depositAddress || '')}
+                          <IconWrapper
+                            style={{ display: 'inline' }}
+                            size={14}
+                            onClick={() => setCopiedTo(data?.depositAddress || '')}
+                          >
+                            <StyledCopy />
+                          </IconWrapper>
+                        </>
+                      )}
                     </b>{' '}
                     in next 1h.
                   </div>
@@ -167,29 +196,41 @@ export const TransactionDetails = ({ currency }: Props) => {
             </RowBetween>
 
             {data?.fromAddress && (
-              <RowBetween
-                style={{ flexWrap: 'wrap', cursor: 'pointer' }}
-                onClick={() => setCopiedFrom(data.fromAddress ?? '')}
-              >
+              <RowBetween style={{ flexWrap: 'wrap' }}>
                 <label>
                   {isDeposit(data.type) && <Trans>Sender&apos;s address:</Trans>}
                   {isWithdraw(data.type) && <Trans>Receiver&apos;s address:</Trans>}
                 </label>
                 <TYPE.descriptionThin>
-                  {isCopiedFrom ? t`Copied` : shortenAddress(data?.fromAddress)}
+                  {isCopiedFrom ? (
+                    t`Copied`
+                  ) : (
+                    <Flex>
+                      {shortenAddress(data?.fromAddress || '')}
+                      <IconWrapper size={18} onClick={() => setCopiedFrom(data?.fromAddress || '')}>
+                        <StyledCopy />
+                      </IconWrapper>
+                    </Flex>
+                  )}
                 </TYPE.descriptionThin>
               </RowBetween>
             )}
             {isDeposit(data.type) && (
-              <RowBetween
-                style={{ flexWrap: 'wrap', cursor: 'pointer' }}
-                onClick={() => setCopiedTo(data.depositAddress ?? '')}
-              >
+              <RowBetween style={{ flexWrap: 'wrap' }}>
                 <label>
                   <Trans>Receiver&apos;s address: </Trans>
                 </label>
                 <TYPE.descriptionThin>
-                  {isCopiedTo ? t`Copied` : shortenAddress(data.depositAddress || '')}
+                  {isCopiedTo ? (
+                    t`Copied`
+                  ) : (
+                    <Flex>
+                      {shortenAddress(data.depositAddress || '')}
+                      <IconWrapper size={18} onClick={() => setCopiedTo(data.depositAddress || '')}>
+                        <StyledCopy />
+                      </IconWrapper>
+                    </Flex>
+                  )}
                 </TYPE.descriptionThin>
               </RowBetween>
             )}

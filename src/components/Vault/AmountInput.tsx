@@ -80,6 +80,8 @@ export const AmountInput = ({
                 className="token-amount-input"
                 value={value}
                 onUserInput={(val) => {
+                  const floatingPart = val.split('.')[1]
+                  if (floatingPart && currency && currency?.decimals < floatingPart.length) return
                   onUserInput(val)
                 }}
               />

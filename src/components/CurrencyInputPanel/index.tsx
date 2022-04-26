@@ -171,7 +171,7 @@ interface CurrencyInputPanelProps {
   showMaxButton: boolean
   label?: ReactNode
   onCurrencySelect?: (currency: Currency) => void
-  currency?: Currency | null
+  currency?: (Currency & { tokenInfo?: { decimals?: number } }) | null
   hideBalance?: boolean
   pair?: Pair | null
   hideInput?: boolean
@@ -210,9 +210,19 @@ export default function CurrencyInputPanel({
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const theme = useTheme()
 
+  const decimals = (currency?.tokenInfo?.decimals ?? 18) > 4 ? 4 : currency?.tokenInfo?.decimals ?? 18
+
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
+
+  const onChangeInput = (val: string) => {
+    const floatingPart = val.split('.')[1]
+    const inputDecimals = currency?.decimals || (currency as any)?.tokenInfo?.decimals || 2
+    if (floatingPart && currency && inputDecimals < floatingPart.length) return
+    onUserInput(val)
+  }
+
   return (
     <InputPanel id={id} hideInput={hideInput} {...rest}>
       {locked && (
@@ -232,9 +242,7 @@ export default function CurrencyInputPanel({
               <NumericalInput
                 className="token-amount-input"
                 value={value}
-                onUserInput={(val) => {
-                  onUserInput(val)
-                }}
+                onUserInput={onChangeInput}
               />
             </>
           )}
@@ -288,7 +296,7 @@ export default function CurrencyInputPanel({
                         renderBalance(selectedCurrencyBalance)
                       ) : (
                         <Trans>
-                          Balance: {formatCurrencyAmount(selectedCurrencyBalance, 4)} {currency.symbol}
+                          Balance: {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
                         </Trans>
                       )
                     ) : null}
