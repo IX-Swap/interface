@@ -5,7 +5,7 @@ export const dialog = (theme: Theme) => {
   return {
     styleOverrides: {
       paper: {
-        padding: '2rem',
+        padding: theme.spacing(2),
         borderRadius: '16px',
         minWidth: 380
       }
@@ -26,7 +26,7 @@ export const dialogContent = (theme: Theme) => {
         lineHeight: '17px',
         color: textPalette.secondary,
         padding: 4,
-        marginTop: '1rem'
+        marginTop: theme.spacing(1)
       }
     }
   }

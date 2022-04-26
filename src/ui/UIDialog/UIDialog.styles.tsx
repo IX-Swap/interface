@@ -12,13 +12,8 @@ export const useStyles = makeStyles(theme => {
       position: 'absolute',
       right: 10,
       top: 10,
-      marginLeft: '20px',
-      cursor: 'pointer',
-
-      '& .MuiSvgIcon-root': {
-        width: '20px',
-        height: '20px'
-      }
+      marginLeft: 20,
+      cursor: 'pointer'
     }
   }
 })
