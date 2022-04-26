@@ -1,6 +1,8 @@
 import React from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
-import { FormControl, MenuItem, Select } from '@mui/material'
+import { FormControl } from '@mui/material'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const PeriodicalFilter = () => {
   return (
@@ -18,11 +20,11 @@ export const PeriodicalFilter = () => {
               onChange={handleChange}
               defaultValue='Quarterly'
             >
-              <MenuItem value='Daily'>Daily</MenuItem>
-              <MenuItem value='Weekly'>Weekly</MenuItem>
-              <MenuItem value='Monthly'>Monthly</MenuItem>
-              <MenuItem value='Quarterly'>Quarterly</MenuItem>
-              <MenuItem value='Yearly'>Yearly</MenuItem>
+              <SelectItem value='Daily'>Daily</SelectItem>
+              <SelectItem value='Weekly'>Weekly</SelectItem>
+              <SelectItem value='Monthly'>Monthly</SelectItem>
+              <SelectItem value='Quarterly'>Quarterly</SelectItem>
+              <SelectItem value='Yearly'>Yearly</SelectItem>
             </Select>
           </FormControl>
         )

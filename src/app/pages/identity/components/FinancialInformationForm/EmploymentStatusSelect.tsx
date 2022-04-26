@@ -1,5 +1,7 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 const employmentStatusList = [
   'Full-Time Employee',
@@ -15,14 +17,22 @@ export const EmploymentStatusSelect = (props: any) => {
   const { ...rest } = props
 
   return (
-    <Select {...rest} style={{ minWidth: 100 }}>
-      {employmentStatusList.map(item => {
-        return (
-          <MenuItem value={item} key={item}>
-            {item}
-          </MenuItem>
-        )
-      })}
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select
+        {...rest}
+        style={{ minWidth: 100 }}
+        label={undefined}
+        displayEmpty
+      >
+        {employmentStatusList.map(item => {
+          return (
+            <SelectItem value={item} key={item}>
+              {item}
+            </SelectItem>
+          )
+        })}
+      </Select>
+    </>
   )
 }

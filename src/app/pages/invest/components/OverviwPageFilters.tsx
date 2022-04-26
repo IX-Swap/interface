@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Grid, Select } from '@mui/material'
+import { Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { renderMenuItems } from 'helpers/rendering'
+import { renderSelectItems } from 'helpers/rendering'
+import { Select } from 'ui/Select/Select'
 
 export const OverviewPageFilters = () => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
@@ -95,10 +96,11 @@ export const OverviewPageFilters = () => {
           <Select
             fullWidth
             variant='outlined'
+            style={{ marginTop: 0, height: 53 }}
             defaultValue={defaultSelectValue()}
             onChange={handleChange as any}
           >
-            {renderMenuItems(
+            {renderSelectItems(
               selectOptions.map(option => ({
                 label: option,
                 value: option

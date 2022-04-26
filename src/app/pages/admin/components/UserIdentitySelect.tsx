@@ -1,16 +1,24 @@
-import { Button, FormControl, Grid, MenuItem, Typography } from '@mui/material'
+import { Button, FormControl, Grid, Typography } from '@mui/material'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React, { useState } from 'react'
 import { UserIdentityCreatedStatus } from 'types/user'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
-
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 export interface UserIdentitySelectProps {
   userIdentities: UserIdentityCreatedStatus
   userId: string
 }
+type IdentityType = 'no identity' | 'individual' | 'investors' | 'issuers'
 
+const labelMap: { [key in IdentityType]: string } = {
+  'no identity': 'No Identity Created Yet',
+  individual: 'Individual Investor',
+  investors: 'Corporate Investor',
+  issuers: 'Issuer (Raise Capital)'
+}
 export const UserIdentitySelect = ({
   userIdentities,
   userId
@@ -21,7 +29,7 @@ export const UserIdentitySelect = ({
   const hasIdentity = hasIndividual || hasInvestor || hasIssuer
 
   const { active, root } = useStyles()
-  const [identity, setIdentity] = useState(
+  const [identity, setIdentity] = useState<IdentityType>(
     !hasIdentity ? 'no identity' : 'individual'
   )
 
@@ -57,39 +65,49 @@ export const UserIdentitySelect = ({
   return (
     <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
       <Grid item xs={7}>
-        <FormControl fullWidth>
-          <TextFieldSelect
-            label='Identity Status'
+        <FormControl>
+          <InputLabel>Identity Status</InputLabel>
+          <Select
             value={identity}
-            onChange={value => setIdentity(value?.target.value)}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 300,
+                  width: 250,
+                  paddingRight: 15
+                }
+              }
+            }}
+            renderValue={value => labelMap[value as IdentityType]}
+            onChange={value => setIdentity(value?.target.value as IdentityType)}
             fullWidth
           >
             {!hasIdentity ? (
-              <MenuItem value='no identity'>
+              <SelectItem value='no identity'>
                 <Typography classes={{ root: active }}>
                   No Identity Created Yet
                 </Typography>
-              </MenuItem>
+              </SelectItem>
             ) : null}
-            <MenuItem value='individual'>
+            <SelectItem value='individual'>
               <Typography classes={{ root: hasIndividual ? active : root }}>
                 Individual Investor
               </Typography>
-            </MenuItem>
-            <MenuItem value='investors'>
+            </SelectItem>
+            <SelectItem value='investors'>
               <Typography classes={{ root: hasInvestor ? active : root }}>
                 Corporate Investor
               </Typography>
-            </MenuItem>
-            <MenuItem value='issuers'>
+            </SelectItem>
+            <SelectItem value='issuers'>
               <Typography classes={{ root: hasIssuer ? active : root }}>
                 Issuer (Raise Capital)
               </Typography>
-            </MenuItem>
-          </TextFieldSelect>
+            </SelectItem>
+          </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={12}>
         <Button
           component={AppRouterLinkComponent}
           to={getPath()}

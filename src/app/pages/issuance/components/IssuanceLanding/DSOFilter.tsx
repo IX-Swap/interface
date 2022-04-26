@@ -1,6 +1,6 @@
 import React from 'react'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
-import { Box, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { NoDeals } from 'app/pages/issuance/components/IssuanceLanding/NoDeals'
 import { VSpacer } from 'components/VSpacer'
 import { useDSOFilter } from 'app/pages/issuance/hooks/useDSOFilter'
@@ -17,15 +17,16 @@ export const DSOFilter = () => {
   }
 
   return (
-    <Box py={3}>
+    <Box py={3} maxWidth={300}>
       <Typography variant='h5'>My DSO(s)</Typography>
       <VSpacer size='small' />
-      <DSOSelect
-        fullWidth
-        value={selected}
-        options={data.list}
-        onChange={handleChange}
-      />
+      <Grid container xs={12}>
+        <DSOSelect
+          value={selected}
+          options={data.list}
+          onChange={handleChange}
+        />
+      </Grid>
     </Box>
   )
 }
