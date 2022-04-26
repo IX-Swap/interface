@@ -1,9 +1,6 @@
 import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => {
-  // eslint-disable-next-line
-  const alertsPalette = theme.palette.alerts!
-
   return {
     btnWrapper: {
       width: '-webkit-fill-available'
