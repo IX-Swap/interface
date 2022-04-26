@@ -10,6 +10,6 @@ export const AppContentWrapper = styled(Grid)(
   ({ theme, background }: AppContentWrapperProps) => ({
     minHeight: '100vh',
     backgroundColor: theme.palette.backgrounds[background ?? 'default'],
-    paddingTop: background === undefined ? 64 : 0
+    paddingTop: 80
   })
 )

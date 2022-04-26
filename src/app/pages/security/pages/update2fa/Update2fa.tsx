@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Box, Stepper, Step, StepLabel, Grid } from '@mui/material'
+import { Step, Grid, Typography } from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useStyles } from './Update2fa.styles'
 import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons'
 import { useAuth } from 'hooks/auth/useAuth'
 import { history } from 'config/history'
 import { SecurityRoute } from 'app/pages/security/router/config'
-import { VSpacer } from 'components/VSpacer'
+import { Stepper } from 'ui/Stepper/Stepper'
+import { StepButton } from 'ui/Stepper/StepButton'
 
 const steps = [
   'Remove Current Authenticator',
-  'Scan New QR Code',
-  'Backup the Key',
-  'Enable New Authenticator'
+  'Scan QR Code',
+  'Backup Key',
+  'Enable Authenticator'
 ]
 
 export const Update2fa = () => {
@@ -44,50 +44,71 @@ export const Update2fa = () => {
   const isBackButtonVisible = activeStep > 1 && activeStep < steps.length
   const isNextButtonVisible = activeStep < steps.length - 1 && activeStep > 0
 
+  const isStepActive = (index: number) => index === activeStep
+  const isStepCompleted = (index: number) => index < activeStep
+  // TODO Added necessary logic here
+  const isStepFailed = (index: number) => false
+
+  const getVariantsConditions = (index: number) => ({
+    active: isStepActive(index),
+    completed: isStepCompleted(index),
+    error: isStepFailed(index)
+  })
+
   return (
-    <Grid container spacing={0}>
-      <PageHeader title='Change Authenticator' />
-      <Grid item xs={12} className={classes.wrapper}>
-        <Container>
-          <PageHeader title='Change Authenticator' variant={'h6'} />
-          <Box>
-            <Stepper activeStep={activeStep} alternativeLabel>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <Grid
-              container
-              justifyContent='center'
-              alignItems='center'
-              direction='column'
-            >
-              <Grid item>
-                <VSpacer size={'medium'} />
-                <Box mt={4} mb={6} width='100%'>
-                  <ActiveStep
-                    twoFaData={twoFaData}
-                    handleSuccessfulRemoveAuthenticator={
-                      handleSuccessfulFirstStep
-                    }
-                    index={activeStep}
-                    nextStep={nextStep}
-                  />
-                </Box>
-              </Grid>
-              <Grid item>
-                <ChangeStepButtons
-                  isBackButtonVisible={isBackButtonVisible}
-                  isNextButtonVisible={isNextButtonVisible}
-                  onBackButtonClick={prevStep}
-                  onNextButtonClick={nextStep}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
+    <Grid container spacing={0} xs={12} className={classes.wrapper}>
+      <Grid
+        container
+        justifyContent='center'
+        alignItems='center'
+        direction='column'
+        className={classes.leftBlock}
+      >
+        <Grid item>
+          <ActiveStep
+            twoFaData={twoFaData}
+            handleSuccessfulRemoveAuthenticator={handleSuccessfulFirstStep}
+            index={activeStep}
+            nextStep={nextStep}
+          />
+        </Grid>
+        <Grid item>
+          <ChangeStepButtons
+            isBackButtonVisible={isBackButtonVisible}
+            isNextButtonVisible={isNextButtonVisible}
+            onBackButtonClick={prevStep}
+            onNextButtonClick={nextStep}
+          />
+        </Grid>
+      </Grid>
+      <Grid
+        item
+        container
+        flexDirection={'column'}
+        className={classes.rightBlock}
+      >
+        <Grid item>
+          <Typography variant={'h6'} className={classes.progressTitle}>
+            Progress
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Stepper orientation={'vertical'} activeStep={activeStep} nonLinear>
+            {steps.map((label, index) => (
+              <Step
+                key={label}
+                completed={getVariantsConditions(index).completed}
+              >
+                <StepButton
+                  step={index + 1}
+                  variantsConditions={getVariantsConditions(index)}
+                >
+                  {label}
+                </StepButton>
+              </Step>
+            ))}
+          </Stepper>
+        </Grid>
       </Grid>
     </Grid>
   )
