@@ -38,29 +38,21 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
   const fiatValueInput = useUSDCValue(parsedAmounts[Field.INPUT])
   const fiatValueOutput = useUSDCValue(parsedAmounts[Field.OUTPUT])
   const priceImpact = computeFiatValuePriceImpact(fiatValueInput, fiatValueOutput)
-  const inputDecimals =
-    (parsedAmounts[Field.INPUT] as any)?.currency?.decimals ||
-    (parsedAmounts[Field.INPUT] as any)?.currency?.tokenInfo?.decimals ||
-    0
-  const outputDecimals =
-    (parsedAmounts[Field.OUTPUT] as any)?.currency?.decimals ||
-    (parsedAmounts[Field.OUTPUT] as any)?.currency?.tokenInfo?.decimals ||
-    0
 
   const handleTypeInput = useCallback(
     (value: string) => {
-      onUserInput(Field.INPUT, value, inputDecimals)
+      onUserInput(Field.INPUT, value)
       handleHideConfirm()
     },
-    [onUserInput, handleHideConfirm, inputDecimals]
+    [onUserInput, handleHideConfirm]
   )
 
   const handleTypeOutput = useCallback(
     (value: string) => {
-      onUserInput(Field.OUTPUT, value, outputDecimals)
+      onUserInput(Field.OUTPUT, value)
       handleHideConfirm()
     },
-    [onUserInput, handleHideConfirm, outputDecimals]
+    [onUserInput, handleHideConfirm]
   )
   const handleInputSelect = useCallback(
     (inputCurrency) => {
@@ -80,7 +72,7 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
   )
 
   const handleMaxInput = useCallback(() => {
-    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toExact(), inputDecimals)
+    maxInputAmount && onUserInput(Field.INPUT, maxInputAmount.toExact())
     handleHideConfirm()
   }, [maxInputAmount, onUserInput, handleHideConfirm])
 
