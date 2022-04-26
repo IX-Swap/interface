@@ -1,4 +1,4 @@
-import { Pair } from 'app/pages/exchange/hooks/useMarketList'
+import { Pair } from 'app/pages/invest/hooks/useMarketList'
 
 export const pair: Pair = {
   _id: '123456',

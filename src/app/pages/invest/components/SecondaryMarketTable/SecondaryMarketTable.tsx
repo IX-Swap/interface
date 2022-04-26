@@ -9,7 +9,7 @@ import { columns } from 'app/pages/invest/components/SecondaryMarketTable/column
 import { SearchFilter } from 'app/components/SearchFilter'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useTheme } from '@mui/material/styles'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
 
 export const SecondaryMarketTable = () => {
   const theme = useTheme()
@@ -32,7 +32,7 @@ export const SecondaryMarketTable = () => {
         <Grid item>
           <Button
             component={AppRouterLinkComponent}
-            to={OTCMarketRoute.holdings}
+            to={AccountsRoute.myHoldings}
             color='primary'
             variant='outlined'
             size='large'
