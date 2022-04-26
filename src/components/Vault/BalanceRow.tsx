@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
@@ -9,9 +9,12 @@ import { useCurrencyBalance } from 'state/wallet/hooks'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
+import { useWithdrawState } from 'state/withdraw/hooks'
 
 import { MouseoverTooltip } from 'components/Tooltip'
+
 import { ExistingTitle, TitleStatusRow } from './styleds'
+import { isPending } from './enum'
 
 interface Props {
   currency?: Currency
@@ -38,6 +41,17 @@ const TextWrap = styled(TYPE.titleBig)`
 export const BalanceRow = ({ currency, account, token }: Props) => {
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const toggle = useWithdrawModalToggle()
+  const { withdrawStatus } = useWithdrawState()
+  const haveActiveWithdrawal = isPending(withdrawStatus.status || '')
+
+  const tooltipText = useMemo(() => {
+    if (!token.allowWithdrawal) return 'Withdrawal are not available yet for this token'
+
+    if (haveActiveWithdrawal)
+      return 'There is already 1 withdrawal request in progress. Please check its status and wait for completion or cancelation.'
+
+    return ''
+  }, [haveActiveWithdrawal, token.allowWithdrawal])
 
   return (
     <TitleStatusRow>
@@ -48,14 +62,14 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
         </TextWrap>
         <AddWrappedToMetamask token={token} />
       </ExistingTitle>
-      <MouseoverTooltip text={!token.allowWithdrawal ? 'Withdrawal are not available yet for this token' : ''}>
+      <MouseoverTooltip text={tooltipText}>
         <ButtonGradientBorder
           data-testid="withdraw"
           style={{ width: '230px' }}
           onClick={async () => {
             toggle()
           }}
-          disabled={!token.allowWithdrawal}
+          disabled={!token.allowWithdrawal || haveActiveWithdrawal}
         >
           <Trans>Withdraw</Trans>
         </ButtonGradientBorder>

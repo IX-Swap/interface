@@ -41,7 +41,7 @@ export const ArrowWrapper = styled.div`
   background-color: ${({ theme }) => theme.bg9};
 `
 interface Props {
-  currency?: SecCurrency
+  currency?: SecCurrency & { tokenInfo?: { decimals?: number } }
   token: any
 }
 
@@ -70,7 +70,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
       deposit({
         id: tokenId,
-        amount: Number(parsedAmount?.toSignificant(5)),
+        amount: Number(parsedAmount?.toFixed(currency?.decimals || currency?.tokenInfo?.decimals || 2)),
         fromAddress: computedAddress || '',
       })
     }
