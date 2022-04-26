@@ -1,23 +1,18 @@
-import {
-  FormControl,
-  InputLabel,
-  ListItemIcon,
-  ListItemText,
-  TextField
-} from '@mui/material'
+import { FormControl, ListItemIcon, ListItemText } from '@mui/material'
 import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { hasValue } from 'helpers/forms'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useEffect } from 'react'
-import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const SubFundSelect = () => {
   const { data, isLoading } = useVCCDSO()
   const { getFilterValue, getHasValue, updateFilter } = useQueryFilter()
   const status = getFilterValue('status')
-
   useEffect(() => {
     if (!getHasValue('subfunds') && data !== undefined) {
       updateFilter('subfunds', data.map(dso => dso._id).join(','))
@@ -65,38 +60,37 @@ export const SubFundSelect = () => {
         }
 
         return (
-          <FormControl fullWidth variant='outlined' style={{ width: 300 }}>
-            <InputLabel id='SubFundSelect-label'>
-              Select Multiple Sub-funds
-            </InputLabel>
-            <TextField
-              select
-              SelectProps={{
-                displayEmpty: true,
-                labelId: 'SubFundSelect-label',
-                multiple: true,
-                renderValue: values => getStringValue(values),
-                MenuProps: {
-                  PaperProps: {
-                    style: {
-                      maxHeight: 300,
-                      width: 300
-                    }
-                  },
-                  anchorOrigin: {
-                    vertical: 'bottom',
-                    horizontal: 'center'
-                  },
-                  transformOrigin: {
-                    vertical: 'top',
-                    horizontal: 'center'
+          <FormControl
+            fullWidth
+            variant='outlined'
+            style={{ width: 300, marginTop: -12 }}
+          >
+            <InputLabel>Select Multiple Sub-funds</InputLabel>
+            <Select
+              displayEmpty
+              multiple={true}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                    width: 300,
+                    paddingRight: 15
                   }
+                },
+                anchorOrigin: {
+                  vertical: 'bottom',
+                  horizontal: 'center'
+                },
+                transformOrigin: {
+                  vertical: 'top',
+                  horizontal: 'center'
                 }
               }}
-              InputLabelProps={{ shrink: true }}
+              renderValue={values => getStringValue(values)}
               value={selected}
               onChange={handleChange}
               disabled={isLoading}
+              label={undefined}
             >
               {options?.length > 0 ? (
                 <SelectItem value='all'>
@@ -123,10 +117,12 @@ export const SubFundSelect = () => {
                   <ListItemText primary={option.name} />
                 </SelectItem>
               ))}
-            </TextField>
+            </Select>
           </FormControl>
         )
       }}
     </SearchQueryFilter>
   )
 }
+
+SubFundSelect.displayName = 'Select_SubFundSelect'
