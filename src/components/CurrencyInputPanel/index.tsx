@@ -171,7 +171,7 @@ interface CurrencyInputPanelProps {
   showMaxButton: boolean
   label?: ReactNode
   onCurrencySelect?: (currency: Currency) => void
-  currency?: (Currency & { tokenInfo: { decimals?: number } }) | null
+  currency?: (Currency & { tokenInfo?: { decimals?: number } }) | null
   hideBalance?: boolean
   pair?: Pair | null
   hideInput?: boolean
