@@ -3,7 +3,6 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
 import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPreview/CorporatesPreview'
 import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
-import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'
 import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
 import { IndividualPreview } from 'app/pages/identity/components/IndividualPreview/IndividualPreview'
 import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton'
@@ -41,14 +40,7 @@ export const IdentityPreview = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} container spacing={3}>
-        {hasIndividual && (
-          <Grid item xs={12} md={4}>
-            <IndividualIdentityButton
-              active={selectedIdentity === 'individual'}
-              onClick={() => setSelectedIdentity('individual')}
-            />
-          </Grid>
-        )}
+        {hasIndividual && <Grid item xs={12} md={4}></Grid>}
         {hasCorporate ? (
           <Grid item xs={12} md={4}>
             {corporateIdentities.list[0].type === 'issuer' ? (
