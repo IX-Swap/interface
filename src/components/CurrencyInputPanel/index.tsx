@@ -171,7 +171,7 @@ interface CurrencyInputPanelProps {
   showMaxButton: boolean
   label?: ReactNode
   onCurrencySelect?: (currency: Currency) => void
-  currency?: Currency | null
+  currency?: (Currency & { tokenInfo: { decimals?: number } }) | null
   hideBalance?: boolean
   pair?: Pair | null
   hideInput?: boolean
@@ -209,6 +209,8 @@ export default function CurrencyInputPanel({
   const { account } = useActiveWeb3React()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const theme = useTheme()
+
+  const decimals = (currency?.tokenInfo?.decimals ?? 18) > 4 ? 4 : currency?.tokenInfo?.decimals ?? 18
 
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
@@ -288,7 +290,7 @@ export default function CurrencyInputPanel({
                         renderBalance(selectedCurrencyBalance)
                       ) : (
                         <Trans>
-                          Balance: {formatCurrencyAmount(selectedCurrencyBalance, 4)} {currency.symbol}
+                          Balance: {formatCurrencyAmount(selectedCurrencyBalance, decimals)} {currency.symbol}
                         </Trans>
                       )
                     ) : null}

@@ -1842,9 +1842,9 @@
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
 "@ixswap1/default-token-list@^1.0.4":
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.3.5.tgz#ca99fb0db38744682202e060bbb8fcb56abc8435"
-  integrity sha512-vlYMccSZeEjTbotyjgKiWorMu+1pvMVAJS1Cm+pSTuE68/immEyzwYZPtW7i9JFdlCCh++gwGUj0SzJUMzbldA==
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.3.6.tgz#8e996fb1a3753d04ed322547086e51880ee150a3"
+  integrity sha512-xqwITUhCsR8xepFmQxpyi6cWAnS5mMuXOU+oDE8AqZmD62ECHtJOamLGFFtL+a4oHbNap1Aj435qAdgipX00Uw==
 
 "@ixswap1/lib@1.x.x":
   version "1.3.0"
