@@ -76,42 +76,42 @@ export const SwapButtons = ({
   const showError = useShowError()
 
   const onClick = useCallback(async () => {
-    if (trade && account) {
-      const pair = trade.route.pairs[0]
+    // if (trade && account) {
+    //   const pair = trade.route.pairs[0]
 
-      try {
-        await verifySwap({
-          tokenFrom: trade.inputAmount.currency.wrapped.address, //pair.token0.address,
-          tokenTo: trade.outputAmount.currency.wrapped.address, //pair.token1.address,
+    //   try {
+    //     await verifySwap({
+    //       tokenFrom: trade.inputAmount.currency.wrapped.address, //pair.token0.address,
+    //       tokenTo: trade.outputAmount.currency.wrapped.address, //pair.token1.address,
 
-          pair: pair.liquidityToken.address,
+    //       pair: pair.liquidityToken.address,
 
-          kLast: '0', //BigInt(parseFloat(pair.reserve1.multiply(pair.reserve0).toExact()) * 10 ** 18).toString(),
+    //       kLast: '0', //BigInt(parseFloat(pair.reserve1.multiply(pair.reserve0).toExact()) * 10 ** 18).toString(),
 
-          priceToleranceThreshold: BigNumber.from(parseInt(trade.priceImpact.toFixed())),
-          systemFeeRate: BigNumber.from(pair.isSecurity ? 10 : 3), // utils.parseUnits(trade.executionPrice.toFixed()),
+    //       priceToleranceThreshold: BigNumber.from(parseInt(trade.priceImpact.toFixed())),
+    //       systemFeeRate: BigNumber.from(pair.isSecurity ? 10 : 3), // utils.parseUnits(trade.executionPrice.toFixed()),
 
-          id: `swap-${Math.floor(1 + Math.random() * 100000000)}`,
+    //       id: `swap-${Math.floor(1 + Math.random() * 100000000)}`,
 
-          amountInFrom: utils.parseUnits(trade.inputAmount.toExact()),
-          amountInTo: utils.parseUnits('0'), //utils.parseUnits(trade.maximumAmountIn(allowedSlippage).toExact()),
+    //       amountInFrom: utils.parseUnits(trade.inputAmount.toExact()),
+    //       amountInTo: utils.parseUnits('0'), //utils.parseUnits(trade.maximumAmountIn(allowedSlippage).toExact()),
 
-          amountOutFrom: utils.parseUnits('0'), //utils.parseUnits(trade.minimumAmountOut(allowedSlippage).toExact()),
-          amountOutTo: utils.parseUnits(trade.outputAmount.toExact()),
+    //       amountOutFrom: utils.parseUnits('0'), //utils.parseUnits(trade.minimumAmountOut(allowedSlippage).toExact()),
+    //       amountOutTo: utils.parseUnits(trade.outputAmount.toExact()),
 
-          sender: account,
-          receiver: pair.liquidityToken.address,
-          slope: 0.05,
+    //       sender: account,
+    //       receiver: pair.liquidityToken.address,
+    //       slope: 0.05,
 
-          isSecurity: pair.isSecurity,
-          pairAddress: pair.liquidityToken.address,
-          chainId: chainId || 137,
-        })
-      } catch (err) {
-        showError((err as Error).message)
-        return
-      }
-    }
+    //       isSecurity: pair.isSecurity,
+    //       pairAddress: pair.liquidityToken.address,
+    //       chainId: chainId || 137,
+    //     })
+    //   } catch (err) {
+    //     showError((err as Error).message)
+    //     return
+    //   }
+    // }
 
     if (expertMode) {
       handleSwap()
