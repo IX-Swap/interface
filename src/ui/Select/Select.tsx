@@ -11,19 +11,22 @@ export interface SelectProps extends MuiSelectProps {}
 export const Select = ({
   multiple = false,
   MenuProps,
+  renderValue,
   ...props
 }: SelectProps) => {
   const classes = useStyles()
 
-  const renderValue = (selected: any | any[]) => {
+  const renderValueFallback = (selected: any | any[]) => {
     const isPlaceholderVisible = multiple
       ? selected.length === 0
-      : selected === null || selected === undefined
+      : selected === null || selected === undefined || selected === ''
 
     if (isPlaceholderVisible) {
       return <Box className={classes.placeholder}>{props.placeholder}</Box>
     }
-
+    if (renderValue instanceof Function) {
+      return renderValue(selected)
+    }
     if (multiple) {
       return selected.join(', ')
     }
@@ -34,7 +37,7 @@ export const Select = ({
   return (
     <MuiSelect
       {...props}
-      renderValue={renderValue}
+      renderValue={renderValueFallback}
       fullWidth
       multiple={multiple}
       className={classes.wrapper}

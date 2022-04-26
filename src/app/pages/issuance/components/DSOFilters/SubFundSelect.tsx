@@ -30,21 +30,21 @@ export const SubFundSelect = () => {
       id: item._id
     })) ?? []
 
+  const getStringValue = (selectedValues: any) => {
+    const names = selectedValues.map((id: string) => {
+      const option = options.find((item: any) => item.id === id)
+      return option?.name ?? null
+    })
+    const result = names?.filter((n: string) => n).join(',')
+    return result
+  }
+
   return (
     <SearchQueryFilter name='subfunds'>
       {({ value, onChange }) => {
         const selected = hasValue<string>(value) ? value.split(',') : []
         const isAllSelected =
           options.length > 0 && selected?.length === options.length
-
-        const getStringValue = (selectedValues: any) => {
-          const names = selectedValues.map((id: string) => {
-            const option = options.find((item: any) => item.id === id)
-            return option?.name ?? null
-          })
-
-          return names?.filter((n: string) => n).join(',')
-        }
 
         const handleChange = (event: any) => {
           const targetValue = event.target.value

@@ -68,7 +68,17 @@ export const UserIdentitySelect = ({
         <FormControl>
           <InputLabel>Identity Status</InputLabel>
           <Select
-            value={labelMap[identity]}
+            value={identity}
+            MenuProps={{
+              PaperProps: {
+                style: {
+                  maxHeight: 300,
+                  width: 250,
+                  paddingRight: 15
+                }
+              }
+            }}
+            renderValue={value => labelMap[value as IdentityType]}
             onChange={value => setIdentity(value?.target.value as IdentityType)}
             fullWidth
           >

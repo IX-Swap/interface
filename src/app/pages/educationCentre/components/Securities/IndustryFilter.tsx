@@ -1,5 +1,6 @@
 import { FormControl } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { isEmptyString } from 'helpers/strings'
 import React from 'react'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { Select } from 'ui/Select/Select'
@@ -23,9 +24,7 @@ export const IndustryFilter = () => {
             onChange={event => {
               onChange(event.target?.value as string)
             }}
-            value={
-              value === '' || value === undefined ? 'All Industries' : value
-            }
+            value={isEmptyString(value) ? 'All Industries' : value}
           >
             <SelectItem value=''>All Industries</SelectItem>
             {industries.map(industry => (
