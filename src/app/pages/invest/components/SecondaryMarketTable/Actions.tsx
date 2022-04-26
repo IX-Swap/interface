@@ -1,8 +1,7 @@
 import { Button, IconButton } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Launch as LaunchIcon } from '@mui/icons-material'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
-import { InvestRoute as paths } from 'app/pages/invest/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React from 'react'
 export interface ActionsProps {
@@ -15,7 +14,7 @@ export const Actions = ({ item }: ActionsProps) => {
     <>
       <IconButton
         component={AppRouterLinkComponent}
-        to={paths.viewListing}
+        to={InvestRoute.viewListing}
         params={{
           userId: item.listing.createdBy,
           listingId: item.listing._id
@@ -32,7 +31,7 @@ export const Actions = ({ item }: ActionsProps) => {
           color: theme.palette.slider.activeBackground
         }}
         component={AppRouterLinkComponent}
-        to={OTCMarketRoute.market}
+        to={InvestRoute.exchange}
         params={{
           pairId: item._id
         }}

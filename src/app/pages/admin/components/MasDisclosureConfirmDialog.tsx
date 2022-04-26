@@ -1,7 +1,7 @@
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
-import { useCreateOrUpdateMASDisclosure } from 'app/pages/exchange/hooks/useCreateOrUpdateMASDisclosure'
+import { useCreateOrUpdateMASDisclosure } from 'app/pages/admin/hooks/useCreateOrUpdateMASDisclosure'
 import { useFormContext } from 'react-hook-form'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 

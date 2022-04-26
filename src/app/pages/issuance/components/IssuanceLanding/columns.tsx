@@ -4,7 +4,7 @@ import format from 'date-fns/format'
 import { Grid, Typography } from '@mui/material'
 import { DSOActivity } from 'types/dso'
 import { Avatar } from 'components/Avatar'
-import { getActivityUserInfo } from 'app/pages/issuance/utils'
+import { getActivityUserInfo } from 'app/pages/issuance/utils/utils'
 
 export const renderActivityDate = (date: string, row: DSOActivity) =>
   format(new Date(date), 'MM/dd/yyyy p')
