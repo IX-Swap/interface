@@ -52,7 +52,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
   const name = `[${data.status}] ${data.firstName} ${data.lastName}`
 
   return (
-    <Card elevation={0}>
+    <Card elevation={0} className={classes.container}>
       <CardContent>
         <Box pt={2} pb={2}>
           <DataPreview

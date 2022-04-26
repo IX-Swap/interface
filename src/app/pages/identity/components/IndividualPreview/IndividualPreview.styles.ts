@@ -5,5 +5,8 @@ export const useStyles = makeStyles({
     position: 'absolute',
     right: '184px',
     top: '304px'
+  },
+  container: {
+    backgroundColor: '#f7f9fa'
   }
 })
