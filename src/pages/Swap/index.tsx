@@ -92,7 +92,11 @@ export default function Swap({ history }: RouteComponentProps) {
     handleHideConfirm()
     // if there was a tx hash, we want to clear the input
     if (txHash) {
-      onUserInput(Field.INPUT, '')
+      const inputDecimals =
+      (currencies[Field.INPUT] as any)?.decimals ||
+      (currencies[Field.INPUT] as any)?.tokenInfo?.decimals ||
+      0
+      onUserInput(Field.INPUT, '', inputDecimals)
     }
     setOpenModal(false)
   }, [onUserInput, txHash, handleHideConfirm, setOpenModal])
