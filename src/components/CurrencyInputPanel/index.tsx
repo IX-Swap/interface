@@ -216,7 +216,7 @@ export default function CurrencyInputPanel({
 
   const onChangeInput = (val: string) => {
     const floatingPart = val.split('.')[1]
-    const inputDecimals = currency?.decimals || (currency as any)?.tokenInfo?.decimals
+    const inputDecimals = currency?.decimals || (currency as any)?.tokenInfo?.decimals || 2
     if (floatingPart && currency && inputDecimals < floatingPart.length) return
     onUserInput(val)
   }
