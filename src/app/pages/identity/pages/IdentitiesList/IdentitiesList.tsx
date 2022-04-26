@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { RootContainer } from 'ui/RootContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
@@ -13,12 +13,35 @@ export const IdentitiesList: React.FC = () => {
     <AppContentWrapper container background='default'>
       <RootContainer background='default'>
         <Grid container spacing={5}>
-          <Grid item xs={12} container spacing={1}>
+          <Grid item xs={12} container style={{ zIndex: 2 }}>
             <Grid item xs={12}>
-              <Typography variant='h2' align='center'>
+              <Typography
+                fontSize={'24px'}
+                fontWeight={600}
+                lineHeight={'29px'}
+              >
                 {hasIdentity ? 'Identity' : 'Create your Identity'}
               </Typography>
             </Grid>
+            <Box display='flex' justifyContent='flex-start' width='100%'>
+              <Typography color='#3B4251' fontSize={'14px'} lineHeight={'24px'}>
+                Profile
+              </Typography>
+              <Box component={'span'} borderRadius={'100px'} margin={'0 12px'}>
+                <svg
+                  width='4'
+                  height='4'
+                  viewBox='0 0 4 4'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <rect width='4' height='4' rx='2' fill='#778194' />
+                </svg>
+              </Box>
+              <Typography color='#778194' fontSize={'14px'} lineHeight={'24px'}>
+                Identity
+              </Typography>
+            </Box>
             {!hasIdentity && (
               <Grid item xs={12}>
                 <Typography
