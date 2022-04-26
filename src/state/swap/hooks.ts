@@ -49,7 +49,7 @@ export function useSubmitApproval() {
 export function useSwapActionHandlers(): {
   onCurrencySelection: (field: Field, currency: Currency) => void
   onSwitchTokens: () => void
-  onUserInput: (field: Field, typedValue: string, decimals: number) => void
+  onUserInput: (field: Field, typedValue: string) => void
   onChangeRecipient: (recipient: string | null) => void
 } {
   const dispatch = useDispatch<AppDispatch>()
@@ -73,9 +73,7 @@ export function useSwapActionHandlers(): {
   }, [dispatch])
 
   const onUserInput = useCallback(
-    (field: Field, typedValue: string, decimals: number) => {
-      const floatingPart = typedValue.split('.')[1]
-      if (floatingPart && floatingPart.length > decimals) return
+    (field: Field, typedValue: string) => {
       dispatch(typeInput({ field, typedValue }))
     },
     [dispatch]
