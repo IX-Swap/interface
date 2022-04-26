@@ -33,6 +33,9 @@ export const InvestRouter = () => {
       <AppRoute path={InvestRoute.overview}>
         <InvestOverview />
       </AppRoute>
+      <AppRoute path={InvestRoute.trading}>
+        <></>
+      </AppRoute>
     </Switch>
   )
 }

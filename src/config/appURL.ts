@@ -64,7 +64,8 @@ export const urlFeature = {
   listings: `${AppFeature.Listings}`,
   buyerList: `${AppFeature.BuyerList}`,
   captable: AppFeature.CapTable,
-  manageDistributions: 'manage-distributions'
+  manageDistributions: 'manage-distributions',
+  trading: AppFeature.Trading
 }
 
 export const appURL = {
