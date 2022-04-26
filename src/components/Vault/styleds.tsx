@@ -75,6 +75,9 @@ export const HistoryRowWraper = styled.tr`
     padding: 1px;
     background: ${({ theme }) => theme.bgG2};
   }
+  > td {
+    padding: 0px 4px;
+  }
 `
 
 export const HistoryHeaderWrapper = styled.thead`
