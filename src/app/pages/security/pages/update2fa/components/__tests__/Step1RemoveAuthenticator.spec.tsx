@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { Step1RemoveAuthenticator } from 'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator'
+import { Step1RemoveAuthenticator } from 'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator/Step1RemoveAuthenticator'
 import * as useGetEmailCode from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 import { fireEvent, waitFor } from '@testing-library/dom'
 

@@ -43,39 +43,40 @@ export const TextInput = (props: InputProps) => {
         marginTop:
           (rest?.variant ?? 'outlined') === 'outlined' ? '12px' : 'initial'
       }}
-      InputProps={{
-        endAdornment:
-          !hideIcon && (loading || hasError !== undefined) ? (
-            <InputAdornment position='end'>
-              {loading && (
-                <CircularProgress
-                  thickness={1.5}
-                  style={{ color: theme?.palette?.input?.placeholder }}
-                  size={13}
-                />
-              )}
-              {!loading && hasError && (
-                <Icon
-                  name={'alert-triangle'}
-                  noHover
-                  size={15}
-                  color={theme.palette.error.main}
-                />
-              )}
-              {!loading &&
-                !hasError &&
-                (inputIsEmpty ? null : (
+      InputProps={
+        InputProps ?? {
+          endAdornment:
+            !hideIcon && (loading || hasError !== undefined) ? (
+              <InputAdornment position='end'>
+                {loading && (
+                  <CircularProgress
+                    thickness={1.5}
+                    style={{ color: theme?.palette?.input?.placeholder }}
+                    size={13}
+                  />
+                )}
+                {!loading && hasError && (
                   <Icon
-                    name={'check'}
+                    name={'alert-triangle'}
                     noHover
                     size={15}
-                    color={theme.palette.success.main}
+                    color={theme.palette.error.main}
                   />
-                ))}
-            </InputAdornment>
-          ) : null,
-        ...InputProps
-      }}
+                )}
+                {!loading &&
+                  !hasError &&
+                  (inputIsEmpty ? null : (
+                    <Icon
+                      name={'check'}
+                      noHover
+                      size={15}
+                      color={theme.palette.success.main}
+                    />
+                  ))}
+              </InputAdornment>
+            ) : null
+        }
+      }
     >
       {props?.children}
     </TextField>

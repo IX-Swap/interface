@@ -56,7 +56,7 @@ export const Update2fa = () => {
   })
 
   return (
-    <Grid container spacing={0} xs={12} className={classes.wrapper}>
+    <Grid container xs={12} className={classes.wrapper}>
       <Grid
         container
         justifyContent='center'
