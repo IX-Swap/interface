@@ -10,6 +10,7 @@ import { Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { RootContainer } from 'ui/RootContainer'
 
 export const Users = () => {
   const { getFilterValue } = useQueryFilter()
@@ -21,29 +22,31 @@ export const Users = () => {
   }
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
       <Grid item xs={12}>
         <PageHeader title='Users' />
       </Grid>
-      <Grid item xs={12} md={6} lg={4}>
-        <SearchFilter
-          fullWidth
-          placeholder='Search'
-          inputAdornmentPosition='end'
-        />
-      </Grid>
-      <Grid item>
-        <TableView<User>
-          innerRef={ref}
-          uri={userURL.getAll}
-          name={usersQueryKeys.getList}
-          columns={columns}
-          hasActions
-          actions={({ item }) => renderActions(item, ref)}
-          filter={filter}
-          actionHeader='Roles'
-        />
-      </Grid>
+      <RootContainer>
+        <Grid item xs={12} md={6} lg={4}>
+          <SearchFilter
+            fullWidth
+            placeholder='Search'
+            inputAdornmentPosition='end'
+          />
+        </Grid>
+        <Grid item>
+          <TableView<User>
+            innerRef={ref}
+            uri={userURL.getAll}
+            name={usersQueryKeys.getList}
+            columns={columns}
+            hasActions
+            actions={({ item }) => renderActions(item, ref)}
+            filter={filter}
+            actionHeader='Roles'
+          />
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

@@ -21,28 +21,30 @@ export const ChangePassword = () => {
   }
 
   return (
-    <Container style={{ backgroundColor: 'transparent' }}>
+    <>
       <PageHeader title='Change Password' />
-      <Grid container alignItems='center' justifyContent='center'>
-        <Grid container lg={4} item>
-          <Form
-            defaultValues={defaultValues}
-            validationSchema={changePasswordFormValuesSchema}
-            onSubmit={onSubmit}
-          >
-            <Paper elevation={1}>
-              <Box p={3}>
-                <Grid container>
-                  <ChangePasswordFields />
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Submit>Change</Submit>
+      <Container style={{ backgroundColor: 'transparent' }}>
+        <Grid container alignItems='center' justifyContent='center'>
+          <Grid container lg={4} item>
+            <Form
+              defaultValues={defaultValues}
+              validationSchema={changePasswordFormValuesSchema}
+              onSubmit={onSubmit}
+            >
+              <Paper elevation={1}>
+                <Box p={3}>
+                  <Grid container>
+                    <ChangePasswordFields />
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Submit>Change</Submit>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </Paper>
-          </Form>
+                </Box>
+              </Paper>
+            </Form>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   )
 }

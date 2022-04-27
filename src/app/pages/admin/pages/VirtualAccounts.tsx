@@ -11,6 +11,7 @@ import { AddVirtualAccountsButton } from 'app/pages/admin/components/AddVirtualA
 import { VirtualAccountsStats } from 'app/pages/admin/components/VirtualAccountsStats/VirtualAccountsStats'
 import { DisableAccountsButton } from 'app/pages/admin/components/DisableAccountsButton/DisableAccountsButton'
 import { UploadCSVButton } from 'app/pages/admin/components/UploadCSVButton/UploadCSVButton'
+import { RootContainer } from 'ui/RootContainer'
 
 export const itemComparator = (
   a: VirtualAccountType,
@@ -22,27 +23,34 @@ export const itemComparator = (
 export const VirtualAccounts = () => {
   return (
     <SelectionHelper<VirtualAccount> itemComparator={itemComparator}>
-      <Grid container direction='column' spacing={5}>
+      <Grid
+        container
+        direction='column'
+        spacing={5}
+        style={{ display: 'table' }}
+      >
         <Grid item>
           <PageHeader title='Virtual Accounts' />
         </Grid>
-        <Grid item>
-          <VirtualAccountsStats />
-        </Grid>
-        <Grid item container spacing={2}>
+        <RootContainer>
           <Grid item>
-            <AddVirtualAccountsButton />
+            <VirtualAccountsStats />
+          </Grid>
+          <Grid item container spacing={2}>
+            <Grid item>
+              <AddVirtualAccountsButton />
+            </Grid>
+            <Grid item>
+              <DisableAccountsButton />
+            </Grid>
+            <Grid item>
+              <UploadCSVButton />
+            </Grid>
           </Grid>
           <Grid item>
-            <DisableAccountsButton />
+            <VirtualAccountsTabView />
           </Grid>
-          <Grid item>
-            <UploadCSVButton />
-          </Grid>
-        </Grid>
-        <Grid item>
-          <VirtualAccountsTabView />
-        </Grid>
+        </RootContainer>
       </Grid>
     </SelectionHelper>
   )

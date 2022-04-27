@@ -15,11 +15,11 @@ export const MyHoldings = () => {
       'View, manage and track the value of your private company shares and stock options over time. Receive insights, and investment and liquidity opportunities specific to your holdings.'
   })
   return (
-    <RootContainer>
-      <Grid container direction='column' spacing={3}>
-        <Grid item>
-          <PageHeader title='My Holdings' showBreadcrumbs />
-        </Grid>
+    <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader title='My Holdings' showBreadcrumbs />
+      </Grid>
+      <RootContainer>
         <Grid item>
           <Typography variant='h3'>{headerContent.title}</Typography>
           <VSpacer size='small' />
@@ -29,7 +29,7 @@ export const MyHoldings = () => {
           <VSpacer size='small' />
           <HoldingsTables setHeaderContent={setHeaderContent} />
         </Grid>
-      </Grid>
-    </RootContainer>
+      </RootContainer>
+    </Grid>
   )
 }

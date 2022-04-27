@@ -4,39 +4,42 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { Filters } from './components/Filters/Filters'
 import { ReportsTable } from 'app/pages/accounts/pages/reports/components/ReportsTable/ReportsTable'
+import { RootContainer } from 'ui/RootContainer'
 
 export const Reports: React.FC = () => {
   return (
-    <Grid container direction={'column'}>
+    <Grid container direction={'column'} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='Reports' />
       </Grid>
-      <Grid item>
-        <VSpacer size={'small'} />
-        <Typography variant={'h4'}>Statements</Typography>
-        <VSpacer size={'small'} />
-      </Grid>
-      <Grid
-        item
-        container
-        justifyContent={'space-between'}
-        alignItems={'center'}
-      >
+      <RootContainer>
         <Grid item>
-          <Box marginRight={2} marginTop={2} marginBottom={2}>
-            <Typography variant={'body1'}>
-              View, manage and track your accounting reports and taxations.
-            </Typography>
-          </Box>
+          <VSpacer size={'small'} />
+          <Typography variant={'h4'}>Statements</Typography>
+          <VSpacer size={'small'} />
+        </Grid>
+        <Grid
+          item
+          container
+          justifyContent={'space-between'}
+          alignItems={'center'}
+        >
+          <Grid item>
+            <Box marginRight={2} marginTop={2} marginBottom={2}>
+              <Typography variant={'body1'}>
+                View, manage and track your accounting reports and taxations.
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Filters />
+          </Grid>
         </Grid>
         <Grid item>
-          <Filters />
+          <VSpacer size={'medium'} />
+          <ReportsTable />
         </Grid>
-      </Grid>
-      <Grid item>
-        <VSpacer size={'medium'} />
-        <ReportsTable />
-      </Grid>
+      </RootContainer>
     </Grid>
   )
 }

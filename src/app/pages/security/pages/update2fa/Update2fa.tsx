@@ -9,6 +9,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { history } from 'config/history'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { VSpacer } from 'components/VSpacer'
+import { RootContainer } from 'ui/RootContainer'
 
 const steps = [
   'Remove Current Authenticator',
@@ -45,50 +46,52 @@ export const Update2fa = () => {
   const isNextButtonVisible = activeStep < steps.length - 1 && activeStep > 0
 
   return (
-    <Grid container spacing={0}>
+    <Grid container spacing={0} style={{ display: 'table' }}>
       <PageHeader title='Change Authenticator' />
-      <Grid item xs={12} className={classes.wrapper}>
-        <Container>
-          <PageHeader title='Change Authenticator' variant={'h6'} />
-          <Box>
-            <Stepper activeStep={activeStep} alternativeLabel>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <Grid
-              container
-              justifyContent='center'
-              alignItems='center'
-              direction='column'
-            >
-              <Grid item>
-                <VSpacer size={'medium'} />
-                <Box mt={4} mb={6} width='100%'>
-                  <ActiveStep
-                    twoFaData={twoFaData}
-                    handleSuccessfulRemoveAuthenticator={
-                      handleSuccessfulFirstStep
-                    }
-                    index={activeStep}
-                    nextStep={nextStep}
+      <RootContainer>
+        <Grid item xs={12} className={classes.wrapper}>
+          <Container>
+            <PageHeader title='Change Authenticator' variant={'h6'} />
+            <Box>
+              <Stepper activeStep={activeStep} alternativeLabel>
+                {steps.map(label => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <Grid
+                container
+                justifyContent='center'
+                alignItems='center'
+                direction='column'
+              >
+                <Grid item>
+                  <VSpacer size={'medium'} />
+                  <Box mt={4} mb={6} width='100%'>
+                    <ActiveStep
+                      twoFaData={twoFaData}
+                      handleSuccessfulRemoveAuthenticator={
+                        handleSuccessfulFirstStep
+                      }
+                      index={activeStep}
+                      nextStep={nextStep}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item>
+                  <ChangeStepButtons
+                    isBackButtonVisible={isBackButtonVisible}
+                    isNextButtonVisible={isNextButtonVisible}
+                    onBackButtonClick={prevStep}
+                    onNextButtonClick={nextStep}
                   />
-                </Box>
+                </Grid>
               </Grid>
-              <Grid item>
-                <ChangeStepButtons
-                  isBackButtonVisible={isBackButtonVisible}
-                  isNextButtonVisible={isNextButtonVisible}
-                  onBackButtonClick={prevStep}
-                  onNextButtonClick={nextStep}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-      </Grid>
+            </Box>
+          </Container>
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

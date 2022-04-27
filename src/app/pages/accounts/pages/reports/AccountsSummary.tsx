@@ -11,6 +11,7 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { CashReportTable } from 'app/pages/accounts/pages/reports/components/CashReportTable/CashReportTable'
 import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { RootContainer } from 'ui/RootContainer'
 
 export const AccountsSummary: React.FC = () => {
   const { updateFilter } = useQueryFilter()
@@ -56,22 +57,23 @@ export const AccountsSummary: React.FC = () => {
   }
 
   return (
-    <Grid container direction={'column'}>
+    <Grid container direction={'column'} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='Activity Summary' />
         <VSpacer size={'medium'} />
       </Grid>
+      <RootContainer>
+        <ReportsInfo>
+          {!hasNoData ? (
+            <Actions sectionSummaries={['Open Positions', 'Cash Report']} />
+          ) : undefined}
+        </ReportsInfo>
 
-      <ReportsInfo>
-        {!hasNoData ? (
-          <Actions sectionSummaries={['Open Positions', 'Cash Report']} />
-        ) : undefined}
-      </ReportsInfo>
-
-      <Grid item>
-        <VSpacer size={'medium'} />
-        {renderContent()}
-      </Grid>
+        <Grid item>
+          <VSpacer size={'medium'} />
+          {renderContent()}
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

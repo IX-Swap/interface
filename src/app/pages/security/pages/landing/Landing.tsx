@@ -8,6 +8,7 @@ import { SecurityRoute } from 'app/pages/security/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import useStyles from 'app/pages/security/pages/landing/Landing.styles'
 import { VSpacer } from 'components/VSpacer'
+import { RootContainer } from 'ui/RootContainer'
 
 export const Landing = () => {
   const { user = { totpConfirmed: false } } = useAuth()
@@ -22,57 +23,59 @@ export const Landing = () => {
   }
 
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='Settings' />
       </Grid>
 
-      <Grid item className={classes.contentWrapper}>
-        <Grid container direction='column' alignItems='center' wrap='wrap'>
-          <Grid container direction='column' item>
-            <Grid item>
-              <SettingsRow
-                name='2FA Authenticator'
-                action={
-                  <Button
-                    variant='text'
-                    color='primary'
-                    onClick={handleUpdate2FA}
-                    size='large'
-                  >
-                    {user.totpConfirmed ? 'Update' : 'Connect'}
-                  </Button>
-                }
-              />
-            </Grid>
-            <VSpacer size={'small'} />
+      <RootContainer>
+        <Grid item className={classes.contentWrapper}>
+          <Grid container direction='column' alignItems='center' wrap='wrap'>
+            <Grid container direction='column' item>
+              <Grid item>
+                <SettingsRow
+                  name='2FA Authenticator'
+                  action={
+                    <Button
+                      variant='text'
+                      color='primary'
+                      onClick={handleUpdate2FA}
+                      size='large'
+                    >
+                      {user.totpConfirmed ? 'Update' : 'Connect'}
+                    </Button>
+                  }
+                />
+              </Grid>
+              <VSpacer size={'small'} />
 
-            <Grid item>
-              <SettingsRow
-                name='Password'
-                action={
-                  <Button
-                    variant='text'
-                    color='primary'
-                    onClick={() => push(SecurityRoute.changePassword)}
-                    size='large'
-                  >
-                    Update
-                  </Button>
-                }
-              />
-            </Grid>
-            <VSpacer size={'small'} />
+              <Grid item>
+                <SettingsRow
+                  name='Password'
+                  action={
+                    <Button
+                      variant='text'
+                      color='primary'
+                      onClick={() => push(SecurityRoute.changePassword)}
+                      size='large'
+                    >
+                      Update
+                    </Button>
+                  }
+                />
+              </Grid>
+              <VSpacer size={'small'} />
 
-            <Grid item>
-              <SettingsRow
-                name='Application Theme'
-                action={<ThemeSelector />}
-              />
+              <Grid item>
+                <SettingsRow
+                  name='Application Theme'
+                  action={<ThemeSelector />}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </RootContainer>
     </Grid>
   )
 }

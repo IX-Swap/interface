@@ -6,27 +6,20 @@ import { AppRoute } from 'components/AppRoute'
 import { IndividualRouter } from 'app/pages/identity/router/IndividualRouter'
 import { CorporateRouter } from 'app/pages/identity/router/CorporateRouter'
 import { DetailsOfIssuanceRouter } from 'app/pages/identity/router/DetailsOfIssuanceRouter'
-import { RootContainer } from 'ui/RootContainer'
 
 export const IdentityRouter = () => {
   return (
     <Switch>
       <AppRoute path={IdentityRoute.individual}>
-        <RootContainer>
-          <IndividualRouter />
-        </RootContainer>
+        <IndividualRouter />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.corporate}>
-        <RootContainer>
-          <CorporateRouter />
-        </RootContainer>
+        <CorporateRouter />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.issuance}>
-        <RootContainer>
-          <DetailsOfIssuanceRouter />
-        </RootContainer>
+        <DetailsOfIssuanceRouter />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.list}>
