@@ -18,7 +18,7 @@ export const useStyles = makeStyles(theme => ({
   wrapper: {
     // background: 'red',
     position: `relative`,
-    background: 'rgba(255, 255, 255, 0.75)',
+    background: theme.palette.header.bg,
     border: 'none',
     marginTop: '1rem',
     marginBottom: '1rem',
