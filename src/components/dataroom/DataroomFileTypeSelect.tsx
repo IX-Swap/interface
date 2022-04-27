@@ -20,3 +20,4 @@ export const DataroomFileTypeSelect = (props: SelectProps) => {
     </Select>
   )
 }
+DataroomFileTypeSelect.displayName = 'Select_DataroomFileTypeSelect'

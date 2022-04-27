@@ -31,3 +31,4 @@ export const CountrySelect = (props: CountrySelectProps): JSX.Element => {
     </>
   )
 }
+CountrySelect.displayName = 'Select_CountrySelect'

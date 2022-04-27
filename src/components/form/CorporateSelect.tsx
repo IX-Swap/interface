@@ -33,3 +33,4 @@ export const CorporateSelect = (props: any) => {
     </>
   )
 }
+CorporateSelect.displayName = 'Select_CorporateSelect'
