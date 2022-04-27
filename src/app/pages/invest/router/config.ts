@@ -24,7 +24,8 @@ export const InvestRoute = {
     'makeInvestment'
   ]),
   commitments: makeURL(['app', 'invest', 'commitments']),
-  trading: makeURL(['app', 'invest', 'trading'])
+  trading: makeURL(['app', 'invest', 'trading', 'pairId']),
+  tradingRoot: makeURL(['app', 'trading'])
 }
 
 export const CommitmentRoute = {
