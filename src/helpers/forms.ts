@@ -72,13 +72,11 @@ export const textValueExtractor = (
 
 export const showInputLabel = (component: ElementType) => {
   const displayName = String((component as any).displayName)
-  const componentName = String((component as any).name)
   const renderName = (component as any)?.render?.name
   const showLabel = !(
     renderName === 'TextField' ||
     displayName.startsWith('TextField') ||
-    displayName.startsWith('Select') ||
-    componentName.includes('Select')
+    displayName.startsWith('Select')
   )
   return showLabel
 }

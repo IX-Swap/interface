@@ -32,3 +32,4 @@ export const AnnualIncomeSelect = (props: any) => {
     </>
   )
 }
+AnnualIncomeSelect.displayName = 'Select_AnnualIncomeSelect'

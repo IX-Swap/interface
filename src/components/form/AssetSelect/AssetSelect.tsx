@@ -42,3 +42,4 @@ export const AssetSelect = (
     </>
   )
 }
+AssetSelect.displayName = 'Select_AssetSelect'

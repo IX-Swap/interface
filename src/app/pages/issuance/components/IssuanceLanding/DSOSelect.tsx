@@ -22,3 +22,5 @@ export const DSOSelect = (props: DSOSelectProps): JSX.Element => {
     </Select>
   )
 }
+
+DSOSelect.displayName = 'Select_DSOSelect'

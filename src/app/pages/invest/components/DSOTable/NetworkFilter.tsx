@@ -49,3 +49,4 @@ export const NetworkFilter = () => {
     </Select>
   )
 }
+NetworkFilter.displayName = 'Select_NetworkFilter'

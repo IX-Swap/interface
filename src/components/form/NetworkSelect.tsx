@@ -33,3 +33,4 @@ export const NetworkSelect = (props: SelectProps): JSX.Element => {
     </>
   )
 }
+NetworkSelect.displayName = 'Select_NetworkSelect'
