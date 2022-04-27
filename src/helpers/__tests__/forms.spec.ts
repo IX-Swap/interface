@@ -3,7 +3,8 @@ import {
   hasValue,
   plainValueExtractor,
   reverseBooleanValueExtractor,
-  numericStringValueExtractor
+  numericStringValueExtractor,
+  renderValue
 } from '../forms'
 
 describe('plainValueExtractor', () => {
@@ -49,5 +50,24 @@ describe('numericStringValueExtractor', () => {
       formattedValue: '123'
     }
     expect(numericStringValueExtractor(values)).toEqual('123')
+  })
+})
+
+describe('renderValue', () => {
+  it('returns the correct value', () => {
+    const list: { _id: string; formattedValue: string }[] = [
+      {
+        _id: '1',
+        formattedValue: '123'
+      }
+    ]
+    expect(
+      renderValue({
+        value: '1',
+        list,
+        extractor: (item: { _id: string; formattedValue: string }) =>
+          item.formattedValue
+      })
+    ).toEqual('123')
   })
 })
