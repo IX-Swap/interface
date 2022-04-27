@@ -25,23 +25,26 @@ export const UploadDocumentField = ({
   tooltipContent
 }: UploadDocumentFieldProps) => {
   const { control } = useFormContext()
+
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <Box>
-          <Grid item container alignItems='center'>
-            <Typography variant='h5'>{label}</Typography>
-            <Box pr={1}></Box>
-            {tooltipContent !== undefined ? (
-              <Tooltip
-                data-testid='upload-document-field-tooltip'
-                title={tooltipContent}
-              />
-            ) : null}
-          </Grid>
-        </Box>
-        {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
-      </Grid>
+      {label !== '' && (
+        <Grid item xs={12}>
+          <Box>
+            <Grid item container alignItems='center'>
+              <Typography variant='h5'>{label}</Typography>
+              <Box pr={1}></Box>
+              {tooltipContent !== undefined ? (
+                <Tooltip
+                  data-testid='upload-document-field-tooltip'
+                  title={tooltipContent}
+                />
+              ) : null}
+            </Grid>
+          </Box>
+          {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
+        </Grid>
+      )}
       <Grid item xs={12}>
         <FieldsArray name={name} control={control}>
           {({ fields, append, remove }) => (
@@ -51,7 +54,7 @@ export const UploadDocumentField = ({
                   <Grid item xs={12} key={field.id}>
                     <TypedField
                       customRenderer
-                      name={[name, index, 'value']}
+                      name={[name, index]}
                       control={control}
                       component={FileUpload}
                       label='Upload File'

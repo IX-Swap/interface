@@ -2,12 +2,9 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { PersonnelInformationProps } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
-import { TypedField } from 'components/form/TypedField'
-import { FileUpload } from 'ui/FileUpload/FileUpload'
-import { useFormContext } from 'react-hook-form'
-import { plainValueExtractor } from 'helpers/forms'
-import { DataroomFileType } from 'config/dataroom'
+import { pathToString } from 'helpers/forms'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 
 export const AuthorizationDocuments = ({
   fieldId,
@@ -15,7 +12,7 @@ export const AuthorizationDocuments = ({
   index,
   defaultValue
 }: PersonnelInformationProps) => {
-  const { control } = useFormContext()
+  const fieldName = pathToString([index, 'documents'], rootName)
 
   return (
     <Grid container spacing={3}>
@@ -29,22 +26,8 @@ export const AuthorizationDocuments = ({
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <TypedField
-          customRenderer
-          fullWidth
-          component={FileUpload}
-          name={[rootName, index, 'documents', 'value']}
-          label='Upload File'
-          control={control}
-          valueExtractor={plainValueExtractor}
-          accept={DataroomFileType.document}
-          documentInfo={{
-            type: 'Authorization Documents',
-            title: 'Authorization Documents'
-          }}
-        />
+        <UploadDocumentField name={fieldName} label='' />
       </Grid>
-
       <ValidateOnMount />
     </Grid>
   )
