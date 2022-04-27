@@ -206,7 +206,7 @@ export const getActionStatusPercent = (action: ActionTypes, status: string) => {
 }
 
 export const isPending = (status: string) => {
-  return !endedStatuses.includes(status)
+  return status ? !endedStatuses.includes(status) : false
 }
 
 export const isWithdraw = (action: ActionTypes) => {
