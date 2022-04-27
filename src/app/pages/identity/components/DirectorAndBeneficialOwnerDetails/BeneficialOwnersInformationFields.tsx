@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material'
-import { Personnel } from 'app/pages/identity/types/forms'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { percentageNumberFormat } from 'config/numberFormat'
@@ -11,20 +10,18 @@ export interface BeneficialOwnersInformationFieldsProps {
   rootName: string
   index: number
   fieldId: string
-  defaultValue: Personnel
 }
 
 export const BeneficialOwnersInformationFields = ({
   rootName,
   index,
-  fieldId,
-  defaultValue
+  fieldId
 }: BeneficialOwnersInformationFieldsProps) => {
   const { control } = useFormContext()
 
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={4}>
+    <Grid container spacing={6}>
+      <Grid item xs={12} md={6}>
         <TypedField
           key={fieldId}
           component={TextInput}
@@ -32,10 +29,9 @@ export const BeneficialOwnersInformationFields = ({
           variant='outlined'
           name={[rootName, index, 'fullName']}
           label='Full Name'
-          defaultValue={defaultValue.fullName ?? ''}
         />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={6}>
         <TypedField
           control={control}
           component={NumericInput}
@@ -46,7 +42,6 @@ export const BeneficialOwnersInformationFields = ({
           helperText='in percent'
           variant='outlined'
           fullWidth
-          defaultValue={defaultValue.percentageShareholding ?? ''}
         />
       </Grid>
     </Grid>

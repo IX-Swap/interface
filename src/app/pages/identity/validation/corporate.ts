@@ -4,6 +4,7 @@ import {
   CorporateInvestorAgreementsFormValues,
   CorporateInvestorDocumentsFormValues,
   DirectorFormValues,
+  DocumentFieldArrayItemValue,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
@@ -107,15 +108,11 @@ export const directorsAndBeneficialOwnersSchema = yup
               .phone()
               .required(validationMessages.required),
             address: addressSchema.required(validationMessages.required),
-            documents: yup
-              .object({
-                proofOfIdentity: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required),
-                proofOfAddress: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required)
-              })
+            proofOfIdentity: yup
+              .array<DocumentFieldArrayItemValue>()
+              .required(validationMessages.required),
+            proofOfAddress: yup
+              .array<DocumentFieldArrayItemValue>()
               .required(validationMessages.required)
           })
           .required(validationMessages.required)
@@ -134,15 +131,11 @@ export const directorsAndBeneficialOwnersSchema = yup
               })
               .typeError('Percentage shareholding must be a number')
               .required(validationMessages.required),
-            documents: yup
-              .object({
-                proofOfIdentity: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required),
-                proofOfAddress: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required)
-              })
+            proofOfIdentity: yup
+              .array<DocumentFieldArrayItemValue>()
+              .required(validationMessages.required),
+            proofOfAddress: yup
+              .array<DocumentFieldArrayItemValue>()
               .required(validationMessages.required)
           })
           .required(validationMessages.required)
