@@ -163,7 +163,7 @@ export interface RepresentativeFormValues {
   designation: string
   email: string
   contactNumber: string
-  documents: DataroomFile[]
+  documents: Array<{ value: DataroomFile }>
 }
 export interface DirectorFormValues {
   fullName: string

@@ -10,13 +10,27 @@ import {
 export const getCorporateInfoRequestPayload = (
   data: InvestorCorporateInfoFormValues
 ) => {
-  const { otherLegalEntityStatus, legalEntityStatus, logo, ...rest } = data
+  const {
+    otherLegalEntityStatus,
+    legalEntityStatus,
+    logo,
+    representatives,
+    ...rest
+  } = data
   const customLegalEntityStatus =
     otherLegalEntityStatus !== undefined && otherLegalEntityStatus.trim() !== ''
+
+  const representativesTransformed = representatives.map(rep => ({
+    ...rep,
+    documents: rep.documents.map(doc => ({ ...doc.value }))
+  }))
+
+  console.log(representativesTransformed)
 
   return {
     ...rest,
     logo: (logo as DataroomFile)?._id,
+    representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus
       : legalEntityStatus

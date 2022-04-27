@@ -25,6 +25,13 @@ export const getCorporateInfoFormValues = (
     ? last(LEGAL_ENTITY_STATUS_LIST)?.value
     : data?.legalEntityStatus
 
+  const representatives = data?.representatives.map(item => ({
+    ...item,
+    documents: item.documents?.map(doc => ({ value: doc }))
+  }))
+
+  console.log(representatives)
+
   return {
     logo: data?.logo,
     companyLegalName: data?.companyLegalName,
@@ -33,7 +40,7 @@ export const getCorporateInfoFormValues = (
     otherLegalEntityStatus,
     countryOfFormation: data?.countryOfFormation,
     companyAddress: data?.companyAddress,
-    representatives: data?.representatives,
+    representatives: representatives,
     mailingAddress: data?.mailingAddress,
     isMailingAddressSame: data?.isMailingAddressSame,
     numberOfBusinessOwners: data?.numberOfBusinessOwners,

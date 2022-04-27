@@ -60,7 +60,9 @@ export const File = ({
           {label}
         </Typography>
       </Box>
-      {(!multiple || isDisplay) && value !== undefined ? (
+      {(!multiple || isDisplay) &&
+      value !== undefined &&
+      (value as DataroomFile)?.originalFileName !== undefined ? (
         <Actions
           name={name}
           document={value as DataroomFile}

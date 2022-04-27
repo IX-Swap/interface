@@ -54,7 +54,7 @@ export const UploadDocumentField = ({
                   <Grid item xs={12} key={field.id}>
                     <TypedField
                       customRenderer
-                      name={[name, index]}
+                      name={[name, index, 'value']}
                       control={control}
                       component={FileUpload}
                       label='Upload File'
@@ -66,14 +66,19 @@ export const UploadDocumentField = ({
                         type: label,
                         title: label
                       }}
-                      remove={() => remove(index)}
+                      remove={() => {
+                        remove(index)
+                      }}
+                      defaultValue={field.value}
                     />
                   </Grid>
                 )
               })}
               <Grid item xs={12}>
                 <Button
-                  onClick={() => append({ value: {} })}
+                  onClick={() => {
+                    append({ value: {} })
+                  }}
                   variant='outlined'
                   startIcon={<Icon name='plus' />}
                   sx={{ width: '100%' }}
