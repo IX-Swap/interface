@@ -1,10 +1,12 @@
-import { Grid, Paper, Step, Typography } from '@mui/material'
+import { Grid, Paper, Step, useMediaQuery } from '@mui/material'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ComponentType, useEffect, useMemo, useState } from 'react'
 import { MutationResultPair } from 'react-query'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
+import { useTheme } from '@mui/material/styles'
+import { SaveDrafButton } from 'app/components/FormStepper/SaveDraftButton'
 
 export interface FormStepperStep {
   label: string
@@ -12,6 +14,7 @@ export interface FormStepperStep {
   getFormValues: any
   getRequestPayload: any
   validationSchema?: any
+  formId?: string
 }
 
 export interface FormStepperProps {
@@ -24,6 +27,7 @@ export interface FormStepperProps {
   shouldSaveOnMove?: boolean
   nonLinear?: boolean
   skippable?: boolean
+  formTitle?: string
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -36,7 +40,8 @@ export const FormStepper = (props: FormStepperProps) => {
     shouldSaveOnMove = true,
     defaultActiveStep,
     nonLinear = false,
-    skippable = false
+    skippable = false,
+    formTitle
   } = props
 
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
@@ -63,6 +68,9 @@ export const FormStepper = (props: FormStepperProps) => {
 
   const { getFilterValue, updateFilter } = useQueryFilter()
   const stepFilter = getFilterValue('step')
+
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
   const getStepFilterValue = () => {
     const stepByFilterIndex = steps.findIndex(
@@ -114,7 +122,7 @@ export const FormStepper = (props: FormStepperProps) => {
       active: index === activeStep,
       completed: lastStep
         ? data !== undefined
-          ? data.status === 'Submitted' || data.status === 'Approved'
+          ? data?.status === 'Submitted' || data?.status === 'Approved'
           : false
         : completed.includes(index)
         ? isValid
@@ -128,8 +136,12 @@ export const FormStepper = (props: FormStepperProps) => {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={9}>
+    <Grid
+      container
+      spacing={2}
+      direction={matches ? 'column-reverse' : undefined}
+    >
+      <Grid item xs={12} sm={9}>
         {stepsMemo.map((step, index) => (
           <FormStep
             key={`step-content-${index}`}
@@ -148,15 +160,44 @@ export const FormStepper = (props: FormStepperProps) => {
           />
         ))}
       </Grid>
-      <Grid item xs={3}>
-        <Paper sx={{ borderRadius: 2, py: 5 }}>
-          <Typography variant='h6' sx={{ mb: 2, pl: 4 }}>
-            Progress
-          </Typography>
+      <Grid item xs={12} sm={3}>
+        <Paper
+          sx={{
+            borderRadius: 2,
+            py: matches ? 2 : 5,
+            px: matches ? 2 : undefined
+          }}
+        >
           <Stepper
             nonLinear={nonLinear}
-            orientation='vertical'
+            orientation={matches ? 'horizontal' : 'vertical'}
             activeStep={activeStep}
+            title={matches ? steps[activeStep].label : 'Progress'}
+            stepInfo={
+              matches
+                ? {
+                    label: formTitle,
+                    activeStep: activeStep + 1,
+                    totalSteps: steps.length
+                  }
+                : undefined
+            }
+            actions={
+              <SaveDrafButton
+                isLastStep={activeStep === steps.length - 1}
+                formId={`${steps[activeStep].formId ?? 'form'}-${activeStep}`}
+                disabled={
+                  (activeStep === steps.length - 1 &&
+                    !(
+                      (steps[activeStep].validationSchema?.isValidSync(
+                        steps[activeStep].getFormValues(data)
+                      ) as boolean) ?? true
+                    )) ||
+                  data?.status === 'Submitted' ||
+                  data?.status === 'Approved'
+                }
+              />
+            }
           >
             {steps.map((formStep, index) => {
               const step = index + 1

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Step } from '@mui/material'
+import { Box, Button, Step, useMediaQuery } from '@mui/material'
 import { Orientation } from '@mui/material/Stepper/Stepper'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
+import { useTheme } from '@mui/styles'
 
 const steps = [
   'Step Title 1',
@@ -15,11 +16,16 @@ const steps = [
 
 export interface StepperTemplateProps {
   orientation?: Orientation
+  formTitle?: string
 }
 
 export const StepperExample = ({
-  orientation = 'horizontal'
+  orientation = 'horizontal',
+  formTitle
 }: StepperTemplateProps) => {
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+
   const [activeStep, setActiveStep] = React.useState(0)
   const handleStep = (step: number) => () => {
     setActiveStep(step)
@@ -36,7 +42,43 @@ export const StepperExample = ({
   })
 
   return (
-    <Stepper nonLinear orientation={orientation} activeStep={activeStep}>
+    <Stepper
+      nonLinear
+      orientation={orientation}
+      activeStep={activeStep}
+      stepInfo={
+        orientation === 'horizontal' && matches
+          ? {
+              label: steps[activeStep],
+              activeStep: activeStep + 1,
+              totalSteps: steps.length
+            }
+          : undefined
+      }
+      title={formTitle}
+      actions={
+        <Box
+          display='flex'
+          justifyContent={matches ? 'center' : 'flex-start'}
+          width='100%'
+          mt={matches ? 1 : 3}
+        >
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: {
+                xs: 300,
+                md: 220
+              }
+            }}
+          >
+            <Button fullWidth variant='outlined'>
+              Save Draft
+            </Button>
+          </Box>
+        </Box>
+      }
+    >
       {steps.map((label, index) => {
         const step = index + 1
 

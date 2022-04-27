@@ -23,11 +23,13 @@ export type CorporateType =
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity
   type?: CorporateType
+  formTitle?: string
 }
 
 export const CorporateInvestorForm = ({
   data,
-  type = 'investor'
+  type = 'investor',
+  formTitle
 }: CorporateInvestorFormProps) => {
   const corporateInvestorFormSteps = getCorporateInvestorFormSteps(type)
 
@@ -82,6 +84,7 @@ export const CorporateInvestorForm = ({
         submitMutation={submitMutation}
         steps={corporateInvestorFormSteps}
         defaultActiveStep={defaultActiveStep}
+        formTitle={formTitle}
         nonLinear
       />
     </>
