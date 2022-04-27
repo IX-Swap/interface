@@ -17,7 +17,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const { control } = useFormContext<Address>()
 
   return (
-    <Grid container spacing={3} className={privateClassNames()}>
+    <Grid container spacing={6} className={privateClassNames()}>
       <Grid item xs={12} md={6}>
         <TypedField
           customRenderer

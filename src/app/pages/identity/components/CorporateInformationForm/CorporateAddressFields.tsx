@@ -18,9 +18,11 @@ export const CorporateAddressFields = () => {
   }, [isMailingAddressSame, reset, getValues])
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={6}>
       <Grid item xs={12}>
         <FormSectionHeader title='Registered Address' />
+      </Grid>
+      <Grid item xs={12}>
         <AddressFields rootName='companyAddress' />
       </Grid>
       <Grid item xs={12}>
@@ -35,10 +37,14 @@ export const CorporateAddressFields = () => {
         />
       </Grid>
       {!isMailingAddressSame ? (
-        <Grid item xs={12}>
-          <FormSectionHeader title='Mailing Address' />
-          <AddressFields rootName='mailingAddress' />
-        </Grid>
+        <>
+          <Grid item xs={12}>
+            <FormSectionHeader title='Mailing Address' />
+          </Grid>
+          <Grid item xs={12}>
+            <AddressFields rootName='mailingAddress' />
+          </Grid>
+        </>
       ) : null}
     </Grid>
   )

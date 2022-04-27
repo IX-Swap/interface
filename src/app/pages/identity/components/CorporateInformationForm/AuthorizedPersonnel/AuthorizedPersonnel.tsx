@@ -37,7 +37,7 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
 
   return (
     <FieldContainer>
-      <Grid container spacing={3}>
+      <Grid container spacing={6}>
         <Grid
           item
           container

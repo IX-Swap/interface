@@ -40,7 +40,7 @@ export const InformationFields = ({
   return (
     <>
       <FormSectionHeader title={corporateInformationLabelMap[type]} />
-      <Grid container direction='row' spacing={3}>
+      <Grid container spacing={6}>
         <Grid item xs={12}>
           <TypedField
             customRenderer
@@ -101,6 +101,18 @@ export const InformationFields = ({
             variant='outlined'
             name='legalEntityStatus'
             label='Legal Entity'
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            customRenderer
+            fullWidth
+            component={TextInput}
+            control={control}
+            variant='outlined'
+            name='otherLegalEntityStatus'
+            label='Others (Please specify)'
+            disabled={legalEntityStatus !== 'others'}
           />
         </Grid>
         <ValidateOnMount />
