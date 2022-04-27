@@ -1,9 +1,10 @@
-import React from 'react'
-import { MenuItem, SelectProps, TextFieldProps } from '@mui/material'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
-import { AuthorizableStatus } from 'types/util'
 import { ValidCurrency } from 'helpers/types'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import React from 'react'
+import { AuthorizableStatus } from 'types/util'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select, SelectProps } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 interface BankSelectProps extends Partial<SelectProps> {
   currency?: ValidCurrency
@@ -23,16 +24,19 @@ export const BankSelect = (props: BankSelectProps) => {
   )
 
   return (
-    <TextFieldSelect {...(rest as TextFieldProps)}>
-      <MenuItem disabled value={undefined}>
-        {filteredBanks.length > 0 ? 'Bank' : 'No available banks'}
-      </MenuItem>
-      {filteredBanks.map(({ _id, bankName, bankAccountNumber }) => (
-        <MenuItem key={_id} value={_id}>
-          {bankName} – {bankAccountNumber}
-        </MenuItem>
-      ))}
-    </TextFieldSelect>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select {...rest} label={undefined}>
+        <SelectItem disabled value={undefined}>
+          {filteredBanks.length > 0 ? 'Bank' : 'No available banks'}
+        </SelectItem>
+        {filteredBanks.map(({ _id, bankName, bankAccountNumber }) => (
+          <SelectItem key={_id} value={_id}>
+            {bankName} – {bankAccountNumber}
+          </SelectItem>
+        ))}
+      </Select>
+    </>
   )
 }
 

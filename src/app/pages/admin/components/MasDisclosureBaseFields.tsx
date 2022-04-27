@@ -5,7 +5,7 @@ import { RichTextEditor } from 'components/form/RichTextEditor'
 import { wysiwygValueExtractor } from 'helpers/forms'
 import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
-import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
+import { useGetSiteConfig } from 'app/pages/invest/hooks/useGetSiteConfig'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { MasDisclosureConfirmDialog } from 'app/pages/admin/components/MasDisclosureConfirmDialog'
 

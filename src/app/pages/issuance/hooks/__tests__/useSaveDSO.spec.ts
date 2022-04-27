@@ -3,7 +3,7 @@ import * as useCreateDSO from 'app/pages/issuance/hooks/useCreateDSO'
 import * as useUpdateDSO from 'app/pages/issuance/hooks/useUpdateDSO'
 import { renderHookWithServiceProvider, waitFor } from 'test-utils'
 import { createDSOArgs, dso } from '__fixtures__/issuance'
-import * as getUpdateDSOPayload from 'app/pages/issuance/utils'
+import * as getUpdateDSOPayload from 'app/pages/issuance/utils/utils'
 import { useSaveDSO } from '../useSaveDSO'
 
 describe('useSaveDSO', () => {

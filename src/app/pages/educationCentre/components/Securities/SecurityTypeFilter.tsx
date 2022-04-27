@@ -1,7 +1,10 @@
-import { FormControl, MenuItem } from '@mui/material'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { FormControl } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { isEmptyString } from 'helpers/strings'
 import React from 'react'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const assetClasses = [
   'Equity',
@@ -16,20 +19,20 @@ export const SecurityTypeFilter = () => {
     <SearchQueryFilter<'assetClass'> name='assetClass' defaultValue=''>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
-          <TextFieldSelect
-            label='Security Type'
+          <InputLabel>Security Type</InputLabel>
+          <Select
             onChange={event => {
-              onChange(event.target.value)
+              onChange(event.target.value as string)
             }}
-            value={value}
+            value={isEmptyString(value) ? 'All Types' : value}
           >
-            <MenuItem value=''>All Types</MenuItem>
+            <SelectItem value=''>All Types</SelectItem>
             {assetClasses.map(assetClass => (
-              <MenuItem key={assetClass} value={assetClass}>
+              <SelectItem key={assetClass} value={assetClass}>
                 {assetClass}
-              </MenuItem>
+              </SelectItem>
             ))}
-          </TextFieldSelect>
+          </Select>
         </FormControl>
       )}
     </SearchQueryFilter>

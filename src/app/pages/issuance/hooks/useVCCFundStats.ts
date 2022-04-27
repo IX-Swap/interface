@@ -8,7 +8,7 @@ import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { InvestmentStats, SubFundStats } from 'types/vccDashboard'
 import { subMonths } from 'date-fns'
-import { sortAssets, sortInvestors } from '../utils'
+import { sortAssets, sortInvestors } from 'app/pages/issuance/utils/utils'
 
 export const useVCCFundStats = () => {
   const { user } = useAuth()

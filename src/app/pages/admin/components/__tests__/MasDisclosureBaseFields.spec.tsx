@@ -7,7 +7,7 @@ import { wysiwygValueExtractor } from 'helpers/forms'
 import { Form } from 'components/form/Form'
 import { fireEvent } from '@testing-library/dom'
 import * as useFormContext from 'react-hook-form'
-import * as useGetSiteConfig from 'app/pages/exchange/hooks/useGetSiteConfig'
+import * as useGetSiteConfig from 'app/pages/invest/hooks/useGetSiteConfig'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 jest.mock('components/form/TypedField', () => ({
