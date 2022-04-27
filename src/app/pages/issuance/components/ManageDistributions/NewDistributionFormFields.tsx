@@ -72,7 +72,6 @@ export const NewDistributionFormFields = ({
             numberFormat={moneyNumberFormat}
             valueExtractor={numericValueExtractor}
             variant='outlined'
-            capsuleLabel={currency}
           />
         </Grid>
         <Grid item xs={12} md={3}>

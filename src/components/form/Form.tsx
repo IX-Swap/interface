@@ -12,6 +12,7 @@ export interface FormProps<T extends {}> {
   shouldUnregister?: boolean
   resetAfterSubmit?: boolean
   allowInvalid?: boolean
+  id?: string
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -24,6 +25,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     children,
     resetAfterSubmit = false,
     allowInvalid = false,
+    id,
     ...rest
   } = props
 
@@ -59,6 +61,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
           formSubmit,
           allowInvalid ? handleInvalidSubmit : console.error
         )}
+        id={id}
       >
         {children}
       </form>

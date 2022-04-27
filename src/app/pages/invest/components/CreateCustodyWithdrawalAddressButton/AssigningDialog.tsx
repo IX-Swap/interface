@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dialog, Box, Typography, DialogContent } from '@mui/material'
-import { LoadingMessage } from 'app/pages/exchange/components/GetWalletDialog/LoadingMessage'
+import { LoadingMessage } from 'app/pages/invest/components/GetWalletDialog/LoadingMessage'
 
 export interface AssigningDialogProps {
   open: boolean

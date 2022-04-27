@@ -26,8 +26,10 @@ export const VirtualTransactionsFilters = () => {
         item
         container
         xs={12}
+        mb={2}
         wrap={'wrap'}
         justifyContent={'space-between'}
+        alignItems='center'
       >
         <VTDateFilter />
         {!isMiniLaptop && <Box pr={3} />}

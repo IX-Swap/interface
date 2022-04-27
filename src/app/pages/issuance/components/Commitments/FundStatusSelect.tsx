@@ -1,8 +1,10 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { SelectProps } from '@mui/material'
+import { renderSelectItems } from 'helpers/rendering'
 import { TypedSelectProps } from 'types/util'
 import { fundStatuses } from 'config/defaults'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface FundStatusSelectSelectProps extends TypedSelectProps {
   includeAll?: boolean
@@ -28,11 +30,11 @@ export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
   return (
     <Select {...(rest as SelectProps)} label={label}>
       {includeAll && (
-        <MenuItem value={valueBetweenAll}>
+        <SelectItem value={valueBetweenAll}>
           {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
-        </MenuItem>
+        </SelectItem>
       )}
-      {renderMenuItems(
+      {renderSelectItems(
         fundStatuses.map(option => ({
           label: option,
           value: getValueForFundStatus(option)

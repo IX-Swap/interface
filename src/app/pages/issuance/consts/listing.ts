@@ -1,0 +1,31 @@
+import { ListingFormValues } from 'app/pages/issuance/types/listings'
+
+export const initialListingFormValues: ListingFormValues = {
+  logo: '',
+  corporate: '',
+  network: '',
+  tokenName: '',
+  tokenSymbol: '',
+  decimals: null,
+  minimumTradeUnits: null,
+  maximumTradeUnits: null,
+  raisedAmount: null,
+  capitalStructure: '',
+  investmentPeriod: null,
+  dividendYield: null,
+  interestRate: null,
+  grossIRR: null,
+  investmentStructure: '',
+  distributionFrequency: '',
+  leverage: null,
+  equityMultiple: null,
+  currency: '',
+  marketType: 'Exchange',
+  team: [],
+  incomeStatement: [],
+  cashFlow: [],
+  balanceSheet: [],
+  introduction: '',
+  asset: '',
+  dso: ''
+}

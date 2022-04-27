@@ -1,9 +1,10 @@
 import React from 'react'
-import { Select } from 'ui/Select/Select'
 import { SelectProps } from '@mui/material'
 import { renderSelectItems } from 'helpers/rendering'
 import { COUNTRIES_OPTS } from 'app/pages/identity/const'
+import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export interface CountrySelectProps extends SelectProps {
   filter?: string[]
@@ -19,11 +20,14 @@ export const CountrySelect = (props: CountrySelectProps): JSX.Element => {
   }
 
   return (
-    <Select {...props}>
-      <SelectItem disabled value={undefined}>
-        Country
-      </SelectItem>
-      {renderSelectItems(filteredCountries())}
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select {...props} label={undefined} displayEmpty>
+        <SelectItem disabled value={undefined}>
+          Country
+        </SelectItem>
+        {renderSelectItems(filteredCountries())}
+      </Select>
+    </>
   )
 }

@@ -1,7 +1,8 @@
+import { SelectProps } from '@mui/material'
 import React from 'react'
-import { MenuItem, SelectProps, TextFieldProps } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface DSOSelectProps extends Partial<SelectProps> {
   options: DigitalSecurityOffering[]
@@ -11,13 +12,13 @@ export const DSOSelect = (props: DSOSelectProps): JSX.Element => {
   const { options, ...rest } = props
 
   return (
-    <TextFieldSelect variant='outlined' fullWidth {...(rest as TextFieldProps)}>
-      {options.length < 1 && <MenuItem disabled>No Deals Found</MenuItem>}
+    <Select {...rest} fullWidth={false}>
+      {options.length < 1 && <SelectItem disabled>No Deals Found</SelectItem>}
       {options.map(({ _id, tokenName, user }) => (
-        <MenuItem key={_id} value={[_id, user].join(':')}>
+        <SelectItem key={_id} value={[_id, user].join(':')}>
           {tokenName}
-        </MenuItem>
+        </SelectItem>
       ))}
-    </TextFieldSelect>
+    </Select>
   )
 }

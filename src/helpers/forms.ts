@@ -4,6 +4,7 @@ import get from 'lodash/get'
 import { wysiwygToHtml } from 'helpers/rendering'
 import { sanitize } from 'dompurify'
 import { capitalizeFirstLetter } from 'helpers/strings'
+import { ElementType } from 'react'
 
 export const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -67,4 +68,17 @@ export const textValueExtractor = (
   event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
 ) => {
   return capitalizeFirstLetter(event.target.value)
+}
+
+export const showInputLabel = (component: ElementType) => {
+  const displayName = String((component as any).displayName)
+  const componentName = String((component as any).name)
+  const renderName = (component as any)?.render?.name
+  const showLabel = !(
+    renderName === 'TextField' ||
+    displayName.startsWith('TextField') ||
+    displayName.startsWith('Select') ||
+    componentName.includes('Select')
+  )
+  return showLabel
 }

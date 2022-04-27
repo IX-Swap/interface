@@ -1,7 +1,7 @@
-import React, { ChangeEvent } from 'react'
-import { FormControl, InputLabel } from '@mui/material'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { FormControl } from '@mui/material'
 import { ClosedDSOSelect } from 'app/pages/authorizer/components/ClosedDSOSelect'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React, { ChangeEvent } from 'react'
 
 export const ClosedDSOsFilter = () => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
@@ -21,8 +21,11 @@ export const ClosedDSOsFilter = () => {
 
   return (
     <FormControl variant='outlined' fullWidth>
-      <InputLabel htmlFor='closedDSO'>Closed DSO</InputLabel>
-      <ClosedDSOSelect value={value} onChange={handleChange} />
+      <ClosedDSOSelect
+        value={value}
+        onChange={handleChange}
+        label={'Closed DSO'}
+      />
     </FormControl>
   )
 }

@@ -103,6 +103,7 @@ export const FormStep = (props: FormStepProps) => {
       validationSchema={getValidationSchema()}
       onSubmit={handleSubmit}
       allowInvalid
+      id={`${step.formId ?? 'form'}-${index}`}
     >
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='large' />

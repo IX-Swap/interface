@@ -1,18 +1,22 @@
-import React from 'react'
-import { MenuItem } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
 import { FUNDSOURCES_OPTS } from 'app/pages/identity/const'
+import { renderSelectItems } from 'helpers/rendering'
+import React from 'react'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const FundSourceSelect = (props: any): JSX.Element => {
   return (
-    <Select {...props}>
-      <MenuItem disabled value={undefined}>
-        Source of funds
-      </MenuItem>
-      {renderMenuItems(FUNDSOURCES_OPTS)}
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select {...props} label={undefined}>
+        <SelectItem disabled value={undefined}>
+          Source of funds
+        </SelectItem>
+        {renderSelectItems(FUNDSOURCES_OPTS)}
+      </Select>
+    </>
   )
 }
 
-FundSourceSelect.displayName = 'TextField_FundSourceSelect'
+FundSourceSelect.displayName = 'Select_FundSourceSelect'
