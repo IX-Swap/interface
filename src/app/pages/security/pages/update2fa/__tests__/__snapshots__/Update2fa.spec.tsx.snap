@@ -4,337 +4,350 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
 <div>
   <div
     class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+    style="display: table;"
   >
     <div
       class="makeStyles-wrapper-6 MuiBox-root css-0"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-1vpwcmr-MuiGrid-root"
+        class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-11lq3yg-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-1vpwcmr-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-11lq3yg-MuiGrid-root"
           >
-            <h2
-              class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
             >
-              Change Authenticator
-            </h2>
+              <h2
+                class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+              >
+                Change Authenticator
+              </h2>
+            </div>
           </div>
-        </div>
-        <div
-          class="MuiGrid-root css-vj1n65-MuiGrid-root"
-        >
-          <nav
-            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
           >
-            <ol
-              class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-            />
-          </nav>
+            <nav
+              class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+            >
+              <ol
+                class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+              />
+            </nav>
+          </div>
         </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-wrapper-1 css-1idn90j-MuiGrid-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-snjpuj-MuiContainer-root"
     >
       <div
-        class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-wrapper-1 css-1idn90j-MuiGrid-root"
       >
         <div
-          class="makeStyles-wrapper-6 MuiBox-root css-0"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-1vpwcmr-MuiGrid-root"
+            class="makeStyles-wrapper-6 MuiBox-root css-0"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-11lq3yg-MuiGrid-root"
+              class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
-              >
-                <h6
-                  class="MuiTypography-root MuiTypography-h6 css-1h41tev-MuiTypography-root"
-                >
-                  Change Authenticator
-                </h6>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root css-vj1n65-MuiGrid-root"
-            >
-              <nav
-                class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
-              >
-                <ol
-                  class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-                />
-              </nav>
-            </div>
-          </div>
-        </div>
-        <div
-          class="MuiBox-root css-0"
-        >
-          <div
-            class="MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel css-10mg1vw-MuiStepper-root"
-          >
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
-            >
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      1
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-active MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Remove Current Authenticator
-                  </span>
-                </span>
-              </span>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
-            >
-              <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
-              >
-                <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
-                />
-              </div>
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      2
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Scan New QR Code
-                  </span>
-                </span>
-              </span>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
-            >
-              <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
-              >
-                <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
-                />
-              </div>
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      3
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Backup the Key
-                  </span>
-                </span>
-              </span>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
-            >
-              <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
-              >
-                <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
-                />
-              </div>
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      4
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Enable New Authenticator
-                  </span>
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1ewlecp-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-12aw9rk"
-              />
-              <div
-                class="MuiBox-root css-1mvxmnv"
+                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-1vpwcmr-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-11lq3yg-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
                   >
-                    <h5
-                      class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-qj7s3w-MuiTypography-root"
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1h41tev-MuiTypography-root"
                     >
-                      Remove Authenticator by Verifying Your Identity
-                    </h5>
-                    <div
-                      class="MuiBox-root css-1jpm9pd"
-                    />
+                      Change Authenticator
+                    </h6>
                   </div>
+                </div>
+                <div
+                  class="MuiGrid-root css-vj1n65-MuiGrid-root"
+                >
+                  <nav
+                    class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                  >
+                    <ol
+                      class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                    />
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiBox-root css-0"
+          >
+            <div
+              class="MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel css-10mg1vw-MuiStepper-root"
+            >
+              <div
+                class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
+              >
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="12"
+                      />
+                      <text
+                        class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
+                        text-anchor="middle"
+                        x="12"
+                        y="16"
+                      >
+                        1
+                      </text>
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label Mui-active MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
+                    >
+                      Remove Current Authenticator
+                    </span>
+                  </span>
+                </span>
+              </div>
+              <div
+                class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
+              >
+                <div
+                  class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
+                >
+                  <span
+                    class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
+                  />
+                </div>
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="12"
+                      />
+                      <text
+                        class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
+                        text-anchor="middle"
+                        x="12"
+                        y="16"
+                      >
+                        2
+                      </text>
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
+                    >
+                      Scan New QR Code
+                    </span>
+                  </span>
+                </span>
+              </div>
+              <div
+                class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
+              >
+                <div
+                  class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
+                >
+                  <span
+                    class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
+                  />
+                </div>
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="12"
+                      />
+                      <text
+                        class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
+                        text-anchor="middle"
+                        x="12"
+                        y="16"
+                      >
+                        3
+                      </text>
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
+                    >
+                      Backup the Key
+                    </span>
+                  </span>
+                </span>
+              </div>
+              <div
+                class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
+              >
+                <div
+                  class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
+                >
+                  <span
+                    class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
+                  />
+                </div>
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        r="12"
+                      />
+                      <text
+                        class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
+                        text-anchor="middle"
+                        x="12"
+                        y="16"
+                      >
+                        4
+                      </text>
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
+                    >
+                      Enable New Authenticator
+                    </span>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1ewlecp-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-12aw9rk"
+                />
+                <div
+                  class="MuiBox-root css-1mvxmnv"
+                >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-19zvv5e-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-qj7s3w-MuiTypography-root"
+                      >
+                        Remove Authenticator by Verifying Your Identity
+                      </h5>
+                      <div
+                        class="MuiBox-root css-1jpm9pd"
+                      />
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-9cj2hi-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-19zvv5e-MuiGrid-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
-                          style="max-width: 380px;"
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-9cj2hi-MuiGrid-root"
                         >
-                          To remove the Authenticator, we have to send a code to your email. The code will be valid for 30 minutes.
-                        </p>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-9cj2hi-MuiGrid-root"
-                      >
-                        <button
-                          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-13e45tm-MuiButtonBase-root-MuiButton-root"
-                          tabindex="0"
-                          type="button"
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
+                            style="max-width: 380px;"
+                          >
+                            To remove the Authenticator, we have to send a code to your email. The code will be valid for 30 minutes.
+                          </p>
+                        </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-9cj2hi-MuiGrid-root"
                         >
-                          Send code
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
-                        </button>
+                          <button
+                            class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-13e45tm-MuiButtonBase-root-MuiButton-root"
+                            tabindex="0"
+                            type="button"
+                          >
+                            Send code
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1s324r5-MuiGrid-root"
-              />
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1s324r5-MuiGrid-root"
+                />
+              </div>
             </div>
           </div>
         </div>
