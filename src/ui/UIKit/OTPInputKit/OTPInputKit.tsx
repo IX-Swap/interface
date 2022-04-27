@@ -6,6 +6,7 @@ import { OTPInputField } from 'ui/OTPInputField/OTPInputField'
 export const OTPInputKit = () => {
   const [otp, setOtp] = useState<string>()
   const [otpError, setOtpError] = useState<string>()
+  const [otpMobile, setOtpMobile] = useState<string>()
 
   return (
     <UIKitThemeWrapper>
@@ -41,6 +42,21 @@ export const OTPInputKit = () => {
             onChange={(value: string) => setOtpError(value)}
             numInputs={6}
             isInputNum={true}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Typography>Mobile</Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <OTPInputField
+            name={'test'}
+            value={otpMobile}
+            onChange={(value: string) => setOtpMobile(value)}
+            numInputs={6}
+            isInputNum={true}
+            mobile
           />
         </Grid>
       </Grid>

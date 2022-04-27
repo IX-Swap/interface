@@ -11,7 +11,7 @@ import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
 
 const steps = [
-  'Remove Current Authenticator',
+  'Remove Authenticator',
   'Scan QR Code',
   'Backup Key',
   'Enable Authenticator'

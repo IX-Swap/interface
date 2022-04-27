@@ -1,5 +1,9 @@
 import makeStyles from '@mui/styles/makeStyles'
 
+export interface Props {
+  mobile: boolean
+}
+
 export const useStyles = makeStyles(theme => ({
   container: {},
   fullwidth: {
@@ -9,13 +13,14 @@ export const useStyles = makeStyles(theme => ({
   input: {
     display: 'block',
     outline: 'none',
-    width: '72px!important',
-    height: 120,
+    width: (props: Props) =>
+      props.mobile ? '42px!important' : '72px!important',
+    height: (props: Props) => (props.mobile ? 70 : 120),
     border: `1px solid ${theme.palette.otpInput.border}`,
-    borderRadius: 16,
+    borderRadius: (props: Props) => (props.mobile ? 8 : 16),
     backgroundColor: theme.palette.otpInput.bg,
     color: theme.palette.otpInput.color,
-    fontSize: 32,
+    fontSize: (props: Props) => (props.mobile ? 24 : 32),
     margin: theme.spacing(0, 1.25),
     boxSizing: 'border-box',
     caretColor: 'transparent',
@@ -30,7 +35,7 @@ export const useStyles = makeStyles(theme => ({
     },
     '&::placeholder': {
       lineHeight: 1,
-      fontSize: 60,
+      fontSize: (props: Props) => (props.mobile ? 30 : 54),
       color: theme.palette.otpInput.placeholder
     }
   },
