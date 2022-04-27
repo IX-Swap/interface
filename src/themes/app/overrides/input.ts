@@ -6,15 +6,27 @@ export const input = (theme: Theme) => {
     styleOverrides: {
       root: {
         backgroundColor: theme.palette.background.paper,
-        borderRadius: 4,
+        borderRadius: 8,
         // common styles
         '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root,': {
           marginLeft: 0,
           marginTop: 12
         },
         '& .MuiInputLabel-root': {
+          color: theme.palette.select.label,
+          fontSize: 18,
+          opacity: 0.7,
+          '&.Mui-focused': {
+            color: theme.palette.primary.main,
+            opacity: 1
+          },
+          '&.Mui-error': {
+            color: theme.palette.error.main,
+            opacity: 1
+          },
           '&.Mui-disabled': {
-            color: theme.palette.text.secondary
+            color: theme.palette.text.secondary,
+            opacity: 1
           }
         },
         '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
@@ -74,7 +86,9 @@ export const input = (theme: Theme) => {
         // outlined input
         '& .MuiInputLabel-outlined': {
           top: -12,
-          left: -12
+          left: -12,
+          fontSize: '18px',
+          lineHeight: 1
         },
         '& .MuiOutlinedInput-input': {
           height: 49
@@ -84,6 +98,7 @@ export const input = (theme: Theme) => {
           paddingRight: 0,
           borderWidth: 1,
           '&.MuiInputBase-root': {
+            borderRadius: 8,
             '&:hover .MuiOutlinedInput-notchedOutline': {
               borderColor: theme.palette.primary.light,
               borderWidth: 1

@@ -11,6 +11,7 @@ export interface FormProps<T extends {}> {
   criteriaMode?: 'all' | 'firstError'
   shouldUnregister?: boolean
   resetAfterSubmit?: boolean
+  id?: string
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -22,6 +23,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     shouldUnregister,
     children,
     resetAfterSubmit = false,
+    id,
     ...rest
   } = props
 
@@ -50,6 +52,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
         {...rest}
         style={{ width: '100%' }}
         onSubmit={form.handleSubmit(formSubmit, console.error)}
+        id={id}
       >
         {children}
       </form>

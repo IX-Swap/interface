@@ -1,7 +1,8 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
 import { useAllBalances } from 'hooks/balance/useAllBalances'
 import { queryStatusRenderer } from 'components/form/renderUtils'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const BalanceSelect = (props: any): JSX.Element => {
   const { status, data } = useAllBalances()
@@ -10,13 +11,13 @@ export const BalanceSelect = (props: any): JSX.Element => {
 
   return (
     <Select {...props}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Balance
-      </MenuItem>
+      </SelectItem>
       {data.list.map(({ assetId, symbol, name }) => (
-        <MenuItem key={assetId} value={assetId}>
+        <SelectItem key={assetId} value={assetId}>
           {name} ({symbol})
-        </MenuItem>
+        </SelectItem>
       ))}
     </Select>
   )

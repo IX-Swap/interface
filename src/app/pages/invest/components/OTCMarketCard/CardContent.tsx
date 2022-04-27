@@ -8,7 +8,7 @@ import useStyles from 'app/pages/invest/components/OTCMarketCard/CardContent.sty
 import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
-import { percentageToNumber } from 'app/pages/issuance/utils'
+import { percentageToNumber } from 'app/pages/issuance/utils/utils'
 
 export interface CardContentProps {
   data: DigitalSecurityOffering | any

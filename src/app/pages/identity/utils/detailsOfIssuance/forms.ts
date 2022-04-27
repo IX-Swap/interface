@@ -21,8 +21,8 @@ export const getIssuerDocumentsFormValues = (data?: DetailsOfIssuance) => {
       return {
         ...result,
         companyRelated: Array.isArray(companyRelated)
-          ? [...companyRelated, document]
-          : [document]
+          ? [...companyRelated, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -30,8 +30,8 @@ export const getIssuerDocumentsFormValues = (data?: DetailsOfIssuance) => {
       return {
         ...result,
         issuanceRelated: Array.isArray(issuanceRelated)
-          ? [...issuanceRelated, document]
-          : [document]
+          ? [...issuanceRelated, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -39,8 +39,8 @@ export const getIssuerDocumentsFormValues = (data?: DetailsOfIssuance) => {
       return {
         ...result,
         financial: Array.isArray(financial)
-          ? [...financial, document]
-          : [document]
+          ? [...financial, { value: document }]
+          : [{ value: document }]
       }
     }
 

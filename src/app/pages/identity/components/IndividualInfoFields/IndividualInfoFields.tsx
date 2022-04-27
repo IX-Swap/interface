@@ -1,7 +1,6 @@
 import { Box, Grid } from '@mui/material'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { DatePicker } from 'components/form/DatePicker'
 import { GenderSelect } from 'components/form/GenderSelect'
 import { NationalitySelect } from 'components/form/NationalitySelect'
@@ -20,6 +19,7 @@ import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface IndividualInfoFieldsProps {
@@ -45,7 +45,7 @@ export const IndividualInfoFields = (
         <Box marginRight={2}>
           <TypedField
             customRenderer
-            component={Dropzone}
+            component={FileUpload}
             control={control}
             rootName={rootName}
             name='photo'

@@ -76,7 +76,7 @@ export const FormStep = (props: FormStepProps) => {
       }
     }
 
-    if (shouldSaveStep) {
+    if (shouldSaveStep && (data?.step ?? 0) < activeStep + 1) {
       payload.step = activeStep + 1
     }
 
@@ -86,8 +86,9 @@ export const FormStep = (props: FormStepProps) => {
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={step.validationSchema}
+      validationSchema={isLastStep ? step.validationSchema : undefined}
       onSubmit={handleSubmit}
+      id={`${step.formId ?? 'form'}-${index}`}
     >
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='large' />

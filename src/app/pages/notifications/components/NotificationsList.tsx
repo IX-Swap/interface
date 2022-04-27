@@ -4,7 +4,7 @@ import { useNotifications } from 'app/pages/notifications/hooks/useNotifications
 import { NoData } from 'app/components/NoData/NoData'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { NotificationView } from './NotificationView'
-import { MarkAsRead } from './MarkAsRead'
+import { MarkAsRead } from 'app/pages/notifications/components/MarkAsRead'
 
 export const NotificationsList = () => {
   const { data, isLoading } = useNotifications(true)

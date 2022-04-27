@@ -17,6 +17,7 @@ import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/C
 import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
 import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
 import { RootContainer } from 'ui/RootContainer'
+import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
 
 export const AccountsRouter = () => {
   return (
@@ -67,6 +68,13 @@ export const AccountsRouter = () => {
 
       <AppRoute breadcrumb='My Reports' path={AccountsRoute.reports}>
         <ReportsRouter />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='My Exchange Holdings'
+        path={AccountsRoute.myHoldings}
+      >
+        <MyHoldings />
       </AppRoute>
 
       <AppRoute path={AccountsRoute.landing}>

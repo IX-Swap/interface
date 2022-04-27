@@ -1,23 +1,25 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
+import { SelectProps } from '@mui/material'
 import { BlockchainWalletView } from 'app/components/BlockchainWalletView'
 import { BlockchainWallet } from 'config/blockchain'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const WalletSelect = (props: SelectProps) => {
   return (
     <Select {...props} data-testid='wallet-select'>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Select Wallet
-      </MenuItem>
+      </SelectItem>
       {Object.entries(BlockchainWallet).map(([label, value]) => {
         return (
-          <MenuItem
+          <SelectItem
             key={value}
             value={value}
             disabled={value !== BlockchainWallet.Metamask}
           >
             <BlockchainWalletView wallet={value} />
-          </MenuItem>
+          </SelectItem>
         )
       })}
     </Select>

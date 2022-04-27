@@ -1,5 +1,5 @@
-import { ListingDetails } from 'app/pages/exchange/components/ListingDetails/ListingDetails'
-import { useListing } from 'app/pages/exchange/hooks/useListing'
+import { ListingDetails } from 'app/pages/issuance/components/ListingDetails/ListingDetails'
+import { useListing } from 'app/pages/invest/hooks/useListing'
 import React from 'react'
 import { AppFeature } from 'types/app'
 import { AuthorizerView } from '../../components/AuthorizerView'

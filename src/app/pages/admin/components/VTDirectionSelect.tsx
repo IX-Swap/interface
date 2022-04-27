@@ -1,8 +1,10 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { SelectProps } from '@mui/material'
+import { renderSelectItems } from 'helpers/rendering'
 import { TypedSelectProps } from 'types/util'
 import { transferDirections } from 'config/defaults'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface VTDirectionSelectProps extends TypedSelectProps {
   includeAll?: boolean
@@ -22,11 +24,11 @@ export const VTDirectionSelect = (props: VTDirectionSelectProps) => {
   return (
     <Select {...(rest as SelectProps)} label={label}>
       {includeAll && (
-        <MenuItem value={valueBetweenAll}>
+        <SelectItem value={valueBetweenAll}>
           {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
-        </MenuItem>
+        </SelectItem>
       )}
-      {renderMenuItems(
+      {renderSelectItems(
         transferDirections.map(option => ({
           label: option,
           value: option

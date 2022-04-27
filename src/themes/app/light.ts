@@ -207,6 +207,12 @@ export const lightTheme: DeprecatedThemeOptions = {
       boxShadow: tinycolor('#a2acbf16').setAlpha(0.16).toRgbString(),
       border: '#EDF2FA'
     },
+    notificationsDropdown: {
+      bg: '#FFFFFF',
+      message: '#778194',
+      divider: '#EDF2FA',
+      bgHover: tinycolor('#EDF2FA').setAlpha(0.4).toRgbString()
+    },
     success: {
       main: '#7DD320'
     },

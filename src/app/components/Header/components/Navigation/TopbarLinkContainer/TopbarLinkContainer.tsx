@@ -24,8 +24,20 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   } = props
   const { pathname } = useLocation()
   const baseLink = link.split('/').slice(0, 3).join('/')
-  const isActive =
-    placement === 'topbar' ? pathname.startsWith(baseLink) : pathname === link
+
+  const getIsLinkActive = () => {
+    if (placement === 'topbar') {
+      return pathname.startsWith(baseLink)
+    }
+
+    // This check is needed because the pathname that contains the 'exchange' also contains pairId
+    if (link.includes('exchange') && pathname.includes('exchange')) {
+      return true
+    }
+
+    return pathname === link
+  }
+  const isActive = getIsLinkActive()
 
   const classes = useStyles({
     isActive: active || isActive,

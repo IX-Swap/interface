@@ -3,7 +3,7 @@ import { useServices } from 'hooks/useServices'
 import { useCallback } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormActionsProps, DSOFormValues } from 'types/dso'
-import { getUpdateDSOPayload } from '../utils'
+import { getUpdateDSOPayload } from 'app/pages/issuance/utils/utils'
 import { useCreateDSO } from './useCreateDSO'
 import { useUpdateDSO } from './useUpdateDSO'
 

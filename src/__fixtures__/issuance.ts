@@ -12,7 +12,7 @@ import {
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
-import { numberToPercentage } from 'app/pages/issuance/utils'
+import { numberToPercentage } from 'app/pages/issuance/utils/utils'
 import { network } from './network'
 import { individual } from '__fixtures__/identity'
 

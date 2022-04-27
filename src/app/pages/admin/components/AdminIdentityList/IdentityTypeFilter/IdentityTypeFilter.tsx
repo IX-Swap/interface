@@ -1,7 +1,8 @@
 import React from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
-import { FormControl, InputLabel, SelectChangeEvent } from '@mui/material'
+import { FormControl, SelectChangeEvent } from '@mui/material'
 import { IdentityTypeSelect } from 'components/form/IdentityTypeSelect'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export const IdentityTypeFilter = () => {
   return (
@@ -16,7 +17,7 @@ export const IdentityTypeFilter = () => {
             onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}
-            label='Identity Type'
+            label={undefined}
           />
         </FormControl>
       )}
