@@ -6,19 +6,19 @@ import { ListingForm } from 'app/pages/exchange/components/ListingForm/ListingFo
 
 export const CreateListing = () => {
   return (
-    <RootContainer>
-      <Grid container direction='column'>
-        <Grid item>
-          <PageHeader
-            title={'Create New Listing'}
-            alignment='flex-start'
-            showBreadcrumbs={true}
-          />
-        </Grid>
+    <Grid container direction='column' style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader
+          title={'Create New Listing'}
+          alignment='flex-start'
+          showBreadcrumbs={true}
+        />
+      </Grid>
+      <RootContainer>
         <Grid item>
           <ListingForm isNew />
         </Grid>
-      </Grid>
-    </RootContainer>
+      </RootContainer>
+    </Grid>
   )
 }

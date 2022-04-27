@@ -18,15 +18,15 @@ export const IdentitiesList: React.FC = () => {
 
   return (
     <AppContentWrapper container background='light'>
-      <RootContainer background='light'>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <PageHeader
-              title='Identity'
-              alignment='flex-start'
-              showBreadcrumbs={false}
-            />
-          </Grid>
+      <Grid container spacing={3} style={{ display: 'table' }}>
+        <Grid item xs={12}>
+          <PageHeader
+            title='Identity'
+            alignment='flex-start'
+            showBreadcrumbs={false}
+          />
+        </Grid>
+        <RootContainer background='light'>
           <Grid item xs={12}>
             {hasIdentity || detailsOfIssuance !== undefined ? (
               <IdentityPreview />
@@ -34,8 +34,8 @@ export const IdentitiesList: React.FC = () => {
               <NoIdentityView />
             )}
           </Grid>
-        </Grid>
-      </RootContainer>
+        </RootContainer>
+      </Grid>
     </AppContentWrapper>
   )
 }

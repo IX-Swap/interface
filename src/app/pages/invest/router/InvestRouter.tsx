@@ -7,6 +7,7 @@ import { AppRoute } from 'components/AppRoute'
 import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
 import { ViewListing } from 'app/pages/invest/components/SecondaryMarketTable/ViewListing'
 import { InvestOverview } from 'app/pages/invest/pages/InvestOverview'
+import { RootContainer } from 'ui/RootContainer'
 
 export const InvestRouter = () => {
   return (
@@ -27,11 +28,15 @@ export const InvestRouter = () => {
       </AppRoute>
 
       <AppRoute exact path={InvestRoute.landing}>
-        <InvestLanding />
+        <RootContainer>
+          <InvestLanding />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute path={InvestRoute.overview}>
-        <InvestOverview />
+        <RootContainer>
+          <InvestOverview />
+        </RootContainer>
       </AppRoute>
     </Switch>
   )

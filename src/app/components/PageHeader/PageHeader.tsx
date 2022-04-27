@@ -14,7 +14,7 @@ export interface PageHeaderProps {
   hasBackButton?: boolean
   variant?: Variant | 'inherit'
   noMargin?: boolean
-  newThemeOn?: boolean
+  styled?: boolean
 }
 
 export const PageHeader = (props: PageHeaderProps) => {
@@ -25,15 +25,15 @@ export const PageHeader = (props: PageHeaderProps) => {
     showBreadcrumbs = true,
     variant = 'h2',
     noMargin = false,
-    newThemeOn = true
+    styled = true
   } = props
   const { crumbs } = useBreadcrumbs()
   const justify = alignment ?? (crumbs.length === 1 ? 'center' : 'flex-start')
   const classes = useStyles()
-  const Wrapper = newThemeOn ? Box : Fragment
+  const Wrapper = styled ? Box : Fragment
 
   return (
-    <Wrapper className={newThemeOn ? classes.wrapper : ''}>
+    <Wrapper className={styled ? classes.wrapper : ''}>
       <Container>
         <Grid
           container
