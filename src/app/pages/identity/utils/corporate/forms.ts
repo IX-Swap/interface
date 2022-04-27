@@ -25,12 +25,14 @@ export const getCorporateInfoFormValues = (
     ? last(LEGAL_ENTITY_STATUS_LIST)?.value
     : data?.legalEntityStatus
 
-  const representatives = data?.representatives.map(item => ({
-    ...item,
-    documents: item.documents?.map(doc => ({ value: doc }))
-  }))
-
-  console.log(representatives)
+  const representatives = data?.representatives.map(item => {
+    return {
+      ...item,
+      documents: Array.isArray(item.documents)
+        ? item.documents?.map(doc => ({ value: doc }))
+        : []
+    }
+  })
 
   return {
     logo: data?.logo,

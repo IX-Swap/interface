@@ -22,10 +22,8 @@ export const getCorporateInfoRequestPayload = (
 
   const representativesTransformed = representatives.map(rep => ({
     ...rep,
-    documents: rep.documents.map(doc => ({ ...doc.value }))
+    documents: rep.documents?.map(doc => ({ ...doc.value }))
   }))
-
-  console.log(representativesTransformed)
 
   return {
     ...rest,
