@@ -1,6 +1,7 @@
 import { alpha } from '@mui/material/styles'
 import makeStyles from '@mui/styles/makeStyles'
-import { drawerWidth } from 'app/components/OnboardingPanel/OnboardingPanel.styles'
+
+export const drawerWidth = 250
 
 export const useStyles = makeStyles(theme => ({
   root: { pointerEvents: 'none' },

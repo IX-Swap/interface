@@ -1,4 +1,4 @@
-import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 import { useSnackbar } from 'hooks/useSnackbar'

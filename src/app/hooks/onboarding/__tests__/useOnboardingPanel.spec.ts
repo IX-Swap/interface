@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
+import { useOnboardingPanel } from 'app/hooks/onboarding/useOnboardingPanel'
 import * as useAppState from 'app/hooks/useAppState'
 import { waitFor } from 'test-utils'
 
