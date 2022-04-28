@@ -3,18 +3,20 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { useAdminState, useGetMe } from 'state/admin/hooks'
+import { MEDIA_WIDTHS } from 'theme'
+import { useUserState, useGetMe } from 'state/user/hooks'
 import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
 import { Border, ToggleOption } from 'components/Tabs'
 import { AdminList } from 'components/AdminList'
 import { AdminKycTable } from 'components/AdminKyc'
+import { Whitelist } from 'components/Whitelist'
 
 import { Navbar } from './Navbar'
 import { SUPPORTED_ADMIN_ROLES } from './mock'
 
-type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'admin-list'
+type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'admin-list' | 'whitelist'
 
 interface Tab {
   label: string
@@ -32,6 +34,7 @@ const tabs: Tab[] = [
   { label: 'Broker-dealer Transactions', value: 'transactions' },
   { label: 'Security catalog', value: 'security-catalog' },
   { label: `Admin's`, value: 'admin-list' },
+  { label: 'Whitelist', value: 'whitelist' },
 ]
 
 const renderTab = (selectedTab: AdminTab | string) => {
@@ -46,6 +49,8 @@ const renderTab = (selectedTab: AdminTab | string) => {
       return <AdminSecurityCatalog />
     case 'admin-list':
       return <AdminList />
+    case 'whitelist':
+      return <Whitelist />
     default:
       return null
   }
@@ -58,7 +63,7 @@ const AdminKyc = () => {
   const location = useLocation()
   const params = useParams<AdminParams>()
 
-  const { adminData } = useAdminState()
+  const { me } = useUserState()
   const getMe = useGetMe()
 
   const fetchMe = useCallback(async () => {
@@ -87,31 +92,29 @@ const AdminKyc = () => {
   }, [params])
 
   useEffect(() => {
-    if (!adminData) {
+    if (!me) {
       fetchMe()
       return
     }
 
-    if (adminData && SUPPORTED_ADMIN_ROLES.includes(adminData.role || 'user')) {
+    if (me && SUPPORTED_ADMIN_ROLES.includes(me.role || 'user')) {
       // history.push('/admin')
       return
     }
 
     history.push('/')
-  }, [adminData])
+  }, [me])
 
   return (
     <Container>
       <Navbar />
-      {SUPPORTED_ADMIN_ROLES.includes(adminData?.role || 'user') && (
+      {SUPPORTED_ADMIN_ROLES.includes(me?.role || 'user') && (
         <Body>
           <TabsContainer>
             {tabs.map(({ value, label }, index) => (
               <>
                 <ToggleOption
-                  style={
-                    adminData?.role === 'operator' && value !== 'kyc' ? { opacity: 0.5, pointerEvents: 'none' } : {}
-                  }
+                  style={me?.role === 'operator' && value !== 'kyc' ? { opacity: 0.5, pointerEvents: 'none' } : {}}
                   key={`tabs-${index}`}
                   onClick={() => changeTab(value)}
                   active={selectedTab === value}
@@ -147,6 +150,10 @@ const TabsContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 60px;
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    flex-direction: column;
+    row-gap: 4px;
+  }
 `
 
 export default AdminKyc

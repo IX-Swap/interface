@@ -2,7 +2,6 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 
 export const admin = {
   login: 'auth/login',
-  me: 'auth/me',
   adminList: 'users/admin',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
@@ -18,6 +17,8 @@ export const admin = {
   resubmitKyc: (id: string | number) => `/newkyc/resubmit/${id}`,
   getAtlasIdByTicker: (ticker: string) => `/catalog/atlas?ticker=${ticker}`,
   addAdmin: () => '/metamask/admin',
+  whitelistedList: 'users/whitelisted',
+  addOrRemoveWhitelisted: (address: string) => `users/whitelist/address/${address}`,
 }
 
 export const vesting = {
@@ -32,6 +33,7 @@ export const metamask = {
 
 export const auth = {
   refresh: `auth/refresh`,
+  me: 'auth/me',
 }
 
 export const kyc = {

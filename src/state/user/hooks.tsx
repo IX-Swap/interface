@@ -12,7 +12,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import apiService from 'services/apiService'
-import { broker, kyc, tokens, users } from 'services/apiUrls'
+import { auth, broker, kyc, tokens, users } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
 import { LOGIN_STATUS, useLogin, useUserisLoggedIn } from 'state/auth/hooks'
 import { useAuthState } from 'state/auth/hooks'
@@ -48,6 +48,7 @@ import {
   updateUserLocale,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
+  getMe,
 } from './actions'
 
 function serializeToken(token: Token): SerializedToken {
@@ -567,4 +568,25 @@ export function useAccount() {
       handleAccountChanged(false)
     }
   }, [kyc, accountChanged, loadingRequest, pathname])
+}
+
+export const me = async () => {
+  const result = await apiService.get(auth.me)
+  return result.data
+}
+
+export function useGetMe() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(async () => {
+    try {
+      dispatch(getMe.pending())
+      const data = await me()
+      dispatch(getMe.fulfilled({ data }))
+      return data
+    } catch (error: any) {
+      dispatch(getMe.rejected({ errorMessage: 'Could not get me' }))
+      return null
+    }
+  }, [dispatch])
+  return callback
 }
