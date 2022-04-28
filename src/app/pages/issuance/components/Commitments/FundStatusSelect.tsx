@@ -43,3 +43,5 @@ export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
     </Select>
   )
 }
+
+FundStatusSelect.displayName = 'Select_FundStatusSelect'

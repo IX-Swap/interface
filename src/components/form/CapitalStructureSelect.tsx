@@ -36,3 +36,4 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
     </>
   )
 }
+CapitalStructureSelect.displayName = 'Select_CapitalStructureSelect'

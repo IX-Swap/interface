@@ -35,3 +35,4 @@ export const ThemeSelector = () => {
     </Select>
   )
 }
+ThemeSelector.displayName = 'Select_ThemeSelector'

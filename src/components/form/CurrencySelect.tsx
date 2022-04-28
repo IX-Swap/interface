@@ -33,3 +33,5 @@ export const CurrencySelect = (props: any): JSX.Element => {
     </>
   )
 }
+
+CurrencySelect.displayName = 'Select_CurrencySelect'

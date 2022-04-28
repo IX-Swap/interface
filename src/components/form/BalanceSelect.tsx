@@ -22,3 +22,4 @@ export const BalanceSelect = (props: any): JSX.Element => {
     </Select>
   )
 }
+BalanceSelect.displayName = 'Select_BalanceSelect'

@@ -34,3 +34,4 @@ export const RoleSelect = (props: RoleSelectProps) => {
     </Select>
   )
 }
+RoleSelect.displayName = 'Select_RoleSelect'
