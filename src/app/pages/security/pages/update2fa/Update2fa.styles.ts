@@ -3,17 +3,17 @@ import { makeStyles } from '@mui/styles'
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     padding: theme.spacing(2, 0, 5),
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column-reverse'
     }
   },
   leftBlock: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: 16,
-    padding: theme.spacing(8, 3, 8),
+    padding: theme.spacing(8, 2.5, 8),
     marginRight: theme.spacing(2.5),
     width: 'calc(100% - 316px)',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%'
     }
   },
@@ -23,9 +23,10 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(5, 0, 5),
     width: 296,
     height: 'max-content',
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
+      padding: theme.spacing(2)
     }
   },
   progressTitle: {

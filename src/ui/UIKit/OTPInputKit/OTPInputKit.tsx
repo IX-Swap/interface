@@ -56,7 +56,6 @@ export const OTPInputKit = () => {
             onChange={(value: string) => setOtpMobile(value)}
             numInputs={6}
             isInputNum={true}
-            mobile
           />
         </Grid>
       </Grid>

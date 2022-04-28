@@ -1,26 +1,31 @@
 import makeStyles from '@mui/styles/makeStyles'
 
-export interface Props {
-  mobile: boolean
-}
-
 export const useStyles = makeStyles(theme => ({
   container: {},
   fullwidth: {
-    width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 'calc(100% - 20px)',
+    [theme.breakpoints.down('lg')]: {
+      width: 'calc(100% - 8px)'
+    }
   },
   input: {
     display: 'block',
     outline: 'none',
-    width: (props: Props) =>
-      props.mobile ? '42px!important' : '72px!important',
-    height: (props: Props) => (props.mobile ? 70 : 120),
+    [theme.breakpoints.down('lg')]: {
+      width: '42px!important',
+      height: 70,
+      borderRadius: 8,
+      fontSize: 24,
+      margin: theme.spacing(0, 0.5)
+    },
+    width: '72px!important',
+    height: 120,
     border: `1px solid ${theme.palette.otpInput.border}`,
-    borderRadius: (props: Props) => (props.mobile ? 8 : 16),
+    borderRadius: 16,
     backgroundColor: theme.palette.otpInput.bg,
     color: theme.palette.otpInput.color,
-    fontSize: (props: Props) => (props.mobile ? 24 : 32),
+    fontSize: 32,
     margin: theme.spacing(0, 1.25),
     boxSizing: 'border-box',
     caretColor: 'transparent',
@@ -35,7 +40,10 @@ export const useStyles = makeStyles(theme => ({
     },
     '&::placeholder': {
       lineHeight: 1,
-      fontSize: (props: Props) => (props.mobile ? 30 : 54),
+      fontSize: 54,
+      [theme.breakpoints.down('lg')]: {
+        fontSize: 30
+      },
       color: theme.palette.otpInput.placeholder
     }
   },

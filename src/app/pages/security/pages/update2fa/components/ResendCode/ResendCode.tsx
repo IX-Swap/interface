@@ -5,11 +5,12 @@ import { GetEmailCodeResponse } from 'app/pages/security/types'
 import classNames from 'classnames'
 
 export interface ResendCodeProps {
+  isLoading: boolean
   data: GetEmailCodeResponse | undefined
   action: () => void
 }
 
-export const ResendCode = ({ action, data }: ResendCodeProps) => {
+export const ResendCode = ({ action, data, isLoading }: ResendCodeProps) => {
   const classes = useStyles()
   const [isDisabled, setIsDisabled] = useState(true)
 
@@ -38,7 +39,7 @@ export const ResendCode = ({ action, data }: ResendCodeProps) => {
     <Typography
       variant={'body1'}
       className={classNames(classes.wrapper, {
-        [classes.disabled]: isDisabled
+        [classes.disabled]: isDisabled || isLoading
       })}
       onClick={handleClick}
     >

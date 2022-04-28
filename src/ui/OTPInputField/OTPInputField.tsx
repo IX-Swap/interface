@@ -9,17 +9,15 @@ export interface OTPInputFieldProps extends OtpInputProps {
   fullwidth?: boolean
   name?: string
   control?: Control
-  mobile?: boolean
 }
 
 export const OTPInputField = ({
   variant = 'standard',
   fullwidth = false,
   shouldAutoFocus = false,
-  mobile = false,
   ...rest
 }: OTPInputFieldProps) => {
-  const classes = useStyles({ mobile })
+  const classes = useStyles()
   const placeholder = '______'
 
   return (

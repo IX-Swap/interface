@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Step, Grid, Typography } from '@mui/material'
+import { Step, Grid, useMediaQuery } from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
 import { useStyles } from './Update2fa.styles'
@@ -9,6 +9,7 @@ import { history } from 'config/history'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
+import { useTheme } from '@mui/styles'
 
 const steps = [
   'Remove Authenticator',
@@ -46,8 +47,11 @@ export const Update2fa = () => {
 
   const isStepActive = (index: number) => index === activeStep
   const isStepCompleted = (index: number) => index < activeStep
-  // TODO Added necessary logic here
+  // TODO Add necessary logic here if needed
   const isStepFailed = (index: number) => false
+
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('md'))
 
   const getVariantsConditions = (index: number) => ({
     active: isStepActive(index),
@@ -55,15 +59,22 @@ export const Update2fa = () => {
     error: isStepFailed(index)
   })
 
+  const stepInfo = matches
+    ? {
+        label: steps[activeStep],
+        activeStep: activeStep + 1,
+        totalSteps: steps.length
+      }
+    : undefined
+
   return (
-    <Grid container xs={12} className={classes.wrapper}>
-      <Grid
-        container
-        justifyContent='center'
-        alignItems='center'
-        direction='column'
-        className={classes.leftBlock}
-      >
+    <Grid
+      container
+      xs={12}
+      className={classes.wrapper}
+      justifyContent={'center'}
+    >
+      <Grid className={classes.leftBlock}>
         <Grid item>
           <ActiveStep
             twoFaData={twoFaData}
@@ -88,12 +99,14 @@ export const Update2fa = () => {
         className={classes.rightBlock}
       >
         <Grid item>
-          <Typography variant={'h6'} className={classes.progressTitle}>
-            Progress
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Stepper orientation={'vertical'} activeStep={activeStep} nonLinear>
+          <Stepper
+            orientation={matches ? 'horizontal' : 'vertical'}
+            activeStep={activeStep}
+            nonLinear
+            withMobileDropdown={false}
+            title={'Progress'}
+            stepInfo={stepInfo}
+          >
             {steps.map((label, index) => (
               <Step
                 key={label}

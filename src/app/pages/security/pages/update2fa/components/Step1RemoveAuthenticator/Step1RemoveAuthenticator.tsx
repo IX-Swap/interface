@@ -41,16 +41,6 @@ export const Step1RemoveAuthenticator = ({
 
   const renderSendCodeScreen = () => (
     <Grid container direction='column' alignItems='center'>
-      <Grid item>
-        <Typography
-          align='center'
-          variant='body1'
-          className={classes.description}
-        >
-          To remove the Authenticator, we have to send a code to your email. The
-          code will be valid for 30 minutes.
-        </Typography>
-      </Grid>
       <Grid item container justifyContent={'center'}>
         <Grid item>
           <img src={remove2FAIcon} alt='Remove 2FA' className={classes.icon} />
@@ -70,11 +60,20 @@ export const Step1RemoveAuthenticator = ({
 
   const renderRemoveAndContinueScreen = () => {
     return (
-      <Grid container direction={'column'}>
+      <Grid container direction={'column'} alignItems={'center'}>
+        <Grid item>
+          <Typography
+            align='center'
+            variant='body1'
+            className={classes.description}
+          >
+            To update your Authenticator please remove the current one
+          </Typography>
+        </Grid>
         <Grid item className={classes.info}>
           <VerificationInfo />
         </Grid>
-        <Grid item>
+        <Grid item className={classes.formBlock}>
           <RemoveAuthenticatorForm
             isLoading={isUpdate2faLoading}
             onSubmit={update2fa}
@@ -89,7 +88,7 @@ export const Step1RemoveAuthenticator = ({
     <StepWrapper
       title={
         <>
-          Remove Authenticator by <br /> Verifying Your Identity
+          Update Authenticator by <br /> Verifying Your Identity
         </>
       }
     >

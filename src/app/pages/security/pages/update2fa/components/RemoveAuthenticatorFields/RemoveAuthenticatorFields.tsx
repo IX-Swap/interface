@@ -25,7 +25,7 @@ export const RemoveAuthenticatorFields = ({
   const otpValueLength = 6
   const isOTPFull = watch('otp').length === otpValueLength
   const isEmailCodeFull = watch('emailCode').length === otpValueLength
-  const { refetch, data } = useGetEmailCode()
+  const { refetch, data, isLoading: isEmailCodeLoading } = useGetEmailCode()
   const getEmailCode = async () => {
     await refetch()
   }
@@ -38,17 +38,19 @@ export const RemoveAuthenticatorFields = ({
             control={control}
             customRenderer
             component={TextInput}
-            label={
-              <Typography variant={'body1'} style={{ color: '#0A1326' }}>
-                Verification Code
-              </Typography>
-            }
+            label={<Typography variant={'body1'}>Verification Code</Typography>}
             name='emailCode'
             fullWidth
             placeholder={'E-mail verification code'}
             variant='outlined'
             InputProps={{
-              endAdornment: <ResendCode action={getEmailCode} data={data} />
+              endAdornment: (
+                <ResendCode
+                  action={getEmailCode}
+                  data={data}
+                  isLoading={isEmailCodeLoading}
+                />
+              )
             }}
           />
         </Grid>
@@ -62,17 +64,19 @@ export const RemoveAuthenticatorFields = ({
         <Grid item className={classes.label}>
           <Typography variant={'body1'}>Authenticator Code</Typography>
         </Grid>
-        <Grid item>
-          <TypedField
-            control={control}
-            component={OTPInputField}
-            name='otp'
-            fullwidth
-            valueExtractor={plainValueExtractor}
-            isInputNum
-            numInputs={otpValueLength}
-            variant='outlined'
-          />
+        <Grid item container justifyContent={'flex-start'}>
+          <Grid item>
+            <TypedField
+              control={control}
+              component={OTPInputField}
+              name='otp'
+              fullwidth
+              valueExtractor={plainValueExtractor}
+              isInputNum
+              numInputs={otpValueLength}
+              variant='outlined'
+            />
+          </Grid>
         </Grid>
         <Grid item>
           <Typography variant={'body1'} className={classes.helperText}>
