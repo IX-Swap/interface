@@ -1,14 +1,16 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+
+import { adminOffset } from 'state/admin/constants'
 import apiService from 'services/apiService'
-import { admin } from 'services/apiUrls'
+import { admin, auth } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
+
 import {
   getBrokerDealerList,
   getBrokerDealerSwaps,
   getAccreditationList,
-  getMe,
   logout,
   postApproveAccreditation,
   postDeclineAccreditation,
@@ -19,7 +21,11 @@ import {
   postResetKyc,
   postResubmitKyc,
   getAdminList,
+  getWhitelistedList,
+  patchAddOrRemoveWhitelisted,
 } from './actions'
+import { useUserState } from 'state/user/hooks'
+import { useDeleteConfirmationPopupToggle } from 'state/application/hooks'
 
 export enum BROKER_DEALERS_STATUS {
   SUCCESS,
@@ -60,11 +66,6 @@ export function useAdminState(): AppState['admin'] {
   return useSelector<AppState, AppState['admin']>((state) => state.admin)
 }
 
-export const me = async () => {
-  const result = await apiService.get(admin.me)
-  return result.data
-}
-
 export const adminList = async (params?: Record<string, string | number>) => {
   const result = await apiService.get(admin.adminList, undefined, params)
   return result.data
@@ -86,22 +87,6 @@ export function useGetAdminList() {
     },
     [dispatch]
   )
-  return callback
-}
-
-export function useGetMe() {
-  const dispatch = useDispatch<AppDispatch>()
-  const callback = useCallback(async () => {
-    try {
-      dispatch(getMe.pending())
-      const data = await me()
-      dispatch(getMe.fulfilled({ data }))
-      return data
-    } catch (error: any) {
-      dispatch(getMe.rejected({ errorMessage: 'Could not get me' }))
-      return null
-    }
-  }, [dispatch])
   return callback
 }
 
@@ -442,10 +427,73 @@ export const addAdmin = async (address: string) => {
 }
 
 export const useOnlyAdminAccess = () => {
-  const { adminData } = useAdminState()
+  const { me } = useUserState()
   const history = useHistory()
 
-  if (adminData?.role !== 'admin') {
+  if (me?.role !== 'admin') {
     history.push('/admin/kyc')
   }
+}
+
+const getWhitelistedListReq = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.whitelistedList, undefined, params)
+  return result.data
+}
+
+export const useGetWhitelistedList = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(getWhitelistedList.pending())
+        const data = await getWhitelistedListReq(params)
+        dispatch(getWhitelistedList.fulfilled({ data }))
+        return data
+      } catch (error: any) {
+        dispatch(getWhitelistedList.rejected({ errorMessage: 'Could not get whitelisted users' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+interface AddOrRemoveWhitelisted {
+  address: string
+  isWhitelisted: boolean
+}
+
+export const patchAddOrRemoveWhitelistedReq = async ({ address, isWhitelisted }: AddOrRemoveWhitelisted) => {
+  const result = await apiService.patch(admin.addOrRemoveWhitelisted(address), { isWhitelisted })
+  return result.data
+}
+
+export const useAddOrRemoveWhitelisted = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const getWhitelisted = useGetWhitelistedList()
+  const toggle = useDeleteConfirmationPopupToggle()
+
+  const callback = useCallback(
+    async (data: AddOrRemoveWhitelisted) => {
+      try {
+        dispatch(patchAddOrRemoveWhitelisted.pending())
+
+        const res = await patchAddOrRemoveWhitelistedReq(data)
+        if (!res.isWhitelisted) {
+          toggle()
+        }
+        await getWhitelisted({ page: 1, offset: adminOffset })
+
+        dispatch(patchAddOrRemoveWhitelisted.fulfilled())
+
+        return res
+      } catch (error: any) {
+        dispatch(patchAddOrRemoveWhitelisted.rejected({ errorMessage: 'Could not get whitelisted users' }))
+        return null
+      }
+    },
+    [dispatch, toggle, getWhitelisted]
+  )
+  return callback
 }
