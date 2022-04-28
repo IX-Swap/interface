@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => {
     wrapper: {
       transform: 'none',
       position: 'static',
-      marginBottom: 12,
+      marginBottom: theme.spacing(1.5),
       color: selectPalette.label,
       opacity: 0.7,
       lineHeight: 1.1

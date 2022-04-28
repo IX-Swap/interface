@@ -39,11 +39,7 @@ export const TextInput = (props: InputProps) => {
       error={hasError}
       value={value}
       disabled={disabled}
-      className={
-        disabled === true
-          ? classnames(classes.root, classes.disabled)
-          : classes.root
-      }
+      className={classnames(classes.root, { [classes.disabled]: disabled })}
       InputProps={{
         endAdornment:
           !hideIcon && (loading || hasError !== undefined) ? (
