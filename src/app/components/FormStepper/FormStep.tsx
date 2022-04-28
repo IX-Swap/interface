@@ -7,7 +7,6 @@ import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
-import { NextButton } from 'app/components/FormStepper/NextButton'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
 
@@ -74,7 +73,6 @@ export const FormStep = (props: FormStepProps) => {
     const onSubmitSuccess = (data: any) => {
       if (data?.message === 'OK' && !isLastStep) {
         setCompleted?.()
-        setActiveStep(activeStep + 1)
       }
     }
 
@@ -146,7 +144,18 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {hasNextStep && <NextButton />}
+          {hasNextStep && (
+            <SaveButton
+              step={index}
+              transformData={step.getRequestPayload}
+              mutation={saveMutation}
+              successCallback={() => setActiveStep(activeStep + 1)}
+              variant='contained'
+              color='primary'
+            >
+              Next
+            </SaveButton>
+          )}
 
           {isLastStep && (
             <SubmitButton mutation={submitMutation} data={data} step={step} />
