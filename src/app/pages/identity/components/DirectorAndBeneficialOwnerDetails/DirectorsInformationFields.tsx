@@ -70,7 +70,6 @@ export const DirectorsInformationFields = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          key={fieldId}
           component={LegalEntityStatusSelect}
           control={control}
           variant='outlined'
