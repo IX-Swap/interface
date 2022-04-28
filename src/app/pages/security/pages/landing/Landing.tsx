@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@mui/material'
+import { Button, Grid, Divider } from '@mui/material'
 import { useAuth } from 'hooks/auth/useAuth'
 import { SettingsRow } from './components/SettingsRow'
 import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
@@ -8,6 +8,7 @@ import { SecurityRoute } from 'app/pages/security/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import useStyles from 'app/pages/security/pages/landing/Landing.styles'
 import { VSpacer } from 'components/VSpacer'
+import { ThemeSelectorMobile } from './components/ThemeSelectorMobile'
 
 export const Landing = () => {
   const { user = { totpConfirmed: false } } = useAuth()
@@ -24,7 +25,7 @@ export const Landing = () => {
   return (
     <Grid container direction='column'>
       <Grid item>
-        <PageHeader title='Settings' />
+        <PageHeader isNew={false} title='Settings' />
       </Grid>
 
       <Grid item className={classes.contentWrapper}>
@@ -46,6 +47,7 @@ export const Landing = () => {
               />
             </Grid>
             <VSpacer size={'small'} />
+            <Divider sx={{ my: 0.5 }} />
 
             <Grid item>
               <SettingsRow
@@ -63,11 +65,20 @@ export const Landing = () => {
               />
             </Grid>
             <VSpacer size={'small'} />
+            <Divider sx={{ my: 0.5 }} />
 
-            <Grid item>
+            <Grid item className={classes.web}>
               <SettingsRow
                 name='Application Theme'
                 action={<ThemeSelector />}
+              />
+            </Grid>
+
+            <Grid item className={classes.mobile}>
+              <SettingsRow
+                actionPosition='center'
+                name='Dark Mode'
+                action={<ThemeSelectorMobile />}
               />
             </Grid>
           </Grid>
