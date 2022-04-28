@@ -21,25 +21,6 @@ describe('Step1RemoveAuthenticator', () => {
     jest.clearAllMocks()
   })
 
-  it('renders send code button when data is undefined, invoke refetch on click', async () => {
-    jest
-      .spyOn(useGetEmailCode, 'useGetEmailCode')
-      .mockImplementation(() => getEmailCodeUnsuccessfulResponse as any)
-
-    const { getByText } = render(
-      <Step1RemoveAuthenticator
-        onSuccessRemoveAuthenticator={handleSuccessfulRemoveAuthenticator}
-      />
-    )
-
-    expect(getByText('Send code')).toBeInTheDocument()
-    fireEvent.click(getByText('Send code'))
-
-    await waitFor(() => {
-      expect(getEmailCodeUnsuccessfulResponse.refetch).toHaveBeenCalled()
-    })
-  })
-
   it('should match snapshot when useGetEmailCode has successful response', () => {
     jest
       .spyOn(useGetEmailCode, 'useGetEmailCode')
