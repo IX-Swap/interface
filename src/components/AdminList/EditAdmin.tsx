@@ -19,7 +19,7 @@ import { updateUser } from 'state/user/hooks'
 
 import { StyledButtonGradientBorder } from './styleds'
 import { adminRoles } from './mock'
- 
+
 interface Props {
   isOpen: boolean
   address: string
@@ -48,7 +48,6 @@ export const EditAdmin: FC<Props> = ({
   refreshCallback,
 }) => {
   const [isLoading, handleIsLoading] = useState(false)
-
   const addPopup = useAddPopup()
 
   const onAddressChange = (value: string) => {
@@ -69,7 +68,7 @@ export const EditAdmin: FC<Props> = ({
             photoId: 0,
           })
         } else {
-          await addAdmin(address)
+          await addAdmin(address, role.label ? role.label.toLowerCase() : role.toLowerCase())
         }
 
         handleIsLoading(false)
@@ -125,15 +124,13 @@ export const EditAdmin: FC<Props> = ({
                 </TYPE.small>
               )}
             </Box>
-            {isUpdating && (
-              <Select
-                withScroll
-                label="Role of Admin"
-                selectedItem={role.length > 0 ? capitalizeFirstLetter(role) : ''}
-                items={adminRoles}
-                onSelect={(selectedRole) => handleRole(selectedRole)}
-              />
-            )}
+            <Select
+              withScroll
+              label="Role of Admin"
+              selectedItem={capitalizeFirstLetter(role.label ? role.label : role)}
+              items={adminRoles}
+              onSelect={(selectedRole) => handleRole(selectedRole)}
+            />
             <RowCenter>
               <AddAdminButton onClick={onAdd}>
                 <Trans>{isUpdating ? 'Update' : 'Add'}</Trans>

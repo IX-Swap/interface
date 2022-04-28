@@ -45,7 +45,7 @@ export const AdminList: FC = () => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalError, handleError] = useState('')
-  const [adminRole, handleRole] = useState('')
+  const [adminRole, handleRole] = useState('admin')
   const [updateAddress, setUpdateAddress] = useState('')
   const [searchValue, setSearchValue] = useState('')
   const { adminList, adminLoading } = useAdminState()
