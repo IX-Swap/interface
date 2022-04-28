@@ -1,15 +1,17 @@
-import { Currency, CurrencyAmount, Ether, Token } from '@ixswap1/sdk-core'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
+import { Text } from 'rebass'
+import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+import JSBI from 'jsbi'
+
 import { ButtonGradient } from 'components/Button'
 import { EmptyStateInfoCard } from 'components/Card'
 import FullPositionCard from 'components/PositionCard'
 import { TipWithMessage } from 'components/TipWithMessage'
 import useTheme from 'hooks/useTheme'
-import JSBI from 'jsbi'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
-import { Link } from 'react-router-dom'
-import { Text } from 'rebass'
+
 import Column, { AutoColumn } from '../../components/Column'
 import { FindPoolTabs } from '../../components/NavigationTabs'
 import CurrencySearchModal from '../../components/SearchModal/CurrencySearchModal'
@@ -37,12 +39,12 @@ const bodyProps = {
 export default function PoolFinder() {
   const query = useQuery()
   const theme = useTheme()
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
 
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN1)
 
-  const [currency0, setCurrency0] = useState<Currency | null>(() => (chainId ? Ether.onChain(chainId) : null))
+  const [currency0, setCurrency0] = useState<Currency | null>(null)
   const [currency1, setCurrency1] = useState<Currency | null>(null)
 
   const [pairState, pair] = useV2Pair(currency0 ?? undefined, currency1 ?? undefined)

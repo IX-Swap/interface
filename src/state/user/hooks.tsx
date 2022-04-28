@@ -52,23 +52,29 @@ import {
 } from './actions'
 
 function serializeToken(token: Token): SerializedToken {
-  return {
-    chainId: token.chainId,
-    address: token.address,
-    decimals: token.decimals,
-    symbol: token.symbol,
-    name: token.name,
-  }
+  // TO DO - refactor
+  return token as SerializedToken
+
+  // return {
+  //   chainId: token.chainId,
+  //   address: token.address,
+  //   decimals: token.decimals,
+  //   symbol: token.symbol,
+  //   name: token.name,
+  // }
 }
 
 function deserializeToken(serializedToken: SerializedToken): Token {
-  return new Token(
-    serializedToken.chainId,
-    serializedToken.address,
-    serializedToken.decimals,
-    serializedToken.symbol,
-    serializedToken.name
-  )
+  // TO DO - refactor
+  return serializedToken as Token
+
+  // return new Token(
+  //   serializedToken.chainId,
+  //   serializedToken.address,
+  //   serializedToken.decimals,
+  //   serializedToken.symbol,
+  //   serializedToken.name
+  // )
 }
 
 export function useIsDarkMode(): boolean {
