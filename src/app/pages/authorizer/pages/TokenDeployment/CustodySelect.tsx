@@ -22,3 +22,4 @@ export const CustodySelect = (props: SelectProps): JSX.Element => {
     </>
   )
 }
+CustodySelect.displayName = 'Select_CustodySelect'

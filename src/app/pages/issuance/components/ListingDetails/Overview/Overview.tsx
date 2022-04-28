@@ -15,7 +15,7 @@ export const Overview = ({ data }: OverviewProps) => {
     <Grid container spacing={6} direction='column'>
       <Grid item xs={12}>
         <BasicOverview
-          networkName={data.network.name}
+          networkName={data.network?.name}
           capitalStructure={data.capitalStructure}
           launchDate={data.launchDate}
           completionDate={data.completionDate}

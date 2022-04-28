@@ -6,6 +6,8 @@ import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hoo
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { renderValue } from 'helpers/forms'
+import { Network } from 'types/networks'
 
 export const NetworkFilter = () => {
   const { data, status } = useAllNetworks()
@@ -23,7 +25,14 @@ export const NetworkFilter = () => {
       updateFilter('network', event.target.value)
     }
   }
-
+  const renderName = (value: any) => {
+    const val = renderValue({
+      value,
+      list: data,
+      extractor: (item: Network) => item.name
+    })
+    return val === '' ? 'All' : val
+  }
   const queryStatus = queryStatusRenderer(status)
   if (queryStatus !== undefined) return queryStatus
 
@@ -33,6 +42,7 @@ export const NetworkFilter = () => {
       value={value ?? 'All'}
       variant={'outlined'}
       onChange={handleChange}
+      renderValue={renderName}
       defaultValue={value ?? 'All'}
       style={{
         fontSize: 15,
@@ -49,3 +59,4 @@ export const NetworkFilter = () => {
     </Select>
   )
 }
+NetworkFilter.displayName = 'Select_NetworkFilter'

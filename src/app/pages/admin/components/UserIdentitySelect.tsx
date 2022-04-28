@@ -123,4 +123,4 @@ export const UserIdentitySelect = ({
   )
 }
 
-UserIdentitySelect.displayName = 'TextField_UserIdentitySelect'
+UserIdentitySelect.displayName = 'Select_UserIdentitySelect'

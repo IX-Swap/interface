@@ -29,3 +29,5 @@ export const PairSelect = (props: Partial<SelectProps>) => {
     </FormControl>
   )
 }
+
+PairSelect.displayName = 'Select_PairSelect'

@@ -207,6 +207,18 @@ export const darkTheme: DeprecatedThemeOptions = {
       divider: '#1D3667',
       bgHover: tinycolor('#152D5F').setAlpha(0.4).toRgbString()
     },
+    otpInput: {
+      bg: '#152D5F',
+      color: '#FFFFFF',
+      colorError: '#F56283',
+      border: '#1D3667',
+      borderFocus: '#78A5FF',
+      borderError: tinycolor('#f56283').setAlpha(0.6).toRgbString(),
+      placeholder: '#1D3667',
+      placeholderFocus: '#77A5FE',
+      placeholderError: '#F56283',
+      boxShadow: tinycolor('#0e1f3f').setAlpha(0.2).toRgbString()
+    },
     success: {
       main: '#7DD320'
     },

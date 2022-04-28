@@ -62,3 +62,4 @@ export const LegalEntityStatusSelect = (props: any) => {
     </>
   )
 }
+LegalEntityStatusSelect.displayName = 'Select_LegalEntityStatusSelect'
