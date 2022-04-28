@@ -8,6 +8,7 @@ import {
 import { Icon } from 'ui/Icons/Icon'
 import { useTheme } from '@mui/material/styles'
 import useStyles from './TextInput.styles'
+import classnames from 'classnames'
 
 type InputProps = TextFieldProps & { loading?: boolean; hideIcon?: boolean }
 
@@ -38,11 +39,11 @@ export const TextInput = (props: InputProps) => {
       error={hasError}
       value={value}
       disabled={disabled}
-      className={disabled === true ? classes.disabled : ''}
-      sx={{
-        marginTop:
-          (rest?.variant ?? 'outlined') === 'outlined' ? '12px' : 'initial'
-      }}
+      className={
+        disabled === true
+          ? classnames(classes.root, classes.disabled)
+          : classes.root
+      }
       InputProps={{
         endAdornment:
           !hideIcon && (loading || hasError !== undefined) ? (

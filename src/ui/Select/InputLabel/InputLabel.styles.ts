@@ -6,10 +6,11 @@ export const useStyles = makeStyles(theme => {
   return {
     wrapper: {
       transform: 'none',
-      position: 'absolute',
-      top: -12,
+      position: 'static',
+      marginBottom: 12,
       color: selectPalette.label,
-      opacity: 0.7
+      opacity: 0.7,
+      lineHeight: 1.1
     }
   }
 })
