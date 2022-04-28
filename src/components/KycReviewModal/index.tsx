@@ -15,6 +15,7 @@ import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
 import { getCynopsisRisks } from 'state/kyc/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 interface Props {
   isOpen: boolean
@@ -90,6 +91,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
         actionBtnText="Submit"
         inputLabel="Accompanying text"
         title={openReasonModal === 'reject' ? 'Reject annotation' : 'Change request'}
+        isRejectingApprovedKYC={openReasonModal === 'reject' && data.status === KYCStatuses.APPROVED}
       />
       <RedesignedWideModal
         isOpen={isOpen}

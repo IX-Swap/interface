@@ -67,3 +67,31 @@ export const authorizeSecToken: Readonly<{
 export const updateUnderstoodPlayground = createAction<{ understood: boolean }>(
   'application/updateUnderstoodPlayground'
 )
+
+export const getMe: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: RawGetMePayload }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('user/getMe/pending'),
+  fulfilled: createAction('user/getMe/fulfilled'),
+  rejected: createAction('user/getMe/rejected'),
+}
+export interface RawGetMePayload {
+  id: number
+  email: string
+  tenant: string
+  language: string
+  role: string
+  photo: {
+    uuid: string
+  }
+  photoId: number
+  active: boolean
+  ethAddress: string
+  ethAddressMd5: string
+  createdAt: string
+  updatedAt: string
+  deletedAt: string
+  isWhitelisted: boolean
+}
