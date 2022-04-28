@@ -8,55 +8,44 @@ import { plainValueExtractor } from 'helpers/forms'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { OTPInputField } from 'ui/OTPInputField/OTPInputField'
 import { useStyles } from './RemoveAuthenticatorFields.styles'
-import { useGetEmailCode } from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 import { ResendCode } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export interface OTPFieldsProps {
-  isLoading: boolean
-  email: string
+  isRemove2FALoading: boolean
 }
 
 export const RemoveAuthenticatorFields = ({
-  isLoading,
-  email
+  isRemove2FALoading
 }: OTPFieldsProps) => {
+  const otpValueLength = 6
+  const { user } = useAuth()
   const classes = useStyles()
   const { control, watch } = useFormContext()
-  const otpValueLength = 6
   const isOTPFull = watch('otp').length === otpValueLength
   const isEmailCodeFull = watch('emailCode').length === otpValueLength
-  const { refetch, data, isLoading: isEmailCodeLoading } = useGetEmailCode()
-  const getEmailCode = async () => {
-    await refetch()
-  }
 
   return (
     <Grid container direction='column'>
       <Grid item container direction='column'>
         <Grid item>
           <TypedField
-            control={control}
-            customRenderer
-            component={TextInput}
-            label={<Typography variant={'body1'}>Verification Code</Typography>}
-            name='emailCode'
             fullWidth
-            placeholder={'E-mail verification code'}
+            customRenderer
+            name='emailCode'
+            control={control}
             variant='outlined'
+            component={TextInput}
+            label='Verification Code'
             InputProps={{
-              endAdornment: (
-                <ResendCode
-                  action={getEmailCode}
-                  data={data}
-                  isLoading={isEmailCodeLoading}
-                />
-              )
+              endAdornment: <ResendCode />
             }}
+            placeholder='E-mail verification code'
           />
         </Grid>
         <Grid item>
           <Typography variant={'body1'} className={classes.helperText}>
-            Enter the 6-digit code sent to {renderPartOfEmail(email)}
+            Enter the 6-digit code sent to {renderPartOfEmail(user?.email)}
           </Typography>
         </Grid>
       </Grid>
@@ -67,14 +56,14 @@ export const RemoveAuthenticatorFields = ({
         <Grid item container justifyContent={'flex-start'}>
           <Grid item>
             <TypedField
-              control={control}
-              component={OTPInputField}
-              name='otp'
               fullwidth
-              valueExtractor={plainValueExtractor}
+              name='otp'
               isInputNum
-              numInputs={otpValueLength}
+              control={control}
               variant='outlined'
+              component={OTPInputField}
+              numInputs={otpValueLength}
+              valueExtractor={plainValueExtractor}
             />
           </Grid>
         </Grid>
@@ -86,10 +75,10 @@ export const RemoveAuthenticatorFields = ({
         <Grid item>
           <Submit
             size='large'
-            variant='contained'
             color='primary'
+            variant='contained'
             className={classes.button}
-            disabled={isLoading || !isOTPFull || !isEmailCodeFull}
+            disabled={isRemove2FALoading || !isOTPFull || !isEmailCodeFull}
           >
             Remove and continue
           </Submit>

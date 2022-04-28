@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
 import { useStyles } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode.styles'
-import { GetEmailCodeResponse } from 'app/pages/security/types'
 import classNames from 'classnames'
+import { useGetEmailCode } from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 
-export interface ResendCodeProps {
-  isLoading: boolean
-  data: GetEmailCodeResponse | undefined
-  action: () => void
-}
-
-export const ResendCode = ({ action, data, isLoading }: ResendCodeProps) => {
+export const ResendCode = () => {
   const classes = useStyles()
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [getCodeCount, setGetCodeCount] = useState(0)
+  const { refetch, isLoading } = useGetEmailCode()
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined
@@ -26,12 +22,22 @@ export const ResendCode = ({ action, data, isLoading }: ResendCodeProps) => {
     }
   }, [isDisabled])
 
+  const getText = () => {
+    if (getCodeCount === 0) {
+      return 'Send'
+    }
+    if (isDisabled) {
+      return 'Resend in 30 sec'
+    }
+
+    return 'Resend Code'
+  }
+
   const handleClick = async () => {
-    if (!isDisabled) {
-      await action()
-      if (data !== undefined) {
-        setIsDisabled(true)
-      }
+    if (!isDisabled && !isLoading) {
+      await refetch()
+      setIsDisabled(true)
+      setGetCodeCount(getCodeCount + 1)
     }
   }
 
@@ -43,7 +49,7 @@ export const ResendCode = ({ action, data, isLoading }: ResendCodeProps) => {
       })}
       onClick={handleClick}
     >
-      {isDisabled ? 'Resend in 30 sec' : 'Resend Code'}
+      {getText()}
     </Typography>
   )
 }
