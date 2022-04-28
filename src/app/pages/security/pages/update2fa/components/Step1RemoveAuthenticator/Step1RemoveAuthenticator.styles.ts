@@ -12,7 +12,6 @@ export default makeStyles(theme => ({
   },
   description: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(5),
     width: '100%',
     fontSize: 16,
     opacity: 0.8
