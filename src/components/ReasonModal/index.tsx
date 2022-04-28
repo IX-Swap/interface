@@ -1,8 +1,8 @@
 import React, { useState, useEffect, ChangeEvent, useCallback } from 'react'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import styled from 'styled-components'
 
-import { ModalBlurWrapper, ModalContentWrapper, ModalPadding, TYPE, CloseIcon } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, TYPE, CloseIcon } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonIXSWide } from 'components/Button'
 
@@ -15,12 +15,20 @@ interface Props {
   actionBtnText: string
   title?: string
   inputLabel: string
+  isRejectingApprovedKYC: boolean
 }
 
-export const ReasonModal = ({ isOpen, onClose, onAction, actionBtnText, title, inputLabel }: Props) => {
+export const ReasonModal = ({
+  isOpen,
+  onClose,
+  onAction,
+  actionBtnText,
+  title,
+  inputLabel,
+  isRejectingApprovedKYC,
+}: Props) => {
   const [value, handleValue] = useState('')
   const [error, handleError] = useState('')
-
   const valdiate = useCallback(() => {
     if (value.length > 1000) {
       handleError(t`Maximum is 1000 chars`)
@@ -49,6 +57,16 @@ export const ReasonModal = ({ isOpen, onClose, onAction, actionBtnText, title, i
             {title && <span>{t`${title}`}</span>}
             <CloseIcon data-testid="cross" onClick={onClose} />
           </Title>
+          {isRejectingApprovedKYC && (
+            <>
+              <TYPE.body2 marginBottom="8px">
+                <Trans>Are you sure you want to reject this KYC after it was approved?</Trans>
+              </TYPE.body2>
+              <TYPE.smallError marginBottom="12px" fontSize={12}>
+                <Trans>BE AWARE: All connected accreditations will be deleted for this KYC!</Trans>
+              </TYPE.smallError>
+            </>
+          )}
           <LabelContainer>
             <Label>{t`${inputLabel}`}</Label>
             <img src={clipboardTextIcon} alt="clipboardTextIcon" />

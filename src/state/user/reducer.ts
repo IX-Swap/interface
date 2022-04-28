@@ -27,6 +27,8 @@ import {
   updateUserLocale,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
+  getMe,
+  RawGetMePayload,
 } from './actions'
 
 const currentTimestamp = () => new Date().getTime()
@@ -78,6 +80,9 @@ export interface UserState {
   timestamp: number
   URLWarningVisible: boolean
   hasUnderstoodPlayground: boolean
+  errorMe: string | null
+  isLoadingMe: boolean
+  me: RawGetMePayload
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -106,6 +111,9 @@ export const initialState: UserState = {
   userSecTokens: [],
   secTokenAuthorizations: {},
   hasUnderstoodPlayground: false,
+  errorMe: null,
+  isLoadingMe: false,
+  me: {} as RawGetMePayload,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -261,5 +269,18 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateUnderstoodPlayground, (state, { payload: { understood } }) => {
       state.hasUnderstoodPlayground = understood
+    })
+    .addCase(getMe.pending, (state) => {
+      state.isLoadingMe = true
+      state.errorMe = null
+    })
+    .addCase(getMe.fulfilled, (state, { payload: { data } }) => {
+      state.isLoadingMe = false
+      state.errorMe = null
+      state.me = data
+    })
+    .addCase(getMe.rejected, (state, { payload: { errorMessage } }) => {
+      state.isLoadingMe = false
+      state.errorMe = errorMessage
     })
 )

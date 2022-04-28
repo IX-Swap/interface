@@ -12,6 +12,7 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
 import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './styleds'
+import { useUserState } from 'state/user/hooks'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -22,6 +23,13 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
   const symbolText = useMemo(() => token?.ticker ?? currency?.symbol, [currency?.symbol, token?.ticker])
   const { account } = useActiveWeb3React()
   const toggle = useDepositModalToggle()
+  const { me } = useUserState()
+
+  const isDisabled = useMemo(() => {
+    if (me?.isWhitelisted) return false
+
+    return !token.allowDeposit
+  }, [me, token.allowDeposit])
 
   return (
     <ExistingWrapper>
@@ -34,12 +42,12 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
             <Trans>on {custodian?.name} custodian</Trans>
           </TYPE.description2>
         </ExistingTitle>
-        <MouseoverTooltip text={!token.allowDeposit ? 'Deposits are not available yet for this token' : ''}>
+        <MouseoverTooltip text={isDisabled ? 'Deposits are not available yet for this token' : ''}>
           <ButtonIXSGradient
             data-testid="deposit"
             style={{ width: '230px' }}
             onClick={() => toggle()}
-            disabled={!token.allowDeposit}
+            disabled={isDisabled}
           >
             <Trans>Deposit</Trans>
           </ButtonIXSGradient>

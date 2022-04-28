@@ -15,6 +15,7 @@ import { MouseoverTooltip } from 'components/Tooltip'
 
 import { ExistingTitle, TitleStatusRow } from './styleds'
 import { isPending } from './enum'
+import { useUserState } from 'state/user/hooks'
 
 interface Props {
   currency?: Currency
@@ -43,15 +44,24 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
   const toggle = useWithdrawModalToggle()
   const { withdrawStatus } = useWithdrawState()
   const haveActiveWithdrawal = isPending(withdrawStatus.status || '')
+  const { me } = useUserState()
 
   const tooltipText = useMemo(() => {
+    if (me?.isWhitelisted) return ''
+
     if (!token.allowWithdrawal) return 'Withdrawal are not available yet for this token'
 
     if (haveActiveWithdrawal)
       return 'There is already 1 withdrawal request in progress. Please check its status and wait for completion or cancelation.'
 
     return ''
-  }, [haveActiveWithdrawal, token.allowWithdrawal])
+  }, [haveActiveWithdrawal, token.allowWithdrawal, me])
+
+  const isDisabled = useMemo(() => {
+    if (me?.isWhitelisted) return false
+
+    return !token.allowWithdrawal || haveActiveWithdrawal
+  }, [me, token.allowWithdrawal, haveActiveWithdrawal])
 
   return (
     <TitleStatusRow>
@@ -69,7 +79,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
           onClick={async () => {
             toggle()
           }}
-          disabled={!token.allowWithdrawal || haveActiveWithdrawal}
+          disabled={isDisabled}
         >
           <Trans>Withdraw</Trans>
         </ButtonGradientBorder>

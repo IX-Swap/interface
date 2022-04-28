@@ -2,9 +2,7 @@ import { createReducer } from '@reduxjs/toolkit'
 import { getTokenExpiration } from 'utils/time'
 import {
   postLogin,
-  getMe,
   logout,
-  RawGetMePayload,
   AccreditationList,
   getBrokerDealerList,
   getBrokerDealerSwaps,
@@ -22,6 +20,8 @@ import {
   postResubmitKyc,
   getAdminList,
   AdminList,
+  getWhitelistedList,
+  Whitelist,
 } from './actions'
 
 export interface AdminState {
@@ -30,8 +30,8 @@ export interface AdminState {
   adminLoading: boolean
   adminIsAuthenticated: boolean
   adminError: string | null
-  adminData: RawGetMePayload | null
   adminList: AdminList | null
+  whitelistedList: Whitelist | null
   accreditationList: AccreditationList
   kycList: KycList
   brokerDealerList: BrokerDealerList
@@ -43,8 +43,8 @@ const initialState: AdminState = {
   expiresAt: undefined,
   adminLoading: false,
   adminError: null,
-  adminData: null,
   adminList: null,
+  whitelistedList: null,
   adminIsAuthenticated: Boolean(localStorage.getItem('adminAccessToken')),
   accreditationList: {
     page: 0,
@@ -93,26 +93,10 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = false
       state.adminError = errorMessage
     })
-    .addCase(getMe.pending, (state) => {
-      state.adminLoading = true
-      state.adminError = null
-    })
-    .addCase(getMe.fulfilled, (state, { payload: { data } }) => {
-      state.adminIsAuthenticated = true
-      state.adminLoading = false
-      state.adminError = null
-      state.adminData = data
-    })
-    .addCase(getMe.rejected, (state, { payload: { errorMessage } }) => {
-      state.adminIsAuthenticated = false
-      state.adminLoading = false
-      state.adminError = errorMessage
-    })
     .addCase(logout.fulfilled, (state) => {
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = null
-      state.adminData = null
     })
     .addCase(getAccreditationList.pending, (state) => {
       state.adminLoading = true
@@ -131,7 +115,7 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(postApproveAccreditation.fulfilled, (state, { payload: { data } }) => {
+    .addCase(postApproveAccreditation.fulfilled, (state) => {
       state.adminLoading = false
       state.adminError = null
     })
@@ -143,7 +127,7 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(postDeclineAccreditation.fulfilled, (state, { payload: { data } }) => {
+    .addCase(postDeclineAccreditation.fulfilled, (state) => {
       state.adminLoading = false
       state.adminError = null
     })
@@ -155,7 +139,7 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(postResetAccreditation.fulfilled, (state, { payload: { data } }) => {
+    .addCase(postResetAccreditation.fulfilled, (state) => {
       state.adminLoading = false
       state.adminError = null
     })
@@ -256,6 +240,19 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postResubmitKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(getWhitelistedList.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(getWhitelistedList.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.whitelistedList = data
+    })
+    .addCase(getWhitelistedList.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })

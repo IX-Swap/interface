@@ -8,7 +8,7 @@ import PlaygroundModal from 'components/PlaygroundModal'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useAccount } from 'state/user/hooks'
+import { useAccount, useGetMe } from 'state/user/hooks'
 import { routes } from 'utils/routes'
 import { SupportedChainId } from 'constants/chains'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
@@ -85,6 +85,8 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
 `
 
 export default function App() {
+  const getMe = useGetMe()
+
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   const { chainId, account } = useActiveWeb3React()
@@ -139,6 +141,12 @@ export default function App() {
       localStorage.setItem('clearedLS-07-04-22', 'true')
     }
   }
+
+  useEffect(() => {
+    if (token) {
+      getMe()
+    }
+  }, [token, getMe])
 
   useEffect(() => {
     clearLocaleStorage()
