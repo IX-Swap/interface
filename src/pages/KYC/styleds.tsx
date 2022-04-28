@@ -181,7 +181,7 @@ const KYCStatusColors = {
 
 const KYCStatusDescription = {
   [KYCStatuses.PENDING]:
-    'The KYC is being processed and it may take 1-3 days. The status of the KYC will be updated accordingly.',
+    'Your KYC application has been received and will be processed by the team. Thank you for your patience.',
   [KYCStatuses.APPROVED]: null,
   [KYCStatuses.NOT_SUBMITTED]:
     'Pass KYC once and use it during all accreditations for Securities tokens. Reliable and quick. Submit your KYC, get approved and forget about bureaucracy.',
