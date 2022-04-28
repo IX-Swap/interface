@@ -55,7 +55,11 @@ export const Fields = ({
         </Grid>
         {total > 1 ? (
           <Grid>
-            <IconButton onClick={handleRemove} size='large'>
+            <IconButton
+              onClick={handleRemove}
+              size='large'
+              data-testid='delete-button'
+            >
               <Icon name='trash' />
             </IconButton>
           </Grid>
