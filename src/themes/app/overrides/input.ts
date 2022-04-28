@@ -85,12 +85,10 @@ export const input = (theme: Theme) => {
           },
         // outlined input
         '& .MuiInputLabel-outlined': {
-          //
+          top: -12,
           left: -12,
-          top: -19,
           fontSize: '18px',
-          lineHeight: 1,
-          transform: 'translate(14px, -9px) scale(1)'
+          lineHeight: 1
         },
         '& .MuiOutlinedInput-input': {
           height: 49

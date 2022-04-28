@@ -8,7 +8,6 @@ export const useStyles = makeStyles(theme => ({
     background: 'rgba(76, 136, 255, 0.05)',
     padding: theme.spacing(2),
     borderRadius: 8,
-    //
     border: '1px solid rgba(76, 136, 255, 0.3)',
     maxHeight: 68
   },
