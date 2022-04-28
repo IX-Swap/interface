@@ -1,5 +1,5 @@
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import * as useOnboardingJourneys from 'app/hooks/onboarding/useOnboardingJourneys'
 import { IndividualInvestorForm } from 'app/pages/identity/components/IndividualInvestorForm/IndividualInvestorForm'
 import * as useCreateIndividual from 'app/pages/identity/hooks/useCreateIndividual'
 import * as useSubmitIndividual from 'app/pages/identity/hooks/useSubmitIndividual'
