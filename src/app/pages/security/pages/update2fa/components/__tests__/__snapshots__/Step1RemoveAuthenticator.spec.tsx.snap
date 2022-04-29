@@ -11,7 +11,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
       <h2
         class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
       >
-        Update Authenticator by
+        Update Authenticator by 
         <br />
          Verifying Your Identity
       </h2>
@@ -61,7 +61,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-13xhwni-MuiFormControl-root-MuiTextField-root"
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-9 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
                     control="[object Object]"
                     path="emailCode"
                   >
@@ -86,7 +86,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                         value=""
                       />
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-wrapper-11 css-1b4l2pg-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-wrapper-12 css-1b4l2pg-MuiTypography-root"
                       >
                         Send
                       </p>
@@ -112,7 +112,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                     class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-6 css-1b4l2pg-MuiTypography-root"
                   >
                     Enter the 6-digit code sent to 
-
+                    
                   </p>
                 </div>
               </div>
@@ -138,7 +138,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                       class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
                     >
                       <div
-                        class="makeStyles-container-13 makeStyles-fullwidth-14"
+                        class="makeStyles-container-14 makeStyles-fullwidth-15"
                         style="display: flex;"
                       >
                         <div
@@ -147,7 +147,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Please enter verification code. Digit 1"
                             autocomplete="off"
-                            class="makeStyles-input-15  "
+                            class="makeStyles-input-16  "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -161,7 +161,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 2"
                             autocomplete="off"
-                            class="makeStyles-input-15 "
+                            class="makeStyles-input-16 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -175,7 +175,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 3"
                             autocomplete="off"
-                            class="makeStyles-input-15 "
+                            class="makeStyles-input-16 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -189,7 +189,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 4"
                             autocomplete="off"
-                            class="makeStyles-input-15 "
+                            class="makeStyles-input-16 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -203,7 +203,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 5"
                             autocomplete="off"
-                            class="makeStyles-input-15 "
+                            class="makeStyles-input-16 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -217,7 +217,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 6"
                             autocomplete="off"
-                            class="makeStyles-input-15 "
+                            class="makeStyles-input-16 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -247,7 +247,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                     tabindex="-1"
                     type="submit"
                   >
-                    Remove and continue
+                    Remove and Continue
                   </button>
                 </div>
               </div>

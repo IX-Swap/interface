@@ -9,7 +9,8 @@ export const useStyles = makeStyles(theme => ({
   },
   label: {
     margin: theme.spacing(5, 0, 1.5),
-    color: theme.palette.select.label
+    color: theme.palette.select.label,
+    opacity: 0.7
   },
   button: {
     marginTop: theme.spacing(3),
