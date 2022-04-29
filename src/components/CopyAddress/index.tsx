@@ -27,11 +27,11 @@ export const CopyAddress: FC<Props> = ({ address, copied, setCopied, wrapperStyl
   return (
     <>
       {copied ? (
-        <Trans>Copied</Trans>
+        <Trans>Copied!</Trans>
       ) : (
         <Flex style={wrapperStyles}>
           {shortenAddress(address || '')}
-          <IconWrapper style={{ display: 'inline' }} size={size} onClick={() => setCopied(address || '')}>
+          <IconWrapper style={wrapperStyles} size={size} onClick={() => setCopied(address || '')}>
             <StyledCopy />
           </IconWrapper>
         </Flex>
