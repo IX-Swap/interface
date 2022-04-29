@@ -80,7 +80,7 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
             .phone()
             .required(validationMessages.required),
           documents: yup
-            .array<DataroomFile>()
+            .array<{ value: DataroomFile }>()
             .required(validationMessages.required)
         })
         .required(validationMessages.required)
