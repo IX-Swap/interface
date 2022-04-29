@@ -38,6 +38,8 @@ export const ProductsBlockContainer = styled.div`
     * {
       color: ${({ theme }) => theme.white};
       text-decoration: none;
+      font-weight: 600;
+      line-height: 21px;
     }
     display: grid;
     grid-template-columns: 1fr 1fr;

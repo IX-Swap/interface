@@ -238,7 +238,7 @@ export default function App() {
                 )}
 
                 {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path="/faucet" component={Faucet} />
+                  <Route exact strict path={routes.faucet} component={Faucet} />
                 )}
 
                 {chainId && chains.includes(chainId) && isWhitelisted && (

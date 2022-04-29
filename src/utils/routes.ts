@@ -7,6 +7,7 @@ export const routes = {
   find: '/find',
   pool: '/pool',
   swap: '/swap',
+  faucet: '/faucet',
   kyc: '/kyc',
   kycIndividual: '/kyc/individual',
   kycCorporate: '/kyc/corporate',

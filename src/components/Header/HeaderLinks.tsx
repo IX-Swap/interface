@@ -170,7 +170,7 @@ export const HeaderLinks = () => {
       )}
 
       {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-        <StyledNavLink disabled={!isKycApproved} id={`faucet-nav-link`} to={'/faucet'}>
+        <StyledNavLink disabled={!isKycApproved} id={`faucet-nav-link`} to={routes.faucet}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
