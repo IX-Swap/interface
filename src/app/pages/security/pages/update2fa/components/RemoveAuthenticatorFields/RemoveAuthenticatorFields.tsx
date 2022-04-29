@@ -80,7 +80,7 @@ export const RemoveAuthenticatorFields = ({
             className={classes.button}
             disabled={isRemove2FALoading || !isOTPFull || !isEmailCodeFull}
           >
-            Remove and continue
+            Remove and Continue
           </Submit>
         </Grid>
       </Grid>
