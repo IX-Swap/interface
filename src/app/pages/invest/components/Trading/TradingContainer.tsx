@@ -1,8 +1,8 @@
-import { Grid, Box } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
-import React from 'react'
+import { ShortFinancialSummary } from 'app/pages/exchange/components/FinancialSummary/ShortFinancialSummary'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
+import React from 'react'
 export const TradingContainer = () => {
   const classes = useStyles()
   return (
@@ -12,7 +12,7 @@ export const TradingContainer = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.colorGrid}>
-        <FinancialSummary />
+        <ShortFinancialSummary />
       </Grid>
     </Box>
   )

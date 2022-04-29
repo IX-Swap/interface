@@ -9,8 +9,10 @@ import { ViewListing } from 'app/pages/invest/components/SecondaryMarketTable/Vi
 import { InvestOverview } from 'app/pages/invest/pages/InvestOverview'
 import { Trading } from '../pages/Trading'
 import { RootContainer } from 'ui/RootContainer'
+import { useStyles } from 'app/pages/invest/router/InvestRoot.styles'
 
 export const InvestRouter = () => {
+  const classes = useStyles()
   return (
     <Switch>
       <AppRoute breadcrumb='My Investments' path={InvestRoute.commitments}>
@@ -42,7 +44,9 @@ export const InvestRouter = () => {
         </RootContainer>
       </AppRoute>
       <AppRoute exact path={InvestRoute.trading}>
-        <Trading />
+        <RootContainer className={classes.tradeRoot}>
+          <Trading />
+        </RootContainer>
       </AppRoute>
       <AppRoute path={InvestRoute.tradingRoot}>
         <Redirect to={InvestRoute.trading} />
