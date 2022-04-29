@@ -8,10 +8,18 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { ExternalLink } from 'theme'
 
 import { ProductsBlockContainer } from './styleds'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { isDevelopment } from 'utils/isEnvMode'
+import { useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 export const ProductsBlock = () => {
   const { chainId, account } = useActiveWeb3React()
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const { kyc } = useKYCState()
+  const isKycApproved = kyc?.data?.status === KYCStatuses.APPROVED ?? false
+  
   return (
     <ProductsBlockContainer>
       {chainId && account && (
@@ -20,7 +28,7 @@ export const ProductsBlock = () => {
         </div>
       )}
       <div>
-        {account && chainId && chains.includes(chainId) && (
+        {account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.swap}>
             <Trans>Swap</Trans>
           </NavLink>
@@ -30,28 +38,26 @@ export const ProductsBlock = () => {
             <Trans>Staking</Trans>
           </NavLink>
         )}
-
-        {account && chainId && chains.includes(chainId) && (
+        {isKycApproved && account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.securityTokens()}>
             <Trans>Securities</Trans>
           </NavLink>
         )}
-        {/* <NavLink to="/faucet">
-          <Trans>Faucet </Trans>
-        </NavLink> */}
-        {account && chainId && chains.includes(chainId) && (
+        {account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.pool}>
             <Trans>Pools</Trans>
           </NavLink>
         )}
-        {account && (
-          <ExternalLink target="_self" href="https://info.ixswap.io/home">
+        {isKycApproved && account && isWhitelisted && (
+          <ExternalLink target="_self" href={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}>
             <Trans>Charts</Trans>
           </ExternalLink>
         )}
-        {/* <NavLink to={routes.nftCollections}>
-          <Trans>NFT</Trans>
-        </NavLink> */}
+        {account && (
+          <ExternalLink href="https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform">
+            <Trans>List my token</Trans>
+          </ExternalLink>
+        )}
       </div>
     </ProductsBlockContainer>
   )

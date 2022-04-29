@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Flex } from 'rebass'
-import { isMobile } from 'react-device-detect'
+import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 
-import { ExternalLink, TYPE } from 'theme'
-import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
+import { TYPE } from 'theme'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
 import { useAuthState } from 'state/auth/hooks'
@@ -16,11 +14,9 @@ import { getMyTokens, useFetchTokens, useSecCatalogState } from 'state/secCatalo
 import { MySecToken } from './MySecToken'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 
-import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-tokens.svg'
 import {
   StyledBodyWrapper,
   FeaturedTokensGrid,
-  StyledArrowWrapper,
   MySecTokensTab,
   GradientText,
   MySecTokensGrid,
@@ -31,7 +27,6 @@ import { useUserState } from 'state/user/hooks'
 
 export default function CustodianV2() {
   const offset = 10
-  const docLink = 'https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform'
   const { token } = useAuthState()
   const [mySecTokens, setMySecTokens] = useState([])
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -89,27 +84,9 @@ export default function CustodianV2() {
     </AppBody>
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-      <Flex
-        flexDirection={isMobile ? 'column' : 'row'}
-        alignItems={isMobile ? 'flex-start' : 'center'}
-        justifyContent="space-between"
-      >
-        <TYPE.title4 marginBottom="16px">
-          <Trans>Security tokens</Trans>
-        </TYPE.title4>
-        <ExternalLink style={{ textDecoration: 'none' }} href={docLink}>
-          <StyledButtonGradientBorder>
-            <Flex alignItems="center" justifyContent="center">
-              <TYPE.body4 marginRight="8px" lineHeight="20px">
-                <Trans>List my token</Trans>
-              </TYPE.body4>
-              <StyledArrowWrapper data-testid="listMyToken" clickable>
-                <ArrowDown />
-              </StyledArrowWrapper>
-            </Flex>
-          </StyledButtonGradientBorder>
-        </ExternalLink>
-      </Flex>
+      <TYPE.title4 marginBottom="16px">
+        <Trans>Security tokens</Trans>
+      </TYPE.title4>
       <Info />
       {tokens && (
         <>
