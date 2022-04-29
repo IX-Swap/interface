@@ -120,10 +120,10 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item makeStyles-label-7 css-13i4rnv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-7 css-1b4l2pg-MuiTypography-root"
                   >
                     Authenticator Code
                   </p>
