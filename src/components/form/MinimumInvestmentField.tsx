@@ -17,7 +17,6 @@ export const MinimumInvesmentField = (props: NumericInputProps) => {
           </Typography>
         </Box>
       ) : null}
-
       <FormControl fullWidth>
         <NumericInput {...props} />
       </FormControl>

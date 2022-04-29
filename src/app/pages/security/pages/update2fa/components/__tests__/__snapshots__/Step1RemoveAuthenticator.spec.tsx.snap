@@ -11,7 +11,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
       <h2
         class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
       >
-        Update Authenticator by 
+        Update Authenticator by
         <br />
          Verifying Your Identity
       </h2>
@@ -112,7 +112,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                     class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-6 css-1b4l2pg-MuiTypography-root"
                   >
                     Enter the 6-digit code sent to 
-                    
+
                   </p>
                 </div>
               </div>

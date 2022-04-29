@@ -25,3 +25,4 @@ export const WalletSelect = (props: SelectProps) => {
     </Select>
   )
 }
+WalletSelect.displayName = 'Select_WalletSelect'

@@ -21,3 +21,4 @@ export const DistributionFrequencySelect = (props: any) => {
     </>
   )
 }
+DistributionFrequencySelect.displayName = 'Select_DistributionFrequencySelect'

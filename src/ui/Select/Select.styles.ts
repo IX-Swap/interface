@@ -5,14 +5,14 @@ export const useStyles = makeStyles(theme => {
 
   return {
     wrapper: {
+      marginTop: 0,
       borderRadius: 8,
       backgroundColor: selectPalette.bg,
-      marginTop: 12,
       height: 49,
       '&:hover fieldset.MuiOutlinedInput-notchedOutline': {
         borderColor: theme.palette.primary.light
       },
-      '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root,': {
+      '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root': {
         marginLeft: 0,
         marginTop: 12
       },

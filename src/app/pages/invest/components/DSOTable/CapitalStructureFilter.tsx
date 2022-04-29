@@ -30,7 +30,7 @@ export const CapitalStructureFilter = () => {
       style={{
         borderTopLeftRadius: isMobile ? theme.spacing(0.5) : 0,
         borderBottomLeftRadius: isMobile ? theme.spacing(0.5) : 0,
-        marginTop: 0,
+        marginTop: -12,
         height: 53,
         backgroundColor:
           theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]

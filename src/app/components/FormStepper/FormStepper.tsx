@@ -157,6 +157,7 @@ export const FormStepper = (props: FormStepperProps) => {
             submitMutation={submitMutation}
             shouldSaveOnMove={shouldSaveOnMove}
             skippable={skippable}
+            completed={completed}
           />
         ))}
       </Grid>

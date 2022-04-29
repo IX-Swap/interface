@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { BusinessOwnerSelect } from 'components/form/BusinessOwnerSelect'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
@@ -12,8 +13,8 @@ export const OwnershipStructureFields = () => {
   return (
     <>
       <FormSectionHeader title='Ownership Structure Layers' />
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} md={4}>
+      <Grid container spacing={6}>
+        <Grid item xs={12} md={6}>
           <TypedField
             component={BusinessOwnerSelect}
             control={control}
@@ -22,7 +23,7 @@ export const OwnershipStructureFields = () => {
             variant='outlined'
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} md={6}>
           <TypedField
             component={TextInput}
             fullWidth
@@ -38,6 +39,7 @@ export const OwnershipStructureFields = () => {
             }
           />
         </Grid>
+        <ValidateOnMount />
       </Grid>
     </>
   )

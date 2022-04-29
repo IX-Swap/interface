@@ -24,3 +24,4 @@ export const IdentityTypeSelect = ({
     </Select>
   )
 }
+IdentityTypeSelect.displayName = 'Select_IdentityTypeSelect'

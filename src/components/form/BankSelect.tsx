@@ -1,6 +1,8 @@
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
+import { renderValue } from 'helpers/forms'
 import { ValidCurrency } from 'helpers/types'
 import React from 'react'
+import { Bank } from 'types/bank'
 import { AuthorizableStatus } from 'types/util'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { Select, SelectProps } from 'ui/Select/Select'
@@ -22,11 +24,18 @@ export const BankSelect = (props: BankSelectProps) => {
       status === bankStatus &&
       (props.currency !== undefined ? currency.symbol === props.currency : true)
   )
-
+  const renderName = (value: any) => {
+    return renderValue({
+      value,
+      list: filteredBanks,
+      extractor: ({ bankName, bankAccountNumber }: Bank) =>
+        `${bankName} – ${bankAccountNumber}`
+    })
+  }
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select {...rest} label={undefined}>
+      <Select {...rest} label={undefined} renderValue={renderName}>
         <SelectItem disabled value={undefined}>
           {filteredBanks.length > 0 ? 'Bank' : 'No available banks'}
         </SelectItem>
@@ -40,4 +49,4 @@ export const BankSelect = (props: BankSelectProps) => {
   )
 }
 
-BankSelect.displayName = 'TextField_BankSelect'
+BankSelect.displayName = 'Select_BankSelect'

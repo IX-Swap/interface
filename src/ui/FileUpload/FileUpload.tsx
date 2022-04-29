@@ -13,6 +13,7 @@ import { Avatar } from 'ui/FileUpload/Avatar'
 export interface FileUploadProps {
   name: string
   label: string
+  placeHolder?: string
   value?: Maybe<DataroomFile | DataroomFile[]>
   onChange: (files: DataroomFile | DataroomFile[]) => any
   documentInfo: UploadDocumentInfo
@@ -32,6 +33,7 @@ export interface FileUploadProps {
 export const FileUpload = (props: FileUploadProps) => {
   const {
     label,
+    placeHolder,
     documentInfo,
     value: defaultValue,
     name,
@@ -96,7 +98,9 @@ export const FileUpload = (props: FileUploadProps) => {
     maxSize: _maxSize
   })
 
-  const hasValue = value !== undefined
+  const hasValue =
+    value !== undefined &&
+    (value as DataroomFile).originalFileName !== undefined
 
   const isFileTooLarge =
     fileRejections.length > 0 && fileRejections[0].file.size > _maxSize
@@ -126,6 +130,7 @@ export const FileUpload = (props: FileUploadProps) => {
     isFileTooLarge,
     hasValue,
     label: getLabelDisplay(),
+    placeHolder,
     name,
     multiple,
     rootProps: getRootProps(),

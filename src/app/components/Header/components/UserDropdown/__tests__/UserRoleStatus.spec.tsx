@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import * as useOnboardingJourneys from 'app/hooks/onboarding/useOnboardingJourneys'
 import { UserRoleStatus } from 'app/components/Header/components/UserDropdown/UserRoleStatus/UserRoleStatus'
 
 describe('UserRoleStatus', () => {

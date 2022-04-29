@@ -12,7 +12,7 @@ import { BackDrop } from 'app/components/OnboardingDialog/BackDrop'
 import React, { useState } from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import classnames from 'classnames'
-import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
+import { useOnboardingPanel } from 'app/hooks/onboarding/useOnboardingPanel'
 
 export interface OnboardingDialogProps {
   message: string[]
