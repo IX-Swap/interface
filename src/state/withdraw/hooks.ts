@@ -32,6 +32,7 @@ import {
 import walletValidator from 'multicoin-address-validator'
 import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
 import { setLogItem } from 'state/eventLog/actions'
+import { formatRpcError } from 'utils/formatRpcError'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -159,6 +160,7 @@ export function useWithdrawCallback(
   const addTransaction = useTransactionAdder()
   const cancelAction = useCancelDepositCallback()
   const toggle = useToggleTransactionModal()
+  const addPopup = useAddPopup()
 
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
@@ -202,8 +204,14 @@ export function useWithdrawCallback(
         if (withdrawId) {
           await cancelAction({ requestId: withdrawId })
         }
-        console.error(`Could not withdraw amount`, error)
-        dispatch(withdrawCurrency.rejected({ errorMessage: error.message }))
+        const errorMessage = formatRpcError(error)
+        addPopup({
+          info: {
+            success: false,
+            summary: errorMessage,
+          },
+        })
+        dispatch(withdrawCurrency.rejected({ errorMessage }))
         onError()
       }
     },
@@ -308,6 +316,7 @@ export const usePayFee = () => {
   const web3 = new Web3(library?.provider)
   const paidFee = usePaidWithdrawFee()
   const getEvents = useGetEventCallback()
+  const addPopup = useAddPopup()
 
   return useCallback(
     async ({ feeContractAddress, feeAmount, tokenId, id }) => {
@@ -331,7 +340,14 @@ export const usePayFee = () => {
         getEvents({ tokenId, filter: 'all' })
         dispatch(payFee.fulfilled())
       } catch (error: any) {
-        dispatch(payFee.rejected({ errorMessage: error.message }))
+        const errorMessage = formatRpcError(error)
+        addPopup({
+          info: {
+            success: false,
+            summary: errorMessage,
+          },
+        })
+        dispatch(payFee.rejected({ errorMessage }))
       }
     },
     [account, dispatch, paidFee]
