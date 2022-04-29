@@ -2,38 +2,65 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export interface Props {
   image?: string
+  copied?: boolean
 }
 
 export default makeStyles(theme => ({
+  wrapper: {
+    width: '100%',
+    maxWidth: 484
+  },
   image: {
-    height: '124px',
-    width: '124px',
-    padding: theme.spacing(1),
-    marginBottom: theme.spacing(1.25),
-    borderRadius: 6,
+    height: '240px',
+    width: '240px',
+    padding: theme.spacing(6),
+    margin: theme.spacing(5, 0),
+    border: `1px solid ${theme.palette.otpInput.border}`,
+    borderRadius: 32,
     backgroundImage: (props: Props) =>
       props.image !== undefined ? `url('${props.image}')` : '',
     backgroundPosition: 'center',
     backgroundSize: 'contain',
     backgroundOrigin: 'content-box',
     backgroundRepeat: 'no-repeat',
-    boxShadow:
-      'rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px'
+    boxShadow: '0px 32px 64px rgba(59, 66, 81, 0.08)'
+  },
+  keyBlock: {
+    width: '100%',
+    padding: theme.spacing(0, 0, 0, 2),
+    borderRadius: 8,
+    border: (props: Props) =>
+      `1px solid ${
+        props.copied !== undefined && props.copied
+          ? 'rgba(125, 211, 32, 0.3)'
+          : 'rgba(76, 136, 255, 0.3)'
+      }`,
+    background: (props: Props) =>
+      props.copied !== undefined && props.copied
+        ? 'rgba(125, 211, 32, 0.05)'
+        : 'rgba(76, 136, 255, 0.05)'
   },
   key: {
-    color:
-      theme.palette.mode === 'light'
-        ? theme.palette.text.primary
-        : theme.palette.getContrastText('#F5EBEB'),
-    marginTop: '1em',
-    padding: theme.spacing(1.25, 3),
     fontSize: 18,
-    fontWeight: 500,
-    backgroundColor: '#F5EBEB',
-    borderRadius: 3
+    fontWeight: 600
   },
   text: {
-    maxWidth: 512,
-    fontSize: 18
+    fontSize: 14,
+    fontWeight: 400,
+    opacity: 0.8,
+    margin: theme.spacing(0, 0, 5)
+  },
+  copyButton: {
+    padding: theme.spacing(2),
+    display: 'block',
+    color: (props: Props) =>
+      props.copied !== undefined && props.copied
+        ? theme.palette.success.main
+        : theme.palette.info.main,
+    cursor: 'pointer',
+
+    '&:hover': {
+      opacity: 0.7
+    }
   }
 }))

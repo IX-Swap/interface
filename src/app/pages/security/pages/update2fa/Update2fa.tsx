@@ -3,7 +3,7 @@ import { Step, Grid, useMediaQuery } from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
 import { useStyles } from './Update2fa.styles'
-import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons'
+import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons/ChangeStepButtons'
 import { useAuth } from 'hooks/auth/useAuth'
 import { history } from 'config/history'
 import { SecurityRoute } from 'app/pages/security/router/config'
@@ -30,6 +30,7 @@ export const Update2fa = () => {
     }
     // eslint-disable-next-line
   }, [])
+
   const nextStep = () => {
     setActiveStep(activeStep + 1)
   }
@@ -42,7 +43,7 @@ export const Update2fa = () => {
     nextStep()
   }
 
-  const isBackButtonVisible = activeStep > 1 && activeStep < steps.length
+  const isBackButtonVisible = activeStep > 0 && activeStep < steps.length
   const isNextButtonVisible = activeStep < steps.length - 1 && activeStep > 0
 
   const isStepActive = (index: number) => index === activeStep
@@ -68,61 +69,63 @@ export const Update2fa = () => {
     : undefined
 
   return (
-    <Grid
-      container
-      xs={12}
-      className={classes.wrapper}
-      justifyContent={'center'}
-    >
-      <Grid className={classes.leftBlock}>
-        <Grid item>
-          <ActiveStep
-            twoFaData={twoFaData}
-            handleSuccessfulRemoveAuthenticator={handleSuccessfulFirstStep}
-            index={activeStep}
-            nextStep={nextStep}
-          />
-        </Grid>
-        <Grid item>
-          <ChangeStepButtons
-            isBackButtonVisible={isBackButtonVisible}
-            isNextButtonVisible={isNextButtonVisible}
-            onBackButtonClick={prevStep}
-            onNextButtonClick={nextStep}
-          />
-        </Grid>
-      </Grid>
+    <>
       <Grid
-        item
         container
-        flexDirection={'column'}
-        className={classes.rightBlock}
+        xs={12}
+        className={classes.wrapper}
+        justifyContent={'center'}
       >
-        <Grid item>
-          <Stepper
-            orientation={matches ? 'horizontal' : 'vertical'}
-            activeStep={activeStep}
-            nonLinear
-            withMobileDropdown={false}
-            title={'Progress'}
-            stepInfo={stepInfo}
-          >
-            {steps.map((label, index) => (
-              <Step
-                key={label}
-                completed={getVariantsConditions(index).completed}
-              >
-                <StepButton
-                  step={index + 1}
-                  variantsConditions={getVariantsConditions(index)}
+        <Grid className={classes.leftBlock}>
+          <Grid item>
+            <ActiveStep
+              twoFaData={twoFaData}
+              handleSuccessfulRemoveAuthenticator={handleSuccessfulFirstStep}
+              index={activeStep}
+              nextStep={nextStep}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          item
+          container
+          flexDirection={'column'}
+          className={classes.rightBlock}
+        >
+          <Grid item>
+            <Stepper
+              orientation={matches ? 'horizontal' : 'vertical'}
+              activeStep={activeStep}
+              nonLinear
+              withMobileDropdown={false}
+              title={'Progress'}
+              stepInfo={stepInfo}
+            >
+              {steps.map((label, index) => (
+                <Step
+                  key={label}
+                  completed={getVariantsConditions(index).completed}
                 >
-                  {label}
-                </StepButton>
-              </Step>
-            ))}
-          </Stepper>
+                  <StepButton
+                    step={index + 1}
+                    variantsConditions={getVariantsConditions(index)}
+                  >
+                    {label}
+                  </StepButton>
+                </Step>
+              ))}
+            </Stepper>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+      <Grid item>
+        <ChangeStepButtons
+          isBackButtonVisible={isBackButtonVisible}
+          isNextButtonVisible={isNextButtonVisible}
+          onBackButtonClick={prevStep}
+          onNextButtonClick={nextStep}
+        />
+      </Grid>
+    </>
   )
 }

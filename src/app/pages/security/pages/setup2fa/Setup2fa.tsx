@@ -4,7 +4,7 @@ import { Aside } from 'app/pages/security/pages/setup2fa/components/Aside'
 import { useSetup2fa } from 'app/pages/security/pages/setup2fa/hooks/useSetup2fa'
 import { ActiveStep } from 'app/pages/security/pages/setup2fa/components/ActiveStep'
 import { useStyles } from './Setup2fa.styles'
-import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons'
+import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons/ChangeStepButtons'
 
 const steps = [
   'Download app',

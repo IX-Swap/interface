@@ -2,7 +2,7 @@ import { makeStyles } from '@mui/styles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
-    padding: theme.spacing(2, 0, 5),
+    padding: theme.spacing(2, 0),
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column-reverse'
     }
