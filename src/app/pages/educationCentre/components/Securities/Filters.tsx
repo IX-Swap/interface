@@ -28,7 +28,7 @@ export const Filters = ({
       justifyContent='space-between'
       alignItems={'center'}
     >
-      <Grid item xs={12} lg={4} mt={0.75}>
+      <Grid item xs={12} lg={4} mt={3}>
         <SearchFilter
           inputAdornmentPosition='end'
           placeholder='Search'

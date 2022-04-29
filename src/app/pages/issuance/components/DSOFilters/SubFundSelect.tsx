@@ -63,7 +63,10 @@ export const SubFundSelect = () => {
           <FormControl
             fullWidth
             variant='outlined'
-            style={{ width: 300, marginTop: -12 }}
+            style={{
+              width: 300,
+              marginTop: -20
+            }}
           >
             <InputLabel>Select Multiple Sub-funds</InputLabel>
             <Select
