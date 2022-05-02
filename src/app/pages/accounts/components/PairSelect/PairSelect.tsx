@@ -1,14 +1,11 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  TextFieldProps
-} from '@mui/material'
+import { FormControl } from '@mui/material'
 import { Pair, useMarketList } from 'app/pages/invest/hooks/useMarketList'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import React from 'react'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select, SelectProps } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
-export const PairSelect = (props: Partial<TextFieldProps>) => {
+export const PairSelect = (props: Partial<SelectProps>) => {
   const { data } = useMarketList()
 
   if (data === undefined || data.list.length < 1) {
@@ -17,18 +14,20 @@ export const PairSelect = (props: Partial<TextFieldProps>) => {
 
   return (
     <FormControl fullWidth variant='outlined'>
-      <InputLabel shrink>Pair</InputLabel>
+      <InputLabel>Pair</InputLabel>
 
-      <TextFieldSelect {...props}>
-        <MenuItem disabled value={undefined}>
+      <Select {...props} label={undefined}>
+        <SelectItem disabled value={undefined}>
           Pair
-        </MenuItem>
+        </SelectItem>
         {data.list.map((item: Pair) => (
-          <MenuItem key={item._id} value={item._id}>
+          <SelectItem key={item._id} value={item._id}>
             {item.name}
-          </MenuItem>
+          </SelectItem>
         ))}
-      </TextFieldSelect>
+      </Select>
     </FormControl>
   )
 }
+
+PairSelect.displayName = 'Select_PairSelect'

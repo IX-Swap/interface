@@ -26,7 +26,6 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: '#fff'
   },
   depositLink: {
-    height: 40,
     backgroundColor: '#fff',
     '&:hover': {
       backgroundColor: '#fff'

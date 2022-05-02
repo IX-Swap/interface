@@ -10,21 +10,14 @@ export const StepperKit = () => {
         <Grid item xs={12}>
           <Typography variant='h2'>Stepper</Typography>
         </Grid>
+
         <Grid item xs={12}>
-          <Typography>Horizontal</Typography>
+          <StepperExample formTitle='Horizontal' />
         </Grid>
 
         <Grid item xs={12}>
-          <StepperExample />
-        </Grid>
-
-        <Grid item xs={12}>
-          <Typography>Vertical</Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Box width={175}>
-            <StepperExample orientation={'vertical'} />
+          <Box width={200}>
+            <StepperExample orientation='vertical' formTitle='Vertical' />
           </Box>
         </Grid>
       </Grid>

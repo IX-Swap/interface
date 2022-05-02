@@ -3,7 +3,7 @@ import { Grid, Typography } from '@mui/material'
 import { RootContainer } from 'ui/RootContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
-import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 
 export const IdentitiesList: React.FC = () => {

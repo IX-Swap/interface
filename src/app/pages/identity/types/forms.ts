@@ -124,7 +124,7 @@ export interface IndividualAgreementsFormValues {
 }
 
 export interface InvestorCorporateInfoFormValues {
-  logo?: string
+  logo?: DataroomFile | string
   companyLegalName: string
   registrationNumber: string
   legalEntityStatus: string
@@ -163,7 +163,7 @@ export interface RepresentativeFormValues {
   designation: string
   email: string
   contactNumber: string
-  documents: DataroomFile[]
+  documents: Array<{ value: DataroomFile }>
 }
 export interface DirectorFormValues {
   fullName: string

@@ -123,9 +123,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 name='decimals'
                 control={control}
                 helperText='Decimal Places'
-                variant='outlined'
                 valueExtractor={numericValueExtractor}
-                fullWidth
               />
             </Grid>
           </Grid>

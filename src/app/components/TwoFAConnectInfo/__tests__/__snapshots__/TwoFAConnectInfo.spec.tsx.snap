@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TwoFAConnectInfo should match snapshot when enable2Fa is not true 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-wrapper-4 css-11gelwl-MuiPaper-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item css-1gb55do-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+          >
+            2FA
+          </h5>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <svg
+            class="css-1s8o7ec"
+            fill="#778194"
+            height="24px"
+            width="24px"
+          >
+            <use
+              href="image-mock#security"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item makeStyles-infoBlock-5 css-13i4rnv-MuiGrid-root"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+        >
+          Secure your account with two-factor authentication
+        </p>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root makeStyles-button-6 css-119vr5z-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+          href="/app/settings/setup-2fa"
+          tabindex="0"
+        >
+          Enable 2FA
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

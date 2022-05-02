@@ -2,13 +2,13 @@ import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 import {
-  MenuItem,
   Select,
   Typography,
   Grid,
   FormControl,
   SelectChangeEvent
 } from '@mui/material'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const FinancialReportDSOSelect = () => {
   const { data, isLoading } = useDSOsByUserId('Approved', true)
@@ -47,9 +47,9 @@ export const FinancialReportDSOSelect = () => {
                       >
                         {data.list.map(({ _id, tokenName }) => {
                           return (
-                            <MenuItem value={_id} key={_id}>
+                            <SelectItem value={_id} key={_id}>
                               {tokenName}
-                            </MenuItem>
+                            </SelectItem>
                           )
                         })}
                       </Select>

@@ -7,7 +7,6 @@ import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
-import { NextButton } from 'app/components/FormStepper/NextButton'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
 
@@ -24,6 +23,7 @@ export interface FormStepProps {
   shouldSaveOnMove: boolean
   setCompleted?: () => void
   skippable?: boolean
+  completed: number[]
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -39,7 +39,8 @@ export const FormStep = (props: FormStepProps) => {
     submitMutation,
     shouldSaveOnMove,
     setCompleted,
-    skippable
+    skippable,
+    completed
   } = props
 
   const isCurrentStep = activeStep === index
@@ -72,7 +73,6 @@ export const FormStep = (props: FormStepProps) => {
     const onSubmitSuccess = (data: any) => {
       if (data?.message === 'OK' && !isLastStep) {
         setCompleted?.()
-        setActiveStep(activeStep + 1)
       }
     }
 
@@ -83,11 +83,25 @@ export const FormStep = (props: FormStepProps) => {
     return await mutation(payload).then(onSubmitSuccess)
   }
 
+  const getValidationSchema = () => {
+    if (isLastStep) {
+      return step.validationSchema
+    }
+
+    if (completed.includes(index)) {
+      return step.validationSchema
+    }
+
+    return undefined
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={isLastStep ? step.validationSchema : undefined}
+      validationSchema={getValidationSchema()}
       onSubmit={handleSubmit}
+      allowInvalid
+      id={`${step.formId ?? 'form'}-${index}`}
     >
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='large' />
@@ -130,7 +144,18 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {hasNextStep && <NextButton />}
+          {hasNextStep && (
+            <SaveButton
+              step={index}
+              transformData={step.getRequestPayload}
+              mutation={saveMutation}
+              successCallback={() => setActiveStep(activeStep + 1)}
+              variant='contained'
+              color='primary'
+            >
+              Next
+            </SaveButton>
+          )}
 
           {isLastStep && (
             <SubmitButton mutation={submitMutation} data={data} step={step} />

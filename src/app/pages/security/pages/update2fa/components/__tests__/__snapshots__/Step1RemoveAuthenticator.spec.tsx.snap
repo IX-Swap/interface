@@ -65,7 +65,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1smlnuy-MuiFormControl-root-MuiTextField-root"
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-5 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
                     control="[object Object]"
                     path="emailCode"
                   >
@@ -119,7 +119,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1smlnuy-MuiFormControl-root-MuiTextField-root"
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-5 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
                     control="[object Object]"
                     path="otp"
                   >

@@ -1,27 +1,18 @@
-import React from 'react'
-import { Box, FormControl, Typography } from '@mui/material'
-import { NumericInput, NumericInputProps } from 'components/form/NumericInput'
+import { Box, FormControl } from '@mui/material'
 import { useStyles } from 'components/form/MinimumInvestmentField.styles'
+import { NumericInput, NumericInputProps } from 'components/form/NumericInput'
+import React from 'react'
 
-export interface NumericFieldCapsuleProps extends NumericInputProps {
-  capsuleLabel?: string
-}
+export const NumericFieldCapsule = (props: NumericInputProps) => {
+  const { fieldContainer } = useStyles()
 
-export const NumericFieldCapsule = (props: NumericFieldCapsuleProps) => {
-  const { capsule, fieldContainer } = useStyles()
   return (
     <Box className={fieldContainer}>
-      {props.capsuleLabel !== null && props.capsuleLabel !== '' ? (
-        <Box className={capsule}>
-          <Typography variant='subtitle1' color='textSecondary'>
-            {props.capsuleLabel}
-          </Typography>
-        </Box>
-      ) : null}
-
       <FormControl fullWidth>
         <NumericInput {...props} />
       </FormControl>
     </Box>
   )
 }
+
+NumericFieldCapsule.displayName = 'TextInput_NumericFieldCapsule'

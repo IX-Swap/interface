@@ -1,12 +1,8 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { FormControl, InputLabel, SelectChangeEvent } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const CategoryFilter = () => {
   return (
@@ -20,12 +16,11 @@ export const CategoryFilter = () => {
             onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}
-            label='Filter By'
           >
-            <MenuItem value='Industry'>Industry</MenuItem>
-            <MenuItem value='Country'>Country</MenuItem>
-            <MenuItem value='Securities'>Securities</MenuItem>
-            <MenuItem value='Protocol'>Protocol</MenuItem>
+            <SelectItem value='Industry'>Industry</SelectItem>
+            <SelectItem value='Country'>Country</SelectItem>
+            <SelectItem value='Securities'>Securities</SelectItem>
+            <SelectItem value='Protocol'>Protocol</SelectItem>
           </Select>
         </FormControl>
       )}

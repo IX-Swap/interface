@@ -27,7 +27,11 @@ const EditInvestorForm = ({
         <VSpacer size='medium' />
       </Grid>
       <Grid item xs={12}>
-        <CorporateInvestorForm data={data} type={type} />
+        <CorporateInvestorForm
+          data={data}
+          type={type}
+          formTitle='Corporate Identity'
+        />
       </Grid>
     </Grid>
   )
