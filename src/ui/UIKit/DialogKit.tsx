@@ -100,7 +100,7 @@ export const DialogKit = () => {
         <VSpacer size='small' />
         <DialogActions>
           <Grid container rowSpacing={2} columnSpacing={2} direction='column'>
-            <Grid item xs={12}>
+            <Grid item>
               <Button
                 fullWidth
                 variant='contained'
@@ -109,7 +109,7 @@ export const DialogKit = () => {
                 Large
               </Button>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item>
               <Button
                 fullWidth
                 variant='alternate'

@@ -7,7 +7,7 @@ export const dialog = (theme: Theme) => {
       paper: {
         padding: theme.spacing(2),
         borderRadius: '16px',
-        minWidth: 380
+        width: 380
       }
     }
   }
@@ -25,7 +25,7 @@ export const dialogContent = (theme: Theme) => {
         fontSize: '14px',
         lineHeight: '17px',
         color: textPalette.secondary,
-        padding: 4,
+        padding: 40,
         marginTop: theme.spacing(1)
       }
     }
@@ -36,7 +36,7 @@ export const dialogActions = (theme: Theme) => {
   return {
     styleOverrides: {
       root: {
-        padding: 4
+        padding: 40
       }
     }
   }
@@ -55,7 +55,7 @@ export const dialogTitle = (theme: Theme) => {
         lineHeight: '27px',
         letterSpacing: '-0.02em',
         color: textPalette.primary,
-        padding: 4,
+        padding: 40,
         display: 'flex',
         justifyContent: 'center'
       }
