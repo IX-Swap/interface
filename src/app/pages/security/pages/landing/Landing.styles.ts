@@ -1,26 +1,30 @@
 import { makeStyles } from '@mui/styles'
 
 export default makeStyles(theme => ({
+  subContent: { padding: theme.spacing(5, 5, 7, 5) },
   contentWrapper: {
+    width: 800,
     maxWidth: 800,
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(4.5, 5.5, 4.5, 5),
+
     borderRadius: 16,
     boxShadow:
       theme.palette.mode === 'light'
         ? '0px 4px 62px rgba(170, 170, 170, 0.06)'
-        : 'none'
-  },
-  web: {
-    display: 'block',
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
+        : 'none',
+    [theme.breakpoints.down('md')]: {
+      width: 'auto',
+      minWidth: '20rem',
+      maxWidth: 'none'
     }
   },
-  mobile: {
-    display: 'block',
-    [theme.breakpoints.up('sm')]: {
-      display: 'none'
-    }
+  divider: {
+    width: 'auto',
+    height: '0px',
+    border: '1px solid #DBE2EC',
+    flex: 'none',
+    alignSelf: 'stretch',
+    flexGrow: 0,
+    margin: '28px 0px'
   }
 }))
