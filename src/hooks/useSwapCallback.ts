@@ -7,6 +7,7 @@ import { useSecTokens } from 'state/secTokens/hooks'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { useAuthorizationsState, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
+import { formatRpcError } from 'utils/formatRpcError'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
@@ -352,7 +353,13 @@ export function useSwapCallback(
                   })
                   .catch((callError) => {
                     console.debug('Call threw error', call, callError)
-                    return { call, error: new Error(swapErrorToUserReadableMessage(callError)) }
+                    const errorMessage = formatRpcError(gasError)
+
+                    return {
+                      call,
+                      error:
+                        gasError.code === -32603 ? errorMessage : new Error(swapErrorToUserReadableMessage(callError)),
+                    }
                   })
               })
           })
@@ -418,9 +425,13 @@ export function useSwapCallback(
             if (error?.code === 4001) {
               throw new Error('Transaction rejected.')
             } else {
+              const errorMessage = formatRpcError(error)
+
               // otherwise, the error was unexpected and we need to convey that
               console.error(`Swap failed`, error, address, calldata, value)
-              throw new Error(`Swap failed: ${swapErrorToUserReadableMessage(error)}`)
+              throw new Error(
+                error?.code === -32603 ? errorMessage : `Swap failed: ${swapErrorToUserReadableMessage(error)}`
+              )
             }
           })
       },
