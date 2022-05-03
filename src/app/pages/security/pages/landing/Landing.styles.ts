@@ -20,9 +20,10 @@ export default makeStyles(theme => ({
   },
   divider: {
     width: 'auto',
-    height: '0px',
-    border: '1px solid #DBE2EC',
+    height: '1px',
+    opacity: 0.75,
     flex: 'none',
+    background: '#DBE2EC',
     alignSelf: 'stretch',
     flexGrow: 0,
     margin: '28px 0px'
