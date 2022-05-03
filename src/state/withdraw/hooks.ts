@@ -160,7 +160,6 @@ export function useWithdrawCallback(
   const addTransaction = useTransactionAdder()
   const cancelAction = useCancelDepositCallback()
   const toggle = useToggleTransactionModal()
-  const addPopup = useAddPopup()
 
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
@@ -205,12 +204,6 @@ export function useWithdrawCallback(
           await cancelAction({ requestId: withdrawId })
         }
         const errorMessage = formatRpcError(error)
-        addPopup({
-          info: {
-            success: false,
-            summary: errorMessage,
-          },
-        })
         dispatch(withdrawCurrency.rejected({ errorMessage }))
         onError()
       }
