@@ -82,3 +82,4 @@ export const OccupationSelect = (props: any) => {
     </>
   )
 }
+OccupationSelect.displayName = 'Select_OccupationSelect'

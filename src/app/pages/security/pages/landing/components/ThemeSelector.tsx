@@ -1,4 +1,4 @@
-import { SelectChangeEvent } from '@mui/material'
+import { SelectChangeEvent, Box } from '@mui/material'
 import { AppThemeContext } from 'AppThemeProvider'
 import React, { useContext } from 'react'
 import { AppTheme } from 'themes/app'
@@ -21,17 +21,20 @@ export const ThemeSelector = () => {
   }
 
   return (
-    <Select
-      value={themeType}
-      onChange={handleChange}
-      variant='outlined'
-      className={classes.wrapper}
-    >
-      {Object.values(AppTheme).map(value => (
-        <SelectItem key={value} value={value}>
-          {value} Theme
-        </SelectItem>
-      ))}
-    </Select>
+    <Box className={classes.boxWrapper}>
+      <Select
+        value={themeType}
+        onChange={handleChange}
+        variant='outlined'
+        className={classes.wrapper}
+      >
+        {Object.values(AppTheme).map(value => (
+          <SelectItem key={value} value={value}>
+            {value} Theme
+          </SelectItem>
+        ))}
+      </Select>
+    </Box>
   )
 }
+ThemeSelector.displayName = 'Select_ThemeSelector'

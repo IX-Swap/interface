@@ -12,6 +12,13 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
 describe('PrimaryInvestLink', () => {
+  const defaultPrimaryInvestProps = {
+    style: { fontSize: 16, marginTop: 16 },
+    variant: 'contained',
+    color: 'primary',
+    component: AppRouterLinkComponent
+  }
+
   const primaryProps: PrimaryInvestLinkProps = {
     type: 'Primary',
     data: dso
@@ -25,12 +32,7 @@ describe('PrimaryInvestLink', () => {
     type: 'Primary',
     data: dso
   }
-  const defaultPrimaryInvestProps = {
-    style: { fontSize: 16, marginTop: 16 },
-    variant: 'contained',
-    color: 'primary',
-    component: AppRouterLinkComponent
-  }
+
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -81,7 +83,6 @@ describe('PrimaryInvestLink', () => {
       expect.objectContaining({
         ...defaultPrimaryInvestProps,
         disabled: true,
-        // TODO Change route for OTC after complete OTC page
         to: InvestRoute.exchange,
         params: {
           pairId: dso._id

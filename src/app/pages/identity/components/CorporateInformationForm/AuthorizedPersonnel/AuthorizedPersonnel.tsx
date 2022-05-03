@@ -1,9 +1,11 @@
 import React from 'react'
-import { Grid, Button } from '@mui/material'
+import { Grid, Button, IconButton } from '@mui/material'
 import { PersonnelInformation } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
 import { AuthorizationDocuments } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/AuthorizationDocuments'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { Personnel } from 'app/pages/identity/types/forms'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface AuthorizedPersonnelProps {
   fieldId: string
@@ -34,39 +36,52 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
   }
 
   return (
-    <Grid container direction='column' spacing={6}>
-      {index > 0 ? (
-        <Grid item>
-          <FormSectionHeader
-            title={`(${props.index + 1}) Company Authorized Personnel`}
-            subtitle=''
-            variant='subsection'
-          />
+    <FieldContainer>
+      <Grid container spacing={6}>
+        <Grid
+          item
+          container
+          xs={12}
+          justifyContent='space-between'
+          alignItems='center'
+        >
+          <Grid item>
+            <FormSectionHeader
+              title={`${
+                total > 1 ? `(${props.index + 1}) ` : ''
+              }Company Authorized Personnel`}
+            />
+          </Grid>
+          {total > 1 ? (
+            <Grid item>
+              <IconButton onClick={handleRemove} size='large'>
+                <Icon name='trash' />
+              </IconButton>
+            </Grid>
+          ) : null}
         </Grid>
-      ) : null}
-      <Grid item>
-        <PersonnelInformation {...props} />
-      </Grid>
-      <Grid item>
-        <AuthorizationDocuments {...props} />
-      </Grid>
-      <Grid item container justifyContent='flex-end' spacing={2}>
-        {total > 1 ? (
-          <Grid item>
-            <Button variant='outlined' color='primary' onClick={handleRemove}>
-              Delete
-            </Button>
-          </Grid>
-        ) : null}
 
-        {isLast && total < max ? (
-          <Grid item>
-            <Button variant='outlined' color='primary' onClick={handleAppend}>
-              Add more
-            </Button>
-          </Grid>
-        ) : null}
+        <Grid item xs={12}>
+          <PersonnelInformation {...props} />
+        </Grid>
+        <Grid item xs={12}>
+          <AuthorizationDocuments {...props} />
+        </Grid>
+        <Grid item xs={12} container justifyContent='flex-end' spacing={2}>
+          {isLast && total < max ? (
+            <Grid item>
+              <Button
+                variant='outlined'
+                color='primary'
+                onClick={handleAppend}
+                startIcon={<Icon name='plus' />}
+              >
+                Company Authorized Personnel
+              </Button>
+            </Grid>
+          ) : null}
+        </Grid>
       </Grid>
-    </Grid>
+    </FieldContainer>
   )
 }

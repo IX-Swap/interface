@@ -1,4 +1,4 @@
-import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const useOnboardingJourneys = () => {
@@ -44,7 +44,9 @@ export const useOnboardingJourneys = () => {
   )
 
   const getIsJourneyCompleted = (identityType: IdentityType) => {
-    if (identityType === 'individual') return isIndividualJourneyCompleted
+    if (identityType === 'individual') {
+      return isIndividualJourneyCompleted
+    }
 
     return isCorporateJourneyCompleted
   }

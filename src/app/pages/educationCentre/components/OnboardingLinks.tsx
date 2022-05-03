@@ -5,7 +5,7 @@ import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/indivi
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
 
 export const OnboardingLinks = () => {
   const {

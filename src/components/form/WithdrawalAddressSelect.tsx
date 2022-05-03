@@ -1,6 +1,7 @@
 import { SelectProps } from '@mui/material'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { privateClassNames } from 'helpers/classnames'
+import { renderValue } from 'helpers/forms'
 import React from 'react'
 import { QueryStatus } from 'react-query'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
@@ -20,11 +21,17 @@ export const WithdrawalAddressSelect: React.FC<
 
   const queryStatus = queryStatusRenderer(status)
   if (queryStatus !== undefined) return queryStatus
-
+  const renderName = (value: any) => {
+    return renderValue({
+      value,
+      list,
+      extractor: (item: WithdrawalAddress) => item.label
+    })
+  }
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select displayEmpty {...rest} label={undefined}>
+      <Select displayEmpty {...rest} label={undefined} renderValue={renderName}>
         {list.map(({ label, _id }) => (
           <SelectItem key={_id} value={_id} className={privateClassNames()}>
             {label}

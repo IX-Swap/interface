@@ -39,7 +39,7 @@ export const Actions = ({ handleClose, enable2fa }: ActionsProps) => {
           className={classes.firstButton}
           onClick={handleFirstButtonClick}
         >
-          Enabled 2FA
+          Enable 2FA
         </Button>
       )}
 

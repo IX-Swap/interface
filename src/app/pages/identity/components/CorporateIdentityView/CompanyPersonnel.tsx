@@ -61,14 +61,12 @@ export const CompanyPersonnel = ({
           <Box mb={1} />
           <>
             {showDocumentHeader ? <DataroomHeader /> : null}
-            {personnel.documents.map(document => (
-              <DataroomViewRow
-                showDivider={false}
-                title=''
-                document={document}
-                key={document._id}
-              />
-            ))}
+            <DataroomViewRow
+              showDivider={false}
+              title=''
+              document={(personnel.documents as any).value}
+              key={(personnel.documents as any).value._id}
+            />
           </>
         </Grid>
       ) : null}
