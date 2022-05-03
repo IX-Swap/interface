@@ -1,12 +1,16 @@
 import { makeStyles } from '@mui/styles'
 
 export default makeStyles(theme => ({
-  subContent: { padding: theme.spacing(5, 5, 7, 5) },
+  subContent: {
+    padding: theme.spacing(5, 5, 7, 5),
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(5)
+    }
+  },
   contentWrapper: {
-    width: 800,
-    maxWidth: 800,
+    width: 884,
+    maxWidth: 884,
     backgroundColor: theme.palette.background.paper,
-
     borderRadius: 16,
     boxShadow:
       theme.palette.mode === 'light'
