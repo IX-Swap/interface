@@ -70,7 +70,6 @@ export const getDocumentsRequestPayload = (
 ) => {
   const documents = {
     documents: Object.values(values).reduce<string[]>((result, documents) => {
-      console.log(documents)
       if (Array.isArray(documents)) {
         return [...result, ...documents.map(document => document.value._id)]
       }

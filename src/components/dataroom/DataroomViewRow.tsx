@@ -14,6 +14,7 @@ export interface DataroomViewRowProps {
 
 export const DataroomViewRow = (props: DataroomViewRowProps) => {
   const { document, title, downloader, showDivider = true } = props
+  console.log(document)
 
   return (
     <Fragment>
