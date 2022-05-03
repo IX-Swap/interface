@@ -21,8 +21,8 @@ describe('RemoveAuthenticatorFields', () => {
       </Form>
     )
 
-    expect(getByText('Remove and continue')).toBeInTheDocument()
-    expect(getByText('Remove and continue')).toBeDisabled()
+    expect(getByText('Remove and Continue')).toBeInTheDocument()
+    expect(getByText('Remove and Continue')).toBeDisabled()
   })
 
   it('disables submit button when isLoading is true', async () => {
@@ -52,7 +52,7 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue')).toBeDisabled()
+      expect(getByText('Remove and Continue')).toBeDisabled()
     })
   })
 
@@ -73,7 +73,7 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue')).toBeDisabled()
+      expect(getByText('Remove and Continue')).toBeDisabled()
     })
 
     otpFields.forEach(otpField => {
@@ -85,7 +85,7 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue')).toBeEnabled()
+      expect(getByText('Remove and Continue')).toBeEnabled()
     })
   })
 })

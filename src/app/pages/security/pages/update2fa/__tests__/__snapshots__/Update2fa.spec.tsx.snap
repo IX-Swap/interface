@@ -70,7 +70,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                       >
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-13xhwni-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
                           control="[object Object]"
                           path="emailCode"
                         >
@@ -95,7 +95,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                               value=""
                             />
                             <p
-                              class="MuiTypography-root MuiTypography-body1 makeStyles-wrapper-15 css-1b4l2pg-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-body1 makeStyles-wrapper-16 css-1b4l2pg-MuiTypography-root"
                             >
                               Send
                             </p>
@@ -129,10 +129,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-item makeStyles-label-11 css-13i4rnv-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-label-11 css-1b4l2pg-MuiTypography-root"
                         >
                           Authenticator Code
                         </p>
@@ -147,7 +147,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                             class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
                           >
                             <div
-                              class="makeStyles-container-17 makeStyles-fullwidth-18"
+                              class="makeStyles-container-18 makeStyles-fullwidth-19"
                               style="display: flex;"
                             >
                               <div
@@ -156,7 +156,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                                 <input
                                   aria-label="Please enter verification code. Digit 1"
                                   autocomplete="off"
-                                  class="makeStyles-input-19  "
+                                  class="makeStyles-input-20  "
                                   maxlength="1"
                                   placeholder="_"
                                   style="width: 1em; text-align: center;"
@@ -170,7 +170,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                                 <input
                                   aria-label="Digit 2"
                                   autocomplete="off"
-                                  class="makeStyles-input-19 "
+                                  class="makeStyles-input-20 "
                                   maxlength="1"
                                   placeholder="_"
                                   style="width: 1em; text-align: center;"
@@ -184,7 +184,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                                 <input
                                   aria-label="Digit 3"
                                   autocomplete="off"
-                                  class="makeStyles-input-19 "
+                                  class="makeStyles-input-20 "
                                   maxlength="1"
                                   placeholder="_"
                                   style="width: 1em; text-align: center;"
@@ -198,7 +198,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                                 <input
                                   aria-label="Digit 4"
                                   autocomplete="off"
-                                  class="makeStyles-input-19 "
+                                  class="makeStyles-input-20 "
                                   maxlength="1"
                                   placeholder="_"
                                   style="width: 1em; text-align: center;"
@@ -212,7 +212,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                                 <input
                                   aria-label="Digit 5"
                                   autocomplete="off"
-                                  class="makeStyles-input-19 "
+                                  class="makeStyles-input-20 "
                                   maxlength="1"
                                   placeholder="_"
                                   style="width: 1em; text-align: center;"
@@ -226,7 +226,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                                 <input
                                   aria-label="Digit 6"
                                   autocomplete="off"
-                                  class="makeStyles-input-19 "
+                                  class="makeStyles-input-20 "
                                   maxlength="1"
                                   placeholder="_"
                                   style="width: 1em; text-align: center;"
@@ -256,7 +256,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                           tabindex="-1"
                           type="submit"
                         >
-                          Remove and continue
+                          Remove and Continue
                         </button>
                       </div>
                     </div>
@@ -311,10 +311,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                     class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                   >
                     <div
-                      class="makeStyles-wrapper-21 makeStyles-wrapper-24 MuiBox-root css-0"
+                      class="makeStyles-wrapper-22 makeStyles-wrapper-25 MuiBox-root css-0"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-23 makeStyles-text-26 css-1b4l2pg-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-27 css-1b4l2pg-MuiTypography-root"
                       >
                         1
                       </p>
@@ -350,10 +350,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                     class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                   >
                     <div
-                      class="makeStyles-wrapper-21 makeStyles-wrapper-27 MuiBox-root css-0"
+                      class="makeStyles-wrapper-22 makeStyles-wrapper-28 MuiBox-root css-0"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-23 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-30 css-1b4l2pg-MuiTypography-root"
                       >
                         2
                       </p>
@@ -389,10 +389,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                     class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                   >
                     <div
-                      class="makeStyles-wrapper-21 makeStyles-wrapper-30 MuiBox-root css-0"
+                      class="makeStyles-wrapper-22 makeStyles-wrapper-31 MuiBox-root css-0"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-23 makeStyles-text-32 css-1b4l2pg-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-33 css-1b4l2pg-MuiTypography-root"
                       >
                         3
                       </p>
@@ -428,10 +428,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                     class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                   >
                     <div
-                      class="makeStyles-wrapper-21 makeStyles-wrapper-33 MuiBox-root css-0"
+                      class="makeStyles-wrapper-22 makeStyles-wrapper-34 MuiBox-root css-0"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-23 makeStyles-text-35 css-1b4l2pg-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-36 css-1b4l2pg-MuiTypography-root"
                       >
                         4
                       </p>

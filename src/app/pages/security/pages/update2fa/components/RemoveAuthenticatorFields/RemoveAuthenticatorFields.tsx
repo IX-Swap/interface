@@ -50,8 +50,10 @@ export const RemoveAuthenticatorFields = ({
         </Grid>
       </Grid>
       <Grid item container direction='column'>
-        <Grid item className={classes.label}>
-          <Typography variant={'body1'}>Authenticator Code</Typography>
+        <Grid item>
+          <Typography variant={'body1'} className={classes.label}>
+            Authenticator Code
+          </Typography>
         </Grid>
         <Grid item container justifyContent={'flex-start'}>
           <Grid item>
