@@ -1,11 +1,12 @@
+import { isEmptyString } from 'helpers/strings'
 import { useMemo } from 'react'
 import { useWithdrawalAddresses } from './useWithdrawalAddresses'
 
-export const useWithdrawalAddressAdded = (address?: string) => {
+export const useWithdrawalAddressAdded = (address?: string | null) => {
   const { data } = useWithdrawalAddresses({})
 
   return useMemo(() => {
-    if (address === undefined) {
+    if (isEmptyString(address)) {
       return false
     }
     const filteredAddresses = data.list.filter(

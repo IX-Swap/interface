@@ -1,5 +1,6 @@
 import { Box, Grid } from '@mui/material'
 import { useFinancialSummary } from 'app/pages/exchange/hooks/useFinancialSummary'
+import { BlockchainWallet } from 'app/pages/invest/components/BlockchainWallet/BlockchainWallet'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { PairListDropdown } from '../PairListDropdown/PairListDropdown'
@@ -10,8 +11,8 @@ export const ShortFinancialSummary = () => {
   }>()
   const { data } = useFinancialSummary(pairId)
   return (
-    <Grid container spacing={1}>
-      <Grid item xs={12} md={3}>
+    <Grid container>
+      <Grid item xs={5}>
         <Box
           display='flex'
           justifyContent={{ xs: 'space-between', md: 'flex-start' }}
@@ -23,7 +24,16 @@ export const ShortFinancialSummary = () => {
           </Box>
         </Box>
       </Grid>
-      <Grid item xs={12} md={7}></Grid>
+      <Grid item xs={7}>
+        <Box
+          display='flex'
+          justifyContent={'flex-end'}
+          alignItems='center'
+          padding={[1, 0.5]}
+        >
+          <BlockchainWallet />
+        </Box>
+      </Grid>
     </Grid>
   )
 }
