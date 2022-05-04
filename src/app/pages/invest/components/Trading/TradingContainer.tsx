@@ -7,13 +7,15 @@ export const TradingContainer = () => {
   const classes = useStyles()
   return (
     <Box className={classes.container}>
-      <Grid item>
-        <PageHeader title={'OTC Trading Market'} showBreadcrumbs={false} />
-      </Grid>
+      <Box className={classes.wrapper}>
+        <Grid item>
+          <PageHeader title={'OTC Trading Market'} showBreadcrumbs={false} />
+        </Grid>
 
-      <Grid item xs={12} className={classes.colorGrid}>
-        <ShortFinancialSummary />
-      </Grid>
+        <Grid item xs={12} className={classes.colorGrid}>
+          <ShortFinancialSummary />
+        </Grid>
+      </Box>
     </Box>
   )
 }

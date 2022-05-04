@@ -1,18 +1,16 @@
-import React from 'react'
-import { Switch, Redirect } from 'react-router-dom'
-import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
-import { InvestRoute } from 'app/pages/invest/router/config'
-import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
-import { AppRoute } from 'components/AppRoute'
-import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
 import { ViewListing } from 'app/pages/invest/components/SecondaryMarketTable/ViewListing'
+import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 import { InvestOverview } from 'app/pages/invest/pages/InvestOverview'
-import { Trading } from '../pages/Trading'
+import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
+import { InvestRoute } from 'app/pages/invest/router/config'
+import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
+import { AppRoute } from 'components/AppRoute'
+import React from 'react'
+import { Redirect, Switch } from 'react-router-dom'
 import { RootContainer } from 'ui/RootContainer'
-import { useStyles } from 'app/pages/invest/router/InvestRoot.styles'
+import { Trading } from '../pages/Trading'
 
 export const InvestRouter = () => {
-  const classes = useStyles()
   return (
     <Switch>
       <AppRoute breadcrumb='My Investments' path={InvestRoute.commitments}>
@@ -44,9 +42,7 @@ export const InvestRouter = () => {
         </RootContainer>
       </AppRoute>
       <AppRoute exact path={InvestRoute.trading}>
-        <RootContainer className={classes.tradeRoot}>
-          <Trading />
-        </RootContainer>
+        <Trading />
       </AppRoute>
       <AppRoute path={InvestRoute.tradingRoot}>
         <Redirect to={InvestRoute.trading} />

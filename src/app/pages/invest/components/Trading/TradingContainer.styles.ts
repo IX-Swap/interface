@@ -1,12 +1,18 @@
 import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
+  wrapper: {
+    maxWidth: 1300,
+    width: '100%'
+  },
   container: {
     backgroundColor:
       theme.palette.mode === 'light'
         ? 'rgb(250, 250, 250)'
         : theme.palette.background.paper,
     width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
     paddingTop: theme.spacing(5),
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(3),
@@ -22,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
         ? theme.palette.background.paper
         : '#292929'
   },
-  wrapper: {
+  blockWrapper: {
     width: '100%',
     columnGap: theme.spacing(2),
     boxSizing: 'border-box',
