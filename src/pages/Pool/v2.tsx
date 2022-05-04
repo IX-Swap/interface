@@ -1,5 +1,4 @@
 import { Trans } from '@lingui/macro'
-import { isMobile } from 'react-device-detect'
 import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
 import { TipCard } from 'components/Card'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -12,7 +11,7 @@ import { Flex } from 'rebass'
 import { getPoolTransactionHash } from 'state/pool/hooks'
 import { useIsTransactionPending } from 'state/transactions/hooks'
 import styled from 'styled-components'
-import { ExternalLink, TYPE } from 'theme'
+import { DesktopOnly, ExternalLink, MobileAndTablet, TYPE } from 'theme'
 import { ReactComponent as ExternalIcon } from '../../assets/images/external.svg'
 import { AutoColumn } from '../../components/Column'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
@@ -30,27 +29,36 @@ const LinkTitle = styled(TYPE.body1)`
   font-weight: 600;
 `
 
+const StyledRowCenter = styled(RowCenter)`
+  margin-top: 5px;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    gap: 5px;
+  `};
+`
+
+const StyledTipCard = styled(TipCard)`
+  padding: 1rem 20px;
+  display: flex;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    padding: 16px;
+  `};
+`
+
 const TopContent: FC = () => {
   return (
-    <TipCard
-      style={{
-        display: 'flex',
-        maxWidth: '592px',
-        marginTop: isMobile ? '0rem' : '3rem',
-        marginBottom: isMobile ? '3rem' : '0rem',
-      }}
-      padding="1rem 20px"
-      as={ExternalLink}
-      href="https://info.ixswap.io/home"
-    >
-      <RowCenter style={{ gap: '10px', marginTop: '5px' }}>
+    <StyledTipCard as={ExternalLink} href="https://info.ixswap.io/home">
+      <StyledRowCenter>
         <Flex style={{ gap: '5px' }}>
           <LinkTitle style={{ fontSize: '16px' }}>Top Pools</LinkTitle>
           <ExternalIcon></ExternalIcon>
         </Flex>
-        <TYPE.body1>Explore popular pools on IX Swap Analytics</TYPE.body1>
-      </RowCenter>
-    </TipCard>
+        <TYPE.body1 textAlign="center">Explore popular pools on IX Swap Analytics</TYPE.body1>
+      </StyledRowCenter>
+    </StyledTipCard>
   )
 }
 
@@ -70,9 +78,17 @@ export default function Pool() {
   const isBlurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
   return (
     <>
-      {!isBlurred && !isMobile && <TopContent />}
+      {!isBlurred && (
+        <DesktopOnly style={{ width: '100%', maxWidth: '592px' }}>
+          <TopContent />
+        </DesktopOnly>
+      )}
       <AppBody blurred={isBlurred}>
-        {!isBlurred && isMobile && <TopContent />}
+        {!isBlurred && (
+          <MobileAndTablet>
+            <TopContent />
+          </MobileAndTablet>
+        )}
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>

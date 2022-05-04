@@ -20,6 +20,7 @@ export const NoVaultWrapper = styled.div`
   flex-direction: column;
   ${gradientBorder}
 `
+
 export const ExistingWrapper = styled.div`
   background: ${({ theme }) => theme.bgG11};
   border-radius: 45px;
@@ -28,6 +29,7 @@ export const ExistingWrapper = styled.div`
     padding: 1rem;
   `};
 `
+
 export const NoVaultTitle = styled.div`
   display: flex;
   justify-content: center;
@@ -37,6 +39,7 @@ export const NoVaultTitle = styled.div`
     line-height: 28px;
   }
 `
+
 export const ExistingTitle = styled.span`
   text-align: left;
   white-space: pre-wrap; /* CSS3 */
@@ -44,10 +47,8 @@ export const ExistingTitle = styled.span`
   white-space: -pre-wrap; /* Opera <7 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-      margin-bottom: 20px;
-  `};
 `
+
 export const VaultStatusDescription = styled.div`
   text-align: center;
   margin-top: 20px;
@@ -60,6 +61,7 @@ export const TitleStatusRow = styled(RowBetween)`
   margin-bottom: 2rem;
   flex-wrap: wrap;
 `
+
 export const StatusTitle = styled(TYPE.titleSmall)`
   text-transform: uppercase;
   font-weight: 600 !important;
@@ -160,6 +162,7 @@ export const InfoModalHeader = styled.div`
   font-size: 22px;
   color: white;
 `
+
 export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
   padding: 24px 32px;
   display: flex;
