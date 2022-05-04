@@ -221,7 +221,9 @@ export const darkTheme: DeprecatedThemeOptions = {
       light: tinycolor('#FF8080').setAlpha(0.2).toRgbString()
     },
     info: {
-      main: '#4C88FF'
+      main: '#4C88FF',
+      light: '#ABB8CF',
+      dark: '#EEF1F5'
     },
     'special-red': palette.augmentColor({
       color: {

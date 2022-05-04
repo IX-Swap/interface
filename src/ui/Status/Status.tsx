@@ -2,8 +2,7 @@ import React from 'react'
 import { Chip } from '@mui/material'
 import { useStyles } from 'ui/Status/Status.styles'
 
-export type StatusType = 'approved' | 'submitted' | 'rejected'
-
+export type StatusType = 'approved' | 'submitted' | 'rejected' | 'draft'
 export interface StatusProps {
   label: string
   type: StatusType

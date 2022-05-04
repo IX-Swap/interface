@@ -14,6 +14,8 @@ export const useStyles = makeStyles(theme => {
         return theme.palette.warning.dark
       case 'rejected':
         return theme.palette.error.dark
+      case 'draft':
+        return theme.palette.info.light
     }
   }
 
@@ -25,6 +27,8 @@ export const useStyles = makeStyles(theme => {
         return theme.palette.warning.light
       case 'rejected':
         return theme.palette.error.light
+      case 'draft':
+        return theme.palette.info.dark
     }
   }
 
