@@ -1,5 +1,4 @@
 import React from 'react'
-import useStyles from './FormDialog.styles'
 import DialogTitle from '@mui/material/DialogTitle'
 
 export interface TitleProps {
@@ -7,11 +6,5 @@ export interface TitleProps {
   onClose: () => void
 }
 export const FormDialogTitle = ({ label, onClose, ...rest }: TitleProps) => {
-  const classes = useStyles()
-
-  return (
-    <DialogTitle className={classes.title} {...rest}>
-      {label}
-    </DialogTitle>
-  )
+  return <DialogTitle {...rest}>{label}</DialogTitle>
 }

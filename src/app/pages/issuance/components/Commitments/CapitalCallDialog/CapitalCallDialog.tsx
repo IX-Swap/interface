@@ -53,7 +53,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
       aria-labelledby='capital-call-modal-title'
       aria-describedby='capital-call-modal-description'
     >
-      <DialogTitle className={classes.titleRoot}>
+      <DialogTitle>
         <Typography
           variant='h6'
           component='span'

@@ -39,7 +39,7 @@ export const ExchangeDeactivatedDialog = (props: ModalProps) => {
       aria-describedby='exchange-deactivated-modal-description'
     >
       <Box>
-        <DialogTitle className={classes.titleRoot}>
+        <DialogTitle>
           <Box justifyContent='center' alignItems='center'>
             <Typography variant='h6' component='span' align='center'>
               Exchange

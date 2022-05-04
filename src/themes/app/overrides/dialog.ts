@@ -7,7 +7,11 @@ export const dialog = (theme: Theme) => {
       paper: {
         padding: theme.spacing(2),
         borderRadius: '16px',
-        width: 380
+        minWidth: 380,
+
+        [theme.breakpoints.down('md')]: {
+          minWidth: 'none'
+        }
       }
     }
   }
