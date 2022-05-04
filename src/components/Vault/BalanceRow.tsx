@@ -39,6 +39,15 @@ const TextWrap = styled(TYPE.titleBig)`
       line-height: 27px !important;
   `};
 `
+
+const StyledTitleStatusRow = styled(TitleStatusRow)`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    flex-direction: column-reverse;
+    justify-content: start;
+    align-items: start;
+  `};
+`
+
 export const BalanceRow = ({ currency, account, token }: Props) => {
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const toggle = useWithdrawModalToggle()
@@ -64,7 +73,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
   }, [me, token.allowWithdrawal, haveActiveWithdrawal])
 
   return (
-    <TitleStatusRow style={{ marginTop: '0.6rem' }}>
+    <StyledTitleStatusRow style={{ marginTop: '0.6rem' }}>
       <ExistingTitle>
         <TextWrap>
           <span style={{ marginRight: '10px' }}>{formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)}</span>
@@ -89,7 +98,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
       <MobileAndTablet style={{ width: '100%', marginTop: '0.6rem' }}>
         <MouseoverTooltip referenceStyle={{ width: '100%' }} text={tooltipText}>
           <ButtonGradientBorder
-            style={{ width: '100%' }}
+            style={{ width: '100%', marginBottom: '2rem' }}
             data-testid="withdraw"
             onClick={async () => {
               toggle()
@@ -100,6 +109,6 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
           </ButtonGradientBorder>
         </MouseoverTooltip>
       </MobileAndTablet>
-    </TitleStatusRow>
+    </StyledTitleStatusRow>
   )
 }

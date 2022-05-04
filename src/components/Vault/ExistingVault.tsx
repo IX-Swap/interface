@@ -55,7 +55,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
           </MouseoverTooltip>
         </DesktopOnly>
       </TitleStatusRow>
-      <MobileAndTablet style={{ margin: '1rem 0', width: '100%' }}>
+      <MobileAndTablet style={{ margin: '1rem 0 0.5rem 0', width: '100%' }}>
         <MouseoverTooltip
           referenceStyle={{ width: '100%' }}
           text={isDisabled ? 'Deposit are not available yet for this token' : ''}

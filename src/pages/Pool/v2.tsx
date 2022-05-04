@@ -85,7 +85,7 @@ export default function Pool() {
       )}
       <AppBody blurred={isBlurred}>
         {!isBlurred && (
-          <MobileAndTablet>
+          <MobileAndTablet style={{ marginBottom: '1rem' }}>
             <TopContent />
           </MobileAndTablet>
         )}
