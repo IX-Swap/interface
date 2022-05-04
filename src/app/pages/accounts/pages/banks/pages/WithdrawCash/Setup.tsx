@@ -17,8 +17,10 @@ import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCas
 import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 import { usePaymentMethod } from 'app/pages/accounts/pages/banks/hooks/usePaymentMethods'
 import { VSpacer } from 'components/VSpacer'
+import { useStyles } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/Setup.styles'
 
 export const Setup: React.FC = () => {
+  const { inputWrapper } = useStyles()
   const { watch, control, formState, reset, getValues } =
     useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
@@ -118,7 +120,7 @@ export const Setup: React.FC = () => {
             label='To Bank Account'
             helperText='Please select your bank account in which you want to transfer your fund'
             endAdornment={
-              <InputAdornment position='end'>
+              <InputAdornment position='end' className={inputWrapper}>
                 <MaxButton onClick={setMaxValue} />
               </InputAdornment>
             }
