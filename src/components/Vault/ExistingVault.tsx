@@ -33,7 +33,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
 
   return (
     <ExistingWrapper>
-      <TitleStatusRow style={{ marginBottom: '0rem', width: '100%' }}>
+      <TitleStatusRow style={{ marginBottom: '0rem' }}>
         <ExistingTitle>
           <StyledTitle>
             <Trans>My {symbolText} Vault</Trans>
