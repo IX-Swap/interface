@@ -53,7 +53,7 @@ function getStatusMessage(
     }
     case undefined:
     default:
-      return t`To trade/Swap ${symbolText} please pass accreditation.`
+      return t`To trade/swap ${symbolText} please pass accreditation.`
   }
 }
 export const NoVault = ({ currency, status, accreditationRequest, platform, token, userHaveValidAccount }: Props) => {
