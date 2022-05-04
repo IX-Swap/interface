@@ -1,14 +1,11 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   label: {
-    backgroundColor: '#ffff',
-    borderRadius: '8px',
-    height: '92px',
-    width: '400px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    padding: '24px'
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.spacing(1),
+    height: theme.spacing(11.5),
+    width: theme.spacing(50),
+    padding: theme.spacing(3)
   }
-})
+}))

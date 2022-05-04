@@ -23,9 +23,12 @@ export const FieldsDisplay = ({ fields }: FieldsDisplayProps) => {
         <Grid item key={i}>
           {field.key !== '' ? (
             <LabelledValue
-              className={classes.label}
+              valueWeight='thin'
+              labelWeight='thin'
+              labelColor='identity'
               label={field.key}
               value={field.value}
+              className={classes.label}
             />
           ) : null}
         </Grid>
