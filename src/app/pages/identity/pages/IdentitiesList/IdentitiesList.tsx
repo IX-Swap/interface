@@ -15,7 +15,7 @@ export const IdentitiesList: React.FC = () => {
     <AppContentWrapper container background='default'>
       <Container className={classes.container}>
         <Grid container className={classes.grid}>
-          <Grid item container style={{ zIndex: 2 }}>
+          <Grid item container className={classes.nameIdentity}>
             <Grid item xs={12}>
               <Typography variant='h3'>
                 {hasIdentity

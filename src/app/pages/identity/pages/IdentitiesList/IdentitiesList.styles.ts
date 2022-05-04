@@ -10,7 +10,17 @@ export const useStyles = makeStyles(theme => ({
   container: {
     padding: theme.spacing(3),
     maxWidth: theme.spacing(162.5),
-    backGroundColor: theme.palette.backgrounds.default
+    backGroundColor: theme.palette.backgrounds.default,
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(0),
+      paddingTop: theme.spacing(1.25)
+    }
+  },
+  nameIdentity: {
+    zIndex: 5,
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
   },
   grid: {
     spacing: theme.spacing(4.2),

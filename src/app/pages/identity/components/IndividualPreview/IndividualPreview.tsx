@@ -20,7 +20,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
   }
 
   const name = `[${data.status}] ${data.firstName} ${data.lastName}`
-  const status = data.status[0].toLowerCase() + data.status.slice(1)
+  const status = data.status.toLowerCase()
   const occupation = data.occupation
     .split(/[' '/]/)
     .map(el => el[0] + el.slice(1).toLowerCase())
@@ -51,7 +51,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
         <Status label={data.status} type={status} />
       </Grid>
       <Grid item>
-        <Box pt={2} pb={2}>
+        <Box>
           <DataPreview
             avatar={data.photo}
             userId={data.user._id}
@@ -59,6 +59,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
             name={data.user.name}
             occupation={occupation}
             isIndividual={true}
+            status={data.status}
           />
         </Box>
       </Grid>

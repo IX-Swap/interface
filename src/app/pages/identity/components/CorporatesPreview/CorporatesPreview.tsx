@@ -3,7 +3,7 @@ import { useStyles } from '../IndividualPreview/IndividualPreview.styles'
 import { Box, Grid } from '@mui/material'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { StatusType, Status } from 'ui/Status/Status'
+import { Status } from 'ui/Status/Status'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/IndividualPreview/DataPreview'
@@ -37,7 +37,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     }
   ]
 
-  const status: StatusType = data.status[0].toLowerCase() + data.status.slice(1)
+  const status = data.status.toLowerCase()
 
   const getDetails = () => {
     let details = {
@@ -99,6 +99,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             name={data.user.name}
             occupation={data.type}
             isIndividual={false}
+            status={data.status}
           />
         </Box>
       </Grid>

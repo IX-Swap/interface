@@ -3,6 +3,7 @@ import { useStyles } from './DataPreview.styles'
 // import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar.svg'
 import { Avatar } from 'components/Avatar'
+import { Status } from 'ui/Status/Status'
 import { Box, Typography, Grid, Container } from '@mui/material'
 import { FieldsDisplay } from 'app/pages/identity/components/IndividualPreview/FieldDisplay'
 
@@ -13,6 +14,7 @@ export interface DataPreviewProps {
   name?: string
   occupation: string
   isIndividual: boolean
+  status: string
 }
 
 export const DataPreview = ({
@@ -21,7 +23,8 @@ export const DataPreview = ({
   fields,
   name,
   occupation,
-  isIndividual
+  isIndividual,
+  status
 }: DataPreviewProps) => {
   // const { isMobile } = useAppBreakpoints()
   const classes = useStyles()
@@ -30,6 +33,7 @@ export const DataPreview = ({
       ? occupation
       : 'Investor '
   const isCorporate = isIndividual ? ' Individual ' : ' Corporate '
+  const typeStatus = status.toLowerCase()
 
   return (
     <>
@@ -55,9 +59,12 @@ export const DataPreview = ({
               {isCorporate + isOccupationLowerCase + ' Identity'}
             </Typography>
           </Grid>
+          <Grid item className={classes.approveButton}>
+            <Status label={status} type={typeStatus} />
+          </Grid>
         </Grid>
       </Container>
-      <Box height={'40px'} />
+      <Box className={classes.emptyBox} />
       <FieldsDisplay fields={fields} />
       <div className={classes.whiteBackground}></div>
     </>
