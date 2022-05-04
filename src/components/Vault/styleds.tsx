@@ -3,7 +3,6 @@ import styled, { css, keyframes } from 'styled-components'
 
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
-import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowBetween } from 'components/Row'
@@ -48,9 +47,6 @@ export const ExistingTitle = styled.span`
   white-space: -pre-wrap; /* Opera <7 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-      margin-bottom: 20px;
-  `};
 `
 
 export const VaultStatusDescription = styled.div`
@@ -65,6 +61,7 @@ export const TitleStatusRow = styled(RowBetween)`
   margin-bottom: 2rem;
   flex-wrap: wrap;
 `
+
 export const StatusTitle = styled(TYPE.titleSmall)`
   text-transform: uppercase;
   font-weight: 600 !important;
@@ -153,14 +150,6 @@ export const getStatusIcon = (action: ActionTypes, status: string) => {
 
   return StatusIcons[status] || <LoaderThin size={20} />
 }
-
-export const StyledButtonIXSGradient = styled(ButtonIXSGradient)`
-  width: 230px;
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    width: 100%;
-  `};
-`
 
 export const InfoModalHeader = styled.div`
   padding: 24px 32px;
