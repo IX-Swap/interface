@@ -1,11 +1,11 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
 
 export const Tt = ({ accountId, currency }: DepositInfoProps) => {
-  const { footerInfo } = useStyles()
+  const { footerInfo, infoMessage } = useStyles()
 
   const ttDetails = [
     {
@@ -41,6 +41,11 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
     <Grid direction='column'>
       <Grid item>
         <Box px={3} pb={3}>
+          <Grid item>
+            <Typography className={infoMessage}>
+              Bank charges may apply and will be borne by the clients
+            </Typography>
+          </Grid>
           <Grid container spacing={1}>
             <CashDepositDetails data={ttDetails} />
           </Grid>
