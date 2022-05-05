@@ -36,38 +36,43 @@ export const IdentityPreview = () => {
   return (
     <Grid container>
       <Grid item xs={12} container>
-        {hasIndividual && (
-          <Grid item xs={12} md={4}>
-            <IndividualIdentityButton
-              active={selectedIdentity === 'individual'}
-              onClick={() => setSelectedIdentity('individual')}
-            />
-          </Grid>
-        )}
-        {hasIndividual && <Grid item xs={12} md={4}></Grid>}
-        {hasCorporate ? (
-          <Grid item xs={12} md={4}>
-            {corporateIdentities.list[0].type === 'issuer' ? (
-              <IssuerIdentityButton
-                active={selectedIdentity === 'corporate'}
-                onClick={() => setSelectedIdentity('corporate')}
+        {
+          // Removed Identity button from screen
+        }
+        <div style={{ display: 'none' }}>
+          {hasIndividual && (
+            <Grid item xs={12} md={4}>
+              <IndividualIdentityButton
+                active={selectedIdentity === 'individual'}
+                onClick={() => setSelectedIdentity('individual')}
               />
-            ) : (
-              <CorporateIdentityButton
-                identity={corporateIdentities.list[0]}
-                active={selectedIdentity === 'corporate'}
-                onClick={() => setSelectedIdentity('corporate')}
-              />
-            )}
-          </Grid>
-        ) : (
-          hasDetailsOfIssuance &&
-          (detailsOfIssuanceApproved || detailsOfIssuanceSkipped ? (
-            <CreateIssuerIdentityButton />
+            </Grid>
+          )}
+          {hasIndividual && <Grid item xs={12} md={4}></Grid>}
+          {hasCorporate ? (
+            <Grid item xs={12} md={4}>
+              {corporateIdentities.list[0].type === 'issuer' ? (
+                <IssuerIdentityButton
+                  active={selectedIdentity === 'corporate'}
+                  onClick={() => setSelectedIdentity('corporate')}
+                />
+              ) : (
+                <CorporateIdentityButton
+                  identity={corporateIdentities.list[0]}
+                  active={selectedIdentity === 'corporate'}
+                  onClick={() => setSelectedIdentity('corporate')}
+                />
+              )}
+            </Grid>
           ) : (
-            <CreateDetailsOfIssuanceButton />
-          ))
-        )}
+            hasDetailsOfIssuance &&
+            (detailsOfIssuanceApproved || detailsOfIssuanceSkipped ? (
+              <CreateIssuerIdentityButton />
+            ) : (
+              <CreateDetailsOfIssuanceButton />
+            ))
+          )}
+        </div>
       </Grid>
       <Grid item xs={12}>
         {selectedIdentity === 'individual' ? (
