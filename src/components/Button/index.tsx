@@ -10,7 +10,7 @@ import { gradientBorder } from 'theme'
 
 type ButtonProps = Omit<ButtonPropsOriginal, 'css'>
 
-const isNotSupportGradient = isIOS || isIPad13 || isSafari || isMobileSafari
+export const isNotSupportGradient = isIOS || isIPad13 || isSafari || isMobileSafari
 
 const Base = styled(RebassButton)<
   {
