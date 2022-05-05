@@ -123,6 +123,7 @@ export default createReducer<WithdrawState>(initialState, (builder) =>
     .addCase(getWithdrawStatus.rejected, (state, { payload: { errorMessage } }) => {
       state.loading = false
       state.withdrawError = errorMessage
+      state.withdrawStatus = {} as WithdrawStatus
     })
     .addCase(getFeePrice.pending, (state) => {
       state.loading = true
