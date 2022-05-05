@@ -54,7 +54,7 @@ export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
       dispatch(setLogItem({ logItem: row }))
       toggle()
     }
-  }, [toggle, dispatch, row])
+  }, [toggle, dispatch, row, toggleWithdrawModal, onTypeReceiver, onTypeAmount])
 
   return (
     <HistoryRowWraper data-testid="row" key={`history-item-${key}`} onClick={() => openModal()}>

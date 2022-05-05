@@ -2,6 +2,7 @@ import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { ButtonEmpty, ButtonGradient } from 'components/Button'
+import { isNotSupportGradient } from 'components/Button'
 import { RowStart } from 'components/Row'
 import { TYPE, MEDIA_WIDTHS, gradientBorder } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -127,16 +128,22 @@ export const AddressToMetamask = styled.div`
   > :first-child {
     display: flex;
     align-items: center;
-    background: ${({ theme: { bgG3 } }) => bgG3};
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
     margin-right: 18px;
     font-weight: 500;
     svg {
       margin-right: 12px;
       cursor: pointer;
     }
+    ${({ theme }) =>
+      !isNotSupportGradient
+        ? `
+        background: ${theme.bgG3};
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      ` : `
+        color: ${theme.bg20};
+      `}
   }
   > div:nth-child(2) {
     margin-right: 12px;
