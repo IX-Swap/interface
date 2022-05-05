@@ -276,9 +276,13 @@ export function useSubmitBrokerDealerForm() {
       const data = dto?.encryptedData
       const hash = dto?.hash
       const { brokerDealerId, pairAddress, amount } = dto || {}
+      
       const payload = { callbackEndpoint, data, hash }
-
-      const bdData = await axios.post(endpoint, payload)
+      const bdData = await axios.post(endpoint, payload, {
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      })
 
       const url: string = bdData.data.url ?? bdData.data.data?.url
 
