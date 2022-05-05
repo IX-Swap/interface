@@ -95,38 +95,35 @@ exports[`Reports should match snapshot 1`] = `
               class="makeStyles-filtersWrapper-8 MuiBox-root css-0"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
+                class="makeStyles-filterWrapper-9 MuiBox-root css-0"
               >
                 <div
-                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
-                  style="width: 150px;"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
                 >
-                  <input
-                    aria-invalid="false"
-                    aria-label="Choose date"
-                    aria-readonly="true"
-                    class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
-                    id="mui-1"
-                    readonly=""
-                    type="text"
-                    value=""
-                  />
+                  <label
+                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="true"
+                    for="mui-1"
+                    id="mui-1-label"
+                  >
+                    From
+                  </label>
                   <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
-                  />
-                  <fieldset
-                    aria-hidden="true"
-                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+                    style="width: 150px;"
                   >
                     <input
                       aria-invalid="false"
                       aria-label="Choose date"
                       aria-readonly="true"
-                      class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-1"
                       readonly=""
                       type="text"
                       value=""
+                    />
+                    <div
+                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
                     />
                     <fieldset
                       aria-hidden="true"
@@ -144,38 +141,35 @@ exports[`Reports should match snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
+                class="makeStyles-filterWrapper-9 MuiBox-root css-0"
               >
                 <div
-                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
-                  style="width: 150px;"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
                 >
-                  <input
-                    aria-invalid="false"
-                    aria-label="Choose date"
-                    aria-readonly="true"
-                    class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
-                    id="mui-3"
-                    readonly=""
-                    type="text"
-                    value=""
-                  />
+                  <label
+                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="true"
+                    for="mui-3"
+                    id="mui-3-label"
+                  >
+                    To
+                  </label>
                   <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
-                  />
-                  <fieldset
-                    aria-hidden="true"
-                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+                    style="width: 150px;"
                   >
                     <input
                       aria-invalid="false"
                       aria-label="Choose date"
                       aria-readonly="true"
-                      class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
+                      class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-3"
                       readonly=""
                       type="text"
                       value=""
+                    />
+                    <div
+                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
                     />
                     <fieldset
                       aria-hidden="true"
@@ -227,58 +221,17 @@ exports[`Reports should match snapshot 1`] = `
                     <tr
                       class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
                     >
-                      <b
-                        style="color: rgb(255, 255, 255);"
-                      />
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
-                >
-                  <tr
-                    class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
-                    style="background-color: rgb(247, 249, 250);"
-                  >
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
-                    >
-                      Accounts Summary
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
-                    >
-                      HTML View
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
+                        scope="col"
                       >
-                        View Report
-                      </p>
-                    </td>
-                  </tr>
-                  <tr
-                    class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
-                    style="background-color: rgb(248, 248, 253);"
-                  >
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
-                    >
-                      Trade Confirmation
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
-                    >
-                      HTML View
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                        <b
+                          style="color: rgb(255, 255, 255);"
+                        />
+                      </th>
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
+                        scope="col"
                       >
                         <b
                           style="color: rgb(255, 255, 255);"
@@ -301,13 +254,8 @@ exports[`Reports should match snapshot 1`] = `
                       class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
                       style="background-color: rgb(247, 249, 250);"
                     >
-                      HTML View
-                    </td>
-                    <td
-                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                      <td
+                        class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
                       >
                         Accounts Summary
                       </td>
@@ -320,7 +268,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>
@@ -344,7 +292,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>
@@ -368,7 +316,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>
@@ -378,8 +326,13 @@ exports[`Reports should match snapshot 1`] = `
                       class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
                       style="background-color: rgb(248, 248, 253);"
                     >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                      <td
+                        class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
+                      >
+                        Dividends
+                      </td>
+                      <td
+                        class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
                       >
                         HTML View
                       </td>
@@ -387,7 +340,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>
