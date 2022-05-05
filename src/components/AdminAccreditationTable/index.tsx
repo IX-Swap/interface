@@ -3,18 +3,16 @@ import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
 
-import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { useAdminState, useGetAccreditationList, useOnlyAdminAccess } from 'state/admin/hooks'
-import { shortenAddress } from 'utils'
 import { AccreditationItem, KycItem } from 'state/admin/actions'
 import { adminOffset as offset } from 'state/admin/constants'
+import { CopyAddress } from 'components/CopyAddress'
 
 import { CustodianStatus } from './CustodianStatus'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { BrokerDealerStatus } from './BrokerDealerStatus'
-import { IconWrapper } from 'components/AccountDetails/styleds'
 import { Pagination } from './Pagination'
 import { Search } from './Search'
 import { KycSource } from './KycSource'
@@ -66,16 +64,7 @@ const Row: FC<RowProps> = ({ item, openReviewModal }: RowProps) => {
   return (
     <StyledBodyRow key={id}>
       <Wallet>
-        {copied ? (
-          <Trans>Copied</Trans>
-        ) : (
-          <>
-            {shortenAddress(ethAddress || '')}
-            <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
-              <StyledCopy />
-            </IconWrapper>
-          </>
-        )}
+        <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
       </Wallet>
       <div>{token?.symbol || '-'}</div>
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>

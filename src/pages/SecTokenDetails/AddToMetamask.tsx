@@ -8,9 +8,7 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
-import { StyledCopy } from 'components/AdminTransactionsTable'
-import { RowCenter } from 'components/Row'
-import { shortenAddress } from 'utils'
+import { CopyAddress } from 'components/CopyAddress'
 
 import { ReactComponent as Info } from 'assets/images/info-filled.svg'
 import { AddressToMetamask, StyledButtonGradient } from './styleds'
@@ -38,15 +36,12 @@ export const AddToMetamask = ({ token }: Props) => {
           <div>
             <Trans>{token?.ticker || 'Original token'}:</Trans>
           </div>
-          <div onClick={() => setOriginAddCopied(token?.token?.originalAddress ?? '')}>
-            {originAddIsCopied ? (
-              <Trans>Copied!</Trans>
-            ) : (
-              <RowCenter>
-                {shortenAddress(token?.token?.originalAddress ?? '')}
-                <StyledCopy />
-              </RowCenter>
-            )}
+          <div>
+            <CopyAddress
+              address={token?.token?.originalAddress ?? ''}
+              copied={originAddIsCopied}
+              setCopied={setOriginAddCopied}
+            />
           </div>
           {originalCurrency && library?.provider?.isMetaMask && (
             <StyledButtonGradient onClick={() => !addOriginalCurrency.success && addOriginalCurrency.addToken()}>
@@ -77,15 +72,8 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
                   <Trans>Wrapped {token?.ticker || 'Original token'}:</Trans>
                 </div>
               </div>
-              <div onClick={() => setCopied(token?.token?.address ?? '')}>
-                {isCopied ? (
-                  <Trans>Copied!</Trans>
-                ) : (
-                  <RowCenter>
-                    {shortenAddress(token?.token?.address ?? '')}
-                    <StyledCopy />
-                  </RowCenter>
-                )}
+              <div>
+                <CopyAddress address={token?.token?.address ?? ''} copied={isCopied} setCopied={setCopied} />
               </div>
             </>
             {library?.provider?.isMetaMask && (

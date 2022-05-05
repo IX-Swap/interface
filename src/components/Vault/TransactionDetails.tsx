@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { LinearProgress } from '@material-ui/core'
 import { Flex } from 'rebass'
@@ -10,9 +10,8 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { QRCodeWrap } from 'components/QRCodeWrap'
 import Row, { RowCenter, RowBetween } from 'components/Row'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { StyledCopy } from 'components/AdminTransactionsTable'
+import { CopyAddress } from 'components/CopyAddress'
 import { ApplicationModal } from 'state/application/actions'
-import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
 import { useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
@@ -117,37 +116,23 @@ export const TransactionDetails = ({ currency }: Props) => {
                     </b>{' '}
                     from the wallet{' '}
                     <b>
-                      {isCopiedFrom ? (
-                        'Copied!'
-                      ) : (
-                        <>
-                          {shortenAddress(data?.fromAddress || '')}
-                          <IconWrapper
-                            style={{ display: 'inline' }}
-                            size={14}
-                            onClick={() => setCopiedFrom(data?.fromAddress || '')}
-                          >
-                            <StyledCopy />
-                          </IconWrapper>
-                        </>
-                      )}
+                      <CopyAddress
+                        address={data?.fromAddress || ''}
+                        copied={isCopiedFrom}
+                        setCopied={setCopiedFrom}
+                        size={14}
+                        wrapperStyles={{ display: 'inline' }}
+                      />
                     </b>{' '}
                     to Custodian wallet{' '}
                     <b>
-                      {isCopiedTo ? (
-                        'Copied!'
-                      ) : (
-                        <>
-                          {shortenAddress(data?.depositAddress || '')}
-                          <IconWrapper
-                            style={{ display: 'inline' }}
-                            size={14}
-                            onClick={() => setCopiedTo(data?.depositAddress || '')}
-                          >
-                            <StyledCopy />
-                          </IconWrapper>
-                        </>
-                      )}
+                      <CopyAddress
+                        address={data?.depositAddress || ''}
+                        copied={isCopiedTo}
+                        setCopied={setCopiedTo}
+                        size={14}
+                        wrapperStyles={{ display: 'inline' }}
+                      />
                     </b>{' '}
                     in next 1h.
                   </div>
@@ -202,16 +187,9 @@ export const TransactionDetails = ({ currency }: Props) => {
                   {isWithdraw(data.type) && <Trans>Receiver&apos;s address:</Trans>}
                 </label>
                 <TYPE.descriptionThin>
-                  {isCopiedFrom ? (
-                    t`Copied`
-                  ) : (
-                    <Flex>
-                      {shortenAddress(data?.fromAddress || '')}
-                      <IconWrapper size={18} onClick={() => setCopiedFrom(data?.fromAddress || '')}>
-                        <StyledCopy />
-                      </IconWrapper>
-                    </Flex>
-                  )}
+                  <Flex>
+                    <CopyAddress address={data?.fromAddress || ''} copied={isCopiedFrom} setCopied={setCopiedFrom} />
+                  </Flex>
                 </TYPE.descriptionThin>
               </RowBetween>
             )}
@@ -221,16 +199,9 @@ export const TransactionDetails = ({ currency }: Props) => {
                   <Trans>Receiver&apos;s address: </Trans>
                 </label>
                 <TYPE.descriptionThin>
-                  {isCopiedTo ? (
-                    t`Copied`
-                  ) : (
-                    <Flex>
-                      {shortenAddress(data.depositAddress || '')}
-                      <IconWrapper size={18} onClick={() => setCopiedTo(data.depositAddress || '')}>
-                        <StyledCopy />
-                      </IconWrapper>
-                    </Flex>
-                  )}
+                  <Flex>
+                    <CopyAddress address={data?.depositAddress || ''} copied={isCopiedTo} setCopied={setCopiedTo} />
+                  </Flex>
                 </TYPE.descriptionThin>
               </RowBetween>
             )}

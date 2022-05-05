@@ -8,13 +8,11 @@ import { useAddOrRemoveWhitelisted, useAdminState, useGetWhitelistedList, useOnl
 import { adminOffset as offset } from 'state/admin/constants'
 import { Search } from 'components/AdminAccreditationTable/Search'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { shortenAddress } from 'utils'
-import { StyledCopy } from 'components/AdminTransactionsTable'
 import { AdminRole } from 'state/admin/actions'
-import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradientBorder } from 'components/Button'
 import { DeleteConfirmationPopup } from 'components/DeleteConfirmation'
 import { useDeleteConfirmationPopupToggle } from 'state/application/hooks'
+import { CopyAddress } from 'components/CopyAddress'
 
 import { AddAddress } from './AddAddress'
 import { Table } from '../Table'
@@ -68,18 +66,8 @@ const Row: FC<RowProps> = ({ item, handleEthAddressToDelete }) => {
     <>
       <StyledBodyRow>
         <Wallet>
-          {copied ? (
-            <Trans>Copied</Trans>
-          ) : (
-            <>
-              {shortenAddress(ethAddress || '')}
-              <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
-                <StyledCopy />
-              </IconWrapper>
-            </>
-          )}
+          <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
         </Wallet>
-
         <div>
           <ButtonGradientBorder
             onClick={() => {
