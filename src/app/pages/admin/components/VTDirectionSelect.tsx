@@ -37,3 +37,4 @@ export const VTDirectionSelect = (props: VTDirectionSelectProps) => {
     </Select>
   )
 }
+VTDirectionSelect.displayName = 'Select_VTDirectionSelect'

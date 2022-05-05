@@ -18,3 +18,4 @@ export const GenderSelect = (props: any): JSX.Element => {
     </>
   )
 }
+GenderSelect.displayName = 'Select_GenderSelect'

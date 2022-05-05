@@ -24,3 +24,4 @@ export const BusinessOwnerSelect = (props: any): JSX.Element => {
     </>
   )
 }
+BusinessOwnerSelect.displayName = 'Select_BusinessOwnerSelect'

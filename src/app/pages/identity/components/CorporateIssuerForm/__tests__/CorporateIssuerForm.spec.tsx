@@ -1,5 +1,5 @@
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import * as useOnboardingJourneys from 'app/hooks/onboarding/useOnboardingJourneys'
 import { CorporateIssuerForm } from 'app/pages/identity/components/CorporateIssuerForm/CorporateIssuerForm'
 import * as useAllCorporates from 'app/pages/identity/hooks/useAllCorporates'
 import * as useCreateCorporate from 'app/pages/identity/hooks/useCreateCorporate'

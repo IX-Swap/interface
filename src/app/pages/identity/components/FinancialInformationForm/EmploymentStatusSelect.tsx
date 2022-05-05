@@ -36,3 +36,4 @@ export const EmploymentStatusSelect = (props: any) => {
     </>
   )
 }
+EmploymentStatusSelect.displayName = 'Select_EmploymentStatusSelect'

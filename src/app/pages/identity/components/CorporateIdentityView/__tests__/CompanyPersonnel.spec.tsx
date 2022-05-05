@@ -11,7 +11,7 @@ describe('CompanyPersonnel', () => {
   it('does not render address when it is undefined', () => {
     const { queryByText } = render(
       <CompanyPersonnel
-        personnel={corporate.representatives[0]}
+        personnel={[{ value: corporate.representatives[0] }] as any}
         showDocumentHeader={false}
         documentsTitle='Documents'
       />

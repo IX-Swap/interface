@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { Personnel } from 'app/pages/identity/types/forms'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { TypedField } from 'components/form/TypedField'
@@ -22,10 +23,10 @@ export const PersonnelInformation = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container direction='column' spacing={5}>
-      <Grid item>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
+    <Grid container spacing={6}>
+      <Grid item xs={12}>
+        <Grid container spacing={6}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               defaultValue={defaultValue?.fullName ?? ''}
@@ -36,7 +37,7 @@ export const PersonnelInformation = ({
               label='Full Name'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               component={TextInput}
@@ -49,9 +50,9 @@ export const PersonnelInformation = ({
           </Grid>
         </Grid>
       </Grid>
-      <Grid item>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
+      <Grid item xs={12}>
+        <Grid container spacing={6}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               component={TextInput}
@@ -62,7 +63,7 @@ export const PersonnelInformation = ({
               label='Email Address'
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
               component={PhoneInput}
@@ -77,6 +78,7 @@ export const PersonnelInformation = ({
           </Grid>
         </Grid>
       </Grid>
+      <ValidateOnMount />
     </Grid>
   )
 }

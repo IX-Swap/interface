@@ -185,6 +185,19 @@ export interface NotificationsDropdown {
   bgHover: CSSProperties['color']
 }
 
+export interface OtpInput {
+  bg: CSSProperties['color']
+  color: CSSProperties['color']
+  colorError: CSSProperties['color']
+  border: string
+  borderFocus: string
+  borderError: string
+  boxShadow: string
+  placeholder: CSSProperties['color']
+  placeholderFocus: CSSProperties['color']
+  placeholderError: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -234,6 +247,7 @@ declare module '@mui/material/styles' {
     dropdownLink: DropdownLink
     notificationsDropdown: NotificationsDropdown
     header: HeaderPalette
+    otpInput: OtpInput
   }
 
   export interface Palette {
@@ -280,6 +294,7 @@ declare module '@mui/material/styles' {
     dropdownLink: DropdownLink
     notificationsDropdown: NotificationsDropdown
     header: HeaderPalette
+    otpInput: OtpInput
   }
 
   export interface Theme {
