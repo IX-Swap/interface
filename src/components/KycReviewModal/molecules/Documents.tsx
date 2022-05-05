@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
+import axios from 'axios'
 
 import pdfIcon from 'assets/images/pdf.svg'
 import { EllipsisText, MEDIA_WIDTHS } from 'theme'
@@ -25,10 +26,17 @@ interface Props {
 
 const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf('.')).split('.')[1]
 
-const downloadFile = (url: string, name: string) => {
+const downloadFile = async (url: string, name: string, type: string) => {
   const link = document.createElement('a')
+
+  const { data } = (await axios(url, {
+    responseType: 'blob',
+  })) as any
+
+  const blob = new Blob([data], { type })
+
   link.download = name
-  link.href = url
+  link.href = URL.createObjectURL(blob)
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
@@ -51,7 +59,7 @@ const Row = ({
   file: {
     type,
     id,
-    asset: { name, public: publicUrl },
+    asset: { name, public: publicUrl, mimeType },
     createdAt,
   },
   isFirstRow,
@@ -65,17 +73,17 @@ const Row = ({
     setPreviewModal(true)
   }
 
-  const handleRowClick = (url: string, name: string) => {
+  const handleRowClick = (url: string, name: string, mimeType: string) => {
     const docType = extractDocType(name)
     if (['docx', 'doc'].includes(docType)) {
-      downloadFile(url, name)
+      downloadFile(url, name, mimeType)
     } else {
       openModal()
     }
   }
 
   return (
-    <BodyRow key={id} onClick={() => handleRowClick(publicUrl, name)}>
+    <BodyRow key={id} onClick={() => handleRowClick(publicUrl, name, mimeType)}>
       <div>
         {isFirstRow && <ColumnHeader>{headerCells[0]}</ColumnHeader>}
         <FileName>

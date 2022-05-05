@@ -1,15 +1,19 @@
+import axios from 'axios'
 import { FileWithPath } from 'react-dropzone'
 
 export const createFileFromApi = async (file: any) => {
-    if (file) {
-        const name = file?.name
-        const response = await fetch(file?.public)
-        const blob = await response.blob()
-        const newFile = new File([blob], name, { type: blob.type, lastModified: new Date().getTime() })
-        const preview = URL.createObjectURL(newFile)
-        const fileWithPath = newFile as FileWithPath
-        return { link: file?.public, file: fileWithPath, blob, preview }
-    }
+  if (file) {
+    const name = file?.name
+    const { data } = (await axios(file?.public, {
+      responseType: 'blob',
+    })) as any
 
-    return null
+    const newFile = new File([data], name, { type: file.mimeType, lastModified: new Date().getTime() })
+    const blob = new Blob([data], { type: file.mimeType })
+    const preview = URL.createObjectURL(newFile)
+    const fileWithPath = newFile as FileWithPath
+    return { link: file?.public, file: fileWithPath, blob, preview }
+  }
+
+  return null
 }
