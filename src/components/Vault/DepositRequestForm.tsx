@@ -120,7 +120,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <Row>
               <TYPE.description2 color={`${theme.text2}80`}>
                 <Trans>
-                  Please provide sender’s address in order to approve this transaction. Other adresses will be rejected.
+                  Please provide sender’s address in order to approve this transaction. Other addresses will be rejected.
                 </Trans>
               </TYPE.description2>
             </Row>

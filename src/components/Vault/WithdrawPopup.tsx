@@ -80,6 +80,7 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
                 currency={currency}
                 changeModal={setModalView}
                 token={token}
+                onClose={onClose}
                 onRedirect={onRedirect}
               />
             )}

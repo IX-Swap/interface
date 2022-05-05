@@ -2,15 +2,14 @@ import React, { FC, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
+import { useHistory, useParams } from 'react-router-dom'
 
-import { StyledCopy } from 'components/AdminTransactionsTable'
 import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
-import { shortenAddress } from 'utils'
+import { CopyAddress } from 'components/CopyAddress'
 import { KycItem } from 'state/admin/actions'
-import { IconWrapper } from 'components/AccountDetails/styleds'
 import { adminOffset as offset } from 'state/admin/constants'
 
 import { Pagination } from '../Pagination'
@@ -19,7 +18,6 @@ import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
 import { ButtonGradientBorder, ButtonGradient } from 'components/Button'
-import { useHistory, useParams } from 'react-router-dom'
 import { AdminParams } from 'pages/Admin'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
@@ -57,16 +55,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   return (
     <StyledBodyRow key={id}>
       <Wallet>
-        {copied ? (
-          <Trans>Copied</Trans>
-        ) : (
-          <>
-            {shortenAddress(ethAddress || '')}
-            <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
-              <StyledCopy />
-            </IconWrapper>
-          </>
-        )}
+        <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
       </Wallet>
       <div>{fullName || '-'}</div>
       <div>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>

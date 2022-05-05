@@ -1,3 +1,4 @@
+import { CSSProperties } from '@material-ui/core/styles/withStyles'
 import { Placement } from '@popperjs/core'
 import Portal from '@reach/portal'
 import { transparentize } from 'polished'
@@ -85,6 +86,7 @@ export interface PopoverProps {
   children: React.ReactNode
   placement?: Placement
   style?: any
+  referenceStyle?: CSSProperties
   offset?: any
   close?: () => void
   hideShadow?: boolean
@@ -97,6 +99,7 @@ export default function Popover({
   children,
   placement = 'auto',
   style = {},
+  referenceStyle = {},
   offset = [-22, 8],
   close,
   hideArrow = false,
@@ -120,7 +123,7 @@ export default function Popover({
 
   return (
     <>
-      <ReferenceElement ref={setReferenceElement as any}>{children}</ReferenceElement>
+      <ReferenceElement style={referenceStyle} ref={setReferenceElement as any}>{children}</ReferenceElement>
       <Portal>
         {show && !hideShadow && (
           <Shadow

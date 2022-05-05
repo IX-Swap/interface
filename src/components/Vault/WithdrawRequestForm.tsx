@@ -37,8 +37,9 @@ interface Props {
   changeModal: (param: WithdrawModalView) => void
   token: any
   onRedirect: () => void
+  onClose: () => void
 }
-export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }: Props) => {
+export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect, onClose }: Props) => {
   const theme = useTheme()
   const getWithdrawStatus = useGetWithdrawStatus()
   const createDraftWithdraw = useCreateDraftWitdraw()
@@ -101,6 +102,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && receiver) {
       withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess: onRedirect, onError, receiver })
+      onClose()
     }
   }
 
