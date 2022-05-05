@@ -8,6 +8,8 @@ export interface BrokerDealerSwapDto {
   endpoint: string
   hash: string
   brokerDealerId: number
+  pairAddress: string
+  amount: string
 }
 
 export interface SwapConfirmArguments {

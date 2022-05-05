@@ -1,16 +1,18 @@
+import React, { useCallback, useEffect } from 'react'
+
 import { ButtonIXSGradient } from 'components/Button'
 import { RowBetween } from 'components/Row'
 import { useSwapAuthorizeFirstStep } from 'hooks/useSwapAuthorize'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
-import React, { useCallback, useEffect, useState } from 'react'
 import { useBrokerDealerState, useFakeApprovalState, useToggleFakeApproval } from 'state/application/hooks'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
-import { useSubmitBrokerDealerForm } from 'state/swapHelper/hooks'
+import { useSubmitBrokerDealerForm, useSwapHelpersState } from 'state/swapHelper/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
 
 export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; allowSwap: boolean }) => {
   const showFakeApproval = useFakeApprovalState()
   const setShowFakeApproval = useToggleFakeApproval()
+  const { authorizationInProgress } = useSwapHelpersState()
 
   const brokerDealerDTO = useBrokerDealerState()
   const submitToBrokerDealer = useSubmitBrokerDealerForm()
@@ -22,20 +24,27 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   const { secTokens } = useUserSecTokens()
   const authorizeFirstStep = useSwapAuthorizeFirstStep(trade, allowedSlippage, formRef)
 
-  const [startedFirstStep, setStartedFirstStep] = useState(false)
-
   useEffect(() => {
     if (showFakeApproval) {
       setTimeout(() => {
         setShowFakeApproval(false)
-        submitToBrokerDealer({ dto: brokerDealerDTO, formRef, cb: () => setStartedFirstStep(false) })
+        submitToBrokerDealer({
+          dto: { ...brokerDealerDTO, pairAddress: authorizationInProgress?.pairAddress },
+          formRef,
+        })
       }, 5000)
     }
-  }, [setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer, showFakeApproval])
+  }, [
+    setShowFakeApproval,
+    brokerDealerDTO,
+    formRef,
+    submitToBrokerDealer,
+    showFakeApproval,
+    authorizationInProgress?.pairAddress,
+  ])
 
   const startFirstStep = useCallback(
     (address: any) => {
-      setStartedFirstStep(true)
       authorizeFirstStep(secTokens[address])
     },
     [authorizeFirstStep, secTokens]
@@ -51,16 +60,14 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
         <React.Fragment key={address}>
           {address && secTokens[address] && allowSwap && (
             <>
-              {(startedFirstStep || showFakeApproval) && (
+              {Boolean(authorizationInProgress) ? (
                 <ButtonIXSGradient
                   disabled
                   style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
                 >
                   Confirming transaction with broker...
                 </ButtonIXSGradient>
-              )}
-
-              {!startedFirstStep && !showFakeApproval && (
+              ) : (
                 <ButtonIXSGradient
                   onClick={() => startFirstStep(address)}
                   style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
