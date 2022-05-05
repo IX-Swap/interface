@@ -2,12 +2,12 @@ import { Grid } from '@mui/material'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
 import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPreview/CorporatesPreview'
-// import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
-// import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'
-// import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
+import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
+import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'
+import { IssuerIdentityButton } from 'app/pages/identity/components/IdentityPreview/IssuerIdentityButton'
 import { IndividualPreview } from 'app/pages/identity/components/IndividualPreview/IndividualPreview'
-// import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton'
-// import { CreateIssuerIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton'
+import { CreateDetailsOfIssuanceButton } from 'app/pages/identity/components/NoIdentityView/CreateDetailsOfIssuanceButton'
+import { CreateIssuerIdentityButton } from 'app/pages/identity/components/NoIdentityView/CreateIssuerIdentityButton'
 import React, { useState } from 'react'
 export const IdentityPreview = () => {
   const {
@@ -18,15 +18,15 @@ export const IdentityPreview = () => {
     detailsOfIssuance
   } = useGetIdentities()
   const hasIndividual = individualIdentity !== undefined
-  // const hasCorporate =
-  //   corporateIdentities !== undefined && corporateIdentities.list.length > 0
+  const hasCorporate =
+    corporateIdentities !== undefined && corporateIdentities.list.length > 0
   const hasDetailsOfIssuance = detailsOfIssuance !== undefined
-  // const detailsOfIssuanceApproved =
-  //   detailsOfIssuance?.status === 'Approved' ?? false
-  // const detailsOfIssuanceSkipped = detailsOfIssuance?.skipped ?? false
-  const [selectedIdentity] = useState<'individual' | 'corporate'>(
-    hasIndividual ? 'individual' : 'corporate'
-  )
+  const detailsOfIssuanceApproved =
+    detailsOfIssuance?.status === 'Approved' ?? false
+  const detailsOfIssuanceSkipped = detailsOfIssuance?.skipped ?? false
+  const [selectedIdentity, setSelectedIdentity] = useState<
+    'individual' | 'corporate'
+  >(hasIndividual ? 'individual' : 'corporate')
   if (isLoadingIdentities) {
     return <LoadingIndicator />
   }
@@ -36,7 +36,7 @@ export const IdentityPreview = () => {
   return (
     <Grid container>
       <Grid item xs={12} container>
-        {/* {hasIndividual && (
+        {hasIndividual && (
           <Grid item xs={12} md={4}>
             <IndividualIdentityButton
               active={selectedIdentity === 'individual'}
@@ -67,7 +67,7 @@ export const IdentityPreview = () => {
           ) : (
             <CreateDetailsOfIssuanceButton />
           ))
-        )} */}
+        )}
       </Grid>
       <Grid item xs={12}>
         {selectedIdentity === 'individual' ? (
