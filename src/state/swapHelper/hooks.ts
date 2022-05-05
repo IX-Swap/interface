@@ -278,9 +278,9 @@ export function useSubmitBrokerDealerForm() {
       const { brokerDealerId, pairAddress, amount } = dto || {}
       const payload = { callbackEndpoint, data, hash }
 
-      const url: string = await axios.post(endpoint, payload).then((r) => {
-        return r.data.url ?? r.data?.data?.url
-      })
+      const bdData = await axios.post(endpoint, payload)
+
+      const url: string = bdData.data.url ?? bdData.data.data?.url
 
       const params = url
         .split('?')
