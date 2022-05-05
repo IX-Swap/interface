@@ -82,16 +82,12 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
 
   const details = getDetails()
   return (
-    <Grid
-      container
-      className={classes.container}
-      style={{ display: 'flex', flexDirection: 'row', flexWrap: 'nowrap' }}
-    >
+    <Grid container className={classes.container}>
       <Grid item className={classes.approveButton}>
         <Status label={data.status} type={status} />
       </Grid>
       <Grid item>
-        <Box pt={2} pb={2}>
+        <Box>
           <DataPreview
             avatar={data.logo}
             userId={data.user._id}
