@@ -124,7 +124,7 @@ export const depositToken = async ({
   fromAddress,
 }: {
   tokenId: number
-  amount: number
+  amount: string
   fromAddress: string
 }) => {
   const response = await apiService.post(custody.deposit, { tokenId, amount, fromAddress })
@@ -138,7 +138,7 @@ export const cancelDeposit = async ({ requestId }: { requestId: number }) => {
 
 interface DepositProps {
   id: number
-  amount: number
+  amount: string
   fromAddress: string
 }
 interface CancelDepositProps {
