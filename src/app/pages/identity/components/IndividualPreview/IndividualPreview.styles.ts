@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   buttonBox: {
-    paddingTop: theme.spacing(16.6),
+    paddingTop: theme.spacing(14.2),
     display: 'flex',
     justifyContent: 'flex-end',
     width: '100%',
@@ -34,7 +34,7 @@ export const useStyles = makeStyles(theme => ({
   },
   approveButton: {
     paddingRight: theme.spacing(12.5),
-    paddingTop: theme.spacing(17),
+    paddingTop: theme.spacing(14.5),
     '& div': {
       width: theme.spacing(13.7),
       textAlign: 'center'
