@@ -65,6 +65,7 @@ export const LegalEntityStatusSelect = (props: any) => {
       extractor: (item: Param) => item.key
     })
   }
+
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
