@@ -1,8 +1,9 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
+import { MenuItem, TextFieldProps } from '@mui/material'
 import { renderMenuItems } from 'helpers/rendering'
 import { TypedSelectProps } from 'types/util'
 import { fundStatuses } from 'config/defaults'
+import { TextFieldSelect } from 'components/form/TextFieldSelect'
 
 export interface FundStatusSelectSelectProps extends TypedSelectProps {
   includeAll?: boolean
@@ -26,7 +27,7 @@ export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
   } = props
 
   return (
-    <Select {...(rest as SelectProps)} label={label}>
+    <TextFieldSelect {...(rest as TextFieldProps)} label={label}>
       {includeAll && (
         <MenuItem value={valueBetweenAll}>
           {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
@@ -38,6 +39,6 @@ export const FundStatusSelect = (props: FundStatusSelectSelectProps) => {
           value: getValueForFundStatus(option)
         }))
       )}
-    </Select>
+    </TextFieldSelect>
   )
 }

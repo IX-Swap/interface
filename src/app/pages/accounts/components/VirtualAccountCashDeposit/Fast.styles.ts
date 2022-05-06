@@ -4,5 +4,8 @@ export const useStyles = makeStyles(theme => ({
   footerInfo: {
     backgroundColor: theme.palette.backgrounds.light,
     padding: 24
+  },
+  infoMessage: {
+    marginBottom: '1rem'
   }
 }))
