@@ -3,6 +3,8 @@ import { FormStep } from 'app/components/FormStepper/FormStep'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ComponentType, useEffect, useMemo, useState } from 'react'
 import { MutationResultPair } from 'react-query'
+import { useStyles } from 'app/components/FormStepper/FormStepper.styles'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface FormStepperStep {
   label: string
@@ -36,6 +38,9 @@ export const FormStepper = (props: FormStepperProps) => {
     nonLinear = false,
     skippable = false
   } = props
+
+  const classes = useStyles()
+  const { isMobile } = useAppBreakpoints()
 
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
   const [completed, setCompleted] = React.useState<number[]>(
@@ -88,7 +93,11 @@ export const FormStepper = (props: FormStepperProps) => {
       <Grid item>
         <Stepper activeStep={activeStep} alternativeLabel nonLinear={nonLinear}>
           {steps.map((step, index) => (
-            <Step key={`step-${index}`} completed={completed.includes(index)}>
+            <Step
+              className={classes.step}
+              key={`step-${index}`}
+              completed={completed.includes(index)}
+            >
               {nonLinear ? (
                 <StepButton
                   onClick={handleStepButtonClick(index)}
@@ -98,7 +107,7 @@ export const FormStepper = (props: FormStepperProps) => {
                     index !== Math.max(...completed) + 1
                   }
                 >
-                  <StepLabel>{step.label}</StepLabel>
+                  <StepLabel>{!isMobile ? step.label : ''}</StepLabel>
                 </StepButton>
               ) : (
                 <StepLabel>{step.label}</StepLabel>
@@ -109,7 +118,11 @@ export const FormStepper = (props: FormStepperProps) => {
       </Grid>
 
       {stepsMemo.map((step, index) => (
-        <Grid item key={`step-content-${index}`}>
+        <Grid
+          item
+          key={`step-content-${index}`}
+          className={classes.bodyWrapper}
+        >
           <FormStep
             step={step}
             index={index}
