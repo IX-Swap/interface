@@ -123,13 +123,13 @@ export const AdminTransactionsTable = () => {
           <LoaderThin size={96} />
         </Loader>
       )}
+      <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
       {items?.length === 0 ? (
         <NoData>
           <Trans>No data</Trans>
         </NoData>
       ) : (
         <Container>
-          <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
           <Table body={<Body />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
