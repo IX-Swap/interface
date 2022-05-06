@@ -294,7 +294,8 @@ export default function IndividualKycForm() {
                 !errors.phoneNumber &&
                 !errors.email
               const investorFilled = shouldValidate && !errors.accredited
-              const addressFilled = shouldValidate && !errors.line1 && !errors.line2 && !errors.country && !errors.city
+              const addressFilled =
+                shouldValidate && !errors.address && !errors.postalCode && !errors.country && !errors.city
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               const filesFilled = shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress
@@ -401,16 +402,18 @@ export default function IndividualKycForm() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
-                              onChange={(e) => onChangeInput('line1', e.currentTarget.value, values, setFieldValue)}
-                              value={values.line1}
-                              label="Line 1"
-                              error={errors.line1 && errors.line1}
+                              onChange={(e) => onChangeInput('address', e.currentTarget.value, values, setFieldValue)}
+                              value={values.address}
+                              label="Address"
+                              error={errors.address && errors.address}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('line2', e.currentTarget.value, values, setFieldValue)}
-                              value={values.line2}
-                              label="Line 2"
-                              error={errors.line2 && errors.line2}
+                              onChange={(e) =>
+                                onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)
+                              }
+                              value={values.postalCode}
+                              label="Postal Code"
+                              error={errors.postalCode && errors.postalCode}
                             />
                           </FormGrid>
 
