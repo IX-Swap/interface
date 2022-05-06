@@ -87,7 +87,7 @@ export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [80001]: '',
   [137]: '0x342172484664093B1F15Eb10B91721ba3e3DC97A',
 }
-export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS)
+export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS as string)
 export const ARGENT_WALLET_DETECTOR_ADDRESS: { [chainId: number]: string } = {
   [1]: '0xeca4B0bDBf7c55E9b7925919d03CbF8Dc82537E8',
 }
