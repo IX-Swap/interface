@@ -9,6 +9,7 @@ import { RowCenter } from 'components/Row'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { isValidAddress } from 'utils'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { useAddPopup } from 'state/application/hooks'
 import { useAddOrRemoveWhitelisted, useAdminState } from 'state/admin/hooks'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 
@@ -18,6 +19,7 @@ export const AddAddress = () => {
   const [isOpen, handleIsOpen] = useState(false)
   const [address, setAddress] = useState('')
   const [error, setError] = useState('')
+  const addPopup = useAddPopup()
 
   const { adminLoading } = useAdminState()
 
@@ -33,7 +35,22 @@ export const AddAddress = () => {
 
   const onAdd = async () => {
     if (isValidAddress(address)) {
-      await addOrRemoveWhitelisted({ address, isWhitelisted: true })
+      const data = await addOrRemoveWhitelisted({ address, isWhitelisted: true })
+      if (data?.id) {
+        addPopup({
+          info: {
+            success: true,
+            summary: `Wallet was added successfully in Whitelist`,
+          },
+        })
+      } else {
+        addPopup({
+          info: {
+            success: false,
+            summary: `Something went wrong`,
+          },
+        })
+      }
       close()
     } else {
       setError('Invalid address')
