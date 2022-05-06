@@ -363,8 +363,8 @@ export interface IndividualKyc {
     createdAt: string
     deletedAt: string | null
     id: number
-    line1: string
-    line2: string
+    address: string
+    postalCode: string
     updatedAt: string
     [key: string]: any
   }
@@ -400,8 +400,8 @@ export interface CorporateKyc {
     createdAt: string
     deletedAt: string | null
     id: number
-    line1: string
-    line2: string
+    address: string
+    postalCode: string
     updatedAt: string
     [key: string]: any
   }
