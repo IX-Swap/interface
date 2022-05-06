@@ -2,7 +2,6 @@ import React from 'react'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
-import { useFormContext } from 'react-hook-form'
 import { renderValue } from 'helpers/forms'
 import { Param } from 'types/networks'
 
@@ -59,12 +58,6 @@ export const LEGAL_ENTITY_STATUS_LIST = [
 ]
 
 export const LegalEntityStatusSelect = (props: any) => {
-  const { watch } = useFormContext()
-  const legalEntityStatus = watch('legalEntityStatus')
-  const selectValue = LEGAL_ENTITY_STATUS_LIST.find(
-    item => item.value === legalEntityStatus
-  )?.key
-
   const renderName = (value: any) => {
     return renderValue({
       value,
@@ -79,7 +72,6 @@ export const LegalEntityStatusSelect = (props: any) => {
         {...props}
         style={{ minWidth: 100 }}
         label={undefined}
-        value={selectValue}
         renderValue={renderName}
       >
         <SelectItem disabled value={undefined}>
