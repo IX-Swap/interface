@@ -19,6 +19,10 @@ const BalanceWrapper = styled.div`
      max-width: 60px;
      margin-left: 10px;
   `};
+
+  ${({ theme }) => theme.mediaWidth.upToExtremelySmall`
+    margin-left: 0px;
+  `};
 `
 
 export const IXSBalance = () => {
