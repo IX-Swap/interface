@@ -50,7 +50,7 @@ export const Whitelist: FC = () => {
         <Table body={<Body items={whitelistedList.items} />} header={<Header />} />
       ) : (
         <NoData>
-          <Trans>No data</Trans>
+          <Trans>No results</Trans>
         </NoData>
       )}
     </Container>
