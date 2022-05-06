@@ -11,7 +11,7 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { AdminRole } from 'state/admin/actions'
 import { ButtonGradientBorder } from 'components/Button'
 import { DeleteConfirmationPopup } from 'components/DeleteConfirmation'
-import { useDeleteConfirmationPopupToggle } from 'state/application/hooks'
+import { useAddPopup, useDeleteConfirmationPopupToggle } from 'state/application/hooks'
 import { CopyAddress } from 'components/CopyAddress'
 
 import { AddAddress } from './AddAddress'
@@ -87,9 +87,25 @@ const Row: FC<RowProps> = ({ item, handleEthAddressToDelete }) => {
 const Body: FC<BodyProps> = ({ items }) => {
   const removeWhitelisted = useAddOrRemoveWhitelisted()
   const [ethAddressToDelete, handleEthAddressToDelete] = useState('')
+  const addPopup = useAddPopup()
 
-  const onRemove = (ethAddress: string) => {
-    removeWhitelisted({ address: ethAddress, isWhitelisted: false })
+  const onRemove = async (ethAddress: string) => {
+    const data = await removeWhitelisted({ address: ethAddress, isWhitelisted: false })
+    if (data?.id) {
+      addPopup({
+        info: {
+          success: true,
+          summary: `Wallet was removed from Whitelist successfully`,
+        },
+      })
+    } else {
+      addPopup({
+        info: {
+          success: false,
+          summary: `Something went wrong`,
+        },
+      })
+    }
   }
 
   return (
