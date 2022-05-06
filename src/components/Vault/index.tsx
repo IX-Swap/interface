@@ -1,17 +1,23 @@
-import { Currency } from '@ixswap1/sdk-core'
 import React, { useMemo } from 'react'
-import { useAccreditationStatus } from 'state/secTokens/hooks'
-import { ExistingVault } from './ExistingVault'
-import { NoVault } from './NoVault'
-import { AccreditationStatusEnum } from './enum'
+import { Currency } from '@ixswap1/sdk-core'
+
 import { useKYCState } from 'state/kyc/hooks'
 import { KYC_STATUSES } from 'components/AdminKyc/StatusCell'
+import { useAuthState } from 'state/auth/hooks'
+import { useAccreditationStatus } from 'state/secTokens/hooks'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { RowCenter } from 'components/Row'
+
+import { ExistingVault } from './ExistingVault'
+import { NoVault } from './NoVault'
 
 interface Props {
   currency?: Currency
   token: any
 }
 export const Vault = ({ currency, token }: Props) => {
+  const { token: jwtToken } = useAuthState()
+
   const {
     status,
     isApproved: vaultExists,
@@ -47,6 +53,14 @@ export const Vault = ({ currency, token }: Props) => {
 
     return kycType[userAccountType]
   }, [kyc, token])
+
+  if (!jwtToken) {
+    return (
+      <RowCenter style={{ paddingTop: 24 }}>
+        <LoaderThin size={96} />
+      </RowCenter>
+    )
+  }
 
   return (
     <>

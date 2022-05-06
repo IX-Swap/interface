@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FC } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
 
@@ -9,13 +9,15 @@ import { useCurrency } from 'hooks/Tokens'
 import { getAtlasInfo, getToken } from 'state/secCatalog/hooks'
 import { LightBackground } from 'theme/Background'
 import { BackArrowButton } from 'components/BackArrowButton'
+import { TokenLogo } from 'components/TokenLogo'
+import { NotAvailablePage } from 'components/NotAvailablePage'
+import { useActiveWeb3React } from 'hooks/web3'
 
 import { Container, ValutContainer, InfoTitle, Logo, StyledTitleBig, CompanyName } from './styleds'
 import { DetailsInfo } from './DetailsInfo'
 import { AddToMetamask } from './AddToMetamask'
 import { AtlasInfo } from './AtlasInfo'
 import { NotTradable } from './NotTradable'
-import { TokenLogo } from 'components/TokenLogo'
 
 export default function SecTokenDetails({
   match: {
@@ -25,6 +27,9 @@ export default function SecTokenDetails({
   const currency = (useCurrency(currencyId) as any) ?? undefined
   const [token, setToken] = useState<any>(null)
   const [atlasInfo, setAtlasInfo] = useState<any | null>(null)
+  const { account } = useActiveWeb3React()
+
+  const isLoggedIn = !!account
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -39,6 +44,8 @@ export default function SecTokenDetails({
 
     fetchToken()
   }, [currencyId])
+
+  if (!isLoggedIn) return <NotAvailablePage />
 
   return (
     <>
