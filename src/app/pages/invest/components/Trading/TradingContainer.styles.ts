@@ -37,6 +37,11 @@ export const useStyles = makeStyles(theme => ({
       gridTemplateColumns: '243px auto 288px'
     }
   },
+  contentWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(2)
+  },
   middleBlock: {
     backgroundColor: theme.palette.background.paper,
     marginBottom: theme.spacing(2),

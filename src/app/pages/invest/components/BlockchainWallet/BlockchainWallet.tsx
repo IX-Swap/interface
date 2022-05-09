@@ -2,25 +2,27 @@ import { Box, Button, Hidden, Typography } from '@mui/material'
 import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
 import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 import { useStyles } from 'app/pages/invest/components/BlockchainWallet/BlockchainWallet.styles'
-import WalletModal from 'components/WalletModal/WalletModal'
+import { WalletModalContext } from 'components/WalletModal/WalletModalContextWrapper'
 import { isEmptyString } from 'helpers/strings'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { BlockchainAddress } from './BlockchainAddress'
-
 export const BlockchainWallet = () => {
   const classes = useStyles()
   const { account, chainId } = useActiveWeb3React()
-  const [isOpen, setOpen] = useState(false)
-  const toggleOpen = () => setOpen(!isOpen)
+  const context = useContext(WalletModalContext)
   const isAddressWhitelisted = useWithdrawalAddressAdded(account)
 
   return (
     <>
       <>
         {isEmptyString(account) ? (
-          <Button variant='contained' color='primary' onClick={toggleOpen}>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={context?.toggleModal}
+          >
             Connect Wallet
           </Button>
         ) : (
@@ -48,7 +50,6 @@ export const BlockchainWallet = () => {
           </>
         )}
       </>
-      <WalletModal isOpen={isOpen} toggleModal={toggleOpen} />
     </>
   )
 }
