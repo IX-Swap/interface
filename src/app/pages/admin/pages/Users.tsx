@@ -27,24 +27,26 @@ export const Users = () => {
         <PageHeader title='Users' />
       </Grid>
       <RootContainer>
-        <Grid item xs={12} md={6} lg={4}>
-          <SearchFilter
-            fullWidth
-            placeholder='Search'
-            inputAdornmentPosition='end'
-          />
-        </Grid>
-        <Grid item>
-          <TableView<User>
-            innerRef={ref}
-            uri={userURL.getAll}
-            name={usersQueryKeys.getList}
-            columns={columns}
-            hasActions
-            actions={({ item }) => renderActions(item, ref)}
-            filter={filter}
-            actionHeader='Roles'
-          />
+        <Grid container direction='column' spacing={3}>
+          <Grid item xs={12} md={6} lg={4}>
+            <SearchFilter
+              fullWidth
+              placeholder='Search'
+              inputAdornmentPosition='end'
+            />
+          </Grid>
+          <Grid item>
+            <TableView<User>
+              innerRef={ref}
+              uri={userURL.getAll}
+              name={usersQueryKeys.getList}
+              columns={columns}
+              hasActions
+              actions={({ item }) => renderActions(item, ref)}
+              filter={filter}
+              actionHeader='Roles'
+            />
+          </Grid>
         </Grid>
       </RootContainer>
     </Grid>

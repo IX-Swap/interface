@@ -12,11 +12,13 @@ export const Identities = () => {
         <PageHeader title='Identities' />
       </Grid>
       <RootContainer>
-        <Grid item>
-          <IdentityStatsCards />
-        </Grid>
-        <Grid item>
-          <AdminIdentityList />
+        <Grid container direction='column' spacing={6}>
+          <Grid item>
+            <IdentityStatsCards />
+          </Grid>
+          <Grid item>
+            <AdminIdentityList />
+          </Grid>
         </Grid>
       </RootContainer>
     </Grid>

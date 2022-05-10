@@ -14,7 +14,7 @@ export const AccessReports = () => {
       </Grid>
       <RootContainer className={privateClassNames()}>
         <Grid item xs={12} container justifyContent='flex-end'>
-          <Box>
+          <Box pb={2}>
             <UploadAccessReport />
           </Box>
         </Grid>

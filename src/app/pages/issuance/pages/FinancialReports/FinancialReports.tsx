@@ -12,7 +12,13 @@ export const FinancialReports = () => {
         <PageHeader title='Financial Reports' showBreadcrumbs />
       </Grid>
       <RootContainer>
-        <Grid item xs={12} container justifyContent='flex-end'>
+        <Grid
+          item
+          xs={12}
+          container
+          justifyContent='flex-end'
+          style={{ marginBottom: 20 }}
+        >
           <Grid item>
             <UploadReportButton />
           </Grid>

@@ -145,13 +145,13 @@ export const IssuanceLanding = () => {
             </Grid>
           </Grid>
         </Grid>
-      </RootContainer>
 
-      <Grid container>
-        <Grid item xs={12}>
-          <Activities />
+        <Grid container>
+          <Grid item xs={12}>
+            <Activities />
+          </Grid>
         </Grid>
-      </Grid>
+      </RootContainer>
     </>
   )
 }

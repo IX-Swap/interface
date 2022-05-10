@@ -33,22 +33,24 @@ export const VirtualAccounts = () => {
           <PageHeader title='Virtual Accounts' />
         </Grid>
         <RootContainer>
-          <Grid item>
-            <VirtualAccountsStats />
-          </Grid>
-          <Grid item container spacing={2}>
+          <Grid container direction='column' spacing={5}>
             <Grid item>
-              <AddVirtualAccountsButton />
+              <VirtualAccountsStats />
+            </Grid>
+            <Grid item container spacing={2}>
+              <Grid item>
+                <AddVirtualAccountsButton />
+              </Grid>
+              <Grid item>
+                <DisableAccountsButton />
+              </Grid>
+              <Grid item>
+                <UploadCSVButton />
+              </Grid>
             </Grid>
             <Grid item>
-              <DisableAccountsButton />
+              <VirtualAccountsTabView />
             </Grid>
-            <Grid item>
-              <UploadCSVButton />
-            </Grid>
-          </Grid>
-          <Grid item>
-            <VirtualAccountsTabView />
           </Grid>
         </RootContainer>
       </Grid>
