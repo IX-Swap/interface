@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(0.5)
   },
   header: {
-    marginBottom: theme.spacing(2)
+    marginBottom: 8
   },
   container: {
     marginBottom: theme.spacing(3)
@@ -16,15 +16,21 @@ export const useStyles = makeStyles(theme => ({
     margin: 0
   },
   wrapper: {
-    // background: 'red',
     position: `relative`,
     background: theme.palette.header.bg,
     border: 'none',
     marginTop: '1rem',
     marginBottom: '1rem',
-    maxHeight: 130,
-    paddingTop: 33,
+    maxHeight: 120,
+    paddingTop: 30,
     paddingBottom: 33,
     width: '100%'
+  },
+  title: {
+    fontSize: 24,
+    height: 29
+  },
+  crumbs: {
+    height: 24
   }
 }))
