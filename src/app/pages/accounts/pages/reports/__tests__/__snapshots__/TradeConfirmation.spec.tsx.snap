@@ -10,22 +10,22 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="makeStyles-wrapper-17 MuiBox-root css-0"
+        class="makeStyles-wrapper-20 MuiBox-root css-0"
       >
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-15 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-18 css-1vpwcmr-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-14 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container makeStyles-header-17 css-11lq3yg-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-21 css-rldqdm-MuiTypography-root"
                 >
                   Trade Confirmation
                 </h2>
@@ -59,19 +59,19 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
           class="MuiBox-root css-12aw9rk"
         />
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-21 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-27 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
         >
           <div
             aria-expanded="false"
-            class="MuiButtonBase-root makeStyles-summaryWrapper-22 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+            class="MuiButtonBase-root makeStyles-summaryWrapper-28 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
             role="button"
             tabindex="0"
           >
             <div
-              class="makeStyles-summaryContent-23 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+              class="makeStyles-summaryContent-29 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
             >
               <p
-                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-24 css-1okvd07-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-30 css-1okvd07-MuiTypography-root"
               >
                 Trades
               </p>
@@ -107,7 +107,7 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                   role="region"
                 >
                   <div
-                    class="makeStyles-detailsWrapper-25 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                    class="makeStyles-detailsWrapper-31 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
                   >
                     <div
                       class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
@@ -122,40 +122,40 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                             class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1efwvfh-MuiTableCell-root"
                               data-testid="cell"
                               scope="col"
                             />
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1efwvfh-MuiTableCell-root"
                               data-testid="cell"
                               scope="col"
                             >
                               Date
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1efwvfh-MuiTableCell-root"
                               data-testid="cell"
                               scope="col"
                             >
                               Type
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               data-testid="cell"
                               scope="col"
                             >
                               Quantity
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               data-testid="cell"
                               scope="col"
                             >
                               Price
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               data-testid="cell"
                               scope="col"
                             >
@@ -167,61 +167,61 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                           class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
                         >
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-36 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-42 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               Securities Pair
                             </th>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                           </tr>
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-38 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-44 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               HKUV/SGD
                             </th>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                             >
                               2021-05-28, 04:33 AM
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                             >
                               SELL
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               10
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               10.00
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               100.00
                             </td>
@@ -266,7 +266,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
                 >
                   Trade Confirmation
                 </h2>
@@ -294,7 +294,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
       class="MuiContainer-root MuiContainer-maxWidthLg css-snjpuj-MuiContainer-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-9 css-l6hioc-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-12 css-l6hioc-MuiGrid-root"
         style="opacity: 0.75;"
       >
         <div
@@ -330,7 +330,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
           class="MuiBox-root css-12aw9rk"
         />
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-10 css-t0zib5-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-13 css-t0zib5-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -346,7 +346,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
               class="MuiBox-root css-12aw9rk"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-11 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-14 css-1b4l2pg-MuiTypography-root"
             >
               This page is empty.
             </p>
@@ -354,7 +354,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
               class="MuiBox-root css-7ieh0i"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-content-12 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-content-15 css-1b4l2pg-MuiTypography-root"
             >
               There are no records to display for the selected report.
             </p>
@@ -379,22 +379,22 @@ exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `
       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="makeStyles-wrapper-44 MuiBox-root css-0"
+        class="makeStyles-wrapper-50 MuiBox-root css-0"
       >
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-42 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-48 css-1vpwcmr-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-41 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container makeStyles-header-47 css-11lq3yg-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-51 css-rldqdm-MuiTypography-root"
                 >
                   Trade Confirmation
                 </h2>
@@ -428,7 +428,7 @@ exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `
           class="MuiBox-root css-12aw9rk"
         />
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-48 css-t0zib5-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-57 css-t0zib5-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -444,7 +444,7 @@ exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `
               class="MuiBox-root css-12aw9rk"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-49 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-58 css-1b4l2pg-MuiTypography-root"
             >
               This page is empty.
             </p>
@@ -452,7 +452,7 @@ exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `
               class="MuiBox-root css-7ieh0i"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-content-50 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-content-59 css-1b4l2pg-MuiTypography-root"
             >
               There are no records to display for the selected report.
             </p>

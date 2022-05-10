@@ -25,7 +25,7 @@ exports[`Reports should match snapshot 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
                 >
                   Reports
                 </h2>
@@ -84,21 +84,21 @@ exports[`Reports should match snapshot 1`] = `
           class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
         >
           <div
-            class="makeStyles-wrapper-6 MuiBox-root css-0"
+            class="makeStyles-wrapper-9 MuiBox-root css-0"
           >
             <h6
-              class="MuiTypography-root MuiTypography-subtitle1 makeStyles-filterText-7 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-subtitle1 makeStyles-filterText-10 css-1b4l2pg-MuiTypography-root"
             >
               Select Date:
             </h6>
             <div
-              class="makeStyles-filtersWrapper-8 MuiBox-root css-0"
+              class="makeStyles-filtersWrapper-11 MuiBox-root css-0"
             >
               <div
-                class="makeStyles-filterWrapper-9 MuiBox-root css-0"
+                class="makeStyles-filterWrapper-12 MuiBox-root css-0"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-inxvf7-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
                     class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
@@ -141,10 +141,10 @@ exports[`Reports should match snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="makeStyles-filterWrapper-9 MuiBox-root css-0"
+                class="makeStyles-filterWrapper-12 MuiBox-root css-0"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-inxvf7-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
                     class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
@@ -268,7 +268,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-17 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>
@@ -292,7 +292,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-17 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>
@@ -316,7 +316,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-17 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>
@@ -340,7 +340,7 @@ exports[`Reports should match snapshot 1`] = `
                         class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 makeStyles-link-17 css-1okvd07-MuiTypography-root"
                         >
                           View Report
                         </p>

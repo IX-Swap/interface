@@ -10,22 +10,22 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="makeStyles-wrapper-17 MuiBox-root css-0"
+        class="makeStyles-wrapper-20 MuiBox-root css-0"
       >
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-15 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-18 css-1vpwcmr-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-14 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container makeStyles-header-17 css-11lq3yg-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-21 css-rldqdm-MuiTypography-root"
                 >
                   Activity Summary
                 </h2>
@@ -59,19 +59,19 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
           class="MuiBox-root css-12aw9rk"
         />
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-21 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-27 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
         >
           <div
             aria-expanded="false"
-            class="MuiButtonBase-root makeStyles-summaryWrapper-22 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+            class="MuiButtonBase-root makeStyles-summaryWrapper-28 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
             role="button"
             tabindex="0"
           >
             <div
-              class="makeStyles-summaryContent-23 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+              class="makeStyles-summaryContent-29 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
             >
               <p
-                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-24 css-1okvd07-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-30 css-1okvd07-MuiTypography-root"
               >
                 Open Positions
               </p>
@@ -107,7 +107,7 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                   role="region"
                 >
                   <div
-                    class="makeStyles-detailsWrapper-25 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                    class="makeStyles-detailsWrapper-31 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
                   >
                     <div
                       class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
@@ -122,49 +122,49 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                             class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
                               Symbol
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
                               Open
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               scope="col"
                             >
                               Quantity
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               scope="col"
                             >
                               Cost price
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               scope="col"
                             >
                               Cost value
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               scope="col"
                             >
                               Last Trade Price
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               scope="col"
                             >
                               Current Value
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-26 css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-32 css-1v6mra9-MuiTableCell-root"
                               scope="col"
                             >
                               Unrealized P/L
@@ -175,114 +175,114 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
                         >
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-36 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-42 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               Tokens
                             </th>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                           </tr>
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-38 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-44 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               RHTC/SGD
                             </th>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               2021-11-01, 06:15 AM
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               3
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               2,000.00
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               6,000.00
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               2,000.00
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               6,000.00
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               0.00
                             </td>
                           </tr>
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-40 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-46 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-28 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-34 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               Total
                             </th>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               5,033.00
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             />
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               146,000.00
                             </td>
                             <td
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-28 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-34 css-17jaypo-MuiTableCell-root"
                             >
                               -79,835.00
                             </td>
@@ -297,19 +297,19 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
           </div>
         </div>
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-21 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-27 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
         >
           <div
             aria-expanded="false"
-            class="MuiButtonBase-root makeStyles-summaryWrapper-22 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+            class="MuiButtonBase-root makeStyles-summaryWrapper-28 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
             role="button"
             tabindex="0"
           >
             <div
-              class="makeStyles-summaryContent-23 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+              class="makeStyles-summaryContent-29 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
             >
               <p
-                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-24 css-1okvd07-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-30 css-1okvd07-MuiTypography-root"
               >
                 Cash Report
               </p>
@@ -345,7 +345,7 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                   role="region"
                 >
                   <div
-                    class="makeStyles-detailsWrapper-25 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                    class="makeStyles-detailsWrapper-31 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
                   >
                     <div
                       class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
@@ -357,80 +357,80 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
                         >
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-42 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-48 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-41 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-47 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               USD
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-41 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-47 css-17jaypo-MuiTableCell-root"
                               scope="row"
                             >
                               Total
                             </th>
                           </tr>
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-44 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-50 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-43 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-49 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               Starting cash
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-43 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-49 css-17jaypo-MuiTableCell-root"
                               scope="row"
                             >
                               0.00
                             </th>
                           </tr>
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-46 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-52 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-45 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-51 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               Other Fees
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-45 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-51 css-17jaypo-MuiTableCell-root"
                               scope="row"
                             >
                               0.00
                             </th>
                           </tr>
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-48 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-54 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-47 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-53 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               Withdrawals
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-47 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-53 css-17jaypo-MuiTableCell-root"
                               scope="row"
                             >
                               0.00
                             </th>
                           </tr>
                           <tr
-                            class="MuiTableRow-root makeStyles-row-31 makeStyles-row-50 css-8dfetm-MuiTableRow-root"
+                            class="MuiTableRow-root makeStyles-row-37 makeStyles-row-56 css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-49 css-17e0zod-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-55 css-17e0zod-MuiTableCell-root"
                               scope="row"
                             >
                               Ending Cash
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-27 makeStyles-cashColumn-49 css-17jaypo-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-cashColumn-33 makeStyles-cashColumn-55 css-17jaypo-MuiTableCell-root"
                               scope="row"
                             >
                               0.00
@@ -461,22 +461,22 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="makeStyles-wrapper-68 MuiBox-root css-0"
+        class="makeStyles-wrapper-77 MuiBox-root css-0"
       >
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-66 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-75 css-1vpwcmr-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-65 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container makeStyles-header-74 css-11lq3yg-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-78 css-rldqdm-MuiTypography-root"
                 >
                   Activity Summary
                 </h2>
@@ -510,19 +510,19 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
           class="MuiBox-root css-12aw9rk"
         />
         <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-72 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-root-84 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-1m8eno4-MuiPaper-root-MuiAccordion-root"
         >
           <div
             aria-expanded="false"
-            class="MuiButtonBase-root makeStyles-summaryWrapper-73 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
+            class="MuiButtonBase-root makeStyles-summaryWrapper-85 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
             role="button"
             tabindex="0"
           >
             <div
-              class="makeStyles-summaryContent-74 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+              class="makeStyles-summaryContent-86 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
             >
               <p
-                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-75 css-1okvd07-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 makeStyles-summary-87 css-1okvd07-MuiTypography-root"
               >
                 Cash Report
               </p>
@@ -558,7 +558,7 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
                   role="region"
                 >
                   <div
-                    class="makeStyles-detailsWrapper-76 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+                    class="makeStyles-detailsWrapper-88 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
                   >
                     <div
                       class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
@@ -593,22 +593,22 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="makeStyles-wrapper-56 MuiBox-root css-0"
+        class="makeStyles-wrapper-62 MuiBox-root css-0"
       >
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-54 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-60 css-1vpwcmr-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-53 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container makeStyles-header-59 css-11lq3yg-MuiGrid-root"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-63 css-rldqdm-MuiTypography-root"
                 >
                   Activity Summary
                 </h2>
@@ -642,7 +642,7 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
           class="MuiBox-root css-12aw9rk"
         />
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-60 css-t0zib5-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-69 css-t0zib5-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -658,7 +658,7 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
               class="MuiBox-root css-12aw9rk"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-61 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-70 css-1b4l2pg-MuiTypography-root"
             >
               This page is empty.
             </p>
@@ -666,7 +666,7 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
               class="MuiBox-root css-7ieh0i"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-content-62 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-content-71 css-1b4l2pg-MuiTypography-root"
             >
               There are no records to display for the selected report.
             </p>
@@ -706,7 +706,7 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
                 >
                   Activity Summary
                 </h2>
@@ -734,7 +734,7 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
       class="MuiContainer-root MuiContainer-maxWidthLg css-snjpuj-MuiContainer-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-9 css-l6hioc-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-12 css-l6hioc-MuiGrid-root"
         style="opacity: 0.75;"
       >
         <div
@@ -770,7 +770,7 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
           class="MuiBox-root css-12aw9rk"
         />
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-10 css-t0zib5-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-13 css-t0zib5-MuiGrid-root"
         >
           <div
             class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -786,7 +786,7 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
               class="MuiBox-root css-12aw9rk"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-11 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-14 css-1b4l2pg-MuiTypography-root"
             >
               This page is empty.
             </p>
@@ -794,7 +794,7 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
               class="MuiBox-root css-7ieh0i"
             />
             <p
-              class="MuiTypography-root MuiTypography-body1 makeStyles-content-12 css-1b4l2pg-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-content-15 css-1b4l2pg-MuiTypography-root"
             >
               There are no records to display for the selected report.
             </p>
