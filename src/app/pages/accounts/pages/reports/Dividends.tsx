@@ -9,6 +9,7 @@ import { DividendsTable } from 'app/pages/accounts/pages/reports/components/Divi
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { RootContainer } from 'ui/RootContainer'
 
 export const Dividends: React.FC = () => {
   const { updateFilter } = useQueryFilter()
@@ -34,18 +35,19 @@ export const Dividends: React.FC = () => {
   }
 
   return (
-    <Grid container direction={'column'}>
+    <Grid container direction={'column'} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='Dividends' />
         <VSpacer size={'medium'} />
       </Grid>
 
-      <ReportsInfo />
-
-      <Grid item>
-        <VSpacer size={'medium'} />
-        {renderContent()}
-      </Grid>
+      <RootContainer>
+        <ReportsInfo />
+        <Grid item>
+          <VSpacer size={'medium'} />
+          {renderContent()}
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

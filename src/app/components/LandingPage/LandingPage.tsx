@@ -14,13 +14,15 @@ export const LandingPage = (props: LandingPageProps) => {
   const { links, title } = props
 
   return (
-    <RootContainer>
+    <>
       <PageHeader title={title} alignment='center' showBreadcrumbs={false} />
-      <Grid item container justifyContent='center' alignItems='flex-start'>
-        {links.map((link, index) => (
-          <LandingPageItem key={index} link={link} />
-        ))}
-      </Grid>
-    </RootContainer>
+      <RootContainer>
+        <Grid item container justifyContent='center' alignItems='flex-start'>
+          {links.map((link, index) => (
+            <LandingPageItem key={index} link={link} />
+          ))}
+        </Grid>
+      </RootContainer>
+    </>
   )
 }
