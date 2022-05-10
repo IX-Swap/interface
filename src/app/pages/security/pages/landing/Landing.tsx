@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@mui/material'
+import { Button, Grid, Box } from '@mui/material'
 import { useAuth } from 'hooks/auth/useAuth'
 import { SettingsRow } from './components/SettingsRow'
 import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
@@ -7,7 +7,8 @@ import { useHistory } from 'react-router-dom'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import useStyles from 'app/pages/security/pages/landing/Landing.styles'
-import { VSpacer } from 'components/VSpacer'
+import { ThemeSelectorMobile } from './components/ThemeSelectorMobile'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Landing = () => {
   const { user = { totpConfirmed: false } } = useAuth()
@@ -21,14 +22,21 @@ export const Landing = () => {
     }
   }
 
+  const { isDesktop } = useAppBreakpoints()
   return (
     <Grid container direction='column'>
       <Grid item>
-        <PageHeader title='Settings' />
+        <PageHeader isNew={false} title='Settings' />
       </Grid>
 
       <Grid item className={classes.contentWrapper}>
-        <Grid container direction='column' alignItems='center' wrap='wrap'>
+        <Grid
+          className={classes.subContent}
+          container
+          direction='column'
+          alignItems='center'
+          wrap='wrap'
+        >
           <Grid container direction='column' item>
             <Grid item>
               <SettingsRow
@@ -45,7 +53,8 @@ export const Landing = () => {
                 }
               />
             </Grid>
-            <VSpacer size={'small'} />
+
+            <Box className={classes.divider} />
 
             <Grid item>
               <SettingsRow
@@ -62,12 +71,13 @@ export const Landing = () => {
                 }
               />
             </Grid>
-            <VSpacer size={'small'} />
+
+            <Box className={classes.divider} />
 
             <Grid item>
               <SettingsRow
-                name='Application Theme'
-                action={<ThemeSelector />}
+                name={isDesktop ? 'Application Theme' : 'Dark Mode'}
+                action={isDesktop ? <ThemeSelector /> : <ThemeSelectorMobile />}
               />
             </Grid>
           </Grid>

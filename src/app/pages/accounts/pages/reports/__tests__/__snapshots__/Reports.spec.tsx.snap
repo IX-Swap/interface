@@ -90,7 +90,7 @@ exports[`Reports should match snapshot 1`] = `
               class="makeStyles-filterWrapper-9 MuiBox-root css-0"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-18i04ku-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
               >
                 <label
                   class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
@@ -101,18 +101,21 @@ exports[`Reports should match snapshot 1`] = `
                   From
                 </label>
                 <div
-                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
                   style="width: 150px;"
                 >
                   <input
                     aria-invalid="false"
                     aria-label="Choose date"
                     aria-readonly="true"
-                    class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
+                    class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
                     id="mui-1"
                     readonly=""
                     type="text"
                     value=""
+                  />
+                  <div
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
                   />
                   <fieldset
                     aria-hidden="true"
@@ -133,7 +136,7 @@ exports[`Reports should match snapshot 1`] = `
               class="makeStyles-filterWrapper-9 MuiBox-root css-0"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-18i04ku-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-10 css-1fk1xr7-MuiFormControl-root-MuiTextField-root"
               >
                 <label
                   class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
@@ -144,18 +147,21 @@ exports[`Reports should match snapshot 1`] = `
                   To
                 </label>
                 <div
-                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
                   style="width: 150px;"
                 >
                   <input
                     aria-invalid="false"
                     aria-label="Choose date"
                     aria-readonly="true"
-                    class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
+                    class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
                     id="mui-3"
                     readonly=""
                     type="text"
                     value=""
+                  />
+                  <div
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
                   />
                   <fieldset
                     aria-hidden="true"
@@ -254,7 +260,7 @@ exports[`Reports should match snapshot 1`] = `
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                       >
                         View Report
                       </p>
@@ -278,7 +284,7 @@ exports[`Reports should match snapshot 1`] = `
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                       >
                         View Report
                       </p>
@@ -302,7 +308,7 @@ exports[`Reports should match snapshot 1`] = `
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                       >
                         View Report
                       </p>
@@ -326,7 +332,7 @@ exports[`Reports should match snapshot 1`] = `
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-17jaypo-MuiTableCell-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-11 css-1okvd07-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-link-14 css-1okvd07-MuiTypography-root"
                       >
                         View Report
                       </p>

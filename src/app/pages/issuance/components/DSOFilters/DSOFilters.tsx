@@ -5,7 +5,7 @@ import React from 'react'
 
 export const DSOFilters = () => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} alignItems='center'>
       <Grid item>
         <StatusFilter />
       </Grid>

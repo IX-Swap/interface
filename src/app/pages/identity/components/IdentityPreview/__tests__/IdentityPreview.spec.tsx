@@ -1,4 +1,4 @@
-import * as useGetIdentities from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import * as useGetIdentities from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 import React from 'react'
 import { render } from 'test-utils'

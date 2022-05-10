@@ -7,15 +7,21 @@ export const input = (theme: Theme) => {
       root: {
         backgroundColor: theme.palette.background.paper,
         borderRadius: 8,
+        marginTop: 0,
         // common styles
-        '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root,': {
+        '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root': {
           marginLeft: 0,
           marginTop: 12
         },
         '& .MuiInputLabel-root': {
           color: theme.palette.select.label,
-          fontSize: 18,
+          fontSize: 14,
           opacity: 0.7,
+          transform: 'scale(1)',
+          '&.MuiInputLabel-filled': {
+            top: 12,
+            left: 16
+          },
           '&.Mui-focused': {
             color: theme.palette.primary.main,
             opacity: 1
@@ -57,6 +63,7 @@ export const input = (theme: Theme) => {
             backgroundColor: theme.palette.background.paper,
             background: theme.palette.background.paper,
             height: 85,
+            borderRadius: 8,
             transition: 'none',
             width: 400,
             [theme.breakpoints.down('sm')]: {
@@ -85,10 +92,9 @@ export const input = (theme: Theme) => {
           },
         // outlined input
         '& .MuiInputLabel-outlined': {
-          top: -12,
-          left: -12,
-          fontSize: '18px',
-          lineHeight: 1
+          position: 'initial',
+          marginBottom: 12,
+          lineHeight: 1.13
         },
         '& .MuiOutlinedInput-input': {
           height: 49
@@ -139,7 +145,11 @@ export const input = (theme: Theme) => {
           WebkitBoxShadow: '',
           '&::placeholder': {
             textOverflow: 'ellipsis !important',
-            color: inputStyles?.placeholder
+            color: inputStyles?.placeholder,
+            opacity: 1,
+            [theme.breakpoints.down('md')]: {
+              fontSize: 14
+            }
           },
           '&:-webkit-autofill': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,

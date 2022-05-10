@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography } from '@mui/material'
-import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
 import { useStyles } from 'app/components/Header/components/UserDropdown/UserRoleStatus/UserRoleStatus.styles'
 
 export const UserRoleStatus = () => {

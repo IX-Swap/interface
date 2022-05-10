@@ -9,8 +9,10 @@ export const useStyles = makeStyles(theme => ({
     width: 280
   },
   filterWrapper: {
+    marginTop: -24,
     [theme.breakpoints.down('lg')]: {
-      paddingTop: 24
+      paddingTop: 24,
+      marginTop: 0
     }
   },
   childrenWRapper: {

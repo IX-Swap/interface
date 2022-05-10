@@ -7,5 +7,11 @@ export default makeStyles(theme => ({
       minWidth: 'initial',
       marginTop: theme.spacing(2)
     }
+  },
+  boxWrapper: {
+    width: 120
+  },
+  switchWrapper: {
+    marginRight: 40
   }
 }))

@@ -2,13 +2,12 @@ import makeStyles from '@mui/styles/makeStyles'
 import InfoIcon from 'assets/icons/item-checked.svg'
 
 export const useStyles = makeStyles(theme => {
-  // eslint-disable-next-line
-  const selectPalette = theme.palette.select!
+  const selectPalette = theme.palette.select
 
   return {
     wrapper: {
       position: 'relative',
-      padding: theme.spacing(2.25, 0),
+      padding: theme.spacing(2.25, 0.75),
       fontSize: 13,
 
       '&.MuiMenuItem-root': {
