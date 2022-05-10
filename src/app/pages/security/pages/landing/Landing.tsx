@@ -24,9 +24,9 @@ export const Landing = () => {
 
   const { isDesktop } = useAppBreakpoints()
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader isNew={false} title='Settings' />
+        <PageHeader styled={false} title='Settings' />
       </Grid>
 
       <Grid item className={classes.contentWrapper}>

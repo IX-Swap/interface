@@ -7,6 +7,7 @@ import { AccountsSummary } from 'app/pages/accounts/pages/reports/AccountsSummar
 import { TradeConfirmation } from 'app/pages/accounts/pages/reports/TradeConfirmation'
 import { AggregatedCostsAndCharges } from 'app/pages/accounts/pages/reports/AggregatedCostsAndCharges'
 import { Dividends } from 'app/pages/accounts/pages/reports/Dividends'
+import { RootContainer } from 'ui/RootContainer'
 
 export const ReportsRouter = () => {
   return (
