@@ -22,7 +22,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
             >
               <h2
-                class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h2 makeStyles-title-7 css-rldqdm-MuiTypography-root"
               >
                 Change Authenticator
               </h2>
@@ -67,7 +67,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                     class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
                   >
                     <h6
-                      class="MuiTypography-root MuiTypography-h6 css-1h41tev-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h6 makeStyles-title-7 css-1h41tev-MuiTypography-root"
                     >
                       Change Authenticator
                     </h6>
