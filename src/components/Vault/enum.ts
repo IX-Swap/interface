@@ -2,6 +2,7 @@ import { t } from '@lingui/macro'
 
 export enum WithdrawStatus {
   DRAFT = 'draft',
+  FEE_PENDING = 'feePending',
   FEE_ACCEPTED = 'feeAccepted',
   PENDING = 'pending',
   BURNED = 'burned',
@@ -66,6 +67,7 @@ export const isSuccessTransaction = (action: ActionTypes, status: string) => {
 
 const WithdrawStatusText = {
   [WithdrawStatus.DRAFT]: 'Waiting for fee payment...',
+  [WithdrawStatus.FEE_PENDING]: 'Waiting for withdrawal fee to be paid...',
   [WithdrawStatus.FEE_ACCEPTED]: 'Fee accepted, ready for withdrawal...',
   [WithdrawStatus.PENDING]: 'Burning wrapped ${symbol}...',
   [WithdrawStatus.BURNED]: 'Wrapped ${symbol} burned, verifying...',
@@ -150,6 +152,7 @@ export const ActionTypeText = {
 
 const WithdrawStatusPercents = {
   [WithdrawStatus.DRAFT]: 1,
+  [WithdrawStatus.FEE_PENDING]: 2,
   [WithdrawStatus.FEE_ACCEPTED]: 5,
   [WithdrawStatus.PENDING]: 10,
   [WithdrawStatus.BURNED]: 20,

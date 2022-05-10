@@ -17,6 +17,7 @@ import { useChooseBrokerDealerModalToggle, useShowError } from 'state/applicatio
 import { LOGIN_STATUS, useLogin, useUserisLoggedIn } from 'state/auth/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { useKYCState } from 'state/kyc/hooks'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
@@ -66,15 +67,18 @@ function serializeToken(token: Token): SerializedToken {
 
 function deserializeToken(serializedToken: SerializedToken): Token {
   // TO DO - refactor
-  return serializedToken as Token
 
-  // return new Token(
-  //   serializedToken.chainId,
-  //   serializedToken.address,
-  //   serializedToken.decimals,
-  //   serializedToken.symbol,
-  //   serializedToken.name
-  // )
+  if (!serializedToken.tokenInfo) {
+    return new Token(
+      serializedToken.chainId,
+      serializedToken.address,
+      serializedToken.decimals,
+      serializedToken.symbol,
+      serializedToken.name
+    )
+  }
+
+  return new WrappedTokenInfo(serializedToken.tokenInfo, serializedToken.list)
 }
 
 export function useIsDarkMode(): boolean {
@@ -353,7 +357,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
   return useMemo(() => {
     // dedupes pairs of tokens in the combined list
     const keyed = combinedList.reduce<{ [key: string]: [Token, Token] }>((memo, [tokenA, tokenB]) => {
-      const sorted = tokenA.sortsBefore(tokenB)
+      const sorted = tokenA?.sortsBefore?.(tokenB)
       const key = sorted ? `${tokenA.address}:${tokenB.address}` : `${tokenB.address}:${tokenA.address}`
       if (memo[key]) return memo
       memo[key] = sorted ? [tokenA, tokenB] : [tokenB, tokenA]

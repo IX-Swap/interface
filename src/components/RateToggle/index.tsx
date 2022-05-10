@@ -16,7 +16,7 @@ export default function RateToggle({
   const tokenA = currencyA?.wrapped
   const tokenB = currencyB?.wrapped
 
-  const isSorted = tokenA && tokenB && tokenA.sortsBefore(tokenB)
+  const isSorted = tokenA && tokenB && tokenA?.sortsBefore?.(tokenB)
 
   return tokenA && tokenB ? (
     <div style={{ width: 'fit-content', display: 'flex', alignItems: 'center' }}>
