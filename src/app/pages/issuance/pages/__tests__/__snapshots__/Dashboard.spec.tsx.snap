@@ -25,7 +25,7 @@ exports[`Dashboard should match snapshot 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
               >
                 <h2
-                  class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
                 >
                   InvestaX Digital Fund VCC
                 </h2>
@@ -47,7 +47,7 @@ exports[`Dashboard should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-snjpuj-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1hznz5z-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
@@ -103,7 +103,7 @@ exports[`Dashboard should match snapshot 1`] = `
                       class="MuiBox-root css-mz9qt7"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-root-6 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-root-9 css-1b4l2pg-MuiTypography-root"
                     >
                       2
                     </p>
@@ -153,7 +153,7 @@ exports[`Dashboard should match snapshot 1`] = `
                       class="MuiBox-root css-mz9qt7"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-root-6 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-root-9 css-1b4l2pg-MuiTypography-root"
                     >
                       0
                     </p>
@@ -203,7 +203,7 @@ exports[`Dashboard should match snapshot 1`] = `
                       class="MuiBox-root css-mz9qt7"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-root-6 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-root-9 css-1b4l2pg-MuiTypography-root"
                     >
                       10
                     </p>
@@ -258,7 +258,7 @@ exports[`Dashboard should match snapshot 1`] = `
               style="background-color: rgb(247, 249, 250);"
             >
               <div
-                class="makeStyles-wrapper-7 MuiBox-root css-1j30m50"
+                class="makeStyles-wrapper-10 MuiBox-root css-1j30m50"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1me3d2y-MuiGrid-root"
@@ -290,19 +290,19 @@ exports[`Dashboard should match snapshot 1`] = `
                           class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-8 css-1efwvfh-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-11 css-1efwvfh-MuiTableCell-root"
                             scope="col"
                           >
                             Sub-Fund
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-8 css-1efwvfh-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-11 css-1efwvfh-MuiTableCell-root"
                             scope="col"
                           >
                             Investor Name
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-8 css-1v6mra9-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-11 css-1v6mra9-MuiTableCell-root"
                             scope="col"
                           >
                             Amount
@@ -316,19 +316,19 @@ exports[`Dashboard should match snapshot 1`] = `
                           class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-9 css-17e0zod-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-12 css-17e0zod-MuiTableCell-root"
                             scope="row"
                           >
                             Access Token
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-9 css-17e0zod-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-12 css-17e0zod-MuiTableCell-root"
                             scope="row"
                           >
                             aditya test 2
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-9 css-17jaypo-MuiTableCell-root"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-12 css-17jaypo-MuiTableCell-root"
                             scope="row"
                           >
                             2,000,000.00
