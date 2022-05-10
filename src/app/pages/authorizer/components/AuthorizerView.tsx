@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Container } from '@mui/material'
+import { Grid, Typography, Box } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { formatDateAndTime } from 'helpers/dates'
@@ -16,6 +16,7 @@ import { AuthorizerCategory } from 'types/app'
 import { privateClassNames } from 'helpers/classnames'
 import { DigitalSecurityOffering } from 'types/dso'
 import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
+import { RootContainer } from 'ui/RootContainer'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -51,105 +52,105 @@ export const AuthorizerView = <T,>(
   const showForm = !(isTransaction && approvedOrRejected)
 
   return (
-    <>
-      <PageHeader title={title} />
-      <Container className={privateClassNames()} style={{ paddingTop: 40 }}>
-        <Grid container direction='column' spacing={4}>
-          <Grid item>
-            <Grid container spacing={6} wrap='wrap-reverse'>
-              {hasIdentity && (
-                <Grid item xs={12} md={3}>
-                  <AuthorizerIdentities
-                    corporates={getCorporates(data)}
-                    individual={data.identity?.individual}
-                  />
+    <Grid container direction='column' spacing={4} display='table'>
+      <Grid item>
+        <PageHeader title={title} />
+      </Grid>
+      <RootContainer className={privateClassNames()} style={{ padding: 40 }}>
+        <Grid item>
+          <Grid container spacing={6} wrap='wrap-reverse'>
+            {hasIdentity && (
+              <Grid item xs={12} md={3}>
+                <AuthorizerIdentities
+                  corporates={getCorporates(data)}
+                  individual={data.identity?.individual}
+                />
+              </Grid>
+            )}
+            <Grid item xs={12} md={hasIdentity ? 9 : 12}>
+              <Grid container direction='column'>
+                <Grid item style={{ marginBottom: 5 }}>
+                  <Typography color='textSecondary'>
+                    {formatDateAndTime(data.createdAt ?? data.assignedAt)}
+                  </Typography>
                 </Grid>
-              )}
-              <Grid item xs={12} md={hasIdentity ? 9 : 12}>
-                <Grid container direction='column'>
-                  <Grid item style={{ marginBottom: 5 }}>
-                    <Typography color='textSecondary'>
-                      {formatDateAndTime(data.createdAt ?? data.assignedAt)}
-                    </Typography>
-                  </Grid>
 
+                <Grid
+                  item
+                  container
+                  alignItems='center'
+                  justifyContent='space-between'
+                  style={{ marginBottom: 24 }}
+                >
+                  <Typography variant='h3'>
+                    {category === 'virtual-accounts'
+                      ? 'About This Virtual Account'
+                      : title}
+                  </Typography>
+                  <Box display='flex'>
+                    <AuthorizableLevel level={data.level} compact={false} />
+                    <Box px={0.5} />
+                    <AuthorizableStatus
+                      status={data.status}
+                      compact={false}
+                      isNewTheme
+                    />
+                  </Box>
+                </Grid>
+
+                <Grid item>{children}</Grid>
+
+                <Grid item>
+                  <VSpacer size='medium' />
+                </Grid>
+
+                {category !== 'virtual-accounts' &&
+                  category !== 'token-deployment' && (
+                    <Grid item>
+                      <Typography variant='h3'>
+                        Authorization Documents
+                      </Typography>
+                      <VSpacer size='small' />
+                      <Form
+                        defaultValues={{
+                          documents: documents.map(value => ({ value }))
+                        }}
+                      >
+                        <AuthorizationDocuments
+                          resourceId={data._id}
+                          feature={feature}
+                        />
+                      </Form>
+                    </Grid>
+                  )}
+
+                {showForm && category !== 'token-deployment' && (
+                  <Grid item style={{ marginTop: 20 }}>
+                    <AuthorizerForm status={data.status} itemId={data._id} />
+                  </Grid>
+                )}
+
+                {category === AuthorizerCategory.Offerings && (
                   <Grid
-                    item
                     container
-                    alignItems='center'
-                    justifyContent='space-between'
-                    style={{ marginBottom: 24 }}
+                    item
+                    justifyContent='flex-end'
+                    style={{ marginBottom: 20 }}
                   >
-                    <Typography variant='h3'>
-                      {category === 'virtual-accounts'
-                        ? 'About This Virtual Account'
-                        : title}
-                    </Typography>
-                    <Box display='flex'>
-                      <AuthorizableLevel level={data.level} compact={false} />
-                      <Box px={0.5} />
-                      <AuthorizableStatus
-                        status={data.status}
-                        compact={false}
-                        isNewTheme
-                      />
-                    </Box>
+                    <PromotionSwitch
+                      dso={data as unknown as DigitalSecurityOffering}
+                    />
+
+                    <VisibilitySwitch
+                      dso={data as unknown as DigitalSecurityOffering}
+                    />
                   </Grid>
-
-                  <Grid item>{children}</Grid>
-
-                  <Grid item>
-                    <VSpacer size='medium' />
-                  </Grid>
-
-                  {category !== 'virtual-accounts' &&
-                    category !== 'token-deployment' && (
-                      <Grid item>
-                        <Typography variant='h3'>
-                          Authorization Documents
-                        </Typography>
-                        <VSpacer size='small' />
-                        <Form
-                          defaultValues={{
-                            documents: documents.map(value => ({ value }))
-                          }}
-                        >
-                          <AuthorizationDocuments
-                            resourceId={data._id}
-                            feature={feature}
-                          />
-                        </Form>
-                      </Grid>
-                    )}
-
-                  {showForm && category !== 'token-deployment' && (
-                    <Grid item style={{ marginTop: 20 }}>
-                      <AuthorizerForm status={data.status} itemId={data._id} />
-                    </Grid>
-                  )}
-
-                  {category === AuthorizerCategory.Offerings && (
-                    <Grid
-                      container
-                      item
-                      justifyContent='flex-end'
-                      style={{ marginBottom: 20 }}
-                    >
-                      <PromotionSwitch
-                        dso={data as unknown as DigitalSecurityOffering}
-                      />
-
-                      <VisibilitySwitch
-                        dso={data as unknown as DigitalSecurityOffering}
-                      />
-                    </Grid>
-                  )}
-                </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Container>
-    </>
+      </RootContainer>
+    </Grid>
   )
 }
