@@ -114,7 +114,8 @@ export const custody = {
   feePrice: (id: number | string) => `/token/price/${id}`,
   withdrawStatus: (id: number | string) => `/custody/withdraw/fee-status/${id}`,
   draftWithdraw: '/custody/withdraw/prepare-whitelist',
-  paidFee: `/custody/withdraw/fee-whitelist`,
+  preparePaidFee: '/custody/withdraw/prepare-fee',
+  paidFee: '/custody/withdraw/fee-whitelist',
 }
 
 export const eventLog = {
