@@ -51,6 +51,7 @@ export const TradingBody = () => {
           isFetching={isFetching}
           currencyLabel={currencyName}
           tokenLabel={tokenName}
+          isDisabled={!isWhitelisted}
           currencyBalance={currencyBalance}
           suffix={
             <PlaceOrderSuffix isWhiteListed={isWhitelisted} account={account} />
