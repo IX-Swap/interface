@@ -300,7 +300,7 @@ export default function CurrencyList({
           acc.sec.push(next)
         } else if (next?.tokenInfo?.symbol === 'USDC') {
           acc.usdc = next
-        } else if (next?.tokenInfo?.symbol === 'WIXS') {
+        } else if (['WIXS', 'IXS'].includes(next?.tokenInfo?.symbol || '')) {
           acc.wixs = next
         } else {
           acc.rest.push(next)
@@ -316,7 +316,7 @@ export default function CurrencyList({
       }
     )
 
-    return [...sec, wixs, usdc, ...rest]
+    return [...sec, ...(Object.keys(wixs).length ? [wixs] : []), ...(Object.keys(usdc).length ? [usdc] : []), ...rest]
   }, [currencies])
 
   const itemData: (Currency | BreakLine)[] = useMemo(() => {
