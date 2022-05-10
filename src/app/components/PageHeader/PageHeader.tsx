@@ -50,7 +50,10 @@ export const PageHeader = (props: PageHeaderProps) => {
           >
             <Grid item container alignItems='center' justifyContent={justify}>
               {hasBackButton && <BackButton className={classes.backButton} />}
-              <Typography className={classes.title} variant={variant}>
+              <Typography
+                className={styled ? classes.title : ''}
+                variant={variant}
+              >
                 {title}
               </Typography>
             </Grid>
