@@ -1,20 +1,19 @@
 import React from 'react'
-import { useStyles } from './DataPreview.styles'
-// import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { useStyles } from 'app/pages/identity/components/DataPreview/DataPreview.styles'
 import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar.svg'
 import { Avatar } from 'components/Avatar'
 import { Status } from 'ui/Status/Status'
 import { Box, Typography, Grid, Container } from '@mui/material'
-import { FieldsDisplay } from 'app/pages/identity/components/IndividualPreview/FieldDisplay'
+import { FieldsDisplay } from 'app/pages/identity/components/DataPreview/FieldDisplay'
 
 export interface DataPreviewProps {
   avatar?: string
   userId?: string
   fields?: Array<{ key: string; value?: string }>
   name?: string
-  occupation: string
   isIndividual: boolean
   status: string
+  identityType?: string
 }
 
 export const DataPreview = ({
@@ -22,18 +21,17 @@ export const DataPreview = ({
   userId,
   fields,
   name,
-  occupation,
   isIndividual,
-  status
+  status,
+  identityType
 }: DataPreviewProps) => {
-  // const { isMobile } = useAppBreakpoints()
   const classes = useStyles()
-  const isOccupationLowerCase =
-    occupation == undefined || occupation !== 'Others'
-      ? occupation
-      : 'Investor '
-  const isCorporate = isIndividual ? ' Individual ' : ' Corporate '
+  const userIdentity = isIndividual ? ' Individual ' : ' Corporate '
   const typeStatus = status.toLowerCase()
+  const identityLabel =
+    identityType === 'issuer' || identityType === 'investor'
+      ? identityType[0].toUpperCase() + identityType.slice(1)
+      : 'Investor'
 
   return (
     <>
@@ -56,7 +54,7 @@ export const DataPreview = ({
           </Grid>
           <Grid item className={classes.isIndividualGrid}>
             <Typography variant='subtitle1' className={classes.textCorporate}>
-              {isCorporate + isOccupationLowerCase + ' Identity'}
+              {userIdentity + identityLabel + ' Identity'}
             </Typography>
           </Grid>
           <Grid item className={classes.approveButton}>

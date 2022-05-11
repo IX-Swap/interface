@@ -1,7 +1,7 @@
 import React from 'react'
 import { LabelledValue } from 'components/LabelledValue'
 import { Grid } from '@mui/material'
-import { useStyles } from './FieldsDsiplay.style'
+import { useStyles } from 'app/pages/identity/components/DataPreview/FieldsDisplay.style'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { useTheme } from '@mui/material/styles'
 
