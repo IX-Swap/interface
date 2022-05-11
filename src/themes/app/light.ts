@@ -228,8 +228,8 @@ export const lightTheme: DeprecatedThemeOptions = {
     },
     info: {
       main: '#4C88FF',
-      light: '#ABB8CF',
-      dark: '#EEF1F5'
+      light: tinycolor('#EEF1F5').setAlpha(0.2).toRgbString(),
+      dark: '#ABB8CF'
     },
     'special-red': palette.augmentColor({
       color: {
