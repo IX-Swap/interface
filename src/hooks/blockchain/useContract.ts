@@ -95,9 +95,7 @@ export function getContractInstance({
       address,
       ABI,
       library,
-      withSignerIfPossible && account !== undefined && account !== null
-        ? account
-        : undefined
+      withSignerIfPossible && account !== null ? account : undefined
     )
   } catch (error) {
     console.error('Failed to get contract', error)
