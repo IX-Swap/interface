@@ -98,7 +98,7 @@ export const DSOTableFilters = () => {
             <NetworkFilter />
           </Grid>
           <Hidden lgDown>
-            <Grid item xs={6} md={2}>
+            <Grid item xs={6} md={3}>
               <ColumnsEditorToggle
                 value='columns'
                 onClick={toggleColumns}

@@ -11,7 +11,7 @@ export const PairFilter = () => {
           value={value}
           label='Pair'
           onChange={event => {
-            onChange(event.target.value)
+            onChange(event.target.value as string)
           }}
         />
       )}

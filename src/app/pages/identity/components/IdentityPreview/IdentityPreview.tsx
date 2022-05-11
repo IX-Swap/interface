@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPreview/CorporatesPreview'
 import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
 import { IndividualIdentityButton } from 'app/pages/identity/components/IdentityPreview/IndividualIdentityButton'

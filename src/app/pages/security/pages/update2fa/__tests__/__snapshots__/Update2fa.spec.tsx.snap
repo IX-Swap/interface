@@ -82,7 +82,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
             class="MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel css-10mg1vw-MuiStepper-root"
           >
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
             >
               <span
                 class="MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
@@ -123,7 +123,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               </span>
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
             >
               <div
                 class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
@@ -171,7 +171,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               </span>
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
             >
               <div
                 class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
@@ -219,7 +219,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               </span>
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
             >
               <div
                 class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"

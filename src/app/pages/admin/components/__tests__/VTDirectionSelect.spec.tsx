@@ -1,18 +1,25 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { transferDirections } from 'config/defaults'
-import { MenuItem, Select } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { renderSelectItems } from 'helpers/rendering'
 import { VTDirectionSelect } from 'app/pages/admin/components/VTDirectionSelect'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 jest.mock('@mui/material', () => ({
-  Select: jest.fn(({ children }) => <select>{children}</select>),
-  MenuItem: jest.fn(({ value }) => <option value={value}>{value}</option>),
   useMediaQuery: jest.fn()
 }))
 
 jest.mock('helpers/rendering', () => ({
-  renderMenuItems: jest.fn()
+  renderSelectItems: jest.fn()
+}))
+
+jest.mock('ui/Select/Select', () => ({
+  Select: jest.fn(({ children }) => <select>{children}</select>)
+}))
+
+jest.mock('ui/Select/SelectItem/SelectItem', () => ({
+  SelectItem: jest.fn(({ value }) => <option value={value}>{value}</option>)
 }))
 
 describe('VTDirectionSelect', () => {
@@ -24,7 +31,7 @@ describe('VTDirectionSelect', () => {
     render(<VTDirectionSelect />)
 
     expect(Select).toHaveBeenCalled()
-    expect(renderMenuItems).toHaveBeenCalledWith(
+    expect(renderSelectItems).toHaveBeenCalledWith(
       transferDirections.map(option => ({ label: option, value: option }))
     )
   })
@@ -32,7 +39,10 @@ describe('VTDirectionSelect', () => {
   it('shows all in the option if includeAll props is true', () => {
     const { getByText } = render(<VTDirectionSelect includeAll />)
 
-    expect(MenuItem).toHaveBeenCalledWith({ value: 'All', children: 'All' }, {})
+    expect(SelectItem).toHaveBeenCalledWith(
+      { value: 'All', children: 'All' },
+      {}
+    )
     expect(getByText(/all/i)).toBeTruthy()
   })
 
@@ -41,7 +51,7 @@ describe('VTDirectionSelect', () => {
       <VTDirectionSelect includeAll labelBetweenAll={''} />
     )
 
-    expect(MenuItem).toHaveBeenCalledWith({ value: 'All', children: '' }, {})
+    expect(SelectItem).toHaveBeenCalledWith({ value: 'All', children: '' }, {})
     expect(getByText(/all/i)).toBeTruthy()
   })
 })

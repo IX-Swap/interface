@@ -11,7 +11,7 @@ import * as useCreateCorporate from 'app/pages/identity/hooks/useCreateCorporate
 import * as useUpdateCorporate from 'app/pages/identity/hooks/useUpdateCorporate'
 import * as useSubmitCorporate from 'app/pages/identity/hooks/useSubmitCorporate'
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import * as useOnboardingJourneys from 'app/hooks/onboarding/useOnboardingJourneys'
 import { history } from 'config/history'
 import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 import { IdentityRoute } from 'app/pages/identity/router/config'

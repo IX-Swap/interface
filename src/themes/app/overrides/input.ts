@@ -6,15 +6,33 @@ export const input = (theme: Theme) => {
     styleOverrides: {
       root: {
         backgroundColor: theme.palette.background.paper,
-        borderRadius: 4,
+        borderRadius: 8,
+        marginTop: 0,
         // common styles
-        '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root,': {
+        '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root': {
           marginLeft: 0,
           marginTop: 12
         },
         '& .MuiInputLabel-root': {
+          color: theme.palette.select.label,
+          fontSize: 14,
+          opacity: 0.7,
+          transform: 'scale(1)',
+          '&.MuiInputLabel-filled': {
+            top: 12,
+            left: 16
+          },
+          '&.Mui-focused': {
+            color: theme.palette.primary.main,
+            opacity: 1
+          },
+          '&.Mui-error': {
+            color: theme.palette.error.main,
+            opacity: 1
+          },
           '&.Mui-disabled': {
-            color: theme.palette.text.secondary
+            color: theme.palette.text.secondary,
+            opacity: 1
           }
         },
         '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
@@ -45,6 +63,7 @@ export const input = (theme: Theme) => {
             backgroundColor: theme.palette.background.paper,
             background: theme.palette.background.paper,
             height: 85,
+            borderRadius: 8,
             transition: 'none',
             width: 400,
             [theme.breakpoints.down('sm')]: {
@@ -73,8 +92,9 @@ export const input = (theme: Theme) => {
           },
         // outlined input
         '& .MuiInputLabel-outlined': {
-          top: -12,
-          left: -12
+          position: 'initial',
+          marginBottom: 12,
+          lineHeight: 1.13
         },
         '& .MuiOutlinedInput-input': {
           height: 49
@@ -84,6 +104,7 @@ export const input = (theme: Theme) => {
           paddingRight: 0,
           borderWidth: 1,
           '&.MuiInputBase-root': {
+            borderRadius: 8,
             '&:hover .MuiOutlinedInput-notchedOutline': {
               borderColor: theme.palette.primary.light,
               borderWidth: 1
@@ -124,7 +145,11 @@ export const input = (theme: Theme) => {
           WebkitBoxShadow: '',
           '&::placeholder': {
             textOverflow: 'ellipsis !important',
-            color: inputStyles?.placeholder
+            color: inputStyles?.placeholder,
+            opacity: 1,
+            [theme.breakpoints.down('md')]: {
+              fontSize: 14
+            }
           },
           '&:-webkit-autofill': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,

@@ -5,7 +5,7 @@ import { useUpdateCorporate } from 'app/pages/identity/hooks/useUpdateCorporate'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useSubmitCorporate } from 'app/pages/identity/hooks/useSubmitCorporate'
 import { getCorporateInvestorFormSteps } from './steps'
-import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
@@ -23,11 +23,13 @@ export type CorporateType =
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity
   type?: CorporateType
+  formTitle?: string
 }
 
 export const CorporateInvestorForm = ({
   data,
-  type = 'investor'
+  type = 'investor',
+  formTitle
 }: CorporateInvestorFormProps) => {
   const corporateInvestorFormSteps = getCorporateInvestorFormSteps(type)
 
@@ -82,6 +84,7 @@ export const CorporateInvestorForm = ({
         submitMutation={submitMutation}
         steps={corporateInvestorFormSteps}
         defaultActiveStep={defaultActiveStep}
+        formTitle={formTitle}
         nonLinear
       />
     </>

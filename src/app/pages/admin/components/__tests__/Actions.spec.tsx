@@ -51,34 +51,6 @@ describe('Actions', () => {
     )
   })
 
-  it('does not invoke handleChange if roles match', async () => {
-    const { getByTestId, getByRole } = render(
-      <Actions
-        user={{ ...props.user, roles: fakeAdminView.roles.join(',') }}
-        ref={ref}
-      />
-    )
-
-    fireEvent.mouseDown(getByRole('button'))
-    await waitFor(() => {
-      fireEvent.click(getByTestId('backdrop'))
-      expect(fakeAdminView.handleChange).toHaveBeenCalledTimes(0)
-    })
-  })
-
-  it('invokes handleChange with correct arguments if roles does not match', async () => {
-    const { getByTestId, getByRole } = render(<Actions {...props} ref={ref} />)
-
-    fireEvent.mouseDown(getByRole('button'))
-    await waitFor(() => {
-      fireEvent.click(getByTestId('backdrop'))
-      expect(fakeAdminView.handleChange).toHaveBeenCalledTimes(1)
-      expect(fakeAdminView.handleChange).toHaveBeenCalledWith(
-        `${fakeAdminView.roles[0]},${fakeAdminView.roles[1]}`
-      )
-    })
-  })
-
   it('invokes handleRoleChange correctly', async () => {
     const { getByRole, getAllByRole } = render(<Actions {...props} ref={ref} />)
 

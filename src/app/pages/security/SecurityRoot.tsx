@@ -6,8 +6,8 @@ import { AppContentWrapper } from 'ui/AppContentWrapper'
 
 export const SecurityRoot: React.FC = () => {
   return (
-    <AppContentWrapper container background='light'>
-      <RootContainer className={privateClassNames()} background='light'>
+    <AppContentWrapper container>
+      <RootContainer className={privateClassNames()}>
         <SecurityRouter />
       </RootContainer>
     </AppContentWrapper>

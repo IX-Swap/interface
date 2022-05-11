@@ -1,5 +1,7 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
+import { SelectProps } from '@mui/material'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 interface IdentityTypeSelectProps extends Partial<SelectProps> {
   withAll?: boolean
@@ -11,14 +13,15 @@ export const IdentityTypeSelect = ({
 }: IdentityTypeSelectProps) => {
   return (
     <Select {...other}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Identity types
-      </MenuItem>
-      {withAll && <MenuItem value=''>All</MenuItem>}
-      <MenuItem value='individual'>Individual Identity</MenuItem>
-      <MenuItem value='issuer'>Issuer Identity</MenuItem>
-      <MenuItem value='corporate'>Corporate Identity</MenuItem>
-      <MenuItem value='issuer_corporate'>Issuer and Corporate</MenuItem>
+      </SelectItem>
+      {withAll && <SelectItem value=''>All</SelectItem>}
+      <SelectItem value='individual'>Individual Identity</SelectItem>
+      <SelectItem value='issuer'>Issuer Identity</SelectItem>
+      <SelectItem value='corporate'>Corporate Identity</SelectItem>
+      <SelectItem value='issuer_corporate'>Issuer and Corporate</SelectItem>
     </Select>
   )
 }
+IdentityTypeSelect.displayName = 'Select_IdentityTypeSelect'
