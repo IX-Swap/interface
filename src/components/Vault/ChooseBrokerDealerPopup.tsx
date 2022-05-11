@@ -38,6 +38,15 @@ const KycRow = styled.div`
 
   justify-content: flex-start;
   align-items: center;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;  
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  `};
 `
 
 const KycTooltipIcon = () => {
@@ -83,6 +92,10 @@ const Button = styled.button`
   &:active {
     border: none;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin: 0;
+  `};
 `
 
 interface KycSourceTooltipProps {
@@ -164,7 +177,9 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <TYPE.small style={{ fontSize: '12px', color: '#EDCEFF' }}>KYC source</TYPE.small>
       </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
-        <TYPE.body1>My IX Swap KYC</TYPE.body1>
+        <TYPE.body1 minWidth="auto" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          My IX Swap KYC
+        </TYPE.body1>
 
         <KycSourceTooltip text="Recommended" />
 
