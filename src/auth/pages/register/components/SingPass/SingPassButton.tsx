@@ -1,11 +1,12 @@
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, ButtonProps, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
 import { ReactComponent as SingpassLogo } from 'assets/singpass-logo.svg'
 
-export const SingPassButton = () => {
+export const SingPassButton = (props: ButtonProps) => {
   return (
     <Button
+      {...props}
       type='button'
       variant='contained'
       endIcon={<Icon name='chevron-right' color='#FFF' />}
