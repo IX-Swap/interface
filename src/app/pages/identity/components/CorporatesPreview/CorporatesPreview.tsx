@@ -1,12 +1,12 @@
 import React from 'react'
-import { useStyles } from '../IndividualPreview/IndividualPreview.styles'
+import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
 import { Box, Grid } from '@mui/material'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { Status } from 'ui/Status/Status'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
-import { DataPreview } from 'app/pages/identity/components/IndividualPreview/DataPreview'
+import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
@@ -79,7 +79,6 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     }
     return details
   }
-
   const details = getDetails()
   return (
     <Grid container className={classes.container}>
@@ -93,9 +92,9 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             userId={data.user._id}
             fields={corporateIdentityFields}
             name={data.user.name}
-            occupation={data.type}
             isIndividual={false}
             status={data.status}
+            identityType={data.type}
           />
         </Box>
       </Grid>

@@ -36,7 +36,7 @@ export const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(12.5),
     paddingTop: theme.spacing(14.5),
     '& div': {
-      width: theme.spacing(13.7),
+      width: theme.spacing(14.7),
       textAlign: 'center'
     },
     zIndex: 5,

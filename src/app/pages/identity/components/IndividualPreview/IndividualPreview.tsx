@@ -1,12 +1,12 @@
 import React from 'react'
-import { useStyles } from './IndividualPreview.styles'
+import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
 import { Box, Grid } from '@mui/material'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { Status } from 'ui/Status/Status'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
-import { DataPreview } from 'app/pages/identity/components/IndividualPreview/DataPreview'
+import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
@@ -21,10 +21,16 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
 
   const name = `[${data.status}] ${data.firstName} ${data.lastName}`
   const status = data.status.toLowerCase()
-  const occupation = data.occupation
-    .split(/[' '/]/)
-    .map(el => el[0] + el.slice(1).toLowerCase())
-    .join(' ')
+  const adjustedIdentityType = (str: string) => {
+    const res = str.split('').map(el => el.toLowerCase())
+    res[0] = res[0].toUpperCase()
+    for (let i = 0; i < res.length; i++) {
+      if (res[i] === ' ' || res[i] === '/') {
+        res.splice(i + 1, 1, res[i + 1].toUpperCase())
+      }
+    }
+    return res.join('')
+  }
 
   const individualIdentityFields = [
     {
@@ -33,7 +39,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
     },
     {
       key: 'Occupation',
-      value: occupation
+      value: adjustedIdentityType(data.occupation)
     },
     {
       key: 'Email',
@@ -44,6 +50,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
       value: data.contactNumber
     }
   ]
+  console.log(data)
 
   return (
     <Grid container className={classes.container}>
@@ -57,7 +64,6 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
             userId={data.user._id}
             fields={individualIdentityFields}
             name={data.user.name}
-            occupation={occupation}
             isIndividual={true}
             status={data.status}
           />
