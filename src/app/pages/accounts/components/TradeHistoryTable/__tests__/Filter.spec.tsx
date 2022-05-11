@@ -1,6 +1,5 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { CreateListing } from 'app/pages/issuance/pages/CreateListing'
 import { Filters } from 'app/pages/accounts/components/TradeHistoryTable/Filter'
 
 describe('Filters', () => {

@@ -3,12 +3,22 @@ import makeStyles from '@mui/styles/makeStyles'
 export const useStyles = makeStyles(theme => ({
   container: {},
   fullwidth: {
-    width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 'calc(100% - 20px)',
+    [theme.breakpoints.down('lg')]: {
+      width: 'calc(100% - 8px)'
+    }
   },
   input: {
     display: 'block',
     outline: 'none',
+    [theme.breakpoints.down('lg')]: {
+      width: '42px!important',
+      height: 70,
+      borderRadius: 8,
+      fontSize: 24,
+      margin: theme.spacing(0, 0.5)
+    },
     width: '72px!important',
     height: 120,
     border: `1px solid ${theme.palette.otpInput.border}`,
@@ -30,7 +40,10 @@ export const useStyles = makeStyles(theme => ({
     },
     '&::placeholder': {
       lineHeight: 1,
-      fontSize: 60,
+      fontSize: 54,
+      [theme.breakpoints.down('lg')]: {
+        fontSize: 30
+      },
       color: theme.palette.otpInput.placeholder
     }
   },

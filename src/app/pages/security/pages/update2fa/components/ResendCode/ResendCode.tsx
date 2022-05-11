@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
-import { ReactComponent as InfoIcon } from 'assets/icons/info.svg'
+import { Typography } from '@mui/material'
 import { useStyles } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode.styles'
-import { GetEmailCodeResponse } from 'app/pages/security/types'
+import classNames from 'classnames'
+import { useGetEmailCode } from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 
-export interface ResendCodeProps {
-  data: GetEmailCodeResponse | undefined
-  action: () => void
-}
-
-export const ResendCode = ({ action, data }: ResendCodeProps) => {
+export const ResendCode = () => {
   const classes = useStyles()
-  const [isDisabled, setIsDisabled] = useState(true)
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [getCodeCount, setGetCodeCount] = useState(0)
+  const { refetch, isLoading } = useGetEmailCode()
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined
@@ -25,29 +22,34 @@ export const ResendCode = ({ action, data }: ResendCodeProps) => {
     }
   }, [isDisabled])
 
+  const getText = () => {
+    if (getCodeCount === 0) {
+      return 'Send'
+    }
+    if (isDisabled) {
+      return 'Resend in 30 sec'
+    }
+
+    return 'Resend Code'
+  }
+
   const handleClick = async () => {
-    await action()
-    if (data !== undefined) {
+    if (!isDisabled && !isLoading) {
+      await refetch()
       setIsDisabled(true)
+      setGetCodeCount(getCodeCount + 1)
     }
   }
 
   return (
-    <Box className={classes.container}>
-      <Box className={classes.wrapper}>
-        <InfoIcon />
-        <Typography variant={'body1'} className={classes.text}>
-          Verification code has been sent.
-        </Typography>
-      </Box>
-      <Button
-        variant={'text'}
-        color={'primary'}
-        disabled={isDisabled}
-        onClick={handleClick}
-      >
-        Resend Code
-      </Button>
-    </Box>
+    <Typography
+      variant={'body1'}
+      className={classNames(classes.wrapper, {
+        [classes.disabled]: isDisabled || isLoading
+      })}
+      onClick={handleClick}
+    >
+      {getText()}
+    </Typography>
   )
 }

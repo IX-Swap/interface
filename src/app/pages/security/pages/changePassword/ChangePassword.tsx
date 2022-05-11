@@ -1,12 +1,13 @@
-import React from 'react'
-import { Container, Paper, Grid, Box } from '@mui/material'
-import { ChangePasswordFormValues } from './types'
-import { changePasswordFormValuesSchema } from './validation'
-import { useChangePassword } from './hooks/useChangePassword'
+import { Box, Grid, Paper } from '@mui/material'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
-import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import React from 'react'
+import { RootContainer } from 'ui/RootContainer'
+import { useChangePassword } from './hooks/useChangePassword'
+import { ChangePasswordFormValues } from './types'
+import { changePasswordFormValuesSchema } from './validation'
 
 const defaultValues = {
   oldPassword: '',
@@ -21,9 +22,11 @@ export const ChangePassword = () => {
   }
 
   return (
-    <>
-      <PageHeader title='Change Password' />
-      <Container style={{ backgroundColor: 'transparent' }}>
+    <Grid container direction='column' style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader styled={false} title='Change Password' />
+      </Grid>
+      <RootContainer>
         <Grid container alignItems='center' justifyContent='center'>
           <Grid container lg={4} item>
             <Form
@@ -44,7 +47,7 @@ export const ChangePassword = () => {
             </Form>
           </Grid>
         </Grid>
-      </Container>
-    </>
+      </RootContainer>
+    </Grid>
   )
 }

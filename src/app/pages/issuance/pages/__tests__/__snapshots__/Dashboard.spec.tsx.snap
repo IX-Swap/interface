@@ -47,7 +47,7 @@ exports[`Dashboard should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-snjpuj-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1hznz5z-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
