@@ -96,6 +96,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/react-hooks": "^3.4.1",
     "@testing-library/user-event": "^12.1.10",
+    "@typechain/ethers-v5": "^10.0.0",
     "@types/axios": "^0.14.0",
     "@types/classnames": "^2.2.10",
     "@types/dompurify": "^2.2.3",
@@ -156,6 +157,7 @@
     "storybook-dark-mode": "^1.0.9",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
+    "typechain": "^8.0.0",
     "url-loader": "^4.1.1",
     "wait-on": "^6.0.0",
     "webpack": "^5.65.0",
@@ -178,7 +180,8 @@
     "format": "prettier --write 'src/**/*.tsx'",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "type-check": "tsc -p . --noEmit"
+    "type-check": "tsc -p . --noEmit",
+    "compile-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\""
   },
   "browserslist": {
     "production": [

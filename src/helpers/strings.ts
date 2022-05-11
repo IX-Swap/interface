@@ -12,7 +12,7 @@ interface GetIdFromObjProps extends Record<string, any> {
 export const getIdFromObj = (value?: GetIdFromObjProps | null): string =>
   value?._id ?? ''
 
-export const isEmptyString = (value: string | null | undefined) => {
+export const isEmptyString = (value?: string | null) => {
   return value === undefined || value === null || value.trim().length === 0
 }
 
