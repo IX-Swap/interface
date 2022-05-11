@@ -1,4 +1,16 @@
 import React, { FC } from 'react'
+import styled from 'styled-components'
+
+const Logo = styled.img<{ width: string; height: string }>`
+  width: ${({ width }) => width};
+  height: ${({ width }) => width};
+  border-radius: 50%;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    width: 36px;
+    height: 36px;
+  `}
+`
 
 interface TokenLogoProps {
   logo: {
@@ -13,5 +25,5 @@ export const TokenLogo: FC<TokenLogoProps> = ({ logo, width = '72px', height = '
   if (!logo) return null
 
   const { storageUrl, uuid } = logo
-  return <img width={width} height={height} style={{ borderRadius: '50%' }} src={`${storageUrl}${uuid}`} />
+  return <Logo width={width} height={height} src={`${storageUrl}${uuid}`} />
 }

@@ -313,11 +313,12 @@ export default function CorporateKycForm() {
                 !errors.email &&
                 !errors.phoneNumber &&
                 !errors.authorizationDocuments
-              const addressFilled = shouldValidate && !errors.line1 && !errors.line2 && !errors.city && !errors.country
+              const addressFilled =
+                shouldValidate && !errors.address && !errors.postalCode && !errors.city && !errors.country
               const residentialAddressFilled =
                 shouldValidate &&
-                !errors.residentialAddressLine1 &&
-                !errors.residentialAddressLine2 &&
+                !errors.residentialAddressAddress &&
+                !errors.residentialAddressPostalCode &&
                 !errors.residentialAddressCountry &&
                 !errors.residentialAddressCity
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
@@ -462,16 +463,18 @@ export default function CorporateKycForm() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
-                              onChange={(e) => onChangeInput('line1', e.currentTarget.value, values, setFieldValue)}
-                              value={values.line1}
-                              label="Line 1"
-                              error={errors.line1 && errors.line1}
+                              onChange={(e) => onChangeInput('address', e.currentTarget.value, values, setFieldValue)}
+                              value={values.address}
+                              label="Address"
+                              error={errors.address && errors.address}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('line2', e.currentTarget.value, values, setFieldValue)}
-                              value={values.line2}
-                              label="Line 2"
-                              error={errors.line2 && errors.line2}
+                              onChange={(e) =>
+                                onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)
+                              }
+                              value={values.postalCode}
+                              label="Postal Code"
+                              error={errors.postalCode && errors.postalCode}
                             />
                           </FormGrid>
 
@@ -506,19 +509,24 @@ export default function CorporateKycForm() {
                           <FormGrid>
                             <TextInput
                               onChange={(e) =>
-                                onChangeInput('residentialAddressLine1', e.currentTarget.value, values, setFieldValue)
+                                onChangeInput('residentialAddressAddress', e.currentTarget.value, values, setFieldValue)
                               }
-                              value={values.residentialAddressLine1}
-                              label="Line 1"
-                              error={errors.residentialAddressLine1 && errors.residentialAddressLine1}
+                              value={values.residentialAddressAddress}
+                              label="Address"
+                              error={errors.residentialAddressAddress && errors.residentialAddressAddress}
                             />
                             <TextInput
                               onChange={(e) =>
-                                onChangeInput('residentialAddressLine2', e.currentTarget.value, values, setFieldValue)
+                                onChangeInput(
+                                  'residentialAddressPostalCode',
+                                  e.currentTarget.value,
+                                  values,
+                                  setFieldValue
+                                )
                               }
-                              value={values.residentialAddressLine2}
-                              label="Line 2"
-                              error={errors.residentialAddressLine2 && errors.residentialAddressLine2}
+                              value={values.residentialAddressPostalCode}
+                              label="Postal Code"
+                              error={errors.residentialAddressPostalCode && errors.residentialAddressPostalCode}
                             />
                           </FormGrid>
 

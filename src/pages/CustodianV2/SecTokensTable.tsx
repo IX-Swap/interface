@@ -196,7 +196,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
           onChange={onSearchChange}
         />
 
-        <Flex>
+        {/* <Flex>
           <FilterDropdown
             placeholder="Issuers"
             selectedItem={filters.issuer}
@@ -226,7 +226,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
           style={isMobile ? { width: '100%', marginTop: 16 } : { width: 200, marginLeft: 16 }}
         >
           <TYPE.body2>Reset filters</TYPE.body2>
-        </ButtonGradientBorder>
+        </ButtonGradientBorder> */}
       </Flex>
 
       {loadingRequest ? (

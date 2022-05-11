@@ -9,7 +9,7 @@ const MobilePopupWrapper = styled.div<{ height: string | number }>`
   position: fixed;
   max-width: 100%;
   width: 100%;
-  z-index: 3;
+  z-index: 99999999999;
   height: ${({ height }) => height};
   margin: ${({ height }) => (height ? '0 auto;' : 0)};
   margin-bottom: ${({ height }) => (height ? '20px' : 0)};
@@ -37,7 +37,7 @@ const FixedPopupColumn = styled(AutoColumn)<{ extraPadding: boolean }>`
   right: 1rem;
   max-width: 355px !important;
   width: 100%;
-  z-index: 3;
+  z-index: 99999999999;
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     display: none;

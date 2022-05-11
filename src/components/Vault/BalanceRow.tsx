@@ -3,10 +3,9 @@ import { Currency } from '@ixswap1/sdk-core'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { ButtonGradientBorder } from 'components/Button'
 import { useWithdrawModalToggle } from 'state/application/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import { TYPE } from 'theme'
+import { DesktopOnly, MobileAndTablet, TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
 import { useWithdrawState } from 'state/withdraw/hooks'
@@ -16,6 +15,7 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { ExistingTitle, TitleStatusRow } from './styleds'
 import { isPending } from './enum'
 import { useUserState } from 'state/user/hooks'
+import { ButtonGradientBorder } from 'components/Button'
 
 interface Props {
   currency?: Currency
@@ -33,12 +33,21 @@ const TextWrap = styled(TYPE.titleBig)`
   line-height: 36px !important;
   ${({ theme }) => theme.mediaWidth.upToSmall`
       display: flex;
-      gap: 10px;
-      flex-direction: column;
+      gap: 0px;
+      flex-direction: row;
       font-size: 23px !important;
       line-height: 27px !important;
   `};
 `
+
+const StyledTitleStatusRow = styled(TitleStatusRow)`
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    flex-direction: column-reverse;
+    justify-content: start;
+    align-items: start;
+  `};
+`
+
 export const BalanceRow = ({ currency, account, token }: Props) => {
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const toggle = useWithdrawModalToggle()
@@ -64,7 +73,7 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
   }, [me, token.allowWithdrawal, haveActiveWithdrawal])
 
   return (
-    <TitleStatusRow>
+    <StyledTitleStatusRow style={{ marginTop: '0.6rem' }}>
       <ExistingTitle>
         <TextWrap>
           <span style={{ marginRight: '10px' }}>{formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)}</span>
@@ -72,18 +81,34 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
         </TextWrap>
         <AddWrappedToMetamask token={token} />
       </ExistingTitle>
-      <MouseoverTooltip text={tooltipText}>
-        <ButtonGradientBorder
-          data-testid="withdraw"
-          style={{ width: '230px' }}
-          onClick={async () => {
-            toggle()
-          }}
-          disabled={isDisabled}
-        >
-          <Trans>Withdraw</Trans>
-        </ButtonGradientBorder>
-      </MouseoverTooltip>
-    </TitleStatusRow>
+      <DesktopOnly>
+        <MouseoverTooltip text={tooltipText}>
+          <ButtonGradientBorder
+            style={{ width: '230px' }}
+            data-testid="withdraw"
+            onClick={async () => {
+              toggle()
+            }}
+            disabled={isDisabled}
+          >
+            <Trans>Withdraw</Trans>
+          </ButtonGradientBorder>
+        </MouseoverTooltip>
+      </DesktopOnly>
+      <MobileAndTablet style={{ width: '100%', marginTop: '0.6rem' }}>
+        <MouseoverTooltip referenceStyle={{ width: '100%' }} text={tooltipText}>
+          <ButtonGradientBorder
+            style={{ width: '100%', marginBottom: '2rem' }}
+            data-testid="withdraw"
+            onClick={async () => {
+              toggle()
+            }}
+            disabled={isDisabled}
+          >
+            <Trans>Withdraw</Trans>
+          </ButtonGradientBorder>
+        </MouseoverTooltip>
+      </MobileAndTablet>
+    </StyledTitleStatusRow>
   )
 }

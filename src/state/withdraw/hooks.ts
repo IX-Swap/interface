@@ -32,6 +32,7 @@ import {
 import walletValidator from 'multicoin-address-validator'
 import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
 import { setLogItem } from 'state/eventLog/actions'
+import { formatRpcError } from 'utils/formatRpcError'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -202,8 +203,8 @@ export function useWithdrawCallback(
         if (withdrawId) {
           await cancelAction({ requestId: withdrawId })
         }
-        console.error(`Could not withdraw amount`, error)
-        dispatch(withdrawCurrency.rejected({ errorMessage: error.message }))
+        const errorMessage = formatRpcError(error)
+        dispatch(withdrawCurrency.rejected({ errorMessage }))
         onError()
       }
     },
@@ -307,7 +308,9 @@ export const usePayFee = () => {
   const { library, account } = useActiveWeb3React()
   const web3 = new Web3(library?.provider)
   const paidFee = usePaidWithdrawFee()
+  const paidFeeRejected = useFeeRejected()
   const getEvents = useGetEventCallback()
+  
 
   return useCallback(
     async ({ feeContractAddress, feeAmount, tokenId, id }) => {
@@ -323,15 +326,26 @@ export const usePayFee = () => {
           gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
         }
 
-        const txRes = await web3.eth.sendTransaction(tx)
-
-        if (txRes.transactionHash) {
+        //const txRes = await web3.eth.sendTransaction(tx)
+        /*if (txRes.transactionHash) {
           await paidFee({ tokenId, id, feeTxHash: txRes.transactionHash })
-        }
+        }*/
+
+        await web3.eth.sendTransaction(tx)
+          .on('transactionHash', async (hash: string) => {
+            await postPrepareFeeReq({ id, feeTxHash: hash })
+          })
+
+          .on('receipt', async (receipt: any) => {
+            if (receipt.transactionHash) {
+              await paidFee({ tokenId, id, feeTxHash: receipt.transactionHash })
+            }
+          })
+
         getEvents({ tokenId, filter: 'all' })
         dispatch(payFee.fulfilled())
       } catch (error: any) {
-        dispatch(payFee.rejected({ errorMessage: error.message }))
+        paidFeeRejected(error)
       }
     },
     [account, dispatch, paidFee]
@@ -344,9 +358,38 @@ interface PaidFee {
   feeTxHash: string
 }
 
+interface PrepareFee {
+  id: number
+  feeTxHash: string
+}
+
 export const postPaidFeeReq = async (data: PaidFee) => {
   const response = await apiService.post(custody.paidFee, data)
   return response.data
+}
+
+export const postPrepareFeeReq = async (data: PrepareFee) => {
+  const response = await apiService.post(custody.preparePaidFee, data)
+  return response.data
+}
+
+export const useFeeRejected = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const addPopup = useAddPopup()
+
+  return useCallback(
+    async (error: any) => {
+      const errorMessage = formatRpcError(error)
+      addPopup({
+        info: {
+          success: false,
+          summary: errorMessage,
+        },
+      })
+      dispatch(payFee.rejected({ errorMessage }))
+    },
+    [dispatch]
+  )  
 }
 
 export const usePaidWithdrawFee = () => {
@@ -358,6 +401,21 @@ export const usePaidWithdrawFee = () => {
         dispatch(postPaidFee.pending())
         const response = await postPaidFeeReq(data)
         dispatch(postPaidFee.fulfilled(response))
+      } catch (error: any) {
+        dispatch(postPaidFee.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch]
+  )
+}
+
+export const usePrepareWithdrawFee = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async (data: PaidFee) => {
+      try {
+        const response = await postPaidFeeReq(data)
       } catch (error: any) {
         dispatch(postPaidFee.rejected({ errorMessage: error.message }))
       }

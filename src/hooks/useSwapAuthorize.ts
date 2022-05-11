@@ -121,7 +121,6 @@ export function useSwapAuthorizeFirstStep(
           const { usedToken, amount, orderType, firstIsSec } = dto
           const tokenInfo = (token as any)?.tokenInfo
           const accreditationRequest = tokenInfo?.accreditationRequest
-          const brokerDealerName = tokenInfo?.platform?.name
           const brokerDealerId = (accreditationRequest as any)?.brokerDealerId
           const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
           const pairAddress = pair?.liquidityToken?.address
@@ -151,7 +150,7 @@ export function useSwapAuthorizeFirstStep(
           if (result) {
             if (!result?.endpoint.includes('fake-approve')) {
               submitToBrokerDealer({
-                dto: { ...result, brokerDealerId },
+                dto: { ...result, brokerDealerId, pairAddress, amount },
                 formRef,
               })
             } else {
@@ -166,7 +165,18 @@ export function useSwapAuthorizeFirstStep(
         }
       }
     },
-    [getAuthorization, pairs, submitToBrokerDealer, allowedSlippage, secTokens, trade, formRef]
+    [
+      getAuthorization,
+      pairs,
+      submitToBrokerDealer,
+      allowedSlippage,
+      secTokens,
+      trade,
+      formRef,
+      dispatch,
+      setBrokerDealerData,
+      setShowFakeApproval,
+    ]
   )
   return fetchAuthorization
 }

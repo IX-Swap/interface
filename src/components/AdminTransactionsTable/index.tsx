@@ -7,9 +7,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
 import { Search } from '../AdminAccreditationTable/Search'
-import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useAdminState, useFetchBrokerDealerSwaps, useOnlyAdminAccess } from 'state/admin/hooks'
-import { shortenAddress } from 'utils'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import useCopyClipboard from 'hooks/useCopyClipboard'
@@ -19,6 +17,7 @@ import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { ExternalLink } from 'theme'
 import { adminOffset as offset } from 'state/admin/constants'
 import { getExplorerName } from 'hooks/useExplorerName'
+import { CopyAddress } from 'components/CopyAddress'
 
 interface RowProps {
   item: BrokerDealerSwapItem
@@ -62,16 +61,7 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
       <div>{broker}</div>
       <Wallet>
-        {copied ? (
-          <Trans>Copied</Trans>
-        ) : (
-          <>
-            {shortenAddress(ethAddress || '')}
-            <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
-              <StyledCopy />
-            </IconWrapper>
-          </>
-        )}
+        <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
       </Wallet>
       <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
       <div>
@@ -133,13 +123,13 @@ export const AdminTransactionsTable = () => {
           <LoaderThin size={96} />
         </Loader>
       )}
+      <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
       {items?.length === 0 ? (
         <NoData>
           <Trans>No data</Trans>
         </NoData>
       ) : (
         <Container>
-          <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
           <Table body={<Body />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>

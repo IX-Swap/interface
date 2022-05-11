@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
 
 import { Table } from '../Table'
 import { Container } from 'components/AdminAccreditationTable'
@@ -10,13 +10,11 @@ import { useAdminState, useGetAdminList, useOnlyAdminAccess } from 'state/admin/
 import { adminOffset as offset } from 'state/admin/constants'
 import { Search } from 'components/AdminAccreditationTable/Search'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { shortenAddress } from 'utils'
-import { StyledCopy } from 'components/AdminTransactionsTable'
 import { AdminRole } from 'state/admin/actions'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
+import { CopyAddress } from 'components/CopyAddress'
 
 import { TopContent, StyledBodyRow, StyledHeaderRow } from './styleds'
-import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradientBorder } from 'components/Button'
 import { updateUser } from 'state/user/hooks'
 import { DeleteConfirmationPopup } from 'components/DeleteConfirmation'
@@ -152,16 +150,7 @@ const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, refreshCal
     <>
       <StyledBodyRow>
         <Wallet>
-          {copied ? (
-            <Trans>Copied</Trans>
-          ) : (
-            <>
-              {shortenAddress(ethAddress || '')}
-              <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
-                <StyledCopy />
-              </IconWrapper>
-            </>
-          )}
+          <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
         </Wallet>
         <div>{capitalizeFirstLetter(role)}</div>
         <div>

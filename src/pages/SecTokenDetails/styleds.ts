@@ -2,6 +2,7 @@ import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { ButtonEmpty, ButtonGradient } from 'components/Button'
+import { isNotSupportGradient } from 'components/Button'
 import { RowStart } from 'components/Row'
 import { TYPE, MEDIA_WIDTHS, gradientBorder } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -12,6 +13,10 @@ export const Container = styled(Box)`
 export const InfoTitle = styled(RowStart)`
   gap: 21px;
   margin-bottom: 41px;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    gap: 12px;
+  `}
 `
 
 export const TitleText = styled.span`
@@ -39,10 +44,13 @@ export const Details = styled.div`
     * {
       color: ${({ theme }) => theme.white};
     }
-    @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+
+    ${({ theme }) => theme.mediaWidth.upToMedium`
       flex-direction: column;
-    }
+      align-items: start;
+    `}
   }
+
   > :last-child {
     color: ${({ theme }) => theme.text2};
   }
@@ -53,6 +61,10 @@ export const Dot = styled.div`
   height: 3px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.white};
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    display: none;
+  `}
 `
 
 export const GridElement = styled.div`
@@ -83,16 +95,28 @@ export const IconWrapper = styled.div<{ size?: number }>`
   }
 `
 export const Logo = styled(CurrencyLogo)`
-  @media (max-width: 768px) {
-    width: 54px;
-    height: 54px;
-  }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    width: 36px;
+    height: 36px;
+  `}
 `
 
 export const StyledTitleBig = styled(TYPE.titleBig)`
-  @media (max-width: 768px) {
+  ${({ theme }) => theme.mediaWidth.upToMedium`
     font-size: 24px !important;
-  }
+    line-height: 32px !important;
+    min-width: auto !important;
+  `}
+`
+
+export const CompanyName = styled(StyledTitleBig)`
+  ${({ theme }) => theme.mediaWidth.upToMedium`   
+    font-size: 20px !important;
+    line-height: 24px !important;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  `}
 `
 
 export const AddressToMetamask = styled.div`
@@ -104,16 +128,22 @@ export const AddressToMetamask = styled.div`
   > :first-child {
     display: flex;
     align-items: center;
-    background: ${({ theme: { bgG3 } }) => bgG3};
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
     margin-right: 18px;
     font-weight: 500;
     svg {
       margin-right: 12px;
       cursor: pointer;
     }
+    ${({ theme }) =>
+      !isNotSupportGradient
+        ? `
+        background: ${theme.bgG3};
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      ` : `
+        color: ${theme.bg20};
+      `}
   }
   > div:nth-child(2) {
     margin-right: 12px;

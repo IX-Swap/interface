@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, EllipsisText } from 'theme'
@@ -6,7 +6,6 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { Download } from 'react-feather'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradient } from 'components/Button'
-import { createFileFromApi } from 'utils/createFileFromApi'
 import { AcceptFiles } from 'components/Upload/types'
 import FileViewer from 'react-file-viewer'
 
@@ -14,28 +13,10 @@ interface Props {
   isOpen: boolean
   onClose: () => void
   data: Array<any>
-  downloadFile: (url: string, name: string) => void
+  downloadFile: (url: string, name: string, mimeType: string) => void
 }
 
 export const KycDocPreviewModal = ({ isOpen, onClose, data, downloadFile }: Props) => {
-  const [docs, setDocs] = useState([])
-
-  const fetchDocs = async () => {
-    const response = data?.reduce((acc: any, doc: any) => {
-      const res = createFileFromApi(doc.asset)
-      return [...acc, res]
-    }, [])
-
-    const documents = await Promise.all(response as any)
-    setDocs(documents as any)
-  }
-
-  useEffect(() => {
-    if (data?.length) {
-      fetchDocs()
-    }
-  }, [data])
-
   return (
     <>
       <RedesignedWideModal isOpen={isOpen} onDismiss={onClose}>
@@ -50,24 +31,24 @@ export const KycDocPreviewModal = ({ isOpen, onClose, data, downloadFile }: Prop
               </Title>
             </TitleContainer>
             <Body className="file-viewer-canvas-wrapper">
-              {docs?.map(({ preview, file, id }: any) => (
+              {data?.map(({ asset, id }: any) => (
                 <>
-                  {file.type === AcceptFiles.PDF ? (
+                  {asset.mimeType === AcceptFiles.PDF ? (
                     <div>
                       <div className="file-viewer-title">
                         <EllipsisText style={{ width: 'calc(100% - 40px)', whiteSpace: 'pre-wrap' }}>
-                          {file.name}
+                          {asset.name}
                         </EllipsisText>
-                        <StyledDocPreviewButton onClick={() => downloadFile(preview, file.name)}>
+                        <StyledDocPreviewButton onClick={() => downloadFile(asset.public, asset.name, asset.mimeType)}>
                           <IconWrapper style={{ margin: 0 }} size={18}>
                             <StyledDownload />
                           </IconWrapper>
                         </StyledDocPreviewButton>
                       </div>
-                      <FileViewer fileType="pdf" filePath={preview} />
+                      <FileViewer fileType="pdf" filePath={asset.public} />
                     </div>
                   ) : (
-                    <img key={id} style={{ maxWidth: '100%', maxHeight: '100%' }} src={preview} alt="" />
+                    <img key={id} style={{ maxWidth: '100%', maxHeight: '100%' }} src={asset.public} alt="" />
                   )}
                 </>
               ))}
