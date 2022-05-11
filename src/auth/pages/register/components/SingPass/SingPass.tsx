@@ -14,7 +14,11 @@ export const SingPass = () => {
   return (
     <>
       <SingPassButton onClick={handleClick} />
-      <SingPassDialog open={open} onClose={handleClose} />
+      <SingPassDialog
+        open={open}
+        onClose={handleClose}
+        handleClose={handleClose}
+      />
     </>
   )
 }
