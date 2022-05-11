@@ -8,7 +8,11 @@ export interface RootContainerProps extends ContainerProps {
 
 export const RootContainer = styled(Container)<RootContainerProps>(
   ({ theme, background }: RootContainerProps) => ({
-    padding: theme?.spacing(3),
-    backgroundColor: theme?.palette?.backgrounds[background ?? 'default']
+    padding: theme?.spacing(0),
+    paddingTop: theme?.spacing(3),
+    backgroundColor: theme?.palette?.backgrounds[background ?? 'default'],
+    [theme?.breakpoints.down('sm')]: {
+      padding: theme?.spacing(0, 2)
+    }
   })
 )

@@ -73,21 +73,18 @@ exports[`Filters should match snapshot 1`] = `
               From
             </label>
             <div
-              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
               style="width: 155px;"
             >
               <input
                 aria-invalid="false"
                 aria-label="Choose date"
                 aria-readonly="true"
-                class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
+                class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                 id="mui-1"
                 readonly=""
                 type="text"
                 value=""
-              />
-              <div
-                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
               />
               <fieldset
                 aria-hidden="true"
@@ -119,21 +116,18 @@ exports[`Filters should match snapshot 1`] = `
               To
             </label>
             <div
-              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
               style="width: 155px;"
             >
               <input
                 aria-invalid="false"
                 aria-label="Choose date"
                 aria-readonly="true"
-                class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
+                class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                 id="mui-3"
                 readonly=""
                 type="text"
                 value=""
-              />
-              <div
-                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
               />
               <fieldset
                 aria-hidden="true"

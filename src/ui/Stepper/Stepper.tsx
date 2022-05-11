@@ -15,6 +15,7 @@ import { useTheme } from '@mui/styles'
 export interface StepperProps extends MuiStepperProps {
   stepInfo?: StepInfoProps
   actions?: ReactElement
+  withMobileDropdown?: boolean
 }
 
 export const Stepper = ({
@@ -22,6 +23,7 @@ export const Stepper = ({
   alternativeLabel,
   title,
   stepInfo,
+  withMobileDropdown = true,
   actions,
   ...props
 }: StepperProps) => {
@@ -48,17 +50,20 @@ export const Stepper = ({
               variant='body1'
               sx={{
                 mb: { xs: 0, md: 2 },
-                pl: { xs: 0, md: 3 },
+                pl: { xs: 0, md: 5 },
                 lineHeight: { xs: '20px', md: undefined },
                 fontSize: {
                   xs: 16,
-                  md: undefined
+                  md: 18
+                },
+                fontWeight: {
+                  xs: 600
                 }
               }}
             >
               {title}
             </Typography>
-            {matches ? (
+            {matches && withMobileDropdown ? (
               <IconButton
                 sx={{
                   width: 40,

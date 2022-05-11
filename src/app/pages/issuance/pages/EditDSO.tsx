@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { DSO } from 'app/pages/issuance/components/DSO'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { RootContainer } from 'ui/RootContainer'
 
 export const EditDSO = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
@@ -15,18 +16,19 @@ export const EditDSO = () => {
   }
 
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item xs={12}>
         <PageHeader title={data.tokenName} />
       </Grid>
+      <RootContainer>
+        <Grid item>
+          <VSpacer size='medium' />
+        </Grid>
 
-      <Grid item>
-        <VSpacer size='medium' />
-      </Grid>
-
-      <Grid item>
-        <DSO dsoId={dsoId} issuerId={issuerId} isEditing />
-      </Grid>
+        <Grid item>
+          <DSO dsoId={dsoId} issuerId={issuerId} isEditing />
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

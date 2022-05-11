@@ -3,15 +3,11 @@ import { render } from 'test-utils'
 import { ResendCode } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode'
 import { fireEvent, waitFor } from '@testing-library/dom'
 import { act } from 'react-dom/test-utils'
+import * as useGetEmailCode from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 
 jest.useFakeTimers()
 
 describe('ResendCode', () => {
-  const getEmailCodeSuccessfulResponse = {
-    data: { email: 'test' },
-    refetch: jest.fn()
-  }
-
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -21,57 +17,51 @@ describe('ResendCode', () => {
     jest.useRealTimers()
   })
 
-  it('renders disabled button', () => {
-    const { getByText } = render(
-      <ResendCode
-        action={getEmailCodeSuccessfulResponse.refetch}
-        data={getEmailCodeSuccessfulResponse.data}
-      />
-    )
+  it('renders correct text', async () => {
+    const { getByText } = render(<ResendCode />)
 
-    expect(getByText('Resend Code')).toBeInTheDocument()
-    expect(getByText('Resend Code')).toBeDisabled()
-  })
+    expect(getByText('Send')).toBeInTheDocument()
 
-  it('enables button after 30 seconds', async () => {
-    const { getByText } = render(
-      <ResendCode
-        action={getEmailCodeSuccessfulResponse.refetch}
-        data={getEmailCodeSuccessfulResponse.data}
-      />
-    )
+    fireEvent.click(getByText('Send'))
 
-    act(() => {
-      jest.advanceTimersByTime(29000)
+    await waitFor(() => {
+      expect(getByText('Resend in 30 sec')).toBeInTheDocument()
     })
-
-    expect(getByText('Resend Code')).toBeDisabled()
 
     act(() => {
       jest.advanceTimersByTime(30000)
     })
 
-    expect(getByText('Resend Code')).toBeEnabled()
+    await waitFor(() => {
+      expect(getByText('Resend Code')).toBeInTheDocument()
+    })
   })
 
-  it('revoke action on button click when button is not disabled', async () => {
-    const { getByText } = render(
-      <ResendCode
-        action={getEmailCodeSuccessfulResponse.refetch}
-        data={getEmailCodeSuccessfulResponse.data}
-      />
-    )
+  it('returns correct count of call get email code function on text click', async () => {
+    const refetch = jest.fn()
 
-    act(() => {
-      jest.runAllTimers()
+    jest
+      .spyOn(useGetEmailCode, 'useGetEmailCode')
+      .mockImplementation(() => ({ isLoading: false, refetch } as any))
+
+    const { getByText } = render(<ResendCode />)
+
+    fireEvent.click(getByText('Send'))
+    await waitFor(() => {
+      expect(refetch).toHaveBeenCalledTimes(1)
     })
 
-    expect(getByText('Resend Code')).toBeInTheDocument()
-    expect(getByText('Resend Code')).toBeEnabled()
-    fireEvent.click(getByText('Resend Code'))
-
+    fireEvent.click(getByText('Resend in 30 sec'))
     await waitFor(() => {
-      expect(getEmailCodeSuccessfulResponse.refetch).toHaveBeenCalled()
+      expect(refetch).toHaveBeenCalledTimes(1)
+    })
+
+    act(() => {
+      jest.advanceTimersByTime(30000)
+    })
+    fireEvent.click(getByText('Resend Code'))
+    await waitFor(() => {
+      expect(refetch).toHaveBeenCalledTimes(2)
     })
   })
 })
