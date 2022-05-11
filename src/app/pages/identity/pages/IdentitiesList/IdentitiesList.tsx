@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStyles } from './IdentitiesList.styles'
+import { useStyles } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList.styles'
 import { Box, Container, Grid, Typography } from '@mui/material'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
@@ -16,24 +16,30 @@ export const IdentitiesList: React.FC = () => {
       <Container className={classes.container}>
         <Grid container className={classes.grid}>
           <Grid item container className={classes.nameIdentity}>
-            <Grid item xs={12}>
-              <Typography variant='h3'>
-                {hasIdentity
-                  ? identityLoaded.user.name
-                  : 'Create your Identity'}
-              </Typography>
-            </Grid>
-            <Box className={classes.box}>
-              <Typography className={classes.breadcrumbsLink}>
-                Profile
-              </Typography>
-              <Box className={classes.dot}>
-                <Dot />
-              </Box>
-              <Typography className={classes.breadcrumbs}>Identity</Typography>
-            </Box>
-            {!hasIdentity && (
-              <Grid item xs={12}>
+            {hasIdentity ? (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant='h3'>
+                    {identityLoaded.user.name}
+                  </Typography>
+                </Grid>
+                <Box className={classes.box}>
+                  <Typography className={classes.breadcrumbsLink}>
+                    Profile
+                  </Typography>
+                  <Box className={classes.dot}>
+                    <Dot />
+                  </Box>
+                  <Typography className={classes.breadcrumbs}>
+                    Identity
+                  </Typography>
+                </Box>
+              </>
+            ) : (
+              <Grid item xs={12} className={classes.createIdentity}>
+                <Typography variant='h2' align='center'>
+                  Create your Identity
+                </Typography>
                 <Typography
                   variant='body1'
                   align='center'

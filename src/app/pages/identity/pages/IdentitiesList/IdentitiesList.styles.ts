@@ -40,5 +40,12 @@ export const useStyles = makeStyles(theme => ({
       fontSize: theme.spacing(1.8),
       lineHeight: theme.spacing(3)
     }
+  },
+  createIdentity: {
+    paddingTop: theme.spacing(3.4),
+    paddingBottom: theme.spacing(7),
+    '& p': {
+      paddingTop: theme.spacing(1)
+    }
   }
 }))
