@@ -17,7 +17,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const { control } = useFormContext<Address>()
 
   return (
-    <Grid container spacing={6} className={privateClassNames()}>
+    <Grid paddingTop={4} container spacing={2} className={privateClassNames()}>
       <Grid item xs={12} md={6}>
         <TypedField
           customRenderer
@@ -29,6 +29,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Line 1'
           variant='outlined'
           defaultValue={defaultValue?.line1 ?? ''}
+          placeholder='Line 1'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -39,9 +40,10 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='line2'
-          label='Line 2'
+          label='Line 2 (Optional)'
           variant='outlined'
           defaultValue={defaultValue?.line2 ?? ''}
+          placeholder='Line 2'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -55,6 +57,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='City'
           variant='outlined'
           defaultValue={defaultValue?.city ?? ''}
+          placeholder='City'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -65,9 +68,10 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='state'
-          label='State'
+          label='State (Optional)'
           variant='outlined'
           defaultValue={defaultValue?.state ?? ''}
+          placeholder='State'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -79,6 +83,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Country'
           variant='outlined'
           defaultValue={defaultValue?.country ?? ''}
+          placeholder='Country'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -92,6 +97,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Postal Code'
           variant='outlined'
           defaultValue={defaultValue?.postalCode ?? ''}
+          placeholder='Postal Code'
         />
       </Grid>
       <ValidateOnMount />

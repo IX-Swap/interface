@@ -42,18 +42,14 @@ export const individualInvestorFormSteps = [
     component: () => (
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <Paper sx={{ borderRadius: 2, p: 4 }}>
             <FormSectionHeader title={'Personal Information'} />
             <IndividualInfoFields />
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <Paper sx={{ borderRadius: 2, p: 4 }}>
             <FormSectionHeader title={'Address'} />
-            <Typography variant='subtitle2' color='textSecondary'>
-              Please provide your current address
-            </Typography>
-            <VSpacer size='medium' />
             <AddressFields />
           </Paper>
         </Grid>

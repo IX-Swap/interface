@@ -104,7 +104,7 @@ export const FormStep = (props: FormStepProps) => {
       id={`${step.formId ?? 'form'}-${index}`}
     >
       <Grid item>{createElement(step.component)}</Grid>
-      <VSpacer size='large' />
+      <VSpacer size='small' />
 
       <Grid item container justifyContent='flex-end'>
         <Box display='flex'>
@@ -127,19 +127,6 @@ export const FormStep = (props: FormStepProps) => {
               >
                 Back
               </BackButton>
-              <Box mx={1} />
-            </Fragment>
-          )}
-
-          {!isLastStep && (
-            <Fragment>
-              <SaveButton
-                step={index}
-                transformData={step.getRequestPayload}
-                mutation={saveMutation}
-              >
-                {shouldSaveOnMove ? 'Save & Finish Later' : 'Update'}
-              </SaveButton>
               <Box mx={1} />
             </Fragment>
           )}

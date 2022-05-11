@@ -30,7 +30,12 @@ export const personalInfoSchema = yup
     contactNumber: yup.string().phone().required(validationMessages.required),
     email: emailSchema.required(validationMessages.required),
     address: addressSchema.required(validationMessages.required),
-    gender: yup.string().required(validationMessages.required)
+    gender: yup.string().required(validationMessages.required),
+    nric: yup.string().when('nationality', {
+      is: 'Singapore',
+      then: yup.string().required(validationMessages.required),
+      otherwise: yup.string()
+    })
   })
 
 export const financialInfoSchema = yup

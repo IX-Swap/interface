@@ -7,6 +7,7 @@ import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
 import { useTheme } from '@mui/material/styles'
 import { SaveDrafButton } from 'app/components/FormStepper/SaveDraftButton'
+import { TwoFAConnectInfo } from 'app/components/TwoFAConnectInfo/TwoFAConnectInfo'
 
 export interface FormStepperStep {
   label: string
@@ -166,7 +167,8 @@ export const FormStepper = (props: FormStepperProps) => {
           sx={{
             borderRadius: 2,
             py: matches ? 2 : 5,
-            px: matches ? 2 : undefined
+            px: matches ? 2 : undefined,
+            marginBottom: 2
           }}
         >
           <Stepper
@@ -219,6 +221,13 @@ export const FormStepper = (props: FormStepperProps) => {
               )
             })}
           </Stepper>
+        </Paper>
+        <Paper
+          sx={{
+            borderRadius: 2
+          }}
+        >
+          <TwoFAConnectInfo />
         </Paper>
       </Grid>
     </Grid>
