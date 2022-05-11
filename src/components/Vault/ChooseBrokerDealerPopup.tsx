@@ -22,10 +22,10 @@ import { KYCStatuses } from './enum'
 const KycSourceContainer = styled.div`
   width: 100%;
 
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 2rem;
 
   & > * {
-    margin: 0.5rem;
+    margin: 0.5rem 0rem;
   }
 `
 
@@ -209,7 +209,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const [source, setSource] = useState<KycSource | undefined>(undefined)
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
   const { loadingAccreditation } = useUserState()
-  const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.symbol || null
+  const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.originalSymbol || null
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   const { kyc } = useKYCState()
@@ -382,7 +382,7 @@ const Text = styled(TYPE.body4)`
 const BrokerDealersGridHeader = styled.div`
   display: grid;
   grid-template-columns: 115px 30px 1fr auto;
-  padding: 10px 40px;
+  padding: 0.5rem 2rem;
 `
 
 const BrokerDealersGrid = styled(BrokerDealersGridHeader)`
