@@ -235,7 +235,7 @@ export const darkTheme: DeprecatedThemeOptions = {
     info: {
       main: '#4C88FF',
       light: '#ABB8CF',
-      dark: tinycolor('#EEF1F5').setAlpha(0.2).toRgbString()
+      dark: tinycolor('#ABB8CF').setAlpha(0.2).toRgbString()
     },
     'special-red': palette.augmentColor({
       color: {
