@@ -34,6 +34,7 @@ import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
 import { Pagination } from 'components/Pagination'
+import { NoData } from 'components/Whitelist/styleds'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -340,7 +341,9 @@ export const AdminSecurityCatalog: FC = () => {
                   <Pagination page={issuers.page} totalPages={issuers.totalPages} onPageChange={onPageChange} />
                 </>
               ) : (
-                <TYPE.body2 textAlign="center">No results</TYPE.body2>
+                <NoData>
+                 <Trans>No results</Trans>
+                </NoData>
               )}
             </Flex>
           </>
