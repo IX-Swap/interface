@@ -53,7 +53,12 @@ export const Menu = ({ close }: Props) => {
           )}
 
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem disabled={!isKycApproved} id={`security-nav-link`} to={routes.securityTokens()} onClick={close}>
+            <MenuListItem
+              disabled={!isKycApproved}
+              id={`security-nav-link`}
+              to={routes.securityTokens()}
+              onClick={close}
+            >
               <Trans>Security Tokens</Trans>
             </MenuListItem>
           )}
@@ -62,6 +67,16 @@ export const Menu = ({ close }: Props) => {
             <MenuListItem id={`pool-nav-link`} to={`/pool`} onClick={close}>
               <Trans>Liquidity pools</Trans>
             </MenuListItem>
+          )}
+
+          {chainId && chains.includes(chainId) && isWhitelisted && (
+            <ExternalListItem
+              disabled={!isKycApproved}
+              target="_self"
+              href={'https://ixswap.io/fractionalized-nfts-coming-soon-on-ix-swap/'}
+            >
+              <Trans>FNFT</Trans>
+            </ExternalListItem>
           )}
 
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
