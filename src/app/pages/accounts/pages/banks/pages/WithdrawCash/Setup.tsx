@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
-import { Grid, InputAdornment, Typography } from '@mui/material'
+import { Box, Grid, InputAdornment, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { TypedField } from 'components/form/TypedField'
@@ -120,8 +120,10 @@ export const Setup: React.FC = () => {
             label='To Bank Account'
             helperText='Please select your bank account in which you want to transfer your fund'
             endAdornment={
-              <InputAdornment position='end' className={inputWrapper}>
-                <MaxButton onClick={setMaxValue} />
+              <InputAdornment position='end'>
+                <Box className={inputWrapper}>
+                  <MaxButton onClick={setMaxValue} />
+                </Box>
               </InputAdornment>
             }
           />
