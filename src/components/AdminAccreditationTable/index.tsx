@@ -17,6 +17,7 @@ import { Pagination } from './Pagination'
 import { Search } from './Search'
 import { KycSource } from './KycSource'
 import { KycReviewModal } from 'components/KycReviewModal'
+import { NoData } from 'components/Whitelist/styleds'
 
 const headerCells = [
   t`Wallet address`,
@@ -133,7 +134,7 @@ export const AdminAccreditationTable = () => {
       )}
       {items.length === 0 ? (
         <NoData>
-          <Trans>No data</Trans>
+          <Trans>No results</Trans>
         </NoData>
       ) : (
         <Container>
@@ -158,12 +159,6 @@ const Loader = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000000;
-`
-
-const NoData = styled.div`
-  font-weight: 600;
-  color: ${({ theme: { text2 } }) => text2};
-  text-align: center;
 `
 
 const Wallet = styled.div`

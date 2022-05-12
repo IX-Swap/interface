@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { t } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 
 import { Table } from '../Table'
 import { Container } from 'components/AdminAccreditationTable'
@@ -19,6 +19,7 @@ import { ButtonGradientBorder } from 'components/Button'
 import { updateUser } from 'state/user/hooks'
 import { DeleteConfirmationPopup } from 'components/DeleteConfirmation'
 import { useAddPopup, useDeleteConfirmationPopupToggle } from 'state/application/hooks'
+import { NoData } from 'components/Whitelist/styleds'
 
 const headerCells = [t`Wallet address`, t`Role`, '', '']
 
@@ -101,7 +102,7 @@ export const AdminList: FC = () => {
         />
       </TopContent>
 
-      {adminList && (
+      {(adminList as any)?.items?.length > 0 ? (
         <Table
           body={
             <Body
@@ -109,11 +110,15 @@ export const AdminList: FC = () => {
               setCallbackParams={setCallbackParams}
               changeRoleClick={changeRoleClick}
               refreshCallback={refreshCallback}
-              items={adminList.items}
+              items={adminList?.items || []}
             />
           }
           header={<Header />}
         />
+      ) : (
+        <NoData>
+          <Trans>No results</Trans>
+        </NoData>
       )}
     </Container>
   )
