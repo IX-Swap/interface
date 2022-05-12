@@ -66,7 +66,11 @@ export const PairListDropdown = ({
       <Grid item>
         <Grid container direction='column' justifyContent='flex-start'>
           <Grid item>
-            <PairName handleClick={handleClick} pairName={pairName} />
+            <PairName
+              handleClick={handleClick}
+              hideDropdown={hideDropdown}
+              pairName={pairName}
+            />
           </Grid>
           {!hideDropdown && (
             <Grid item>

@@ -6,9 +6,14 @@ import useStyles from './PairListDropdown.styles'
 export interface PairNameProps {
   pairName: string
   handleClick?: (event: React.MouseEvent<HTMLElement>) => void
+  hideDropdown?: boolean
 }
 
-export const PairName = ({ pairName, handleClick }: PairNameProps) => {
+export const PairName = ({
+  pairName,
+  handleClick,
+  hideDropdown = false
+}: PairNameProps) => {
   const classes = useStyles()
   const { theme } = useAppTheme()
   return (
@@ -20,13 +25,14 @@ export const PairName = ({ pairName, handleClick }: PairNameProps) => {
       onClick={handleClick}
     >
       {pairName}
-
-      <Icon
-        name='switch-down'
-        size={22}
-        color={theme.palette.primary.main}
-        className={classes.icon}
-      />
+      {!hideDropdown && (
+        <Icon
+          name='switch-down'
+          size={22}
+          color={theme.palette.primary.main}
+          className={classes.icon}
+        />
+      )}
     </Typography>
   )
 }
