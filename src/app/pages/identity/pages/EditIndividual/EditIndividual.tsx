@@ -6,18 +6,21 @@ import { IndividualInvestorForm } from 'app/pages/identity/components/Individual
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { RootContainer } from 'ui/RootContainer'
 
 const EditIndividualComponent = ({ data }: { data: IndividualIdentity }) => (
   <Grid container>
-    <Grid container item xs={12}>
+    <Grid container item xs={12} style={{ display: 'table' }}>
       <PageHeader title={getPersonName(data)} />
     </Grid>
-    <Grid container item>
-      <VSpacer size='medium' />
-    </Grid>
-    <Grid item xs={12}>
-      <IndividualInvestorForm />
-    </Grid>
+    <RootContainer>
+      <Grid container item>
+        <VSpacer size='medium' />
+      </Grid>
+      <Grid item xs={12}>
+        <IndividualInvestorForm />
+      </Grid>
+    </RootContainer>
   </Grid>
 )
 

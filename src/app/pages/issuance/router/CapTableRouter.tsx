@@ -4,6 +4,7 @@ import { AppRoute } from 'components/AppRoute'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { CapTable } from 'app/pages/issuance/pages/CapTable'
 import { ManageDistributions } from 'app/pages/issuance/pages/ManageDistributions'
+import { RootContainer } from 'ui/RootContainer'
 
 export const CapTableRouter = () => {
   return (
@@ -17,7 +18,9 @@ export const CapTableRouter = () => {
       </AppRoute>
       )
       <AppRoute breadcrumb='Cap Table Management' path={IssuanceRoute.capTable}>
-        <CapTable />
+        <RootContainer>
+          <CapTable />
+        </RootContainer>
       </AppRoute>
     </Switch>
   )

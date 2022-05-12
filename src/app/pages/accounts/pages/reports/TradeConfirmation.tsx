@@ -9,6 +9,7 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { TradesTable } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesTable'
 import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { RootContainer } from 'ui/RootContainer'
 
 export const TradeConfirmation = () => {
   const { updateFilter } = useQueryFilter()
@@ -34,18 +35,19 @@ export const TradeConfirmation = () => {
   }
 
   return (
-    <Grid container direction={'column'}>
+    <Grid container direction={'column'} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='Trade Confirmation' />
         <VSpacer size={'medium'} />
       </Grid>
+      <RootContainer>
+        <ReportsInfo />
 
-      <ReportsInfo />
-
-      <Grid item>
-        <VSpacer size={'medium'} />
-        {renderContent()}
-      </Grid>
+        <Grid item>
+          <VSpacer size={'medium'} />
+          {renderContent()}
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }
