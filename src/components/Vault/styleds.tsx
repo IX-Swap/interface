@@ -264,3 +264,10 @@ export const LiniarProgressContainer = styled.div<{ statusColor: keyof Colors }>
     background-color: transparent;
   }
 `
+
+export const WarningPaidFee = styled.div`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.red1};
+  margin-bottom: 18px;
+`
