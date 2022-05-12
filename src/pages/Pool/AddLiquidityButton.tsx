@@ -13,7 +13,7 @@ export const AddLiquidityButton = () => {
 
   return (
     <RowCenter>
-      <ButtonIXSWide id="add-liquidity" data-testid="add-liquidity" as={Link} to={`/add/${native.symbol || 'ETH'}`}>
+      <ButtonIXSWide id="add-liquidity" data-testid="add-liquidity" as={Link} to="/add">
         <Text>
           <Trans>Add Liquidity</Trans>
         </Text>
