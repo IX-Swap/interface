@@ -1,6 +1,5 @@
 import { Grid } from '@mui/material'
 import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
-import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { useCurrencyBalance } from 'app/pages/exchange/hooks/useCurrencyBalance'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
@@ -11,6 +10,7 @@ import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { TradingOrders } from './Orders/TradingOrders'
 import { PlaceOrderSuffix } from './PlaceOrderSuffix'
 
 export const TradingBody = () => {
@@ -42,7 +42,7 @@ export const TradingBody = () => {
       xs={12}
     >
       <Grid item className={classes.colorGrid} xs={12} md={7}>
-        <MyOrders />
+        <TradingOrders />
       </Grid>
 
       <Grid item container xs={12} md={4}>

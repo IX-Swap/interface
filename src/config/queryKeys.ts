@@ -225,6 +225,11 @@ export const exchangeMarketQueryKeys = {
     generateQueryKey('orders-list', userId, pairId)
 }
 
+export const tradingQueryKeys = {
+  getMyOpenOrdersList: (userId?: string, pairId?: string) =>
+    generateQueryKey('my-trading-open-orders-list', userId, pairId)
+}
+
 export const listingsQueryKeys = {
   getListingsList: 'listings-list'
 }

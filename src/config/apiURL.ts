@@ -309,7 +309,10 @@ export const placeOrderURL = {
 export const exchangeMarket = {
   getOrdersList: (userId?: string) => `exchange/orders/list/${userId}`
 }
-
+export const trading = {
+  getMyOrdersList: () => `otc/orders/list/my`,
+  cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`
+}
 export const listings = {
   getListByUser: (userId?: string) => `exchange/listing/list/${userId}`,
   submitListing: (userId?: string, listingId?: string) =>
