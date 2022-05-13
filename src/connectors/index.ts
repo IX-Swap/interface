@@ -26,7 +26,7 @@ const NETWORK_URLS: {
   [137]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
 }
 
-const SUPPORTED_CHAIN_IDS = [1, 4, 3, 5, 42, 80001, 137, 56]
+// const SUPPORTED_CHAIN_IDS = [1, 4, 3, 5, 42, 80001, 137, 56]
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,

@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useReducer, useRef } from 'react'
 import styled from 'styled-components'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
 import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
@@ -9,7 +9,6 @@ import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
-import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
@@ -26,7 +25,11 @@ import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { countriesList } from 'constants/countriesList'
+import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 
+import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
   individualFormInitialValues,
@@ -38,9 +41,6 @@ import {
 } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchema } from './schema'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
-import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
-import { useAddPopup, useShowError } from 'state/application/hooks'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses } from './enum'
 
@@ -83,7 +83,7 @@ export default function IndividualKycForm() {
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
-  }, [account, prevAccount])
+  }, [account, prevAccount, history])
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -96,9 +96,9 @@ export default function IndividualKycForm() {
       }
     }
 
-    if (kyc?.data.status === KYCStatuses.CHANGES_REQUESTED) {
+    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED) {
       getProgress()
-      setUpdateKycId(kyc.data.id)
+      setUpdateKycId(kyc.id)
     } else {
       setFormData(individualFormInitialValues)
     }
@@ -683,7 +683,7 @@ export default function IndividualKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description={kyc?.data?.message || null}
+                      description={kyc?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StyledStickyBox>

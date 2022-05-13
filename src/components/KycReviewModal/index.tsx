@@ -9,13 +9,12 @@ import { ReasonModal } from 'components/ReasonModal'
 import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
 import { useApproveKyc, useRejectKyc, useResetKyc, useResubmitKyc } from 'state/admin/hooks'
-
-
-import { CorporateForm } from './CorporateForm'
-import { IndividualForm } from './IndividualForm'
 import { getCynopsisRisks } from 'state/kyc/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { KYCStatuses } from 'pages/KYC/enum'
+
+import { CorporateForm } from './CorporateForm'
+import { IndividualForm } from './IndividualForm'
 
 interface Props {
   isOpen: boolean
@@ -43,7 +42,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
     }
 
     fetchCynopsisRisks()
-  }, [])
+  }, [data?.user.ethAddress])
 
   const kyc = (data?.individualKycId ? data?.individual : data?.corporate) || ({} as IndividualKyc | CorporateKyc)
 

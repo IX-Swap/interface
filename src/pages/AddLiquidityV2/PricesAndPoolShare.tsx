@@ -1,7 +1,8 @@
 import React from 'react'
-import { Currency, Percent, Price } from '@ixswap1/sdk-core'
+import { Currency, Percent } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
+
 import { Field } from '../../state/mint/actions'
 import { PoolPriceBar } from './PoolPriceBar'
 

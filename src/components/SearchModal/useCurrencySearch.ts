@@ -1,4 +1,4 @@
-import { Currency, Ether, Token } from '@ixswap1/sdk-core'
+import { Currency, Token } from '@ixswap1/sdk-core'
 import useDebounce from 'hooks/useDebounce'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'

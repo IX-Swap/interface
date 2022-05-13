@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import { adminOffset } from 'state/admin/constants'
 import apiService from 'services/apiService'
-import { admin, auth } from 'services/apiUrls'
+import { admin } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 
 import {

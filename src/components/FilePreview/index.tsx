@@ -3,7 +3,7 @@ import { FileWithPath } from 'react-dropzone'
 
 import { TYPE } from 'theme'
 import { KYCStatusIcons } from 'pages/KYC/styleds'
-import { KYCStatuses } from 'components/Vault/enum'
+import { KYCStatuses } from 'pages/KYC/enum'
 import { ButtonText } from 'components/Button'
 
 import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'

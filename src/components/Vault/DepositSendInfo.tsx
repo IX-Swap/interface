@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import React from 'react'
 import { Trans } from '@lingui/macro'
+import { Copy } from 'react-feather'
+import styled from 'styled-components'
+
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -8,24 +12,20 @@ import Row, { RowCenter } from 'components/Row'
 import { useCurrency } from 'hooks/Tokens'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import React from 'react'
-import { Copy } from 'react-feather'
 import { useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
-import styled from 'styled-components'
 import { TYPE } from 'theme'
-import { shortAddress } from '../../utils'
 import useENS from 'hooks/useENS'
+
+import { shortAddress } from '../../utils'
 
 const StyledCopy = styled(Copy)`
   color: ${({ theme }) => theme.text1};
   width: 17px;
   height: 17px;
 `
-interface Props {
-  onClose: () => void
-}
-export const DepositSendInfo = ({ onClose }: Props) => {
+
+export const DepositSendInfo = () => {
   const { amount, sender, currencyId, loadingDeposit, depositError } = useDepositState()
   const { address, loading } = useENS(sender)
   const error = Boolean(sender.length > 0 && !loading && !address)

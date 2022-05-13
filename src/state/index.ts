@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { load, save } from 'redux-localstorage-simple'
 import admin from './admin/reducer'
 import application from './application/reducer'
@@ -70,7 +70,10 @@ const rootReducer = (state: any, action: any) => {
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware({ thunk: true }),
+    save({ states: PERSISTED_KEYS, debounce: 1000 }),
+  ],
   preloadedState: load({ states: PERSISTED_KEYS }),
 })
 

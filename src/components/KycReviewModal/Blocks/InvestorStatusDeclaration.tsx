@@ -1,10 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 
 import { TYPE } from 'theme'
 import { Checkbox } from 'components/Checkbox'
 import Column from 'components/Column'
 import { CorporateKyc, IndividualKyc } from 'state/admin/actions'
+
 import { Block } from '../molecules/Block'
 
 interface Props {
@@ -40,9 +40,3 @@ export const InvestorStatusDeclaration = ({ data, kycKey }: Props) => {
     </Block>
   )
 }
-
-const Content = styled.div`
-  display: grid;
-  row-gap: 20px;
-  margin-top: 32px;
-`

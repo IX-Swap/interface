@@ -1,19 +1,15 @@
-import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
-import { getNames } from 'country-list'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { TYPE } from 'theme'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useFetchIssuers, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
-import { FilterDropdown } from './FilterDropdown'
-import { industries } from 'components/AdminSecurityCatalog/mock'
-import { ButtonGradientBorder } from 'components/Button'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -97,19 +93,19 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
 
 export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, totalItems }: Props) => {
   const [searchValue, setSearchValue] = useState('')
-  const [filters, setFilters] = useState<any>({
+  const [filters] = useState<any>({
     industry: null,
     country: null,
     issuer: null,
   })
   const getIssuers = useFetchIssuers()
-  const { issuers, loadingRequest } = useSecCatalogState()
+  const { loadingRequest } = useSecCatalogState()
   const [currentPage, setCurrentPage] = useState(1)
   const fetchTokens = useFetchTokens()
 
   useEffect(() => {
     getIssuers({ page: 1, offset: 100000 })
-  }, [])
+  }, [getIssuers])
 
   useEffect(() => {
     const { industry, country, issuer } = filters
@@ -143,41 +139,41 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
     setCurrentPage(page)
   }
 
-  const handleResetFilters = () => {
-    setFilters({
-      industry: null,
-      country: null,
-      issuer: null,
-    })
-    setSearchValue('')
-  }
+  // const handleResetFilters = () => {
+  //   setFilters({
+  //     industry: null,
+  //     country: null,
+  //     issuer: null,
+  //   })
+  //   setSearchValue('')
+  // }
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
     setCurrentPage(1)
   }
 
-  const onFilterChange = (filterName: string, filter: any) => {
-    setFilters({ ...filters, [filterName]: filter })
-    setCurrentPage(1)
-  }
+  // const onFilterChange = (filterName: string, filter: any) => {
+  //   setFilters({ ...filters, [filterName]: filter })
+  //   setCurrentPage(1)
+  // }
 
-  const countries = useMemo(() => {
-    return getNames()
-      .map((name, index) => ({ id: ++index, name }))
-      .sort((a, b) => a.name.localeCompare(b.name))
-  }, [])
+  // const countries = useMemo(() => {
+  //   return getNames()
+  //     .map((name, index) => ({ id: ++index, name }))
+  //     .sort((a, b) => a.name.localeCompare(b.name))
+  // }, [])
 
-  const issuersWithTokens = useMemo(() => {
-    return issuers
-      ? issuers.items
-          .filter(({ tokens }: any) => tokens.length > 0)
-          .map(({ id, name }: any) => ({
-            id,
-            name,
-          }))
-      : []
-  }, [issuers]) // get issuers with tokens.length > 0
+  // const issuersWithTokens = useMemo(() => {
+  //   return issuers
+  //     ? issuers.items
+  //         .filter(({ tokens }: any) => tokens.length > 0)
+  //         .map(({ id, name }: any) => ({
+  //           id,
+  //           name,
+  //         }))
+  //     : []
+  // }, [issuers]) // get issuers with tokens.length > 0
 
   return (
     <>

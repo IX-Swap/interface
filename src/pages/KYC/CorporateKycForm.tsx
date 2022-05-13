@@ -63,7 +63,7 @@ export default function CorporateKycForm() {
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
-  }, [account, prevAccount])
+  }, [account, prevAccount, history])
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -76,9 +76,9 @@ export default function CorporateKycForm() {
       }
     }
 
-    if (kyc?.data.status === KYCStatuses.CHANGES_REQUESTED) {
+    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED) {
       getProgress()
-      setUpdateKycId(kyc.data.id)
+      setUpdateKycId(kyc.id)
     } else {
       setFormData(corporateFormInitialValues)
     }
@@ -938,7 +938,7 @@ export default function CorporateKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description={kyc?.data?.message || null}
+                      description={kyc?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StyledStickyBox>

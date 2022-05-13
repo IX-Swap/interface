@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 
 import Column from 'components/Column'
 import { RowBetween, RowStart } from 'components/Row'
-import { traitsSubtitle, traitsTitle, TraitType } from 'state/nft/types'
+import { traitsTitle, TraitType } from 'state/nft/types'
 import { TYPE } from 'theme'
 import { ReactComponent as AddIcon } from 'assets/images/add.svg'
 

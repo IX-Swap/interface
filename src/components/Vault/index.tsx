@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 
 import { useKYCState } from 'state/kyc/hooks'
-import { KYC_STATUSES } from 'components/AdminKyc/StatusCell'
+import { KYCStatuses } from 'pages/KYC/enum'
 import { useAuthState } from 'state/auth/hooks'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -28,11 +28,11 @@ export const Vault = ({ currency, token }: Props) => {
   const { kyc } = useKYCState()
 
   const getUserAccountType = () => {
-    const kycType = kyc?.data?.individualKycId ? 'individual' : 'corporate'
+    const kycType = kyc?.individualKycId ? 'individual' : 'corporate'
 
-    const userKyc = kyc?.data?.individual || kyc?.data?.corporate || {}
+    const userKyc = kyc?.individual || kyc?.corporate
 
-    if (userKyc.accredited) {
+    if (userKyc?.accredited) {
       return `${kycType}Accredited`
     }
     return `${kycType}AccreditedNot`
@@ -40,7 +40,7 @@ export const Vault = ({ currency, token }: Props) => {
 
   const userHaveValidAccount = useMemo(() => {
     const { kycType } = token
-    if (!kycType || !kyc || ![KYC_STATUSES.APPROVED, KYC_STATUSES.REJECTED].includes(kyc?.data?.status)) return true
+    if (!kycType || !kyc || ![KYCStatuses.APPROVED, KYCStatuses.REJECTED].includes(kyc?.status)) return true
 
     const userAccountType = getUserAccountType()
 

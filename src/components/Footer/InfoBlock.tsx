@@ -1,8 +1,6 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
 
-import { RowBetween } from 'components/Row'
-
 import { InfoBlockContainer } from './styleds'
 
 export const InfoBlock = () => {

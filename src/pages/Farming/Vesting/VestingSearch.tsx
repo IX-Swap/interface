@@ -1,11 +1,13 @@
+import React, { useEffect, useState } from 'react'
 import { t } from '@lingui/macro'
+import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
+
 import { ButtonIXSGradient } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { saveCustomVestingAddress } from 'state/vesting/actions'
-import styled from 'styled-components'
 import { isValidAddress } from 'utils'
+
 import { ReactComponent as Close } from '../../../assets/images/cross.svg'
 
 // todo use button inside search
@@ -19,7 +21,7 @@ export const VestingSearch = () => {
   useEffect(() => {
     dispatch(saveCustomVestingAddress({ customVestingAddress: '' }))
     handleAddres('')
-  }, [account])
+  }, [account, dispatch])
 
   const onChange = (e: { target: { value: string } }) => {
     const input = e.target.value.trim()

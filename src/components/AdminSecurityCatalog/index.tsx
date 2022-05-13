@@ -6,12 +6,10 @@ import { isMobile } from 'react-device-detect'
 
 import { ExternalLink, TYPE } from 'theme'
 import { Container } from 'components/AdminAccreditationTable'
-import { BrokerDealerCard } from './BrokerDealerCard'
 import { ButtonIXSGradient, ButtonText } from 'components/Button'
 import { Search } from 'components/AdminAccreditationTable/Search'
 import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
 import { useAddPopup, useTokenPopupToggle, useDeleteTokenPopupToggle } from 'state/application/hooks'
-import { TokenPopup } from './TokenPopup'
 import {
   getIssuer,
   useAddIssuer,
@@ -21,20 +19,22 @@ import {
   validateIssuer,
 } from 'state/secCatalog/hooks'
 import Upload from 'components/Upload'
-import { Loader } from '../AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
-import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
 import { adminOffset as offset } from 'state/admin/constants'
 import { useOnlyAdminAccess } from 'state/admin/hooks'
+import { Pagination } from 'components/Pagination'
+import { NoData } from 'components/Whitelist/styleds'
 
+import { TokenPopup } from './TokenPopup'
+import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
+import { Loader } from '../AdminTransactionsTable'
+import { BrokerDealerCard } from './BrokerDealerCard'
 import { EditButton, StyledButtonGradientBorder, FormGrid, Logo, TokenCard } from './styleds'
 import { initialIssuerState } from './mock'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
-import { Pagination } from 'components/Pagination'
-import { NoData } from 'components/Whitelist/styleds'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -75,7 +75,7 @@ export const AdminSecurityCatalog: FC = () => {
     if (currentIssuer?.id) {
       fetchIssuer()
     }
-  }, [issuers])
+  }, [issuers, currentIssuer?.id])
 
   useEffect(() => {
     getIssuers({ page: 1, offset, ...(searchValue && { search: searchValue }) })
@@ -342,7 +342,7 @@ export const AdminSecurityCatalog: FC = () => {
                 </>
               ) : (
                 <NoData>
-                 <Trans>No results</Trans>
+                  <Trans>No results</Trans>
                 </NoData>
               )}
             </Flex>

@@ -66,6 +66,8 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
 
   const haveActiveWithdrawal = isPending(withdrawStatus.status || 'pending')
 
+  const paid = [WithdrawStatus.FEE_ACCEPTED, WithdrawStatus.PENDING].includes(withdrawStatus.status as WithdrawStatus)
+
   useEffect(() => {
     if (tokenInfo.id) {
       getWithdrawStatus(tokenInfo.id)
@@ -191,10 +193,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
               {t`Sending Withdrawal Fee`}
             </WaitingWitdrawalFee>
           ) : (
-            <>
-              {inputError ??
-                t`${withdrawStatus.status !== WithdrawStatus.FEE_ACCEPTED ? 'Pay withdraw fee' : 'Withdraw'}`}
-            </>
+            <>{inputError ?? t`${paid ? 'Withdraw' : 'Pay withdraw fee'}`}</>
           )}
         </ButtonIXSWide>
       </Row>

@@ -1,6 +1,8 @@
-import { DEFAULT_LOCALE, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
 import { useEffect, useMemo } from 'react'
-import { useUserLocale, useUserLocaleManager } from 'state/user/hooks'
+
+import { DEFAULT_LOCALE, SupportedLocale, SUPPORTED_LOCALES } from 'constants/locales'
+import { useUserLocaleManager } from 'state/user/hooks'
+
 import useParsedQueryString from './useParsedQueryString'
 
 /**
@@ -46,10 +48,10 @@ export function useSetLocaleFromUrl() {
  * Returns the currently active locale, from a combination of user agent, query string, and user settings stored in redux
  */
 export function useActiveLocale(): SupportedLocale {
-  const userLocale = useUserLocale()
+  // const userLocale = useUserLocale()
 
   return useMemo(() => {
     return DEFAULT_LOCALE
     // return userLocale ?? navigatorLocale() ?? DEFAULT_LOCALE
-  }, [userLocale])
+  }, [])
 }

@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { legalEntityTypes } from 'pages/KYC/mock'
 
 export const cynopsisKeys = [
   { key: 'cynopsis1', label: 'Cynopsis 1' },

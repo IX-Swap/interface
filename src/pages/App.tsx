@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react'
 import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
+import { useDispatch } from 'react-redux'
 
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
@@ -12,6 +13,10 @@ import { useAccount, useGetMe } from 'state/user/hooks'
 import { routes } from 'utils/routes'
 import { SupportedChainId } from 'constants/chains'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from 'pages/KYC/enum'
+import { useAuthState } from 'state/auth/hooks'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -28,11 +33,6 @@ import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
-import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-import { KYCStatuses } from 'components/Vault/enum'
-import { useAuthState } from 'state/auth/hooks'
-import { useDispatch } from 'react-redux'
-import { LoadingIndicator } from 'components/LoadingIndicator'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -100,10 +100,10 @@ export default function App() {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
   const defaultPage = useMemo(() => {
-    if (kyc?.data?.status !== KYCStatuses.APPROVED || !account) {
+    if (kyc?.status !== KYCStatuses.APPROVED || !account) {
       return '/kyc'
     }
-    if (kyc?.data?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
+    if (kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
       return '/security-tokens'
     }
 
@@ -114,9 +114,9 @@ export default function App() {
     if (!account) return false
     if (!kyc) return true
 
-    if ([KYCStatuses.REJECTED, KYCStatuses.APPROVED, KYCStatuses.PENDING].includes(kyc?.data?.status)) return false
+    if ([KYCStatuses.REJECTED, KYCStatuses.APPROVED, KYCStatuses.PENDING].includes(kyc?.status)) return false
 
-    const userKyc = kyc?.data.corporateKycId ? 'corporate' : 'individual'
+    const userKyc = kyc?.corporateKycId ? 'corporate' : 'individual'
 
     if (KYCStatuses.CHANGES_REQUESTED) {
       return kycType === userKyc
