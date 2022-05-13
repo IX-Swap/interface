@@ -1,5 +1,10 @@
 import { OrderSide } from 'types/order'
-import { getIdFromObj, getOrderSideName, isTruthy } from '../strings'
+import {
+  getIdFromObj,
+  getOrderSideName,
+  isSuccessRequest,
+  isTruthy
+} from '../strings'
 
 describe('getIDString', () => {
   it('returns _id property of input value', () => {
@@ -36,9 +41,15 @@ describe('isTruthy', () => {
     expect(isTruthy([])).toEqual(true)
   })
 
- it('returns false for falsy values', () => {
+  it('returns false for falsy values', () => {
     expect(isTruthy(null)).toEqual(false)
     expect(isTruthy(0)).toEqual(false)
     expect(isTruthy(undefined)).toEqual(false)
+  })
+})
+
+describe('isSuccessRequest', () => {
+  it('returns true for ok status', () => {
+    expect(isSuccessRequest(201)).toEqual(true)
   })
 })
