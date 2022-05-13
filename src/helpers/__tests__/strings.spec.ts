@@ -1,5 +1,5 @@
 import { OrderSide } from 'types/order'
-import { getIdFromObj, getOrderSideName } from '../strings'
+import { getIdFromObj, getOrderSideName, isSuccessRequest } from '../strings'
 
 describe('getIDString', () => {
   it('returns _id property of input value', () => {
@@ -26,5 +26,11 @@ describe('getOrderSideName', () => {
 
   it('returns correct value when argument is ASK', () => {
     expect(getOrderSideName(OrderSide.ASK)).toEqual('Sell')
+  })
+})
+
+describe('isSuccessRequest', () => {
+  it('returns true for ok status', () => {
+    expect(isSuccessRequest(201)).toEqual(true)
   })
 })
