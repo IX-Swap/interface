@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
 import { Formik } from 'formik'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
+import { Prompt } from 'react-router-dom'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -35,7 +36,9 @@ import { corporateErrorsSchema } from './schema'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 
+
 export default function CorporateKycForm() {
+  const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
@@ -98,9 +101,7 @@ export default function CorporateKycForm() {
 
   const goBack = (e?: any) => {
     if (e) e.preventDefault()
-    if (confirm(promptValue)) {
-      history.push('/kyc')
-    }
+    history.push('/kyc')
   }
 
   const changeBeneficiar = (
@@ -222,6 +223,7 @@ export default function CorporateKycForm() {
 
   return (
     <Loadable loading={!isLoggedIn}>
+      <Prompt when={!canLeavePage.current} message={promptValue} />
       <LoadingIndicator isLoading={loadingRequest} />
 
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
@@ -252,6 +254,7 @@ export default function CorporateKycForm() {
               corporateErrorsSchema
                 .validate(values, { abortEarly: false })
                 .then(async () => {
+                  canLeavePage.current = true
                   setCanSubmit(false)
                   const body = corporateTransformKycDto(values)
                   let data: any = null
@@ -294,6 +297,7 @@ export default function CorporateKycForm() {
                   setIsSubmittedOnce(true)
                   setErrors(newErrors)
                   setCanSubmit(false)
+                  canLeavePage.current = false
                 })
             }}
           >
