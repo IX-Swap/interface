@@ -1,8 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { Input, Textarea } from 'components/Input'
-import { gradientBorder, ellipsisText, MEDIA_WIDTHS } from 'theme'
-import Upload from 'components/Upload'
+import { MEDIA_WIDTHS } from 'theme'
 
 const uploadStyles = css`
   z-index: 2;

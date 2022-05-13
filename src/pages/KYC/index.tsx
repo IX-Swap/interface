@@ -12,28 +12,27 @@ import { RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
-import { useUserisLoggedIn } from 'state/auth/hooks'
 import Column from 'components/Column'
-import { useUserState } from 'state/user/hooks'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { usePendingSignState } from 'state/application/hooks'
 import { useKYCState } from 'state/kyc/hooks'
+import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.svg'
+import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
+import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
 
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard } from './styleds'
-import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.svg'
-import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
-import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
+
 interface DescriptionProps {
   description: string | null
 }
 
 interface DateInfoProps {
-  submittedDate?: string
-  rejectedDate?: string
-  approvedDate?: string
-  changeRequestDate?: string
+  submittedDate?: string | null
+  rejectedDate?: string | null
+  approvedDate?: string | null
+  changeRequestDate?: string | null
   info?: string
 }
 
@@ -81,16 +80,14 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 
 export default function KYC() {
   const { account } = useActiveWeb3React()
-  const { account: userAccount } = useUserState()
   const [loading, setLoading] = useState(false)
-  const isLoggedIn = useUserisLoggedIn()
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
 
   const { kyc, loadingRequest } = useKYCState()
 
-  const status = useMemo(() => kyc?.data?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
-  const description = useMemo(() => kyc?.data.message || getStatusDescription(status), [kyc, status])
+  const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
+  const description = useMemo(() => kyc?.message || getStatusDescription(status), [kyc, status])
 
   useEffect(() => {
     if (pendingSign) {
@@ -135,25 +132,22 @@ export default function KYC() {
         return (
           <>
             <Description description={description} />
-            <DateInfo submittedDate={kyc?.data.createdAt} rejectedDate={kyc?.data.updatedAt} />
+            <DateInfo submittedDate={kyc?.createdAt} rejectedDate={kyc?.updatedAt} />
           </>
         )
       case KYCStatuses.PENDING:
         return (
           <>
             <Description description={getStatusDescription(status)} />
-            <DateInfo submittedDate={kyc?.data.updatedAt || kyc?.data.createdAt} />
+            <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
       case KYCStatuses.CHANGES_REQUESTED:
         return (
           <>
             <Description description={description} />
-            <DateInfo submittedDate={kyc?.data.createdAt} changeRequestDate={kyc?.data.updatedAt} />
-            <Link
-              style={{ textDecoration: 'none ' }}
-              to={`/kyc/${kyc?.data.corporateKycId ? 'corporate' : 'individual'}`}
-            >
+            <DateInfo submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
+            <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}>
               <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
                 <Trans>Make changes and resend KYC</Trans>
               </ButtonIXSGradient>
@@ -166,8 +160,8 @@ export default function KYC() {
             <ApprovedKYC />
             <DateInfo
               info="In order to make changes to your KYC please get in touch with us via kyc@ixswap.io"
-              submittedDate={kyc?.data.createdAt}
-              approvedDate={kyc?.data.updatedAt}
+              submittedDate={kyc?.createdAt}
+              approvedDate={kyc?.updatedAt}
             />
           </Flex>
         )
@@ -175,11 +169,11 @@ export default function KYC() {
         return (
           <>
             <Description description={getStatusDescription(status)} />
-            <DateInfo submittedDate={kyc?.data.updatedAt || kyc?.data.createdAt} />
+            <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
     }
-  }, [status])
+  }, [status, description, kyc])
 
   if (!account) return <NotAvailablePage />
 
@@ -211,7 +205,7 @@ export default function KYC() {
                 <Trans>IX Swap KYC</Trans>
               </TYPE.title4>
 
-              <KYCStatus status={kyc?.data.status || KYCStatuses.NOT_SUBMITTED} />
+              <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />
 
               {getKYCDescription()}
             </Content>

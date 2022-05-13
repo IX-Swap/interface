@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
@@ -115,11 +115,7 @@ export const AdminKycTable = () => {
   }
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
-  useEffect(() => {
-    getKyc()
-  }, [id])
-
-  const getKyc = async () => {
+  const getKyc = useCallback(async () => {
     if (!id) return
     try {
       handleIsLoading(true)
@@ -129,7 +125,11 @@ export const AdminKycTable = () => {
     } catch (e) {
       handleIsLoading(false)
     }
-  }
+  }, [id])
+
+  useEffect(() => {
+    getKyc()
+  }, [id, getKyc])
 
   return (
     <div id="kyc-container">

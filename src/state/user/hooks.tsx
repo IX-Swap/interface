@@ -423,7 +423,6 @@ export function useFetchUserSecTokenListCallback(): (sendDispatch?: boolean) => 
           return tokenList
         })
         .catch((error) => {
-          console.debug(`Failed to get sec token list`, error)
           sendDispatch && dispatch(fetchUserSecTokenList.rejected({ errorMessage: error.message }))
           throw error
         })
@@ -488,7 +487,6 @@ export function usePassAccreditation(
         toggle()
         onSuccess && onSuccess()
       } catch (error) {
-        console.debug(`Failed to pass accreditation`, error)
         showError(t`Failed to pass accreditation ${String((error as any)?.message)}`)
         dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
@@ -517,7 +515,7 @@ export function useAccount() {
     if (loginError) {
       dispatch(saveAccount({ account: '' }))
     }
-  }, [loginError])
+  }, [loginError, dispatch])
 
   useEffect(() => {
     const timerFunc = setTimeout(checkAuthError, 20000)
@@ -553,7 +551,7 @@ export function useAccount() {
     if (!token && account && !triggeredAuth) {
       authenticate()
     }
-  }, [token, account, triggeredAuth])
+  }, [token, account, triggeredAuth, authenticate])
 
   useEffect(() => {
     if (account && account !== savedAccount) {
@@ -562,7 +560,7 @@ export function useAccount() {
       dispatch(clearSwapState())
       dispatch(clearSwapHelperState())
     }
-  }, [account, savedAccount])
+  }, [account, savedAccount, dispatch])
 
   useEffect(() => {
     if (token) {
@@ -571,13 +569,13 @@ export function useAccount() {
   }, [token, getUserSecTokens])
 
   useEffect(() => {
-    if (kyc?.data?.status !== KYC_STATUSES.APPROVED && accountChanged && !loadingRequest) {
+    if (kyc?.status !== KYC_STATUSES.APPROVED && accountChanged && !loadingRequest) {
       if (pathname !== '/kyc') {
         history.push('/kyc')
       }
       handleAccountChanged(false)
     }
-  }, [kyc, accountChanged, loadingRequest, pathname])
+  }, [kyc, accountChanged, loadingRequest, pathname, history])
 }
 
 export const me = async () => {

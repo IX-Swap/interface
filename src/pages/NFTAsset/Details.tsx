@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
 
 import { ReactComponent as BurgerMenu } from 'assets/images/burger-menu.svg'
 import { ReactComponent as Star } from 'assets/images/star.svg'
@@ -32,9 +31,7 @@ interface Props {
   isFreeze: boolean
 }
 
-export const Details = ({ stats, levels, rectangles, isNSFW, isFreeze }: Props) => {
-  const h = useHistory()
-
+export const Details = ({ stats, levels, rectangles, isNSFW }: Props) => {
   return (
     <NftAttributesContainer>
       {rectangles?.length > 0 && (

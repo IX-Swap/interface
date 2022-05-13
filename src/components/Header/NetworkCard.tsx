@@ -1,16 +1,18 @@
-import { CHAIN_INFO, NETWORK_LABELS, SupportedChainId } from 'constants/chains'
+import React, { useMemo, useRef } from 'react'
+import styled from 'styled-components'
+import { Trans } from '@lingui/macro'
+
+import { CHAIN_INFO, NETWORK_LABELS } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useMemo, useRef } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
-import styled from 'styled-components'
-import { VioletCard } from '../Card'
 import { ChevronElement } from 'components/ChevronElement'
 import { MEDIA_WIDTHS } from 'theme'
-import { Trans } from '@lingui/macro'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+
+import { VioletCard } from '../Card'
 
 const SelectorControls = styled(VioletCard)`
   border-radius: 12px;

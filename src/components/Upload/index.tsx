@@ -4,7 +4,6 @@ import { useDropzone, FileWithPath } from 'react-dropzone'
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
 import { getfileType } from './utils'
 import { AcceptFiles, FileTypes } from './types'
-import { ImageLoader } from '../ImageLoader'
 
 interface Props {
   onDrop: (file: any) => void

@@ -227,7 +227,7 @@ function handleClickExternalLink(event: React.MouseEvent<HTMLAnchorElement>) {
   // don't prevent default, don't redirect if it's a new tab
   if (target === '_blank' || event.ctrlKey || event.metaKey) {
     ReactGA.outboundLink({ label: anonymizedHref }, () => {
-      console.debug('Fired outbound link event', anonymizedHref)
+      // must have 2-3 params
     })
   } else {
     event.preventDefault()
@@ -333,7 +333,7 @@ export const StyledPageHeader = styled.div`
     margin-bottom: 5px;
   }
 `
-export const ModalBlurWrapper = styled.span<{touchable?: boolean}>`
+export const ModalBlurWrapper = styled.span<{ touchable?: boolean }>`
   background: ${({ theme }) => theme.bgG5};
   border-radius: 45px;
   display: flex;
@@ -353,7 +353,7 @@ export const ModalBlurWrapper = styled.span<{touchable?: boolean}>`
     max-width: 100%;
     border-radius: 0;
   `};
-  user-select: ${({touchable}) => touchable ? 'auto' : 'none'};
+  user-select: ${({ touchable }) => (touchable ? 'auto' : 'none')};
 `
 export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
@@ -447,7 +447,7 @@ export const MobileOnly = styled.span`
 const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
   border: 0;
   clip: rect(0 0 0 0);
-  clippath: inset(50%);
+  clip-path: inset(50%);
   height: 1px;
   margin: -1px;
   overflow: hidden;

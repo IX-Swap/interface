@@ -1,6 +1,8 @@
 import { useCallback } from 'react'
+
 import apiService from 'services/apiService'
 import { metamask } from 'services/apiUrls'
+
 import { login } from './login'
 import { sign } from './personalSign'
 import { useActiveWeb3React } from './web3'
@@ -10,6 +12,7 @@ interface Hash {
 }
 export const useFetchToken = () => {
   const { account, library, deactivate } = useActiveWeb3React()
+
   const fetchToken = useCallback(async () => {
     if (!account) {
       throw new Error("User didn't connect a wallet")
@@ -28,7 +31,7 @@ export const useFetchToken = () => {
       throw new Error('No login data received')
     }
     return loginData.data
-  }, [account, library])
+  }, [account, library, deactivate])
 
   return { fetchToken }
 }

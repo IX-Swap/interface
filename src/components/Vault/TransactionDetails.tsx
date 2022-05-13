@@ -104,7 +104,7 @@ export const TransactionDetails = ({ currency }: Props) => {
               {statusText} {isSuccess && <SuccessIcon />}
             </TYPE.descriptionThin>
             <LiniarProgressContainer statusColor={statusColor as keyof Colors}>
-              <LinearProgress variant="buffer" value={percent} />
+              <LinearProgress variant="buffer" value={percent} valueBuffer={0} />
             </LiniarProgressContainer>
             {isDeposit(data.type) && status === DepositStatus.PENDING && (
               <PendingDepositInfo>

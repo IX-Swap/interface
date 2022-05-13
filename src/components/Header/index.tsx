@@ -240,14 +240,12 @@ export default function Header() {
                 <HeaderElement>
                   <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
                     <KYCCard flexDirection="column" alignItems="center" justifyContent="center">
-                      {kyc?.data.status === 'approved' ? (
+                      {kyc?.status === 'approved' ? (
                         <KYCApproved style={{ width: 30, height: 30 }} />
                       ) : (
                         <KYC style={{ marginTop: 5 }} />
                       )}
-                      <TYPE.smallError color={kyc?.data.status !== 'approved' ? 'error' : 'green1'}>
-                        KYC
-                      </TYPE.smallError>
+                      <TYPE.smallError color={kyc?.status !== 'approved' ? 'error' : 'green1'}>KYC</TYPE.smallError>
                     </KYCCard>
                   </NavLink>
                 </HeaderElement>

@@ -35,7 +35,7 @@ export const Menu = ({ close }: Props) => {
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { kyc } = useKYCState()
-  const isKycApproved = kyc?.data?.status === KYCStatuses.APPROVED ?? false
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
 

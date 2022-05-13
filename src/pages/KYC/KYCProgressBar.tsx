@@ -11,7 +11,7 @@ import { FormCard, PageLink } from './styleds'
 interface Props {
   topics: any[]
   reasons: string[]
-  description: string
+  description: string | null
   disabled?: boolean
   handleSubmit?: (e: any) => void
 }

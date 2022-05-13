@@ -1,5 +1,6 @@
 import { FileWithPath } from 'file-selector'
-import { commonFileTypes, FileTypes } from './types'
+
+import { FileTypes } from './types'
 
 export const getfileType = (file?: FileWithPath | null): FileTypes => {
   const fileType = String(file?.type).split('/')[0]

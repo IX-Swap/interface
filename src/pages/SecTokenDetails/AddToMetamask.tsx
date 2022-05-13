@@ -9,10 +9,9 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { CopyAddress } from 'components/CopyAddress'
-
 import { ReactComponent as Info } from 'assets/images/info-filled.svg'
+
 import { AddressToMetamask, StyledButtonGradient } from './styleds'
-import { Flex } from 'rebass'
 
 interface Props {
   token: any

@@ -80,7 +80,6 @@ export function useFetchSecTokenListCallback(): (sendDispatch?: boolean) => Prom
           return tokenList
         })
         .catch((error) => {
-          console.debug(`Failed to get sec token list`, error)
           sendDispatch && dispatch(fetchSecTokenList.rejected({ errorMessage: error.message }))
           throw error
         })

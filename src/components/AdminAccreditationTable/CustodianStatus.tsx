@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { Trans } from '@lingui/macro'
-import styled, { ThemeContext } from 'styled-components'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
 import { AccreditationStatusEnum } from 'components/Vault/enum'
 import { useApproveAccreditation } from 'state/admin/hooks'
@@ -20,7 +19,6 @@ interface Props {
 
 export const CustodianStatus = ({ status, id, custodian }: Props) => {
   const approveAccreditation = useApproveAccreditation()
-  const theme = useContext(ThemeContext)
 
   const [isModalOpen, handleIsModalOpen] = useState(false)
 

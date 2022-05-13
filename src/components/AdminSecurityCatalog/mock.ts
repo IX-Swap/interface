@@ -1,5 +1,3 @@
-import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
-
 export const defaultKycType = {
   individualAccredited: false,
   individualAccreditedNot: false,

@@ -11,10 +11,11 @@ import { ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
+import { routes } from 'utils/routes'
 
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
+import { useAuthState } from 'state/auth/hooks'
 import { ApplicationModal } from 'state/application/actions'
-import { useToggleModal, useShowError, useAddPopup } from 'state/application/hooks'
+import { useToggleModal, useAddPopup } from 'state/application/hooks'
 import { NFTCollection, TraitType } from 'state/nft/types'
 import {
   useAssetFormState,
@@ -32,7 +33,6 @@ import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
 import { FileUploader } from './FileUploader'
 import { StyledInput, StyledCreateCollectionBtn, StyledTextarea } from './styleds'
-import { routes } from 'utils/routes'
 
 export const CreateForm = () => {
   const {

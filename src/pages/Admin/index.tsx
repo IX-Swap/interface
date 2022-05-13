@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
@@ -60,7 +60,6 @@ const AdminKyc = () => {
   const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
 
   const history = useHistory()
-  const location = useLocation()
   const params = useParams<AdminParams>()
 
   const { me } = useUserState()
@@ -82,7 +81,7 @@ const AdminKyc = () => {
     (tab: AdminTab) => {
       history.push(`/admin/${tab}`)
     },
-    [history, location]
+    [history]
   )
 
   useEffect(() => {
@@ -103,7 +102,7 @@ const AdminKyc = () => {
     }
 
     history.push('/')
-  }, [me])
+  }, [me, fetchMe, history])
 
   return (
     <Container>

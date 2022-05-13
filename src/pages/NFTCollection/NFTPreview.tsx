@@ -1,12 +1,13 @@
-import { PreviewParent, StyledLogo } from 'components/Upload/styleds'
-import { FileTypes } from 'components/Upload/types'
-import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
+
+import { StyledLogo } from 'components/Upload/styleds'
+import { FileTypes } from 'components/Upload/types'
 import { ellipsisText, gradientBorder, TYPE } from 'theme'
-import LogoWhite from '../../assets/svg/logo-white.svg'
 import { CollectionImage } from 'pages/NFTCollections/styleds'
 import { ImageLoader } from 'components/ImageLoader'
+
+import LogoWhite from '../../assets/svg/logo-white.svg'
 
 interface NFTPreviewProps {
   uri: string
@@ -121,10 +122,6 @@ const Description = styled.div`
   font-weight: 500;
   font-size: 12px;
   color: rgba(237, 206, 255, 0.5);
-  ${ellipsisText}
-`
-
-const CollectionName = styled.div`
   ${ellipsisText}
 `
 

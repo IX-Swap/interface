@@ -11,7 +11,7 @@ export default function Updater(): null {
   const fetchList = useFetchSecTokenListCallback()
   const fetchListCallback = useCallback(() => {
     // if (!isWindowVisible) return
-    fetchList().catch((error) => console.debug('interval sec token list fetching error', error))
+    fetchList()
   }, [fetchList])
 
   // fetch all lists every 15 minutes, but only after we initialize library

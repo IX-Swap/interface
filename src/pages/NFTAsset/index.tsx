@@ -9,17 +9,16 @@ import { NFTImageShow } from 'state/nft/types'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { useActiveWeb3React } from 'hooks/web3'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { ButtonGradientBorder } from 'components/Button'
+import AppBody from 'pages/AppBody'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 import { routes } from 'utils/routes'
 
 import { NftFilePreview } from '../NFTCollection/NFTPreview'
 import LogoWhite from '../../assets/svg/logo-white.svg'
-import AppBody from 'pages/AppBody'
-import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { Info } from './Info'
 import { Details } from './Details'
-import { ButtonGradientBorder } from 'components/Button'
-import { Box } from 'rebass'
 
 interface NftLevel {
   display_type: 'level'
@@ -153,7 +152,7 @@ const NftAssetPage = ({
       }
     }
     getDetails()
-  }, [getNFTDetails, collectionAddress, itemId])
+  }, [getNFTDetails, collectionAddress, itemId, collection])
 
   if (!account) return <NFTConnectWallet />
 

@@ -18,8 +18,8 @@ export const ProductsBlock = () => {
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { kyc } = useKYCState()
-  const isKycApproved = kyc?.data?.status === KYCStatuses.APPROVED ?? false
-  
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+
   return (
     <ProductsBlockContainer>
       {chainId && account && (
@@ -49,7 +49,10 @@ export const ProductsBlock = () => {
           </NavLink>
         )}
         {isKycApproved && account && isWhitelisted && (
-          <ExternalLink target="_self" href={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}>
+          <ExternalLink
+            target="_self"
+            href={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}
+          >
             <Trans>Charts</Trans>
           </ExternalLink>
         )}

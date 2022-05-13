@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
+import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { StyledPageHeader, TYPE } from 'theme'
-
-import { importNftCollection } from 'state/nft/actions'
 
 import { RowFixed } from 'components/Row'
 import Column, { AutoColumn } from 'components/Column'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 
-import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { useActiveWeb3React } from 'hooks/web3'
 
 import AppBody from 'pages/AppBody'
 
 import { Input } from 'components/Input'
-import { ButtonConfirmed, ButtonPrimary } from 'components/Button'
-import styled from 'styled-components'
+import { ButtonPrimary } from 'components/Button'
 import { CHAIN_INFO } from 'constants/chains'
-import { useDispatch } from 'react-redux'
 import { useNftCollectionImport } from 'state/nft/hooks'
-import { useHistory } from 'react-router-dom'
 
 const NftLinkInput = styled(Input)`
   padding: 0.4rem;
@@ -51,7 +48,7 @@ const extractNftFromRarible = (address: string) => {
 }
 
 export default function Faucet() {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   const [nftLink, setNftLink] = useState('')
   const [nftId, setNftId] = useState('')
