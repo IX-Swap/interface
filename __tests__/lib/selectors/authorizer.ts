@@ -3,6 +3,11 @@ export const authorizerEl = {
   PENDING_ITEMS: '//*[text()="Pending Items"]',
   DROP_DOWN: '[data-testid="dropdown"]',
 
+  viewProfileSection: {
+    UPLOAD_DOCUMENT: '[id="documents[0].value"]',
+    DELETE_DOCUMENT_BUTTON: '[aria-label="Delete File"]'
+  },
+
   pages: {
     DASHBOARD: '[href="/app/authorizer"] >> nth=-1',
     BANK_ACCOUNTS: '[href="/app/authorizer/bank-accounts"]',

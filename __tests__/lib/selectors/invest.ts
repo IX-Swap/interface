@@ -5,7 +5,7 @@ export const invest = {
   TOAST_NOTIFICATIONS: '[data-testid="notification-inner"]',
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',
-  LANDING_TABLES_PANEL: '[role="tabpanel"]',
+  LANDING_TABLES_PANEL: '[role="tablist"]',
   OVERVIEW_PAGE: '[href="/app/invest/overview"]',
   SECOND_MARKET: '[href="/app/otc-market"]',
   CHECKBOX: '[type="checkbox"]',
@@ -15,6 +15,7 @@ export const invest = {
   OFFERS: '[href*="/app/invest/offerings/"]',
 
   buttons: {
+    COMMITMENTS_TAB: 'button >> text="Commitments"',
     INVEST: '[data-testid="otc-card-link"]',
     VIEW_INVEST: '[data-testid="view-button"]',
     CANCEL_ORDER: '[data-testid="table"] >> text="Cancel"',
@@ -22,21 +23,18 @@ export const invest = {
     DOWNLOAD_DOC: 'text="Download Subscription Document"',
     CREATE_CUSTODY_ADDRESS: 'text="Create custody withdrawal address"',
     SUBMIT_INVEST: 'button >> text="Invest"',
-    LEARN_MORE: 'span >> text="Learn More"',
+    LEARN_MORE: 'a >> text="Learn More"',
     INVEST_LANDING: '[href*="/view/make-investment"]',
     I_AGREE: 'button >> text="I Agree"',
     DECLINE: 'button >> text="Decline"',
     SELL: 'button >> text="SELL"',
-    VIEW_SECOND_DSO:
-      '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
-    INVEST_ACCOUNT:
-      '[href="/app/invest/offerings/61c1ca2956e67e0e60c340f5/61c1e3e356e67e0e60c35854/view/make-investment"]'
+    VIEW_SECOND_DSO: '[href*="/app/invest/commitments/"]'
   },
   fields: {
     SEARCH: '[placeholder="Search"]',
     PRICE: '[id="price"]',
     AMOUNT: '[id="amount"]',
-    // SEARCH: '[placeholder="Search Offers"]',
+    SEARCH_DSO: '[placeholder="Search Offers"]',
     UPLOAD_SIGNED_DOC: '[name="signedSubscriptionDocument"]',
     NUMBER_UNITS: '[id="numberOfUnits"]',
     OTP: '[id="otp"]'
