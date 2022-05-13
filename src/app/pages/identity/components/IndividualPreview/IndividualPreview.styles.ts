@@ -25,7 +25,7 @@ export const useStyles = makeStyles(theme => ({
       paddingTop: theme.spacing(2),
       justifyContent: 'center',
       '& a': {
-        width: theme.spacing(20.5)
+        width: theme.spacing(20.6)
       }
     }
   },
