@@ -30,11 +30,7 @@ export const IdentityRouter = () => {
         </RootContainer>
       </AppRoute>
 
-      <AppRoute
-        path={IdentityRoute.list}
-        breadcrumb='Create Individual Investor'
-        exact
-      >
+      <AppRoute path={IdentityRoute.identitySuccess} exact>
         <SubmitIdentity />
       </AppRoute>
     </Switch>

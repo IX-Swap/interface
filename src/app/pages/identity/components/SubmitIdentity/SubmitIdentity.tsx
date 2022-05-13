@@ -1,52 +1,51 @@
-import { Card, Grid, Typography } from '@mui/material'
-import { Box } from '@mui/system'
 import React from 'react'
-import { AppContentWrapper } from 'ui/AppContentWrapper'
+import { useStyles } from 'app/pages/identity/components/SubmitIdentity/SubmitIdentity.style'
+import { Button, Grid, Typography } from '@mui/material'
+import { Box } from '@mui/system'
 import { ReactComponent as Success } from 'assets/icons/alerts/success.svg'
+// import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
+// import { IdentityRoute } from 'app/pages/identity/router/config'
+// import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { TwoFAALert } from 'app/pages/identity/components/SubmitIdentity/TwoFAALert'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const SubmitIdentity = () => {
+  const classes = useStyles()
   return (
-    <AppContentWrapper container background='default'>
-      <Card sx={{ paddingLeft: '184px', paddingTop: '16.5px' }}>
-        <Box
-          style={{ display: 'flex', flexDirection: 'row' }}
-          sx={{
-            width: 920,
-            height: 372,
-            backgroundColor: 'white',
-            borderRadius: '16.5px'
-          }}
-        >
-          <Grid style={{ width: '190px', padding: '64px 0 0 59px' }}>
+    <Grid container className={classes.boxHeader}>
+      <PageHeader title='succes' />
+      <Grid item xs={12}>
+        <Typography variant='h3'>user name</Typography>
+      </Grid>
+      <Grid item className={classes.breadcrumbs}>
+        <Typography className={classes.breadcrumbsLink}>Profile</Typography>
+        <Box className={classes.dot}>''</Box>
+        <Typography className={classes.breadcrumbsLink}>Identity</Typography>
+      </Grid>
+      <Box>
+        <Box className={classes.boxAlert} mb={2} height={372}>
+          <Grid className={classes.iconSuccess}>
             <Success height={80} width={80} />
           </Grid>
-          <Grid style={{ paddingTop: '64px' }} container spacing={2}>
+          <Grid className={classes.mainContent}>
             <Typography variant='h2'>
               Thank you for your application!
             </Typography>
-            <Typography fontSize={16} fontWeight={400}>
+            <Typography className={classes.text} mt={2}>
               We are checking your application now, this usually takes from one
               to three days
             </Typography>
+            <Typography className={classes.text} mt={2}>
+              If you have any further questions, you can always contact our{' '}
+              <a href=' https://investax.io/contact/ '>support deprtment</a>
+            </Typography>
+            <Button variant='outlined' size='large'>
+              View Identity
+            </Button>
           </Grid>
         </Box>
-
-        <Box
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            paddingTop: '16.5px'
-          }}
-          sx={{
-            width: 920,
-            height: 326,
-            backgroundColor: 'white',
-            borderRadius: '16.5px'
-          }}
-        >
-          Choose the type of Identity
-        </Box>
-      </Card>
-    </AppContentWrapper>
+        <TwoFAALert />
+      </Box>
+    </Grid>
   )
 }

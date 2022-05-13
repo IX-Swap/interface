@@ -35,6 +35,7 @@ export const IdentityRoute = {
     'identityId',
     'view'
   ]),
+
   editCorporate: makeURL([
     'app',
     'identity',
@@ -43,6 +44,7 @@ export const IdentityRoute = {
     'identityId',
     'edit'
   ]),
+  identitySuccess: makeURL(['app', 'identity', 'success']),
   createIssuer: '/app/identity/corporates/create-issuer',
   viewIssuer: '/app/identity/corporates/:userId/:identityId/view-issuer',
   editIssuer: '/app/identity/corporates/:userId/:identityId/edit-issuer',
