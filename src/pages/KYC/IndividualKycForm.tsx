@@ -1,8 +1,8 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect, useReducer, useRef } from 'react'
 import styled from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { Formik } from 'formik'
-import { useHistory } from 'react-router-dom'
+import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
@@ -58,6 +58,7 @@ export const FormContainer = styled(FormWrapper)`
 `
 
 export default function IndividualKycForm() {
+  const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
@@ -165,9 +166,7 @@ export default function IndividualKycForm() {
 
   const goBack = (e?: any) => {
     if (e) e.preventDefault()
-    if (confirm(promptValue)) {
-      history.push('/kyc')
-    }
+    history.push('/kyc')
   }
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
@@ -205,6 +204,7 @@ export default function IndividualKycForm() {
 
   return (
     <Loadable loading={!isLoggedIn}>
+      <Prompt when={!canLeavePage.current} message={promptValue} />
       <LoadingIndicator isLoading={loadingRequest} />
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         <ButtonText
@@ -234,6 +234,7 @@ export default function IndividualKycForm() {
               individualErrorsSchema
                 .validate(values, { abortEarly: false })
                 .then(async () => {
+                  canLeavePage.current = true
                   setCanSubmit(false)
                   const body = individualTransformKycDto(values)
                   let data: any = null
@@ -276,6 +277,7 @@ export default function IndividualKycForm() {
                   setIsSubmittedOnce(true)
                   setErrors(newErrors)
                   setCanSubmit(false)
+                  canLeavePage.current = false
                 })
             }}
           >
