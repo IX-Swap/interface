@@ -1,13 +1,25 @@
 import React from 'react'
-import { Trans } from '@lingui/macro'
+import { isFirefox } from 'react-device-detect'
 import styled from 'styled-components'
+import { Trans } from '@lingui/macro'
+import FileViewer from 'react-file-viewer'
+import { Download } from 'react-feather'
+
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, EllipsisText } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { Download } from 'react-feather'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradient } from 'components/Button'
 import { AcceptFiles } from 'components/Upload/types'
-import FileViewer from 'react-file-viewer'
+
+export const Image = styled.img`
+  max-width: 100%;
+
+  ${!isFirefox
+    ? `
+    max-height: 100%;
+  `
+    : ``}
+`
 
 interface Props {
   isOpen: boolean
@@ -48,7 +60,7 @@ export const KycDocPreviewModal = ({ isOpen, onClose, data, downloadFile }: Prop
                       <FileViewer fileType="pdf" filePath={asset.public} />
                     </div>
                   ) : (
-                    <img key={id} style={{ maxWidth: '100%', maxHeight: '100%' }} src={asset.public} alt="" />
+                    <Image key={id} src={asset.public} alt="" />
                   )}
                 </>
               ))}
