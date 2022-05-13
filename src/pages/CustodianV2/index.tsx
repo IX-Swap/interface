@@ -46,6 +46,7 @@ export default function CustodianV2() {
     }
     if (isLoggedIn) {
       fetchMyTokens()
+      setNoFilteredTokens([])
     }
   }, [userAccount, isLoggedIn])
 
