@@ -250,6 +250,9 @@ export const darkTheme: DeprecatedThemeOptions = {
         light: '#AADF70',
         contrastText: '#FFF'
       }
-    })
+    }),
+    header: {
+      bg: '#132A57'
+    }
   }
 }

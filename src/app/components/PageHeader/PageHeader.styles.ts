@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(0.5)
   },
   header: {
-    marginBottom: theme.spacing(2)
+    marginBottom: 8
   },
   container: {
     marginBottom: theme.spacing(3)
@@ -17,32 +17,20 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     position: `relative`,
-    background: 'rgba(255, 255, 255, 0.75)',
+    background: theme.palette.header.bg,
     border: 'none',
-    height: '120px',
-    width: '100vw',
-    left: `50%`,
-    right: `50%`,
-    marginLeft: `-50vw`,
-    marginRight: `-50vw`,
-    marginTop: `-1vw`,
-    padding: `3% 16% 10% 16%`,
-    marginBottom: `3vw`,
-
-    [theme.breakpoints.down('md')]: {
-      width: `102vw`
-    },
-
-    [theme.breakpoints.down('sm')]: {
-      width: `125vw`
-    },
-
-    [theme.breakpoints.down('600')]: {
-      width: `105vw`
-    },
-
-    [theme.breakpoints.down('400')]: {
-      width: `31rem`
-    }
+    marginTop: '1rem',
+    marginBottom: '1rem',
+    maxHeight: 120,
+    paddingTop: 30,
+    paddingBottom: 33,
+    width: '100%'
+  },
+  title: {
+    fontSize: 24,
+    height: 29
+  },
+  crumbs: {
+    height: 24
   }
 }))

@@ -91,6 +91,10 @@ export interface SkeletonPalette {
   bg: string
 }
 
+export interface HeaderPalette {
+  bg: string
+}
+
 export interface Alerts {
   bg: CSSProperties['color']
   color: CSSProperties['color']
@@ -242,6 +246,7 @@ declare module '@mui/material/styles' {
     select: SelectPalette
     dropdownLink: DropdownLink
     notificationsDropdown: NotificationsDropdown
+    header: HeaderPalette
     otpInput: OtpInput
   }
 
@@ -288,6 +293,7 @@ declare module '@mui/material/styles' {
     select: SelectPalette
     dropdownLink: DropdownLink
     notificationsDropdown: NotificationsDropdown
+    header: HeaderPalette
     otpInput: OtpInput
   }
 

@@ -256,6 +256,9 @@ export const lightTheme: DeprecatedThemeOptions = {
         light: '#AADF70',
         contrastText: '#FFF'
       }
-    })
+    }),
+    header: {
+      bg: 'rgba(255, 255, 255, 0.75)'
+    }
   }
 }

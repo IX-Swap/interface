@@ -14,17 +14,13 @@ import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
 import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
-import { RootContainer } from 'ui/RootContainer'
-import { privateClassNames } from 'helpers/classnames'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
 
 export const AdminRouter = () => {
   return (
     <Switch>
       <AppRoute breadcrumb='Users' path={AdminRoute.users}>
-        <RootContainer className={privateClassNames()}>
-          <UserRouter />
-        </RootContainer>
+        <UserRouter />
       </AppRoute>
 
       <AppRoute
@@ -32,33 +28,25 @@ export const AdminRouter = () => {
         exact
         path={AdminRoute.accessReports}
       >
-        <RootContainer className={privateClassNames()}>
-          <AccessReports />
-        </RootContainer>
+        <AccessReports />
       </AppRoute>
 
       <AppRoute
         path={AdminRoute.viewIndividualIdentity}
         breadcrumb='View Individual Identity'
       >
-        <RootContainer className={privateClassNames()}>
-          <ViewIndividualIdentity />
-        </RootContainer>
+        <ViewIndividualIdentity />
       </AppRoute>
 
       <AppRoute
         path={AdminRoute.viewCorporateIdentity}
         breadcrumb='View Corporate Identity'
       >
-        <RootContainer className={privateClassNames()}>
-          <ViewCorporateIdentity />
-        </RootContainer>
+        <ViewCorporateIdentity />
       </AppRoute>
 
       <AppRoute path={AdminRoute.identities} breadcrumb='Identities'>
-        <RootContainer className={privateClassNames()}>
-          <Identities />
-        </RootContainer>
+        <Identities />
       </AppRoute>
 
       <AppRoute
@@ -66,9 +54,7 @@ export const AdminRouter = () => {
         path={AdminRoute.virtualAccount}
         breadcrumb='Virtual Accounts'
       >
-        <RootContainer className={privateClassNames()}>
-          <VirtualAccounts />
-        </RootContainer>
+        <VirtualAccounts />
       </AppRoute>
 
       <AppRoute
@@ -76,15 +62,11 @@ export const AdminRouter = () => {
         path={AdminRoute.masDisclosure}
         breadcrumb='MAS Disclosure'
       >
-        <RootContainer className={privateClassNames()}>
-          <MasDisclosure />
-        </RootContainer>
+        <MasDisclosure />
       </AppRoute>
 
       <AppRoute path={AdminRoute.banner} breadcrumb='Banner'>
-        <RootContainer className={privateClassNames()}>
-          <Banner />
-        </RootContainer>
+        <Banner />
       </AppRoute>
 
       <AppRoute
@@ -92,9 +74,7 @@ export const AdminRouter = () => {
         path={AdminRoute.virtualAccountTransactions}
         breadcrumb='VA Transactions'
       >
-        <RootContainer className={privateClassNames()}>
-          <VirtualAccountTransactions />
-        </RootContainer>
+        <VirtualAccountTransactions />
       </AppRoute>
 
       <AppRoute
@@ -102,9 +82,7 @@ export const AdminRouter = () => {
         path={AdminRoute.virtualAccountAudit}
         breadcrumb='VA Audit'
       >
-        <RootContainer className={privateClassNames()}>
-          <VirtualAccountAudit />
-        </RootContainer>
+        <VirtualAccountAudit />
       </AppRoute>
 
       <AppRoute
@@ -119,15 +97,11 @@ export const AdminRouter = () => {
         path={AdminRoute.custodyManagement}
         breadcrumb='Custody Management'
       >
-        <RootContainer className={privateClassNames()}>
-          <CustodyManagementRouter />
-        </RootContainer>
+        <CustodyManagementRouter />
       </AppRoute>
 
       <AppRoute path={AdminRoute.landing}>
-        <RootContainer className={privateClassNames()}>
-          <LandingPage links={adminLandingLinks} title='Admin' />
-        </RootContainer>
+        <LandingPage links={adminLandingLinks} title='Admin' />
       </AppRoute>
     </Switch>
   )

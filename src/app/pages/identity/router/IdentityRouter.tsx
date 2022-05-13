@@ -12,21 +12,15 @@ export const IdentityRouter = () => {
   return (
     <Switch>
       <AppRoute path={IdentityRoute.individual}>
-        <RootContainer>
-          <IndividualRouter />
-        </RootContainer>
+        <IndividualRouter />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.corporate}>
-        <RootContainer>
-          <CorporateRouter />
-        </RootContainer>
+        <CorporateRouter />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.issuance}>
-        <RootContainer>
-          <DetailsOfIssuanceRouter />
-        </RootContainer>
+        <DetailsOfIssuanceRouter />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.list}>

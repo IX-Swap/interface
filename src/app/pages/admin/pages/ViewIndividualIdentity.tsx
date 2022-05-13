@@ -10,6 +10,7 @@ import React from 'react'
 import { getIdFromObj, getPersonName } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { RootContainer } from 'ui/RootContainer'
 
 export interface IndividualIdentityDisplayProps {
   data: IndividualIdentity
@@ -22,33 +23,35 @@ export const IndividualIdentityDisplay = ({
   const adminId = getIdFromObj(user)
 
   return (
-    <Grid container>
+    <Grid container style={{ display: 'table' }}>
       <Grid item xs={12}>
         <PageHeader title={getPersonName(data)} />
       </Grid>
-      <Grid item xs={12}>
-        <RejectionMessage data={data} />
-      </Grid>
-      <Grid
-        container
-        item
-        xs={12}
-        justifyContent='flex-end'
-        alignItems='center'
-      >
-        {adminId === data.createdBy ? (
-          <EditButton
-            link={AdminRoute.createIndividualIdentity}
-            params={{ userId: data.user._id }}
-          />
-        ) : null}
-      </Grid>
-      <Grid item container xs={12}>
-        <VSpacer size='small' />
-      </Grid>
-      <Grid item xs={12}>
-        <IndividualIdentityView data={data} />
-      </Grid>
+      <RootContainer>
+        <Grid item xs={12}>
+          <RejectionMessage data={data} />
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          justifyContent='flex-end'
+          alignItems='center'
+        >
+          {adminId === data.createdBy ? (
+            <EditButton
+              link={AdminRoute.createIndividualIdentity}
+              params={{ userId: data.user._id }}
+            />
+          ) : null}
+        </Grid>
+        <Grid item container xs={12}>
+          <VSpacer size='small' />
+        </Grid>
+        <Grid item xs={12}>
+          <IndividualIdentityView data={data} />
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }
