@@ -19,6 +19,7 @@ import { useParams } from 'react-router-dom'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { IssuanceLandingCard } from 'ui/SecondaryCard'
+import { RootContainer } from 'ui/RootContainer'
 
 export const IssuanceLanding = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
@@ -36,101 +37,121 @@ export const IssuanceLanding = () => {
   return (
     <>
       <PageHeader title={data?.tokenName} showBreadcrumbs={false} />
-      <Grid
-        container
-        spacing={3}
-        justifyContent='space-between'
-        wrap={!isTablet ? 'wrap' : 'wrap-reverse'}
-      >
+      <RootContainer>
         <Grid
-          item
           container
-          direction='row'
-          spacing={isTablet ? 0 : 3}
-          xs={12}
-          md={8}
+          spacing={3}
+          justifyContent='space-between'
+          wrap={!isTablet ? 'wrap' : 'wrap-reverse'}
         >
-          <Grid item xs={12} md={4} lg={4}>
-            <IssuanceLandingCard variant='outlined'>
-              <TotalInvestors />
-            </IssuanceLandingCard>
-          </Grid>
-
-          {divider}
-
-          <Grid item xs={12} md={4} lg={4}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
-              <AmountRaised />
-            </IssuanceLandingCard>
-          </Grid>
-
-          {divider}
-
-          <Grid item xs={12} md={4} lg={4}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
-              <TargetFundraise />
-            </IssuanceLandingCard>
-          </Grid>
-
-          {divider}
-
-          <Grid item xs={12} lg={8}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
-              <InvestmentGrowthChart />
-            </IssuanceLandingCard>
-          </Grid>
-
-          {divider}
-
-          <Grid item xs={12} lg={4}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
-              <TopInvestors />
-            </IssuanceLandingCard>
-          </Grid>
-
-          {divider}
-
-          <Grid item xs={12} lg={6}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
-              <CommitmentStatsChart />
-            </IssuanceLandingCard>
-          </Grid>
-
-          {divider}
-
-          <Grid item xs={12} lg={6}>
-            <IssuanceLandingCard variant='outlined' style={{ height: '100%' }}>
-              <RegionalMap />
-            </IssuanceLandingCard>
-          </Grid>
-        </Grid>
-
-        {divider}
-
-        <Grid container item xs={12} md={4}>
           <Grid
-            component={IssuanceLandingCard}
-            container
             item
+            container
+            direction='row'
+            spacing={isTablet ? 0 : 3}
             xs={12}
-            direction='column'
-            justifyContent={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
-            variant='outlined'
-            style={{ padding: theme.spacing(4) }}
+            md={8}
           >
-            <DSOInfo />
-            <CountdownTimer />
-            <DSOFilter />
-            <MoreOptions />
+            <Grid item xs={12} md={4} lg={4}>
+              <IssuanceLandingCard variant='outlined'>
+                <TotalInvestors />
+              </IssuanceLandingCard>
+            </Grid>
+
+            {divider}
+
+            <Grid item xs={12} md={4} lg={4}>
+              <IssuanceLandingCard
+                variant='outlined'
+                style={{ height: '100%' }}
+              >
+                <AmountRaised />
+              </IssuanceLandingCard>
+            </Grid>
+
+            {divider}
+
+            <Grid item xs={12} md={4} lg={4}>
+              <IssuanceLandingCard
+                variant='outlined'
+                style={{ height: '100%' }}
+              >
+                <TargetFundraise />
+              </IssuanceLandingCard>
+            </Grid>
+
+            {divider}
+
+            <Grid item xs={12} lg={8}>
+              <IssuanceLandingCard
+                variant='outlined'
+                style={{ height: '100%' }}
+              >
+                <InvestmentGrowthChart />
+              </IssuanceLandingCard>
+            </Grid>
+
+            {divider}
+
+            <Grid item xs={12} lg={4}>
+              <IssuanceLandingCard
+                variant='outlined'
+                style={{ height: '100%' }}
+              >
+                <TopInvestors />
+              </IssuanceLandingCard>
+            </Grid>
+
+            {divider}
+
+            <Grid item xs={12} lg={6}>
+              <IssuanceLandingCard
+                variant='outlined'
+                style={{ height: '100%' }}
+              >
+                <CommitmentStatsChart />
+              </IssuanceLandingCard>
+            </Grid>
+
+            {divider}
+
+            <Grid item xs={12} lg={6}>
+              <IssuanceLandingCard
+                variant='outlined'
+                style={{ height: '100%' }}
+              >
+                <RegionalMap />
+              </IssuanceLandingCard>
+            </Grid>
+          </Grid>
+
+          {divider}
+
+          <Grid container item xs={12} md={4}>
+            <Grid
+              component={IssuanceLandingCard}
+              container
+              item
+              xs={12}
+              direction='column'
+              justifyContent={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
+              variant='outlined'
+              style={{ padding: theme.spacing(4) }}
+            >
+              <DSOInfo />
+              <CountdownTimer />
+              <DSOFilter />
+              <MoreOptions />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
 
-      <Grid container>
-        <Grid item xs={12}>
-          <Activities />
+        <Grid container>
+          <Grid item xs={12}>
+            <Activities />
+          </Grid>
         </Grid>
-      </Grid>
+      </RootContainer>
     </>
   )
 }

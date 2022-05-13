@@ -10,6 +10,7 @@ import { VSpacer } from 'components/VSpacer'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import React from 'react'
+import { RootContainer } from 'ui/RootContainer'
 
 export interface CorporateIdentityProps {
   data: CorporateIdentity
@@ -20,33 +21,35 @@ export const CorporateIdentityDisplay = ({ data }: CorporateIdentityProps) => {
   const adminId = getIdFromObj(user)
 
   return (
-    <Grid container>
+    <Grid container style={{ display: 'table' }}>
       <Grid item xs={12}>
         <PageHeader title={data.companyLegalName} />
       </Grid>
-      <Grid item xs={12}>
-        <RejectionMessage data={data} />
-      </Grid>
-      <Grid
-        xs={12}
-        container
-        item
-        justifyContent='flex-end'
-        alignItems='center'
-      >
-        {adminId === data.createdBy ? (
-          <EditButton
-            link={AdminRoute.createCorporateIdentity}
-            params={{ userId: data.user._id }}
-          />
-        ) : null}
-      </Grid>
-      <Grid item xs={12} container>
-        <VSpacer size='small' />
-      </Grid>
-      <Grid item xs={12}>
-        <CorporateIdentityView data={data} />
-      </Grid>
+      <RootContainer>
+        <Grid item xs={12}>
+          <RejectionMessage data={data} />
+        </Grid>
+        <Grid
+          xs={12}
+          container
+          item
+          justifyContent='flex-end'
+          alignItems='center'
+        >
+          {adminId === data.createdBy ? (
+            <EditButton
+              link={AdminRoute.createCorporateIdentity}
+              params={{ userId: data.user._id }}
+            />
+          ) : null}
+        </Grid>
+        <Grid item xs={12} container>
+          <VSpacer size='small' />
+        </Grid>
+        <Grid item xs={12}>
+          <CorporateIdentityView data={data} />
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

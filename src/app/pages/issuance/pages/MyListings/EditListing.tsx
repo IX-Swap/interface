@@ -16,19 +16,19 @@ export const EditListing = () => {
   const { data, isLoading } = useListingById(listingId, issuerId)
 
   return (
-    <RootContainer>
-      <Grid container direction='column'>
-        <Grid item>
-          <PageHeader
-            title={'Edit Listing'}
-            alignment='flex-start'
-            showBreadcrumbs={true}
-          />
-        </Grid>
+    <Grid container direction='column' style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader
+          title={'Edit Listing'}
+          alignment='flex-start'
+          showBreadcrumbs={true}
+        />
+      </Grid>
+      <RootContainer>
         <Grid item>
           {isLoading ? <LoadingIndicator /> : <ListingForm data={data} />}
         </Grid>
-      </Grid>
-    </RootContainer>
+      </RootContainer>
+    </Grid>
   )
 }

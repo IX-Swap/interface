@@ -9,6 +9,7 @@ import { FeesTable } from 'app/pages/accounts/pages/reports/components/FeesTable
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { RootContainer } from 'ui/RootContainer'
 
 export const AggregatedCostsAndCharges: React.FC = () => {
   const { data, isLoading } = useFeeAndCharges()
@@ -47,18 +48,19 @@ export const AggregatedCostsAndCharges: React.FC = () => {
   }
 
   return (
-    <Grid container direction={'column'}>
+    <Grid container direction={'column'} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title='Aggregated Costs and Charges' />
         <VSpacer size={'medium'} />
       </Grid>
+      <RootContainer>
+        <ReportsInfo />
 
-      <ReportsInfo />
-
-      <Grid item>
-        <VSpacer size={'medium'} />
-        {renderContent()}
-      </Grid>
+        <Grid item>
+          <VSpacer size={'medium'} />
+          {renderContent()}
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

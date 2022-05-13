@@ -66,6 +66,8 @@ export const step = (theme: Theme) => {
         '& .MuiStepButton-root': {
           paddingLeft: 0,
           paddingRight: 31,
+          paddingBottom: 0,
+          paddingTop: 0,
           margin: 0,
           boxSizing: 'border-box'
         },

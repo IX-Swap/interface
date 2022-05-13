@@ -63,6 +63,7 @@ export const InformationFields = ({
             control={control}
             variant='outlined'
             name='companyLegalName'
+            defaultValue=''
             label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
           />
         </Grid>
@@ -82,6 +83,7 @@ export const InformationFields = ({
             control={control}
             variant='outlined'
             name='registrationNumber'
+            defaultValue=''
             label='Registration Number/UEN'
           />
         </Grid>

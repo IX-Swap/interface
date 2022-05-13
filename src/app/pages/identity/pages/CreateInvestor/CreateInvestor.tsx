@@ -9,6 +9,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { generatePath, Redirect } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
+import { RootContainer } from 'ui/RootContainer'
 
 export interface CreateCorporateIdentityProps {
   type?: CorporateType
@@ -35,16 +36,18 @@ export const CreateCorporateIdentity = ({
   }
 
   return (
-    <Grid container>
-      <Grid item>
-        <PageHeader title={title} />
-      </Grid>
-      <Grid container item>
-        <VSpacer size='medium' />
-      </Grid>
-      <Grid item>
-        <CorporateInvestorForm type={type} formTitle={title} />
-      </Grid>
-    </Grid>
+    <>
+      <PageHeader title={title} />
+      <RootContainer>
+        <Grid container>
+          <Grid container item>
+            <VSpacer size='medium' />
+          </Grid>
+          <Grid item>
+            <CorporateInvestorForm type={type} />
+          </Grid>
+        </Grid>
+      </RootContainer>
+    </>
   )
 }
