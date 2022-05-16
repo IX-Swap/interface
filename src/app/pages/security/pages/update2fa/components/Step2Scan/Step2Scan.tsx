@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Typography, Grid } from '@mui/material'
-import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 import { TwoFaData } from 'app/pages/security/types'
-import { copyToClipboard } from 'helpers/clipboard'
+import { StepWrapper } from 'app/pages/security/components/StepWrapper'
+import { BackupKey } from 'app/pages/security/pages/update2fa/components/BackupKey/BackupKey'
 import useStyles from './Step2Scan.styles'
 
 export interface Step2ScanProps {
@@ -10,20 +10,7 @@ export interface Step2ScanProps {
 }
 
 export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
-  const [copied, setCopied] = useState(false)
-  const classes = useStyles({ image: twoFaData?.image, copied })
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout | undefined
-    if (copied) {
-      timeout = setTimeout(() => setCopied(false), 3000)
-    }
-    return () => {
-      if (timeout !== undefined) {
-        clearTimeout(timeout)
-      }
-    }
-  }, [copied])
+  const classes = useStyles({ image: twoFaData?.image })
 
   return (
     <StepWrapper
@@ -54,29 +41,7 @@ export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
               </Typography>
             </Grid>
 
-            <Grid
-              item
-              container
-              alignItems={'center'}
-              className={classes.keyBlock}
-              justifyContent={'space-between'}
-            >
-              <Grid item>
-                <Typography className={classes.key}>{twoFaData.key}</Typography>
-              </Grid>
-              <Grid item>
-                <Typography
-                  variant={'body1'}
-                  className={classes.copyButton}
-                  onClick={() => {
-                    setCopied(true)
-                    copyToClipboard(twoFaData.key)
-                  }}
-                >
-                  {copied ? 'Copied' : 'Copy'}
-                </Typography>
-              </Grid>
-            </Grid>
+            <BackupKey value={twoFaData.key} />
           </Grid>
         </Grid>
       )}
