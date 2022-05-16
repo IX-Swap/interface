@@ -22,7 +22,12 @@ export const CountrySelect = (props: CountrySelectProps): JSX.Element => {
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select {...props} label={undefined} displayEmpty>
+      <Select
+        {...props}
+        label={undefined}
+        displayEmpty
+        placeholder='Select Country'
+      >
         <SelectItem disabled value={undefined}>
           Country
         </SelectItem>

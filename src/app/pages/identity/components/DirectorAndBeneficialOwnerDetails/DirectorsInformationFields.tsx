@@ -32,6 +32,7 @@ export const DirectorsInformationFields = ({
           variant='outlined'
           name={[rootName, index, 'fullName']}
           label='Full Name'
+          placeholder='Full Name'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -43,6 +44,7 @@ export const DirectorsInformationFields = ({
           name={[rootName, index, 'designation']}
           label='Designation'
           fullWidth
+          placeholder='Add Designation'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -54,6 +56,7 @@ export const DirectorsInformationFields = ({
           name={[rootName, index, 'email']}
           label='Email Address'
           fullWidth
+          placeholder='Email Address'
         />
       </Grid>
       <Grid item xs={12} md={6}>

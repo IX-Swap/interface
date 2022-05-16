@@ -53,6 +53,8 @@ export const LegalEntityStatusSelect = (props: any) => {
           )
           return item?.label
         }}
+        displayEmpty
+        placeholder='Select Legal Entity'
       >
         <SelectItem disabled value={undefined}>
           Legal Entity
