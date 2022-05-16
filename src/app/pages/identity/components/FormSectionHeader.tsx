@@ -20,7 +20,7 @@ export const FormSectionHeader = ({
 
       {subtitle !== undefined ? (
         <Box mt={1}>
-          <Typography variant='subtitle2' color='textSecondary'>
+          <Typography fontWeight={400} variant='body1' color='textSecondary'>
             {subtitle}
           </Typography>
         </Box>
