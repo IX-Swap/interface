@@ -86,3 +86,7 @@ export const getTextWithOrWithoutColon = (text: string, hasColon: boolean) =>
 
 export const getValueOrPlaceholder = (value: string) =>
   value === undefined || value.length < 1 ? '-' : value
+
+export const isSuccessRequest = (status?: number) => {
+  return String(status).startsWith('2')
+}
