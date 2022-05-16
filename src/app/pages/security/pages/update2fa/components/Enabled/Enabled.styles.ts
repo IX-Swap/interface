@@ -1,9 +1,13 @@
 import { makeStyles } from '@mui/styles'
 
 export const useStyles = makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(0, 0, 8)
+  },
   text: {
-    maxWidth: 310,
-    margin: theme.spacing(3, 'auto', 10),
-    fontSize: 18
+    margin: theme.spacing(2, 'auto', 12.25),
+    fontSize: 16,
+    opacity: 0.8,
+    maxWidth: 484
   }
 }))

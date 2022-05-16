@@ -2,10 +2,13 @@ import React from 'react'
 import { Button, Grid } from '@mui/material'
 import { useStyles } from 'app/pages/security/components/ChangeStepButtons/ChangeStepButtons.styles'
 import classnames from 'classnames'
+import { history } from 'config/history'
+import { SecurityRoute } from 'app/pages/security/router/config'
 
 export interface ChangeStepButtonsProps {
   isBackButtonVisible: boolean
   isNextButtonVisible: boolean
+  isContinueButtonVisible?: boolean
   onBackButtonClick: () => void
   onNextButtonClick: () => void
 }
@@ -13,6 +16,7 @@ export interface ChangeStepButtonsProps {
 export const ChangeStepButtons = ({
   isBackButtonVisible,
   isNextButtonVisible,
+  isContinueButtonVisible = false,
   onBackButtonClick,
   onNextButtonClick
 }: ChangeStepButtonsProps) => {
@@ -49,6 +53,18 @@ export const ChangeStepButtons = ({
             onClick={onNextButtonClick}
           >
             Next
+          </Button>
+        </Grid>
+      )}
+
+      {isContinueButtonVisible && (
+        <Grid item>
+          <Button
+            color={'primary'}
+            variant={'contained'}
+            onClick={() => history.push(SecurityRoute.landing)}
+          >
+            Continue
           </Button>
         </Grid>
       )}
