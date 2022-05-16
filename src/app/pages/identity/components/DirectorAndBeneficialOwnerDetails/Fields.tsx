@@ -59,6 +59,9 @@ export const Fields = ({
               onClick={handleRemove}
               size='large'
               data-testid='delete-button'
+              sx={{
+                borderRadius: 2
+              }}
             >
               <Icon name='trash' />
             </IconButton>
