@@ -8,8 +8,8 @@ export const useStyles = makeStyles(theme => ({
       width: '100%'
     }
   },
-  firstButton: {
-    marginRight: theme.spacing(2)
+  secondButton: {
+    marginLight: theme.spacing(2)
   },
   button: {
     width: 140,

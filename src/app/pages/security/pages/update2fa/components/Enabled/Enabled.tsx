@@ -7,6 +7,7 @@ import { useStyles } from './Enabled.styles'
 
 export const Enabled = () => {
   const classes = useStyles()
+
   return (
     <Grid container direction='column' alignItems='center'>
       <Grid item container alignItems={'center'} justifyContent={'center'}>

@@ -1,30 +1,34 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
-import { OTPField } from 'components/form/OTPField'
 import { useFormContext } from 'react-hook-form'
 import { plainValueExtractor } from 'helpers/forms'
 import { Box } from '@mui/material'
 import { Submit } from 'components/form/Submit'
+import { OTPInputField } from 'ui/OTPInputField/OTPInputField'
+import { useStyles } from './EnableFormFields.styles'
 
 export const EnableFormFields = () => {
   const { control, watch } = useFormContext()
   const otp = watch('otp')
   const isSubmitDisabled = otp.length < 6
+  const classes = useStyles()
 
   return (
     <>
       <TypedField
+        isInputNum
         control={control}
-        customRenderer
-        component={OTPField}
+        component={OTPInputField}
         name='otp'
-        label=''
-        variant='standard'
+        variant='outlined'
         valueExtractor={plainValueExtractor}
+        numInputs={6}
         shouldAutoFocus
       />
-      <Box my={4} width='100%' textAlign='center'>
-        <Submit disabled={isSubmitDisabled}>Enable</Submit>
+      <Box width='100%' textAlign='center'>
+        <Submit disabled={isSubmitDisabled} className={classes.button}>
+          Enable and Continue
+        </Submit>
       </Box>
     </>
   )

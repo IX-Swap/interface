@@ -31,7 +31,7 @@ export const ChangeStepButtons = ({
             variant='outlined'
             color='primary'
             disableElevation
-            className={classnames(classes.button, classes.firstButton)}
+            className={classes.button}
             onClick={onBackButtonClick}
           >
             Back
@@ -45,7 +45,7 @@ export const ChangeStepButtons = ({
             variant='contained'
             color='primary'
             disableElevation
-            className={classes.button}
+            className={classnames(classes.button, classes.secondButton)}
             onClick={onNextButtonClick}
           >
             Next
