@@ -3,7 +3,15 @@ import { useSingPassAuthorise } from 'hooks/auth/useSingPassAuthorise'
 import React, { useState } from 'react'
 import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
 
-export const RetrieveButton = () => {
+export interface RetrieveButtonProps {
+  hideCheckBox?: boolean
+  label?: string
+}
+
+export const RetrieveButton = ({
+  hideCheckBox = false,
+  label = ' Retrieve Myinfo with Singpass'
+}: RetrieveButtonProps) => {
   const { authoriseUrl } = useSingPassAuthorise()
 
   const [checked, setCheked] = useState(false)
@@ -13,22 +21,25 @@ export const RetrieveButton = () => {
 
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12}>
-        <FormControlLabel
-          sx={{
-            '.MuiFormControlLabel-label': {
-              color: '#0E1E3F'
-            },
-            '.MuiSvgIcon-root': {
-              fill: '#DBE2EC',
-              bgcolor: 'transparent'
-            }
-          }}
-          onClick={handleClick}
-          control={<UICheckbox checked={checked} sx={{ height: 40 }} />}
-          label='Include Notice of Assessment (NOA) to verify your accredited investor status'
-        />
-      </Grid>
+      {!hideCheckBox ? (
+        <Grid item xs={12}>
+          <FormControlLabel
+            sx={{
+              '.MuiFormControlLabel-label': {
+                color: '#0E1E3F'
+              },
+              '.MuiSvgIcon-root': {
+                fill: '#DBE2EC',
+                bgcolor: 'transparent'
+              }
+            }}
+            onClick={handleClick}
+            control={<UICheckbox checked={checked} sx={{ height: 40 }} />}
+            label='Include Notice of Assessment (NOA) to verify your accredited investor status'
+          />
+        </Grid>
+      ) : null}
+
       <Grid item xs={12}>
         <Button
           sx={{
@@ -38,11 +49,11 @@ export const RetrieveButton = () => {
             }
           }}
           fullWidth
-          disabled={!checked}
+          disabled={!checked && !hideCheckBox}
           variant='contained'
           href={authoriseUrl}
         >
-          Retrieve Myinfo with Singpass
+          {label}
         </Button>
       </Grid>
     </Grid>
