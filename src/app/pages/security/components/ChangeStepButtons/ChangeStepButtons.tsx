@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Grid } from '@mui/material'
 import { useStyles } from 'app/pages/security/components/ChangeStepButtons/ChangeStepButtons.styles'
-import classnames from 'classnames'
 import { history } from 'config/history'
 import { SecurityRoute } from 'app/pages/security/router/config'
 
@@ -30,7 +29,7 @@ export const ChangeStepButtons = ({
       className={classes.container}
     >
       {isBackButtonVisible && (
-        <Grid item>
+        <Grid item className={classes.item}>
           <Button
             variant='outlined'
             color='primary'
@@ -44,12 +43,12 @@ export const ChangeStepButtons = ({
       )}
 
       {isNextButtonVisible && (
-        <Grid item>
+        <Grid item className={classes.item}>
           <Button
             variant='contained'
             color='primary'
             disableElevation
-            className={classnames(classes.button, classes.secondButton)}
+            className={classes.button}
             onClick={onNextButtonClick}
           >
             Next
@@ -58,10 +57,11 @@ export const ChangeStepButtons = ({
       )}
 
       {isContinueButtonVisible && (
-        <Grid item>
+        <Grid item className={classes.item}>
           <Button
             color={'primary'}
             variant={'contained'}
+            className={classes.button}
             onClick={() => history.push(SecurityRoute.landing)}
           >
             Continue

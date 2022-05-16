@@ -3,9 +3,10 @@ import { makeStyles } from '@mui/styles'
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     padding: theme.spacing(2, 0),
+
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column-reverse',
-      padding: theme.spacing(4, 0, 5)
+      padding: theme.spacing(4, 0, 2)
     }
   },
   leftBlock: {
@@ -14,8 +15,10 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(8, 2.5, 8),
     marginRight: theme.spacing(2.5),
     width: 'calc(100% - 316px)',
+
     [theme.breakpoints.down('md')]: {
-      width: '100%'
+      width: '100%',
+      padding: theme.spacing(2.5)
     }
   },
   rightBlock: {
@@ -24,6 +27,7 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(5, 0, 5),
     width: 296,
     height: 'max-content',
+
     [theme.breakpoints.down('md')]: {
       width: '100%',
       marginBottom: theme.spacing(3),

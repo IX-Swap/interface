@@ -27,7 +27,11 @@ export const Enabled = () => {
         </Typography>
       </Grid>
       <Grid item>
-        <img src={Enabled2FaIcon} alt={'Enabled 2FA'} />
+        <img
+          src={Enabled2FaIcon}
+          alt={'Enabled 2FA'}
+          className={classes.icon}
+        />
       </Grid>
     </Grid>
   )

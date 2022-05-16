@@ -22,7 +22,11 @@ export default makeStyles(theme => ({
   },
   key: {
     fontSize: 18,
-    fontWeight: 600
+    fontWeight: 600,
+
+    [theme.breakpoints.down('md')]: {
+      fontSize: 14
+    }
   },
   copyButton: {
     padding: theme.spacing(2),

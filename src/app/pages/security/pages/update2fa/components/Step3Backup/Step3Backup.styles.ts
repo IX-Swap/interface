@@ -8,10 +8,18 @@ export default makeStyles(theme => ({
   text: {
     margin: theme.spacing(2, 0, 27),
     fontSize: 16,
-    opacity: 0.8
+    opacity: 0.8,
+
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(3, 0, 5)
+    }
   },
   secondText: {
     marginTop: theme.spacing(27),
-    opacity: 0.8
+    opacity: 0.8,
+
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(5)
+    }
   }
 }))
