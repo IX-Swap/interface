@@ -1,48 +1,68 @@
-import { PlaywrightTestConfig, devices } from '@playwright/test'
+import { devices, PlaywrightTestConfig } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
-  workers: 1,
-  timeout: 180000,
+  /*Directory that will be recursively scanned for test files.*/
+  testDir: './__tests__/tests',
+
+  /* Opt out of parallel tests on CI. */
+  workers: 2,
+
+  /*This is a base timeout for all tests.*/
+  timeout: 180 * 1000,
+
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  forbidOnly: !!process.env.CI,
+
+  /* Take pictures if they are missing. */
   updateSnapshots: 'missing',
-  maxFailures: process.env.CI ? 20 : undefined,
-  reporter: [['allure-playwright'], ['list']],
+
+  /* Retry on CI only */
+  retries: process.env.CI ? 2 : 0,
+  /* The maximum number of test failures. After reaching this number, testing will stop and exit with an error.*/
+
+  reporter: [['html', { outputFolder: 'reports/html' }], ['list']],
   outputDir: 'reports',
+  /* Retry on CI only */
+
+  expect: {
+    /**
+     * Maximum time expect() should wait for the condition to be met.
+     */
+    timeout: 15000
+  },
+
+  globalSetup: require.resolve('./__tests__/lib/global-setup'),
+  use: {
+    headless: true,
+    viewport: { width: 1900, height: 1000 },
+    ignoreHTTPSErrors: true,
+    screenshot: 'only-on-failure',
+    trace: 'on-first-retry',
+    video: 'off',
+    httpCredentials: {
+      username: 'ixprime',
+      password: '!nv35taX2K2!*'
+    }
+  },
   projects: [
     {
       name: 'Chrome',
-      retries: 2,
-      timeout: 180000,
-      use: {
-        headless: true,
-        viewport: { width: 1900, height: 1000 },
-        ignoreHTTPSErrors: true,
-        browserName: 'chromium',
-        screenshot: 'only-on-failure',
-        trace: 'on-first-retry',
-        video: 'off',
-        httpCredentials: {
-          username: 'ixprime',
-          password: '!nv35taX2K2!*'
-        }
-      }
+      use: { browserName: 'chromium' }
+    },
+
+    {
+      name: 'Webkit',
+      use: { browserName: 'webkit' }
+    },
+
+    {
+      name: 'Firefox',
+      use: { browserName: 'firefox' }
     }
+
     // {
-    //   name: 'Webkit',
-    //   // retries: 1,
-    //   timeout: 180000,
-    //   use: {
-    //     headless: true,
-    //     viewport: { width: 1900, height: 1000 },
-    //     ignoreHTTPSErrors: true,
-    //     browserName: 'webkit',
-    //     screenshot: 'only-on-failure',
-    //     trace: 'on-first-retry',
-    //     video: 'off',
-    //     httpCredentials: {
-    //       username: 'ixprime',
-    //       password: '!nv35taX2K2!*'
-    //     }
-    //   }
+    //   name: 'iPhone',
+    //   use: { ...devices['iPhone 12 Pro Max'] }
     // }
   ]
 }
