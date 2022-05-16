@@ -4,7 +4,8 @@ export const useStyles = makeStyles(theme => ({
   wrapper: {
     padding: theme.spacing(2, 0),
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column-reverse'
+      flexDirection: 'column-reverse',
+      padding: theme.spacing(4, 0, 5)
     }
   },
   leftBlock: {

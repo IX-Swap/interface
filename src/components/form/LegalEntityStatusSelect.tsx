@@ -2,49 +2,70 @@ import React from 'react'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
-import { useFormContext } from 'react-hook-form'
+import { renderValue } from 'helpers/forms'
+import { Param } from 'types/networks'
 
 export const LEGAL_ENTITY_STATUS_LIST = [
-  { name: 'Public Company', value: 'publicCompany' },
-  { name: 'Private Company', value: 'privateCompany' },
-  { name: 'Limited Liability Company', value: 'limitedLiabilityCompany' },
-  { name: 'Partnership', value: 'partnership' },
+  { key: 'Public Company', value: 'publicCompany', _id: 'publicCompany' },
+  { key: 'Private Company', value: 'privateCompany', _id: 'privateCompany' },
   {
-    name: 'Limited Liability Partnership',
-    value: 'limitedLiabilityPartnership'
+    key: 'Limited Liability Company',
+    value: 'limitedLiabilityCompany',
+    _id: 'limitedLiabilityCompany'
   },
-  { name: 'Society', value: 'society' },
-  { name: 'Trust', value: 'trust' },
+  { key: 'Partnership', value: 'partnership', _id: 'partnership' },
+  {
+    key: 'Limited Liability Partnership',
+    value: 'limitedLiabilityPartnership',
+    _id: 'limitedLiabilityPartnership'
+  },
+  { key: 'Society', value: 'society', _id: 'society' },
+  { key: 'Trust', value: 'trust', _id: 'trust' },
 
   {
-    name: 'Exempt Private Company Limited by Shares',
-    value: 'exemptPrivateCompanyLimitedByShares'
+    key: 'Exempt Private Company Limited by Shares',
+    value: 'exemptPrivateCompanyLimitedByShares',
+    _id: 'exemptPrivateCompanyLimitedByShares'
   },
-  { name: 'Limited (LTD)', value: 'limitedLTD' },
+  { key: 'Limited (LTD)', value: 'limitedLTD', _id: 'limitedLTD' },
   {
-    name: 'Private Company Limited by Shares (LTD)',
-    value: 'privateCompanyLimitedBySharesLTD'
-  },
-  { name: 'Proprietary Limited (PTY LTD)', value: 'proprietaryLimitedPTYLTD' },
-  {
-    name: 'Public Company Limited by Guarantee',
-    value: 'publicCompanyLimitedByGuarantee'
+    key: 'Private Company Limited by Shares (LTD)',
+    value: 'privateCompanyLimitedBySharesLTD',
+    _id: 'privateCompanyLimitedBySharesLTD'
   },
   {
-    name: 'Public Company Limited by Shares',
-    value: 'publicCompanyLimitedByShares'
+    key: 'Proprietary Limited (PTY LTD)',
+    value: 'proprietaryLimitedPTYLTD',
+    _id: 'proprietaryLimitedPTYLTD'
   },
-  { name: 'Public Limited Company (PLC)', value: 'publicLimitedCompanyPLC' },
+  {
+    key: 'Public Company Limited by Guarantee',
+    value: 'publicCompanyLimitedByGuarantee',
+    _id: 'publicCompanyLimitedByGuarantee'
+  },
+  {
+    key: 'Public Company Limited by Shares',
+    value: 'publicCompanyLimitedByShares',
+    _id: 'publicCompanyLimitedByShares'
+  },
+  {
+    key: 'Public Limited Company (PLC)',
+    value: 'publicLimitedCompanyPLC',
+    _id: 'publicLimitedCompanyPLC'
+  },
 
-  { name: 'Others (Please specify)', value: 'others' }
+  { key: 'Others (Please specify)', value: 'others', _id: 'others' }
 ]
 
 export const LegalEntityStatusSelect = (props: any) => {
-  const { watch } = useFormContext()
-  const legalEntityStatus = watch('legalEntityStatus')
-  const selectValue = LEGAL_ENTITY_STATUS_LIST.find(
-    item => item.value === legalEntityStatus
-  )?.name
+  const renderName = (value: any) => {
+    return renderValue({
+      value,
+      list: LEGAL_ENTITY_STATUS_LIST,
+      extractor: (item: Param) => item.key
+    })
+  }
+
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
@@ -52,15 +73,15 @@ export const LegalEntityStatusSelect = (props: any) => {
         {...props}
         style={{ minWidth: 100 }}
         label={undefined}
-        value={selectValue}
+        renderValue={renderName}
       >
         <SelectItem disabled value={undefined}>
           Legal Entity
         </SelectItem>
-        {LEGAL_ENTITY_STATUS_LIST.map(({ value, name }) => {
+        {LEGAL_ENTITY_STATUS_LIST.map(({ value, key }) => {
           return (
             <SelectItem value={value} key={value}>
-              {name}
+              {key}
             </SelectItem>
           )
         })}

@@ -22,6 +22,7 @@ export const InvestorCommitmentTable = () => {
     <Grid container direction='column' spacing={3}>
       <Grid item>
         <PageHeader
+          styled={false}
           title={'Investor Commitments'}
           variant={'h3'}
           showBreadcrumbs={false}

@@ -5,6 +5,7 @@ import React from 'react'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useParams } from 'react-router-dom'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
+import { RootContainer } from 'ui/RootContainer'
 
 export const CreateIssuerAsAdmin = () => {
   const params = useParams<{ userId: string }>()
@@ -15,16 +16,18 @@ export const CreateIssuerAsAdmin = () => {
   }
 
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title={data.name} />
       </Grid>
-      <Grid container item>
-        <VSpacer size='medium' />
-      </Grid>
-      <Grid item>
-        <AdminCorporateIssuerForm />
-      </Grid>
+      <RootContainer>
+        <Grid container item>
+          <VSpacer size='medium' />
+        </Grid>
+        <Grid item>
+          <AdminCorporateIssuerForm />
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }
