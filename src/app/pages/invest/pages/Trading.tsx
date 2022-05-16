@@ -17,10 +17,11 @@ export const Trading = () => {
   }
 
   if (isPairIdFalsy(pairId)) {
-    const firstPair = data.list[0]
+    // TODO use the featured token
+    const firstPair = data.list[7]
     const to =
       firstPair !== undefined
-        ? generatePath(InvestRoute.trading, { pairId: data?.list[0]?._id })
+        ? generatePath(InvestRoute.trading, { pairId: data?.list[7]?._id })
         : InvestRoute.tradingRoot
 
     return <Redirect to={to} />

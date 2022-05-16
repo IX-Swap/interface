@@ -1,4 +1,6 @@
 import { Box, Button, ButtonProps } from '@mui/material'
+import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
+import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
 import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
 
@@ -9,8 +11,14 @@ export const ConfirmOTCOrderButton = ({
   order,
   ...rest
 }: ConfirmOTCOrderButtonProps) => {
+  const { chainId } = usePairTokenAddressNetwork()
+  // TODO: replace with token address
+  const sendToken = useSendToken({
+    address: '0x91BC44e284Fe08Fe5A6550664F93Eca897930A82',
+    tokenChainId: chainId
+  })
   const handleClick = async () => {
-    console.log('confirm!!!')
+    await sendToken(order.ethAddress, order.amount)
   }
 
   return (

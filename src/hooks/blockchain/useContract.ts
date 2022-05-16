@@ -103,7 +103,7 @@ export function getContractInstance({
   }
 }
 
-export function useTokenContract(
+export function useErc20Contract(
   tokenAddress?: string,
   withSignerIfPossible?: boolean
 ) {

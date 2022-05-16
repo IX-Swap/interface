@@ -9,7 +9,9 @@ export interface OTCOrderActionsProps {
 }
 
 export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
-  if (item.status !== OTCOrderStatus.MATCH) {
+  const showButtons =
+    item.status === OTCOrderStatus.MATCH && item.orderType === 'SELL'
+  if (!showButtons) {
     return <></>
   }
   return (

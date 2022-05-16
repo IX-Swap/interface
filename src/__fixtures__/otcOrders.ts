@@ -9,7 +9,7 @@ export const orders: OTCOrder[] = [
     price: 8500,
     amount: 1,
     status: OTCOrderStatus.CONFIRMED,
-    ethAddress: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962'
+    ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
   },
   {
     _id: '609d1d93c54af74af46c027d',
@@ -19,7 +19,7 @@ export const orders: OTCOrder[] = [
     price: 8500,
     amount: 1,
     status: OTCOrderStatus.CONFIRMED,
-    ethAddress: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962'
+    ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
   },
   {
     _id: '609d1d93c54af74af46c027e',
@@ -29,6 +29,6 @@ export const orders: OTCOrder[] = [
     price: 8500,
     amount: 1,
     status: OTCOrderStatus.MATCH,
-    ethAddress: '0xceD04c7926eA0a240e1fC5FD2BeFDAB924F26962'
+    ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
   }
 ]

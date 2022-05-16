@@ -57,6 +57,12 @@ export const CHAIN_INFO: ChainInfoMap = {
     nativeCurrency: { name: 'Kovan ETH', symbol: 'kovETH', decimals: 18 },
     logoUrl: ethereumLogoUrl
   },
+  [SupportedChainId.RINKEBY]: {
+    blockExplorerUrls: ['https://rinkeby.etherscan.io/'],
+    chainName: 'Rinkeby',
+    nativeCurrency: { name: 'Rinkeby ETH', symbol: 'rinETH', decimals: 18 },
+    logoUrl: ethereumLogoUrl
+  },
   [SupportedChainId.KOVAN]: {
     blockExplorerUrls: ['https://kovan.etherscan.io/'],
     chainName: 'Kovan',
