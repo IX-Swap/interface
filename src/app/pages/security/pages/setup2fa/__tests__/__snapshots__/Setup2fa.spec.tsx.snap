@@ -338,13 +338,13 @@ exports[`Setup2fa should match snapshot 1`] = `
               class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1s324r5-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container makeStyles-container-3 css-1bizp5f-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <button
-                    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root  css-gbhykm-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root makeStyles-button-5 makeStyles-secondButton-4 css-gbhykm-MuiButtonBase-root-MuiButton-root"
                     tabindex="0"
                     type="button"
                   >

@@ -2,6 +2,14 @@ import React from 'react'
 import { render } from 'test-utils'
 import { Step3Backup } from 'app/pages/security/pages/update2fa/components/Step3Backup/Step3Backup'
 import { fakeTwoFaData } from '__fixtures__/security'
+import { BackupKey } from 'app/pages/security/pages/update2fa/components/BackupKey/BackupKey'
+
+jest.mock(
+  'app/pages/security/pages/update2fa/components/BackupKey/BackupKey',
+  () => ({
+    BackupKey: jest.fn(() => null)
+  })
+)
 
 describe('Step3Backup', () => {
   afterEach(async () => {
@@ -14,7 +22,10 @@ describe('Step3Backup', () => {
   })
 
   it('renders 2fa key', () => {
-    const { getByTestId } = render(<Step3Backup twoFaData={fakeTwoFaData} />)
-    expect(getByTestId('key')).toHaveTextContent(fakeTwoFaData.key)
+    render(<Step3Backup twoFaData={fakeTwoFaData} />)
+    expect(BackupKey).toHaveBeenCalledWith(
+      expect.objectContaining({ value: fakeTwoFaData.key }),
+      {}
+    )
   })
 })

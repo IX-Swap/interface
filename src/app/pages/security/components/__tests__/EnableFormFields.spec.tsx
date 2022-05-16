@@ -22,8 +22,7 @@ describe('EnableFormFields', () => {
 
     expect(TypedField).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: 'otp',
-        label: ''
+        name: 'otp'
       }),
       {}
     )
