@@ -74,6 +74,7 @@ export const Actions = ({ item }: ActionsProps) => {
               variant='body1'
               align='center'
               style={{ marginBottom: 24 }}
+              color='GrayText'
             >
               You will no longer be able to do transactions from this bank
               account

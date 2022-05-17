@@ -1,9 +1,10 @@
 import {
-  Box,
+  Grid,
   DialogContent,
   DialogActions,
   Typography,
-  Button
+  Button,
+  DialogTitle
 } from '@mui/material'
 import React from 'react'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
@@ -22,30 +23,33 @@ export const IdentitySubmitConfirmationDialog = ({
   }
 
   return (
-    <UIDialog open={open}>
-      <Box p={6}>
-        <Typography variant='h5' style={{ textAlign: 'center' }}>
+    <UIDialog open={open} maxWidth='md'>
+      <DialogTitle>
+        <Typography variant='h2' style={{ textAlign: 'center' }}>
           Thanks For Submitting Your Identity!
         </Typography>
-        <DialogContent>
-          <Typography>
-            You will receive an e-mail shortly confirming your identity status.
-          </Typography>
-        </DialogContent>
-        <DialogActions
-          style={{ display: 'flex', paddingTop: 30, justifyContent: 'center' }}
-        >
+      </DialogTitle>
+      <DialogContent>
+        <Typography color='gray' align='center'>
+          You will receive an e-mail shortly confirming your identity status.
+        </Typography>
+      </DialogContent>
+      <DialogActions
+        style={{ display: 'flex', paddingTop: 30, justifyContent: 'center' }}
+      >
+        <Grid container>
           <Button
-            variant='contained'
+            fullWidth
+            variant='alternate'
             color='primary'
             disableRipple
             disableElevation
             onClick={handleClick}
           >
-            OK
+            Okay
           </Button>
-        </DialogActions>
-      </Box>
+        </Grid>
+      </DialogActions>
     </UIDialog>
   )
 }

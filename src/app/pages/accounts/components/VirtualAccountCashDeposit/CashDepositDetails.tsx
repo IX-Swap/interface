@@ -11,7 +11,7 @@ export const CashDepositDetails = ({ data }: CashDepositDetailsProps) => {
     <>
       {data.map(item => (
         <Grid item xs={12} sm={6}>
-          <LabelledValue {...item} />
+          <LabelledValue labelColor='gray' {...item} />
         </Grid>
       ))}
     </>

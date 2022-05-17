@@ -34,16 +34,12 @@ export default makeStyles(theme => ({
     top: theme.spacing(1.8),
     right: theme.spacing(2),
     opacity: 0.6,
-    color: theme.palette.getContrastText(theme.palette.primary.main)
+    color: '#ffff'
   },
   actions: {
-    paddingLeft: '5em',
-    paddingRight: '5em',
-    paddingTop: 0,
-    paddingBottom: 0,
-    marginBottom: theme.spacing(3),
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   },
   multiEmail: {
     position: 'relative',
@@ -69,11 +65,12 @@ export default makeStyles(theme => ({
     }
   },
   emailItem: {
-    borderRadius: '54px!important',
-    backgroundColor: '#F0F0F0!important'
+    borderRadius: '4px!important',
+    background: '#4C88FF !important',
+    color: '#ffff'
   },
   removeItem: {
-    backgroundColor: '#C4C4C4!important',
+    backgroundColor: '#4C88FF!important',
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -81,7 +78,10 @@ export default makeStyles(theme => ({
     fontSize: 17,
     color: '#F0F0F0!important',
     width: 14,
-    height: 14
+    height: 14,
+    '& svg': {
+      fill: '#ffff'
+    }
   },
   buttonsBlock: {
     marginLeft: '0!important',

@@ -16,6 +16,7 @@ import { ReactMultiEmail, isEmail } from 'react-multi-email'
 import 'react-multi-email/style.css'
 import { useCapitalCall } from 'app/pages/issuance/hooks/useCapitalCall'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -64,16 +65,18 @@ export const CapitalCallDialog = (props: ModalProps) => {
         </Typography>
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <Typography variant={'body1'} align={'left'}>
+        <Typography color='GrayText' variant={'body1'} align={'left'}>
           You can enter multiple email address of “Not Funded” investors. Email
           will be sent to notify them.
         </Typography>
       </DialogContent>
       <DialogActions className={classes.actions}>
+        <Box ml={1} mb={1}>
+          <Typography>Enter email</Typography>
+        </Box>
         <ReactMultiEmail
           className={classes.multiEmail}
           emails={emails}
-          placeholder={'Enter Email'}
           onChange={(_emails: string[]) => {
             setEmails(_emails)
           }}
@@ -92,11 +95,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
                 key={index}
                 className={classes.emailItem}
               >
-                <Typography
-                  variant={'body1'}
-                  component='div'
-                  color={'textPrimary'}
-                >
+                <Typography variant={'body1'} component='div' color='white'>
                   {email}
                 </Typography>
                 <Box
@@ -106,7 +105,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
                   style={{ fontWeight: 400 }}
                   onClick={() => removeEmail(index)}
                 >
-                  ×
+                  <Icon name='close' />
                 </Box>
               </Box>
             )
@@ -116,24 +115,32 @@ export const CapitalCallDialog = (props: ModalProps) => {
           container
           justifyContent={'flex-end'}
           className={classes.buttonsBlock}
+          spacing={2}
         >
-          <Button
-            variant={'outlined'}
-            color={'primary'}
-            className={classes.cancelButton}
-            onClick={() => toggleOpen()}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant={'contained'}
-            color={'primary'}
-            className={classes.confirmButton}
-            disabled={isLoading || !(emails.length > 0)}
-            onClick={handleSubmit}
-          >
-            Confirm
-          </Button>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant={'outlined'}
+              color={'primary'}
+              className={classes.cancelButton}
+              onClick={() => toggleOpen()}
+            >
+              Cancel
+            </Button>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant={'contained'}
+              color={'primary'}
+              className={classes.confirmButton}
+              disabled={isLoading || !(emails.length > 0)}
+              onClick={handleSubmit}
+            >
+              Confirm
+            </Button>
+          </Grid>
         </Grid>
       </DialogActions>
     </UIDialog>

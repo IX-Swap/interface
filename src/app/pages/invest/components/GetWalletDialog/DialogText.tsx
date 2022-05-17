@@ -5,7 +5,7 @@ export const DialogText: React.FC = () => {
   return (
     <Grid container direction='column'>
       <Grid item>
-        <Typography variant='subtitle2' align='center'>
+        <Typography color='GrayText' variant='subtitle2' align='center'>
           Would you like to have it?
         </Typography>
       </Grid>

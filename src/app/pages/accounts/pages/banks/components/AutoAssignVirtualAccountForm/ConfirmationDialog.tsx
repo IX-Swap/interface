@@ -1,5 +1,11 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Typography
+} from '@mui/material'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
@@ -32,44 +38,43 @@ export const ConfirmationDialog = ({
 
   return (
     <UIDialog open={open} disablePortal onClose={onClose}>
-      <Box py='40px' px='60px' textAlign='center'>
-        <Grid container direction='column' spacing={2}>
-          <Grid item>
-            <Typography variant='subtitle1'>{title}</Typography>
+      <DialogTitle>
+        <Typography variant='h2'>{title}</Typography>
+      </DialogTitle>
+      <DialogContent>
+        <Typography align='center' color='gray' variant='body1'>
+          {bodyText}
+        </Typography>
+      </DialogContent>
+      <DialogActions>
+        <Grid container spacing={1} justifyContent='center'>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              onClick={onClose}
+              type='button'
+              variant='outlined'
+              color='primary'
+              disableElevation
+              disabled={assigning}
+            >
+              Cancel
+            </Button>
           </Grid>
-          <Grid item>
-            <Typography variant='body1'>{bodyText}</Typography>
-          </Grid>
-          <Grid item>
-            <VSpacer size='small' />
-            <Grid container spacing={1} justifyContent='center'>
-              <Grid item>
-                <Button
-                  onClick={onClose}
-                  type='button'
-                  variant='outlined'
-                  color='primary'
-                  disableElevation
-                  disabled={assigning}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  color='primary'
-                  disableElevation
-                  disabled={assigning}
-                >
-                  {confirmLabel}
-                </Button>
-              </Grid>
-            </Grid>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              type='submit'
+              variant='contained'
+              color='primary'
+              disableElevation
+              disabled={assigning}
+            >
+              {confirmLabel}
+            </Button>
           </Grid>
         </Grid>
-      </Box>
+      </DialogActions>
     </UIDialog>
   )
 }

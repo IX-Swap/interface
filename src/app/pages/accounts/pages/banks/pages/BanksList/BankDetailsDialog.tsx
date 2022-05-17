@@ -1,4 +1,4 @@
-import { Box, DialogTitle, Grid, useTheme } from '@mui/material'
+import { Box, DialogTitle, Grid } from '@mui/material'
 import { convertAddressToString } from 'app/pages/authorizer/components/utils'
 import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
@@ -16,47 +16,51 @@ export const BankDetailsDialog = ({
   open,
   close
 }: BankDetailsDialogProps) => {
-  const theme = useTheme()
   return (
     <UIDialog open={open} maxWidth='sm' fullWidth onClose={close}>
       <Box position='relative'>
+        <DialogTitle>Bank Account Information</DialogTitle>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <DialogTitle
-              style={{
-                backgroundColor: theme.palette.primary.main,
-                color: '#FFF',
-                textAlign: 'center'
-              }}
-            >
-              Bank Account Information
-            </DialogTitle>
-          </Grid>
           <Grid item xs={12}>
             <Grid container spacing={3} style={{ padding: '20px 40px 40px' }}>
               <Grid item xs={12} md={6}>
-                <LabelledValue label='Bank Name' value={bank.bankName} />
+                <LabelledValue
+                  labelColor='gray'
+                  label='Bank Name'
+                  value={bank.bankName}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <LabelledValue
+                  labelColor='gray'
                   label='Bank Account Number'
                   value={bank.bankAccountNumber}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <LabelledValue label='Swift Code' value={bank.swiftCode} />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <LabelledValue label='Currency' value={bank.currency.symbol} />
+                <LabelledValue
+                  labelColor='gray'
+                  label='Swift Code'
+                  value={bank.swiftCode}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <LabelledValue
+                  labelColor='gray'
+                  label='Currency'
+                  value={bank.currency.symbol}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <LabelledValue
+                  labelColor='gray'
                   label='Bank Address'
                   value={convertAddressToString(bank.address)}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
                 <LabelledValue
+                  labelColor='gray'
                   label={`Account Holder's Name`}
                   value={bank.accountHolderName}
                 />

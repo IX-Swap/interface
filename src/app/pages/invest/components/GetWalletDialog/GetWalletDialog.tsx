@@ -39,7 +39,7 @@ export const GetWalletDialog = (props: ModalProps) => {
 
   return (
     <UIDialog
-      maxWidth={'md'}
+      maxWidth={'sm'}
       fullWidth
       fullScreen={fullScreen}
       open={open}
@@ -48,27 +48,26 @@ export const GetWalletDialog = (props: ModalProps) => {
       aria-labelledby='getwallet-modal-title'
       aria-describedby='getwallet-modal-description'
     >
-      <Box py={3} px={2.5}>
-        <DialogTitle className={classes.titleRoot}>
-          <Box justifyContent='center' alignItems='center'>
-            <Typography variant='h6' component='span' align='center'>
-              You need a custody wallet address to trade
-            </Typography>
-          </Box>
-        </DialogTitle>
-        <DialogContent style={{ overflowY: 'initial' }}>
-          <DialogText />
-        </DialogContent>
-        <DialogActions>
-          <Box mt={1} width={1}>
-            {isLoading ? (
-              <LoadingMessage />
-            ) : (
-              <Actions action={handleCreateWallet} />
-            )}
-          </Box>
-        </DialogActions>
-      </Box>
+      <DialogTitle>
+        <Typography variant='h2' component='span' align='center'>
+          You need a custody wallet address to trade
+        </Typography>
+      </DialogTitle>
+      <DialogContent style={{ overflowY: 'initial' }}>
+        <DialogText />
+      </DialogContent>
+      <DialogActions>
+        <Box mt={1} width={1}>
+          {isLoading ? (
+            <LoadingMessage />
+          ) : (
+            <Actions
+              action={handleCreateWallet}
+              cancel={() => toggleOpen(false)}
+            />
+          )}
+        </Box>
+      </DialogActions>
     </UIDialog>
   )
 }

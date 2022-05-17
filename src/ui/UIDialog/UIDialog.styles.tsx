@@ -7,8 +7,8 @@ export const useStyles = makeStyles(theme => {
     },
     iconWrapper: {
       position: 'absolute',
-      right: 10,
-      top: 10,
+      right: 45.25,
+      top: 45.25,
       marginLeft: 20,
       cursor: 'pointer'
     }

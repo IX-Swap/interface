@@ -59,7 +59,7 @@ export const CustodyDetailsDialog = () => {
       className={classes.root}
     >
       <DialogTitle className={classes.titleRoot}>
-        <Box justifyContent='center' alignItems='center'>
+        <Box p={4} justifyContent='center' alignItems='center'>
           <Typography
             variant='h4'
             component='span'
