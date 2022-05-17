@@ -49,8 +49,8 @@ export const DocumentFields = ({
                 fontWeight={400}
                 color='textSecondary'
               >
-                utility bills, bank statement/credit card statement, tenancy
-                agreement, and telecom bill
+                Utility Bills, Bank Statement/Credit Card Statement, Tenancy
+                Agreement, Telecom Bill
               </Typography>
             </>
           }
