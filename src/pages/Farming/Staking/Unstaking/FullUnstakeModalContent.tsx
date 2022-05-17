@@ -78,14 +78,14 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
         </RowBetween>
         <Row marginTop={20} marginBottom={10}>
           <IXSAmountToUnstake>
-            {formatAmount(+stakeAmount)} {IXSCurrency?.symbol}
+            {stakeAmount} {IXSCurrency?.symbol}
           </IXSAmountToUnstake>
         </Row>
         {IXSGovBalance && !isEnoughIXSGov() && (
           <TYPE.description2 color={'bg14'}>
             <Trans>
-              You don’t have enough IXSGov for unstake all available {IXSCurrency?.symbol} ({formatAmount(+stakeAmount)}{' '}
-              is available) 1 {IXSCurrency?.symbol} = 1 IXGov
+              You don’t have enough IXSGov for unstake all available {IXSCurrency?.symbol} ({stakeAmount} is available)
+              1 {IXSCurrency?.symbol} = 1 IXGov
             </Trans>
           </TYPE.description2>
         )}
@@ -97,7 +97,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textRight={
               <EllipsedText>
                 <div>
-                  {formatAmount(+stakeAmount)}&nbsp;IXSGov ({formatAmount(+(IXSGovBalance?.toSignificant(8) || 0))}{' '}
+                  {stakeAmount}&nbsp;IXSGov ({formatAmount(+(IXSGovBalance?.toSignificant(8) || 0))}{' '}
                   <Trans>available</Trans>)
                 </div>
               </EllipsedText>
