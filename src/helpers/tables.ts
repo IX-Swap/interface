@@ -9,6 +9,7 @@ import { AssetBalance } from 'types/balance'
 import { PersonName } from './types'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { useTheme } from '@mui/material/styles'
 import {
   CorporateIdentity,
   IndividualIdentity,
@@ -16,6 +17,7 @@ import {
 } from 'app/pages/identity/types/forms'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
+import { MatchedOTCOrder, UnmatchedOTCOrder } from 'types/otcOrder'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -143,6 +145,8 @@ export const renderAmount = (
     | DSWithdrawal
     | DigitalSecurityOffering
     | AssetBalance
+    | MatchedOTCOrder
+    | UnmatchedOTCOrder
 ): string => {
   const amount = Number.isNaN(val) ? 0 : parseFloat(val)
   let symbol
@@ -185,4 +189,22 @@ export const getUserNameById = (userId: string) => {
   }
 
   return data?.name
+}
+
+export const useHeaderColor = (
+  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+) => {
+  const theme = useTheme()
+  if (themeVariant === 'primary') {
+    return theme.palette.mode === 'light'
+      ? '#141272'
+      : theme.palette.primary.main
+  }
+  if (themeVariant === 'error') {
+    return '#DF5A72'
+  }
+  if (themeVariant === 'success') {
+    return theme.palette.backgrounds.alternative
+  }
+  return 'initial'
 }

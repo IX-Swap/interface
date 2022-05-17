@@ -1,3 +1,5 @@
+import { Asset } from './asset'
+
 export enum OTCOrderStatus {
   NEW = 'NEW',
   MATCH = 'MATCH', // the system matched it
@@ -7,13 +9,14 @@ export enum OTCOrderStatus {
   COMPLETED = 'COMPLETED' //  complete status - tokens sent complete
 }
 
+export type OrderType = 'SELL' | 'BUY'
 export interface OTCOrder {
   _id: string
   price: number
   amount: number
   ethAddress: string
   pair: string
-  orderType: 'SELL' | 'BUY'
+  orderType: OrderType
   status: OTCOrderStatus
   createdAt: string
 }
@@ -33,6 +36,7 @@ export interface MatchedOTCOrder {
   pair: string
   status: OTCOrderStatus
   createdAt: string
+  asset: Asset
   buyer: OTCParticipant
   seller: OTCParticipant
 }
@@ -41,6 +45,7 @@ export interface UnmatchedOTCOrder {
   price: number
   amount: number
   pair: string
+  asset: Asset
   user: OTCParticipant
   orderType: 'SELL' | 'BUY'
 }

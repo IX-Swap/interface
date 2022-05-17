@@ -2,6 +2,7 @@ import { renderMoney } from 'app/pages/exchange/components/OpenOrders/columns'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { MatchedOTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { renderAmount } from 'helpers/tables'
 
 export const columns: Array<TableColumn<MatchedOTCOrder>> = [
   {
@@ -29,8 +30,8 @@ export const columns: Array<TableColumn<MatchedOTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Amount'
-    // render: renderAmount
+    label: 'Amount',
+    render: renderAmount
   },
   {
     key: 'amount',

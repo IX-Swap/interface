@@ -22,6 +22,7 @@ import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { useTheme } from '@mui/material/styles'
 import useStyles from './TableView.styles'
 import { NoData } from 'app/components/NoData/NoData'
+import { useHeaderColor } from 'helpers/tables'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -52,7 +53,7 @@ export interface TableViewProps<T> {
   paperProps?: PaperProps
   defaultRowsPerPage?: number
   size?: 'small' | 'medium'
-  themeVariant?: 'default' | 'primary'
+  themeVariant?: 'default' | 'primary' | 'error' | 'success'
   noDataComponent?: JSX.Element
   noHeader?: boolean
   actionHeader?: string
@@ -97,15 +98,9 @@ export const TableView = <T,>({
     queryEnabled: queryEnabled,
     defaultRowsPerPage: defaultRowsPerPage
   })
-
+  const headColor = useHeaderColor(themeVariant)
   const theme = useTheme()
   const classes = useStyles()
-  const headColor =
-    themeVariant === 'primary'
-      ? theme.palette.mode === 'light'
-        ? '#141272'
-        : theme.palette.primary.main
-      : 'initial'
   const headHeight = themeVariant === 'primary' ? 50 : 'initial'
   const headDisplay = noHeader ? 'none' : 'table-header-group'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
@@ -173,10 +168,9 @@ export const TableView = <T,>({
     >
       <b
         style={{
-          color:
-            themeVariant === 'primary'
-              ? theme.palette.slider.activeColor
-              : 'initial'
+          color: ['primary', 'success', 'error'].includes(themeVariant)
+            ? theme.palette.slider.activeColor
+            : 'initial'
         }}
       >
         {item?.label ?? content}

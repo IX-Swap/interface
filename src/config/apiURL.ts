@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { AppFeature } from 'types/app'
+import { OrderType } from 'types/otcOrder'
 
 export const apiURL = {
   authorizerBanks: '/accounts/banks/list'
@@ -311,7 +312,10 @@ export const exchangeMarket = {
 }
 export const trading = {
   getMyOrdersList: () => `otc/orders/list/my`,
-  cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`
+  cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`,
+  confirmOTCOrder: (orderId: string) => `'/otc/order/confirm/${orderId}`,
+  getUnmatchedOrders: (side: OrderType) =>
+    `/otc/order/list/${side.toLowerCase()}`
 }
 export const listings = {
   getListByUser: (userId?: string) => `exchange/listing/list/${userId}`,
