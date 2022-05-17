@@ -1,7 +1,9 @@
-import { test as base, expect } from '@playwright/test'
+import { test as base, expect, chromium } from '@playwright/test'
+import { baseCreds } from '../helpers/creds'
+
 import { Authentication } from '../page-objects/authentication'
 import { Admin } from '../page-objects/admin'
-import { BankAccounts } from '../page-objects/accounts'
+import { Accounts } from '../page-objects/accounts'
 import { Authorizer } from '../page-objects/authorizer'
 import { UserForms } from '../page-objects/identity-forms'
 import { Dso, Listing } from '../page-objects/issuance'
@@ -22,7 +24,7 @@ export const test = base.extend<{
   kycSelectors: any
   issuance: any
   invest: any
-  bankAccount: BankAccounts
+  bankAccount: Accounts
   authorizer: Authorizer
   page2: any
 }>({
@@ -37,7 +39,7 @@ export const test = base.extend<{
   },
 
   bankAccount: async ({ page }, use) => {
-    const bankAccount = new BankAccounts(page)
+    const bankAccount = new Accounts(page)
     await use(bankAccount)
   },
   investment: async ({ page }, use) => {
@@ -78,9 +80,11 @@ export const test = base.extend<{
   invest: async ({ page }, use) => {
     await use(invest)
   },
-  page2: async ({ browser }, use) => {
-    const context = await browser.newContext()
-    const page2 = await context.newPage()
+  page2: async ({}, use) => {
+    const browser = await chromium.launchPersistentContext('', {
+      httpCredentials: baseCreds.httpCredentials
+    })
+    const page2 = await browser.newPage()
     await use(page2)
   }
 })

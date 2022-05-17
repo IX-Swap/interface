@@ -1,0 +1,50 @@
+name: E2E Tests
+
+on:
+  pull_request:
+    branches: 
+      - staging
+      - dev
+      - otc
+    types: 
+      - closed
+     
+jobs:
+  e2e-tests:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    name: E2E Tests
+    runs-on: ubuntu-latest # or macos-latest, windows-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.17
+      - name: Set tests dependencies
+        run: yarn
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Set env
+        run: |
+          echo "BRANCHE_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+        env:
+          NODE_OPTIONS: "--max-old-space-size=8192"
+ 
+      - name: Run regression testing
+        if: ${{ env.BRANCHE_NAME == 'staging' }}
+        run: |
+           yarn test:e2e 
+
+      - name: Run smoke testing
+        if: ${{ env.BRANCHE_NAME == 'otc' || env.BRANCHE_NAME == 'dev' }}
+        run: |
+           yarn test:smoke 
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: my-trace
+          path: ./reports

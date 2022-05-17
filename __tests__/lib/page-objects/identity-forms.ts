@@ -1,6 +1,6 @@
 import { kyc } from '../selectors/kyc-form'
 import { text } from '../helpers/text'
-import { expect } from '@playwright/test'
+import { expect, Locator } from '@playwright/test'
 
 import {
   click,
@@ -11,13 +11,21 @@ import {
   screenshotMatching,
   shouldNotExist,
   randomString,
-  waitForRequestInclude
+  waitForRequestInclude,
+  shouldExist
 } from '../helpers/helpers'
 
 class UserForms {
   page: any
+  ERROR: Locator
+  FULL_NAME: Locator
+  ERROR_NOTIFICATION: Locator
+
   constructor(page) {
     this.page = page
+    this.ERROR = page.locator('[class*=Mui-error]')
+    this.FULL_NAME = page.locator(kyc.field.FULL_NAME)
+    this.ERROR_NOTIFICATION = page.locator("[appearance='error']")
   }
 
   followToViewIdentity = async () => {
@@ -44,18 +52,11 @@ class UserForms {
     await typeText(kyc.field.issuer.DETAILS, 'OMG', this.page)
   }
 
-  fillIssuerDetails = async () => {
+  skipFirstForm = async () => {
     await this.page.mouse.click(100, 200, { force: true })
     await click('text="SKIP THIS"', this.page)
     await click('text="Yes"', this.page)
     await click(kyc.buttons.OKAY, this.page)
-    await uploadFiles(this.page, kyc.field.corporate.LOGO, text.docs.pathToFile)
-    await typeText(kyc.field.corporate.NAME, 'middle', this.page)
-    await typeText(kyc.field.REGISTRATION_NUMBER, '1990', this.page)
-    await click(kyc.field.corporate.COMPANY_OF_INCORPORATION, this.page)
-    await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
-    await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)
-    await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page)
   }
 
   checkAllViewUsingSnapshot = async screenName => {
@@ -69,60 +70,45 @@ class UserForms {
     await click(kyc.field.TAX_RESIDENT, this.page)
     await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
     await typeText(kyc.field.TAX_RESIDENT_IDENTIFICATION, '9379992', this.page)
+    await click(kyc.buttons.SUBMIT, this.page)
   }
 
   fillCorporateInformation = async () => {
-    await click(kyc.buttons.OKAY, this.page)
+    await this.page.mouse.click(100, 200, { force: true })
     await uploadFiles(this.page, kyc.field.corporate.LOGO, text.docs.pathToFile)
-    await typeText(kyc.field.corporate.NAME, 'middle', this.page)
+    await typeText(kyc.field.corporate.NAME, 'middle' + randomString(), this.page)
     await typeText(kyc.field.REGISTRATION_NUMBER, '1990', this.page)
     await click(kyc.field.corporate.COMPANY_OF_INCORPORATION, this.page)
     await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
     await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)
     await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page)
+    await click(kyc.listBox.NUMBER_BUSINESS_OWNERS, this.page)
+    await click(kyc.listBox.NUMBER_BUSINESS_OWNERS_VALUE, this.page)
+    await click(kyc.listBox.SOURCE_OF_FUNDS, this.page)
+    await click(kyc.listBox.SOURCE_OF_FUNDS_VALUE, this.page)
+    await typeText(kyc.field.issuer.BUSINESS_ACTIVITY, 'BUSINESS ACTIVITY', this.page)
   }
   updateData = async () => {
-    await click('text="Update"', this.page)
-    await waitForRequestInclude(this.page, 'identity/', 'GET')
+    await this.page.waitForTimeout(1000)
+    const update = await this.page.locator('text="Update"')
+    await this.page.waitForTimeout(1000)
+    await update.click()
+    await waitForRequestInclude(this.page, 'identity/', 'PUT')
   }
   editCorporateInformation = async () => {
     const string = randomString()
     await click(kyc.buttons.EDIT, this.page)
-    const corporateName = await clearAndTypeText(
-      kyc.field.corporate.NAME,
-      'name' + string,
-      this.page
-    )
-    const regNumber = await clearAndTypeText(
-      kyc.field.REGISTRATION_NUMBER,
-      '1990' + string,
-      this.page
-    )
-    const city = await clearAndTypeText(
-      kyc.field.corporate.CITY,
-      'Baku' + string,
-      this.page
-    )
-    const state = await clearAndTypeText(
-      kyc.field.corporate.STATE,
-      'Kyiv' + string,
-      this.page
-    )
+    const corporateName = await clearAndTypeText(kyc.field.corporate.NAME, 'name' + string, this.page)
+    const regNumber = await clearAndTypeText(kyc.field.REGISTRATION_NUMBER, '1990' + string, this.page)
+    const city = await clearAndTypeText(kyc.field.corporate.CITY, 'Baku' + string, this.page)
+    const state = await clearAndTypeText(kyc.field.corporate.STATE, 'Kyiv' + string, this.page)
+    await clearAndTypeText(kyc.field.issuer.BUSINESS_ACTIVITY, 'business' + string, this.page)
     await this.updateData()
     await click(kyc.buttons.SUBMIT, this.page)
-
-    const directorName = await clearAndTypeText(
-      kyc.field.issuer.FULL_NAME,
-      'director' + string,
-      this.page
-    )
+    const directorName = await clearAndTypeText(kyc.field.issuer.FULL_NAME, 'director' + string, this.page)
     await this.updateData()
     await click(kyc.buttons.SUBMIT, this.page)
-    const taxNumber = await clearAndTypeText(
-      kyc.field.TAX_RESIDENT_IDENTIFICATION,
-      'S' + string,
-      this.page
-    )
+    const taxNumber = await clearAndTypeText(kyc.field.TAX_RESIDENT_IDENTIFICATION, 'S' + string, this.page)
     await this.updateData()
 
     return [corporateName, regNumber, city, state, directorName, taxNumber]
@@ -145,78 +131,46 @@ class UserForms {
   }
 
   fillCorporateDirectorAddressForm = async () => {
-    await uploadFiles(
-      this.page,
-      kyc.field.corporate.directors.BENEFICIAL_PROOF_ADDRESS,
-      text.docs.docBenefitsAddress
-    )
-    await uploadFiles(
-      this.page,
-      kyc.field.corporate.directors.BENEFICIAL_PROOF_IDENTITY,
-      text.docs.docBenefitsIdentify
-    )
+    await uploadFiles(this.page, kyc.field.corporate.directors.BENEFICIAL_PROOF_ADDRESS, text.docs.pdfFilePath)
+    await uploadFiles(this.page, kyc.field.corporate.directors.BENEFICIAL_PROOF_IDENTITY, text.docs.pdfFilePath)
     await waitForText(this.page, text.docs.docBenefitsIdentifyName)
-    await typeText(
-      kyc.field.corporate.directors.POSTAL_CODE,
-      '123441',
-      this.page
-    )
+    await typeText(kyc.field.corporate.directors.POSTAL_CODE, '123441', this.page)
     await typeText(kyc.field.corporate.directors.ADDRESS1, 'line1', this.page)
     await typeText(kyc.field.corporate.directors.ADDRESS2, 'line2', this.page)
     await click(kyc.field.corporate.directors.COUNTRY, this.page)
     await click('text="Azerbaijan"', this.page)
     await typeText(kyc.field.corporate.directors.CITY, 'Baku', this.page)
     await typeText(kyc.field.corporate.directors.STATE, 'Kyiv', this.page)
-    await typeText(
-      kyc.field.corporate.directors.PERCENTAGE_SHAREHOLDING,
-      '100',
-      this.page
-    )
-    await typeText(
-      kyc.field.BENEFICIAL_FULL_NAME,
-      'BENEFICIAL FULL NAME',
-      this.page
-    )
+    await typeText(kyc.field.corporate.directors.PERCENTAGE_SHAREHOLDING, '100', this.page)
+    await typeText(kyc.field.BENEFICIAL_FULL_NAME, 'BENEFICIAL FULL NAME', this.page)
     await click(kyc.buttons.SUBMIT, this.page)
+    await shouldExist(kyc.form.TAX_DECLARATION, this.page)
   }
 
   fillPeopleWithExecutiveAuthorityForm = async () => {
     await typeText(kyc.field.issuer.FULL_NAME, 'Full name auto test', this.page)
     await typeText(kyc.field.EMAIL, 'line2@test.com', this.page)
-    await typeText(
-      kyc.field.corporate.directors.DESIGNATION,
-      'DESIGNATION',
-      this.page
-    )
+    await typeText(kyc.field.corporate.directors.DESIGNATION, 'DESIGNATION', this.page)
     await clearAndTypeText(kyc.field.PHONE_NUMBER, '13022462220', this.page)
     //Authorization Document
-    await uploadFiles(
-      this.page,
-      kyc.field.corporate.directors.PROOF_IDENTITY,
-      text.docs.pathToFile
-    )
-
-    await uploadFiles(
-      this.page,
-      kyc.field.corporate.directors.PROOF_ADDRESS,
-      text.docs.pathToFile
-    )
+    await uploadFiles(this.page, kyc.field.corporate.directors.PROOF_IDENTITY, text.docs.pdfFilePath)
+    await uploadFiles(this.page, kyc.field.corporate.directors.PROOF_ADDRESS, text.docs.pdfFilePath)
   }
+
   fillCompanyAuthorizedPersonnel = async () => {
     await typeText(kyc.field.EMAIL, 'line2@test.com', this.page)
     await typeText(kyc.field.FULL_NAME, 'Full name auto test', this.page)
     await typeText(kyc.field.corporate.DESIGNATION, 'DESIGNATION', this.page)
     await clearAndTypeText(kyc.field.PHONE_NUMBER, '13022462220', this.page)
     //Authorization Document
-    await uploadFiles(
-      this.page,
-      kyc.field.corporate.directors.DOCUMENTS,
-      text.docs.pathToFile
-    )
+    await uploadFiles(this.page, kyc.field.corporate.directors.DOCUMENTS, text.docs.pdfFilePath)
     await click(kyc.buttons.SUBMIT, this.page)
+    await shouldExist(kyc.form.DIRECTORS, this.page)
   }
   fillPersonalInformationForm = async () => {
     await uploadFiles(this.page, kyc.field.PHOTO, text.docs.pathToFile)
+    await click('[id="gender"]', this.page)
+    await click('[data-value="F"]', this.page)
     await typeText(kyc.field.MIDDLENAME, 'Middle', this.page)
     await typeText(kyc.field.DATA, '12/11/1990', this.page)
     await clearAndTypeText(kyc.field.PHONE_NUMBER, '13022462220', this.page)
@@ -233,20 +187,21 @@ class UserForms {
     await click('text="Azerbaijan"', this.page)
     await typeText(kyc.field.CITY, 'Baku', this.page)
     await click(kyc.buttons.SUBMIT, this.page)
+    await shouldExist(kyc.listBox.OCCUPATION, this.page)
   }
 
   fillFinancialInformation = async () => {
-    await typeText(kyc.field.OCCUPATION, 'OCCUPATION', this.page)
+    await click(kyc.listBox.OCCUPATION, this.page)
+    await click(kyc.listBox.OCCUPATION_VALUE, this.page)
     await typeText(kyc.field.EMPLOYER, 'EMPLOYER', this.page)
     await click(kyc.field.EMPLOYMENT_STATUS, this.page)
     await click(kyc.field.STATUS, this.page)
     await click(kyc.field.INCOME, this.page)
     await click(kyc.field.SET_INCOME, this.page)
-    await this.page.check(kyc.checkbox.INHERITANCE)
-    await this.page.check(kyc.checkbox.INVESTMENTS)
-    await click(kyc.checkbox.INVESTMENTS_VALUE, this.page)
-    await click(kyc.checkbox.INHERITANCE_VALUE, this.page)
+    await click(kyc.listBox.SOURCE_OF_FUNDS, this.page)
+    await click(kyc.listBox.SOURCE_OF_FUNDS_VALUE, this.page)
     await click(kyc.buttons.SUBMIT, this.page)
+    await shouldExist(kyc.form.TAX_DECLARATION, this.page)
   }
 
   fillTaxDeclaration = async () => {
@@ -261,55 +216,33 @@ class UserForms {
       await click('[name="trustee"]', this.page)
     }
     await click(kyc.checkbox.I_CONFIRM, this.page)
+    await click(kyc.buttons.SUBMIT, this.page)
   }
 
   uploadDocument = async list => {
     for (const item of list) {
-      await uploadFiles(this.page, item, text.docs.pathToFile)
+      await uploadFiles(this.page, item, text.docs.pdfFilePath)
     }
     await shouldNotExist(kyc.NOTIFICATION, this.page)
   }
 
   editIndividualInformation = async () => {
-    const string = randomString()
+    const string = randomString().toLowerCase()
     await click(kyc.buttons.EDIT, this.page)
-    const corporateName = await clearAndTypeText(
-      kyc.field.FIRS_NAME,
-      'Name' + string,
-      this.page
-    )
-    const regNumber = await clearAndTypeText(
-      kyc.field.MIDDLENAME,
-      'Middle' + string,
-      this.page
-    )
-    const city = await clearAndTypeText(
-      kyc.field.CITY,
-      'City' + string,
-      this.page
-    )
-    const state = await clearAndTypeText(
-      kyc.field.ADDRESS,
-      'Kyiv' + string,
-      this.page
-    )
+    const corporateName = await clearAndTypeText(kyc.field.FIRS_NAME, 'Name' + string, this.page)
+    const regNumber = await clearAndTypeText(kyc.field.MIDDLENAME, 'Middle' + string, this.page)
+    const city = await clearAndTypeText(kyc.field.CITY, 'City' + string, this.page)
+    const state = await clearAndTypeText(kyc.field.ADDRESS, 'Kyiv' + string, this.page)
     await this.updateData()
     await click(kyc.buttons.SUBMIT, this.page)
 
-    const occupationName = await clearAndTypeText(
-      kyc.field.OCCUPATION,
-      'Occupation' + string,
-      this.page
-    )
-    const employer = await clearAndTypeText(
-      kyc.field.EMPLOYER,
-      'Employer' + string,
-      this.page
-    )
+    await click(kyc.listBox.OCCUPATION, this.page)
+    await click(kyc.listBox.OCCUPATION_VALUE, this.page)
+    const employer = await clearAndTypeText(kyc.field.EMPLOYER, 'Employer' + string, this.page)
 
     await this.updateData()
 
-    return [corporateName, regNumber, city, state, occupationName, employer]
+    return [corporateName, regNumber, city, state, employer]
   }
 }
 export { UserForms }

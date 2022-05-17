@@ -5,17 +5,18 @@ import { expect } from '@playwright/test'
 import { text } from '../lib/helpers/text'
 import { invest } from '../lib/selectors/invest'
 
-test.beforeEach(async ({ page }) => {
-  await navigate(baseCreds.URL, page)
-})
 test.afterEach(async ({ page }) => {
   await page.close()
 })
 
 test.describe('', () => {
-  test.beforeEach(async ({ auth }) => {
-    await auth.loginWithout2fa(baseCreds.EMAIL_APPROVED, baseCreds.PASSWORD)
+  test.use({ storageState: './__tests__/lib/storages/dsoStorageState.json' })
+  test.beforeEach(async ({ page }) => {
+    await navigate(baseCreds.URL, page)
   })
+  // test.beforeEach(async ({ auth, page }) => {
+  //   await auth.loginWithout2fa(baseCreds.EMAIL_APPROVED, baseCreds.PASSWORD)
+  // })
 
   test.describe('Primary', () => {
     test('Download subscription docs', async ({ investment, context }) => {
@@ -23,9 +24,7 @@ test.describe('', () => {
       expect(pages).toBe(2)
     })
 
-    test.skip('(Bug)Custody address should be created', async ({
-      investment
-    }) => {
+    test.skip('(Bug)Custody address should be created', async ({ investment }) => {
       await investment.createCustodyAddress()
     })
 
@@ -33,10 +32,7 @@ test.describe('', () => {
       await investment.checkThatInvestmentLandingAvailable()
     })
 
-    test('Should be redirected to invest from landing', async ({
-      investment,
-      page
-    }) => {
+    test('Should be redirected to invest from landing', async ({ investment, page }) => {
       await investment.checkThatInvestmentLandingAvailable()
       await click(invest.buttons.INVEST_LANDING, page)
       await shouldExist(invest.buttons.DOWNLOAD_DOC, page)
@@ -55,17 +51,13 @@ test.describe('', () => {
     })
 
     test('The Investment view should contain', async ({ investment, page }) => {
-      await page.pause()
       const locator = await investment.checkRedirectionToCommitment()
       await expect(locator).toContainText(text.commitmentsView)
     })
-    test('The Investment view should redirect to the DSO view page', async ({
-      investment,
-      page
-    }) => {
+    test.skip('The Investment view should redirect to the DSO view page', async ({ investment, page }) => {
       await investment.checkRedirectionToCommitment()
       await click(invest.OFFERS, page)
-      await expect(page).toHaveURL(/app\/invest\/offerings\/\S+\/view/g)
+      await expect(page).toHaveURL(/app\/invest\/commitments\/\S+\/view/g)
     })
   })
 })
@@ -109,68 +101,40 @@ test.describe('', () => {
 let locator
 test.describe('Overview page', () => {
   test.beforeEach(async ({ investment, auth, page }) => {
-    await auth.loginWithout2fa(
-      baseCreds.VIEW_DSO_MORE_OPTIONS,
-      baseCreds.PASSWORD
-    )
+    await navigate(baseCreds.URL, page)
+    await auth.loginWithout2fa(baseCreds.VIEW_DSO_MORE_OPTIONS, baseCreds.PASSWORD)
     await investment.toTheOverviewPage()
     await page.waitForSelector(invest.PRIMARY_CARD)
     locator = await page.locator(invest.fields.SEARCH)
   })
 
-  test('Search in the primary section should be work', async ({
-    investment,
-    page
-  }) => {
-    await investment.checkSearch(
-      locator.first(),
-      text.dsoName,
-      text.requests.search
-    )
+  test('Search in the primary section should be work (IXPRIME-216)', async ({ investment, page }) => {
+    await investment.checkSearch(locator.first(), text.dsoName, text.requests.search)
     await shouldExist(invest.PRIMARY_CARD, page)
   })
 
-  test('Search in the secondary section should be work', async ({
-    investment,
-    page
-  }) => {
-    await investment.checkSearch(
-      locator.last(),
-      text.secondaryName,
-      text.requests.search
-    )
-    await expect(await page.locator(invest.TABLE)).toContainText(
-      text.secondaryName
-    )
-  })
-  test('The "Invest" button should redirect to the "Make Commitment" page', async ({
-    page
-  }) => {
-    await click(invest.buttons.INVEST, page)
-    await expect(page).toHaveURL(
-      /app\/invest\/offerings\/\S+\/view\/make-investment$/g
-    )
+  test('Search in the secondary section should be work (IXPRIME-215)', async ({ investment, page }) => {
+    await investment.checkSearch(locator.last(), text.secondaryName, text.requests.search)
+    await expect(await page.locator(invest.TABLE)).toContainText(text.secondaryName)
   })
 
-  test('The "TRADE" button should redirect to the "Secondary Market" page', async ({
-    page
-  }) => {
+  test('The "Invest" button should redirect to the "Make Commitment" page (IXPRIME-208)', async ({ page }) => {
+    await click(invest.buttons.INVEST, page)
+    await expect(page).toHaveURL(/app\/invest\/offerings\/\S+\/view\/make-investment$/g)
+  })
+
+  test('The "TRADE" button should redirect to the "Secondary Market" page (IXPRIME-225)', async ({ page }) => {
     await click('//table >> text="TRADE"', page) //data-testid needs to deploy to staging
     await expect(page).toHaveURL(/app\/otc-market\/market\/\S+$/g)
   })
 
-  test('The "My Holdings" button should redirect to the "Holdings" page', async ({
-    page
-  }) => {
+  test('The "My Holdings" button should redirect to the "Holdings" page (IXPRIME-211)', async ({ page }) => {
     await click('text="My Holdings"', page) //data-testid needs to deploy to staging
-    await expect(page).toHaveURL(/app\/otc-market\/holdings$/g)
+    await expect(page).toHaveURL(/app\/otc-market\/holdings\?tab=0$/g)
   })
 
-  test('The "My Investments" button should redirect to the "My Investments" page', async ({
-    page
-  }) => {
+  test('The "My Investments" button should redirect to the "My Investments" page (IXPRIME-201)', async ({ page }) => {
     await click(invest.ACCOUNTS_COMMITMENTS, page)
-
     await expect(page).toHaveURL(/app\/invest\/commitments$/g)
   })
 })
