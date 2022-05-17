@@ -1,14 +1,15 @@
-import React from 'react'
-import { useStyles } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList.styles'
 import { Box, Container, Grid, Typography } from '@mui/material'
-import { AppContentWrapper } from 'ui/AppContentWrapper'
-import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
-import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
+import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
+import { useStyles } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList.styles'
+import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
+import React from 'react'
+import { AppContentWrapper } from 'ui/AppContentWrapper'
 
 export const IdentitiesList: React.FC = () => {
-  const { hasIdentity, identityLoaded } = useGetIdentities()
+  const { hasIdentity, identityLoaded, isLoadingIdentities } =
+    useGetIdentities()
   const classes = useStyles()
 
   return (
@@ -16,7 +17,7 @@ export const IdentitiesList: React.FC = () => {
       <Container className={classes.container}>
         <Grid container className={classes.grid}>
           <Grid item container className={classes.nameIdentity}>
-            {hasIdentity ? (
+            {hasIdentity && (
               <>
                 <Grid item xs={12}>
                   <Typography variant='h3'>
@@ -35,7 +36,8 @@ export const IdentitiesList: React.FC = () => {
                   </Typography>
                 </Box>
               </>
-            ) : (
+            )}
+            {!hasIdentity && !isLoadingIdentities && (
               <Grid item xs={12} className={classes.createIdentity}>
                 <Typography variant='h2' align='center'>
                   Create your Identity
@@ -51,7 +53,8 @@ export const IdentitiesList: React.FC = () => {
             )}
           </Grid>
           <Grid item xs={12}>
-            {hasIdentity ? <IdentityPreview /> : <IdentitySelectionView />}
+            {hasIdentity && <IdentityPreview />}
+            {!hasIdentity && !isLoadingIdentities && <IdentitySelectionView />}
           </Grid>
         </Grid>
       </Container>
