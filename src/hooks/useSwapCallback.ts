@@ -167,7 +167,7 @@ function useSwapCallArguments(
     }
     const swapMethods = []
     const options = {
-      feeOnTransfer: false,
+      feeOnTransfer: true,
       allowedSlippage,
       recipient,
       deadline: deadline.toNumber(),
@@ -175,18 +175,19 @@ function useSwapCallArguments(
     }
     swapMethods.push(Router.swapCallParameters(trade, options))
 
-    if (trade.tradeType === TradeType.EXACT_INPUT) {
-      swapMethods.push(
-        Router.swapCallParameters(trade, {
-          feeOnTransfer: true,
-          allowedSlippage,
-          recipient,
-          deadline: deadline.toNumber(),
-          // typing to any because AuthorizationDigest does not accept null but it should
-          authorizationDigest: (authorizationDigest as any) || undefined,
-        })
-      )
-    }
+    // if (trade.tradeType === TradeType.EXACT_INPUT) {
+    //   swapMethods.push(
+    //     Router.swapCallParameters(trade, {
+    //       feeOnTransfer: true,
+    //       allowedSlippage,
+    //       recipient,
+    //       deadline: deadline.toNumber(),
+    //       // typing to any because AuthorizationDigest does not accept null but it should
+    //       authorizationDigest: (authorizationDigest as any) || undefined,
+    //     })
+    //   )
+    // }
+
     return swapMethods.map(({ methodName, args, value }) => {
       console.log({ methodName, args, value })
       if (argentWalletContract && trade.inputAmount.currency.isToken) {
@@ -343,7 +344,13 @@ export function useSwapCallback(
                   gasEstimate,
                 }
               })
-              .catch((gasError) => {
+              .catch((gasError: any) => {
+                if (chainId === 42) {
+                  return {
+                    call,
+                    gasEstimate: '15000000',
+                  } as any
+                }
                 return library
                   .call(tx)
                   .then(() => {
@@ -390,7 +397,10 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            // ...('gasEstimate' in bestCallOption ? { gasLimit: 900000 } : {}),
+            ...(chainId === 42 && {
+              ...('gasEstimate' in bestCallOption ? { gasLimit: 900000 } : {}),
+              gasPrice: 1500000000,
+            }),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {
