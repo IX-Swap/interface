@@ -31,6 +31,13 @@ export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
             className={classes.wrapper}
           >
             <Grid item>
+              <Typography align='center' className={classes.description}>
+                Use the app to scan the barcode below or type a Setup Key on the
+                keyboard of your phone
+              </Typography>
+            </Grid>
+
+            <Grid item>
               <div data-testid='store-image' className={classes.image} />
             </Grid>
 
@@ -41,7 +48,23 @@ export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
               </Typography>
             </Grid>
 
-            <BackupKey value={twoFaData.key} />
+            <BackupKey value={twoFaData.encoded} />
+
+            <Grid item>
+              <Typography align='center' className={classes.contact}>
+                <span className={classes.contactText}>
+                  If you do not have a smartphone or need more help, please{' '}
+                </span>
+                <a
+                  target='_blank'
+                  href='mailto:support@investax.io'
+                  className={classes.link}
+                  rel='noreferrer'
+                >
+                  <span>contact us</span>
+                </a>
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       )}

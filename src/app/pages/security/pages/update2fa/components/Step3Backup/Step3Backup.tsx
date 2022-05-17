@@ -32,7 +32,7 @@ export const Step3Backup = ({ twoFaData }: Step3BackupProps) => {
             </Typography>
           </Grid>
 
-          <BackupKey value={twoFaData.key} />
+          <BackupKey value={twoFaData.encoded} />
 
           <Grid item>
             <Typography variant={'body1'} className={classes.secondText}>

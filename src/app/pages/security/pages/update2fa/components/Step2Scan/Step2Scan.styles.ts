@@ -29,5 +29,22 @@ export default makeStyles(theme => ({
     fontWeight: 400,
     opacity: 0.8,
     margin: theme.spacing(0, 0, 5)
+  },
+  description: {
+    margin: theme.spacing(2, 0, 0),
+    fontWeight: 400,
+    fontSize: 16,
+    opacity: 0.8
+  },
+  contact: {
+    fontWeight: 400,
+    margin: theme.spacing(5, 0, 0)
+  },
+  contactText: {
+    opacity: 0.8
+  },
+  link: {
+    color: '#70a0ff',
+    textDecoration: 'none'
   }
 }))
