@@ -8,7 +8,10 @@ export interface OptionalLabelProps {
 export const OptionalLabel = ({ label }: OptionalLabelProps) => {
   return (
     <span>
-      {label} <Typography variant='caption'>(Optional)</Typography>
+      {label}{' '}
+      <Typography variant='caption' color='#778194' sx={{ opacity: 1 }}>
+        (Optional)
+      </Typography>
     </span>
   )
 }

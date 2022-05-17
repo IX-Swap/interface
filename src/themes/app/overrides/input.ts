@@ -16,7 +16,6 @@ export const input = (theme: Theme) => {
         '& .MuiInputLabel-root': {
           color: theme.palette.select.label,
           fontSize: 14,
-          opacity: 0.7,
           transform: 'scale(1)',
           '&.MuiInputLabel-filled': {
             top: 12,
@@ -147,9 +146,7 @@ export const input = (theme: Theme) => {
             textOverflow: 'ellipsis !important',
             color: inputStyles?.placeholder,
             opacity: 1,
-            [theme.breakpoints.down('md')]: {
-              fontSize: 14
-            }
+            fontSize: 14
           },
           '&:-webkit-autofill': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,

@@ -30,7 +30,8 @@ export const DocumentFields = ({
                 fontWeight={400}
                 color='textSecondary'
               >
-                passport, driving license, NRIC and government issued ID card
+                Passport, Driving License, NRIC, Government Issued ID Card And
+                Others
               </Typography>
             </>
           }

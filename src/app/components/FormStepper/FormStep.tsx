@@ -107,7 +107,7 @@ export const FormStep = (props: FormStepProps) => {
       <VSpacer size='large' />
 
       <Grid item container justifyContent='flex-end'>
-        <Box display='flex'>
+        <Box display='flex' pb={5}>
           {skippable !== undefined && skippable && !isLastStep && (
             <Fragment>
               <SkipButton mutation={saveMutation} />

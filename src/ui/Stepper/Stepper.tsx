@@ -11,7 +11,7 @@ import { StepInfo, StepInfoProps } from 'ui/Stepper/StepInfo'
 import { Icon } from 'ui/Icons/Icon'
 import { StepperDialog } from 'ui/Stepper/StepperDialog'
 import { useTheme } from '@mui/styles'
-
+import { Divider } from 'ui/Divider'
 export interface StepperProps extends MuiStepperProps {
   stepInfo?: StepInfoProps
   actions?: ReactElement
@@ -86,8 +86,20 @@ export const Stepper = ({
         >
           {children}
         </MuiStepper>
+        <Box width='100%' p={matches ? 0 : '24px 40px'}>
+          <Divider />
+        </Box>
 
-        {actions !== undefined ? <>{actions}</> : null}
+        {actions !== undefined ? (
+          <Box
+            display='flex'
+            justifyContent='center'
+            width='100%'
+            p={matches ? 0 : '0 40px'}
+          >
+            {actions}
+          </Box>
+        ) : null}
       </Box>
       <StepperDialog
         el={
