@@ -139,8 +139,8 @@ export const input = (theme: Theme) => {
           borderRadius: 8,
 
           boxSizing: 'border-box' as any,
-          color: theme.palette.text.primary,
-          fontSize: 16,
+          color: theme.palette.select.label,
+          fontSize: 14,
           WebkitBoxShadow: '',
           '&::placeholder': {
             textOverflow: 'ellipsis !important',
@@ -150,8 +150,9 @@ export const input = (theme: Theme) => {
           },
           '&:-webkit-autofill': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
-            WebkitTextFillColor: '',
-            transition: ''
+            WebkitTextFillColor: theme.palette.select.label,
+            transition: '',
+            color: theme.palette.select.label
           },
 
           '&:-webkit-autofill:focus': {
@@ -161,7 +162,8 @@ export const input = (theme: Theme) => {
           },
           '&:-internal-autofill-selected': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
-            borderRadius: 0
+            borderRadius: 0,
+            color: theme.palette.select.label
           },
           '.Mui-focused &': {
             backgroundColor: '',
@@ -175,6 +177,12 @@ export const input = (theme: Theme) => {
           '.Mui-disabled &': {
             background: inputStyles.disabledBg,
             backgroundColor: inputStyles.disabledBg
+          },
+          '&[type=tel]': {
+            '&:-webkit-autofill': {
+              WebkitTextFillColor: inputStyles?.placeholder
+            },
+            color: inputStyles?.placeholder
           }
         },
         multiline: {
