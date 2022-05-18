@@ -32,7 +32,7 @@ export const SecurityDetails = ({
   }, [pathname])
 
   return (
-    <Grid container spacing={3}>
+    <Grid marginTop={1} container spacing={3}>
       <Grid item xs={12}>
         <SecurityViewHeader data={security} />
       </Grid>

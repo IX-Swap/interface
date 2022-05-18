@@ -9,14 +9,12 @@ export const initialValues = {
 }
 
 export interface RemoveAuthenticatorFormProps {
-  email: string
-  isLoading: boolean
+  isRemove2FALoading: boolean
   onSubmit: (values: Remove2faFormValues) => void
 }
 
 export const RemoveAuthenticatorForm = ({
-  email,
-  isLoading,
+  isRemove2FALoading,
   onSubmit
 }: RemoveAuthenticatorFormProps) => {
   return (
@@ -25,7 +23,7 @@ export const RemoveAuthenticatorForm = ({
       defaultValues={initialValues}
       onSubmit={onSubmit}
     >
-      <RemoveAuthenticatorFields isLoading={isLoading} email={email} />
+      <RemoveAuthenticatorFields isRemove2FALoading={isRemove2FALoading} />
     </Form>
   )
 }

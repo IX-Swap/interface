@@ -8,36 +8,39 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { getPersonName } from 'helpers/strings'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
+import { RootContainer } from 'ui/RootContainer'
 
 export const ViewIndividual = () => {
   return (
     <IndividualIdentityContainer
       component={({ data }) => (
-        <Grid container>
+        <Grid container style={{ display: 'table' }}>
           <Grid item xs={12}>
             <PageHeader title={getPersonName(data)} />
           </Grid>
-          <Grid item xs={12}>
-            <RejectionMessage data={data} />
-          </Grid>
-          <Grid
-            container
-            item
-            xs={12}
-            justifyContent='flex-end'
-            alignItems='center'
-          >
-            <EditButton
-              link={IdentityRoute.editIndividual}
-              params={{ identityId: data._id, userId: data.user._id }} // TODO: ask backend to unify user field for all objects
-            />
-          </Grid>
-          <Grid item container xs={12}>
-            <VSpacer size='small' />
-          </Grid>
-          <Grid item xs={12}>
-            <IndividualIdentityView data={data} />
-          </Grid>
+          <RootContainer>
+            <Grid item xs={12}>
+              <RejectionMessage data={data} />
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              justifyContent='flex-end'
+              alignItems='center'
+            >
+              <EditButton
+                link={IdentityRoute.editIndividual}
+                params={{ identityId: data._id, userId: data.user._id }} // TODO: ask backend to unify user field for all objects
+              />
+            </Grid>
+            <Grid item container xs={12}>
+              <VSpacer size='small' />
+            </Grid>
+            <Grid item xs={12}>
+              <IndividualIdentityView data={data} />
+            </Grid>
+          </RootContainer>
         </Grid>
       )}
     />

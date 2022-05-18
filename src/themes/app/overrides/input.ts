@@ -94,7 +94,7 @@ export const input = (theme: Theme) => {
         '& .MuiInputLabel-outlined': {
           position: 'initial',
           marginBottom: 12,
-          lineHeight: 1
+          lineHeight: 1.13
         },
         '& .MuiOutlinedInput-input': {
           height: 49
