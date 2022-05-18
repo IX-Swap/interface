@@ -71,7 +71,13 @@ const rootReducer = (state: any, action: any) => {
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => [
-    ...getDefaultMiddleware({ thunk: true }),
+    ...getDefaultMiddleware({
+      thunk: true,
+      serializableCheck: {
+        ignoredActions: ['swapHelper/setSwapState'],
+        ignoredPaths: ['swapHelper.localSwap.tradeToConfirm'],
+      },
+    }),
     save({ states: PERSISTED_KEYS, debounce: 1000 }),
   ],
   preloadedState: load({ states: PERSISTED_KEYS }),

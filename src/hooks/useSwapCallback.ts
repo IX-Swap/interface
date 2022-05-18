@@ -187,6 +187,7 @@ function useSwapCallArguments(
         })
       )
     }
+
     return swapMethods.map(({ methodName, args, value }) => {
       console.log({ methodName, args, value })
       if (argentWalletContract && trade.inputAmount.currency.isToken) {
@@ -343,7 +344,13 @@ export function useSwapCallback(
                   gasEstimate,
                 }
               })
-              .catch((gasError) => {
+              .catch((gasError: any) => {
+                if (chainId === 42) {
+                  return {
+                    call,
+                    gasEstimate: '15000000',
+                  } as any
+                }
                 return library
                   .call(tx)
                   .then(() => {
@@ -390,7 +397,10 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            // ...('gasEstimate' in bestCallOption ? { gasLimit: 900000 } : {}),
+            ...(chainId === 42 && {
+              ...('gasEstimate' in bestCallOption ? { gasLimit: 900000 } : {}),
+              gasPrice: 1500000000,
+            }),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {

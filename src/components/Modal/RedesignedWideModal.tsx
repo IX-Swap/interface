@@ -178,9 +178,9 @@ export default function RedesignedWideModal({
               initialFocusRef={initialFocusRef}
               unstable_lockFocusAcrossFrames={false}
               isright={isright}
-              scrollable={scrollable}
+              scrollable={scrollable ? `${scrollable}` : ''}
               tip={tip}
-              flexColumn={topContent ? true : false}
+              flexcolumn={topContent ? 'true' : ''}
             >
               {topContent ? <div style={{ maxWidth: '622px', whiteSpace: 'nowrap' }}>{topContent}</div> : null}
               <StyledDialogContent
