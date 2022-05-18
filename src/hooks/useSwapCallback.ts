@@ -167,7 +167,7 @@ function useSwapCallArguments(
     }
     const swapMethods = []
     const options = {
-      feeOnTransfer: trade.tradeType === TradeType.EXACT_INPUT,
+      feeOnTransfer: false,
       allowedSlippage,
       recipient,
       deadline: deadline.toNumber(),
@@ -175,18 +175,18 @@ function useSwapCallArguments(
     }
     swapMethods.push(Router.swapCallParameters(trade, options))
 
-    // if (trade.tradeType === TradeType.EXACT_INPUT) {
-    //   swapMethods.push(
-    //     Router.swapCallParameters(trade, {
-    //       feeOnTransfer: true,
-    //       allowedSlippage,
-    //       recipient,
-    //       deadline: deadline.toNumber(),
-    //       // typing to any because AuthorizationDigest does not accept null but it should
-    //       authorizationDigest: (authorizationDigest as any) || undefined,
-    //     })
-    //   )
-    // }
+    if (trade.tradeType === TradeType.EXACT_INPUT) {
+      swapMethods.push(
+        Router.swapCallParameters(trade, {
+          feeOnTransfer: true,
+          allowedSlippage,
+          recipient,
+          deadline: deadline.toNumber(),
+          // typing to any because AuthorizationDigest does not accept null but it should
+          authorizationDigest: (authorizationDigest as any) || undefined,
+        })
+      )
+    }
 
     return swapMethods.map(({ methodName, args, value }) => {
       console.log({ methodName, args, value })
