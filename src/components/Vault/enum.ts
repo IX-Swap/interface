@@ -28,13 +28,13 @@ export enum WithdrawStatus {
   FB_TX_TIMEOUT = 'fbTxTimeout',
   FB_TX_FAILED = 'fbTxFailed',
   APPROVED = 'approved',
-  CANCELLED = 'cancelled',
+  CANCELED = 'canceled',
   FAILED = 'failed',
 }
 
 export enum DepositStatus {
   PENDING = 'pending',
-  CANCELLED = 'cancelled',
+  CANCELED = 'canceled',
   FAILED = 'failed',
   APPROVED = 'approved',
   REQUESTED = 'requested',
@@ -88,7 +88,7 @@ const WithdrawStatusText = {
   [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: 'Withdrawal Completed!',
   [WithdrawStatus.FB_TX_CANCELLING]: 'Cancelling...',
   [WithdrawStatus.FB_TX_CANCELLED]: 'Withdrawal canceled (contact support if needed)',
-  [WithdrawStatus.CANCELLED]: 'Withdrawal canceled (contact support if needed)',
+  [WithdrawStatus.CANCELED]: 'Withdrawal canceled (contact support if needed)',
   [WithdrawStatus.FB_TX_BLOCKED]: 'Withdrawal blocked (contact support)',
   [WithdrawStatus.FB_TX_TIMEOUT]: 'Withdrawal timeout (contact support)',
   [WithdrawStatus.FB_TX_FAILED]: 'Withdrawal failed (contact support)',
@@ -98,7 +98,7 @@ const WithdrawStatusText = {
 
 const DepositStatusText = {
   [DepositStatus.PENDING]: 'Waiting for deposit...',
-  [DepositStatus.CANCELLED]: 'Deposit cancelled due timeout',
+  [DepositStatus.CANCELED]: 'Deposit canceled due timeout',
   [DepositStatus.FAILED]: 'Deposit failed (contact support)',
   [DepositStatus.APPROVED]: 'Deposit received, minting ${symbol}...',
   [DepositStatus.REQUESTED]: 'Requested',
@@ -113,14 +113,14 @@ const WithdrawStatusColors = {
   [WithdrawStatus.FB_TX_BLOCKED]: 'error',
   [WithdrawStatus.FB_TX_TIMEOUT]: 'error',
   [WithdrawStatus.FB_TX_FAILED]: 'error',
-  [WithdrawStatus.CANCELLED]: 'error',
+  [WithdrawStatus.CANCELED]: 'error',
   [WithdrawStatus.FAILED]: 'error',
 } as Record<string, string>
 
 const DepositStatusColors = {
   [DepositStatus.SETTLED]: 'green1',
   [DepositStatus.FAILED]: 'error',
-  [DepositStatus.CANCELLED]: 'error',
+  [DepositStatus.CANCELED]: 'error',
 } as Record<string, string>
 
 export const withdrawErrorStatuses = [
@@ -128,13 +128,13 @@ export const withdrawErrorStatuses = [
   WithdrawStatus.FB_TX_BLOCKED,
   WithdrawStatus.FB_TX_TIMEOUT,
   WithdrawStatus.FB_TX_FAILED,
-  WithdrawStatus.CANCELLED,
+  WithdrawStatus.CANCELED,
   WithdrawStatus.FAILED,
 ] as string[]
 
 export const withdrawSuccessStatuses = [WithdrawStatus.APPROVED, WithdrawStatus.FB_TX_PARTIALLY_COMPLETED] as string[]
 
-export const depositErrorStatuses = [DepositStatus.FAILED, DepositStatus.CANCELLED] as string[]
+export const depositErrorStatuses = [DepositStatus.FAILED, DepositStatus.CANCELED] as string[]
 
 export const depositSuccessStatuses = [DepositStatus.SETTLED] as string[]
 
@@ -173,7 +173,7 @@ const WithdrawStatusPercents = {
   [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: 100,
   [WithdrawStatus.FB_TX_CANCELLING]: 80,
   [WithdrawStatus.FB_TX_CANCELLED]: 100,
-  [WithdrawStatus.CANCELLED]: 100,
+  [WithdrawStatus.CANCELED]: 100,
   [WithdrawStatus.FB_TX_BLOCKED]: 100,
   [WithdrawStatus.FB_TX_TIMEOUT]: 100,
   [WithdrawStatus.FB_TX_FAILED]: 100,
@@ -183,7 +183,7 @@ const WithdrawStatusPercents = {
 
 const DepositStatusPercents = {
   [DepositStatus.PENDING]: 10,
-  [DepositStatus.CANCELLED]: 100,
+  [DepositStatus.CANCELED]: 100,
   [DepositStatus.FAILED]: 100,
   [DepositStatus.APPROVED]: 50,
   [DepositStatus.REQUESTED]: 50,

@@ -135,14 +135,14 @@ export const WithdrawStatusIcons = {
   [WithdrawStatus.FB_TX_BLOCKED]: <Attention />,
   [WithdrawStatus.FB_TX_TIMEOUT]: <Attention />,
   [WithdrawStatus.FB_TX_FAILED]: <Attention />,
-  [WithdrawStatus.CANCELLED]: <Attention />,
+  [WithdrawStatus.CANCELED]: <Attention />,
   [WithdrawStatus.FAILED]: <Attention />,
 } as Record<string, JSX.Element>
 
 export const DepositStatusIcons = {
   [DepositStatus.SETTLED]: <Passed />,
   [DepositStatus.FAILED]: <Attention />,
-  [DepositStatus.CANCELLED]: <Attention />,
+  [DepositStatus.CANCELED]: <Attention />,
 } as Record<string, JSX.Element>
 
 export const getStatusIcon = (action: ActionTypes, status: string) => {
