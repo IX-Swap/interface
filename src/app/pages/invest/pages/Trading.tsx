@@ -1,31 +1,19 @@
-import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
-import {
-  isMarketDataFalsy,
-  isPairIdFalsy
-} from 'app/pages/exchange/utils/order'
+import { isPairIdFalsy } from 'app/pages/exchange/utils/order'
 import React from 'react'
-import { generatePath, Redirect, useParams } from 'react-router-dom'
+import { Redirect, useParams } from 'react-router-dom'
 import { TradingContainer } from '../components/Trading/TradingContainer'
-import { InvestRoute } from '../router/config'
+import { useFeaturedPair } from '../hooks/useFeaturedPair'
 
 export const Trading = () => {
   const { pairId } = useParams<{ pairId: string }>()
-  const { data, isLoading } = useMarketList()
-
-  if ((isMarketDataFalsy(data), isLoading)) {
+  const { data, isLoading } = useFeaturedPair()
+  if (data === undefined || data === null || isLoading) {
     return null
   }
 
   if (isPairIdFalsy(pairId)) {
-    // TODO use the featured token
-    const firstPair = data.list[7]
-    const to =
-      firstPair !== undefined
-        ? generatePath(InvestRoute.trading, { pairId: data?.list[7]?._id })
-        : InvestRoute.tradingRoot
-
+    const to = data._id
     return <Redirect to={to} />
   }
-
   return <TradingContainer />
 }
