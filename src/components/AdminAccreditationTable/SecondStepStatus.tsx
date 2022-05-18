@@ -76,7 +76,7 @@ export const SecondStepStatus = ({ status, id }: Props) => {
   if (status === AccreditationStatusEnum.PENDING_CUSTODIAN) {
     return (
       <>
-        <RejectModal isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
+        <RejectModal searchValue='' isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
         <ButtonsContainer>
           <ApproveButton onClick={approve}>
             <Trans>Approve</Trans>
