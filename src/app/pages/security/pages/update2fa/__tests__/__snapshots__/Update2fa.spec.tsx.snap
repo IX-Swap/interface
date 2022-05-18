@@ -70,7 +70,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                       >
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-1ofof2g-MuiFormControl-root-MuiTextField-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-112rbl4-MuiFormControl-root-MuiTextField-root"
                           control="[object Object]"
                           path="emailCode"
                         >
