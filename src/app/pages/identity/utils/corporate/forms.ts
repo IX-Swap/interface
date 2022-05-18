@@ -6,7 +6,8 @@ import {
   CorporateInvestorTaxDeclarationFormValues,
   IndividualDocumentsFormValues,
   InvestorCorporateInfoFormValues,
-  InvestorDirectorsAndBeneficialOwnersFormValues
+  InvestorDirectorsAndBeneficialOwnersFormValues,
+  Personnel
 } from '../../types/forms'
 
 export const getCorporateInfoFormValues = (
@@ -54,31 +55,32 @@ export const getCorporateInfoFormValues = (
 export const getDirectorsAndBeneficialOwnersFormValues = (
   data: CorporateIdentity | undefined
 ): Partial<InvestorDirectorsAndBeneficialOwnersFormValues> => {
+  const getDirectorDocuments = (director: Personnel) => {
+    const proofOfAddress = director.documents
+      ?.filter(document => document?.type === 'Proof of Address')
+      ?.map(doc => ({ value: doc })) ?? [{}]
+
+    const proofOfIdentity = director.documents
+      ?.filter(document => document?.type === 'Proof of Identity')
+      ?.map(doc => ({ value: doc })) ?? [{}]
+
+    return {
+      proofOfIdentity,
+      proofOfAddress
+    }
+  }
+
   return {
     directors: data?.directors.map(director => {
       return {
         ...director,
-        documents: {
-          proofOfAddress: director.documents.filter(
-            document => document.type === 'Proof of Address'
-          ),
-          proofOfIdentity: director.documents.filter(
-            document => document.type === 'Proof of Identity'
-          )
-        }
+        ...getDirectorDocuments(director)
       }
     }),
     beneficialOwners: data?.beneficialOwners.map(director => {
       return {
         ...director,
-        documents: {
-          proofOfAddress: director.documents.filter(
-            document => document.type === 'Proof of Address'
-          ),
-          proofOfIdentity: director.documents.filter(
-            document => document.type === 'Proof of Identity'
-          )
-        }
+        ...getDirectorDocuments(director)
       }
     })
   }

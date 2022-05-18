@@ -44,7 +44,10 @@ export const CreateCorporateIdentity = ({
             <VSpacer size='medium' />
           </Grid>
           <Grid item>
-            <CorporateInvestorForm type={type} />
+            <CorporateInvestorForm
+              formTitle='Corporate Investor Identity'
+              type={type}
+            />
           </Grid>
         </Grid>
       </RootContainer>
