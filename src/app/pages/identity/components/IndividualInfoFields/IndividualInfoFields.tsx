@@ -16,7 +16,7 @@ import {
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
@@ -30,7 +30,8 @@ export const IndividualInfoFields = (
   props: IndividualInfoFieldsProps
 ): JSX.Element => {
   const { rootName } = props
-  const { control, watch } = useFormContext<IndividualPersonalInformation>()
+  const { control, watch, clearErrors } =
+    useFormContext<IndividualPersonalInformation>()
   const {
     email: defaultEmail,
     firstName: defaultFirstName,
@@ -39,6 +40,13 @@ export const IndividualInfoFields = (
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
   const nationality = watch('nationality')
+
+  useEffect(() => {
+    if (nationality !== 'Singapore') {
+      control.setValue('nric', '')
+      clearErrors('nric')
+    }
+  }, []) // eslint-disable-line
 
   return (
     <Grid container>
@@ -117,11 +125,11 @@ export const IndividualInfoFields = (
               name='dob'
               label='Date'
               component={DatePicker}
-              openTo='year'
               customRenderer
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
               maxDate={subYears(new Date(), 18)}
+              variant='date'
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>

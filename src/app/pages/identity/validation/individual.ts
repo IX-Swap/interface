@@ -33,7 +33,10 @@ export const personalInfoSchema = yup
     gender: yup.string().required(validationMessages.required),
     nric: yup.string().when('nationality', {
       is: 'Singapore',
-      then: yup.string().required(validationMessages.required),
+      then: yup
+        .string()
+        .max(12, 'Maximum of 12 characters')
+        .required(validationMessages.required),
       otherwise: yup.string()
     })
   })

@@ -9,7 +9,15 @@ export const GenderSelect = (props: any): JSX.Element => {
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select {...props} label={undefined} displayEmpty>
+      <Select
+        {...props}
+        label={undefined}
+        displayEmpty
+        renderValue={value => {
+          const item = GENDERS_OPTS.find(({ value: v }) => v === value)
+          return item?.label
+        }}
+      >
         <SelectItem disabled value={undefined}>
           Gender
         </SelectItem>
