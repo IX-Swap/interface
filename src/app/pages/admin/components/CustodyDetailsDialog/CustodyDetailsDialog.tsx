@@ -83,12 +83,13 @@ export const CustodyDetailsDialog = () => {
       <VSpacer size={'small'} />
       <DialogActions className={classes.actions}>
         <Button
+          fullWidth
           size='large'
           color='primary'
           variant='contained'
           onClick={() => replace(CustodyManagementRoute.main)}
         >
-          Close
+          Okay
         </Button>
       </DialogActions>
     </UIDialog>
