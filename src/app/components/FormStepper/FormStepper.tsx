@@ -188,14 +188,16 @@ export const FormStepper = (props: FormStepperProps) => {
               }
               actions={
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <SubmitButton
-                      mutation={submitMutation}
-                      data={data}
-                      step={steps[steps.length - 1]}
-                      fullWidth
-                    />
-                  </Grid>
+                  {matches ? null : (
+                    <Grid item xs={12}>
+                      <SubmitButton
+                        mutation={submitMutation}
+                        data={data}
+                        step={steps[steps.length - 1]}
+                        fullWidth
+                      />
+                    </Grid>
+                  )}
                   <Grid item xs={12}>
                     <SaveDrafButton
                       isLastStep={activeStep === steps.length - 1}
