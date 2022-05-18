@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { Box } from 'rebass'
 
 import { Vault } from 'components/Vault'
 import { DepositPopup } from 'components/Vault/DepositPopup'
 import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 import { useCurrency } from 'hooks/Tokens'
+import { routes } from 'utils/routes'
 import { getAtlasInfo, getToken } from 'state/secCatalog/hooks'
 import { LightBackground } from 'theme/Background'
 import { BackArrowButton } from 'components/BackArrowButton'
@@ -24,6 +25,7 @@ export default function SecTokenDetails({
     params: { currencyId },
   },
 }: RouteComponentProps<{ currencyId: string }>) {
+  const history = useHistory()
   const currency = (useCurrency(currencyId) as any) ?? undefined
   const [token, setToken] = useState<any>(null)
   const [atlasInfo, setAtlasInfo] = useState<any | null>(null)
@@ -45,6 +47,10 @@ export default function SecTokenDetails({
     fetchToken()
   }, [currencyId])
 
+  const onBack = () => {
+    history.push(routes.securityTokens())
+  }
+
   if (!isLoggedIn) return <NotAvailablePage />
 
   return (
@@ -54,7 +60,7 @@ export default function SecTokenDetails({
       <LightBackground />
       <Container width={['100%', '90%']} maxWidth={'920px'}>
         <InfoTitle>
-          <BackArrowButton />
+          <BackArrowButton onBack={onBack}  />
           {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
           <Box display="flex" alignItems="center">
             <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
