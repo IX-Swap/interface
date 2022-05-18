@@ -105,6 +105,7 @@ export const PickerButton = ({
       </CustomButton>
       {open && (
         <PopperEl
+          style={{ zIndex: 1 }}
           id={id}
           open={open}
           anchorEl={anchorEl}

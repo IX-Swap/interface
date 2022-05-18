@@ -146,7 +146,8 @@ export const input = (theme: Theme) => {
             textOverflow: 'ellipsis !important',
             color: inputStyles?.placeholder,
             opacity: 1,
-            fontSize: 14
+            fontSize: 14,
+            lineHeight: 17
           },
           '&:-webkit-autofill': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
