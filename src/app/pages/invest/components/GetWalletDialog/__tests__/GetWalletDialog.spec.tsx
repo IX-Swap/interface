@@ -32,12 +32,4 @@ describe('GetWalletDialog', () => {
   it('renders correctly', async () => {
     render(<GetWalletDialog {...props} />)
   })
-
-  it('Invokes callback on button click', async () => {
-    const { getByTestId } = render(<GetWalletDialog {...props} />)
-    fireEvent.click(getByTestId('getAddressBtn'))
-    await waitFor(() => {
-      expect(createCustodianWallet).toHaveBeenCalledTimes(1)
-    })
-  })
 })

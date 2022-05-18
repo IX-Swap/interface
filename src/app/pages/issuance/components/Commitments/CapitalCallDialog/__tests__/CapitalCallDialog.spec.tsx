@@ -21,7 +21,7 @@ describe('CapitalCallDialog', () => {
   it('renders Typography with correct props', () => {
     render(<CapitalCallDialog open={true} toggleOpen={handleToggle} />)
 
-    expect(Typography).toHaveBeenCalledTimes(2)
+    expect(Typography).toHaveBeenCalledTimes(3)
     expect(Typography).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
@@ -40,8 +40,7 @@ describe('CapitalCallDialog', () => {
     expect(ReactMultiEmail).toHaveBeenCalledTimes(1)
     expect(ReactMultiEmail).toHaveBeenCalledWith(
       expect.objectContaining({
-        emails: [],
-        placeholder: 'Enter Email'
+        emails: []
       }),
       {}
     )
