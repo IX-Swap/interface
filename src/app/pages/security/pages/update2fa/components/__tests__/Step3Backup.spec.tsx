@@ -24,7 +24,7 @@ describe('Step3Backup', () => {
   it('renders 2fa key', () => {
     render(<Step3Backup twoFaData={fakeTwoFaData} />)
     expect(BackupKey).toHaveBeenCalledWith(
-      expect.objectContaining({ value: fakeTwoFaData.key }),
+      expect.objectContaining({ value: fakeTwoFaData.encoded }),
       {}
     )
   })
