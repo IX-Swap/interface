@@ -591,10 +591,7 @@ export function useGetStakings() {
         return now > lockedTill * 1000
       }
       const getByPeriod = async (period: PeriodsEnum) => {
-        const stakedTransactions = await staking?.stakedTransactionsForPeriod(
-          '0xE54eedb5adC6B412ae8069F2FffA1292e2aEd1f0',
-          periodsIndex[period]
-        )
+        const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periodsIndex[period])
         if (stakedTransactions.length === 0) return []
         return stakedTransactions.map((data: Array<number>, index: number) => {
           const startDateUnix = BigNumber.from(data[0]).toNumber()

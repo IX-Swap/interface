@@ -167,7 +167,7 @@ function useSwapCallArguments(
     }
     const swapMethods = []
     const options = {
-      feeOnTransfer: true,
+      feeOnTransfer: trade.tradeType === TradeType.EXACT_INPUT,
       allowedSlippage,
       recipient,
       deadline: deadline.toNumber(),
