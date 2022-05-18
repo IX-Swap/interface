@@ -16,6 +16,7 @@ interface Props {
   error?: any | ReactChildren
   maxHeight?: number
   maxDate?: any
+  minDate?: any
 }
 
 export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate, ...props }: Props) => {

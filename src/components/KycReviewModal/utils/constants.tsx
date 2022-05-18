@@ -1,5 +1,14 @@
 import dayjs from 'dayjs'
 
+import { IdentityDocumentType } from 'pages/KYC/enum'
+
+export type KycTypes = Array<{
+  key: string
+  label: string
+  width?: Record<string, number>
+  format?: (values: string) => string
+}>
+
 export const cynopsisKeys = [
   { key: 'cynopsis1', label: 'Cynopsis 1' },
   { key: 'cynopsis2', label: 'Cynopsis 2' },
@@ -23,7 +32,19 @@ export const corporateInfoKeys = [
     width: { xs: 12, sm: 6 },
   },
   { key: 'businessActivity', label: 'Business Activity', width: { xs: 12, sm: 6 } },
-] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
+  {
+    key: 'incorporationDate',
+    label: 'Date of Incorporation',
+    width: { xs: 12, sm: 6 },
+    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+  },
+  {
+    key: 'incorporationExpiryDate',
+    label: 'Date of Incorporation Expiry',
+    width: { xs: 12, sm: 6 },
+    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+  },
+] as KycTypes
 
 export const personalInfoKeys = [
   { key: 'firstName', label: 'First Name', width: { xs: 12, sm: 6, md: 4 } },
@@ -45,7 +66,33 @@ export const personalInfoKeys = [
     width: { xs: 12, sm: 6 },
   },
   { key: 'email', label: 'Email address: ', width: { xs: 12, sm: 6 } },
-] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
+] as KycTypes
+
+export const individualDocumentKeys = [
+  {
+    key: 'idType',
+    label: 'Document Type',
+    width: { xs: 12, sm: 6 },
+    format: (value: string): string => {
+      const key = value.replaceAll(' ', '_') as keyof typeof IdentityDocumentType
+      return IdentityDocumentType[key]
+    },
+  },
+  { key: 'idNumber', label: 'Document Number', width: { xs: 12, sm: 6 } },
+
+  {
+    key: 'idIssueDate',
+    label: 'Document Issue Date',
+    width: { xs: 12, sm: 6 },
+    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+  },
+  {
+    key: 'idExpiryDate',
+    label: 'Document Expiry Date',
+    width: { xs: 12, sm: 6 },
+    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+  },
+]
 
 export const companyAuthorizedPersonnelKeys = [
   { key: 'personnelName', label: 'Full Name', width: { xs: 12, sm: 6 } },

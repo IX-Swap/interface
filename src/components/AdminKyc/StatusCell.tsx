@@ -2,19 +2,13 @@ import React, { useContext } from 'react'
 import { t } from '@lingui/macro'
 import styled, { ThemeContext } from 'styled-components'
 
+import { KYCStatuses } from 'pages/KYC/enum'
+
 import rejectedIcon from '../../assets/images/reject.svg'
 import changeRequestIcon from '../../assets/images/attention-white.svg'
 import approvedIcon from '../../assets/images/check-success.svg'
 import pendingIcon from '../../assets/images/loader_thin.svg'
 import warningIcon from '../../assets/images/warning.svg'
-
-export const KYC_STATUSES = {
-  PENDING: 'pending',
-  APPROVED: 'approved',
-  REJECTED: 'rejected',
-  CHANGE_REQUEST: 'changes-requested',
-  DRAFT: 'draft',
-}
 
 interface Props {
   status: string
@@ -23,25 +17,31 @@ interface Props {
 export const StatusCell = ({ status }: Props) => {
   const theme = useContext(ThemeContext)
   const statusColors = {
-    [KYC_STATUSES.PENDING]: theme.text2,
-    [KYC_STATUSES.DRAFT]: theme.text2,
-    [KYC_STATUSES.REJECTED]: theme.error,
-    [KYC_STATUSES.CHANGE_REQUEST]: theme.text2,
-    [KYC_STATUSES.APPROVED]: theme.green1,
+    [KYCStatuses.PENDING]: theme.text2,
+    [KYCStatuses.DRAFT]: theme.text2,
+    [KYCStatuses.REJECTED]: theme.error,
+    [KYCStatuses.CHANGES_REQUESTED]: theme.text2,
+    [KYCStatuses.APPROVED]: theme.green1,
+    [KYCStatuses.FAILED]: theme.error,
+    [KYCStatuses.IN_PROGRESS]: theme.text2,
   } as Record<string, string>
 
   const getText = () => {
     switch (status) {
-      case KYC_STATUSES.PENDING:
+      case KYCStatuses.PENDING:
         return t`Pending`
-      case KYC_STATUSES.REJECTED:
+      case KYCStatuses.REJECTED:
         return t`Declined`
-      case KYC_STATUSES.CHANGE_REQUEST:
+      case KYCStatuses.CHANGES_REQUESTED:
         return t`Change requested`
-      case KYC_STATUSES.APPROVED:
+      case KYCStatuses.APPROVED:
         return t`Approved`
-      case KYC_STATUSES.DRAFT:
+      case KYCStatuses.DRAFT:
         return t`Draft`
+      case KYCStatuses.FAILED:
+        return t`Failed`
+      case KYCStatuses.IN_PROGRESS:
+        return t`In progress`
       default:
         return t`Status`
     }
@@ -49,15 +49,19 @@ export const StatusCell = ({ status }: Props) => {
 
   const getIcon = () => {
     switch (status) {
-      case KYC_STATUSES.REJECTED:
+      case KYCStatuses.REJECTED:
         return rejectedIcon
-      case KYC_STATUSES.APPROVED:
+      case KYCStatuses.APPROVED:
         return approvedIcon
-      case KYC_STATUSES.PENDING:
+      case KYCStatuses.PENDING:
         return pendingIcon
-      case KYC_STATUSES.CHANGE_REQUEST:
+      case KYCStatuses.CHANGES_REQUESTED:
         return changeRequestIcon
-      case KYC_STATUSES.DRAFT:
+      case KYCStatuses.DRAFT:
+        return warningIcon
+      case KYCStatuses.FAILED:
+        return rejectedIcon
+      case KYCStatuses.IN_PROGRESS:
         return warningIcon
       default:
         return pendingIcon

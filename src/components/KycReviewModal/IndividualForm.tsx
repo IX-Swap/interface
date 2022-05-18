@@ -2,14 +2,17 @@ import React from 'react'
 
 import { IndividualKyc } from 'state/admin/actions'
 
-import { Cynopsis } from './Blocks/Cynopsis'
-import { Information } from './Blocks/Information'
-import { Address } from './Blocks/Address'
-import { SourceOfFunds } from './Blocks/SourceOfFunds'
-import { Fatca } from './Blocks/Fatca'
-import { UploadedDocuments } from './Blocks/UploadedDocuments'
-import { Occupation } from './Blocks/Occupation'
-import { InvestorStatusDeclaration } from './Blocks/InvestorStatusDeclaration'
+import {
+  IndividualDocument,
+  Cynopsis,
+  Information,
+  Address,
+  SourceOfFunds,
+  Fatca,
+  UploadedDocuments,
+  Occupation,
+  InvestorStatusDeclaration,
+} from './Blocks'
 
 interface Props {
   data: IndividualKyc
@@ -21,6 +24,7 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
     <>
       <Cynopsis riskJSON={riskJSON} />
       <Information data={data} kycKey="individual" />
+      <IndividualDocument data={data} />
       <Address data={data} />
       <SourceOfFunds data={data} kycKey="individual" />
       <InvestorStatusDeclaration data={data} kycKey="individual" />
