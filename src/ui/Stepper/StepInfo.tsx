@@ -26,7 +26,7 @@ export const StepInfo = ({ label, activeStep, totalSteps }: StepInfoProps) => {
         fontSize={14}
         textTransform='capitalize'
       >
-        {activeStep}/{totalSteps}
+        Step {activeStep}/{totalSteps}
       </Typography>
     </Box>
   )

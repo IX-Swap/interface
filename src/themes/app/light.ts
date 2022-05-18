@@ -197,7 +197,7 @@ export const lightTheme: DeprecatedThemeOptions = {
       bgDisabled: '#F0F2F7',
       itemBorder: '#EDF2FA',
       placeholder: '#778194',
-      label: '#0A1326',
+      label: '#3B4251',
       color: '#778194',
       colorDisabled: '#778194',
       labelDisabled: '#778194',
@@ -254,6 +254,9 @@ export const lightTheme: DeprecatedThemeOptions = {
         light: '#AADF70',
         contrastText: '#FFF'
       }
-    })
+    }),
+    header: {
+      bg: 'rgba(255, 255, 255, 0.75)'
+    }
   }
 }

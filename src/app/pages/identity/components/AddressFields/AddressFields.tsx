@@ -2,6 +2,7 @@ import { Grid } from '@mui/material'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { Address } from 'app/pages/identity/types/forms'
 import { CountrySelect } from 'components/form/CountrySelect'
+import { OptionalLabel } from 'components/form/OptionalLabel'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
@@ -40,7 +41,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='line2'
-          label='Line 2 (Optional)'
+          label={<OptionalLabel label='Line 2' />}
           variant='outlined'
           defaultValue={defaultValue?.line2 ?? ''}
           placeholder='Line 2'
@@ -68,7 +69,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='state'
-          label='State (Optional)'
+          label={<OptionalLabel label='State' />}
           variant='outlined'
           defaultValue={defaultValue?.state ?? ''}
           placeholder='State'

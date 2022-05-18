@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Container } from '@mui/material'
+import { Grid, Typography, Box } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { formatDateAndTime } from 'helpers/dates'
@@ -16,6 +16,7 @@ import { AuthorizerCategory } from 'types/app'
 import { privateClassNames } from 'helpers/classnames'
 import { DigitalSecurityOffering } from 'types/dso'
 import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
+import { RootContainer } from 'ui/RootContainer'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -51,11 +52,11 @@ export const AuthorizerView = <T,>(
   const showForm = !(isTransaction && approvedOrRejected)
 
   return (
-    <Container className={privateClassNames()} style={{ paddingTop: 40 }}>
-      <Grid container direction='column' spacing={4}>
-        <Grid item>
-          <PageHeader title={title} />
-        </Grid>
+    <Grid container direction='column' spacing={4} display='table'>
+      <Grid item>
+        <PageHeader title={title} />
+      </Grid>
+      <RootContainer className={privateClassNames()} style={{ padding: 40 }}>
         <Grid item>
           <Grid container spacing={6} wrap='wrap-reverse'>
             {hasIdentity && (
@@ -149,7 +150,7 @@ export const AuthorizerView = <T,>(
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </RootContainer>
+    </Grid>
   )
 }

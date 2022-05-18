@@ -11,7 +11,7 @@ export interface SubmitButtonProps extends ButtonProps {
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { mutation, data, step } = props
+  const { mutation, data, step, fullWidth } = props
 
   const [save, { isLoading }] = mutation
   const isSubmitted = data?.status === 'Submitted'
@@ -35,7 +35,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           ''
         )
       }
-      placement='top-end'
+      placement='top'
       arrow
     >
       <Box>
@@ -45,8 +45,13 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           onClick={async () => void handleSave()}
           disabled={isApproved || isLoading || isSubmitted || !isValid}
           disableElevation
+          fullWidth={fullWidth}
         >
-          {isApproved ? 'Approved' : isSubmitted ? 'Submitted' : 'Submit'}
+          {isApproved
+            ? 'Approved'
+            : isSubmitted
+            ? 'Submitted'
+            : 'Submit Identity'}
         </Button>
       </Box>
     </Tooltip>

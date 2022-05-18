@@ -160,12 +160,15 @@ export interface CorporateInvestorDocumentsFormValues {
   corporateDocuments: DataroomFile[]
   financialDocuments: DataroomFile[]
 }
+export interface DocumentFieldArrayItemValue {
+  value: DataroomFile
+}
 export interface RepresentativeFormValues {
   fullName: string
   designation: string
   email: string
   contactNumber: string
-  documents: Array<{ value: DataroomFile }>
+  documents: DocumentFieldArrayItemValue[]
 }
 export interface DirectorFormValues {
   fullName: string
@@ -173,19 +176,15 @@ export interface DirectorFormValues {
   email: string
   contactNumber: string
   address: Address
-  documents: {
-    proofOfIdentity: DataroomFile[]
-    proofOfAddress: DataroomFile[]
-  }
+  proofOfIdentity?: DocumentFieldArrayItemValue[]
+  proofOfAddress?: DocumentFieldArrayItemValue[]
 }
 
 export interface BeneficialOwnerFormValues {
   fullName: string
   percentageShareholding: number
-  documents: {
-    proofOfIdentity: DataroomFile[]
-    proofOfAddress: DataroomFile[]
-  }
+  proofOfIdentity?: DocumentFieldArrayItemValue[]
+  proofOfAddress?: DocumentFieldArrayItemValue[]
 }
 export interface CorporateInvestorAgreementsFormValues {
   investor: boolean

@@ -243,19 +243,16 @@ exports[`Setup2fa should match snapshot 1`] = `
                 class="MuiBox-root css-1mvxmnv"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <h5
-                      class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-qj7s3w-MuiTypography-root"
+                    <h2
+                      class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
                     >
                       Install Authenticator App in Your Smartphone Device
-                    </h5>
-                    <div
-                      class="MuiBox-root css-1jpm9pd"
-                    />
+                    </h2>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"

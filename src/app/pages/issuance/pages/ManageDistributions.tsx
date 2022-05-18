@@ -6,6 +6,7 @@ import { NewDistribution } from 'app/pages/issuance/components/ManageDistributio
 import { PastDistributionsTable } from 'app/pages/issuance/components/ManageDistributions/PastDistributionsTable'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { RootContainer } from 'ui/RootContainer'
 
 export const ManageDistributions = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
@@ -16,19 +17,21 @@ export const ManageDistributions = () => {
   }
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} style={{ display: 'table' }}>
       <Grid item xs={12}>
         <PageHeader title={data.tokenName} showBreadcrumbs />
       </Grid>
-      <Grid item xs={12}>
-        <Insights />
-      </Grid>
-      <Grid item xs={12}>
-        <NewDistribution />
-      </Grid>
-      <Grid item xs={12}>
-        <PastDistributionsTable dso={data} />
-      </Grid>
+      <RootContainer>
+        <Grid item xs={12}>
+          <Insights />
+        </Grid>
+        <Grid item xs={12}>
+          <NewDistribution />
+        </Grid>
+        <Grid item xs={12}>
+          <PastDistributionsTable dso={data} />
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

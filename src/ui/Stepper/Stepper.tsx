@@ -11,10 +11,11 @@ import { StepInfo, StepInfoProps } from 'ui/Stepper/StepInfo'
 import { Icon } from 'ui/Icons/Icon'
 import { StepperDialog } from 'ui/Stepper/StepperDialog'
 import { useTheme } from '@mui/styles'
-
+import { Divider } from 'ui/Divider'
 export interface StepperProps extends MuiStepperProps {
   stepInfo?: StepInfoProps
   actions?: ReactElement
+  withMobileDropdown?: boolean
 }
 
 export const Stepper = ({
@@ -22,6 +23,7 @@ export const Stepper = ({
   alternativeLabel,
   title,
   stepInfo,
+  withMobileDropdown = true,
   actions,
   ...props
 }: StepperProps) => {
@@ -48,17 +50,20 @@ export const Stepper = ({
               variant='body1'
               sx={{
                 mb: { xs: 0, md: 2 },
-                pl: { xs: 0, md: 3 },
+                pl: { xs: 0, md: 5 },
                 lineHeight: { xs: '20px', md: undefined },
                 fontSize: {
                   xs: 16,
-                  md: undefined
+                  md: 18
+                },
+                fontWeight: {
+                  xs: 600
                 }
               }}
             >
               {title}
             </Typography>
-            {matches ? (
+            {matches && withMobileDropdown ? (
               <IconButton
                 sx={{
                   width: 40,
@@ -81,8 +86,20 @@ export const Stepper = ({
         >
           {children}
         </MuiStepper>
+        <Box width='100%' p={matches ? 0 : '24px 40px'}>
+          <Divider />
+        </Box>
 
-        {actions !== undefined ? <>{actions}</> : null}
+        {actions !== undefined ? (
+          <Box
+            display='flex'
+            justifyContent='center'
+            width='100%'
+            p={matches ? 0 : '0 40px'}
+          >
+            {actions}
+          </Box>
+        ) : null}
       </Box>
       <StepperDialog
         el={

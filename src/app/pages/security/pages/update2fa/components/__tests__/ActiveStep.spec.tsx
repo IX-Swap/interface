@@ -4,11 +4,12 @@ import { ActiveStep } from 'app/pages/security/pages/update2fa/components/Active
 import { fakeTwoFaData } from '__fixtures__/security'
 
 jest.mock(
-  'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator',
+  'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator/Step1RemoveAuthenticator',
   () => ({
     Step1RemoveAuthenticator: jest.fn(() => <div data-testid='step-1' />)
   })
 )
+
 jest.mock(
   'app/pages/security/pages/update2fa/components/Step2Scan/Step2Scan',
   () => ({

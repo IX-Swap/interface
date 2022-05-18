@@ -16,7 +16,6 @@ export const input = (theme: Theme) => {
         '& .MuiInputLabel-root': {
           color: theme.palette.select.label,
           fontSize: 14,
-          opacity: 0.7,
           transform: 'scale(1)',
           '&.MuiInputLabel-filled': {
             top: 12,
@@ -94,7 +93,7 @@ export const input = (theme: Theme) => {
         '& .MuiInputLabel-outlined': {
           position: 'initial',
           marginBottom: 12,
-          lineHeight: 1
+          lineHeight: 1.13
         },
         '& .MuiOutlinedInput-input': {
           height: 49
@@ -140,21 +139,20 @@ export const input = (theme: Theme) => {
           borderRadius: 8,
 
           boxSizing: 'border-box' as any,
-          color: theme.palette.text.primary,
-          fontSize: 16,
+          color: theme.palette.select.label,
+          fontSize: 14,
           WebkitBoxShadow: '',
           '&::placeholder': {
             textOverflow: 'ellipsis !important',
             color: inputStyles?.placeholder,
             opacity: 1,
-            [theme.breakpoints.down('md')]: {
-              fontSize: 14
-            }
+            fontSize: 14
           },
           '&:-webkit-autofill': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
-            WebkitTextFillColor: '',
-            transition: ''
+            WebkitTextFillColor: theme.palette.select.label,
+            transition: '',
+            color: theme.palette.select.label
           },
 
           '&:-webkit-autofill:focus': {
@@ -164,7 +162,8 @@ export const input = (theme: Theme) => {
           },
           '&:-internal-autofill-selected': {
             WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
-            borderRadius: 0
+            borderRadius: 0,
+            color: theme.palette.select.label
           },
           '.Mui-focused &': {
             backgroundColor: '',
@@ -178,6 +177,12 @@ export const input = (theme: Theme) => {
           '.Mui-disabled &': {
             background: inputStyles.disabledBg,
             backgroundColor: inputStyles.disabledBg
+          },
+          '&[type=tel]': {
+            '&:-webkit-autofill': {
+              WebkitTextFillColor: inputStyles?.placeholder
+            },
+            color: inputStyles?.placeholder
           }
         },
         multiline: {

@@ -23,9 +23,7 @@ export const InvestRouter = () => {
         breadcrumb='View Digital Security Offering'
         path={InvestRoute.view}
       >
-        <RootContainer>
-          <InvestDSORouter />
-        </RootContainer>
+        <InvestDSORouter />
       </AppRoute>
 
       <AppRoute breadcrumb='Exchange' exact path={InvestRoute.exchange}>

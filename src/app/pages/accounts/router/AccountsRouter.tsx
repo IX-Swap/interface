@@ -16,6 +16,7 @@ import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAd
 import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
 import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
 import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
+import { RootContainer } from 'ui/RootContainer'
 import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
 
 export const AccountsRouter = () => {
@@ -60,7 +61,9 @@ export const AccountsRouter = () => {
       </AppRoute>
 
       <AppRoute breadcrumb='Dashboard' path={AccountsRoute.dashboard}>
-        <Dashboard />
+        <RootContainer>
+          <Dashboard />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute breadcrumb='My Reports' path={AccountsRoute.reports}>
