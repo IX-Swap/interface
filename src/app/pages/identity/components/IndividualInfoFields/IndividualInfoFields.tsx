@@ -21,6 +21,7 @@ import { useFormContext } from 'react-hook-form'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { DatePicker } from 'ui/DateTimePicker/DatePicker'
+import { OptionalLabel } from 'components/form/OptionalLabel'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -46,7 +47,7 @@ export const IndividualInfoFields = (
       control.setValue('nric', '')
       clearErrors('nric')
     }
-  }, []) // eslint-disable-line
+  }, [nationality]) // eslint-disable-line
 
   return (
     <Grid container>
@@ -55,10 +56,11 @@ export const IndividualInfoFields = (
           <TypedField
             customRenderer
             component={FileUpload}
+            placeHolder='Upload File'
             control={control}
             rootName={rootName}
             name='photo'
-            label='Upload Your Photo'
+            label={<OptionalLabel label='Upload Photo' />}
             valueExtractor={documentValueExtractor}
             accept={DataroomFileType.image}
             documentInfo={{
@@ -90,7 +92,7 @@ export const IndividualInfoFields = (
               component={TextInput}
               control={control}
               name='middleName'
-              label='Middle Name (Optional)'
+              label={<OptionalLabel label='Middle Name' />}
               defaultValue={
                 defaultMiddleName !== undefined
                   ? capitalizeFirstLetter(defaultMiddleName)
