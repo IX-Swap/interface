@@ -1,17 +1,19 @@
-import { BigNumber } from '@ethersproject/bignumber'
-import { TransactionResponse } from '@ethersproject/providers'
-import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
-import { t, Trans } from '@lingui/macro'
-import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
-import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box, Text } from 'rebass'
-import { setPoolTransactionHash, useMitigationEnabled } from 'state/pool/hooks'
 import { ThemeContext } from 'styled-components'
+import { BigNumber } from '@ethersproject/bignumber'
+import { TransactionResponse } from '@ethersproject/providers'
+import { t, Trans } from '@lingui/macro'
+import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
+
+import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
+import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
+import { setPoolTransactionHash, useMitigationEnabled } from 'state/pool/hooks'
 import { routes } from 'utils/routes'
+
 import { ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
@@ -45,6 +47,7 @@ import { SecToSecWarning } from './SecToSecWarning'
 import { ToggleableBody } from './styleds'
 import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
+
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
 export default function AddLiquidity({

@@ -189,6 +189,10 @@ export function useDerivedMintInfo(
     error = t`Connect Wallet`
   }
 
+  if (!currencyA || !currencyB) {
+    error = error ?? t`Choose pair`
+  }
+
   if (pairState === PairState.INVALID) {
     error = error ?? t`Invalid pair`
   }
