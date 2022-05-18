@@ -7,6 +7,7 @@ export interface Props {
 export default makeStyles(theme => ({
   container: {
     width: '100%',
+    maxWidth: '80vw!important',
     padding: theme.spacing(0, 0, 0, 2),
     borderRadius: 8,
     border: (props: Props) =>
@@ -20,9 +21,15 @@ export default makeStyles(theme => ({
         ? 'rgba(125, 211, 32, 0.05)'
         : 'rgba(76, 136, 255, 0.05)'
   },
+  keyBlock: {
+    width: 'calc(100% - 70px)'
+  },
   key: {
     fontSize: 18,
     fontWeight: 600,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
 
     [theme.breakpoints.down('md')]: {
       fontSize: 14

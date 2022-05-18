@@ -31,7 +31,7 @@ export const BackupKey = ({ value }: BackupKeyProps) => {
       className={classes.container}
       justifyContent={'space-between'}
     >
-      <Grid item>
+      <Grid item className={classes.keyBlock}>
         <Typography className={classes.key}>{value}</Typography>
       </Grid>
       <Grid item>
