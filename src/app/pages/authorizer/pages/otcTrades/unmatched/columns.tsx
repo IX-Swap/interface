@@ -1,7 +1,9 @@
 import { renderMoney } from 'app/pages/exchange/components/OpenOrders/columns'
 import { renderAmount } from 'helpers/tables'
+import React from 'react'
 import { OrderType, UnmatchedOTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { OrderTableIdentityLink } from '../OrderTableIdentityLink'
 
 export const getColumns = (
   side: OrderType
@@ -11,8 +13,9 @@ export const getColumns = (
     label: 'Pair'
   },
   {
-    key: 'user._id',
-    label: side === 'BUY' ? 'Buyer' : 'Seller'
+    key: 'user.userId',
+    label: side === 'BUY' ? 'Buyer' : 'Seller',
+    render: (userId, { user }) => <OrderTableIdentityLink user={user} />
   },
   {
     key: 'user.phoneNumber',

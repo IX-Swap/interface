@@ -19,25 +19,9 @@ export const OTCTrades = () => {
             </Typography>
             <MatchedOrders />
           </Grid>
-          <Grid
-            item
-            columnGap={6}
-            display='grid'
-            gridTemplateColumns='repeat(2, 1fr)'
-          >
-            <Grid item container direction='column' gap={2}>
-              <Typography variant='h4' fontWeight={600}>
-                Unmatched Buy Orders
-              </Typography>
-
-              <UnmatchedOrders side='BUY' />
-            </Grid>
-            <Grid item container direction='column' gap={2}>
-              <Typography variant='h4' fontWeight={600}>
-                Unmatched Sell Orders
-              </Typography>
-              <UnmatchedOrders side='SELL' />
-            </Grid>
+          <Grid item container columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+            <UnmatchedOrders side='BUY' title={'Unmatched Buy Orders'} />
+            <UnmatchedOrders side='SELL' title={'Unmatched Sell Orders'} />
           </Grid>
         </Grid>
       </Grid>

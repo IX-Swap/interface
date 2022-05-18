@@ -311,11 +311,12 @@ export const exchangeMarket = {
   getOrdersList: (userId?: string) => `exchange/orders/list/${userId}`
 }
 export const trading = {
-  getMyOrdersList: () => `otc/orders/list/my`,
+  getMyOrdersList: 'otc/orders/list/my',
   cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`,
-  confirmOTCOrder: (orderId: string) => `'/otc/order/confirm/${orderId}`,
+  confirmOTCOrder: (orderId: string) => `/otc/order/confirm/${orderId}`,
   getUnmatchedOrders: (side: OrderType) =>
-    `/otc/order/list/${side.toLowerCase()}`
+    `/otc/order/list/${side.toLowerCase()}`,
+  getMatchedOrders: '/otc/order/list/match'
 }
 export const listings = {
   getListByUser: (userId?: string) => `exchange/listing/list/${userId}`,

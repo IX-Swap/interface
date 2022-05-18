@@ -29,7 +29,7 @@ export const TradingOpenOrders = () => {
     <Grid>
       <TableView<OTCOrder>
         name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId)}
-        uri={trading.getMyOrdersList()}
+        uri={trading.getMyOrdersList}
         fakeItems={orders}
         size='small'
         // filter={

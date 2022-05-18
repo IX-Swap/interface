@@ -3,6 +3,8 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { MatchedOTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
 import { renderAmount } from 'helpers/tables'
+import { OrderTableIdentityLink } from '../OrderTableIdentityLink'
+import React from 'react'
 
 export const columns: Array<TableColumn<MatchedOTCOrder>> = [
   {
@@ -16,12 +18,13 @@ export const columns: Array<TableColumn<MatchedOTCOrder>> = [
   },
   {
     key: 'buyer._id',
-    label: 'Buyer'
+    label: 'Buyer',
+    render: (buyerId, { buyer }) => <OrderTableIdentityLink user={buyer} />
   },
   {
     key: 'seller._id',
-    label: 'Seller'
-    // render: renderRepresentativeName
+    label: 'Seller',
+    render: (buyerId, { seller }) => <OrderTableIdentityLink user={seller} />
   },
   {
     key: 'price',
