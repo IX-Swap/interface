@@ -56,7 +56,6 @@ export const DSOTerms = () => {
                 label='Dividend Yield'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='in percent'
                 variant='outlined'
                 disabled={isDebt}
               />
@@ -69,7 +68,6 @@ export const DSOTerms = () => {
                 name='interestRate'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='in percent'
                 variant='outlined'
                 disabled={isEquity}
               />
@@ -82,7 +80,6 @@ export const DSOTerms = () => {
                 label='Gross IRR'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='in percent'
                 variant='outlined'
                 disabled={isDebt}
               />

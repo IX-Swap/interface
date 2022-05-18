@@ -2,6 +2,7 @@ import { Grid } from '@mui/material'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { Address } from 'app/pages/identity/types/forms'
 import { CountrySelect } from 'components/form/CountrySelect'
+import { OptionalLabel } from 'components/form/OptionalLabel'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
@@ -29,6 +30,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Line 1'
           variant='outlined'
           defaultValue={defaultValue?.line1 ?? ''}
+          placeholder='Line 1'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -39,9 +41,10 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='line2'
-          label='Line 2'
+          label={<OptionalLabel label='Line 2' />}
           variant='outlined'
           defaultValue={defaultValue?.line2 ?? ''}
+          placeholder='Line 2'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -55,6 +58,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='City'
           variant='outlined'
           defaultValue={defaultValue?.city ?? ''}
+          placeholder='City'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -65,9 +69,10 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           control={control}
           rootName={rootName}
           name='state'
-          label='State'
+          label={<OptionalLabel label='State' />}
           variant='outlined'
           defaultValue={defaultValue?.state ?? ''}
+          placeholder='State'
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -92,6 +97,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Postal Code'
           variant='outlined'
           defaultValue={defaultValue?.postalCode ?? ''}
+          placeholder='Postal Code'
         />
       </Grid>
       <ValidateOnMount />
