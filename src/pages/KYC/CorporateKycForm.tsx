@@ -25,6 +25,7 @@ import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorp
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
+import { DateInput } from 'components/DateInput'
 
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -35,7 +36,6 @@ import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
-
 
 export default function CorporateKycForm() {
   const canLeavePage = useRef(false)
@@ -182,7 +182,7 @@ export default function CorporateKycForm() {
     }
   }
 
-  const onChangeInput = (key: string, value: string, values: any, setFieldValue: any) => {
+  const onChangeInput = (key: string, value: string | boolean, values: any, setFieldValue: any) => {
     if (values[key] !== value) {
       setFieldValue(key, value, false)
     }
@@ -307,9 +307,12 @@ export default function CorporateKycForm() {
                 shouldValidate &&
                 !errors.corporateName &&
                 !errors.typeOfLegalEntity &&
-                !errors.registrationNumber &&
                 !errors.countryOfIncorporation &&
-                !errors.businessActivity
+                !errors.businessActivity &&
+                !errors.registrationNumber &&
+                !errors.incorporationDate &&
+                !errors.incorporationExpiryDate &&
+                !errors.inFatfJurisdiction
               const authorizedPersonnelFilled =
                 shouldValidate &&
                 !errors.personnelName &&
@@ -389,6 +392,39 @@ export default function CorporateKycForm() {
                               items={legalEntityTypes}
                               onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
                               error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
+                            />
+                          </FormGrid>
+                          <FormGrid>
+                            <DateInput
+                              label="Date of Incorporation"
+                              maxHeight={60}
+                              error={errors.incorporationDate}
+                              value={values.incorporationDate}
+                              onChange={(value) => {
+                                setFieldValue('incorporationDate', value, false)
+                                validationSeen('incorporationDate')
+                              }}
+                              maxDate={new Date()}
+                            />
+                            <DateInput
+                              label="Date of Incorporation Expiry"
+                              maxHeight={60}
+                              error={errors.incorporationExpiryDate}
+                              value={values.incorporationExpiryDate}
+                              onChange={(value) => {
+                                setFieldValue('incorporationExpiryDate', value, false)
+                                validationSeen('incorporationExpiryDate')
+                              }}
+                              minDate={new Date()}
+                            />
+                          </FormGrid>
+                          <FormGrid columns={1}>
+                            <Checkbox
+                              checked={values.inFatfJurisdiction}
+                              onClick={() =>
+                                onChangeInput('inFatfJurisdiction', !values.inFatfJurisdiction, values, setFieldValue)
+                              }
+                              label="Is The Ultimate Holding Company A Regulated Entity Or Listed Company In a FATF Jurisdiction?"
                             />
                           </FormGrid>
                         </Column>

@@ -172,6 +172,13 @@ export default function KYC() {
             <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
           </>
         )
+      case KYCStatuses.IN_PROGRESS:
+        return (
+          <>
+            <Description description={getStatusDescription(status)} />
+            <DateInfo submittedDate={kyc?.updatedAt || kyc?.createdAt} />
+          </>
+        )
     }
   }, [status, description, kyc])
 

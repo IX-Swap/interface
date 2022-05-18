@@ -79,7 +79,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
-  const isDraftStatus = data.status === 'draft'
+  const needResubmit = [KYCStatuses.DRAFT, KYCStatuses.FAILED].includes(data.status as any)
 
   return (
     <>
@@ -118,17 +118,17 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                 <CorporateForm riskJSON={riskJSON} data={kyc} />
               )}
             </Body>
-            <ActionsContainer buttons={isDraftStatus ? 4 : 3}>
-              <ButtonIXSWide onClick={approve} disabled={isDraftStatus}>
+            <ActionsContainer buttons={needResubmit ? 4 : 3}>
+              <ButtonIXSWide onClick={approve} disabled={needResubmit}>
                 <Trans>Approve</Trans>
               </ButtonIXSWide>
-              <ButtonPinkBorder onClick={reject} disabled={isDraftStatus}>
+              <ButtonPinkBorder onClick={reject} disabled={needResubmit}>
                 <Trans>Reject</Trans>
               </ButtonPinkBorder>
-              <ButtonGradientBorder onClick={changeRequest} disabled={isDraftStatus}>
+              <ButtonGradientBorder onClick={changeRequest} disabled={needResubmit}>
                 <Trans>Request a change</Trans>
               </ButtonGradientBorder>
-              {isDraftStatus && (
+              {needResubmit && (
                 <ButtonIXSWide onClick={resubmit}>
                   <Trans>Resubmit</Trans>
                 </ButtonIXSWide>

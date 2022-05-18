@@ -1,16 +1,16 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Percent, Token } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
-import { KYC_STATUSES } from 'components/AdminKyc/StatusCell'
+import JSBI from 'jsbi'
+import flatMap from 'lodash.flatmap'
+
 import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
 import useIXSCurrency from 'hooks/useIXSCurrency'
-import JSBI from 'jsbi'
-import flatMap from 'lodash.flatmap'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
 import apiService from 'services/apiService'
 import { auth, broker, kyc, tokens, users } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
@@ -29,6 +29,7 @@ import { clearSwapState } from 'state/swap/actions'
 import { clearSwapHelperState } from 'state/swapHelper/actions'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
+
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -51,6 +52,7 @@ import {
   updateUserSlippageTolerance,
   getMe,
 } from './actions'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 function serializeToken(token: Token): SerializedToken {
   // TO DO - refactor
@@ -569,7 +571,7 @@ export function useAccount() {
   }, [token, getUserSecTokens])
 
   useEffect(() => {
-    if (kyc?.status !== KYC_STATUSES.APPROVED && accountChanged && !loadingRequest) {
+    if (kyc?.status !== KYCStatuses.APPROVED && accountChanged && !loadingRequest) {
       if (pathname !== '/kyc') {
         history.push('/kyc')
       }

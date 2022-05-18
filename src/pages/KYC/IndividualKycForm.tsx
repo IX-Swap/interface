@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useReducer, useRef } from 'react'
+import React, { useMemo, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
@@ -42,7 +42,7 @@ import {
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
-import { KYCStatuses } from './enum'
+import { KYCStatuses, IdentityDocumentType } from './enum'
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -202,6 +202,10 @@ export default function IndividualKycForm() {
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
+  const idTypes = useMemo(() => {
+    return Object.values(IdentityDocumentType).map((value, index) => ({ value: ++index, label: value }))
+  }, [])
+
   return (
     <Loadable loading={!isLoggedIn}>
       <Prompt when={!canLeavePage.current} message={promptValue} />
@@ -295,6 +299,8 @@ export default function IndividualKycForm() {
                 !errors.citizenship &&
                 !errors.phoneNumber &&
                 !errors.email
+              const identityDocumentFilled =
+                shouldValidate && !errors.idType && !errors.idNumber && !errors.idIssueDate && !errors.idExpiryDate
               const investorFilled = shouldValidate && !errors.accredited
               const addressFilled =
                 shouldValidate && !errors.address && !errors.postalCode && !errors.country && !errors.city
@@ -392,7 +398,56 @@ export default function IndividualKycForm() {
                           </FormGrid>
                         </Column>
                       </FormCard>
-
+                      <FormCard id="identity-document">
+                        <RowBetween marginBottom="32px">
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Identity Document</Trans>
+                          </TYPE.title6>
+                          {identityDocumentFilled && <BigPassed />}
+                        </RowBetween>
+                        <Column style={{ gap: '20px' }}>
+                          <FormGrid>
+                            <Select
+                              error={errors.idType}
+                              withScroll
+                              label="Document Type"
+                              selectedItem={values.idType}
+                              items={idTypes}
+                              onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
+                            />
+                            <TextInput
+                              onChange={(e) => onChangeInput('idNumber', e.currentTarget.value, values, setFieldValue)}
+                              value={values.idNumber}
+                              label="Document Number"
+                              error={errors.idNumber}
+                            />
+                          </FormGrid>
+                          <FormGrid>
+                            <DateInput
+                              label="Document Issue Date"
+                              maxHeight={60}
+                              error={errors.idIssueDate}
+                              value={values.idIssueDate}
+                              onChange={(value) => {
+                                setFieldValue('idIssueDate', value, false)
+                                validationSeen('idIssueDate')
+                              }}
+                              maxDate={new Date()}
+                            />
+                            <DateInput
+                              label="Document Expiry Date"
+                              maxHeight={60}
+                              error={errors.idExpiryDate}
+                              value={values.idExpiryDate}
+                              onChange={(value) => {
+                                setFieldValue('idExpiryDate', value, false)
+                                validationSeen('idExpiryDate')
+                              }}
+                              minDate={new Date()}
+                            />
+                          </FormGrid>
+                        </Column>
+                      </FormCard>
                       <FormCard id="address">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
@@ -599,7 +654,7 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '40px' }}>
                           <Uploader
-                            subtitle="Proof of ID - Passport or Singapore NRIC."
+                            subtitle="Proof of ID - Passport, Singapore NRIC, International Passport, National ID, Driving License or Others."
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
@@ -651,6 +706,11 @@ export default function IndividualKycForm() {
                           title: 'Personal Information',
                           href: 'personal',
                           passed: personalFilled,
+                        },
+                        identityDocument: {
+                          title: 'Identity Document',
+                          href: 'identity-document',
+                          passed: identityDocumentFilled,
                         },
                         address: {
                           title: 'Address',
