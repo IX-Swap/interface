@@ -31,6 +31,7 @@ const headerCells = [
 interface RowProps {
   item: AccreditationItem
   openReviewModal: (kyc: KycItem) => void
+  searchValue: string
 }
 
 const Header = () => {
@@ -43,7 +44,7 @@ const Header = () => {
   )
 }
 
-const Row: FC<RowProps> = ({ item, openReviewModal }: RowProps) => {
+const Row: FC<RowProps> = ({ item, searchValue,  openReviewModal }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
@@ -76,17 +77,18 @@ const Row: FC<RowProps> = ({ item, openReviewModal }: RowProps) => {
         <BrokerDealerStatus status={status} kyc={kyc} broker={broker} />
       </div>
       <div>
-        <CustodianStatus status={status} id={id} custodian={custodian} />
+        <CustodianStatus status={status} searchValue={searchValue} id={id} custodian={custodian} />
       </div>
     </StyledBodyRow>
   )
 }
 
 interface BodyProps {
+  searchValue: string
   openReviewModal: (kyc: KycItem) => void
 }
 
-const Body = ({ openReviewModal }: BodyProps) => {
+const Body = ({ searchValue, openReviewModal }: BodyProps) => {
   const {
     accreditationList: { items },
   } = useAdminState()
@@ -94,7 +96,7 @@ const Body = ({ openReviewModal }: BodyProps) => {
   return (
     <>
       {items?.map((item) => {
-        return <Row key={`kyc-table-${item.id}`} item={item} openReviewModal={openReviewModal} />
+        return <Row key={`kyc-table-${item.id}`} searchValue={searchValue} item={item} openReviewModal={openReviewModal} />
       })}
     </>
   )
@@ -138,7 +140,7 @@ export const AdminAccreditationTable = () => {
         </NoData>
       ) : (
         <Container>
-          <Table body={<Body openReviewModal={openModal} />} header={<Header />} />
+          <Table body={<Body searchValue={searchValue} openReviewModal={openModal} />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
