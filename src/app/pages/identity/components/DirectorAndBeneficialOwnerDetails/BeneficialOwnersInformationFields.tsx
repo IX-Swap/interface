@@ -40,7 +40,6 @@ export const BeneficialOwnersInformationFields = ({
           label='Percentage Shareholding'
           numberFormat={percentageNumberFormat}
           valueExtractor={numericValueExtractor}
-          helperText='in percent'
           variant='outlined'
           fullWidth
           placeholder='Percentage Shareholding'

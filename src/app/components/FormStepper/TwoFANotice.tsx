@@ -23,7 +23,7 @@ export const TwoFANotice = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant='body1' color='textSecondary'>
+          <Typography variant='body1' color='textSecondary' sx={{ mb: 1 }}>
             Secure your account with two-factor authentication
           </Typography>
         </Grid>
