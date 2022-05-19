@@ -29,7 +29,7 @@ export const FieldsDisplay = ({ fields }: FieldsDisplayProps) => {
             <LabelledValue
               valueWeight='thin'
               labelWeight='thin'
-              labelColor={isMobile ? 'light' : 'identity'}
+              labelColor={isMobile ? 'light' : 'gray'}
               valueColor={isMobile ? theme.palette.text.secondary : undefined}
               label={field.key}
               value={field.value}
