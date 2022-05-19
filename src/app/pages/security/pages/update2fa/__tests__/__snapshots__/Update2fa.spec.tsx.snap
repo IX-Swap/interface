@@ -17,7 +17,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
           <h2
             class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
           >
-            Update Authenticator by
+            Update Authenticator by 
             <br />
              Verifying Your Identity
           </h2>
@@ -67,7 +67,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-inxvf7-MuiFormControl-root-MuiTextField-root"
+                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-1sri0it-MuiFormControl-root-MuiTextField-root"
                         control="[object Object]"
                         path="emailCode"
                       >
@@ -117,8 +117,8 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       <p
                         class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-10 css-1b4l2pg-MuiTypography-root"
                       >
-                        Enter the 6-digit code sent to
-
+                        Enter the 6-digit code sent to 
+                        
                       </p>
                     </div>
                   </div>
@@ -271,7 +271,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
         class="MuiBox-root css-0"
       >
         <div
-          class="MuiBox-root css-1c73l8u"
+          class="MuiBox-root css-f93uvp"
         >
           <p
             class="MuiTypography-root MuiTypography-body1 css-93b3zb-MuiTypography-root"
@@ -439,11 +439,18 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
             </button>
           </div>
         </div>
+        <div
+          class="MuiBox-root css-14moqo8"
+        >
+          <div
+            class="ForwardRef(Box)-root-37 ForwardRef(Box)-root-38 MuiBox-root css-0"
+          />
+        </div>
       </div>
     </div>
   </div>
   <div
-    class="MuiGrid-root MuiGrid-container makeStyles-container-37 css-1bizp5f-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container makeStyles-container-39 css-1bizp5f-MuiGrid-root"
   />
 </div>
 `;
