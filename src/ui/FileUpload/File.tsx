@@ -11,7 +11,7 @@ export interface FileProps {
   hasError?: boolean
   isFileTooLarge?: boolean
   hasValue?: boolean
-  label?: string
+  label?: string | React.ReactNode
   placeHolder?: string
   name?: string
   multiple?: boolean

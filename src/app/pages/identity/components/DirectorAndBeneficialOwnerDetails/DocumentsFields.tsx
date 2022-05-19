@@ -3,50 +3,54 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { Box, Grid, Typography } from '@mui/material'
 import { DirectorsInformationFieldsProps } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
+import { pathToString } from 'helpers/forms'
 
 export const DocumentFields = ({
   fieldId,
   rootName,
-  index,
-  defaultValue
-}: DirectorsInformationFieldsProps) => {
+  index
+}: Omit<DirectorsInformationFieldsProps, 'defaultValue'>) => {
   return (
-    <Grid container direction='column' spacing={3}>
-      <Grid item>
+    <Grid container spacing={6}>
+      <Grid item xs={12}>
         <FormSectionHeader
-          variant='subsection'
           title='Upload Documents'
           subtitle='Please upload your Proof of Identity and Proof of Address. All account statements and documents should be dated within 3 months.'
         />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <UploadDocumentField
-          fieldId={fieldId}
-          name={[rootName, index, 'documents', 'proofOfIdentity']}
+          name={pathToString([index, 'proofOfIdentity'], rootName)}
           label='Proof of Identity'
-          defaultValue={(defaultValue?.documents as any)?.proofOfIdentity ?? []}
           helperElement={
             <>
               <Box m={1} />
-              <Typography variant='body1'>
-                passport, driving license, NRIC and government issued ID card.
+              <Typography
+                variant='body1'
+                fontWeight={400}
+                color='textSecondary'
+              >
+                Passport, Driving License, NRIC, Government Issued ID Card And
+                Others
               </Typography>
             </>
           }
         />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <UploadDocumentField
-          fieldId={fieldId}
-          name={[rootName, index, 'documents', 'proofOfAddress']}
+          name={pathToString([index, 'proofOfAddress'], rootName)}
           label='Proof of Address'
-          defaultValue={(defaultValue?.documents as any)?.proofOfAddress ?? []}
           helperElement={
             <>
               <Box m={1} />
-              <Typography variant='body1'>
-                utility bills, bank statement/credit card statement, tenancy
-                agreement, and telecom bill.
+              <Typography
+                variant='body1'
+                fontWeight={400}
+                color='textSecondary'
+              >
+                Utility Bills, Bank Statement/Credit Card Statement, Tenancy
+                Agreement, Telecom Bill
               </Typography>
             </>
           }

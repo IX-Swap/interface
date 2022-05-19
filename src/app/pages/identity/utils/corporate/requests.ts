@@ -44,19 +44,21 @@ export const getDirectorsAndBeneficialOwnerRequestPayload = (
     directors: directors.map(director => {
       return {
         ...director,
-        documents: Object.values(director.documents).reduce(
-          (result, values) => [...result, ...values],
-          []
-        )
+        documents: [
+          ...(director.proofOfAddress?.map(doc => ({ ...doc.value })) ?? []),
+          ...(director.proofOfIdentity?.map(doc => ({ ...doc.value })) ?? [])
+        ]
       }
     }),
     beneficialOwners: beneficialOwners.map(beneficialOwner => {
       return {
         ...beneficialOwner,
-        documents: Object.values(beneficialOwner.documents).reduce(
-          (result, values) => [...result, ...values],
-          []
-        )
+        documents: [
+          ...(beneficialOwner.proofOfAddress?.map(doc => ({ ...doc.value })) ??
+            []),
+          ...(beneficialOwner.proofOfIdentity?.map(doc => ({ ...doc.value })) ??
+            [])
+        ]
       }
     })
   }
