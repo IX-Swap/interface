@@ -4,7 +4,6 @@ import {
   DialogProps,
   DialogTitle,
   Button,
-  Typography,
   DialogContent,
   Box,
   Grid
@@ -31,11 +30,11 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
   }
 
   return (
-    <UIDialog {...rest}>
+    <UIDialog maxWidth='sm' onClose={handleClose} {...rest}>
       <DialogTitle>
-        <Typography component='div' variant='h2' align='center'>
+        <Box maxWidth={410} textAlign='center'>
           {title}
-        </Typography>
+        </Box>
       </DialogTitle>
       <DialogContent>
         <Box pt={1} pb={2}>
@@ -44,24 +43,26 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
       </DialogContent>
 
       <DialogActions>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
+        <Grid container spacing={2} justifyContent='center' alignItems='center'>
+          <Grid item xs={5}>
             <ButtonTransparent
               fullWidth
               variant='contained'
               disableElevation
               onClick={handleClose}
+              size='medium'
             >
               Cancel
             </ButtonTransparent>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <Button
               fullWidth
               onClick={handleAction}
               variant='contained'
               disableElevation
               color='primary'
+              size='medium'
             >
               {actionLabel}
             </Button>

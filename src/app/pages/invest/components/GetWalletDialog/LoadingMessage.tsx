@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography, useTheme } from '@mui/material'
 import React from 'react'
 
 export interface LoadingMessageProps {
@@ -8,6 +8,7 @@ export interface LoadingMessageProps {
 export const LoadingMessage: React.FC<LoadingMessageProps> = ({
   message = 'Assigning please wait'
 }) => {
+  const theme = useTheme()
   return (
     <Box
       width={1}
@@ -16,7 +17,7 @@ export const LoadingMessage: React.FC<LoadingMessageProps> = ({
       justifyContent='center'
       alignItems='center'
     >
-      <Typography>{message}</Typography>
+      <Typography color={theme.palette.text.secondary}>{message}</Typography>
       <Box mt={3}>
         <CircularProgress thickness={5.5} size={20} />
       </Box>

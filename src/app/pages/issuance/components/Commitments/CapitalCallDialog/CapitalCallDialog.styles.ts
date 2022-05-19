@@ -47,8 +47,9 @@ export default makeStyles(theme => ({
     height: 156,
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     padding: `${theme.spacing(3)}!important`,
-    borderColor: `${theme.palette.primary.main}!important`,
-    backgroundColor: `${theme.palette.background.default}!important`,
+    borderColor: `${theme.palette.input.border}!important`,
+    backgroundColor: `${theme.palette.background.paper}!important`,
+    borderRadius: '8px',
 
     '& input': {
       width: '100%',
@@ -56,18 +57,16 @@ export default makeStyles(theme => ({
       color: `${theme.palette.text.primary}!important`
     },
     '& span': {
-      position: 'absolute!important',
-      top: '-13px!important',
-      left: '8px!important',
       background: 'inherit!important',
-      display: 'block!important',
-      color: `${theme.palette.primary.main}!important`
+      color: `${theme.palette.text.secondary}!important`,
+      lineHeight: '18px'
     }
   },
   emailItem: {
     borderRadius: '4px!important',
     background: '#4C88FF !important',
-    color: '#ffff'
+    color: '#ffff',
+    fontWeight: 400
   },
   removeItem: {
     backgroundColor: '#4C88FF!important',
@@ -90,10 +89,10 @@ export default makeStyles(theme => ({
   cancelButton: {
     marginRight: theme.spacing(3),
     fontSize: 14,
-    fontWeight: 400
+    fontWeight: 500
   },
   confirmButton: {
     fontSize: 14,
-    fontWeight: 400
+    fontWeight: 500
   }
 }))

@@ -4,7 +4,9 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  Typography
+  Typography,
+  Box,
+  useTheme
 } from '@mui/material'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -25,6 +27,7 @@ export const ConfirmationDialog = ({
 }: ConfirmationDialogProps) => {
   const { watch } = useFormContext()
   const currency: string = watch('currency', '')
+  const theme = useTheme()
 
   const title = isAdditional
     ? 'Request for New Account'
@@ -37,19 +40,29 @@ export const ConfirmationDialog = ({
   const confirmLabel = isAdditional ? 'Send request' : 'Yes'
 
   return (
-    <UIDialog open={open} disablePortal onClose={onClose}>
+    <UIDialog maxWidth='sm' open={open} disablePortal onClose={onClose}>
       <DialogTitle>
-        <Typography variant='h2'>{title}</Typography>
+        <Box textAlign='center'>{title}</Box>
       </DialogTitle>
       <DialogContent>
-        <Typography align='center' color='gray' variant='body1'>
+        <Typography
+          align='center'
+          color={theme.palette.text.secondary}
+          variant='body1'
+        >
           {bodyText}
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Grid container spacing={1} justifyContent='center'>
-          <Grid item xs={6}>
+        <Grid
+          container
+          spacing={1}
+          justifyContent='center'
+          alignContent='center'
+        >
+          <Grid item xs={5}>
             <Button
+              size='medium'
               fullWidth
               onClick={onClose}
               type='button'
@@ -61,8 +74,9 @@ export const ConfirmationDialog = ({
               Cancel
             </Button>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={5}>
             <Button
+              size='medium'
               fullWidth
               type='submit'
               variant='contained'

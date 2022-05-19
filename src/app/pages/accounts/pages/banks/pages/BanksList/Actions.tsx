@@ -11,6 +11,7 @@ import { BankDetailsDialog } from 'app/pages/accounts/pages/banks/pages/BanksLis
 import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 import { Form } from 'components/form/Form'
 import { Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 export interface ActionsProps {
   item: Bank
@@ -20,6 +21,7 @@ export const Actions = ({ item }: ActionsProps) => {
   const [removeBank, { isLoading }] = useRemoveBank()
   const [showBankDetails, setShowBankDetails] = useState(false)
   const [showOtpDialog, setShowOtpDialog] = useState(false)
+  const theme = useTheme()
 
   const view = () => {
     setShowBankDetails(true)
@@ -67,16 +69,18 @@ export const Actions = ({ item }: ActionsProps) => {
         <OTPDialog
           open={showOtpDialog}
           close={closeOtpDialog}
-          title='Are You Sure You Want to Remove Bank Account?'
+          title='Are you sure you want to remove Bank Account?'
           actionLabel='Confirm'
           content={
             <Typography
               variant='body1'
               align='center'
               style={{ marginBottom: 24 }}
-              color='GrayText'
+              color={theme.palette.text.secondary}
+              fontWeight={500}
             >
-              You will no longer be able to do transactions from this bank
+              You will no longer be able to do transactions from this bank{' '}
+              <br />
               account
             </Typography>
           }

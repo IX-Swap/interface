@@ -4,7 +4,6 @@ import {
   Button,
   DialogTitle,
   Box,
-  Typography,
   DialogContent,
   DialogActions,
   useTheme,
@@ -57,17 +56,11 @@ export const CustodyDetailsDialog = () => {
       maxWidth={'md'}
       fullScreen={fullScreen}
       className={classes.root}
+      onClose={() => replace(CustodyManagementRoute.main)}
     >
-      <DialogTitle className={classes.titleRoot}>
-        <Box p={4} justifyContent='center' alignItems='center'>
-          <Typography
-            variant='h4'
-            component='span'
-            align='center'
-            className={classes.title}
-          >
-            Tokens Supported for the {user.name}
-          </Typography>
+      <DialogTitle>
+        <Box p={4} justifyContent='center' textAlign='center'>
+          Tokens Supported for the {user.name}
         </Box>
       </DialogTitle>
       <DialogContent className={classes.contentWrapper}>

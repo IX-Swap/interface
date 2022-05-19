@@ -8,18 +8,20 @@ export interface ActionProps {
 export const Actions: React.FC<ActionProps> = ({ action, cancel }) => {
   return (
     <Grid spacing={2} container justifyContent='center'>
-      <Grid item>
+      <Grid item xs={6}>
         <Button
+          fullWidth
           color='primary'
           onClick={() => cancel()}
-          variant='alternate'
+          variant='outlined'
           data-testid='getAddressBtn'
         >
           Cancel
         </Button>
       </Grid>
-      <Grid item>
+      <Grid item xs={6}>
         <Button
+          fullWidth
           color='primary'
           onClick={() => action()}
           variant='contained'

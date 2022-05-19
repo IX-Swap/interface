@@ -45,7 +45,7 @@ export const dialogActions = (theme: Theme) => {
 
 export const dialogTitle = (theme: Theme) => {
   // eslint-disable-next-line
-  const textPalette = theme.palette.text!
+  const dialogPalette = theme.palette.dialog!
   return {
     styleOverrides: {
       root: {
@@ -55,9 +55,10 @@ export const dialogTitle = (theme: Theme) => {
         fontSize: '24px',
         lineHeight: '29px',
         letterSpacing: '-0.02em',
-        color: textPalette.primary,
+        color: dialogPalette.color,
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
       }
     }
   }

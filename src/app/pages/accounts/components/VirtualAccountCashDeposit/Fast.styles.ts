@@ -2,15 +2,14 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   footerInfo: {
-    backgroundColor: theme.palette.backgrounds.light,
+    backgroundColor: theme.palette.background.default,
     padding: 24
   },
   tabStyle: {
     '& .Mui-selected': {
-      color: '#343A47'
+      color: theme.palette.dialog.color
     },
     '& .MuiTabs-indicator': {
-      color: 'red',
       maxWidth: 103
     }
   }

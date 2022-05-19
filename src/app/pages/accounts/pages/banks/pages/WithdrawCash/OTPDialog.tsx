@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
+  Box,
   Typography
 } from '@mui/material'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
@@ -14,6 +15,7 @@ import { plainValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
+import { useTheme } from '@mui/material/styles'
 
 export const OTPDialogContent = ({
   close,
@@ -22,6 +24,7 @@ export const OTPDialogContent = ({
 }: Pick<OTPDialogProps, 'close' | 'content' | 'actionLabel'>) => {
   const { control, watch, formState } = useFormContext<WithdrawCashFormValues>()
   const otpValue = watch('otp')
+  const theme = useTheme()
 
   return (
     <>
@@ -32,7 +35,20 @@ export const OTPDialogContent = ({
           customRenderer
           component={OTPField}
           name='otp'
-          label='OTP (Enter code from authenticator to proceed)'
+          label={
+            <Box
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-start'
+              }}
+            >
+              <Typography color={theme.palette.dialog.color}>OTP</Typography>
+              <Typography color={theme.palette.text.secondary}>
+                (Enter code from authenticator to proceed)
+              </Typography>
+            </Box>
+          }
           variant='outlined'
           valueExtractor={plainValueExtractor}
           shouldAutoFocus
@@ -90,13 +106,7 @@ export const OTPDialog = (props: OTPDialogProps) => {
   return (
     <UIDialog disablePortal open={open} maxWidth='sm' onClose={close}>
       <DialogTitle>
-        <Typography
-          variant='h2'
-          align='center'
-          style={{ textTransform: 'capitalize' }}
-        >
-          {title ?? 'Cash Withdrawal'}
-        </Typography>
+        <Box textAlign='center'>{title ?? 'Cash Withdrawal'}</Box>
       </DialogTitle>
       <OTPDialogContent {...props} />
     </UIDialog>

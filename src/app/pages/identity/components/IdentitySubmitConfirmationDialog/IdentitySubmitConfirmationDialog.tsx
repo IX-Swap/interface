@@ -4,7 +4,9 @@ import {
   DialogActions,
   Typography,
   Button,
-  DialogTitle
+  DialogTitle,
+  Box,
+  useTheme
 } from '@mui/material'
 import React from 'react'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
@@ -22,15 +24,17 @@ export const IdentitySubmitConfirmationDialog = ({
     closeDialog()
   }
 
+  const theme = useTheme()
+
   return (
-    <UIDialog open={open} maxWidth='md'>
+    <UIDialog onClose={handleClick} open={open} maxWidth='md'>
       <DialogTitle>
-        <Typography variant='h2' style={{ textAlign: 'center' }}>
-          Thanks For Submitting Your Identity!
-        </Typography>
+        <Box p={2} textAlign='center'>
+          Thanks for submitting your identity!
+        </Box>
       </DialogTitle>
       <DialogContent>
-        <Typography color='gray' align='center'>
+        <Typography color={theme.palette.text.secondary} align='center'>
           You will receive an e-mail shortly confirming your identity status.
         </Typography>
       </DialogContent>
@@ -40,7 +44,7 @@ export const IdentitySubmitConfirmationDialog = ({
         <Grid container>
           <Button
             fullWidth
-            variant='alternate'
+            variant='outlined'
             color='primary'
             disableRipple
             disableElevation

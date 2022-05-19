@@ -27,7 +27,7 @@ export const VirtualAccountCashDeposit = ({
         <Box mt={3} px={3}>
           <Typography color='gray'>
             <Box component='span' fontSize={14} fontWeight={500}>
-              Choose Your Cash Deposit Method:
+              Choose your cash deposit method:
             </Box>
           </Typography>
         </Box>

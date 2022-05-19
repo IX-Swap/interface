@@ -55,26 +55,26 @@ export const CapitalCallDialog = (props: ModalProps) => {
       aria-describedby='capital-call-modal-description'
     >
       <DialogTitle>
-        <Typography
-          variant='h6'
-          component='span'
-          align='center'
-          className={classes.title}
-        >
-          Capital Call
-        </Typography>
+        <Box textAlign='center'>Notify investors</Box>
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <Typography color='GrayText' variant={'body1'} align={'left'}>
-          You can enter multiple email address of “Not Funded” investors. Email
-          will be sent to notify them.
+        <Typography
+          color={theme.palette.text.secondary}
+          variant={'body1'}
+          align={'left'}
+        >
+          You can enter multiple email addresses of “Not Funded” investors.
+          Email will be sent to notify them.
         </Typography>
       </DialogContent>
       <DialogActions className={classes.actions}>
         <Box ml={1} mb={1}>
-          <Typography>Enter email</Typography>
+          <Typography color={theme.palette.dialog.color}>
+            Enter email
+          </Typography>
         </Box>
         <ReactMultiEmail
+          placeholder='Type email and press space...'
           className={classes.multiEmail}
           emails={emails}
           onChange={(_emails: string[]) => {

@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Typography,
   DialogTitle,
   DialogContent,
   DialogProps,
@@ -39,7 +38,7 @@ export const GetWalletDialog = (props: ModalProps) => {
 
   return (
     <UIDialog
-      maxWidth={'sm'}
+      maxWidth={'xs'}
       fullWidth
       fullScreen={fullScreen}
       open={open}
@@ -49,9 +48,7 @@ export const GetWalletDialog = (props: ModalProps) => {
       aria-describedby='getwallet-modal-description'
     >
       <DialogTitle>
-        <Typography variant='h2' component='span' align='center'>
-          You need a custody wallet address to trade
-        </Typography>
+        <Box textAlign='center'>You need a custody wallet address to trade</Box>
       </DialogTitle>
       <DialogContent style={{ overflowY: 'initial' }}>
         <DialogText />

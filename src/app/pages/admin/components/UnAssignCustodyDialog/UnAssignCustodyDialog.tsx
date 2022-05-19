@@ -50,37 +50,44 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
       className={classes.root}
       onClose={() => onClose()}
     >
-      <DialogTitle className={classes.titleRoot}>
-        <Typography
-          variant='h4'
-          component='span'
-          align='center'
-          className={classes.title}
-        >
-          Are You Sure You Want to Unassign the Custody?
-        </Typography>
+      <DialogTitle>
+        <Box pt={4} textAlign='center'>
+          Are you sure you want to Unassign <br /> the Custody?
+        </Box>
       </DialogTitle>
       <DialogContent style={{ overflowY: 'initial' }}>
-        <Box justifyContent='center' alignItems='center'>
-          <Typography variant={'body1'} align={'center'}>
-            Unassigning the custody will result in loss of tokens and user will
-            not be
-            <br /> able to use the same address again.
-          </Typography>
-          <VSpacer size={'small'} />
-          <VSpacer size={'extraSmall'} />
-          <Typography variant={'body1'} align={'center'}>
-            Please enter OTP from your authenticator before proceeding
+        <Typography
+          variant={'body1'}
+          align={'center'}
+          color={theme.palette.text.secondary}
+        >
+          Unassigning the custody will result in loss of tokens and user will
+          not be
+          <br /> able to use the same address again.
+        </Typography>
+        <VSpacer size={'small'} />
+        <VSpacer size={'extraSmall'} />
+        <Box
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            marginBottom: -2
+          }}
+        >
+          <Typography color={theme.palette.dialog.color}>OTP</Typography>
+          <Typography color={theme.palette.text.secondary}>
+            (code from authenticator)
           </Typography>
         </Box>
       </DialogContent>
-      <VSpacer size={'small'} />
       <DialogActions>
         <OTPForm
           data-testid='otp-form'
           isLoading={isLoading}
           onClose={() => onClose()}
           onSubmit={handleSubmit}
+          placeholder='______'
         />
       </DialogActions>
     </UIDialog>

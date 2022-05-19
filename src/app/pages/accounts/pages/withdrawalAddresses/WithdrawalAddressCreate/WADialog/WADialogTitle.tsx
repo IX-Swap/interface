@@ -1,6 +1,6 @@
 import React from 'react'
 import DialogTitle from '@mui/material/DialogTitle'
-import { Typography } from '@mui/material'
+import { Box } from '@mui/material'
 
 export interface TitleProps {
   label: string
@@ -8,9 +8,9 @@ export interface TitleProps {
 export const WADialogTitle = ({ label, ...rest }: TitleProps) => {
   return (
     <DialogTitle {...rest}>
-      <Typography variant='h2' component='span' align='center'>
+      <Box pt={2} textAlign='center'>
         {label}
-      </Typography>
+      </Box>
     </DialogTitle>
   )
 }

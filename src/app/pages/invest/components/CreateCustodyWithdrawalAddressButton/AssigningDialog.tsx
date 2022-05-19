@@ -1,5 +1,5 @@
 import React from 'react'
-import { DialogContent, DialogTitle } from '@mui/material'
+import { Box, DialogContent, DialogTitle } from '@mui/material'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { LoadingMessage } from 'app/pages/invest/components/GetWalletDialog/LoadingMessage'
 
@@ -10,8 +10,10 @@ export interface AssigningDialogProps {
 export const AssigningDialog = ({ open }: AssigningDialogProps) => {
   return (
     <UIDialog maxWidth='sm' open={open}>
-      <DialogTitle style={{ textAlign: 'center', padding: 24 }}>
-        We Are Assigning You a <br /> Withdrawal Address
+      <DialogTitle>
+        <Box pt={3}>
+          We are assigning you a <br /> withdrawal address
+        </Box>
       </DialogTitle>
       <DialogContent>
         <LoadingMessage message='Please wait' />

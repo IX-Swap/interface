@@ -3,7 +3,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogProps,
-  DialogActions
+  DialogActions,
+  Box
 } from '@mui/material'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 
@@ -46,7 +47,9 @@ export const Dialog = (props: ModalProps) => {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <DialogTitle style={titleStyle}>{title}</DialogTitle>
+        <DialogTitle style={titleStyle}>
+          <Box textAlign='center'>{title}</Box>
+        </DialogTitle>
         <DialogContent style={{ overflowY: 'initial' }}>
           {content}
         </DialogContent>

@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography, useTheme } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
@@ -6,6 +6,7 @@ import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDepos
 
 export const Tt = ({ accountId, currency }: DepositInfoProps) => {
   const { footerInfo } = useStyles()
+  const theme = useTheme()
 
   const ttDetails = [
     {
@@ -48,14 +49,16 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
       </Grid>
       <Grid item>
         <Box className={footerInfo}>
-          <Grid container spacing={1}>
-            <Grid item xs={12}>
-              <Box fontStyle='italic'>
-                Please note that TT transfers are the only method of transfer
-                from bank accounts that are not based in Singapore
-              </Box>
-            </Grid>
-          </Grid>
+          <Typography
+            color={theme.palette.text.secondary}
+            fontSize={14}
+            fontWeight={400}
+            lineHeight='22px'
+            letterSpacing='-0.02em'
+          >
+            Please note that TT transfers are the only method of transfer from
+            bank accounts that are not based in Singapore
+          </Typography>
         </Box>
       </Grid>
     </Grid>

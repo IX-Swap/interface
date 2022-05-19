@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, Typography, useTheme } from '@mui/material'
 import { VirtualAccountCashDeposit } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountCashDeposit'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { FormDialog } from 'components/FormDialog/FormDialog'
@@ -15,6 +15,7 @@ export const CashDepositButton = ({
 }: CashDepositButtonProps) => {
   const [open, setOpen] = useState(false)
   const { data, isLoading } = useVirtualAccount(virtualAccountId)
+  const theme = useTheme()
 
   const openDialog = () => {
     setOpen(true)
@@ -40,7 +41,17 @@ export const CashDepositButton = ({
       </Button>
       <FormDialog maxWidth='sm' open={open} onClose={closeDialog}>
         <FormDialogTitle
-          label='Deposit to Virtual Account'
+          label={
+            <>
+              Deposit to Virtual Account
+              <Typography
+                style={{ marginTop: 15 }}
+                color={theme.palette.text.secondary}
+              >
+                Bank charges may apply and will be borne by the clients
+              </Typography>
+            </>
+          }
           onClose={closeDialog}
         />
         <FormDialogContent noPadding>
