@@ -13,14 +13,9 @@ export const Layout2fa = ({ content, stepper, buttons }: Layout2faProps) => {
 
   return (
     <>
-      <Grid
-        container
-        xs={12}
-        className={classes.wrapper}
-        justifyContent={'center'}
-      >
-        <Grid className={classes.leftBlock}>
-          <Grid item>{content}</Grid>
+      <Grid container className={classes.wrapper} justifyContent={'center'}>
+        <Grid item className={classes.leftBlock}>
+          {content}
         </Grid>
         <Grid
           item
@@ -28,10 +23,10 @@ export const Layout2fa = ({ content, stepper, buttons }: Layout2faProps) => {
           flexDirection={'column'}
           className={classes.rightBlock}
         >
-          <Grid item>{stepper}</Grid>
+          {stepper}
         </Grid>
       </Grid>
-      <Grid item>{buttons}</Grid>
+      {buttons}
     </>
   )
 }

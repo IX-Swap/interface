@@ -3,266 +3,262 @@
 exports[`Update2fa does not render Next and Back button if step is 0, should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-12 makeStyles-wrapper-1 css-9ot9es-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container makeStyles-wrapper-1 css-1lym95h-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root makeStyles-leftBlock-2 css-vj1n65-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item makeStyles-leftBlock-2 css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
+          >
+            Update Authenticator by 
+            <br />
+             Verifying Your Identity
+          </h2>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-          >
-            <h2
-              class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
-            >
-              Update Authenticator by 
-              <br />
-               Verifying Your Identity
-            </h2>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-t0zib5-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-t0zib5-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-description-7 css-1gd5lqg-MuiTypography-root"
+              >
+                To update your Authenticator please remove the current one
+              </p>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item makeStyles-info-5 css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                class="makeStyles-wrapper-8 MuiBox-root css-0"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-description-7 css-1gd5lqg-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 makeStyles-text-9 css-1b4l2pg-MuiTypography-root"
                 >
-                  To update your Authenticator please remove the current one
+                  Verification code has been sent
                 </p>
               </div>
-              <div
-                class="MuiGrid-root MuiGrid-item makeStyles-info-5 css-13i4rnv-MuiGrid-root"
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item makeStyles-formBlock-6 css-13i4rnv-MuiGrid-root"
+            >
+              <form
+                data-testid="remove-authenticator-form"
+                style="width: 100%;"
               >
                 <div
-                  class="makeStyles-wrapper-8 MuiBox-root css-0"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-text-9 css-1b4l2pg-MuiTypography-root"
-                  >
-                    Verification code has been sent
-                  </p>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item makeStyles-formBlock-6 css-13i4rnv-MuiGrid-root"
-              >
-                <form
-                  data-testid="remove-authenticator-form"
-                  style="width: 100%;"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-inxvf7-MuiFormControl-root-MuiTextField-root"
+                        control="[object Object]"
+                        path="emailCode"
                       >
+                        <label
+                          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
+                          data-shrink="true"
+                          for="emailCode"
+                          id="emailCode-label"
+                        >
+                          Verification Code
+                        </label>
                         <div
-                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-inxvf7-MuiFormControl-root-MuiTextField-root"
-                          control="[object Object]"
-                          path="emailCode"
+                          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-1c4a1fp-MuiInputBase-root-MuiOutlinedInput-root"
                         >
-                          <label
-                            class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
-                            data-shrink="true"
-                            for="emailCode"
-                            id="emailCode-label"
+                          <input
+                            aria-invalid="false"
+                            class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
+                            id="emailCode"
+                            name="emailCode"
+                            placeholder="E-mail verification code"
+                            type="text"
+                            value=""
+                          />
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 makeStyles-wrapper-16 css-1b4l2pg-MuiTypography-root"
                           >
-                            Verification Code
-                          </label>
-                          <div
-                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-1c4a1fp-MuiInputBase-root-MuiOutlinedInput-root"
+                            Send
+                          </p>
+                          <fieldset
+                            aria-hidden="true"
+                            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                           >
-                            <input
-                              aria-invalid="false"
-                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
-                              id="emailCode"
-                              name="emailCode"
-                              placeholder="E-mail verification code"
-                              type="text"
-                              value=""
-                            />
-                            <p
-                              class="MuiTypography-root MuiTypography-body1 makeStyles-wrapper-16 css-1b4l2pg-MuiTypography-root"
+                            <legend
+                              class="css-173wfxe"
                             >
-                              Send
-                            </p>
-                            <fieldset
-                              aria-hidden="true"
-                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                            >
-                              <legend
-                                class="css-173wfxe"
-                              >
-                                <span>
-                                  Verification Code
-                                </span>
-                              </legend>
-                            </fieldset>
-                          </div>
+                              <span>
+                                Verification Code
+                              </span>
+                            </legend>
+                          </fieldset>
                         </div>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-10 css-1b4l2pg-MuiTypography-root"
-                        >
-                          Enter the 6-digit code sent to 
-                          
-                        </p>
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-10 css-1b4l2pg-MuiTypography-root"
+                      >
+                        Enter the 6-digit code sent to 
+                        
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-label-11 css-1b4l2pg-MuiTypography-root"
+                      >
+                        Authenticator Code
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item css-19hkhe-MuiGrid-root"
                     >
                       <div
                         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-label-11 css-1b4l2pg-MuiTypography-root"
-                        >
-                          Authenticator Code
-                        </p>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-item css-19hkhe-MuiGrid-root"
-                      >
                         <div
-                          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
                         >
                           <div
-                            class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
+                            class="makeStyles-container-18 makeStyles-fullwidth-19"
+                            style="display: flex;"
                           >
                             <div
-                              class="makeStyles-container-18 makeStyles-fullwidth-19"
-                              style="display: flex;"
+                              style="display: flex; align-items: center;"
                             >
-                              <div
-                                style="display: flex; align-items: center;"
-                              >
-                                <input
-                                  aria-label="Please enter verification code. Digit 1"
-                                  autocomplete="off"
-                                  class="makeStyles-input-20  "
-                                  maxlength="1"
-                                  placeholder="_"
-                                  style="width: 1em; text-align: center;"
-                                  type="tel"
-                                  value=""
-                                />
-                              </div>
-                              <div
-                                style="display: flex; align-items: center;"
-                              >
-                                <input
-                                  aria-label="Digit 2"
-                                  autocomplete="off"
-                                  class="makeStyles-input-20 "
-                                  maxlength="1"
-                                  placeholder="_"
-                                  style="width: 1em; text-align: center;"
-                                  type="tel"
-                                  value=""
-                                />
-                              </div>
-                              <div
-                                style="display: flex; align-items: center;"
-                              >
-                                <input
-                                  aria-label="Digit 3"
-                                  autocomplete="off"
-                                  class="makeStyles-input-20 "
-                                  maxlength="1"
-                                  placeholder="_"
-                                  style="width: 1em; text-align: center;"
-                                  type="tel"
-                                  value=""
-                                />
-                              </div>
-                              <div
-                                style="display: flex; align-items: center;"
-                              >
-                                <input
-                                  aria-label="Digit 4"
-                                  autocomplete="off"
-                                  class="makeStyles-input-20 "
-                                  maxlength="1"
-                                  placeholder="_"
-                                  style="width: 1em; text-align: center;"
-                                  type="tel"
-                                  value=""
-                                />
-                              </div>
-                              <div
-                                style="display: flex; align-items: center;"
-                              >
-                                <input
-                                  aria-label="Digit 5"
-                                  autocomplete="off"
-                                  class="makeStyles-input-20 "
-                                  maxlength="1"
-                                  placeholder="_"
-                                  style="width: 1em; text-align: center;"
-                                  type="tel"
-                                  value=""
-                                />
-                              </div>
-                              <div
-                                style="display: flex; align-items: center;"
-                              >
-                                <input
-                                  aria-label="Digit 6"
-                                  autocomplete="off"
-                                  class="makeStyles-input-20 "
-                                  maxlength="1"
-                                  placeholder="_"
-                                  style="width: 1em; text-align: center;"
-                                  type="tel"
-                                  value=""
-                                />
-                              </div>
+                              <input
+                                aria-label="Please enter verification code. Digit 1"
+                                autocomplete="off"
+                                class="makeStyles-input-20  "
+                                maxlength="1"
+                                placeholder="_"
+                                style="width: 1em; text-align: center;"
+                                type="tel"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              style="display: flex; align-items: center;"
+                            >
+                              <input
+                                aria-label="Digit 2"
+                                autocomplete="off"
+                                class="makeStyles-input-20 "
+                                maxlength="1"
+                                placeholder="_"
+                                style="width: 1em; text-align: center;"
+                                type="tel"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              style="display: flex; align-items: center;"
+                            >
+                              <input
+                                aria-label="Digit 3"
+                                autocomplete="off"
+                                class="makeStyles-input-20 "
+                                maxlength="1"
+                                placeholder="_"
+                                style="width: 1em; text-align: center;"
+                                type="tel"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              style="display: flex; align-items: center;"
+                            >
+                              <input
+                                aria-label="Digit 4"
+                                autocomplete="off"
+                                class="makeStyles-input-20 "
+                                maxlength="1"
+                                placeholder="_"
+                                style="width: 1em; text-align: center;"
+                                type="tel"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              style="display: flex; align-items: center;"
+                            >
+                              <input
+                                aria-label="Digit 5"
+                                autocomplete="off"
+                                class="makeStyles-input-20 "
+                                maxlength="1"
+                                placeholder="_"
+                                style="width: 1em; text-align: center;"
+                                type="tel"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              style="display: flex; align-items: center;"
+                            >
+                              <input
+                                aria-label="Digit 6"
+                                autocomplete="off"
+                                class="makeStyles-input-20 "
+                                maxlength="1"
+                                placeholder="_"
+                                style="width: 1em; text-align: center;"
+                                type="tel"
+                                value=""
+                              />
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-10 css-1b4l2pg-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-10 css-1b4l2pg-MuiTypography-root"
-                        >
-                          Enter the 6-digit code from your existing Authenticator App
-                        </p>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                        Enter the 6-digit code from your existing Authenticator App
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <button
+                        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButtonBase-root Mui-disabled makeStyles-button-12 css-r7zh34-MuiButtonBase-root-MuiButton-root"
+                        disabled=""
+                        tabindex="-1"
+                        type="submit"
                       >
-                        <button
-                          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButtonBase-root Mui-disabled makeStyles-button-12 css-r7zh34-MuiButtonBase-root-MuiButton-root"
-                          disabled=""
-                          tabindex="-1"
-                          type="submit"
-                        >
-                          Remove and Continue
-                        </button>
-                      </div>
+                        Remove and Continue
+                      </button>
                     </div>
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -272,190 +268,182 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
       class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-rightBlock-3 css-5x0lb4-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        class="MuiBox-root css-0"
       >
         <div
-          class="MuiBox-root css-0"
+          class="MuiBox-root css-1c73l8u"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-93b3zb-MuiTypography-root"
+          >
+            Progress
+          </p>
+        </div>
+        <div
+          class="MuiStepper-root MuiStepper-vertical css-9tmuzo-MuiStepper-root"
         >
           <div
-            class="MuiBox-root css-1c73l8u"
+            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
           >
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-93b3zb-MuiTypography-root"
+            <button
+              class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical active css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+              tabindex="0"
+              type="button"
             >
-              Progress
-            </p>
+              <span
+                class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+              >
+                <span
+                  class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                >
+                  <div
+                    class="makeStyles-wrapper-22 makeStyles-wrapper-25 MuiBox-root css-0"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-27 css-1b4l2pg-MuiTypography-root"
+                    >
+                      1
+                    </p>
+                  </div>
+                </span>
+                <span
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                >
+                  <span
+                    class="MuiStepLabel-label Mui-active css-t1n505-MuiStepLabel-label"
+                  >
+                    Remove Authenticator
+                  </span>
+                </span>
+              </span>
+              <span
+                class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
           <div
-            class="MuiStepper-root MuiStepper-vertical css-9tmuzo-MuiStepper-root"
+            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
           >
-            <div
-              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            <button
+              class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+              tabindex="0"
+              type="button"
             >
-              <button
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical active css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
+              <span
+                class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                  class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                 >
-                  <span
-                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                  <div
+                    class="makeStyles-wrapper-22 makeStyles-wrapper-28 MuiBox-root css-0"
                   >
-                    <div
-                      class="makeStyles-wrapper-22 makeStyles-wrapper-25 MuiBox-root css-0"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-30 css-1b4l2pg-MuiTypography-root"
                     >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-27 css-1b4l2pg-MuiTypography-root"
-                      >
-                        1
-                      </p>
-                    </div>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label Mui-active css-t1n505-MuiStepLabel-label"
-                    >
-                      Remove Authenticator
-                    </span>
-                  </span>
+                      2
+                    </p>
+                  </div>
                 </span>
                 <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                >
+                  <span
+                    class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
+                  >
+                    Scan QR Code
+                  </span>
+                </span>
+              </span>
+              <span
+                class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+          >
+            <button
+              class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+              tabindex="0"
+              type="button"
             >
-              <button
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
+              <span
+                class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                  class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                 >
-                  <span
-                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                  <div
+                    class="makeStyles-wrapper-22 makeStyles-wrapper-31 MuiBox-root css-0"
                   >
-                    <div
-                      class="makeStyles-wrapper-22 makeStyles-wrapper-28 MuiBox-root css-0"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-33 css-1b4l2pg-MuiTypography-root"
                     >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-30 css-1b4l2pg-MuiTypography-root"
-                      >
-                        2
-                      </p>
-                    </div>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
-                    >
-                      Scan QR Code
-                    </span>
-                  </span>
+                      3
+                    </p>
+                  </div>
                 </span>
                 <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                >
+                  <span
+                    class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
+                  >
+                    Backup Key
+                  </span>
+                </span>
+              </span>
+              <span
+                class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <div
+            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+          >
+            <button
+              class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+              tabindex="0"
+              type="button"
             >
-              <button
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
+              <span
+                class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                  class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                 >
-                  <span
-                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                  <div
+                    class="makeStyles-wrapper-22 makeStyles-wrapper-34 MuiBox-root css-0"
                   >
-                    <div
-                      class="makeStyles-wrapper-22 makeStyles-wrapper-31 MuiBox-root css-0"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-36 css-1b4l2pg-MuiTypography-root"
                     >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-33 css-1b4l2pg-MuiTypography-root"
-                      >
-                        3
-                      </p>
-                    </div>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
-                    >
-                      Backup Key
-                    </span>
-                  </span>
+                      4
+                    </p>
+                  </div>
                 </span>
                 <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
-            >
-              <button
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
-              >
-                <span
-                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
                 >
                   <span
-                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                    class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
                   >
-                    <div
-                      class="makeStyles-wrapper-22 makeStyles-wrapper-34 MuiBox-root css-0"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-24 makeStyles-text-36 css-1b4l2pg-MuiTypography-root"
-                      >
-                        4
-                      </p>
-                    </div>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
-                    >
-                      Enable Authenticator
-                    </span>
+                    Enable Authenticator
                   </span>
                 </span>
-                <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-            </div>
+              </span>
+              <span
+                class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div
-    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-  >
-    <div
-      class="MuiGrid-root MuiGrid-container makeStyles-container-37 css-1bizp5f-MuiGrid-root"
-    />
-  </div>
+    class="MuiGrid-root MuiGrid-container makeStyles-container-37 css-1bizp5f-MuiGrid-root"
+  />
 </div>
 `;
