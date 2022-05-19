@@ -1,4 +1,4 @@
-// import { IdentitiesList } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList'
+import { IdentitiesList } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList'
 import React from 'react'
 import { Switch } from 'react-router-dom'
 import { IdentityRoute } from './config'
@@ -6,8 +6,7 @@ import { AppRoute } from 'components/AppRoute'
 import { IndividualRouter } from 'app/pages/identity/router/IndividualRouter'
 import { CorporateRouter } from 'app/pages/identity/router/CorporateRouter'
 import { DetailsOfIssuanceRouter } from 'app/pages/identity/router/DetailsOfIssuanceRouter'
-import { SubmitIdentity } from 'app/pages/identity/components/SubmitIdentity/SubmitIdentity'
-import { RootContainer } from 'ui/RootContainer'
+import { SuccessPage } from 'app/pages/identity/pages/SuccessPage/SuccessPage'
 
 export const IdentityRouter = () => {
   return (
@@ -24,8 +23,16 @@ export const IdentityRouter = () => {
         <DetailsOfIssuanceRouter />
       </AppRoute>
 
-      <AppRoute path={IdentityRoute.identitySuccess} exact>
-        <SubmitIdentity />
+      <AppRoute
+        path={IdentityRoute.identitySuccess}
+        breadcrumb='Success page'
+        exact
+      >
+        <SuccessPage />
+      </AppRoute>
+
+      <AppRoute path={IdentityRoute.list} exact>
+        <IdentitiesList />
       </AppRoute>
     </Switch>
   )

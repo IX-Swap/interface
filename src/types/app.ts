@@ -7,7 +7,8 @@ export enum AppService {
   Invest = 'invest',
   Authorizer = 'authorizer',
   Market = 'market',
-  OTCMarket = 'otc-market'
+  OTCMarket = 'otc-market',
+  SuccessPage = 'success'
 }
 
 export enum AppFeature {
