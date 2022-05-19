@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography, useTheme } from '@mui/material'
 import useStyles from './WAOfferToCreateWallet.styles'
 
 export interface WAOfferToCreateWalletProps {
@@ -10,10 +10,11 @@ export const WAOfferToCreateWallet = ({
   onClick
 }: WAOfferToCreateWalletProps) => {
   const classes = useStyles()
+  const theme = useTheme()
 
   return (
     <Grid item>
-      <Typography variant={'body2'}>
+      <Typography color={theme.palette.text.secondary} variant={'body2'}>
         Do not have address?{' '}
         <Box component={'span'} className={classes.link} onClick={onClick}>
           Let’s create

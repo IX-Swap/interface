@@ -21,14 +21,14 @@ describe('CapitalCallDialog', () => {
   it('renders Typography with correct props', () => {
     render(<CapitalCallDialog open={true} toggleOpen={handleToggle} />)
 
-    expect(Typography).toHaveBeenCalledTimes(2)
+    expect(Typography).toHaveBeenCalledTimes(3)
     expect(Typography).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        variant: 'body1',
         align: 'left',
         children:
-          'You can enter multiple email address of “Not Funded” investors. Email will be sent to notify them.'
+          'You can enter multiple email addresses of “Not Funded” investors. Email will be sent to notify them.',
+        variant: 'body1'
       }),
       {}
     )
@@ -40,8 +40,7 @@ describe('CapitalCallDialog', () => {
     expect(ReactMultiEmail).toHaveBeenCalledTimes(1)
     expect(ReactMultiEmail).toHaveBeenCalledWith(
       expect.objectContaining({
-        emails: [],
-        placeholder: 'Enter Email'
+        emails: []
       }),
       {}
     )

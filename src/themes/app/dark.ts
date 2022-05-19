@@ -251,6 +251,9 @@ export const darkTheme: DeprecatedThemeOptions = {
     }),
     header: {
       bg: '#132A57'
+    },
+    dialog: {
+      color: '#FFFFFF'
     }
   }
 }

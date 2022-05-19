@@ -26,8 +26,9 @@ export const DialogEnabledToggle = ({
       title={`Are you sure you want to ${
         enabled ? 'disable' : 'enable'
       } this user?`}
+      maxWidth='sm'
     >
-      <Typography align='center'>
+      <Typography color={'gray'} align='center'>
         {enabled
           ? 'Disabling a user will result in the user not being able to access this platform anymore.'
           : 'Enabling users will allow them access to this platform again.'}
