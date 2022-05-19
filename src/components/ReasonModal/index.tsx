@@ -72,7 +72,7 @@ export const ReasonModal = ({
             <img src={clipboardTextIcon} alt="clipboardTextIcon" />
           </LabelContainer>
           <Textarea onChange={onValueChange} value={value} />
-          <ButtonIXSWide disabled={Boolean(error)} onClick={onSubmit}>
+          <ButtonIXSWide disabled={Boolean(error) || !value} onClick={onSubmit}>
             {t`${error || actionBtnText}`}
           </ButtonIXSWide>
         </ModalContent>
