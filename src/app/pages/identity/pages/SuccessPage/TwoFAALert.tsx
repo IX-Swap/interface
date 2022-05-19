@@ -7,6 +7,7 @@ import { ReactComponent as Enabled } from 'assets/icons/2fa/security-enabled.svg
 import { ReactComponent as Disabled } from 'assets/icons/2fa/security-disabled.svg'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { SecurityRoute } from 'app/pages/security/router/config'
 
 export const TwoFAALert = () => {
   const classes = useStyles()
@@ -39,7 +40,7 @@ export const TwoFAALert = () => {
               className={classes.button}
               variant='outlined'
               size='large'
-              to='/app/settings/change-2fa'
+              to={SecurityRoute.change2fa}
               component={AppRouterLinkComponent}
             >
               Update 2FA
@@ -65,7 +66,7 @@ export const TwoFAALert = () => {
             </Typography>
             <Button
               className={classes.button}
-              to='/app/settings/setup-2fa'
+              to={SecurityRoute.change2fa}
               component={AppRouterLinkComponent}
               variant='contained'
               size='large'
