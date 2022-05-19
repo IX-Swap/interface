@@ -7,6 +7,7 @@ import { Status } from 'ui/Status/Status'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
+import { adjustIdentityOccupation } from 'app/pages/identity/utils/shared'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
@@ -21,17 +22,6 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
 
   const name = `[${data.status}] ${data.firstName} ${data.lastName}`
   const status = data.status.toLowerCase()
-  const adjustedIdentityType = (str: string) => {
-    const res = str.split('').map(el => el.toLowerCase())
-    res[0] = res[0].toUpperCase()
-    for (let i = 0; i < res.length; i++) {
-      if (res[i] === ' ' || res[i] === '/') {
-        res.splice(i + 1, 1, res[i + 1].toUpperCase())
-      }
-    }
-    return res.join('')
-  }
-
   const individualIdentityFields = [
     {
       key: 'Full Name',
@@ -39,7 +29,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
     },
     {
       key: 'Occupation',
-      value: adjustedIdentityType(data.occupation)
+      value: adjustIdentityOccupation(data.occupation)
     },
     {
       key: 'Email',
@@ -50,7 +40,6 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
       value: data.contactNumber
     }
   ]
-  console.log(data)
 
   return (
     <Grid container className={classes.container}>
