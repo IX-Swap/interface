@@ -7,6 +7,7 @@ import { Avatar as AvatarComponent } from 'components/Avatar'
 import { getDataroomFileId } from 'helpers/dataroom'
 import { useFormContext } from 'react-hook-form'
 import classNames from 'classnames'
+import { isString } from 'lodash'
 
 export const Avatar = ({
   hasError,
@@ -29,7 +30,10 @@ export const Avatar = ({
   }
   return (
     <Box>
-      {label !== undefined && <InputLabel>{label}</InputLabel>}
+      {label !== undefined && isString(label) && (
+        <InputLabel>{label}</InputLabel>
+      )}
+      {label !== undefined && !isString(label) && <Box pb={1}>{label}</Box>}
       <AvatarBox
         className={classNames({
           hasError,

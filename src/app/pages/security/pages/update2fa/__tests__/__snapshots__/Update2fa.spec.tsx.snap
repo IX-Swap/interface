@@ -17,7 +17,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
           <h2
             class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
           >
-            Update Authenticator by 
+            Update Authenticator by
             <br />
              Verifying Your Identity
           </h2>
@@ -117,8 +117,8 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       <p
                         class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-10 css-1b4l2pg-MuiTypography-root"
                       >
-                        Enter the 6-digit code sent to 
-                        
+                        Enter the 6-digit code sent to
+
                       </p>
                     </div>
                   </div>

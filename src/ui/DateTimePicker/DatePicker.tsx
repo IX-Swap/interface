@@ -2,12 +2,13 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { DatePickerProps as MUIDatePickerProps } from '@mui/lab/DatePicker'
 import { PickerOnChangeFn } from '@mui/lab/internal/pickers/hooks/useViews'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import { Box, IconButton, InputAdornment, InputLabel } from '@mui/material'
+import { Box, IconButton, InputAdornment } from '@mui/material'
 import { addYears, format, subYears } from 'date-fns'
 import React, { useEffect, useState } from 'react'
 import { DatePickerPopper } from 'ui/DateTimePicker/DatePickerPopper'
 import { Icon } from 'ui/Icons/Icon'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 const defaultDates = {
   min: subYears(new Date(), 40),
@@ -115,9 +116,11 @@ export const DatePicker = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box maxWidth={320}>
+      <Box>
         {label !== undefined && (
-          <InputLabel error={hasError}>{label}</InputLabel>
+          <InputLabel style={{ fontSize: 14 }} shrink error={hasError}>
+            {label}
+          </InputLabel>
         )}
         <TextInput
           value={format(
