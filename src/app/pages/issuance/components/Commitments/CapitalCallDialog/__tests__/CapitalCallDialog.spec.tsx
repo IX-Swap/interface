@@ -18,6 +18,22 @@ describe('CapitalCallDialog', () => {
     jest.clearAllMocks()
   })
 
+  it('renders Typography with correct props', () => {
+    render(<CapitalCallDialog open={true} toggleOpen={handleToggle} />)
+
+    expect(Typography).toHaveBeenCalledTimes(3)
+    expect(Typography).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        align: 'left',
+        children:
+          'You can enter multiple email addresses of “Not Funded” investors. Email will be sent to notify them.',
+        variant: 'body1'
+      }),
+      {}
+    )
+  })
+
   it('renders ReactMultiEmail with correct props', async () => {
     render(<CapitalCallDialog open={true} toggleOpen={handleToggle} />)
 
