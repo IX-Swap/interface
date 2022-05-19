@@ -439,18 +439,11 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
             </button>
           </div>
         </div>
-        <div
-          class="MuiBox-root css-14moqo8"
-        >
-          <div
-            class="ForwardRef(Box)-root-37 ForwardRef(Box)-root-38 MuiBox-root css-0"
-          />
-        </div>
       </div>
     </div>
   </div>
   <div
-    class="MuiGrid-root MuiGrid-container makeStyles-container-39 css-1bizp5f-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container makeStyles-container-37 css-1bizp5f-MuiGrid-root"
   />
 </div>
 `;
