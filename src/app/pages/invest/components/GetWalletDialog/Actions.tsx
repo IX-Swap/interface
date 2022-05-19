@@ -14,7 +14,7 @@ export const Actions: React.FC<ActionProps> = ({ action, cancel }) => {
           color='primary'
           onClick={() => cancel()}
           variant='outlined'
-          data-testid='getAddressBtn'
+          data-testid='cancelGetAddress'
         >
           Cancel
         </Button>
