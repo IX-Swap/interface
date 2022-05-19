@@ -3,361 +3,293 @@
 exports[`Setup2fa should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-grid-xs-12 makeStyles-wrapper-1 css-9ot9es-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-2 css-7g05lj-MuiGrid-root"
+      class="MuiGrid-root makeStyles-leftBlock-2 css-vj1n65-MuiGrid-root"
     >
       <div
-        class="makeStyles-aside-2 MuiBox-root css-0"
-      >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
-        >
-          What is 2FA?
-        </h5>
-        <div
-          class="MuiBox-root css-12aw9rk"
-        />
-        <p
-          class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-        >
-          (2FA) Two-Factor Authentication increases your account security by requiring multiple forms of verification when signing into InvestaX Prime.
-        </p>
-        <div
-          class="MuiBox-root css-12aw9rk"
-        />
-        <a
-          class="MuiTypography-root MuiTypography-body1 MuiLink-root MuiLink-underlineNone css-33gudj-MuiTypography-root-MuiLink-root"
-          href="/app/settings/guide-2fa"
-        >
-          Learn more
-        </a>
-      </div>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-12 MuiGrid-grid-lg-10 css-1hlpjpi-MuiGrid-root"
-    >
-      <div
-        class="MuiContainer-root MuiContainer-maxWidthLg makeStyles-wrapper-1 css-1oqqzyl-MuiContainer-root"
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
       >
         <div
-          class="MuiBox-root css-0"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
         >
           <div
-            class="MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel css-10mg1vw-MuiStepper-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
           >
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
+            <h2
+              class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
             >
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      1
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-active MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Download app
-                  </span>
-                </span>
-              </span>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
-            >
-              <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
-              >
-                <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
-                />
-              </div>
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      2
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Scan QR Code
-                  </span>
-                </span>
-              </span>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
-            >
-              <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
-              >
-                <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
-                />
-              </div>
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      3
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Backup Key
-                  </span>
-                </span>
-              </span>
-            </div>
-            <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-14pz21o-MuiStep-root"
-            >
-              <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
-              >
-                <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
-                />
-              </div>
-              <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
-              >
-                <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="12"
-                    />
-                    <text
-                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
-                      text-anchor="middle"
-                      x="12"
-                      y="16"
-                    >
-                      4
-                    </text>
-                  </svg>
-                </span>
-                <span
-                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
-                >
-                  <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
-                  >
-                    Enable Authenticator
-                  </span>
-                </span>
-              </span>
-            </div>
+              Install Authenticator App
+              <br />
+               in Your Smartphone Device
+            </h2>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1ewlecp-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
             >
               <div
-                class="MuiBox-root css-1mvxmnv"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column makeStyles-container-5 css-67pqv6-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-firstText-6 css-1gd5lqg-MuiTypography-root"
                   >
-                    <h2
-                      class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
-                    >
-                      Install Authenticator App in Your Smartphone Device
-                    </h2>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-19zvv5e-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1ihtruj-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
-                        >
-                          When you log in, you’ll need to enter a code generated by the Google Authenticator app or another authenitcator app
-                        </p>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1ihtruj-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
-                        >
-                          Download an authentication app to your smartphone from the App Store (for iPhone) or Google Play (for android smartphones)
-                        </p>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                      >
-                        <div
-                          class="MuiBox-root css-8f57v9"
-                        >
-                          <div
-                            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-12n0uxm-MuiGrid-root"
-                          >
-                            <div
-                              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                            >
-                              <a
-                                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-q3td2j-MuiTypography-root-MuiLink-root"
-                                href="https://apps.apple.com/us/app/google-authenticator/id388497605"
-                                target="_blank"
-                              >
-                                <img
-                                  alt="App Store Logo"
-                                  height="40px"
-                                  src="image-mock"
-                                />
-                              </a>
-                            </div>
-                            <div
-                              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                            >
-                              <a
-                                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-q3td2j-MuiTypography-root-MuiLink-root"
-                                href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en"
-                                target="_blank"
-                              >
-                                <img
-                                  alt="Google Play Logo"
-                                  height="40px"
-                                  src="image-mock"
-                                />
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1ihtruj-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
-                        >
-                          Please click “NEXT” when you have finished the authenticator app installed in your smartphone
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    When you log in, you will need to enter a code generated by the Google Authenticator app or another authenticator app
+                  </p>
                 </div>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-container makeStyles-container-3 css-1bizp5f-MuiGrid-root"
-              >
                 <div
-                  class="MuiGrid-root MuiGrid-item makeStyles-item-4 css-13i4rnv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
-                  <button
-                    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root makeStyles-button-5 css-gbhykm-MuiButtonBase-root-MuiButton-root"
-                    tabindex="0"
-                    type="button"
+                  <img
+                    alt="Enabled 2FA"
+                    class="makeStyles-icon-8"
+                    src="image-mock"
+                  />
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-secondText-7 css-1gd5lqg-MuiTypography-root"
                   >
-                    Next
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    Download an Authentication App to your smartphone from the App Store or Google Play
+                  </p>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-di8adu-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <a
+                      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-q3td2j-MuiTypography-root-MuiLink-root"
+                      href="https://apps.apple.com/us/app/google-authenticator/id388497605"
+                      target="_blank"
                     />
-                  </button>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <a
+                      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-q3td2j-MuiTypography-root-MuiLink-root"
+                      href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en"
+                      target="_blank"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item makeStyles-rightBlock-3 css-5x0lb4-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="MuiBox-root css-1c73l8u"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-93b3zb-MuiTypography-root"
+            >
+              Progress
+            </p>
+          </div>
+          <div
+            class="MuiStepper-root MuiStepper-vertical css-9tmuzo-MuiStepper-root"
+          >
+            <div
+              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            >
+              <button
+                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical active css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <div
+                      class="makeStyles-wrapper-9 makeStyles-wrapper-12 MuiBox-root css-0"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-14 css-1b4l2pg-MuiTypography-root"
+                      >
+                        1
+                      </p>
+                    </div>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label Mui-active css-t1n505-MuiStepLabel-label"
+                    >
+                      Download App
+                    </span>
+                  </span>
+                </span>
+                <span
+                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            >
+              <button
+                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <div
+                      class="makeStyles-wrapper-9 makeStyles-wrapper-15 MuiBox-root css-0"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-17 css-1b4l2pg-MuiTypography-root"
+                      >
+                        2
+                      </p>
+                    </div>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
+                    >
+                      Scan QR Code
+                    </span>
+                  </span>
+                </span>
+                <span
+                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            >
+              <button
+                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <div
+                      class="makeStyles-wrapper-9 makeStyles-wrapper-18 MuiBox-root css-0"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-20 css-1b4l2pg-MuiTypography-root"
+                      >
+                        3
+                      </p>
+                    </div>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
+                    >
+                      Backup Key
+                    </span>
+                  </span>
+                </span>
+                <span
+                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+            <div
+              class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            >
+              <button
+                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiStepLabel-root MuiStepLabel-vertical css-1bl8ooz-MuiStepLabel-root"
+                >
+                  <span
+                    class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
+                  >
+                    <div
+                      class="makeStyles-wrapper-9 makeStyles-wrapper-21 MuiBox-root css-0"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-23 css-1b4l2pg-MuiTypography-root"
+                      >
+                        4
+                      </p>
+                    </div>
+                  </span>
+                  <span
+                    class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
+                  >
+                    <span
+                      class="MuiStepLabel-label css-t1n505-MuiStepLabel-label"
+                    >
+                      Enable Authenticator
+                    </span>
+                  </span>
+                </span>
+                <span
+                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container makeStyles-container-24 css-1bizp5f-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item makeStyles-item-25 css-13i4rnv-MuiGrid-root"
+      >
+        <button
+          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root makeStyles-button-26 css-gbhykm-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Next
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
       </div>
     </div>
   </div>

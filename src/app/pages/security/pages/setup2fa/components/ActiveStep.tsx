@@ -4,7 +4,7 @@ import { Step3Backup } from 'app/pages/security/pages/setup2fa/components/Step3B
 import { Step4Enable } from 'app/pages/security/components/Step4Enable/Step4Enable'
 import { Enabled } from 'app/pages/security/pages/setup2fa/components/Enabled'
 import { TwoFaData } from 'app/pages/security/types'
-import { Step1Download } from 'app/pages/security/pages/setup2fa/components/Step1Download'
+import { Step1Download } from 'app/pages/security/pages/setup2fa/components/Step1Download/Step1Download'
 
 export interface ActiveStepProps {
   index: number
