@@ -5,7 +5,9 @@ import {
   DialogActions,
   Grid,
   IconButton,
-  InputAdornment
+  InputAdornment,
+  Typography,
+  useTheme
 } from '@mui/material'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { WalletConnectionStatus } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
@@ -30,6 +32,7 @@ export interface WAConnectProps {
 
 export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
   const { watch, control } = useFormContext<WithdrawalAddressFormValues>()
+  const theme = useTheme()
   const address = watch('address')
   const wallet = watch('wallet')
   const [checkAddress, { isLoading, data, isSuccess }] = useCheckAddress({
@@ -61,12 +64,20 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
   return (
     <>
       <Grid item mt={3}>
+        <Typography
+          color={theme.palette.dialog.color}
+          style={{ marginBottom: 10 }}
+          fontSize={14}
+          fontWeight={500}
+          lineHeight='17px'
+        >
+          Blockchain address
+        </Typography>
         <TypedField
           className={privateClassNames()}
           component={TextInput}
           control={control}
           name='address'
-          label='Blockchain Address'
           variant='outlined'
           disabled={allowConnect}
           InputProps={{
@@ -101,7 +112,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
       {hasWallet && <WAInfoFields />}
       {!hasWallet && hint}
       <DialogActions>
-        <Grid item container justifyContent='flex-end'>
+        <Grid mt={2} item container justifyContent='center'>
           <WAConnectActions
             isVerifying={isVerifying}
             isVerified={isVerified}

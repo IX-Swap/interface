@@ -1,12 +1,11 @@
 import {
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
-  Typography,
-  Box
+  Box,
+  Typography
 } from '@mui/material'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
 import { OTPField } from 'components/form/OTPField'
@@ -15,6 +14,8 @@ import { VSpacer } from 'components/VSpacer'
 import { plainValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
+import { useTheme } from '@mui/material/styles'
 
 export const OTPDialogContent = ({
   close,
@@ -23,6 +24,7 @@ export const OTPDialogContent = ({
 }: Pick<OTPDialogProps, 'close' | 'content' | 'actionLabel'>) => {
   const { control, watch, formState } = useFormContext<WithdrawCashFormValues>()
   const otpValue = watch('otp')
+  const theme = useTheme()
 
   return (
     <>
@@ -33,22 +35,42 @@ export const OTPDialogContent = ({
           customRenderer
           component={OTPField}
           name='otp'
-          label='Please enter your OTP from authenticator before proceeding'
+          label={
+            <Box
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-start'
+              }}
+            >
+              <Typography color={theme.palette.dialog.color}>OTP</Typography>
+              <Typography color={theme.palette.text.secondary}>
+                (Enter code from authenticator to proceed)
+              </Typography>
+            </Box>
+          }
           variant='outlined'
           valueExtractor={plainValueExtractor}
           shouldAutoFocus
+          placeholder='______'
         />
       </DialogContent>
       <VSpacer size='small' />
       <DialogActions>
         <Grid container spacing={2} justifyContent='center'>
-          <Grid item>
-            <Button variant='outlined' color='primary' onClick={close}>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant='outlined'
+              color='primary'
+              onClick={close}
+            >
               Cancel
             </Button>
           </Grid>
-          <Grid item>
+          <Grid item xs={6}>
             <Button
+              fullWidth
               type='submit'
               variant='contained'
               color='primary'
@@ -82,19 +104,11 @@ export const OTPDialog = (props: OTPDialogProps) => {
   const { close, open, title } = props
 
   return (
-    <Dialog disablePortal open={open} maxWidth='md' onClose={close}>
-      <Box py={4} px={10}>
-        <DialogTitle>
-          <Typography
-            variant='h5'
-            align='center'
-            style={{ textTransform: 'capitalize' }}
-          >
-            {title ?? 'Cash Withdrawal'}
-          </Typography>
-        </DialogTitle>
-      </Box>
+    <UIDialog disablePortal open={open} maxWidth='sm' onClose={close}>
+      <DialogTitle>
+        <Box textAlign='center'>{title ?? 'Cash Withdrawal'}</Box>
+      </DialogTitle>
       <OTPDialogContent {...props} />
-    </Dialog>
+    </UIDialog>
   )
 }

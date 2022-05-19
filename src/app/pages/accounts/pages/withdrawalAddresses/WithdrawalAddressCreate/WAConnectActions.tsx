@@ -34,6 +34,7 @@ export const WAConnectActions = ({
 
   return (
     <Button
+      fullWidth
       color='primary'
       variant='contained'
       disableElevation

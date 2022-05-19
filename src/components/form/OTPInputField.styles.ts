@@ -4,11 +4,12 @@ export const useStyles = makeStyles(theme => ({
   container: {},
   fullwidth: {
     width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    gap: 16
   },
   base: {
-    height: 38,
-    width: `38px !important`,
+    height: 70,
+    width: `55px !important`,
     padding: theme.spacing(1),
     display: 'block',
     outline: 'none',

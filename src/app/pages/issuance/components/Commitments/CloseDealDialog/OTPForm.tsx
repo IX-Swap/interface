@@ -11,16 +11,26 @@ export interface OTPFormProps {
   isLoading: boolean
   onClose: () => void
   onSubmit: (values: CloseDealArgs) => void
+  placeholder?: string
 }
 
-export const OTPForm = ({ isLoading, onClose, onSubmit }: OTPFormProps) => {
+export const OTPForm = ({
+  isLoading,
+  onClose,
+  onSubmit,
+  placeholder
+}: OTPFormProps) => {
   return (
     <Form
       data-testid='otp-form'
       defaultValues={initialValues}
       onSubmit={onSubmit}
     >
-      <OTPFields isLoading={isLoading} onClose={onClose} />
+      <OTPFields
+        placeholder={placeholder}
+        isLoading={isLoading}
+        onClose={onClose}
+      />
     </Form>
   )
 }

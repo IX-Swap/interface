@@ -34,6 +34,7 @@ export const Checkbox = (
       control={<UICheckbox name={name} />}
       label={
         <Typography
+          fontWeight={400}
           variant='body1'
           color={error ? 'error' : 'inherit'}
           style={{ marginTop: 10 }}

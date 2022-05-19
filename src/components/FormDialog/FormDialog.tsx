@@ -1,7 +1,8 @@
 import React from 'react'
-import Dialog, { DialogProps } from '@mui/material/Dialog'
+import { DialogProps } from '@mui/material/Dialog'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { useTheme } from '@mui/material/styles'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export const FormDialog: React.FC<DialogProps> = ({
   children,
@@ -13,7 +14,7 @@ export const FormDialog: React.FC<DialogProps> = ({
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <Dialog
+    <UIDialog
       fullWidth
       open={open}
       fullScreen={fullScreen}
@@ -21,6 +22,6 @@ export const FormDialog: React.FC<DialogProps> = ({
       {...rest}
     >
       {children}
-    </Dialog>
+    </UIDialog>
   )
 }

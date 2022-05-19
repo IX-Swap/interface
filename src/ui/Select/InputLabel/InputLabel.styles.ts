@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => {
       position: 'static',
       marginBottom: theme.spacing(1.5),
       color: selectPalette.label,
-      opacity: 0.7,
+      opacity: 1,
       lineHeight: 1.13
     }
   }
