@@ -7,6 +7,7 @@ import { IndividualRouter } from 'app/pages/identity/router/IndividualRouter'
 import { CorporateRouter } from 'app/pages/identity/router/CorporateRouter'
 import { DetailsOfIssuanceRouter } from 'app/pages/identity/router/DetailsOfIssuanceRouter'
 import { SuccessPage } from 'app/pages/identity/pages/SuccessPage/SuccessPage'
+import { RootContainer } from 'ui/RootContainer'
 
 export const IdentityRouter = () => {
   return (
@@ -32,7 +33,9 @@ export const IdentityRouter = () => {
       </AppRoute>
 
       <AppRoute path={IdentityRoute.list} exact>
-        <IdentitiesList />
+        <RootContainer background='default'>
+          <IdentitiesList />
+        </RootContainer>
       </AppRoute>
     </Switch>
   )

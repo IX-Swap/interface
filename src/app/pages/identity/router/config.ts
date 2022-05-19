@@ -62,6 +62,5 @@ export const IdentityRoute = {
     '/app/identity/corporates/:userId/:identityId/view-fund-manager',
   viewFundAdmin: '/app/identity/corporates/:userId/:identityId/view-fund-admin',
   viewPortfolioManager:
-    '/app/identity/corporates/:userId/:identityId/view-portfolio-manager',
-  submitIdentity: '/app/identity/:userId/submit'
+    '/app/identity/corporates/:userId/:identityId/view-portfolio-manager'
 }
