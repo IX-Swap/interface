@@ -1,15 +1,14 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { t, Trans } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
-import { useHistory } from 'react-router-dom'
+import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
-import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
@@ -26,7 +25,11 @@ import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { countriesList } from 'constants/countriesList'
+import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 
+import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
   individualFormInitialValues,
@@ -38,11 +41,8 @@ import {
 } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchema } from './schema'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
-import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
-import { useAddPopup, useShowError } from 'state/application/hooks'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
-import { KYCStatuses } from './enum'
+import { KYCStatuses, IdentityDocumentType } from './enum'
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -58,6 +58,7 @@ export const FormContainer = styled(FormWrapper)`
 `
 
 export default function IndividualKycForm() {
+  const canLeavePage = useRef(false)
   const [cookies] = useCookies(['annoucementsSeen'])
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
@@ -82,7 +83,7 @@ export default function IndividualKycForm() {
     if (account && prevAccount && account !== prevAccount) {
       history.push('/kyc')
     }
-  }, [account, prevAccount])
+  }, [account, prevAccount, history])
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -95,9 +96,9 @@ export default function IndividualKycForm() {
       }
     }
 
-    if (kyc?.data.status === KYCStatuses.CHANGES_REQUESTED) {
+    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED) {
       getProgress()
-      setUpdateKycId(kyc.data.id)
+      setUpdateKycId(kyc.id)
     } else {
       setFormData(individualFormInitialValues)
     }
@@ -165,9 +166,7 @@ export default function IndividualKycForm() {
 
   const goBack = (e?: any) => {
     if (e) e.preventDefault()
-    if (confirm(promptValue)) {
-      history.push('/kyc')
-    }
+    history.push('/kyc')
   }
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
@@ -203,8 +202,13 @@ export default function IndividualKycForm() {
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
+  const idTypes = useMemo(() => {
+    return Object.values(IdentityDocumentType).map((value, index) => ({ value: ++index, label: value }))
+  }, [])
+
   return (
     <Loadable loading={!isLoggedIn}>
+      <Prompt when={!canLeavePage.current} message={promptValue} />
       <LoadingIndicator isLoading={loadingRequest} />
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         <ButtonText
@@ -234,6 +238,7 @@ export default function IndividualKycForm() {
               individualErrorsSchema
                 .validate(values, { abortEarly: false })
                 .then(async () => {
+                  canLeavePage.current = true
                   setCanSubmit(false)
                   const body = individualTransformKycDto(values)
                   let data: any = null
@@ -276,6 +281,7 @@ export default function IndividualKycForm() {
                   setIsSubmittedOnce(true)
                   setErrors(newErrors)
                   setCanSubmit(false)
+                  canLeavePage.current = false
                 })
             }}
           >
@@ -293,6 +299,8 @@ export default function IndividualKycForm() {
                 !errors.citizenship &&
                 !errors.phoneNumber &&
                 !errors.email
+              const identityDocumentFilled =
+                shouldValidate && !errors.idType && !errors.idNumber && !errors.idIssueDate && !errors.idExpiryDate
               const investorFilled = shouldValidate && !errors.accredited
               const addressFilled =
                 shouldValidate && !errors.address && !errors.postalCode && !errors.country && !errors.city
@@ -390,7 +398,56 @@ export default function IndividualKycForm() {
                           </FormGrid>
                         </Column>
                       </FormCard>
-
+                      <FormCard id="identity-document">
+                        <RowBetween marginBottom="32px">
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Identity Document</Trans>
+                          </TYPE.title6>
+                          {identityDocumentFilled && <BigPassed />}
+                        </RowBetween>
+                        <Column style={{ gap: '20px' }}>
+                          <FormGrid>
+                            <Select
+                              error={errors.idType}
+                              withScroll
+                              label="Document Type"
+                              selectedItem={values.idType}
+                              items={idTypes}
+                              onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
+                            />
+                            <TextInput
+                              onChange={(e) => onChangeInput('idNumber', e.currentTarget.value, values, setFieldValue)}
+                              value={values.idNumber}
+                              label="Document Number"
+                              error={errors.idNumber}
+                            />
+                          </FormGrid>
+                          <FormGrid>
+                            <DateInput
+                              label="Document Issue Date"
+                              maxHeight={60}
+                              error={errors.idIssueDate}
+                              value={values.idIssueDate}
+                              onChange={(value) => {
+                                setFieldValue('idIssueDate', value, false)
+                                validationSeen('idIssueDate')
+                              }}
+                              maxDate={new Date()}
+                            />
+                            <DateInput
+                              label="Document Expiry Date"
+                              maxHeight={60}
+                              error={errors.idExpiryDate}
+                              value={values.idExpiryDate}
+                              onChange={(value) => {
+                                setFieldValue('idExpiryDate', value, false)
+                                validationSeen('idExpiryDate')
+                              }}
+                              minDate={new Date()}
+                            />
+                          </FormGrid>
+                        </Column>
+                      </FormCard>
                       <FormCard id="address">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
@@ -597,7 +654,7 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '40px' }}>
                           <Uploader
-                            subtitle="Proof of ID - Passport or Singapore NRIC."
+                            subtitle="Proof of ID - Passport, Singapore NRIC, International Passport, National ID, Driving License or Others."
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
@@ -650,6 +707,11 @@ export default function IndividualKycForm() {
                           href: 'personal',
                           passed: personalFilled,
                         },
+                        identityDocument: {
+                          title: 'Identity Document',
+                          href: 'identity-document',
+                          passed: identityDocumentFilled,
+                        },
                         address: {
                           title: 'Address',
                           href: 'address',
@@ -681,7 +743,7 @@ export default function IndividualKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description={kyc?.data?.message || null}
+                      description={kyc?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StyledStickyBox>

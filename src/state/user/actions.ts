@@ -8,6 +8,8 @@ export interface SerializedToken {
   decimals: number
   symbol?: string
   name?: string
+  tokenInfo?: any
+  [key: string]: any
 }
 
 export interface SerializedPair {

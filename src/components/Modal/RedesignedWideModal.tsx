@@ -129,7 +129,7 @@ export default function RedesignedWideModal({
   mobileMaxHeight = false,
   initialFocusRef,
   children,
-  isright = false,
+  isright,
   scrollable = false,
   tip,
   topContent,
@@ -145,7 +145,7 @@ export default function RedesignedWideModal({
     if (isOpen && scrollable) {
       setTimeout(() => handleLoad(), 100)
     }
-  }, [isOpen])
+  }, [isOpen, scrollable])
 
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
@@ -178,9 +178,9 @@ export default function RedesignedWideModal({
               initialFocusRef={initialFocusRef}
               unstable_lockFocusAcrossFrames={false}
               isright={isright}
-              scrollable={scrollable}
+              scrollable={scrollable ? `${scrollable}` : ''}
               tip={tip}
-              flexColumn={topContent ? true : false}
+              flexcolumn={topContent ? 'true' : ''}
             >
               {topContent ? <div style={{ maxWidth: '622px', whiteSpace: 'nowrap' }}>{topContent}</div> : null}
               <StyledDialogContent

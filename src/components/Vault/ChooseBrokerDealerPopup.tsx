@@ -1,4 +1,9 @@
+import React, { useCallback, useEffect, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
+import styled from 'styled-components'
+import { Flex } from 'rebass'
+import { useHistory } from 'react-router-dom'
+
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -6,26 +11,21 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
 import Tooltip from 'components/Tooltip'
 import { useCurrency } from 'hooks/Tokens'
-import React, { useCallback, useEffect, useState } from 'react'
-import { Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
 import { useBrokerDealersState, useFetchBrokerDealers } from 'state/brokerDealer/hooks'
 import { useFetchUserSecTokenListCallback, usePassAccreditation, useUserState } from 'state/user/hooks'
-import styled from 'styled-components'
-import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
-import { CloseIcon, TYPE } from '../../theme'
-import { useHistory } from 'react-router-dom'
+import { ModalBlurWrapper, ModalContentWrapper, ModalPadding, CloseIcon, TYPE } from 'theme'
 import { useKYCState } from 'state/kyc/hooks'
-import { KYCStatuses } from './enum'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 const KycSourceContainer = styled.div`
   width: 100%;
 
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 2rem;
 
   & > * {
-    margin: 0.5rem;
+    margin: 0.5rem 0rem;
   }
 `
 
@@ -38,6 +38,15 @@ const KycRow = styled.div`
 
   justify-content: flex-start;
   align-items: center;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;  
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  `};
 `
 
 const KycTooltipIcon = () => {
@@ -83,6 +92,10 @@ const Button = styled.button`
   &:active {
     border: none;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin: 0;
+  `};
 `
 
 interface KycSourceTooltipProps {
@@ -135,9 +148,9 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   }
 
   useEffect(() => {
-    const status = kyc?.data.status === KYCStatuses.APPROVED ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
+    const status = kyc?.status === KYCStatuses.APPROVED ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
 
-    setStatusDesc(getText(kyc?.data.status))
+    setStatusDesc(getText(kyc?.status))
     setSelected(status)
   }, [kyc])
 
@@ -147,7 +160,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
   const onChange = useCallback(
     (value: KycSource) => {
-      if (kyc?.data.status === KYCStatuses.APPROVED || value !== KycSource.IXSwap) {
+      if (kyc?.status === KYCStatuses.APPROVED || value !== KycSource.IXSwap) {
         setSelected(value)
       }
     },
@@ -164,16 +177,18 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <TYPE.small style={{ fontSize: '12px', color: '#EDCEFF' }}>KYC source</TYPE.small>
       </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
-        <TYPE.body1>My IX Swap KYC</TYPE.body1>
+        <TYPE.body1 minWidth="auto" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          My IX Swap KYC
+        </TYPE.body1>
 
         <KycSourceTooltip text="Recommended" />
 
-        <Button onClick={requestKyc} disabled={kyc?.data?.status === KYCStatuses.APPROVED}>
+        <Button onClick={requestKyc} disabled={kyc?.status === KYCStatuses.APPROVED}>
           <TYPE.small>{statusDesc}</TYPE.small>
         </Button>
 
         <Spacer />
-        {kyc?.data?.status === KYCStatuses.APPROVED ? (
+        {kyc?.status === KYCStatuses.APPROVED ? (
           <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
             {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
           </IconWrapper>
@@ -209,7 +224,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const [source, setSource] = useState<KycSource | undefined>(undefined)
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
   const { loadingAccreditation } = useUserState()
-  const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.symbol || null
+  const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.originalSymbol || null
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   const { kyc } = useKYCState()
@@ -226,7 +241,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
     if (tokenId) {
       fetchBrokerDealerPairs(tokenId)
     }
-  }, [tokenId])
+  }, [tokenId, fetchBrokerDealerPairs])
 
   useEffect(() => {
     if (brokerDealerPairs) {
@@ -339,7 +354,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
             <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
               {!loadingAccreditation && (
                 <ButtonIXSWide
-                  disabled={loadingAccreditation || kyc?.data?.status !== KYCStatuses.APPROVED}
+                  disabled={loadingAccreditation || kyc?.status !== KYCStatuses.APPROVED}
                   style={{ textTransform: 'unset' }}
                   onClick={() => {
                     passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
@@ -382,7 +397,7 @@ const Text = styled(TYPE.body4)`
 const BrokerDealersGridHeader = styled.div`
   display: grid;
   grid-template-columns: 115px 30px 1fr auto;
-  padding: 10px 40px;
+  padding: 0.5rem 2rem;
 `
 
 const BrokerDealersGrid = styled(BrokerDealersGridHeader)`

@@ -57,7 +57,7 @@ export const Select = ({ onSelect, value, options, placeholder = '', name, isMul
   const selectedValue = useMemo(
     () =>
       options.find((option) => option.label === (value?.label || value) || option.value === (value?.value || value)),
-    [value]
+    [value, options]
   )
 
   return (

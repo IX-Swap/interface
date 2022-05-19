@@ -8,6 +8,10 @@ export const individualErrorsSchema = yup.object().shape({
   gender: yup.object().nullable().required('Required'),
   nationality: yup.object().nullable().required('Required'),
   citizenship: yup.object().nullable().required('Required'),
+  idType: yup.object().nullable().required('Required'),
+  idNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
+  idIssueDate: yup.mixed().nullable().required('Required'),
+  idExpiryDate: yup.mixed().nullable().required('Required'),
   phoneNumber: yup
     .string()
     .required('Required')
@@ -42,9 +46,14 @@ export const individualErrorsSchema = yup.object().shape({
 export const corporateErrorsSchema = yup.object().shape({
   corporateName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   typeOfLegalEntity: yup.object().nullable().required('Required'),
-  registrationNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   countryOfIncorporation: yup.object().nullable().required('Required'),
   businessActivity: yup.string().required('Required'),
+
+  registrationNumber: yup.string().required('Required'),
+  incorporationDate: yup.mixed().nullable().required('Required'),
+  incorporationExpiryDate: yup.mixed().nullable().required('Required'),
+  inFatfJurisdiction: yup.string().required('Required'),
+
   personnelName: yup.string().required('Required'),
   designation: yup.string().required('Required'),
   email: yup.string().email('Invalid email').required('Required'),

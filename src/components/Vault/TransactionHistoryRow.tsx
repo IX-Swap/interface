@@ -20,12 +20,11 @@ import { DateBox, HistoryRowWraper, IconColumn } from './styleds'
 
 interface Props {
   row: LogItem
-  key: any
   currency: Currency & { originalSymbol: string }
   icon: JSX.Element
 }
 
-export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
+export const TransactionHistoryRow = ({ row, currency, icon }: Props) => {
   const status = row?.status ?? row?.params?.status ?? 'pending'
   const statusText = getActionStatusText(row.type, status, currency?.originalSymbol, currency?.symbol)
   const { width } = useWindowSize()
@@ -57,7 +56,7 @@ export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
   }, [toggle, dispatch, row, toggleWithdrawModal, onTypeReceiver, onTypeAmount])
 
   return (
-    <HistoryRowWraper data-testid="row" key={`history-item-${key}`} onClick={() => openModal()}>
+    <HistoryRowWraper data-testid="row" key={`history-item-${row.createdAt}`} onClick={() => openModal()}>
       <td>
         <TYPE.subHeader1 color={'text1'}>{ActionTypeText[row.type]}</TYPE.subHeader1>
       </td>

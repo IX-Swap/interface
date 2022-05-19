@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { Trans } from '@lingui/macro'
-import styled, { ThemeContext } from 'styled-components'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 
 import { AccreditationStatusEnum } from 'components/Vault/enum'
 import { useApproveAccreditation } from 'state/admin/hooks'
@@ -16,11 +15,11 @@ interface Props {
   status: string
   id: number
   custodian: string
+  searchValue: string
 }
 
-export const CustodianStatus = ({ status, id, custodian }: Props) => {
+export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) => {
   const approveAccreditation = useApproveAccreditation()
-  const theme = useContext(ThemeContext)
 
   const [isModalOpen, handleIsModalOpen] = useState(false)
 
@@ -29,7 +28,7 @@ export const CustodianStatus = ({ status, id, custodian }: Props) => {
 
   const approve = async () => {
     try {
-      await approveAccreditation(id)
+      await approveAccreditation(id, searchValue)
     } catch (e) {}
   }
 
@@ -44,7 +43,7 @@ export const CustodianStatus = ({ status, id, custodian }: Props) => {
       <div>
         {status === AccreditationStatusEnum.PENDING_CUSTODIAN && (
           <>
-            <RejectModal isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
+            <RejectModal searchValue={searchValue} isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
             <ButtonsContainer>
               <ActionButton onClick={approve}>
                 <StyledCheckIcon />
@@ -55,7 +54,7 @@ export const CustodianStatus = ({ status, id, custodian }: Props) => {
             </ButtonsContainer>
           </>
         )}
-        <MoreActions id={id} />
+        <MoreActions id={id} searchValue={searchValue} />
       </div>
     </Container>
   )

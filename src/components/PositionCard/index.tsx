@@ -41,7 +41,7 @@ const StyledPositionCard = styled(LightCard)`
   }
 `
 
-export default function FullPositionCard({ pair, stakedBalance }: PositionCardProps) {
+export default function FullPositionCard({ pair }: PositionCardProps) {
   const [showMore, setShowMore] = useState(false)
   const {
     currency0,

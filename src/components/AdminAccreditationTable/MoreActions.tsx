@@ -10,9 +10,10 @@ import { useResetAccreditation } from 'state/admin/hooks'
 
 interface Props {
   id: number
+  searchValue: string
 }
 
-export const MoreActions = ({ id }: Props) => {
+export const MoreActions = ({ id, searchValue }: Props) => {
   const accreditationReset = useResetAccreditation()
   const [isOpen, handleIsOpen] = useState(false)
 
@@ -21,7 +22,7 @@ export const MoreActions = ({ id }: Props) => {
 
   const startAgain = async () => {
     try {
-      await accreditationReset(id)
+      await accreditationReset(id, searchValue)
       close()
     } catch (e) {}
   }

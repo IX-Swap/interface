@@ -18,6 +18,7 @@ import { ExternalLink } from 'theme'
 import { adminOffset as offset } from 'state/admin/constants'
 import { getExplorerName } from 'hooks/useExplorerName'
 import { CopyAddress } from 'components/CopyAddress'
+import { NoData } from 'components/Whitelist/styleds'
 
 interface RowProps {
   item: BrokerDealerSwapItem
@@ -126,7 +127,7 @@ export const AdminTransactionsTable = () => {
       <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
       {items?.length === 0 ? (
         <NoData>
-          <Trans>No data</Trans>
+          <Trans>No results</Trans>
         </NoData>
       ) : (
         <Container>
@@ -151,12 +152,6 @@ export const Loader = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000000;
-`
-
-const NoData = styled.div`
-  font-weight: 600;
-  color: ${({ theme: { text2 } }) => text2};
-  text-align: center;
 `
 
 const Wallet = styled.div`

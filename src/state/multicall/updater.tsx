@@ -30,7 +30,6 @@ async function fetchChunk(
   results: { success: boolean; returnData: string }[]
   blockNumber: number
 }> {
-  console.debug('Fetching chunk', chunk, minBlockNumber)
   let resultsBlockNumber: number
   let results: { success: boolean; returnData: string }[]
   try {
@@ -41,11 +40,9 @@ async function fetchChunk(
     resultsBlockNumber = blockNumber.toNumber()
     results = returnData
   } catch (error) {
-    console.debug('Failed to fetch chunk', error)
     throw error
   }
   if (resultsBlockNumber < minBlockNumber) {
-    console.debug(`Fetched results for old block number: ${resultsBlockNumber.toString()} vs. ${minBlockNumber}`)
     throw new RetryableError('Fetched for old block number')
   }
   return { results, blockNumber: resultsBlockNumber }
@@ -204,7 +201,6 @@ export default function Updater(): null {
 
             // dispatch any errored calls
             if (erroredCalls.length > 0) {
-              console.debug('Calls errored in fetch', erroredCalls)
               dispatch(
                 errorFetchingMulticallResults({
                   calls: erroredCalls,
@@ -216,7 +212,6 @@ export default function Updater(): null {
           })
           .catch((error: any) => {
             if (error.isCancelledError) {
-              console.debug('Cancelled fetch for blockNumber', latestBlockNumber)
               return
             }
             console.error('Failed to fetch multicall chunk', chunk, chainId, error)

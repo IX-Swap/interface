@@ -1,12 +1,11 @@
-import { t, Trans } from '@lingui/macro'
+import React, { useMemo } from 'react'
+import { Trans } from '@lingui/macro'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { darken } from 'polished'
-import React, { useMemo } from 'react'
-import { isMobile } from 'react-device-detect'
 import { Activity } from 'react-feather'
 import styled, { css } from 'styled-components'
-import { DesktopAndTablet } from 'theme'
+
 // import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
@@ -116,14 +115,6 @@ const NetworkIcon = styled(Activity)`
 // we want the latest one to come first, so return negative if a is after b
 function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
-}
-
-function Sock() {
-  return (
-    <span role="img" aria-label={t`has socks emoji`} style={{ marginTop: -4, marginBottom: -4 }}>
-      🧦
-    </span>
-  )
 }
 
 // eslint-disable-next-line react/prop-types

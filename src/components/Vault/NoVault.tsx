@@ -1,11 +1,17 @@
+import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
+
 import { ButtonIXSGradient } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useMemo } from 'react'
 import { useWalletModalToggle, useChooseBrokerDealerModalToggle } from 'state/application/hooks'
 import { useSecTokenId } from 'state/secTokens/hooks'
 import { TYPE } from 'theme'
+import { SecTokenPlatform } from 'types/secToken'
+import { removeProtocolFromUrl } from 'utils'
+import { RowCenter } from 'components/Row'
+import QuestionHelper from 'components/QuestionHelper'
+
 import { VaultStatusDescription, NoVaultTitle, NoVaultWrapper } from './styleds'
 import { ChooseBrokerDealerPopup } from './ChooseBrokerDealerPopup'
 import {
@@ -14,11 +20,7 @@ import {
   ERROR_ACCREDITATION_STATUSES,
   PENDING_ACCREDITATION_STATUSES,
 } from './enum'
-import Row, { RowCenter } from 'components/Row'
-import QuestionHelper from 'components/QuestionHelper'
 import { AccreditationStatus } from './AccreditationStatus'
-import { SecTokenPlatform } from 'types/secToken'
-import { removeProtocolFromUrl } from 'utils'
 
 interface Props {
   currency?: Currency

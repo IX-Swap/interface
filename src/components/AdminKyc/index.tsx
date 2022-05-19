@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
@@ -17,8 +17,9 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
-import { ButtonGradientBorder, ButtonGradient } from 'components/Button'
+import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
+import { NoData } from 'components/Whitelist/styleds'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 
@@ -114,11 +115,7 @@ export const AdminKycTable = () => {
   }
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
-  useEffect(() => {
-    getKyc()
-  }, [id])
-
-  const getKyc = async () => {
+  const getKyc = useCallback(async () => {
     if (!id) return
     try {
       handleIsLoading(true)
@@ -128,7 +125,11 @@ export const AdminKycTable = () => {
     } catch (e) {
       handleIsLoading(false)
     }
-  }
+  }, [id])
+
+  useEffect(() => {
+    getKyc()
+  }, [id, getKyc])
 
   return (
     <div id="kyc-container">
@@ -141,7 +142,7 @@ export const AdminKycTable = () => {
       )}
       {items.length === 0 ? (
         <NoData>
-          <Trans>No data</Trans>
+          <Trans>No results</Trans>
         </NoData>
       ) : (
         <Container>
@@ -166,12 +167,6 @@ const Loader = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000000;
-`
-
-const NoData = styled.div`
-  font-weight: 600;
-  color: ${({ theme: { text2 } }) => text2};
-  text-align: center;
 `
 
 export const Wallet = styled.div`

@@ -43,11 +43,6 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
     onResetWithdraw()
   }, [toggle, setModalView, onResetWithdraw])
 
-  const onRedirect = useCallback(() => {
-    setModalView(WithdrawModalView.WITHDRAW_REQUEST)
-    onResetWithdraw()
-  }, [setModalView, onResetWithdraw])
-
   return (
     <RedesignedWideModal
       isOpen={isOpen}
@@ -76,13 +71,7 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
               <CloseIcon onClick={onClose} />
             </RowBetween>
             {modalView === WithdrawModalView.WITHDRAW_REQUEST && (
-              <WithdrawRequestForm
-                currency={currency}
-                changeModal={setModalView}
-                token={token}
-                onClose={onClose}
-                onRedirect={onRedirect}
-              />
+              <WithdrawRequestForm currency={currency} changeModal={setModalView} token={token} onRedirect={onClose} />
             )}
             {modalView === WithdrawModalView.PENDING && <WithdrawPending />}
             {modalView === WithdrawModalView.SUCCESS && <WithdrawSuccess onClose={onClose} />}

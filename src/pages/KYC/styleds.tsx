@@ -159,6 +159,8 @@ export const KYCStatusIcons = {
   [KYCStatuses.CHANGES_REQUESTED]: () => <Attention />,
   [KYCStatuses.REJECTED]: () => <NonTradable />,
   [KYCStatuses.DRAFT]: () => <LoaderThin size={20} />,
+  [KYCStatuses.IN_PROGRESS]: () => <LoaderThin size={20} />,
+  [KYCStatuses.FAILED]: () => <NonTradable />,
 }
 
 const KYCStatusText = {
@@ -168,6 +170,8 @@ const KYCStatusText = {
   [KYCStatuses.CHANGES_REQUESTED]: t`Changes Requested`,
   [KYCStatuses.REJECTED]: t`Rejected`,
   [KYCStatuses.DRAFT]: t`Pending approval`,
+  [KYCStatuses.IN_PROGRESS]: t`Pending approval`,
+  [KYCStatuses.FAILED]: t`FAILED`,
 }
 
 const KYCStatusColors = {
@@ -177,6 +181,8 @@ const KYCStatusColors = {
   [KYCStatuses.CHANGES_REQUESTED]: 'text1',
   [KYCStatuses.REJECTED]: 'error',
   [KYCStatuses.DRAFT]: 'text2',
+  [KYCStatuses.IN_PROGRESS]: 'text2',
+  [KYCStatuses.FAILED]: 'error',
 }
 
 const KYCStatusDescription = {
@@ -190,7 +196,10 @@ const KYCStatusDescription = {
   [KYCStatuses.REJECTED]:
     'Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.',
   [KYCStatuses.DRAFT]:
-    'KYC is being processed and it may take 1-3 days. The status of the KYC will be updated accordingly.',
+    'Your KYC application has been received and will be processed by the team. Thank you for your patience.',
+  [KYCStatuses.FAILED]: 'FAILED to submit kyc. Please contact support.',
+  [KYCStatuses.IN_PROGRESS]:
+    'Your KYC application has been received and will be processed by the team. Thank you for your patience.',
 }
 
 export const getStatusInfo = (status: KYCStatuses) => {

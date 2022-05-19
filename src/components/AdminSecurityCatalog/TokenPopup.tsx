@@ -11,22 +11,22 @@ import { ButtonText, CloseIcon, ModalContentWrapper, ModalPadding, TYPE } from '
 import { useAddPopup, useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
-import { Radio } from './Radio'
 import { ButtonIXSGradient } from 'components/Button'
 import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validateToken } from 'state/secCatalog/hooks'
-import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 import { adminOffset as offset } from 'state/admin/constants'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { getAtlasIdByTicker } from 'state/admin/hooks'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
+import { Dropdown } from './Dropdown'
+import { Radio } from './Radio'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow, LoaderContainer } from './styleds'
 import { industries, initialTokenState } from './mock'
 import { TokenAvailableFor } from './TokenAvailableFor'
-import { getAtlasIdByTicker } from 'state/admin/hooks'
-import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   token: any | null
@@ -91,7 +91,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       const validationErrors = validateToken(token)
       setErrors(validationErrors)
     }
-  }, [token])
+  }, [token, hasErrorOnSubmit])
 
   const confirmClose = () => {
     closeConfirm()
@@ -203,16 +203,19 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
 
-  const chainsOptions = [
-    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Ethereum' },
-    { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
-    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Polygon' },
-  ]
+  const chainsOptions = useMemo(
+    () => [
+      { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Ethereum' },
+      { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
+      { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Polygon' },
+    ],
+    []
+  )
 
   const selectedChainOption = useMemo(() => {
     if (!token) return {}
     return chainsOptions.find(({ id }) => id === token.chainId)
-  }, [token?.chainId])
+  }, [token, chainsOptions])
 
   return (
     <>

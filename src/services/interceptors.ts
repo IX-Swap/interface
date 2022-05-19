@@ -2,15 +2,6 @@ import { t } from '@lingui/macro'
 import { AxiosResponse } from 'axios'
 import { APIResponse } from './types'
 
-class APIError extends Error {
-  code: string
-  constructor(message: string, code?: string) {
-    super()
-    this.message = message
-    this.code = code ?? ''
-  }
-}
-
 export const responseSuccessInterceptor = (response: AxiosResponse<APIResponse>) => {
   const data = response.data.data ?? response.data
 

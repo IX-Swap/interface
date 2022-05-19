@@ -1,7 +1,8 @@
-import Row from 'components/Row'
 import React, { useMemo } from 'react'
+
+import Row from 'components/Row'
 import { useNFTState } from 'state/nft/hooks'
-import { NFTImage } from 'state/nft/types'
+
 import { Card } from './styleds'
 
 export const NFTCards = () => {

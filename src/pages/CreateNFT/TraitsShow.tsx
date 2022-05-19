@@ -1,13 +1,9 @@
 import React from 'react'
 import { Flex } from 'rebass'
-import styled from 'styled-components'
 
-import { LightCard } from 'components/Card'
-import Column from 'components/Column'
 import IXSProgressBar from 'components/IXSProgressBar'
-import Row, { RowBetween } from 'components/Row'
+import Row from 'components/Row'
 import { NumericTrait, Trait, TraitType } from 'state/nft/types'
-import { ellipsisText, TYPE } from 'theme'
 
 import { PropertyCard, LevelCard, StatCard } from './styleds'
 

@@ -1,12 +1,14 @@
+import { useMemo } from 'react'
 import { parseBytes32String } from '@ethersproject/strings'
-import { Currency, Ether, Token } from '@ixswap1/sdk-core'
+import { Currency, Token } from '@ixswap1/sdk-core'
 import { TOKEN_SHORTHANDS } from 'constants/tokens'
 import { arrayify } from 'ethers/lib/utils'
 import keys from 'lodash.keys'
 import omit from 'lodash.omit'
-import { useMemo } from 'react'
+
 import { useSecTokens } from 'state/secTokens/hooks'
 import { supportedChainId } from 'utils/supportedChainId'
+
 import { createTokenFilterFunction } from '../components/SearchModal/filtering'
 import { useAllLists, useCombinedActiveList, useInactiveListUrls } from '../state/lists/hooks'
 import { WrappedTokenInfo } from '../state/lists/wrappedTokenInfo'
@@ -17,6 +19,7 @@ import { TokenAddressMap, useUnsupportedTokenList } from './../state/lists/hooks
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 import { useNativeCurrency } from './useNativeCurrency'
 import { useActiveWeb3React } from './web3'
+
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean): { [address: string]: Token } {
   const { chainId } = useActiveWeb3React()

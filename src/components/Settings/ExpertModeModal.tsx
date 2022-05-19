@@ -2,7 +2,6 @@ import React, { useCallback, useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { X } from 'react-feather'
-import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
 import { useExpertModeManager } from '../../state/user/hooks'
 import { ButtonPrimary } from '../Button'
@@ -65,11 +64,6 @@ const StyledCloseIcon = styled(X)`
   > * {
     stroke: ${({ theme }) => theme.text1};
   }
-`
-const Break = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: ${({ theme }) => theme.bg3};
 `
 
 const ExpertModeButton = styled(ButtonPrimary)`

@@ -1,18 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Label } from '@rebass/forms'
 import { t, Trans } from '@lingui/macro'
-
 import { Box } from 'rebass'
-import { useHistory } from 'react-router-dom'
+
 import { TYPE } from 'theme'
-
 import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
-import { useShowError } from 'state/application/hooks'
-
+import { useAuthState } from 'state/auth/hooks'
 import { ButtonIXSGradient } from 'components/Button'
 import { Loadable } from 'components/LoaderHover'
-
 import { NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
 
 import { Container, StyledInput, StyledTextarea, Row, ActionsContainer } from './styled'
@@ -81,7 +76,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
 
   useEffect(() => {
     onClearCollectionState()
-  }, [])
+  }, [onClearCollectionState])
 
   useEffect(() => {
     if (collection) {

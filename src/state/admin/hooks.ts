@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import { adminOffset } from 'state/admin/constants'
 import apiService from 'services/apiService'
-import { admin, auth } from 'services/apiUrls'
+import { admin } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 
 import {
@@ -189,12 +189,12 @@ export function useApproveAccreditation() {
     accreditationList: { page, offset },
   } = useAdminState()
   const callback = useCallback(
-    async (id: number) => {
+    async (id: number, searchValue?: string) => {
       try {
         dispatch(postApproveAccreditation.pending())
         const data = await approveAccreditation(id)
         dispatch(postApproveAccreditation.fulfilled({ data }))
-        await getAccretitations({ page, offset })
+        await getAccretitations({ page, offset, ...(searchValue && { search: searchValue }) })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postApproveAccreditation.rejected({ errorMessage: 'Could not approve accreditation' }))
@@ -218,12 +218,12 @@ export function useDeclineAccreditation() {
     accreditationList: { page, offset },
   } = useAdminState()
   const callback = useCallback(
-    async (data: { id: number; message: string }) => {
+    async (data: { id: number; message: string }, searchValue?: string) => {
       try {
         dispatch(postDeclineAccreditation.pending())
         const res = await declineAccreditation(data)
         dispatch(postDeclineAccreditation.fulfilled({ data: res }))
-        await getAccretitations({ page, offset })
+        await getAccretitations({ page, offset, ...(searchValue && { search: searchValue }) })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postDeclineAccreditation.rejected({ errorMessage: 'Could not decline accreditation' }))
@@ -247,12 +247,12 @@ export function useResetAccreditation() {
     accreditationList: { page, offset },
   } = useAdminState()
   const callback = useCallback(
-    async (tokenId: number) => {
+    async (tokenId: number, searchValue?: string) => {
       try {
         dispatch(postResetAccreditation.pending())
         const data = await accreditationReset(tokenId)
         dispatch(postResetAccreditation.fulfilled({ data }))
-        await getAccretitations({ page, offset })
+        await getAccretitations({ page, offset, ...(searchValue && { search: searchValue }) })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postResetAccreditation.rejected({ errorMessage: 'Could not reset accreditation' }))

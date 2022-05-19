@@ -1,16 +1,17 @@
+import React, { useState } from 'react'
 import { Trans } from '@lingui/macro'
-import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Box } from 'rebass'
+
 import { TYPE } from 'theme'
 import { Loadable } from 'components/LoaderHover'
-import { CollectionForm } from '../../components/CollectionForm'
-import { Container, StyledTab } from '../CreateNFT/styleds'
 import { useActiveWeb3React } from 'hooks/web3'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
-import { useHistory, useParams } from 'react-router-dom'
 import { useCollectionFormState, useCreateFullCollection } from 'state/nft/hooks'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import AppBody from 'pages/AppBody'
-import { Box } from 'rebass'
+
+import { CollectionForm } from '../../components/CollectionForm'
 
 const CreateCollection = () => {
   const { account, chainId } = useActiveWeb3React()

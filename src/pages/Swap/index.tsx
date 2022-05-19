@@ -1,7 +1,9 @@
+import React, { useCallback, useMemo, useRef } from 'react'
+import { RouteComponentProps } from 'react-router-dom'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import styled from 'styled-components'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
-import { FakeBrokerDealerApproval } from 'components/FakeBrokerDealerApproval/index'
+
 import { GeneralModal } from 'components/GeneralModal/GeneralModal'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { AcceptChanges } from 'components/swap/AcceptChanges'
@@ -11,9 +13,6 @@ import { PendingSuccesModals } from 'components/swap/PendingSuccesModals'
 import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffers'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
-import React, { useCallback, useMemo, useRef } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
-import { useFakeApprovalState } from 'state/application/hooks'
 import {
   useOpenModal,
   useSetSwapState,

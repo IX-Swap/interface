@@ -1,13 +1,14 @@
+import { useCallback, useMemo } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
-import { useCallback, useMemo } from 'react'
+
 import { useSecTokens } from 'state/secTokens/hooks'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { useAuthorizationsState, useSwapSecPairs } from 'state/swapHelper/hooks'
-import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { formatRpcError } from 'utils/formatRpcError'
+
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
@@ -81,7 +82,7 @@ export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, Trad
       (address) => address !== null && (!authorizations?.[tokenToPairMap[address]] || !authorizations?.[account ?? ''])
     )
     return missingAddress
-  }, [addresses, authorizations, pairs])
+  }, [addresses, authorizations, pairs, account])
 }
 
 export function useAuthorizationDigest(
@@ -110,7 +111,7 @@ export function useAuthorizationDigest(
         deadline: addressAuthorization.deadline,
       }
     })
-  }, [addresses, authorizations, pairs])
+  }, [addresses, authorizations, pairs, account])
 
   return authorizationDigest
 }
@@ -186,6 +187,7 @@ function useSwapCallArguments(
         })
       )
     }
+
     return swapMethods.map(({ methodName, args, value }) => {
       console.log({ methodName, args, value })
       if (argentWalletContract && trade.inputAmount.currency.isToken) {
@@ -342,17 +344,19 @@ export function useSwapCallback(
                   gasEstimate,
                 }
               })
-              .catch((gasError) => {
-                console.debug('Gas estimate failed, trying eth_call to extract error', call)
-
+              .catch((gasError: any) => {
+                if (chainId === 42) {
+                  return {
+                    call,
+                    gasEstimate: '15000000',
+                  } as any
+                }
                 return library
                   .call(tx)
-                  .then((result) => {
-                    console.debug('Unexpected successful call after failed estimate gas', call, gasError, result)
+                  .then(() => {
                     return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
                   })
                   .catch((callError) => {
-                    console.debug('Call threw error', call, callError)
                     const errorMessage = formatRpcError(gasError)
 
                     return {
@@ -393,7 +397,10 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            // ...('gasEstimate' in bestCallOption ? { gasLimit: 900000 } : {}),
+            ...(chainId === 42 && {
+              ...('gasEstimate' in bestCallOption ? { gasLimit: 900000 } : {}),
+              gasPrice: 1500000000,
+            }),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {

@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
-  const paid = status === WithdrawStatus.FEE_ACCEPTED
+  const paid = [WithdrawStatus.FEE_ACCEPTED, WithdrawStatus.PENDING].includes(status as WithdrawStatus)
 
   const feeText = useMemo(() => {
     if (paid || feePrice) {
@@ -23,7 +23,7 @@ export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
   }, [estimatedPrice, feePrice, paid])
 
   return (
-    <Container status={status}>
+    <Container paid={paid}>
       <li>
         {t`${feeText}`}
         {paid && <SuccessIcon />}
@@ -33,7 +33,7 @@ export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
   )
 }
 
-const Container = styled.div<{ status: string }>`
+const Container = styled.div<{ paid: boolean }>`
   margin: 18px 0px;
   width: 100%;
   display: flex;
@@ -49,8 +49,8 @@ const Container = styled.div<{ status: string }>`
     }
   }
   > :first-child {
-    ${({ status }) =>
-      status === WithdrawStatus.FEE_ACCEPTED &&
+    ${({ paid }) =>
+      paid &&
       css`
         color: ${({ theme }) => theme.green1};
       `}

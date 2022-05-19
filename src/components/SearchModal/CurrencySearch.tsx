@@ -1,20 +1,21 @@
+import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect, useRef } from 'react'
 import { Currency, Token } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 import useTheme from 'hooks/useTheme'
-import React, { KeyboardEvent, ReactNode, RefObject, useCallback, useEffect, useRef } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { VariableSizeList } from 'react-window'
 import { Box } from 'rebass'
 import styled from 'styled-components/macro'
+
+import { ModalContentWrapper } from 'theme/components'
+
 import { ReactComponent as Edit } from '../../assets/images/edit-circle.svg'
 import { ButtonText, CloseIcon, TYPE } from '../../theme'
 import Column from '../Column'
 import Row, { RowBetween, RowFixed } from '../Row'
-import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import ImportRow from './ImportRow'
 import { PaddedColumn40, SearchInput } from './styleds'
-import { ModalContentWrapper } from 'theme/components'
 import { useCurrencySearch } from './useCurrencySearch'
 
 const Footer = styled.div`
@@ -51,7 +52,6 @@ export function CurrencySearch({
   selectedCurrency,
   onCurrencySelect,
   otherSelectedCurrency,
-  showCommonBases,
   onDismiss,
   isOpen,
   showManageView,
@@ -68,7 +68,6 @@ export function CurrencySearch({
     inputRef,
     debouncedQuery,
     handleInput,
-    chainId,
     native,
     searchTokenIsAdded,
     searchToken,
