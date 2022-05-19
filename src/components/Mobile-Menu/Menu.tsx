@@ -65,7 +65,7 @@ export const Menu = ({ close }: Props) => {
 
           {chainId && chains.includes(chainId) && isWhitelisted && (
             <MenuListItem id={`pool-nav-link`} to={`/pool`} onClick={close}>
-              <Trans>Liquidity pools</Trans>
+              <Trans>Liquidity Pools</Trans>
             </MenuListItem>
           )}
 

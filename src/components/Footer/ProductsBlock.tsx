@@ -58,7 +58,7 @@ export const ProductsBlock = () => {
         )}
         {account && (
           <ExternalLink href="https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform">
-            <Trans>List my token</Trans>
+            <Trans>List My Token</Trans>
           </ExternalLink>
         )}
       </div>
