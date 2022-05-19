@@ -45,6 +45,7 @@ export const Stepper = ({
             justifyContent='space-between'
             minHeight={40}
             alignItems='center'
+            mb={matches ? 1 : 0}
           >
             <Typography
               variant='body1'
@@ -86,16 +87,19 @@ export const Stepper = ({
         >
           {children}
         </MuiStepper>
-        <Box width='100%' p={matches ? 0 : '24px 40px'}>
-          <Divider />
-        </Box>
-
+        <>
+          {matches ? null : (
+            <Box width='100%' p='24px 40px'>
+              <Divider />
+            </Box>
+          )}
+        </>
         {actions !== undefined ? (
           <Box
             display='flex'
             justifyContent='center'
             width='100%'
-            p={matches ? 0 : '0 40px'}
+            p={matches ? '20px 0 0 0' : '0 40px'}
           >
             {actions}
           </Box>
