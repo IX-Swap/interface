@@ -1,10 +1,22 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import Enabled2FaIcon from './../../assets/enabled-2fa.png'
-import { useStyles } from './Enabled.styles'
+import Enabled2FaIcon from 'app/pages/security/pages/update2fa/assets/enabled-2fa.png'
+import { useStyles } from 'app/pages/security/components/Enabled/Enabled.styles'
 
-export const Enabled = () => {
+export interface EnabledProps {
+  update2FA?: boolean
+}
+
+export const Enabled = ({ update2FA = false }: EnabledProps) => {
   const classes = useStyles()
+  const title = update2FA ? (
+    <>
+      2FA Has Been Updated
+      <br /> Successfully
+    </>
+  ) : (
+    '2FA Enabled'
+  )
 
   return (
     <Grid
@@ -16,8 +28,7 @@ export const Enabled = () => {
       <Grid item container alignItems={'center'} justifyContent={'center'}>
         <Grid>
           <Typography align='center' variant='h4'>
-            2FA Has Been Updated
-            <br /> Successfully
+            {title}
           </Typography>
         </Grid>
       </Grid>

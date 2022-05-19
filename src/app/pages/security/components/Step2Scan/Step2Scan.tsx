@@ -2,8 +2,8 @@ import React from 'react'
 import { Typography, Grid } from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'
-import { BackupKey } from 'app/pages/security/pages/update2fa/components/BackupKey/BackupKey'
-import useStyles from './Step2Scan.styles'
+import { BackupKey } from 'app/pages/security/components/BackupKey/BackupKey'
+import useStyles from 'app/pages/security/components/Step2Scan/Step2Scan.styles'
 
 export interface Step2ScanProps {
   twoFaData: TwoFaData | undefined

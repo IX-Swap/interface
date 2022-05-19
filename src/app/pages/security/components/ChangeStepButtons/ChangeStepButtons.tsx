@@ -8,6 +8,7 @@ export interface ChangeStepButtonsProps {
   isBackButtonVisible: boolean
   isNextButtonVisible: boolean
   isContinueButtonVisible?: boolean
+  update2FA?: boolean
   onBackButtonClick: () => void
   onNextButtonClick: () => void
 }
@@ -16,6 +17,7 @@ export const ChangeStepButtons = ({
   isBackButtonVisible,
   isNextButtonVisible,
   isContinueButtonVisible = false,
+  update2FA = false,
   onBackButtonClick,
   onNextButtonClick
 }: ChangeStepButtonsProps) => {
@@ -62,7 +64,9 @@ export const ChangeStepButtons = ({
             color={'primary'}
             variant={'contained'}
             className={classes.button}
-            onClick={() => history.push(SecurityRoute.landing)}
+            onClick={() =>
+              history.push(update2FA ? SecurityRoute.landing : '/')
+            }
           >
             Continue
           </Button>

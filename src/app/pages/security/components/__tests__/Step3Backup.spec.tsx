@@ -1,8 +1,8 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { Step3Backup } from 'app/pages/security/pages/update2fa/components/Step3Backup/Step3Backup'
+import { Step3Backup } from 'app/pages/security/components/Step3Backup/Step3Backup'
 import { fakeTwoFaData } from '__fixtures__/security'
-import { BackupKey } from 'app/pages/security/pages/update2fa/components/BackupKey/BackupKey'
+import { BackupKey } from 'app/pages/security/components/BackupKey/BackupKey'
 
 jest.mock(
   'app/pages/security/pages/update2fa/components/BackupKey/BackupKey',
