@@ -4,12 +4,9 @@ import { Step3Backup } from 'app/pages/security/components/Step3Backup/Step3Back
 import { fakeTwoFaData } from '__fixtures__/security'
 import { BackupKey } from 'app/pages/security/components/BackupKey/BackupKey'
 
-jest.mock(
-  'app/pages/security/pages/update2fa/components/BackupKey/BackupKey',
-  () => ({
-    BackupKey: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/security/components/BackupKey/BackupKey', () => ({
+  BackupKey: jest.fn(() => null)
+}))
 
 describe('Step3Backup', () => {
   afterEach(async () => {
