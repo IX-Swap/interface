@@ -30,5 +30,5 @@ export const fakeTwoFaData = {
   image:
     'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
   key: 'test-store-key',
-  encoded: ''
+  encoded: 'test-store-key-encoded'
 }
