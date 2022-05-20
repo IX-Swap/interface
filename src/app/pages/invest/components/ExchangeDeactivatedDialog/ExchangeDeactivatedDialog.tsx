@@ -1,6 +1,5 @@
 import {
   Box,
-  Dialog as MUIDialog,
   DialogActions,
   DialogContent,
   DialogProps,
@@ -11,6 +10,7 @@ import {
   useTheme
 } from '@mui/material'
 import React from 'react'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { Actions } from 'app/pages/invest/components/ExchangeDeactivatedDialog/Actions'
 import useStyles from 'app/pages/invest/components/ExchangeDeactivatedDialog/ExchangeDeactivatedDialog.styles'
 
@@ -26,7 +26,7 @@ export const ExchangeDeactivatedDialog = (props: ModalProps) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <MUIDialog
+    <UIDialog
       maxWidth={'md'}
       fullScreen={fullScreen}
       open={open}
@@ -39,7 +39,7 @@ export const ExchangeDeactivatedDialog = (props: ModalProps) => {
       aria-describedby='exchange-deactivated-modal-description'
     >
       <Box>
-        <DialogTitle className={classes.titleRoot}>
+        <DialogTitle>
           <Box justifyContent='center' alignItems='center'>
             <Typography variant='h6' component='span' align='center'>
               Exchange
@@ -64,6 +64,6 @@ export const ExchangeDeactivatedDialog = (props: ModalProps) => {
           </Box>
         </DialogActions>
       </Box>
-    </MUIDialog>
+    </UIDialog>
   )
 }

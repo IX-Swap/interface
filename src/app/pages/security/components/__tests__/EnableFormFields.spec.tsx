@@ -1,4 +1,4 @@
-import { EnableFormFields } from 'app/pages/security/components/EnableFormFields'
+import { EnableFormFields } from 'app/pages/security/components/EnableFormFields/EnableFormFields'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
@@ -22,8 +22,7 @@ describe('EnableFormFields', () => {
 
     expect(TypedField).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: 'otp',
-        label: ''
+        name: 'otp'
       }),
       {}
     )

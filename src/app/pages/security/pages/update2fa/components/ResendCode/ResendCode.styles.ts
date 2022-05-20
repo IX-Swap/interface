@@ -7,10 +7,13 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap',
     cursor: 'pointer',
     padding: theme.spacing(2),
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+
+    '&:hover': {
+      opacity: 0.7
+    }
   },
   disabled: {
-    //
     color: '#BEC4CF',
     cursor: 'initial'
   }

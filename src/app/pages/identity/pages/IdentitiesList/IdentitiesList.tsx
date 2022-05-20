@@ -1,26 +1,47 @@
-import React from 'react'
-import { Grid, Typography } from '@mui/material'
-import { RootContainer } from 'ui/RootContainer'
-import { AppContentWrapper } from 'ui/AppContentWrapper'
-import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
+import { Box, Container, Grid, Typography } from '@mui/material'
 import { useGetIdentities } from 'app/hooks/onboarding/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
+import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
+import { useStyles } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList.styles'
+import { ReactComponent as Dot } from 'assets/icons/new/dot.svg'
+import React from 'react'
+import { AppContentWrapper } from 'ui/AppContentWrapper'
 
 export const IdentitiesList: React.FC = () => {
-  const { hasIdentity } = useGetIdentities()
+  const { hasIdentity, identityLoaded, isLoadingIdentities } =
+    useGetIdentities()
+  const classes = useStyles()
 
   return (
     <AppContentWrapper container background='default'>
-      <RootContainer background='default'>
-        <Grid container spacing={5}>
-          <Grid item xs={12} container spacing={1}>
-            <Grid item xs={12}>
-              <Typography variant='h2' align='center'>
-                {hasIdentity ? 'Identity' : 'Create your Identity'}
-              </Typography>
-            </Grid>
-            {!hasIdentity && (
-              <Grid item xs={12}>
+      <Container className={classes.container}>
+        <Grid container className={classes.grid}>
+          <Grid item container className={classes.nameIdentity}>
+            {hasIdentity && (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant='h3'>
+                    {identityLoaded.user.name}
+                  </Typography>
+                </Grid>
+                <Box className={classes.box}>
+                  <Typography className={classes.breadcrumbsLink}>
+                    Profile
+                  </Typography>
+                  <Box className={classes.dot}>
+                    <Dot />
+                  </Box>
+                  <Typography className={classes.breadcrumbs}>
+                    Identity
+                  </Typography>
+                </Box>
+              </>
+            )}
+            {!hasIdentity && !isLoadingIdentities && (
+              <Grid item xs={12} className={classes.createIdentity}>
+                <Typography variant='h2' align='center'>
+                  Create your Identity
+                </Typography>
                 <Typography
                   variant='body1'
                   align='center'
@@ -32,10 +53,11 @@ export const IdentitiesList: React.FC = () => {
             )}
           </Grid>
           <Grid item xs={12}>
-            {hasIdentity ? <IdentityPreview /> : <IdentitySelectionView />}
+            {hasIdentity && <IdentityPreview />}
+            {!hasIdentity && !isLoadingIdentities && <IdentitySelectionView />}
           </Grid>
         </Grid>
-      </RootContainer>
+      </Container>
     </AppContentWrapper>
   )
 }

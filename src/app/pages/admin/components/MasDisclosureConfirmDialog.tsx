@@ -1,8 +1,9 @@
-import { Box, Button, Dialog, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { useCreateOrUpdateMASDisclosure } from 'app/pages/admin/hooks/useCreateOrUpdateMASDisclosure'
 import { useFormContext } from 'react-hook-form'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface MasDisclosureConfirmDialogProps {
   onClose: () => void
@@ -23,7 +24,7 @@ export const MasDisclosureConfirmDialog = ({
   }
 
   return (
-    <Dialog open={open} disablePortal data-testid='mas-disclosure-dialog'>
+    <UIDialog open={open} disablePortal data-testid='mas-disclosure-dialog'>
       <Box py='40px' px='60px' textAlign='center'>
         <Grid container direction='column' spacing={2}>
           <Grid item>
@@ -65,6 +66,6 @@ export const MasDisclosureConfirmDialog = ({
           </Grid>
         </Grid>
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

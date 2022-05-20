@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Typography,
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
@@ -15,6 +14,7 @@ import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDial
 import { VSpacer } from 'components/VSpacer'
 import { useCloseDeal } from 'app/pages/issuance/hooks/useCloseDeal'
 import { useParams } from 'react-router-dom'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -32,7 +32,7 @@ export const CloseDealDialog = (props: ModalProps) => {
   } = useCloseDeal()
 
   return (
-    <MUIDialog
+    <UIDialog
       maxWidth={'md'}
       fullWidth
       fullScreen={fullScreen}
@@ -81,6 +81,6 @@ export const CloseDealDialog = (props: ModalProps) => {
           />
         </DialogActions>
       </Box>
-    </MUIDialog>
+    </UIDialog>
   )
 }

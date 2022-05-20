@@ -22,9 +22,10 @@ jest.mock(
     Step3Backup: jest.fn(() => <div data-testid='step-3' />)
   })
 )
-jest.mock('app/pages/security/components/Step4Enable', () => ({
+jest.mock('app/pages/security/components/Step4Enable/Step4Enable', () => ({
   Step4Enable: jest.fn(() => <div data-testid='step-4' />)
 }))
+
 jest.mock(
   'app/pages/security/pages/update2fa/components/Enabled/Enabled',
   () => ({

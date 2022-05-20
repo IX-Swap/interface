@@ -9,6 +9,7 @@ import { DatePickerActions } from 'ui/DateTimePicker/DatePickerActions'
 import { DatePickerWrapper } from 'ui/DateTimePicker/DatePickerWrapper'
 import { PickerButton } from 'ui/DateTimePicker/PickerButton'
 import { TimePicker } from 'ui/DateTimePicker/TimePicker'
+import { useStyles } from 'ui/DateTimePicker/DatePickerPopper.styles'
 
 export interface DatePickerPopperProps extends PopperProps {
   date: Date
@@ -42,9 +43,10 @@ export const DatePickerPopper = ({
   setDateAction,
   ...rest
 }: DatePickerPopperProps) => {
+  const classes = useStyles()
   return (
     <ClickAwayListener onClickAway={clickAwayHandler}>
-      <Popper {...rest}>
+      <Popper className={classes.popperStyles} {...rest}>
         <DatePickerWrapper elevation={0} sx={{ mt: '4px' }}>
           <Box maxWidth={320}>
             {variant === 'date' || variant === 'datetime' ? (

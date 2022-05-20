@@ -1,12 +1,15 @@
 import {
-  Box,
-  Dialog,
+  Grid,
   DialogContent,
   DialogActions,
   Typography,
-  Button
+  Button,
+  DialogTitle,
+  Box,
+  useTheme
 } from '@mui/material'
 import React from 'react'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface IdentitySubmitConfirmationDialogProps {
   open: boolean
@@ -21,31 +24,36 @@ export const IdentitySubmitConfirmationDialog = ({
     closeDialog()
   }
 
+  const theme = useTheme()
+
   return (
-    <Dialog open={open}>
-      <Box p={6}>
-        <Typography variant='h5' style={{ textAlign: 'center' }}>
-          Thanks For Submitting Your Identity!
+    <UIDialog onClose={handleClick} open={open} maxWidth='md'>
+      <DialogTitle>
+        <Box p={2} textAlign='center'>
+          Thanks for submitting your identity!
+        </Box>
+      </DialogTitle>
+      <DialogContent>
+        <Typography color={theme.palette.text.secondary} align='center'>
+          You will receive an e-mail shortly confirming your identity status.
         </Typography>
-        <DialogContent>
-          <Typography>
-            You will receive an e-mail shortly confirming your identity status.
-          </Typography>
-        </DialogContent>
-        <DialogActions
-          style={{ display: 'flex', paddingTop: 30, justifyContent: 'center' }}
-        >
+      </DialogContent>
+      <DialogActions
+        style={{ display: 'flex', paddingTop: 30, justifyContent: 'center' }}
+      >
+        <Grid container>
           <Button
-            variant='contained'
+            fullWidth
+            variant='outlined'
             color='primary'
             disableRipple
             disableElevation
             onClick={handleClick}
           >
-            OK
+            Okay
           </Button>
-        </DialogActions>
-      </Box>
-    </Dialog>
+        </Grid>
+      </DialogActions>
+    </UIDialog>
   )
 }

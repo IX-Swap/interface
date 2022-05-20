@@ -13,7 +13,7 @@ describe('Step2Scan', () => {
       <Step2Scan twoFaData={fakeTwoFaData} />
     )
     const image = getByTestId('store-image')
-    expect(getByText(fakeTwoFaData.key)).toBeTruthy()
+    expect(getByText(fakeTwoFaData.encoded)).toBeInTheDocument()
     expect(image).toBeInTheDocument()
   })
 })

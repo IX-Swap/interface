@@ -30,6 +30,7 @@ export interface IndividualPersonalInfoFormValues {
   contactNumber: string
   address: Address
   gender: string
+  nric?: string
 }
 
 export interface TaxResidency {
@@ -66,6 +67,7 @@ export interface PersonalProfile {
   contactNumber: string
   email?: string
   gender: string
+  nric?: string
 }
 
 export type IndividualPersonalInformation = Omit<

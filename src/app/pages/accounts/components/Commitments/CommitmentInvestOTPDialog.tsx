@@ -1,6 +1,7 @@
-import { Dialog, DialogTitle, Typography, Box } from '@mui/material'
+import { DialogTitle, Typography, Box } from '@mui/material'
 import { OTPDialogContent } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 import React from 'react'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 interface CommitmentInvestOTPDialogProps {
   close: () => void
@@ -12,7 +13,7 @@ export const CommitmentInvestOTPDialog = ({
   open
 }: CommitmentInvestOTPDialogProps) => {
   return (
-    <Dialog disablePortal open={open} maxWidth='md' onClose={close}>
+    <UIDialog disablePortal open={open} maxWidth='md' onClose={close}>
       <Box py={4} px={10}>
         <DialogTitle>
           <Typography
@@ -30,6 +31,6 @@ export const CommitmentInvestOTPDialog = ({
         </Box>
         <OTPDialogContent close={close} actionLabel='Confirm' />
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

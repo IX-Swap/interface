@@ -20,6 +20,9 @@ export const StatusesKit = () => {
           <Grid item>
             <Status label={'Rejected'} type={'rejected'} />
           </Grid>
+          <Grid item>
+            <Status label={'Draft'} type={'draft'} />
+          </Grid>
         </Grid>
       </Grid>
     </UIKitThemeWrapper>
