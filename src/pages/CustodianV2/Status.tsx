@@ -23,9 +23,8 @@ export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Prop
             {amount}
           </TYPE.description7>
         )
-      case 'pending-custodian':
+      case 'pending':
       case 'new':
-      case 'pending-kyc':
         return (
           <TYPE.buttonMuted color={'text1'}>
             <Trans>Pending...</Trans>

@@ -22,7 +22,7 @@ export const convert = (obj: any): string =>
 
 export const getStatusIcon = (status: string) => {
   switch (status) {
-    case AccreditationStatusEnum.REJECTED:
+    case AccreditationStatusEnum.DECLINED:
     case AccreditationStatusEnum.FAILED:
       return rejectedIcon
     case AccreditationStatusEnum.APPROVED:

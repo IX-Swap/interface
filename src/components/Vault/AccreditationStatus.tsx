@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { Box } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 
@@ -9,65 +9,75 @@ import { TYPE } from 'theme'
 
 import { AccreditationStatusEnum } from './enum'
 import { StatusTitle } from './styleds'
+import Column from 'components/Column'
 
 interface Props {
-  status?: AccreditationStatusEnum
-}
-interface Details {
-  color: string
-  text: string
-  icon: () => JSX.Element | null
+  brokerDealerStatus: string
+  custodianStatus: string
 }
 
-const useAccreditationDetails = (status?: AccreditationStatusEnum): Details => {
-  const info = useMemo(() => {
+export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus }: Props) => {
+  const statuses = [brokerDealerStatus, custodianStatus]
+
+  const getStatusInfo = useCallback((status) => {
     switch (status) {
-      case AccreditationStatusEnum.REJECTED:
+      case AccreditationStatusEnum.DECLINED:
         return {
           color: 'error',
           text: t`Rejected`,
-          // eslint-disable-next-line react/display-name
-          icon: () => null,
         }
       case AccreditationStatusEnum.FAILED:
         return {
           color: 'error',
           text: t`Failed`,
-          // eslint-disable-next-line react/display-name
-          icon: () => null,
         }
-      case AccreditationStatusEnum.PENDING_CUSTODIAN:
+      case AccreditationStatusEnum.APPROVED:
+        return {
+          color: 'green1',
+          text: t`Passed`,
+        }
       case AccreditationStatusEnum.PENDING:
       default:
         return {
           color: 'text1',
           text: t`Passing accreditation`,
-          // eslint-disable-next-line react/display-name
-          icon: () => <LoaderThin size={20} />,
+          icon: <LoaderThin size={20} />,
         }
     }
-  }, [status])
-  return info
-}
+  }, [])
 
-export const AccreditationStatus = ({ status }: Props) => {
-  const info = useAccreditationDetails(status)
   return (
-    <RowCenter
-      flexWrap="wrap"
-      style={{ marginTop: '28px', order: status === AccreditationStatusEnum.REJECTED ? 2 : 3 }}
-    >
-      <StatusTitle>
-        <Trans>Status:</Trans>
-      </StatusTitle>
-      <Box marginLeft="13px" display="flex" alignItems="center">
-        <TYPE.titleSmall color={info.color}>{info.text}</TYPE.titleSmall>
-        {info.icon() && (
-          <Box marginLeft="9px" display="flex" justifyContent="center">
-            <IconWrapper size={20}>{info.icon()}</IconWrapper>
-          </Box>
-        )}
-      </Box>
-    </RowCenter>
+    <Column style={{ marginTop: '28px', order: statuses.includes(AccreditationStatusEnum.DECLINED) ? 2 : 3 }}>
+      <RowCenter flexWrap="wrap">
+        <StatusTitle>
+          <Trans>Broker - dealer:</Trans>
+        </StatusTitle>
+        <Box marginLeft="13px" display="flex" alignItems="center">
+          <TYPE.titleSmall color={getStatusInfo(brokerDealerStatus).color}>
+            {getStatusInfo(brokerDealerStatus).text}
+          </TYPE.titleSmall>
+          {getStatusInfo(brokerDealerStatus).icon && (
+            <Box marginLeft="9px" display="flex" justifyContent="center">
+              <IconWrapper size={20}>{getStatusInfo(brokerDealerStatus).icon}</IconWrapper>
+            </Box>
+          )}
+        </Box>
+      </RowCenter>
+      <RowCenter flexWrap="wrap">
+        <StatusTitle>
+          <Trans>Custodian:</Trans>
+        </StatusTitle>
+        <Box marginLeft="13px" display="flex" alignItems="center">
+          <TYPE.titleSmall color={getStatusInfo(custodianStatus).color}>
+            {getStatusInfo(custodianStatus).text}
+          </TYPE.titleSmall>
+          {getStatusInfo(custodianStatus).icon && (
+            <Box marginLeft="9px" display="flex" justifyContent="center">
+              <IconWrapper size={20}>{getStatusInfo(custodianStatus).icon}</IconWrapper>
+            </Box>
+          )}
+        </Box>
+      </RowCenter>
+    </Column>
   )
 }

@@ -17,10 +17,16 @@ const StatusBox = styled(Box)`
   justify-content: center;
   align-items: center;
 `
-export const Status = ({ status }: { status: AccreditationStatusEnum }) => {
+interface Props {
+  brokerDealerStatus: string
+  custodianStatus: string
+}
+
+export const Status = ({ brokerDealerStatus, custodianStatus }: Props) => {
+  const statuses = [custodianStatus, brokerDealerStatus]
   return (
     <>
-      {PENDING_ACCREDITATION_STATUSES.includes(status) && (
+      {PENDING_ACCREDITATION_STATUSES.some((status) => statuses.includes(status)) && (
         <StatusBox>
           <IconClock />
           <TYPE.status>
@@ -28,7 +34,7 @@ export const Status = ({ status }: { status: AccreditationStatusEnum }) => {
           </TYPE.status>
         </StatusBox>
       )}
-      {ERROR_ACCREDITATION_STATUSES.includes(status) && (
+      {ERROR_ACCREDITATION_STATUSES.some((status) => statuses.includes(status)) && (
         <StatusBox>
           <Attention />
           <TYPE.status>

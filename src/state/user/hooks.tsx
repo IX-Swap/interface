@@ -462,7 +462,7 @@ export function usePassAccreditation(
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
   const showError = useShowError()
-  const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
+  const { brokerDealerStatus, custodianStatus, accreditationRequest } = useAccreditationStatus(currencyId)
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
     async (tokenId: number, brokerDealerPairId: number, isKyc: boolean) => {
@@ -473,8 +473,8 @@ export function usePassAccreditation(
           await chooseBrokerDealer({ pairId: brokerDealerPairId })
           if (
             accreditationRequest &&
-            accreditationStatus &&
-            ERROR_ACCREDITATION_STATUSES.includes(accreditationStatus)
+            (ERROR_ACCREDITATION_STATUSES.includes(brokerDealerStatus) ||
+              ERROR_ACCREDITATION_STATUSES.includes(custodianStatus))
           ) {
             await restartAccreditation({ accreditationId: accreditationRequest.id })
           }
@@ -493,7 +493,17 @@ export function usePassAccreditation(
         dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },
-    [dispatch, login, fetchTokens, toggle, showError, accreditationRequest, accreditationStatus, onSuccess]
+    [
+      dispatch,
+      login,
+      fetchTokens,
+      toggle,
+      showError,
+      accreditationRequest,
+      brokerDealerStatus,
+      custodianStatus,
+      onSuccess,
+    ]
   )
 }
 
