@@ -8,14 +8,15 @@ export interface Props {
 export const useStyles = makeStyles(theme => {
   const getColor = (type: StatusType) => {
     switch (type) {
-      case 'approved':
-        return '#ffffff'
       case 'submitted':
         return theme.palette.warning.dark
       case 'rejected':
         return theme.palette.error.dark
       case 'draft':
         return theme.palette.info.light
+      case 'approved':
+      default:
+        return '#ffffff'
     }
   }
 

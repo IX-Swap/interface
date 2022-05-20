@@ -45,6 +45,11 @@ export const DirectorsAndBeneficialOwnerFields = ({
                       ? 'Add Executive Authority'
                       : 'Add Beneficial Owner'
                   }
+                  removeButtonLabel={
+                    name === 'directors'
+                      ? 'Remove Executive'
+                      : 'Remove Beneficial'
+                  }
                   sectionTitle={
                     name === 'directors'
                       ? 'Directors/Partners/People with Executive Authority'
