@@ -1,4 +1,5 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
+import { AccreditationStatusEnum } from 'components/Vault/enum'
 import { timePeriods } from 'utils/time'
 
 export const postLogin: Readonly<{
@@ -219,6 +220,8 @@ export interface AccreditationItem {
   custodianApplicationId?: number
   deletedAt?: string
   id: number
+  brokerDealerStatus: string
+  custodianStatus: string
   kyc: {
     url: string
     [key: string]: any
