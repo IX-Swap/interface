@@ -1,12 +1,12 @@
 import React, { cloneElement, CSSProperties, useState } from 'react'
 import {
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
   DialogActions,
   Box
 } from '@mui/material'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   button: JSX.Element
@@ -39,7 +39,7 @@ export const Dialog = (props: ModalProps) => {
   return (
     <>
       {cloneElement(button, { onClick: handleOpen })}
-      <MUIDialog
+      <UIDialog
         {...rest}
         maxWidth={maxWidth}
         open={isOpened}
@@ -47,14 +47,14 @@ export const Dialog = (props: ModalProps) => {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <Box p={maxWidth === undefined || maxWidth === 'xs' ? 2 : 8}>
-          <DialogTitle style={titleStyle}>{title}</DialogTitle>
-          <DialogContent style={{ overflowY: 'initial' }}>
-            {content}
-          </DialogContent>
-          <DialogActions>{renderActions()}</DialogActions>
-        </Box>
-      </MUIDialog>
+        <DialogTitle style={titleStyle}>
+          <Box textAlign='center'>{title}</Box>
+        </DialogTitle>
+        <DialogContent style={{ overflowY: 'initial' }}>
+          {content}
+        </DialogContent>
+        <DialogActions>{renderActions()}</DialogActions>
+      </UIDialog>
     </>
   )
 }

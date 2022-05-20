@@ -43,19 +43,6 @@ describe('Actions', () => {
     fireEvent.click(viewButton, { bubbles: true })
 
     expect(getByText(/Bank Account Information/i)).toBeTruthy()
-
-    const closeButton = getByRole('button', {
-      name: /close/i
-    }) as HTMLButtonElement
-
-    fireEvent.click(closeButton, { bubbles: true, cancelable: true })
-
-    await waitFor(
-      () => {
-        expect(queryByText(/Bank Account Information/i)).toBeFalsy()
-      },
-      { timeout: 1000 }
-    )
   })
 
   it('displays otp dialog box correctly', () => {

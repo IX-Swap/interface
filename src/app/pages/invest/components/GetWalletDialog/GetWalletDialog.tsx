@@ -1,7 +1,5 @@
 import React from 'react'
 import {
-  Typography,
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
@@ -11,14 +9,13 @@ import {
   useTheme
 } from '@mui/material'
 import { Actions } from 'app/pages/invest/components/GetWalletDialog/Actions'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
 import useStyles from 'app/pages/invest/components/GetWalletDialog/GetWalletDialog.styles'
 import { LoadingMessage } from 'app/pages/invest/components/GetWalletDialog/LoadingMessage'
 import { DialogText } from 'app/pages/invest/components/GetWalletDialog/DialogText'
 import { useCreateCustodianWallet } from 'app/pages/invest/hooks/useCreateCustodianWallet'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -40,8 +37,8 @@ export const GetWalletDialog = (props: ModalProps) => {
   const handleCreateWallet = async () => await createCustodianWallet()
 
   return (
-    <MUIDialog
-      maxWidth={'md'}
+    <UIDialog
+      maxWidth={'xs'}
       fullWidth
       fullScreen={fullScreen}
       open={open}
@@ -50,35 +47,24 @@ export const GetWalletDialog = (props: ModalProps) => {
       aria-labelledby='getwallet-modal-title'
       aria-describedby='getwallet-modal-description'
     >
-      <Box py={3} px={2.5}>
-        <DialogTitle className={classes.titleRoot}>
-          <Box justifyContent='center' alignItems='center'>
-            <IconButton
-              aria-label='close'
-              onClick={() => toggleOpen(false)}
-              className={classes.closeButton}
-              size='large'
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography variant='h6' component='span' align='center'>
-              You need a custody wallet address to trade
-            </Typography>
-          </Box>
-        </DialogTitle>
-        <DialogContent style={{ overflowY: 'initial' }}>
-          <DialogText />
-        </DialogContent>
-        <DialogActions>
-          <Box mt={1} width={1}>
-            {isLoading ? (
-              <LoadingMessage />
-            ) : (
-              <Actions action={handleCreateWallet} />
-            )}
-          </Box>
-        </DialogActions>
-      </Box>
-    </MUIDialog>
+      <DialogTitle>
+        <Box textAlign='center'>You need a custody wallet address to trade</Box>
+      </DialogTitle>
+      <DialogContent style={{ overflowY: 'initial' }}>
+        <DialogText />
+      </DialogContent>
+      <DialogActions>
+        <Box mt={1} width={1}>
+          {isLoading ? (
+            <LoadingMessage />
+          ) : (
+            <Actions
+              action={handleCreateWallet}
+              cancel={() => toggleOpen(false)}
+            />
+          )}
+        </Box>
+      </DialogActions>
+    </UIDialog>
   )
 }

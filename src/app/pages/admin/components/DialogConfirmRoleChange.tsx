@@ -1,11 +1,11 @@
 import React from 'react'
-import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Button from '@mui/material/Button'
 import User from 'types/user'
 import { privateClassNames } from 'helpers/classnames'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface DialogConfirmRoleChangeProps {
   user: User
@@ -23,7 +23,7 @@ export default function DialogConfirmRoleChange({
   handleConfirm
 }: DialogConfirmRoleChangeProps) {
   return (
-    <Dialog
+    <UIDialog
       className={privateClassNames()}
       disableEscapeKeyDown
       open={open}
@@ -43,6 +43,6 @@ export default function DialogConfirmRoleChange({
           Ok
         </Button>
       </DialogActions>
-    </Dialog>
+    </UIDialog>
   )
 }

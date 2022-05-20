@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Typography,
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
@@ -14,6 +13,7 @@ import {
 import useStyles from 'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog.styles'
 import { VSpacer } from 'components/VSpacer'
 import { SearchFilter } from 'app/components/SearchFilter'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
   currentCustodian: string
@@ -31,7 +31,7 @@ export const ListedTokensDialog = (props: ModalProps) => {
   // TODO added get tokens list function after complete backend api endpoint
 
   return (
-    <MUIDialog
+    <UIDialog
       fullWidth
       open={open}
       maxWidth={'md'}
@@ -77,6 +77,6 @@ export const ListedTokensDialog = (props: ModalProps) => {
           Close
         </Button>
       </DialogActions>
-    </MUIDialog>
+    </UIDialog>
   )
 }

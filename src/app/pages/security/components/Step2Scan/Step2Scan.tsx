@@ -32,8 +32,8 @@ export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
           >
             <Grid item>
               <Typography align='center' className={classes.description}>
-                Use the app to scan the barcode below or type a Setup Key on the
-                keyboard of your phone
+                Use the app to scan the barcode below or type the Setup Key on
+                the keyboard of your phone
               </Typography>
             </Grid>
 
@@ -43,8 +43,8 @@ export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
 
             <Grid item>
               <Typography align='center' className={classes.text}>
-                Click the “add button“ on Authenticator App to scan the QR Code
-                or use a Setup key bellow
+                Click the “add“ button in the Authenticator App to scan the QR
+                Code or use the Setup key below
               </Typography>
             </Grid>
 

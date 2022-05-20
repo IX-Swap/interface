@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import {
   Typography,
-  Dialog as MUIDialog,
   DialogTitle,
   DialogContent,
   DialogProps,
@@ -13,11 +12,11 @@ import {
   Grid
 } from '@mui/material'
 import useStyles from './CapitalCallDialog.styles'
-import IconButton from '@mui/material/IconButton'
-import CloseIcon from '@mui/icons-material/Close'
 import { ReactMultiEmail, isEmail } from 'react-multi-email'
 import 'react-multi-email/style.css'
 import { useCapitalCall } from 'app/pages/issuance/hooks/useCapitalCall'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -45,7 +44,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
   }
 
   return (
-    <MUIDialog
+    <UIDialog
       maxWidth={'sm'}
       fullWidth
       fullScreen={fullScreen}
@@ -55,35 +54,29 @@ export const CapitalCallDialog = (props: ModalProps) => {
       aria-labelledby='capital-call-modal-title'
       aria-describedby='capital-call-modal-description'
     >
-      <DialogTitle className={classes.titleRoot}>
-        <Typography
-          variant='h6'
-          component='span'
-          align='center'
-          className={classes.title}
-        >
-          Capital Call
-        </Typography>
-        <IconButton
-          aria-label='close'
-          onClick={() => toggleOpen(false)}
-          className={classes.closeButton}
-          size='large'
-        >
-          <CloseIcon />
-        </IconButton>
+      <DialogTitle>
+        <Box textAlign='center'>Notify investors</Box>
       </DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <Typography variant={'body1'} align={'left'}>
-          You can enter multiple email address of “Not Funded” investors. Email
-          will be sent to notify them.
+        <Typography
+          color={theme.palette.text.secondary}
+          variant={'body1'}
+          align={'left'}
+        >
+          You can enter multiple email addresses of “Not Funded” investors.
+          Email will be sent to notify them.
         </Typography>
       </DialogContent>
       <DialogActions className={classes.actions}>
+        <Box ml={1} mb={1}>
+          <Typography color={theme.palette.dialog.color}>
+            Enter email
+          </Typography>
+        </Box>
         <ReactMultiEmail
+          placeholder='Type email and press space...'
           className={classes.multiEmail}
           emails={emails}
-          placeholder={'Enter Email'}
           onChange={(_emails: string[]) => {
             setEmails(_emails)
           }}
@@ -102,11 +95,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
                 key={index}
                 className={classes.emailItem}
               >
-                <Typography
-                  variant={'body1'}
-                  component='div'
-                  color={'textPrimary'}
-                >
+                <Typography variant={'body1'} component='div' color='white'>
                   {email}
                 </Typography>
                 <Box
@@ -116,7 +105,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
                   style={{ fontWeight: 400 }}
                   onClick={() => removeEmail(index)}
                 >
-                  ×
+                  <Icon name='close' />
                 </Box>
               </Box>
             )
@@ -126,26 +115,34 @@ export const CapitalCallDialog = (props: ModalProps) => {
           container
           justifyContent={'flex-end'}
           className={classes.buttonsBlock}
+          spacing={2}
         >
-          <Button
-            variant={'outlined'}
-            color={'primary'}
-            className={classes.cancelButton}
-            onClick={() => toggleOpen()}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant={'contained'}
-            color={'primary'}
-            className={classes.confirmButton}
-            disabled={isLoading || !(emails.length > 0)}
-            onClick={handleSubmit}
-          >
-            Confirm
-          </Button>
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant={'outlined'}
+              color={'primary'}
+              className={classes.cancelButton}
+              onClick={() => toggleOpen()}
+            >
+              Cancel
+            </Button>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Button
+              fullWidth
+              variant={'contained'}
+              color={'primary'}
+              className={classes.confirmButton}
+              disabled={isLoading || !(emails.length > 0)}
+              onClick={handleSubmit}
+            >
+              Confirm
+            </Button>
+          </Grid>
         </Grid>
       </DialogActions>
-    </MUIDialog>
+    </UIDialog>
   )
 }

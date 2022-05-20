@@ -1,17 +1,19 @@
 import React from 'react'
-import { Box, Card, CardContent, CardActions } from '@mui/material'
+import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
+import { Box, Grid } from '@mui/material'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
+import { Status } from 'ui/Status/Status'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
-import { PreviewHeader } from 'app/pages/identity/components/IndividualPreview/PreviewHeader'
-import { DataPreview } from 'app/pages/identity/components/IndividualPreview/DataPreview'
+import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 
 export interface CorporatesPreviewProps {
   data?: CorporateIdentity
 }
 
 export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
+  const classes = useStyles()
   if (data === undefined) {
     return null
   }
@@ -34,6 +36,8 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
       value: data.representatives?.[0].contactNumber
     }
   ]
+
+  const status = data.status.toLowerCase()
 
   const getDetails = () => {
     let details = {
@@ -75,22 +79,27 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     }
     return details
   }
-
   const details = getDetails()
   return (
-    <Card elevation={0}>
-      <CardContent>
-        <Box pt={2} pb={2}>
-          <PreviewHeader title={details.title} status={data.status} />
+    <Grid container className={classes.container}>
+      <Grid item className={classes.approveButton}>
+        <Status label={data.status} type={status} />
+      </Grid>
+      <Grid item>
+        <Box>
           <DataPreview
             avatar={data.logo}
             userId={data.user._id}
             fields={corporateIdentityFields}
+            name={data.user.name}
+            isIndividual={false}
+            status={data.status}
+            identityType={data.type}
           />
         </Box>
-      </CardContent>
-      <CardActions>
-        <Box display='flex' justifyContent='flex-end' width='100%'>
+      </Grid>
+      <Grid item className={classes.index}>
+        <Box className={classes.buttonBox}>
           <EditButton
             link={details.editLink}
             params={{
@@ -109,7 +118,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
             }}
           />
         </Box>
-      </CardActions>
-    </Card>
+      </Grid>
+    </Grid>
   )
 }
