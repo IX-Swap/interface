@@ -4,11 +4,13 @@ import { VSpacer } from 'components/VSpacer'
 import { IndividualInvestorForm } from 'app/pages/identity/components/IndividualInvestorForm/IndividualInvestorForm'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const CreateIndividual: React.FC = () => {
+  const { isMobile } = useAppBreakpoints()
   return (
     <>
-      <PageHeader title='Create Individual Identity' />
+      {!isMobile && <PageHeader title='Create Individual Identity' />}
       <RootContainer>
         <Grid container>
           <Grid container item xs={12}>
