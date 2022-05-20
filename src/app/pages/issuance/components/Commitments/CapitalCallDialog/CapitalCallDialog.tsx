@@ -57,11 +57,11 @@ export const CapitalCallDialog = (props: ModalProps) => {
       <DialogTitle>
         <Box textAlign='center'>Notify investors</Box>
       </DialogTitle>
-      <DialogContent className={classes.dialogContent}>
+      <DialogContent>
         <Typography
           color={theme.palette.text.secondary}
           variant={'body1'}
-          align={'left'}
+          align={'center'}
         >
           You can enter multiple email addresses of “Not Funded” investors.
           Email will be sent to notify them.
@@ -95,7 +95,12 @@ export const CapitalCallDialog = (props: ModalProps) => {
                 key={index}
                 className={classes.emailItem}
               >
-                <Typography variant={'body1'} component='div' color='white'>
+                <Typography
+                  fontWeight={400}
+                  variant={'body1'}
+                  component='div'
+                  color='white'
+                >
                   {email}
                 </Typography>
                 <Box

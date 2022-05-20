@@ -6,6 +6,7 @@ import {
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+import { useStyles } from 'components/form/Checkbox.styles'
 
 export interface CheckboxProps extends Omit<FormControlLabelProps, 'control'> {
   reverse?: boolean
@@ -24,6 +25,8 @@ export const Checkbox = (
     ...rest
   } = props
 
+  const classes = useStyles()
+
   return (
     <FormControlLabel
       {...rest}
@@ -31,7 +34,7 @@ export const Checkbox = (
         alignItems: 'flex-start'
       }}
       checked={reverse ? !value : value}
-      control={<UICheckbox name={name} />}
+      control={<UICheckbox className={classes.checkboxStyled} name={name} />}
       label={
         <Typography
           fontWeight={400}

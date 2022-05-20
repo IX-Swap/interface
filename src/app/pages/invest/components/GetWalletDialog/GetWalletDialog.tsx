@@ -48,7 +48,9 @@ export const GetWalletDialog = (props: ModalProps) => {
       aria-describedby='getwallet-modal-description'
     >
       <DialogTitle>
-        <Box textAlign='center'>You need a custody wallet address to trade</Box>
+        <Box pt={3} textAlign='center'>
+          You need a custody wallet address to trade
+        </Box>
       </DialogTitle>
       <DialogContent style={{ overflowY: 'initial' }}>
         <DialogText />
