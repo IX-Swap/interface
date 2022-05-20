@@ -1,45 +1,35 @@
 import React from 'react'
-import { Box, Card, CardContent, CardActions } from '@mui/material'
+import { useStyles } from 'app/pages/identity/components/IndividualPreview/IndividualPreview.styles'
+import { Box, Grid } from '@mui/material'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
+import { Status } from 'ui/Status/Status'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
-import { PreviewHeader } from 'app/pages/identity/components/IndividualPreview/PreviewHeader'
-import { DataPreview } from 'app/pages/identity/components/IndividualPreview/DataPreview'
+import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
+import { adjustIdentityOccupation } from 'app/pages/identity/utils/shared'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
 }
 
 export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
+  const classes = useStyles()
+
   if (data === undefined) {
     return null
   }
 
+  const name = `[${data.status}] ${data.firstName} ${data.lastName}`
+  const status = data.status.toLowerCase()
   const individualIdentityFields = [
     {
-      key: 'First Name',
-      value: data.firstName
+      key: 'Full Name',
+      value: data.firstName + ' ' + data.lastName
     },
     {
-      key: 'Middle Name',
-      value: data.middleName
-    },
-    {
-      key: 'Last Name',
-      value: data.lastName
-    },
-    {
-      key: 'Date of Birth',
-      value: data.dob
-    },
-    {
-      key: 'Citizenship',
-      value: data.nationality
-    },
-    {
-      key: '',
-      value: ''
+      key: 'Occupation',
+      value: adjustIdentityOccupation(data.occupation)
     },
     {
       key: 'Email',
@@ -51,22 +41,25 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
     }
   ]
 
-  const name = `[${data.status}] ${data.firstName} ${data.lastName}`
-
   return (
-    <Card elevation={0}>
-      <CardContent>
-        <Box pt={2} pb={2}>
-          <PreviewHeader title='Individual Investor' status={data.status} />
+    <Grid container className={classes.container}>
+      <Grid item className={classes.approveButton}>
+        <Status label={data.status} type={status} />
+      </Grid>
+      <Grid item>
+        <Box>
           <DataPreview
             avatar={data.photo}
             userId={data.user._id}
             fields={individualIdentityFields}
+            name={data.user.name}
+            isIndividual={true}
+            status={data.status}
           />
         </Box>
-      </CardContent>
-      <CardActions>
-        <Box display='flex' justifyContent='flex-end' width='100%'>
+      </Grid>
+      <Grid item className={classes.index}>
+        <Box className={classes.buttonBox}>
           <EditButton
             link={IdentityRoute.editIndividual}
             params={{
@@ -85,7 +78,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
             }}
           />
         </Box>
-      </CardActions>
-    </Card>
+      </Grid>
+    </Grid>
   )
 }

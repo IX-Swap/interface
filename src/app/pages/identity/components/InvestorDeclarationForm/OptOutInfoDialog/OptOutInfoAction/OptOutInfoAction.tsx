@@ -19,12 +19,24 @@ export const OptOutInfoAction: React.FC<OptOutInfoActionProps> = ({
 
   return (
     <>
-      <Grid container justifyContent='center'>
-        <Grid item>
-          <StyledButton color='primary' onClick={close} variant='outlined'>
+      <Grid container justifyContent='center' spacing={2}>
+        <Grid item xs={6}>
+          <StyledButton
+            fullWidth
+            color='primary'
+            onClick={close}
+            variant='outlined'
+          >
             Cancel
           </StyledButton>
-          <StyledButton color='primary' onClick={close} variant='contained'>
+        </Grid>
+        <Grid item xs={6}>
+          <StyledButton
+            fullWidth
+            color='primary'
+            onClick={close}
+            variant='contained'
+          >
             Opt Out
           </StyledButton>
         </Grid>

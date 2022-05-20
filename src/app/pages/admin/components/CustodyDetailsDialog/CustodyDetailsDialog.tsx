@@ -2,10 +2,8 @@
 import React from 'react'
 import {
   Button,
-  Dialog as MUIDialog,
   DialogTitle,
   Box,
-  Typography,
   DialogContent,
   DialogActions,
   useTheme,
@@ -18,6 +16,7 @@ import useStyles from 'app/pages/admin/components/CustodyDetailsDialog/CustodyDe
 import { useGetCustodianDetails } from 'app/pages/admin/hooks/useGetCustodianDetails'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { Wallet } from 'types/custodyAccount'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export const getWalletsWithOrderedDetails = (wallets: Wallet[]) =>
   wallets.map(({ asset_tickers, wallet_name }) => ({
@@ -51,23 +50,17 @@ export const CustodyDetailsDialog = () => {
   }
 
   return (
-    <MUIDialog
+    <UIDialog
       open
       fullWidth
       maxWidth={'md'}
       fullScreen={fullScreen}
       className={classes.root}
+      onClose={() => replace(CustodyManagementRoute.main)}
     >
-      <DialogTitle className={classes.titleRoot}>
-        <Box justifyContent='center' alignItems='center'>
-          <Typography
-            variant='h4'
-            component='span'
-            align='center'
-            className={classes.title}
-          >
-            Tokens Supported for the {user.name}
-          </Typography>
+      <DialogTitle>
+        <Box p={4} justifyContent='center' textAlign='center'>
+          Tokens Supported for the {user.name}
         </Box>
       </DialogTitle>
       <DialogContent className={classes.contentWrapper}>
@@ -83,14 +76,15 @@ export const CustodyDetailsDialog = () => {
       <VSpacer size={'small'} />
       <DialogActions className={classes.actions}>
         <Button
+          fullWidth
           size='large'
           color='primary'
           variant='contained'
           onClick={() => replace(CustodyManagementRoute.main)}
         >
-          Close
+          Okay
         </Button>
       </DialogActions>
-    </MUIDialog>
+    </UIDialog>
   )
 }
