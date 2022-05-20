@@ -35,7 +35,6 @@ export const TradingBody = () => {
     <Grid
       item
       container
-      className={classes.wrapper}
       alignItems={'flex-start'}
       justifyContent='space-between'
       gap={3}

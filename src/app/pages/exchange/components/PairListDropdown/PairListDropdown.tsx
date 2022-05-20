@@ -1,20 +1,23 @@
 import { ClickAwayListener, Grid, Paper, Popper } from '@mui/material'
 import { PairList } from 'app/pages/exchange/components/PairList/PairList'
+import { PairName } from 'app/pages/exchange/components/PairListDropdown/PairName'
 import { PairTableFilter } from 'app/pages/exchange/components/PairTable/PairTableFilter/PairTableFilter'
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'
-import { InvestRoute as paths } from 'app/pages/invest/router/config'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import useStyles from './PairListDropdown.styles'
-import { PairName } from 'app/pages/exchange/components/PairListDropdown/PairName'
 export interface PairListDropdownProps {
   pairName: string
   hideDropdown?: boolean
+  path: string
+  params: any
 }
 
 export const PairListDropdown = ({
   pairName,
+  path,
+  params,
   hideDropdown = false
 }: PairListDropdownProps) => {
   const popperRef = useRef(null)
@@ -22,6 +25,8 @@ export const PairListDropdown = ({
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const { pairId } = useParams<{ pairId: string }>()
   const { data: marketData } = useMarket(pairId)
+  const paramsIsDefined =
+    params.userId !== undefined || params.issuerId !== undefined
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl !== null ? null : event.currentTarget)
   }
@@ -81,15 +86,9 @@ export const PairListDropdown = ({
           )}
         </Grid>
       </Grid>
-      {marketData !== undefined ? (
+      {marketData !== undefined && paramsIsDefined ? (
         <Grid item>
-          <AppRouterLink
-            to={paths.viewListing}
-            params={{
-              userId: marketData.listing.createdBy,
-              listingId: marketData.listing._id
-            }}
-          >
+          <AppRouterLink to={path} params={params}>
             View Details
           </AppRouterLink>
         </Grid>
