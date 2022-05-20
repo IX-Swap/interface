@@ -27,8 +27,9 @@ export const Step3Backup = ({ twoFaData }: Step3BackupProps) => {
         >
           <Grid item>
             <Typography variant={'body1'} className={classes.text}>
-              Please save this key in a safe place. It will allow you to recover
-              your Authenticator in case of losing your phone
+              This is a private key please save it in a safe place. It will
+              allow you to recover your Authenticator in case of losing your
+              phone
             </Typography>
           </Grid>
 
