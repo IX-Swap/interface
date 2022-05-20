@@ -27,7 +27,7 @@ export const ActiveStep = ({
         />
       )
     case 1:
-      return <Step2Scan twoFaData={twoFaData} />
+      return <Step2Scan twoFaData={twoFaData} update2FA />
     case 2:
       return <Step3Backup twoFaData={twoFaData} />
     case 3:

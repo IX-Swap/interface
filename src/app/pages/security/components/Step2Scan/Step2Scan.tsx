@@ -7,9 +7,10 @@ import useStyles from 'app/pages/security/components/Step2Scan/Step2Scan.styles'
 
 export interface Step2ScanProps {
   twoFaData: TwoFaData | undefined
+  update2FA?: boolean
 }
 
-export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
+export const Step2Scan = ({ twoFaData, update2FA = false }: Step2ScanProps) => {
   const classes = useStyles({ image: twoFaData?.image })
 
   return (
@@ -17,7 +18,7 @@ export const Step2Scan = ({ twoFaData }: Step2ScanProps) => {
       title={
         <>
           Scan this QR Code on <br />
-          new Authenticator App
+          {update2FA ? 'new' : 'Your'} Authenticator App
         </>
       }
     >
