@@ -1,15 +1,18 @@
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { TokenList } from '@uniswap/token-lists'
+import { CheckCircle } from 'react-feather'
+import ReactGA from 'react-ga'
+import { Box } from 'rebass'
+import styled from 'styled-components/macro'
+
 import { Line } from 'components/Line'
 import Popover from 'components/Popover'
 import Toggle from 'components/Toggle'
 import { UNSUPPORTED_LIST_URLS } from 'constants/lists'
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { CheckCircle } from 'react-feather'
-import ReactGA from 'react-ga'
-import { Box } from 'rebass'
+import { useActiveWeb3React } from 'hooks/web3'
 import { useAppDispatch, useAppSelector } from 'state/hooks'
-import styled from 'styled-components/macro'
+
 import { ReactComponent as Settings } from '../../assets/images/settings-full.svg'
 import { useFetchListCallback } from '../../hooks/useFetchListCallback'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
@@ -79,8 +82,9 @@ const StyledListUrlText = styled(TYPE.main)`
   color: ${({ theme }) => theme.text2};
 `
 
-const RowWrapper = styled(Row)<{ bgColor: string }>`
-  background-color: ${({ bgColor }) => bgColor ?? 'transparent'};
+const RowWrapper = styled(Row)<{ bgColor: string; active: boolean; hasActiveTokens: boolean }>`
+  background-color: ${({ bgColor, active, theme }) => (active ? bgColor ?? 'transparent' : theme.bg2)};
+  opacity: ${({ hasActiveTokens }) => (hasActiveTokens ? 1 : 0.4)};
   transition: 200ms;
   align-items: center;
   padding: 1rem;
@@ -138,8 +142,16 @@ const ListRowLayout = ({
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
   const theme = useTheme()
+  const { chainId } = useActiveWeb3React()
 
   useOnClickOutside(node, open ? toggle : undefined)
+
+  const activeTokensOnThisChain = useMemo(() => {
+    if (!list || !chainId) {
+      return 0
+    }
+    return list.tokens.reduce((acc, cur) => (cur.chainId === chainId ? acc + 1 : acc), 0)
+  }, [chainId, list])
 
   const popOverContent = () => (
     <PopOverContent>
@@ -163,7 +175,13 @@ const ListRowLayout = ({
     </PopOverContent>
   )
   return (
-    <RowWrapper bgColor={theme.bg12} key={listUrl} id={listUrlRowHTMLId(listUrl ?? '')}>
+    <RowWrapper
+      bgColor={theme.bg12}
+      key={listUrl}
+      id={listUrlRowHTMLId(listUrl ?? '')}
+      active={isActive}
+      hasActiveTokens={activeTokensOnThisChain > 0}
+    >
       {list?.logoURI ? (
         <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
       ) : (
@@ -175,7 +193,7 @@ const ListRowLayout = ({
         </Row>
         <RowFixed style={{ lineHeight: '17px' }}>
           <StyledListUrlText mr="6px">
-            <Trans>{list?.tokens?.length} tokens</Trans>
+            <Trans>{activeTokensOnThisChain} tokens</Trans>
           </StyledListUrlText>
           <StyledMenu ref={node as any}>
             <Popover show={open} content={popOverContent()} placement={'right'}>
@@ -190,6 +208,7 @@ const ListRowLayout = ({
       </Column>
       {!handleImport && handleDisableList && handleEnableList && (
         <Toggle
+          disabled={!activeTokensOnThisChain}
           isActive={isActive}
           toggle={() => {
             isActive ? handleDisableList() : handleEnableList()
