@@ -21,7 +21,7 @@ const StyledToggle = styled.button<{ isActive?: boolean; activeElement?: boolean
   padding: 2px;
   display: flex;
   width: fit-content;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   outline: none;
   height: fit-content;
 `
