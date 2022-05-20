@@ -66,7 +66,7 @@ export const TwoFAALert = () => {
             </Typography>
             <Button
               className={classes.button}
-              to={SecurityRoute.change2fa}
+              to={SecurityRoute.setup2fa}
               component={AppRouterLinkComponent}
               variant='contained'
               size='large'
