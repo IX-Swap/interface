@@ -19,12 +19,42 @@ export type TStats = {
 
 export type Props = {
   identity: KYCIdentity
+  selectedStatuses: string[]
+  stats: ReadonlyArray<TStats>
+  setSelectedStatuses: (newStatuses: string[]) => void
   onIdentityChange: (identity: KYCIdentity) => void
   setSearchValue: (search: string) => void
-  stats: ReadonlyArray<TStats>
 }
 
-export const AdminKycFilters: FC<Props> = ({ identity, stats, setSearchValue, onIdentityChange }) => {
+export const AdminKycFilters: FC<Props> = ({
+  identity,
+  stats,
+  selectedStatuses,
+  setSelectedStatuses,
+  setSearchValue,
+  onIdentityChange,
+}) => {
+  const handleStatusChange = (status: string) => {
+    const newStatuses = [...selectedStatuses]
+    const indexOfSource = selectedStatuses.indexOf(status)
+    const indexOfTotal = selectedStatuses.indexOf('total')
+
+    if (status === 'total') {
+      setSelectedStatuses(['total'])
+      return
+    } else if (indexOfTotal > -1) {
+      newStatuses.splice(indexOfTotal, 1)
+    }
+
+    if (indexOfSource > -1) {
+      newStatuses.splice(indexOfSource, 1)
+    } else {
+      newStatuses.push(status)
+    }
+
+    setSelectedStatuses(newStatuses)
+  }
+
   return (
     <>
       <Flex marginBottom="24px">
@@ -59,18 +89,19 @@ export const AdminKycFilters: FC<Props> = ({ identity, stats, setSearchValue, on
         {stats.map(({ status, count }) => {
           const statusInfo = status !== 'total' ? getStatusInfo(status as KYCStatuses) : 'total'
           const title = <TYPE.title6 marginLeft="8px">{`${ButtonStatusText[status]} - ${count}`}</TYPE.title6>
-                
+
           return (
             <Fragment key={`status-button-${status}`}>
-              {statusInfo !== 'total' ? (
+              {!selectedStatuses.includes(status) ? (
                 <ButtonGradientBorder
                   minHeight="32px !important"
                   height="32px"
                   padding="6px 24px"
                   fontSize="16px !important"
                   lineHeight="16px !important"
+                  onClick={() => handleStatusChange(status)}
                 >
-                  {statusInfo.icon()}
+                  {statusInfo !== 'total' && statusInfo.icon()}
                   {title}
                 </ButtonGradientBorder>
               ) : (
@@ -80,8 +111,10 @@ export const AdminKycFilters: FC<Props> = ({ identity, stats, setSearchValue, on
                   padding="6px 24px"
                   fontSize="16px !important"
                   lineHeight="16px !important"
+                  onClick={() => handleStatusChange(status)}
                 >
-                  <TYPE.title6>{title}</TYPE.title6>
+                  {statusInfo !== 'total' && statusInfo.icon()}
+                  {title}
                 </ButtonIXSGradient>
               )}
             </Fragment>

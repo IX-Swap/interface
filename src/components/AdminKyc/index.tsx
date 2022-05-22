@@ -21,7 +21,6 @@ import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/Whitelist/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
-import { KYCIdentity } from 'components/AdminKycFilters/mock'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 interface RowProps {
@@ -87,10 +86,11 @@ const Body = ({ openModal }: { openModal: (kyc: KycItem) => void }) => {
 }
 
 export const AdminKycTable = () => {
-  const [identity, setIdentity] = useState<KYCIdentity>(null)
+  const [identity, setIdentity] = useState<any>(null)
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
   const [stats, setStats] = useState<TStats[]>([])
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>(['total'])
   const [searchValue, setSearchValue] = useState('')
   const {
     kycList: { totalPages, page, items },
@@ -104,16 +104,22 @@ export const AdminKycTable = () => {
 
   useEffect(() => {
     const getStats = async () => {
-      const data = await getStatusStats({ ...(searchValue && { search: searchValue }) })
+      const data = await getStatusStats({ identity: identity?.label ? identity.label.toLowerCase() : 'all' })
       if (data?.stats) setStats([...data.stats, { status: 'total', count: data.total }])
     }
 
     getStats()
-  }, [searchValue])
+  }, [searchValue, identity])
 
   useEffect(() => {
-    getKycList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
-  }, [getKycList, searchValue])
+    getKycList({
+      page: 1,
+      offset,
+      search: searchValue,
+      status: selectedStatuses.filter((status) => status !== 'total').join(','),
+      identity: identity?.label ? identity.label.toLowerCase() : 'all',
+    })
+  }, [getKycList, searchValue, identity, selectedStatuses])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -121,7 +127,7 @@ export const AdminKycTable = () => {
     getKycList({ page, offset, search: searchValue })
   }
 
-  const onIdentityChange = (identity: KYCIdentity) => {
+  const onIdentityChange = (identity: any) => {
     setIdentity(identity)
   }
 
@@ -156,6 +162,8 @@ export const AdminKycTable = () => {
         setSearchValue={setSearchValue}
         identity={identity}
         onIdentityChange={onIdentityChange}
+        selectedStatuses={selectedStatuses}
+        setSelectedStatuses={setSelectedStatuses}
       />
 
       {(adminLoading || isLoading) && (
