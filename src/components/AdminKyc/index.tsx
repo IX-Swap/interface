@@ -10,7 +10,7 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { CopyAddress } from 'components/CopyAddress'
 import { KycItem } from 'state/admin/actions'
-import { AdminKycFilters, KYCIdentity } from 'components/AdminKycFilters'
+import { AdminKycFilters, TStats } from 'components/AdminKycFilters'
 import { adminOffset as offset } from 'state/admin/constants'
 
 import { Pagination } from '../Pagination'
@@ -20,6 +20,8 @@ import { KycReviewModal } from 'components/KycReviewModal'
 import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/Whitelist/styleds'
+import { getStatusStats } from 'state/kyc/hooks'
+import { KYCIdentity } from 'components/AdminKycFilters/mock'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 interface RowProps {
@@ -88,6 +90,7 @@ export const AdminKycTable = () => {
   const [identity, setIdentity] = useState<KYCIdentity>(null)
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
+  const [stats, setStats] = useState<TStats[]>([])
   const [searchValue, setSearchValue] = useState('')
   const {
     kycList: { totalPages, page, items },
@@ -98,6 +101,15 @@ export const AdminKycTable = () => {
   const history = useHistory()
 
   const { id } = useParams<AdminParams>()
+
+  useEffect(() => {
+    const getStats = async () => {
+      const data = await getStatusStats({ ...(searchValue && { search: searchValue }) })
+      if (data?.stats) setStats([...data.stats, { status: 'total', count: data.total }])
+    }
+
+    getStats()
+  }, [searchValue])
 
   useEffect(() => {
     getKycList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
@@ -135,13 +147,16 @@ export const AdminKycTable = () => {
     getKyc()
   }, [id, getKyc])
 
-  console.log(items)
-
   return (
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
 
-      <AdminKycFilters setSearchValue={setSearchValue} identity={identity} onIdentityChange={onIdentityChange} />
+      <AdminKycFilters
+        stats={stats}
+        setSearchValue={setSearchValue}
+        identity={identity}
+        onIdentityChange={onIdentityChange}
+      />
 
       {(adminLoading || isLoading) && (
         <Loader>
