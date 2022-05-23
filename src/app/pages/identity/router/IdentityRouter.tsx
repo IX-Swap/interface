@@ -6,6 +6,8 @@ import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router-dom'
 import { IdentityRoute } from './config'
+import { SuccessPage } from 'app/pages/identity/pages/SuccessPage/SuccessPage'
+
 
 export const IdentityRouter = () => {
   return (
@@ -20,6 +22,14 @@ export const IdentityRouter = () => {
 
       <AppRoute path={IdentityRoute.issuance}>
         <DetailsOfIssuanceRouter />
+      </AppRoute>
+
+      <AppRoute
+        path={IdentityRoute.identitySuccess}
+        breadcrumb='Success page'
+        exact
+      >
+        <SuccessPage />
       </AppRoute>
 
       <AppRoute path={IdentityRoute.list}>
