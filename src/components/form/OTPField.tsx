@@ -17,6 +17,7 @@ export interface OTPFieldProps {
   numInputs?: number
   isInputNum?: boolean
   shouldAutoFocus?: boolean
+  placeholder?: string
 }
 
 export const OTPField = ({
@@ -31,7 +32,8 @@ export const OTPField = ({
   variant = 'standard',
   numInputs = 6,
   shouldAutoFocus = false,
-  isInputNum = false
+  isInputNum = false,
+  placeholder
 }: OTPFieldProps) => {
   const renderLabel = () =>
     typeof label === 'string' ? (
@@ -62,6 +64,7 @@ export const OTPField = ({
           isInputNum={isInputNum}
           variant={variant}
           shouldAutoFocus={shouldAutoFocus}
+          placeholder={placeholder}
         />
       </Grid>
       {!error && hasHelperText && (

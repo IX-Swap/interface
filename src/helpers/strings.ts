@@ -16,6 +16,13 @@ export const isEmptyString = (value: string | null | undefined) => {
   return value === undefined || value === null || value.trim().length === 0
 }
 
+export const isTruthy = (value: any) => {
+  if (value === undefined || value === null) {
+    return false
+  }
+  return !(value === '' || value === 0)
+}
+
 export const compareStrings = (a: string, b: string) => a === b
 
 export const getOfferingName = (
@@ -79,3 +86,7 @@ export const getTextWithOrWithoutColon = (text: string, hasColon: boolean) =>
 
 export const getValueOrPlaceholder = (value: string) =>
   value === undefined || value.length < 1 ? '-' : value
+
+export const isSuccessRequest = (status?: number) => {
+  return String(status).startsWith('2')
+}

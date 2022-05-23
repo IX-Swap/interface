@@ -7,6 +7,9 @@ import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
 import { useTheme } from '@mui/material/styles'
 import { SaveDrafButton } from 'app/components/FormStepper/SaveDraftButton'
+import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
+import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface FormStepperStep {
   label: string
@@ -43,6 +46,8 @@ export const FormStepper = (props: FormStepperProps) => {
     skippable = false,
     formTitle
   } = props
+
+  const { isMobile } = useAppBreakpoints()
 
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
 
@@ -161,65 +166,88 @@ export const FormStepper = (props: FormStepperProps) => {
           />
         ))}
       </Grid>
-      <Grid item xs={12} sm={3}>
-        <Paper
-          sx={{
-            borderRadius: 2,
-            py: matches ? 2 : 5,
-            px: matches ? 2 : undefined
-          }}
-        >
-          <Stepper
-            nonLinear={nonLinear}
-            orientation={matches ? 'horizontal' : 'vertical'}
-            activeStep={activeStep}
-            title={matches ? steps[activeStep].label : 'Progress'}
-            stepInfo={
-              matches
-                ? {
-                    label: formTitle,
-                    activeStep: activeStep + 1,
-                    totalSteps: steps.length
-                  }
-                : undefined
-            }
-            actions={
-              <SaveDrafButton
-                isLastStep={activeStep === steps.length - 1}
-                formId={`${steps[activeStep].formId ?? 'form'}-${activeStep}`}
-                disabled={
-                  (activeStep === steps.length - 1 &&
-                    !(
-                      (steps[activeStep].validationSchema?.isValidSync(
-                        steps[activeStep].getFormValues(data)
-                      ) as boolean) ?? true
-                    )) ||
-                  data?.status === 'Submitted' ||
-                  data?.status === 'Approved'
-                }
-              />
-            }
+      <Grid item container xs={12} sm={3} spacing={2} alignContent='flex-start'>
+        <Grid item xs={12}>
+          <Paper
+            sx={{
+              borderRadius: 2,
+              py: matches ? 2 : 5,
+              px: matches ? 2 : undefined
+            }}
           >
-            {steps.map((formStep, index) => {
-              const step = index + 1
-              return (
-                <Step key={formStep.label}>
-                  <StepButton
-                    step={step}
-                    variantsConditions={getStepStatus(
-                      formStep,
-                      index,
-                      activeStep
-                    )}
-                    onClick={handleStepButtonClick(index)}
-                  >
-                    {formStep.label}
-                  </StepButton>
-                </Step>
-              )
-            })}
-          </Stepper>
-        </Paper>
+            <Stepper
+              nonLinear={nonLinear}
+              orientation={matches ? 'horizontal' : 'vertical'}
+              activeStep={activeStep}
+              title={matches ? steps[activeStep].label : 'Progress'}
+              stepInfo={
+                matches
+                  ? {
+                      label: formTitle,
+                      activeStep: activeStep + 1,
+                      totalSteps: steps.length
+                    }
+                  : undefined
+              }
+              actions={
+                <Grid container spacing={2}>
+                  {matches ? null : (
+                    <Grid item xs={12}>
+                      <SubmitButton
+                        mutation={submitMutation}
+                        data={data}
+                        step={steps[steps.length - 1]}
+                        fullWidth
+                      />
+                    </Grid>
+                  )}
+                  <Grid item xs={12}>
+                    <SaveDrafButton
+                      isLastStep={activeStep === steps.length - 1}
+                      formId={`${
+                        steps[activeStep].formId ?? 'form'
+                      }-${activeStep}`}
+                      disabled={
+                        (activeStep === steps.length - 1 &&
+                          !(
+                            (steps[activeStep].validationSchema?.isValidSync(
+                              steps[activeStep].getFormValues(data)
+                            ) as boolean) ?? true
+                          )) ||
+                        data?.status === 'Submitted' ||
+                        data?.status === 'Approved'
+                      }
+                    />
+                  </Grid>
+                </Grid>
+              }
+            >
+              {steps.map((formStep, index) => {
+                const step = index + 1
+                return (
+                  <Step key={formStep.label}>
+                    <StepButton
+                      step={step}
+                      variantsConditions={getStepStatus(
+                        formStep,
+                        index,
+                        activeStep
+                      )}
+                      onClick={handleStepButtonClick(index)}
+                    >
+                      {formStep.label}
+                    </StepButton>
+                  </Step>
+                )
+              })}
+            </Stepper>
+          </Paper>
+        </Grid>
+        {!isMobile && (
+          <Grid item xs={12}>
+            <TwoFANotice />
+          </Grid>
+        )}
       </Grid>
     </Grid>
   )

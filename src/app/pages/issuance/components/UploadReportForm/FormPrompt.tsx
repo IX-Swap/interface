@@ -5,12 +5,12 @@ import { Action, Location } from 'history'
 import {
   Box,
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   Grid,
   Typography
 } from '@mui/material'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export const FormPrompt = () => {
   const { formState, reset } = useFormContext()
@@ -51,7 +51,7 @@ export const FormPrompt = () => {
   return (
     <>
       <Prompt when={formState.isDirty} message={showCustomPrompt} />
-      <Dialog open={open}>
+      <UIDialog open={open}>
         <Box width='100%' py={4} px={5}>
           <DialogContent>
             <Box pb={2}>
@@ -89,7 +89,7 @@ export const FormPrompt = () => {
             </Box>
           </DialogActions>
         </Box>
-      </Dialog>
+      </UIDialog>
     </>
   )
 }

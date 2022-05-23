@@ -1,4 +1,4 @@
-import { Box, Grid, Link, Typography } from '@mui/material'
+import { Box, Grid, Link, Typography, useTheme } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
 import { ValidCurrency } from 'helpers/types'
@@ -10,7 +10,8 @@ export interface DepositInfoProps {
 }
 
 export const Fast = ({ accountId, currency }: DepositInfoProps) => {
-  const { footerInfo } = useStyles()
+  const theme = useTheme()
+  const { footerInfo, infoMessage } = useStyles()
   const fastDetails = [
     {
       label: 'Currency',
@@ -46,33 +47,34 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
     <Grid direction='column'>
       <Grid item>
         <Box px={3} pb={3}>
-          <Grid container spacing={1}>
+          <Grid item>
+            <Typography className={infoMessage}>
+              Bank charges may apply and will be borne by the clients
+            </Typography>
+          </Grid>
+          <Grid container spacing={5}>
             <CashDepositDetails data={extendedFastDetails} />
           </Grid>
         </Box>
       </Grid>
       <Grid item>
         <Box className={footerInfo}>
-          <Grid container spacing={1}>
-            <Grid item xs={12} sm={6}>
-              <Box fontWeight='bold'>Max Transaction Limit:</Box>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography>SGD 200,000</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Box fontStyle='italic'>
-                Please visit the link below to know more about the list of banks
-                that supports FAST
-              </Box>
-              <Link
-                href='https://www.abs.org.sg/consumer-banking/fast'
-                target='_blank'
-              >
-                https://www.abs.org.sg/consumer-banking/fast
-              </Link>
-            </Grid>
-          </Grid>
+          <Typography
+            color={theme.palette.text.secondary}
+            fontSize={14}
+            fontWeight={400}
+            lineHeight='22px'
+            letterSpacing='-0.02em'
+          >
+            Max Transaction Limit: SGD 200,000. Please visit the link below to
+            know more about the list of banks that supports FAST <br />
+            <Link
+              href='https://www.abs.org.sg/consumer-banking/fast'
+              target='_blank'
+            >
+              https://www.abs.org.sg/consumer-banking/fast
+            </Link>
+          </Typography>
         </Box>
       </Grid>
     </Grid>

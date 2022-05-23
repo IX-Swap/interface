@@ -197,7 +197,7 @@ export const lightTheme: DeprecatedThemeOptions = {
       bgDisabled: '#F0F2F7',
       itemBorder: '#EDF2FA',
       placeholder: '#778194',
-      label: '#0A1326',
+      label: '#3B4251',
       color: '#778194',
       colorDisabled: '#778194',
       labelDisabled: '#778194',
@@ -239,7 +239,9 @@ export const lightTheme: DeprecatedThemeOptions = {
       light: tinycolor('#FF8080').setAlpha(0.2).toRgbString()
     },
     info: {
-      main: '#4C88FF'
+      main: '#4C88FF',
+      light: '#ABB8CF',
+      dark: tinycolor('#ABB8CF').setAlpha(0.2).toRgbString()
     },
     'special-red': palette.augmentColor({
       color: {
@@ -257,6 +259,9 @@ export const lightTheme: DeprecatedThemeOptions = {
     }),
     header: {
       bg: 'rgba(255, 255, 255, 0.75)'
+    },
+    dialog: {
+      color: '#343A47'
     }
   }
 }

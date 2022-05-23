@@ -1,73 +1,70 @@
-import React, { useState } from 'react'
-import { Container, Box, Stepper, Step, StepLabel, Grid } from '@mui/material'
-import { Aside } from 'app/pages/security/pages/setup2fa/components/Aside'
+import React from 'react'
+import { Step } from '@mui/material'
 import { useSetup2fa } from 'app/pages/security/pages/setup2fa/hooks/useSetup2fa'
 import { ActiveStep } from 'app/pages/security/pages/setup2fa/components/ActiveStep'
-import { useStyles } from './Setup2fa.styles'
-import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons'
+import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons/ChangeStepButtons'
+import { Layout2fa } from 'app/pages/security/components/Layout2fa/Layout2fa'
+import { StepButton } from 'ui/Stepper/StepButton'
+import { Stepper } from 'ui/Stepper/Stepper'
+import { use2faSteps } from 'app/pages/security/hooks/use2faSteps'
 
 const steps = [
-  'Download app',
+  'Download App',
   'Scan QR Code',
   'Backup Key',
   'Enable Authenticator'
 ]
 
 export const Setup2fa = () => {
-  const classes = useStyles()
   const { data } = useSetup2fa()
-  const [activeStep, setActiveStep] = useState(0)
-  const nextStep = () => {
-    setActiveStep(activeStep + 1)
-  }
-  const prevStep = () => {
-    setActiveStep(activeStep - 1)
-  }
+
+  const {
+    activeStep,
+    prevStep,
+    nextStep,
+    stepperConditions,
+    stepInfo,
+    isMobile
+  } = use2faSteps(steps)
+
   const isBackButtonVisible = activeStep > 0 && activeStep < steps.length
   const isNextButtonVisible = activeStep < steps.length - 1
 
   return (
-    <Grid container spacing={0}>
-      <Grid item xs={12} md={12} lg={2}>
-        <Aside />
-      </Grid>
-      <Grid item xs={12} md={12} lg={10}>
-        <Container className={classes.wrapper}>
-          <Box>
-            <Stepper activeStep={activeStep} alternativeLabel>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <Grid
-              container
-              justifyContent='center'
-              alignItems='center'
-              direction='column'
-            >
-              <Grid item>
-                <Box mt={4} mb={6} width='100%'>
-                  <ActiveStep
-                    index={activeStep}
-                    twoFaData={data}
-                    nextStep={nextStep}
-                  />
-                </Box>
-              </Grid>
-              <Grid item>
-                <ChangeStepButtons
-                  isBackButtonVisible={isBackButtonVisible}
-                  isNextButtonVisible={isNextButtonVisible}
-                  onBackButtonClick={prevStep}
-                  onNextButtonClick={nextStep}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        </Container>
-      </Grid>
-    </Grid>
+    <Layout2fa
+      content={
+        <ActiveStep index={activeStep} twoFaData={data} nextStep={nextStep} />
+      }
+      stepper={
+        <Stepper
+          orientation={isMobile ? 'horizontal' : 'vertical'}
+          activeStep={activeStep}
+          nonLinear
+          withMobileDropdown={false}
+          title={'Progress'}
+          stepInfo={stepInfo}
+        >
+          {steps.map((label, index) => (
+            <Step key={label} completed={stepperConditions(index).completed}>
+              <StepButton
+                step={index + 1}
+                variantsConditions={stepperConditions(index)}
+              >
+                {label}
+              </StepButton>
+            </Step>
+          ))}
+        </Stepper>
+      }
+      buttons={
+        <ChangeStepButtons
+          isBackButtonVisible={isBackButtonVisible}
+          isNextButtonVisible={isNextButtonVisible}
+          isContinueButtonVisible={activeStep === 4}
+          onBackButtonClick={prevStep}
+          onNextButtonClick={nextStep}
+        />
+      }
+    />
   )
 }

@@ -17,6 +17,7 @@ export default makeStyles(theme => ({
     padding: 0,
     fontWeight: 500,
     fontSize: 16,
+    alignSelf: 'flex-start',
     '&:hover': {
       backgroundColor: 'initial',
       opacity: 0.6
@@ -43,5 +44,13 @@ export default makeStyles(theme => ({
   debt: {
     backgroundColor: '#F2F2FE',
     color: '#8084F7'
+  },
+  buttonRow: {
+    marginTop: 'auto',
+    marginBottom: 0
+  },
+  rootBox: {
+    display: 'flex',
+    flexDirection: 'column'
   }
 }))

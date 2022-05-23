@@ -1,7 +1,8 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
+import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
 
 export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
   const achDetails = [
@@ -34,12 +35,18 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
       value: '1-3 Business Days'
     }
   ]
+  const { infoMessage } = useStyles()
 
   return (
     <Grid direction='column'>
       <Grid item>
         <Box px={3} pb={3}>
-          <Grid container spacing={1}>
+          <Grid item>
+            <Typography className={infoMessage}>
+              Bank charges may apply and will be borne by the clients
+            </Typography>
+          </Grid>
+          <Grid container spacing={5}>
             <CashDepositDetails data={extendedAchDetails} />
           </Grid>
         </Box>

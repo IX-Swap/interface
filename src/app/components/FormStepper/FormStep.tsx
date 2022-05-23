@@ -9,6 +9,8 @@ import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
+import { isSuccessRequest } from 'helpers/strings'
+import { useStyles } from 'app/components/FormStepper/FormStep.styles'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -44,6 +46,7 @@ export const FormStep = (props: FormStepProps) => {
   } = props
 
   const isCurrentStep = activeStep === index
+  const classes = useStyles()
 
   if (!isCurrentStep) {
     return null
@@ -71,7 +74,8 @@ export const FormStep = (props: FormStepProps) => {
     const payload = step.getRequestPayload(values)
 
     const onSubmitSuccess = (data: any) => {
-      if (data?.message === 'OK' && !isLastStep) {
+      if (isSuccessRequest(data.status) && !isLastStep) {
+        //eslint-disable-line
         setCompleted?.()
       }
     }
@@ -104,10 +108,10 @@ export const FormStep = (props: FormStepProps) => {
       id={`${step.formId ?? 'form'}-${index}`}
     >
       <Grid item>{createElement(step.component)}</Grid>
-      <VSpacer size='large' />
+      <VSpacer size='small' />
 
       <Grid item container justifyContent='flex-end'>
-        <Box display='flex'>
+        <Box className={classes.stepButtons}>
           {skippable !== undefined && skippable && !isLastStep && (
             <Fragment>
               <SkipButton mutation={saveMutation} />
@@ -118,6 +122,7 @@ export const FormStep = (props: FormStepProps) => {
           {hasPrevStep && (
             <Fragment>
               <BackButton
+                fullWidth
                 mutation={editMutation}
                 getRequestPayload={step.getRequestPayload}
                 shouldSaveStep={shouldSaveOnMove}
@@ -131,21 +136,9 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {!isLastStep && (
-            <Fragment>
-              <SaveButton
-                step={index}
-                transformData={step.getRequestPayload}
-                mutation={saveMutation}
-              >
-                {shouldSaveOnMove ? 'Save & Finish Later' : 'Update'}
-              </SaveButton>
-              <Box mx={1} />
-            </Fragment>
-          )}
-
           {hasNextStep && (
             <SaveButton
+              fullWidth
               step={index}
               transformData={step.getRequestPayload}
               mutation={saveMutation}
@@ -158,7 +151,12 @@ export const FormStep = (props: FormStepProps) => {
           )}
 
           {isLastStep && (
-            <SubmitButton mutation={submitMutation} data={data} step={step} />
+            <SubmitButton
+              fullWidth
+              mutation={submitMutation}
+              data={data}
+              step={step}
+            />
           )}
         </Box>
       </Grid>

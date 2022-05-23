@@ -47,7 +47,9 @@ describe('CommitmentIssuance', () => {
 
     expect(CommitmentIssuanceFields).toHaveBeenCalledTimes(1)
     expect(CommitmentIssuanceFields).toHaveBeenCalledWith(
-      { amount: `${commitment.numberOfUnits} ${commitment.dso.tokenSymbol}` },
+      {
+        amount: `${commitment.numberOfUnits} ${commitment.dso.tokenSymbol}`,
+      },
       {}
     )
   })

@@ -19,6 +19,9 @@ jest.mock('app/pages/invest/components/EstimatedValue', () => ({
 jest.mock('app/pages/invest/components/AssetBalance', () => ({
   AssetBalance: jest.fn(() => null)
 }))
+jest.mock('app/pages/invest/components/DSOBlockChainDetails/DSOBlockchainDetails',() => ({
+  DSOBlockchainDetails: jest.fn(() => null)
+}))
 
 describe('CommitmentHeader', () => {
   const props: CommitmentHeaderProps = { dso }

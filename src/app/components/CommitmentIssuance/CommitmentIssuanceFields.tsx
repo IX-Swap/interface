@@ -1,13 +1,12 @@
-import React from 'react'
-import { Grid, Typography, Box, OutlinedInput } from '@mui/material'
-import { useFormContext } from 'react-hook-form'
-import { LabelledValue } from 'components/LabelledValue'
-import { TypedField } from 'components/form/TypedField'
-import { DateTimePickerComponent } from 'components/form/DateTimePicker'
-import { CommitmentIssuanceFormValues } from 'types/commitment'
+import { Box, Grid, OutlinedInput, Typography } from '@mui/material'
 import useStyles from 'app/components/CommitmentIssuance/CommitmentIssuanceFields.styles'
+import { TypedField } from 'components/form/TypedField'
+import { DateTimePicker } from 'components/form/_DateTimePicker'
+import { LabelledValue } from 'components/LabelledValue'
 import { convertDateToISO } from 'helpers/dates'
-
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { CommitmentIssuanceFormValues } from 'types/commitment'
 export interface CommitmentIssuanceFieldsProps {
   amount: string
 }
@@ -16,7 +15,6 @@ export const CommitmentIssuanceFields = (
   props: CommitmentIssuanceFieldsProps
 ) => {
   const classes = useStyles()
-
   const { control } = useFormContext<CommitmentIssuanceFormValues>()
 
   return (
@@ -60,7 +58,7 @@ export const CommitmentIssuanceFields = (
           name='releaseDate'
           label=''
           control={control}
-          component={DateTimePickerComponent}
+          component={DateTimePicker}
           disablePast
           valueExtractor={convertDateToISO}
           defaultValue={null}

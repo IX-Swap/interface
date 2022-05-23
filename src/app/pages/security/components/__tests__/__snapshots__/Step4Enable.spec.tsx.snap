@@ -18,47 +18,45 @@ exports[`Step4Enable should match snapshot 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-19zvv5e-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1ihtruj-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-1 css-t0zib5-MuiGrid-root"
         >
-          <p
-            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
           >
-            Please enter the 6-digit code from your 
-            
-             
-            authenticator app
-          </p>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-        >
-          <form
-            data-testid="form"
-            style="width: 100%;"
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-text-2 css-1gd5lqg-MuiTypography-root"
+            >
+              Please enter the 6 digit code from your Authenticator App
+            </p>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
           >
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column css-ffjoah-MuiGrid-root"
+            <form
+              data-testid="form"
+              style="width: 100%;"
             >
               <div
-                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
               >
                 <div
-                  class="makeStyles-container-1 makeStyles-fullwidth-2"
+                  class="makeStyles-container-5"
                   style="display: flex;"
                 >
                   <div
                     style="display: flex; align-items: center;"
                   >
                     <input
-                      aria-label="Please enter verification code. Character 1"
+                      aria-label="Please enter verification code. Digit 1"
                       autocomplete="off"
-                      class="makeStyles-base-3 makeStyles-standard-4 "
+                      class="makeStyles-input-7 "
                       maxlength="1"
+                      placeholder="_"
                       style="width: 1em; text-align: center;"
-                      type="text"
+                      type="tel"
                       value=""
                     />
                   </div>
@@ -66,12 +64,13 @@ exports[`Step4Enable should match snapshot 1`] = `
                     style="display: flex; align-items: center;"
                   >
                     <input
-                      aria-label="Character 2"
+                      aria-label="Digit 2"
                       autocomplete="off"
-                      class="makeStyles-base-3 makeStyles-standard-4"
+                      class="makeStyles-input-7"
                       maxlength="1"
+                      placeholder="_"
                       style="width: 1em; text-align: center;"
-                      type="text"
+                      type="tel"
                       value=""
                     />
                   </div>
@@ -79,12 +78,13 @@ exports[`Step4Enable should match snapshot 1`] = `
                     style="display: flex; align-items: center;"
                   >
                     <input
-                      aria-label="Character 3"
+                      aria-label="Digit 3"
                       autocomplete="off"
-                      class="makeStyles-base-3 makeStyles-standard-4"
+                      class="makeStyles-input-7"
                       maxlength="1"
+                      placeholder="_"
                       style="width: 1em; text-align: center;"
-                      type="text"
+                      type="tel"
                       value=""
                     />
                   </div>
@@ -92,12 +92,13 @@ exports[`Step4Enable should match snapshot 1`] = `
                     style="display: flex; align-items: center;"
                   >
                     <input
-                      aria-label="Character 4"
+                      aria-label="Digit 4"
                       autocomplete="off"
-                      class="makeStyles-base-3 makeStyles-standard-4"
+                      class="makeStyles-input-7"
                       maxlength="1"
+                      placeholder="_"
                       style="width: 1em; text-align: center;"
-                      type="text"
+                      type="tel"
                       value=""
                     />
                   </div>
@@ -105,12 +106,13 @@ exports[`Step4Enable should match snapshot 1`] = `
                     style="display: flex; align-items: center;"
                   >
                     <input
-                      aria-label="Character 5"
+                      aria-label="Digit 5"
                       autocomplete="off"
-                      class="makeStyles-base-3 makeStyles-standard-4"
+                      class="makeStyles-input-7"
                       maxlength="1"
+                      placeholder="_"
                       style="width: 1em; text-align: center;"
-                      type="text"
+                      type="tel"
                       value=""
                     />
                   </div>
@@ -118,31 +120,32 @@ exports[`Step4Enable should match snapshot 1`] = `
                     style="display: flex; align-items: center;"
                   >
                     <input
-                      aria-label="Character 6"
+                      aria-label="Digit 6"
                       autocomplete="off"
-                      class="makeStyles-base-3 makeStyles-standard-4"
+                      class="makeStyles-input-7"
                       maxlength="1"
+                      placeholder="_"
                       style="width: 1em; text-align: center;"
-                      type="text"
+                      type="tel"
                       value=""
                     />
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="MuiBox-root css-17w1y3n"
-            >
-              <button
-                class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root Mui-disabled  css-gbhykm-MuiButtonBase-root-MuiButton-root"
-                disabled=""
-                tabindex="-1"
-                type="submit"
+              <div
+                class="MuiBox-root css-fzwid6"
               >
-                Enable
-              </button>
-            </div>
-          </form>
+                <button
+                  class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root Mui-disabled makeStyles-button-3 css-gbhykm-MuiButtonBase-root-MuiButton-root"
+                  disabled=""
+                  tabindex="-1"
+                  type="submit"
+                >
+                  Enable and Continue
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

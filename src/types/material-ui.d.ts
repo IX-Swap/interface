@@ -198,6 +198,10 @@ export interface OtpInput {
   placeholderError: CSSProperties['color']
 }
 
+export interface DialogPalette {
+  color: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -248,6 +252,7 @@ declare module '@mui/material/styles' {
     notificationsDropdown: NotificationsDropdown
     header: HeaderPalette
     otpInput: OtpInput
+    dialog: DialogPalette
   }
 
   export interface Palette {
@@ -295,6 +300,7 @@ declare module '@mui/material/styles' {
     notificationsDropdown: NotificationsDropdown
     header: HeaderPalette
     otpInput: OtpInput
+    dialog: DialogPalette
   }
 
   export interface Theme {
