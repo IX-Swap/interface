@@ -3,9 +3,12 @@ import { render } from 'test-utils'
 import { ActiveStep } from 'app/pages/security/pages/setup2fa/components/ActiveStep'
 import { fakeTwoFaData } from '__fixtures__/security'
 
-jest.mock('app/pages/security/pages/setup2fa/components/Step1Download', () => ({
-  Step1Download: jest.fn(() => <div data-testid='step-1' />)
-}))
+jest.mock(
+  'app/pages/security/pages/setup2fa/components/Step1Download/Step1Download',
+  () => ({
+    Step1Download: jest.fn(() => <div data-testid='step-1' />)
+  })
+)
 jest.mock(
   'app/pages/security/pages/setup2fa/components/Step2Scan/Step2Scan',
   () => ({
@@ -18,9 +21,10 @@ jest.mock(
     Step3Backup: jest.fn(() => <div data-testid='step-3' />)
   })
 )
-jest.mock('app/pages/security/components/Step4Enable', () => ({
+jest.mock('app/pages/security/components/Step4Enable/Step4Enable', () => ({
   Step4Enable: jest.fn(() => <div data-testid='step-4' />)
 }))
+
 jest.mock('app/pages/security/pages/setup2fa/components/Enabled', () => ({
   Enabled: jest.fn(() => <div data-testid='step-5' />)
 }))

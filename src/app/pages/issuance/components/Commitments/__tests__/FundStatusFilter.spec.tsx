@@ -15,18 +15,6 @@ describe('FundStatusFilter', () => {
     jest.clearAllMocks()
   })
 
-  it('renders InputLabel with correct props', () => {
-    render(<FundStatusFilter />)
-    expect(InputLabel).toHaveBeenCalledTimes(1)
-    expect(InputLabel).toHaveBeenCalledWith(
-      expect.objectContaining({
-        htmlFor: 'sortBy',
-        children: 'Sort By'
-      }),
-      {}
-    )
-  })
-
   it('renders FundStatusSelect with correct props', () => {
     render(<FundStatusFilter />)
     expect(FundStatusSelect).toHaveBeenCalledTimes(1)

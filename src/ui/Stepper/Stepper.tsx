@@ -88,7 +88,7 @@ export const Stepper = ({
           {children}
         </MuiStepper>
         <>
-          {matches ? null : (
+          {matches || actions === undefined ? null : (
             <Box width='100%' p='24px 40px'>
               <Divider />
             </Box>

@@ -2,11 +2,15 @@ import React, { PropsWithChildren } from 'react'
 import { CommitmentFormValues } from 'types/commitment'
 import { FormProps, Form } from 'components/form/Form'
 import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
-import { commitmentFormValidationSchema } from 'app/pages/invest/validation'
+import {
+  commitmentCampaignValidationSchema,
+  commitmentNonCampaignValidationSchema
+} from 'app/pages/invest/validation'
 
 export interface CommitmentFormProps {
   dso: string
   currency: string
+  isCampaign?: boolean
 }
 
 export const CommitmentForm = (
@@ -14,7 +18,10 @@ export const CommitmentForm = (
     CommitmentFormProps & FormProps<CommitmentFormValues>
   >
 ) => {
-  const { dso, currency, children, ...rest } = props
+  const { dso, currency, children, isCampaign = false, ...rest } = props
+  const validationSchema = isCampaign
+    ? commitmentCampaignValidationSchema
+    : commitmentNonCampaignValidationSchema
   const {
     invest: [makeInvestment]
   } = useMakeCommitment()
@@ -35,11 +42,7 @@ export const CommitmentForm = (
   }
 
   return (
-    <Form
-      {...rest}
-      onSubmit={handleSubmit}
-      validationSchema={commitmentFormValidationSchema}
-    >
+    <Form {...rest} onSubmit={handleSubmit} validationSchema={validationSchema}>
       {children}
     </Form>
   )

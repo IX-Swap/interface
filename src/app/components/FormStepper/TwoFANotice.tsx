@@ -1,13 +1,16 @@
-import { Grid, Typography, Paper, Button } from '@mui/material'
+import { Grid, Typography, Paper, Button, useMediaQuery } from '@mui/material'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { useAuth } from 'hooks/auth/useAuth'
 import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
+import { useTheme } from '@mui/material/styles'
 
 export const TwoFANotice = () => {
   const { user } = useAuth()
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
-  if (user !== undefined && user.enable2Fa === true) {
+  if ((user !== undefined && user.enable2Fa === true) || matches) {
     return null
   }
 

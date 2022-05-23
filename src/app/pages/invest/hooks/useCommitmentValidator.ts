@@ -5,6 +5,7 @@ import { hasValue } from 'helpers/forms'
 
 interface ValidatorReturnObj {
   isValid: boolean
+  message?: string
 }
 
 export interface ValidatorProps {
@@ -55,8 +56,11 @@ export const useCommitmentValidator = (
       clearErrors('numberOfUnits')
     }
 
-    return { isValid }
+    return {
+      isValid,
+      message: message === 'Insufficient Balance' ? message : undefined
+    }
   }
 
-  return { isValid: false }
+  return { isValid: false, message: 'Insufficient Balance' }
 }

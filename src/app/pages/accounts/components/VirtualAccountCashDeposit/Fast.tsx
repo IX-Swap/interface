@@ -10,8 +10,8 @@ export interface DepositInfoProps {
 }
 
 export const Fast = ({ accountId, currency }: DepositInfoProps) => {
-  const { footerInfo } = useStyles()
   const theme = useTheme()
+  const { footerInfo, infoMessage } = useStyles()
   const fastDetails = [
     {
       label: 'Currency',
@@ -47,6 +47,11 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
     <Grid direction='column'>
       <Grid item>
         <Box px={3} pb={3}>
+          <Grid item>
+            <Typography className={infoMessage}>
+              Bank charges may apply and will be borne by the clients
+            </Typography>
+          </Grid>
           <Grid container spacing={5}>
             <CashDepositDetails data={extendedFastDetails} />
           </Grid>

@@ -8,6 +8,7 @@ import { AppRouter } from 'app/router/AppRouter'
 import { IdleDialog } from 'app/components/IdleDialog'
 import { useIdleTimers } from 'app/hooks/useIdleTimers'
 import { Header } from 'app/components/Header/Header'
+import Web3ReactManager from 'components/Web3ReactManager/Web3ReactManager'
 
 export const AppRoot = () => {
   const { open, logoutTimer, resetLogoutTimer, closeDialog, reset, logout } =
@@ -22,7 +23,9 @@ export const AppRoot = () => {
           <Header />
         </Grid>
         <AppContentWrapper item container>
-          <AppRouter />
+          <Web3ReactManager>
+            <AppRouter />
+          </Web3ReactManager>
         </AppContentWrapper>
       </Grid>
       <IdleDialog

@@ -24,12 +24,17 @@ export const CommitmentFormWrapper = () => {
   if (isLoading || data === undefined) {
     return null
   }
+  const isCampaign = data?.isCampaign === true
+  const downloadButton = isCampaign
+    ? 'Download Investment Agreement'
+    : 'Download Subscription Document'
 
   return (
     <CommitmentForm
       dso={data._id}
+      isCampaign={Boolean(data?.isCampaign)}
       currency={data.currency._id}
-      defaultValues={{ pricePerUnit: data.pricePerUnit }}
+      defaultValues={{ pricePerUnit: data.pricePerUnit, tnc: false }}
     >
       <Grid
         container
@@ -54,31 +59,33 @@ export const CommitmentFormWrapper = () => {
                   size='medium'
                   fullWidth
                 >
-                  Download Subscription Document
+                  {downloadButton}
                 </DownloadDSOSubscriptionDocument>
                 <VSpacer size='small' />
                 <CommitmentFormFields
                   decimalScale={data.deploymentInfo?.decimals}
                   symbol={data.currency.symbol}
                   network={data.network?._id}
+                  isCampaign={isCampaign}
                 />
                 <VSpacer size='medium' />
                 <Grid container spacing={2} justifyContent='center'>
                   <Grid item xs={4}>
                     <CommitmentFormCancelButton />
                   </Grid>
-                  {capitalStructureWithFunds.includes(
-                    data.capitalStructure
-                  ) && (
-                    <Grid item xs={4}>
-                      <CommitmentFormCommitButton
-                        assetId={data.currency._id}
-                        minInvestment={data.minimumInvestment}
-                        dsoId={params.dsoId}
-                        currency={data.currency._id}
-                      />
-                    </Grid>
-                  )}
+                  {!isCampaign &&
+                    capitalStructureWithFunds.includes(
+                      data.capitalStructure
+                    ) && (
+                      <Grid item xs={4}>
+                        <CommitmentFormCommitButton
+                          assetId={data.currency._id}
+                          minInvestment={data.minimumInvestment}
+                          dsoId={params.dsoId}
+                          currency={data.currency._id}
+                        />
+                      </Grid>
+                    )}
 
                   <Grid item xs={4}>
                     <CommitmentFormSubmitButton
@@ -86,6 +93,7 @@ export const CommitmentFormWrapper = () => {
                       minInvestment={data.minimumInvestment}
                       dsoId={params.dsoId}
                       currency={data.currency._id}
+                      disabled={data?.disableInvestInCampaign === true}
                     />
                   </Grid>
                 </Grid>

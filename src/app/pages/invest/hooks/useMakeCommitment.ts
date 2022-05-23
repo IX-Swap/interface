@@ -23,7 +23,10 @@ export const useMakeCommitment = () => {
   }
 
   const successHandler = () => {
-    void snackbarService.showSnackbar('Success', 'success')
+    void snackbarService.showSnackbar(
+      "Success. Please wait for the authorizer's approval",
+      'success'
+    )
     replace(generatePath(InvestRoute.view, params))
   }
 

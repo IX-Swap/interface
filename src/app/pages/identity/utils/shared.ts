@@ -47,3 +47,14 @@ export const prepareDeclarationsForUpload = (
     [key]: value
   }))
 }
+
+export const adjustIdentityOccupation = (str: string) => {
+  const res = str.split('').map(el => el.toLowerCase())
+  res[0] = res[0].toUpperCase()
+  for (let i = 0; i < res.length; i++) {
+    if (res[i] === ' ' || res[i] === '/') {
+      res.splice(i + 1, 1, res[i + 1].toUpperCase())
+    }
+  }
+  return res.join('')
+}
