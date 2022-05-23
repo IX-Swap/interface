@@ -80,5 +80,13 @@ export const useStyles = makeStyles(theme => ({
       lineHeight: theme.spacing(2.5),
       fontSize: theme.spacing(1.7)
     }
+  },
+  successPageIcon: {
+    width: 81.82,
+    height: theme.spacing(12.5),
+    [theme.breakpoints.down('sm')]: {
+      width: theme.spacing(7.5),
+      height: 73
+    }
   }
 }))

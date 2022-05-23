@@ -20,14 +20,11 @@ export const TwoFAAlert = () => {
       {isProtected ? (
         <Box
           className={classes.boxAlert}
-          height={isMobile ? 300 : 284}
           mb={isMobile ? 2 : 10}
+          height={isMobile ? 300 : 284}
         >
           <Grid className={classes.icon2fa}>
-            <Enabled
-              height={isMobile ? 73 : 100}
-              width={isMobile ? 60 : 81.82}
-            />
+            <Enabled className={classes.successPageIcon} />
           </Grid>
           <Grid className={classes.mainContent}>
             <Typography variant='h2' className={classes.topText}>
@@ -50,10 +47,7 @@ export const TwoFAAlert = () => {
       ) : (
         <Box className={classes.boxAlert} height={326} mb={isMobile ? 2 : 10}>
           <Grid className={classes.icon2fa}>
-            <Disabled
-              height={isMobile ? 73 : 100}
-              width={isMobile ? 60 : 81.82}
-            />
+            <Disabled className={classes.successPageIcon} />
           </Grid>
           <Grid className={classes.mainContent}>
             <Typography variant='h2' className={classes.topText}>
