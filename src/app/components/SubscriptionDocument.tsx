@@ -6,12 +6,14 @@ import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 
 export interface SubscriptionDocumentProps {
-  document: DataroomFile
+  document?: DataroomFile | null
 }
 
 export const SubscriptionDocument = (props: SubscriptionDocumentProps) => {
   const { document } = props
-
+  if (document === undefined || document === null) {
+    return null
+  }
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>

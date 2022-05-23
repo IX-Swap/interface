@@ -1,12 +1,9 @@
-import {
-  getTimeAgo,
-  convertDateToISO,
-  formatDateToMMDDYY,
-  formatDateAndTime
-} from 'helpers/dates'
 import subDays from 'date-fns/subDays'
 import subHours from 'date-fns/subHours'
 import subMinutes from 'date-fns/subMinutes'
+import {
+  convertDateToISO, formatDateAndTime, formatDateToMMDDYY, getTimeAgo
+} from 'helpers/dates'
 
 describe('getTimeAgo', () => {
   it('returns "Now" if current time is passed', () => {
@@ -75,3 +72,4 @@ describe('convertDateToISO', () => {
     expect(convertDateToISO('')).toEqual(undefined)
   })
 })
+

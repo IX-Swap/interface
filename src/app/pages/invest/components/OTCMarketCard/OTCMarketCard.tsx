@@ -39,7 +39,7 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
       elevation={0}
       style={{ flexDirection: 'column' }}
     >
-      <Box px={3} pt={2.5} pb={5} height='100%'>
+      <Box px={3} pt={2.5} pb={5} height='100%' className={classes.rootBox}>
         <CardCover type={type} data={data} viewURL={viewURL} />
         <CardContent type={type} data={data} />
         {type !== 'OTC' ? (
@@ -61,6 +61,7 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
         <Grid
           container
           item
+          className={classes.buttonRow}
           justifyContent='space-between'
           alignItems={'center'}
         >

@@ -9,7 +9,7 @@ import { TextInput } from 'ui/TextInput/TextInput'
 export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
   return (
     <MobileDateTimePicker
-      inputFormat='MM/dd/yy'
+      inputFormat='MM/dd/yy hh:mm'
       {...props}
       renderInput={inputProps => (
         <TextInput variant='outlined' fullWidth label='Date' {...inputProps} />

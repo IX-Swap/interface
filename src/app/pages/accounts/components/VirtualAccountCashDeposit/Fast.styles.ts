@@ -12,5 +12,8 @@ export const useStyles = makeStyles(theme => ({
     '& .MuiTabs-indicator': {
       maxWidth: 103
     }
+  },
+  infoMessage: {
+    marginBottom: '1rem'
   }
 }))

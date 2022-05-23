@@ -21,9 +21,9 @@ export const CardContent = (props: CardContentProps) => {
   const minimumInvestmentPrice =
     data.minimumInvestment !== undefined
       ? formatMoney(
-          data.minimumInvestment * data.pricePerUnit,
-          data.currency.symbol
-        )
+        data.minimumInvestment * data.pricePerUnit,
+        data.currency.symbol
+      )
       : 0
 
   return (
@@ -50,29 +50,31 @@ export const CardContent = (props: CardContentProps) => {
             </>
           )}
         </Grid>
-        <Grid item>
-          <VSpacer size='small' />
-          <LabelledValue
-            item
-            reverse
-            valueWeight='custom'
-            labelWeight='default'
-            valueFontSize={16}
-            labelFontSize={14}
-            label={type === 'OTC' ? 'Token Symbol' : 'Expected Return'}
-            value={
-              type === 'OTC'
-                ? data.tokenSymbol
-                : percentageToNumber(
+        {data.isCampaign !== true && (
+          <Grid item>
+            <VSpacer size='small' />
+            <LabelledValue
+              item
+              reverse
+              valueWeight='custom'
+              labelWeight='default'
+              valueFontSize={16}
+              labelFontSize={14}
+              label={type === 'OTC' ? 'Token Symbol' : 'Expected Return'}
+              value={
+                type === 'OTC'
+                  ? data.tokenSymbol
+                  : percentageToNumber(
                     data.capitalStructure === 'Debt'
                       ? data.interestRate
                       : data.grossIRR
                   )
                     ?.toFixed(2)
                     .concat('%')
-            }
-          />
-        </Grid>
+              }
+            />
+          </Grid>
+        )}
 
         <Grid item>
           <VSpacer size='small' />
@@ -90,27 +92,29 @@ export const CardContent = (props: CardContentProps) => {
               type !== 'OTC'
                 ? minimumInvestmentPrice
                 : // eslint-disable-next-line
-                  `${data.tokenSymbol} ${data.minimumTradeUnits}`
+                `${data.tokenSymbol} ${data.minimumTradeUnits}`
             }
           />
         </Grid>
 
-        <Grid item>
-          <VSpacer size='small' />
-          <LabelledValue
-            item
-            reverse
-            valueWeight='custom'
-            labelWeight='default'
-            valueFontSize={16}
-            labelFontSize={14}
-            label={'Target Fundraise'}
-            value={formatMoney(
-              type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
-              type !== 'OTC' ? data.currency.symbol : 'SGD'
-            )}
-          />
-        </Grid>
+        {data.isCampaign !== true && (
+          <Grid item>
+            <VSpacer size='small' />
+            <LabelledValue
+              item
+              reverse
+              valueWeight='custom'
+              labelWeight='default'
+              valueFontSize={16}
+              labelFontSize={14}
+              label={'Target Fundraise'}
+              value={formatMoney(
+                type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
+                type !== 'OTC' ? data.currency.symbol : 'SGD'
+              )}
+            />
+          </Grid>
+        )}
       </Grid>
     </Box>
   )

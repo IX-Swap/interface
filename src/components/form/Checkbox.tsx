@@ -28,7 +28,8 @@ export const Checkbox = (
     <FormControlLabel
       {...rest}
       style={{
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        ...props.style
       }}
       checked={reverse ? !value : value}
       control={<UICheckbox name={name} />}
@@ -37,7 +38,7 @@ export const Checkbox = (
           fontWeight={400}
           variant='body1'
           color={error ? 'error' : 'inherit'}
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 10, fontSize: 13.5 }}
         >
           {label}
         </Typography>

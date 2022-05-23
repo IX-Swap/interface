@@ -5,6 +5,7 @@ on:
       - develop
       - staging
       - release
+      - otc
       - CU-*
     types: [opened, synchronize, reopened]
 jobs:
