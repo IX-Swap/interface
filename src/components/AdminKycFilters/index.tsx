@@ -1,16 +1,17 @@
 import React, { FC, Fragment } from 'react'
+import { Flex } from 'rebass'
 
 // import { Select } from 'pages/KYC/common'
 import { Select } from 'components/Select'
-
-import { SelectFiltersContainer } from './styleds'
-import { Flex } from 'rebass'
 import { Search } from 'components/AdminAccreditationTable/Search'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { TYPE } from 'theme'
+
+import { SelectFiltersContainer } from './styleds'
 import { getStatusInfo } from 'pages/KYC/styleds'
 import { KYCStatuses } from 'pages/KYC/enum'
-import { TYPE } from 'theme'
 import { ButtonStatusText, identityOptions, KYCIdentity } from './mock'
+import { DateFilter } from 'components/DateFilter'
 
 export type TStats = {
   status: string
@@ -21,15 +22,19 @@ export type Props = {
   identity: KYCIdentity
   selectedStatuses: string[]
   stats: ReadonlyArray<TStats>
+  endDate: any
   setSelectedStatuses: (newStatuses: string[]) => void
   onIdentityChange: (identity: KYCIdentity) => void
   setSearchValue: (search: string) => void
+  setEndDate: (value: any) => void
 }
 
 export const AdminKycFilters: FC<Props> = ({
   identity,
   stats,
   selectedStatuses,
+  endDate,
+  setEndDate,
   setSelectedStatuses,
   setSearchValue,
   onIdentityChange,
@@ -55,6 +60,10 @@ export const AdminKycFilters: FC<Props> = ({
     setSelectedStatuses(newStatuses)
   }
 
+  const handleDateChange = (newDate: string) => {
+    setEndDate(newDate)
+  }
+
   return (
     <>
       <Flex marginBottom="24px">
@@ -72,14 +81,11 @@ export const AdminKycFilters: FC<Props> = ({
             onSelect={onIdentityChange}
             isSearchable={false}
           />
-          <Select
-            borderRadius="0px 30px 30px 0px"
-            value={null}
-            placeholder="By Date"
-            options={[]}
-            isSearchable={false}
-            onSelect={() => {
-              console.log('select')
+          <DateFilter
+            selectBorderRadius="0px 30px 30px 0px"
+            value={endDate?.format('YYYY-MM-DD') || null}
+            onChange={(newDate) => {
+              handleDateChange(newDate)
             }}
           />
         </SelectFiltersContainer>

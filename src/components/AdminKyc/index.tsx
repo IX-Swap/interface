@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
@@ -91,6 +92,7 @@ export const AdminKycTable = () => {
   const [isLoading, handleIsLoading] = useState(false)
   const [stats, setStats] = useState<TStats[]>([])
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>(['total'])
+  const [endDate, setEndDate] = useState(null)
   const [searchValue, setSearchValue] = useState('')
   const {
     kycList: { totalPages, page, items },
@@ -102,29 +104,35 @@ export const AdminKycTable = () => {
 
   const { id } = useParams<AdminParams>()
 
+  const getKycFilters = (page: number, withStatus = true) => {
+    let kycFilter: any = { page, offset, search: searchValue, identity: identity?.label ? identity.label.toLowerCase() : 'all' }
+    if (!selectedStatuses.includes('total') && withStatus) {
+      kycFilter.status = selectedStatuses.join(',')
+    }
+    if (endDate) {
+      kycFilter.date = (endDate as any).format('YYYY-MM-DD')
+    }
+
+    return kycFilter
+  }
+
   useEffect(() => {
     const getStats = async () => {
-      const data = await getStatusStats({ identity: identity?.label ? identity.label.toLowerCase() : 'all' })
+      const data = await getStatusStats(getKycFilters(1, false))
       if (data?.stats) setStats([...data.stats, { status: 'total', count: data.total }])
     }
 
     getStats()
-  }, [searchValue, identity])
+  }, [searchValue, identity, selectedStatuses, endDate])
 
   useEffect(() => {
-    getKycList({
-      page: 1,
-      offset,
-      search: searchValue,
-      status: selectedStatuses.filter((status) => status !== 'total').join(','),
-      identity: identity?.label ? identity.label.toLowerCase() : 'all',
-    })
-  }, [getKycList, searchValue, identity, selectedStatuses])
+    getKycList(getKycFilters(1))
+  }, [getKycList, searchValue, identity, selectedStatuses, endDate])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getKycList({ page, offset, search: searchValue })
+    getKycList(getKycFilters(page))
   }
 
   const onIdentityChange = (identity: any) => {
@@ -164,6 +172,8 @@ export const AdminKycTable = () => {
         onIdentityChange={onIdentityChange}
         selectedStatuses={selectedStatuses}
         setSelectedStatuses={setSelectedStatuses}
+        endDate={endDate}
+        setEndDate={setEndDate}
       />
 
       {(adminLoading || isLoading) && (

@@ -14,6 +14,7 @@ interface Props {
   isSearchable?: boolean
   error?: string
   borderRadius?: string
+  isDisabled?: boolean
 }
 
 const colourStyles = {
@@ -61,6 +62,7 @@ export const Select = ({
   options,
   placeholder = '',
   name,
+  isDisabled = false,
   isSearchable = true,
   isMulti = false,
   error = '',
@@ -71,7 +73,6 @@ export const Select = ({
       options.find((option) => option.label === (value?.label || value) || option.value === (value?.value || value)),
     [value, options]
   )
-
   return (
     <StyledReactSelect
       error={error}
@@ -86,6 +87,7 @@ export const Select = ({
       name={name}
       styles={colourStyles as StylesConfig}
       borderRadius={borderRadius}
+      isDisabled={isDisabled}
     />
   )
 }
