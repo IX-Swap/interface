@@ -28,4 +28,8 @@ describe('Snapshot test for Success Page', () => {
     const page = render(<SuccessPage />)
     expect(page).toMatchSnapshot()
   })
+  it('checking TwoFA alert with snapshot', () => {
+    const alert = render(<TwoFAAlert />)
+    expect(alert).toMatchSnapshot()
+  })
 })
