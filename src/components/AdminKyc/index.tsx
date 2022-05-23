@@ -106,7 +106,7 @@ export const AdminKycTable = () => {
 
   const getKycFilters = (page: number, withStatus = true) => {
     let kycFilter: any = { page, offset, search: searchValue, identity: identity?.label ? identity.label.toLowerCase() : 'all' }
-    if (!selectedStatuses.includes('total') && withStatus) {
+    if (!selectedStatuses.includes('total') && withStatus && selectedStatuses.length > 0) {
       kycFilter.status = selectedStatuses.join(',')
     }
     if (endDate) {

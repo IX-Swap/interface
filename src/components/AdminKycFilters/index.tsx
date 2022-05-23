@@ -1,7 +1,6 @@
 import React, { FC, Fragment } from 'react'
 import { Flex } from 'rebass'
 
-// import { Select } from 'pages/KYC/common'
 import { Select } from 'components/Select'
 import { Search } from 'components/AdminAccreditationTable/Search'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'

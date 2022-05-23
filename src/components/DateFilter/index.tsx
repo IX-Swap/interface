@@ -28,13 +28,13 @@ export const DateFilter: FC<Props> = ({ value, selectBorderRadius, onChange }) =
       autoOk
       disableFuture
       openTo="date"
-      variant="inline"
+      variant="dialog"
       TextFieldComponent={() => (
-        <div style={{ cursor: 'pointer' }} onClick={onClick}>
+        <div style={{ cursor: 'pointer', whiteSpace: 'nowrap' }} onClick={onClick}>
           <Select
             borderRadius={selectBorderRadius}
             value={null}
-            placeholder="By Date"
+            placeholder={value?.toString() || "By Date"}
             options={[]}
             onSelect={() => null}
             isDisabled
