@@ -24,11 +24,13 @@ import { AccreditationStatus } from './AccreditationStatus'
 
 interface Props {
   currency?: Currency
-  status?: AccreditationStatusEnum
+  brokerDealerStatus: string
+  custodianStatus: string
   accreditationRequest: AccreditationRequest | null
   platform: SecTokenPlatform | null
   token: any
   userHaveValidAccount: boolean
+  message: string
 }
 
 function getStatusMessage(
@@ -39,9 +41,6 @@ function getStatusMessage(
   const status = accreditationRequest?.status
   switch (status) {
     case AccreditationStatusEnum.PENDING:
-    // case AccreditationStatusEnum.PENDING_KYC:
-    //   return t`Checking your KYC on ${platform?.name || 'primary issuer'}`
-    case AccreditationStatusEnum.PENDING_CUSTODIAN:
       return t`KYC approved on ${platform?.name || 'primary issuer'}. Waiting for KYC approval on Custodian...`
     case AccreditationStatusEnum.FAILED:
       return (
@@ -50,7 +49,7 @@ function getStatusMessage(
           platform?.website || 'primary issuer website'
         )}. Retry passing accreditation once your KYC is approved by ${platform?.name || 'primary issuer'}. [retry]`
       )
-    case AccreditationStatusEnum.REJECTED: {
+    case AccreditationStatusEnum.DECLINED: {
       return accreditationRequest?.message || t`Accreditation rejected`
     }
     case undefined:
@@ -58,13 +57,24 @@ function getStatusMessage(
       return t`To trade/swap ${symbolText} please pass accreditation.`
   }
 }
-export const NoVault = ({ currency, status, accreditationRequest, platform, token, userHaveValidAccount }: Props) => {
+export const NoVault = ({
+  currency,
+  brokerDealerStatus,
+  custodianStatus,
+  accreditationRequest,
+  platform,
+  token,
+  userHaveValidAccount,
+  message,
+}: Props) => {
   const symbolText = useMemo(() => token?.ticker ?? currency?.name ?? '', [currency, token])
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
   const toggleChooseBrokerDealerModal = useChooseBrokerDealerModalToggle()
   const currencyId: string | undefined = (currency as any)?.address
   const tokenId = useSecTokenId({ currencyId })
+
+  const statuses = [custodianStatus, brokerDealerStatus]
 
   return (
     <NoVaultWrapper>
@@ -98,11 +108,17 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
 
       {userHaveValidAccount && (
         <>
-          <VaultStatusDescription style={{ order: status === AccreditationStatusEnum.REJECTED ? 3 : 2 }}>
+          <VaultStatusDescription style={{ order: statuses.includes(AccreditationStatusEnum.DECLINED) ? 3 : 2 }}>
             <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
           </VaultStatusDescription>
 
-          {status && <AccreditationStatus status={status} />}
+          {(custodianStatus || brokerDealerStatus) && (
+            <AccreditationStatus
+              message={message}
+              custodianStatus={custodianStatus}
+              brokerDealerStatus={brokerDealerStatus}
+            />
+          )}
         </>
       )}
       {userHaveValidAccount ? (
@@ -118,14 +134,16 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
             </ButtonIXSGradient>
           )}
 
-          {Boolean(account && !(PENDING_ACCREDITATION_STATUSES as any).includes(status)) && (
+          {Boolean(account && !PENDING_ACCREDITATION_STATUSES.some((status) => statuses.includes(status))) && (
             <ButtonIXSGradient
               style={{ marginTop: '28px', padding: '16px 24px' }}
               data-testid="pass-kyc-and-accreditation"
               onClick={toggleChooseBrokerDealerModal}
             >
-              {status === undefined && <Trans>Pass Accreditation</Trans>}
-              {status && ERROR_ACCREDITATION_STATUSES.includes(status) && <Trans>Retry pass accreditation</Trans>}
+              {statuses.some((status) => !status) && <Trans>Pass Accreditation</Trans>}
+              {ERROR_ACCREDITATION_STATUSES.some((status) => statuses.includes(status)) && (
+                <Trans>Retry pass accreditation</Trans>
+              )}
             </ButtonIXSGradient>
           )}
           <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} />

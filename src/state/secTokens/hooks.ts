@@ -150,10 +150,18 @@ export function useAccreditationStatus(currencyId?: string) {
 
   return useMemo(() => {
     const accreditationRequest: AccreditationRequest | null = tokenInfo?.accreditationRequest || null
-    const status: AccreditationStatusEnum | undefined = accreditationRequest?.status
-    const isApproved = status === AccreditationStatusEnum.APPROVED
+    const isApproved =
+      accreditationRequest?.custodianStatus === AccreditationStatusEnum.APPROVED &&
+      accreditationRequest?.brokerDealerStatus === AccreditationStatusEnum.APPROVED
     const platform = tokenInfo?.platform || null
 
-    return { status, isApproved, accreditationRequest, platform }
+    return {
+      isApproved,
+      accreditationRequest,
+      platform,
+      custodianStatus: accreditationRequest?.custodianStatus ?? '',
+      brokerDealerStatus: accreditationRequest?.brokerDealerStatus ?? '',
+      message: accreditationRequest?.message ?? '',
+    }
   }, [tokenInfo?.accreditationRequest, tokenInfo?.platform])
 }

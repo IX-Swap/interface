@@ -5,6 +5,7 @@ import { BodyWrapper } from 'pages/AppBody'
 import { ArrowWrapper } from 'components/swap/styleds'
 import { SearchInput } from 'components/SearchModal/styleds'
 import { DarkBlueCard } from 'components/Card'
+import { TYPE } from 'theme'
 
 export const cardCommonStyles = css`
   border-radius: 30px;
@@ -102,4 +103,10 @@ export const StyledSearchInput = styled(SearchInput)`
 export const StyledDarkBlueCard = styled(DarkBlueCard)<{ isOpen: boolean }>`
   background-color: ${({ theme, isOpen }) => (isOpen ? theme.bg7 : theme.bg19)};
   color: ${({ theme, isOpen }) => (isOpen ? theme.text2 : theme.text9)};
+`
+
+export const StyledButtonMuted = styled(TYPE.buttonMuted)`
+  background: rgba(145, 132, 196, 0.1);
+  border-radius: 16px;
+  padding: 4px 8px;
 `

@@ -44,7 +44,7 @@ const Header = () => {
   )
 }
 
-const Row: FC<RowProps> = ({ item, searchValue,  openReviewModal }: RowProps) => {
+const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
@@ -56,6 +56,8 @@ const Row: FC<RowProps> = ({ item, searchValue,  openReviewModal }: RowProps) =>
     createdAt,
     kyc,
     userKyc,
+    custodianStatus,
+    brokerDealerStatus,
   } = item
   const { ethAddress } = user
 
@@ -74,10 +76,10 @@ const Row: FC<RowProps> = ({ item, searchValue,  openReviewModal }: RowProps) =>
         <KycSource onKycClick={onKycClick} kyc={kyc} userKyc={userKyc} status={status} />
       </div>
       <div>
-        <BrokerDealerStatus status={status} kyc={kyc} broker={broker} />
+        <BrokerDealerStatus status={brokerDealerStatus} kyc={kyc} broker={broker} />
       </div>
       <div>
-        <CustodianStatus status={status} searchValue={searchValue} id={id} custodian={custodian} />
+        <CustodianStatus status={custodianStatus} searchValue={searchValue} id={id} custodian={custodian} />
       </div>
     </StyledBodyRow>
   )
@@ -96,7 +98,9 @@ const Body = ({ searchValue, openReviewModal }: BodyProps) => {
   return (
     <>
       {items?.map((item) => {
-        return <Row key={`kyc-table-${item.id}`} searchValue={searchValue} item={item} openReviewModal={openReviewModal} />
+        return (
+          <Row key={`kyc-table-${item.id}`} searchValue={searchValue} item={item} openReviewModal={openReviewModal} />
+        )
       })}
     </>
   )

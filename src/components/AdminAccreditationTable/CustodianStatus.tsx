@@ -35,13 +35,13 @@ export const CustodianStatus = ({ status, id, custodian, searchValue }: Props) =
   return (
     <Container>
       <div>
-        {status !== AccreditationStatusEnum.PENDING_CUSTODIAN && (
+        {status !== AccreditationStatusEnum.PENDING && (
           <img src={getStatusIcon(status)} alt="icon" width="20px" height="20px" />
         )}
         <EllipsisText>{custodian}</EllipsisText>
       </div>
       <div>
-        {status === AccreditationStatusEnum.PENDING_CUSTODIAN && (
+        {status === AccreditationStatusEnum.PENDING && (
           <>
             <RejectModal searchValue={searchValue} isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
             <ButtonsContainer>

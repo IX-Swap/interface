@@ -33,7 +33,7 @@ interface SelectProps {
   onSelect: (item: any) => void
   selectedItem: any
   items: any[]
-  label: string
+  label?: string
   withScroll?: boolean
   placeholder?: string
   style?: CSSProperties
@@ -49,11 +49,13 @@ type TextInputProps = HTMLProps<HTMLInputElement> & {
 export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, items, error, name }: SelectProps) => {
   return (
     <Box>
-      <Label marginBottom="11px">
-        <TYPE.title11 color="text2">
-          <Trans>{label}</Trans>
-        </TYPE.title11>
-      </Label>
+      {label && (
+        <Label marginBottom="11px">
+          <TYPE.title11 color="text2">
+            <Trans>{label}</Trans>
+          </TYPE.title11>
+        </Label>
+      )}
       <ReactSelect name={name} onSelect={onSelect} value={selectedItem} options={items} error={error} />
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>

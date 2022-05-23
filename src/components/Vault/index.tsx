@@ -19,28 +19,30 @@ export const Vault = ({ currency, token }: Props) => {
   const { token: jwtToken } = useAuthState()
 
   const {
-    status,
+    custodianStatus,
+    brokerDealerStatus,
     isApproved: vaultExists,
     accreditationRequest,
     platform,
+    message,
   } = useAccreditationStatus((currency as any)?.address || 0)
   const newToken = { ...currency, isToken: true }
   const { kyc } = useKYCState()
 
-  const getUserAccountType = () => {
-    const kycType = kyc?.individualKycId ? 'individual' : 'corporate'
-
-    const userKyc = kyc?.individual || kyc?.corporate
-
-    if (userKyc?.accredited) {
-      return `${kycType}Accredited`
-    }
-    return `${kycType}AccreditedNot`
-  }
-
   const userHaveValidAccount = useMemo(() => {
     const { kycType } = token
     if (!kycType || !kyc || ![KYCStatuses.APPROVED, KYCStatuses.REJECTED].includes(kyc?.status)) return true
+
+    const getUserAccountType = () => {
+      const kycType = kyc?.individualKycId ? 'individual' : 'corporate'
+
+      const userKyc = kyc?.individual || kyc?.corporate
+
+      if (userKyc?.accredited) {
+        return `${kycType}Accredited`
+      }
+      return `${kycType}AccreditedNot`
+    }
 
     const userAccountType = getUserAccountType()
 
@@ -70,10 +72,12 @@ export const Vault = ({ currency, token }: Props) => {
             <NoVault
               currency={currency}
               token={token}
-              status={status}
+              custodianStatus={custodianStatus}
+              brokerDealerStatus={brokerDealerStatus}
               accreditationRequest={accreditationRequest}
               platform={platform}
               userHaveValidAccount={userHaveValidAccount}
+              message={message}
             />
           )}
           {vaultExists && (
@@ -82,9 +86,11 @@ export const Vault = ({ currency, token }: Props) => {
         </>
       ) : (
         <NoVault
+          message={message}
           currency={currency}
           token={token}
-          status={status}
+          custodianStatus={custodianStatus}
+          brokerDealerStatus={brokerDealerStatus}
           accreditationRequest={accreditationRequest}
           platform={platform}
           userHaveValidAccount={userHaveValidAccount}
