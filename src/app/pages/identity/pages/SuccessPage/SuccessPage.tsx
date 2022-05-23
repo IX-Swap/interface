@@ -42,7 +42,7 @@ export const SuccessPage = () => {
             </Typography>
             <Typography className={classes.text} mt={2}>
               If you have any further questions, you can always contact our{' '}
-              <a href=' https://investax.io/contact/ '>support deprtment</a>
+              <a href=' https://investax.io/contact/ '>support department</a>
             </Typography>
             <Button
               component={AppRouterLinkComponent}
