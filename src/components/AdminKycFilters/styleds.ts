@@ -17,6 +17,10 @@ export const SelectFiltersContainer = styled(Flex)`
     display: none;
   }
 
+  > div *[class*='indicatorContainer'] {
+    display: none;
+  }
+
   > div *[class*='menu'] {
     width: 200px;
   }

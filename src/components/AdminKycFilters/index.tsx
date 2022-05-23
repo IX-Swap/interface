@@ -1,9 +1,10 @@
 import React, { FC, Fragment } from 'react'
 import { Flex } from 'rebass'
+import styled from 'styled-components'
 
 import { Select } from 'components/Select'
 import { Search } from 'components/AdminAccreditationTable/Search'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonEmpty, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { TYPE } from 'theme'
 
 import { SelectFiltersContainer } from './styleds'
@@ -11,6 +12,14 @@ import { getStatusInfo } from 'pages/KYC/styleds'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { ButtonStatusText, identityOptions, KYCIdentity } from './mock'
 import { DateFilter } from 'components/DateFilter'
+
+const ResetFilterButton = styled(ButtonEmpty)`
+  color: ${({ theme }) => theme.text2};
+  margin-left: 16px;
+  white-space: nowrap;
+  width: auto;
+  font-weight: 400;
+`
 
 export type TStats = {
   status: string
@@ -63,6 +72,12 @@ export const AdminKycFilters: FC<Props> = ({
     setEndDate(newDate)
   }
 
+  const handleResetFilters = () => {
+    setEndDate(null)
+    setSelectedStatuses(['total'])
+    onIdentityChange(null)
+  }
+
   return (
     <>
       <Flex marginBottom="24px">
@@ -88,6 +103,9 @@ export const AdminKycFilters: FC<Props> = ({
             }}
           />
         </SelectFiltersContainer>
+        <ResetFilterButton onClick={handleResetFilters}>
+          Reset Filters
+        </ResetFilterButton>
       </Flex>
 
       <Flex marginBottom="52px" justifyContent="space-between">
