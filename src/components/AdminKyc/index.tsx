@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
@@ -10,19 +11,19 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { CopyAddress } from 'components/CopyAddress'
 import { KycItem } from 'state/admin/actions'
+import { AdminKycFilters, TStats } from 'components/AdminKycFilters'
 import { adminOffset as offset } from 'state/admin/constants'
 
 import { Pagination } from '../Pagination'
 import { BodyRow, HeaderRow, Table } from '../Table'
-import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
 import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
 import { NoData } from 'components/Whitelist/styleds'
+import { getStatusStats } from 'state/kyc/hooks'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
-
 interface RowProps {
   item: KycItem
   openModal: () => void
@@ -86,8 +87,12 @@ const Body = ({ openModal }: { openModal: (kyc: KycItem) => void }) => {
 }
 
 export const AdminKycTable = () => {
+  const [identity, setIdentity] = useState<any>(null)
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
+  const [stats, setStats] = useState<TStats[]>([])
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>(['total'])
+  const [endDate, setEndDate] = useState(null)
   const [searchValue, setSearchValue] = useState('')
   const {
     kycList: { totalPages, page, items },
@@ -99,14 +104,39 @@ export const AdminKycTable = () => {
 
   const { id } = useParams<AdminParams>()
 
+  const getKycFilters = (page: number, withStatus = true) => {
+    let kycFilter: any = { page, offset, search: searchValue, identity: identity?.label ? identity.label.toLowerCase() : 'all' }
+    if (!selectedStatuses.includes('total') && withStatus && selectedStatuses.length > 0) {
+      kycFilter.status = selectedStatuses.join(',')
+    }
+    if (endDate) {
+      kycFilter.date = (endDate as any).format('YYYY-MM-DD')
+    }
+
+    return kycFilter
+  }
+
   useEffect(() => {
-    getKycList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
-  }, [getKycList, searchValue])
+    const getStats = async () => {
+      const data = await getStatusStats(getKycFilters(1, false))
+      if (data?.stats) setStats([...data.stats, { status: 'total', count: data.total }])
+    }
+
+    getStats()
+  }, [searchValue, identity, selectedStatuses, endDate])
+
+  useEffect(() => {
+    getKycList(getKycFilters(1))
+  }, [getKycList, searchValue, identity, selectedStatuses, endDate])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getKycList({ page, offset, search: searchValue })
+    getKycList(getKycFilters(page))
+  }
+
+  const onIdentityChange = (identity: any) => {
+    setIdentity(identity)
   }
 
   const closeModal = () => {
@@ -134,12 +164,24 @@ export const AdminKycTable = () => {
   return (
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <Search placeholder="Search for Wallet" setSearchValue={setSearchValue} />
+
+      <AdminKycFilters
+        stats={stats}
+        setSearchValue={setSearchValue}
+        identity={identity}
+        onIdentityChange={onIdentityChange}
+        selectedStatuses={selectedStatuses}
+        setSelectedStatuses={setSelectedStatuses}
+        endDate={endDate}
+        setEndDate={setEndDate}
+      />
+
       {(adminLoading || isLoading) && (
         <Loader>
           <LoaderThin size={96} />
         </Loader>
       )}
+
       {items.length === 0 ? (
         <NoData>
           <Trans>No results</Trans>

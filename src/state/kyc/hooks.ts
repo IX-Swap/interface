@@ -33,6 +33,15 @@ export const getMyKyc = async () => {
   }
 }
 
+export const getStatusStats = async (params?: Record<string, string | number>) => {
+  try {
+    const result = await apiService.get(kyc.getStatusStats, undefined, params)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const getCynopsisRisks = async (address: string) => {
   try {
     const result = await apiService.get(kyc.cynopsisRisks(address))
