@@ -50,8 +50,7 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
               variant='contained'
               disableElevation
               onClick={handleClose}
-              size='medium'
-              style={{ height: 50 }}
+              size='large'
             >
               Cancel
             </ButtonTransparent>
@@ -63,8 +62,7 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
               variant='contained'
               disableElevation
               color='primary'
-              size='medium'
-              style={{ height: 50 }}
+              size='large'
             >
               {actionLabel}
             </Button>

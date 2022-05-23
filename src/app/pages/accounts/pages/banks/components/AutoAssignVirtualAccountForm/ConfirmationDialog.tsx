@@ -62,8 +62,7 @@ export const ConfirmationDialog = ({
         >
           <Grid item xs={5}>
             <Button
-              style={{ height: 50 }}
-              size='medium'
+              size='large'
               fullWidth
               onClick={onClose}
               type='button'
@@ -77,8 +76,7 @@ export const ConfirmationDialog = ({
           </Grid>
           <Grid item xs={5}>
             <Button
-              style={{ height: 50 }}
-              size='medium'
+              size='large'
               fullWidth
               type='submit'
               variant='contained'
