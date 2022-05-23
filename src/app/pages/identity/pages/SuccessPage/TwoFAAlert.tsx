@@ -9,7 +9,7 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { SecurityRoute } from 'app/pages/security/router/config'
 
-export const TwoFAALert = () => {
+export const TwoFAAlert = () => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
   const { user = { enable2Fa: undefined } } = useAuth()

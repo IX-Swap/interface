@@ -4,7 +4,7 @@ import { Button, Grid, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { ReactComponent as Success } from 'assets/icons/alerts/success.svg'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { TwoFAALert } from 'app/pages/identity/pages/SuccessPage/TwoFAALert'
+import { TwoFAAlert } from 'app/pages/identity/pages/SuccessPage/TwoFAAlert'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { RootContainer } from 'ui/RootContainer'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -57,7 +57,7 @@ export const SuccessPage = () => {
             </Button>
           </Grid>
         </Box>
-        <TwoFAALert />
+        <TwoFAAlert />
       </RootContainer>
     </Grid>
   )
