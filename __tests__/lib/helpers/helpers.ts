@@ -220,5 +220,6 @@ export {
   waitNewPage,
   isDisabledList,
   getCount,
-  LOADER
+  LOADER,
+  delay
 }

@@ -17,6 +17,7 @@ import { Authorizer } from '../lib/page-objects/authorizer'
 import { approveIdentity, createCorporateIdentity, createIdentity } from '../lib/api/create-identities'
 import * as corporateBody from '../lib/api/corporate-identity'
 import { accountsTab } from '../lib/selectors/accounts'
+import { authForms } from '../lib/selectors/auth'
 
 test.afterEach(async ({ page }) => {
   await page.close()
@@ -174,16 +175,12 @@ test.describe('Invest to NFT', async () => {
 
   test("Test the ability to Invest to NFT's token if User has no cash (IXPRIME-469)", async ({ investment, page }) => {
     await investment.investToNFT()
+    await click(invest.buttons.SUBMIT_INVEST, page)
   })
 
   test('Download subscription docs (IXPRIME-394)', async ({ investment, context }) => {
-    await investment.makeDeposit(forEachEmail)
     const pages = await investment.downloadDocument(context)
     expect(pages).toBe(2)
-  })
-
-  test("Test the ability to Invest to NFT's token (IXPRIME-390)", async ({ investment, page }) => {
-    await investment.investToNFT()
   })
 
   test('The invest button should be disabled (IXPRIME-399)', async ({ page }) => {
@@ -196,7 +193,7 @@ test.describe('Invest to NFT', async () => {
     await expect(page).toHaveURL(/app\/invest\/offerings\/\S+\/view/g)
   })
 
-  test('Test the ability to "Copy to the clipboard" button (IXPRIME-391)', async ({ investment, page }) => {
+  test.only('Test the ability to "Copy to the clipboard" button (IXPRIME-391)', async ({ investment, page }) => {
     await click(invest.buttons.CLICKABLE_ETH_ADDRESS, page)
     const otpValue = await investment.getValueFromOTP()
     expect(otpValue).toBe('0xCD21c24DFDa445BAE7A25e6769A1A42c5C19a510') //example
@@ -208,9 +205,19 @@ test.describe('Invest to NFT', async () => {
     await shouldExist(accountsTab.fields.BLOCKCHAIN_ADDRESS, secondPage)
   })
 
-  test.only('Test the ability to Add to Metamask (IXPRIME-465)', async ({ investment, page }) => {
+  test('Test the ability to Add to Metamask (IXPRIME-465)', async ({ page }) => {
     await click(invest.buttons.METAMASK_ICON, page)
     await click(invest.buttons.CONNECT_TO_METAMASK, page)
     await expect(page).toHaveURL('https://metamask.io/')
+  })
+
+  test('The campaign DSO should not be available to invest a second time (IXPRIME-470)', async ({
+    investment,
+    page
+  }) => {
+    await investment.makeDeposit(forEachEmail)
+    await investment.investToNFT()
+    const button = await isDisabledList([invest.buttons.SUBMIT_INVEST], page)
+    expect(button, 'The Invest button is not disabled').toStrictEqual([true])
   })
 })

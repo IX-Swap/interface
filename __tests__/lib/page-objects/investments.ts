@@ -11,7 +11,8 @@ import {
   uploadFiles,
   waitForRequestInclude,
   waitForText,
-  waitNewPage
+  waitNewPage,
+  delay
 } from '../helpers/helpers'
 import { text } from '../helpers/text'
 import { invest } from '../selectors/invest'
@@ -118,7 +119,6 @@ class Invest {
     await click(issuance.dso.listBox.CORPORATE_VALUE, this.page)
     await typeText(invest.fields.OTP, '111111', this.page)
     await click(invest.checkBox.I_HAVE_READ, this.page)
-    await click(invest.buttons.SUBMIT_INVEST, this.page)
   }
 
   checkThatInvestmentLandingAvailable = async () => {
@@ -190,8 +190,7 @@ class Invest {
   makeDeposit = async (email: string) => {
     sendMoneyToEmail['email'] = email
     const { cookies, request } = await getCookies(baseCreds.ADMIN)
-    const ss = await postRequest(sendMoneyToEmail, cookies, 'virtual-accounts/admin/deposits')
-    console.log(ss)
+    await postRequest(sendMoneyToEmail, cookies, 'virtual-accounts/admin/deposits')
   }
 }
 export { Invest }
