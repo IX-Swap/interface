@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import { Flex } from 'rebass'
 import { NavLink } from 'react-router-dom'
 import { isMobileOnly } from 'react-device-detect'
@@ -21,9 +21,34 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
   const { account } = useActiveWeb3React()
   const balance = useCurrencyBalance(account ?? undefined, { isToken: true, ...wrappedToken } ?? undefined)
 
+  const status = useMemo(() => {
+    const statuses = [
+      wrappedToken.accreditationRequest?.brokerDealerStatus,
+      wrappedToken.accreditationRequest?.custodianStatus,
+    ]
+
+    if (statuses.every((status) => status === 'approved')) {
+      return 'approved'
+    }
+
+    if (statuses.some((status) => status === 'pending')) {
+      return 'pending'
+    }
+
+    if (statuses.some((status) => status === 'declined')) {
+      return 'declined'
+    }
+
+    if (statuses.some((status) => status === 'faild')) {
+      return 'faild'
+    }
+
+    return 'pending'
+  }, [wrappedToken])
+
   return (
     <NavLink style={{ textDecoration: 'none', overflow: 'hidden' }} to={`/security-tokens/${token.id}`}>
-      <MySecTokenCard isPending={wrappedToken.status !== 'approved'}>
+      <MySecTokenCard isPending={status !== 'approved'}>
         <Flex flexDirection={isMobileOnly ? 'column' : 'row'} justifyContent="space-between">
           <Flex
             width="-webkit-fill-available"
@@ -48,11 +73,7 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
             justifyContent={isMobileOnly ? 'flex-start' : 'flex-end'}
             width="-webkit-fill-available"
           >
-            <Status
-              status={wrappedToken.accreditationRequests[0]?.status}
-              amount={balance}
-              decimals={token.token.decimals ?? 18}
-            />
+            <Status status={status} amount={balance} decimals={token.token.decimals ?? 18} />
           </Flex>
         </Flex>
       </MySecTokenCard>
