@@ -6,6 +6,8 @@ export const textDev = {
   ETH_ADDRESS: '0x78140B507Ca3CCA6A2174d8eb5A642F36EBc4051',
   ETH_NET_NAME: 'Ethereum TestNet',
   ETH_ADDRESS_SHORT: '0x78...4051',
+  NFT_DSO_NAME: 'NFTAQATEST',
+
   requests: {
     IXPS_SGD_PAIR: 'app/otc-market/market/61a71463ad10390e378804e3',
     USERS_LIST: 'auth/users/list',

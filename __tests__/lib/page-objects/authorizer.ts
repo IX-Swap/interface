@@ -19,6 +19,13 @@ import {
 } from '../helpers/helpers'
 
 class Authorizer {
+  static createBlockchainAddressByApi = async email => {
+    const { cookies, request } = await getCookies(email)
+    const id = (await request.json()).data._id
+    const createBankAccount = await postRequest(blockchainAddresses, cookies, `accounts/withdrawal-addresses/${id}`)
+    return createBankAccount
+  }
+
   page: any
   constructor(page) {
     this.page = page
@@ -94,13 +101,6 @@ class Authorizer {
     const createNewDSO = (await postRequest(dso, cookies, `issuance/dso/${userId}`)).data.id
     const submitDSO = await postRequest({}, cookies, `issuance/dso/${userId}/${createNewDSO}/submit`, 'PATCH')
     return submitDSO
-  }
-  createBlockchainAddressByApi = async email => {
-    const { cookies, request } = await getCookies(email)
-    const id = (await request.json()).data._id
-    const createBankAccount = await postRequest(blockchainAddresses, cookies, `accounts/withdrawal-addresses/${id}`)
-
-    return createBankAccount
   }
 
   createCashWithdrawalRequestByApi = async () => {

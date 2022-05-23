@@ -6,6 +6,7 @@ export const textStaging = {
   ETH_ADDRESS: '0x5455D6D8ae4263d69b29d1DeD8eCD361b6498446',
   ETH_ADDRESS_SHORT: '0x54...8446',
   ETH_NET_NAME: 'Ethereum Testnet',
+  NFT_DSO_NAME: 'AQANFTTEST',
 
   requests: {
     IXPS_SGD_PAIR: 'app/otc-market/market/61a71463ad10390e378804e3',

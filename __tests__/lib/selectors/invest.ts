@@ -20,7 +20,11 @@ export const invest = {
     VIEW_INVEST: '[data-testid="view-button"]',
     CANCEL_ORDER: '[data-testid="table"] >> text="Cancel"',
     PLACE_ORDER: '[data-testid="submit"]',
-    DOWNLOAD_DOC: 'text="Download Subscription Document"',
+    // DOWNLOAD_DOC: 'text="Download Subscription Document"',
+    DOWNLOAD_DOC: `//*[contains(text(),'Download')]`,
+    CLICKABLE_ETH_ADDRESS: '[data-testid="FileCopyOutlinedIcon"]',
+    METAMASK_ICON: '[aria-label="add-to-metamask"]',
+    CONNECT_TO_METAMASK: '[id="connect-METAMASK"]',
     CREATE_CUSTODY_ADDRESS: 'text="Create custody withdrawal address"',
     SUBMIT_INVEST: 'button >> text="Invest"',
     LEARN_MORE: 'a >> text="Learn More"',
@@ -37,6 +41,8 @@ export const invest = {
     SEARCH_DSO: '[placeholder="Search Offers"]',
     UPLOAD_SIGNED_DOC: '[name="signedSubscriptionDocument"]',
     NUMBER_UNITS: '[id="numberOfUnits"]',
+    TOTAL_AMOUNT: '[id="totalAmount"]',
+    PRICEPER_UNIT: '[id="pricePerUnit"]',
     OTP: '[id="otp"]'
   },
   listBox: {
@@ -45,5 +51,7 @@ export const invest = {
     IXPS_SGD_PAIR: '[href="/app/otc-market/market/61a71463ad10390e378804e3"]',
     PAIR_NAME: '[data-testid="pairName"]',
     PAIR_NAME_VALUE: 'a >> text="AQA##/SGD"'
-  }
+  },
+
+  checkBox: { I_HAVE_READ: '[name="tnc"]' }
 }

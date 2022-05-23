@@ -179,7 +179,6 @@ test.describe.parallel('Edit identities form', () => {
     await navigate(baseCreds.URL, page)
     await auth.loginWithout2fa(forEachEmail, baseCreds.PASSWORD)
     await kycForms.followToViewIdentity()
-    await page.pause()
     const fields = await kycForms.editCorporateInformation()
     await kycForms.checkThatTheChangesSaved(fields)
   })

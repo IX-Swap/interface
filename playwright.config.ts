@@ -31,7 +31,7 @@ const config: PlaywrightTestConfig = {
     timeout: 15000
   },
 
-  globalSetup: require.resolve('./__tests__/lib/global-setup'),
+  // globalSetup: require.resolve('./__tests__/lib/global-setup'),
   use: {
     headless: true,
     viewport: { width: 1900, height: 1000 },

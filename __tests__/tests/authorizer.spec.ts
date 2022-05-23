@@ -23,6 +23,7 @@ import {
   shouldExist
 } from '../lib/helpers/helpers'
 import { issuance } from '../lib/selectors/issuance'
+import { Authorizer } from '../lib/page-objects/authorizer'
 
 test.use({ storageState: './__tests__/lib/storages/authorizerStorageState.json' })
 
@@ -391,7 +392,7 @@ test.describe('Check Blockchain Addresses page', () => {
     const email = emailCreate()
     const identityResponce = await createIdentity(email, identityType, individualBody)
     await approveIdentity(identityResponce.submitId, identityType)
-    await authorizer.createBlockchainAddressByApi(email)
+    await Authorizer.createBlockchainAddressByApi(email)
     rejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
     approved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
     await click(authorizerEl.pages.BLOCKCHAIN_ADDRESSES, page)

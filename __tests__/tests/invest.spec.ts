@@ -1,9 +1,22 @@
 import { baseCreds } from '../lib/helpers/creds'
 import { test } from '../lib/fixtures/fixtures'
-import { click, navigate, shouldExist } from '../lib/helpers/helpers'
+import {
+  click,
+  emailCreate,
+  isDisabledList,
+  navigate,
+  shouldExist,
+  typeText,
+  waitNewPage
+} from '../lib/helpers/helpers'
 import { expect } from '@playwright/test'
 import { text } from '../lib/helpers/text'
 import { invest } from '../lib/selectors/invest'
+import { Authorizer } from '../lib/page-objects/authorizer'
+
+import { approveIdentity, createCorporateIdentity, createIdentity } from '../lib/api/create-identities'
+import * as corporateBody from '../lib/api/corporate-identity'
+import { accountsTab } from '../lib/selectors/accounts'
 
 test.afterEach(async ({ page }) => {
   await page.close()
@@ -14,12 +27,10 @@ test.describe('', () => {
   test.beforeEach(async ({ page }) => {
     await navigate(baseCreds.URL, page)
   })
-  // test.beforeEach(async ({ auth, page }) => {
-  //   await auth.loginWithout2fa(baseCreds.EMAIL_APPROVED, baseCreds.PASSWORD)
-  // })
 
   test.describe('Primary', () => {
     test('Download subscription docs', async ({ investment, context }) => {
+      await investment.goToAvailableDso()
       const pages = await investment.downloadDocument(context)
       expect(pages).toBe(2)
     })
@@ -136,5 +147,70 @@ test.describe('Overview page', () => {
   test('The "My Investments" button should redirect to the "My Investments" page (IXPRIME-201)', async ({ page }) => {
     await click(invest.ACCOUNTS_COMMITMENTS, page)
     await expect(page).toHaveURL(/app\/invest\/commitments$/g)
+  })
+})
+
+test.describe('Invest to NFT', async () => {
+  let forEachEmail: any
+  let corporatesType = 'corporates'
+
+  test.beforeAll(async () => {
+    forEachEmail = emailCreate()
+    const identityResponce = await createCorporateIdentity(forEachEmail, corporatesType, corporateBody)
+    await approveIdentity(identityResponce.submitId, corporatesType)
+    await Authorizer.createBlockchainAddressByApi(forEachEmail)
+  })
+
+  test.beforeEach(async ({ auth, page, investment }) => {
+    await navigate(baseCreds.URL, page)
+    await auth.loginWithout2fa(forEachEmail, baseCreds.PASSWORD)
+    await investment.goToAvailableDso(text.NFT_DSO_NAME)
+    const fields = await isDisabledList(
+      [invest.fields.NUMBER_UNITS, invest.fields.PRICEPER_UNIT, invest.fields.TOTAL_AMOUNT],
+      page
+    )
+    expect(fields, 'Fields are not disabled').toStrictEqual([true, true, true])
+  })
+
+  test("Test the ability to Invest to NFT's token if User has no cash (IXPRIME-469)", async ({ investment, page }) => {
+    await investment.investToNFT()
+  })
+
+  test('Download subscription docs (IXPRIME-394)', async ({ investment, context }) => {
+    await investment.makeDeposit(forEachEmail)
+    const pages = await investment.downloadDocument(context)
+    expect(pages).toBe(2)
+  })
+
+  test("Test the ability to Invest to NFT's token (IXPRIME-390)", async ({ investment, page }) => {
+    await investment.investToNFT()
+  })
+
+  test('The invest button should be disabled (IXPRIME-399)', async ({ page }) => {
+    const button = await isDisabledList([invest.buttons.SUBMIT_INVEST], page)
+    expect(button, 'The Invest button is not disabled').toStrictEqual([true])
+  })
+
+  test("Test the ability to Cancel Invest to NFT's token (IXPRIME-397)", async ({ page }) => {
+    await click(accountsTab.buttons.CANCEL, page)
+    await expect(page).toHaveURL(/app\/invest\/offerings\/\S+\/view/g)
+  })
+
+  test('Test the ability to "Copy to the clipboard" button (IXPRIME-391)', async ({ investment, page }) => {
+    await click(invest.buttons.CLICKABLE_ETH_ADDRESS, page)
+    const otpValue = await investment.getValueFromOTP()
+    expect(otpValue).toBe('0xCD21c24DFDa445BAE7A25e6769A1A42c5C19a510') //example
+  })
+
+  test('Test the ability to Add Your Metamask Wallet (IXPRIME-398)', async ({ page, context }) => {
+    const secondPage = await waitNewPage(context, page, accountsTab.buttons.ADD_ADDRESS)
+    await expect(secondPage).toHaveURL(/app\/accounts\/withdrawal-addresses\/create/g)
+    await shouldExist(accountsTab.fields.BLOCKCHAIN_ADDRESS, secondPage)
+  })
+
+  test.only('Test the ability to Add to Metamask (IXPRIME-465)', async ({ investment, page }) => {
+    await click(invest.buttons.METAMASK_ICON, page)
+    await click(invest.buttons.CONNECT_TO_METAMASK, page)
+    await expect(page).toHaveURL('https://metamask.io/')
   })
 })

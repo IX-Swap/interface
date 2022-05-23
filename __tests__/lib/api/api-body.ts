@@ -1,6 +1,12 @@
 const time6 = Date.now().toString().slice(-6)
 import { baseCreds, setENV } from '../helpers/creds'
 
+export const sendMoneyToEmail = {
+  email: 'some@gmail.com',
+  amount: 1000000,
+  currency: 'USD'
+}
+
 export const bankAccount = {
   bankName: 'Teegan Ward',
   accountHolderName: 'Hayley Solis',
