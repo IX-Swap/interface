@@ -32,7 +32,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
     <div>
       {description && (
         <FormCard style={{ padding: 24, marginBottom: 24 }}>
-          <TYPE.title6 fontSize={15} marginBottom="16px" style={{ textTransform: 'uppercase' }} color={'bg14'}>
+          <TYPE.title6 fontSize={15} marginBottom="16px" style={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }} color={'bg14'}>
             <Trans>Reason of changes requested</Trans>
           </TYPE.title6>
 
