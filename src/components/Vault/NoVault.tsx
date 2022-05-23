@@ -30,6 +30,7 @@ interface Props {
   platform: SecTokenPlatform | null
   token: any
   userHaveValidAccount: boolean
+  message: string
 }
 
 function getStatusMessage(
@@ -64,6 +65,7 @@ export const NoVault = ({
   platform,
   token,
   userHaveValidAccount,
+  message,
 }: Props) => {
   const symbolText = useMemo(() => token?.ticker ?? currency?.name ?? '', [currency, token])
   const { account } = useActiveWeb3React()
@@ -73,6 +75,7 @@ export const NoVault = ({
   const tokenId = useSecTokenId({ currencyId })
 
   const statuses = [custodianStatus, brokerDealerStatus]
+
   return (
     <NoVaultWrapper>
       <NoVaultTitle style={{ order: 1, zIndex: 4 }}>
@@ -110,7 +113,11 @@ export const NoVault = ({
           </VaultStatusDescription>
 
           {(custodianStatus || brokerDealerStatus) && (
-            <AccreditationStatus custodianStatus={custodianStatus} brokerDealerStatus={brokerDealerStatus} />
+            <AccreditationStatus
+              message={message}
+              custodianStatus={custodianStatus}
+              brokerDealerStatus={brokerDealerStatus}
+            />
           )}
         </>
       )}

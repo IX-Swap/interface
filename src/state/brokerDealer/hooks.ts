@@ -39,3 +39,11 @@ export function useFetchBrokerDealers() {
   )
   return callback
 }
+
+export const useClearBrokerDealers = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(() => {
+    dispatch(getBrokerDealers.fulfilled({ data: [] }))
+  }, [dispatch])
+  return callback
+}

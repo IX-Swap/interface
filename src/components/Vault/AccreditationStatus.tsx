@@ -14,10 +14,15 @@ import Column from 'components/Column'
 interface Props {
   brokerDealerStatus: string
   custodianStatus: string
+  message: string
 }
 
-export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus }: Props) => {
+export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus, message }: Props) => {
   const statuses = [brokerDealerStatus, custodianStatus]
+
+  const needReason = [AccreditationStatusEnum.DECLINED, AccreditationStatusEnum.FAILED].some((status) =>
+    statuses.includes(status)
+  )
 
   const getStatusInfo = useCallback((status) => {
     switch (status) {
@@ -78,6 +83,16 @@ export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus }: Pro
           )}
         </Box>
       </RowCenter>
+      {message && needReason && (
+        <RowCenter flexWrap="wrap" marginTop="8px">
+          <StatusTitle color="error">
+            <Trans>Reason:</Trans>
+          </StatusTitle>
+          <Box marginLeft="13px" display="flex" alignItems="center">
+            <TYPE.titleSmall>{message}</TYPE.titleSmall>
+          </Box>
+        </RowCenter>
+      )}
     </Column>
   )
 }

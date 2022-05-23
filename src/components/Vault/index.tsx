@@ -24,6 +24,7 @@ export const Vault = ({ currency, token }: Props) => {
     isApproved: vaultExists,
     accreditationRequest,
     platform,
+    message,
   } = useAccreditationStatus((currency as any)?.address || 0)
   const newToken = { ...currency, isToken: true }
   const { kyc } = useKYCState()
@@ -76,6 +77,7 @@ export const Vault = ({ currency, token }: Props) => {
               accreditationRequest={accreditationRequest}
               platform={platform}
               userHaveValidAccount={userHaveValidAccount}
+              message={message}
             />
           )}
           {vaultExists && (
@@ -84,6 +86,7 @@ export const Vault = ({ currency, token }: Props) => {
         </>
       ) : (
         <NoVault
+          message={message}
           currency={currency}
           token={token}
           custodianStatus={custodianStatus}

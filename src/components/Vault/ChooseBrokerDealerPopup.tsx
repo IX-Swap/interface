@@ -8,16 +8,17 @@ import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import Row, { RowBetween } from 'components/Row'
+import Row, { RowBetween, RowCenter } from 'components/Row'
 import Tooltip from 'components/Tooltip'
 import { useCurrency } from 'hooks/Tokens'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
-import { useBrokerDealersState, useFetchBrokerDealers } from 'state/brokerDealer/hooks'
+import { useBrokerDealersState, useFetchBrokerDealers, useClearBrokerDealers } from 'state/brokerDealer/hooks'
 import { useFetchUserSecTokenListCallback, usePassAccreditation, useUserState } from 'state/user/hooks'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding, CloseIcon, TYPE } from 'theme'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
+import { useActiveWeb3React } from 'hooks/web3'
 
 const KycSourceContainer = styled.div`
   width: 100%;
@@ -220,6 +221,8 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const isOpen = useModalOpen(ApplicationModal.CHOOSE_BROKER_DEALER)
   const toggle = useChooseBrokerDealerModalToggle()
 
+  const { chainId } = useActiveWeb3React()
+
   const { brokersData: brokerDealerPairs, brokersLoading, brokersError } = useBrokerDealersState()
   const [source, setSource] = useState<KycSource | undefined>(undefined)
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
@@ -228,6 +231,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   const { kyc } = useKYCState()
+  const clearBrokerDealers = useClearBrokerDealers()
 
   useEffect(() => {
     if (isOpen) {
@@ -238,10 +242,16 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   }, [isOpen, toggle])
 
   useEffect(() => {
-    if (tokenId) {
+    if (chainId) {
+      clearBrokerDealers()
+    }
+  }, [chainId, clearBrokerDealers])
+
+  useEffect(() => {
+    if (tokenId && brokerDealerPairs.length === 0) {
       fetchBrokerDealerPairs(tokenId)
     }
-  }, [tokenId, fetchBrokerDealerPairs])
+  }, [tokenId, fetchBrokerDealerPairs, brokerDealerPairs])
 
   useEffect(() => {
     if (brokerDealerPairs) {
@@ -349,12 +359,19 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 </IconWrapper>
               </BrokerDealersGrid>
             ))}
+            {brokerDealerPairs?.length === 0 && (
+              <RowCenter marginTop="8px" padding="0px 2rem">
+                No pairs available for this network, please change it.
+              </RowCenter>
+            )}
           </div>
           <StartAccreditationButtonWrapper>
             <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
               {!loadingAccreditation && (
                 <ButtonIXSWide
-                  disabled={loadingAccreditation || kyc?.status !== KYCStatuses.APPROVED}
+                  disabled={
+                    loadingAccreditation || kyc?.status !== KYCStatuses.APPROVED || brokerDealerPairs?.length === 0
+                  }
                   style={{ textTransform: 'unset' }}
                   onClick={() => {
                     passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)

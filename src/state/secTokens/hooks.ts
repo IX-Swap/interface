@@ -161,6 +161,7 @@ export function useAccreditationStatus(currencyId?: string) {
       platform,
       custodianStatus: accreditationRequest?.custodianStatus ?? '',
       brokerDealerStatus: accreditationRequest?.brokerDealerStatus ?? '',
+      message: accreditationRequest?.message ?? '',
     }
   }, [tokenInfo?.accreditationRequest, tokenInfo?.platform])
 }
