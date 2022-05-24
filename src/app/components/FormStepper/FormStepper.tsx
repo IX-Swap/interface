@@ -1,7 +1,7 @@
 import { Grid, Paper, Step, useMediaQuery } from '@mui/material'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import React, { ComponentType, useEffect, useMemo, useState } from 'react'
+import React, { ComponentType, useMemo } from 'react'
 import { MutationResultPair } from 'react-query'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
@@ -79,14 +79,15 @@ export const FormStepper = (props: FormStepperProps) => {
       (step: FormStepperStep) => step.label === stepFilter
     )
 
-    return stepByFilterIndex > -1 && completed.includes(stepByFilterIndex)
-      ? stepByFilterIndex
-      : undefined
+    return stepByFilterIndex > -1 ? stepByFilterIndex : undefined
   }
 
-  const [activeStep, setActiveStep] = useState<number>(
+  const activeStep: number =
     getStepFilterValue() ?? defaultActiveStep ?? data?.step ?? 0
-  )
+
+  const setActiveStep = (step: number) => {
+    updateFilter('step', steps[step]?.label)
+  }
 
   const handleStepButtonClick = (step: number) => () => {
     if (nonLinear) {
@@ -105,11 +106,6 @@ export const FormStepper = (props: FormStepperProps) => {
       setCompleted([...completed, activeStep])
     }
   }
-
-  useEffect(() => {
-    updateFilter('step', steps[activeStep]?.label)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeStep])
 
   const getStepStatus = (
     step: FormStepperStep,

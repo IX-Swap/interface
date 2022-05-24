@@ -10,6 +10,7 @@ import { VSpacer } from 'components/VSpacer'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
 import { isSuccessRequest } from 'helpers/strings'
+import { SaveOnNavigate } from 'app/components/FormStepper/SaveOnNavigate'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -104,6 +105,10 @@ export const FormStep = (props: FormStepProps) => {
       allowInvalid
       id={`${step.formId ?? 'form'}-${index}`}
     >
+      <SaveOnNavigate
+        transformData={step.getRequestPayload}
+        mutation={saveMutation}
+      />
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='small' />
 
