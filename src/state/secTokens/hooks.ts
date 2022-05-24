@@ -44,8 +44,6 @@ export const useAreBothSecTokens = ({ address0, address1 }: { address0?: string;
   return useMemo(() => sec0 && sec1, [sec0, sec1])
 }
 export const useSecTokenId = ({ currencyId }: { currencyId?: string }): number | undefined => {
-  
-  
   const { secTokens } = useSecTokens()
   const token = secTokens[currencyId ?? '']
 
