@@ -50,3 +50,11 @@ export interface UnmatchedOTCOrder {
   user: OTCParticipant
   orderType: 'SELL' | 'BUY'
 }
+
+export interface CreateOTCOrderArgs {
+  orderType: 'SELL' | 'BUY'
+  price: number
+  amount: number
+  ethAddress: string
+  pair: string
+}

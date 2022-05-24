@@ -2,22 +2,25 @@ import { Grid } from '@mui/material'
 import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { useCurrencyBalance } from 'app/pages/exchange/hooks/useCurrencyBalance'
-import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
-import { useSymbol } from 'app/pages/exchange/hooks/useSymbol'
 import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { TradingOrders } from './Orders/TradingOrders'
-import { PlaceOrderSuffix } from './PlaceOrderSuffix'
+import {
+  orderPayloadtoOTCAdapt,
+  useCreateOTCOrder
+} from 'app/pages/invest/hooks/useCreateOTCOrder'
+import { useFeaturedPair } from 'app/pages/invest/hooks/useFeaturedPair'
+import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/TradingOrders'
+import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
 
 export const TradingBody = () => {
   const classes = useStyles()
   const { pairId } = useParams<{ pairId: string }>()
-  const { data } = useMarketList()
-  const { symbol } = useSymbol(pairId, data)
+  const { data: pair } = useFeaturedPair()
+  const symbol = pair?.name ?? ''
   const { data: tokenBalance } = useTokenBalance(pairId)
   const { account } = useActiveWeb3React()
   const isWhitelisted = useWithdrawalAddressAdded(account)
@@ -25,8 +28,10 @@ export const TradingBody = () => {
   const tokenName = symbol.split('/')[0]
 
   const currencyBalance = useCurrencyBalance(currencyName)
+  const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
-    return await new Promise(resolve => resolve(undefined))
+    const args = orderPayloadtoOTCAdapt({ values, account })
+    return await create(args)
   }
   const isFetching = false
   const createOrderStatus = ''
@@ -49,7 +54,7 @@ export const TradingBody = () => {
           isFetching={isFetching}
           currencyLabel={currencyName}
           tokenLabel={tokenName}
-          isDisabled={!isWhitelisted}
+          isDisabled={!isWhitelisted || isLoading}
           currencyBalance={currencyBalance}
           suffix={
             <PlaceOrderSuffix isWhiteListed={isWhitelisted} account={account} />
