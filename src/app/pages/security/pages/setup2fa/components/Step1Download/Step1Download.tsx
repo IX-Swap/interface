@@ -55,6 +55,7 @@ export const Step1Download = () => {
               <Link
                 href='https://apps.apple.com/us/app/google-authenticator/id388497605'
                 target='_blank'
+                className={classes.link}
               >
                 <AppStoreLogo />
               </Link>
@@ -63,6 +64,7 @@ export const Step1Download = () => {
               <Link
                 href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en'
                 target='_blank'
+                className={classes.link}
               >
                 <GooglePlayLogo />
               </Link>
