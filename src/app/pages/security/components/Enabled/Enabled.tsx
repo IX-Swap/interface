@@ -34,7 +34,7 @@ export const Enabled = ({ update2FA = false }: EnabledProps) => {
       </Grid>
       <Grid item>
         <Typography align='center' variant='body1' className={classes.text}>
-          Your account is now protected by Two-Factor Authentication (2FA)
+          Your account is now protected by Two-Factor Authentication
         </Typography>
       </Grid>
       <Grid item>
