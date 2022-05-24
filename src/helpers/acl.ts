@@ -77,12 +77,6 @@ export const useIsAccredited = () => {
   return hasRole(user.roles, AppRole.ACCREDITED)
 }
 
-export const useIsEnabled2FA = () => {
-  const user = useCachedUser()
-
-  return user?.totpConfirmed ?? false
-}
-
 export const useHasSpecialRole = () => {
   const isAdmin = useIsAdmin()
   const isAuthorizer = useIsAuthorizer()

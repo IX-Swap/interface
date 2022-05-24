@@ -1,5 +1,4 @@
 import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
-import { SecurityRoute } from 'app/pages/security/router/config'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { useIsAdmin } from 'helpers/acl'
@@ -9,28 +8,12 @@ export const useOnboardingDialog = () => {
   const { getIsJourneyCompleted } = useOnboardingJourneys()
   const isAdmin = useIsAdmin()
 
-  const showEnable2FADialog = () => {
-    !isAdmin &&
-      showOnboardingDialog({
-        title: 'Secure Your Account!',
-        message: [
-          'Increase your account security by enabling two factor authentication when signing into platform'
-        ],
-        action: SecurityRoute.setup2fa,
-        actionLabel: 'Enable 2FA',
-        closeLabel: 'Skip',
-        closeArrow: false
-      })
-  }
-
   const showCreateAccountDialog = () => {
     !isAdmin &&
       showOnboardingDialog({
         title: 'Create an Identity',
-        message: [
-          'Please create your identity first before you can manage your Accounts.'
-        ],
-        closeLabel: 'Okay'
+        message: ['To manage your account please create your identity first'],
+        closeLabel: 'Proceed Now'
       })
   }
 
@@ -43,20 +26,6 @@ export const useOnboardingDialog = () => {
             `In compliance with our KYC/AML process. Please create your ${identityType} identity.`
           ],
           closeLabel: 'Okay',
-          closeArrow: true
-        })
-    }
-  }
-
-  const showPostIdentityCreateDialog = (identityType: IdentityType) => {
-    if (!getIsJourneyCompleted(identityType)) {
-      !isAdmin &&
-        showOnboardingDialog({
-          title: 'Identity Created!',
-          message: [
-            `Thank you for creating your ${identityType} identity. We will review your documents and notify your identity status.`
-          ],
-          closeLabel: 'Ok',
           closeArrow: true
         })
     }
@@ -86,26 +55,10 @@ export const useOnboardingDialog = () => {
       })
   }
 
-  const showOnboardingCompleteDialog = () => {
-    !isAdmin &&
-      showOnboardingDialog({
-        title: 'Onboarding Complete!',
-        message: [
-          'You have complete the Onboarding journey. Our authorizer has approved your identity. You can start looking our deals in the “Invest” panel. Happy Investing!'
-        ],
-        actionLabel: 'Start Investing',
-        action: ''
-        // action: investPaths.landing
-      })
-  }
-
   return {
-    showEnable2FADialog,
     showCreateAccountDialog,
     showPreIdentityCreateDialog,
-    showPostIdentityCreateDialog,
     showCreateDetailsOfIssuanceDialog,
-    showSubmitDetailsOfIssuanceDialog,
-    showOnboardingCompleteDialog
+    showSubmitDetailsOfIssuanceDialog
   }
 }

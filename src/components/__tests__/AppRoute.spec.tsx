@@ -9,7 +9,10 @@ import { AppRoute as AppPath } from 'app/router/config'
 import * as useIsAccredited from 'helpers/acl'
 
 describe('AppRoute', () => {
+  const initialPath = '/'
+
   beforeEach(() => {
+    history.push(initialPath)
     const useOnboardingDialogResponse = {
       showEnable2FADialog: () => {},
       showCreateAccountDialog: () => {}
@@ -56,7 +59,7 @@ describe('AppRoute', () => {
     expect(history.location.pathname).toBe(AppPath.identity)
   })
 
-  it('redirects to educationCentre page when is2FAEnabled is false', () => {
+  it('does not redirect when isAccredited is true', () => {
     jest
       .spyOn(useCachedUser, 'useCachedUser')
       .mockImplementation(() => user as any)
@@ -65,16 +68,12 @@ describe('AppRoute', () => {
       .spyOn(useIsAccredited, 'useIsAccredited')
       .mockImplementation(() => true as any)
 
-    jest
-      .spyOn(useIsAccredited, 'useIsEnabled2FA')
-      .mockImplementation(() => false as any)
-
     render(
       <AppRoute path={AppPath.issuance}>
         <div>App</div>
       </AppRoute>
     )
 
-    expect(history.location.pathname).toBe(AppPath.identity)
+    expect(history.location.pathname).toBe(initialPath)
   })
 })
