@@ -1,9 +1,9 @@
 import { Grid, Tab, Tabs } from '@mui/material'
-import { PastOrderTable } from 'app/pages/exchange/components/PastOrderTable/PastOrderTable'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { TradingOpenOrders } from './OpenOrders/TradingOpenOrders'
+import { PastOTCOrders } from './PastOrders/PastOTCOrders'
 
 export const TradingOrders = () => {
   const [selectedIdx, setSelectedIdx] = useState(0)
@@ -26,7 +26,7 @@ export const TradingOrders = () => {
       </TabPanel>
 
       <TabPanel pt={3} value={selectedIdx} index={1}>
-        <PastOrderTable pairId={pairId} />
+        <PastOTCOrders pairId={pairId} />
       </TabPanel>
     </Grid>
   )

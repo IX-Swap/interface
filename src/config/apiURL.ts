@@ -312,6 +312,7 @@ export const exchangeMarket = {
 }
 export const trading = {
   getMyOrdersList: `otc/order/list/my`,
+  getMyPastOrders: `otc/order/list/my/past`,
   getConfirmedOrders: `/otc/order/list/confirm`,
   cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`,
   confirmOTCOrder: (orderId: string) => `/otc/order/confirm/${orderId}`,

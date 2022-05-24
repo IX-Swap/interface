@@ -17,7 +17,6 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { OTCOrder } from 'types/otcOrder'
-import { orders } from '__fixtures__/otcOrders'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
 
 export const TradingOpenOrders = () => {
@@ -31,13 +30,7 @@ export const TradingOpenOrders = () => {
       <TableView<OTCOrder>
         name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId)}
         uri={trading.getMyOrdersList}
-        fakeItems={orders}
         size='small'
-        // filter={
-        //   {
-        //     orderType: 'OPEN'
-        //   } as any
-        // }
         columns={columns}
         noHeader={isMiniLaptop}
         themeVariant={'primary'}
