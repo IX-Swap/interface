@@ -46,6 +46,7 @@ export default function CustodianV2() {
     }
     if (isLoggedIn) {
       fetchMyTokens()
+      setNoFilteredTokens([])
     }
   }, [userAccount, isLoggedIn])
 
@@ -65,14 +66,16 @@ export default function CustodianV2() {
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
   const approvedSecTokens = mySecTokens
     ? mySecTokens.filter(
-        ({ token }: any) =>
-          token.accreditationRequests?.length > 0 && token.accreditationRequests[0]?.status === 'approved'
+        ({ token: { accreditationRequest } }: any) =>
+          accreditationRequest?.brokerDealerStatus === 'approved' &&
+          accreditationRequest?.custodianStatus === 'approved'
       )
     : []
   const pendingSecTokens = mySecTokens
     ? mySecTokens.filter(
-        ({ token }: any) =>
-          token.accreditationRequests?.length > 0 && token.accreditationRequests[0].status !== 'approved'
+        ({ token: { accreditationRequest } }: any) =>
+          accreditationRequest?.brokerDealerStatus !== 'approved' ||
+          accreditationRequest?.custodianStatus !== 'approved'
       )
     : []
 

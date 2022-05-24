@@ -1,9 +1,8 @@
+import { useMemo } from 'react'
 import { Pair } from '@ixswap1/v2-sdk'
-import { BIG_INT_ZERO } from 'constants/misc'
+
 import { useV2Pairs } from 'hooks/useV2Pairs'
 import { useActiveWeb3React } from 'hooks/web3'
-import JSBI from 'jsbi'
-import { useMemo } from 'react'
 import { useTrackedTokenPairs, toV2LiquidityToken } from 'state/user/hooks'
 import { useTokenBalancesWithLoadingIndicator } from 'state/wallet/hooks'
 

@@ -1,17 +1,14 @@
+import React, { FC, useEffect, useCallback } from 'react'
+import styled from 'styled-components'
+
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Body, Container } from 'pages/Admin'
-import React, { FC, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import { Flex } from 'rebass'
 import { useFetchMyCollections, useNFTState } from 'state/nft/hooks'
-import { Edit2 } from 'react-feather'
 import { StyledInternalLink, TYPE } from 'theme'
 import { routes } from 'utils/routes'
-import useTheme from 'hooks/useTheme'
-import styled from 'styled-components'
 import { NFTCollectionImage } from 'state/nft/types'
 import { useUserisLoggedIn } from 'state/auth/hooks'
 import AppBody from 'pages/AppBody'
@@ -30,7 +27,6 @@ import {
   MoreActions,
 } from './styleds'
 import { NoCollections } from './NoCollections'
-import { ImageLoader } from 'components/ImageLoader'
 
 const LoaderWrapper = styled.div`
   display: flex;
@@ -61,7 +57,6 @@ const NFTCollections: FC = () => {
   const isLoggedIn = useUserisLoggedIn()
   const fetchMyCollections = useFetchMyCollections()
   const { myCollections, collectionsLoading } = useNFTState()
-  const theme = useTheme()
 
   //const blurred = chainId !== SUPPORTED_TGE_CHAINS.KOVAN
 
@@ -79,7 +74,7 @@ const NFTCollections: FC = () => {
     }
 
     onSetCollectionState()
-  }, [isLoggedIn, chainId])
+  }, [isLoggedIn, chainId, onSetCollectionState])
 
   if (!account) return <NFTConnectWallet />
   return (

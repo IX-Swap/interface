@@ -1,4 +1,10 @@
+import React, { useRef } from 'react'
 import { Trans } from '@lingui/macro'
+import { darken } from 'polished'
+import { NavLink } from 'react-router-dom'
+import { css } from 'styled-components'
+import styled from 'styled-components/macro'
+
 import { ChevronElement } from 'components/ChevronElement'
 import Column from 'components/Column'
 import { Line } from 'components/Line'
@@ -9,16 +15,12 @@ import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
 import { useActiveWeb3React } from 'hooks/web3'
 import { KYCStatuses } from 'pages/KYC/enum'
-import { darken } from 'polished'
-import React, { useRef } from 'react'
-import { NavLink } from 'react-router-dom'
 import { useKYCState } from 'state/kyc/hooks'
-import { css } from 'styled-components'
-import styled from 'styled-components/macro'
 import { ExternalLink, TYPE } from 'theme'
 import { isDevelopment } from 'utils/isEnvMode'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
+
 import Row, { RowFixed } from '../Row'
 
 const activeClassName = 'ACTIVE'
@@ -93,8 +95,7 @@ export const HeaderLinks = () => {
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const isKycApproved = kyc?.data?.status === KYCStatuses.APPROVED ?? false
-  const isDev = ['test development env', 'development'].includes(process.env.NODE_ENV)
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
   return (
@@ -113,7 +114,7 @@ export const HeaderLinks = () => {
 
       {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
-          <Trans>Liquidity pools</Trans>
+          <Trans>Liquidity Pools</Trans>
         </StyledNavLink>
       )}
 

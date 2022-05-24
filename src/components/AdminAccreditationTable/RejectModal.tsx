@@ -11,11 +11,12 @@ import { useDeclineAccreditation } from 'state/admin/hooks'
 
 interface Props {
   isModalOpen: boolean
+  searchValue: string
   closeModal: () => void
   id: number
 }
 
-export const RejectModal = ({ isModalOpen, closeModal, id }: Props) => {
+export const RejectModal = ({ searchValue, isModalOpen, closeModal, id }: Props) => {
   const declineAccreditation = useDeclineAccreditation()
   const [value, handleValue] = useState('Your KYC was rejected. Please contact us if you have any questions.')
   const [error, handleError] = useState('')
@@ -38,7 +39,7 @@ export const RejectModal = ({ isModalOpen, closeModal, id }: Props) => {
 
   const onReject = async () => {
     try {
-      await declineAccreditation({ id, message: value })
+      await declineAccreditation({ id, message: value }, searchValue)
       closeModal()
     } catch (e) {}
   }

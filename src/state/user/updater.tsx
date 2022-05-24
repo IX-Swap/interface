@@ -15,12 +15,14 @@ export default function Updater(): null {
   const { account } = useActiveWeb3React()
   const { refreshToken } = useAuthState()
   const savedAccount = useUserAccountState()
+
   const fetchListCallback = useCallback(async () => {
     if (!isWindowVisible || !savedAccount) {
       return
     }
-    fetchList().catch((error) => console.debug('interval user sec token list fetching error', error))
-  }, [fetchList, isWindowVisible, account, savedAccount])
+    fetchList()
+  }, [fetchList, isWindowVisible, savedAccount])
+
   useInterval(fetchListCallback, account && refreshToken ? 1000 * 60 * 1 : null)
   // keep dark mode in sync with the system
   useEffect(() => {

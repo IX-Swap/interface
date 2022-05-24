@@ -1,4 +1,7 @@
+import React, { useEffect, useMemo, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
+import { useDispatch } from 'react-redux'
+
 import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
@@ -9,8 +12,6 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { SupportedChainId } from 'constants/chains'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
@@ -21,7 +22,7 @@ import { POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
 import { PERIOD, Tier, TIER_LIMIT } from 'state/stake/reducer'
 import { DesktopAndTablet, MobileOnly, TYPE } from 'theme'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-import { formatNumber } from 'utils/formatNumber'
+
 import { APYPercentage, APYWrapper, RowWithMarginTop, RowWithMarginTopAndBottom, StakingTierCardWrapper } from './style'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
@@ -56,7 +57,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     setIsPoolLimitationLoading(false)
     const filled = poolSizeState[tier.period]
     setLeftToFill(parseFloat(stringLimit) - parseFloat(filled))
-  }, [poolSizeState, tier.period, chainId])
+  }, [poolSizeState, tier.period, chainId, stringLimit])
 
   useEffect(() => {
     if (leftToFill <= 1 && !isPoolLimitationLoading) {
@@ -64,7 +65,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     } else {
       setIsLimitReached(false)
     }
-  }, [leftToFill])
+  }, [leftToFill, isPoolLimitationLoading])
 
   const selectPeriod = () => {
     const periodLegend = {

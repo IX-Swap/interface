@@ -1,4 +1,7 @@
+import React, { useCallback, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
+import styled from 'styled-components'
+
 import { ButtonIXSWide } from 'components/Button'
 import { StakeModalTop } from 'components/earn/styled'
 import Row, { RowBetween } from 'components/Row'
@@ -9,13 +12,13 @@ import { useCurrency } from 'hooks/Tokens'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
-import React, { useCallback, useEffect, useState } from 'react'
 import { useUnstakingState } from 'state/stake/unstake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
 import { floorTo4Decimals, formatAmount } from 'utils/formatCurrencyAmount'
+
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
+
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking

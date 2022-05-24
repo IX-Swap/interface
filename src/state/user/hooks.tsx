@@ -1,22 +1,23 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Percent, Token } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
-import { KYC_STATUSES } from 'components/AdminKyc/StatusCell'
+import JSBI from 'jsbi'
+import flatMap from 'lodash.flatmap'
+
 import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
 import useIXSCurrency from 'hooks/useIXSCurrency'
-import JSBI from 'jsbi'
-import flatMap from 'lodash.flatmap'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation } from 'react-router-dom'
 import apiService from 'services/apiService'
 import { auth, broker, kyc, tokens, users } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
 import { LOGIN_STATUS, useLogin, useUserisLoggedIn } from 'state/auth/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { useKYCState } from 'state/kyc/hooks'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
@@ -28,6 +29,7 @@ import { clearSwapState } from 'state/swap/actions'
 import { clearSwapHelperState } from 'state/swapHelper/actions'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
+
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -50,6 +52,7 @@ import {
   updateUserSlippageTolerance,
   getMe,
 } from './actions'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 function serializeToken(token: Token): SerializedToken {
   // TO DO - refactor
@@ -66,15 +69,18 @@ function serializeToken(token: Token): SerializedToken {
 
 function deserializeToken(serializedToken: SerializedToken): Token {
   // TO DO - refactor
-  return serializedToken as Token
 
-  // return new Token(
-  //   serializedToken.chainId,
-  //   serializedToken.address,
-  //   serializedToken.decimals,
-  //   serializedToken.symbol,
-  //   serializedToken.name
-  // )
+  if (!serializedToken.tokenInfo) {
+    return new Token(
+      serializedToken.chainId,
+      serializedToken.address,
+      serializedToken.decimals,
+      serializedToken.symbol,
+      serializedToken.name
+    )
+  }
+
+  return new WrappedTokenInfo(serializedToken.tokenInfo, serializedToken.list)
 }
 
 export function useIsDarkMode(): boolean {
@@ -353,7 +359,7 @@ export function useTrackedTokenPairs(): [Token, Token][] {
   return useMemo(() => {
     // dedupes pairs of tokens in the combined list
     const keyed = combinedList.reduce<{ [key: string]: [Token, Token] }>((memo, [tokenA, tokenB]) => {
-      const sorted = tokenA.sortsBefore(tokenB)
+      const sorted = tokenA?.sortsBefore?.(tokenB)
       const key = sorted ? `${tokenA.address}:${tokenB.address}` : `${tokenB.address}:${tokenA.address}`
       if (memo[key]) return memo
       memo[key] = sorted ? [tokenA, tokenB] : [tokenB, tokenA]
@@ -419,7 +425,6 @@ export function useFetchUserSecTokenListCallback(): (sendDispatch?: boolean) => 
           return tokenList
         })
         .catch((error) => {
-          console.debug(`Failed to get sec token list`, error)
           sendDispatch && dispatch(fetchUserSecTokenList.rejected({ errorMessage: error.message }))
           throw error
         })
@@ -457,7 +462,7 @@ export function usePassAccreditation(
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
   const showError = useShowError()
-  const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
+  const { brokerDealerStatus, custodianStatus, accreditationRequest } = useAccreditationStatus(currencyId)
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
     async (tokenId: number, brokerDealerPairId: number, isKyc: boolean) => {
@@ -468,8 +473,8 @@ export function usePassAccreditation(
           await chooseBrokerDealer({ pairId: brokerDealerPairId })
           if (
             accreditationRequest &&
-            accreditationStatus &&
-            ERROR_ACCREDITATION_STATUSES.includes(accreditationStatus)
+            (ERROR_ACCREDITATION_STATUSES.includes(brokerDealerStatus) ||
+              ERROR_ACCREDITATION_STATUSES.includes(custodianStatus))
           ) {
             await restartAccreditation({ accreditationId: accreditationRequest.id })
           }
@@ -484,12 +489,21 @@ export function usePassAccreditation(
         toggle()
         onSuccess && onSuccess()
       } catch (error) {
-        console.debug(`Failed to pass accreditation`, error)
         showError(t`Failed to pass accreditation ${String((error as any)?.message)}`)
         dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },
-    [dispatch, login, fetchTokens, toggle, showError, accreditationRequest, accreditationStatus, onSuccess]
+    [
+      dispatch,
+      login,
+      fetchTokens,
+      toggle,
+      showError,
+      accreditationRequest,
+      brokerDealerStatus,
+      custodianStatus,
+      onSuccess,
+    ]
   )
 }
 
@@ -513,7 +527,7 @@ export function useAccount() {
     if (loginError) {
       dispatch(saveAccount({ account: '' }))
     }
-  }, [loginError])
+  }, [loginError, dispatch])
 
   useEffect(() => {
     const timerFunc = setTimeout(checkAuthError, 20000)
@@ -549,7 +563,7 @@ export function useAccount() {
     if (!token && account && !triggeredAuth) {
       authenticate()
     }
-  }, [token, account, triggeredAuth])
+  }, [token, account, triggeredAuth, authenticate])
 
   useEffect(() => {
     if (account && account !== savedAccount) {
@@ -558,7 +572,7 @@ export function useAccount() {
       dispatch(clearSwapState())
       dispatch(clearSwapHelperState())
     }
-  }, [account, savedAccount])
+  }, [account, savedAccount, dispatch])
 
   useEffect(() => {
     if (token) {
@@ -567,13 +581,13 @@ export function useAccount() {
   }, [token, getUserSecTokens])
 
   useEffect(() => {
-    if (kyc?.data?.status !== KYC_STATUSES.APPROVED && accountChanged && !loadingRequest) {
+    if (kyc?.status !== KYCStatuses.APPROVED && accountChanged && !loadingRequest) {
       if (pathname !== '/kyc') {
         history.push('/kyc')
       }
       handleAccountChanged(false)
     }
-  }, [kyc, accountChanged, loadingRequest, pathname])
+  }, [kyc, accountChanged, loadingRequest, pathname, history])
 }
 
 export const me = async () => {

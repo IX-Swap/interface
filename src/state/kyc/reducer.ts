@@ -1,12 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { postLogin } from 'state/auth/actions'
 
-import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
+import { createKYC, fetchGetMyKyc, MyKyc, updateKYC } from './actions'
 
 export interface KYCState {
   loadingRequest: boolean
   error: any | null
-  kyc: any | null
+  kyc: MyKyc | null
 }
 
 const initialState: KYCState = {

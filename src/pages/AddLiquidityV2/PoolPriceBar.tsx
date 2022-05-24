@@ -1,13 +1,22 @@
-import { Currency, Percent, Price } from '@ixswap1/sdk-core'
+import { Currency, Percent } from '@ixswap1/sdk-core'
 import React, { useContext } from 'react'
 import { Text } from 'rebass'
-import { ThemeContext } from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { AutoColumn } from '../../components/Column'
 import { AutoRow } from '../../components/Row'
 import { ONE_BIPS } from '../../constants/misc'
 import { Field } from '../../state/mint/actions'
 import { TYPE } from '../../theme'
+
+const Row = styled(AutoRow)`
+  justify: space-around;
+
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    justify-content: start;
+  `};
+`
 
 export function PoolPriceBar({
   currencies,
@@ -24,7 +33,7 @@ export function PoolPriceBar({
   const theme = useContext(ThemeContext)
   return (
     <AutoColumn gap="md">
-      <AutoRow justify="space-around" gap="4px">
+      <Row justify="space-around" gap="4px">
         <AutoColumn justify="center">
           <TYPE.black>{formatAmount(+(price?.toSignificant(6) || 0)) ?? '-'}</TYPE.black>
           <Text fontWeight={500} fontSize={14} color={theme.text2} pt={1}>
@@ -48,7 +57,7 @@ export function PoolPriceBar({
             Share of Pool
           </Text>
         </AutoColumn>
-      </AutoRow>
+      </Row>
     </AutoColumn>
   )
 }

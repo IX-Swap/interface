@@ -17,6 +17,7 @@ import { Pagination } from './Pagination'
 import { Search } from './Search'
 import { KycSource } from './KycSource'
 import { KycReviewModal } from 'components/KycReviewModal'
+import { NoData } from 'components/Whitelist/styleds'
 
 const headerCells = [
   t`Wallet address`,
@@ -30,6 +31,7 @@ const headerCells = [
 interface RowProps {
   item: AccreditationItem
   openReviewModal: (kyc: KycItem) => void
+  searchValue: string
 }
 
 const Header = () => {
@@ -42,7 +44,7 @@ const Header = () => {
   )
 }
 
-const Row: FC<RowProps> = ({ item, openReviewModal }: RowProps) => {
+const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
@@ -54,6 +56,8 @@ const Row: FC<RowProps> = ({ item, openReviewModal }: RowProps) => {
     createdAt,
     kyc,
     userKyc,
+    custodianStatus,
+    brokerDealerStatus,
   } = item
   const { ethAddress } = user
 
@@ -72,20 +76,21 @@ const Row: FC<RowProps> = ({ item, openReviewModal }: RowProps) => {
         <KycSource onKycClick={onKycClick} kyc={kyc} userKyc={userKyc} status={status} />
       </div>
       <div>
-        <BrokerDealerStatus status={status} kyc={kyc} broker={broker} />
+        <BrokerDealerStatus status={brokerDealerStatus} kyc={kyc} broker={broker} />
       </div>
       <div>
-        <CustodianStatus status={status} id={id} custodian={custodian} />
+        <CustodianStatus status={custodianStatus} searchValue={searchValue} id={id} custodian={custodian} />
       </div>
     </StyledBodyRow>
   )
 }
 
 interface BodyProps {
+  searchValue: string
   openReviewModal: (kyc: KycItem) => void
 }
 
-const Body = ({ openReviewModal }: BodyProps) => {
+const Body = ({ searchValue, openReviewModal }: BodyProps) => {
   const {
     accreditationList: { items },
   } = useAdminState()
@@ -93,7 +98,9 @@ const Body = ({ openReviewModal }: BodyProps) => {
   return (
     <>
       {items?.map((item) => {
-        return <Row key={`kyc-table-${item.id}`} item={item} openReviewModal={openReviewModal} />
+        return (
+          <Row key={`kyc-table-${item.id}`} searchValue={searchValue} item={item} openReviewModal={openReviewModal} />
+        )
       })}
     </>
   )
@@ -133,11 +140,11 @@ export const AdminAccreditationTable = () => {
       )}
       {items.length === 0 ? (
         <NoData>
-          <Trans>No data</Trans>
+          <Trans>No results</Trans>
         </NoData>
       ) : (
         <Container>
-          <Table body={<Body openReviewModal={openModal} />} header={<Header />} />
+          <Table body={<Body searchValue={searchValue} openReviewModal={openModal} />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
@@ -158,12 +165,6 @@ const Loader = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1000000;
-`
-
-const NoData = styled.div`
-  font-weight: 600;
-  color: ${({ theme: { text2 } }) => text2};
-  text-align: center;
 `
 
 const Wallet = styled.div`

@@ -147,6 +147,10 @@ const Title = styled.a`
   :hover {
     cursor: pointer;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToExtremelySmall`
+    display: none;
+  `};
 `
 
 const IXSIcon = styled.div``
@@ -189,7 +193,15 @@ const HeaderWrapper = styled.div`
   z-index: 2;
 `
 
-const KYCWrapper = styled(Flex)`
+const KYCWrapper = styled.div`
+  display: block;
+
+  ${({ theme }) => theme.mediaWidth.upToExtremelySmall`
+    display: none;
+  `};
+`
+
+const KYCCard = styled(Flex)`
   padding: 0px 7px 3px 7px;
   background: ${({ theme }) => theme.bgG13};
   border-radius: 4px;
@@ -224,18 +236,20 @@ export default function Header() {
           <HeaderLinks />
           <HeaderControls>
             {isWhitelisted && (
-              <HeaderElement>
-                <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
-                  <KYCWrapper flexDirection="column" alignItems="center" justifyContent="center">
-                    {kyc?.data.status === 'approved' ? (
-                      <KYCApproved style={{ width: 30, height: 30 }} />
-                    ) : (
-                      <KYC style={{ marginTop: 5 }} />
-                    )}
-                    <TYPE.smallError color={kyc?.data.status !== 'approved' ? 'error' : 'green1'}>KYC</TYPE.smallError>
-                  </KYCWrapper>
-                </NavLink>
-              </HeaderElement>
+              <KYCWrapper>
+                <HeaderElement>
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
+                    <KYCCard flexDirection="column" alignItems="center" justifyContent="center">
+                      {kyc?.status === 'approved' ? (
+                        <KYCApproved style={{ width: 30, height: 30 }} />
+                      ) : (
+                        <KYC style={{ marginTop: 5 }} />
+                      )}
+                      <TYPE.smallError color={kyc?.status !== 'approved' ? 'error' : 'green1'}>KYC</TYPE.smallError>
+                    </KYCCard>
+                  </NavLink>
+                </HeaderElement>
+              </KYCWrapper>
             )}
             <HeaderElement>
               <IXSBalance />

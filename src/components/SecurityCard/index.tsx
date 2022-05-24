@@ -67,8 +67,11 @@ export default function SecurityCard({
 }) {
   const { account } = useActiveWeb3React()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const accreditationStatus = (currency as any)?.tokenInfo?.accreditationRequest?.status
-  const isAccredited = accreditationStatus === AccreditationStatusEnum.APPROVED
+  const brokerDealerStatus = (currency as any)?.tokenInfo?.accreditationRequest?.brokerDealerStatus
+  const custodianStatus = (currency as any)?.tokenInfo?.accreditationRequest?.custodianStatus
+  const isAccredited = [custodianStatus, brokerDealerStatus].every(
+    (status) => status === AccreditationStatusEnum.APPROVED
+  )
   return (
     <Row style={style}>
       <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
@@ -83,7 +86,9 @@ export default function SecurityCard({
                   {isAccredited && (
                     <ShortenedAmount>{formatCurrencyAmount(balance, currency.decimals ?? 18)}</ShortenedAmount>
                   )}
-                  {!isAccredited && <Status status={accreditationStatus} />}
+                  {!isAccredited && (
+                    <Status custodianStatus={custodianStatus} brokerDealerStatus={brokerDealerStatus} />
+                  )}
                 </Box>
               )}
             </StyledRowBetween>

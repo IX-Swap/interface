@@ -14,7 +14,7 @@ interface Props {
   status: string
 }
 
-export const KycSource = ({ kyc, userKyc, onKycClick, status }: Props) => {
+export const KycSource = ({ userKyc, onKycClick, status }: Props) => {
   if (Boolean(userKyc)) {
     const internalKyc = userKyc?.corporate || userKyc?.individual
 

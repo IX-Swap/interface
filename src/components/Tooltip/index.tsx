@@ -7,6 +7,11 @@ const TooltipContainer = styled.div<{ width?: number }>`
   padding: 0.6rem 1rem;
   font-weight: 400;
   word-break: break-word;
+
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    width: 100%;
+    padding: 1rem;
+  `};
 `
 
 const TooltipContainerFit = styled(TooltipContainer)`

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
+import dayjs from 'dayjs'
 
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
@@ -30,16 +31,15 @@ import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
 import { FeeStatus } from './FeeStatus'
 import { isPending, WithdrawStatus } from './enum'
-import { WaitingWitdrawalFee } from './styleds'
+import { WaitingWitdrawalFee, WarningPaidFee } from './styleds'
 
 interface Props {
   currency?: SecCurrency
   changeModal: (param: WithdrawModalView) => void
   token: any
   onRedirect: () => void
-  onClose: () => void
 }
-export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect, onClose }: Props) => {
+export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }: Props) => {
   const theme = useTheme()
   const getWithdrawStatus = useGetWithdrawStatus()
   const createDraftWithdraw = useCreateDraftWitdraw()
@@ -65,6 +65,8 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect, 
   const error = Boolean(receiver.length > 0 && !loading && !address && networkName === 'Ethereum')
 
   const haveActiveWithdrawal = isPending(withdrawStatus.status || 'pending')
+
+  const paid = [WithdrawStatus.FEE_ACCEPTED, WithdrawStatus.PENDING].includes(withdrawStatus.status as WithdrawStatus)
 
   useEffect(() => {
     if (tokenInfo.id) {
@@ -102,7 +104,6 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect, 
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && receiver) {
       withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess: onRedirect, onError, receiver })
-      onClose()
     }
   }
 
@@ -174,6 +175,12 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect, 
         feePrice={haveActiveWithdrawal ? withdrawStatus.feeAmount : ''}
         estimatedPrice={feePrice}
       />
+      {withdrawStatus.status === WithdrawStatus.DRAFT && (
+        <WarningPaidFee>
+          Withdrawing will be canceled if withdrawal fee will not be paid until{' '}
+          {dayjs(withdrawStatus.createdAt).add(1, 'hours').format('MMM DD HH:mm')}
+        </WarningPaidFee>
+      )}
       <Row>
         <ButtonIXSWide
           style={{ textTransform: 'unset' }}
@@ -186,10 +193,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect, 
               {t`Sending Withdrawal Fee`}
             </WaitingWitdrawalFee>
           ) : (
-            <>
-              {inputError ??
-                t`${withdrawStatus.status !== WithdrawStatus.FEE_ACCEPTED ? 'Pay withdraw fee' : 'Withdraw'}`}
-            </>
+            <>{inputError ?? t`${paid ? 'Withdraw' : 'Pay withdraw fee'}`}</>
           )}
         </ButtonIXSWide>
       </Row>

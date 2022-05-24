@@ -310,7 +310,6 @@ export const usePayFee = () => {
   const paidFee = usePaidWithdrawFee()
   const paidFeeRejected = useFeeRejected()
   const getEvents = useGetEventCallback()
-  
 
   return useCallback(
     async ({ feeContractAddress, feeAmount, tokenId, id }) => {
@@ -326,16 +325,11 @@ export const usePayFee = () => {
           gasPrice: gasPrice ?? web3.utils.toWei('80', 'gwei'),
         }
 
-        //const txRes = await web3.eth.sendTransaction(tx)
-        /*if (txRes.transactionHash) {
-          await paidFee({ tokenId, id, feeTxHash: txRes.transactionHash })
-        }*/
-
-        await web3.eth.sendTransaction(tx)
+        await web3.eth
+          .sendTransaction(tx)
           .on('transactionHash', async (hash: string) => {
             await postPrepareFeeReq({ id, feeTxHash: hash })
           })
-
           .on('receipt', async (receipt: any) => {
             if (receipt.transactionHash) {
               await paidFee({ tokenId, id, feeTxHash: receipt.transactionHash })
@@ -389,7 +383,7 @@ export const useFeeRejected = () => {
       dispatch(payFee.rejected({ errorMessage }))
     },
     [dispatch]
-  )  
+  )
 }
 
 export const usePaidWithdrawFee = () => {

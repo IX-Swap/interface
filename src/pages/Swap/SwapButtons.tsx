@@ -1,23 +1,22 @@
+import React, { useCallback } from 'react'
+import JSBI from 'jsbi'
+import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
+
 import { SwapErrorCard } from 'components/Card'
-import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
 import { OutputInfo } from 'components/swap/OutputInfo'
-import { BigNumber, utils } from 'ethers'
 import { ApprovalState } from 'hooks/useApproveCallback'
 import { UseERC20PermitState } from 'hooks/useERC20Permit'
 import useIsArgentWallet from 'hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from 'hooks/useIsSwapUnsupported'
 import { useSwapCallbackError } from 'hooks/useSwapCallback'
 import { useActiveWeb3React } from 'hooks/web3'
-import JSBI from 'jsbi'
-import React, { useCallback } from 'react'
-import { Text } from 'rebass'
-import { useShowError, useWalletModalToggle } from 'state/application/hooks'
+import { useWalletModalToggle } from 'state/application/hooks'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { ParsedAmounts } from 'state/swap/typings'
-import { useSetSwapState, useSwapHelpersState } from 'state/swapHelper/hooks'
+import { useSetSwapState } from 'state/swapHelper/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
-import { verifySwap } from 'utils/verifySwap'
+
 import { ButtonIXSWide } from '../../components/Button'
 import { BottomGrouping, SwapCallbackError } from '../../components/swap/styleds'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
@@ -27,8 +26,6 @@ import { useHandleSwap } from './handleSwap'
 import { WrapText } from './typings'
 import { usePriceImpact } from './usePriceImpact'
 import { useSwapApproval } from './useSwapApproval'
-import { useSecTokens } from 'state/secTokens/hooks'
-import { parseBytes32String } from 'ethers/lib/utils'
 
 export const SwapButtons = ({
   parsedAmounts,
@@ -39,7 +36,7 @@ export const SwapButtons = ({
   parsedAmounts: ParsedAmounts | undefined
   allowSwap: boolean
 }) => {
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const { recipient, typedValue, independentField, approvalSubmitted } = useSwapState()
 
   const {
@@ -58,11 +55,10 @@ export const SwapButtons = ({
   const { approvalState, signatureState } = useSwapApproval()
 
   const { showConfirm, swapErrorMessage, setSwapState } = useSetSwapState()
-  const { authorizationInProgress } = useSwapHelpersState()
 
   // for expert mode
   const { expertMode } = useExpertModeManager()
-  const { priceImpactTooHigh, priceImpactSeverity, priceImpact } = usePriceImpact({ parsedAmounts })
+  const { priceImpactSeverity, priceImpact } = usePriceImpact({ parsedAmounts })
   const handleSwap = useHandleSwap({ priceImpact })
 
   // toggle wallet when disconnected
@@ -70,10 +66,7 @@ export const SwapButtons = ({
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
   const [singleHopOnly] = useUserSingleHopOnly()
 
-  const { secTokens } = useSecTokens()
   //const isSecToken = Boolean(secTokens[token.address])
-
-  const showError = useShowError()
 
   const onClick = useCallback(async () => {
     // if (trade && account) {
@@ -124,7 +117,7 @@ export const SwapButtons = ({
         txHash: undefined,
       })
     }
-  }, [account, allowedSlippage, authorizationInProgress?.pairAddress, expertMode, handleSwap, setSwapState, trade])
+  }, [expertMode, handleSwap, setSwapState, trade])
 
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
 

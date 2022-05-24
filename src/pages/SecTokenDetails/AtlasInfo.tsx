@@ -2,7 +2,6 @@ import React from 'react'
 import { Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 
-import { DetailsElement } from './DetailsElement'
 import { AtlasInfoContainer } from './styleds'
 
 interface Props {

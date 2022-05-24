@@ -9,7 +9,6 @@ import coingekoImg from 'assets/images/social/Coingeko.svg'
 import discordImg from 'assets/images/social/Discord.svg'
 import coinmarketcapImg from 'assets/images/social/Coinmarketcap.svg'
 import redditImg from 'assets/images/social/Reddit.svg'
-import { routes } from 'utils/routes'
 import { ExternalLink } from 'theme'
 
 import { SocialBlockContainer } from './styleds'

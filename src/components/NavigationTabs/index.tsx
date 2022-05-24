@@ -135,7 +135,7 @@ export function CustodianTabs() {
           <RowEnd style={{ padding: '0' }}>
             <Trans>
               <a style={{ color: '#FFFFFF', textDecoration: 'underline' }} href={listMyTokenLink} target="blank">
-                List my token
+                List My Token
               </a>
             </Trans>
           </RowEnd>

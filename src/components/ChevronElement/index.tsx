@@ -11,9 +11,16 @@ interface Props {
   setShowMore?: (arg0: boolean) => void
 }
 
-const StyledChevron = styled(ChevronUp)<{ showMore: boolean }>`
-  transform: ${({ showMore }) => (!showMore ? 'rotate(180deg)' : '')};
-  transition: 0.4s;
+const StyledChevron = styled.div<{ open: boolean }>`
+  height: 20px;
+  min-width: 20px;
+  > svg {
+    margin-left: 8px;
+    height: 20px;
+    min-width: 20px;
+    transform: ${({ open }) => (!open ? 'rotate(180deg)' : '')};
+    transition: 0.4s;
+  }
 `
 export const ChevronElement = ({ showMore, setShowMore }: Props) => {
   const theme = useTheme()
@@ -29,12 +36,9 @@ export const ChevronElement = ({ showMore, setShowMore }: Props) => {
           if (setShowMore) setShowMore(!showMore)
         }}
       >
-        <StyledChevron
-          size="20"
-          color={theme.text2}
-          style={{ marginLeft: '8px', height: '20px', minWidth: '20px' }}
-          showMore={showMore}
-        />
+        <StyledChevron open={showMore}>
+          <ChevronUp size="20" color={theme.text2} />
+        </StyledChevron>
       </ButtonEmpty>
     </RowFixed>
   )

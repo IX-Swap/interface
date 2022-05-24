@@ -1,4 +1,4 @@
-import React, { FC, ReactChildren, useMemo } from 'react'
+import React, { ReactChildren, useMemo } from 'react'
 import { Box, Flex } from 'rebass'
 import { FileWithPath } from 'react-dropzone'
 

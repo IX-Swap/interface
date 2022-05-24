@@ -219,12 +219,11 @@ export const isDeposit = (action: ActionTypes) => {
   return action === ActionTypes.DEPOSIT
 }
 export enum AccreditationStatusEnum {
-  PENDING = 'new',
+  NEW = 'new',
+  PENDING = 'pending',
   APPROVED = 'approved',
-  REJECTED = 'declined',
-  FAILED = 'failed', // error occured
-  PENDING_CUSTODIAN = 'pending-custodian', // waiting for custodian action
-  PENDING_KYC = 'pending-kyc',
+  FAILED = 'failed',
+  DECLINED = 'declined',
 }
 
 export interface CustodianInfo {
@@ -240,19 +239,12 @@ export interface AccreditationRequest {
   id: number
   status: AccreditationStatusEnum
   custodian: CustodianInfo
+  brokerDealerStatus: string
+  custodianStatus: string
 }
-export const PENDING_ACCREDITATION_STATUSES = [
-  AccreditationStatusEnum.PENDING,
-  AccreditationStatusEnum.PENDING_CUSTODIAN,
-  AccreditationStatusEnum.PENDING_KYC,
-]
+export const PENDING_ACCREDITATION_STATUSES = [AccreditationStatusEnum.NEW, AccreditationStatusEnum.PENDING] as string[]
 
-export const ERROR_ACCREDITATION_STATUSES = [AccreditationStatusEnum.FAILED, AccreditationStatusEnum.REJECTED]
-
-export enum KYCStatuses {
-  PENDING = 'pending',
-  APPROVED = 'approved',
-  REJECTED = 'rejected',
-  CHANGES_REQUESTED = 'changes-requested',
-  NOT_SUBMITTED = 'not submitted',
-}
+export const ERROR_ACCREDITATION_STATUSES = [
+  AccreditationStatusEnum.FAILED,
+  AccreditationStatusEnum.DECLINED,
+] as string[]

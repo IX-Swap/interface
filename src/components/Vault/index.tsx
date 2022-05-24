@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 
 import { useKYCState } from 'state/kyc/hooks'
-import { KYC_STATUSES } from 'components/AdminKyc/StatusCell'
+import { KYCStatuses } from 'pages/KYC/enum'
 import { useAuthState } from 'state/auth/hooks'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -19,28 +19,30 @@ export const Vault = ({ currency, token }: Props) => {
   const { token: jwtToken } = useAuthState()
 
   const {
-    status,
+    custodianStatus,
+    brokerDealerStatus,
     isApproved: vaultExists,
     accreditationRequest,
     platform,
+    message,
   } = useAccreditationStatus((currency as any)?.address || 0)
   const newToken = { ...currency, isToken: true }
   const { kyc } = useKYCState()
 
-  const getUserAccountType = () => {
-    const kycType = kyc?.data?.individualKycId ? 'individual' : 'corporate'
-
-    const userKyc = kyc?.data?.individual || kyc?.data?.corporate || {}
-
-    if (userKyc.accredited) {
-      return `${kycType}Accredited`
-    }
-    return `${kycType}AccreditedNot`
-  }
-
   const userHaveValidAccount = useMemo(() => {
     const { kycType } = token
-    if (!kycType || !kyc || ![KYC_STATUSES.APPROVED, KYC_STATUSES.REJECTED].includes(kyc?.data?.status)) return true
+    if (!kycType || !kyc || ![KYCStatuses.APPROVED, KYCStatuses.REJECTED].includes(kyc?.status)) return true
+
+    const getUserAccountType = () => {
+      const kycType = kyc?.individualKycId ? 'individual' : 'corporate'
+
+      const userKyc = kyc?.individual || kyc?.corporate
+
+      if (userKyc?.accredited) {
+        return `${kycType}Accredited`
+      }
+      return `${kycType}AccreditedNot`
+    }
 
     const userAccountType = getUserAccountType()
 
@@ -70,10 +72,12 @@ export const Vault = ({ currency, token }: Props) => {
             <NoVault
               currency={currency}
               token={token}
-              status={status}
+              custodianStatus={custodianStatus}
+              brokerDealerStatus={brokerDealerStatus}
               accreditationRequest={accreditationRequest}
               platform={platform}
               userHaveValidAccount={userHaveValidAccount}
+              message={message}
             />
           )}
           {vaultExists && (
@@ -82,9 +86,11 @@ export const Vault = ({ currency, token }: Props) => {
         </>
       ) : (
         <NoVault
+          message={message}
           currency={currency}
           token={token}
-          status={status}
+          custodianStatus={custodianStatus}
+          brokerDealerStatus={brokerDealerStatus}
           accreditationRequest={accreditationRequest}
           platform={platform}
           userHaveValidAccount={userHaveValidAccount}

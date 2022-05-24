@@ -6,9 +6,9 @@ export const AnimatedDialogOverlay = animated(DialogOverlay)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
   isright?: boolean
-  scrollable?: boolean
+  scrollable?: string
   tip?: string
-  flexColumn?: boolean
+  flexcolumn?: string
 }>`
   &[data-reach-dialog-overlay] {
     z-index: 12;
@@ -24,7 +24,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
     display: flex;
     align-items: ${({ isright }) => (isright ? 'flex-start' : 'center')};
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
-    flex-direction: ${({ flexColumn }) => (flexColumn ? 'column' : 'row')};
+    flex-direction: ${({ flexcolumn }) => (flexcolumn ? 'column' : 'row')};
 
     background-color: ${({ theme }) => theme.modalBG};
     ${({ tip }) =>
