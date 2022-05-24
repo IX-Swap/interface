@@ -54,7 +54,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
 export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     label: 'Pair',
-    key: 'pair',
+    key: 'pair.name',
     render: renderTicker
   },
   {

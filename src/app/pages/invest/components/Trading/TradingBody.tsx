@@ -36,10 +36,10 @@ export const TradingBody = () => {
       container
       alignItems={'flex-start'}
       justifyContent='space-between'
-      gap={3}
-      xs={12}
+      columnSpacing={2}
+      ml={0}
     >
-      <Grid item className={classes.colorGrid} xs={12} md={7} minHeight={325}>
+      <Grid item className={classes.colorGrid} minHeight={325} xs={12} md={8}>
         <TradingOrders />
       </Grid>
 
