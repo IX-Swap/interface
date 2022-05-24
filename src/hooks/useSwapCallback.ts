@@ -72,24 +72,20 @@ export function getTokenToPairMap(pairs: Array<Pair | null>) {
 }
 
 export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
-  const { account } = useActiveWeb3React()
   const addresses = useSwapSecTokenAddresses(trade)
   const authorizations = useAuthorizationsState()
   const { secPairs: pairs } = useSwapSecPairs(trade)
   return useMemo(() => {
     const tokenToPairMap = getTokenToPairMap(pairs)
-    const missingAddress = addresses.filter(
-      (address) => address !== null && (!authorizations?.[tokenToPairMap[address]] || !authorizations?.[account ?? ''])
-    )
+    const missingAddress = addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
     return missingAddress
-  }, [addresses, authorizations, pairs, account])
+  }, [addresses, authorizations, pairs])
 }
 
 export function useAuthorizationDigest(
   trade: V2Trade<Currency, Currency, TradeType> | undefined
 ): Array<TradeAuthorization> | undefined {
   const authorizations = useAuthorizationsState()
-  const { account } = useActiveWeb3React()
   const addresses = useSwapSecTokenAddresses(trade)
   const { secPairs: pairs } = useSwapSecPairs(trade)
   const authorizationDigest: Array<TradeAuthorization> | undefined = useMemo(() => {
@@ -98,8 +94,7 @@ export function useAuthorizationDigest(
     }
     const tokenToPairMap = getTokenToPairMap(pairs)
     return addresses.map((address) => {
-      const addressAuthorization =
-        address && authorizations ? authorizations[account || ''] || authorizations[tokenToPairMap[address]] : null
+      const addressAuthorization = address && authorizations ? authorizations[tokenToPairMap[address]] : null
       if (!addressAuthorization) {
         return EMPTY_AUTHORIZATION
       }
@@ -111,7 +106,7 @@ export function useAuthorizationDigest(
         deadline: addressAuthorization.deadline,
       }
     })
-  }, [addresses, authorizations, pairs, account])
+  }, [addresses, authorizations, pairs])
 
   return authorizationDigest
 }
@@ -189,7 +184,6 @@ function useSwapCallArguments(
     }
 
     return swapMethods.map(({ methodName, args, value }) => {
-      console.log({ methodName, args, value })
       if (argentWalletContract && trade.inputAmount.currency.isToken) {
         return {
           address: argentWalletContract.address,

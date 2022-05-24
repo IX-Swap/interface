@@ -1,5 +1,6 @@
 import { Contract } from '@ethersproject/contracts'
 import { WETH9 } from '@ixswap1/sdk-core'
+import { Web3Provider } from '@ethersproject/providers'
 import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
 import { abi as IIxsWSecABI } from '@ixswap1/v2-core/build/IIxsWSec.json'
 import { abi as IxsGovernanceToken } from '@ixswap1/v2-core/build/IxsGovernanceToken.json'
@@ -7,7 +8,8 @@ import { abi as IxsReturningStakeBankPostIdoV1 } from '@ixswap1/v2-core/build/Ix
 import { abi as IxsToken } from '@ixswap1/v2-core/build/IxsToken.json'
 import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
 import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2LiquidityRouter.json'
-import { abi as IIxsV2SwapRouter } from '@ixswap1/v2-periphery/build/IIxsV2SwapRouter.json'
+
+import { abi as IIxsV2SwapRouter } from 'abis/IxsV2SwapRouter.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import EIP_2612 from 'abis/eip_2612.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
@@ -20,6 +22,7 @@ import FAUCET_STABLE_ABI from 'abis/faucet-stable-contract.json'
 import MULTICALL_ABI from 'abis/multicall2.json'
 import NFT_ABI from 'abis/nft-contract.json'
 import WETH_ABI from 'abis/weth.json'
+import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
 import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
@@ -33,10 +36,9 @@ import {
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
+
 import { ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Erc20, Multicall2, Weth } from '../abis/types'
 import { useActiveWeb3React } from './web3'
-import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
-import { Web3Provider } from '@ethersproject/providers'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(

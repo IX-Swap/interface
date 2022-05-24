@@ -29,6 +29,7 @@ import { clearSwapState } from 'state/swap/actions'
 import { clearSwapHelperState } from 'state/swapHelper/actions'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
@@ -52,7 +53,6 @@ import {
   updateUserSlippageTolerance,
   getMe,
 } from './actions'
-import { KYCStatuses } from 'pages/KYC/enum'
 
 function serializeToken(token: Token): SerializedToken {
   // TO DO - refactor
