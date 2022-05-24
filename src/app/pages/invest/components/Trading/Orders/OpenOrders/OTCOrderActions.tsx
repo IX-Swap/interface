@@ -9,15 +9,20 @@ export interface OTCOrderActionsProps {
 }
 
 export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
-  const showButtons =
-    item.status === OTCOrderStatus.MATCH && item.orderType === 'SELL'
-  if (!showButtons) {
+  const showConfirm =
+    item.status === OTCOrderStatus.CONFIRMED && item.orderType === 'SELL'
+  const orderFinished = [
+    OTCOrderStatus.COMPLETED,
+    OTCOrderStatus.CANCELLED
+  ].includes(item.status)
+  const showCancel = !orderFinished
+  if (!(showConfirm || showCancel)) {
     return <></>
   }
   return (
     <Box display='flex' justifyContent='space-between'>
-      <CancelOTCOrderButton variant='text' order={item} />
-      <ConfirmOTCOrderButton variant='text' order={item} />
+      {showCancel && <CancelOTCOrderButton variant='text' order={item} />}
+      {showConfirm && <ConfirmOTCOrderButton variant='text' order={item} />}
     </Box>
   )
 }

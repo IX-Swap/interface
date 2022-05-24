@@ -18,6 +18,7 @@ import {
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
 import { MatchedOTCOrder, UnmatchedOTCOrder } from 'types/otcOrder'
+import { Theme } from '@mui/material'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -207,4 +208,20 @@ export const useHeaderColor = (
     return theme.palette.backgrounds.alternative
   }
   return 'initial'
+}
+
+interface RowColorArgs {
+  theme: Theme
+  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+  count: number
+}
+
+export const getRowColor = ({ theme, themeVariant, count }: RowColorArgs) => {
+  if (themeVariant === 'default') {
+    return 'initial'
+  }
+  if (count % 2 === 0) {
+    return theme.palette.backgrounds.default
+  }
+  return theme.palette.mode === 'light' ? '#F8F8FD' : theme.palette.grey[900]
 }

@@ -2,6 +2,7 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   colorGrid: {
+    padding: `0 ${String(theme.spacing(2))}`,
     backgroundColor:
       theme.palette.mode === 'light'
         ? theme.palette.background.paper

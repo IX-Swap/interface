@@ -18,6 +18,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { OTCOrder } from 'types/otcOrder'
 import { orders } from '__fixtures__/otcOrders'
+import { OpenOTCTableBody } from './OpenOTCTableBody'
 
 export const TradingOpenOrders = () => {
   const { user } = useAuth()
@@ -41,6 +42,7 @@ export const TradingOpenOrders = () => {
         noHeader={isMiniLaptop}
         themeVariant={'primary'}
         hasActions
+        bordered={false}
         actions={OTCOrderActions}
         paperProps={
           isMiniLaptop
@@ -55,7 +57,9 @@ export const TradingOpenOrders = () => {
           ? (props: TableViewRendererProps<OTCOrder>) => (
               <CompactBody {...props} columns={compactColumns} />
             )
-          : undefined}
+          : (props: TableViewRendererProps<OTCOrder>) => (
+              <OpenOTCTableBody {...props} columns={columns} />
+            )}
       </TableView>
     </Grid>
   )

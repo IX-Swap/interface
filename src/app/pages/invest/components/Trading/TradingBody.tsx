@@ -26,7 +26,6 @@ export const TradingBody = () => {
 
   const currencyBalance = useCurrencyBalance(currencyName)
   const submitForm = async (values: PlaceOrderArgs) => {
-    console.log({ values })
     return await new Promise(resolve => resolve(undefined))
   }
   const isFetching = false
@@ -40,7 +39,7 @@ export const TradingBody = () => {
       gap={3}
       xs={12}
     >
-      <Grid item className={classes.colorGrid} xs={12} md={7}>
+      <Grid item className={classes.colorGrid} xs={12} md={7} minHeight={325}>
         <TradingOrders />
       </Grid>
 

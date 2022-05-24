@@ -22,7 +22,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     label: 'Pair',
-    key: 'pair'
+    key: 'pair.name'
   },
   {
     key: 'orderType',
@@ -43,12 +43,12 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     key: 'amount',
     label: 'Total',
     render: (_, row) => renderMoney(row.amount * row.price, row)
+  },
+  {
+    key: '_id',
+    label: 'Filled',
+    render: (_, __) => '100%'
   }
-  // {
-  //   key: 'filledPercent',
-  //   label: 'Filled',
-  //   render: formatPercent
-  // }
 ]
 
 export const compactColumns: Array<TableColumn<OTCOrder>> = [
@@ -82,10 +82,10 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
     key: 'createdAt',
     label: 'Date',
     render: formatDateToMMDDYY
+  },
+  {
+    key: '_id',
+    label: 'Filled',
+    render: (_, __) => '100%'
   }
-  // {
-  //   key: 'filledPercent',
-  //   label: 'Filled',
-  //   render: formatPercent
-  // },
 ]

@@ -1,4 +1,5 @@
 import { Asset } from './asset'
+import { OTCMarket } from './market'
 
 export enum OTCOrderStatus {
   NEW = 'NEW',
@@ -15,7 +16,7 @@ export interface OTCOrder {
   price: number
   amount: number
   ethAddress: string
-  pair: string
+  pair: OTCMarket
   orderType: OrderType
   status: OTCOrderStatus
   createdAt: string
