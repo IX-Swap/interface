@@ -30,9 +30,9 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
   }
 
   return (
-    <UIDialog maxWidth='sm' onClose={handleClose} {...rest}>
+    <UIDialog maxWidth='xs' onClose={handleClose} {...rest}>
       <DialogTitle>
-        <Box maxWidth={410} textAlign='center'>
+        <Box mt={2} maxWidth={410} textAlign='center'>
           {title}
         </Box>
       </DialogTitle>
@@ -43,14 +43,14 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
       </DialogContent>
 
       <DialogActions>
-        <Grid container spacing={2} justifyContent='center' alignItems='center'>
+        <Grid container spacing={3} justifyContent='center' alignItems='center'>
           <Grid item xs={5}>
             <ButtonTransparent
               fullWidth
               variant='contained'
               disableElevation
               onClick={handleClose}
-              size='medium'
+              size='large'
             >
               Cancel
             </ButtonTransparent>
@@ -62,7 +62,7 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
               variant='contained'
               disableElevation
               color='primary'
-              size='medium'
+              size='large'
             >
               {actionLabel}
             </Button>
