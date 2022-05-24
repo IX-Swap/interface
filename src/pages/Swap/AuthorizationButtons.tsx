@@ -55,23 +55,17 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   }
 
   return (
-    <RowBetween style={{ flexWrap: 'wrap' }}>
+    <RowBetween style={{ flexWrap: 'wrap', gap: '16px' }}>
       {missingAuthorizations.map((address) => (
         <React.Fragment key={address}>
           {address && secTokens[address] && allowSwap && (
             <>
               {Boolean(authorizationInProgress) ? (
-                <ButtonIXSGradient
-                  disabled
-                  style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
-                >
+                <ButtonIXSGradient disabled style={{ width: '100%' }}>
                   Confirming transaction with broker...
                 </ButtonIXSGradient>
               ) : (
-                <ButtonIXSGradient
-                  onClick={() => startFirstStep(address)}
-                  style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
-                >
+                <ButtonIXSGradient onClick={() => startFirstStep(address)} style={{ width: '100%' }}>
                   Authorize {secTokens[address]?.symbol}
                 </ButtonIXSGradient>
               )}

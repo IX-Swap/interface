@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
-import store from 'state'
+
 import { omit } from 'utils/omit'
+
 import {
   clearAuthorization,
   clearSwapHelperState,
@@ -28,7 +29,7 @@ export const initialState: SwapHelperState = {
 
 export default createReducer(initialState, (builder) =>
   builder
-    .addCase(saveAuthorization, (state, { payload: { authorization, chainId, address, account } }) => {
+    .addCase(saveAuthorization, (state, { payload: { authorization, chainId, address } }) => {
       return {
         ...state,
         authorizations: {
@@ -36,13 +37,12 @@ export default createReducer(initialState, (builder) =>
           [chainId]: {
             ...state.authorizations[chainId],
             [address]: authorization,
-            [account]: authorization,
           },
         },
       }
     })
-    .addCase(clearAuthorization, (state, { payload: { chainId, addresses, account } }) => {
-      const newAuthorization = omit(state.authorizations[chainId], [...addresses, account])
+    .addCase(clearAuthorization, (state, { payload: { chainId, addresses } }) => {
+      const newAuthorization = omit(state.authorizations[chainId], addresses)
       return {
         ...state,
         authorizations: {
@@ -87,5 +87,6 @@ export default createReducer(initialState, (builder) =>
       state.openModal = false
       state.authorizationInProgress = null
       state.loadingSwap = false
+      state.authorizations = {}
     })
 )

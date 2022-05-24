@@ -1,23 +1,21 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
-import { useWeb3React } from '@web3-react/core'
 import axios from 'axios'
-import { BigNumber, utils } from 'ethers'
 import * as H from 'history'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { useCurrency } from 'hooks/Tokens'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useMissingAuthorizations, useSwapSecTokenAddresses } from 'hooks/useSwapCallback'
 import { useV2Pairs } from 'hooks/useV2Pairs'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, tokens } from 'services/apiUrls'
 import { useAddPopup } from 'state/application/hooks'
-import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { getStringAmount } from 'utils/getStringAmount'
+
 import { hexTimeToTokenExpirationTime, shouldRenewToken } from 'utils/time'
-import { verifySwap } from 'utils/verifySwap'
 import { AppDispatch, AppState } from '../index'
 import {
   clearAuthorization,
@@ -62,14 +60,14 @@ export function useSaveSwapTx() {
 
 export function useClearAuthorization() {
   const dispatch = useDispatch<AppDispatch>()
-  const { chainId, account } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
   return useCallback(
     (addresses: string[]) => {
       if (chainId) {
-        dispatch(clearAuthorization({ addresses, chainId, account: account || '' }))
+        dispatch(clearAuthorization({ addresses, chainId }))
       }
     },
-    [chainId]
+    [chainId, dispatch]
   )
 }
 
@@ -186,7 +184,7 @@ export function useSubmitBrokerDealerForm() {
   const addPopup = useAddPopup()
   const dispatch = useDispatch<AppDispatch>()
 
-  const { account, chainId } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
   const { authorizationInProgress } = useSwapHelpersState()
 
   const address = authorizationInProgress?.pairAddress
@@ -255,7 +253,6 @@ export function useSubmitBrokerDealerForm() {
             authorization: persistedAuthorization,
             chainId,
             address: pairAddress,
-            account: account || '',
           })
         )
         showPopup({ success: true })
@@ -266,7 +263,7 @@ export function useSubmitBrokerDealerForm() {
         clearState()
       }
     },
-    [chainId, dispatch, account, showPopup, clearState]
+    [chainId, dispatch, showPopup, clearState]
   )
 
   const submitForm = useCallback(
@@ -276,12 +273,12 @@ export function useSubmitBrokerDealerForm() {
       const data = dto?.encryptedData
       const hash = dto?.hash
       const { brokerDealerId, pairAddress, amount } = dto || {}
-      
+
       const payload = { callbackEndpoint, data, hash }
       const bdData = await axios.post(endpoint, payload, {
         headers: {
-          'Access-Control-Allow-Origin': '*'
-        }
+          'Access-Control-Allow-Origin': '*',
+        },
       })
 
       const url: string = bdData.data.url ?? bdData.data.data?.url
@@ -329,7 +326,7 @@ export function useSwapConfirmDataFromURL(
   const parsedQs = useParsedQueryString()
   // maybe later avoid the request if there already is an authorization but maybe not
   const { authorizationInProgress } = useSwapHelpersState()
-  const { account, chainId } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
   const address = authorizationInProgress?.pairAddress || ''
   const brokerDealerId = authorizationInProgress?.brokerDealerId || 0
   const platform = authorizationInProgress?.platform
@@ -360,7 +357,7 @@ export function useSwapConfirmDataFromURL(
 
     dispatch(setLoadingSwap({ isLoading: false }))
     history.push(`/swap`)
-  }, [history])
+  }, [history, dispatch])
 
   const processError = useCallback(() => {
     showPopup({ success: false })
@@ -392,7 +389,7 @@ export function useSwapConfirmDataFromURL(
         swapId,
       }
       setReceivedAuthorization(true)
-      dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address, account: account || '' }))
+      dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
       showPopup({ success: true })
       clearState()
     } catch (e) {
