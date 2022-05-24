@@ -65,7 +65,7 @@ exports[`Setup2fa should match snapshot 1`] = `
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <a
-                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-q3td2j-MuiTypography-root-MuiLink-root"
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways makeStyles-link-9 css-q3td2j-MuiTypography-root-MuiLink-root"
                     href="https://apps.apple.com/us/app/google-authenticator/id388497605"
                     target="_blank"
                   />
@@ -74,7 +74,7 @@ exports[`Setup2fa should match snapshot 1`] = `
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <a
-                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-q3td2j-MuiTypography-root-MuiLink-root"
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways makeStyles-link-9 css-q3td2j-MuiTypography-root-MuiLink-root"
                     href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en"
                     target="_blank"
                   />
@@ -104,7 +104,7 @@ exports[`Setup2fa should match snapshot 1`] = `
           class="MuiStepper-root MuiStepper-vertical css-9tmuzo-MuiStepper-root"
         >
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical active css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
@@ -118,10 +118,10 @@ exports[`Setup2fa should match snapshot 1`] = `
                   class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <div
-                    class="makeStyles-wrapper-9 makeStyles-wrapper-12 MuiBox-root css-0"
+                    class="makeStyles-wrapper-10 makeStyles-wrapper-13 MuiBox-root css-0"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-14 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-12 makeStyles-text-15 css-1b4l2pg-MuiTypography-root"
                     >
                       1
                     </p>
@@ -143,7 +143,7 @@ exports[`Setup2fa should match snapshot 1`] = `
             </button>
           </div>
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
@@ -157,10 +157,10 @@ exports[`Setup2fa should match snapshot 1`] = `
                   class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <div
-                    class="makeStyles-wrapper-9 makeStyles-wrapper-15 MuiBox-root css-0"
+                    class="makeStyles-wrapper-10 makeStyles-wrapper-16 MuiBox-root css-0"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-17 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-12 makeStyles-text-18 css-1b4l2pg-MuiTypography-root"
                     >
                       2
                     </p>
@@ -182,7 +182,7 @@ exports[`Setup2fa should match snapshot 1`] = `
             </button>
           </div>
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
@@ -196,10 +196,10 @@ exports[`Setup2fa should match snapshot 1`] = `
                   class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <div
-                    class="makeStyles-wrapper-9 makeStyles-wrapper-18 MuiBox-root css-0"
+                    class="makeStyles-wrapper-10 makeStyles-wrapper-19 MuiBox-root css-0"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-20 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-12 makeStyles-text-21 css-1b4l2pg-MuiTypography-root"
                     >
                       3
                     </p>
@@ -221,7 +221,7 @@ exports[`Setup2fa should match snapshot 1`] = `
             </button>
           </div>
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
@@ -235,10 +235,10 @@ exports[`Setup2fa should match snapshot 1`] = `
                   class="MuiStepLabel-iconContainer css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <div
-                    class="makeStyles-wrapper-9 makeStyles-wrapper-21 MuiBox-root css-0"
+                    class="makeStyles-wrapper-10 makeStyles-wrapper-22 MuiBox-root css-0"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-11 makeStyles-text-23 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-12 makeStyles-text-24 css-1b4l2pg-MuiTypography-root"
                     >
                       4
                     </p>
@@ -264,13 +264,13 @@ exports[`Setup2fa should match snapshot 1`] = `
     </div>
   </div>
   <div
-    class="MuiGrid-root MuiGrid-container makeStyles-container-24 css-1bizp5f-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container makeStyles-container-25 css-1bizp5f-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item makeStyles-item-25 css-13i4rnv-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item makeStyles-item-26 css-13i4rnv-MuiGrid-root"
     >
       <button
-        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root makeStyles-button-26 css-gbhykm-MuiButtonBase-root-MuiButton-root"
+        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root makeStyles-button-27 css-gbhykm-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >
