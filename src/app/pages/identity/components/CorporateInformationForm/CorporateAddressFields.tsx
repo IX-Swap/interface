@@ -33,7 +33,7 @@ export const CorporateAddressFields = () => {
           control={control}
           valueExtractor={booleanValueExtractor}
           name='isMailingAddressSame'
-          label='Is your mailing address same as registered address?'
+          label='Mailing Address Is Same As Registered Address'
         />
       </Grid>
       {!isMailingAddressSame ? (
