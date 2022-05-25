@@ -1,21 +1,23 @@
-import { CashDeposit } from 'types/cashDeposit'
-import { formatMoney } from 'helpers/numbers'
-import { CashWithdrawal } from 'types/cashWithdrawal'
-import { Commitment } from 'types/commitment'
-import { DSWithdrawal } from 'types/dsWithdrawal'
-import { Asset } from 'types/asset'
-import { DigitalSecurityOffering } from 'types/dso'
-import { AssetBalance } from 'types/balance'
-import { PersonName } from './types'
-import { formatDateToMMDDYY } from 'helpers/dates'
-import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { Theme } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { useUserById } from 'app/pages/admin/hooks/useUserById'
+import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
 import {
   CorporateIdentity,
   IndividualIdentity,
   Personnel
 } from 'app/pages/identity/types/forms'
-import { useUserById } from 'app/pages/admin/hooks/useUserById'
-import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
+import { formatDateToMMDDYY } from 'helpers/dates'
+import { formatMoney } from 'helpers/numbers'
+import { Asset } from 'types/asset'
+import { AssetBalance } from 'types/balance'
+import { CashDeposit } from 'types/cashDeposit'
+import { CashWithdrawal } from 'types/cashWithdrawal'
+import { Commitment } from 'types/commitment'
+import { DigitalSecurityOffering } from 'types/dso'
+import { DSWithdrawal } from 'types/dsWithdrawal'
+import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { PersonName } from './types'
 
 export const renderMinimumInvestment = (
   amount: number,
@@ -185,4 +187,38 @@ export const getUserNameById = (userId: string) => {
   }
 
   return data?.name
+}
+
+export const useHeaderColor = (
+  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+) => {
+  const theme = useTheme()
+  if (themeVariant === 'primary') {
+    return theme.palette.mode === 'light'
+      ? '#141272'
+      : theme.palette.primary.main
+  }
+  if (themeVariant === 'error') {
+    return '#DF5A72'
+  }
+  if (themeVariant === 'success') {
+    return theme.palette.backgrounds.alternative
+  }
+  return 'initial'
+}
+
+interface RowColorArgs {
+  theme: Theme
+  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+  count: number
+}
+
+export const getRowColor = ({ theme, themeVariant, count }: RowColorArgs) => {
+  if (themeVariant === 'default') {
+    return 'initial'
+  }
+  if (count % 2 === 0) {
+    return theme.palette.backgrounds.default
+  }
+  return theme.palette.mode === 'light' ? '#F8F8FD' : theme.palette.grey[900]
 }

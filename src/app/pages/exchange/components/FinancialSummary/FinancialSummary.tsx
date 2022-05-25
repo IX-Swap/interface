@@ -9,6 +9,7 @@ import { useMarket } from 'app/pages/exchange/hooks/useMarket'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { InvestRoute as paths } from 'app/pages/invest/router/config'
 
 export const FinancialSummary = () => {
   const { pairId } = useParams<{
@@ -30,7 +31,14 @@ export const FinancialSummary = () => {
           padding={1}
         >
           <Box flexGrow={1} width={{ xs: '50%', md: '100%' }}>
-            <PairListDropdown pairName={data?.name} />
+            <PairListDropdown
+              pairName={data?.name}
+              path={paths.viewListing}
+              params={{
+                userId: marketData.listing.createdBy,
+                listingId: marketData.listing._id
+              }}
+            />
           </Box>
           <Hidden mdUp>
             <Box
