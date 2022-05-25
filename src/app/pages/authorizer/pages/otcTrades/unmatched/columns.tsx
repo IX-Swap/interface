@@ -1,39 +1,40 @@
-import { renderMoney } from 'app/pages/exchange/components/OpenOrders/columns'
-import { renderAmount } from 'helpers/tables'
-import React from 'react'
-import { OrderType, UnmatchedOTCOrder } from 'types/otcOrder'
+import { formatMoney, getOrderCurrency, renderTotal } from 'helpers/numbers'
+import { OrderType, OTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
-import { OrderTableIdentityLink } from '../OrderTableIdentityLink'
+import { renderIdentityLink } from '../OrderTableIdentityLink'
 
-export const getColumns = (
-  side: OrderType
-): Array<TableColumn<UnmatchedOTCOrder>> => [
+export const getColumns = (side: OrderType): Array<TableColumn<OTCOrder>> => [
   {
-    key: 'pair',
+    key: 'pair.name',
     label: 'Pair'
   },
   {
-    key: 'user.userId',
+    key: '_id',
     label: side === 'BUY' ? 'Buyer' : 'Seller',
-    render: (userId, { user }) => <OrderTableIdentityLink user={user} />
+    render: (value, item) => renderIdentityLink(item, 'Creator')
   },
   {
-    key: 'user.phoneNumber',
-    label: 'Phone'
+    key: 'user',
+    label: 'Phone',
+    render: (value, item) =>
+      item?.identity?.individual !== undefined
+        ? item?.identity?.individual?.contactNumber
+        : item?.identity?.corporate?.contactNumber
   },
   {
     key: 'price',
     label: 'Price',
-    render: renderMoney
+    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
     key: 'amount',
     label: 'Amount',
-    render: renderAmount
+    render: (value, row) => formatMoney(value, '')
   },
   {
-    key: 'amount',
+    key: '_id',
     label: 'Total',
-    render: (_, row) => renderMoney(row.amount * row.price, row)
+    render: (_, row) =>
+      renderTotal({ amount: row.amount, price: row.price, row })
   }
 ]

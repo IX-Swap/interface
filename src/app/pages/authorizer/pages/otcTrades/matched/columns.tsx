@@ -1,44 +1,58 @@
-import { renderMoney } from 'app/pages/exchange/components/OpenOrders/columns'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { MatchedOTCOrder } from 'types/otcOrder'
+import {
+  formatMoney,
+  getFilledPercentage,
+  getOrderCurrency,
+  renderMoney,
+  renderTotal
+} from 'helpers/numbers'
+import { OTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
-import { renderAmount } from 'helpers/tables'
-import { OrderTableIdentityLink } from '../OrderTableIdentityLink'
-import React from 'react'
+import { renderIdentityLink } from '../OrderTableIdentityLink'
 
-export const columns: Array<TableColumn<MatchedOTCOrder>> = [
+export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'createdAt',
     label: 'Date',
     render: formatDateToMMDDYY
   },
   {
-    key: 'pair',
+    key: 'pair.name',
     label: 'Pair'
   },
   {
-    key: 'buyer._id',
+    key: 'user',
     label: 'Buyer',
-    render: (buyerId, { buyer }) => <OrderTableIdentityLink user={buyer} />
+    render: (_, item) => renderIdentityLink(item, 'BUY')
   },
   {
-    key: 'seller._id',
+    key: 'identity._id',
     label: 'Seller',
-    render: (buyerId, { seller }) => <OrderTableIdentityLink user={seller} />
+    render: (_, item) => renderIdentityLink(item, 'SELL')
   },
   {
     key: 'price',
     label: 'Price',
-    render: renderMoney
+    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
     key: 'amount',
     label: 'Amount',
-    render: renderAmount
+    render: renderMoney
   },
   {
     key: 'amount',
     label: 'Total',
-    render: (_, row) => renderMoney(row.amount * row.price, row)
+    render: (_, row) =>
+      renderTotal({ amount: row.amount, price: row.price, row })
+  },
+  {
+    key: '_id',
+    label: 'Filled',
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.amount,
+        availableAmount: row.availableAmount
+      })
   }
 ]

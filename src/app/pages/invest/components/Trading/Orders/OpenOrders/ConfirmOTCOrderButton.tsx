@@ -1,4 +1,5 @@
 import { Box, Button, ButtonProps } from '@mui/material'
+import { useConfirmMyOrder } from 'app/pages/authorizer/hooks/useConfirmMyOrder'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
 import React from 'react'
@@ -16,15 +17,23 @@ export const ConfirmOTCOrderButton = ({
     address: address,
     tokenChainId: chainId
   })
+  const [confirmMatch, { isLoading }] = useConfirmMyOrder()
   const handleClick = async () => {
-    await sendToken(order.ethAddress, order.amount)
+    try {
+      await sendToken(order.ethAddress, order.amount)
+      await confirmMatch({
+        orderId: order._id,
+        matchedOrderId: order.matches?._id ?? ''
+      })
+    } catch {
+      console.error('error confirming')
+    }
   }
 
   return (
     <Box display='flex' justifyContent='center'>
       <Button
-        // disabled={status === 'loading'}
-        disabled={false}
+        disabled={isLoading}
         onClick={handleClick}
         variant='text'
         color='primary'

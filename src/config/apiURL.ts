@@ -315,7 +315,20 @@ export const trading = {
   getMyPastOrders: `otc/order/list/my/past`,
   getConfirmedOrders: `/otc/order/list/confirm`,
   cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`,
-  confirmOTCOrder: (orderId: string) => `/otc/order/confirm/${orderId}`,
+  confirmOTCOrder: ({
+    orderId,
+    matchedOrderId
+  }: {
+    orderId: string
+    matchedOrderId: string
+  }) => `/otc/order/confirm/${orderId}/${matchedOrderId}`,
+  confirmMyOrder: ({
+    orderId,
+    matchedOrderId
+  }: {
+    orderId: string
+    matchedOrderId: string
+  }) => `/otc/order/my/confirm/${orderId}/${matchedOrderId}`,
   getUnmatchedOrders: (side: OrderType) =>
     `/otc/order/list/${side.toLowerCase()}`,
   getMatchedOrders: '/otc/order/list/match',

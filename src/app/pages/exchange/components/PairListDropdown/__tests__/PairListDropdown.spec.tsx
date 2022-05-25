@@ -8,6 +8,13 @@ jest.mock('@mui/material/ClickAwayListener', () => jest.fn(() => null))
 
 describe('PairListDropdown', () => {
   const setAnchorEl = jest.fn()
+  const props = {
+    path: 'https://test.com',
+    params: {
+      dsoId: '1234',
+      issuerId: '123'
+    }
+  }
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -18,7 +25,7 @@ describe('PairListDropdown', () => {
       .spyOn(React, 'useState')
       .mockImplementation(() => [anchorEl, setAnchorEl])
 
-    render(<PairListDropdown pairName='IXPS/SGD' />)
+    render(<PairListDropdown pairName='IXPS/SGD' {...props} />)
 
     expect(ClickAwayListener).toHaveBeenCalledTimes(0)
   })
@@ -29,7 +36,7 @@ describe('PairListDropdown', () => {
       .spyOn(React, 'useState')
       .mockImplementation(() => [anchorEl, setAnchorEl])
 
-    render(<PairListDropdown pairName='IXPS/SGD' />)
+    render(<PairListDropdown pairName='IXPS/SGD' {...props} />)
 
     expect(ClickAwayListener).toHaveBeenCalledTimes(1)
   })
@@ -40,7 +47,9 @@ describe('PairListDropdown', () => {
       .spyOn(React, 'useState')
       .mockImplementation(() => [anchorEl, setAnchorEl])
 
-    const { getByTestId } = render(<PairListDropdown pairName='IXPS/SGD' />)
+    const { getByTestId } = render(
+      <PairListDropdown pairName='IXPS/SGD' {...props} />
+    )
     fireEvent.click(getByTestId('pairName'))
 
     await waitFor(() => {
