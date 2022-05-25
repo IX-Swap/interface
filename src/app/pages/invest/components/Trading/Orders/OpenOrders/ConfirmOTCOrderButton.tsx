@@ -11,10 +11,9 @@ export const ConfirmOTCOrderButton = ({
   order,
   ...rest
 }: ConfirmOTCOrderButtonProps) => {
-  const { chainId } = usePairTokenAddressNetwork()
-  // TODO: replace with token address
+  const { chainId, address } = usePairTokenAddressNetwork()
   const sendToken = useSendToken({
-    address: '0x91BC44e284Fe08Fe5A6550664F93Eca897930A82',
+    address: address,
     tokenChainId: chainId
   })
   const handleClick = async () => {
