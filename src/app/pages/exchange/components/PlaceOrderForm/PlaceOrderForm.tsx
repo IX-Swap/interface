@@ -128,7 +128,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         <Grid item className={classes.buttonWrapper}>
           <Submit
             createOrderStatus={createOrderStatus}
-            disabled={isFetching || isDisabled}
+            disabled={isFetching || isDisabled || balance <= 0}
             data-testid='submit'
             size='large'
             variant='contained'
