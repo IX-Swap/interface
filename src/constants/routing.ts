@@ -28,6 +28,17 @@ const WETH_ONLY: ChainTokenList = {
   [137]: [WETH9[137]],
 }
 
+// used only for testing multihop on kovan
+const TEST_TOKENS = [
+  new Token(42, '0x1bdFF869D71E8e42D71e19E015fcC9E3Fc50e579', 18, 'WSEC', 'WSEC'),
+  new Token(42, '0x9b22472E7dd78c31FF139D6d76A579dfcF9aC634', 18, 'SEC', 'SEC'),
+  new Token(42, '0x143610a6D610c5ce9096d4ebaF6A85D98F32A1Fe', 18, 'QQ', 'QQ'),
+  new Token(42, '0x564efF0E726e2d2346F1231a93F3184a18FC0e94', 18, 'EE', 'EE'),
+  new Token(42, '0x9E9B2eE771629E2edFf526748e2ddc69122953fc', 18, 'WW', 'WW'),
+  new Token(42, '0xF7526D3aA11496CCD4FB6A505b64B74E7bBd8F71', 18, 'RR', 'RR'),
+  new Token(42, '0x40Fe1CC36fA8dAabCf680B6742966344d209f9f2', 18, 'AA', 'AA'),
+]
+
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ...WETH_ONLY,
@@ -79,7 +90,7 @@ export const COMMON_BASES: ChainCurrencyList = {
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
   [1]: [...WETH_ONLY[1], ...TRANSFORMED_DEFAULT_TOKEN_LIST[1], USDC[1], IXS[1]],
-  [42]: [...WETH_ONLY[42], ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
+  [42]: [...WETH_ONLY[42], ...TEST_TOKENS, ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
   [137]: [...WETH_ONLY[137], ...TRANSFORMED_DEFAULT_TOKEN_LIST[137], USDC[137], IXS[137]],
 }
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
