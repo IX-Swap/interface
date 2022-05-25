@@ -24,7 +24,7 @@ export const UsCitizenshipConfirmation = () => {
 
       <Paper className={styles.container}>
         <Grid item>
-          <Typography>Why We Need Your Tax Declaration?</Typography>
+          <Typography>Declaration of US Citizenship or US Residence</Typography>
         </Grid>
         <FatcaDialog />
       </Paper>

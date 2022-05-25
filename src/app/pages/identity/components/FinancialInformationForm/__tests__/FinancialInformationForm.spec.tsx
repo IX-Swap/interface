@@ -27,6 +27,5 @@ describe('FinancialInformationForm', () => {
     render(<FinancialInformationForm />)
 
     expect(EmploymentField).toHaveBeenCalled()
-    expect(FundSource).toHaveBeenCalled()
   })
 })
