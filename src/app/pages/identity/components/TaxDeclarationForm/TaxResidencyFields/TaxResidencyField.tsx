@@ -1,5 +1,7 @@
-import DeleteOutlined from '@mui/icons-material/DeleteOutlined'
-import { Button, Grid, IconButton } from '@mui/material'
+import { ReactComponent as DeleteOutlined } from 'assets/icons/delete.svg'
+import { ReactComponent as DeleteDisabledOutlined } from 'assets/icons/delete-disabled.svg'
+import { ReactComponent as PlusIcon } from 'assets/icons/plus.svg'
+import { Button, Grid, Typography, useTheme, Box } from '@mui/material'
 import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
 import { TaxResidency } from 'app/pages/identity/types/forms'
 import { CountrySelect } from 'components/form/CountrySelect'
@@ -8,6 +10,9 @@ import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { useStyles } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidency.styles'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+
 export interface TaxResidencyFieldProps {
   field: Partial<TaxResidency & { id: string }>
   append: (
@@ -35,6 +40,11 @@ export const TaxResidencyField = ({
   const { control, watch } = useFormContext()
   const residencyList = watch('taxResidencies')
   const { taxIdAvailable } = residencyList[index] as TaxResidency
+  const country = residencyList[index].countryOfResidence
+
+  const styles = useStyles()
+  const theme = useTheme()
+  const { isMobile, isTablet } = useAppBreakpoints()
 
   const getSelectedCountries = () => {
     if (residencyList === undefined || residencyList.length < 1) {
@@ -72,13 +82,12 @@ export const TaxResidencyField = ({
       direction='column'
       spacing={3}
       style={{
-        borderTop: index !== 0 ? '1px solid lightgray' : 'none',
         paddingTop: index !== 0 ? 30 : 0
       }}
     >
       <Grid item>
-        <Grid container spacing={3} alignItems='flex-start'>
-          <Grid item xs={12} md={4}>
+        <Grid container spacing={2} alignItems='flex-start'>
+          <Grid item xs={12} md={5.5}>
             <TypedField
               component={CountrySelect}
               name={['taxResidencies', index, 'countryOfResidence']}
@@ -91,12 +100,16 @@ export const TaxResidencyField = ({
             />
           </Grid>
 
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={5.5}>
             <TypedField
               fullWidth
               control={control}
               component={TextInput}
-              label='Tax Identification Number'
+              label={
+                country !== 'Singapore'
+                  ? 'Tax Identification Number'
+                  : 'NRIC/FIN'
+              }
               defaultValue={defaultValue?.taxIdentificationNumber ?? ''}
               name={['taxResidencies', index, 'taxIdentificationNumber']}
               variant='outlined'
@@ -105,37 +118,38 @@ export const TaxResidencyField = ({
             />
           </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Grid container spacing={2} alignItems='center'>
-              <Grid item xs={2}>
-                <IconButton
-                  onClick={handleRemove}
-                  disabled={total === 1}
-                  data-testid='remove-button'
-                  size='large'
-                >
-                  <DeleteOutlined />
-                </IconButton>
-              </Grid>
-              {isLast && total < max ? (
-                <Grid item xs={10}>
-                  <Button
-                    variant='outlined'
-                    color='primary'
-                    onClick={handleAdd}
-                  >
-                    Add more
-                  </Button>
-                </Grid>
-              ) : null}
-            </Grid>
+          <Grid item xs={12} md={1}>
+            <Box className={styles.container} onClick={handleRemove}>
+              {total === 1 ? <DeleteDisabledOutlined /> : <DeleteOutlined />}
+              {(isMobile || isTablet) && (
+                <Typography color={theme.palette.text.secondary}>
+                  Remove Country
+                </Typography>
+              )}
+            </Box>
           </Grid>
         </Grid>
       </Grid>
       <Grid item>
         <VSpacer size={'small'} />
         <TinUnavailableFields index={index} defaultValue={defaultValue} />
+        <VSpacer size='small' />
+        <Box className={styles.divider} />
       </Grid>
+
+      {isLast && total < max ? (
+        <Grid item xs={10} display='flex' justifyContent='right'>
+          <Button
+            size='large'
+            variant='outlined'
+            color='primary'
+            onClick={handleAdd}
+            fullWidth={isMobile || isTablet}
+          >
+            <PlusIcon height='12' width='12' /> &nbsp; Add more
+          </Button>
+        </Grid>
+      ) : null}
     </Grid>
   )
 }

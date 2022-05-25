@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid } from '@mui/material'
+import { Grid, useTheme } from '@mui/material'
 import { ReasonFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
@@ -15,6 +15,7 @@ export interface TinUnavailableFieldsProps {
 export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   const { index, defaultValue } = props
   const { control, watch, setValue, clearErrors } = useFormContext()
+  const theme = useTheme()
 
   const { singaporeOnly } = control.getValues()
   const isTinAvailable: boolean = watch<string, boolean>(
@@ -39,7 +40,8 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
           valueExtractor={reverseBooleanValueExtractor}
           control={control}
           name={['taxResidencies', index, 'taxIdAvailable']}
-          label='if TIN is not available please indicate reason:'
+          label='TIN is not available (please indicate reason):'
+          labelColor={theme.palette.text.secondary}
         />
       </Grid>
       {!isTinAvailable && (

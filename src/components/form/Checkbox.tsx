@@ -10,6 +10,7 @@ import { useStyles } from 'components/form/Checkbox.styles'
 
 export interface CheckboxProps extends Omit<FormControlLabelProps, 'control'> {
   reverse?: boolean
+  labelColor?: string
 }
 
 export const Checkbox = (
@@ -22,6 +23,7 @@ export const Checkbox = (
     error = true,
     control,
     reverse = false,
+    labelColor,
     ...rest
   } = props
 
@@ -40,7 +42,7 @@ export const Checkbox = (
         <Typography
           fontWeight={400}
           variant='body1'
-          color={error ? 'error' : 'inherit'}
+          color={error ? 'error' : labelColor != null ? labelColor : 'inherit'}
           style={{ marginTop: 10, fontSize: 13.5 }}
         >
           {label}

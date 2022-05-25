@@ -1,4 +1,10 @@
-import { Grid, FormControlLabel, Box } from '@mui/material'
+import {
+  Grid,
+  FormControlLabel,
+  Box,
+  Typography,
+  useTheme
+} from '@mui/material'
 import {
   IndividualTaxDeclarationFormValues,
   TaxResidency
@@ -25,6 +31,7 @@ export const ReasonFields = ({
     useFormContext<IndividualTaxDeclarationFormValues>()
   const reason = watch(`taxResidencies[${index}].reason`)
   const isBReason = reason === 'B'
+  const theme = useTheme()
 
   return (
     <Box ml={3}>
@@ -40,13 +47,18 @@ export const ReasonFields = ({
           <Grid item>
             <FormControlLabel
               label={
-                <>
+                <Typography
+                  fontWeight={reason === 'A' ? 500 : 400}
+                  color={reason !== 'A' ? theme.palette.text.secondary : ''}
+                  lineHeight='150%'
+                  letterSpacing='-0.01em'
+                >
                   <Box fontWeight='bold' component='span'>
                     Reason A
                   </Box>{' '}
                   - The country/jurisdiction where the Account Holder is
                   resident does not issue TINs to its residents
-                </>
+                </Typography>
               }
               value='A'
               control={<UIRadio />}
@@ -56,7 +68,12 @@ export const ReasonFields = ({
           <Grid item>
             <FormControlLabel
               label={
-                <>
+                <Typography
+                  fontWeight={reason === 'B' ? 500 : 400}
+                  color={reason !== 'B' ? theme.palette.text.secondary : ''}
+                  lineHeight='150%'
+                  letterSpacing='-0.01em'
+                >
                   <Box fontWeight='bold' component='span'>
                     Reason B
                   </Box>{' '}
@@ -64,7 +81,7 @@ export const ReasonFields = ({
                   equivalent number (Please explain why your are unable to
                   obtain a TIN in the below table if you have selected this
                   reason)
-                </>
+                </Typography>
               }
               value='B'
               control={<UIRadio />}
@@ -89,14 +106,19 @@ export const ReasonFields = ({
           <Grid item>
             <FormControlLabel
               label={
-                <>
+                <Typography
+                  fontWeight={reason === 'C' ? 500 : 400}
+                  color={reason !== 'C' ? theme.palette.text.secondary : ''}
+                  lineHeight='150%'
+                  letterSpacing='-0.01em'
+                >
                   <Box fontWeight='bold' component='span'>
                     Reason C
                   </Box>{' '}
                   - No TIN is required. (Note. Only select this reason if the
                   domestic law of the relevant jurisdiction does not require the
                   collection of the TIN issued by such jurisdiction)
-                </>
+                </Typography>
               }
               value='C'
               control={<UIRadio />}

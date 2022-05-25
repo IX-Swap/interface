@@ -9,7 +9,7 @@ export const FundSourceSelect = (props: any): JSX.Element => {
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select {...props} label={undefined}>
+      <Select {...props} label={undefined} displayEmpty>
         <SelectItem disabled value={undefined}>
           Source of funds
         </SelectItem>

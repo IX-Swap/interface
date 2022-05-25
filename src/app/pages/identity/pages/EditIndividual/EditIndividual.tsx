@@ -7,22 +7,24 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { RootContainer } from 'ui/RootContainer'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
-const EditIndividualComponent = ({ data }: { data: IndividualIdentity }) => (
-  <Grid container>
-    <Grid container item xs={12} style={{ display: 'table' }}>
-      <PageHeader title={getPersonName(data)} />
-    </Grid>
-    <RootContainer>
-      <Grid container item>
-        <VSpacer size='medium' />
-      </Grid>
-      <Grid item xs={12}>
-        <IndividualInvestorForm />
-      </Grid>
-    </RootContainer>
-  </Grid>
-)
+const EditIndividualComponent = ({ data }: { data: IndividualIdentity }) => {
+  const { isMobile } = useAppBreakpoints()
+  return (
+    <>
+      {!isMobile && <PageHeader title={getPersonName(data)} />}
+      <RootContainer>
+        <Grid container item>
+          <VSpacer size='medium' />
+        </Grid>
+        <Grid item xs={12}>
+          <IndividualInvestorForm />
+        </Grid>
+      </RootContainer>
+    </>
+  )
+}
 
 export const EditIndividual = () => {
   return <IndividualIdentityContainer component={EditIndividualComponent} />

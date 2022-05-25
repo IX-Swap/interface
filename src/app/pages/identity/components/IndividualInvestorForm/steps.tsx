@@ -21,8 +21,7 @@ import {
   financialInfoSchema,
   individualInvestorDocumentsSchema,
   individualInvestorStatusDeclarationSchema,
-  personalInfoSchema,
-  taxDeclarationSchema
+  personalInfoSchema
 } from 'app/pages/identity/validation/individual'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { FinancialInformationForm } from 'app/pages/identity/components/FinancialInformationForm/FinancialInformationForm'
@@ -32,6 +31,7 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
+import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 
 export const individualInvestorFormSteps = [
   {
@@ -57,7 +57,7 @@ export const individualInvestorFormSteps = [
     )
   },
   {
-    label: 'Financial Information',
+    label: 'Financial and Tax Information',
     getFormValues: getFinancialInfoFormValues,
     getRequestPayload: getFinancialInfoRequestPayload,
     validationSchema: financialInfoSchema,
@@ -68,19 +68,14 @@ export const individualInvestorFormSteps = [
             <FinancialInformationForm />
           </Paper>
         </Grid>
-      </Grid>
-    )
-  },
-  {
-    label: 'Tax Declaration',
-    getFormValues: getTaxDeclarationFormValues,
-    getRequestPayload: getTaxDeclarationRequestPayload,
-    validationSchema: taxDeclarationSchema,
-    component: () => (
-      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 5 }}>
             <TaxDeclarationForm />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper sx={{ borderRadius: 2, p: 5 }}>
+            <UsCitizenshipConfirmation />
           </Paper>
         </Grid>
       </Grid>

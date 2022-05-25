@@ -9,19 +9,16 @@ export const TaxDeclarationInfoDialog = () => {
     <Dialog
       fullWidth
       scroll='body'
-      maxWidth='md'
+      maxWidth='xs'
       button={
         <Typography
           component='span'
           color='primary'
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
+          style={{ cursor: 'pointer' }}
         >
-          Click here
+          Learn more
         </Typography>
       }
-      titleStyle={{
-        textAlign: 'center'
-      }}
       title='Why we need your Tax Declaration?'
       content={<TaxDeclarationInfoContent />}
       actions={<TaxDeclarationInfoAction />}
