@@ -18,7 +18,7 @@ config.performance = {
 }
 
 config.devServer = {
-  port: 3000,
+  port: 3001,
   open: true,
   hot: true,
   compress: false,

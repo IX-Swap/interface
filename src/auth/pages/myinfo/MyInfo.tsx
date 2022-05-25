@@ -9,7 +9,7 @@ import { Icon } from 'ui/Icons/Icon'
 
 export const MyInfo = () => {
   const { getFilterValue } = useQueryFilter()
-  const errorType = getFilterValue<'errorType'>('errorType', 'connection')
+  const errorType = getFilterValue<'errorType'>('errorType')
 
   if (errorType === undefined) {
     return <Redirect to={AuthRoute.signup} />
@@ -20,12 +20,6 @@ export const MyInfo = () => {
       title: 'Email  Already  Exists',
       message:
         'You have already used this email to sign up on our platform. Please try again with another email.',
-      action: <RetrieveButton label='Try Again' hideCheckBox />
-    },
-    connection: {
-      title: 'Connection  Failed',
-      message:
-        'We are unable to retrieve your information from Singpass. Proceed with your application once again.',
       action: (
         <Grid container spacing={2} justifyContent='space-between'>
           <Grid item xs={6}>
@@ -45,11 +39,17 @@ export const MyInfo = () => {
           </Grid>
         </Grid>
       )
+    },
+    connection: {
+      title: 'Connection  Failed',
+      message:
+        'We are unable to retrieve your information from Singpass. Proceed with your application once again.',
+      action: <RetrieveButton label='Try Again' hideCheckBox />
     }
   }
 
   return (
-    <Box width='100%' maxWidth={480} m={[0, 'auto']}>
+    <Box width='100%' maxWidth={480}>
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <Typography align='center' variant='h3' textTransform='uppercase'>

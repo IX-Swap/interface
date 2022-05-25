@@ -6,5 +6,6 @@ export const AuthRoute = {
   successfulSignup: '/auth/successful-signup',
   successfulPasswordReset: '/auth/successful-reset',
   declineInvitation: '/auth/invitations/decline/:roleId',
-  myinfoError: '/auth/myinfo'
+  myinfoError: '/auth/myinfo',
+  callback: '/callback'
 }

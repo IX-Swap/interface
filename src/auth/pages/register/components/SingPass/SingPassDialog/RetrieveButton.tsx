@@ -1,5 +1,5 @@
 import { Button, FormControlLabel, Grid } from '@mui/material'
-import { useSingPassAuthorise } from 'hooks/auth/useSingPassAuthorise'
+import { generateSingPassAuthorizeUrl } from 'hooks/utils'
 import React, { useState } from 'react'
 import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
 
@@ -12,7 +12,7 @@ export const RetrieveButton = ({
   hideCheckBox = false,
   label = ' Retrieve Myinfo with Singpass'
 }: RetrieveButtonProps) => {
-  const { authoriseUrl } = useSingPassAuthorise()
+  const authoriseUrl = generateSingPassAuthorizeUrl()
 
   const [checked, setCheked] = useState(false)
   const handleClick = () => {

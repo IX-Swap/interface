@@ -25,7 +25,9 @@ export const getThemeOverrides = (
         transformOrigin: 'top left',
         fontSize: 16,
         color: '#ffffff',
-
+        '&.Mui-disabled': {
+          color: '#ffffff'
+        },
         '&.Mui-focused': {
           color: '#ffffff'
         },
@@ -62,6 +64,13 @@ export const getThemeOverrides = (
   },
   MuiOutlinedInput: {
     styleOverrides: {
+      root: {
+        '&:hover': {
+          'fieldset.MuiOutlinedInput-notchedOutline': {
+            borderColor: 'transparent'
+          }
+        }
+      },
       notchedOutline: {
         borderColor: 'transparent',
         '& span': {
@@ -84,9 +93,14 @@ export const getThemeOverrides = (
           backgroundClip: 'padding-box',
           WebkitTextFillColor: `#ffffff`
         },
-        '& ~ fieldset.MuiOutlinedInput-notchedOutline': {
-          borderRadius: 3,
-          borderColor: '#1a397c'
+        '&, &:disabled, &:hover': {
+          '~ fieldset.MuiOutlinedInput-notchedOutline': {
+            borderRadius: 3,
+            borderColor: 'transparent'
+          }
+        },
+        '&:disabled': {
+          WebkitTextFillColor: `#ffffff`
         }
       }
     }

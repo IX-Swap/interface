@@ -9,7 +9,7 @@ import { AppRoute } from 'components/AppRoute'
 import { SuccessfulSignup } from 'auth/pages/successful-signup/SuccessfulSignup'
 import { SuccessfulReset } from 'auth/pages/successful-reset/SuccessfulReset'
 import { InvitationDeclie } from 'auth/pages/invitation/InvitationDecline'
-import { MyInfo } from 'auth/pages/myinfo/myinfo'
+import { MyInfo } from 'auth/pages/myinfo/MyInfo'
 
 export const AuthRouter = () => {
   return (
