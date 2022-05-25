@@ -43,7 +43,7 @@ const TEST_TOKENS = [
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ...WETH_ONLY,
   [1]: [...WETH_ONLY[1], ...TRANSFORMED_DEFAULT_TOKEN_LIST[1], USDC[1], IXS[1]],
-  [42]: [...WETH_ONLY[42], ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
+  [42]: [...WETH_ONLY[42], ...TEST_TOKENS, ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
   [137]: [...WETH_ONLY[137], ...TRANSFORMED_DEFAULT_TOKEN_LIST[137], USDC[137], IXS[137]],
 }
 export const ADDITIONAL_BASES: { [chainId: number]: { [tokenAddress: string]: Token[] } } = {
