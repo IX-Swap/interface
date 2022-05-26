@@ -5,7 +5,7 @@ import { Typography } from '@mui/material'
 import { useStyles } from 'app/components/Header/components/Navigation/TopbarLinkContainer/TopbarLinkContainer.styles'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { useUncompletedIdentityDialog } from 'app/components/Header/hooks/useUncompletedIdentityDialog'
+import { useUncompletedIdentityDialog } from 'app/components/UncompletedIdentityDialog/hook/useUncompletedIdentityDialog'
 import { useAppNavigation } from 'app/components/Header/hooks/useAppNavigation'
 
 export interface TopbarLinkProps {

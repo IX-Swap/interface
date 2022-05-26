@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import classnames from 'classnames'
 import { useHistory } from 'react-router-dom'
 import {
   Button,
@@ -10,7 +9,6 @@ import {
 } from '@mui/material'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { BackDrop } from 'app/components/BackDrop'
-import { useOnboardingPanel } from 'app/hooks/onboarding/useOnboardingPanel'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useUncompletedIdentityDialogData } from 'app/components/UncompletedIdentityDialog/hook/useUncompletedIdentityDialogData'
 import { useStyles } from 'app/components/UncompletedIdentityDialog/UncompletedIdentityDialog.styles'
@@ -20,11 +18,8 @@ export const EmptyBackDrop = () => <></>
 export const UncompletedIdentityDialog = () => {
   const history = useHistory()
   const { data, isLoading } = useUncompletedIdentityDialogData()
-
-  const { open: panelOpened } = useOnboardingPanel()
   const [opened, setOpened] = useState(true)
-  const { scrollPaper, paper, content, actions, paperShift, root, button } =
-    useStyles()
+  const { scrollPaper, paper, content, actions, root, button } = useStyles()
 
   const handleClose = () => {
     setOpened(false)
@@ -68,8 +63,8 @@ export const UncompletedIdentityDialog = () => {
         onClose={handleClose}
         classes={{
           root: root,
-          scrollPaper: scrollPaper,
-          paper: classnames(paper, { [paperShift]: !panelOpened })
+          paper: paper,
+          scrollPaper: scrollPaper
         }}
         BackdropComponent={EmptyBackDrop}
       >

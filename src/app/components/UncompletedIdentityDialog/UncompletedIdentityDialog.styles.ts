@@ -1,8 +1,6 @@
 import { alpha } from '@mui/material/styles'
 import makeStyles from '@mui/styles/makeStyles'
 
-export const dialogWidth = 400
-
 export const useStyles = makeStyles(theme => ({
   root: { pointerEvents: 'none' },
   backDrop: {
@@ -21,9 +19,9 @@ export const useStyles = makeStyles(theme => ({
     transform: 'translate(-50%, -50%)',
     margin: 0,
     zIndex: 1000,
-    maxWidth: dialogWidth,
+    maxWidth: 400,
+    minWidth: 343,
     minHeight: 257,
-    width: '100%',
     textAlign: 'center',
     padding: theme.spacing(5),
     borderRadius: 8,
@@ -45,9 +43,6 @@ export const useStyles = makeStyles(theme => ({
   },
   actions: {
     padding: 0
-  },
-  paperShift: {
-    right: 30
   },
   button: {
     width: '100%'
