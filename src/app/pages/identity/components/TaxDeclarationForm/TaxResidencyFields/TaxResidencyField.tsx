@@ -115,6 +115,11 @@ export const TaxResidencyField = ({
               variant='outlined'
               disabled={!taxIdAvailable}
               key={field.id}
+              placeholder={
+                country !== 'Singapore'
+                  ? 'Tax Identification Number'
+                  : 'NRIC/FIN'
+              }
             />
           </Grid>
 
@@ -146,7 +151,7 @@ export const TaxResidencyField = ({
             onClick={handleAdd}
             fullWidth={isMobile || isTablet}
           >
-            <PlusIcon height='12' width='12' /> &nbsp; Add more
+            <PlusIcon height='12' width='12' /> &nbsp; Add Country
           </Button>
         </Grid>
       ) : null}

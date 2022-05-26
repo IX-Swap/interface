@@ -34,10 +34,10 @@ export const EmploymentField = () => {
               control={control}
               variant='outlined'
               name='employmentStatus'
-              label='Employment Sector'
+              label='Employment Status'
               data-testid='Employment-select'
               fullWidth
-              placeholder='Select Employment Sector'
+              placeholder='Select Employment Status'
             />
           </Grid>
           <Grid item xs={12} md={6}>
