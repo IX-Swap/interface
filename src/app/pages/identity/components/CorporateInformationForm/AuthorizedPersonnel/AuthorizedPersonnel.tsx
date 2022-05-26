@@ -76,7 +76,7 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
                 onClick={handleAppend}
                 startIcon={<Icon name='plus' />}
               >
-                Company Authorized Personnel
+                Add Company Authorized Personnel
               </Button>
             </Grid>
           ) : null}

@@ -32,6 +32,7 @@ export const OwnershipStructureFields = () => {
             name='businessActivity'
             label='Business Activity'
             variant='outlined'
+            placeholder='Add Activity'
             helperText={
               formState.dirtyFields.businessActivity === true
                 ? 'Max 1024 symbols'

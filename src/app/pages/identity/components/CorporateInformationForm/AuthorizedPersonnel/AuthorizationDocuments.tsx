@@ -20,7 +20,7 @@ export const AuthorizationDocuments = ({
         <FormSectionHeader title='Authorization Document' />
       </Grid>
       <Grid item>
-        <Typography variant='caption'>
+        <Typography variant='caption' color='#778194'>
           Board Resolution, Power of Attorney, Partnership Deed, Trust Deed, and
           Others.
         </Typography>

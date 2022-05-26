@@ -63,6 +63,9 @@ export const InformationFields = ({
             control={control}
             variant='outlined'
             name='companyLegalName'
+            placeholder={
+              type === 'investor' ? 'Corporate Name' : 'Company Name'
+            }
             defaultValue=''
             label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
           />
@@ -85,6 +88,7 @@ export const InformationFields = ({
             name='registrationNumber'
             defaultValue=''
             label='Registration Number/UEN'
+            placeholder='Registration Number'
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -103,6 +107,7 @@ export const InformationFields = ({
             variant='outlined'
             name='legalEntityStatus'
             label='Legal Entity'
+            placeholder='Legal Entity'
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -113,8 +118,9 @@ export const InformationFields = ({
             control={control}
             variant='outlined'
             name='otherLegalEntityStatus'
-            label='Others (Please specify)'
+            label='Others (Legal Entity)'
             disabled={legalEntityStatus !== 'others'}
+            placeholder='Please specify'
           />
         </Grid>
         <ValidateOnMount />

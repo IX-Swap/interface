@@ -9,7 +9,7 @@ export const BusinessOwnerSelect = (props: any): JSX.Element => {
       <InputLabel>{props.label}</InputLabel>
       <Select
         {...props}
-        placeholder={String(props.label)}
+        placeholder='Select Number'
         displayEmpty
         label={undefined}
       >

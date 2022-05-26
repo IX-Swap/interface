@@ -35,6 +35,7 @@ export const PersonnelInformation = ({
               variant='outlined'
               name={[rootName, index, 'fullName']}
               label='Full Name'
+              placeholder='Full Name'
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -46,6 +47,7 @@ export const PersonnelInformation = ({
               variant='outlined'
               name={[rootName, index, 'designation']}
               label='Designation'
+              placeholder='Add Designation'
             />
           </Grid>
         </Grid>
@@ -61,6 +63,7 @@ export const PersonnelInformation = ({
               variant='outlined'
               name={[rootName, index, 'email']}
               label='Email Address'
+              placeholder='Email Address'
             />
           </Grid>
           <Grid item xs={12} md={6}>
