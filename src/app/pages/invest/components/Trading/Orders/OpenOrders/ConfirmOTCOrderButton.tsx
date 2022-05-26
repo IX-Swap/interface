@@ -23,7 +23,7 @@ export const ConfirmOTCOrderButton = ({
       await sendToken(order.ethAddress, order.amount)
       await confirmMatch({
         orderId: order._id,
-        matchedOrderId: order.matches?._id ?? ''
+        matchedOrderId: order.matches?.order ?? ''
       })
     } catch {
       console.error('error confirming')
