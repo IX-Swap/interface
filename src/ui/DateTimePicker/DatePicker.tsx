@@ -116,7 +116,7 @@ export const DatePicker = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box>
+      <Box position='relative'>
         {label !== undefined && (
           <InputLabel style={{ fontSize: 14 }} shrink error={hasError}>
             {label}
@@ -157,6 +157,12 @@ export const DatePicker = ({
           }}
           onClick={handleFocus}
           fullWidth
+          sx={{
+            input: {
+              caretColor: 'transparent',
+              cursor: 'default'
+            }
+          }}
         />
         {open && (
           <DatePickerPopper
