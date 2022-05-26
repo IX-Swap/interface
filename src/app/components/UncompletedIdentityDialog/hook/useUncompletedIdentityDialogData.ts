@@ -38,7 +38,7 @@ export const useUncompletedIdentityDialogData = () => {
   const createIdentityInfo = () => {
     return {
       title: 'Create an Identity',
-      message: ['To manage your account please create your identity first'],
+      message: 'To manage your account please create your identity first',
       actionLabel: 'Proceed Now',
       action: getRedirectPath()
     }
@@ -47,7 +47,7 @@ export const useUncompletedIdentityDialogData = () => {
   const finishIdentityInfo = () => {
     return {
       title: 'Finish your Identity creation',
-      message: ['To manage your account please finish your identity first'],
+      message: 'To manage your account please finish your identity first',
       actionLabel: 'Proceed Now',
       action: getRedirectPath()
     }
@@ -56,11 +56,10 @@ export const useUncompletedIdentityDialogData = () => {
   const waitAuthorizerInfo = () => {
     return {
       title: 'Wait for Authorizer’s Approval',
-      message: [
-        'To manage your account please wait for Authorizer’s approval of your identity first'
-      ],
+      message:
+        'To manage your account please wait for Authorizer’s approval of your identity first',
       actionLabel: 'OK',
-      action: getRedirectPath()
+      action: null
     }
   }
 
@@ -84,6 +83,7 @@ export const useUncompletedIdentityDialogData = () => {
   }
 
   return {
-    getData
+    data: getData(),
+    isLoading: !isIdentitiesLoaded
   }
 }

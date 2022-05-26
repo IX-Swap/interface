@@ -12,13 +12,7 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 1201,
     width: '100vw',
     height: '100vh',
-    backgroundColor: alpha('#000', 0.5),
-    transition: 'opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
-  },
-  scrollPaper: {
-    display: 'block',
-    position: 'relative',
-    pointerEvents: 'none'
+    backgroundColor: alpha('#000', 0.5)
   },
   paper: {
     position: 'absolute',
@@ -28,15 +22,18 @@ export const useStyles = makeStyles(theme => ({
     margin: 0,
     zIndex: 1000,
     maxWidth: dialogWidth,
+    minHeight: 257,
+    width: '100%',
     textAlign: 'center',
     padding: theme.spacing(5),
     borderRadius: 8,
     pointerEvents: 'auto',
-    transition: theme.transitions.create('right', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen
-    }),
     backgroundColor: theme.palette.backgrounds.light
+  },
+  scrollPaper: {
+    display: 'block',
+    position: 'relative',
+    pointerEvents: 'none'
   },
   content: {
     margin: theme.spacing(0, 0, 3),
