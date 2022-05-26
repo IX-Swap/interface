@@ -1,4 +1,3 @@
-import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import * as useOnboardingJourneys from 'app/hooks/onboarding/useOnboardingJourneys'
 import { CorporateIssuerForm } from 'app/pages/identity/components/CorporateIssuerForm/CorporateIssuerForm'
 import * as useAllCorporates from 'app/pages/identity/hooks/useAllCorporates'
@@ -6,7 +5,6 @@ import * as useCreateCorporate from 'app/pages/identity/hooks/useCreateCorporate
 import * as useSubmitCorporate from 'app/pages/identity/hooks/useSubmitCorporate'
 import * as useUpdateCorporate from 'app/pages/identity/hooks/useUpdateCorporate'
 import React from 'react'
-import { render } from 'test-utils'
 import { corporate } from '__fixtures__/identity'
 import {
   generateInfiniteQueryResult,
@@ -33,11 +31,6 @@ describe('CorporateIssuerForm', () => {
   const useCreateCorporateResponse = [mutateFn, mutationResult]
   const useUpdateCorporateResponse = [mutateFn, mutationResult]
   const useSubmitCorporateResponse = [mutateFn, mutationResult]
-
-  const showPreIdentityCreateDialogMock = jest.fn()
-  const useOnboardingDialogResponse = {
-    showPreIdentityCreateDialog: showPreIdentityCreateDialogMock
-  }
 
   const useOnboardingJourneysResponse = {
     isCorporateJourneyCompleted: true,
@@ -72,10 +65,6 @@ describe('CorporateIssuerForm', () => {
       .mockImplementation(() => useSubmitCorporateResponse as any)
 
     jest
-      .spyOn(useOnboardingDialog, 'useOnboardingDialog')
-      .mockImplementation(() => useOnboardingDialogResponse as any)
-
-    jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
       .mockImplementation(() => useOnboardingJourneysResponse as any)
 
@@ -86,22 +75,5 @@ describe('CorporateIssuerForm', () => {
 
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it('invokes showPreIdentityCreateDialog when data is undefined', () => {
-    const useAllCorporatesZeroResponse = generateInfiniteQueryResult({
-      map: {
-        [corporate._id]: corporate
-      },
-      list: [],
-      isLoading: false
-    })
-
-    jest
-      .spyOn(useAllCorporates, 'useAllCorporates')
-      .mockImplementation(() => useAllCorporatesZeroResponse as any)
-
-    render(<CorporateIssuerForm />)
-    expect(showPreIdentityCreateDialogMock).toHaveBeenCalled()
   })
 })

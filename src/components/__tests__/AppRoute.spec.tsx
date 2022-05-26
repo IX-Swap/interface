@@ -1,4 +1,3 @@
-import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { AppRoute } from 'components/AppRoute'
 import { history } from 'config/history'
 import * as useCachedUser from 'hooks/auth/useCachedUser'
@@ -13,14 +12,6 @@ describe('AppRoute', () => {
 
   beforeEach(() => {
     history.push(initialPath)
-    const useOnboardingDialogResponse = {
-      showEnable2FADialog: () => {},
-      showCreateAccountDialog: () => {}
-    }
-
-    jest
-      .spyOn(useOnboardingDialog, 'useOnboardingDialog')
-      .mockImplementation(() => useOnboardingDialogResponse as any)
   })
 
   afterEach(async () => {

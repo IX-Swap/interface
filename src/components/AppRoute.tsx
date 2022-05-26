@@ -1,9 +1,6 @@
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import { AppRoute as AppPath } from 'app/router/config'
 import { Breadcrumb } from 'components/Breadcrumb'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SentryRoute } from 'components/SentryRoute'
-import { useIsAccredited } from 'helpers/acl'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import React, { memo } from 'react'
 import { RouteProps, Redirect } from 'react-router-dom'
@@ -17,23 +14,10 @@ export interface AppRouteProps extends RouteProps {
 export const AppRoute = memo((props: AppRouteProps) => {
   const { breadcrumb, path, children, ...rest } = props
   const user = useCachedUser()
-  const isAccredited = useIsAccredited()
-  const { showCreateAccountDialog } = useOnboardingDialog()
 
   if (user === undefined) {
     if (!path.startsWith('/auth')) {
       return <Redirect to='/auth' />
-    }
-  } else {
-    if (
-      !isAccredited &&
-      !path.startsWith(AppPath.educationCentre) &&
-      !path.startsWith(AppPath.identity) &&
-      !path.startsWith(AppPath.security) &&
-      !path.startsWith(AppPath.notifications)
-    ) {
-      showCreateAccountDialog()
-      return <Redirect to={path} />
     }
   }
 

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useCreateCorporate } from 'app/pages/identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/identity/hooks/useUpdateCorporate'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useSubmitCorporate } from 'app/pages/identity/hooks/useSubmitCorporate'
 import { getCorporateInvestorFormSteps } from './steps'
 import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
@@ -38,16 +37,9 @@ export const CorporateInvestorForm = ({
   const createMutation = useCreateCorporate(type)
   const updateMutation = useUpdateCorporate(type)
   const submitMutation = useSubmitCorporate(openDialog)
-  const { showPreIdentityCreateDialog } = useOnboardingDialog()
   const { isCorporateJourneyCompleted, corporateIdentities } =
     useOnboardingJourneys()
   const { location, replace } = useHistory()
-
-  useEffect(() => {
-    if (data === undefined) {
-      showPreIdentityCreateDialog('corporate')
-    }
-  }, [data]) // eslint-disable-line
 
   useEffect(() => {
     if (
