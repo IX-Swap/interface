@@ -69,14 +69,13 @@ export const useUncompletedIdentityDialogData = () => {
         return createIdentityInfo()
       }
       if (
-        individualIdentity?.status === 'Submitted' &&
+        individualIdentity?.status === 'Submitted' ||
         corporateIdentities.some(item => item.status === 'Submitted')
       ) {
         return waitAuthorizerInfo()
       }
-      if (isIndividualJourneyStarted || isCorporateJourneyStarted) {
-        return finishIdentityInfo()
-      }
+
+      return finishIdentityInfo()
     }
 
     return undefined
