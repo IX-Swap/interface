@@ -9,9 +9,7 @@ export const useUncompletedIdentityDialog = (pathname: string) => {
   const { isNavigationPossibleWithoutCompletedIdentity } = useAppNavigation()
 
   const showUncompletedIdentityDialog = () => {
-    if (!isNavigationPossibleWithoutCompletedIdentity(pathname) || isAdmin) {
-      return null
-    } else {
+    if (isNavigationPossibleWithoutCompletedIdentity(pathname) && !isAdmin) {
       showDialog(UncompletedIdentityDialog)
     }
   }

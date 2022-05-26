@@ -20,13 +20,17 @@ export const useStyles = makeStyles(theme => ({
     margin: 0,
     zIndex: 1000,
     maxWidth: 400,
-    minWidth: 343,
+    minWidth: 400,
     minHeight: 257,
     textAlign: 'center',
     padding: theme.spacing(5),
     borderRadius: 8,
     pointerEvents: 'auto',
-    backgroundColor: theme.palette.backgrounds.light
+    backgroundColor: theme.palette.backgrounds.light,
+
+    [theme.breakpoints.down('md')]: {
+      minWidth: 343
+    }
   },
   scrollPaper: {
     display: 'block',
