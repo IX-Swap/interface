@@ -1,6 +1,11 @@
 import { Typography } from '@mui/material'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatMoney } from 'helpers/numbers'
+import {
+  formatMoney,
+  getFilledPercentage,
+  getOrderCurrency,
+  renderTotal
+} from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
@@ -32,7 +37,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'price',
     label: 'Price',
-    render: renderMoney
+    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
     key: 'amount',
@@ -42,12 +47,17 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'amount',
     label: 'Total',
-    render: (_, row) => renderMoney(row.amount * row.price, row)
+    render: (_, row) =>
+      renderTotal({ amount: row.amount, price: row.price, row })
   },
   {
     key: '_id',
     label: 'Filled',
-    render: (_, __) => '100%'
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.amount,
+        availableAmount: row.availableAmount
+      })
   }
 ]
 
@@ -75,7 +85,8 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'amount',
     label: 'Total',
-    render: (_, row) => renderMoney(row.amount * row.price, row)
+    render: (_, row) =>
+      renderTotal({ amount: row.amount, price: row.price, row })
   },
   {
     key: 'createdAt',
@@ -85,6 +96,10 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, __) => '100%'
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.amount,
+        availableAmount: row.availableAmount
+      })
   }
 ]
