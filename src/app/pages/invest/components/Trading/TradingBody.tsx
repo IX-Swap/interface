@@ -2,31 +2,29 @@ import { Grid } from '@mui/material'
 import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { useCurrencyBalance } from 'app/pages/exchange/hooks/useCurrencyBalance'
-import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
+import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/TradingOrders'
+import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
-import { useActiveWeb3React } from 'hooks/blockchain/web3'
-import React from 'react'
-import { useParams } from 'react-router-dom'
 import {
   orderPayloadtoOTCAdapt,
   useCreateOTCOrder
 } from 'app/pages/invest/hooks/useCreateOTCOrder'
 import { useFeaturedPair } from 'app/pages/invest/hooks/useFeaturedPair'
-import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/TradingOrders'
-import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
-
+import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
+import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
+import { useActiveWeb3React } from 'hooks/blockchain/web3'
+import React from 'react'
 export const TradingBody = () => {
   const classes = useStyles()
-  const { pairId } = useParams<{ pairId: string }>()
   const { data: pair } = useFeaturedPair()
   const symbol = pair?.name ?? ''
-  const { data: tokenBalance } = useTokenBalance(pairId)
+  const { address } = usePairTokenAddressNetwork()
+  const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
   const isWhitelisted = useWithdrawalAddressAdded(account)
   const currencyName = symbol.split('/')[1]
   const tokenName = symbol.split('/')[0]
-
   const currencyBalance = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
@@ -59,9 +57,7 @@ export const TradingBody = () => {
           suffix={
             <PlaceOrderSuffix isWhiteListed={isWhitelisted} account={account} />
           }
-          tokenBalance={
-            tokenBalance?.data !== undefined ? tokenBalance.data.amount : 0
-          }
+          tokenBalance={balance}
           onSubmit={submitForm}
         />
       </Grid>
