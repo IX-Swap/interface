@@ -8,7 +8,7 @@ import { AppRoute as AppPath } from 'app/router/config'
 import * as useIsAccredited from 'helpers/acl'
 
 describe('AppRoute', () => {
-  const initialPath = '/'
+  const initialPath = '/app/identity176540'
 
   beforeEach(() => {
     history.push(initialPath)
