@@ -27,6 +27,7 @@ export const invest = {
     CONNECT_TO_METAMASK: '[id="connect-METAMASK"]',
     CREATE_CUSTODY_ADDRESS: 'text="Create custody withdrawal address"',
     SUBMIT_INVEST: 'button >> text="Invest"',
+    SUBMIT_COMMIT: '[data-type="commit"]',
     LEARN_MORE: 'a >> text="Learn More"',
     INVEST_LANDING: '[href*="/view/make-investment"]',
     I_AGREE: 'button >> text="I Agree"',

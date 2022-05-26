@@ -3,7 +3,7 @@ dotenv.config()
 import { devCreds } from '../credentials/dev'
 import { stagingCreds } from '../credentials/staging'
 
-const setENV = process.env.BRANCHE_NAME || 'staging'
+const setENV = process.env.BRANCHE_NAME || 'otc'
 let baseCreds
 
 if (setENV?.includes('staging')) {

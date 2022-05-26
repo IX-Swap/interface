@@ -17,7 +17,7 @@ const config: PlaywrightTestConfig = {
   updateSnapshots: 'missing',
 
   /* Retry on CI only */
-  retries: process.env.CI !== undefined ? 2 : 0,
+  retries: process.env.CI !== undefined ? 2 : 1,
   /* The maximum number of test failures. After reaching this number, testing will stop and exit with an error. */
 
   reporter: [['html', { outputFolder: 'reports/html' }], ['list']],
@@ -31,7 +31,7 @@ const config: PlaywrightTestConfig = {
     timeout: 15000
   },
 
-  // globalSetup: require.resolve('./__tests__/lib/global-setup'),
+  globalSetup: require.resolve('./__tests__/lib/global-setup'),
   use: {
     headless: true,
     viewport: { width: 1900, height: 1000 },

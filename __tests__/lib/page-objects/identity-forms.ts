@@ -89,12 +89,11 @@ class UserForms {
     await typeText(kyc.field.issuer.BUSINESS_ACTIVITY, 'BUSINESS ACTIVITY', this.page)
   }
   updateData = async () => {
-    await this.page.waitForTimeout(1000)
     const update = await this.page.locator('text="Update"')
-    await this.page.waitForTimeout(1000)
     await update.click()
-    await waitForRequestInclude(this.page, 'identity/', 'PUT')
+    await this.page.waitForRequest(request => request.url().includes('/identity'))
   }
+
   editCorporateInformation = async () => {
     const string = randomString()
     await click(kyc.buttons.EDIT, this.page)
@@ -110,7 +109,7 @@ class UserForms {
     await click(kyc.buttons.SUBMIT, this.page)
     const taxNumber = await clearAndTypeText(kyc.field.TAX_RESIDENT_IDENTIFICATION, 'S' + string, this.page)
     await this.updateData()
-
+    await this.page.reload()
     return [corporateName, regNumber, city, state, directorName, taxNumber]
   }
   checkThatTheChangesSaved = async (fields: Array<[]>) => {
