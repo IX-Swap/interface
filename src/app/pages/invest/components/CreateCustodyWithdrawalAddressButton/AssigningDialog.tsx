@@ -16,7 +16,7 @@ export const AssigningDialog = ({ open }: AssigningDialogProps) => {
         </Box>
       </DialogTitle>
       <DialogContent>
-        <LoadingMessage message='Please wait' />
+        <LoadingMessage message='Please wait...' />
       </DialogContent>
     </UIDialog>
   )

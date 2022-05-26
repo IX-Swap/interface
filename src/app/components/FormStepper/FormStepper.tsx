@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles'
 import { SaveDrafButton } from 'app/components/FormStepper/SaveDraftButton'
 import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface FormStepperStep {
   label: string
@@ -45,6 +46,8 @@ export const FormStepper = (props: FormStepperProps) => {
     skippable = false,
     formTitle
   } = props
+
+  const { isMobile } = useAppBreakpoints()
 
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
 
@@ -236,9 +239,11 @@ export const FormStepper = (props: FormStepperProps) => {
             </Stepper>
           </Paper>
         </Grid>
-        <Grid item xs={12}>
-          <TwoFANotice />
-        </Grid>
+        {!isMobile && (
+          <Grid item xs={12}>
+            <TwoFANotice />
+          </Grid>
+        )}
       </Grid>
     </Grid>
   )

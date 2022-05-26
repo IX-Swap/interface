@@ -3,10 +3,13 @@ import { useMutation, useQueryCache } from 'react-query'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { useHistory } from 'react-router-dom'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 export const useSubmitIndividual = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
   const queryCache = useQueryCache()
+  const { replace } = useHistory()
 
   const submitIndividual = async (id: string) => {
     const uri = identityURL.individuals.submit(id)
@@ -23,6 +26,7 @@ export const useSubmitIndividual = (callback?: () => void) => {
       if (data.data.authorizations.length === 0) {
         storageService.set(data.data._id, 'individual')
       }
+      replace(IdentityRoute.identitySuccess)
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

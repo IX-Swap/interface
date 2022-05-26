@@ -25,7 +25,7 @@ describe('CapitalCallDialog', () => {
     expect(Typography).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        align: 'left',
+        align: 'center',
         children:
           'You can enter multiple email addresses of “Not Funded” investors. Email will be sent to notify them.',
         variant: 'body1'

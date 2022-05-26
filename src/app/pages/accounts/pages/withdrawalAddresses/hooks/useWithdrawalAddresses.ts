@@ -12,12 +12,10 @@ import { withdrawalAddressQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
 
 interface Props {
-  network?: string
   status?: AuthorizableStatus
 }
 
 export const useWithdrawalAddresses = ({
-  network,
   status = 'Approved'
 }: Props): UsePaginatedQueryData<WithdrawalAddress> => {
   const { apiService } = useServices()
@@ -30,10 +28,7 @@ export const useWithdrawalAddresses = ({
   ) => await apiService.post<PaginatedData<WithdrawalAddress>>(uri, args)
 
   const { data, ...queryResult } = useInfiniteQuery(
-    [
-      withdrawalAddressQueryKeys.getAddresses,
-      { ...paginationArgs, network, status }
-    ],
+    [withdrawalAddressQueryKeys.getAddresses, { ...paginationArgs, status }],
     getAllWithdrawalAddresses
   )
 

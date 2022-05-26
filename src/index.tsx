@@ -20,7 +20,9 @@ import { ToastProvider } from 'react-toast-notifications'
 import { setupFullStory } from 'setupFullStory'
 import { setupGtagManager } from 'setupGtagManager'
 import { setupSentry } from 'setupSentry'
-
+import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
+import { NetworkContextName } from 'config/blockchain/constants'
+import getLibrary from 'config/blockchain/getLibrary'
 const queryCache = new QueryCache({
   defaultConfig: {
     queries: {
@@ -28,6 +30,7 @@ const queryCache = new QueryCache({
     }
   }
 })
+const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -49,17 +52,21 @@ const IXApp = () => {
                   <CssBaseline />
                   <UserProvider>
                     <Router history={history}>
-                      <AppStateProvider>
-                        <Switch>
-                          <ToastProvider
-                            components={{ Toast, ToastContainer }}
-                            autoDismiss={false}
-                            placement='bottom-right'
-                          >
-                            <EntryPoint />
-                          </ToastProvider>
-                        </Switch>
-                      </AppStateProvider>
+                      <Web3ReactProvider getLibrary={getLibrary}>
+                        <Web3ProviderNetwork getLibrary={getLibrary}>
+                          <AppStateProvider>
+                            <Switch>
+                              <ToastProvider
+                                components={{ Toast, ToastContainer }}
+                                autoDismiss={false}
+                                placement='bottom-right'
+                              >
+                                <EntryPoint />
+                              </ToastProvider>
+                            </Switch>
+                          </AppStateProvider>
+                        </Web3ProviderNetwork>
+                      </Web3ReactProvider>
                     </Router>
                   </UserProvider>
                 </ReactQueryCacheProvider>

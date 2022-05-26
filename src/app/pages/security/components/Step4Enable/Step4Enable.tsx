@@ -21,7 +21,7 @@ export const Step4Enable = ({
   update2FA = false
 }: Step4EnableProps) => {
   const classes = useStyles()
-  const [enable2fa, { isError }] = useEnable2fa(nextStep, !update2FA)
+  const [enable2fa, { isError }] = useEnable2fa(nextStep)
   const onSubmit = async (values: Enable2faFormValues) => {
     await enable2fa(values)
   }

@@ -50,29 +50,31 @@ export const CardContent = (props: CardContentProps) => {
             </>
           )}
         </Grid>
-        <Grid item>
-          <VSpacer size='small' />
-          <LabelledValue
-            item
-            reverse
-            valueWeight='custom'
-            labelWeight='default'
-            valueFontSize={16}
-            labelFontSize={14}
-            label={type === 'OTC' ? 'Token Symbol' : 'Expected Return'}
-            value={
-              type === 'OTC'
-                ? data.tokenSymbol
-                : percentageToNumber(
-                    data.capitalStructure === 'Debt'
-                      ? data.interestRate
-                      : data.grossIRR
-                  )
-                    ?.toFixed(2)
-                    .concat('%')
-            }
-          />
-        </Grid>
+        {data.isCampaign !== true && (
+          <Grid item>
+            <VSpacer size='small' />
+            <LabelledValue
+              item
+              reverse
+              valueWeight='custom'
+              labelWeight='default'
+              valueFontSize={16}
+              labelFontSize={14}
+              label={type === 'OTC' ? 'Token Symbol' : 'Expected Return'}
+              value={
+                type === 'OTC'
+                  ? data.tokenSymbol
+                  : percentageToNumber(
+                      data.capitalStructure === 'Debt'
+                        ? data.interestRate
+                        : data.grossIRR
+                    )
+                      ?.toFixed(2)
+                      .concat('%')
+              }
+            />
+          </Grid>
+        )}
 
         <Grid item>
           <VSpacer size='small' />
@@ -95,22 +97,26 @@ export const CardContent = (props: CardContentProps) => {
           />
         </Grid>
 
-        <Grid item>
-          <VSpacer size='small' />
-          <LabelledValue
-            item
-            reverse
-            valueWeight='custom'
-            labelWeight='default'
-            valueFontSize={16}
-            labelFontSize={14}
-            label={'Target Fundraise'}
-            value={formatMoney(
-              type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
-              type !== 'OTC' ? data.currency.symbol : 'SGD'
-            )}
-          />
-        </Grid>
+        {data.isCampaign !== true && (
+          <Grid item>
+            <VSpacer size='small' />
+            <LabelledValue
+              item
+              reverse
+              valueWeight='custom'
+              labelWeight='default'
+              valueFontSize={16}
+              labelFontSize={14}
+              label={'Target Fundraise'}
+              value={formatMoney(
+                type !== 'OTC'
+                  ? data.totalFundraisingAmount
+                  : data.raisedAmount,
+                type !== 'OTC' ? data.currency.symbol : 'SGD'
+              )}
+            />
+          </Grid>
+        )}
       </Grid>
     </Box>
   )

@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-direction-xs-column css-1gkl4f1-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    >
+      <div
+        class="MuiBox-root css-4ecbw1"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-u7els9-MuiTypography-root"
+        >
+          <span
+            class="MuiBox-root css-bg3st0"
+          >
+            Choose your cash deposit method:
+          </span>
+        </p>
+      </div>
+      <div
+        class="MuiBox-root css-xpvo6d"
+      >
+        <div
+          class="MuiTabs-root makeStyles-tabStyle-2 css-1ujnqem-MuiTabs-root"
+        >
+          <div
+            class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+            style="overflow: hidden; margin-bottom: 0px;"
+          >
+            <div
+              class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+              role="tablist"
+            >
+              <button
+                aria-selected="true"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth ForwardRef(Tab)-selected-6 Mui-selected css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                role="tab"
+                tabindex="0"
+                type="button"
+              >
+                FAST
+              </button>
+              <button
+                aria-selected="false"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                ACH Credit
+              </button>
+              <button
+                aria-selected="false"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                TT
+              </button>
+              <button
+                aria-selected="false"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                role="tab"
+                tabindex="-1"
+                type="button"
+              >
+                MEPS
+              </button>
+            </div>
+            <span
+              class="MuiTabs-indicator css-50jx75-MuiTabs-indicator"
+              style="left: 0px; width: 0px;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    >
+      <div
+        role="tabpanel"
+      >
+        <div
+          class="MuiBox-root css-1161qt5"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-direction-xs-column css-1gkl4f1-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="MuiBox-root css-11jsv8j"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-infoMessage-3 css-1b4l2pg-MuiTypography-root"
+                  >
+                    Bank charges may apply and will be borne by the clients
+                  </p>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-5 css-1ld3b9g-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                      >
+                        Currency
+                      </p>
+                      <div
+                        class="MuiBox-root css-1gbh5gc"
+                      />
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                      >
+                        USD
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                      >
+                        Bank:
+                      </p>
+                      <div
+                        class="MuiBox-root css-1gbh5gc"
+                      />
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                      >
+                        Hongkong & Shanghai Banking Corporate (HSBC CORP)
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                      >
+                        Beneficiary Account Name / Payee:
+                      </p>
+                      <div
+                        class="MuiBox-root css-1gbh5gc"
+                      />
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                      >
+                        IC SG Pte Ltd
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                      >
+                        Beneficiary Account Number:
+                      </p>
+                      <div
+                        class="MuiBox-root css-1gbh5gc"
+                      />
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                      >
+                        000000000121
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                      >
+                        SWIFT Code:
+                      </p>
+                      <div
+                        class="MuiBox-root css-1gbh5gc"
+                      />
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                      >
+                        HSBCSGSGXXX
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                      >
+                        Time Estimation for Deposit:
+                      </p>
+                      <div
+                        class="MuiBox-root css-1gbh5gc"
+                      />
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                      >
+                        1 Hour
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="makeStyles-footerInfo-1 MuiBox-root css-0"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-14r80mg-MuiTypography-root"
+                >
+                  Max Transaction Limit: SGD 200,000. Please visit the link below to know more about the list of banks that supports FAST 
+                  <br />
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-q3td2j-MuiTypography-root-MuiLink-root"
+                    href="https://www.abs.org.sg/consumer-banking/fast"
+                    target="_blank"
+                  >
+                    https://www.abs.org.sg/consumer-banking/fast
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        hidden=""
+        role="tabpanel"
+      />
+      <div
+        hidden=""
+        role="tabpanel"
+      />
+      <div
+        hidden=""
+        role="tabpanel"
+      />
+    </div>
+  </div>
+</div>
+`;

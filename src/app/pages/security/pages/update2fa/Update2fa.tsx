@@ -79,6 +79,7 @@ export const Update2fa = () => {
       }
       buttons={
         <ChangeStepButtons
+          update2FA
           isBackButtonVisible={isBackButtonVisible}
           isNextButtonVisible={isNextButtonVisible}
           isContinueButtonVisible={activeStep === 4}
