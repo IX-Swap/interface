@@ -25,7 +25,6 @@ export const TradingBody = () => {
   const isWhitelisted = useWithdrawalAddressAdded(account)
   const currencyName = symbol.split('/')[1]
   const tokenName = symbol.split('/')[0]
-  console.log({ balance })
   const currencyBalance = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
