@@ -27,7 +27,7 @@ export const getColumns = (side: OrderType): Array<TableColumn<OTCOrder>> => [
     render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
-    key: 'amount',
+    key: 'availableAmount',
     label: 'Amount',
     render: (value, row) => formatMoney(value, '')
   },
