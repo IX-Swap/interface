@@ -73,7 +73,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
             Cancel
           </Button>
           <Box marginX={1} />
-          <Submit>{submitButtonLabel}</Submit>
+          <Submit watchIsDirty={false}>{submitButtonLabel}</Submit>
         </Grid>
       </Grid>
     </Form>
