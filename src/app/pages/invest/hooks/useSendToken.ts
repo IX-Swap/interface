@@ -10,6 +10,7 @@ export interface SendTokenArgs {
 export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
   const { account, chainId } = useActiveWeb3React()
   const tokenContract = useErc20Contract(address, true)
+
   return useCallback(
     async (recipient: string, value: number) => {
       if (
@@ -26,6 +27,7 @@ export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
           BigNumber.from(value),
           { gasLimit: BigNumber.from(9999999) }
         )
+
         const final = await result.wait()
         return final
       } catch (e) {
