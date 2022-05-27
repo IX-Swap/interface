@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
@@ -8,9 +9,25 @@ import {
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderRowAmount, renderTicker } from 'helpers/tables'
-import { OTCOrder } from 'types/otcOrder'
+import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import React from 'react'
+import { useAppTheme } from 'hooks/useAppTheme'
 
+const SimpleStatus = ({ status }: { status: string }) => {
+  const { theme } = useAppTheme()
+  return (
+    <Typography
+      color={
+        status === OTCOrderStatus.CANCELLED
+          ? theme.palette.error.main
+          : 'initial'
+      }
+    >
+      {capitalizeFirstLetter(status)}
+    </Typography>
+  )
+}
 export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'createdAt',
@@ -50,6 +67,11 @@ export const columns: Array<TableColumn<OTCOrder>> = [
         amount: row.amount,
         availableAmount: row.availableAmount
       })
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    render: (value, _) => <SimpleStatus status={value} />
   }
 ]
 

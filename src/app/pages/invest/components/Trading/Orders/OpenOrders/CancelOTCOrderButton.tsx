@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, ButtonProps } from '@mui/material'
+import { Box, Button, ButtonProps, CircularProgress } from '@mui/material'
 import { OTCOrder } from 'types/otcOrder'
 import { useCancelOTCOrder } from 'app/pages/invest/hooks/useCancelOTCOrder'
 
@@ -17,17 +17,19 @@ export const CancelOTCOrderButton = ({
   }
 
   return (
-    <Box display='flex' justifyContent='center'>
-      <Button
-        disabled={status === 'loading'}
-        onClick={handleClick}
-        variant='text'
-        color='primary'
-        size='small'
-        {...rest}
-      >
-        Cancel
-      </Button>
+    <Box display='flex' justifyContent='center' alignItems={'center'}>
+      {status === 'loading' && <CircularProgress size={14} />}
+      {status !== 'loading' && (
+        <Button
+          onClick={handleClick}
+          variant='text'
+          color='primary'
+          size='small'
+          {...rest}
+        >
+          Cancel
+        </Button>
+      )}
     </Box>
   )
 }
