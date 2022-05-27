@@ -25,6 +25,7 @@ import { adminOffset as offset } from 'state/admin/constants'
 import { useOnlyAdminAccess } from 'state/admin/hooks'
 import { Pagination } from 'components/Pagination'
 import { NoData } from 'components/Whitelist/styleds'
+import { AcceptFiles } from 'components/Upload/types'
 
 import { TokenPopup } from './TokenPopup'
 import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
@@ -239,7 +240,11 @@ export const AdminSecurityCatalog: FC = () => {
                     </TYPE.title11>
                   </Label>
                   <ButtonText>
-                    <Upload file={currentIssuer?.file} onDrop={(file) => handleDropImage(file)}>
+                    <Upload
+                      accept={AcceptFiles.IMAGE}
+                      file={currentIssuer?.file}
+                      onDrop={(file) => handleDropImage(file)}
+                    >
                       <Logo>
                         {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
                           <img

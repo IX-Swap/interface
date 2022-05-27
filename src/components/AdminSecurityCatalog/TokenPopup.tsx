@@ -20,6 +20,7 @@ import { adminOffset as offset } from 'state/admin/constants'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { getAtlasIdByTicker } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { AcceptFiles } from 'components/Upload/types'
 
 import { Dropdown } from './Dropdown'
 import { Radio } from './Radio'
@@ -292,7 +293,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </TYPE.title11>
                         </Label>
                         <ButtonText>
-                          <Upload file={token.file} onDrop={(file) => handleDropImage(file)}>
+                          <Upload accept={AcceptFiles.IMAGE} file={token.file} onDrop={(file) => handleDropImage(file)}>
                             <Logo error={errors?.logo}>
                               {token.filePath || token.logo?.public ? (
                                 <img
