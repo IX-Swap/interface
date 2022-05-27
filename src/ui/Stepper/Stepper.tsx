@@ -38,7 +38,9 @@ export const Stepper = ({
   return (
     <>
       <Box>
-        {stepInfo !== undefined && matches ? <StepInfo {...stepInfo} /> : null}
+        {stepInfo !== undefined && matches ? (
+          <StepInfo {...{ ...stepInfo, label: title }} />
+        ) : null}
         {title !== undefined ? (
           <Box
             display='flex'
@@ -62,7 +64,7 @@ export const Stepper = ({
                 }
               }}
             >
-              {title}
+              {matches ? stepInfo?.label : title}
             </Typography>
             {matches && withMobileDropdown ? (
               <IconButton

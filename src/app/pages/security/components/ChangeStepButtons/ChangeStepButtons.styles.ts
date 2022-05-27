@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles'
 export const useStyles = makeStyles(theme => ({
   container: {
     width: 'calc(100% - 316px)',
-    marginBottom: theme.spacing(5),
+    // marginBottom: theme.spacing(5),
     gap: theme.spacing(2),
 
     [theme.breakpoints.down('md')]: {
