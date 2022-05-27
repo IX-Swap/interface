@@ -20,7 +20,8 @@ export const useConfirmMyOrder = () => {
   return useMutation(confirmMatchOrder, {
     onSuccess: async () => {
       void snackbarService.showSnackbar('Confirmed', 'success')
-      await queryCache.invalidateQueries(tradingQueryKeys.getMatchedOrders)
+      void queryCache.invalidateQueries(tradingQueryKeys.getMyOpenOrdersList)
+      void queryCache.invalidateQueries(tradingQueryKeys.pastOrders)
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

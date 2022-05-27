@@ -1,19 +1,33 @@
 import { Typography } from '@mui/material'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatMoney } from 'helpers/numbers'
+import {
+  formatMoney,
+  getFilledPercentage,
+  getOrderCurrency,
+  renderMoney,
+  renderTotal
+} from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
-import React from 'react'
-import { OTCOrder } from 'types/otcOrder'
+import { renderRowAmount, renderTicker } from 'helpers/tables'
+import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import React from 'react'
+import { useAppTheme } from 'hooks/useAppTheme'
 
-export const renderTicker = (value: string, row: any) => (
-  <Typography variant='subtitle1'>{value}</Typography>
-)
-
-export const renderMoney = (value: any, row: any) => formatMoney(value, '')
-export const renderAmount = (value: any, row: any) =>
-  Number.isInteger(value) ? formatMoney(value, '') : value
-
+const SimpleStatus = ({ status }: { status: string }) => {
+  const { theme } = useAppTheme()
+  return (
+    <Typography
+      color={
+        status === OTCOrderStatus.CANCELLED
+          ? theme.palette.error.main
+          : 'initial'
+      }
+    >
+      {capitalizeFirstLetter(status)}
+    </Typography>
+  )
+}
 export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'createdAt',
@@ -32,22 +46,32 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'price',
     label: 'Price',
-    render: renderMoney
+    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
     key: 'amount',
     label: 'Amount',
-    render: renderAmount
+    render: renderRowAmount
   },
   {
     key: 'amount',
     label: 'Total',
-    render: (_, row) => renderMoney(row.amount * row.price, row)
+    render: (_, row) =>
+      renderTotal({ amount: row.amount, price: row.price, row })
   },
   {
     key: '_id',
     label: 'Filled',
-    render: (_, __) => '100%'
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.amount,
+        availableAmount: row.availableAmount
+      })
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    render: (value, _) => <SimpleStatus status={value} />
   }
 ]
 
@@ -75,7 +99,8 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'amount',
     label: 'Total',
-    render: (_, row) => renderMoney(row.amount * row.price, row)
+    render: (_, row) =>
+      renderTotal({ amount: row.amount, price: row.price, row })
   },
   {
     key: 'createdAt',
@@ -85,6 +110,10 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, __) => '100%'
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.amount,
+        availableAmount: row.availableAmount
+      })
   }
 ]

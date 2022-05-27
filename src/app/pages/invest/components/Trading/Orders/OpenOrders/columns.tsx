@@ -1,23 +1,15 @@
-import { Typography } from '@mui/material'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
   getFilledPercentage,
   getOrderCurrency,
+  renderMoney,
   renderTotal
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
-import React from 'react'
+import { renderTicker } from 'helpers/tables'
 import { OTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
-
-export const renderTicker = (value: string, row: any) => (
-  <Typography variant='subtitle1'>{value}</Typography>
-)
-
-export const renderMoney = (value: any, row: any) => formatMoney(value, '')
-export const renderAmount = (value: any, row: any) =>
-  Number.isInteger(value) ? formatMoney(value, '') : value
 
 export const columns: Array<TableColumn<OTCOrder>> = [
   {
@@ -27,7 +19,8 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     label: 'Pair',
-    key: 'pair.name'
+    key: 'pair.name',
+    render: renderTicker
   },
   {
     key: 'orderType',
@@ -92,6 +85,10 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, __) => '100%'
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.amount,
+        availableAmount: row.availableAmount
+      })
   }
 ]

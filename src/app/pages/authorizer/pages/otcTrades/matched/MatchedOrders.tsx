@@ -21,7 +21,7 @@ const Actions: ActionsType<OTCOrder> = ({ item }) => {
         onClick={async () =>
           await confirmOrder({
             orderId: item._id,
-            matchedOrderId: item.matches?._id ?? ''
+            matchedOrderId: item.matches?.order ?? ''
           })
         }
       >

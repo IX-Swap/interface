@@ -3,7 +3,7 @@ import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
 import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import React from 'react'
-import { OTCOrder } from 'types/otcOrder'
+import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { getExpiresOrderMessage } from 'helpers/dates'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
 
@@ -11,8 +11,12 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   const { columns, items, actions, hasActions, cacheQueryKey } = props
   const classes = useStyles()
   const needsConfirmation = (item: OTCOrder) => {
-    return item.status === 'CONFIRMED' && item.orderType === 'SELL'
+    return (
+      item.matches?.status === OTCOrderStatus.CONFIRMED &&
+      item.orderType === 'SELL'
+    )
   }
+
   const theme = useTheme()
   const rowColor = (item: OTCOrder) => {
     if (!needsConfirmation(item)) {

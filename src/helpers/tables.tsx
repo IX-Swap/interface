@@ -1,4 +1,4 @@
-import { Theme } from '@mui/material'
+import { Theme, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
@@ -18,7 +18,7 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { PersonName } from './types'
-
+import React from 'react'
 export const renderMinimumInvestment = (
   amount: number,
   row: DigitalSecurityOffering
@@ -222,3 +222,10 @@ export const getRowColor = ({ theme, themeVariant, count }: RowColorArgs) => {
   }
   return theme.palette.mode === 'light' ? '#F8F8FD' : theme.palette.grey[900]
 }
+
+export const renderRowAmount = (value: any, row: any) =>
+  Number.isInteger(value) ? formatMoney(value, '') : value
+
+export const renderTicker = (value: string, row: any) => (
+  <Typography variant='subtitle1'>{value}</Typography>
+)

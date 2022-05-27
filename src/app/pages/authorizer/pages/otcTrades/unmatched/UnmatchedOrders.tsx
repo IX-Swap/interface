@@ -13,7 +13,7 @@ export interface UnmatchedOrdersProps {
 export const UnmatchedOrders = ({ side, title }: UnmatchedOrdersProps) => {
   return (
     <Grid item container direction='column' xs={12} lg={6} gap={2}>
-      <Typography variant='h4' fontWeight={600}>
+      <Typography variant='h4' fontWeight={600} data-testId='unmatched-title'>
         {title}
       </Typography>
       <TableView<OTCOrder>

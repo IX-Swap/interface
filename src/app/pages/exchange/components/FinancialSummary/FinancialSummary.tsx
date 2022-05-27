@@ -30,16 +30,18 @@ export const FinancialSummary = () => {
           alignItems='flex-start'
           padding={1}
         >
-          <Box flexGrow={1} width={{ xs: '50%', md: '100%' }}>
-            <PairListDropdown
-              pairName={data?.name}
-              path={paths.viewListing}
-              params={{
-                userId: marketData.listing.createdBy,
-                listingId: marketData.listing._id
-              }}
-            />
-          </Box>
+          {marketData !== undefined && (
+            <Box flexGrow={1} width={{ xs: '50%', md: '100%' }}>
+              <PairListDropdown
+                pairName={data?.name}
+                path={paths.viewListing}
+                params={{
+                  userId: marketData.listing.createdBy,
+                  listingId: marketData.listing._id
+                }}
+              />
+            </Box>
+          )}
           <Hidden mdUp>
             <Box
               flexGrow={1}
