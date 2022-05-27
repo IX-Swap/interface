@@ -14,7 +14,7 @@ interface SwitchNetworkArguments {
 export async function switchToNetwork({
   library,
   chainId
-}: SwitchNetworkArguments): Promise<null | void> {
+}: SwitchNetworkArguments): Promise<null | never | undefined> {
   if (library?.provider?.request == null) {
     return
   }

@@ -283,7 +283,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
           class="MuiStepper-root MuiStepper-vertical css-9tmuzo-MuiStepper-root"
         >
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical active css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
@@ -322,7 +322,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
             </button>
           </div>
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
@@ -361,7 +361,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
             </button>
           </div>
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"
@@ -400,7 +400,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
             </button>
           </div>
           <div
-            class="MuiStep-root MuiStep-vertical css-tzsq05-MuiStep-root"
+            class="MuiStep-root MuiStep-vertical css-sei0vp-MuiStep-root"
           >
             <button
               class="MuiButtonBase-root MuiStepButton-root MuiStepButton-vertical css-rko9yk-MuiButtonBase-root-MuiStepButton-root"

@@ -17,5 +17,10 @@ export const useStyles = makeStyles(theme => ({
   },
   icon: {
     maxWidth: '100%'
+  },
+  link: {
+    '& path': {
+      fill: theme.palette.mode === 'light' ? 'initial' : '#ffffff'
+    }
   }
 }))

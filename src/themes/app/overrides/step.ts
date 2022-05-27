@@ -15,6 +15,9 @@ export const step = (theme: Theme) => {
 
           '&.Mui-active': {
             borderBottom: '1px solid #4C88FF'
+          },
+          '&.Mui-completed': {
+            color: theme.palette.text.secondary
           }
         },
         [theme.breakpoints.down('md')]: {
@@ -86,6 +89,9 @@ export const step = (theme: Theme) => {
               height: '100%',
               background: '#4C88FF'
             }
+          },
+          '&.Mui-completed': {
+            color: theme.palette.text.secondary
           }
         },
         [theme.breakpoints.down('md')]: {
