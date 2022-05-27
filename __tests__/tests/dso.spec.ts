@@ -57,19 +57,19 @@ test.describe('Check functionality', () => {
 })
 
 test('DSO creation is available', async ({ dso, auth, page, issuance }) => {
-  await dso.followToFundsManagement(auth, baseCreds.CREATE_DSO_MORE_OPTIONS)
+  await dso.followToFundsManagement()
   await click(issuance.dso.buttons.CREATE_DSO, page)
   await shouldExist(issuance.dso.FORM, page)
 })
 test.skip('The fields should be editable if the DSO has not started.', async ({ dso, auth }) => {
-  await dso.followToFundsManagement(auth, baseCreds.DSO_EDIT)
+  await dso.followToFundsManagement()
   const formsIsEdited = await dso.editDsoInformationForm()
   expect(formsIsEdited).toStrictEqual([true, true])
 })
 
 test.describe('Funds Management More Option section', () => {
   test.beforeEach(async ({ dso, auth }) => {
-    await dso.followToFundsManagement(auth, baseCreds.VIEW_DSO_MORE_OPTIONS)
+    await dso.followToFundsManagement()
   })
   test('View DSO is available', async ({ issuance, page }) => {
     await click(issuance.dso.buttons.VIEW_THIS_DSO, page)
