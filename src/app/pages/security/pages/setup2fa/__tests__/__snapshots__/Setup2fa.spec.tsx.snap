@@ -97,7 +97,7 @@ exports[`Setup2fa should match snapshot 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-93b3zb-MuiTypography-root"
           >
-            2FA Authenticator
+            Progress
           </p>
         </div>
         <div
