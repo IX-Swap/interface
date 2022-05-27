@@ -41,7 +41,7 @@ export const Setup2fa = () => {
           activeStep={activeStep}
           nonLinear
           withMobileDropdown={false}
-          title={'Progress'}
+          title={isMobile ? '2FA Authenticator' : 'Progress'}
           stepInfo={stepInfo}
         >
           {steps.map((label, index) => (
