@@ -45,14 +45,14 @@ export const SidebarContainer = () => {
       icon: InvestIcon
     },
     {
-      label: 'Exchange',
-      link: OTCMarketRoute.landing,
-      icon: OTCMarketIcon
-    },
-    {
       label: 'Trading',
       link: InvestRoute.trading,
       icon: TradingIcon
+    },
+    {
+      label: 'Exchange',
+      link: OTCMarketRoute.landing,
+      icon: OTCMarketIcon
     }
   ]
 
