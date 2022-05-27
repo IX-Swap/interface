@@ -12,12 +12,13 @@ export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
   const tokenContract = useErc20Contract(address, true)
 
   return useCallback(
-    async (recipient: string, value: number) => {
+    async (value: number, recipient?: string) => {
       if (
         tokenContract === null ||
         account === undefined ||
         account === null ||
-        chainId !== tokenChainId
+        chainId !== tokenChainId ||
+        recipient === undefined
       ) {
         return false
       }

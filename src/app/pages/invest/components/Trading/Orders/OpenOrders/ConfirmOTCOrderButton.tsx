@@ -21,7 +21,7 @@ export const ConfirmOTCOrderButton = ({
   const handleClick = async () => {
     setLoadingTransaction(true)
     try {
-      await sendToken(order.ethAddress, order.amount)
+      await sendToken(order.amount, order.matches?.ethAddress)
       await confirmMatch({
         orderId: order._id,
         matchedOrderId: order.matches?.order ?? ''
