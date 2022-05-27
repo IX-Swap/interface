@@ -110,6 +110,10 @@ export const TopbarContainer = () => {
       path: InvestRoute.landing
     },
     {
+      label: 'Trading',
+      path: InvestRoute.trading
+    },
+    {
       label: 'Exchange',
       path: OTCMarketRoute.landing
     }

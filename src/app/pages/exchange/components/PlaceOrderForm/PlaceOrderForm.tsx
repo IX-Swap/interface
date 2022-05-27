@@ -27,6 +27,8 @@ export interface PlaceOrderFormProps {
   isFetching?: boolean
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
   defaultActiveTab?: number
+  isDisabled?: boolean
+  suffix?: React.ReactNode
 }
 
 export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
@@ -35,7 +37,9 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   tokenLabel,
   currencyBalance,
   tokenBalance,
+  suffix,
   isFetching = false,
+  isDisabled = false,
   onSubmit,
   defaultActiveTab = 0
 }) => {
@@ -124,7 +128,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         <Grid item className={classes.buttonWrapper}>
           <Submit
             createOrderStatus={createOrderStatus}
-            disabled={isFetching}
+            disabled={isFetching || isDisabled || balance <= 0}
             data-testid='submit'
             size='large'
             variant='contained'
@@ -133,6 +137,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             PLACE ORDER
           </Submit>
         </Grid>
+        {suffix !== undefined && suffix}
       </Grid>
     </Form>
   )
