@@ -5,20 +5,32 @@ import { useStyles } from 'app/pages/invest/components/Trading/PlaceOrderSuffix.
 import { ReactComponent as InfoIcon } from 'assets/icons/info-light.svg'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { WalletModalContext } from 'components/WalletModal/WalletModalContextWrapper'
+import { CHAIN_INFO } from 'config/blockchain/constants'
 import { isEmptyString } from 'helpers/strings'
+import useSwitchChain from 'hooks/blockchain/useSwitchChain'
 import React, { useContext } from 'react'
+import { usePairTokenAddressNetwork } from '../../hooks/usePairTokenAddressNetwork'
 
 interface PlaceOrderSuffixProps {
   isWhiteListed: boolean
   account?: string | null
+  chainId?: number | null
 }
 export const PlaceOrderSuffix = ({
   isWhiteListed,
-  account
+  account,
+  chainId
 }: PlaceOrderSuffixProps) => {
   const classes = useStyles()
+  const { chainId: tokenChainId } = usePairTokenAddressNetwork()
   const context = useContext(WalletModalContext)
-  if (!isEmptyString(account) && isWhiteListed) {
+  const isCorrectChain = chainId === tokenChainId
+  const chainInfo =
+    tokenChainId !== null && tokenChainId !== undefined
+      ? CHAIN_INFO[tokenChainId]
+      : null
+  const { switchChain } = useSwitchChain()
+  if (!isEmptyString(account) && isWhiteListed && isCorrectChain) {
     return null
   }
   return (
@@ -51,6 +63,20 @@ export const PlaceOrderSuffix = ({
           <AppRouterLink target='_blank' to={WithdrawalAddressesRoute.create}>
             <Launch color='primary' style={{ width: 23, height: 23 }} />
           </AppRouterLink>
+        </>
+      )}
+      {!isEmptyString(account) && isWhiteListed && !isCorrectChain && (
+        <>
+          <Typography variant='subtitle2'>
+            Please connect to
+            <Box
+              onClick={() => switchChain(tokenChainId)}
+              className={classes.connectLink}
+            >
+              {chainInfo?.chainName} network
+            </Box>
+            to place your order
+          </Typography>
         </>
       )}
     </Box>

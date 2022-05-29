@@ -15,13 +15,14 @@ import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenA
 import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import React from 'react'
+
 export const TradingBody = () => {
   const classes = useStyles()
   const { data: pair } = useFeaturedPair()
   const symbol = pair?.name ?? ''
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const isWhitelisted = useWithdrawalAddressAdded(account)
   const currencyName = symbol.split('/')[1]
   const tokenName = symbol.split('/')[0]
@@ -55,7 +56,11 @@ export const TradingBody = () => {
           isDisabled={!isWhitelisted || isLoading}
           currencyBalance={currencyBalance}
           suffix={
-            <PlaceOrderSuffix isWhiteListed={isWhitelisted} account={account} />
+            <PlaceOrderSuffix
+              isWhiteListed={isWhitelisted}
+              account={account}
+              chainId={chainId}
+            />
           }
           tokenBalance={balance}
           onSubmit={submitForm}
