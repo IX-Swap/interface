@@ -34,7 +34,7 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
   })
   const { switchChain } = useSwitchChain()
   const { accountState } = useMetamaskWalletState({
-    dsoChainId: dsoChainId as number
+    tokenChainId: dsoChainId as number
   })
 
   const info = CHAIN_INFO[dsoChainId as number]

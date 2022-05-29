@@ -4,42 +4,34 @@ import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAdd
 import { useStyles } from 'app/pages/invest/components/Trading/PlaceOrderSuffix.styles'
 import { ReactComponent as InfoIcon } from 'assets/icons/info-light.svg'
 import { AppRouterLink } from 'components/AppRouterLink'
-import { WalletModalContext } from 'components/WalletModal/WalletModalContextWrapper'
-import { CHAIN_INFO } from 'config/blockchain/constants'
 import { isEmptyString } from 'helpers/strings'
-import useSwitchChain from 'hooks/blockchain/useSwitchChain'
-import React, { useContext } from 'react'
+import React from 'react'
+import { useMetamaskConnectionManager } from '../../hooks/useMetamaskConnectionManager'
+import { AccountState } from '../../hooks/useMetamaskWalletState'
 import { usePairTokenAddressNetwork } from '../../hooks/usePairTokenAddressNetwork'
 
 interface PlaceOrderSuffixProps {
   isWhiteListed: boolean
   account?: string | null
-  chainId?: number | null
 }
 export const PlaceOrderSuffix = ({
   isWhiteListed,
-  account,
-  chainId
+  account
 }: PlaceOrderSuffixProps) => {
   const classes = useStyles()
   const { chainId: tokenChainId } = usePairTokenAddressNetwork()
-  const context = useContext(WalletModalContext)
-  const isCorrectChain = chainId === tokenChainId
-  const chainInfo =
-    tokenChainId !== null && tokenChainId !== undefined
-      ? CHAIN_INFO[tokenChainId]
-      : null
-  const { switchChain } = useSwitchChain()
-  if (!isEmptyString(account) && isWhiteListed && isCorrectChain) {
+  const { connectCallback, switchChain, accountState, targetChainName } =
+    useMetamaskConnectionManager()
+  if (isWhiteListed && accountState === AccountState.SAME_CHAIN) {
     return null
   }
   return (
     <Box className={classes.wrapper}>
       <InfoIcon className={classes.icon} />
-      {isEmptyString(account) && (
+      {accountState === AccountState.NOT_CONNECTED && (
         <Typography variant='subtitle2'>
           Please
-          <Box onClick={context?.toggleModal} className={classes.connectLink}>
+          <Box onClick={connectCallback} className={classes.connectLink}>
             connect
           </Box>
           your Metamask wallet to place any orders
@@ -65,7 +57,7 @@ export const PlaceOrderSuffix = ({
           </AppRouterLink>
         </>
       )}
-      {!isEmptyString(account) && isWhiteListed && !isCorrectChain && (
+      {isWhiteListed && accountState === AccountState.DIFFERENT_CHAIN && (
         <>
           <Typography variant='subtitle2'>
             Please connect to
@@ -73,7 +65,7 @@ export const PlaceOrderSuffix = ({
               onClick={() => switchChain(tokenChainId)}
               className={classes.connectLink}
             >
-              {chainInfo?.chainName} network
+              {targetChainName} network
             </Box>
             to place your order
           </Typography>
