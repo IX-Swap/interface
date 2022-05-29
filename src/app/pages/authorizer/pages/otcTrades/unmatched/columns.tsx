@@ -35,6 +35,6 @@ export const getColumns = (side: OrderType): Array<TableColumn<OTCOrder>> => [
     key: '_id',
     label: 'Total',
     render: (_, row) =>
-      renderTotal({ amount: row.amount, price: row.price, row })
+      renderTotal({ amount: row.availableAmount, price: row.price, row })
   }
 ]
