@@ -36,10 +36,11 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   }
   const columnCount = columns.length + Number(hasActions)
   const { accountState, isWhitelisted } = useMetamaskConnectionManager()
+  const { found } = isWhitelisted
   const showEmptyState =
     (accountState !== AccountState.SAME_CHAIN ||
       items?.length === 0 ||
-      !isWhitelisted) &&
+      !found) &&
     !loading
   if (showEmptyState) {
     return <OpenOrdersEmptyState />

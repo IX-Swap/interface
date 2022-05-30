@@ -23,7 +23,7 @@ export const TradingBody = () => {
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
-  const isWhitelisted = useWithdrawalAddressAdded(account)
+  const { found } = useWithdrawalAddressAdded(account)
   const currencyName = symbol.split('/')[1]
   const tokenName = symbol.split('/')[0]
   const currencyBalance = useCurrencyBalance(currencyName)
@@ -53,11 +53,9 @@ export const TradingBody = () => {
           isFetching={isFetching}
           currencyLabel={currencyName}
           tokenLabel={tokenName}
-          isDisabled={!isWhitelisted || isLoading}
+          isDisabled={!found || isLoading}
           currencyBalance={currencyBalance}
-          suffix={
-            <PlaceOrderSuffix isWhiteListed={isWhitelisted} account={account} />
-          }
+          suffix={<PlaceOrderSuffix isWhiteListed={found} account={account} />}
           tokenBalance={balance}
           onSubmit={submitForm}
         />

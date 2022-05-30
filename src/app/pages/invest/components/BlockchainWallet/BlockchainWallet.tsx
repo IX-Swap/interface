@@ -13,7 +13,7 @@ export const BlockchainWallet = () => {
   const web3 = useActiveWeb3React()
   const context = useContext(WalletModalContext)
   const { account, chainId, active } = web3
-  const isAddressWhitelisted = useWithdrawalAddressAdded(account)
+  const { found, label } = useWithdrawalAddressAdded(account)
   return (
     <>
       <>
@@ -27,7 +27,7 @@ export const BlockchainWallet = () => {
           </Button>
         ) : (
           <>
-            {!isAddressWhitelisted && active && (
+            {!found && active && (
               <Button
                 variant='contained'
                 color='primary'
@@ -37,14 +37,18 @@ export const BlockchainWallet = () => {
                 Add Wallet
               </Button>
             )}
-            {isAddressWhitelisted && active && (
+            {found && active && (
               <Box display='flex' gap={1}>
                 <Hidden lgDown>
                   <Typography className={classes.label} variant='subtitle1'>
                     Your Wallet:
                   </Typography>
                 </Hidden>
-                <BlockchainAddress chainId={chainId} account={account} />
+                <BlockchainAddress
+                  chainId={chainId}
+                  account={account}
+                  labelName={label}
+                />
               </Box>
             )}
           </>

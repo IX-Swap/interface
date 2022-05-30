@@ -15,9 +15,10 @@ const getTitle = (accountState: AccountState) => {
 export const OpenOrdersEmptyState = () => {
   const { switchChain, accountState, targetChainName, isWhitelisted } =
     useMetamaskConnectionManager()
+  const { found } = isWhitelisted
   const classes = useStyles()
   const subtitle = useMemo(() => {
-    if (accountState === AccountState.NOT_CONNECTED || !isWhitelisted) {
+    if (accountState === AccountState.NOT_CONNECTED || !found) {
       return 'No orders yet, please connect wallet first'
     }
     if (accountState === AccountState.DIFFERENT_CHAIN) {
@@ -32,7 +33,7 @@ export const OpenOrdersEmptyState = () => {
       )
     }
     return 'No orders on this wallet, make sure you are connected to the right address'
-  }, [accountState, isWhitelisted, targetChainName, switchChain, classes])
+  }, [accountState, found, targetChainName, switchChain, classes])
 
   return <EmptyState title={getTitle(accountState)} subtitle={subtitle} />
 }

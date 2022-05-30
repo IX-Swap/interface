@@ -14,7 +14,7 @@ describe('OpenOrdersEmptyState', () => {
     switchChain: jest.fn(),
     accountState: AccountState.SAME_CHAIN,
     targetChainName: 'test chain',
-    isWhitelisted: true
+    isWhitelisted: { found: true }
   }
   afterEach(async () => {
     jest.clearAllMocks()

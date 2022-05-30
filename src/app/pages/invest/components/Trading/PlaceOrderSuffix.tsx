@@ -8,7 +8,6 @@ import { isEmptyString } from 'helpers/strings'
 import React from 'react'
 import { useMetamaskConnectionManager } from '../../hooks/useMetamaskConnectionManager'
 import { AccountState } from '../../hooks/useMetamaskWalletState'
-import { usePairTokenAddressNetwork } from '../../hooks/usePairTokenAddressNetwork'
 
 interface PlaceOrderSuffixProps {
   isWhiteListed: boolean
@@ -19,7 +18,6 @@ export const PlaceOrderSuffix = ({
   account
 }: PlaceOrderSuffixProps) => {
   const classes = useStyles()
-  const { chainId: tokenChainId } = usePairTokenAddressNetwork()
   const { connectCallback, switchChain, accountState, targetChainName } =
     useMetamaskConnectionManager()
   if (isWhiteListed && accountState === AccountState.SAME_CHAIN) {
@@ -61,10 +59,7 @@ export const PlaceOrderSuffix = ({
         <>
           <Typography variant='subtitle2'>
             Please connect to
-            <Box
-              onClick={() => switchChain(tokenChainId)}
-              className={classes.connectLink}
-            >
+            <Box onClick={() => switchChain()} className={classes.connectLink}>
               {targetChainName} network
             </Box>
             to place your order

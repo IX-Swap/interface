@@ -4,10 +4,10 @@ import { useWithdrawalAddresses } from './useWithdrawalAddresses'
 
 export const useWithdrawalAddressAdded = (address?: string | null) => {
   const { data } = useWithdrawalAddresses({})
-
+  console.log(data)
   return useMemo(() => {
     if (isEmptyString(address)) {
-      return false
+      return { found: false, label: '' }
     }
     const filteredAddresses = data.list.filter(
       ({ status }) => status === 'Approved'
@@ -15,6 +15,6 @@ export const useWithdrawalAddressAdded = (address?: string | null) => {
     const found = filteredAddresses.filter(
       addressItem => addressItem.address === address
     )
-    return found?.[0] !== undefined
+    return { found: found?.[0] !== undefined, label: found?.[0]?.label ?? '' }
   }, [address, data.list])
 }

@@ -95,7 +95,10 @@ export const CHAIN_INFO: ChainInfoMap = {
       decimals: 18
     },
     logoUrl: polygonLogoUrl,
-    rpcUrls: ['https://rpc-mumbai.matic.today'],
+    rpcUrls: [
+      'https://matic-mumbai.chainstacklabs.com/',
+      'https://rpc-mumbai.matic.today'
+    ],
     blockExplorerUrls: [
       'https://mumbai.polygonscan.com/',
       'https://explorer-mumbai.maticvigil.com/'
