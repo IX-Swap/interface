@@ -44,6 +44,7 @@ test.describe.parallel('Check identities form', () => {
     })
   })
   test('Check the ability to Create Corporate Investor Identity (IXPRIME-336)', async ({ page, kycForms }) => {
+    test.setTimeout(220000)
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.CORPORATE, page)
       await kycForms.fillCorporateInformation()
@@ -91,7 +92,7 @@ test.describe.parallel('Check identities form', () => {
       await expect(taxForm).toHaveCount(1)
     })
   })
-  test.only('Check the "Create identity" notification IXPRIME-151', async ({ page }, testInfo) => {
+  test('Check the "Create identity" notification IXPRIME-151', async ({ page }, testInfo) => {
     await click(accountsTab.ACCOUNTS_SECTION, page)
     await click(accountsTab.BANK_ACCOUNTS, page)
     const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
@@ -137,7 +138,7 @@ test.describe.parallel('Check identities form', () => {
     })
   })
 
-  test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
+  test.only('Check FATCA information', async ({ page, kycForms }, testInfo) => {
     await click(kyc.type.INDIVIDUAL, page)
     await click(kyc.buttons.OKAY, page)
     await kycForms.fillPersonalInformationForm()
@@ -146,7 +147,7 @@ test.describe.parallel('Check identities form', () => {
     await kycForms.fillTaxDeclaration()
     await click(kyc.buttons.FATCA, page)
     const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-    // await screenshotMatching(testInfo.title, dialog, page)
+    await screenshotMatching(testInfo.title, dialog, page)
   })
 })
 
