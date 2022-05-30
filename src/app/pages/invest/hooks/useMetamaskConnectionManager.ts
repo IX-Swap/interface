@@ -20,7 +20,7 @@ export const useMetamaskConnectionManager = () => {
   const { switchChain } = useSwitchChain()
   return {
     connectCallback: context?.toggleModal,
-    switchChain,
+    switchChain: () => switchChain(tokenChainId),
     accountState,
     targetChainName: chainInfo?.chainName,
     isWhitelisted

@@ -23,7 +23,7 @@ export const EmptyState = ({ hasItems = false }: { hasItems: boolean }) => {
       return (
         <>
           Please connect to
-          <Box onClick={() => switchChain()} className={classes.connectLink}>
+          <Box onClick={switchChain} className={classes.connectLink}>
             {targetChainName} network
           </Box>
           to see your open trades

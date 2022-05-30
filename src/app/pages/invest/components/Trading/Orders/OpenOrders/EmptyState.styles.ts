@@ -29,6 +29,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'inline-block',
     textDecoration: 'underline',
     color: theme.palette.primary.main,
-    margin: '0 3px'
+    margin: '0 3px',
+    cursor: 'pointer'
   }
 }))
