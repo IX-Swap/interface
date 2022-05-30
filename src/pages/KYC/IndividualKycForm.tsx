@@ -292,6 +292,7 @@ export default function IndividualKycForm() {
               const personalFilled =
                 shouldValidate &&
                 !errors.firstName &&
+                !errors.middleName &&
                 !errors.lastName &&
                 !errors.dateOfBirth &&
                 !errors.gender &&
@@ -333,6 +334,7 @@ export default function IndividualKycForm() {
                               }
                               value={values.middleName}
                               label="Middle Name:"
+                              error={errors.middleName && errors.middleName}
                             />
                             <TextInput
                               onChange={(e) => onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)}
