@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react'
-import ReactSelect, { StylesConfig } from 'react-select'
+import ReactSelect, { StylesConfig, components } from 'react-select'
 import styled, { css } from 'styled-components'
+import { width } from 'styled-system'
+
+import { ellipsisText } from 'theme'
 
 type Option = { label?: string; value?: any }
 
@@ -54,6 +57,66 @@ const colourStyles = {
       maxHeight: '188px',
     }
   },
+  multiValue: (styles: Record<string, any>) => {
+    return {
+      ...styles,
+      fontWeight: 600,
+    }
+  },
+  valueContainer: (styles: Record<string, any>) => {
+    return {
+      ...styles,
+      width: '100%',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      flexWrap: 'nowrap',
+      display: 'flex',
+    }
+  },
+  control: (styles: Record<string, any>) => {
+    return {
+      ...styles,
+      flexWrap: 'nowrap',
+    }
+  },
+}
+
+const MultiValue = (props: any) => {
+  const valuesArray = useMemo(
+    (): { label: string; value: any }[] => props?.selectProps?.value || [],
+    [props?.selectProps?.value]
+  )
+
+  const isLast = valuesArray.findIndex(({ value }) => value === props?.data?.value) === valuesArray.length - 1
+
+  return (
+    <StyledValue>
+      {props?.data?.icon}
+      {`${props?.data?.label}${isLast ? '' : `,`}`}
+      {!isLast && <>&nbsp;</>}
+    </StyledValue>
+  )
+}
+
+const SingleValue = (props: any) => {
+  return (
+    <StyledValue>
+      {props?.data?.icon}
+      {props?.data?.label}
+    </StyledValue>
+  )
+}
+
+const Option = (props: any) => {
+  return (
+    <components.Option {...props}>
+      <StyledValue>
+        {props?.data?.icon}
+        {props?.data?.label}
+      </StyledValue>
+    </components.Option>
+  )
 }
 
 export const Select = ({
@@ -77,17 +140,20 @@ export const Select = ({
     <StyledReactSelect
       error={error}
       options={options}
-      isMulti={isMulti}
       isSearchable={isSearchable}
+      isMulti={isMulti}
       onChange={(option: unknown) => {
         onSelect(option as Option)
       }}
+      components={{ MultiValue, SingleValue, Option }}
       value={selectedValue}
       placeholder={placeholder}
       name={name}
       styles={colourStyles as StylesConfig}
       borderRadius={borderRadius}
       isDisabled={isDisabled}
+      hideSelectedOptions={!isMulti}
+      closeMenuOnSelect={!isMulti}
     />
   )
 }
@@ -132,4 +198,10 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
       }
     }
   }
+`
+
+const StyledValue = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
 `

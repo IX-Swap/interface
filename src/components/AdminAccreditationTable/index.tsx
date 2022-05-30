@@ -9,15 +9,15 @@ import { useAdminState, useGetAccreditationList, useOnlyAdminAccess } from 'stat
 import { AccreditationItem, KycItem } from 'state/admin/actions'
 import { adminOffset as offset } from 'state/admin/constants'
 import { CopyAddress } from 'components/CopyAddress'
+import { Search } from 'components/Search'
+import { KycReviewModal } from 'components/KycReviewModal'
+import { NoData } from 'components/UsersList/styleds'
 
 import { CustodianStatus } from './CustodianStatus'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { BrokerDealerStatus } from './BrokerDealerStatus'
 import { Pagination } from './Pagination'
-import { Search } from './Search'
 import { KycSource } from './KycSource'
-import { KycReviewModal } from 'components/KycReviewModal'
-import { NoData } from 'components/Whitelist/styleds'
 
 const headerCells = [
   t`Wallet address`,

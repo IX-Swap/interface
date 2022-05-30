@@ -13,7 +13,6 @@ import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import Row, { RowBetween } from 'components/Row'
-import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
@@ -29,6 +28,7 @@ import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
+import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,

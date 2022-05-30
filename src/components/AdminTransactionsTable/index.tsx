@@ -6,9 +6,8 @@ import styled from 'styled-components'
 import React, { FC, useEffect, useState } from 'react'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
-import { Search } from '../AdminAccreditationTable/Search'
+import { Search } from 'components/Search'
 import { useAdminState, useFetchBrokerDealerSwaps, useOnlyAdminAccess } from 'state/admin/hooks'
-import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
@@ -18,7 +17,9 @@ import { ExternalLink } from 'theme'
 import { adminOffset as offset } from 'state/admin/constants'
 import { getExplorerName } from 'hooks/useExplorerName'
 import { CopyAddress } from 'components/CopyAddress'
-import { NoData } from 'components/Whitelist/styleds'
+import { NoData } from 'components/UsersList/styleds'
+
+import { BodyRow, HeaderRow, Table } from '../Table'
 
 interface RowProps {
   item: BrokerDealerSwapItem

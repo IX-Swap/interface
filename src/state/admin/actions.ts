@@ -1,5 +1,5 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
-import { AccreditationStatusEnum } from 'components/Vault/enum'
+
 import { timePeriods } from 'utils/time'
 
 export const postLogin: Readonly<{
@@ -88,14 +88,14 @@ export const getKycList: Readonly<{
   rejected: createAction('admin/getKycList/rejected'),
 }
 
-export const getAdminList: Readonly<{
+export const getUsersList: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: AdminList }>
+  fulfilled: ActionCreatorWithPayload<{ data: UsersList }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
-  pending: createAction('admin/getAdminList/pending'),
-  fulfilled: createAction('admin/getAdminList/fulfilled'),
-  rejected: createAction('admin/getAdminList/rejected'),
+  pending: createAction('admin/getUsersList/pending'),
+  fulfilled: createAction('admin/getUsersList/fulfilled'),
+  rejected: createAction('admin/getUsersList/rejected'),
 }
 
 export const postApproveKyc: Readonly<{
@@ -178,18 +178,29 @@ export interface AccreditationList {
   prevPage: number
 }
 
-export interface AdminRole {
+export interface User {
   active: boolean
+  createdAt: string
+  deletedAt: null | string
+  email: null | string
   ethAddress: string
   id: number
+  fullName: string | null
+  isWhitelisted: boolean
+  language: string
+  photo: any
+  photoId: null | string
+  principal: string
   role: string
   tenant: string
+  updatedAt: string
+  tokens: any[]
 }
 
-export interface AdminList {
+export interface UsersList {
   page: number
   totalPages: number
-  items: AdminRole[]
+  items: User[]
 }
 
 export interface Whitelisted {

@@ -17,7 +17,9 @@ export const Search = ({ setSearchValue, placeholder, style }: Props) => {
     timer = setTimeout(() => setSearchValue(value), 250)
   }
 
-  return <Input style={style} placeholder={t`${placeholder || 'Search for Wallet or Token'}`} onChange={onSearchChange} />
+  return (
+    <Input style={style} placeholder={t`${placeholder || 'Search for Wallet or Token'}`} onChange={onSearchChange} />
+  )
 }
 
 export const Input = styled.input`

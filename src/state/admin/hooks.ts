@@ -20,7 +20,7 @@ import {
   postRejectKyc,
   postResetKyc,
   postResubmitKyc,
-  getAdminList,
+  getUsersList,
   getWhitelistedList,
   patchAddOrRemoveWhitelisted,
 } from './actions'
@@ -66,22 +66,22 @@ export function useAdminState(): AppState['admin'] {
   return useSelector<AppState, AppState['admin']>((state) => state.admin)
 }
 
-export const adminList = async (params?: Record<string, string | number>) => {
-  const result = await apiService.get(admin.adminList, undefined, params)
+export const usersList = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.usersList, undefined, params)
   return result.data
 }
 
-export function useGetAdminList() {
+export function useGetUsersList() {
   const dispatch = useDispatch<AppDispatch>()
   const callback = useCallback(
     async (params?: Record<string, string | number>) => {
       try {
-        dispatch(getAdminList.pending())
-        const data = await adminList(params)
-        dispatch(getAdminList.fulfilled({ data }))
+        dispatch(getUsersList.pending())
+        const data = await usersList(params)
+        dispatch(getUsersList.fulfilled({ data }))
         return data
       } catch (error: any) {
-        dispatch(getAdminList.rejected({ errorMessage: 'Could not get me' }))
+        dispatch(getUsersList.rejected({ errorMessage: 'Could not get users list' }))
         return null
       }
     },
