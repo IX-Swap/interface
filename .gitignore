@@ -12,6 +12,7 @@ bfg.jar
 coverage
 reports
 storages/
+documents/
 
 .history
 allure-results/

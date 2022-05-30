@@ -222,7 +222,6 @@ class UserForms {
     for (const item of list) {
       await uploadFiles(this.page, item, text.docs.pdfFilePath)
     }
-    await shouldNotExist(kyc.NOTIFICATION, this.page)
   }
 
   editIndividualInformation = async () => {

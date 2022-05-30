@@ -43,8 +43,6 @@ export const textDev = {
   docs: {
     pathToFile: '__tests__/lib/documents/test-img.jpg',
     pdfFilePath: '__tests__/lib/documents/pdfTest.pdf',
-    docBenefitsAddress: '__tests__/lib/documents/docBenefitsAddress.docx',
-    docBenefitsIdentify: '__tests__/lib/documents/docBenefitsIdentify.docx',
     docBenefitsAddressName: 'pdfTest.pdf',
     docBenefitsIdentifyName: 'pdfTest.pdf',
     uploaded: ['625fcb4c6589dc0d889a8517', '625fcb4eb364cd0d8c9118c4', '625fcb4f6589dc0d889a851a']

@@ -42,8 +42,6 @@ export const textStaging = {
   docs: {
     pathToFile: '__tests__/lib/documents/test-img.jpg',
     pdfFilePath: '__tests__/lib/documents/pdfTest.pdf',
-    docBenefitsAddress: '__tests__/lib/documents/docBenefitsAddress.docx',
-    docBenefitsIdentify: '__tests__/lib/documents/docBenefitsIdentify.docx',
     docBenefitsAddressName: 'pdfTest.pdf',
     docBenefitsIdentifyName: 'pdfTest.pdf',
     uploaded: ['625408bbdf302d0d8cb5b402', '625408b6df302d0d8cb5b3ff', '625408b2df302d0d8cb5b3fc']
