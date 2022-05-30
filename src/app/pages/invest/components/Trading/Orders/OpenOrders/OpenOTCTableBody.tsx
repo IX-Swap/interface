@@ -8,7 +8,7 @@ import { TableViewRendererProps } from 'components/TableWithPagination/TableView
 import { getExpiresOrderMessage } from 'helpers/dates'
 import React from 'react'
 import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
-import { EmptyState } from './EmptyState'
+import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
 
 export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   const {
@@ -36,13 +36,13 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   }
   const columnCount = columns.length + Number(hasActions)
   const { accountState, isWhitelisted } = useMetamaskConnectionManager()
-  if (
+  const showEmptyState =
     (accountState !== AccountState.SAME_CHAIN ||
       items?.length === 0 ||
       !isWhitelisted) &&
     !loading
-  ) {
-    return <EmptyState hasItems={items?.length > 0} />
+  if (showEmptyState) {
+    return <OpenOrdersEmptyState />
   }
   return (
     <TableBody>
