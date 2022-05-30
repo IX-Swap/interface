@@ -1,13 +1,13 @@
 import React, { CSSProperties, FC, HTMLProps, ReactChildren } from 'react'
 import { Box, Flex } from 'rebass'
-import { Trans } from '@lingui/macro'
-import { Label } from '@rebass/forms'
+import { t, Trans } from '@lingui/macro'
 import styled from 'styled-components'
 import { FileWithPath } from 'react-dropzone'
 
 import { Input } from 'components/Input'
 import { ButtonGradient } from 'components/Button'
 import { TYPE, EllipsisText } from 'theme'
+import { Label } from 'components/Label'
 import Upload from 'components/Upload'
 import { FilePreview } from 'components/FilePreview'
 import { GradientText } from 'pages/CustodianV2/styleds'
@@ -58,13 +58,7 @@ export const Select: FC<SelectProps> = ({
 }: SelectProps) => {
   return (
     <Box>
-      {label && (
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>{label}</Trans>
-          </TYPE.title11>
-        </Label>
-      )}
+      {label && <Label text={label} />}
       <ReactSelect
         name={name}
         placeholder={placeholder}
@@ -95,13 +89,7 @@ export const TextInput: FC<TextInputProps> = ({
 }: TextInputProps) => {
   return (
     <Box>
-      {label && (
-        <Label marginBottom="11px" htmlFor={name || ''}>
-          <TYPE.title11 color="text2">
-            <Trans>{label}</Trans>
-          </TYPE.title11>
-        </Label>
-      )}
+      {label && <Label text={label} htmlFor={name || ''} />}
 
       <StyledInput
         onBlur={onBlur}
@@ -194,13 +182,7 @@ interface ChooseFileTypes {
 export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: ChooseFileTypes) => {
   return (
     <Box style={{ maxWidth: 200 }}>
-      {label && (
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>{label}</Trans>
-          </TYPE.title11>
-        </Label>
-      )}
+      {label && <Label text={label} />}
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
@@ -232,26 +214,10 @@ export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
       <FormGrid columns={4}>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>Full Name</Trans>
-          </TYPE.title11>
-        </Label>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>% Shareholding</Trans>
-          </TYPE.title11>
-        </Label>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>Proof of Address</Trans>
-          </TYPE.title11>
-        </Label>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>Proof of Identity</Trans>
-          </TYPE.title11>
-        </Label>
+        <Label text={t`Full Name`} />
+        <Label text={t`% Shareholding`} />
+        <Label text={t`Proof of Address`} />
+        <Label text={t`Proof of Identity`} />
       </FormGrid>
     </BeneficialOwnersTableContainer>
   )

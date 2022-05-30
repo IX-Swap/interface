@@ -18,6 +18,7 @@ interface Props {
   maxHeight?: number
   maxDate?: any
   minDate?: any
+  placeholder?: string
 }
 
 export const DateInput = ({ value, openTo, onChange, label, name, onBlur, error, maxDate, ...props }: Props) => {

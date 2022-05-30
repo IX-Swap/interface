@@ -14,7 +14,7 @@ import { Input as NumericalInput } from 'components/NumericalInput'
 
 export const Container = styled(Box)`
   height: fit-content;
-  background: ${({ theme }) => theme.bg21};
+  background: ${({ theme }) => theme.bg19};
   border-radius: 36px;
   padding: 40px 60px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {

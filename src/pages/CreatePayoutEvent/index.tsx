@@ -10,8 +10,9 @@ import { ButtonText } from 'components/Button'
 import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
 import { Summary } from './Summary'
-
+import { PayoutForm } from './PayoutForm'
 import { DesktopAndTablet, MobileOnly, TYPE } from 'theme'
+
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { FormCard, PageTitle } from './styleds'
@@ -26,7 +27,7 @@ const CreatePayoutEventPage: FC = () => {
 
   return (
     <Loadable loading={!isLoggedIn}>
-      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
+      <StyledBodyWrapper style={{ maxWidth: 840 }} hasAnnouncement={!cookies.annoucementsSeen}>
         <Flex marginBottom="32px" alignItems="center">
           <ButtonText>
             <ArrowLeft fill="white !important" style={{ fill: 'white !important=' }} />
@@ -36,7 +37,7 @@ const CreatePayoutEventPage: FC = () => {
           </PageTitle>
         </Flex>
 
-        <FormCard>
+        <FormCard marginBottom="32px">
           <TYPE.title6 marginBottom="28px">
             <Trans>SECURITY TOKENS</Trans>
           </TYPE.title6>
@@ -51,8 +52,10 @@ const CreatePayoutEventPage: FC = () => {
             <DateInput label="Record Date" maxHeight={60} openTo="date" value={''} onChange={() => null} />
           </FormGrid>
 
-          <Summary walletsAmount="1" poolsAmount="123"  />
+          <Summary walletsAmount={200} poolsAmount={500} />
         </FormCard>
+
+        <PayoutForm />
       </StyledBodyWrapper>
     </Loadable>
   )

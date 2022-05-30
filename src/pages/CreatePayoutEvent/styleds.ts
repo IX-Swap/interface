@@ -11,7 +11,7 @@ export const PageTitle = styled(TYPE.title4)`
 `
 
 export const FormCard = styled(Box)`
-  background: ${({ theme }) => theme.bg21};
+  background: ${({ theme }) => theme.bg18};
   border-radius: 16px;
   padding: 32px;
 

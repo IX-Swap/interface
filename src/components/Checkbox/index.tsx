@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 import { Flex } from 'rebass'
 
 import { ButtonText } from 'components/Button'
@@ -18,6 +18,7 @@ interface Props {
   disabled?: boolean
   onBlur?: (e: any) => void
   name?: string
+  buttonStyles?: CSSProperties
 }
 
 export const Checkbox: FC<Props> = ({
@@ -28,6 +29,7 @@ export const Checkbox: FC<Props> = ({
   onBlur,
   name,
   scaleSize = 1,
+  buttonStyles,
   disabled = false,
 }: Props) => {
   const style = { transform: `scale(${scaleSize})` }
@@ -39,14 +41,14 @@ export const Checkbox: FC<Props> = ({
       name={name}
       onBlur={onBlur}
       type="button"
-      style={{ textDecoration: 'none', textAlign: 'inherit' }}
+      style={{ ...buttonStyles, textDecoration: 'none', textAlign: 'inherit' }}
       onClick={onClick}
       disabled={disabled}
     >
       <Flex>
         {checked ? checkedImage : notCheckedImage}
         {scaleSize !== 1 ? (
-          <TYPE.title6 style={{ textTransform: 'uppercase' }} marginLeft="12px">
+          <TYPE.title6 fontWeight={checked ? 700 : 400} marginLeft="8px">
             {label}
           </TYPE.title6>
         ) : (

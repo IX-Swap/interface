@@ -71,10 +71,10 @@ export function colors(darkMode: boolean): Colors {
     bg15: darkMode ? '#2C254A' : '#2C254A',
     bg16: darkMode ? '#170626' : '#170626',
     bg17: darkMode ? '#1C112D' : '#1C112D',
-    bg18: darkMode ? '#27204666' : '#27204666',
+    bg18: darkMode ? '#27204666' : '#27204666', // rgba(39, 32, 70, 0.4)
     bg19: darkMode ? '#271F4A66' : '#271F4A66',
     bg20: darkMode ? '#7B42A9' : '#7B42A9',
-    bg21: darkMode ? '#27204666' : '#27204666', // rgba(39, 32, 70, 0.4)
+    bg21: darkMode ? '#EDCEFF80' : '#EDCEFF80',
     bgG1: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
