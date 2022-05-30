@@ -36,13 +36,13 @@ export const corporateInfoKeys = [
     key: 'incorporationDate',
     label: 'Date of Incorporation',
     width: { xs: 12, sm: 6 },
-    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
   },
   {
     key: 'incorporationExpiryDate',
     label: 'Date of Incorporation Expiry',
     width: { xs: 12, sm: 6 },
-    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
   },
 ] as KycTypes
 
@@ -74,6 +74,7 @@ export const individualDocumentKeys = [
     label: 'Document Type',
     width: { xs: 12, sm: 6 },
     format: (value: string): string => {
+      if (!value) return 'Not completed'
       const key = value.replaceAll(' ', '_') as keyof typeof IdentityDocumentType
       return IdentityDocumentType[key]
     },
@@ -84,13 +85,13 @@ export const individualDocumentKeys = [
     key: 'idIssueDate',
     label: 'Document Issue Date',
     width: { xs: 12, sm: 6 },
-    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
   },
   {
     key: 'idExpiryDate',
     label: 'Document Expiry Date',
     width: { xs: 12, sm: 6 },
-    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
   },
 ]
 
