@@ -50,7 +50,7 @@ export const useSecTokenId = ({ currencyId }: { currencyId?: string }): number |
   return (token as any)?.tokenInfo?.id
 }
 
-export const useSecToken = ({ currencyId }: { currencyId?: string }): number | undefined => {
+export const useSecToken = ({ currencyId }: { currencyId?: string }): SecToken | undefined => {
   const { secTokens } = useSecTokens()
   const token = secTokens[currencyId ?? '']
 
