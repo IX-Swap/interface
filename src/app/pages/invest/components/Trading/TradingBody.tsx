@@ -15,6 +15,7 @@ import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenA
 import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import React from 'react'
+
 export const TradingBody = () => {
   const classes = useStyles()
   const { data: pair } = useFeaturedPair()

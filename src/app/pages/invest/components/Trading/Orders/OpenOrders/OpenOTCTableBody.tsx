@@ -1,14 +1,24 @@
 import { Box, TableBody, TableCell, TableRow, useTheme } from '@mui/material'
+import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
+import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
+import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
 import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
+import { getExpiresOrderMessage } from 'helpers/dates'
 import React from 'react'
 import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
-import { getExpiresOrderMessage } from 'helpers/dates'
-import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
+import { EmptyState } from './EmptyState'
 
 export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
-  const { columns, items, actions, hasActions, cacheQueryKey } = props
+  const {
+    columns,
+    items,
+    actions,
+    hasActions,
+    cacheQueryKey,
+    loading = false
+  } = props
   const classes = useStyles()
   const needsConfirmation = (item: OTCOrder) => {
     return (
@@ -25,6 +35,15 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
     return theme.palette.mode === 'light' ? '#F6F4FD' : '#494166'
   }
   const columnCount = columns.length + Number(hasActions)
+  const { accountState, isWhitelisted } = useMetamaskConnectionManager()
+  if (
+    (accountState !== AccountState.SAME_CHAIN ||
+      items?.length === 0 ||
+      !isWhitelisted) &&
+    !loading
+  ) {
+    return <EmptyState hasItems={items?.length > 0} />
+  }
   return (
     <TableBody>
       {items.map((row, i) => (

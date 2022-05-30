@@ -10,14 +10,14 @@ import { Link } from 'react-router-dom'
 import { BlockchainAddress } from './BlockchainAddress'
 export const BlockchainWallet = () => {
   const classes = useStyles()
-  const { account, chainId } = useActiveWeb3React()
+  const web3 = useActiveWeb3React()
   const context = useContext(WalletModalContext)
+  const { account, chainId, active } = web3
   const isAddressWhitelisted = useWithdrawalAddressAdded(account)
-
   return (
     <>
       <>
-        {isEmptyString(account) ? (
+        {isEmptyString(account) || !active ? (
           <Button
             variant='contained'
             color='primary'
@@ -27,7 +27,7 @@ export const BlockchainWallet = () => {
           </Button>
         ) : (
           <>
-            {!isAddressWhitelisted && (
+            {!isAddressWhitelisted && active && (
               <Button
                 variant='contained'
                 color='primary'
@@ -37,7 +37,7 @@ export const BlockchainWallet = () => {
                 Add Wallet
               </Button>
             )}
-            {isAddressWhitelisted && (
+            {isAddressWhitelisted && active && (
               <Box display='flex' gap={1}>
                 <Hidden lgDown>
                   <Typography className={classes.label} variant='subtitle1'>
