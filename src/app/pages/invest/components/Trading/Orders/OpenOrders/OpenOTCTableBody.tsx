@@ -1,14 +1,14 @@
 import { Box, TableBody, TableCell, TableRow, useTheme } from '@mui/material'
+import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
+import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
+import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
 import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
+import { getExpiresOrderMessage } from 'helpers/dates'
 import React from 'react'
 import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
-import { getExpiresOrderMessage } from 'helpers/dates'
-import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
 import { EmptyState } from './EmptyState'
-import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
-import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 
 export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   const {
@@ -35,10 +35,11 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
     return theme.palette.mode === 'light' ? '#F6F4FD' : '#494166'
   }
   const columnCount = columns.length + Number(hasActions)
-  const { accountState } = useMetamaskConnectionManager()
-
+  const { accountState, isWhitelisted } = useMetamaskConnectionManager()
   if (
-    (accountState !== AccountState.SAME_CHAIN || items?.length === 0) &&
+    (accountState !== AccountState.SAME_CHAIN ||
+      items?.length === 0 ||
+      !isWhitelisted) &&
     !loading
   ) {
     return <EmptyState hasItems={items?.length > 0} />

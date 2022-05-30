@@ -24,5 +24,11 @@ export const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     marginTop: theme.spacing(1),
     color: theme.palette.mode === 'light' ? '#778194' : '#fff'
+  },
+  connectLink: {
+    display: 'inline-block',
+    textDecoration: 'underline',
+    color: theme.palette.primary.main,
+    margin: '0 3px'
   }
 }))
