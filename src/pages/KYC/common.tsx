@@ -40,13 +40,22 @@ interface SelectProps {
   error?: any | ReactChildren
   onBlur?: (e: any) => void
   name?: string
+  isMulti?: boolean
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement> & {
   error?: any | ReactChildren
 }
 
-export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, items, error, name }: SelectProps) => {
+export const Select: FC<SelectProps> = ({
+  label,
+  onSelect,
+  selectedItem,
+  items,
+  error,
+  name,
+  ...rest
+}: SelectProps) => {
   return (
     <Box>
       {label && (
@@ -56,7 +65,7 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, items, 
           </TYPE.title11>
         </Label>
       )}
-      <ReactSelect name={name} onSelect={onSelect} value={selectedItem} options={items} error={error} />
+      <ReactSelect name={name} onSelect={onSelect} value={selectedItem} options={items} error={error} {...rest} />
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}

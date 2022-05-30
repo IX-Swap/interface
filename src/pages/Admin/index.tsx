@@ -9,14 +9,13 @@ import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
 import { Border, ToggleOption } from 'components/Tabs'
-import { AdminList } from 'components/AdminList'
+import { UsersList } from 'components/UsersList'
 import { AdminKycTable } from 'components/AdminKyc'
-import { Whitelist } from 'components/Whitelist'
 
 import { Navbar } from './Navbar'
 import { SUPPORTED_ADMIN_ROLES } from './mock'
 
-type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'admin-list' | 'whitelist'
+type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'users-list'
 
 interface Tab {
   label: string
@@ -33,8 +32,7 @@ const tabs: Tab[] = [
   { label: 'KYC', value: 'kyc' },
   { label: 'Broker-dealer Transactions', value: 'transactions' },
   { label: 'Security catalog', value: 'security-catalog' },
-  { label: `Admin's`, value: 'admin-list' },
-  { label: 'Whitelist', value: 'whitelist' },
+  { label: 'Users', value: 'users-list' },
 ]
 
 const renderTab = (selectedTab: AdminTab | string) => {
@@ -47,10 +45,8 @@ const renderTab = (selectedTab: AdminTab | string) => {
       return <AdminTransactionsTable />
     case 'security-catalog':
       return <AdminSecurityCatalog />
-    case 'admin-list':
-      return <AdminList />
-    case 'whitelist':
-      return <Whitelist />
+    case 'users-list':
+      return <UsersList />
     default:
       return null
   }

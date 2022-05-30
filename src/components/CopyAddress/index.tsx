@@ -21,16 +21,24 @@ interface Props {
   size?: number
   setCopied: (toCopy: string) => void
   wrapperStyles?: CSSProperties
+  isShortenAddress?: boolean
 }
 
-export const CopyAddress: FC<Props> = ({ address, copied, setCopied, wrapperStyles, size = 18 }) => {
+export const CopyAddress: FC<Props> = ({
+  address,
+  copied,
+  setCopied,
+  wrapperStyles,
+  size = 18,
+  isShortenAddress = true,
+}) => {
   return (
     <>
       {copied ? (
         <Trans>Copied!</Trans>
       ) : (
         <Flex style={wrapperStyles}>
-          {shortenAddress(address || '')}
+          {isShortenAddress ? shortenAddress(address || '') : address}
           <IconWrapper style={wrapperStyles} size={size} onClick={() => setCopied(address || '')}>
             <StyledCopy />
           </IconWrapper>

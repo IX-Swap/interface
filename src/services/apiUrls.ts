@@ -2,7 +2,7 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 
 export const admin = {
   login: 'auth/login',
-  adminList: 'users/admin',
+  usersList: 'users',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
   accreditationList: '/kyc/list',

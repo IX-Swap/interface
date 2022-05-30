@@ -44,7 +44,7 @@ export const Checkbox: FC<Props> = ({
       disabled={disabled}
     >
       <Flex>
-        <div>{checked ? checkedImage : notCheckedImage}</div>
+        {checked ? checkedImage : notCheckedImage}
         {scaleSize !== 1 ? (
           <TYPE.title6 style={{ textTransform: 'uppercase' }} marginLeft="12px">
             {label}

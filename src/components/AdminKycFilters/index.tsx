@@ -3,7 +3,7 @@ import { Flex } from 'rebass'
 import styled from 'styled-components'
 
 import { Select } from 'components/Select'
-import { Search } from 'components/AdminAccreditationTable/Search'
+import { Search } from 'components/Search'
 import { ButtonEmpty, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { TYPE } from 'theme'
 
@@ -103,9 +103,7 @@ export const AdminKycFilters: FC<Props> = ({
             }}
           />
         </SelectFiltersContainer>
-        <ResetFilterButton onClick={handleResetFilters}>
-          Reset Filters
-        </ResetFilterButton>
+        <ResetFilterButton onClick={handleResetFilters}>Reset Filters</ResetFilterButton>
       </Flex>
 
       <Flex marginBottom="52px" justifyContent="space-between">
