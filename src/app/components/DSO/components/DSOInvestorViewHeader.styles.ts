@@ -15,6 +15,7 @@ export const useStyles = makeStyles(theme => ({
   },
   tokenName: {
     fontSize: 40,
+    color: theme.palette.switch.color,
     [theme.breakpoints.down('lg')]: {
       fontSize: 14
     }
@@ -22,6 +23,7 @@ export const useStyles = makeStyles(theme => ({
   corporateName: {
     fontWeight: 400,
     opacity: 0.7,
+    color: theme.palette.switch.color,
     [theme.breakpoints.down('lg')]: {
       fontSize: 14
     }

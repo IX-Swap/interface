@@ -14,21 +14,34 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={6} md={3}>
-        <LabelledValue label='Network' value={dso.network?.name} isNewThemeOn />
+        <LabelledValue
+          label='Network'
+          value={dso.network?.name}
+          labelColor='bright'
+          valueColor='#FFFFFF'
+        />
       </Grid>
       <Grid item xs={6} md={3}>
-        <LabelledValue label='Decimal' value={dso.decimals} isNewThemeOn />
+        <LabelledValue
+          label='Decimal'
+          value={dso.decimals}
+          labelColor='bright'
+          valueColor='#FFFFFF'
+        />
       </Grid>
       <Grid item xs={6} md={3}>
         <LabelledValue
           label='Capital Structure'
           value={dso.capitalStructure}
-          isNewThemeOn
+          labelColor='bright'
+          valueColor='#FFFFFF'
         />
       </Grid>
       <Grid item xs={6} md={3}>
         <LabelledValue
           label='Token Address'
+          labelColor='bright'
+          valueColor='#FFFFFF'
           value={
             <Typography
               component='span'
@@ -38,21 +51,22 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
               {dso.deploymentInfo?.token ?? ''}
             </Typography>
           }
-          isNewThemeOn
         />
       </Grid>
       <Grid item xs={6} md={3}>
         <LabelledValue
           label='Launch Date'
           value={dso.launchDate}
-          isNewThemeOn
+          labelColor='bright'
+          valueColor='#FFFFFF'
         />
       </Grid>
       <Grid item xs={6} md={3}>
         <LabelledValue
           label='Completion Date'
           value={dso.completionDate}
-          isNewThemeOn
+          labelColor='bright'
+          valueColor='#FFFFFF'
         />
       </Grid>
       <Hidden lgUp>
