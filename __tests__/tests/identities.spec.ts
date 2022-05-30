@@ -138,7 +138,7 @@ test.describe.parallel('Check identities form', () => {
     })
   })
 
-  test.only('Check FATCA information', async ({ page, kycForms }, testInfo) => {
+  test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
     await click(kyc.type.INDIVIDUAL, page)
     await click(kyc.buttons.OKAY, page)
     await kycForms.fillPersonalInformationForm()
