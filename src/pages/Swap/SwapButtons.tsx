@@ -17,6 +17,7 @@ import { ParsedAmounts } from 'state/swap/typings'
 import { useSetSwapState } from 'state/swapHelper/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
 import { verifySwap } from 'utils/verifySwap'
+
 import { ButtonIXSWide } from '../../components/Button'
 import { BottomGrouping, SwapCallbackError } from '../../components/swap/styleds'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
@@ -31,10 +32,12 @@ export const SwapButtons = ({
   parsedAmounts,
   showAcceptChanges,
   allowSwap,
+  invalidRoute,
 }: {
   showAcceptChanges: boolean
   parsedAmounts: ParsedAmounts | undefined
   allowSwap: boolean
+  invalidRoute: boolean
 }) => {
   const { account, chainId } = useActiveWeb3React()
   const { recipient, typedValue, independentField, approvalSubmitted } = useSwapState()
@@ -94,7 +97,8 @@ export const SwapButtons = ({
 
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
 
-  const routeNotFound = !trade?.route
+  const routeNotFound = !trade?.route || invalidRoute
+
   const userHasSpecifiedInputOutput = Boolean(
     currencies[Field.INPUT] &&
       currencies[Field.OUTPUT] &&

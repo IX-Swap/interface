@@ -21,6 +21,7 @@ import {
   useWatchAuthorizationExpire,
 } from 'state/swapHelper/hooks'
 import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
+import { useSecToken } from 'state/secTokens/hooks'
 
 import { AutoColumn } from '../../components/Column'
 import { CurrencyInput } from '../../components/swap/CurrencyInput'
@@ -125,6 +126,13 @@ export default function Swap({ history }: RouteComponentProps) {
   const withSecToken =
     (currencies.INPUT as CurrencyWithSec)?.isSecToken || (currencies.OUTPUT as CurrencyWithSec)?.isSecToken
 
+  const tokenPath = trade?.route?.path || []
+  const lastButOneToken = tokenPath[tokenPath.length - 2]
+
+  const secToken = useSecToken({ currencyId: lastButOneToken?.address })
+
+  const invalidRoute = Boolean(secToken?.isSecToken)
+
   return (
     <>
       <TokenWarningModal history={history} />
@@ -144,16 +152,21 @@ export default function Swap({ history }: RouteComponentProps) {
 
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
-            {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
-            <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
+            {showWrap || invalidRoute ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
+            {!invalidRoute && (
+              <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
+            )}
 
             {!showLoading && (
               <>
                 {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
 
                 {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
-                <AuthorizationButtons formRef={formRef} allowSwap={allowSwapSecurity || !withSecToken} />
+                {!invalidRoute && (
+                  <AuthorizationButtons formRef={formRef} allowSwap={allowSwapSecurity || !withSecToken} />
+                )}
                 <SwapButtons
+                  invalidRoute={invalidRoute}
                   parsedAmounts={parsedAmounts}
                   showAcceptChanges={showAcceptChanges}
                   allowSwap={allowSwapSecurity || !withSecToken}
