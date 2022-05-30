@@ -24,9 +24,11 @@ export const use2faSteps = (steps: string[]) => {
     error: isStepFailed(index)
   })
 
+  const is2faCompleted = activeStep === 4
+
   const stepInfo = matches
     ? {
-        label: steps[activeStep],
+        label: is2faCompleted ? 'Success page' : steps[activeStep],
         activeStep: activeStep + 1,
         totalSteps: steps.length
       }
@@ -38,6 +40,7 @@ export const use2faSteps = (steps: string[]) => {
     prevStep,
     stepperConditions: getVariantsConditions,
     stepInfo,
-    isMobile: matches
+    isMobile: matches,
+    is2faCompleted
   }
 }

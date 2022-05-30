@@ -28,6 +28,7 @@ export const Update2fa = () => {
     prevStep,
     stepInfo,
     isMobile,
+    is2faCompleted,
     stepperConditions
   } = use2faSteps(steps)
 
@@ -82,7 +83,7 @@ export const Update2fa = () => {
           update2FA
           isBackButtonVisible={isBackButtonVisible}
           isNextButtonVisible={isNextButtonVisible}
-          isContinueButtonVisible={activeStep === 4}
+          isContinueButtonVisible={is2faCompleted}
           onBackButtonClick={prevStep}
           onNextButtonClick={nextStep}
         />
