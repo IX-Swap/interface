@@ -233,7 +233,6 @@ export function swapErrorToUserReadableMessage(error: any): string {
     reason = error.reason ?? error.message ?? reason
     error = error.error ?? error.data?.originalError
   }
-
   if (reason?.indexOf('execution reverted: ') === 0) reason = reason.substr('execution reverted: '.length)
   switch (reason) {
     case 'IxsV2Router: EXPIRED':
