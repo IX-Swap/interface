@@ -4,6 +4,7 @@ import { tradingQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { CreateOTCOrderArgs } from 'types/otcOrder'
+import { validateOTCOrder } from 'app/pages/invest/validation'
 
 export const orderPayloadtoOTCAdapt = ({
   values,
@@ -21,16 +22,6 @@ export const orderPayloadtoOTCAdapt = ({
   }
 }
 
-const validateOTCOrder = (values: CreateOTCOrderArgs) => {
-  let message = ''
-  if (!Number.isInteger(values.amount)) {
-    message = 'Floating point amounts are not allowed'
-  }
-  if (values.amount <= 0 || values.price <= 0) {
-    message = 'Amount and price must be greater than 0'
-  }
-  return message
-}
 export const useCreateOTCOrder = () => {
   const { apiService, snackbarService } = useServices()
   const uri = trading.createOrder
