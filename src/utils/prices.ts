@@ -1,6 +1,7 @@
 import JSBI from 'jsbi'
 import { Currency, CurrencyAmount, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+
 import {
   ALLOWED_PRICE_IMPACT_HIGH,
   ALLOWED_PRICE_IMPACT_LOW,
@@ -23,14 +24,10 @@ export function computeRealizedLPFeePercent(trade: V2Trade<CurrencyWithSec, Curr
   // for each hop in our trade, take away the x*y=k price impact from 0.3% fees
   // e.g. for 3 tokens/2 hops: 1 - ((1 - .03) * (1-.03))
 
-  const withSecToken = trade.route.input?.isSecToken || trade.route.output?.isSecToken
-
   const percent = ONE_HUNDRED_PERCENT.subtract(
-    trade.route.pairs.reduce<Percent>(
-      (currentFee: Percent): Percent =>
-        currentFee.multiply(withSecToken ? SEC_INPUT_FRACTION_AFTER_FEE : INPUT_FRACTION_AFTER_FEE),
-      ONE_HUNDRED_PERCENT
-    )
+    trade.route.pairs.reduce<Percent>((currentFee: Percent, next: any): Percent => {
+      return currentFee.multiply(next.isSecurity ? SEC_INPUT_FRACTION_AFTER_FEE : INPUT_FRACTION_AFTER_FEE)
+    }, ONE_HUNDRED_PERCENT)
   )
 
   return new Percent(percent.numerator, percent.denominator)
