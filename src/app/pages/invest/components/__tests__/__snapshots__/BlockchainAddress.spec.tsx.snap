@@ -13,6 +13,7 @@ exports[`BlockchainAddress should match snapshot 1`] = `
     <h6
       class="MuiTypography-root MuiTypography-subtitle2 css-s0c2fe-MuiTypography-root"
     >
+      wallet : 
       0x67ed...8cbc
     </h6>
   </div>

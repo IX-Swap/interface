@@ -14,7 +14,8 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: theme.spacing(6),
     padding: theme.spacing(0.25, 1.5),
     textAlign: 'center',
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    cursor: 'pointer'
   },
   chainLogo: {
     width: 17,

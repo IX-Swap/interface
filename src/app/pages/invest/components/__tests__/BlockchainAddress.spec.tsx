@@ -12,6 +12,7 @@ describe('BlockchainAddress', () => {
       <BlockchainAddress
         account={'0x67ed490d810c41263758e7355cef720ffed68cbc'}
         chainId={1}
+        labelName='wallet'
       />
     )
     expect(container).toMatchSnapshot()

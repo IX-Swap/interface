@@ -1,10 +1,6 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { waitFor, renderHookWithServiceProvider } from 'test-utils'
-import * as useAuthHook from 'hooks/auth/useAuth'
-import * as useParsedDataHook from 'hooks/useParsedData'
-import { paginationArgs } from 'config/defaults'
 import * as useWithdrawalAddressesMock from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
-import { user } from '__fixtures__/user'
+import { waitFor } from 'test-utils'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 import { useWithdrawalAddressAdded } from '../useWithdrawalAddressAdded'
 
@@ -32,7 +28,7 @@ describe('useWithdrawalAddressAdded', () => {
         useWithdrawalAddressAdded('0x67ed490d810c41263758e7355cef720ffed68cbc')
       )
       await waitFor(() => {
-        expect(result?.current).toEqual(true)
+        expect(result?.current.found).toEqual(true)
       })
     })
   })
@@ -40,7 +36,7 @@ describe('useWithdrawalAddressAdded', () => {
     await act(async () => {
       const { result } = renderHook(() => useWithdrawalAddressAdded())
       await waitFor(() => {
-        expect(result?.current).toEqual(false)
+        expect(result?.current.found).toEqual(false)
       })
     })
   })
@@ -48,7 +44,7 @@ describe('useWithdrawalAddressAdded', () => {
     await act(async () => {
       const { result } = renderHook(() => useWithdrawalAddressAdded('123456'))
       await waitFor(() => {
-        expect(result?.current).toEqual(false)
+        expect(result?.current.found).toEqual(false)
       })
     })
   })
