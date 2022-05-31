@@ -16,7 +16,7 @@ export const TaxDeclarationInfoDialog = () => {
           color='primary'
           style={{ textDecoration: 'underline', cursor: 'pointer' }}
         >
-          Click here
+          Learn more
         </Typography>
       }
       titleStyle={{

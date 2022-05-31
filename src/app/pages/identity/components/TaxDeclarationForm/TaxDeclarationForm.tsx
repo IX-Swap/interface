@@ -13,7 +13,7 @@ export const TaxDeclarationForm = ({
   identityType = 'individual'
 }: TaxDeclarationFormProps) => {
   return (
-    <>
+    <Paper sx={{ borderRadius: 2, p: 5 }}>
       <FormSectionHeader title='Tax Declaration' />
       <Grid
         data-testid='taxDeclaration'
@@ -21,36 +21,35 @@ export const TaxDeclarationForm = ({
         direction='column'
         spacing={6}
       >
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
+        <Grid
+          item
+          container
+          justifyContent={'space-between'}
+          alignItems={'center'}
+        >
           <Grid item>
-            <Typography>
-              <TaxDeclarationInfoDialog /> to know why we need your tax
-              information.
-            </Typography>
+            <Typography>To know why we need your tax declaration</Typography>
           </Grid>
-        </Paper>
+          <Grid item>
+            <TaxDeclarationInfoDialog />
+          </Grid>
+        </Grid>
         <Grid item>
           {identityType === 'individual' ? (
-            <Paper sx={{ borderRadius: 2, p: 5 }}>
-              <TaxResidencyFields />
-            </Paper>
+            <TaxResidencyFields />
           ) : (
-            <Paper sx={{ borderRadius: 2, p: 5 }}>
-              <TaxResidencyFieldArray />
-            </Paper>
+            <TaxResidencyFieldArray />
           )}
         </Grid>
         {identityType === 'individual' ? (
           <>
             <Grid item>
-              <Paper sx={{ borderRadius: 2, p: 5 }}>
-                <FormSectionHeader title={'FATCA'} />
-                <UsCitizenshipConfirmation />
-              </Paper>
+              <FormSectionHeader title={'FATCA'} />
+              <UsCitizenshipConfirmation />
             </Grid>
           </>
         ) : null}
       </Grid>
-    </>
+    </Paper>
   )
 }
