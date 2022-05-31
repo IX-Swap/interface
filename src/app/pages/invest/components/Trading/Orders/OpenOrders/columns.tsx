@@ -52,7 +52,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     render: (_, row) =>
       getFilledMatchesPercentage({
         amount: row.amount,
-        matchedAmount: row.matches?.matchedAmount
+        matchedAmount: row.matches?.matchedAmount ?? 0
       })
   }
 ]

@@ -4,7 +4,7 @@ import { useWithdrawalAddresses } from './useWithdrawalAddresses'
 
 export const useWithdrawalAddressAdded = (address?: string | null) => {
   const { data } = useWithdrawalAddresses({})
-  console.log(data)
+
   return useMemo(() => {
     if (isEmptyString(address)) {
       return { found: false, label: '' }

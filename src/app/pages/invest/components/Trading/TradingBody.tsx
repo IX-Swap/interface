@@ -55,7 +55,14 @@ export const TradingBody = () => {
           tokenLabel={tokenName}
           isDisabled={!found || isLoading}
           currencyBalance={currencyBalance}
-          suffix={<PlaceOrderSuffix isWhiteListed={found} account={account} />}
+          suffix={({ tab }: { tab: number }) => (
+            <PlaceOrderSuffix
+              tab={tab}
+              currencyBalance={currencyBalance}
+              tokenBalance={balance}
+              tokenName={tokenName}
+            />
+          )}
           tokenBalance={balance}
           onSubmit={submitForm}
         />
