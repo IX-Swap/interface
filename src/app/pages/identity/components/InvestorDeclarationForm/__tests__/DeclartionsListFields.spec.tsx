@@ -5,6 +5,8 @@ import {
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
+import { TypedField } from 'components/form/TypedField'
+import { Checkbox } from 'components/form/Checkbox'
 
 describe('DeclartionsListFields', () => {
   const props: DeclarationsListFieldsProps = {
@@ -13,20 +15,18 @@ describe('DeclartionsListFields', () => {
         label: 'Declaration One',
         name: 'one'
       }
-    ],
-    title: 'This is the title'
+    ]
   }
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
   it('renders title correctly', () => {
-    const { getByText } = render(
+    const { getByTestId } = render(
       <Form>
         <DeclarationsListFields {...props} />
       </Form>
     )
-
-    expect(getByText('This is the title')).toBeTruthy()
+    expect(getByTestId('Declaration-select')).toBeInTheDocument()
   })
 })

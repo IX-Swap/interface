@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { Grid, Typography } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
-import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
 import { useServices } from 'hooks/useServices'
@@ -20,6 +18,11 @@ export const InvestorDeclarationForm = ({
   const declarationsError = errors.investorDeclarations
   const optInAgreementsError = errors.optInAgreements
 
+  const isCorporate = identityType === 'corporate'
+  const title = `I declare that I am "${
+    isCorporate ? 'Corporate' : 'Individual'
+  } Accredited Investor"`
+
   useEffect(() => {
     if (declarationsError !== undefined) {
       void snackbarService.showSnackbar(declarationsError.message, 'error')
@@ -34,26 +37,10 @@ export const InvestorDeclarationForm = ({
       <FormSectionHeader title='Investor Status Declaration' />
       <Grid data-testid='investorStatusDeclaration' container spacing={3}>
         <Grid item xs={12}>
-          <Typography>
-            Singapore rules require you to declare your investor status before
-            you see live deals on our platform
-          </Typography>
+          <Typography>{title}</Typography>
         </Grid>
         <Grid item xs={12}>
           <InvestorAgreements type={identityType} />
-        </Grid>
-
-        <Grid item xs={12}>
-          <FormSectionHeader title={'Opt-In Requirement'} />
-          <DeclarationsListFields
-            title='I confirm to be treated as an “Accredited Investor” by InvestaX'
-            data={[
-              {
-                name: 'optInAgreements',
-                label: <OptInAgreements showOptOutDialog />
-              }
-            ]}
-          />
         </Grid>
       </Grid>
     </>

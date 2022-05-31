@@ -1,7 +1,8 @@
 import {
   FormControlLabel,
   FormControlLabelProps,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material'
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
@@ -26,8 +27,16 @@ export const Checkbox = (
     labelColor,
     ...rest
   } = props
+  const theme = useTheme()
 
   const classes = useStyles()
+  const defaultColor = error
+    ? 'error'
+    : labelColor != null
+    ? labelColor
+    : value
+    ? theme.palette.text.primary
+    : theme.palette.text.secondary
 
   return (
     <FormControlLabel
@@ -42,7 +51,7 @@ export const Checkbox = (
         <Typography
           fontWeight={400}
           variant='body1'
-          color={error ? 'error' : labelColor != null ? labelColor : 'inherit'}
+          color={defaultColor}
           style={{ marginTop: 10, fontSize: 13.5 }}
         >
           {label}

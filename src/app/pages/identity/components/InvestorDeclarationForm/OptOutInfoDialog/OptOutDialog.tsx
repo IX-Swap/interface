@@ -12,7 +12,8 @@ export const OptOutInfoDialog = () => {
         <Typography
           component='span'
           color='primary'
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
+          style={{ cursor: 'pointer' }}
+          fontWeight={400}
         >
           opt out
         </Typography>

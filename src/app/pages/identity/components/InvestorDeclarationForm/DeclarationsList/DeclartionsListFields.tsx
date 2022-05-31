@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
@@ -11,23 +11,16 @@ export interface DeclarationsListItem {
 }
 
 export interface DeclarationsListFieldsProps {
-  title?: string
   data: DeclarationsListItem[]
 }
 
 export const DeclarationsListFields = ({
-  title,
   data
 }: DeclarationsListFieldsProps) => {
   const { control } = useFormContext()
 
   return (
-    <Grid container>
-      {title !== undefined && (
-        <Grid item xs={12}>
-          <Typography variant={'subtitle1'}>{title}</Typography>
-        </Grid>
-      )}
+    <Grid container spacing={2}>
       {data.map(item => {
         return (
           <Grid item xs={12} key={item.name}>
@@ -39,6 +32,7 @@ export const DeclarationsListFields = ({
               label={item.label as any}
               name={item.name}
               defaultValue={false}
+              data-testid='Declaration-select'
             />
           </Grid>
         )

@@ -11,7 +11,8 @@ export const SafeguardInfoDialog = () => {
         <Typography
           component='span'
           color='primary'
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
+          style={{ cursor: 'pointer' }}
+          fontWeight={400}
         >
           safeguards
         </Typography>
