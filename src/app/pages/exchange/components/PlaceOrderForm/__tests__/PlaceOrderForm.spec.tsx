@@ -70,7 +70,7 @@ describe('PlaceOrderForm', () => {
           tokenBalance={300}
           isDisabled={true}
           currencyBalance={15000}
-          suffix={<div>TEST</div>}
+          suffix={({ tab }: { tab: number }) => <div>TEST</div>}
           onSubmit={async () => {}}
         />
       </Form>
