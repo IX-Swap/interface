@@ -6,7 +6,7 @@ import { useMutation, useQueryCache } from 'react-query'
 export const useConfirmMyOrder = () => {
   const { apiService, snackbarService } = useServices()
   const queryCache = useQueryCache()
-  const confirmMatchOrder = async ({
+  const confirmMyOrder = async ({
     orderId,
     matchedOrderId
   }: {
@@ -17,9 +17,12 @@ export const useConfirmMyOrder = () => {
     return await apiService.post(url, {})
   }
 
-  return useMutation(confirmMatchOrder, {
+  return useMutation(confirmMyOrder, {
     onSuccess: async () => {
-      void snackbarService.showSnackbar('Confirmed', 'success')
+      void snackbarService.showSnackbar(
+        'You have confirmed the token transfer',
+        'success'
+      )
       void queryCache.invalidateQueries(tradingQueryKeys.getMyOpenOrdersList)
       void queryCache.invalidateQueries(tradingQueryKeys.pastOrders)
     },

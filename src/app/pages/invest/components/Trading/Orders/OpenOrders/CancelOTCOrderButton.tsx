@@ -11,7 +11,10 @@ export const CancelOTCOrderButton = ({
   order,
   ...rest
 }: CancelOTCOrderButtonProps) => {
-  const [cancelOrder, { status }] = useCancelOTCOrder(order._id)
+  const [cancelOrder, { status }] = useCancelOTCOrder(
+    order._id,
+    order.orderType
+  )
   const handleClick = async () => {
     void cancelOrder()
   }

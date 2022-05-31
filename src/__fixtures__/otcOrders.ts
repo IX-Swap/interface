@@ -116,3 +116,10 @@ export const invalidFloatingPointAmount: CreateOTCOrderArgs = {
   price: 1,
   amount: 1.1
 }
+export const transformedOTCOrderArgs = {
+  amount: 230,
+  price: 33,
+  ethAddress: '5435435',
+  orderType: 'SELL',
+  pair: '12'
+}
