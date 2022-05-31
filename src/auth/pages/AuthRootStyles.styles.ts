@@ -20,7 +20,6 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     width: '55%',
-    minHeight: '100vh',
     position: 'relative',
     backgroundColor: 'transparent',
     display: 'flex',
@@ -34,11 +33,10 @@ export const useStyles = makeStyles(theme => ({
   formContainer: {
     marginTop: 'auto',
     marginBottom: 'auto',
-    paddingTop: 64,
+    paddingTop: 72,
     paddingBottom: 64,
     [theme.breakpoints.down('md')]: {
-      marginTop: 0,
-      paddingTop: 0,
+      paddingTop: 24,
       paddingBottom: 24
     }
   },
@@ -51,7 +49,10 @@ export const useStyles = makeStyles(theme => ({
     backgroundPosition: 'right center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    height: '100vh',
     [theme.breakpoints.down('md')]: {
       display: 'none'
     }
@@ -74,9 +75,7 @@ export const useStyles = makeStyles(theme => ({
     left: 0,
     top: 33,
     [theme.breakpoints.down('md')]: {
-      position: 'static',
-      marginBottom: 30,
-      marginTop: 9
+      top: 0
     }
   }
 }))
