@@ -178,6 +178,21 @@ export default function AddLiquidity({
         isCreating ? enableMitigation : mitigationEnabled,
       ]
       value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
+    } else if (currencyB.symbol === 'wCT1') {
+      estimate = router.estimateGas.addLiquidity
+      method = router.addLiquidity
+      args = [
+        currencyB?.wrapped?.address ?? '',
+        currencyA?.wrapped?.address ?? '',
+        parsedAmountB.quotient.toString(),
+        parsedAmountA.quotient.toString(),
+        amountsMin[Field.CURRENCY_B].toString(),
+        amountsMin[Field.CURRENCY_A].toString(),
+        account,
+        deadline.toHexString(),
+        isCreating ? enableMitigation : mitigationEnabled,
+      ]
+      value = null
     } else {
       estimate = router.estimateGas.addLiquidity
       method = router.addLiquidity
