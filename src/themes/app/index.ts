@@ -29,6 +29,13 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
   }
 
   theme.components = {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          width: 'calc(100vw - 16px)'
+        }
+      }
+    },
     ...getThemeOverrides(theme),
     MuiSwitch: {
       ...getThemeOverrides(theme)?.MuiSwitch,
