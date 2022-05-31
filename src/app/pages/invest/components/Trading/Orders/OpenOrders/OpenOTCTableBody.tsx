@@ -20,6 +20,7 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
     loading = false
   } = props
   const classes = useStyles()
+
   const needsConfirmation = (item: OTCOrder) => {
     return (
       item.matches?.status === OTCOrderStatus.CONFIRMED &&

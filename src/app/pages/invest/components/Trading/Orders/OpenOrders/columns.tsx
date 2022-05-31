@@ -1,6 +1,7 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
+  getFilledMatchesPercentage,
   getFilledPercentage,
   getOrderCurrency,
   renderMoney,
@@ -34,8 +35,10 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Amount',
-    render: renderMoney
+    label: 'Matched amount',
+    align: 'center',
+    render: (value, row) =>
+      formatMoney(row?.matches?.matchedAmount ?? 0, '', false)
   },
   {
     key: 'amount',
@@ -47,9 +50,9 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     key: '_id',
     label: 'Filled',
     render: (_, row) =>
-      getFilledPercentage({
+      getFilledMatchesPercentage({
         amount: row.amount,
-        availableAmount: row.availableAmount
+        matchedAmount: row.matches?.matchedAmount
       })
   }
 ]
