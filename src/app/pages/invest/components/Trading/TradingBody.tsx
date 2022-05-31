@@ -6,11 +6,8 @@ import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
 import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/TradingOrders'
 import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
-import {
-  orderPayloadtoOTCAdapt,
-  useCreateOTCOrder
-} from 'app/pages/invest/hooks/useCreateOTCOrder'
-import { useFeaturedPair } from 'app/pages/invest/hooks/useFeaturedPair'
+import { useCreateOTCOrder } from 'app/pages/invest/hooks/useCreateOTCOrder'
+import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
@@ -18,19 +15,15 @@ import React from 'react'
 
 export const TradingBody = () => {
   const classes = useStyles()
-  const { data: pair } = useFeaturedPair()
-  const symbol = pair?.name ?? ''
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
   const { found } = useWithdrawalAddressAdded(account)
-  const currencyName = symbol.split('/')[1]
-  const tokenName = symbol.split('/')[0]
+  const { currencyName, tokenName } = useFeaturedPairNames()
   const currencyBalance = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
-    const args = orderPayloadtoOTCAdapt({ values, account })
-    return await create(args)
+    return await create({ args: values, account })
   }
   const isFetching = false
   const createOrderStatus = ''
@@ -55,7 +48,14 @@ export const TradingBody = () => {
           tokenLabel={tokenName}
           isDisabled={!found || isLoading}
           currencyBalance={currencyBalance}
-          suffix={<PlaceOrderSuffix isWhiteListed={found} account={account} />}
+          suffix={({ tab }: { tab: number }) => (
+            <PlaceOrderSuffix
+              tab={tab}
+              currencyBalance={currencyBalance}
+              tokenBalance={balance}
+              tokenName={tokenName}
+            />
+          )}
           tokenBalance={balance}
           onSubmit={submitForm}
         />

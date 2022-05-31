@@ -17,6 +17,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { OTCOrder } from 'types/otcOrder'
+import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
 
 export const TradingOpenOrders = () => {
@@ -36,6 +37,7 @@ export const TradingOpenOrders = () => {
         themeVariant={'primary'}
         hasActions
         bordered={false}
+        noDataComponent={<OpenOrdersEmptyState />}
         actions={OTCOrderActions}
         paperProps={
           isMiniLaptop

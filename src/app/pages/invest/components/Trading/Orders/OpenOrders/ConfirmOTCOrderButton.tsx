@@ -22,12 +22,13 @@ export const ConfirmOTCOrderButton = ({
     setLoadingTransaction(true)
     try {
       const sendingResult = await sendToken(
-        order.amount,
+        order.matches?.matchedAmount ?? 0,
         order.matches?.ethAddress
       )
       if (sendingResult) {
         await confirmMatch({
           orderId: order._id,
+
           matchedOrderId: order.matches?.order ?? ''
         })
       }

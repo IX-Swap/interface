@@ -31,8 +31,12 @@ export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
           { gasLimit: BigNumber.from(9999999) }
         )
 
-        await result.wait()
-        return true
+        const receipt = await result.wait()
+        if (receipt.status === 1) {
+          return true
+        }
+        snackbarService.showSnackbar('Transaction failed', 'error')
+        return false
       } catch (error: any) {
         if (error?.message?.includes('404') === false) {
           void snackbarService.showSnackbar(error.message, 'error')

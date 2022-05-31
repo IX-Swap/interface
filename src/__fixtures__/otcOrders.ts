@@ -1,5 +1,6 @@
 import { OTCMarket } from 'types/market'
 import {
+  CreateOTCOrderArgs,
   OTCMatch,
   OTCOrder,
   OTCOrderStatus,
@@ -96,3 +97,29 @@ export const orders: OTCOrder[] = [
     ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
   }
 ]
+
+export const validOTCOrderData: CreateOTCOrderArgs = {
+  orderType: 'SELL',
+  price: 5,
+  amount: 1,
+  ethAddress: '12345',
+  pair: 'IX-APE'
+}
+
+export const invalidOTCOrderData: CreateOTCOrderArgs = {
+  ...validOTCOrderData,
+  price: 0
+}
+
+export const invalidFloatingPointAmount: CreateOTCOrderArgs = {
+  ...invalidOTCOrderData,
+  price: 1,
+  amount: 1.1
+}
+export const transformedOTCOrderArgs = {
+  amount: 230,
+  price: 33,
+  ethAddress: '5435435',
+  orderType: 'SELL',
+  pair: '12'
+}

@@ -30,7 +30,6 @@ export interface TableViewRendererProps<T> {
   hasActions: boolean
   actions?: ActionsType<T>
   cacheQueryKey: any
-  loading?: boolean
 }
 export interface RenderHeadCellArgs<T> {
   item?: TableColumn<T>
@@ -210,8 +209,7 @@ export const TableView = <T,>({
                   columns,
                   hasActions,
                   actions,
-                  cacheQueryKey,
-                  loading: status === 'loading'
+                  cacheQueryKey
                 })
               ) : (
                 <TableRows

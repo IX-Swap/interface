@@ -125,7 +125,16 @@ export const getFilledPercentage = ({
   const percentAmount = ((amount - (availableAmount ?? amount)) / amount) * 100
   return `${percentAmount.toFixed(2)}%`
 }
-
+export const getFilledMatchesPercentage = ({
+  amount,
+  matchedAmount
+}: {
+  amount: number
+  matchedAmount: number
+}) => {
+  const percentAmount = (matchedAmount / amount) * 100
+  return `${percentAmount.toFixed(2)}%`
+}
 export const renderMoney = (value: any, row?: any) => formatMoney(value, '')
 export const renderTotal = ({
   price,

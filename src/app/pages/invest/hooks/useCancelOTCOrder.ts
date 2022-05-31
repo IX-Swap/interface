@@ -3,7 +3,7 @@ import { tradingQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 
-export const useCancelOTCOrder = (orderId: string) => {
+export const useCancelOTCOrder = (orderId: string, orderType: string) => {
   const queryCache = useQueryCache()
   const { apiService, snackbarService } = useServices()
   const cancelOrder = async () => {
@@ -12,7 +12,10 @@ export const useCancelOTCOrder = (orderId: string) => {
 
   return useMutation(cancelOrder, {
     onSuccess: async () => {
-      snackbarService.showSnackbar('Order Cancelled', 'success')
+      snackbarService.showSnackbar(
+        `You have cancelled the ${orderType.toLowerCase()} order`,
+        'success'
+      )
       void queryCache.invalidateQueries(tradingQueryKeys.getMyOpenOrdersList)
       void queryCache.invalidateQueries(tradingQueryKeys.pastOrders)
     },

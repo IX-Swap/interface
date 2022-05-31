@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@mui/material'
-import { Form } from 'components/form/Form'
-import { formatMoney, formatTokenBalance } from 'helpers/numbers'
-import { TabPanel } from 'components/TabPanel'
-import { LabelledValue } from 'components/LabelledValue'
+import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
+import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
 import {
   PlaceOrderArgs,
   PlaceOrderFormValues
 } from 'app/pages/exchange/types/form'
-import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
-import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
-import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
-import { useParams } from 'react-router-dom'
+import { Form } from 'components/form/Form'
+import { Submit } from 'components/form/Submit'
+import { LabelledValue } from 'components/LabelledValue'
+import { TabPanel } from 'components/TabPanel'
+import { formatMoney, formatTokenBalance } from 'helpers/numbers'
 import { isEmptyString } from 'helpers/strings'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { OrderSide } from 'types/order'
 
 export type ActiveTabName = 'BUY' | 'SELL'
@@ -28,7 +28,7 @@ export interface PlaceOrderFormProps {
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
   defaultActiveTab?: number
   isDisabled?: boolean
-  suffix?: React.ReactNode
+  suffix?: ({ tab }: { tab: number }) => React.ReactNode
 }
 
 export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
@@ -137,7 +137,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             PLACE ORDER
           </Submit>
         </Grid>
-        {suffix !== undefined && suffix}
+        {suffix?.({ tab: activeTabNameIdx })}
       </Grid>
     </Form>
   )
