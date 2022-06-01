@@ -227,8 +227,11 @@ export const exchangeMarketQueryKeys = {
 }
 
 export const tradingQueryKeys = {
-  getMyOpenOrdersList: (userId?: string, pairId?: string) =>
-    generateQueryKey('my-trading-open-orders-list', userId, pairId),
+  getMyOpenOrdersList: (
+    userId?: string,
+    pairId?: string,
+    account?: string | null
+  ) => generateQueryKey('my-trading-open-orders-list', userId, pairId, account),
   getUnmatchedOrders: (side: OrderType) => `unmatched-orders-${side}`,
   getMatchedOrders: `matched-orders`,
   featuredPair: 'featured-pair',

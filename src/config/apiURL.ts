@@ -311,7 +311,8 @@ export const exchangeMarket = {
   getOrdersList: (userId?: string) => `exchange/orders/list/${userId}`
 }
 export const trading = {
-  getMyOrdersList: `otc/order/list/my`,
+  getMyOrdersList: (ethAddress: string | null | undefined) =>
+    `otc/order/list/my/open/${ethAddress}`,
   getMyPastOrders: `otc/order/list/my/past`,
   getConfirmedOrders: `/otc/order/list/confirm`,
   cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`,

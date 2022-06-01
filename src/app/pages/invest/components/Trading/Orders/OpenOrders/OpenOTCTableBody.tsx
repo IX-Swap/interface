@@ -11,7 +11,7 @@ import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
 
 export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
-  const { columns, items, actions, hasActions, cacheQueryKey } = props
+  const { columns, items, actions, hasActions, cacheQueryKey, loading } = props
   const classes = useStyles()
 
   const needsConfirmation = (item: OTCOrder) => {
@@ -31,7 +31,10 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   const columnCount = columns.length + Number(hasActions)
   const { accountState, isWhitelisted } = useMetamaskConnectionManager()
   const { found } = isWhitelisted
-  const showEmptyState = accountState !== AccountState.SAME_CHAIN || !found
+  const showEmptyState =
+    accountState !== AccountState.SAME_CHAIN ||
+    !found ||
+    (items?.length === 0 && loading !== true)
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }

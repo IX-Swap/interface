@@ -13,6 +13,7 @@ import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
@@ -25,12 +26,12 @@ export const TradingOpenOrders = () => {
   const userId = getIdFromObj(user)
   const { pairId } = useParams<{ pairId: string }>()
   const { isMiniLaptop } = useAppBreakpoints()
-
+  const { account } = useActiveWeb3React()
   return (
     <Grid>
       <TableView<OTCOrder>
-        name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId)}
-        uri={trading.getMyOrdersList}
+        name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
+        uri={trading.getMyOrdersList(account)}
         size='small'
         columns={columns}
         noHeader={isMiniLaptop}
