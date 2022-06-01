@@ -604,31 +604,10 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-d0uhtl"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                    >
-                      I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                    >
-                      I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
-                      <span
-                        class="MuiTypography-root MuiTypography-body1 css-1okvd07-MuiTypography-root"
-                        style="text-decoration: underline; cursor: pointer;"
-                      >
-                        safeguards
-                      </span>
-                       for Accredited Investors.
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                    >
-                      I have been informed of and understand my right to
-                       
-                      opt out
-                       of the Accredited Investors status with InvestaX at any point in time.
-                    </p>
+                    I have been informed of and understand my right to
+                     
+                    opt out
+                     of the Accredited Investors status
                   </div>
                 </div>
               </div>
