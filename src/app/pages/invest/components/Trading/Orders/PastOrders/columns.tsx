@@ -4,15 +4,14 @@ import {
   formatMoney,
   getFilledPercentage,
   getOrderCurrency,
-  renderMoney,
   renderTotal
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderRowAmount, renderTicker } from 'helpers/tables'
+import { useAppTheme } from 'hooks/useAppTheme'
+import React from 'react'
 import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
-import React from 'react'
-import { useAppTheme } from 'hooks/useAppTheme'
 
 const SimpleStatus = ({ status }: { status: string }) => {
   const { theme } = useAppTheme()
@@ -36,7 +35,8 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     label: 'Pair',
-    key: 'pair.name'
+    key: 'pair.name',
+    render: renderTicker
   },
   {
     key: 'orderType',
@@ -82,9 +82,14 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
     render: renderTicker
   },
   {
-    label: 'Amount',
+    key: 'status',
+    label: 'Status',
+    render: (value, _) => <SimpleStatus status={value} />
+  },
+  {
     key: 'amount',
-    render: renderMoney
+    label: 'Amount',
+    render: renderRowAmount
   },
   {
     key: 'orderType',
@@ -94,18 +99,14 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'price',
     label: 'Price',
-    render: renderMoney
+    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
+
   {
     key: 'amount',
     label: 'Total',
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })
-  },
-  {
-    key: 'createdAt',
-    label: 'Date',
-    render: formatDateToMMDDYY
   },
   {
     key: '_id',
@@ -115,5 +116,10 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
         amount: row.amount,
         availableAmount: row.availableAmount
       })
+  },
+  {
+    key: 'createdAt',
+    label: 'Date',
+    render: formatDateToMMDDYY
   }
 ]
