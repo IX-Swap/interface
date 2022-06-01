@@ -1,6 +1,7 @@
-import { Grid } from '@mui/material'
+import { Grid, Hidden } from '@mui/material'
 import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
+import { PlaceOrderFormDialog } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog'
 import { useCurrencyBalance } from 'app/pages/exchange/hooks/useCurrencyBalance'
 import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
 import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/TradingOrders'
@@ -39,15 +40,37 @@ export const TradingBody = () => {
       <Grid item className={classes.colorGrid} minHeight={325} xs={12} md={8}>
         <TradingOrders />
       </Grid>
-
-      <Grid item container xs={12} md={4}>
-        <PlaceOrderForm
+      <Hidden lgDown>
+        <Grid item container xs={12} md={4}>
+          <PlaceOrderForm
+            createOrderStatus={createOrderStatus}
+            isFetching={isFetching}
+            currencyLabel={currencyName}
+            tokenLabel={tokenName}
+            isDisabled={!found || isLoading}
+            currencyBalance={currencyBalance}
+            suffix={({ tab }: { tab: number }) => (
+              <PlaceOrderSuffix
+                tab={tab}
+                currencyBalance={currencyBalance}
+                tokenBalance={balance}
+                tokenName={tokenName}
+              />
+            )}
+            tokenBalance={balance}
+            onSubmit={submitForm}
+          />
+        </Grid>
+      </Hidden>
+      <Hidden mdUp>
+        <PlaceOrderFormDialog
+          symbol={currencyName}
           createOrderStatus={createOrderStatus}
           isFetching={isFetching}
-          currencyLabel={currencyName}
-          tokenLabel={tokenName}
-          isDisabled={!found || isLoading}
+          currencyName={currencyName}
+          tokenName={tokenName}
           currencyBalance={currencyBalance}
+          tokenBalance={{ data: { amount: balance } }}
           suffix={({ tab }: { tab: number }) => (
             <PlaceOrderSuffix
               tab={tab}
@@ -56,10 +79,9 @@ export const TradingBody = () => {
               tokenName={tokenName}
             />
           )}
-          tokenBalance={balance}
-          onSubmit={submitForm}
+          submitForm={submitForm}
         />
-      </Grid>
+      </Hidden>
     </Grid>
   )
 }
