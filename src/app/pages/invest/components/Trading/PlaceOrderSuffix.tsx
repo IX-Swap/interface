@@ -38,7 +38,8 @@ export const PlaceOrderSuffix = ({
   const { found } = isWhitelisted
 
   const noCurrencyBalance =
-    (currencyBalance <= 0 || tokenBalance < Number(amount) * Number(price)) &&
+    (currencyBalance <= 0 ||
+      currencyBalance < Number(amount) * Number(price)) &&
     tab === 0
   const noTokenBalance =
     (tokenBalance <= 0 || tokenBalance < Number(amount)) && tab === 1
