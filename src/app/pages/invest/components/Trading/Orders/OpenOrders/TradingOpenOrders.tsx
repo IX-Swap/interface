@@ -4,7 +4,6 @@ import {
   compactColumns
 } from 'app/pages/invest/components/Trading/Orders/OpenOrders/columns'
 import { OTCOrderActions } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OTCOrderActions'
-import { CompactBody } from 'components/TableWithPagination/CompactBody'
 import {
   TableView,
   TableViewRendererProps
@@ -18,6 +17,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { OTCOrder } from 'types/otcOrder'
+import { CompactOpenOTCOrder } from './CompactOpenOTCOrder'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
 
@@ -51,7 +51,7 @@ export const TradingOpenOrders = () => {
       >
         {isMiniLaptop
           ? (props: TableViewRendererProps<OTCOrder>) => (
-              <CompactBody {...props} columns={compactColumns} />
+              <CompactOpenOTCOrder {...props} columns={compactColumns} />
             )
           : (props: TableViewRendererProps<OTCOrder>) => (
               <OpenOTCTableBody {...props} columns={columns} />

@@ -1,40 +1,18 @@
-import { Box, TableBody, TableCell, TableRow, useTheme } from '@mui/material'
+import { Box, TableBody, TableCell, TableRow } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
-import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
-import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
+import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
 import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
 import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getExpiresOrderMessage } from 'helpers/dates'
 import React from 'react'
-import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
-import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
+import { OTCOrder } from 'types/otcOrder'
+import { needsConfirmation, useOpenOrderState } from './helpers'
 
 export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
-  const { columns, items, actions, hasActions, cacheQueryKey, loading } = props
   const classes = useStyles()
-
-  const needsConfirmation = (item: OTCOrder) => {
-    return (
-      item.matches?.status === OTCOrderStatus.CONFIRMED &&
-      item.orderType === 'SELL'
-    )
-  }
-
-  const theme = useTheme()
-  const rowColor = (item: OTCOrder) => {
-    if (!needsConfirmation(item)) {
-      return 'initial'
-    }
-    return theme.palette.mode === 'light' ? '#F6F4FD' : '#494166'
-  }
-  const columnCount = columns.length + Number(hasActions)
-  const { accountState, isWhitelisted } = useMetamaskConnectionManager()
-  const { found } = isWhitelisted
-  const showEmptyState =
-    accountState !== AccountState.SAME_CHAIN ||
-    !found ||
-    (items?.length === 0 && loading !== true)
+  const { columns, items, actions, hasActions, cacheQueryKey } = props
+  const { showEmptyState, columnCount, rowColor } = useOpenOrderState(props)
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }

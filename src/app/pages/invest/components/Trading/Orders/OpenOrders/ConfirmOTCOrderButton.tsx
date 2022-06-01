@@ -2,6 +2,7 @@ import { Box, Button, ButtonProps, CircularProgress } from '@mui/material'
 import { useConfirmMyOrder } from 'app/pages/invest/hooks/useConfirmMyOrder'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useState } from 'react'
 import { OTCOrder } from 'types/otcOrder'
 export interface ConfirmOTCOrderButtonProps extends ButtonProps {
@@ -38,21 +39,37 @@ export const ConfirmOTCOrderButton = ({
       setLoadingTransaction(false)
     }
   }
+  const { isMiniLaptop } = useAppBreakpoints()
 
   return (
     <Box display='flex' justifyContent='center' alignItems={'center'}>
       {(isLoading || loadingTransaction) && <CircularProgress size={14} />}
       {!(isLoading || loadingTransaction) && (
-        <Button
-          disabled={isLoading || loadingTransaction}
-          onClick={handleClick}
-          variant='text'
-          color='primary'
-          size='small'
-          {...rest}
-        >
-          Confirm
-        </Button>
+        <>
+          {!isMiniLaptop && (
+            <Button
+              disabled={isLoading || loadingTransaction}
+              onClick={handleClick}
+              color='primary'
+              size='small'
+              {...rest}
+            >
+              Confirm
+            </Button>
+          )}
+          {isMiniLaptop && (
+            <Button
+              disabled={isLoading || loadingTransaction}
+              onClick={handleClick}
+              variant='contained'
+              color='primary'
+              fullWidth
+              {...rest}
+            >
+              Confirm
+            </Button>
+          )}
+        </>
       )}
     </Box>
   )
