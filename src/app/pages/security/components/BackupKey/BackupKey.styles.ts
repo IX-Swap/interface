@@ -22,7 +22,8 @@ export default makeStyles(theme => ({
         : 'rgba(76, 136, 255, 0.05)'
   },
   keyBlock: {
-    width: 'calc(100% - 70px)'
+    width: (props: Props) =>
+      `calc(100% - ${props.copied !== undefined && props.copied ? 80 : 70}px)`
   },
   key: {
     fontSize: 18,

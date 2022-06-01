@@ -20,14 +20,16 @@ export const StepInfo = ({ label, activeStep, totalSteps }: StepInfoProps) => {
       >
         {label}
       </Typography>
-      <Typography
-        variant='overline'
-        color={theme.palette.stepIcon.color}
-        fontSize={14}
-        textTransform='capitalize'
-      >
-        Step {activeStep}/{totalSteps}
-      </Typography>
+      {activeStep !== undefined && totalSteps !== undefined && (
+        <Typography
+          variant='overline'
+          color={theme.palette.stepIcon.color}
+          fontSize={14}
+          textTransform='capitalize'
+        >
+          Step {activeStep < totalSteps ? activeStep : totalSteps}/{totalSteps}
+        </Typography>
+      )}
     </Box>
   )
 }

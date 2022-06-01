@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, Grid } from '@mui/material'
 import { copyToClipboard } from 'helpers/clipboard'
-import useStyles from './BackupKey.styles'
+import useStyles from 'app/pages/security/components/BackupKey/BackupKey.styles'
 
 export interface BackupKeyProps {
   value: string

@@ -2,12 +2,16 @@ import React from 'react'
 import { Typography, Grid, Link } from '@mui/material'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 import { ReactComponent as AppStoreLogo } from 'app/pages/security/pages/setup2fa/assets/appstore.svg'
+import { ReactComponent as AppStoreLogoMobile } from 'app/pages/security/pages/setup2fa/assets/appstore-mobile.svg'
 import { ReactComponent as GooglePlayLogo } from 'app/pages/security/pages/setup2fa/assets/googleplay.svg'
+import { ReactComponent as GooglePlayLogoMobile } from 'app/pages/security/pages/setup2fa/assets/googleplay-mobile.svg'
 import TwoFaIcon from 'app/pages/security/pages/setup2fa/assets/security.png'
 import { useStyles } from './Step1Download.styles'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Step1Download = () => {
   const classes = useStyles()
+  const { isMobile } = useAppBreakpoints()
 
   return (
     <StepWrapper
@@ -55,16 +59,18 @@ export const Step1Download = () => {
               <Link
                 href='https://apps.apple.com/us/app/google-authenticator/id388497605'
                 target='_blank'
+                className={classes.link}
               >
-                <AppStoreLogo />
+                {isMobile ? <AppStoreLogoMobile /> : <AppStoreLogo />}
               </Link>
             </Grid>
             <Grid item>
               <Link
                 href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en'
                 target='_blank'
+                className={classes.link}
               >
-                <GooglePlayLogo />
+                {isMobile ? <GooglePlayLogoMobile /> : <GooglePlayLogo />}
               </Link>
             </Grid>
           </Grid>

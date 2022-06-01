@@ -62,7 +62,7 @@ export const Update2fa = () => {
           activeStep={activeStep}
           nonLinear
           withMobileDropdown={false}
-          title={'Progress'}
+          title={isMobile ? '2FA Authenticator' : 'Progress'}
           stepInfo={stepInfo}
         >
           {steps.map((label, index) => (
@@ -79,6 +79,7 @@ export const Update2fa = () => {
       }
       buttons={
         <ChangeStepButtons
+          update2FA
           isBackButtonVisible={isBackButtonVisible}
           isNextButtonVisible={isNextButtonVisible}
           isContinueButtonVisible={activeStep === 4}
