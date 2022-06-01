@@ -13,8 +13,10 @@ import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
+import { useQueryCache } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { OTCOrder } from 'types/otcOrder'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
@@ -25,17 +27,19 @@ export const TradingOpenOrders = () => {
   const userId = getIdFromObj(user)
   const { pairId } = useParams<{ pairId: string }>()
   const { isMiniLaptop } = useAppBreakpoints()
-
+  const { account } = useActiveWeb3React()
+  const queryCache = useQueryCache()
   return (
     <Grid>
       <TableView<OTCOrder>
-        name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId)}
-        uri={trading.getMyOrdersList}
+        name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
+        uri={trading.getMyOrdersList(account)}
         size='small'
         columns={columns}
         noHeader={isMiniLaptop}
         themeVariant={'primary'}
         hasActions
+        fakeLoading={Boolean(queryCache.isFetching)}
         bordered={false}
         noDataComponent={<OpenOrdersEmptyState />}
         actions={OTCOrderActions}
