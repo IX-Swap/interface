@@ -1,10 +1,11 @@
 import React from 'react'
-import { Grid, Paper, Typography } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { TaxResidencyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { TaxResidencyFieldArray } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
-import { TaxDeclarationInfoDialog } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoDialog'
+import { TaxDeclarationInfo } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfo'
+import useStyles from './TaxDeclarationForm.style'
 
 export interface TaxDeclarationFormProps {
   identityType?: 'individual' | 'corporate'
@@ -12,27 +13,13 @@ export interface TaxDeclarationFormProps {
 export const TaxDeclarationForm = ({
   identityType = 'individual'
 }: TaxDeclarationFormProps) => {
+  const classes = useStyles()
   return (
-    <Paper sx={{ borderRadius: 2, p: 5 }}>
+    <Paper className={classes.container}>
       <FormSectionHeader title='Tax Declaration' />
-      <Grid
-        data-testid='taxDeclaration'
-        container
-        direction='column'
-        spacing={6}
-      >
-        <Grid
-          item
-          container
-          justifyContent={'space-between'}
-          alignItems={'center'}
-        >
-          <Grid item>
-            <Typography>To know why we need your tax declaration</Typography>
-          </Grid>
-          <Grid item>
-            <TaxDeclarationInfoDialog />
-          </Grid>
+      <Grid data-testid='taxDeclaration' container direction='column'>
+        <Grid item className={classes.taxDeclaration}>
+          <TaxDeclarationInfo />
         </Grid>
         <Grid item>
           {identityType === 'individual' ? (

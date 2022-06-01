@@ -10,7 +10,7 @@ export const dialog = (theme: Theme) => {
         minWidth: 380,
 
         [theme.breakpoints.down('md')]: {
-          minWidth: 'none'
+          minWidth: 'initial'
         }
       }
     }

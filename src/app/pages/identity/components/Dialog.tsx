@@ -1,4 +1,4 @@
-import React, { cloneElement, CSSProperties, useState } from 'react'
+import React, { cloneElement, useState } from 'react'
 import {
   DialogTitle,
   DialogContent,
@@ -8,17 +8,16 @@ import {
 } from '@mui/material'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 
+// @ts-expect-error
 export interface ModalProps extends Partial<DialogProps> {
   button: JSX.Element
-  title: string
+  title: JSX.Element | string
   content: JSX.Element | string
   actions?: JSX.Element | JSX.Element[]
-  titleStyle?: CSSProperties
 }
 
 export const Dialog = (props: ModalProps) => {
-  const { button, title, content, actions, titleStyle, maxWidth, ...rest } =
-    props
+  const { button, title, content, actions, maxWidth, ...rest } = props
   const [isOpened, setIsOpened] = useState(false)
   const handleOpen = (e: Event) => {
     e.preventDefault()
@@ -47,7 +46,7 @@ export const Dialog = (props: ModalProps) => {
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <DialogTitle style={titleStyle}>
+        <DialogTitle>
           <Box textAlign='center'>{title}</Box>
         </DialogTitle>
         <DialogContent style={{ overflowY: 'initial' }}>
