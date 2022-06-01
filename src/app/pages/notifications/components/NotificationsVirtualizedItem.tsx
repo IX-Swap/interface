@@ -13,7 +13,6 @@ export const NotificationsVirtualizedItem = (
   const { data, index, ...rest } = props
   const { ref } = useVirtualizedListItemHelpers(index, 0)
   const item = data[index]
-
   return (
     <div {...rest}>
       <div ref={ref} style={{ marginBottom: -1 }}>

@@ -34,7 +34,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
-    key: 'amount',
+    key: 'availableAmount',
     label: 'Matched amount',
     align: 'center',
     render: (value, row) =>
@@ -75,7 +75,7 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
     render: renderMoney
   },
   {
-    key: 'amount',
+    key: 'availableAmount',
     label: 'Total',
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })

@@ -211,7 +211,7 @@ export const TableView = <T,>({
                   hasActions,
                   actions,
                   cacheQueryKey,
-                  loading: status === 'loading'
+                  loading: isLoading
                 })
               ) : (
                 <TableRows
