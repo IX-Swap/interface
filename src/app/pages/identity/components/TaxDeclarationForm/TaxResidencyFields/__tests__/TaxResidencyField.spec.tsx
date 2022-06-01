@@ -64,7 +64,7 @@ describe('TaxResidencyField', () => {
       </Form>
     )
 
-    const addMoreButton = getByText('Add more')
+    const addMoreButton = getByText('Add Country')
 
     fireEvent.click(addMoreButton, { cancellable: true, bubbles: true })
     expect(mockAppend).toHaveBeenCalled()
