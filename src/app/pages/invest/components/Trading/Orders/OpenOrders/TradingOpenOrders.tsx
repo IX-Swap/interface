@@ -16,7 +16,6 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
-import { useQueryCache } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { OTCOrder } from 'types/otcOrder'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
@@ -28,7 +27,6 @@ export const TradingOpenOrders = () => {
   const { pairId } = useParams<{ pairId: string }>()
   const { isMiniLaptop } = useAppBreakpoints()
   const { account } = useActiveWeb3React()
-  const queryCache = useQueryCache()
   return (
     <Grid>
       <TableView<OTCOrder>
@@ -39,7 +37,6 @@ export const TradingOpenOrders = () => {
         noHeader={isMiniLaptop}
         themeVariant={'primary'}
         hasActions
-        fakeLoading={Boolean(queryCache.isFetching)}
         bordered={false}
         noDataComponent={<OpenOrdersEmptyState />}
         actions={OTCOrderActions}
