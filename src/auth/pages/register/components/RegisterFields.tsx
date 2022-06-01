@@ -113,7 +113,6 @@ export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
           isMyInfo={isMyInfo}
           withPasswordValidation
           showErrorMessages={false}
-          hideShowPassword
         />
       </Grid>
       {!isMyInfo ? (
