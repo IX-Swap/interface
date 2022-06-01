@@ -13,20 +13,22 @@ const Actions: ActionsType<OTCOrder> = ({ item }) => {
   const [confirmOrder, { isLoading }] = useConfirmMatchOrder()
   if (item?.matches?.status === 'MATCH') {
     return (
-      <Button
-        color='primary'
-        variant='outlined'
-        disableElevation
-        disabled={isLoading}
-        onClick={async () =>
-          await confirmOrder({
-            orderId: item._id,
-            matchedOrderId: item.matches?.order ?? ''
-          })
-        }
-      >
-        Confirm
-      </Button>
+      <Box display='flex' justifyContent={'flex-start'}>
+        <Button
+          color='primary'
+          variant='outlined'
+          disableElevation
+          disabled={isLoading}
+          onClick={async () =>
+            await confirmOrder({
+              orderId: item._id,
+              matchedOrderId: item.matches?.order ?? ''
+            })
+          }
+        >
+          Confirm
+        </Button>
+      </Box>
     )
   }
   return (
