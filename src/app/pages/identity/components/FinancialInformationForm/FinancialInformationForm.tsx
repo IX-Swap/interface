@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { EmploymentField } from 'app/pages/identity/components/FinancialInformationForm/EmploymentFields'
 import { FundSource } from 'app/pages/identity/components/FinancialInformationForm/FundSource'
+import { NoticeOfAssesment } from 'app/pages/identity/components/FinancialInformationForm/NoticeOfAssesment/NoticeOfAssesment'
 
 export const FinancialInformationForm = () => {
   return (
@@ -13,6 +14,9 @@ export const FinancialInformationForm = () => {
       </Grid>
       <Grid item>
         <EmploymentField />
+      </Grid>
+      <Grid item xs={12}>
+        <NoticeOfAssesment />
       </Grid>
       <Grid item>
         <FundSource />

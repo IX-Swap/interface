@@ -20,6 +20,7 @@ import { DatePicker } from 'components/form/DatePicker'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { subYears } from 'date-fns'
 import { capitalizeFirstLetter } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -29,6 +30,7 @@ export const IndividualInfoFields = (
   props: IndividualInfoFieldsProps
 ): JSX.Element => {
   const { rootName } = props
+  const { user } = useAuth()
   const { control } = useFormContext<IndividualPersonalInformation>()
   const {
     email: defaultEmail,
@@ -57,6 +59,14 @@ export const IndividualInfoFields = (
           />
         </Box>
         <Grid container spacing={6} style={{ marginTop: isMobile ? 8 : 20 }}>
+          <Grid item xs={12}>
+            <TextField
+              label='Principal Name'
+              value={user?.name}
+              disabled
+              fullWidth
+            />
+          </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
