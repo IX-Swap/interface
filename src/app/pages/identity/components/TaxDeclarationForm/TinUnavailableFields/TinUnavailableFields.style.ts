@@ -8,6 +8,9 @@ export default makeStyles(theme => ({
     marginBottom: theme.spacing(2)
   },
   label: {
-    color: theme.palette.text.secondary
+    color:
+      theme.palette.mode === 'light'
+        ? theme.palette.text.secondary
+        : theme.palette.divider
   }
 }))

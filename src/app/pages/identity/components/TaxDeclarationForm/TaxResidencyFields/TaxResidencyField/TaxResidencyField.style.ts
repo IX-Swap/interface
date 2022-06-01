@@ -12,8 +12,17 @@ export default makeStyles(theme => ({
   deleteButton: {
     width: 48,
     height: 48,
-    backgroundColor: '#F7F9FA!important',
-    borderRadius: 8
+    backgroundColor: `${
+      theme.palette.mode === 'light' ? '#F7F9FA' : '#1D3667'
+    }!important`,
+    borderRadius: 8,
+
+    '&.Mui-disabled': {
+      opacity: theme.palette.mode === 'dark' ? 0.5 : 1,
+      '& svg': {
+        fill: '#496396'
+      }
+    }
   },
   icon: {
     marginRight: theme.spacing(1)

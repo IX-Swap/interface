@@ -16,6 +16,10 @@ export default makeStyles(theme => ({
     marginTop: theme.spacing(0.75),
     textTransform: 'capitalize',
     color: ({ isActive }: Props) =>
-      isActive ? theme.palette.text.primary : theme.palette.text.secondary
+      isActive
+        ? theme.palette.text.primary
+        : theme.palette.mode === 'light'
+        ? theme.palette.text.secondary
+        : theme.palette.divider
   }
 }))
