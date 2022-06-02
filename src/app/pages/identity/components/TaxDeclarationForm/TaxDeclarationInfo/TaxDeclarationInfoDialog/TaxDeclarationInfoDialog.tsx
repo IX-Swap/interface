@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dialog } from 'app/pages/identity/components/Dialog'
+import { Dialog } from 'app/pages/identity/components/Dialog/Dialog'
 import { Box, Typography } from '@mui/material'
 import { TaxDeclarationInfoContent } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfoDialog/TaxDeclarationInfoContent'
 import { TaxDeclarationInfoAction } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfoDialog/TaxDeclarationInfoActions'

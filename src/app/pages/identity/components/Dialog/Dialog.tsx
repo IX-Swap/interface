@@ -7,6 +7,8 @@ import {
   Box
 } from '@mui/material'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
+import useStyles from './Dialog.style'
+import { Icon } from 'ui/Icons/Icon'
 
 // @ts-expect-error
 export interface ModalProps extends Partial<DialogProps> {
@@ -17,6 +19,7 @@ export interface ModalProps extends Partial<DialogProps> {
 }
 
 export const Dialog = (props: ModalProps) => {
+  const classes = useStyles()
   const { button, title, content, actions, maxWidth, ...rest } = props
   const [isOpened, setIsOpened] = useState(false)
   const handleOpen = (e: Event) => {
@@ -43,16 +46,21 @@ export const Dialog = (props: ModalProps) => {
         maxWidth={maxWidth}
         open={isOpened}
         onClose={handleClose}
+        showIconClose={false}
+        classes={{ root: classes.dialog }}
         aria-labelledby='simple-modal-title'
         aria-describedby='simple-modal-description'
       >
-        <DialogTitle>
+        <DialogTitle classes={{ root: classes.title }}>
+          <Icon className={classes.icon} name='close' onClick={handleClose} />
           <Box textAlign='center'>{title}</Box>
         </DialogTitle>
-        <DialogContent style={{ overflowY: 'initial' }}>
+        <DialogContent classes={{ root: classes.content }}>
           {content}
         </DialogContent>
-        <DialogActions>{renderActions()}</DialogActions>
+        <DialogActions classes={{ root: classes.actions }}>
+          {renderActions()}
+        </DialogActions>
       </UIDialog>
     </>
   )
