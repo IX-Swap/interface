@@ -1,6 +1,10 @@
 import getSymbolFromCurrency from 'currency-symbol-map'
 import { OTCOrder } from 'types/otcOrder'
 
+export const isNotNullish = (value?: number | null) => {
+  return value !== undefined && value !== null && value > 0
+}
+
 export const addSymbol = (
   value: string | number | undefined,
   symbol: string = 'SGD',

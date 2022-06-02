@@ -22,7 +22,7 @@ export const useCryptoBalance = (tokenAddress?: string) => {
     }
     const interval = setInterval(() => {
       fetch().catch(error => console.error(error))
-    }, 15000)
+    }, 5000)
     return () => clearInterval(interval)
   }, [fetchBalance])
   return balance
