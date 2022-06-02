@@ -28,7 +28,7 @@ describe('OpenOrdersEmptyState', () => {
     render(<OpenOrdersEmptyState />)
     expect(EmptyState).toBeCalledWith(
       expect.objectContaining({
-        title: 'No orders yet',
+        title: 'No orders',
         subtitle:
           'No orders on this wallet, make sure you are connected to the right address'
       }),

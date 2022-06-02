@@ -9,7 +9,7 @@ const getTitle = (accountState: AccountState) => {
   if (accountState === AccountState.DIFFERENT_CHAIN) {
     return 'Wrong network'
   }
-  return 'No orders yet'
+  return 'No orders'
 }
 
 export const OpenOrdersEmptyState = () => {
