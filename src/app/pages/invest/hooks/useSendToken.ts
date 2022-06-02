@@ -22,6 +22,10 @@ export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
         chainId !== tokenChainId ||
         recipient === undefined
       ) {
+        void snackbarService.showSnackbar(
+          'Could not get details from metamask. Please refresh and try again',
+          'error'
+        )
         return false
       }
       try {
