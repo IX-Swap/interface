@@ -24,7 +24,13 @@ export const useStyles = makeStyles(theme => ({
     maxHeight: 120,
     paddingTop: 30,
     paddingBottom: 33,
-    width: '100%'
+    width: '100%',
+    paddingLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: 0,
+      marginLeft: 0
+    }
   },
   title: {
     fontSize: 24,

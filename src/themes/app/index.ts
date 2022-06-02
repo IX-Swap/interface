@@ -29,13 +29,6 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
   }
 
   theme.components = {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          width: 'calc(100vw - 16px)'
-        }
-      }
-    },
     ...getThemeOverrides(theme),
     MuiSwitch: {
       ...getThemeOverrides(theme)?.MuiSwitch,
@@ -64,6 +57,18 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
     MuiFab: {
       ...getThemeOverrides(theme)?.MuiFab,
       ...defaultProps
+    },
+    MuiCssBaseline: {
+      ...getThemeOverrides(theme)?.MuiCssBaseline,
+      styleOverrides: {
+        body: {
+          width: 'calc(100vw - 16px)',
+          backgroundColor: theme.palette.backgrounds.default,
+          [theme.breakpoints.down('sm')]: {
+            width: 'calc(100vw)'
+          }
+        }
+      }
     }
   }
 
