@@ -37,7 +37,7 @@ export const useCreateOTCOrder = () => {
     const values = orderPayloadtoOTCAdapt({ values: args, account })
     const validationMessage = validateOTCOrder(values)
     if (validationMessage.length > 0) {
-      void snackbarService.showSnackbar(validationMessage, 'error')
+      throw new Error(validationMessage)
     } else {
       return await apiService.post(uri, values)
     }

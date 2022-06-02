@@ -7,7 +7,6 @@ import {
 } from 'app/pages/exchange/types/form'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 import { Form } from 'components/form/Form'
-import { Submit } from 'components/form/Submit'
 import { LabelledValue } from 'components/LabelledValue'
 import { TabPanel } from 'components/TabPanel'
 import { formatMoney, formatTokenBalance } from 'helpers/numbers'
@@ -15,6 +14,7 @@ import { isEmptyString } from 'helpers/strings'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { OrderSide } from 'types/order'
+import { PlaceOrderFormSubmitButton } from './PlaceOrderFormSubmitButton'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -125,18 +125,13 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             </TabPanel>
           )
         })}
-        <Grid item className={classes.buttonWrapper}>
-          <Submit
-            createOrderStatus={createOrderStatus}
-            disabled={isFetching || isDisabled || balance <= 0}
-            data-testid='submit'
-            size='large'
-            variant='contained'
-            className={classes.button}
-          >
-            PLACE ORDER
-          </Submit>
-        </Grid>
+        <PlaceOrderFormSubmitButton
+          createOrderStatus={createOrderStatus}
+          isFetching={isFetching}
+          isDisabled={isDisabled}
+          balance={balance}
+          activeTabNameIdx={activeTabNameIdx}
+        />
         {suffix?.({ tab: activeTabNameIdx })}
       </Grid>
     </Form>
