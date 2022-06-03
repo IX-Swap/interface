@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Grid } from '@mui/material'
 import { reverseBooleanValueExtractor } from 'helpers/forms'
-import { Divider } from 'ui/Divider'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { TaxResidency } from 'app/pages/identity/types/forms'
@@ -56,9 +55,6 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
           />
         </Grid>
       )}
-      <Grid item>
-        <Divider />
-      </Grid>
     </Grid>
   )
 }
