@@ -1,7 +1,6 @@
 import { Theme } from '@mui/material'
 
 export const dialog = (theme: Theme) => {
-  // eslint-disable-next-line
   return {
     styleOverrides: {
       paper: {
@@ -18,8 +17,7 @@ export const dialog = (theme: Theme) => {
 }
 
 export const dialogContent = (theme: Theme) => {
-  // eslint-disable-next-line
-  const textPalette = theme.palette.text!
+  const textPalette = theme.palette.text
   return {
     styleOverrides: {
       root: {
@@ -44,8 +42,7 @@ export const dialogActions = (theme: Theme) => {
 }
 
 export const dialogTitle = (theme: Theme) => {
-  // eslint-disable-next-line
-  const dialogPalette = theme.palette.dialog!
+  const dialogPalette = theme.palette.dialog
   return {
     styleOverrides: {
       root: {
