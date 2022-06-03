@@ -24,7 +24,7 @@ export const useStyles = makeStyles(theme => ({
     maxHeight: 120,
     paddingTop: 30,
     paddingBottom: 33,
-    width: 'calc(100vw + 16px)'
+    width: '100%'
   },
   title: {
     fontSize: 24,
