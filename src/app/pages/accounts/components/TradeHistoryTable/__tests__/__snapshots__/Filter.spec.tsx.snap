@@ -6,7 +6,7 @@ exports[`Filters should match snapshot 1`] = `
     class="MuiGrid-root MuiGrid-container makeStyles-wrapper-1 css-1xzqqmo-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2 css-7g05lj-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-2 css-1dfp4b3-MuiGrid-root"
     >
       <div
         class="makeStyles-searchWrapper-2 MuiBox-root css-0"
@@ -53,7 +53,7 @@ exports[`Filters should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-10 makeStyles-filterWrapper-3 css-1hlpjpi-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-lg-10 makeStyles-filterWrapper-3 css-xp6191-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 makeStyles-childrenWRapper-4 css-ofrcno-MuiGrid-root"
