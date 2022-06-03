@@ -9,7 +9,6 @@ import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { QRCodeWrap } from 'components/QRCodeWrap'
 import Row, { RowCenter, RowBetween } from 'components/Row'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { CopyAddress } from 'components/CopyAddress'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
@@ -63,9 +62,6 @@ export const TransactionDetails = ({ currency }: Props) => {
     return data?.amount
   }, [data])
 
-  const [isCopiedFrom, setCopiedFrom] = useCopyClipboard()
-  const [isCopiedTo, setCopiedTo] = useCopyClipboard()
-
   if (!data) return null
 
   const status = data?.status ?? data?.params?.status ?? 'pending'
@@ -116,20 +112,12 @@ export const TransactionDetails = ({ currency }: Props) => {
                     </b>{' '}
                     from the wallet{' '}
                     <b>
-                      <CopyAddress
-                        address={data?.fromAddress || ''}
-                        copied={isCopiedFrom}
-                        setCopied={setCopiedFrom}
-                        size={14}
-                        wrapperStyles={{ display: 'inline' }}
-                      />
+                      <CopyAddress address={data?.fromAddress || ''} size={14} wrapperStyles={{ display: 'inline' }} />
                     </b>{' '}
                     to Custodian wallet{' '}
                     <b>
                       <CopyAddress
                         address={data?.depositAddress || ''}
-                        copied={isCopiedTo}
-                        setCopied={setCopiedTo}
                         size={14}
                         wrapperStyles={{ display: 'inline' }}
                       />
@@ -188,7 +176,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                 </label>
                 <TYPE.descriptionThin>
                   <Flex>
-                    <CopyAddress address={data?.fromAddress || ''} copied={isCopiedFrom} setCopied={setCopiedFrom} />
+                    <CopyAddress address={data?.fromAddress || ''} />
                   </Flex>
                 </TYPE.descriptionThin>
               </RowBetween>
@@ -200,7 +188,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                 </label>
                 <TYPE.descriptionThin>
                   <Flex>
-                    <CopyAddress address={data?.depositAddress || ''} copied={isCopiedTo} setCopied={setCopiedTo} />
+                    <CopyAddress address={data?.depositAddress || ''} />
                   </Flex>
                 </TYPE.descriptionThin>
               </RowBetween>

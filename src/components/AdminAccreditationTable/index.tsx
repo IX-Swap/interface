@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import styled from 'styled-components'
 
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { useAdminState, useGetAccreditationList, useOnlyAdminAccess } from 'state/admin/hooks'
 import { AccreditationItem, KycItem } from 'state/admin/actions'
 import { adminOffset as offset } from 'state/admin/constants'
@@ -45,7 +44,6 @@ const Header = () => {
 }
 
 const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => {
-  const [copied, setCopied] = useCopyClipboard()
   const {
     id,
     user,
@@ -68,7 +66,7 @@ const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => 
   return (
     <StyledBodyRow key={id}>
       <Wallet>
-        <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
+        <CopyAddress address={ethAddress} />
       </Wallet>
       <div>{token?.symbol || '-'}</div>
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>

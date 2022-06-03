@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { MEDIA_WIDTHS, ModalBlurWrapper } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { User } from 'state/admin/actions'
@@ -18,8 +17,6 @@ interface Props {
 }
 
 export const UpdateSummary = ({ item, close }: Props) => {
-  const [copied, setCopied] = useCopyClipboard()
-
   const { role, isWhitelisted, username, ethAddress, managerOf } = item
 
   return (
@@ -48,7 +45,7 @@ export const UpdateSummary = ({ item, close }: Props) => {
             </SummaryTitle>
             <SummaryContent>
               <Label>Wallet Address:</Label>
-              <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
+              <CopyAddress address={ethAddress} />
 
               <Label>Name:</Label>
               {username}

@@ -14,7 +14,6 @@ import { useAddPopup } from 'state/application/hooks'
 import { Select, TextInput } from 'pages/KYC/common'
 import { Checkbox } from 'components/Checkbox'
 import { CopyAddress } from 'components/CopyAddress'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { useSecTokenState } from 'state/secTokens/hooks'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
@@ -37,7 +36,6 @@ export const UserModal: FC<Props> = ({ item, close }) => {
   const [changeRole, handleChangeRole] = useState(false)
   const [showSummary, handleShowSummary] = useState(false)
   const { adminLoading } = useAdminState()
-  const [copied, setCopied] = useCopyClipboard()
   const addPopup = useAddPopup()
 
   const createUser = useCreateUser()
@@ -201,8 +199,6 @@ export const UserModal: FC<Props> = ({ item, close }) => {
                       wrapperStyles={{ wordBreak: 'break-word' }}
                       address={ethAddress}
                       isShortenAddress={false}
-                      copied={copied}
-                      setCopied={setCopied}
                     />
                   </div>
                 </ExistingWallet>

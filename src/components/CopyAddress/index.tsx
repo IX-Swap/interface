@@ -18,9 +18,7 @@ export const StyledCopy = styled(Copy)`
 
 interface Props {
   address: string
-  copied: boolean
   size?: number
-  setCopied: (toCopy: string) => void
   wrapperStyles?: CSSProperties
   isShortenAddress?: boolean
 }

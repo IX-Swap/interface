@@ -7,7 +7,6 @@ import { Wallet } from 'components/AdminKyc'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useAdminState, useGetUsersList, useOnlyAdminAccess } from 'state/admin/hooks'
 import { adminOffset as offset } from 'state/admin/constants'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { User } from 'state/admin/actions'
 import { CopyAddress } from 'components/CopyAddress'
 import { ButtonGradientBorder } from 'components/Button'
@@ -106,7 +105,6 @@ export const UsersList: FC = () => {
 }
 
 const Row: FC<RowProps> = ({ item, changeUser }) => {
-  const [copied, setCopied] = useCopyClipboard()
   const [expanded, handleExpanded] = useState(false)
   const { ethAddress, role, username, isWhitelisted, managerOf } = item
 
@@ -126,7 +124,7 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
         >
           <StyledBodyRow>
             <Wallet>
-              <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
+              <CopyAddress address={ethAddress} />
             </Wallet>
             <div>{ROLES_LABEL[role]}</div>
             <div>{username || '-'}</div>
