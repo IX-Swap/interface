@@ -1,26 +1,26 @@
-import { act } from '@testing-library/react-hooks'
-import axios from 'axios'
+// import { act } from '@testing-library/react-hooks'
+// import axios from 'axios'
 import { BigNumber, ethers } from 'ethers'
-import { waitFor } from 'test-utils'
+// import { waitFor } from 'test-utils'
 import * as sendTokenFuns from '../useSendToken'
 
-describe('estimateMaxGas', () => {
-  afterEach(async () => {
-    jest.clearAllMocks()
-  })
+// describe('estimateMaxGas', () => {
+//   afterEach(async () => {
+//     jest.clearAllMocks()
+//   })
 
-  it('test gas estimate', async () => {
-    jest
-      .spyOn(axios, 'get')
-      .mockImplementation(
-        async () =>
-          new Promise(res =>
-            res({ data: { result: { rapidgaspricegwei: 50 } } })
-          )
-      )
-    await expect(sendTokenFuns.estimateMaxGas()).resolves.toBe('50')
-  })
-})
+//   it('test gas estimate', async () => {
+//     jest
+//       .spyOn(axios, 'get')
+//       .mockImplementation(
+//         async () =>
+//           new Promise(res =>
+//             res({ data: { result: { rapidgaspricegwei: 50 } } })
+//           )
+//       )
+//     await expect(sendTokenFuns.estimateMaxGas()).resolves.toBe('50')
+//   })
+// })
 describe('getTransferProps', () => {
   afterEach(async () => {
     jest.clearAllMocks()
