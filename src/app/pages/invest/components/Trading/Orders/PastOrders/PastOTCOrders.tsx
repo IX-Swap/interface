@@ -33,7 +33,7 @@ export const PastOTCOrders = (props: PostOrderTableProps) => {
           noHeader={isMiniLaptop}
           noDataComponent={
             <EmptyState
-              title='No past orders yet'
+              title='No past orders'
               subtitle='You haven’t made any orders on this wallet'
               isRow={false}
             />
