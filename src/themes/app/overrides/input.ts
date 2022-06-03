@@ -10,8 +10,11 @@ export const input = (theme: Theme) => {
         marginTop: 0,
         // common styles
         '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root': {
+          position: 'absolute',
+          top: 88,
+          left: 0,
           marginLeft: 0,
-          marginTop: 12
+          marginTop: 0
         },
         '& .MuiInputLabel-root': {
           color: theme.palette.select.label,
@@ -23,14 +26,6 @@ export const input = (theme: Theme) => {
           },
           '&.Mui-focused': {
             color: theme.palette.primary.main,
-            opacity: 1
-          },
-          '&.Mui-error': {
-            color: theme.palette.error.main,
-            opacity: 1
-          },
-          '&.Mui-disabled': {
-            color: theme.palette.text.secondary,
             opacity: 1
           }
         },
