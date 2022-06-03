@@ -87,6 +87,7 @@ export const TaxResidencyField = ({
           <Grid item className={classes.block}>
             <TypedField
               fullWidth
+              hideIcon
               control={control}
               component={TextInput}
               label='Tax Identification Number'
