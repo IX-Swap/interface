@@ -38,6 +38,11 @@ export interface OTCMatch {
   status: OTCOrderStatus
   user: string
   identity?: OTCIdentity
+  matchedOrder?: {
+    _id: string
+    amount: number
+    availableAmount: number
+  }
 }
 
 export interface OTCParticipant {
