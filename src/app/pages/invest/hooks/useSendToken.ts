@@ -1,4 +1,5 @@
-import { BigNumber } from 'ethers'
+import axios from 'axios'
+import { BigNumber, ethers } from 'ethers'
 import { useErc20Contract } from 'hooks/blockchain/useContract'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useServices } from 'hooks/useServices'
@@ -7,6 +8,25 @@ import { useCallback } from 'react'
 export interface SendTokenArgs {
   address?: string
   tokenChainId?: number
+}
+export const estimateMaxGas = async () => {
+  try {
+    const result = await axios.get(
+      'https://gpoly.blockscan.com/gasapi.ashx?apikey=key&method=pendingpooltxgweidata'
+    )
+    return (result.data.result.rapidgaspricegwei * 2).toString()
+  } catch (e) {
+    return null
+  }
+}
+export const getTransferProps = async () => {
+  const props: ethers.Overrides = { gasLimit: BigNumber.from(9999999) }
+  const estimatedGas = await estimateMaxGas()
+
+  if (estimatedGas !== null && estimatedGas !== undefined) {
+    props.gasPrice = ethers.utils.parseUnits(estimatedGas, 'gwei')
+  }
+  return props
 }
 export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
   const { account, chainId } = useActiveWeb3React()
@@ -29,10 +49,11 @@ export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
         return false
       }
       try {
+        const props = await getTransferProps()
         const result = await tokenContract.transfer(
           recipient,
           BigNumber.from(value),
-          { gasLimit: BigNumber.from(9999999) }
+          { ...props }
         )
 
         const receipt = await result.wait()

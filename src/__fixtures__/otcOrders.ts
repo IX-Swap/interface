@@ -53,50 +53,74 @@ const fakeOTCMatch1: OTCMatch = {
   },
   status: OTCOrderStatus.PENDING
 }
-
-export const orders: OTCOrder[] = [
-  {
-    _id: '609d1d93c54af74af46c027c',
-    createdAt: '2022-05-10T12:45:07.411Z',
-    pair: fakeOTCMarket,
-    orderType: 'SELL',
-    price: 8500,
-    amount: 1,
-    availableAmount: 1,
-    user: '1234',
-    status: OTCOrderStatus.CONFIRMED,
-    ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1',
-    matches: fakeOTCMatch
+const fakeOTCMatch2: OTCMatch = {
+  _id: '609d1d93c54af74af46c027d',
+  order: '609d1d93c54af74af46c027c',
+  user: '609d1d93c54af74af46c027c',
+  ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1',
+  matchedAmount: 1,
+  identity: {
+    individual: seller
   },
-  {
-    _id: '609d1d93c54af74af46c027d',
-    createdAt: '2022-05-10T12:46:07.411Z',
-    pair: fakeOTCMarket,
-    orderType: 'BUY',
-    price: 8500,
-    availableAmount: 1,
+  status: OTCOrderStatus.CONFIRMED
+}
+const order1: OTCOrder = {
+  _id: '609d1d93c54af74af46c027c',
+  createdAt: '2022-05-10T12:45:07.411Z',
+  pair: fakeOTCMarket,
+  orderType: 'SELL',
+  price: 8500,
+  amount: 1,
+  availableAmount: 1,
+  user: '1234',
+  status: OTCOrderStatus.CONFIRMED,
+  ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1',
+  matches: fakeOTCMatch
+}
+const order2: OTCOrder = {
+  _id: '609d1d93c54af74af46c027d',
+  createdAt: '2022-05-10T12:46:07.411Z',
+  pair: fakeOTCMarket,
+  orderType: 'BUY',
+  price: 8500,
+  availableAmount: 1,
 
-    amount: 5,
-    user: '1234',
-    matches: fakeOTCMatch1,
-    status: OTCOrderStatus.CONFIRMED,
-    ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
-  },
-  {
-    _id: '609d1d93c54af74af46c027e',
-    createdAt: '2022-05-10T12:47:07.411Z',
-    pair: fakeOTCMarket,
-    orderType: 'SELL',
-    availableAmount: 1,
+  amount: 5,
+  user: '1234',
+  matches: fakeOTCMatch1,
+  status: OTCOrderStatus.CONFIRMED,
+  ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
+}
+const order3: OTCOrder = {
+  _id: '609d1d93c54af74af46c027e',
+  createdAt: '2022-05-10T12:47:07.411Z',
+  pair: fakeOTCMarket,
+  orderType: 'SELL',
+  availableAmount: 1,
 
-    price: 8500,
-    user: '1234',
+  price: 8500,
+  user: '1234',
 
-    amount: 1,
-    status: OTCOrderStatus.MATCH,
-    ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
-  }
-]
+  amount: 1,
+  status: OTCOrderStatus.MATCH,
+  ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
+}
+export const order4: OTCOrder = {
+  _id: '609d1d93c54af74af46c028a',
+  createdAt: '2022-05-10T12:47:07.411Z',
+  pair: fakeOTCMarket,
+  orderType: 'SELL',
+  availableAmount: 1,
+
+  price: 8500,
+  user: '1234',
+  matches: fakeOTCMatch2,
+  amount: 1,
+  status: OTCOrderStatus.MATCH,
+  ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
+}
+export const orders: OTCOrder[] = [order1, order2, order3, order4]
+export const sortedOrders: OTCOrder[] = [order4, order1, order2, order3]
 
 export const validOTCOrderData: CreateOTCOrderArgs = {
   orderType: 'SELL',

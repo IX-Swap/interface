@@ -29,3 +29,6 @@ export const useOpenOrderState = (props: TableViewRendererProps<OTCOrder>) => {
     (items?.length === 0 && loading !== true)
   return { showEmptyState, columnCount, rowColor }
 }
+
+export const sortOpenOrders = (first: OTCOrder, _: OTCOrder) =>
+  first.matches?.status === OTCOrderStatus.CONFIRMED ? -1 : 1
