@@ -30,8 +30,12 @@ export const getTokenLogoURL = (address: string, chainId = SupportedChainId.MAIN
   return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/${network}/assets/${address}/logo.png`
 }
 
-export const getNetworkFromToken = (tokenInfo: any) => {
+export const getOriginalNetworkFromToken = (tokenInfo: any) => {
   return tokenInfo?.originalNetwork?.charAt(0)?.toUpperCase() + tokenInfo?.originalNetwork?.slice(1) || ''
+}
+
+export const getNetworkFromToken = (tokenInfo: any) => {
+  return tokenInfo?.network?.charAt(0)?.toUpperCase() + tokenInfo?.network?.slice(1) || ''
 }
 
 const StyledEthereumLogo = styled.img<{ size: string }>`

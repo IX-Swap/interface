@@ -271,3 +271,24 @@ export const WarningPaidFee = styled.div`
   color: ${({ theme }) => theme.red1};
   margin-bottom: 18px;
 `
+export const DepositWarningInfo = styled.div`
+  color: ${({ theme }) => theme.error};
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > div {
+    text-align: center;
+    font-weight: 600;
+  }
+`
+
+export const DeadlineInfo = styled.div`
+  font-weight: 500;
+  font-size: 10px;
+  color: rgba(237, 206, 255, 0.5);
+  line-height: 15px;
+  margin-top: 8px;
+`
