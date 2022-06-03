@@ -3,13 +3,13 @@ import { ROLES, ROLES_LABEL } from 'constants/roles'
 export enum FILTERS {
   SEARCH = 'search',
   ROLES = 'roles',
-  SEC_TOKENS = 'secTokens',
+  SEC_TOKENS = 'tokens',
 }
 
-export const initialValues = {
+export const defaultValues = {
   search: '',
   roles: [],
-  secTokens: [],
+  tokens: [],
 } as Record<string, any>
 
 export const rolesOptions = [

@@ -1,12 +1,17 @@
 import styled from 'styled-components'
 import { Popover } from '@material-ui/core'
+
 import { ButtonText } from 'components/Button'
+import { MEDIA_WIDTHS } from 'theme'
 
 export const Container = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 16px;
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const FiltersContainer = styled.div`

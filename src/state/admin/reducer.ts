@@ -22,6 +22,8 @@ import {
   UsersList,
   getWhitelistedList,
   Whitelist,
+  updateUser,
+  postUser,
 } from './actions'
 
 export interface AdminState {
@@ -253,6 +255,35 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.whitelistedList = data
     })
     .addCase(getWhitelistedList.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postUser.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postUser.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.usersList = { ...state.usersList, items: [data, ...state.usersList.items] }
+    })
+    .addCase(postUser.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(updateUser.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(updateUser.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.usersList = {
+        ...state.usersList,
+        items: state.usersList.items.map((el) => (el.id === data.id ? data : el)),
+      }
+    })
+    .addCase(updateUser.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })

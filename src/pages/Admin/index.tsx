@@ -52,7 +52,7 @@ const renderTab = (selectedTab: AdminTab | string) => {
   }
 }
 
-const AdminKyc = () => {
+const Admin = () => {
   const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
 
   const history = useHistory()
@@ -151,4 +151,4 @@ const TabsContainer = styled.div`
   }
 `
 
-export default AdminKyc
+export default Admin

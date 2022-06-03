@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react'
 import ReactSelect, { StylesConfig, components } from 'react-select'
 import styled, { css } from 'styled-components'
-import { width } from 'styled-system'
 
-import { ellipsisText } from 'theme'
+import { Checkbox } from 'components/Checkbox'
 
 type Option = { label?: string; value?: any }
 
@@ -21,12 +20,18 @@ interface Props {
 }
 
 const colourStyles = {
-  option: (styles: Record<string, any>, { isSelected }: { isSelected: boolean }) => {
+  placeholder: (styles: Record<string, any>) => {
     return {
       ...styles,
-      backgroundColor: isSelected ? '#272046' : 'transparend',
-      color: isSelected ? 'white' : 'rgba(237, 206, 255, 0.5)',
-      fontWeight: isSelected ? '700' : '400',
+      color: 'rgba(237, 206, 255, 0.5)',
+    }
+  },
+  option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
+    return {
+      ...styles,
+      backgroundColor: isSelected && !isMulti ? '#272046' : 'transparend',
+      color: isSelected && !isMulti ? 'white' : 'rgba(237, 206, 255, 0.5)',
+      fontWeight: isSelected && !isMulti ? '700' : '400',
     }
   },
   singleValue: (styles: Record<string, any>) => {
@@ -88,7 +93,9 @@ const MultiValue = (props: any) => {
     [props?.selectProps?.value]
   )
 
-  const isLast = valuesArray.findIndex(({ value }) => value === props?.data?.value) === valuesArray.length - 1
+  const itemIndex = valuesArray.findIndex(({ value }) => value === props?.data?.value)
+
+  const isLast = itemIndex === valuesArray.length - 1
 
   return (
     <StyledValue>
@@ -112,6 +119,7 @@ const Option = (props: any) => {
   return (
     <components.Option {...props}>
       <StyledValue>
+        {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
         {props?.data?.icon}
         {props?.data?.label}
       </StyledValue>
@@ -131,11 +139,16 @@ export const Select = ({
   error = '',
   borderRadius = '36px',
 }: Props) => {
-  const selectedValue = useMemo(
-    () =>
-      options.find((option) => option.label === (value?.label || value) || option.value === (value?.value || value)),
-    [value, options]
-  )
+  const selectedValue = useMemo(() => {
+    if (isMulti) {
+      return value.map((el: any) =>
+        options.find((option) => option.label === (el?.label || el) || option.value === (el?.value || el))
+      )
+    }
+    return options.find(
+      (option) => option.label === (value?.label || value) || option.value === (value?.value || value)
+    )
+  }, [value, options, isMulti])
   return (
     <StyledReactSelect
       error={error}
@@ -152,7 +165,7 @@ export const Select = ({
       styles={colourStyles as StylesConfig}
       borderRadius={borderRadius}
       isDisabled={isDisabled}
-      hideSelectedOptions={!isMulti}
+      hideSelectedOptions={false}
       closeMenuOnSelect={!isMulti}
     />
   )
@@ -167,12 +180,12 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     padding: 0px 16px;
     background: rgba(39, 31, 74, 0.4);
     border: none;
-    ${({ error }) =>
+    /* ${({ error }) =>
       error &&
       css`
         border: 1px solid;
         border-color: #ed0376 !important;
-      `}
+      `} */
   }
   *[class*='indicatorSeparator'] {
     display: none;

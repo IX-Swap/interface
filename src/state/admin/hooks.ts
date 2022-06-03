@@ -23,6 +23,8 @@ import {
   getUsersList,
   getWhitelistedList,
   patchAddOrRemoveWhitelisted,
+  postUser,
+  updateUser,
 } from './actions'
 import { useUserState } from 'state/user/hooks'
 import { useDeleteConfirmationPopupToggle } from 'state/application/hooks'
@@ -83,6 +85,62 @@ export function useGetUsersList() {
       } catch (error: any) {
         dispatch(getUsersList.rejected({ errorMessage: 'Could not get users list' }))
         return null
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+interface CreateUser {
+  ethAddress: string
+  isWhitelisted: boolean
+  username: string
+  managerOf: any[]
+  role: string
+}
+
+export const createUser = async (params: CreateUser) => {
+  const result = await apiService.post(admin.createUser, params)
+  return result.data
+}
+
+export function useCreateUser() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params: CreateUser) => {
+      try {
+        dispatch(postUser.pending())
+        const data = await createUser(params)
+        dispatch(postUser.fulfilled({ data }))
+        return data
+      } catch (error: any) {
+        dispatch(postUser.rejected({ errorMessage: error.message || 'Could not create user' }))
+        throw new Error(error)
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export const patchUser = async (id: number, updatedUser: Omit<CreateUser, 'ethAddress'>) => {
+  const result = await apiService.patch(admin.updateUser(id), updatedUser)
+  return result.data
+}
+
+export function useUpdateUser() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number, params: Omit<CreateUser, 'ethAddress'>) => {
+      try {
+        dispatch(updateUser.pending())
+        const data = await patchUser(id, params)
+        dispatch(updateUser.fulfilled({ data }))
+        return data
+      } catch (error: any) {
+        dispatch(updateUser.rejected({ errorMessage: error.message || 'Could not update user' }))
+        throw Error(error.message)
       }
     },
     [dispatch]

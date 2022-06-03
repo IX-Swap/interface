@@ -6,6 +6,7 @@ import { Flex } from 'rebass'
 
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { shortenAddress } from 'utils'
+import useCopyClipboard from 'hooks/useCopyClipboard'
 
 export const StyledCopy = styled(Copy)`
   margin-left: 8px;
@@ -24,14 +25,9 @@ interface Props {
   isShortenAddress?: boolean
 }
 
-export const CopyAddress: FC<Props> = ({
-  address,
-  copied,
-  setCopied,
-  wrapperStyles,
-  size = 18,
-  isShortenAddress = true,
-}) => {
+export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isShortenAddress = true }) => {
+  const [copied, setCopied] = useCopyClipboard()
+
   return (
     <>
       {copied ? (
