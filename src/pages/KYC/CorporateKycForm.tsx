@@ -167,6 +167,7 @@ export default function CorporateKycForm() {
 
     setFieldValue('sourceOfFunds', newSources, false)
     validationSeen('sourceOfFunds')
+    validationSeen('otherFunds')
   }
 
   const countries = useMemo(() => {

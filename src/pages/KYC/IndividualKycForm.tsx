@@ -162,6 +162,7 @@ export default function IndividualKycForm() {
 
     setFieldValue('sourceOfFunds', newSources, false)
     validationSeen('sourceOfFunds')
+    validationSeen('otherFunds')
   }
 
   const goBack = (e?: any) => {
