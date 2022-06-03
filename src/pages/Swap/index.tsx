@@ -126,13 +126,6 @@ export default function Swap({ history }: RouteComponentProps) {
   const withSecToken =
     (currencies.INPUT as CurrencyWithSec)?.isSecToken || (currencies.OUTPUT as CurrencyWithSec)?.isSecToken
 
-  const tokenPath = trade?.route?.path || []
-  const lastButOneToken = tokenPath[tokenPath.length - 2]
-
-  const secToken = useSecToken({ currencyId: lastButOneToken?.address })
-
-  const invalidRoute = Boolean(secToken?.isSecToken)
-
   return (
     <>
       <TokenWarningModal history={history} />
@@ -152,21 +145,17 @@ export default function Swap({ history }: RouteComponentProps) {
 
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
-            {showWrap || invalidRoute ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
-            {!invalidRoute && (
-              <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
-            )}
+            {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
+
+            <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
 
             {!showLoading && (
               <>
                 {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
 
                 {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
-                {!invalidRoute && (
-                  <AuthorizationButtons formRef={formRef} allowSwap={allowSwapSecurity || !withSecToken} />
-                )}
+                <AuthorizationButtons formRef={formRef} allowSwap={allowSwapSecurity || !withSecToken} />
                 <SwapButtons
-                  invalidRoute={invalidRoute}
                   parsedAmounts={parsedAmounts}
                   showAcceptChanges={showAcceptChanges}
                   allowSwap={allowSwapSecurity || !withSecToken}

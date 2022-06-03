@@ -3,7 +3,11 @@ import flatMap from 'lodash.flatmap'
 import { useMemo } from 'react'
 import { ADDITIONAL_BASES, BASES_TO_CHECK_TRADES_AGAINST, CUSTOM_BASES } from '../constants/routing'
 
-export function useAllCurrencyCombinations(currencyA?: Currency, currencyB?: Currency): [Token, Token][] {
+export function useAllCurrencyCombinations(
+  currencyA?: Currency,
+  currencyB?: Currency,
+  tokensToExclude?: string[]
+): [Token, Token][] {
   const chainId = currencyA?.chainId
 
   const [tokenA, tokenB] = chainId ? [currencyA?.wrapped, currencyB?.wrapped] : [undefined, undefined]
@@ -15,8 +19,12 @@ export function useAllCurrencyCombinations(currencyA?: Currency, currencyB?: Cur
     const additionalA = tokenA ? ADDITIONAL_BASES[chainId]?.[tokenA.address] ?? [] : []
     const additionalB = tokenB ? ADDITIONAL_BASES[chainId]?.[tokenB.address] ?? [] : []
 
-    return [...common, ...additionalA, ...additionalB]
-  }, [chainId, tokenA, tokenB])
+    const data = [...common, ...additionalA, ...additionalB]
+    if (tokensToExclude?.length) {
+      return data.filter((token) => !tokensToExclude.includes(token.address))
+    }
+    return data
+  }, [chainId, tokenA, tokenB, tokensToExclude])
 
   const basePairs: [Token, Token][] = useMemo(
     () => flatMap(bases, (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])),

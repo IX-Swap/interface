@@ -32,12 +32,10 @@ export const SwapButtons = ({
   parsedAmounts,
   showAcceptChanges,
   allowSwap,
-  invalidRoute,
 }: {
   showAcceptChanges: boolean
   parsedAmounts: ParsedAmounts | undefined
   allowSwap: boolean
-  invalidRoute: boolean
 }) => {
   const { account, chainId } = useActiveWeb3React()
   const { recipient, typedValue, independentField, approvalSubmitted } = useSwapState()
@@ -97,7 +95,7 @@ export const SwapButtons = ({
 
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
 
-  const routeNotFound = !trade?.route || invalidRoute
+  const routeNotFound = !trade?.route
 
   const userHasSpecifiedInputOutput = Boolean(
     currencies[Field.INPUT] &&
