@@ -54,7 +54,8 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
       }
     }
-    if (error?.response?.status === 403) {
+
+    if (error?.response) {
       const message = error?.response?.data?.message
       throw new Error(message)
     }

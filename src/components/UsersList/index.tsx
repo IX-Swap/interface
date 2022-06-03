@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
 import { AccordionSummary, AccordionDetails } from '@material-ui/core'
 
@@ -7,12 +7,9 @@ import { Wallet } from 'components/AdminKyc'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useAdminState, useGetUsersList, useOnlyAdminAccess } from 'state/admin/hooks'
 import { adminOffset as offset } from 'state/admin/constants'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { User } from 'state/admin/actions'
 import { CopyAddress } from 'components/CopyAddress'
 import { ButtonGradientBorder } from 'components/Button'
-import { updateUser } from 'state/user/hooks'
-import { DeleteConfirmationPopup } from 'components/DeleteConfirmation'
 import { NoData } from 'components/UsersList/styleds'
 import checkIcon from 'assets/images/check-success.svg'
 import notCheckIcon from 'assets/images/reject.svg'
@@ -22,7 +19,7 @@ import { MultipleFilters } from 'components/MultipleFilters'
 
 import { Table } from '../Table'
 import { UserModal } from './UserModal'
-import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon } from './styleds'
+import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon, AddButton } from './styleds'
 import { FILTERS } from 'components/MultipleFilters/constants'
 
 const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Whitelisted`, '']
@@ -38,16 +35,12 @@ interface BodyProps {
 interface RowProps {
   changeUser: (item: User) => void
   item: User
-  callbackParams: any[]
-  setCallbackParams: (value: any[]) => void
-  refreshCallback: () => void
 }
 
 export const UsersList: FC = () => {
   useOnlyAdminAccess()
   const [selectedItem, handleSelectedItem] = useState<User | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
   const { usersList, adminLoading } = useAdminState()
   const [callbackParams, setCallbackParams] = useState<any>([])
   const getAdminList = useGetUsersList()
@@ -55,10 +48,6 @@ export const UsersList: FC = () => {
   const getPaginatedAdminList = (filters?: Record<string, any>) => {
     getAdminList({ page: 1, offset, ...filters })
   }
-
-  // useEffect(() => {
-  //   getPaginatedAdminList()
-  // }, [getAdminList, searchValue])
 
   const openUpdateModal = () => {
     setModalOpen(true)
@@ -81,18 +70,16 @@ export const UsersList: FC = () => {
   return (
     <Container>
       <LoadingIndicator isLoading={adminLoading} />
+      {modalOpen && <UserModal item={selectedItem} close={closeUpdateModal} />}
       <TopContent marginBottom="33px">
         <MultipleFilters
           filters={[FILTERS.SEARCH, FILTERS.ROLES, FILTERS.SEC_TOKENS]}
           callback={getPaginatedAdminList}
+          searchPlaceholder="Search by Wallet or Name"
         />
-        <UserModal
-          item={selectedItem}
-          close={closeUpdateModal}
-          isOpen={modalOpen}
-          refreshCallback={refreshCallback}
-          open={openUpdateModal}
-        />
+        <AddButton onClick={openUpdateModal}>
+          <Trans>Add User</Trans>
+        </AddButton>
       </TopContent>
 
       {usersList.items.length > 0 ? (
@@ -117,13 +104,14 @@ export const UsersList: FC = () => {
   )
 }
 
-const Row: FC<RowProps> = ({ callbackParams, item, changeUser }) => {
-  const [copied, setCopied] = useCopyClipboard()
+const Row: FC<RowProps> = ({ item, changeUser }) => {
   const [expanded, handleExpanded] = useState(false)
-  const { ethAddress, role, fullName, isWhitelisted, tokens } = item
+  const { ethAddress, role, username, isWhitelisted, managerOf } = item
+
+  const needAccordion = role === ROLES.TOKEN_MANAGER && Boolean(managerOf?.length)
 
   const toggleAccordion = () => {
-    if (role === ROLES.TOKEN_MANAGER) {
+    if (needAccordion) {
       handleExpanded((state) => !state)
     }
   }
@@ -132,15 +120,15 @@ const Row: FC<RowProps> = ({ callbackParams, item, changeUser }) => {
     <>
       <StyledAccordion elevation={0} expanded={expanded} onChange={toggleAccordion}>
         <AccordionSummary
-          style={{ margin: 0, background: 'transparent', cursor: role === ROLES.TOKEN_MANAGER ? 'pointer' : 'default' }}
+          style={{ margin: 0, background: 'transparent', cursor: needAccordion ? 'pointer' : 'default' }}
         >
           <StyledBodyRow>
             <Wallet>
-              <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
+              <CopyAddress address={ethAddress} />
             </Wallet>
             <div>{ROLES_LABEL[role]}</div>
-            <div>{fullName || 'Full name'}</div>
-            <div>{role === ROLES.TOKEN_MANAGER ? `${tokens?.length || 0} SEC Token's` : '-'}</div>
+            <div>{username || '-'}</div>
+            <div>{role === ROLES.TOKEN_MANAGER ? `${managerOf?.length || 0} SEC Token's` : '-'}</div>
             <div>
               <img src={isWhitelisted ? checkIcon : notCheckIcon} alt="is-whitelisted" />
             </div>
@@ -154,7 +142,7 @@ const Row: FC<RowProps> = ({ callbackParams, item, changeUser }) => {
               >
                 Edit
               </ButtonGradientBorder>
-              {role === ROLES.TOKEN_MANAGER && <ExpandIcon src={expandIcon} alt="expandIcon" expanded={expanded} />}
+              {needAccordion && <ExpandIcon src={expandIcon} alt="expandIcon" expanded={expanded} />}
             </div>
             {/* <div>
           <ButtonGradientBorder
@@ -181,22 +169,14 @@ const Row: FC<RowProps> = ({ callbackParams, item, changeUser }) => {
           </StyledBodyRow>
         </AccordionDetails>
       </StyledAccordion>
-      <DeleteConfirmationPopup callbackParams={callbackParams} confirmCallback={updateUser} />
     </>
   )
 }
-const Body: FC<BodyProps> = ({ items, callbackParams, refreshCallback, setCallbackParams, changeUser }) => {
+const Body: FC<BodyProps> = ({ items, changeUser }) => {
   return (
     <>
       {items.map((item) => (
-        <Row
-          callbackParams={callbackParams}
-          setCallbackParams={setCallbackParams}
-          refreshCallback={refreshCallback}
-          changeUser={changeUser}
-          item={item}
-          key={`kyc-table-${item}`}
-        />
+        <Row changeUser={changeUser} item={item} key={`kyc-table-${item}`} />
       ))}
     </>
   )

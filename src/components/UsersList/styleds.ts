@@ -1,13 +1,14 @@
 import styled, { css } from 'styled-components'
 import { Flex } from 'rebass'
-
-import { StyledButtonGradientBorder as ButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
-import { BodyRow, HeaderRow } from 'components/Table'
 import { Accordion } from '@material-ui/core'
+
+import { BodyRow, HeaderRow } from 'components/Table'
+import { ButtonIXSGradient } from 'components/Button'
 
 export const StyledBodyRow = styled(BodyRow)`
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  min-width: 1270px;
+  min-width: 950px;
+  width: 100%;
   margin-bottom: 0px;
   background-color: transparent;
   border: none;
@@ -26,12 +27,14 @@ export const StyledBodyRow = styled(BodyRow)`
 
 export const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  min-width: 1270px;
+  min-width: 950px;
+  width: 100%;
 `
 
-export const StyledButtonGradientBorder = styled(ButtonGradientBorder)`
+export const AddButton = styled(ButtonIXSGradient)`
   margin-left: 33px;
-
+  max-height: 60px;
+  min-width: 135px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     margin-top: 16px;
     margin-left: 0px;
@@ -45,6 +48,8 @@ export const TopContent = styled(Flex)`
 `
 
 export const StyledAccordion = styled(Accordion)`
+  min-width: 950px;
+  width: 100%;
   color: white !important;
   margin: 0px !important;
   border: 1px solid ${({ theme: { bg11 } }) => bg11}!important;

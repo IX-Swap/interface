@@ -1,6 +1,6 @@
 import React, { CSSProperties, useCallback, useMemo } from 'react'
 
-import { RowCenter, RowStart } from 'components/Row'
+import { RowCenter } from 'components/Row'
 import { TYPE } from 'theme'
 
 import { DarkBlueCard, PopOverContent, StyledPopover, Icon } from './styleds'

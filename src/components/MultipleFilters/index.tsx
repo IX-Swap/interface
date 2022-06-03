@@ -7,19 +7,19 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useSecTokenState } from 'state/secTokens/hooks'
 
-import { FILTERS, initialValues, rolesOptions } from './constants'
+import { FILTERS, defaultValues, rolesOptions } from './constants'
 import { Container, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
-import { ButtonText } from 'components/Button'
 
 interface Props {
   filters: FILTERS[]
   callback: (params: Record<string, any>) => void
+  searchPlaceholder?: string
 }
 
 let timer = null as any
 
-export const MultipleFilters = ({ filters, callback }: Props) => {
+export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search for Wallet' }: Props) => {
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
 
@@ -27,7 +27,7 @@ export const MultipleFilters = ({ filters, callback }: Props) => {
     if (secTokens?.length) {
       return secTokens.map((token) => ({
         label: token.symbol,
-        value: token.address,
+        value: token.id,
         icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
       }))
     }
@@ -35,12 +35,12 @@ export const MultipleFilters = ({ filters, callback }: Props) => {
     return []
   }, [secTokens])
 
-  const getInitialValues = useMemo(() => {
+  const initialValues = useMemo((): Record<string, any> => {
     if (filters.length) {
       return filters.reduce(
         (acc, next) => ({
           ...acc,
-          [next]: initialValues[next],
+          [next]: defaultValues[next],
         }),
         {}
       )
@@ -50,7 +50,7 @@ export const MultipleFilters = ({ filters, callback }: Props) => {
   }, [filters])
 
   const { setFieldValue, values, resetForm } = useFormik({
-    initialValues: getInitialValues as Record<string, any>,
+    initialValues,
     onSubmit: () => {
       // must have onSubmit
     },
@@ -102,7 +102,7 @@ export const MultipleFilters = ({ filters, callback }: Props) => {
     [FILTERS.SEARCH]: (
       <Search
         setSearchValue={(value: string) => setFieldValue(FILTERS.SEARCH, value)}
-        placeholder={t`Search for Wallet`}
+        placeholder={t`${searchPlaceholder}`}
         style={{ margin: 0 }}
       />
     ),
@@ -113,29 +113,27 @@ export const MultipleFilters = ({ filters, callback }: Props) => {
         selectedItems={values.roles}
         onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
         items={rolesOptions}
-        // style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
       />
     ),
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
         className="dropdown"
         placeholder="Sec Token"
-        selectedItems={values.secTokens}
+        selectedItems={values.tokens}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
         items={tokensOptions}
-        // style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
       />
     ),
   } as Record<string, JSX.Element>
 
   return (
     <Container>
-      {withSearch && filterComponents.search}
+      {withSearch && filterComponents[FILTERS.SEARCH]}
       <FiltersContainer>
         {filters.map((filter) => filter !== FILTERS.SEARCH && filterComponents[filter])}
       </FiltersContainer>
       <ResetFilters disabled={isEmpty} onClick={onResetFilters}>
-        Reset Filters
+        Clear Filters
       </ResetFilters>
     </Container>
   )

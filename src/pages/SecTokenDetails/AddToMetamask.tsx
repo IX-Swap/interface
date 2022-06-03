@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro'
 import { AboutWrapping } from 'components/Vault/AboutWrapping'
 import { useCurrency } from 'hooks/Tokens'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
@@ -26,7 +25,6 @@ export const AddToMetamask = ({ token }: Props) => {
   const { library } = useActiveWeb3React()
 
   const addOriginalCurrency = useAddTokenToMetamask(originalCurrency ?? undefined)
-  const [originAddIsCopied, setOriginAddCopied] = useCopyClipboard()
 
   return (
     <AddressToMetamask>
@@ -36,11 +34,7 @@ export const AddToMetamask = ({ token }: Props) => {
             <Trans>{token?.ticker || 'Original token'}:</Trans>
           </div>
           <div>
-            <CopyAddress
-              address={token?.token?.originalAddress ?? ''}
-              copied={originAddIsCopied}
-              setCopied={setOriginAddCopied}
-            />
+            <CopyAddress address={token?.token?.originalAddress ?? ''} />
           </div>
           {originalCurrency && library?.provider?.isMetaMask && (
             <StyledButtonGradient onClick={() => !addOriginalCurrency.success && addOriginalCurrency.addToken()}>
@@ -56,7 +50,6 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
   const addCurrency = useAddTokenToMetamask({ ...token?.token, wrapped: token?.token } ?? undefined)
   const { library } = useActiveWeb3React()
   const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
-  const [isCopied, setCopied] = useCopyClipboard()
 
   return (
     <>
@@ -72,7 +65,7 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
                 </div>
               </div>
               <div>
-                <CopyAddress address={token?.token?.address ?? ''} copied={isCopied} setCopied={setCopied} />
+                <CopyAddress address={token?.token?.address ?? ''} />
               </div>
             </>
             {library?.provider?.isMetaMask && (

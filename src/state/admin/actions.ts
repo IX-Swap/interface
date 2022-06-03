@@ -98,6 +98,26 @@ export const getUsersList: Readonly<{
   rejected: createAction('admin/getUsersList/rejected'),
 }
 
+export const postUser: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: User }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/postUser/pending'),
+  fulfilled: createAction('admin/postUser/fulfilled'),
+  rejected: createAction('admin/postUser/rejected'),
+}
+
+export const updateUser: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: User }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/updateUser/pending'),
+  fulfilled: createAction('admin/updateUser/fulfilled'),
+  rejected: createAction('admin/updateUser/rejected'),
+}
+
 export const postApproveKyc: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
@@ -185,7 +205,7 @@ export interface User {
   email: null | string
   ethAddress: string
   id: number
-  fullName: string | null
+  username: string | null
   isWhitelisted: boolean
   language: string
   photo: any
@@ -194,7 +214,7 @@ export interface User {
   role: string
   tenant: string
   updatedAt: string
-  tokens: any[]
+  managerOf: any[]
 }
 
 export interface UsersList {

@@ -7,7 +7,6 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { CopyAddress } from 'components/CopyAddress'
 import { KycItem } from 'state/admin/actions'
@@ -40,7 +39,6 @@ const Header = () => {
 }
 
 const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
-  const [copied, setCopied] = useCopyClipboard()
   const {
     id,
     user: { ethAddress },
@@ -57,7 +55,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   return (
     <StyledBodyRow key={id}>
       <Wallet>
-        <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
+        <CopyAddress address={ethAddress} />
       </Wallet>
       <div>{fullName || '-'}</div>
       <div>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>

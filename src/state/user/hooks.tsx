@@ -448,11 +448,6 @@ export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
   return result.data
 }
 
-export const updateUser = async (address: string, updatedUser: any) => {
-  const result = await apiService.patch(users.update(address), updatedUser)
-  return result.data
-}
-
 export function usePassAccreditation(
   currencyId?: string,
   onSuccess?: () => void

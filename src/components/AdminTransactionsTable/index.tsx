@@ -9,7 +9,6 @@ import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { Search } from 'components/Search'
 import { useAdminState, useFetchBrokerDealerSwaps, useOnlyAdminAccess } from 'state/admin/hooks'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
 import { useCurrency } from 'hooks/Tokens'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
@@ -46,7 +45,6 @@ const Header = () => {
 }
 
 const Row: FC<RowProps> = ({ item }: RowProps) => {
-  const [copied, setCopied] = useCopyClipboard()
   const {
     id,
     data: { amount, tokenAddress, pairSymbol },
@@ -63,7 +61,7 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
       <div>{broker}</div>
       <Wallet>
-        <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
+        <CopyAddress address={ethAddress} />
       </Wallet>
       <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
       <div>
