@@ -16,11 +16,12 @@ import notCheckIcon from 'assets/images/reject.svg'
 import expandIcon from 'assets/images/dropdown.svg'
 import { ROLES_LABEL, ROLES } from 'constants/roles'
 import { MultipleFilters } from 'components/MultipleFilters'
+import { FILTERS } from 'components/MultipleFilters/constants'
 
 import { Table } from '../Table'
 import { UserModal } from './UserModal'
 import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon, AddButton } from './styleds'
-import { FILTERS } from 'components/MultipleFilters/constants'
+import { TokenManagerTokens } from './TokenManagerTokens'
 
 const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Whitelisted`, '']
 
@@ -107,7 +108,6 @@ export const UsersList: FC = () => {
 const Row: FC<RowProps> = ({ item, changeUser }) => {
   const [expanded, handleExpanded] = useState(false)
   const { ethAddress, role, username, isWhitelisted, managerOf } = item
-
   const needAccordion = role === ROLES.TOKEN_MANAGER && Boolean(managerOf?.length)
 
   const toggleAccordion = () => {
@@ -163,7 +163,9 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
             <div />
             <div />
             <div />
-            <div>Keka</div>
+            <div>
+              <TokenManagerTokens items={managerOf} />
+            </div>
             <div />
             <div />
           </StyledBodyRow>
