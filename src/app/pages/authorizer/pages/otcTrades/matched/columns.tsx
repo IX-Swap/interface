@@ -26,9 +26,27 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     render: (_, item) => renderIdentityLink(item, 'BUY')
   },
   {
+    key: 'ethAddress',
+    label: 'Filled Buy',
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.amount,
+        availableAmount: row.availableAmount
+      })
+  },
+  {
     key: 'identity._id',
     label: 'Seller',
     render: (_, item) => renderIdentityLink(item, 'SELL')
+  },
+  {
+    key: '_id',
+    label: 'Filled Sell',
+    render: (_, row) =>
+      getFilledPercentage({
+        amount: row.matches?.matchedOrder?.amount ?? 1,
+        availableAmount: row.matches?.matchedOrder?.availableAmount
+      })
   },
   {
     key: 'price',
@@ -36,7 +54,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
-    key: 'amount',
+    key: 'availableAmount',
     label: 'Amount',
     render: renderMoney
   },
@@ -45,14 +63,5 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     label: 'Total',
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })
-  },
-  {
-    key: '_id',
-    label: 'Filled',
-    render: (_, row) =>
-      getFilledPercentage({
-        amount: row.amount,
-        availableAmount: row.availableAmount
-      })
   }
 ]
