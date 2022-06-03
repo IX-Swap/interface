@@ -48,8 +48,9 @@ const CreatePayoutEventPage: FC = () => {
               selectedItem={null}
               items={mockSecTokens}
               onSelect={() => null}
+              required
             />
-            <DateInput label="Record Date" maxHeight={60} openTo="date" value={''} onChange={() => null} />
+            <DateInput label="Record Date" maxHeight={60} openTo="date" value={''} onChange={() => null} required />
           </FormGrid>
 
           <Summary walletsAmount={200} poolsAmount={500} />

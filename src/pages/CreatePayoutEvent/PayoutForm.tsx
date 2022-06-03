@@ -33,6 +33,7 @@ export const PayoutForm: FC = () => {
             selectedItem={null}
             items={mockSecTokens}
             onSelect={() => null}
+            required
           />
           <TextInput placeholder="1000" label="Amount of Token" onChange={() => null} value={''} />
         </FormGrid>
@@ -51,6 +52,7 @@ export const PayoutForm: FC = () => {
           openTo="date"
           value={''}
           onChange={() => null}
+          required
         />
         <DateInput
           label="Payment Deadline"
@@ -68,12 +70,13 @@ export const PayoutForm: FC = () => {
           label="Headline"
           onChange={() => null}
           value={''}
+          required
         />
       </FormGrid>
 
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
         <Box>
-          <Label text="Payout Description" />
+          <Label text="Payout Description" required />
           <Textarea
             placeholder="Give a brief description of this payout event"
             value={desc}
@@ -83,13 +86,15 @@ export const PayoutForm: FC = () => {
         </Box>
       </FormGrid>
 
-      <Uploader title="Payout Attachments" files={[]} onDrop={() => null} handleDeleteClick={() => null} />
+      <Uploader title="Payout Attachments" files={[]} onDrop={() => null} handleDeleteClick={() => null} required />
 
       <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder marginRight="32px">
+        <ButtonGradientBorder padding="16px 24px" marginRight="32px" disabled>
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
-        <ButtonIXSGradient>Publish Payout Event</ButtonIXSGradient>
+        <ButtonIXSGradient padding="16px 24px" disabled>
+          Publish Payout Event
+        </ButtonIXSGradient>
       </Flex>
     </FormCard>
   )

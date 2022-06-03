@@ -21,7 +21,7 @@ const Card = styled.div`
 export const PayoutType: FC = () => {
   return (
     <Box marginBottom="24px">
-      <Label marginBottom="8px" text={t`Payout Type`} />
+      <Label marginBottom="8px" text={t`Payout Type`} required />
       <Card style={{ marginBottom: 8 }}>
         {payoutTypes.map(({ id, label }) => (
           <Checkbox

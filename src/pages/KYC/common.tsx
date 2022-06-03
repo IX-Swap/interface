@@ -27,6 +27,7 @@ export interface UploaderProps {
   optional?: boolean
   error?: any | ReactChildren
   handleDeleteClick: (index: number) => void
+  required?: boolean
 }
 
 interface SelectProps {
@@ -40,11 +41,16 @@ interface SelectProps {
   error?: any | ReactChildren
   onBlur?: (e: any) => void
   name?: string
+<<<<<<< HEAD
   isMulti?: boolean
+=======
+  required?: boolean
+>>>>>>> 56a9b111 (required label)
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement> & {
   error?: any | ReactChildren
+  required?: boolean
 }
 
 export const Select: FC<SelectProps> = ({
@@ -55,10 +61,11 @@ export const Select: FC<SelectProps> = ({
   items,
   error,
   name,
+  required,
 }: SelectProps) => {
   return (
     <Box>
-      {label && <Label text={label} />}
+      {label && <Label required={required} text={label} />}
       <ReactSelect
         name={name}
         placeholder={placeholder}
@@ -85,11 +92,12 @@ export const TextInput: FC<TextInputProps> = ({
   name,
   type,
   onBlur,
+  required,
   error = false,
 }: TextInputProps) => {
   return (
     <Box>
-      {label && <Label text={label} htmlFor={name || ''} />}
+      {label && <Label text={label} htmlFor={name || ''} required={required} />}
 
       <StyledInput
         onBlur={onBlur}
@@ -115,15 +123,16 @@ export const Uploader: FC<UploaderProps> = ({
   title,
   subtitle,
   files,
-  onDrop,
+  required,
   error,
-  optional = false,
   handleDeleteClick,
+  onDrop,
+  optional = false,
 }: UploaderProps) => {
   return (
     <Box>
-      <Flex marginBottom="10px">
-        <TYPE.body1>{title}</TYPE.body1>
+      <Flex>
+        <Label text={title} required={required} />
         {optional && (
           <>
             <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
