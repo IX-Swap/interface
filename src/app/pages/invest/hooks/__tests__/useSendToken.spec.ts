@@ -18,7 +18,7 @@ describe('estimateMaxGas', () => {
             res({ data: { result: { rapidgaspricegwei: 50 } } })
           )
       )
-    await expect(sendTokenFuns.estimateMaxGas()).resolves.toBe('100')
+    await expect(sendTokenFuns.estimateMaxGas()).resolves.toBe('50')
   })
 })
 describe('getTransferProps', () => {
@@ -29,10 +29,10 @@ describe('getTransferProps', () => {
   it('generates correct props', async () => {
     jest
       .spyOn(sendTokenFuns, 'estimateMaxGas')
-      .mockImplementation(async () => new Promise(res => res('100')))
+      .mockImplementation(async () => new Promise(res => res('50')))
     await expect(sendTokenFuns.getTransferProps()).resolves.toEqual({
       gasLimit: BigNumber.from(9999999),
-      gasPrice: ethers.utils.parseUnits('100', 'gwei')
+      gasPrice: ethers.utils.parseUnits('50', 'gwei')
     })
   })
 })
