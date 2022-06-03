@@ -64,26 +64,25 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
     render: renderTicker
   },
   {
+    key: 'amount',
+    label: 'Amount',
+    render: renderMoney
+  },
+  {
     key: 'orderType',
     label: 'Side',
     render: value => capitalizeFirstLetter(value)
   },
-
   {
-    key: 'amount',
-    label: 'Amount',
-    render: renderMoney
+    key: 'price',
+    label: 'Price',
+    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
   },
   {
     key: 'availableAmount',
     label: 'Total',
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })
-  },
-  {
-    key: 'createdAt',
-    label: 'Date',
-    render: formatDateToMMDDYY
   },
   {
     key: '_id',
@@ -93,5 +92,10 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
         amount: row.amount,
         availableAmount: row.availableAmount
       })
+  },
+  {
+    key: 'createdAt',
+    label: 'Date',
+    render: formatDateToMMDDYY
   }
 ]

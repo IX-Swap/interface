@@ -57,7 +57,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
                     <Grid
                       item
                       xs={6}
-                      style={{ textAlign: 'right', fontWeight: 600 }}
+                      style={{ textAlign: 'right', fontWeight: 400 }}
                     >
                       {key.length > 0 &&
                         (typeof render === 'function'
