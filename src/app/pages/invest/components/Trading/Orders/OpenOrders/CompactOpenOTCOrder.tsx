@@ -6,7 +6,7 @@ import { getExpiresOrderMessage } from 'helpers/dates'
 import get from 'lodash/get'
 import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
-import { needsConfirmation, useOpenOrderState } from './helpers'
+import { needsConfirmation, sortOpenOrders, useOpenOrderState } from './helpers'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OTCOrderActionsMobile } from './OTCOrderActionsMobile'
 
@@ -18,12 +18,14 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
   const { columns, items } = props
   const { showEmptyState, rowColor } = useOpenOrderState(props)
   const classes = useStyles()
+  const sorted = items.sort(sortOpenOrders)
+
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
   return (
     <TableBody>
-      {items.map((item, i) => (
+      {sorted.map((item, i) => (
         <TableRow
           key={i}
           style={{
