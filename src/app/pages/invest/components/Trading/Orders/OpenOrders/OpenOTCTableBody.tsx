@@ -16,7 +16,7 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
-  const sorted = items.sort(sortOpenOrders)
+  const sorted = items?.sort(sortOpenOrders) ?? []
 
   return (
     <TableBody>

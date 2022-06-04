@@ -18,11 +18,11 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
   const { columns, items } = props
   const { showEmptyState, rowColor } = useOpenOrderState(props)
   const classes = useStyles()
-  const sorted = items.sort(sortOpenOrders)
 
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
+  const sorted = items?.sort(sortOpenOrders) ?? []
   return (
     <TableBody>
       {sorted.map((item, i) => (
