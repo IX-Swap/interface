@@ -7,16 +7,17 @@ import { TableViewRendererProps } from 'components/TableWithPagination/TableView
 import { getExpiresOrderMessage } from 'helpers/dates'
 import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
-import { needsConfirmation, sortOpenOrders, useOpenOrderState } from './helpers'
+import { needsConfirmation, useOpenOrderState, sortOpenOrders } from './helpers'
 
 export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   const classes = useStyles()
   const { columns, items, actions, hasActions, cacheQueryKey } = props
   const { showEmptyState, columnCount, rowColor } = useOpenOrderState(props)
-  const sorted = items?.sort(sortOpenOrders) ?? []
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
+  const sorted = items?.sort(sortOpenOrders) ?? []
+
   return (
     <TableBody>
       {sorted.map((row, i) => (

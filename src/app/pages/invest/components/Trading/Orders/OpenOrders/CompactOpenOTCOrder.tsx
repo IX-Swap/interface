@@ -17,12 +17,12 @@ export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
 export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
   const { columns, items } = props
   const { showEmptyState, rowColor } = useOpenOrderState(props)
-  const sorted = items?.sort(sortOpenOrders) ?? []
-
   const classes = useStyles()
+
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
+  const sorted = items?.sort(sortOpenOrders) ?? []
   return (
     <TableBody>
       {sorted.map((item, i) => (

@@ -31,4 +31,7 @@ export const useOpenOrderState = (props: TableViewRendererProps<OTCOrder>) => {
 }
 
 export const sortOpenOrders = (first: OTCOrder, _: OTCOrder) =>
-  first.matches?.status === OTCOrderStatus.CONFIRMED ? -1 : 1
+  first.matches?.status === OTCOrderStatus.CONFIRMED &&
+  first.orderType === 'SELL'
+    ? -1
+    : 1
