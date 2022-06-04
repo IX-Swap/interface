@@ -87,7 +87,7 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
         return true
       })
       // log selected wallet
-
+      console.log({ connector }, 'wallet modal')
       setPendingWallet(connector) // set wallet for pending view
       setWalletView(WALLET_VIEWS.PENDING)
 
