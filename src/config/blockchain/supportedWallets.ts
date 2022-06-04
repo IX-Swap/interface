@@ -1,6 +1,7 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import METAMASK_ICON_URL from 'assets/images/metamask.svg'
-import { injected } from './connectors'
+import WALLETCONNECT_ICON_URL from 'assets/images/walletConnectIcon.svg'
+import { injected, walletconnect } from './connectors'
 
 export interface WalletInfo {
   connector?: AbstractConnector
@@ -31,5 +32,15 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     description: 'Easy-to-use browser extension.',
     href: null,
     color: '#E8831D'
+  },
+  WALLET_CONNECT: {
+    connector: walletconnect,
+    name: 'WalletConnect',
+    iconURL: WALLETCONNECT_ICON_URL,
+    description:
+      'Connect to MetaMask, Trust Wallet, Rainbow Wallet and more...',
+    href: null,
+    color: '#4196FC',
+    mobile: true
   }
 }
