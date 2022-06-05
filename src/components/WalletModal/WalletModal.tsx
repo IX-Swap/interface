@@ -64,7 +64,11 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
     if (
       isOpen &&
       ((active && !activePrevious) ||
-        (connector != null && connector !== connectorPrevious && error == null))
+        (connector != null &&
+          connector !== undefined &&
+          connector !== connectorPrevious &&
+          error == null &&
+          error !== undefined))
     ) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
@@ -98,13 +102,15 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
       ) {
         connector.walletConnectProvider = undefined
       }
-      if (connector != null) {
+      console.log({ connector })
+      if (connector != null && connector === undefined) {
         try {
           await activate(connector, undefined, true)
         } catch (error) {
           if (error instanceof UnsupportedChainIdError) {
             activate(connector) // a little janky...can't use setError because the connector isn't set
           } else {
+            console.log({ error })
             activate(connector) // a little janky...can't use setError because the connector isn't set
             setPendingError(true)
           }
@@ -194,7 +200,7 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
   }
 
   function getModalContent() {
-    if ((error ?? false) !== false) {
+    if (error !== null && error !== undefined) {
       return <ErrorSection error={error} toggleWalletModal={toggleModal} />
     }
     return (
