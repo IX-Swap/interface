@@ -10,6 +10,7 @@ import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
 import { Layout2fa } from 'app/pages/security/components/Layout2fa/Layout2fa'
 import { use2faSteps } from 'app/pages/security/hooks/use2faSteps'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 const steps = [
   'Remove Authenticator',
@@ -21,13 +22,13 @@ const steps = [
 export const Update2fa = () => {
   const [twoFaData, setTwoFaData] = useState<TwoFaData | undefined>(undefined)
   const { user } = useAuth()
+  const { isTablet } = useAppBreakpoints()
 
   const {
     activeStep,
     nextStep,
     prevStep,
     stepInfo,
-    isMobile,
     is2faCompleted,
     stepperConditions
   } = use2faSteps(steps)
@@ -59,11 +60,11 @@ export const Update2fa = () => {
       }
       stepper={
         <Stepper
-          orientation={isMobile ? 'horizontal' : 'vertical'}
+          orientation={isTablet ? 'horizontal' : 'vertical'}
           activeStep={activeStep}
           nonLinear
           withMobileDropdown={false}
-          title={isMobile ? '2FA Authenticator' : 'Progress'}
+          title={isTablet ? '2FA Authenticator' : 'Progress'}
           stepInfo={stepInfo}
         >
           {steps.map((label, index) => (

@@ -1,10 +1,6 @@
 import { useState } from 'react'
-import { useTheme } from '@mui/styles'
-import { useMediaQuery } from '@mui/material'
 
 export const use2faSteps = (steps: string[]) => {
-  const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
   const [activeStep, setActiveStep] = useState(0)
 
   const nextStep = () => {
@@ -26,13 +22,11 @@ export const use2faSteps = (steps: string[]) => {
 
   const is2faCompleted = activeStep === 4
 
-  const stepInfo = matches
-    ? {
-        label: is2faCompleted ? 'Success page' : steps[activeStep],
-        activeStep: activeStep + 1,
-        totalSteps: steps.length
-      }
-    : undefined
+  const stepInfo = {
+    label: is2faCompleted ? 'Success page' : steps[activeStep],
+    activeStep: activeStep + 1,
+    totalSteps: steps.length
+  }
 
   return {
     activeStep,
@@ -40,7 +34,6 @@ export const use2faSteps = (steps: string[]) => {
     prevStep,
     stepperConditions: getVariantsConditions,
     stepInfo,
-    isMobile: matches,
     is2faCompleted
   }
 }
