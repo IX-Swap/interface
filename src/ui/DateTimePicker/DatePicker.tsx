@@ -25,6 +25,8 @@ export interface DatePickerProps
   hasError?: boolean
 }
 
+export type View = 'day' | 'month' | 'year' | 'ampm'
+
 export const DatePicker = ({
   minDate = defaultDates.min,
   maxDate = defaultDates.max,
@@ -38,7 +40,7 @@ export const DatePicker = ({
   hasError = false
 }: DatePickerProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [view, setView] = useState<'day' | 'month' | 'year' | 'ampm'>('day')
+  const [view, setView] = useState<View>('day')
   const [open, setOpen] = useState(false)
 
   const date: Date | undefined = value instanceof Date ? value : new Date()
@@ -51,23 +53,23 @@ export const DatePicker = ({
     undefined
   )
 
-  const getDateValue = (value: unknown) => {
-    if (!(value instanceof Date)) {
+  const getDateValue = (val: unknown) => {
+    if (!(val instanceof Date)) {
       return undefined
     }
-    let date = value
-    if (_minDate !== undefined && value < _minDate) {
-      date = _minDate
+    let dateValue = val
+    if (_minDate !== undefined && val < _minDate) {
+      dateValue = _minDate
     }
-    if (_maxDate !== undefined && value > _maxDate) {
-      date = _maxDate
+    if (_maxDate !== undefined && val > _maxDate) {
+      dateValue = _maxDate
     }
 
-    return date
+    return dateValue
   }
 
-  const onChange: PickerOnChangeFn<unknown> = value => {
-    setDate(getDateValue(value))
+  const onChange: PickerOnChangeFn<unknown> = pickerValue => {
+    setDate(getDateValue(pickerValue))
     setView('day')
   }
 
