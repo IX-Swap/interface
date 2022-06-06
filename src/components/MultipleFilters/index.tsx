@@ -59,10 +59,22 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
   useEffect(() => {
     clearTimeout(timer)
     timer = setTimeout(() => {
-      const filtredValues = Object.keys(values).reduce(
-        (acc, key: string) => ({ ...acc, ...(values[key] && { [key]: values[key] }) }),
-        {}
-      )
+      const filtredValues = Object.keys(values).reduce((acc, key: string) => {
+        const value = values[key]
+        if (value) {
+          if (Array.isArray(value) && value.length) {
+            return {
+              ...acc,
+              [key]: values[key].join(','),
+            }
+          }
+          return {
+            ...acc,
+            [key]: values[key],
+          }
+        }
+        return acc
+      }, {})
       callback(filtredValues)
     }, 250)
     //eslint-disable-next-line react-hooks/exhaustive-deps
