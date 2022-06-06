@@ -80,7 +80,7 @@ export const PayoutForm: FC = () => {
           <Textarea
             placeholder="Give a brief description of this payout event"
             value={desc}
-            style={{ height: '162px', background: '#271F4A66', marginBottom: 0 }}
+            style={{ height: '126px', background: '#271F4A66', marginBottom: 0 }}
             onChange={(e) => setDesc(e.currentTarget.value)}
           />
         </Box>

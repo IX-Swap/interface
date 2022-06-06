@@ -23,7 +23,7 @@ const colourStyles = {
   placeholder: (styles: Record<string, any>) => {
     return {
       ...styles,
-      color: 'rgba(237, 206, 255, 0.5)',
+      color: '#EDCEFF80',
     }
   },
   option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
@@ -178,7 +178,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     height: 60px;
     border-radius: ${({ borderRadius }) => borderRadius};
     padding: 0px 16px;
-    background: rgba(39, 31, 74, 0.4);
+    background: ${({theme}) => theme.bg19};
     border: none;
     /* ${({ error }) =>
       error &&

@@ -50,7 +50,15 @@ const CreatePayoutEventPage: FC = () => {
               onSelect={() => null}
               required
             />
-            <DateInput label="Record Date" maxHeight={60} openTo="date" value={''} onChange={() => null} required />
+            <DateInput
+              label="Record Date"
+              placeholder="Choose record date"
+              maxHeight={60}
+              openTo="date"
+              value={''}
+              onChange={() => null}
+              required
+            />
           </FormGrid>
 
           <Summary walletsAmount={200} poolsAmount={500} />
