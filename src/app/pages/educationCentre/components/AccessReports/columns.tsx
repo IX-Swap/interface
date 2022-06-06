@@ -11,7 +11,11 @@ export const columns: Array<TableColumn<Report>> = [
     label: '',
     key: 'label',
     render: (value, row) => (
-      <Box style={{ backgroundColor: '#fff', paddingBottom: 15 }}>
+      <Box
+        style={{
+          paddingBottom: 15
+        }}
+      >
         <Card
           variant='outlined'
           style={{
