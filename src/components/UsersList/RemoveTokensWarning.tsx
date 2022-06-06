@@ -66,6 +66,7 @@ const TokenList = styled.div`
   justify-content: center;
   row-gap: 16px;
   column-gap: 24px;
+  flex-wrap: wrap;
 `
 
 const Token = styled.div`
