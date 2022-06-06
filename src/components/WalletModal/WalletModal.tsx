@@ -67,7 +67,7 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
         (connector != null &&
           connector !== undefined &&
           connector !== connectorPrevious &&
-          error == null &&
+          error !== null &&
           error !== undefined))
     ) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
