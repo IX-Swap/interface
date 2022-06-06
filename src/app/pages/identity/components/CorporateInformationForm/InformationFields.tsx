@@ -39,8 +39,10 @@ export const InformationFields = ({
 
   return (
     <>
-      <FormSectionHeader title={corporateInformationLabelMap[type]} />
-      <Grid container spacing={6}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <FormSectionHeader title={corporateInformationLabelMap[type]} />
+        </Grid>
         <Grid item xs={12}>
           <TypedField
             customRenderer
@@ -68,6 +70,7 @@ export const InformationFields = ({
             }
             defaultValue=''
             label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
+            hideIcon
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -89,6 +92,7 @@ export const InformationFields = ({
             defaultValue=''
             label='Registration Number/UEN'
             placeholder='Registration Number'
+            hideIcon
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -121,6 +125,7 @@ export const InformationFields = ({
             label='Others (Legal Entity)'
             disabled={legalEntityStatus !== 'others'}
             placeholder='Please specify'
+            hideIcon
           />
         </Grid>
         <ValidateOnMount />

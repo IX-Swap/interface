@@ -12,8 +12,10 @@ export const OwnershipStructureFields = () => {
 
   return (
     <>
-      <FormSectionHeader title='Ownership Structure Layers' />
       <Grid container spacing={6}>
+        <Grid item xs={12}>
+          <FormSectionHeader title='Ownership Structure Layers' />
+        </Grid>
         <Grid item xs={12} md={6}>
           <TypedField
             component={BusinessOwnerSelect}
@@ -38,6 +40,7 @@ export const OwnershipStructureFields = () => {
                 ? 'Max 1024 symbols'
                 : undefined
             }
+            hideIcon
           />
         </Grid>
         <ValidateOnMount />

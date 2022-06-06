@@ -23,12 +23,12 @@ export const CorporateInformationForm = ({
       </Grid>
       <Grid item xs={12}>
         <FieldContainer>
-          <OwnershipStructureFields />
+          <CorporateAddressFields />
         </FieldContainer>
       </Grid>
       <Grid item xs={12}>
         <FieldContainer>
-          <CorporateAddressFields />
+          <OwnershipStructureFields />
         </FieldContainer>
       </Grid>
       <Grid item xs={12}>
