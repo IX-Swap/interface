@@ -15,7 +15,7 @@ export async function addNetwork({
   library,
   chainId,
   info
-}: AddNetworkArguments): Promise<null | void> {
+}: AddNetworkArguments): Promise<null | never | undefined> {
   if (library?.provider?.request == null) {
     return
   }

@@ -8,7 +8,7 @@ export interface AppContentWrapperProps extends GridProps {
 
 export const AppContentWrapper = styled(Grid)(
   ({ theme, background }: AppContentWrapperProps) => ({
-    minHeight: '100vh',
+    minHeight: 'calc(100vh - 80px)',
     backgroundColor: theme.palette.backgrounds[background ?? 'default'],
     paddingTop: background === undefined ? 64 : 0
   })

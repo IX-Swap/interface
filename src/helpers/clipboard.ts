@@ -7,4 +7,5 @@ export const copyToClipboard = (val: string) => {
     document.removeEventListener('copy', () => null)
   })
   document.execCommand('copy')
+  void navigator.clipboard.writeText(val)
 }
