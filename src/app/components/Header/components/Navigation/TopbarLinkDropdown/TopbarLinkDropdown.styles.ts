@@ -18,7 +18,7 @@ export const useStyles = makeStyles(theme => {
       boxShadow: `0px 80px 80px ${theme.palette.dropdownLink.boxShadow}`,
       border: `1px solid ${theme.palette.dropdownLink.border}!important`
     },
-    list: { padding: 0 },
+    list: { padding: 0, maxHeight: 'calc(100vh - 100px)' },
     navItem: {
       position: 'relative',
       minWidth: 266,
