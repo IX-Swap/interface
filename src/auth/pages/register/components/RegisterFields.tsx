@@ -15,7 +15,7 @@ import { Checkbox } from 'components/form/Checkbox'
 import { useStyles } from 'auth/pages/register/Register.styles'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { SingPassButton } from 'auth/pages/register/components/SingPassButton'
+import { SingPass } from 'auth/pages/register/components/SingPass/SingPass'
 
 export interface CheckboxLabelProps {
   isError: boolean
@@ -68,7 +68,7 @@ export const RegisterFields = () => {
 
   return (
     <Grid container spacing={6} direction='column'>
-      <Grid item>{isIndividual ? <SingPassButton /> : null}</Grid>
+      <Grid item>{isIndividual ? <SingPass /> : null}</Grid>
       <Grid item>
         <TypedField
           control={control}

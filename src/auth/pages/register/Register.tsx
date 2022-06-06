@@ -37,7 +37,7 @@ export const Register: React.FC = observer(() => {
 
   useEffect(() => {
     if (identity === undefined || identity === '') {
-      updateFilter('identityType', 'corporate')
+      updateFilter('identityType', 'individual')
     }
   }, [identity, updateFilter])
 
@@ -106,7 +106,7 @@ export const Register: React.FC = observer(() => {
           <Typography align='center' className={question}>
             Already have an account?{' '}
             <AppRouterLink to={AuthRoute.login} className={link}>
-              Sign In.
+              Log In
             </AppRouterLink>
           </Typography>
         </Grid>
