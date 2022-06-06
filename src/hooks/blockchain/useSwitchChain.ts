@@ -10,6 +10,7 @@ export default function useSwitchChain(): {
 
   const switchChain = useCallback(
     async (switchToChainId): Promise<void> => {
+      console.log({ library, provider: library?.provider })
       if (
         library?.provider?.isMetaMask === true &&
         library?.provider?.request != null &&
@@ -18,7 +19,9 @@ export default function useSwitchChain(): {
       ) {
         try {
           await switchToNetwork({ chainId: switchToChainId, library })
-        } catch (e) {}
+        } catch (e) {
+          console.log('error switching network ', { e })
+        }
       }
     },
     [library, chainId]
