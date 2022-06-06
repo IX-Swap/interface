@@ -39,7 +39,7 @@ const Info = styled.div`
 `
 
 const Title = styled.div`
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   font-size: 15px;
   font-weight: 500;
   margin-bottom: 4px;

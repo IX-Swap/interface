@@ -127,7 +127,7 @@ export const PlusButton = styled(ButtonGradientBorder)`
 
 export const HrLine = styled.div`
   margin-top: 24px;
-  border: 1px solid rgba(237, 206, 255, 0.5);
+  border: 1px solid ${({ theme }) => theme.text9};
 `
 
 export const StyledModalContentWrapper = styled(ModalContentWrapper)`
@@ -285,7 +285,7 @@ export const LevelCard = styled.div`
     }
     > div:last-child {
       font-size: 12px;
-      color: rgba(237, 206, 255, 0.5);
+      color: ${({ theme }) => theme.text9};
     }
   }
 
@@ -328,7 +328,7 @@ export const UploaderCard = styled.div<{ isLogo?: boolean; isAudio?: boolean }>`
     `};
   width: 100%;
   background: rgba(15, 5, 24, 0.7);
-  border: 1px dashed rgba(237, 206, 255, 0.5);
+  border: 1px dashed ${({ theme }) => theme.text9};
   border-radius: 12px;
   cursor: pointer;
   ${({ isLogo }) =>

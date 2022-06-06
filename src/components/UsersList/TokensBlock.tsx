@@ -48,7 +48,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
-  border: 1px solid rgba(237, 206, 255, 0.5);
+  border: 1px solid ${({ theme }) => theme.text9};
   border-radius: 12px;
   padding: 12px;
 `

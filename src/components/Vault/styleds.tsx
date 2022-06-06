@@ -192,7 +192,7 @@ export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
       margin: 8px 0px;
       border: none;
       height: 1px;
-      background-color: rgba(237, 206, 255, 0.5);
+      background-color: ${({ theme }) => theme.text9};
     }
     > div {
       font-weight: 600;
@@ -288,7 +288,8 @@ export const DepositWarningInfo = styled.div`
 export const DeadlineInfo = styled.div`
   font-weight: 500;
   font-size: 10px;
-  color: rgba(237, 206, 255, 0.5);
+  /* color: ${({ theme }) => theme.text9}; */
+  color: ${({ theme }) => theme.text9};
   line-height: 15px;
   margin-top: 8px;
 `

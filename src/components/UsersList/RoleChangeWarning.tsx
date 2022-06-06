@@ -68,7 +68,7 @@ const Warning = styled.div`
 `
 
 const RolesContainer = styled.div`
-  border: 1px solid rgba(237, 206, 255, 0.5);
+  border: 1px solid ${({ theme }) => theme.text9};
   border-radius: 24px;
   padding: 8px 12px;
   column-gap: 18px;

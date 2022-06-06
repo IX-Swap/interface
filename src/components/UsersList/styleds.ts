@@ -63,7 +63,7 @@ export const StyledAccordion = styled(Accordion)`
     margin: 0 22px;
     height: 1px;
     border: none;
-    background-color: rgba(237, 206, 255, 0.5);
+    background-color: ${({ theme }) => theme.text9};
   }
   .MuiAccordionDetails-root {
     display: grid;
