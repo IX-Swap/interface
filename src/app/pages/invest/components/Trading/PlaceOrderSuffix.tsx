@@ -9,6 +9,7 @@ import React, { useMemo } from 'react'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks//useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { useFormContext } from 'react-hook-form'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 interface PlaceOrderSuffixProps {
   currencyBalance: number
@@ -31,7 +32,7 @@ export const PlaceOrderSuffix = ({
     isWhitelisted
   } = useMetamaskConnectionManager()
   const { watch } = useFormContext()
-
+  const { isTablet } = useAppBreakpoints()
   const price = watch('price')
   const amount = watch('amount')
 
@@ -86,13 +87,18 @@ export const PlaceOrderSuffix = ({
       return (
         <Typography variant='subtitle2'>
           Please connect to
-          <Box
-            onClick={() => switchChain()}
-            className={classes.connectLink}
-            data-testId='place-order-suffix-switch-chain'
-          >
-            {targetChainName} network
-          </Box>
+          {isTablet ? (
+            <> {targetChainName} network </>
+          ) : (
+            <Box
+              onClick={() => switchChain()}
+              className={classes.connectLink}
+              data-testId='place-order-suffix-switch-chain'
+            >
+              {targetChainName} network
+            </Box>
+          )}
+          {isTablet && <> in your Metamask app </>}
           to place your order
         </Typography>
       )

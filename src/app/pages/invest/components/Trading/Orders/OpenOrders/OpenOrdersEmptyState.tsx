@@ -4,6 +4,7 @@ import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamask
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import React, { useMemo } from 'react'
 import { EmptyState } from 'app/pages/invest/components/Trading/Orders/EmptyState'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 const getTitle = (accountState: AccountState) => {
   if (accountState === AccountState.DIFFERENT_CHAIN) {
@@ -17,6 +18,7 @@ export const OpenOrdersEmptyState = () => {
     useMetamaskConnectionManager()
   const { found } = isWhitelisted
   const classes = useStyles()
+  const { isTablet } = useAppBreakpoints()
   const subtitle = useMemo(() => {
     if (accountState === AccountState.NOT_CONNECTED || !found) {
       return 'No orders yet, please connect wallet first'
@@ -25,15 +27,20 @@ export const OpenOrdersEmptyState = () => {
       return (
         <>
           Please connect to
-          <Box onClick={switchChain} className={classes.connectLink}>
-            {targetChainName} network
-          </Box>
+          {isTablet ? (
+            <> {targetChainName} network </>
+          ) : (
+            <Box onClick={switchChain} className={classes.connectLink}>
+              {targetChainName} network
+            </Box>
+          )}
+          {isTablet && <> in your Metamask app </>}
           to see your open trades
         </>
       )
     }
     return 'No orders on this wallet, make sure you are connected to the right address'
-  }, [accountState, found, targetChainName, switchChain, classes])
+  }, [accountState, found, targetChainName, switchChain, classes, isTablet])
 
   return <EmptyState title={getTitle(accountState)} subtitle={subtitle} />
 }

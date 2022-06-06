@@ -29,7 +29,7 @@ describe('getTransferProps', () => {
   it('generates correct props', async () => {
     jest
       .spyOn(sendTokenFuns, 'estimateMaxGas')
-      .mockImplementation(async () => new Promise(res => res('50')))
+      .mockImplementation(async () => new Promise(res => res(null)))
     await expect(sendTokenFuns.getTransferProps()).resolves.toEqual({
       gasLimit: BigNumber.from(9999999),
       gasPrice: ethers.utils.parseUnits('50', 'gwei')
