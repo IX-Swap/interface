@@ -56,7 +56,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'availableAmount',
     label: 'Amount',
-    render: (_, row) => formatMoney(row?.matches?.matchedAmount ?? 0)
+    render: (_, row) => formatMoney(row?.matches?.matchedAmount ?? 0, '')
   },
   {
     key: 'amount',
