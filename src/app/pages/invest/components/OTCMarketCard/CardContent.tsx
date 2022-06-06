@@ -21,9 +21,9 @@ export const CardContent = (props: CardContentProps) => {
   const minimumInvestmentPrice =
     data.minimumInvestment !== undefined
       ? formatMoney(
-        data.minimumInvestment * data.pricePerUnit,
-        data.currency.symbol
-      )
+          data.minimumInvestment * data.pricePerUnit,
+          data.currency.symbol
+        )
       : 0
 
   return (
@@ -65,12 +65,12 @@ export const CardContent = (props: CardContentProps) => {
                 type === 'OTC'
                   ? data.tokenSymbol
                   : percentageToNumber(
-                    data.capitalStructure === 'Debt'
-                      ? data.interestRate
-                      : data.grossIRR
-                  )
-                    ?.toFixed(2)
-                    .concat('%')
+                      data.capitalStructure === 'Debt'
+                        ? data.interestRate
+                        : data.grossIRR
+                    )
+                      ?.toFixed(2)
+                      .concat('%')
               }
             />
           </Grid>
@@ -92,7 +92,7 @@ export const CardContent = (props: CardContentProps) => {
               type !== 'OTC'
                 ? minimumInvestmentPrice
                 : // eslint-disable-next-line
-                `${data.tokenSymbol} ${data.minimumTradeUnits}`
+                  `${data.tokenSymbol} ${data.minimumTradeUnits}`
             }
           />
         </Grid>
@@ -109,7 +109,9 @@ export const CardContent = (props: CardContentProps) => {
               labelFontSize={14}
               label={'Target Fundraise'}
               value={formatMoney(
-                type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
+                type !== 'OTC'
+                  ? data.totalFundraisingAmount
+                  : data.raisedAmount,
                 type !== 'OTC' ? data.currency.symbol : 'SGD'
               )}
             />

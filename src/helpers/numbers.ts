@@ -1,4 +1,9 @@
 import getSymbolFromCurrency from 'currency-symbol-map'
+import { OTCOrder } from 'types/otcOrder'
+
+export const isNotNullish = (value?: number | null) => {
+  return value !== undefined && value !== null && value > 0
+}
 
 export const addSymbol = (
   value: string | number | undefined,
@@ -113,3 +118,39 @@ export const addLeadingZeros = (num: number | string, length: number) => {
       : ''
   return `${zeroes}${num}`
 }
+
+export const getFilledPercentage = ({
+  amount,
+  availableAmount
+}: {
+  amount: number
+  availableAmount?: number
+}) => {
+  const percentAmount = ((amount - (availableAmount ?? amount)) / amount) * 100
+  return `${percentAmount.toFixed(2)}%`
+}
+export const getFilledMatchesPercentage = ({
+  amount,
+  matchedAmount
+}: {
+  amount: number
+  matchedAmount: number
+}) => {
+  const percentAmount = (matchedAmount / amount) * 100
+  return `${percentAmount.toFixed(2)}%`
+}
+export const renderMoney = (value: any, row?: any) => formatMoney(value, '')
+export const renderTotal = ({
+  price,
+  amount,
+  row
+}: {
+  price: number
+  amount: number
+  row: OTCOrder
+}) => {
+  return formatMoney(amount * price, getOrderCurrency(row), false)
+}
+
+export const getOrderCurrency = (row: OTCOrder) =>
+  row?.pair?.name?.split('/')[1]

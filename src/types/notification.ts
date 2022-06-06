@@ -1,6 +1,12 @@
 import { AppFeature } from './app'
 
-export type NotificationType = 'success' | 'error' | 'info' | 'warning'
+export type NotificationType =
+  | 'success'
+  | 'error'
+  | 'info'
+  | 'warning'
+  | 'BUY'
+  | 'SELL'
 
 export interface Notification {
   _id: string

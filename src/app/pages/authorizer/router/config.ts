@@ -27,7 +27,8 @@ export const AuthorizerRoute = {
   listings: '/app/authorizer/listings',
   virtualAccounts: '/app/authorizer/virtual-accounts',
   dealClosure: '/app/authorizer/closure',
-  tokenDeployment: '/app/authorizer/token-deployment'
+  tokenDeployment: '/app/authorizer/token-deployment',
+  otcTrades: '/app/authorizer/otc-trades'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
@@ -71,6 +72,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     label: 'Deal Closure',
     path: AuthorizerRoute.dealClosure,
     color: '#11BB93',
+    icon: CommitmentIcon
+  },
+  {
+    label: 'OTC Trades',
+    path: AuthorizerRoute.otcTrades,
+    color: '#90A30F',
     icon: CommitmentIcon
   },
   {

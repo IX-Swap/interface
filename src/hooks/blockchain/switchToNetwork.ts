@@ -14,7 +14,7 @@ interface SwitchNetworkArguments {
 export async function switchToNetwork({
   library,
   chainId
-}: SwitchNetworkArguments): Promise<null | void> {
+}: SwitchNetworkArguments): Promise<null | never | undefined> {
   if (library?.provider?.request == null) {
     return
   }
@@ -22,14 +22,19 @@ export async function switchToNetwork({
     ;({ chainId } = await library.getNetwork())
   }
   const formattedChainId = hexStripZeros(BigNumber.from(chainId).toHexString())
+  console.log('switch to network', { formattedChainId })
   try {
     await library?.provider.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: formattedChainId }]
     })
   } catch (error) {
+    console.log({ error, chainId })
     // 4902 is the error code for attempting to switch to an unrecognized chainId
-    if ((error as any)?.code === 4902 && chainId !== undefined) {
+    const isUnrecognized =
+      (error as any)?.code === 4902 ||
+      (error as any)?.message?.includes('Try adding the chain using')
+    if (Boolean(isUnrecognized) && chainId !== undefined) {
       const info = CHAIN_INFO[chainId]
 
       // metamask (only known implementer) automatically switches after a network is added

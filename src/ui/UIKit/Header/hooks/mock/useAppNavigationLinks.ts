@@ -85,6 +85,10 @@ export const useAppNavigationLinks = () => {
     {
       label: 'Exchange',
       path: OTCMarketRoute.landing
+    },
+    {
+      label: 'Trading',
+      path: InvestRoute.trading
     }
   ]
 

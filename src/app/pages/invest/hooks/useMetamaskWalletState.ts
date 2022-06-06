@@ -9,10 +9,10 @@ export enum AccountState {
 }
 
 interface MetamaskWalletStateArgs {
-  dsoChainId?: number
+  tokenChainId?: number
 }
 export const useMetamaskWalletState = ({
-  dsoChainId
+  tokenChainId
 }: MetamaskWalletStateArgs) => {
   const [accountState, setAccountState] = useState(AccountState.NOT_CONNECTED)
   const { chainId, account } = useActiveWeb3React()
@@ -22,7 +22,11 @@ export const useMetamaskWalletState = ({
       if (accountState !== AccountState.NOT_CONNECTED) {
         setAccountState(AccountState.NOT_CONNECTED)
       }
-    } else if (!(dsoChainId === chainId)) {
+    } else if (
+      chainId !== undefined &&
+      tokenChainId !== undefined &&
+      !(tokenChainId === chainId)
+    ) {
       if (accountState !== AccountState.DIFFERENT_CHAIN) {
         setAccountState(AccountState.DIFFERENT_CHAIN)
       }
@@ -31,6 +35,6 @@ export const useMetamaskWalletState = ({
         setAccountState(AccountState.SAME_CHAIN)
       }
     }
-  }, [account, chainId, dsoChainId, accountState])
+  }, [account, chainId, tokenChainId, accountState])
   return { accountState }
 }

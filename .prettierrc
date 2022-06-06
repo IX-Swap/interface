@@ -1,3 +1,4 @@
+
 {
   "parser": "typescript",
   "trailingComma": "none",
@@ -7,5 +8,13 @@
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "jsxSingleQuote": true,
-  "printWidth": 80
+  "printWidth": 80,
+  "overrides": [
+    {
+      "files": "__tests__/**/*.ts",
+      "options": {
+        "printWidth": 120
+      }
+    }
+  ]
 }

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { AppFeature } from 'types/app'
+import { OrderType } from 'types/otcOrder'
 
 export const apiURL = {
   authorizerBanks: '/accounts/banks/list'
@@ -309,7 +310,32 @@ export const placeOrderURL = {
 export const exchangeMarket = {
   getOrdersList: (userId?: string) => `exchange/orders/list/${userId}`
 }
-
+export const trading = {
+  getMyOrdersList: (ethAddress: string | null | undefined) =>
+    `otc/order/list/my/open/${ethAddress}`,
+  getMyPastOrders: `otc/order/list/my/past`,
+  getConfirmedOrders: `/otc/order/list/confirm`,
+  cancelOTCOrder: (orderId: string) => `/otc/order/cancel/${orderId}`,
+  confirmOTCOrder: ({
+    orderId,
+    matchedOrderId
+  }: {
+    orderId: string
+    matchedOrderId: string
+  }) => `/otc/order/confirm/${orderId}/${matchedOrderId}`,
+  confirmMyOrder: ({
+    orderId,
+    matchedOrderId
+  }: {
+    orderId: string
+    matchedOrderId: string
+  }) => `/otc/order/my/confirm/${orderId}/${matchedOrderId}`,
+  getUnmatchedOrders: (side: OrderType) =>
+    `/otc/order/list/${side.toLowerCase()}`,
+  getMatchedOrders: '/otc/order/list/match',
+  getFeaturedPair: '/otc/pair',
+  createOrder: '/otc/order'
+}
 export const listings = {
   getListByUser: (userId?: string) => `exchange/listing/list/${userId}`,
   submitListing: (userId?: string, listingId?: string) =>
