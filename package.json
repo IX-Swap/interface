@@ -21,6 +21,7 @@
     "@web3-react/walletconnect-connector": "7.0.2-alpha.0",
     "add": "^2.0.6",
     "axios": "^0.21.2",
+    "buffer": "^6.0.3",
     "classnames": "^2.2.6",
     "country-json": "^1.1.0",
     "currency-symbol-map": "5.0.1",
@@ -36,6 +37,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "mui-rte": "^2.0.1",
+    "process": "^0.11.10",
     "pure-react-carousel": "^1.27.6",
     "react": "^17.0.2",
     "react-device-detect": "^2.1.2",
@@ -67,6 +69,7 @@
     "typescript": "^4.1.2",
     "uno-material-ui": "^2.0.4",
     "use-debounce": "^5.2.0",
+    "util": "^0.12.4",
     "web3": "^1.4.0",
     "yup": "^0.28.3",
     "yup-phone-lite": "^1.1.0"

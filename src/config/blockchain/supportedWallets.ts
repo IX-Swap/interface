@@ -41,6 +41,7 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
       'Connect to MetaMask, Trust Wallet, Rainbow Wallet and more...',
     href: null,
     color: '#4196FC',
-    mobile: true
+    mobile: true,
+    mobileOnly: true
   }
 }
