@@ -41,11 +41,8 @@ interface SelectProps {
   error?: any | ReactChildren
   onBlur?: (e: any) => void
   name?: string
-<<<<<<< HEAD
   isMulti?: boolean
-=======
   required?: boolean
->>>>>>> 56a9b111 (required label)
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement> & {
