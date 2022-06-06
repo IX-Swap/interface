@@ -143,7 +143,8 @@ export const individual: IndividualIdentity = {
   address,
   user,
   sourceOfFund: 'LOAN',
-  createdBy: '12345'
+  createdBy: '12345',
+  noa_basic: {}
 }
 
 export const document: DataroomFile = {
