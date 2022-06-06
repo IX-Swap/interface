@@ -37,7 +37,7 @@ describe('useCreateOTCOrder', () => {
           )
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
-            'Order Placed. Wait for Authoriser’s approval',
+            'Order Placed. Wait for Authorizer’s approval',
             'success'
           )
         },
