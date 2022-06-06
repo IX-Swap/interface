@@ -178,7 +178,7 @@ const Body: FC<BodyProps> = ({ items, changeUser }) => {
   return (
     <>
       {items.map((item) => (
-        <Row changeUser={changeUser} item={item} key={`kyc-table-${item}`} />
+        <Row changeUser={changeUser} item={item} key={`kyc-table-${item.id}`} />
       ))}
     </>
   )
