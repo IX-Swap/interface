@@ -72,15 +72,18 @@ export const Register: React.FC = observer(() => {
         oldMobileNo: data?.mobileno,
         password: values.password
       },
-      {
-        onError: (error: any) => {
-          if (
-            error?.message === 'Sorry but this email address is already taken'
-          ) {
-            history.push(`${AuthRoute.myinfoError}?errorType=email`)
+      isMyInfo
+        ? {
+            onError: (error: any) => {
+              if (
+                error?.message ===
+                'Sorry but this email address is already taken'
+              ) {
+                history.push(`${AuthRoute.myinfoError}?errorType=email`)
+              }
+            }
           }
-        }
-      }
+        : undefined
     )
   }
 
