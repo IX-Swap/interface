@@ -1,25 +1,10 @@
 import { Grid, TextField, Typography } from '@mui/material'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { formatMoney } from 'helpers/numbers'
 import React from 'react'
 
-export interface BreakdownProps {
-  yearOfAssesement?: string
-  type?: string
-  assessableIncome?: string
-  employment?: string
-  trade?: string
-  rent?: string
-  interest?: string
-}
-
-export const Breakdown = ({
-  yearOfAssesement = 'None',
-  type = 'None',
-  assessableIncome = 'None',
-  employment = 'None',
-  trade = 'None',
-  rent = 'None',
-  interest = 'None'
-}: BreakdownProps) => {
+export const Breakdown = () => {
+  const { individualIdentity } = useIsSingPass()
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} container spacing={3}>
@@ -28,18 +13,25 @@ export const Breakdown = ({
             disabled
             fullWidth
             label='Year of Assessment'
-            value={yearOfAssesement}
+            value={individualIdentity?.noa_basic.year_of_assessment}
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField disabled fullWidth label='Type' value={type} />
+          <TextField
+            disabled
+            fullWidth
+            label='Type'
+            value={individualIdentity?.noa_basic.noa_type}
+          />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
             disabled
             fullWidth
             label='Assessable Income'
-            value={assessableIncome}
+            value={formatMoney(
+              parseFloat(individualIdentity?.noa_basic.assessable_income ?? '')
+            )}
           />
         </Grid>
       </Grid>
@@ -48,16 +40,16 @@ export const Breakdown = ({
       </Grid>
       <Grid item container xs={12} spacing={3}>
         <Grid item xs={12} md={6} lg={3}>
-          <TextField disabled fullWidth label='Employment' value={employment} />
+          <TextField disabled fullWidth label='Employment' value='' />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <TextField disabled fullWidth label='Trade' value={trade} />
+          <TextField disabled fullWidth label='Trade' value='' />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <TextField disabled fullWidth label='Rent' value={rent} />
+          <TextField disabled fullWidth label='Rent' value='' />
         </Grid>
         <Grid item xs={12} md={6} lg={3}>
-          <TextField disabled fullWidth label='Interest' value={interest} />
+          <TextField disabled fullWidth label='Interest' value='' />
         </Grid>
       </Grid>
     </Grid>

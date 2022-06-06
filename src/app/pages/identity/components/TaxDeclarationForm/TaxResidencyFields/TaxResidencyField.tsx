@@ -7,6 +7,7 @@ import { TypedField } from 'components/form/TypedField'
 import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
 import { VSpacer } from 'components/VSpacer'
 import { TaxResidency } from 'app/pages/identity/types/forms'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 
 export interface TaxResidencyFieldProps {
   field: Partial<TaxResidency & { id: string }>
@@ -34,7 +35,11 @@ export const TaxResidencyField = ({
 }: TaxResidencyFieldProps) => {
   const { control, watch } = useFormContext()
   const residencyList = watch('taxResidencies')
-  const { taxIdAvailable } = residencyList[index] as TaxResidency
+  const { taxIdAvailable, countryOfResidence } = residencyList[
+    index
+  ] as TaxResidency
+  const { isSingPass } = useIsSingPass()
+  const disableField = isSingPass && countryOfResidence === 'Singapore'
 
   const getSelectedCountries = () => {
     if (residencyList === undefined || residencyList.length < 1) {
@@ -88,6 +93,7 @@ export const TaxResidencyField = ({
               control={control}
               key={field.id}
               filter={getSelectedCountries()}
+              disabled={disableField}
             />
           </Grid>
 
@@ -100,7 +106,7 @@ export const TaxResidencyField = ({
               defaultValue={defaultValue?.taxIdentificationNumber ?? ''}
               name={['taxResidencies', index, 'taxIdentificationNumber']}
               variant='outlined'
-              disabled={!taxIdAvailable}
+              disabled={!taxIdAvailable || disableField}
               key={field.id}
             />
           </Grid>
@@ -110,7 +116,7 @@ export const TaxResidencyField = ({
               <Grid item xs={2}>
                 <IconButton
                   onClick={handleRemove}
-                  disabled={total === 1}
+                  disabled={total === 1 || disableField}
                   data-testid='remove-button'
                   size='large'
                 >

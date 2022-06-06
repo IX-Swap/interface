@@ -21,6 +21,7 @@ import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { subYears } from 'date-fns'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -39,6 +40,7 @@ export const IndividualInfoFields = (
     middleName: defaultMiddleName
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
+  const { isSingPass, individualIdentity } = useIsSingPass()
 
   return (
     <Grid container>
@@ -59,14 +61,16 @@ export const IndividualInfoFields = (
           />
         </Box>
         <Grid container spacing={6} style={{ marginTop: isMobile ? 8 : 20 }}>
-          <Grid item xs={12}>
-            <TextField
-              label='Principal Name'
-              value={user?.name}
-              disabled
-              fullWidth
-            />
-          </Grid>
+          {isSingPass && (
+            <Grid item xs={12}>
+              <TextField
+                label='Principal Name'
+                value={user?.name}
+                disabled
+                fullWidth
+              />
+            </Grid>
+          )}
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
@@ -128,6 +132,7 @@ export const IndividualInfoFields = (
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
               maxDate={subYears(new Date(), 18)}
+              disabled={isSingPass}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -153,6 +158,7 @@ export const IndividualInfoFields = (
               // disabled={isEmailDisabled}
               defaultValue={defaultEmail}
               variant='outlined'
+              disabled={isSingPass}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -163,6 +169,7 @@ export const IndividualInfoFields = (
               name='nationality'
               label='Nationality'
               variant='outlined'
+              disabled={isSingPass}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -173,8 +180,19 @@ export const IndividualInfoFields = (
               name='gender'
               label='Gender'
               variant='outlined'
+              disabled={isSingPass}
             />
           </Grid>
+          {isSingPass && (
+            <Grid item xs={12} sm={6} md={4}>
+              <TextField
+                fullWidth
+                label='NRIC/FIN'
+                disabled
+                value={individualIdentity?.uinfin}
+              />
+            </Grid>
+          )}
         </Grid>
       </Box>
     </Grid>

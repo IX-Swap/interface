@@ -45,11 +45,34 @@ export const openFileInNewTab = (file: File) => {
 export const generateSingPassAuthorizeUrl = () => {
   const url = process.env.SING_PASS_AUTH_URL ?? ''
   const clientId = process.env.SING_PASS_CLIENT_ID ?? ''
-  const purpose = 'demonstrating MyInfo APIs'
+  const purpose = 'identification'
   const state = encodeURIComponent('123')
   const redirectUrl = process.env.SING_PASS_REDIRECT_URL ?? ''
-  const attributes =
-    'uinfin,name,sex,race,nationality,dob,email,mobileno,regadd,housingtype,hdbtype,marital,edulevel,noa-basic,ownerprivate,cpfcontributions,cpfbalances'
+  const attrArray = [
+    'uinfin',
+    'name',
+    'sex',
+    'race',
+    'nationality',
+    'dob',
+    'email',
+    'mobileno',
+    'regadd',
+    'housingtype',
+    'hdbtype',
+    'marital',
+    'edulevel',
+    'noa-basic',
+    'ownerprivate',
+    'cpfcontributions',
+    'cpfbalances',
+    'employmentsector',
+    'noahistory-basic',
+    'noahistory',
+    'employment',
+    'occupation'
+  ]
+  const attributes = attrArray.join(',')
 
   const authoriseUrl = `${url}?client_id=${clientId}&attributes=${attributes}&purpose=${purpose}&state=${state}&redirect_uri=${redirectUrl}`
 

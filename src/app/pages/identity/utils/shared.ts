@@ -47,3 +47,17 @@ export const prepareDeclarationsForUpload = (
     [key]: value
   }))
 }
+
+export const titleCase = (value?: string) => {
+  if (value === undefined) {
+    return ''
+  }
+
+  return value
+    .toLowerCase()
+    .replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())
+}
+
+export const checkSingPassDisabled = (isSingPass: boolean, value?: string) => {
+  return value !== undefined && value.trim() !== '' && isSingPass
+}
