@@ -140,6 +140,6 @@ const Tooltip = styled.div`
   font-size: 9px;
   line-height: 160%;
   text-align: center;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   max-width: 319px;
 `

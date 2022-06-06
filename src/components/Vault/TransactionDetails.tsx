@@ -33,9 +33,22 @@ import {
   isDeposit,
   isWithdraw,
   withdrawSuccessStatuses,
+  depositErrorStatuses,
+  withdrawErrorStatuses,
 } from './enum'
 
-import { InfoModalHeader, InfoModalBody, StyledQrInfo, LiniarProgressContainer, PendingDepositInfo } from './styleds'
+import {
+  InfoModalHeader,
+  InfoModalBody,
+  StyledQrInfo,
+  LiniarProgressContainer,
+  PendingDepositInfo,
+  DepositWarningInfo,
+  DeadlineInfo,
+} from './styleds'
+import { DepoistStatusInfo } from './DepoistStatusInfo'
+import { getNetworkFromToken, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
+import { WithdrawalWarning } from './WithdrawalWarning'
 
 interface Props {
   currency?: Currency & { originalSymbol: string }
@@ -70,8 +83,17 @@ export const TransactionDetails = ({ currency }: Props) => {
   const isSuccess = (data.type === ActionTypes.DEPOSIT ? depositSuccessStatuses : withdrawSuccessStatuses).includes(
     status
   )
+
+  const isEnded = (
+    data.type === ActionTypes.DEPOSIT
+      ? [...depositSuccessStatuses, ...depositErrorStatuses]
+      : [...withdrawSuccessStatuses, ...withdrawErrorStatuses]
+  ).includes(status)
   const statusColor = getStatusColor(data.type, status)
   const percent = getActionStatusPercent(data.type, status)
+
+  const originalNetworkName = getOriginalNetworkFromToken(currency)
+  const networkName = getNetworkFromToken(currency)
 
   return (
     <RedesignedWideModal
@@ -91,6 +113,13 @@ export const TransactionDetails = ({ currency }: Props) => {
           <CloseIcon data-testid="cross" onClick={toggle} />
         </InfoModalHeader>
         <InfoModalBody style={{ position: 'relative' }} isSuccess={isSuccess}>
+          {isDeposit(data.type) && status === DepositStatus.PENDING && (
+            <DepositWarningInfo>
+              <div>WARNING</div>
+              Please execute the transaction of wCTI Tokens to the Custodians wallet address on the <br />
+              Ethereum Blockchain.
+            </DepositWarningInfo>
+          )}
           <div>
             <label>
               <Trans>Status:</Trans>
@@ -104,43 +133,31 @@ export const TransactionDetails = ({ currency }: Props) => {
             </LiniarProgressContainer>
             {isDeposit(data.type) && status === DepositStatus.PENDING && (
               <PendingDepositInfo>
-                <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-start', marginTop: '8px' }}>
+                <Row style={{ flexWrap: 'wrap', gap: '12px', alignItems: 'flex-end', marginTop: '8px' }}>
                   <div style={{ flex: '1', minWidth: '60%' }}>
-                    Make deposit by sending{' '}
-                    <b>
-                      {data.amount} {currency?.originalSymbol}
-                    </b>{' '}
-                    from the wallet{' '}
-                    <b>
-                      <CopyAddress address={data?.fromAddress || ''} size={14} wrapperStyles={{ display: 'inline' }} />
-                    </b>{' '}
-                    to Custodian wallet{' '}
-                    <b>
-                      <CopyAddress
-                        address={data?.depositAddress || ''}
-                        size={14}
-                        wrapperStyles={{ display: 'inline' }}
-                      />
-                    </b>{' '}
-                    in next 1h.
+                    <DepoistStatusInfo
+                      originalSymbol={currency?.originalSymbol}
+                      fromAddress={data.fromAddress}
+                      toAddress={data.depositAddress}
+                      amount={data.amount}
+                    />
                   </div>
+
                   <div style={{ margin: '0 auto' }}>
                     <QRCodeWrap
                       value={data.depositAddress ?? ''}
-                      size={112}
+                      size={80}
                       info={<StyledQrInfo>{shortenAddress(data?.depositAddress || '')}</StyledQrInfo>}
                     ></QRCodeWrap>
                   </div>
                 </Row>
                 {data.deadline && (
-                  <RowCenter style={{ marginTop: '16px' }}>
-                    <TYPE.description2>
-                      <Trans>
-                        Deposit will be cancelled if no tokens are received until{' '}
-                        {dayjs(data.deadline).format('MMM D HH:mm')}
-                      </Trans>
-                    </TYPE.description2>
-                  </RowCenter>
+                  <DeadlineInfo>
+                    <Trans>
+                      Deposit will be cancelled if no tokens are received until{' '}
+                      {dayjs(data.deadline).format('MMM D HH:mm')}
+                    </Trans>
+                  </DeadlineInfo>
                 )}
               </PendingDepositInfo>
             )}
@@ -204,18 +221,19 @@ export const TransactionDetails = ({ currency }: Props) => {
                 </ExternalLink>
               </RowBetween>
             )}
-
-            {/* {isDeposit(data.type) && (
-              <RowCenter style={{ marginTop: '28px' }}>
-                <QRCodeWrap value={data.depositAddress ?? ''} size={112}></QRCodeWrap>
-              </RowCenter>
-            )} */}
             {depositError && (
               <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
                 <TYPE.description2>{depositError}</TYPE.description2>
               </RowCenter>
             )}
           </Column>
+          {isWithdraw(data.type) && chainId && !isEnded && (
+            <WithdrawalWarning
+              originalNetworkName={originalNetworkName}
+              networkName={networkName}
+              symbol={currency?.originalSymbol}
+            />
+          )}
         </InfoModalBody>
       </ModalBlurWrapper>
     </RedesignedWideModal>

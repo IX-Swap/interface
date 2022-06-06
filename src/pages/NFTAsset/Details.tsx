@@ -11,7 +11,7 @@ import { TraitsShow } from '../CreateNFT/TraitsShow'
 import { SwitchRow } from './SwitchRow'
 
 const Divider = styled.div`
-  background-color: rgba(237, 206, 255, 0.5);
+  background-color: ${({ theme }) => theme.text9};
   height: 1px;
   margin: 28px 0;
 `

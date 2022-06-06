@@ -119,7 +119,7 @@ const SummaryTitle = styled.div`
   font-size: 16px;
   line-height: 24px;
   padding-bottom: 4px;
-  border-bottom: 1px solid rgba(237, 206, 255, 0.5);
+  border-bottom: 1px solid ${({ theme }) => theme.text9};
   margin-bottom: 12px;
 `
 

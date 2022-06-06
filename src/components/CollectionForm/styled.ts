@@ -107,7 +107,7 @@ export const LogoUploader = styled.div<{ file: boolean }>`
   position: relative;
   width: 172px;
   height: 172px;
-  border: 1px dashed rgba(237, 206, 255, 0.5);
+  border: 1px dashed ${({ theme }) => theme.text9};
   border-radius: 50%;
   background-color: ${({ file }) => (file ? 'transparent' : 'rgba(15, 5, 24, 0.7)')};
   display: flex;
@@ -143,7 +143,7 @@ export const CoverUploader = styled.div<{ file: boolean }>`
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  border: 1px dashed rgba(237, 206, 255, 0.5);
+  border: 1px dashed ${({ theme }) => theme.text9};
   background-color: ${({ file }) => (file ? 'transparent' : 'rgba(15, 5, 24, 0.7)')};
   > img {
     margin-bottom: 8px;
@@ -163,7 +163,7 @@ export const CoverUploader = styled.div<{ file: boolean }>`
 export const UploadText = styled.div`
   font-weight: 600;
   font-size: 10px;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   text-align: center;
   span {
     background: ${({ theme: { bgG3 } }) => bgG3};

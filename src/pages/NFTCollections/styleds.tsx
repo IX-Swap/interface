@@ -136,7 +136,7 @@ export const TextInfo = styled.div`
   flex-direction: column;
   row-gap: 8px;
   text-align: center;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   font-weight: 500;
   font-size: 12px;
   > div {
