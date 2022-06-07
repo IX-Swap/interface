@@ -1,24 +1,25 @@
 import React from 'react'
 
 import { useUserState } from 'state/user/hooks'
+import { TmEmptyPage } from 'components/TmEmptyPage'
 
 import { TokenItem } from './TokenItem'
-import { Container } from './styleds'
+import { Container, TokensList } from './styleds'
 
 export const TmMyTokens = () => {
   const { me } = useUserState()
 
   return (
-    <>
+    <Container>
       {me?.managerOf?.length ? (
-        <Container>
+        <TokensList>
           {me?.managerOf.map((item) => (
             <TokenItem key={item} item={item} />
           ))}
-        </Container>
+        </TokensList>
       ) : (
-        <div>No data</div>
+        <TmEmptyPage tab="my-tokens" />
       )}
-    </>
+    </Container>
   )
 }

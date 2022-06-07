@@ -10,15 +10,15 @@ import { ROLES } from 'constants/roles'
 import { TmMyTokens } from 'components/TmMyTokens'
 import { ButtonIXSGradient } from 'components/Button'
 
-type AdminTab = 'my-tokens' | 'payout-events' | 'payout-history'
+export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
 interface Tab {
   label: string
-  value: AdminTab
+  value: TokenManagerTab
 }
 
-export interface AdminParams {
-  tab: AdminTab
+export interface TokenManagerParams {
+  tab: TokenManagerTab
   id?: string
 }
 
@@ -28,7 +28,7 @@ const tabs: Tab[] = [
   { label: 'Payout History', value: 'payout-history' },
 ]
 
-const renderTab = (selectedTab: AdminTab | string) => {
+const renderTab = (selectedTab: TokenManagerTab | string) => {
   switch (selectedTab) {
     case 'my-tokens':
       return <TmMyTokens />
@@ -43,15 +43,15 @@ const renderTab = (selectedTab: AdminTab | string) => {
 }
 
 const TokenManager = () => {
-  const [selectedTab, setSelectedTab] = useState<AdminTab>('my-tokens')
+  const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('my-tokens')
 
   const history = useHistory()
-  const params = useParams<AdminParams>()
+  const params = useParams<TokenManagerParams>()
 
   const { me } = useUserState()
 
   const changeTab = useCallback(
-    (tab: AdminTab) => {
+    (tab: TokenManagerTab) => {
       history.push(`/token-manager/${tab}`)
     },
     [history]
