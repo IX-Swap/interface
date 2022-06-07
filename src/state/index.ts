@@ -28,6 +28,7 @@ import assetForm from './nft/assetForm.reducer'
 import collectionForm from './nft/collectionForm.reducer'
 import secCatalog from './secCatalog/reducer'
 import kyc from './kyc/reducer'
+import payout from './payout/reducer'
 
 const PERSISTED_KEYS: string[] = ['auth', 'lists', 'swap', 'swapHelper', 'transactions', 'user']
 
@@ -59,6 +60,7 @@ const combinedReducer = combineReducers({
   user,
   vesting,
   withdraw,
+  payout,
 })
 
 const rootReducer = (state: any, action: any) => {

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import moment from 'moment'
@@ -22,6 +22,14 @@ interface Props {
 
 export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
   const { tokenId, tokenAmount, recordDate } = values
+
+  const isButtonDisabled = useMemo(() => {
+    for (const key in values) {
+      if (['secTokenAmount', 'id', 'otherType'].includes(key)) continue
+      if (!values[key]) return true
+    }
+    return false
+  }, [values]) // temporary
 
   return (
     <FormCard>
@@ -104,7 +112,7 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
       <Uploader title="Payout Attachments" files={[]} onDrop={() => null} handleDeleteClick={() => null} required />
 
       <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder padding="16px 24px" marginRight="32px" disabled>
+        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={isButtonDisabled}>
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
         <ButtonIXSGradient padding="16px 24px" disabled>

@@ -6,15 +6,21 @@ import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
+import { useCreateDraftPayout } from 'state/payout/hooks'
 
 import { TYPE } from 'theme'
 import { FormGrid } from 'pages/KYC/styleds'
 import { initialValues, mockSecTokens } from './mock'
 import { FormCard } from './styleds'
+import { transformPayoutDraftDTO } from './utils'
 
 export const PayoutForm: FC = () => {
+  const createDraft = useCreateDraftPayout()
+
   const handleFormSubmit = async (values: any) => {
-    console.log('submitted', values)
+    const body = transformPayoutDraftDTO(values)
+    const data = await createDraft(body)
+    console.log('data', data)
   }
 
   return (
@@ -27,12 +33,13 @@ export const PayoutForm: FC = () => {
       enableReinitialize
       onSubmit={handleFormSubmit}
     >
-      {({ values, setFieldValue }) => {
+      {({ values, setFieldValue, handleSubmit }) => {
         const onValueChange = (key: string, value: any) => {
           setFieldValue(key, value, false)
         }
+
         return (
-          <>
+          <form onSubmit={handleSubmit}>
             <FormCard marginBottom="32px">
               <TYPE.title6 marginBottom="28px">
                 <Trans>SECURITY TOKENS</Trans>
@@ -61,7 +68,7 @@ export const PayoutForm: FC = () => {
             </FormCard>
 
             <PayoutEventBlock values={values} onValueChange={onValueChange} />
-          </>
+          </form>
         )
       }}
     </Formik>

@@ -38,6 +38,10 @@ export const auth = {
   me: 'auth/me',
 }
 
+export const payout = {
+  createDraft: `payout/draft`,
+}
+
 export const kyc = {
   getAccreditation: (tokenId: number, isKyc: boolean) => `kyc/getAccreditation/${tokenId}?isKyc=${isKyc}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
