@@ -96,4 +96,5 @@ export interface RawGetMePayload {
   updatedAt: string
   deletedAt: string
   isWhitelisted: boolean
+  managerOf: number[]
 }

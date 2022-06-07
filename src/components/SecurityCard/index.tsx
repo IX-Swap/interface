@@ -1,16 +1,19 @@
-import { Currency } from '@ixswap1/sdk-core'
-import Column from 'components/Column'
-import { AccreditationStatusEnum } from 'components/Vault/enum'
-import { useActiveWeb3React } from 'hooks/web3'
-import { darken } from 'polished'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Box } from 'rebass'
-import { useCurrencyBalance } from 'state/wallet/hooks'
+import Column from 'components/Column'
+import { Currency } from '@ixswap1/sdk-core'
+import { darken } from 'polished'
 import styled, { CSSProperties } from 'styled-components/macro'
+
+import { AccreditationStatusEnum } from 'components/Vault/enum'
+import { useActiveWeb3React } from 'hooks/web3'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { useCurrencyBalance } from 'state/wallet/hooks'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { routes } from 'utils/routes'
+
 import Card, { LightCard } from '../Card'
 import Row, { RowBetween } from '../Row'
 import { CurrencyHeader } from './CurrencyHeader'
@@ -75,7 +78,11 @@ export default function SecurityCard({
   return (
     <Row style={style}>
       <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
-        <StyledPositionCard as={Link} to={routes.securityTokens(currency)} data-testid="custodian-sec-token-info">
+        <StyledPositionCard
+          as={Link}
+          to={routes.securityTokens(currency as WrappedTokenInfo)}
+          data-testid="custodian-sec-token-info"
+        >
           <Column>
             <StyledRowBetween>
               <Box style={{ display: 'flex', justifyContent: 'flex-start', width: 'fit-content' }}>

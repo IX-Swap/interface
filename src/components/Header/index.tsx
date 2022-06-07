@@ -5,7 +5,7 @@ import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Flex, Text } from 'rebass'
+import { Text } from 'rebass'
 import styled from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -17,13 +17,15 @@ import { HeaderLinks } from './HeaderLinks'
 import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
-import { TYPE } from 'theme'
 import { useKYCState } from 'state/kyc/hooks'
 
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { useUserState } from 'state/user/hooks'
+import { ROLES } from 'constants/roles'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -193,20 +195,11 @@ const HeaderWrapper = styled.div`
   z-index: 2;
 `
 
-const KYCWrapper = styled.div`
+const IconWrapper = styled.div`
   display: block;
 
   ${({ theme }) => theme.mediaWidth.upToExtremelySmall`
     display: none;
-  `};
-`
-
-const KYCCard = styled(Flex)`
-  padding: 0px 7px 3px 7px;
-  background: ${({ theme }) => theme.bgG13};
-  border-radius: 4px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none !important;
   `};
 `
 
@@ -218,6 +211,7 @@ export default function Header() {
   const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
+  const { me } = useUserState()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
@@ -235,21 +229,23 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {isWhitelisted && (
-              <KYCWrapper>
+            {isWhitelisted && me?.role === ROLES.TOKEN_MANAGER && (
+              <IconWrapper>
                 <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
-                    <KYCCard flexDirection="column" alignItems="center" justifyContent="center">
-                      {kyc?.status === 'approved' ? (
-                        <KYCApproved style={{ width: 30, height: 30 }} />
-                      ) : (
-                        <KYC style={{ marginTop: 5 }} />
-                      )}
-                      <TYPE.smallError color={kyc?.status !== 'approved' ? 'error' : 'green1'}>KYC</TYPE.smallError>
-                    </KYCCard>
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }} to="/token-manager">
+                    <TokenManager />
                   </NavLink>
                 </HeaderElement>
-              </KYCWrapper>
+              </IconWrapper>
+            )}
+            {isWhitelisted && (
+              <IconWrapper>
+                <HeaderElement>
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
+                    {kyc?.status === 'approved' ? <KYCApproved /> : <KYC />}
+                  </NavLink>
+                </HeaderElement>
+              </IconWrapper>
             )}
             <HeaderElement>
               <IXSBalance />
