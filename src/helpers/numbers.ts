@@ -123,16 +123,6 @@ export const addLeadingZeros = (num: number | string, length: number) => {
   return `${zeroes}${num}`
 }
 
-export const getFilledPercentage = ({
-  amount,
-  availableAmount
-}: {
-  amount: number
-  availableAmount?: number
-}) => {
-  const percentAmount = ((amount - (availableAmount ?? amount)) / amount) * 100
-  return `${percentAmount.toFixed(2)}%`
-}
 export const getFilledRoundedPercentage = ({
   amount,
   availableAmount
@@ -142,16 +132,6 @@ export const getFilledRoundedPercentage = ({
 }) => {
   const percentAmount = ((amount - (availableAmount ?? amount)) / amount) * 100
   return `${Math.round(Number(percentAmount.toFixed(2)))}%`
-}
-export const getFilledMatchesPercentage = ({
-  amount,
-  matchedAmount
-}: {
-  amount: number
-  matchedAmount: number
-}) => {
-  const percentAmount = (matchedAmount / amount) * 100
-  return `${percentAmount.toFixed(2)}%`
 }
 
 export const getRoundedPercentage = ({

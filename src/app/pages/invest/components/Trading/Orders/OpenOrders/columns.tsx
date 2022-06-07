@@ -8,9 +8,21 @@ import {
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderTicker } from 'helpers/tables'
-import { OTCOrder } from 'types/otcOrder'
+import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
 
+const renderOpenOrderPercentage = (row: OTCOrder) => {
+  if (
+    row.matches?.status !== OTCOrderStatus.SETTLED &&
+    row.orderType === 'BUY'
+  ) {
+    return '0'
+  }
+  return getRoundedPercentage({
+    amount: row.amount,
+    matchedAmount: row.matches?.matchedAmount ?? 0
+  })
+}
 export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'createdAt',
@@ -47,11 +59,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) =>
-      getRoundedPercentage({
-        amount: row.amount,
-        matchedAmount: row.matches?.matchedAmount ?? 0
-      })
+    render: (_, row) => renderOpenOrderPercentage(row)
   }
 ]
 
@@ -85,11 +93,7 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) =>
-      getRoundedPercentage({
-        amount: row.amount,
-        matchedAmount: row.matches?.matchedAmount ?? 0
-      })
+    render: (_, row) => renderOpenOrderPercentage(row)
   },
   {
     key: 'createdAt',
