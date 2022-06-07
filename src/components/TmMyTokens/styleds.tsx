@@ -3,6 +3,10 @@ import styled from 'styled-components'
 import { gradientBorder, MEDIA_WIDTHS } from 'theme'
 
 export const Container = styled.div`
+  flex: 1;
+`
+
+export const TokensList = styled.div`
   position: relative;
   ${gradientBorder}
   display: grid;
