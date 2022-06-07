@@ -61,6 +61,7 @@ export const PayoutForm: FC = () => {
                   value={values.recordDate}
                   onChange={(newDate) => onValueChange('recordDate', newDate)}
                   required
+                  tooltipText='Record Date'
                 />
               </FormGrid>
 

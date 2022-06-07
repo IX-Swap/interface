@@ -99,7 +99,7 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
 
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
         <Box>
-          <Label text="Payout Description" required />
+          <Label label="Payout Description" required />
           <Textarea
             placeholder="Give a brief description of this payout event"
             value={values.description}

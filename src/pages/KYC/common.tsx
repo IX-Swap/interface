@@ -62,7 +62,7 @@ export const Select: FC<SelectProps> = ({
 }: SelectProps) => {
   return (
     <Box>
-      {label && <Label required={required} text={label} />}
+      {label && <Label required={required} label={label} />}
       <ReactSelect
         name={name}
         placeholder={placeholder}
@@ -94,7 +94,7 @@ export const TextInput: FC<TextInputProps> = ({
 }: TextInputProps) => {
   return (
     <Box>
-      {label && <Label text={label} htmlFor={name || ''} required={required} />}
+      {label && <Label label={label} htmlFor={name || ''} required={required} />}
 
       <StyledInput
         onBlur={onBlur}
@@ -129,7 +129,7 @@ export const Uploader: FC<UploaderProps> = ({
   return (
     <Box>
       <Flex>
-        <Label text={title} required={required} />
+        <Label label={title} required={required} />
         {optional && (
           <>
             <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
@@ -188,7 +188,7 @@ interface ChooseFileTypes {
 export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: ChooseFileTypes) => {
   return (
     <Box style={{ maxWidth: 200 }}>
-      {label && <Label text={label} />}
+      {label && <Label label={label} />}
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
@@ -220,10 +220,10 @@ export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
       <FormGrid columns={4}>
-        <Label text={t`Full Name`} />
-        <Label text={t`% Shareholding`} />
-        <Label text={t`Proof of Address`} />
-        <Label text={t`Proof of Identity`} />
+        <Label label={t`Full Name`} />
+        <Label label={t`% Shareholding`} />
+        <Label label={t`Proof of Address`} />
+        <Label label={t`Proof of Identity`} />
       </FormGrid>
     </BeneficialOwnersTableContainer>
   )

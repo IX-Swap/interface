@@ -26,7 +26,7 @@ export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
 
   return (
     <Box marginBottom="24px">
-      <Label marginBottom="8px" text={t`Payout Type`} required />
+      <Label marginBottom="8px" label={t`Payout Type`} required />
       <Card style={{ marginBottom: 8 }}>
         {payoutTypes.map(({ id, label }) => (
           <Checkbox

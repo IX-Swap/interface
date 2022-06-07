@@ -6,13 +6,14 @@ import { t } from '@lingui/macro'
 import { Label } from 'components/Label'
 import { TYPE } from 'theme'
 import { Input } from 'components/Input'
+
+import { Props as LabelProps } from 'components/Label'
 import calendarIcon from 'assets/images/calendar.svg'
 
 interface Props {
   value?: string | Date | number
   onChange: (value: any) => void
   onBlur?: (e: any) => void
-  label?: string
   name?: string
   error?: any | ReactChildren
   openTo?: 'date' | 'year' | 'month'
@@ -20,7 +21,6 @@ interface Props {
   maxDate?: any
   minDate?: any
   placeholder?: string
-  required?: boolean
 }
 
 export const DateInput = ({
@@ -32,12 +32,13 @@ export const DateInput = ({
   onBlur,
   error,
   maxDate,
+  tooltipText,
   required,
   ...props
-}: Props) => {
+}: Props & Partial<LabelProps>) => {
   return (
     <Container>
-      <Label text={t`${label || 'Date of Birth'}`} required={required} />
+      <Label label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
       <DatePicker
         name={name}
         value={value || null}

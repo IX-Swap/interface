@@ -26,7 +26,7 @@ interface Props {
 export const Summary: FC<Props> = ({ poolsAmount, walletsAmount }) => {
   return (
     <>
-      <Label text={t`Token Payout Summary`} />
+      <Label label={t`Token Payout Summary`} />
 
       <Card>
         <Flex marginBottom="8px" justifyContent="space-between" alignItems="center" opacity="50%">
