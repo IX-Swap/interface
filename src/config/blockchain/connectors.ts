@@ -37,6 +37,7 @@ export function getNetworkLibrary(): Web3Provider {
 export const injected = new InjectedConnector({})
 
 export const walletconnect = new WalletConnectConnector({
-  rpc: NETWORK_URLS,
+  supportedChainIds: [137, 80001],
+  rpc: [NETWORK_URLS[137], NETWORK_URLS[80001]],
   qrcode: true
 })
