@@ -1,9 +1,9 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
-  getFilledPercentage,
+  formatRoundedAmount,
+  getFilledRoundedPercentage,
   getOrderCurrency,
-  renderMoney,
   renderTotal
 } from 'helpers/numbers'
 import { OTCOrder } from 'types/otcOrder'
@@ -29,7 +29,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     key: 'ethAddress',
     label: 'Filled Buy',
     render: (_, row) =>
-      getFilledPercentage({
+      getFilledRoundedPercentage({
         amount: row.amount,
         availableAmount: row.availableAmount
       })
@@ -43,7 +43,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     key: '_id',
     label: 'Filled Sell',
     render: (_, row) =>
-      getFilledPercentage({
+      getFilledRoundedPercentage({
         amount: row.matches?.matchedOrder?.amount ?? 1,
         availableAmount: row.matches?.matchedOrder?.availableAmount
       })
@@ -56,7 +56,8 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'availableAmount',
     label: 'Amount',
-    render: (_, row) => formatMoney(row?.matches?.matchedAmount ?? 0, '')
+    render: (_, row) => formatRoundedAmount(row?.matches?.matchedAmount ?? 0),
+    align: 'center'
   },
   {
     key: 'amount',
