@@ -24,6 +24,10 @@ export const formatAmount = (value: number) => {
 
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
+export const formatRoundedAmount = (value: number) => {
+  if (value === undefined || value === null) return ''
+  return Math.round(Number(value.toFixed(2)))
+}
 
 export const formatAmountValue = (value: string | number) =>
   typeof value === 'number' ? formatAmount(value) : value
@@ -129,6 +133,16 @@ export const getFilledPercentage = ({
   const percentAmount = ((amount - (availableAmount ?? amount)) / amount) * 100
   return `${percentAmount.toFixed(2)}%`
 }
+export const getFilledRoundedPercentage = ({
+  amount,
+  availableAmount
+}: {
+  amount: number
+  availableAmount?: number
+}) => {
+  const percentAmount = ((amount - (availableAmount ?? amount)) / amount) * 100
+  return `${Math.round(Number(percentAmount.toFixed(2)))}%`
+}
 export const getFilledMatchesPercentage = ({
   amount,
   matchedAmount
@@ -139,6 +153,18 @@ export const getFilledMatchesPercentage = ({
   const percentAmount = (matchedAmount / amount) * 100
   return `${percentAmount.toFixed(2)}%`
 }
+
+export const getRoundedPercentage = ({
+  amount,
+  matchedAmount
+}: {
+  amount: number
+  matchedAmount: number
+}) => {
+  const percentAmount = (matchedAmount / amount) * 100
+  return `${Math.round(Number(percentAmount.toFixed(2)))}%`
+}
+
 export const renderMoney = (value: any, row?: any) => formatMoney(value, '')
 export const renderTotal = ({
   price,

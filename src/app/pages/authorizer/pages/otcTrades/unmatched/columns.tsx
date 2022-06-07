@@ -1,4 +1,9 @@
-import { formatMoney, getOrderCurrency, renderTotal } from 'helpers/numbers'
+import {
+  formatMoney,
+  formatRoundedAmount,
+  getOrderCurrency,
+  renderTotal
+} from 'helpers/numbers'
 import { OrderType, OTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
 import { renderIdentityLink } from '../OrderTableIdentityLink'
@@ -29,7 +34,8 @@ export const getColumns = (side: OrderType): Array<TableColumn<OTCOrder>> => [
   {
     key: 'availableAmount',
     label: 'Amount',
-    render: (value, row) => formatMoney(value, '')
+    render: (value, row) => formatRoundedAmount(value),
+    align: 'center'
   },
   {
     key: '_id',
