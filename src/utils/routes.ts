@@ -1,7 +1,5 @@
 import { Currency } from '@ixswap1/sdk-core'
 
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-
 import { currencyId } from './currencyId'
 
 export const routes = {
