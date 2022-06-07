@@ -10,11 +10,8 @@ export const input = (theme: Theme) => {
         marginTop: 0,
         // common styles
         '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root': {
-          position: 'absolute',
-          top: 88,
-          left: 0,
           marginLeft: 0,
-          marginTop: 0
+          marginTop: 12
         },
         '& .MuiInputLabel-root': {
           color: theme.palette.select.label,

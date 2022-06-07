@@ -14,10 +14,7 @@ export const useStyles = makeStyles(theme => {
       },
       '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root': {
         marginLeft: 0,
-        marginTop: 0,
-        position: 'absolute',
-        top: 88,
-        left: 0
+        marginTop: 12
       },
       '&.Mui-focused': {
         backgroundColor: selectPalette.bg
