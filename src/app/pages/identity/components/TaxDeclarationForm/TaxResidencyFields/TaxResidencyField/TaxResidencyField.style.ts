@@ -1,7 +1,9 @@
 import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
-  container: {},
+  container: {
+    position: 'relative'
+  },
   block: {
     width: 'calc(50% - 44px)',
     marginRight: theme.spacing(2.5),
@@ -19,14 +21,18 @@ export default makeStyles(theme => ({
     marginTop: theme.spacing(3)
   },
   deleteButton: {
+    position: 'absolute',
+    right: 0,
+    top: 28,
     width: 48,
-    height: 48,
+    height: 49,
     backgroundColor: `${
       theme.palette.mode === 'light' ? '#F7F9FA' : '#1D3667'
     }!important`,
     borderRadius: 8,
 
     [theme.breakpoints.down('md')]: {
+      position: 'initial',
       width: '100%',
       margin: theme.spacing(1, 0, 4)
     },

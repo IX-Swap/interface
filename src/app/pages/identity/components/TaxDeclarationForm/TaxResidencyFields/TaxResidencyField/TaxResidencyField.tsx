@@ -90,7 +90,7 @@ export const TaxResidencyField = ({
   return (
     <Grid container direction='column' className={classes.container}>
       <Grid item>
-        <Grid container alignItems='flex-end'>
+        <Grid container>
           <Grid item className={classes.block}>
             <TypedField
               component={CountrySelect}
