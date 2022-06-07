@@ -124,7 +124,7 @@ export const useAppNavigation = () => {
     return false
   }
 
-  const isNavigationPossibleWithoutCompletedIdentity = (link: string) => {
+  const isNavigationImpossibleWithoutCompletedIdentity = (link: string) => {
     return (
       !isAccredited &&
       !link.startsWith(AppPath.educationCentre) &&
@@ -138,6 +138,7 @@ export const useAppNavigation = () => {
     links,
     dropdownLinksItems,
     isDropdownLink,
-    isNavigationPossibleWithoutCompletedIdentity
+    isNavigationImpossibleWithoutCompletedIdentity:
+      isNavigationImpossibleWithoutCompletedIdentity
   }
 }

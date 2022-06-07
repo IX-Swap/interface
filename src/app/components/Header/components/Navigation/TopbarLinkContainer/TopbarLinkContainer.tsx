@@ -29,7 +29,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   const { pathname } = useLocation()
   const baseLink = link.split('/').slice(0, 3).join('/')
 
-  const { isNavigationPossibleWithoutCompletedIdentity } = useAppNavigation()
+  const { isNavigationImpossibleWithoutCompletedIdentity } = useAppNavigation()
   const { showUncompletedIdentityDialog } = useUncompletedIdentityDialog(link)
 
   const getIsLinkActive = () => {
@@ -53,7 +53,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   })
 
   const handleClick = (e: React.MouseEvent) => {
-    if (disabled || isNavigationPossibleWithoutCompletedIdentity(link)) {
+    if (disabled || isNavigationImpossibleWithoutCompletedIdentity(link)) {
       e.preventDefault()
       !disabled && showUncompletedIdentityDialog()
     }

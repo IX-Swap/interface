@@ -21,7 +21,7 @@ import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 
-describe('useAppNavigationLinks', () => {
+describe('useAppNavigation', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
