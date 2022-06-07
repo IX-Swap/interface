@@ -136,8 +136,13 @@ export const TaxResidencyField = ({
         className={classes.buttonBlock}
       >
         {isLast && total < max ? (
-          <Grid item>
-            <Button variant='outlined' color='primary' onClick={handleAdd}>
+          <Grid item className={classes.addButtonContainer}>
+            <Button
+              variant='outlined'
+              color='primary'
+              onClick={handleAdd}
+              fullWidth={matches}
+            >
               <Icon name={'plus'} size={20} className={classes.icon} />
               Add Country
             </Button>

@@ -46,5 +46,10 @@ export default makeStyles(theme => ({
   },
   icon: {
     marginRight: theme.spacing(1)
+  },
+  addButtonContainer: {
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
+    }
   }
 }))
