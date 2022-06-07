@@ -17,7 +17,6 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     position: `relative`,
-    marginTop: theme.spacing(2),
     background: theme.palette.header.bg,
     border: 'none',
     maxHeight: 120,
