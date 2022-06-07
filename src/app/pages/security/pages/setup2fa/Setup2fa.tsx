@@ -7,6 +7,7 @@ import { Layout2fa } from 'app/pages/security/components/Layout2fa/Layout2fa'
 import { StepButton } from 'ui/Stepper/StepButton'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { use2faSteps } from 'app/pages/security/hooks/use2faSteps'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 const steps = [
   'Download App',
@@ -17,15 +18,10 @@ const steps = [
 
 export const Setup2fa = () => {
   const { data } = useSetup2fa()
+  const { isTablet } = useAppBreakpoints()
 
-  const {
-    activeStep,
-    prevStep,
-    nextStep,
-    stepperConditions,
-    stepInfo,
-    isMobile
-  } = use2faSteps(steps)
+  const { activeStep, prevStep, nextStep, stepperConditions, stepInfo } =
+    use2faSteps(steps)
 
   const isBackButtonVisible = activeStep > 0 && activeStep < steps.length
   const isNextButtonVisible = activeStep < steps.length - 1
@@ -37,12 +33,12 @@ export const Setup2fa = () => {
       }
       stepper={
         <Stepper
-          orientation={isMobile ? 'horizontal' : 'vertical'}
+          orientation={isTablet ? 'horizontal' : 'vertical'}
           activeStep={activeStep}
           nonLinear
           withMobileDropdown={false}
-          title={isMobile ? '2FA Authenticator' : 'Progress'}
-          stepInfo={stepInfo}
+          title={isTablet ? '2FA Authenticator' : 'Progress'}
+          stepInfo={isTablet ? stepInfo : undefined}
         >
           {steps.map((label, index) => (
             <Step key={label} completed={stepperConditions(index).completed}>

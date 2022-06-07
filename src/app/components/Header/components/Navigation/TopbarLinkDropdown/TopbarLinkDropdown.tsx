@@ -39,6 +39,7 @@ export const TopbarLinkDropdown = ({
       </div>
 
       <Menu
+        disableScrollLock={true}
         classes={{
           paper: classes.paper,
           list: classes.list

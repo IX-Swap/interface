@@ -16,9 +16,11 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   label: {
-    fontWeight: 600
+    fontWeight: 600,
+    color: theme.palette.primary.contrastText
   },
   value: {
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    color: theme.palette.primary.contrastText
   }
 }))
