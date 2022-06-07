@@ -13,7 +13,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
         class="makeStyles-wrapper-20 MuiBox-root css-0"
       >
         <div
-          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-18 css-1vpwcmr-MuiGrid-root"
@@ -50,7 +50,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-2lb6pp-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -226,7 +226,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
         class="makeStyles-wrapper-52 MuiBox-root css-0"
       >
         <div
-          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-50 css-1vpwcmr-MuiGrid-root"
@@ -263,7 +263,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-2lb6pp-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -324,7 +324,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
         class="makeStyles-wrapper-67 MuiBox-root css-0"
       >
         <div
-          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-65 css-1vpwcmr-MuiGrid-root"
@@ -361,7 +361,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-2lb6pp-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -422,7 +422,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 
         class="makeStyles-wrapper-5 MuiBox-root css-0"
       >
         <div
-          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-3 css-1vpwcmr-MuiGrid-root"
@@ -459,7 +459,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-2lb6pp-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-12 css-l6hioc-MuiGrid-root"
