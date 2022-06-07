@@ -3,7 +3,6 @@ import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { useCreateIndividual } from 'app/pages/identity/hooks/useCreateIndividual'
 import { useSubmitIndividual } from '../../hooks/useSubmitIndividual'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useOnboardingJourneys } from 'app/hooks/onboarding/useOnboardingJourneys'
 import { individualInvestorFormSteps } from './steps'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
@@ -18,23 +17,21 @@ export const IndividualInvestorForm = memo(() => {
   const { data, isLoading } = useIndividualIdentity()
   const mutation = useCreateIndividual()
   const submitMutation = useSubmitIndividual(openDialog)
-  const { showPreIdentityCreateDialog } = useOnboardingDialog()
   const { isIndividualJourneyCompleted } = useOnboardingJourneys()
   const { location, replace } = useHistory()
 
   useEffect(() => {
     if (!isLoading) {
-      if (data === undefined) {
-        showPreIdentityCreateDialog('individual')
-      } else {
-        if (location.pathname === IdentityRoute.createIndividual) {
-          replace(
-            generatePath(IdentityRoute.editIndividual, {
-              identityId: data._id,
-              userId: data.user._id
-            })
-          )
-        }
+      if (
+        data !== undefined &&
+        location.pathname === IdentityRoute.createIndividual
+      ) {
+        replace(
+          generatePath(IdentityRoute.editIndividual, {
+            identityId: data._id,
+            userId: data.user._id
+          })
+        )
       }
     }
     // eslint-disable-next-line

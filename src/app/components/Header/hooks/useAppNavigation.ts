@@ -1,4 +1,5 @@
 import {
+  useIsAccredited,
   useIsAdmin,
   useIsAuthorizer,
   useIsFundManager,
@@ -12,7 +13,7 @@ import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
-import { AppRoute } from 'app/router/config'
+import { AppRoute as AppPath, AppRoute } from 'app/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { educationCentreLinks } from 'app/pages/educationCentre/router/config'
@@ -23,10 +24,11 @@ import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import { InternalRouteProps } from 'types/util'
 
-export const useAppNavigationLinks = () => {
+export const useAppNavigation = () => {
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
   const isAdmin = useIsAdmin()
+  const isAccredited = useIsAccredited()
   const isFundManager = useIsFundManager()
   const isSuperUser = isAuthorizer || isAdmin
   const educationCenterLabel = 'Education Centre'
@@ -122,9 +124,21 @@ export const useAppNavigationLinks = () => {
     return false
   }
 
+  const isNavigationImpossibleWithoutCompletedIdentity = (link: string) => {
+    return (
+      !isAccredited &&
+      !link.startsWith(AppPath.educationCentre) &&
+      !link.startsWith(AppPath.identity) &&
+      !link.startsWith(AppPath.security) &&
+      !link.startsWith(AppPath.notifications)
+    )
+  }
+
   return {
     links,
     dropdownLinksItems,
-    isDropdownLink
+    isDropdownLink,
+    isNavigationImpossibleWithoutCompletedIdentity:
+      isNavigationImpossibleWithoutCompletedIdentity
   }
 }

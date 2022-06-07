@@ -1,12 +1,8 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, createElement, FunctionComponent } from 'react'
 import { AppearanceTypes, useToasts } from 'react-toast-notifications'
 import { NotificationToast } from 'app/pages/notifications/components/NotificationToast'
 import { Notification as TNotification } from 'types/notification'
 import { Snackbar } from './Snackbar'
-import {
-  OnboardingDialog,
-  OnboardingDialogProps
-} from 'app/components/OnboardingDialog/OnboardingDialog'
 import { useQueryCache } from 'react-query'
 import { identityQueryKeys } from 'config/queryKeys'
 import apiService from 'services/api'
@@ -14,19 +10,20 @@ import storageService from 'services/storage'
 import User from 'types/user'
 import { userURL } from 'config/apiURL'
 import { getIdFromObj } from 'helpers/strings'
+import { OnboardingDialog } from 'app/components/OnboardingDialog/OnboardingDialog'
 
 export interface SnackbarService {
   showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
   showNotification: (notification: TNotification) => any
-  showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => any
+  showDialog: (component: FunctionComponent) => any
 }
 
 export const useSnackbar = (): SnackbarService => {
   const { addToast, toastStack } = useToasts()
   const queryCache = useQueryCache()
 
-  const showOnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
-    return addToast(<OnboardingDialog {...onboardingDialog} />, {
+  const showDialog = (component: FunctionComponent) => {
+    return addToast(createElement(component), {
       appearance: 'info',
       autoDismiss: false
     })
@@ -113,6 +110,6 @@ export const useSnackbar = (): SnackbarService => {
       }
       return showAllNotifications()
     },
-    showOnboardingDialog: showOnboardingDialog
+    showDialog: showDialog
   }
 }

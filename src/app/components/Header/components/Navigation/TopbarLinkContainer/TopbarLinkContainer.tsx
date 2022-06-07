@@ -5,6 +5,8 @@ import { Typography } from '@mui/material'
 import { useStyles } from 'app/components/Header/components/Navigation/TopbarLinkContainer/TopbarLinkContainer.styles'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { useUncompletedIdentityDialog } from 'app/components/UncompletedIdentityDialog/hook/useUncompletedIdentityDialog'
+import { useAppNavigation } from 'app/components/Header/hooks/useAppNavigation'
 
 export interface TopbarLinkProps {
   link: string
@@ -27,6 +29,9 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   const { pathname } = useLocation()
   const baseLink = link.split('/').slice(0, 3).join('/')
 
+  const { isNavigationImpossibleWithoutCompletedIdentity } = useAppNavigation()
+  const { showUncompletedIdentityDialog } = useUncompletedIdentityDialog(link)
+
   const getIsLinkActive = () => {
     if (placement === 'topbar') {
       return pathname.startsWith(baseLink)
@@ -48,9 +53,11 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   })
 
   const handleClick = (e: React.MouseEvent) => {
-    if (disabled) {
+    if (disabled || isNavigationImpossibleWithoutCompletedIdentity(link)) {
       e.preventDefault()
+      !disabled && showUncompletedIdentityDialog()
     }
+
     if (onClick !== undefined) {
       onClick()
     }
