@@ -23,10 +23,12 @@ export const FiltersContainer = styled.div`
     border-radius: 0;
   }
   > div:first-child {
-    border-radius: 30px 0px 0px 30px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
   }
   > div:last-child {
-    border-radius: 0px 30px 30px 0px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
   }
 `
 

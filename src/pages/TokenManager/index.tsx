@@ -9,6 +9,7 @@ import { Border, ToggleOption } from 'components/Tabs'
 import { ROLES } from 'constants/roles'
 import { TmMyTokens } from 'components/TmMyTokens'
 import { ButtonIXSGradient } from 'components/Button'
+import { TmPayoutEvents } from 'components/TmPayoutEvents'
 
 export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
@@ -33,7 +34,7 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
     case 'my-tokens':
       return <TmMyTokens />
     case 'payout-events':
-      return <div>Payout events</div>
+      return <TmPayoutEvents />
     case 'payout-history':
       return <div>Payout history</div>
 
@@ -43,7 +44,7 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
 }
 
 const TokenManager = () => {
-  const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('my-tokens')
+  const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('payout-events')
 
   const history = useHistory()
   const params = useParams<TokenManagerParams>()
