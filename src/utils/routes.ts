@@ -1,4 +1,7 @@
 import { Currency } from '@ixswap1/sdk-core'
+
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+
 import { currencyId } from './currencyId'
 
 export const routes = {
@@ -11,8 +14,7 @@ export const routes = {
   kyc: '/kyc',
   kycIndividual: '/kyc/individual',
   kycCorporate: '/kyc/corporate',
-  securityTokens: (currency?: Currency & { tokenInfo?: { catalogId: number } }) =>
-    `/security-tokens${currency ? `/${currency?.tokenInfo?.catalogId}` : ''}`,
+  securityTokens: (currency?: any) => `/security-tokens${currency ? `/${currency?.tokenInfo?.catalogId}` : ''}`,
   staking: '/staking',
   vesting: '/vesting',
   nftList: '/nft',

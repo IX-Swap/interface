@@ -57,6 +57,14 @@ export const useSecToken = ({ currencyId }: { currencyId?: string }): SecToken |
   return token as any
 }
 
+export const useSecTokenById = (id?: number): SecToken | undefined => {
+  const { tokens } = useSecTokenState()
+
+  const token = (tokens || []).find((token) => token.id === id)
+
+  return token
+}
+
 const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =
   typeof WeakMap !== 'undefined' ? new WeakMap<SecToken[], SecTokenAddressMap>() : null
 
@@ -126,17 +134,20 @@ export function listToSecTokenMap(
 }
 
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
-export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: string]: Token } {
+export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: string]: WrappedTokenInfo } {
   const { chainId } = useActiveWeb3React()
 
   return useMemo(() => {
     if (!tokenMap || chainId === undefined) return {}
     if (!tokenMap[chainId]) return {}
     // reduce to just tokens
-    const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: Token }>((newMap, address) => {
-      newMap[address] = tokenMap[chainId][address].token
-      return newMap
-    }, {})
+    const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: WrappedTokenInfo }>(
+      (newMap, address) => {
+        newMap[address] = tokenMap[chainId][address].token
+        return newMap
+      },
+      {}
+    )
 
     return mapWithoutUrls
   }, [tokenMap, chainId])

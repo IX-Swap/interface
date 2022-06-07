@@ -22,6 +22,7 @@ import { useKYCState } from 'state/kyc/hooks'
 
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
@@ -235,6 +236,15 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
+            {isWhitelisted && (
+              <KYCWrapper>
+                <HeaderElement>
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/token-manager">
+                    <TokenManager />
+                  </NavLink>
+                </HeaderElement>
+              </KYCWrapper>
+            )}
             {isWhitelisted && (
               <KYCWrapper>
                 <HeaderElement>

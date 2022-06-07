@@ -3,6 +3,7 @@ import { Currency } from '@ixswap1/sdk-core'
 
 export interface SecToken extends TokenInfo {
   id: number
+  catalogId: number
   ticker: string
   status: string
   network: string

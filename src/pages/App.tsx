@@ -35,6 +35,7 @@ import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
 
 const Admin = lazy(() => import('./Admin'))
+const TokenManager = lazy(() => import('./TokenManager'))
 
 const KYC = lazy(() => import('./KYC'))
 const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
@@ -185,8 +186,10 @@ export default function App() {
             >
               <Switch>
                 <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
-
                 <Route exact strict path="/admin/:tab/:id?" component={Admin} />
+
+                <Route exact strict path="/token-manager" render={() => <Redirect to="/token-manager/my-tokens" />} />
+                <Route exact strict path="/token-manager/:tab/:id?" component={TokenManager} />
 
                 {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
                   <Route exact strict path={routes.nftCreate} component={CreateNFT} />

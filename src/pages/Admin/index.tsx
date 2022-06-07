@@ -145,6 +145,7 @@ const TabsContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 60px;
+  column-gap: 32px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     flex-direction: column;
     row-gap: 4px;

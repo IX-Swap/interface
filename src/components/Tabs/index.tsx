@@ -7,6 +7,7 @@ export const ToggleWrapper = styled(RowCenter)`
   border-radius: 12px;
   padding: 0px 6px;
   grid-gap: 6px;
+  column-gap: 32px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    flex-direction:column;
    gap: 10px;
@@ -14,18 +15,16 @@ export const ToggleWrapper = styled(RowCenter)`
 `
 
 export const ToggleOption = styled.div<{ active?: boolean }>`
-  min-width: 120px;
   width: fit-content;
-  padding: 2px 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   border-radius: 12px;
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
-  text-transform: uppercase;
+  font-size: 22px;
+  line-height: 40px;
+  /* text-transform: uppercase; */
   background-color: transparent;
   color: ${({ theme, active }) => (active ? theme.text2 : hexToRGBA(theme.text2, 0.7))};
   user-select: none;
