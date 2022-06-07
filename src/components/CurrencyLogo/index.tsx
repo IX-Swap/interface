@@ -59,7 +59,7 @@ export default function CurrencyLogo({
   style,
   ...rest
 }: {
-  currency?: Currency
+  currency?: Currency | null
   size?: string
   style?: React.CSSProperties
 }) {
@@ -68,15 +68,15 @@ export default function CurrencyLogo({
 
   const uri =
     currency instanceof WrappedTokenInfo
-      ? currency.logoURI || (tokens[currency.address] as any)?.tokenInfo?.logoURI
+      ? currency?.logoURI || (tokens[currency?.address] as any)?.tokenInfo?.logoURI
       : undefined
   const uriLocations = useHttpLocations(uri)
   const { chainId } = useActiveWeb3React()
   const srcs: string[] = useMemo(() => {
-    if (!currency || currency.isNative) return []
+    if (!currency || currency?.isNative) return []
 
-    if (currency.isToken) {
-      const defaultUrls = currency.chainId === 1 ? [getTokenLogoURL(currency.address, chainId)] : []
+    if (currency?.isToken) {
+      const defaultUrls = currency?.chainId === 1 ? [getTokenLogoURL(currency?.address, chainId)] : []
       if (currency instanceof WrappedTokenInfo) {
         return [...uriLocations, ...defaultUrls]
       }
