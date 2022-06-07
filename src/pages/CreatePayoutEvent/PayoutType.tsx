@@ -6,19 +6,24 @@ import { t } from '@lingui/macro'
 import { Label } from 'components/Label'
 import { TYPE } from 'theme'
 import { Checkbox } from 'components/Checkbox'
+import { TextInput } from 'pages/KYC/common'
 
 import { payoutTypes } from './mock'
 import { ExtraInfoCard } from 'pages/KYC/styleds'
 
-const Card = styled.div`
-  background: ${({ theme }) => theme.bg19};
-  padding: 12px 16px;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-`
+interface Props {
+  values: any
+  onValueChange: (key: string, newValue: any) => void
+}
 
-export const PayoutType: FC = () => {
+export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
+  const description = payoutTypes.find(({ label }) => values.type === label)?.description || null
+
+  const onTypeChange = (label: string) => {
+    if (label !== 'Other') onValueChange('otherType', '')
+    onValueChange('type', label)
+  }
+
   return (
     <Box marginBottom="24px">
       <Label marginBottom="8px" text={t`Payout Type`} required />
@@ -30,13 +35,31 @@ export const PayoutType: FC = () => {
             buttonStyles={{ marginRight: 26 }}
             isRadio
             label={label}
-            checked={id === 1}
+            onClick={() => onTypeChange(label)}
+            checked={values.type === label}
           />
         ))}
       </Card>
-      <ExtraInfoCard>
-        <TYPE.buttonMuted opacity="50%">Dividends - One payment date</TYPE.buttonMuted>
-      </ExtraInfoCard>
+      {description && values.type !== 'Other' && (
+        <ExtraInfoCard>
+          <TYPE.buttonMuted opacity="50%">{description}</TYPE.buttonMuted>
+        </ExtraInfoCard>
+      )}
+      {values.type === 'Other' && (
+        <TextInput
+          placeholder="Write payout type"
+          onChange={(e) => onValueChange('otherType', e.currentTarget.value)}
+          value={values.otherType}
+        />
+      )}
     </Box>
   )
 }
+
+const Card = styled.div`
+  background: ${({ theme }) => theme.bg19};
+  padding: 12px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+`

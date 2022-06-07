@@ -7,17 +7,11 @@ import { Loadable } from 'components/LoaderHover'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { ButtonText } from 'components/Button'
-import { Select } from 'pages/KYC/common'
-import { DateInput } from 'components/DateInput'
-import { Summary } from './Summary'
 import { PayoutForm } from './PayoutForm'
-import { DesktopAndTablet, MobileOnly, TYPE } from 'theme'
 
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
-import { FormCard, PageTitle } from './styleds'
-import { FormGrid } from 'pages/KYC/styleds'
-import { mockSecTokens } from './mock'
+import { PageTitle } from './styleds'
 
 const CreatePayoutEventPage: FC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
@@ -36,33 +30,6 @@ const CreatePayoutEventPage: FC = () => {
             <Trans>Create Payout Event</Trans>
           </PageTitle>
         </Flex>
-
-        <FormCard marginBottom="32px">
-          <TYPE.title6 marginBottom="28px">
-            <Trans>SECURITY TOKENS</Trans>
-          </TYPE.title6>
-          <FormGrid style={{ marginBottom: 20 }}>
-            <Select
-              label="Sec Token"
-              placeholder="Choose SEC token"
-              selectedItem={null}
-              items={mockSecTokens}
-              onSelect={() => null}
-              required
-            />
-            <DateInput
-              label="Record Date"
-              placeholder="Choose record date"
-              maxHeight={60}
-              openTo="date"
-              value={''}
-              onChange={() => null}
-              required
-            />
-          </FormGrid>
-
-          <Summary walletsAmount={200} poolsAmount={500} />
-        </FormCard>
 
         <PayoutForm />
       </StyledBodyWrapper>

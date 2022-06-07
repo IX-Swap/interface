@@ -1,101 +1,69 @@
-import React, { FC, useState } from 'react'
-import { Box, Flex } from 'rebass'
+import React, { FC } from 'react'
+import { Formik } from 'formik'
 import { Trans } from '@lingui/macro'
 
-import { TYPE } from 'theme'
-import { PayoutType } from './PayoutType'
-import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
-import { Select, TextInput, Uploader } from 'pages/KYC/common'
+import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
+import { Summary } from './Summary'
+import { PayoutEventBlock } from './PayoutEventBlock'
 
+import { TYPE } from 'theme'
+import { FormGrid } from 'pages/KYC/styleds'
+import { initialValues, mockSecTokens } from './mock'
 import { FormCard } from './styleds'
-import { mockSecTokens } from './mock'
-import { Textarea } from 'components/Input'
-import { Label } from 'components/Label'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 
 export const PayoutForm: FC = () => {
-  const [desc, setDesc] = useState('')
+  const handleFormSubmit = async (values: any) => {
+    console.log('submitted', values)
+  }
 
   return (
-    <FormCard>
-      <TYPE.title6 marginBottom="28px">
-        <Trans>PAYOUT EVENT</Trans>
-      </TYPE.title6>
+    <Formik
+      initialValues={initialValues}
+      validateOnBlur={false}
+      validateOnChange={false}
+      validateOnMount={false}
+      isInitialValid={false}
+      enableReinitialize
+      onSubmit={handleFormSubmit}
+    >
+      {({ values, setFieldValue }) => {
+        const onValueChange = (key: string, value: any) => {
+          setFieldValue(key, value, false)
+        }
+        return (
+          <>
+            <FormCard marginBottom="32px">
+              <TYPE.title6 marginBottom="28px">
+                <Trans>SECURITY TOKENS</Trans>
+              </TYPE.title6>
+              <FormGrid style={{ marginBottom: 20 }}>
+                <Select
+                  label="Sec Token"
+                  placeholder="Choose SEC token"
+                  selectedItem={values.secTokenId}
+                  items={mockSecTokens}
+                  onSelect={(item) => onValueChange('secTokenId', item)}
+                  required
+                />
+                <DateInput
+                  label="Record Date"
+                  placeholder="Choose record date"
+                  maxHeight={60}
+                  openTo="date"
+                  value={values.recordDate}
+                  onChange={(newDate) => onValueChange('recordDate', newDate)}
+                  required
+                />
+              </FormGrid>
 
-      <PayoutType />
+              <Summary walletsAmount={200} poolsAmount={500} />
+            </FormCard>
 
-      <Box marginBottom="20px">
-        <FormGrid style={{ marginBottom: 8 }}>
-          <Select
-            label="Payout Token"
-            placeholder="Select token"
-            selectedItem={null}
-            items={mockSecTokens}
-            onSelect={() => null}
-            required
-          />
-          <TextInput placeholder="1000" label="Amount of Token" onChange={() => null} value={''} />
-        </FormGrid>
-        <ExtraInfoCard>
-          <TYPE.description2 fontWeight={400}>
-            Payout token computed as of May 22, 2022 at 1 USDT per SEC token
-          </TYPE.description2>
-        </ExtraInfoCard>
-      </Box>
-
-      <FormGrid style={{ marginBottom: 24 }}>
-        <DateInput
-          label="Payment Start Date"
-          placeholder="Choose start date"
-          maxHeight={60}
-          openTo="date"
-          value={''}
-          onChange={() => null}
-          required
-        />
-        <DateInput
-          label="Payment Deadline"
-          placeholder="Choose deadline"
-          maxHeight={60}
-          openTo="date"
-          value={''}
-          onChange={() => null}
-        />
-      </FormGrid>
-
-      <FormGrid columns={1} style={{ marginBottom: 24 }}>
-        <TextInput
-          placeholder="Provide a name for this payout event"
-          label="Headline"
-          onChange={() => null}
-          value={''}
-          required
-        />
-      </FormGrid>
-
-      <FormGrid columns={1} style={{ marginBottom: 24 }}>
-        <Box>
-          <Label text="Payout Description" required />
-          <Textarea
-            placeholder="Give a brief description of this payout event"
-            value={desc}
-            style={{ height: '126px', background: '#271F4A66', marginBottom: 0 }}
-            onChange={(e) => setDesc(e.currentTarget.value)}
-          />
-        </Box>
-      </FormGrid>
-
-      <Uploader title="Payout Attachments" files={[]} onDrop={() => null} handleDeleteClick={() => null} required />
-
-      <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder padding="16px 24px" marginRight="32px" disabled>
-          <Trans>Save as Draft</Trans>
-        </ButtonGradientBorder>
-        <ButtonIXSGradient padding="16px 24px" disabled>
-          Publish Payout Event
-        </ButtonIXSGradient>
-      </Flex>
-    </FormCard>
+            <PayoutEventBlock values={values} onValueChange={onValueChange} />
+          </>
+        )
+      }}
+    </Formik>
   )
 }
