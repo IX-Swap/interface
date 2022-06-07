@@ -34,6 +34,7 @@ export const Dashboard = () => {
       </Grid>
       <RootContainer>
         <Grid item xs={12}>
+          <VSpacer size={'medium'} />
           <DSOFilters />
           <VSpacer size={'medium'} />
         </Grid>

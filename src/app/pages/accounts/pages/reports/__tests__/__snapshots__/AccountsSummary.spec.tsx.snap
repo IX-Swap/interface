@@ -50,7 +50,7 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -501,7 +501,7 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -633,7 +633,7 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -731,7 +731,7 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-1cqzv7a-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-12 css-l6hioc-MuiGrid-root"
