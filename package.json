@@ -18,7 +18,7 @@
     "@sentry/tracing": "^5.26.0",
     "@web3-react/core": "^6.0.9",
     "@web3-react/injected-connector": "^6.0.7",
-    "@web3-react/walletconnect": "^8.0.1-beta.0",
+    "@web3-react/walletconnect-connector": "7.0.2-alpha.0",
     "add": "^2.0.6",
     "axios": "^0.21.2",
     "buffer": "^6.0.3",
@@ -170,7 +170,7 @@
   },
   "resolutions": {
     "babel-loader": "8.1.0",
-    "@walletconnect/ethereum-provider": "1.7.1"
+    "@walletconnect/ethereum-provider": "1.6.5"
   },
   "scripts": {
     "start": "NODE_ENV=development webpack serve --color --progress",
