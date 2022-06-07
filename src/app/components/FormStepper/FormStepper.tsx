@@ -6,7 +6,7 @@ import { MutationResultPair } from 'react-query'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
 import { useTheme } from '@mui/material/styles'
-import { SaveDrafButton } from 'app/components/FormStepper/SaveDraftButton'
+import { SaveDraftButton } from 'app/components/FormStepper/SaveDraftButton'
 import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
@@ -190,7 +190,7 @@ export const FormStepper = (props: FormStepperProps) => {
                     </Grid>
                   )}
                   <Grid item xs={12}>
-                    <SaveDrafButton
+                    <SaveDraftButton
                       isLastStep={activeStep === steps.length - 1}
                       formId={`${
                         steps[activeStep].formId ?? 'form'

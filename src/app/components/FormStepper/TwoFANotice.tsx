@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles'
 export const TwoFANotice = () => {
   const { user } = useAuth()
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+  const matches = useMediaQuery(theme.breakpoints.down('md'))
 
   if ((user !== undefined && user.enable2Fa === true) || matches) {
     return null
