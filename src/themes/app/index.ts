@@ -10,6 +10,16 @@ export enum AppTheme {
   System = 'System'
 }
 
+const breakpoints = {
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1248,
+    xl: 1536
+  }
+}
+
 export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
   const baseTheme =
     themeType === AppTheme.System
@@ -20,7 +30,7 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
       ? darkTheme
       : lightTheme
 
-  const theme = createTheme({ ...baseTheme, typography })
+  const theme = createTheme({ ...baseTheme, typography, breakpoints })
 
   const defaultProps = {
     defaultProps: {

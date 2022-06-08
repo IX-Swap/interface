@@ -33,7 +33,7 @@ export const BlockchainWalletsCount = ({
               to={paths.list}
               size='small'
             >
-              <LaunchIcon className={classes.icon} />
+              <LaunchIcon className={classes.icon} fill='#FFFFFF' />
             </IconButton>
           </Box>
         </Typography>

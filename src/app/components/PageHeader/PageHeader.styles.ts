@@ -19,8 +19,6 @@ export const useStyles = makeStyles(theme => ({
     position: `relative`,
     background: theme.palette.header.bg,
     border: 'none',
-    marginTop: '1rem',
-    marginBottom: '1rem',
     maxHeight: 120,
     paddingTop: 30,
     paddingBottom: 33,

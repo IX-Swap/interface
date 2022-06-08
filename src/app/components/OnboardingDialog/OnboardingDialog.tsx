@@ -1,3 +1,5 @@
+import React, { useState } from 'react'
+import classnames from 'classnames'
 import {
   Button,
   DialogActions,
@@ -6,13 +8,11 @@ import {
   Typography
 } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
-import { useStyles } from 'app/components/OnboardingDialog/OnboardingDialog.styles'
-import { BackDrop } from 'app/components/OnboardingDialog/BackDrop'
-import React, { useState } from 'react'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import classnames from 'classnames'
-import { UIDialog } from 'ui/UIDialog/UIDialog'
 import { useOnboardingPanel } from 'app/hooks/onboarding/useOnboardingPanel'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
+import { useStyles } from './OnboardingDialog.styles'
+import { BackDrop } from 'app/components/BackDrop'
 
 export interface OnboardingDialogProps {
   message: string[]
