@@ -2,8 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
-import { TaxResidencyField } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField'
-import { VSpacer } from 'components/VSpacer'
+import { TaxResidencyField } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField/TaxResidencyField'
 import { TaxResidency } from 'app/pages/identity/types/forms'
 import { MAX_TAX_RESIDENCIES } from 'app/pages/identity/const/declarations'
 
@@ -21,7 +20,7 @@ export const TaxResidencyFieldArray = () => {
   return (
     <FieldsArray name='taxResidencies' control={control}>
       {({ fields, append, remove }) => (
-        <Grid container direction='column' spacing={3}>
+        <Grid container direction='column'>
           {fields.map((field, i) => (
             <Fragment>
               <Grid item key={i}>
@@ -36,7 +35,6 @@ export const TaxResidencyFieldArray = () => {
                   total={fields.length}
                   defaultValue={field as TaxResidency}
                 />
-                {fields.length > 1 && <VSpacer size={'small'} />}
               </Grid>
             </Fragment>
           ))}

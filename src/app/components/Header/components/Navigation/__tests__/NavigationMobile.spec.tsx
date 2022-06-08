@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import { TopbarLinkContainer } from 'app/components/Header/components/Navigation/TopbarLinkContainer/TopbarLinkContainer'
 import { NavigationMobile } from 'app/components/Header/components/Navigation/NavigationMobile/NavigationMobile'
 import { DropdownContentProps } from 'app/components/Header/components/Dropdown/Dropdown'
-import * as useAppNavigationLinks from 'app/components/Header/hooks/useAppNavigationLinks'
+import * as useAppNavigationLinks from 'app/components/Header/hooks/useAppNavigation'
 import { NavigationDropdownLinkMobile } from 'app/components/Header/components/Navigation/NavigationDropdownLinkMobile'
 
 jest.mock(
@@ -33,7 +33,7 @@ describe('NavigationMobile', () => {
   })
 
   it('renders TopbarLinkContainer components', () => {
-    jest.spyOn(useAppNavigationLinks, 'useAppNavigationLinks').mockReturnValue({
+    jest.spyOn(useAppNavigationLinks, 'useAppNavigation').mockReturnValue({
       links: links,
       isDropdownLink: jest.fn(() => false)
     } as any)
@@ -43,17 +43,15 @@ describe('NavigationMobile', () => {
   })
 
   it('renders NavigationDropdownLinkMobile components', () => {
-    jest
-      .spyOn(useAppNavigationLinks, 'useAppNavigationLinks')
-      .mockReturnValueOnce({
-        links: links,
-        isDropdownLink: jest.fn(() => true),
-        dropdownLinksItems: jest.fn(() => [
-          { label: '11' },
-          { label: '12' },
-          { label: '13' }
-        ])
-      } as any)
+    jest.spyOn(useAppNavigationLinks, 'useAppNavigation').mockReturnValueOnce({
+      links: links,
+      isDropdownLink: jest.fn(() => true),
+      dropdownLinksItems: jest.fn(() => [
+        { label: '11' },
+        { label: '12' },
+        { label: '13' }
+      ])
+    } as any)
     render(<NavigationMobile {...props} />)
 
     expect(NavigationDropdownLinkMobile).toHaveBeenCalledTimes(2)

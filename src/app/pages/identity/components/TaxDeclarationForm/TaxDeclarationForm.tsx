@@ -1,9 +1,9 @@
 import React from 'react'
-import { Grid, Paper, Typography } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { TaxResidencyFieldArray } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
-import { TaxDeclarationInfoDialog } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoDialog'
-import { useStyles } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclaration.styles'
+import { TaxDeclarationInfo } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfo'
+import useStyles from './TaxDeclarationForm.style'
 
 export interface TaxDeclarationFormProps {
   identityType?: 'individual' | 'corporate'
@@ -11,28 +11,18 @@ export interface TaxDeclarationFormProps {
 export const TaxDeclarationForm = ({
   identityType = 'individual'
 }: TaxDeclarationFormProps) => {
-  const styles = useStyles()
+  const classes = useStyles()
   return (
-    <>
+    <Paper className={classes.container}>
       <FormSectionHeader title='Tax Declaration' />
-      <Paper className={styles.container}>
-        <Grid item>
-          <Typography>Why We Need Your Tax Declaration?</Typography>
+      <Grid data-testid='taxDeclaration' container direction='column'>
+        <Grid item className={classes.taxDeclaration}>
+          <TaxDeclarationInfo />
         </Grid>
-        <TaxDeclarationInfoDialog />
-      </Paper>
-
-      <Grid mt={4} data-testid='taxDeclaration' container direction='column'>
         <Grid item>
-          {identityType === 'individual' ? (
-            <TaxResidencyFieldArray />
-          ) : (
-            <Paper sx={{ borderRadius: 2, p: 5 }}>
-              <TaxResidencyFieldArray />
-            </Paper>
-          )}
+          <TaxResidencyFieldArray identityType={identityType} />
         </Grid>
       </Grid>
-    </>
+    </Paper>
   )
 }

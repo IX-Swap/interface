@@ -3,11 +3,11 @@ import { Box } from '@mui/material'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { TopbarLinkDropdown } from 'app/components/Header/components/Navigation/TopbarLinkDropdown/TopbarLinkDropdown'
 import { TopbarLinkContainer } from 'app/components/Header/components/Navigation/TopbarLinkContainer/TopbarLinkContainer'
-import { useAppNavigationLinks } from 'app/components/Header/hooks/useAppNavigationLinks'
+import { useAppNavigation } from 'app/components/Header/hooks/useAppNavigation'
 
 export const Navigation = () => {
   const { isDesktop } = useAppBreakpoints()
-  const { links, dropdownLinksItems, isDropdownLink } = useAppNavigationLinks()
+  const { links, dropdownLinksItems, isDropdownLink } = useAppNavigation()
 
   if (!isDesktop) {
     return null

@@ -4,11 +4,11 @@ import { TopbarLinkContainer } from 'app/components/Header/components/Navigation
 import { DropdownContentProps } from 'app/components/Header/components/Dropdown/Dropdown'
 import { NavigationDropdownLinkMobile } from 'app/components/Header/components/Navigation/NavigationDropdownLinkMobile'
 import { useStyles } from 'app/components/Header/components/Navigation/NavigationMobile/NavigationMobile.styles'
-import { useAppNavigationLinks } from 'app/components/Header/hooks/useAppNavigationLinks'
+import { useAppNavigation } from 'app/components/Header/hooks/useAppNavigation'
 
 export const NavigationMobile = (props: DropdownContentProps) => {
   const classes = useStyles()
-  const { links, dropdownLinksItems, isDropdownLink } = useAppNavigationLinks()
+  const { links, dropdownLinksItems, isDropdownLink } = useAppNavigation()
 
   return (
     <Grid className={classes.wrapper} flexDirection={'column'}>

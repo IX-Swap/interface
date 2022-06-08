@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { useAppNavigationLinks } from 'app/components/Header/hooks/useAppNavigationLinks'
+import { useAppNavigation } from 'app/components/Header/hooks/useAppNavigation'
 import {
   accountsLandingLinks,
   AccountsRoute
@@ -21,7 +21,7 @@ import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 
-describe('useAppNavigationLinks', () => {
+describe('useAppNavigation', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -29,7 +29,7 @@ describe('useAppNavigationLinks', () => {
   it('return array of links with correct length and values by default', () => {
     const {
       result: { current }
-    } = renderHook(() => useAppNavigationLinks())
+    } = renderHook(() => useAppNavigation())
 
     expect(current.links.length).toEqual(3)
     expect(current.links[0]).toEqual({
@@ -55,7 +55,7 @@ describe('useAppNavigationLinks', () => {
 
     const {
       result: { current }
-    } = renderHook(() => useAppNavigationLinks())
+    } = renderHook(() => useAppNavigation())
 
     expect(current.links.length).toEqual(4)
     expect(current.links[0]).toEqual({
@@ -83,7 +83,7 @@ describe('useAppNavigationLinks', () => {
 
     const {
       result: { current }
-    } = renderHook(() => useAppNavigationLinks())
+    } = renderHook(() => useAppNavigation())
 
     expect(current.links.length).toEqual(5)
     expect(current.links[0]).toEqual({
@@ -118,7 +118,7 @@ describe('useAppNavigationLinks', () => {
 
     const {
       result: { current }
-    } = renderHook(() => useAppNavigationLinks())
+    } = renderHook(() => useAppNavigation())
 
     expect(current.links.length).toEqual(6)
     expect(current.links[0]).toEqual({
@@ -154,7 +154,7 @@ describe('useAppNavigationLinks', () => {
   it('return isDropdownLink function which returns correct values', () => {
     const {
       result: { current }
-    } = renderHook(() => useAppNavigationLinks())
+    } = renderHook(() => useAppNavigation())
 
     expect(current.isDropdownLink('Accounts')).toEqual(true)
     expect(current.isDropdownLink('Authorizer')).toEqual(true)
@@ -167,7 +167,7 @@ describe('useAppNavigationLinks', () => {
   it('return dropdownLinksItems function which returns correct values', () => {
     const {
       result: { current }
-    } = renderHook(() => useAppNavigationLinks())
+    } = renderHook(() => useAppNavigation())
 
     expect(current.dropdownLinksItems('Education Centre')).toEqual(
       educationCentreLinks

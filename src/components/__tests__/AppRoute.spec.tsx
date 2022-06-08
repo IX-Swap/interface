@@ -1,4 +1,3 @@
-import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { AppRoute } from 'components/AppRoute'
 import { history } from 'config/history'
 import * as useCachedUser from 'hooks/auth/useCachedUser'
@@ -9,15 +8,10 @@ import { AppRoute as AppPath } from 'app/router/config'
 import * as useIsAccredited from 'helpers/acl'
 
 describe('AppRoute', () => {
-  beforeEach(() => {
-    const useOnboardingDialogResponse = {
-      showEnable2FADialog: () => {},
-      showCreateAccountDialog: () => {}
-    }
+  const initialPath = '/app/identity176540'
 
-    jest
-      .spyOn(useOnboardingDialog, 'useOnboardingDialog')
-      .mockImplementation(() => useOnboardingDialogResponse as any)
+  beforeEach(() => {
+    history.push(initialPath)
   })
 
   afterEach(async () => {
@@ -56,7 +50,7 @@ describe('AppRoute', () => {
     expect(history.location.pathname).toBe(AppPath.identity)
   })
 
-  it('redirects to educationCentre page when is2FAEnabled is false', () => {
+  it('does not redirect when isAccredited is true', () => {
     jest
       .spyOn(useCachedUser, 'useCachedUser')
       .mockImplementation(() => user as any)
@@ -65,16 +59,12 @@ describe('AppRoute', () => {
       .spyOn(useIsAccredited, 'useIsAccredited')
       .mockImplementation(() => true as any)
 
-    jest
-      .spyOn(useIsAccredited, 'useIsEnabled2FA')
-      .mockImplementation(() => false as any)
-
     render(
       <AppRoute path={AppPath.issuance}>
         <div>App</div>
       </AppRoute>
     )
 
-    expect(history.location.pathname).toBe(AppPath.identity)
+    expect(history.location.pathname).toBe(initialPath)
   })
 })

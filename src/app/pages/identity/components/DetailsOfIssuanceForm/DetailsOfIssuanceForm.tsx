@@ -3,26 +3,17 @@ import { detailsOfIssuanceFormSteps } from 'app/pages/identity/components/Detail
 import { useCreateDetailsOfIssuance } from 'app/pages/identity/hooks/useCreateDetailsOfIssuance'
 import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'
 import { useUpdateDetailsOfIssuance } from 'app/pages/identity/hooks/useUpdateDetailsOfIssuance'
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { useSubmitDetailsOfIssuance } from 'app/pages/identity/hooks/useSubmitDetailsOfIssuance'
-import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { Redirect } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 
 export const DetailsOfIssuanceForm = memo(() => {
-  const { data, isLoading } = useDetailsOfIssuance()
+  const { data } = useDetailsOfIssuance()
   const createMutation = useCreateDetailsOfIssuance()
   const updateMutation = useUpdateDetailsOfIssuance(data?._id ?? '')
   const submitMutation = useSubmitDetailsOfIssuance(data?._id ?? '')
-  const { showCreateDetailsOfIssuanceDialog } = useOnboardingDialog()
-
-  useEffect(() => {
-    if (!isLoading && data === undefined) {
-      showCreateDetailsOfIssuanceDialog()
-    }
-    // eslint-disable-next-line
-  }, [isLoading])
 
   if (data?.skipped === true) {
     return <Redirect to={IdentityRoute.createIssuer} />

@@ -2,7 +2,7 @@ import { fireEvent } from '@testing-library/react'
 import {
   TaxResidencyField,
   TaxResidencyFieldProps
-} from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField'
+} from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField/TaxResidencyField'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
