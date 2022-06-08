@@ -9,13 +9,13 @@ import { PayoutHeader } from './PayoutHeader'
 
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 
-export enum PayoutType {
-    DRAFT = 'draft',
-    ANNOUNCED = 'announced',
-    SCHEDULED = 'scheduled',
-    STARTED = 'started',
-    ENDED = 'ended',
-    DELAYED = 'delayed',
+export enum PAYOUT_STATUS {
+  DRAFT = 'draft',
+  ANNOUNCED = 'announced',
+  SCHEDULED = 'scheduled',
+  STARTED = 'started',
+  ENDED = 'ended',
+  DELAYED = 'delayed',
 }
 
 export default function PayoutItem({
@@ -27,12 +27,12 @@ export default function PayoutItem({
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
   const isLoggedIn = !!token && !!account
-  const status = PayoutType.STARTED
+  const status = PAYOUT_STATUS.STARTED
 
   return (
     <Loadable loading={!isLoggedIn}>
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-          <PayoutHeader status={status} />
+        <PayoutHeader status={status} />
       </StyledBodyWrapper>
     </Loadable>
   )
