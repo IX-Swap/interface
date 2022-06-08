@@ -99,7 +99,7 @@ export const Textarea = styled.textarea`
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
-    color: #edceff80;
+    color: ${({ theme }) => theme.bg21};
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
   padding: 16px 22px;
