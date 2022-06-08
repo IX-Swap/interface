@@ -5,7 +5,6 @@ import { t, Trans } from '@lingui/macro'
 
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ButtonGradient } from 'components/Button'
-
 import { TYPE } from 'theme'
 import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
 

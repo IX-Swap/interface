@@ -5,9 +5,9 @@ import { useCookies } from 'react-cookie'
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
-import { PayoutHeader } from './PayoutHeader'
-
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
+
+import { PayoutHeader } from './PayoutHeader'
 
 export enum PAYOUT_STATUS {
   DRAFT = 'draft',

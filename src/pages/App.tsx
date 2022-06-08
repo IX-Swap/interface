@@ -39,6 +39,7 @@ const TokenManager = lazy(() => import('./TokenManager'))
 
 const KYC = lazy(() => import('./KYC'))
 const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
+const CreatePayoutEvent = lazy(() => import('./CreatePayoutEvent'))
 const CorporateKYC = lazy(() => import('./KYC/CorporateKycForm'))
 // const Custodian = lazy(() => import('./Custodian'))
 const CustodianV2 = lazy(() => import('./CustodianV2'))
@@ -77,7 +78,7 @@ const BodyWrapper = styled.div`
   `};
 `
 
-const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
+const ToggleableBody = styled(BodyWrapper) <{ isVisible?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   min-height: calc(100vh - 120px);
   padding-bottom: 48px;
@@ -218,6 +219,7 @@ export default function App() {
                 )}
                 {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
                 {isWhitelisted && <Route exact strict path={routes.payoutItem} component={PayoutItem} />}
+                {isWhitelisted && <Route exact strict path={routes.createPayoutEvent} component={CreatePayoutEvent} />}
                 {isWhitelisted && canAccessKycForm('individual') && (
                   <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
                 )}

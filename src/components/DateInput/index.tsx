@@ -3,33 +3,48 @@ import { DatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
 
+import { Label } from 'components/Label'
 import { TYPE } from 'theme'
 import { Input } from 'components/Input'
+import { Props as LabelProps } from 'components/Label'
 import calendarIcon from 'assets/images/calendar.svg'
 
 interface Props {
   value?: string | Date | number
   onChange: (value: any) => void
   onBlur?: (e: any) => void
-  label?: string
   name?: string
   error?: any | ReactChildren
+  openTo?: 'date' | 'year' | 'month'
   maxHeight?: number
   maxDate?: any
   minDate?: any
+  placeholder?: string
 }
 
-export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate, ...props }: Props) => {
+export const DateInput = ({
+  value,
+  openTo,
+  onChange,
+  label,
+  name,
+  onBlur,
+  error,
+  maxDate,
+  tooltipText,
+  required,
+  ...props
+}: Props & Partial<LabelProps>) => {
   return (
     <Container>
-      <Label>{t`${label || 'Date of Birth'}`}</Label>
+      <Label label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
       <DatePicker
         name={name}
         value={value || null}
         onChange={onChange}
         onBlur={onBlur}
         autoOk
-        openTo="year"
+        openTo={openTo ?? 'year'}
         views={['year', 'month', 'date']}
         format="DD/MM/YYYY"
         TextFieldComponent={(props: Record<string, any>) => <TextField {...props} />}
@@ -55,15 +70,10 @@ const TextField = styled(Input)<{ maxHeight?: number }>`
   background-image: ${`url("${calendarIcon}")`};
   background-repeat: no-repeat;
   background-position: right 26px top 19px;
-  background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
-`
-
-const Label = styled.div`
-  color: ${({ theme }) => theme.text2};
+  background-color: ${({ theme: { bg19 } }) => bg19};
 `
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 11px;
 `

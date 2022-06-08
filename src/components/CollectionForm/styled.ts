@@ -30,7 +30,7 @@ const uploadStyles = css`
 
 export const Container = styled.div`
   padding: 40px 64px;
-  background: rgba(39, 32, 70, 0.4);
+  background: ${({ theme }) => theme.bg19};
   border-radius: 36px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 20px 32px;

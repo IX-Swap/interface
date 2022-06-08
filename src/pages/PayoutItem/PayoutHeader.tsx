@@ -8,10 +8,10 @@ import { ButtonGradientBorder, ButtonPrimary, ButtonText } from 'components/Butt
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReadMore } from 'components/ReadMore'
 import Column from 'components/Column'
-
 import { TYPE } from 'theme'
-import { PAYOUT_STATUS } from '.'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+
+import { PAYOUT_STATUS } from '.'
 import { useStatusButtonInfo } from './utils'
 import { InfoBlock } from './InfoBlock'
 
