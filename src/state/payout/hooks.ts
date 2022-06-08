@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
+import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 
 import { createDraft } from './actions'
-import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)

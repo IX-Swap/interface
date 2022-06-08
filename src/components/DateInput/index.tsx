@@ -6,7 +6,6 @@ import { t } from '@lingui/macro'
 import { Label } from 'components/Label'
 import { TYPE } from 'theme'
 import { Input } from 'components/Input'
-
 import { Props as LabelProps } from 'components/Label'
 import calendarIcon from 'assets/images/calendar.svg'
 

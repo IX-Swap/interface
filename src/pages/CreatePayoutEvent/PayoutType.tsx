@@ -7,9 +7,9 @@ import { Label } from 'components/Label'
 import { TYPE } from 'theme'
 import { Checkbox } from 'components/Checkbox'
 import { TextInput } from 'pages/KYC/common'
+import { ExtraInfoCard } from 'pages/KYC/styleds'
 
 import { payoutTypes } from './mock'
-import { ExtraInfoCard } from 'pages/KYC/styleds'
 
 interface Props {
   values: any

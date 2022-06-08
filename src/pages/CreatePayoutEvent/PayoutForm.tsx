@@ -4,12 +4,12 @@ import { Trans } from '@lingui/macro'
 
 import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-import { Summary } from './Summary'
-import { PayoutEventBlock } from './PayoutEventBlock'
 import { useCreateDraftPayout } from 'state/payout/hooks'
-
 import { TYPE } from 'theme'
 import { FormGrid } from 'pages/KYC/styleds'
+
+import { Summary } from './Summary'
+import { PayoutEventBlock } from './PayoutEventBlock'
 import { initialValues, mockSecTokens } from './mock'
 import { FormCard } from './styleds'
 import { transformPayoutDraftDTO } from './utils'

@@ -1,4 +1,5 @@
 import useTheme from 'hooks/useTheme'
+
 import { PAYOUT_STATUS } from '.'
 
 export const useStatusButtonInfo = (title: PAYOUT_STATUS) => {

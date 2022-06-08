@@ -4,16 +4,16 @@ import { t, Trans } from '@lingui/macro'
 import moment from 'moment'
 
 import { TYPE } from 'theme'
-import { PayoutType } from './PayoutType'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextInput, Uploader } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-
-import { FormCard } from './styleds'
-import { mockSecTokens } from './mock'
 import { Textarea } from 'components/Input'
 import { Label } from 'components/Label'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+
+import { PayoutType } from './PayoutType'
+import { FormCard } from './styleds'
+import { mockSecTokens } from './mock'
 
 interface Props {
   values: any

@@ -1,11 +1,10 @@
 import React, { FC } from 'react'
 import { Label as RebassLabel } from '@rebass/forms'
+import styled from 'styled-components'
 
 import { MouseoverTooltip } from 'components/Tooltip'
-
 import { TYPE } from 'theme'
 import { ReactComponent as Info } from 'assets/images/info-filled.svg'
-import styled from 'styled-components'
 
 export interface Props {
   label: string | JSX.Element

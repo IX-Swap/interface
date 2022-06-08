@@ -1,5 +1,6 @@
 import { Box } from 'rebass'
 import styled from 'styled-components'
+
 import { TYPE } from 'theme'
 
 export const PageTitle = styled(TYPE.title4)`

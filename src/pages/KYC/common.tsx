@@ -12,12 +12,12 @@ import Upload from 'components/Upload'
 import { FilePreview } from 'components/FilePreview'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { Select as ReactSelect } from 'components/Select'
-
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
-import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import { AcceptFiles } from 'components/Upload/types'
+
+import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 
 export interface UploaderProps {
   files: FileWithPath[]

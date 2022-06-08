@@ -7,12 +7,12 @@ import { Loadable } from 'components/LoaderHover'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { ButtonText } from 'components/Button'
-import { PayoutForm } from './PayoutForm'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { usePayoutState } from 'state/payout/hooks'
-
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+
+import { PayoutForm } from './PayoutForm'
 import { PageTitle } from './styleds'
 
 const CreatePayoutEventPage: FC = () => {

@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 
 import { postLogin } from 'state/auth/actions'
+
 import { createDraft } from './actions'
 
 export interface KYCState {

@@ -222,7 +222,7 @@ export default function App() {
                 {isWhitelisted && <Route exact strict path={routes.createPayoutEvent} component={CreatePayoutEvent} />}
                 {isWhitelisted && canAccessKycForm('individual') && (
                   <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
-                )}x
+                )}
                 {isWhitelisted && canAccessKycForm('corporate') && (
                   <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
                 )}
