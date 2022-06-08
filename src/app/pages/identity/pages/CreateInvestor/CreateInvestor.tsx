@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, useMediaQuery } from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 import {
   CorporateInvestorForm,
   CorporateType
@@ -41,14 +41,10 @@ export const CreateCorporateIdentity = ({
     <>
       {matches ? null : <PageHeader title={title} />}
       <RootContainer>
-        <Grid container>
-          <Grid item>
-            <CorporateInvestorForm
-              formTitle='Corporate Investor Identity'
-              type={type}
-            />
-          </Grid>
-        </Grid>
+        <CorporateInvestorForm
+          formTitle='Corporate Investor Identity'
+          type={type}
+        />
       </RootContainer>
     </>
   )
