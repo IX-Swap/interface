@@ -26,4 +26,5 @@ export const routes = {
   nftViewCollection: (address: string) => `/nft/collections/${address}`,
   nftItemPath: `/nft/collections/:collectionAddress/:itemId`,
   nftItem: (address: string, id: number) => `/nft/collections/${address}/${id}`,
+  payoutItem: '/payout/:payoutId',
 }
