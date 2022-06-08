@@ -10,13 +10,13 @@ import { ReadMore } from 'components/ReadMore'
 import Column from 'components/Column'
 
 import { TYPE } from 'theme'
-import { PayoutType } from '.'
+import { PAYOUT_STATUS } from '.'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { useStatusButtonInfo } from './utils'
 import { InfoBlock } from './InfoBlock'
 
 interface Props {
-  status: PayoutType
+  status: PAYOUT_STATUS
 }
 
 export const PayoutHeader: FC<Props> = ({ status }) => {
@@ -53,7 +53,7 @@ export const PayoutHeader: FC<Props> = ({ status }) => {
   )
 }
 
-export const PayoutStatus: FC<{ status: PayoutType }> = ({ status }) => {
+export const PayoutStatus: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
   const { title, backgroundColor, color, borderColor } = useStatusButtonInfo(status)
 
   return (

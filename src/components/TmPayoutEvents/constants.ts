@@ -1,11 +1,3 @@
-export enum PAYOUT_STATUS {
-  ANNOUNCED = 'announced',
-  STARTED = 'started',
-  ENDED = 'ended',
-  DRAFT = 'draft',
-  SCHEDULED = 'scheduled',
-}
-
 export enum PAYOUT_TYPE {
   DIVIDENDS = 'dividends',
   REWARDS = 'rewards',

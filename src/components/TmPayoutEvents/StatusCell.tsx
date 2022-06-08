@@ -1,54 +1,42 @@
 import React, { useMemo } from 'react'
 
+import { Colors } from 'theme/styled'
+import { PAYOUT_STATUS } from 'pages/PayoutItem'
+
 import { StatusContainer } from './styleds'
 
 interface Props {
   status: string
 }
 
-export const StatusCell = ({ status }: Props) => {
-  const color = useMemo(() => {
-    switch (status) {
-      case 'announced': {
-        return 'orange1'
-      }
-      case 'started': {
-        return 'green2'
-      }
-      case 'ended': {
-        return 'blue3'
-      }
-      case 'draft': {
-        return 'transparent'
-      }
-      case 'scheduled': {
-        return 'yellow4'
-      }
-      default: {
-        return 'transparent'
-      }
-    }
-  }, [status])
+interface Info {
+  color: keyof Colors | 'transparent'
+  text: string
+}
 
-  const text = useMemo(() => {
+export const StatusCell = ({ status }: Props) => {
+  const { color, text } = useMemo((): Info => {
     switch (status) {
-      case 'announced': {
-        return 'Announced'
+      case PAYOUT_STATUS.ANNOUNCED: {
+        return { color: 'orange1', text: 'Announced' }
       }
-      case 'started': {
-        return 'Started'
+      case PAYOUT_STATUS.STARTED: {
+        return { color: 'green2', text: 'Started' }
       }
-      case 'ended': {
-        return 'Ended'
+      case PAYOUT_STATUS.ENDED: {
+        return { color: 'blue3', text: 'Ended' }
       }
-      case 'draft': {
-        return 'Draft'
+      case PAYOUT_STATUS.DRAFT: {
+        return { color: 'transparent', text: 'Draft' }
       }
-      case 'scheduled': {
-        return 'Scheduled'
+      case PAYOUT_STATUS.SCHEDULED: {
+        return { color: 'yellow4', text: 'Scheduled' }
+      }
+      case PAYOUT_STATUS.DELAYED: {
+        return { color: 'bg14', text: 'Delayed' }
       }
       default: {
-        return status
+        return { color: 'transparent', text: status }
       }
     }
   }, [status])
