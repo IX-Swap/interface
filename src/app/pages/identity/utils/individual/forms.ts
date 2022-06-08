@@ -30,7 +30,7 @@ export const getPersonalInfoFormValues = (
       state: data?.address?.state,
       postalCode: data?.address?.postalCode,
       country,
-      city: data?.noa_basic !== undefined ? country : data?.address?.city
+      city: data?.address?.city
     }
   }
 }

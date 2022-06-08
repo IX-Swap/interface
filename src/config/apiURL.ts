@@ -41,7 +41,8 @@ export const identityURL = {
     create: (userId?: string) => `/identity/individuals/${userId}`,
     update: (userId?: string) => `/identity/individuals/${userId}`,
     get: (userId?: string) => `/identity/individuals/${userId}`,
-    submit: (id?: string) => `/identity/individuals/${id}/submit`
+    submit: (id?: string) => `/identity/individuals/${id}/submit`,
+    getSingPassData: '/sing-pass/getuser'
   },
   detailsOfIssuance: {
     create: (userId?: string) => `/identity/issuance-detail/${userId}`,

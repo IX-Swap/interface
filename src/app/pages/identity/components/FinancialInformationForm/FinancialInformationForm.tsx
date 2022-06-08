@@ -6,7 +6,7 @@ import { NoticeOfAssesment } from 'app/pages/identity/components/FinancialInform
 import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 
 export const FinancialInformationForm = () => {
-  const { isSingPass } = useIsSingPass()
+  const { isSingPass, singPassData } = useIsSingPass()
 
   return (
     <Grid container direction='column' spacing={6}>
@@ -18,7 +18,7 @@ export const FinancialInformationForm = () => {
       <Grid item>
         <EmploymentField />
       </Grid>
-      {isSingPass && (
+      {isSingPass && singPassData?.noahistory !== undefined && (
         <Grid item xs={12}>
           <NoticeOfAssesment />
         </Grid>

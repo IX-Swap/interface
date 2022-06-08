@@ -5,10 +5,10 @@ import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import {
   dateTimeValueExtractor,
+  hasValue,
   plainValueExtractor,
   textValueExtractor
 } from 'helpers/forms'
-import { NationalitySelect } from 'components/form/NationalitySelect'
 import { GenderSelect } from 'components/form/GenderSelect'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { DataroomFileType } from 'config/dataroom'
@@ -20,8 +20,8 @@ import { DatePicker } from 'components/form/DatePicker'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { subYears } from 'date-fns'
 import { capitalizeFirstLetter } from 'helpers/strings'
-import { useAuth } from 'hooks/auth/useAuth'
 import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { IndividualNationalityField } from 'app/pages/identity/components/IndividualInfoFields/IndividualNationalityField'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -31,7 +31,6 @@ export const IndividualInfoFields = (
   props: IndividualInfoFieldsProps
 ): JSX.Element => {
   const { rootName } = props
-  const { user } = useAuth()
   const { control } = useFormContext<IndividualPersonalInformation>()
   const {
     email: defaultEmail,
@@ -40,7 +39,7 @@ export const IndividualInfoFields = (
     middleName: defaultMiddleName
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
-  const { isSingPass, individualIdentity } = useIsSingPass()
+  const { isSingPass, singPassData, individualIdentity } = useIsSingPass()
 
   return (
     <Grid container>
@@ -65,7 +64,7 @@ export const IndividualInfoFields = (
             <Grid item xs={12}>
               <TextField
                 label='Principal Name'
-                value={user?.name}
+                value={singPassData?.name}
                 disabled
                 fullWidth
               />
@@ -132,7 +131,7 @@ export const IndividualInfoFields = (
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
               maxDate={subYears(new Date(), 18)}
-              disabled={isSingPass}
+              disabled={isSingPass && hasValue(singPassData?.dob)}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -155,22 +154,13 @@ export const IndividualInfoFields = (
               control={control}
               name='email'
               label='Email'
-              // disabled={isEmailDisabled}
               defaultValue={defaultEmail}
               variant='outlined'
-              disabled={isSingPass}
+              disabled={isSingPass && hasValue(singPassData?.email)}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <TypedField
-              rootName={rootName}
-              component={NationalitySelect}
-              control={control}
-              name='nationality'
-              label='Nationality'
-              variant='outlined'
-              disabled={isSingPass}
-            />
+            <IndividualNationalityField rootName={rootName} />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
@@ -180,7 +170,7 @@ export const IndividualInfoFields = (
               name='gender'
               label='Gender'
               variant='outlined'
-              disabled={isSingPass}
+              disabled={isSingPass && hasValue(singPassData?.sex)}
             />
           </Grid>
           {isSingPass && (

@@ -6,9 +6,12 @@ import { TypedField } from 'components/form/TypedField'
 import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'
 import { EmploymentStatusSelect } from 'app/pages/identity/components/FinancialInformationForm/EmploymentStatusSelect'
 import { OccupationSelect } from './OccupationSelect'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { hasValue } from 'helpers/forms'
 
 export const EmploymentField = () => {
   const { control } = useFormContext()
+  const { isSingPass, singPassData } = useIsSingPass()
 
   return (
     <Grid container direction='column'>
@@ -16,13 +19,18 @@ export const EmploymentField = () => {
         <Grid container spacing={6}>
           <Grid item xs={12} md={4}>
             <TypedField
-              component={OccupationSelect}
+              component={
+                isSingPass && hasValue(singPassData?.employmentsector)
+                  ? TextField
+                  : OccupationSelect
+              }
               control={control}
               variant='outlined'
               name='occupation'
               label='Occupation'
               data-testid='Occupation-select'
               fullWidth
+              disabled={isSingPass && hasValue(singPassData?.employmentsector)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -34,6 +42,7 @@ export const EmploymentField = () => {
               label='Employment Status'
               data-testid='Employment-select'
               fullWidth
+              disabled={isSingPass && hasValue(singPassData?.employmentstatus)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -45,6 +54,7 @@ export const EmploymentField = () => {
               label='Employer'
               helperText='Name of the company you own or you are employed'
               fullWidth
+              disabled={isSingPass && hasValue(singPassData?.employment)}
             />
           </Grid>
         </Grid>

@@ -328,7 +328,7 @@ export interface DeclarationTemplate {
   subLevel?: boolean
 }
 
-export interface noa {
+export interface Noa {
   noa_basic: {
     assessable_income?: string
     noa_type?: string
@@ -341,7 +341,7 @@ export type IndividualIdentity = BaseIdentity &
   IdentityFinancials &
   Authorizable &
   TaxDeclaration &
-  noa
+  Noa
 
 export type CorporateIdentity = BaseIdentity &
   CorporateFields &

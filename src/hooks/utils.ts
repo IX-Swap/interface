@@ -67,7 +67,6 @@ export const generateSingPassAuthorizeUrl = () => {
     'cpfcontributions',
     'cpfbalances',
     'employmentsector',
-    'noahistory-basic',
     'noahistory',
     'employment',
     'occupation'
