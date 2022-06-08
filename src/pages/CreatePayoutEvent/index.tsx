@@ -28,7 +28,7 @@ const CreatePayoutEventPage: FC = () => {
       <StyledBodyWrapper style={{ maxWidth: 840 }} hasAnnouncement={!cookies.annoucementsSeen}>
         <Flex marginBottom="32px" alignItems="center">
           <ButtonText>
-            <ArrowLeft fill="white !important" style={{ fill: 'white !important=' }} />
+            <ArrowLeft fill="white !important" />
           </ButtonText>
           <PageTitle textAlign="center" margin="0 auto">
             <Trans>Create Payout Event</Trans>
