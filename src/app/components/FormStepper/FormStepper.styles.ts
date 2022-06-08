@@ -11,6 +11,7 @@ export const useStyles = makeStyles(theme => ({
     width: 296,
     marginLeft: theme.spacing(2),
     gap: theme.spacing(2),
+    alignContent: 'flex-start',
     [theme.breakpoints.down('md')]: {
       width: '100%',
       marginLeft: 0,
