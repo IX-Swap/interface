@@ -71,7 +71,7 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Matched amount',
+    label: 'Quantity',
     render: (_, row) => formatRoundedAmount(row?.matches?.matchedAmount ?? 0)
   },
   {

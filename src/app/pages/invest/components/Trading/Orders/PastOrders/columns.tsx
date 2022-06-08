@@ -51,7 +51,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Amount',
+    label: 'Quantity',
     render: (value, _) => formatRoundedAmount(value)
   },
   {
