@@ -19,12 +19,8 @@ export const createDraftPayout = async (newPayoutDraft: any) => {
     formData.append(key, newPayoutDraft[key])
   }
 
-  try {
-    const result = await apiService.post(payout.createDraft, formData)
-    return result.data
-  } catch (e: any) {
-    throw new Error(e.message)
-  }
+  const result = await apiService.post(payout.createDraft, formData)
+  return result.data
 }
 
 export function useCreateDraftPayout() {

@@ -59,6 +59,7 @@ export const Select: FC<SelectProps> = ({
   error,
   name,
   required,
+  ...rest
 }: SelectProps) => {
   return (
     <Box>
@@ -70,6 +71,7 @@ export const Select: FC<SelectProps> = ({
         value={selectedItem}
         options={items}
         error={error}
+        {...rest}
       />
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
