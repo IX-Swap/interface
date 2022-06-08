@@ -18,7 +18,7 @@ const Divider = styled.div`
 
 const NftAttributesContainer = styled.div`
   padding: 24px 18px;
-  background: rgba(39, 32, 70, 0.4);
+  background: ${({ theme }) => theme.bg21};
   border-radius: 12px;
   margin-top: 32px;
 `

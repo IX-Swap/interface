@@ -51,10 +51,10 @@ export const Select: FC<SelectProps> = ({
   label,
   onSelect,
   selectedItem,
+  placeholder,
   items,
   error,
   name,
-  ...rest
 }: SelectProps) => {
   return (
     <Box>
@@ -65,7 +65,14 @@ export const Select: FC<SelectProps> = ({
           </TYPE.title11>
         </Label>
       )}
-      <ReactSelect name={name} onSelect={onSelect} value={selectedItem} options={items} error={error} {...rest} />
+      <ReactSelect
+        name={name}
+        placeholder={placeholder}
+        onSelect={onSelect}
+        value={selectedItem}
+        options={items}
+        error={error}
+      />
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}

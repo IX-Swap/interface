@@ -14,12 +14,13 @@ interface Props {
   label?: string
   name?: string
   error?: any | ReactChildren
+  openTo?: "date" | "year" | "month"
   maxHeight?: number
   maxDate?: any
   minDate?: any
 }
 
-export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate, ...props }: Props) => {
+export const DateInput = ({ value, openTo, onChange, label, name, onBlur, error, maxDate, ...props }: Props) => {
   return (
     <Container>
       <Label>{t`${label || 'Date of Birth'}`}</Label>
@@ -29,7 +30,7 @@ export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate
         onChange={onChange}
         onBlur={onBlur}
         autoOk
-        openTo="year"
+        openTo={openTo ?? "year"}
         views={['year', 'month', 'date']}
         format="DD/MM/YYYY"
         TextFieldComponent={(props: Record<string, any>) => <TextField {...props} />}
