@@ -89,7 +89,7 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Amount',
+    label: 'Quantity',
     render: (value, _) => formatRoundedAmount(value)
   },
   {

@@ -46,7 +46,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'availableAmount',
-    label: 'Matched amount',
+    label: 'Quantity',
     align: 'center',
     render: (_, row) => formatRoundedAmount(row?.matches?.matchedAmount ?? 0)
   },
