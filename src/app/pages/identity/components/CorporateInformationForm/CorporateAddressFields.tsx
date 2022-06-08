@@ -18,7 +18,7 @@ export const CorporateAddressFields = () => {
   }, [isMailingAddressSame, reset, getValues])
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={5}>
       <Grid item xs={12}>
         <FormSectionHeader title='Registered Address' />
       </Grid>

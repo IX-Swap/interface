@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
@@ -39,7 +39,7 @@ export const InformationFields = ({
 
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid container spacing={5}>
         <Grid item xs={12}>
           <FormSectionHeader title={corporateInformationLabelMap[type]} />
         </Grid>
@@ -48,7 +48,14 @@ export const InformationFields = ({
             customRenderer
             control={control}
             component={FileUpload}
-            label='Upload logo (Optional)'
+            label={
+              <Typography>
+                Upload logo{' '}
+                <Box component={'span'} style={{ color: '#778194' }}>
+                  (Optional)
+                </Box>
+              </Typography>
+            }
             placeHolder='Upload File'
             valueExtractor={plainValueExtractor}
             documentInfo={{
@@ -97,15 +104,6 @@ export const InformationFields = ({
         </Grid>
         <Grid item xs={12} md={6}>
           <TypedField
-            component={FundSourceSelect}
-            control={control}
-            variant='outlined'
-            name='sourceOfFund'
-            label='Source of funds'
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TypedField
             component={LegalEntityStatusSelect}
             control={control}
             variant='outlined'
@@ -126,6 +124,15 @@ export const InformationFields = ({
             disabled={legalEntityStatus !== 'others'}
             placeholder='Please specify'
             hideIcon
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            component={FundSourceSelect}
+            control={control}
+            variant='outlined'
+            name='sourceOfFund'
+            label='Source of Funds'
           />
         </Grid>
         <ValidateOnMount />

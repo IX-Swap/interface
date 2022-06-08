@@ -12,7 +12,7 @@ export const OwnershipStructureFields = () => {
 
   return (
     <>
-      <Grid container spacing={6}>
+      <Grid container spacing={5}>
         <Grid item xs={12}>
           <FormSectionHeader title='Ownership Structure Layers' />
         </Grid>

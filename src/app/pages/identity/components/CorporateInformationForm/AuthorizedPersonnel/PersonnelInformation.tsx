@@ -23,9 +23,9 @@ export const PersonnelInformation = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={5}>
       <Grid item xs={12}>
-        <Grid container spacing={6}>
+        <Grid container spacing={5}>
           <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}

@@ -15,7 +15,7 @@ export const AuthorizationDocuments = ({
   const fieldName = pathToString([index, 'documents'], rootName)
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={5}>
       <Grid item xs={12}>
         <FormSectionHeader title='Authorization Document' />
       </Grid>

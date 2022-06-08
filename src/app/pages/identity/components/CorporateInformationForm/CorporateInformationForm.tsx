@@ -15,7 +15,7 @@ export const CorporateInformationForm = ({
   type = 'investor'
 }: CorporateInformationFormProps) => {
   return (
-    <Grid data-testid='corporateInformationForm' container spacing={6}>
+    <Grid data-testid='corporateInformationForm' container spacing={2}>
       <Grid item xs={12}>
         <FieldContainer>
           <InformationFields type={type} />
