@@ -54,6 +54,7 @@ const NFTCollection = lazy(() => import('./NFTCollection'))
 const UpdateCollection = lazy(() => import('./UpdateCollection'))
 const CreateCollection = lazy(() => import('./CreateCollection'))
 const NftAssetPage = lazy(() => import('./NFTAsset'))
+const PayoutItem = lazy(() => import('./PayoutItem'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -215,8 +216,8 @@ export default function App() {
                 {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
                   <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
                 )}
-
                 {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
+                {isWhitelisted && <Route exact strict path={routes.payoutItem} component={PayoutItem} />}
                 {isWhitelisted && canAccessKycForm('individual') && (
                   <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
                 )}

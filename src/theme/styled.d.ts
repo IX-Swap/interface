@@ -86,10 +86,12 @@ export interface Colors {
   red3: Color
   green1: Color
   green2: Color
+  green3: Color
   yellow1: Color
   yellow2: Color
   yellow3: Color
   yellow4: Color
+  orange: Color
   blue1: Color
   blue2: Color
   blue3: Color
