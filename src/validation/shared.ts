@@ -139,15 +139,12 @@ export const documentsSchema = yup
   .of(
     yup.object<DocumentFieldArrayItemValue>({
       // @ts-expect-error
-      value: yup
-        .object<DataroomFile>()
-        // @ts-expect-error
-        .test(
-          'isMoreThanZeroFilesUpload',
-          'validationMessages.required',
-          // @ts-expect-errors
-          value => Object.keys(value).length > 0
-        )
+      value: yup.object<DataroomFile>().test(
+        'isMoreThanZeroFilesUpload',
+        'validationMessages.required',
+        // @ts-expect-errors
+        value => Object.keys(value).length > 0
+      )
     })
   )
   .required(validationMessages.required)
