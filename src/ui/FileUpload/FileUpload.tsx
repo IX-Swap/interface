@@ -59,14 +59,17 @@ export const FileUpload = (props: FileUploadProps) => {
     if (props.onRemoveCallback !== undefined) {
       props.onRemoveCallback(value)
     }
-    if (remove !== undefined) remove()
+    if (remove !== undefined) {
+      remove()
+    }
   }
 
   const [uploadFile] = useUploadFile(
     {
       onSuccess: response => {
-        if (!multiple && props.onSuccessUploadCallback !== undefined)
+        if (!multiple && props.onSuccessUploadCallback !== undefined) {
           props.onSuccessUploadCallback(response.data[0])
+        }
         onChange(
           multiple
             ? [...(Array.isArray(value) ? value : []), ...response.data]
