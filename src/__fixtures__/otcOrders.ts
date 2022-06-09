@@ -64,7 +64,7 @@ const fakeOTCMatch2: OTCMatch = {
   },
   status: OTCOrderStatus.CONFIRMED
 }
-const order1: OTCOrder = {
+export const order1: OTCOrder = {
   _id: '609d1d93c54af74af46c027c',
   createdAt: '2022-05-10T12:45:07.411Z',
   pair: fakeOTCMarket,

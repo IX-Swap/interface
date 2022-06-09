@@ -47,10 +47,7 @@ export const useCreateOTCOrder = () => {
     onSuccess: data => {
       void queryCache.invalidateQueries(tradingQueryKeys.getMyOpenOrdersList)
       void queryCache.invalidateQueries(tradingQueryKeys.pastOrders)
-      void snackbarService.showSnackbar(
-        'Order Placed. Wait for Authorizer’s approval',
-        'success'
-      )
+      void snackbarService.showSnackbar('Order Placed', 'success')
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

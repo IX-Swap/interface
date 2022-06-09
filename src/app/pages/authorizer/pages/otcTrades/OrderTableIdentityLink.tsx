@@ -3,7 +3,6 @@ import { Box } from '@mui/material'
 import { AuthorizerIdentityLink } from 'app/components/AuthorizerIdentityLink'
 import React from 'react'
 import { OrderType, OTCIdentity, OTCOrder } from 'types/otcOrder'
-
 export interface OrderTableLinkParams {
   userId: string
   identityId: string
@@ -73,9 +72,18 @@ export const OrderTableIdentityLink = ({
       type={identityType}
       userId={userId}
       underline='none'
-      style={{ fontWeight: 400, fontSize: '14px', color: '#286396' }}
+      style={{
+        fontWeight: 400,
+        fontSize: '14px',
+        color: '#286396'
+      }}
     >
-      <Box display='flex' gap={1.25} alignItems='center'>
+      <Box
+        display='flex'
+        justifyContent={'space-between'}
+        gap={1.25}
+        alignItems='center'
+      >
         <Box>{name}</Box>
         <Launch color='primary' />
       </Box>

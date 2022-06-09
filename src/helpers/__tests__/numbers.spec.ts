@@ -4,8 +4,15 @@ import {
   generateRandom,
   formatAmount,
   addSymbol,
-  formatTokenBalance
+  formatTokenBalance,
+  isNotNullish,
+  formatAmountValue,
+  getFilledRoundedPercentage,
+  getRoundedPercentage,
+  renderTotal,
+  getOrderCurrency
 } from 'helpers/numbers'
+import { order1 } from '__fixtures__/otcOrders'
 
 describe('addSymbol', () => {
   it('returns value with symbol', () => {
@@ -74,5 +81,55 @@ describe('formatTokenBalance', () => {
     expect(formatTokenBalance(10, 'SGD')).toEqual('SGD 10.00')
     expect(formatTokenBalance(0.999, 'SGD')).toEqual('SGD 0.999')
     expect(formatTokenBalance(undefined, 'SGD')).toEqual('SGD 0.00')
+  })
+})
+describe('isNotNullish', () => {
+  it('returns false when value is nullish, and true when it is not', () => {
+    expect(isNotNullish(0)).toEqual(false)
+    expect(isNotNullish(null)).toEqual(false)
+    expect(isNotNullish(undefined)).toEqual(false)
+    expect(isNotNullish(5)).toEqual(true)
+  })
+})
+
+describe('formatAmountValue', () => {
+  it('formats value correctly', () => {
+    expect(formatAmountValue('45')).toEqual('45')
+    expect(formatAmountValue(45)).toEqual(formatAmount(45))
+  })
+})
+
+describe('getFilledRoundedPercentage', () => {
+  it('shows correct value for percentage', () => {
+    expect(
+      getFilledRoundedPercentage({ amount: 10, availableAmount: 2 })
+    ).toEqual('80%'),
+      expect(
+        getFilledRoundedPercentage({ amount: 27, availableAmount: 13 })
+      ).toEqual('52%')
+  })
+})
+describe('getRoundedPercentage', () => {
+  it('shows correct value for percentage', () => {
+    expect(getRoundedPercentage({ amount: 10, matchedAmount: 2 })).toEqual(
+      '20%'
+    ),
+      expect(getRoundedPercentage({ amount: 27, matchedAmount: 13 })).toEqual(
+        '48%'
+      )
+  })
+})
+
+describe('renderTotal', () => {
+  it('calculates total correctly', () => {
+    expect(renderTotal({ amount: 10, price: 2, row: order1 })).toEqual(
+      'USD 20.00'
+    )
+  })
+})
+
+describe('getOrderCurrency', () => {
+  it('get correct currency', () => {
+    expect(getOrderCurrency(order1)).toEqual('USD')
   })
 })

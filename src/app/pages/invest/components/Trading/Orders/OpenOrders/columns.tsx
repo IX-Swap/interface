@@ -1,16 +1,15 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
-  getFilledMatchesPercentage,
-  getFilledPercentage,
+  formatRoundedAmount,
   getOrderCurrency,
-  renderMoney,
   renderTotal
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderTicker } from 'helpers/tables'
 import { OTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { renderOpenOrderPercentage } from './helpers'
 
 export const columns: Array<TableColumn<OTCOrder>> = [
   {
@@ -35,10 +34,9 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'availableAmount',
-    label: 'Matched amount',
+    label: 'Quantity',
     align: 'center',
-    render: (value, row) =>
-      formatMoney(row?.matches?.matchedAmount ?? 0, '', false)
+    render: (_, row) => formatRoundedAmount(row?.matches?.matchedAmount ?? 0)
   },
   {
     key: 'amount',
@@ -49,11 +47,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) =>
-      getFilledMatchesPercentage({
-        amount: row.amount,
-        matchedAmount: row.matches?.matchedAmount ?? 0
-      })
+    render: (_, row) => renderOpenOrderPercentage(row)
   }
 ]
 
@@ -65,8 +59,8 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Amount',
-    render: renderMoney
+    label: 'Quantity',
+    render: (_, row) => formatRoundedAmount(row?.matches?.matchedAmount ?? 0)
   },
   {
     key: 'orderType',
@@ -87,11 +81,7 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) =>
-      getFilledPercentage({
-        amount: row.amount,
-        availableAmount: row.availableAmount
-      })
+    render: (_, row) => renderOpenOrderPercentage(row)
   },
   {
     key: 'createdAt',

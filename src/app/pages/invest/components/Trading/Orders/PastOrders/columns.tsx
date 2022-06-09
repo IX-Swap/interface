@@ -2,12 +2,13 @@ import { Typography } from '@mui/material'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
-  getFilledPercentage,
+  formatRoundedAmount,
   getOrderCurrency,
+  getRoundedPercentage,
   renderTotal
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
-import { renderRowAmount, renderTicker } from 'helpers/tables'
+import { renderTicker } from 'helpers/tables'
 import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
 import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
@@ -50,8 +51,8 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Amount',
-    render: renderRowAmount
+    label: 'Quantity',
+    render: (value, _) => formatRoundedAmount(value)
   },
   {
     key: 'amount',
@@ -63,9 +64,9 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     key: '_id',
     label: 'Filled',
     render: (_, row) =>
-      getFilledPercentage({
+      getRoundedPercentage({
         amount: row.amount,
-        availableAmount: row.availableAmount
+        matchedAmount: row.availableAmount ?? 0
       })
   },
   {
@@ -88,8 +89,8 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   },
   {
     key: 'amount',
-    label: 'Amount',
-    render: renderRowAmount
+    label: 'Quantity',
+    render: (value, _) => formatRoundedAmount(value)
   },
   {
     key: 'orderType',
@@ -112,9 +113,9 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
     key: '_id',
     label: 'Filled',
     render: (_, row) =>
-      getFilledPercentage({
+      getRoundedPercentage({
         amount: row.amount,
-        availableAmount: row.availableAmount
+        matchedAmount: row.availableAmount ?? 0
       })
   },
   {
