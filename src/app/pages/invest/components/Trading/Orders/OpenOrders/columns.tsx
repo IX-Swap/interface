@@ -3,26 +3,14 @@ import {
   formatMoney,
   formatRoundedAmount,
   getOrderCurrency,
-  getRoundedPercentage,
   renderTotal
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderTicker } from 'helpers/tables'
-import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
+import { OTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { renderOpenOrderPercentage } from './helpers'
 
-const renderOpenOrderPercentage = (row: OTCOrder) => {
-  if (
-    row.matches?.status !== OTCOrderStatus.SETTLED &&
-    row.orderType === 'BUY'
-  ) {
-    return '0'
-  }
-  return getRoundedPercentage({
-    amount: row.amount,
-    matchedAmount: row.matches?.matchedAmount ?? 0
-  })
-}
 export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'createdAt',
