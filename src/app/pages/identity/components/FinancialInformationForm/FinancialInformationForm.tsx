@@ -1,12 +1,13 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import { EmploymentField } from 'app/pages/identity/components/FinancialInformationForm/EmploymentFields'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 
 export const FinancialInformationForm = () => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item>
-        <Typography variant='subtitle2'>Financial Information</Typography>
+        <FormSectionHeader title='Financial Information' />
       </Grid>
       <Grid item>
         <EmploymentField />

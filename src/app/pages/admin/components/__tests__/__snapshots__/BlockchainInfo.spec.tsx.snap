@@ -7,7 +7,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
     data-testid="network.info-container"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
     >
       <h5
         class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
@@ -20,7 +20,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </h5>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
       data-testid="blockchain-info-owner-wallet-address"
     >
       <div
@@ -44,7 +44,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
       data-testid="blockchain-info-owner-wallet-balance"
     >
       <div
@@ -68,7 +68,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
       data-testid="blockchain-info-reserve-wallet-address"
     >
       <div
@@ -92,7 +92,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
       data-testid="blockchain-info-reserve-wallet-balance"
     >
       <div

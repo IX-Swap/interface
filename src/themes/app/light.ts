@@ -261,7 +261,8 @@ export const lightTheme: DeprecatedThemeOptions = {
       bg: 'rgba(255, 255, 255, 0.75)'
     },
     dialog: {
-      color: '#343A47'
+      color: '#343A47',
+      content: '#778194'
     }
   }
 }

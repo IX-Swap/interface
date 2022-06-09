@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
 import {
   CorporateInvestorForm,
   CorporateType
@@ -25,11 +24,12 @@ const EditInvestorForm = ({
         <PageHeader title={data.companyLegalName} />
       </Grid>
       <RootContainer>
-        <Grid container item xs={12}>
-          <VSpacer size='medium' />
-        </Grid>
         <Grid item xs={12}>
-          <CorporateInvestorForm data={data} type={type} />
+          <CorporateInvestorForm
+            data={data}
+            type={type}
+            formTitle='Corporate Investor Identity'
+          />
         </Grid>
       </RootContainer>
     </Grid>
