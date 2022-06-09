@@ -2,6 +2,7 @@ import { useTheme } from '@mui/material'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
+import { getRoundedPercentage } from 'helpers/numbers'
 import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
 
 export const needsConfirmation = (item: OTCOrder) => {
@@ -35,3 +36,16 @@ export const sortOpenOrders = (first: OTCOrder, _: OTCOrder) =>
   first.orderType === 'SELL'
     ? -1
     : 1
+
+export const renderOpenOrderPercentage = (row: OTCOrder) => {
+  if (
+    row.matches?.status !== OTCOrderStatus.SETTLED &&
+    row.orderType === 'BUY'
+  ) {
+    return '0'
+  }
+  return getRoundedPercentage({
+    amount: row.amount,
+    matchedAmount: row.matches?.matchedAmount ?? 0
+  })
+}
