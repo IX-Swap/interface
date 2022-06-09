@@ -21,7 +21,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
     <Grid container spacing={5} className={privateClassNames()}>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           component={TextInput}
           fullWidth
           control={control}
@@ -36,7 +35,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           component={TextInput}
           fullWidth
           control={control}
@@ -51,7 +49,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           fullWidth
           component={TextInput}
           control={control}
@@ -66,7 +63,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           fullWidth
           component={TextInput}
           control={control}
@@ -93,7 +89,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           fullWidth
           component={TextInput}
           control={control}

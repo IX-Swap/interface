@@ -76,7 +76,8 @@ export const showInputLabel = (component: ElementType) => {
   const showLabel = !(
     renderName === 'TextField' ||
     displayName.startsWith('TextField') ||
-    displayName.startsWith('Select')
+    displayName.startsWith('Select') ||
+    !displayName.startsWith('PhoneInput')
   )
   return showLabel
 }

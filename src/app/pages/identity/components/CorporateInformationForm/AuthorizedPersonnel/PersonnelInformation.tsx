@@ -78,7 +78,6 @@ export const PersonnelInformation = ({
               control={control}
               name={[rootName, index, 'contactNumber']}
               label='Contact Number'
-              customRenderer
               fullWidth
             />
           </Grid>
