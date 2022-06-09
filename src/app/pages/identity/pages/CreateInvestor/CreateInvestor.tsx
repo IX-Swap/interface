@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid, useMediaQuery } from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
+import { useMediaQuery } from '@mui/material'
 import {
   CorporateInvestorForm,
   CorporateType
@@ -42,17 +41,10 @@ export const CreateCorporateIdentity = ({
     <>
       {matches ? null : <PageHeader title={title} />}
       <RootContainer>
-        <Grid container>
-          <Grid container item>
-            <VSpacer size='medium' />
-          </Grid>
-          <Grid item>
-            <CorporateInvestorForm
-              formTitle='Corporate Investor Identity'
-              type={type}
-            />
-          </Grid>
-        </Grid>
+        <CorporateInvestorForm
+          formTitle='Corporate Investor Identity'
+          type={type}
+        />
       </RootContainer>
     </>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStyles } from 'app/components/OnboardingDialog/OnboardingDialog.styles'
+import { useStyles } from 'app/components/UncompletedIdentityDialog/UncompletedIdentityDialog.styles'
 import { Portal, Fade, Box } from '@mui/material'
 
 export interface BackDropProps {

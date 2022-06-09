@@ -200,6 +200,7 @@ export interface OtpInput {
 
 export interface DialogPalette {
   color: string
+  content: CSSProperties['color']
 }
 
 declare module '@mui/styles/defaultTheme' {

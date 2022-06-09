@@ -1,16 +1,16 @@
 import { Box, Button } from '@mui/material'
 import React from 'react'
 
-export interface SaveDrafButtonProps {
+export interface SaveDraftButtonProps {
   formId: string
   isLastStep?: boolean
   disabled?: boolean
 }
 
-export const SaveDrafButton = ({
+export const SaveDraftButton = ({
   formId,
   disabled = false
-}: SaveDrafButtonProps) => {
+}: SaveDraftButtonProps) => {
   return (
     <Box width='100%'>
       <Button

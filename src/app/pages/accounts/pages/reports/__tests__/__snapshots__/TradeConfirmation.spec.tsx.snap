@@ -13,7 +13,7 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
         class="makeStyles-wrapper-20 MuiBox-root css-0"
       >
         <div
-          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-18 css-1vpwcmr-MuiGrid-root"
@@ -50,7 +50,7 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-1hznz5z-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
@@ -254,7 +254,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
         class="makeStyles-wrapper-5 MuiBox-root css-0"
       >
         <div
-          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-3 css-1vpwcmr-MuiGrid-root"
@@ -291,7 +291,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-1hznz5z-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-12 css-l6hioc-MuiGrid-root"
@@ -382,7 +382,7 @@ exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `
         class="makeStyles-wrapper-50 MuiBox-root css-0"
       >
         <div
-          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-48 css-1vpwcmr-MuiGrid-root"
@@ -419,7 +419,7 @@ exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `
       />
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-1hznz5z-MuiContainer-root"
+      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"

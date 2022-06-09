@@ -6,10 +6,11 @@ import { MutationResultPair } from 'react-query'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { StepButton } from 'ui/Stepper/StepButton'
 import { useTheme } from '@mui/material/styles'
-import { SaveDrafButton } from 'app/components/FormStepper/SaveDraftButton'
+import { SaveDraftButton } from 'app/components/FormStepper/SaveDraftButton'
 import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { useStyles } from './FormStepper.styles'
 
 export interface FormStepperStep {
   label: string
@@ -34,6 +35,7 @@ export interface FormStepperProps {
 }
 
 export const FormStepper = (props: FormStepperProps) => {
+  const classes = useStyles()
   const {
     steps,
     data,
@@ -75,7 +77,7 @@ export const FormStepper = (props: FormStepperProps) => {
   const stepFilter = getFilterValue('step')
 
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+  const matches = useMediaQuery(theme.breakpoints.down('md'))
 
   const getStepFilterValue = () => {
     const stepByFilterIndex = steps.findIndex(
@@ -137,12 +139,8 @@ export const FormStepper = (props: FormStepperProps) => {
   }
 
   return (
-    <Grid
-      container
-      spacing={2}
-      direction={matches ? 'column-reverse' : undefined}
-    >
-      <Grid item xs={12} sm={9}>
+    <Grid container direction={matches ? 'column-reverse' : 'row'}>
+      <Grid item className={classes.content}>
         {stepsMemo.map((step, index) => (
           <FormStep
             key={`step-content-${index}`}
@@ -162,29 +160,19 @@ export const FormStepper = (props: FormStepperProps) => {
           />
         ))}
       </Grid>
-      <Grid item container xs={12} sm={3} spacing={2} alignContent='flex-start'>
-        <Grid item xs={12}>
-          <Paper
-            sx={{
-              borderRadius: 2,
-              py: matches ? 2 : 5,
-              px: matches ? 2 : undefined
-            }}
-          >
+      <Grid item container className={classes.rightBlock}>
+        <Grid item className={classes.stepperBlock}>
+          <Paper className={classes.stepperBlockWrapper}>
             <Stepper
               nonLinear={nonLinear}
               orientation={matches ? 'horizontal' : 'vertical'}
               activeStep={activeStep}
-              title={matches ? steps[activeStep].label : 'Progress'}
-              stepInfo={
-                matches
-                  ? {
-                      label: formTitle,
-                      activeStep: activeStep + 1,
-                      totalSteps: steps.length
-                    }
-                  : undefined
-              }
+              title={matches ? formTitle : 'Progress'}
+              stepInfo={{
+                label: steps[activeStep].label,
+                activeStep: activeStep + 1,
+                totalSteps: steps.length
+              }}
               actions={
                 <Grid container spacing={2}>
                   {matches ? null : (
@@ -198,7 +186,7 @@ export const FormStepper = (props: FormStepperProps) => {
                     </Grid>
                   )}
                   <Grid item xs={12}>
-                    <SaveDrafButton
+                    <SaveDraftButton
                       isLastStep={activeStep === steps.length - 1}
                       formId={`${
                         steps[activeStep].formId ?? 'form'

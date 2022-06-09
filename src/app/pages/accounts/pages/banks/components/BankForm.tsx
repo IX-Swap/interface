@@ -6,12 +6,12 @@ import { bankFormValidationSchema } from 'app/pages/accounts/validation'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { getBankFormDefaultValues } from 'app/pages/accounts/pages/banks/utils'
 import { Form } from 'components/form/Form'
-import { Submit } from 'components/form/Submit'
 import { BankFields } from 'app/pages/accounts/pages/banks/components/BankFields'
 import { VSpacer } from 'components/VSpacer'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
+import { ValidSubmit } from 'components/form/ValidSubmit'
 
 export interface BankFormProps {
   submitButtonLabel: string
@@ -73,7 +73,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
             Cancel
           </Button>
           <Box marginX={1} />
-          <Submit>{submitButtonLabel}</Submit>
+          <ValidSubmit>{submitButtonLabel}</ValidSubmit>
         </Grid>
       </Grid>
     </Form>
