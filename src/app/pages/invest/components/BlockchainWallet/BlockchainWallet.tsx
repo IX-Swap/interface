@@ -10,9 +10,8 @@ import { Link } from 'react-router-dom'
 import { BlockchainAddress } from './BlockchainAddress'
 export const BlockchainWallet = () => {
   const classes = useStyles()
-  const web3 = useActiveWeb3React()
   const context = useContext(WalletModalContext)
-  const { account, chainId, active } = web3
+  const { account, chainId, active } = useActiveWeb3React()
   const { found, label } = useWithdrawalAddressAdded(account)
   return (
     <>
@@ -21,6 +20,7 @@ export const BlockchainWallet = () => {
           <Button
             variant='contained'
             color='primary'
+            data-testid='connect-wallet-button'
             onClick={context?.toggleModal}
           >
             Connect Wallet
@@ -32,6 +32,7 @@ export const BlockchainWallet = () => {
                 variant='contained'
                 color='primary'
                 component={Link}
+                data-testid='add-wallet-button'
                 to={WithdrawalAddressesRoute.create}
               >
                 Add Wallet
