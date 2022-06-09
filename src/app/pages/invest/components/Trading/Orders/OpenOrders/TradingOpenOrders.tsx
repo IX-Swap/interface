@@ -17,6 +17,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { OTCOrder } from 'types/otcOrder'
+import { OpenOrdersContextWrapper } from '../../context/OpenOrdersContextWrapper'
 import { CompactOpenOTCOrder } from './CompactOpenOTCOrder'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
@@ -28,35 +29,37 @@ export const TradingOpenOrders = () => {
   const { isMiniLaptop } = useAppBreakpoints()
   const { account } = useActiveWeb3React()
   return (
-    <Grid>
-      <TableView<OTCOrder>
-        name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
-        uri={trading.getMyOrdersList(account)}
-        size='small'
-        columns={columns}
-        noHeader={isMiniLaptop}
-        themeVariant={'primary'}
-        hasActions
-        bordered={false}
-        noDataComponent={<OpenOrdersEmptyState />}
-        actions={OTCOrderActions}
-        paperProps={
-          isMiniLaptop
-            ? {
-                variant: 'elevation',
-                elevation: 0
-              }
-            : undefined
-        }
-      >
-        {isMiniLaptop
-          ? (props: TableViewRendererProps<OTCOrder>) => (
-              <CompactOpenOTCOrder {...props} columns={compactColumns} />
-            )
-          : (props: TableViewRendererProps<OTCOrder>) => (
-              <OpenOTCTableBody {...props} columns={columns} />
-            )}
-      </TableView>
-    </Grid>
+    <OpenOrdersContextWrapper>
+      <Grid>
+        <TableView<OTCOrder>
+          name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
+          uri={trading.getMyOrdersList(account)}
+          size='small'
+          columns={columns}
+          noHeader={isMiniLaptop}
+          themeVariant={'primary'}
+          hasActions
+          bordered={false}
+          noDataComponent={<OpenOrdersEmptyState />}
+          actions={OTCOrderActions}
+          paperProps={
+            isMiniLaptop
+              ? {
+                  variant: 'elevation',
+                  elevation: 0
+                }
+              : undefined
+          }
+        >
+          {isMiniLaptop
+            ? (props: TableViewRendererProps<OTCOrder>) => (
+                <CompactOpenOTCOrder {...props} columns={compactColumns} />
+              )
+            : (props: TableViewRendererProps<OTCOrder>) => (
+                <OpenOTCTableBody {...props} columns={columns} />
+              )}
+        </TableView>
+      </Grid>
+    </OpenOrdersContextWrapper>
   )
 }

@@ -1,18 +1,23 @@
-import { Box, TableBody, TableCell, TableRow } from '@mui/material'
+import { TableBody, TableCell, TableRow } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
 import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
-import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
 import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getExpiresOrderMessage } from 'helpers/dates'
-import React from 'react'
+import React, { useContext } from 'react'
 import { OTCOrder } from 'types/otcOrder'
-import { needsConfirmation, useOpenOrderState, sortOpenOrders } from './helpers'
+import { OpenOrdersContext } from '../../context/OpenOrdersContextWrapper'
+import { needsConfirmation, sortOpenOrders, useOpenOrderState } from './helpers'
+import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
 
 export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
   const classes = useStyles()
+  const theme = useTheme()
   const { columns, items, actions, hasActions, cacheQueryKey } = props
   const { showEmptyState, columnCount, rowColor } = useOpenOrderState(props)
+  const context = useContext(OpenOrdersContext)
+
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
@@ -27,7 +32,10 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
             style={{
               backgroundColor: rowColor(row),
               border: 'transparent',
-              borderBottom: 'initial'
+              borderBottom:
+                needsConfirmation(row) || i === sorted.length - 1
+                  ? 'initial'
+                  : `12px solid ${theme.palette.background.paper}`
             }}
           >
             {columns.map(column => (
@@ -38,6 +46,7 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
                 row={row}
               />
             ))}
+
             {hasActions && (
               <ActionTableCell
                 row={row}
@@ -46,12 +55,38 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
               />
             )}
           </TableRow>
+          {context?.isIndexOpen(row._id) === true && (
+            <TableRow
+              key={`${i}-subrow`}
+              style={{
+                border: 'transparent'
+              }}
+            >
+              {columns.map(column => (
+                <TableCellWrapper
+                  bordered={true}
+                  key={column.key}
+                  column={column}
+                  row={row}
+                />
+              ))}
+
+              {hasActions && (
+                <ActionTableCell
+                  row={row}
+                  cacheQueryKey={cacheQueryKey}
+                  actions={actions}
+                />
+              )}
+            </TableRow>
+          )}
           {needsConfirmation(row) && (
             <TableRow
               key={`${i}-timeout`}
               className={classes.infoRow}
               style={{
-                backgroundColor: rowColor(row)
+                backgroundColor: rowColor(row),
+                borderBottom: `12px solid ${theme.palette.background.paper}`
               }}
             >
               <TableCell
@@ -59,7 +94,6 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
                 colSpan={columnCount}
                 className={classes.infoCell}
               >
-                <Box className={classes.separator} />
                 {getExpiresOrderMessage(new Date(row.createdAt))}
               </TableCell>
             </TableRow>

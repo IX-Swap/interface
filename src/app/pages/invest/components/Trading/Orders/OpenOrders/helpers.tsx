@@ -15,10 +15,13 @@ export const needsConfirmation = (item: OTCOrder) => {
 export const useOpenOrderState = (props: TableViewRendererProps<OTCOrder>) => {
   const { columns, items, hasActions, loading } = props
   const theme = useTheme()
-  const rowColor = (item: OTCOrder) => {
+  const mobileRowColor = (item: OTCOrder) => {
     if (!needsConfirmation(item)) {
       return 'initial'
     }
+    return theme.palette.mode === 'light' ? '#F6F4FD' : '#494166'
+  }
+  const rowColor = (item: OTCOrder) => {
     return theme.palette.mode === 'light' ? '#F6F4FD' : '#494166'
   }
   const columnCount = columns.length + Number(hasActions)
@@ -28,7 +31,7 @@ export const useOpenOrderState = (props: TableViewRendererProps<OTCOrder>) => {
     accountState !== AccountState.SAME_CHAIN ||
     !found ||
     (items?.length === 0 && loading !== true)
-  return { showEmptyState, columnCount, rowColor }
+  return { showEmptyState, columnCount, mobileRowColor, rowColor }
 }
 
 export const sortOpenOrders = (first: OTCOrder, _: OTCOrder) =>

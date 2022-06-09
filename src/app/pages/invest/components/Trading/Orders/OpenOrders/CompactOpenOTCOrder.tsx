@@ -16,7 +16,7 @@ export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
 
 export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
   const { columns, items } = props
-  const { showEmptyState, rowColor } = useOpenOrderState(props)
+  const { showEmptyState, mobileRowColor } = useOpenOrderState(props)
   const classes = useStyles()
 
   if (showEmptyState) {
@@ -29,7 +29,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
         <TableRow
           key={i}
           style={{
-            backgroundColor: rowColor(item)
+            backgroundColor: mobileRowColor(item)
           }}
         >
           <TableCell>
@@ -73,7 +73,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
                   xs={12}
                   key={`${item._id}-timeout`}
                   style={{
-                    backgroundColor: rowColor(item),
+                    backgroundColor: mobileRowColor(item),
                     textAlign: 'center'
                   }}
                 >

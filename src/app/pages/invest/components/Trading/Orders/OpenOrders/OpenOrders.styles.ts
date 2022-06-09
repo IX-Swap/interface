@@ -10,12 +10,11 @@ export const useStyles = makeStyles(theme => ({
   infoRow: {
     border: 'transparent',
     borderBottom: 'initial',
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(0.5)
+    borderTop: '1px solid #DDDDDD',
+    paddingTop: theme.spacing(2)
   },
   infoCell: {
     color: '#848484',
-    paddingTop: 0
+    paddingTop: theme.spacing(2)
   }
 }))
