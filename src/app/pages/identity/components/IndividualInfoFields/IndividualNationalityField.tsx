@@ -1,5 +1,6 @@
 import { MenuItem, TextField } from '@mui/material'
 import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { titleCase } from 'app/pages/identity/utils/shared'
 import { NationalitySelect } from 'components/form/NationalitySelect'
 import { TypedField } from 'components/form/TypedField'
 import { hasValue } from 'helpers/forms'
@@ -33,8 +34,8 @@ export const IndividualNationalityField = ({
       select={isSingPass}
     >
       {isSingPass ? (
-        <MenuItem value={individualIdentity?.nationality}>
-          {individualIdentity?.nationality}
+        <MenuItem value={titleCase(individualIdentity?.nationality)}>
+          {titleCase(individualIdentity?.nationality)}
         </MenuItem>
       ) : null}
     </TypedField>
