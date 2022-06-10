@@ -18,10 +18,9 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const { control } = useFormContext<Address>()
 
   return (
-    <Grid paddingTop={4} container spacing={2} className={privateClassNames()}>
+    <Grid container spacing={5} className={privateClassNames()}>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           component={TextInput}
           fullWidth
           control={control}
@@ -31,11 +30,11 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           variant='outlined'
           defaultValue={defaultValue?.line1 ?? ''}
           placeholder='Line 1'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           component={TextInput}
           fullWidth
           control={control}
@@ -45,11 +44,11 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           variant='outlined'
           defaultValue={defaultValue?.line2 ?? ''}
           placeholder='Line 2'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           fullWidth
           component={TextInput}
           control={control}
@@ -59,11 +58,11 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           variant='outlined'
           defaultValue={defaultValue?.city ?? ''}
           placeholder='City'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           fullWidth
           component={TextInput}
           control={control}
@@ -73,6 +72,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           variant='outlined'
           defaultValue={defaultValue?.state ?? ''}
           placeholder='State'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -89,7 +89,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
       </Grid>
       <Grid item xs={12} md={6}>
         <TypedField
-          customRenderer
           fullWidth
           component={TextInput}
           control={control}
@@ -99,6 +98,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           variant='outlined'
           defaultValue={defaultValue?.postalCode ?? ''}
           placeholder='Postal Code'
+          hideIcon
         />
       </Grid>
       <ValidateOnMount />

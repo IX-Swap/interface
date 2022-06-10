@@ -1,6 +1,6 @@
-import { Grid, Typography, Box, Button } from '@mui/material'
+import { Grid, Typography, Box } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
-import React from 'react'
+import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DataroomFileType } from 'config/dataroom'
 import { Tooltip } from 'app/pages/identity/components/UploadDocumentsForm/Tooltip/Tooltip'
@@ -8,6 +8,8 @@ import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { plainValueExtractor } from 'helpers/forms'
 import { Icon } from 'ui/Icons/Icon'
+import { AddDocumentButton } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/AddDocumentButton'
+import { DataroomFile } from 'types/dataroomFile'
 
 export interface UploadDocumentFieldProps {
   name: any
@@ -24,7 +26,27 @@ export const UploadDocumentField = ({
   helperElement,
   tooltipContent
 }: UploadDocumentFieldProps) => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
+  const defaultUploadedFiles =
+    watch(name) !== undefined && Array.isArray(watch(name))
+      ? watch(name).map((file: { value: DataroomFile }) => file.value)
+      : []
+  const filteredDefaultUploadedFiles = defaultUploadedFiles.filter(
+    (file: DataroomFile) => Object.keys(file).length > 0
+  )
+  const [uploadedFiles, setUploadedFiles] = useState<DataroomFile[]>(
+    filteredDefaultUploadedFiles
+  )
+
+  const handleSuccessFileUpload = (value: DataroomFile) => {
+    setUploadedFiles([...uploadedFiles, value])
+  }
+  const handleRemoveFile = (value: DataroomFile) => {
+    const filteredValue = uploadedFiles.filter(
+      (it: DataroomFile) => it !== value
+    )
+    setUploadedFiles(filteredValue)
+  }
 
   return (
     <Grid container spacing={3}>
@@ -48,7 +70,7 @@ export const UploadDocumentField = ({
       <Grid item xs={12}>
         <FieldsArray name={name} control={control}>
           {({ fields, append, remove }) => (
-            <Grid container spacing={1}>
+            <Grid container spacing={2}>
               {fields.map((field, index) => {
                 return (
                   <Grid item xs={12} key={field.id}>
@@ -69,23 +91,26 @@ export const UploadDocumentField = ({
                       remove={() => {
                         remove(index)
                       }}
+                      onSuccessUploadCallback={handleSuccessFileUpload}
+                      onRemoveCallback={handleRemoveFile}
                       defaultValue={field.value}
                     />
                   </Grid>
                 )
               })}
-              <Grid item xs={12}>
-                <Button
-                  onClick={() => {
-                    append({ value: {} })
-                  }}
-                  variant='outlined'
-                  startIcon={<Icon name='plus' />}
-                  sx={{ width: '100%' }}
-                >
-                  Add More
-                </Button>
-              </Grid>
+
+              <AddDocumentButton
+                name={name}
+                isVisible={
+                  fields.length === uploadedFiles.length || fields.length === 0
+                }
+                onClick={() => {
+                  append({ value: {} })
+                }}
+                variant='outlined'
+                startIcon={<Icon name='plus' />}
+                sx={{ width: '100%' }}
+              />
             </Grid>
           )}
         </FieldsArray>
