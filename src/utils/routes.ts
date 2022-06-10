@@ -13,8 +13,7 @@ export const routes = {
   kycIndividual: '/kyc/individual',
   kycCorporate: '/kyc/corporate',
   createPayoutEvent: '/payout/create',
-  securityTokens: (currency?: Currency & { tokenInfo?: { catalogId: number } }) =>
-    `/security-tokens${currency ? `/${currency?.tokenInfo?.catalogId}` : ''}`,
+  securityTokens: (currency?: any) => `/security-tokens${currency ? `/${currency?.tokenInfo?.catalogId}` : ''}`,
   staking: '/staking',
   vesting: '/vesting',
   nftList: '/nft',

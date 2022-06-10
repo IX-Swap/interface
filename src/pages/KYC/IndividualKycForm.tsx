@@ -324,13 +324,15 @@ export default function IndividualKycForm() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
-                              onChange={(e) => onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.firstName}
                               label="First Name:"
                               error={errors.firstName && errors.firstName}
                             />
                             <TextInput
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.middleName}
@@ -338,7 +340,9 @@ export default function IndividualKycForm() {
                               error={errors.middleName && errors.middleName}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.lastName}
                               label="Last Name:"
                               error={errors.lastName && errors.lastName}
@@ -393,7 +397,9 @@ export default function IndividualKycForm() {
                               }}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('email', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.email}
                               label="Email address:"
                               error={errors.email && errors.email}
@@ -419,7 +425,9 @@ export default function IndividualKycForm() {
                               onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('idNumber', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('idNumber', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.idNumber}
                               label="Document Number"
                               error={errors.idNumber}
@@ -462,13 +470,15 @@ export default function IndividualKycForm() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
-                              onChange={(e) => onChangeInput('address', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('address', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.address}
                               label="Address"
                               error={errors.address && errors.address}
                             />
                             <TextInput
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.postalCode}
@@ -490,7 +500,7 @@ export default function IndividualKycForm() {
                               error={errors.country && errors.country}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
                               value={values.city}
                               label="City"
                               error={errors.city && errors.city}
@@ -520,7 +530,9 @@ export default function IndividualKycForm() {
                           <TextInput
                             style={{ marginTop: 20 }}
                             placeholder="Other Source of Funds...."
-                            onChange={(e) => onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)}
+                            onChange={(e: any) =>
+                              onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)
+                            }
                             value={values.otherFunds}
                             error={errors.otherFunds && errors.otherFunds}
                           />
@@ -590,7 +602,9 @@ export default function IndividualKycForm() {
                                 style={{ width: 284 }}
                                 placeholder="ID Number.."
                                 value={values.usTin}
-                                onChange={(e) => onChangeInput('usTin', e.currentTarget.value, values, setFieldValue)}
+                                onChange={(e: any) =>
+                                  onChangeInput('usTin', e.currentTarget.value, values, setFieldValue)
+                                }
                                 error={errors.usTin && errors.usTin}
                               />
                             )}
@@ -632,7 +646,9 @@ export default function IndividualKycForm() {
                             error={errors.employmentStatus && errors.employmentStatus}
                           />
                           <TextInput
-                            onChange={(e) => onChangeInput('employer', e.currentTarget.value, values, setFieldValue)}
+                            onChange={(e: any) =>
+                              onChangeInput('employer', e.currentTarget.value, values, setFieldValue)
+                            }
                             value={values.employer}
                             label="Employer"
                             error={errors.employer && errors.employer}

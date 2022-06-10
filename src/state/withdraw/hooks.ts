@@ -312,7 +312,7 @@ export const usePayFee = () => {
   const getEvents = useGetEventCallback()
 
   return useCallback(
-    async ({ feeContractAddress, feeAmount, tokenId, id }) => {
+    async ({ feeContractAddress, feeAmount, tokenId, id }: any) => {
       try {
         dispatch(payFee.pending())
 

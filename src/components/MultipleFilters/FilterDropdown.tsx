@@ -1,10 +1,11 @@
 import React, { CSSProperties, useCallback, useMemo } from 'react'
+import { t } from '@lingui/macro'
 
 import { RowCenter } from 'components/Row'
 import { TYPE } from 'theme'
+import { Checkbox } from 'components/Checkbox'
 
 import { DarkBlueCard, PopOverContent, StyledPopover, Icon } from './styleds'
-import { Checkbox } from 'components/Checkbox'
 
 interface Props {
   onSelect: (item: any) => void
@@ -16,7 +17,7 @@ interface Props {
   className?: string
 }
 
-export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder, className = '' }: Props) => {
+export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>(null)
 
   const isOpen = Boolean(anchorEl)
@@ -51,18 +52,14 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder, cl
 
   return (
     <>
-      <DarkBlueCard
-        className={className}
-        onClick={handleOpen}
-        isOpen={isOpen || (selectedItems?.length ? true : false)}
-      >
+      <DarkBlueCard className="dropdown" onClick={handleOpen} isOpen={isOpen || (selectedItems?.length ? true : false)}>
         <TYPE.body2
           color="inherit"
           fontWeight={300}
           overflow="hidden"
           style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         >
-          {placeholder}
+          {t`${placeholder}`}
         </TYPE.body2>
       </DarkBlueCard>
       <StyledPopover

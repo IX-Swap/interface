@@ -64,7 +64,17 @@ export const TmPayoutEvents = () => {
 
   return (
     <Container>
-      <MultipleFilters filters={[FILTERS.SEC_TOKENS]} callback={fetch} />
+      <MultipleFilters
+        filters={[
+          FILTERS.STATUS,
+          FILTERS.PAYOUT_TYPE,
+          FILTERS.SEC_TOKENS,
+          FILTERS.PAYOUT_PERIOD,
+          FILTERS.RECORD_DATE,
+          FILTERS.PAYOUT_TOKEN,
+        ]}
+        callback={fetch}
+      />
       <Table body={<Body onEdit={onEdit} items={items} />} header={<Header />} />
     </Container>
   )
@@ -136,7 +146,7 @@ const Row = ({ item, onEdit }: IRow) => {
       <div>
         <ButtonGradientBorder
           style={{ marginRight: 25 }}
-          onClick={(e) => {
+          onClick={(e: any) => {
             e.preventDefault()
             e.stopPropagation()
             onEdit(item)

@@ -25,16 +25,14 @@ export const DateFilter: FC<Props> = ({ value, selectBorderRadius, onChange }) =
       onClose={onClose}
       value={value}
       onChange={onChange}
-      autoOk
       disableFuture
       openTo="date"
-      variant="dialog"
-      TextFieldComponent={() => (
-        <div style={{ cursor: 'pointer', whiteSpace: 'nowrap' }} onClick={onClick}>
+      renderInput={() => (
+        <div style={{ cursor: 'pointer', whiteSpace: 'nowrap' }} onClick={onClick} className="dropdown">
           <Select
             borderRadius={selectBorderRadius}
             value={null}
-            placeholder={value?.toString() || "By Date"}
+            placeholder={value?.toString() || 'By Date'}
             options={[]}
             onSelect={() => null}
             isDisabled

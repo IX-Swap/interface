@@ -1,4 +1,4 @@
-import React, { useCallback, ReactNode } from 'react'
+import React, { useCallback } from 'react'
 import { Box } from 'rebass'
 import { ContainerRow, Input, InputContainer, InputPanel } from './styleds'
 
@@ -10,12 +10,12 @@ interface Props {
   onChange?: ((arg: string) => void) | null
   placeholder?: string
   disabled?: boolean
-  rightItem?: ReactNode
+  rightItem?: JSX.Element
 }
 
 export const AddressInput = ({ id, value, error, placeholder, disabled, rightItem, onChange = null }: Props) => {
   const handleInput = useCallback(
-    (event) => {
+    (event: { target: { value: string } }) => {
       const input = event.target.value
       const withoutSpaces = input.replace(/\s+/g, '')
       onChange && onChange(withoutSpaces)

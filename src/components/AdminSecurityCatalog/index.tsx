@@ -199,7 +199,7 @@ export const AdminSecurityCatalog: FC = () => {
                         <Input
                           id="issuer-name"
                           value={currentIssuer?.name}
-                          onChange={(e) => setCurrentIssuer({ ...currentIssuer, name: e.currentTarget.value })}
+                          onChange={(e: any) => setCurrentIssuer({ ...currentIssuer, name: e.currentTarget.value })}
                         />
                       </InputContainer>
                     </ContainerRow>
@@ -222,7 +222,7 @@ export const AdminSecurityCatalog: FC = () => {
                         <Input
                           id="issuer-url"
                           value={currentIssuer?.url}
-                          onChange={(e) => setCurrentIssuer({ ...currentIssuer, url: e.currentTarget.value })}
+                          onChange={(e: any) => setCurrentIssuer({ ...currentIssuer, url: e.currentTarget.value })}
                         />
                       </InputContainer>
                     </ContainerRow>
@@ -272,7 +272,7 @@ export const AdminSecurityCatalog: FC = () => {
               {showMode === 'edit_issuer' && (
                 <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
                   <TYPE.body3 color="white" fontWeight={600}>
-                    <Trans>+ Add token</Trans>
+                    {t`+ Add token`}
                   </TYPE.body3>
                 </EditButton>
               )}
@@ -303,9 +303,7 @@ export const AdminSecurityCatalog: FC = () => {
                         <TYPE.body3 color="text1">{wrappedToken ? 'Tradable' : 'Non Tradable'}</TYPE.body3>
                         <Box>
                           <EditButton onClick={() => handleEditTokenClick(token)}>
-                            <TYPE.body3 fontWeight={600}>
-                              <Trans>Edit</Trans>
-                            </TYPE.body3>
+                            <TYPE.body3 fontWeight={600}>{t`Edit`}</TYPE.body3>
                           </EditButton>
                         </Box>
                         <Box>

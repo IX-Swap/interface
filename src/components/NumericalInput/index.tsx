@@ -39,7 +39,7 @@ export const Input = React.memo(function InnerInput({
     <StyledNumberInput
       {...rest}
       value={prependSymbol && value ? prependSymbol + value : formatNumberValue(value)}
-      onChange={(event) => {
+      onChange={(event: { target: { value: string } }) => {
         if (prependSymbol) {
           const value = event.target.value
 

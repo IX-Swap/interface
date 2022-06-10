@@ -48,7 +48,7 @@ export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
       {values.type === 'Other' && (
         <TextInput
           placeholder="Write payout type"
-          onChange={(e) => onValueChange('otherType', e.currentTarget.value)}
+          onChange={(e: any) => onValueChange('otherType', e.currentTarget.value)}
           value={values.otherType}
         />
       )}
