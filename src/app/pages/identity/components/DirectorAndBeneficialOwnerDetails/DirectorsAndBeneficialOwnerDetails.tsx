@@ -4,7 +4,7 @@ import { DirectorsAndBeneficialOwnerFields } from 'app/pages/identity/components
 
 export const DirectorsAndBeneficialOwnerDetails = () => {
   return (
-    <Grid container direction='column' spacing={6}>
+    <Grid container direction='column' spacing={2}>
       <Grid item>
         <DirectorsAndBeneficialOwnerFields name='directors' />
       </Grid>

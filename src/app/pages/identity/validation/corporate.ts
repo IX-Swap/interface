@@ -102,6 +102,12 @@ export const directorsAndBeneficialOwnersSchema = yup
           .object<DirectorFormValues>({
             fullName: yup.string().required(validationMessages.required),
             designation: yup.string().required(validationMessages.required),
+            legalEntityStatus: yup
+              .string()
+              .required(validationMessages.required),
+            countryOfFormation: yup
+              .string()
+              .required(validationMessages.required),
             email: emailSchema.required(validationMessages.required),
             contactNumber: yup
               .string()

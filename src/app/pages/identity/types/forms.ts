@@ -176,6 +176,8 @@ export interface DirectorFormValues {
   email: string
   contactNumber: string
   address: Address
+  legalEntityStatus: string
+  countryOfFormation: string
   proofOfIdentity?: DocumentFieldArrayItemValue[]
   proofOfAddress?: DocumentFieldArrayItemValue[]
 }

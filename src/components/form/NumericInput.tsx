@@ -1,7 +1,6 @@
-import { InputProps } from '@mui/material'
 import React from 'react'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
-import { TextInput } from 'ui/TextInput/TextInput'
+import { InputProps, TextInput } from 'ui/TextInput/TextInput'
 
 const InputComponent: React.FC = (props: NumberFormatProps<any>) => {
   const { onValueChange, onChange, inputRef, ...rest } = props
