@@ -106,6 +106,7 @@ export async function getCookiesForAllAccounts(
   }
   return result
 }
+
 export async function putRequest(cookies, link) {
   try {
     // Registration company

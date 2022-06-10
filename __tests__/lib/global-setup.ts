@@ -22,6 +22,8 @@ async function globalSetup(config: FullConfig) {
     // signed-in
     await navigate(baseCreds.URL, page)
     await login.loginWithout2fa(email, baseCreds.PASSWORD)
+    await page.pdf({ path: __dirname + '/documents/pdfTest.pdf' })
+    await page.screenshot({ path: __dirname + '/documents/test-img.jpg' })
 
     // Save signed-in state to 'storageState.json'.
     await page.context().storageState({ path: __dirname + storagePath })

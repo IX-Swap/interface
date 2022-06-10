@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@mui/material'
-import { Form } from 'components/form/Form'
-import { formatMoney, formatTokenBalance } from 'helpers/numbers'
-import { TabPanel } from 'components/TabPanel'
-import { LabelledValue } from 'components/LabelledValue'
+import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
+import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
 import {
   PlaceOrderArgs,
   PlaceOrderFormValues
 } from 'app/pages/exchange/types/form'
-import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
-import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
-import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
-import { useParams } from 'react-router-dom'
+import { Form } from 'components/form/Form'
+import { LabelledValue } from 'components/LabelledValue'
+import { TabPanel } from 'components/TabPanel'
+import { formatMoney, formatTokenBalance } from 'helpers/numbers'
 import { isEmptyString } from 'helpers/strings'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { OrderSide } from 'types/order'
+import { PlaceOrderFormSubmitButton } from './PlaceOrderFormSubmitButton'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -27,6 +27,8 @@ export interface PlaceOrderFormProps {
   isFetching?: boolean
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
   defaultActiveTab?: number
+  isDisabled?: boolean
+  suffix?: ({ tab }: { tab: number }) => React.ReactNode
 }
 
 export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
@@ -35,7 +37,9 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   tokenLabel,
   currencyBalance,
   tokenBalance,
+  suffix,
   isFetching = false,
+  isDisabled = false,
   onSubmit,
   defaultActiveTab = 0
 }) => {
@@ -121,18 +125,14 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             </TabPanel>
           )
         })}
-        <Grid item className={classes.buttonWrapper}>
-          <Submit
-            createOrderStatus={createOrderStatus}
-            disabled={isFetching}
-            data-testid='submit'
-            size='large'
-            variant='contained'
-            className={classes.button}
-          >
-            PLACE ORDER
-          </Submit>
-        </Grid>
+        <PlaceOrderFormSubmitButton
+          createOrderStatus={createOrderStatus}
+          isFetching={isFetching}
+          isDisabled={isDisabled}
+          balance={balance}
+          activeTabNameIdx={activeTabNameIdx}
+        />
+        {suffix?.({ tab: activeTabNameIdx })}
       </Grid>
     </Form>
   )

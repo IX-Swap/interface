@@ -19,6 +19,7 @@ export interface MarketViewProps {
   tokenName: string
   currencyBalance: number
   tokenBalance: any
+  suffix?: ({ tab }: { tab: number }) => React.ReactNode
   submitForm: (bank: PlaceOrderArgs) => Promise<any>
 }
 

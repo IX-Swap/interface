@@ -168,16 +168,17 @@ class Dso {
     return inputs.length
   }
 
-  followToFundsManagement = async (auth, email) => {
+  followToFundsManagement = async () => {
     await navigate(baseCreds.URL, this.page)
     await click(issuance.ISSUANCE_TAB, this.page)
     await click(issuance.FUNDS_MANAGEMENT_TAB, this.page)
   }
 }
 
-class Listing {
+class Listing extends Dso {
   page: any
   constructor(page) {
+    super(page)
     this.page = page
   }
   checkError = async text => {
@@ -190,14 +191,10 @@ class Listing {
     await clearAndTypeText(issuance.dso.fields.INVESTMENT_PERIOD, '11', this.page)
     await click(issuance.dso.listBox.CURRENCY, this.page)
     await typeText(issuance.dso.fields.DECIMALS, '2', this.page)
-    // await clearAndTypeText(issuance.dso.fields.INTEREST_RATE, '10', this.page)
-    // await clearAndTypeText(issuance.dso.fields.INVESTMENT_STRUCTURE, 'best Structure', this.page)
     await click(issuance.dso.listBox.DISTRIBUTION_FREQUENCY, this.page)
     await click(issuance.dso.listBox.DISTRIBUTION_VALUE, this.page)
-    // await clearAndTypeText(issuance.dso.fields.LEVERAGE, '0.1', this.page)
   }
   fillListingGeneralInformationForm = async () => {
-    let dso = new Dso(this.page)
     const tokenName = 'TokenName' + randomString()
     const tokenSymbol = Date.now().toString().slice(-6)
     await uploadFiles(this.page, issuance.dso.LOGO, text.docs.pathToFile)
@@ -211,11 +208,11 @@ class Listing {
     await typeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
     await typeText(issuance.dso.fields.TOKEN_SYMBOL, tokenSymbol, this.page)
     await click(issuance.dso.fields.LAUNCH_DATE, this.page)
-    await dso.lastDayOfMonth.last().click()
-    await dso.OK_BUTTON.click()
+    await this.lastDayOfMonth.last().click()
+    await this.OK_BUTTON.click()
     await click(issuance.dso.fields.COMPLETION_DATE, this.page)
-    await dso.lastDayOfMonth.last().click()
-    await dso.OK_BUTTON.click()
+    await this.lastDayOfMonth.last().click()
+    await this.OK_BUTTON.click()
     await typeText(issuance.dso.fields.DECIMALS, '2', this.page)
     return { tokenSymbol, tokenName }
   }

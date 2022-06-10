@@ -191,8 +191,8 @@ test.describe('The Blockchain addresses page', () => {
     await click(accountsTab.BLOCKCHAIN_ADDRESSES, page)
   })
 
-  test('The View Blockchain Address window should exist (IXPRIME-182)', async ({ page }) => {
-    await click('[data-testid="LaunchIcon"]', page)
+  test('The View Blockchain Address window should exist (IXPRIME-182)', async ({ page, admin }) => {
+    await admin.USER_VIEW_CARD.click()
     const locator = await page.locator(accountsTab.ACCOUNT_INFORMATION)
     await expect(locator).toContainText([
       'View Blockchain Address',
@@ -266,7 +266,18 @@ test.describe('The My Holdings page', () => {
   test.beforeEach(async ({ page }) => {
     await click(accountsTab.MY_EXCHANGE_HOLDINGS, page)
   })
-  test('Transaction should be added to the history', async ({ page }) => {})
-
-  test('Redirection to the invest page', async ({ page }) => {})
+  test('Check the ability to watch "Orders" (IXPRIME-198)', async ({ page, admin }) => {
+    await click('button >> text="Orders"', page)
+    await expect(admin.TABLE).toContainText([
+      'Date',
+      'Pair',
+      'Name',
+      'Side',
+      'Type',
+      'Time-In Force',
+      'Unit Price',
+      'Units',
+      'Total Amount'
+    ])
+  })
 })

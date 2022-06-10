@@ -41,7 +41,8 @@ export enum AppFeature {
   DealClosure = 'closure',
   TokenDeployment = 'token-deployment',
   CustodyManagement = 'custody-management',
-  Dashboard = 'dashboard'
+  Dashboard = 'dashboard',
+  Trading = 'trading'
 }
 
 export enum NotificationFilterFeatures {

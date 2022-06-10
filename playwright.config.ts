@@ -1,24 +1,26 @@
-import { devices, PlaywrightTestConfig } from '@playwright/test'
+import { PlaywrightTestConfig } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
-  /*Directory that will be recursively scanned for test files.*/
+  /* Directory that will be recursively scanned for test files. */
   testDir: './__tests__/tests',
 
   /* Opt out of parallel tests on CI. */
   workers: 2,
 
-  /*This is a base timeout for all tests.*/
+  /* This is a base timeout for all tests. */
   timeout: 180 * 1000,
 
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  forbidOnly: process.env.CI !== undefined,
 
   /* Take pictures if they are missing. */
   updateSnapshots: 'missing',
 
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
-  /* The maximum number of test failures. After reaching this number, testing will stop and exit with an error.*/
+
+   retries: process.env.CI !== undefined ? 1 : 0,
+
+  /* The maximum number of test failures. After reaching this number, testing will stop and exit with an error. */
 
   reporter: [['html', { outputFolder: 'reports/html' }], ['list']],
   outputDir: 'reports',

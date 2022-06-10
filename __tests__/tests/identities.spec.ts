@@ -6,7 +6,8 @@ import { createIdentity, approveIdentity, createCorporateIdentity } from '../lib
 import * as individualBody from '../lib/api/individual-identity'
 import * as corporateBody from '../lib/api/corporate-identity'
 
-import { click, waitForText, navigate, shouldExist, emailCreate } from '../lib/helpers/helpers'
+import { click, waitForText, navigate, shouldExist, emailCreate, screenshotMatching } from '../lib/helpers/helpers'
+import { accountsTab } from '../lib/selectors/accounts'
 
 test.afterEach(async ({ page }) => {
   await page.close()
@@ -43,6 +44,7 @@ test.describe.parallel('Check identities form', () => {
     })
   })
   test('Check the ability to Create Corporate Investor Identity (IXPRIME-336)', async ({ page, kycForms }) => {
+    test.setTimeout(220000)
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.CORPORATE, page)
       await kycForms.fillCorporateInformation()
@@ -90,8 +92,14 @@ test.describe.parallel('Check identities form', () => {
       await expect(taxForm).toHaveCount(1)
     })
   })
+  test('Check the "Create identity" notification IXPRIME-151', async ({ page }, testInfo) => {
+    await click(accountsTab.ACCOUNTS_SECTION, page)
+    await click(accountsTab.BANK_ACCOUNTS, page)
+    const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
+    await screenshotMatching(testInfo.title, dialog, page)
+  })
 
-  test('Issuer(skip step) IXPRIME-359', async ({ page, kycForms }, testInfo) => {
+  test('Issuer(skip step) IXPRIME-359', async ({ page, kycForms }) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.ISSUER, page)
       await kycForms.skipFirstForm()
@@ -114,6 +122,7 @@ test.describe.parallel('Check identities form', () => {
       await waitForText(page, text.notification.submitIdentity)
     })
   })
+
   test('Issuer (full)', async ({ page, kycForms }, testInfo) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.ISSUER, page)
@@ -138,7 +147,7 @@ test.describe.parallel('Check identities form', () => {
     await kycForms.fillTaxDeclaration()
     await click(kyc.buttons.FATCA, page)
     const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-    // await screenshotMatching(testInfo.title, dialog, page)
+    await screenshotMatching(testInfo.title, dialog, page)
   })
 })
 
@@ -179,7 +188,6 @@ test.describe.parallel('Edit identities form', () => {
     await navigate(baseCreds.URL, page)
     await auth.loginWithout2fa(forEachEmail, baseCreds.PASSWORD)
     await kycForms.followToViewIdentity()
-    await page.pause()
     const fields = await kycForms.editCorporateInformation()
     await kycForms.checkThatTheChangesSaved(fields)
   })
