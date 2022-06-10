@@ -63,7 +63,11 @@ export const UserModal: FC<Props> = ({ item, close }) => {
 
   const initialValues = useMemo(() => {
     if (item && Object.keys(tokensOptions).length) {
-      return { ...item, managerOf: item.managerOf.map((id) => tokensOptions[id]), username: item.username || '' }
+      return {
+        ...item,
+        managerOf: item.managerOf.map(({ token: { id } }) => tokensOptions[id]),
+        username: item.username || '',
+      }
     }
 
     return { ethAddress: '', username: '', role: '', isWhitelisted: false, managerOf: [] }

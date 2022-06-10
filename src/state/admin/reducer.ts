@@ -275,12 +275,14 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(updateUser.fulfilled, (state, { payload: { data } }) => {
+    .addCase(updateUser.fulfilled, (state, { payload: { data } }: any) => {
       state.adminLoading = false
       state.adminError = null
       state.usersList = {
         ...state.usersList,
-        items: state.usersList.items.map((el) => (el.id === data.id ? data : el)),
+        items: state.usersList.items.map((el) =>
+          el.id === data.id ? { ...data, managerOf: data.tokens.map((token: any) => ({ token })) } : el
+        ),
       }
     })
     .addCase(updateUser.rejected, (state, { payload: { errorMessage } }) => {

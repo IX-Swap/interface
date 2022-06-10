@@ -8,7 +8,7 @@ import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { Option } from './TokensBlock'
 
 interface Props {
-  items: number[]
+  items: any[]
 }
 
 export const TokenManagerTokens = ({ items }: Props) => {
@@ -32,7 +32,7 @@ export const TokenManagerTokens = ({ items }: Props) => {
     return {}
   }, [secTokens])
 
-  const data = useMemo(() => items.map((item) => tokensOptions[item]), [items, tokensOptions])
+  const data = useMemo(() => items.map((item) => tokensOptions[item.token.id]), [items, tokensOptions])
 
   return (
     <Container>
