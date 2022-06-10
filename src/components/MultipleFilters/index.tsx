@@ -1,14 +1,20 @@
 import React, { useEffect, useMemo } from 'react'
 import { useFormik } from 'formik'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
+import { MobileDatePicker } from '@material-ui/pickers'
 
 import { Search } from 'components/Search'
+import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useSecTokenState } from 'state/secTokens/hooks'
+import { DateRangePickerFilter } from 'components/DateRangePicker'
+import { useSimpleTokens } from 'hooks/Tokens'
+import dayjs from 'dayjs'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 
-import { FILTERS, defaultValues, rolesOptions } from './constants'
-import { Container, FiltersContainer, ResetFilters } from './styleds'
+import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions, payoutTokenOptions } from './constants'
+import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
 
 interface Props {
@@ -22,8 +28,33 @@ let timer = null as any
 export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search for Wallet' }: Props) => {
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
+  const tokens = useSimpleTokens()
+  const native = useNativeCurrency()
 
   const tokensOptions = useMemo(() => {
+    if (Object.values(tokens)?.length) {
+      const list = Object.values(tokens).map((token: any) => {
+        return {
+          label: token.tokenInfo?.symbol || token.symbol,
+          value: token.address,
+          icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        }
+      })
+
+      if (native) {
+        list.unshift({
+          label: native.symbol,
+          value: native.symbol,
+          icon: <CurrencyLogo currency={native} />,
+        })
+      }
+      return list
+    }
+
+    return []
+  }, [tokens, native])
+
+  const secTokensOptions = useMemo(() => {
     if (secTokens?.length) {
       return secTokens.map((token) => ({
         label: token.symbol,
@@ -75,6 +106,7 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
         }
         return acc
       }, {})
+
       callback(filtredValues)
     }, 250)
     //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,7 +152,6 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
     ),
     [FILTERS.ROLES]: (
       <FilterDropdown
-        className="dropdown"
         placeholder="Roles"
         selectedItems={values.roles}
         onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
@@ -129,11 +160,67 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
     ),
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
-        className="dropdown"
         placeholder="Sec Token"
         selectedItems={values.tokens}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
+        items={secTokensOptions}
+      />
+    ),
+    [FILTERS.STATUS]: (
+      <FilterDropdown
+        placeholder="Status"
+        selectedItems={values.status}
+        onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
+        items={statusOptions}
+      />
+    ),
+    [FILTERS.PAYOUT_TYPE]: (
+      <FilterDropdown
+        placeholder="Payout type"
+        selectedItems={values.payoutType}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item.value)}
+        items={payoutTypeOptions}
+      />
+    ),
+    [FILTERS.PAYOUT_TOKEN]: (
+      <FilterDropdown
+        placeholder="Payout token"
+        selectedItems={values.payoutToken}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item.value)}
         items={tokensOptions}
+      />
+    ),
+    [FILTERS.PAYOUT_PERIOD]: (
+      <DateRangePickerFilter
+        label="Payment period"
+        value={values.payoutPeriod}
+        onChange={(value) => setFieldValue(FILTERS.PAYOUT_PERIOD, value)}
+        maxDate={new Date()}
+      />
+    ),
+    [FILTERS.RECORD_DATE]: (
+      <MobileDatePicker
+        value={values.recordDate}
+        onChange={(value) => {
+          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).toString())
+        }}
+        views={['year', 'month', 'date']}
+        renderInput={({ inputProps, focused }) => (
+          <DarkBlueCard
+            className="dropdown"
+            onClick={inputProps?.onClick as any}
+            isOpen={Boolean(focused || values.recordDate)}
+          >
+            <TYPE.body2
+              color="inherit"
+              fontWeight={300}
+              overflow="hidden"
+              style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            >
+              <Trans>Record date</Trans>
+            </TYPE.body2>
+          </DarkBlueCard>
+        )}
       />
     ),
   } as Record<string, JSX.Element>
@@ -142,7 +229,12 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
     <Container>
       {withSearch && filterComponents[FILTERS.SEARCH]}
       <FiltersContainer>
-        {filters.map((filter) => filter !== FILTERS.SEARCH && filterComponents[filter])}
+        {filters.map(
+          (filter, index) =>
+            filter !== FILTERS.SEARCH && (
+              <React.Fragment key={`${filter}-${index}`}> {filterComponents[filter]}</React.Fragment>
+            )
+        )}
       </FiltersContainer>
       <ResetFilters disabled={isEmpty} onClick={onResetFilters}>
         Clear Filters

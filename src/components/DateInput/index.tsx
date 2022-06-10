@@ -12,7 +12,6 @@ import calendarIcon from 'assets/images/calendar.svg'
 interface Props {
   value?: string | Date | number
   onChange: (value: any) => void
-  onBlur?: (e: any) => void
   name?: string
   error?: any | ReactChildren
   openTo?: 'date' | 'year' | 'month'
@@ -27,8 +26,6 @@ export const DateInput = ({
   openTo,
   onChange,
   label,
-  name,
-  onBlur,
   error,
   maxDate,
   tooltipText,
@@ -39,15 +36,12 @@ export const DateInput = ({
     <Container>
       <Label label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
       <DatePicker
-        name={name}
         value={value || null}
         onChange={onChange}
-        onBlur={onBlur}
-        autoOk
         openTo={openTo ?? 'year'}
         views={['year', 'month', 'date']}
-        format="DD/MM/YYYY"
-        TextFieldComponent={(props: Record<string, any>) => <TextField {...props} />}
+        inputFormat="DD/MM/YYYY"
+        renderInput={(props: Record<string, any>) => <TextField {...props} />}
         maxDate={maxDate}
         {...props}
       />

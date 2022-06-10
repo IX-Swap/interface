@@ -330,7 +330,7 @@ export default function CurrencyList({
   const { secTokens } = useSecTokens()
 
   const Row = useCallback(
-    function TokenRow({ data, index, style }) {
+    function TokenRow({ data, index, style }: any) {
       const row: Currency | BreakLine = data[index]
 
       if (isBreakLine(row)) {

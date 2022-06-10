@@ -74,13 +74,11 @@ const TokenManager = () => {
     <Container>
       <Body>
         <TabsContainer>
-          {tabs.map(({ value, label }, index) => (
-            <>
-              <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-                <Trans>{label}</Trans>
-                <Border active={selectedTab === value} />
-              </ToggleOption>
-            </>
+          {tabs.map(({ value, label }) => (
+            <ToggleOption key={`tabs-${value}`} onClick={() => changeTab(value)} active={selectedTab === value}>
+              <Trans>{label}</Trans>
+              <Border active={selectedTab === value} />
+            </ToggleOption>
           ))}
           <ButtonContainer>
             <CreateButton>

@@ -266,7 +266,7 @@ export const CreateForm = () => {
           </Label>
           <StyledInput
             id={'item-name'}
-            onChange={(e) => onSetName(e?.target?.value)}
+            onChange={(e: any) => onSetName(e?.target?.value)}
             placeholder={t`Item name`}
             className="item-name-input"
             type="text"
@@ -304,7 +304,7 @@ export const CreateForm = () => {
             pattern=".*$"
             value={link}
             disabled={false}
-            onChange={(e) => onSetLink(e?.target?.value)}
+            onChange={(e: any) => onSetLink(e?.target?.value)}
             placeholder={`https://yoursite.io/item/123`}
           />
         </Box>
@@ -318,7 +318,7 @@ export const CreateForm = () => {
             </TYPE.body>
           </Label>
           <StyledTextarea
-            onChange={(e) => onSetDescription(e?.target?.value)}
+            onChange={(e: any) => onSetDescription(e?.target?.value)}
             placeholder={t`Provide a detailed description of your item`}
           />
 
@@ -368,7 +368,7 @@ export const CreateForm = () => {
           style={{ margin: '0 auto' }}
           width="140px"
           disabled={Boolean(isNotValid)}
-          onClick={(e) => onSubmit(e)}
+          onClick={(e: any) => onSubmit(e)}
         >
           Create NFT
         </ButtonIXSGradient>

@@ -28,8 +28,8 @@ const activeClassName = 'ACTIVE'
 const HeaderPopover = () => {
   return (
     <PopOverContent
-      onClick={(e) => (e ? e.stopPropagation() : null)}
-      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+      onClick={(e: any) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
       <Column style={{ gap: 3 }}>
         <TYPE.body2 fontWeight={600} marginBottom="4px">
@@ -69,8 +69,8 @@ const HeaderPopover = () => {
 // const NFTPopover = () => {
 //   return (
 //     <PopOverContent
-//       onClick={(e) => (e ? e.stopPropagation() : null)}
-//       onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+//       onClick={(e: any) => (e ? e.stopPropagation() : null)}
+//       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
 //     >
 //       <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections} exact>
 //         <Trans>My Collections</Trans>

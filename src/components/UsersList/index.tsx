@@ -134,7 +134,7 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
             </div>
             <div>
               <ButtonGradientBorder
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.preventDefault()
                   e.stopPropagation()
                   changeUser(item)

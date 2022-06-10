@@ -746,7 +746,7 @@ export function useClaimRewards() {
 
   const addTransaction = useTransactionAdder()
   return useCallback(
-    async (index) => {
+    async (index: number) => {
       try {
         dispatch(setTransactionInProgress({ value: true }))
         const availableClaim = claims[index]

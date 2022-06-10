@@ -1,6 +1,7 @@
-import { Trans } from '@lingui/macro'
 import React from 'react'
+import { t } from '@lingui/macro'
 import styled from 'styled-components/macro'
+
 import { ReactComponent as CopySvg } from '../../assets/images/copy.svg'
 import useCopyClipboard from '../../hooks/useCopyClipboard'
 import { LinkStyledButton } from '../../theme'
@@ -36,7 +37,7 @@ export default function CopyHelper(props: { toCopy: string; children?: React.Rea
           <CopySvg />
         </IconWrapperWithBg>
       </TransactionStatusText>
-      {isCopied ? <Trans>Copied</Trans> : props.children}
+      {isCopied ? t`Copied` : props.children}
     </CopyIcon>
   )
 }

@@ -18,7 +18,7 @@ export const FiltersContainer = styled.div`
   display: flex;
   align-items: center;
   column-gap: 1px;
-  > div {
+  .dropdown {
     min-width: 160px;
     border-radius: 0;
   }
@@ -36,12 +36,11 @@ export const DarkBlueCard = styled.div<{ isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 160px;
+  max-width: 176px;
   width: 100%;
   height: 60px;
   cursor: pointer;
   font-weight: 500;
-  border-radius: 36px;
   padding: 18px;
   background-color: ${({ theme, isOpen }) => (isOpen ? theme.bg7 : theme.bg19)};
   color: ${({ theme, isOpen }) => (isOpen ? theme.text2 : theme.text9)};

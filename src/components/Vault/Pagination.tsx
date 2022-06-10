@@ -53,7 +53,7 @@ export const Pagination = () => {
           forcePage={page - 1}
           pageRangeDisplayed={3}
           marginPagesDisplayed={2}
-          onPageChange={(e) => onChange(e)}
+          onPageChange={(e: any) => onChange(e)}
         />
       )}
     </PaginationContainer>

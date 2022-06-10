@@ -113,7 +113,7 @@ export const NewCollectionPopup = ({ toggle }: Props) => {
                 </Label>
                 <StyledInput
                   id={'collection-name'}
-                  onChange={(e) => onFormChange({ name: 'name', value: e?.target?.value })}
+                  onChange={(e: any) => onFormChange({ name: 'name', value: e?.target?.value })}
                   placeholder={t`Collection Name...`}
                   className="item-name-input"
                   type="text"
@@ -156,7 +156,7 @@ export const NewCollectionPopup = ({ toggle }: Props) => {
                 </TYPE.body>
               </Label>
               <StyledTextarea
-                onChange={(e) => onFormChange({ name: 'description', value: e?.target?.value })}
+                onChange={(e: any) => onFormChange({ name: 'description', value: e?.target?.value })}
                 placeholder={t`Provide a detailed description of your collection...`}
                 value={form.description}
               />

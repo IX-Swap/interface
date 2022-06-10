@@ -52,7 +52,7 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
           <TextInput
             placeholder="1000"
             label="Amount of Token"
-            onChange={(e) => onValueChange('tokenAmount', e.currentTarget.value)}
+            onChange={(e: any) => onValueChange('tokenAmount', e.currentTarget.value)}
             value={tokenAmount}
           />
         </FormGrid>
@@ -91,7 +91,7 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
         <TextInput
           placeholder="Provide a name for this payout event"
           label="Headline"
-          onChange={(e) => onValueChange('title', e.currentTarget.value)}
+          onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
           value={values.title}
           required
         />
@@ -104,7 +104,7 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
             placeholder="Give a brief description of this payout event"
             value={values.description}
             style={{ height: '126px', background: '#271F4A66', marginBottom: 0 }}
-            onChange={(e) => onValueChange('description', e.currentTarget.value)}
+            onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
           />
         </Box>
       </FormGrid>
