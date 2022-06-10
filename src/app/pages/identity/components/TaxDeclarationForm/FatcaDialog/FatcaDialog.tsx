@@ -22,9 +22,8 @@ export const FatcaDialog = () => {
         </Typography>
       }
       title='Under FATCA, You are Citizen Of The United States Of America if:'
-      titleStyle={{ marginTop: 20 }}
       content={<FatcaContent />}
-      actions={<TaxDeclarationInfoAction label='OK' />}
+      actions={<TaxDeclarationInfoAction />}
     />
   )
 }
