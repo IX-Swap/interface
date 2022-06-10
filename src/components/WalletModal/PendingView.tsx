@@ -19,7 +19,6 @@ export default function PendingView({
 }) {
   const isMetamask = Boolean(window?.ethereum?.isMetaMask)
   const classes = useStyles()
-  console.log({ connector, error })
   return (
     <Box
       sx={{

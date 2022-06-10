@@ -1,5 +1,6 @@
-// import axios from 'axios'
-// import { CHAIN_INFO } from 'config/blockchain/constants'
+import axios from 'axios'
+import { GAS } from 'config'
+import { CHAIN_INFO } from 'config/blockchain/constants'
 import { BigNumber, ethers } from 'ethers'
 import { useErc20Contract } from 'hooks/blockchain/useContract'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
@@ -10,21 +11,23 @@ export interface SendTokenArgs {
   address?: string
   tokenChainId?: number
 }
-export const estimateMaxGas = async (chainId?: number) => {
-  return null
-  // try {
-  //   const result = await axios.get(CHAIN_INFO[chainId ?? 137].gasTrackerUrl)
-  //   const value =
-  //     result?.data?.result?.rapidgaspricegwei ??
-  //     result?.data?.result?.FastGasPrice
-  //   return value.toString()
-  // } catch (e) {
-  //   return null
-  // }
+export const estimateGas = async (chainId?: number) => {
+  try {
+    const result = await axios.get(CHAIN_INFO[chainId ?? 137].gasTrackerUrl)
+    const innerResult = result?.data?.result
+    console.log({ GAS })
+    const value =
+      GAS === 'low'
+        ? innerResult?.standardgaspricegwei ?? innerResult?.SafeGasPrice
+        : innerResult?.rapidgaspricegwei ?? innerResult?.FastGasPrice
+    return value.toString()
+  } catch (e) {
+    return null
+  }
 }
 export const getTransferProps = async (chainId?: number) => {
   const props: ethers.Overrides = { gasLimit: BigNumber.from(9999999) }
-  const estimatedGas = await estimateMaxGas(chainId)
+  const estimatedGas = await estimateGas(chainId)
 
   if (estimatedGas !== null && estimatedGas !== undefined) {
     props.gasPrice = ethers.utils.parseUnits(estimatedGas, 'gwei')
