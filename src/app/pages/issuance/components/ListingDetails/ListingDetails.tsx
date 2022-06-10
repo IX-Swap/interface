@@ -26,7 +26,7 @@ export const ListingDetails = ({
         <PageHeader title={data.tokenName} showBreadcrumbs />
       </Grid>
       <RootContainer>
-        <Grid item container justifyContent='flex-end' spacing={1}>
+        <Grid item container justifyContent='flex-end' spacing={1} pl={4}>
           <Grid item xs={12} sm={8}>
             <ListingHeader
               logoId={data.logo}
@@ -40,7 +40,7 @@ export const ListingDetails = ({
             {!withoutActions ? <ListingStatusAndActions data={data} /> : null}
           </Grid>
         </Grid>
-        <Grid item>
+        <Grid item pl={4}>
           <DetailsTab data={data} />
         </Grid>
       </RootContainer>

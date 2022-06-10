@@ -17,6 +17,7 @@ import { privateClassNames } from 'helpers/classnames'
 import { DigitalSecurityOffering } from 'types/dso'
 import { VisibilitySwitch } from 'app/pages/authorizer/components/VisibilitySwitch'
 import { RootContainer } from 'ui/RootContainer'
+import { useStyles } from 'app/pages/authorizer/components/AuthorizerView.styles'
 
 export interface AuthorizerViewProps<T> {
   title: string
@@ -50,6 +51,7 @@ export const AuthorizerView = <T,>(
   const documents = data.authorizationDocuments ?? []
   const approvedOrRejected = ['Approved', 'Rejected'].includes(data.status)
   const showForm = !(isTransaction && approvedOrRejected)
+  const styles = useStyles()
 
   return (
     <Grid container direction='column' spacing={4} display='table'>
@@ -57,7 +59,7 @@ export const AuthorizerView = <T,>(
         <PageHeader title={title} />
       </Grid>
       <RootContainer className={privateClassNames()} style={{ padding: 40 }}>
-        <Grid item>
+        <Grid item className={styles.wrapper}>
           <Grid container spacing={6} wrap='wrap-reverse'>
             {hasIdentity && (
               <Grid item xs={12} md={3}>

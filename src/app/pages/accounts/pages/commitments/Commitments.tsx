@@ -7,7 +7,12 @@ import { RootContainer } from 'ui/RootContainer'
 
 export const Commitments = () => {
   return (
-    <Grid container direction='column' spacing={2} style={{ display: 'table' }}>
+    <Grid
+      container
+      direction='column'
+      spacing={3}
+      style={{ display: 'table', paddingLeft: '30px' }}
+    >
       <PageHeader title='Pending Commitments' />
       <RootContainer>
         <VSpacer size='small' />

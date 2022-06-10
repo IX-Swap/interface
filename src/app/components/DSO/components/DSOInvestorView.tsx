@@ -38,13 +38,13 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
       </Tabs>
 
       <TabPanel value={selectedIdx} index={0}>
-        <Grid container spacing={9}>
+        <Grid container spacing={9} pl={3}>
           <Grid item xs={12}>
             <DSOPricingViewCompact dso={dso} />
           </Grid>
 
           {dso.isCampaign !== true && (
-            <Grid item xs={12}>
+            <Grid item xs={12} pl={3}>
               <DSOTermsViewCompact dso={dso} />
             </Grid>
           )}
