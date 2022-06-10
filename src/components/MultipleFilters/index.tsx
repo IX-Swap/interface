@@ -107,8 +107,6 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
         return acc
       }, {})
 
-      console.log('log => filtredValues', filtredValues)
-
       callback(filtredValues)
     }, 250)
     //eslint-disable-next-line react-hooks/exhaustive-deps
