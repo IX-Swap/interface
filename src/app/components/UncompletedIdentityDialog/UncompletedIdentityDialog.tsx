@@ -19,7 +19,8 @@ export const UncompletedIdentityDialog = () => {
   const history = useHistory()
   const { data, isLoading } = useUncompletedIdentityDialogData()
   const [opened, setOpened] = useState(true)
-  const { scrollPaper, paper, content, actions, root, button } = useStyles()
+  const { scrollPaper, paper, content, actions, root, button, contentMessage } =
+    useStyles()
 
   const handleClose = () => {
     setOpened(false)
@@ -36,7 +37,7 @@ export const UncompletedIdentityDialog = () => {
       <>
         <DialogTitle className={title}>{title}</DialogTitle>
         <DialogContent className={content}>
-          <Typography>{message}</Typography>
+          <Typography className={contentMessage}>{message}</Typography>
         </DialogContent>
         <DialogActions className={actions} onClick={handleClose}>
           <Button
