@@ -1,6 +1,7 @@
 import React from 'react'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
-import { InputProps, TextInput } from 'ui/TextInput/TextInput'
+import { TextInput } from 'ui/TextInput/TextInput'
+import { InputProps } from '@mui/material'
 
 const InputComponent: React.FC = (props: NumberFormatProps<any>) => {
   const { onValueChange, onChange, inputRef, ...rest } = props
@@ -14,6 +15,7 @@ const InputComponent: React.FC = (props: NumberFormatProps<any>) => {
 }
 
 export interface NumericInputProps {
+  hideIcon?: boolean
   numberFormat: NumberFormatProps<any>
   onChange?: any
   variant?: 'outlined' | 'standard'
