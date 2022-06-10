@@ -65,7 +65,9 @@ export const corporate: CorporateIdentity = {
       contactNumber: '+6512345678901',
       documents: [],
       address: address,
-      percentageShareholding: 0
+      percentageShareholding: 0,
+      legalEntityStatus: 'status',
+      countryOfFormation: 'country'
     }
   ],
   email: '',
