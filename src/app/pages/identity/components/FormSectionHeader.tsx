@@ -13,7 +13,7 @@ export const FormSectionHeader = ({
   variant = 'section'
 }: FormSectionHeaderProps) => {
   return (
-    <Box my={variant === 'section' ? 3 : 2}>
+    <Box>
       <Typography variant={variant === 'section' ? 'h5' : 'subtitle1'}>
         {title}
       </Typography>

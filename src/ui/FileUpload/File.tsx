@@ -43,6 +43,16 @@ export const File = ({
   isDisplay = false,
   remove
 }: FileProps) => {
+  const renderLabel = () => {
+    if (
+      (!multiple && Object.keys(value as DataroomFile).length > 0) ||
+      (value as DataroomFile).originalFileName !== undefined
+    ) {
+      return (value as DataroomFile)?.originalFileName
+    }
+    return label
+  }
+
   return (
     <FileUploadBox
       component='div'
@@ -57,7 +67,7 @@ export const File = ({
       <Box display='flex' alignItems='center'>
         <Icon name='file' />
         <Typography className='label' sx={{ ml: 1, lineHeight: '24px' }}>
-          {label}
+          {renderLabel()}
         </Typography>
       </Box>
       {(!multiple || isDisplay) &&

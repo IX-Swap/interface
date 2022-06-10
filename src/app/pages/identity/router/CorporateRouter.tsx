@@ -21,7 +21,7 @@ export const CorporateRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Create Corporate Investor'
+        breadcrumb='Create Corporate Investor Identity'
         exact
         path={IdentityRoute.createCorporate}
       >
@@ -29,7 +29,7 @@ export const CorporateRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Edit Corporate Investor'
+        breadcrumb='Edit Corporate Investor Identity'
         exact
         path={IdentityRoute.editCorporate}
       >

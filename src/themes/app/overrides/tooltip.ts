@@ -8,7 +8,8 @@ export const tooltip = (theme: Theme) => {
       tooltip: {
         width: 'auto',
         minWidth: '78px',
-        height: '26px',
+        height: 'auto',
+        minHeight: '26px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
