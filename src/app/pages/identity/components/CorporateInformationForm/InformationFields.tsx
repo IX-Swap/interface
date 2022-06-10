@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
@@ -39,14 +39,23 @@ export const InformationFields = ({
 
   return (
     <>
-      <FormSectionHeader title={corporateInformationLabelMap[type]} />
-      <Grid container spacing={6}>
+      <Grid container spacing={5}>
+        <Grid item xs={12}>
+          <FormSectionHeader title={corporateInformationLabelMap[type]} />
+        </Grid>
         <Grid item xs={12}>
           <TypedField
             customRenderer
             control={control}
             component={FileUpload}
-            label='Upload logo (Optional)'
+            label={
+              <Typography>
+                Upload logo{' '}
+                <Box component={'span'} style={{ color: '#778194' }}>
+                  (Optional)
+                </Box>
+              </Typography>
+            }
             placeHolder='Upload File'
             valueExtractor={plainValueExtractor}
             documentInfo={{
@@ -63,8 +72,12 @@ export const InformationFields = ({
             control={control}
             variant='outlined'
             name='companyLegalName'
+            placeholder={
+              type === 'investor' ? 'Corporate Name' : 'Company Name'
+            }
             defaultValue=''
             label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
+            hideIcon
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -85,15 +98,8 @@ export const InformationFields = ({
             name='registrationNumber'
             defaultValue=''
             label='Registration Number/UEN'
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TypedField
-            component={FundSourceSelect}
-            control={control}
-            variant='outlined'
-            name='sourceOfFund'
-            label='Source of funds'
+            placeholder='Registration Number'
+            hideIcon
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -103,18 +109,29 @@ export const InformationFields = ({
             variant='outlined'
             name='legalEntityStatus'
             label='Legal Entity'
+            placeholder='Legal Entity'
           />
         </Grid>
         <Grid item xs={12} md={6}>
           <TypedField
-            customRenderer
             fullWidth
             component={TextInput}
             control={control}
             variant='outlined'
             name='otherLegalEntityStatus'
-            label='Others (Please specify)'
+            label='Others (Legal Entity)'
             disabled={legalEntityStatus !== 'others'}
+            placeholder='Please specify'
+            hideIcon
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            component={FundSourceSelect}
+            control={control}
+            variant='outlined'
+            name='sourceOfFund'
+            label='Source of Funds'
           />
         </Grid>
         <ValidateOnMount />
