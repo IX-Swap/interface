@@ -24,6 +24,14 @@ export const input = (theme: Theme) => {
           '&.Mui-focused': {
             color: theme.palette.primary.main,
             opacity: 1
+          },
+          '&.Mui-error': {
+            color: theme.palette.select.label,
+            opacity: 1
+          },
+          '&.Mui-disabled': {
+            color: theme.palette.select.label,
+            opacity: 1
           }
         },
         '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
