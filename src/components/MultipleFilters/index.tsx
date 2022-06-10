@@ -9,11 +9,13 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useSecTokenState } from 'state/secTokens/hooks'
 import { DateRangePickerFilter } from 'components/DateRangePicker'
+import { useSimpleTokens } from 'hooks/Tokens'
+import dayjs from 'dayjs'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions, payoutTokenOptions } from './constants'
 import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
-import dayjs from 'dayjs'
 
 interface Props {
   filters: FILTERS[]
@@ -26,8 +28,33 @@ let timer = null as any
 export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search for Wallet' }: Props) => {
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
+  const tokens = useSimpleTokens()
+  const native = useNativeCurrency()
 
   const tokensOptions = useMemo(() => {
+    if (Object.values(tokens)?.length) {
+      const list = Object.values(tokens).map((token: any) => {
+        return {
+          label: token.tokenInfo?.symbol || token.symbol,
+          value: token.address,
+          icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        }
+      })
+
+      if (native) {
+        list.unshift({
+          label: native.symbol,
+          value: native.symbol,
+          icon: <CurrencyLogo currency={native} />,
+        })
+      }
+      return list
+    }
+
+    return []
+  }, [tokens, native])
+
+  const secTokensOptions = useMemo(() => {
     if (secTokens?.length) {
       return secTokens.map((token) => ({
         label: token.symbol,
@@ -138,7 +165,7 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
         placeholder="Sec Token"
         selectedItems={values.tokens}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
-        items={tokensOptions}
+        items={secTokensOptions}
       />
     ),
     [FILTERS.STATUS]: (
@@ -162,7 +189,7 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
         placeholder="Payout token"
         selectedItems={values.payoutToken}
         onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item.value)}
-        items={payoutTokenOptions}
+        items={tokensOptions}
       />
     ),
     [FILTERS.PAYOUT_PERIOD]: (

@@ -6,21 +6,10 @@ export const muiTheme = createTheme({
       pickerView: {
         backgroundColor: '#372E5E',
         borderRadius: '32px',
-        '&:focus-visible': {
-          outline: 'none',
-        },
-        '& *': {
-          outline: 'none !important',
-          border: 'none !important',
-        },
       },
     },
     MuiPickersModalDialog: {
       dialogRoot: {
-        '& *': {
-          outline: 'none !important',
-          border: 'none !important',
-        },
         outline: 'none',
         backgroundColor: '#372E5E',
         borderRadius: '32px',
@@ -36,10 +25,6 @@ export const muiTheme = createTheme({
         color: 'white',
         '&:focus-visible': {
           outline: 'none',
-        },
-        '& *': {
-          outline: 'none !important',
-          border: 'none !important',
         },
       },
     },
@@ -209,6 +194,11 @@ export const muiTheme = createTheme({
       today: {
         border: 'none !important',
         background: 'rgba(39, 32, 70, 0.35)',
+      },
+    },
+    MuiPickersDatePickerToolbar: {
+      penIcon: {
+        display: 'none',
       },
     },
     MuiPickersDateRangePickerToolbarProps: {
