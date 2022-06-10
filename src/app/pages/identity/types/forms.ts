@@ -92,6 +92,8 @@ export interface Personnel {
   documents: DataroomFile[]
   address: Address
   percentageShareholding: number
+  legalEntityStatus: string
+  countryOfFormation: string
 }
 
 export interface IndividualFinancialInfoFormValues {
