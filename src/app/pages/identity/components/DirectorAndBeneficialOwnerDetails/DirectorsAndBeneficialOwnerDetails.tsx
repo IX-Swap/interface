@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material'
 import React from 'react'
 import { DirectorsAndBeneficialOwnerFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerFields'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export const DirectorsAndBeneficialOwnerDetails = () => {
   return (
@@ -11,6 +12,7 @@ export const DirectorsAndBeneficialOwnerDetails = () => {
       <Grid item>
         <DirectorsAndBeneficialOwnerFields name='beneficialOwners' />
       </Grid>
+      <ValidateOnMount />
     </Grid>
   )
 }
