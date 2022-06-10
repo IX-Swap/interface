@@ -33,7 +33,7 @@ export const Actions = ({
   }
 
   return (
-    <Box>
+    <Box display={'flex'} ml={1}>
       {!readonly && (
         <IconButton onClick={handleDelete} size='large'>
           <Icon name='trash' />

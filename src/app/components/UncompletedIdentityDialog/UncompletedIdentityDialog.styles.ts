@@ -41,6 +41,9 @@ export const useStyles = makeStyles(theme => ({
     margin: theme.spacing(0, 0, 3),
     padding: 0
   },
+  contentMessage: {
+    color: '#778194'
+  },
   title: {
     padding: 0,
     margin: theme.spacing(3, 0, 2)

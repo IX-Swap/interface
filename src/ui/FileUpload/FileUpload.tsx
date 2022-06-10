@@ -28,6 +28,8 @@ export interface FileUploadProps {
   minSize?: number
   maxSize?: number
   remove?: () => void
+  onSuccessUploadCallback?: (value: any) => void
+  onRemoveCallback?: (value: any) => void
 }
 
 export const FileUpload = (props: FileUploadProps) => {
@@ -53,9 +55,21 @@ export const FileUpload = (props: FileUploadProps) => {
   const { hasError } = useFormError(name)
   const [completed, setCompleted] = useState(0)
 
+  const handleRemove = () => {
+    if (props.onRemoveCallback !== undefined) {
+      props.onRemoveCallback(value)
+    }
+    if (remove !== undefined) {
+      remove()
+    }
+  }
+
   const [uploadFile] = useUploadFile(
     {
       onSuccess: response => {
+        if (!multiple && props.onSuccessUploadCallback !== undefined) {
+          props.onSuccessUploadCallback(response.data[0])
+        }
         onChange(
           multiple
             ? [...(Array.isArray(value) ? value : []), ...response.data]
@@ -139,7 +153,7 @@ export const FileUpload = (props: FileUploadProps) => {
     setCompleted,
     value,
     completed,
-    remove
+    remove: handleRemove
   }
 
   if (fullWidth) {

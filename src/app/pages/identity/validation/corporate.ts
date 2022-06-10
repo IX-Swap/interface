@@ -11,6 +11,7 @@ import {
 import { DataroomFile } from 'types/dataroomFile'
 import {
   addressSchema,
+  documentsSchema,
   emailSchema,
   taxIdentificationNumberSchema,
   validationMessages
@@ -80,9 +81,8 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
             .string()
             .phone()
             .required(validationMessages.required),
-          documents: yup
-            .array<{ value: DataroomFile }>()
-            .required(validationMessages.required)
+          // @ts-expect-error
+          documents: documentsSchema
         })
         .required(validationMessages.required)
     )
