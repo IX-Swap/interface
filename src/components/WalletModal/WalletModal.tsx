@@ -91,7 +91,6 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
         return true
       })
       // log selected wallet
-      console.log({ connector }, 'wallet modal')
       setPendingWallet(connector) // set wallet for pending view
       setWalletView(WALLET_VIEWS.PENDING)
 
@@ -102,19 +101,13 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
       ) {
         connector.walletConnectProvider = undefined
       }
-      console.log({ connector })
       if (connector != null && connector !== undefined) {
         try {
-          console.log('activating connector')
           await activate(connector, undefined, true)
         } catch (error) {
-          console.log('some error')
-
           if (error instanceof UnsupportedChainIdError) {
-            console.log('error is UnsupportedChainIdError')
             activate(connector) // a little janky...can't use setError because the connector isn't set
           } else {
-            console.log({ error })
             activate(connector) // a little janky...can't use setError because the connector isn't set
             setPendingError(true)
           }

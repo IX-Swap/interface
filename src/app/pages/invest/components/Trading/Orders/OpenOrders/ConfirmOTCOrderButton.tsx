@@ -18,15 +18,10 @@ export const ConfirmOTCOrderButton = ({
     address: address,
     tokenChainId: chainId
   })
-  console.log({ address, chainId })
   const [confirmMatch, { isLoading }] = useConfirmMyOrder()
   const handleClick = async () => {
     setLoadingTransaction(true)
     try {
-      console.log({
-        amount: order.matches?.matchedAmount,
-        address: order.matches?.ethAddress
-      })
       const sendingResult = await sendToken(
         order.matches?.matchedAmount ?? 0,
         order.matches?.ethAddress
