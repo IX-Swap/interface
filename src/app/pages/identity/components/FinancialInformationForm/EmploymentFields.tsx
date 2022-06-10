@@ -16,6 +16,9 @@ export const EmploymentField = () => {
   const occupationIsSingPass =
     isSingPass && hasValue(singPassData?.employmentsector)
 
+  const statusIsSingPass =
+    isSingPass && hasValue(singPassData?.employmentstatus)
+
   return (
     <Grid container direction='column'>
       <Grid item>
@@ -41,15 +44,22 @@ export const EmploymentField = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TypedField
-              component={EmploymentStatusSelect}
+              component={statusIsSingPass ? TextField : EmploymentStatusSelect}
               control={control}
               variant='outlined'
               name='employmentStatus'
               label='Employment Status'
               data-testid='Employment-select'
               fullWidth
-              disabled={isSingPass && hasValue(singPassData?.employmentstatus)}
-            />
+              disabled={statusIsSingPass}
+              select={statusIsSingPass}
+            >
+              {statusIsSingPass ? (
+                <MenuItem value={individualIdentity?.employmentStatus}>
+                  {individualIdentity?.employmentStatus}
+                </MenuItem>
+              ) : null}
+            </TypedField>
           </Grid>
           <Grid item xs={12} md={4}>
             <TypedField
