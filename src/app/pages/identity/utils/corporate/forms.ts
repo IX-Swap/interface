@@ -4,7 +4,7 @@ import {
   CorporateIdentity,
   CorporateInvestorDeclarationFormValues,
   CorporateInvestorTaxDeclarationFormValues,
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   InvestorCorporateInfoFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   Personnel
@@ -98,12 +98,46 @@ export const getCorporateInvestorTaxDeclarationFormValues = (
 export const getCorporateInvestorDeclarationFormValues = (
   data: CorporateIdentity | undefined
 ): Partial<CorporateInvestorDeclarationFormValues> => {
-  return data?.declarations?.investorsStatus ?? {}
+  const declarations = data?.declarations?.investorsStatus ?? {}
+  const documents = data?.documents.reduce((result: any, document) => {
+    const { evidenceOfAccreditation, financialDocuments, corporateDocuments } =
+      result
+
+    if (document.type === 'Evidence of Accreditation') {
+      return {
+        ...result,
+        evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
+          ? [...evidenceOfAccreditation, { value: document }]
+          : [{ value: document }]
+      }
+    }
+
+    if (document.type === 'Financial Documents') {
+      return {
+        ...result,
+        financialDocuments: Array.isArray(financialDocuments)
+          ? [...financialDocuments, { value: document }]
+          : [{ value: document }]
+      }
+    }
+
+    if (document.type === 'Corporate Documents') {
+      return {
+        ...result,
+        corporateDocuments: Array.isArray(corporateDocuments)
+          ? [...corporateDocuments, { value: document }]
+          : [{ value: document }]
+      }
+    }
+
+    return result
+  }, {})
+  return { ...declarations, ...documents }
 }
 
 export const getCorporateInvestorDocumentsFormValues = (
   data: CorporateIdentity | undefined
-): IndividualDocumentsFormValues => {
+): IdentityDocumentsFormValues => {
   return data?.documents.reduce((result: any, document) => {
     const { evidenceOfAccreditation, financialDocuments, corporateDocuments } =
       result

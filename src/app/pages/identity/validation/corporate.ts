@@ -2,13 +2,14 @@ import {
   Address,
   BeneficialOwnerFormValues,
   CorporateInvestorAgreementsFormValues,
+  CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
   DirectorFormValues,
   DocumentFieldArrayItemValue,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
-import { DataroomFile } from 'types/dataroomFile'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
   addressSchema,
   documentsSchema,
@@ -179,7 +180,10 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
 
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
-  .shape<any>({
+  .shape<
+    CorporateInvestorDeclarationFormValues &
+      CorporateInvestorDocumentsFormValues
+  >({
     assets: yup
       .bool()
       .oneOf([true, false])
@@ -213,7 +217,19 @@ export const corporateInvestorStatusDeclarationSchema = yup
     primaryOfferingServices: yup.bool(),
     digitalSecurities: yup.bool(),
     digitalSecuritiesIssuance: yup.bool(),
-    allServices: yup.bool()
+    allServices: yup.bool(),
+    evidenceOfAccreditation: yup
+      .array<FormArrayElement<DataroomFile>>()
+      .min(1)
+      .required(validationMessages.required),
+    corporateDocuments: yup
+      .array<FormArrayElement<DataroomFile>>()
+      .min(1)
+      .required(validationMessages.required),
+    financialDocuments: yup
+      .array<FormArrayElement<DataroomFile>>()
+      .min(1)
+      .required(validationMessages.required)
   })
   .test(
     'investorDeclarations',
@@ -246,15 +262,15 @@ export const corporateInvestorDocumentsSchema = yup
   .object()
   .shape<CorporateInvestorDocumentsFormValues>({
     evidenceOfAccreditation: yup
-      .array<DataroomFile>()
+      .array<FormArrayElement<DataroomFile>>()
       .min(1)
       .required(validationMessages.required),
     corporateDocuments: yup
-      .array<DataroomFile>()
+      .array<FormArrayElement<DataroomFile>>()
       .min(1)
       .required(validationMessages.required),
     financialDocuments: yup
-      .array<DataroomFile>()
+      .array<FormArrayElement<DataroomFile>>()
       .min(1)
       .required(validationMessages.required)
   })

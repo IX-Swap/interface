@@ -113,7 +113,7 @@ export interface IndividualInvestorDeclarationFormValues
     OptOutRequirements,
     OptInAgreements {}
 
-export interface IndividualDocumentsFormValues {
+export interface IdentityDocumentsFormValues {
   evidenceOfAccreditation: DataroomFile[]
   proofOfIdentity: DataroomFile[]
   proofOfAddress: DataroomFile[]

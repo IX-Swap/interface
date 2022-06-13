@@ -20,18 +20,16 @@ export const ListItem = ({ children }: ListItemProps) => (
   </MuiListItem>
 )
 
-export interface CorporateUploadDocumentsFormProps {
+export interface CorporateDocumentsProps {
   corporateType?: 'investor' | 'issuer'
 }
 
-export const CorporateUploadDocumentsForm = (
-  props: CorporateUploadDocumentsFormProps
-) => {
+export const CorporateDocuments = (props: CorporateDocumentsProps) => {
   const { corporateType = 'issuer' } = props
   const isIssuer = corporateType === 'issuer'
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid item container direction='column' spacing={3}>
       <Grid item>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <UploadDocumentField

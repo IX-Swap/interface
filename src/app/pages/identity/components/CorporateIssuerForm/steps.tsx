@@ -14,7 +14,7 @@ import {
 } from 'app/pages/identity/utils/corporate/requests'
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
-import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateUploadDocumentsFields/CorporateDocuments'
 import {
   corporateInvestorInfoSchema,
   corporateInvestorSchema,
@@ -51,7 +51,7 @@ export const corporateIssuerFormSteps = [
     getFormValues: getCorporateInvestorDocumentsFormValues,
     getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
     validationSchema: corporateIssuerDocumentsSchema,
-    component: () => <CorporateUploadDocumentsForm />
+    component: () => <CorporateDocuments />
   },
   {
     label: 'Review & Submit',

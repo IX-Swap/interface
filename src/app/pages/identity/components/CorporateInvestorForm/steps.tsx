@@ -17,7 +17,7 @@ import {
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
-import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateUploadDocumentsFields/CorporateDocuments'
 import {
   corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,
@@ -60,15 +60,20 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     getFormValues: getCorporateInvestorDeclarationFormValues,
     getRequestPayload: getCorporateInvestorDeclarationRequestPayload,
     validationSchema: corporateInvestorStatusDeclarationSchema,
-    component: () => <InvestorDeclarationForm identityType='corporate' />,
-    formId: 'status-declaration'
+    component: () => (
+      <InvestorDeclarationForm
+        identityType='corporate'
+        corporateType='investor'
+      />
+    ),
+    formId: 'investor-declaration'
   },
   {
     label: 'Upload Documents',
     getFormValues: getCorporateInvestorDocumentsFormValues,
     getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
     validationSchema: corporateInvestorDocumentsSchema,
-    component: () => <CorporateUploadDocumentsForm corporateType='investor' />,
+    component: () => <CorporateDocuments corporateType='investor' />,
     formId: 'documents'
   },
   {

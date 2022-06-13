@@ -65,11 +65,23 @@ export const getDirectorsAndBeneficialOwnerRequestPayload = (
 }
 
 export const getCorporateInvestorDeclarationRequestPayload = (
-  values: CorporateInvestorDeclarationFormValues
+  values: CorporateInvestorDeclarationFormValues &
+    CorporateInvestorDocumentsFormValues
 ) => {
+  const documents = Object.values(values).reduce<
+    Array<{ value: DataroomFile }>
+  >((result, documents) => {
+    if (Array.isArray(documents)) {
+      return [...result, ...documents.map(document => document.value._id)]
+    }
+
+    return result
+  }, [])
+
   return {
     declarations: {
-      investorsStatus: values
+      investorsStatus: values,
+      documents: documents.filter(doc => doc !== undefined)
     }
   }
 }

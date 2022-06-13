@@ -8,13 +8,16 @@ import { useFormContext } from 'react-hook-form'
 import { useServices } from 'hooks/useServices'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateUploadDocumentsFields/CorporateDocuments'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
+  corporateType?: 'investor' | 'issuer'
 }
 
 export const InvestorDeclarationForm = ({
-  identityType = 'individual'
+  identityType = 'individual',
+  corporateType = 'issuer'
 }: InvestorDeclarationFormProps) => {
   const { snackbarService } = useServices()
   const { errors } = useFormContext()
@@ -31,8 +34,9 @@ export const InvestorDeclarationForm = ({
   }, [declarationsError, optInAgreementsError]) // eslint-disable-line
 
   return (
-    <>
+    <Grid container direction={'column'} spacing={5}>
       <Grid
+        item
         data-testid='investorStatusDeclaration'
         container
         spacing={5}
@@ -74,6 +78,10 @@ export const InvestorDeclarationForm = ({
           </FieldContainer>
         </Grid>
       </Grid>
-    </>
+
+      {identityType !== 'individual' && (
+        <CorporateDocuments corporateType={corporateType} />
+      )}
+    </Grid>
   )
 }
