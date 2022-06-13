@@ -70,7 +70,8 @@ export const Register: React.FC = observer(() => {
         oldEmail: data?.email,
         mobileNo: values.phoneNumber,
         oldMobileNo: data?.mobileno,
-        password: values.password
+        password: values.password,
+        identityType: identity
       },
       isMyInfo
         ? {
