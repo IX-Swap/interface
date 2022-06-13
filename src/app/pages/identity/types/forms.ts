@@ -1,4 +1,4 @@
-import { DataroomFile, FormArray } from 'types/dataroomFile'
+import { DataroomFile, FormArray, FormArrayElement } from 'types/dataroomFile'
 import User from 'types/user'
 import {
   CorporateDeclarations,
@@ -156,9 +156,9 @@ export interface CorporateInvestorDeclarationFormValues
     OptOutRequirements {}
 
 export interface CorporateInvestorDocumentsFormValues {
-  evidenceOfAccreditation: DataroomFile[]
-  corporateDocuments: DataroomFile[]
-  financialDocuments: DataroomFile[]
+  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
+  corporateDocuments: Array<FormArrayElement<DataroomFile>>
+  financialDocuments: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {
   value: DataroomFile

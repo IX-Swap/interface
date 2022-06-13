@@ -1,14 +1,14 @@
 export const corporateInvestorAgreementsMap = {
   assets:
-    'An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency; or',
+    'An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency',
   trustee:
-    'The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency; or',
+    'The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency',
   accreditedShareholders:
-    'A corporation where all the shareholders are Accredited Investors; or',
+    'A corporation where all the shareholders are Accredited Investors',
   partnership:
-    'A partnership (other than a limited liability partnership) where all the partners are Accredited Investors; or',
+    'A partnership (other than a limited liability partnership) where all the partners are Accredited Investors',
   accreditedBeneficiaries:
-    'A trust where all the beneficiaries are Accredited Investors; or',
+    'A trust where all the beneficiaries are Accredited Investors',
   accreditedSettlors:
     'A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.'
 }

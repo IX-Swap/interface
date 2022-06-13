@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Grid, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
 import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
@@ -7,6 +7,7 @@ import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclar
 import { useFormContext } from 'react-hook-form'
 import { useServices } from 'hooks/useServices'
 import { IdentityType } from 'app/pages/identity/utils/shared'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -31,29 +32,46 @@ export const InvestorDeclarationForm = ({
 
   return (
     <>
-      <FormSectionHeader title='Investor Status Declaration' />
-      <Grid data-testid='investorStatusDeclaration' container spacing={3}>
+      <Grid
+        data-testid='investorStatusDeclaration'
+        container
+        spacing={5}
+        direction={'column'}
+      >
         <Grid item xs={12}>
-          <Typography>
-            Singapore rules require you to declare your investor status before
-            you see live deals on our platform
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <InvestorAgreements type={identityType} />
+          <FieldContainer>
+            <Grid container spacing={3} direction={'column'}>
+              <Grid item>
+                <FormSectionHeader title='Investor Status Declaration' />
+              </Grid>
+              <Grid item>
+                <InvestorAgreements type={identityType} />
+              </Grid>
+            </Grid>
+          </FieldContainer>
         </Grid>
 
         <Grid item xs={12}>
-          <FormSectionHeader title={'Opt-In Requirement'} />
-          <DeclarationsListFields
-            title='I confirm to be treated as an “Accredited Investor” by InvestaX'
-            data={[
-              {
-                name: 'optInAgreements',
-                label: <OptInAgreements showOptOutDialog />
-              }
-            ]}
-          />
+          <FieldContainer>
+            <Grid container direction={'column'} spacing={5}>
+              <Grid item container spacing={3} direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader title={'Opt-In Requirement'} />
+                </Grid>
+                <Grid item>
+                  <DeclarationsListFields
+                    title='I confirm to be treated as an “Accredited Investor” by InvestaX'
+                    data={[
+                      {
+                        name: 'optInAgreements',
+                        label: <OptInAgreements showOptOutDialog />
+                      }
+                    ]}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          </FieldContainer>
         </Grid>
       </Grid>
     </>

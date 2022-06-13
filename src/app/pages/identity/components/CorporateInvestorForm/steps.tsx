@@ -56,7 +56,7 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     formId: 'tax-declaration'
   },
   {
-    label: 'Investor Status Declaration',
+    label: 'Investor Declaration',
     getFormValues: getCorporateInvestorDeclarationFormValues,
     getRequestPayload: getCorporateInvestorDeclarationRequestPayload,
     validationSchema: corporateInvestorStatusDeclarationSchema,
