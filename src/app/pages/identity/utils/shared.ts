@@ -48,7 +48,11 @@ export const prepareDeclarationsForUpload = (
   }))
 }
 
-export const adjustIdentityOccupation = (str: string) => {
+export const adjustIdentityOccupation = (str?: string) => {
+  if (str === undefined) {
+    return ''
+  }
+
   const res = str.split('').map(el => el.toLowerCase())
   res[0] = res[0].toUpperCase()
   for (let i = 0; i < res.length; i++) {
