@@ -218,8 +218,8 @@ export default function App() {
                   <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
                 )}
                 {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
-                {isWhitelisted && <Route exact strict path={routes.payoutItem} component={PayoutItem} />}
                 {isWhitelisted && <Route exact strict path={routes.createPayoutEvent} component={CreatePayoutEvent} />}
+                {isWhitelisted && <Route exact strict path={routes.payoutItem} component={PayoutItem} />}
                 {isWhitelisted && canAccessKycForm('individual') && (
                   <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
                 )}
