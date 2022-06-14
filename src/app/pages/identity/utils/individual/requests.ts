@@ -13,7 +13,10 @@ export const getPersonalInfoRequestPayload = (
   if (values.dob === null || values.dob === undefined) {
     delete values.dob
   }
-  return { ...values }
+  return {
+    ...values,
+    nric: values.nationality === 'Singapore' ? values.nric : undefined
+  }
 }
 
 export const getFinancialInfoRequestPayload = (
