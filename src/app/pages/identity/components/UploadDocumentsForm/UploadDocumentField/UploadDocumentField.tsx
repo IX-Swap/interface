@@ -54,7 +54,9 @@ export const UploadDocumentField = ({
         <Grid item xs={12}>
           <Box>
             <Grid item container alignItems='center'>
-              <Typography variant='h5'>{label}</Typography>
+              <Typography variant='h5' color={'otpInput.color'}>
+                {label}
+              </Typography>
               <Box pr={1}></Box>
               {tooltipContent !== undefined ? (
                 <Tooltip
@@ -72,7 +74,6 @@ export const UploadDocumentField = ({
           {({ fields, append, remove }) => (
             <Grid container spacing={2}>
               {fields.map((field, index) => {
-                console.log('name ', name, 'field ', field.value)
                 return (
                   <Grid item xs={12} key={field.id}>
                     <TypedField

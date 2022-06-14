@@ -1,6 +1,6 @@
 import { Meta, Story } from '@storybook/react/types-6-0'
 import React from 'react'
-import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateUploadDocumentsFields/CorporateDocuments'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
 
 const meta: Meta = {
   title: 'Pages/Identity/CorporateDocuments',

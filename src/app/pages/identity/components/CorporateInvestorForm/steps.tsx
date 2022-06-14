@@ -17,7 +17,7 @@ import {
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
-import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateUploadDocumentsFields/CorporateDocuments'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
 import {
   corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,

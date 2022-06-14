@@ -8,7 +8,7 @@ import { useFormContext } from 'react-hook-form'
 import { useServices } from 'hooks/useServices'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateUploadDocumentsFields/CorporateDocuments'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -34,12 +34,12 @@ export const InvestorDeclarationForm = ({
   }, [declarationsError, optInAgreementsError]) // eslint-disable-line
 
   return (
-    <Grid container direction={'column'} spacing={5}>
+    <Grid container direction={'column'} spacing={2}>
       <Grid
         item
         data-testid='investorStatusDeclaration'
         container
-        spacing={5}
+        spacing={2}
         direction={'column'}
       >
         <Grid item xs={12}>
