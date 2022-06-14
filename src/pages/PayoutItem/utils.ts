@@ -1,4 +1,5 @@
 import useTheme from 'hooks/useTheme'
+import moment from 'moment'
 
 import { PAYOUT_STATUS } from '.'
 
@@ -20,3 +21,10 @@ export const useStatusButtonInfo = (title: PAYOUT_STATUS) => {
       return { title: 'Delayed', backgroundColor: theme.bgG6, color: theme.text1, borderColor: null }
   }
 }
+
+export const isSameDay = (date: any) => moment(new Date()).isSame(date, 'day')
+export const isBefore = (date: any) => moment(new Date()).isBefore(date, 'day')
+export const isAfter = (date: any) => moment(new Date()).isAfter(date, 'day')
+export const momentFormatDate = (date: any, format: DateFormats = 'll') => moment(date).format(format)
+
+type DateFormats = 'll' | 'LL'
