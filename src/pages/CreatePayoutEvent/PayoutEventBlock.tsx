@@ -1,7 +1,6 @@
 import React, { FC, useMemo } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
-import moment from 'moment'
 
 import { TYPE } from 'theme'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
@@ -10,6 +9,7 @@ import { DateInput } from 'components/DateInput'
 import { Textarea } from 'components/Input'
 import { Label } from 'components/Label'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { momentFormatDate } from 'pages/PayoutItem/utils'
 
 import { PayoutType } from './PayoutType'
 import { FormCard } from './styleds'
@@ -59,7 +59,7 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
         {recordDate && tokenAmount && tokenId && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
-              {t`Payout token computed as of ${moment(new Date(recordDate)).format('LL')} at ${tokenAmount} ${
+              {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${tokenAmount} ${
                 tokenId.label
               } per SEC token`}
             </TYPE.description2>
