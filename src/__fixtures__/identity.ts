@@ -71,6 +71,7 @@ export const corporate: CorporateIdentity = {
   email: '',
   contactNumber: '',
   user,
+  isInstitutionalInvestor: false,
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
