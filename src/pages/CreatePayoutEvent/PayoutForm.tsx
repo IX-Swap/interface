@@ -7,14 +7,16 @@ import { DateInput } from 'components/DateInput'
 import { useCreateDraftPayout } from 'state/payout/hooks'
 import { TYPE } from 'theme'
 import { FormGrid } from 'pages/KYC/styleds'
+import { useTokensList } from 'hooks/useTokensList'
 
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
-import { initialValues, mockSecTokens } from './mock'
+import { initialValues } from './mock'
 import { FormCard } from './styleds'
 import { transformPayoutDraftDTO } from './utils'
 
 export const PayoutForm: FC = () => {
+  const { secTokensOptions } = useTokensList()
   const createDraft = useCreateDraftPayout()
 
   const handleFormSubmit = async (values: any) => {
@@ -49,7 +51,7 @@ export const PayoutForm: FC = () => {
                   label="Sec Token"
                   placeholder="Choose SEC token"
                   selectedItem={values.secTokenId}
-                  items={mockSecTokens}
+                  items={secTokensOptions}
                   onSelect={(item) => onValueChange('secTokenId', item)}
                   required
                 />
@@ -61,7 +63,7 @@ export const PayoutForm: FC = () => {
                   value={values.recordDate}
                   onChange={(newDate) => onValueChange('recordDate', newDate)}
                   required
-                  tooltipText='Record Date'
+                  tooltipText="Record Date"
                 />
               </FormGrid>
 

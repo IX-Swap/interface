@@ -32,7 +32,7 @@ export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
           <Checkbox
             key={`payout-type-${id}`}
             scaleSize={1.1}
-            buttonStyles={{ marginRight: 26 }}
+            buttonStyles={{ marginRight: 32 }}
             isRadio
             label={label}
             onClick={() => onTypeChange(label)}
@@ -40,13 +40,14 @@ export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
           />
         ))}
       </Card>
-      {description && values.type !== 'Other' && (
+      {values.type && (
         <ExtraInfoCard>
           <TYPE.buttonMuted opacity="50%">{description}</TYPE.buttonMuted>
         </ExtraInfoCard>
       )}
       {values.type === 'Other' && (
         <TextInput
+          style={{ marginTop: 12 }}
           placeholder="Write payout type"
           onChange={(e: any) => onValueChange('otherType', e.currentTarget.value)}
           value={values.otherType}
