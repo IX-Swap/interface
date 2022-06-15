@@ -71,7 +71,7 @@ export const Register: React.FC = observer(() => {
         mobileNo: values.phoneNumber,
         oldMobileNo: data?.mobileno,
         password: values.password,
-        identityType: identity
+        accountType: identity?.toLocaleUpperCase()
       },
       isMyInfo
         ? {
