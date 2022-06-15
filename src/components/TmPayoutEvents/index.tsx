@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 
@@ -11,10 +11,12 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { ReactComponent as EyeIcon } from 'assets/images/eye.svg'
 import { useCurrency } from 'hooks/Tokens'
+import { useGetMyPayout } from 'state/token-manager/hooks'
 
 import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
+import { Pagination } from 'components/Pagination'
 
 const headerCells = [
   t`ID`,
@@ -28,6 +30,9 @@ const headerCells = [
 ]
 
 export const TmPayoutEvents = () => {
+  const getMyPayouts = useGetMyPayout()
+  const [page, handlePage] = useState(0)
+
   // TO DO - use real data
   const items = [
     {
@@ -54,8 +59,8 @@ export const TmPayoutEvents = () => {
     },
   ]
 
-  const fetch = () => {
-    // TO DO - add request to get token-manger events
+  const fetch = (params: Record<string, any>) => {
+    getMyPayouts(params)
   }
 
   const onEdit = () => {
@@ -76,6 +81,7 @@ export const TmPayoutEvents = () => {
         callback={fetch}
       />
       <Table body={<Body onEdit={onEdit} items={items} />} header={<Header />} />
+      <Pagination totalPages={12} page={page} onPageChange={handlePage} />
     </Container>
   )
 }

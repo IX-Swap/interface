@@ -58,7 +58,7 @@ export const UpdateSummary = ({ item, close }: Props) => {
 
               {role === ROLES.TOKEN_MANAGER && (
                 <>
-                  <Label>{`User's Role:`}</Label>
+                  <Label>{`Managed Tokens:`}</Label>
                   <TokenList>
                     {managerOf.map(({ icon, label }) => (
                       <Token key={label}>

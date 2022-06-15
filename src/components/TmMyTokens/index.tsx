@@ -14,7 +14,7 @@ export const TmMyTokens = () => {
       {me?.managerOf?.length ? (
         <TokensList>
           {me?.managerOf.map((item) => (
-            <TokenItem key={item} item={item} />
+            <TokenItem key={item.id} item={item} />
           ))}
         </TokensList>
       ) : (
