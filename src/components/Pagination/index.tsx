@@ -1,11 +1,11 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Trans } from '@lingui/macro'
 import styled, { css } from 'styled-components'
 import ReactPaginate from 'react-paginate'
 
+import { Input } from 'components/Input'
+
 import arrowIcon from '../../assets/images/chevron.svg'
-import { Trans } from '@lingui/macro'
-import { Select } from 'components/Select'
-import { gradientBorder } from 'theme'
 
 interface Props {
   page: number
@@ -14,17 +14,30 @@ interface Props {
 }
 
 export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
+  const [inputPage, hanldeInputPage] = useState(0)
+
+  useEffect(() => {
+    hanldeInputPage(page + 1)
+  }, [page])
+
   const onPageClick = ({ selected }: { selected: number }) => {
     onPageChange(selected)
   }
 
-  const pagesOptions = useMemo(
-    () => [...new Array(totalPages)].map((el, index) => ({ value: index, label: `${index + 1}` })),
-    [totalPages]
-  )
+  const onPageInputChange = ({ target: { value } }: { target: { value: string } }) => {
+    if (!value) {
+      hanldeInputPage(1)
+    }
+    if (+value && +value > totalPages) {
+      hanldeInputPage(totalPages)
 
-  const onSelectPage = ({ value }: { value: number }) => {
-    onPageChange(value)
+      return
+    }
+    hanldeInputPage(+value || 1)
+  }
+
+  const onClickButton = () => {
+    onPageChange(inputPage - 1)
   }
 
   return (
@@ -43,33 +56,56 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
       />
       <GoToContaner>
         <Trans>Go to Page</Trans>
-        <SelectContainer>
-          <Select options={pagesOptions} value={page} onSelect={onSelectPage} isSearchable={false} />
-        </SelectContainer>
+        <InputContainer>
+          <StyledInput value={inputPage} onChange={onPageInputChange} />
+        </InputContainer>
+        <Button onClick={onClickButton}>
+          <Next src={arrowIcon} alt="nextIcon" />
+        </Button>
       </GoToContaner>
     </Container>
   )
 }
 
-const SelectContainer = styled.div`
-  *[class*='control'] {
-    position: relative;
-    height: 32px;
-    background-color: transparent;
-    ${gradientBorder}
+const InputContainer = styled.div`
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+  ::after {
+    z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 45px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    -webkit-mask-composite: exclude;
+    mask-composite: exclude;
+    padding: 2px;
+    background: -webkitlinear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
+    background: linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
   }
-  div[class*='ValueContainer'] {
-    padding-left: 0px;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-  }
-  div[class*='indicatorContainer'] {
-    padding: 0px;
-    > svg {
-      fill: white;
-    }
-  }
+  padding: 0 16px;
+  width: 60px;
+`
+
+const StyledInput = styled(Input)`
+  background-color: transparent;
+  width: auto;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  height: 32px;
+  z-index: 20;
+  padding: 0;
+  width: 100%;
+  text-align: center;
 `
 
 const Container = styled.div`
@@ -132,6 +168,27 @@ const GoToContaner = styled.div`
   display: flex;
   align-items: center;
   column-gap: 8px;
+`
+
+const Button = styled.div<{ disabled?: boolean }>`
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(237, 206, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.5;
+      cursor: not-allowed;
+    `}
+  > img {
+    width: 12px;
+    height: 12px;
+  }
 `
 
 const Next = styled.img``
