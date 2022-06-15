@@ -79,6 +79,17 @@ export const getMe: Readonly<{
   fulfilled: createAction('user/getMe/fulfilled'),
   rejected: createAction('user/getMe/rejected'),
 }
+
+export interface ManagerOfToken {
+  id: number
+  tokenId: number
+  userId: number
+  createdAt: null | string
+  updatedAt: null | string
+  deletedAt: null | string
+  token: SecToken
+}
+
 export interface RawGetMePayload {
   id: number
   email: string
@@ -96,5 +107,5 @@ export interface RawGetMePayload {
   updatedAt: string
   deletedAt: string
   isWhitelisted: boolean
-  managerOf: number[]
+  managerOf: ManagerOfToken[]
 }

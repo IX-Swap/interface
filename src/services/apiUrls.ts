@@ -23,6 +23,10 @@ export const admin = {
   addOrRemoveWhitelisted: (address: string) => `users/whitelist/address/${address}`,
 }
 
+export const tokenManager = {
+  myPayouts: 'payout/list/my',
+}
+
 export const vesting = {
   privateBuyer: 'investor/me',
 }
