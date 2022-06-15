@@ -29,10 +29,10 @@ export const Checkbox = (
       return 'error'
     }
     if (value) {
-      return 'text.primary'
+      return reverse ? 'text.secondary' : 'text.primary'
     }
 
-    return 'text.secondary'
+    return reverse ? 'text.primary' : 'text.secondary'
   }
 
   return (

@@ -6,11 +6,5 @@ export default makeStyles(theme => ({
     marginRight: 0,
     marginTop: theme.spacing(3.5),
     marginBottom: theme.spacing(2)
-  },
-  label: {
-    color:
-      theme.palette.mode === 'light'
-        ? theme.palette.text.secondary
-        : theme.palette.divider
   }
 }))

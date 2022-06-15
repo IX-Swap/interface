@@ -43,7 +43,6 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
           control={control}
           name={['taxResidencies', index, 'taxIdAvailable']}
           label='TIN Is Not Available (Please Indicate Reason):'
-          labelClassName={classes.label}
         />
       </Grid>
       {!isTinAvailable && (
