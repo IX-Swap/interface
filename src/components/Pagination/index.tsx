@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components'
 import ReactPaginate from 'react-paginate'
 
 import { Input } from 'components/Input'
+import { inputGradientBorder } from 'theme'
 
 import arrowIcon from '../../assets/images/chevron.svg'
 
@@ -71,25 +72,7 @@ const InputContainer = styled.div`
   border-radius: 12px;
   position: relative;
   z-index: 1;
-  ::after {
-    z-index: 1;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 45px;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out;
-    -webkit-mask-composite: exclude;
-    mask-composite: exclude;
-    padding: 2px;
-    background: -webkitlinear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
-    background: linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
-  }
+  ${inputGradientBorder};
   padding: 0 16px;
   width: 60px;
 `

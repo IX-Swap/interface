@@ -402,6 +402,25 @@ export const SvgIconWrapper = styled.div<{ size?: number }>`
     width: ${({ size }) => (size ? size + 'px' : '32px')};
   }
 `
+export const inputGradientBorder = css`
+  ::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 45px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    padding: 2px;
+    background: ${({ theme }) => `-webkit${theme.borderG1}`};
+    background: ${({ theme }) => theme.borderG1};
+  }
+`
+
 export const gradientBorder = css`
   :before {
     content: '';
