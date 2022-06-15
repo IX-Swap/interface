@@ -218,18 +218,14 @@ export const corporateInvestorStatusDeclarationSchema = yup
     digitalSecurities: yup.bool(),
     digitalSecuritiesIssuance: yup.bool(),
     allServices: yup.bool(),
-    evidenceOfAccreditation: yup
-      .array<FormArrayElement<DataroomFile>>()
-      .min(1)
-      .required(validationMessages.required),
-    corporateDocuments: yup
-      .array<FormArrayElement<DataroomFile>>()
-      .min(1)
-      .required(validationMessages.required),
-    financialDocuments: yup
-      .array<FormArrayElement<DataroomFile>>()
-      .min(1)
-      .required(validationMessages.required)
+    // @ts-expect-error
+    institutionalInvestorDocuments: documentsSchema,
+    // @ts-expect-error
+    evidenceOfAccreditation: documentsSchema,
+    // @ts-expect-error
+    corporateDocuments: documentsSchema,
+    // @ts-expect-error
+    financialDocuments: documentsSchema
   })
   .test(
     'investorDeclarations',
@@ -270,6 +266,10 @@ export const corporateInvestorDocumentsSchema = yup
       .min(1)
       .required(validationMessages.required),
     financialDocuments: yup
+      .array<FormArrayElement<DataroomFile>>()
+      .min(1)
+      .required(validationMessages.required),
+    institutionalInvestorDocuments: yup
       .array<FormArrayElement<DataroomFile>>()
       .min(1)
       .required(validationMessages.required)

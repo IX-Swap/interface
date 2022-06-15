@@ -40,7 +40,6 @@ export const DeclarationsListFields = ({
               valueExtractor={booleanValueExtractor}
               component={Checkbox}
               control={control}
-              labelClassName={classes.labelText}
               label={item.label as any}
               name={item.name}
               defaultValue={false}

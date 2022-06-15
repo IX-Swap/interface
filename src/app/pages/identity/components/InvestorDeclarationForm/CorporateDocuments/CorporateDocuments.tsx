@@ -37,7 +37,7 @@ export const CorporateDocuments = (props: CorporateDocumentsProps) => {
               name='corporateDocuments'
               label='Corporate Documents'
               helperElement={
-                <Typography color={'text.secondary'} mt={1.5}>
+                <Typography color={'text.secondary'} mt={1.5} fontWeight={400}>
                   Company registry profile, certificate of incorporation,
                   memorandum and articles of association, company organization
                   chart, register of shareholders and directors, partnership
@@ -51,7 +51,7 @@ export const CorporateDocuments = (props: CorporateDocumentsProps) => {
               name='financialDocuments'
               label='Financial Documents'
               helperElement={
-                <Typography color={'text.secondary'} mt={1.5}>
+                <Typography color={'text.secondary'} mt={1.5} fontWeight={400}>
                   Balance sheet, profit & loss statement or annual returns
                 </Typography>
               }
@@ -67,13 +67,13 @@ export const CorporateDocuments = (props: CorporateDocumentsProps) => {
                     <Grid item>
                       <List>
                         <ListItem>
-                          <Typography color={'text.secondary'}>
+                          <Typography color={'text.secondary'} fontWeight={400}>
                             Copy of the most recent audited balance sheet of the
                             corporation.
                           </Typography>
                         </ListItem>
                         <ListItem>
-                          <Typography color={'text.secondary'}>
+                          <Typography color={'text.secondary'} fontWeight={400}>
                             Where the corporation is not required to prepare
                             audited account regularly, a balance sheet of the
                             corporation of the state of affairs of the
@@ -84,7 +84,7 @@ export const CorporateDocuments = (props: CorporateDocumentsProps) => {
                       </List>
                     </Grid>
                     <Grid item>
-                      <Typography color={'text.secondary'}>
+                      <Typography color={'text.secondary'} fontWeight={400}>
                         *Note that the above list is not exhaustive and other
                         documents may be required or need to be provided.
                       </Typography>

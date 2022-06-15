@@ -78,11 +78,14 @@ export const getCorporateInvestorDeclarationRequestPayload = (
     return result
   }, [])
 
+  const isInstitutionalInvestor = values.isInstitutionalInvestor
+
   return {
     declarations: {
-      investorsStatus: values,
-      documents: documents.filter(doc => doc !== undefined)
-    }
+      investorsStatus: values
+    },
+    documents: documents.filter(doc => doc !== undefined),
+    isInstitutionalInvestor: isInstitutionalInvestor
   }
 }
 

@@ -153,12 +153,15 @@ export interface CorporateInvestorTaxDeclarationFormValues {
 export interface CorporateInvestorDeclarationFormValues
   extends CorporateInvestorStatus,
     OptInAgreements,
-    OptOutRequirements {}
+    OptOutRequirements {
+  isInstitutionalInvestor: boolean
+}
 
 export interface CorporateInvestorDocumentsFormValues {
   evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
   corporateDocuments: Array<FormArrayElement<DataroomFile>>
   financialDocuments: Array<FormArrayElement<DataroomFile>>
+  institutionalInvestorDocuments: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {
   value: DataroomFile
@@ -242,6 +245,7 @@ export interface CorporateFields {
   numberOfBusinessOwners: string
   businessActivity: string
   sourceOfFund: string
+  isInstitutionalInvestor: boolean
   type:
     | 'investor'
     | 'issuer'

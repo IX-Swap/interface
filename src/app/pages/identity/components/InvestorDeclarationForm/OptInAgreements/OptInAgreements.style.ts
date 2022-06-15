@@ -2,10 +2,10 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   text: {
-    color: theme.palette.otpInput.color,
-    fontSize: 14,
-    fontWeight: 400,
-    lineHeight: 1.6,
+    color: 'inherit',
+    fontSize: 'inherit',
+    fontWeight: 'inherit',
+    lineHeight: 'inherit',
 
     [theme.breakpoints.down('lg')]: {
       display: 'inline'
