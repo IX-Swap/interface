@@ -11,13 +11,17 @@ export interface PasswordFieldProps {
   showErrorMessages?: boolean
   name?: string
   label?: string
+  isMyInfo?: boolean
+  hideShowPassword?: boolean
 }
 
 export const PasswordField = ({
   withPasswordValidation = false,
   showErrorMessages = true,
   name = 'password',
-  label = 'Password'
+  label = 'Password',
+  isMyInfo = false,
+  hideShowPassword = false
 }: PasswordFieldProps) => {
   const { control, errors } = useFormContext()
   const { passwordField } = useStyles()
@@ -33,14 +37,14 @@ export const PasswordField = ({
           label={label}
           type={inputType}
           className={passwordField}
-          placeholder={'Password'}
+          placeholder={isMyInfo ? 'Create Password' : 'Password'}
           isErrorMessageEnabled={showErrorMessages}
           InputLabelProps={{
             shrink: true
           }}
           fullWidth
           InputProps={{
-            endAdornment: (
+            endAdornment: hideShowPassword ? undefined : (
               <EyePassword
                 inputType={inputType}
                 setType={setInputType}

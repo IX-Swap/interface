@@ -49,7 +49,10 @@ export const useStyles = makeStyles(theme => ({
     backgroundPosition: 'right center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    height: '100vh',
     [theme.breakpoints.down('md')]: {
       display: 'none'
     }
