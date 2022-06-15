@@ -6,6 +6,7 @@ import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { reverseBooleanValueExtractor } from 'helpers/forms'
 import { TaxResidency } from 'app/pages/identity/types/forms'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 
 export interface TinUnavailableFieldsProps {
   index: number
@@ -20,6 +21,7 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   const isTinAvailable: boolean = watch<string, boolean>(
     `taxResidencies[${index}].taxIdAvailable`
   )
+  const { isSingPass } = useIsSingPass()
 
   useEffect(() => {
     if (!isTinAvailable) {
@@ -40,6 +42,10 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
           control={control}
           name={['taxResidencies', index, 'taxIdAvailable']}
           label='if TIN is not available please indicate reason:'
+          disabled={
+            isSingPass &&
+            watch(`taxResidencies[${index}].countryOfResidence`) === 'Singapore'
+          }
         />
       </Grid>
       {!isTinAvailable && (

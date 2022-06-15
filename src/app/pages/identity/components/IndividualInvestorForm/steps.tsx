@@ -28,9 +28,9 @@ import { FinancialInformationForm } from 'app/pages/identity/components/Financia
 import { TaxDeclarationForm } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationForm'
 import { IndividualUploadDocumentsForm } from 'app/pages/identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
+import { IndividualAddressFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualAddressFields'
 
 export const individualInvestorFormSteps = [
   {
@@ -48,7 +48,7 @@ export const individualInvestorFormSteps = [
           Please provide your current address
         </Typography>
         <VSpacer size='medium' />
-        <AddressFields />
+        <IndividualAddressFields />
       </Fragment>
     )
   },

@@ -9,10 +9,11 @@ import { Address } from 'app/pages/identity/types/forms'
 export interface AddressFieldsProps {
   rootName?: string
   defaultValue?: Address
+  disabledFields?: Array<keyof Address>
 }
 
 export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
-  const { rootName = 'address', defaultValue } = props
+  const { rootName = 'address', defaultValue, disabledFields = [] } = props
   const { control } = useFormContext<Address>()
 
   return (
@@ -28,6 +29,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Line 1'
           variant='outlined'
           defaultValue={defaultValue?.line1 ?? ''}
+          disabled={disabledFields.includes('line1')}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -41,6 +43,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Line 2'
           variant='outlined'
           defaultValue={defaultValue?.line2 ?? ''}
+          disabled={disabledFields.includes('line2')}
         />
       </Grid>
       <Hidden mdDown>
@@ -57,6 +60,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='City'
           variant='outlined'
           defaultValue={defaultValue?.city ?? ''}
+          disabled={disabledFields.includes('city')}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -70,6 +74,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='State'
           variant='outlined'
           defaultValue={defaultValue?.state ?? ''}
+          disabled={disabledFields.includes('state')}
         />
       </Grid>
       <Hidden mdDown>
@@ -84,6 +89,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Country'
           variant='outlined'
           defaultValue={defaultValue?.country ?? ''}
+          disabled={disabledFields.includes('country')}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
@@ -97,6 +103,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           label='Postal Code'
           variant='outlined'
           defaultValue={defaultValue?.postalCode ?? ''}
+          disabled={disabledFields.includes('postalCode')}
         />
       </Grid>
     </Grid>

@@ -10,10 +10,12 @@ import {
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 
 export const SingaporeOnlyFields = () => {
   const { control } = useFormContext()
   const { singaporeOnly } = control.getValues()
+  const { isSingPass } = useIsSingPass()
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -43,6 +45,7 @@ export const SingaporeOnlyFields = () => {
             control={control}
             name={['taxResidencies', 0, 'taxIdentificationNumber']}
             label='NRIC/FIN'
+            disabled={isSingPass}
           />
         </Grid>
       )}

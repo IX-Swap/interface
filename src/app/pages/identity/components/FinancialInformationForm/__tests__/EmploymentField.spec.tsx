@@ -2,23 +2,47 @@ import { EmploymentField } from 'app/pages/identity/components/FinancialInformat
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
+import * as useIsSingPass from 'app/pages/identity/hooks/useIsSingPass'
 
 describe('EmploymentField', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it('renders fields correctly', () => {
-    const { getByLabelText, queryAllByText, getByTestId } = render(
+  it('renders correctly', () => {
+    render(
+      <Form>
+        <EmploymentField />
+      </Form>
+    )
+  })
+
+  it('disables correct fields when singpass data is present', () => {
+    const objResponse = {
+      isSingPass: true,
+      singPassData: {
+        employmentsector: 'SECTOR',
+        employment: 'BOSS ME',
+        employmentstatus: 'SELF-EMPLOYED'
+      }
+    }
+
+    jest
+      .spyOn(useIsSingPass, 'useIsSingPass')
+      .mockImplementation(() => objResponse as any)
+
+    const { getByLabelText, getByRole } = render(
       <Form>
         <EmploymentField />
       </Form>
     )
 
-    expect(getByTestId('Occupation-select')).toBeInTheDocument()
-    // TODO: fix test
-    expect(getByTestId('Employment-select')).toBeInTheDocument()
-    expect(getByLabelText('Employer')).toBeInTheDocument()
-    expect(queryAllByText('Annual Income')).toBeTruthy()
+    const occupation = getByLabelText('Occupation')
+    const status = getByLabelText('Employment Status')
+    const employer = getByLabelText('Employer')
+
+    expect(occupation).toHaveAttribute('aria-disabled', 'true')
+    expect(status).toHaveAttribute('aria-disabled', 'true')
+    expect(employer).toBeDisabled()
   })
 })

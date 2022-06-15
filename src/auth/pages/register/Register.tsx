@@ -17,6 +17,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
+import { history } from 'config/history'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -61,15 +62,30 @@ export const Register: React.FC = observer(() => {
     : registerFormInitialValues
 
   const handleSubmit = async (values: SignupArgs) => {
-    await signup({
-      name: values.name ?? 'singpassuser',
-      email: values.email,
-      singPassLogin: isMyInfo,
-      oldEmail: data?.email,
-      mobileNo: values.phoneNumber,
-      oldMobileNo: data?.mobileno,
-      password: values.password
-    })
+    await signup(
+      {
+        name: values.name ?? 'singpassuser',
+        email: values.email,
+        singPassLogin: isMyInfo,
+        oldEmail: data?.email,
+        mobileNo: values.phoneNumber,
+        oldMobileNo: data?.mobileno,
+        password: values.password,
+        identityType: identity
+      },
+      isMyInfo
+        ? {
+            onError: (error: any) => {
+              if (
+                error?.message ===
+                'Sorry but this email address is already taken'
+              ) {
+                history.push(`${AuthRoute.myinfoError}?errorType=email`)
+              }
+            }
+          }
+        : undefined
+    )
   }
 
   if (authorizeLoading) {
