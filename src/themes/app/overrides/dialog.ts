@@ -5,7 +5,7 @@ export const dialog = (theme: Theme) => {
     styleOverrides: {
       paper: {
         padding: theme.spacing(4),
-        borderRadius: '16px',
+        borderRadius: 8,
         minWidth: 380,
 
         [theme.breakpoints.down('md')]: {

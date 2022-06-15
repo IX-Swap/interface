@@ -1,8 +1,8 @@
 import React from 'react'
 import { Dialog } from 'app/pages/identity/components/Dialog/Dialog'
 import { Typography } from '@mui/material'
-import { OptOutInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoContent/OptOutInfoContent'
-import { OptOutInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoAction/OptOutInfoAction'
+import { InstitutionalInvestorInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorInfoDialog/InstitutionalInvestorInfoContent/InstitutionalInvestorInfoContent'
+import { InstitutionalInvestorInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorInfoDialog/InstitutionalInvestorInfoAction/InstitutionalInvestorInfoAction'
 
 export const InstitutionalInvestorInfoDialog = () => {
   return (
@@ -18,12 +18,11 @@ export const InstitutionalInvestorInfoDialog = () => {
         </Typography>
       }
       title='Institutional Investor Means'
-      // TODO Need to create new content and actions components
-      content={<OptOutInfoContent />}
-      actions={<OptOutInfoAction />}
+      content={<InstitutionalInvestorInfoContent />}
+      actions={<InstitutionalInvestorInfoAction />}
       fullWidth
       scroll='body'
-      maxWidth='sm'
+      maxWidth='xl'
     />
   )
 }
