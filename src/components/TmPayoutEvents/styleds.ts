@@ -7,9 +7,6 @@ import { ButtonIXSGradient } from 'components/Button'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  .dropdown {
-    height: 40px;
-  }
 `
 
 export const BodyContainer = styled.div`

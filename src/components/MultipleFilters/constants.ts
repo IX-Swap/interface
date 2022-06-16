@@ -12,6 +12,7 @@ export enum FILTERS {
   PAYOUT_PERIOD = 'payoutPeriod',
   RECORD_DATE = 'recordDate',
   PAYOUT_TOKEN = 'payoutToken',
+  DATE_OF_CLAIM = 'createdAt',
 }
 
 export const defaultValues = {
@@ -23,6 +24,7 @@ export const defaultValues = {
   payoutPeriod: [],
   recordDate: null,
   payoutToken: [],
+  createdAt: null,
 } as Record<string, any>
 
 export const rolesOptions = [
@@ -48,9 +50,4 @@ export const payoutTypeOptions = [
   { label: capitalize(PAYOUT_TYPE.INTEREST), value: PAYOUT_TYPE.INTEREST },
   { label: capitalize(PAYOUT_TYPE.AIRDROPS), value: PAYOUT_TYPE.AIRDROPS },
   { label: capitalize(PAYOUT_TYPE.OTHERS), value: PAYOUT_TYPE.OTHERS },
-]
-
-export const payoutTokenOptions = [
-  { label: 'USDC', value: 'usdc' },
-  { label: 'USDT', value: 'usdc' },
 ]

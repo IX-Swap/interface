@@ -10,7 +10,7 @@ export const Container = styled.div`
   height: 100%;
   margin-top: 72px;
   > img {
-    max-width: 280px;
+    max-width: 240px;
     width: 100%;
     height: auto;
   }
@@ -30,5 +30,23 @@ export const Title = styled.div`
   margin: 60px 0px 40px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     margin: 32px 0px 18px;
+  }
+`
+
+export const NothingFound = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  margin-top: 60px;
+  align-items: center;
+  font-weight: 600;
+  line-height: 24px;
+  > div:first-child {
+    font-size: 24px;
+    color: white;
+  }
+  > div:last-child {
+    font-size: 18px;
+    color: ${({ theme }) => theme.text9};
   }
 `

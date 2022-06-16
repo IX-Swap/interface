@@ -91,4 +91,5 @@ export const ResetFilters = styled(ButtonText)`
   line-height: 20px;
   color: ${({ theme }) => theme.text2};
   white-space: nowrap;
+  text-decoration: underline;
 `
