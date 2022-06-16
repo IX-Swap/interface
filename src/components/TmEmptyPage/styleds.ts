@@ -39,16 +39,14 @@ export const NothingFound = styled.div`
   row-gap: 24px;
   margin-top: 60px;
   align-items: center;
+  font-weight: 600;
+  line-height: 24px;
   > div:first-child {
-    font-weight: 600;
     font-size: 24px;
-    line-height: 24px;
     color: white;
   }
   > div:last-child {
-    font-weight: 600;
     font-size: 18px;
-    line-height: 24px;
     color: ${({ theme }) => theme.text9};
   }
 `

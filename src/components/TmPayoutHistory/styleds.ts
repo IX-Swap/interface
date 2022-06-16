@@ -1,7 +1,6 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { BodyRow, HeaderRow } from 'components/Table'
-import { Colors } from 'theme/styled'
 
 export const Container = styled.div`
   display: flex;
@@ -23,14 +22,6 @@ export const StyledBodyRow = styled(BodyRow)`
   border: none;
   > div {
     padding: 24px 10px;
-  }
-  button {
-    min-height: 32px;
-    height: 32px;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 8px 24px;
-    line-height: 16px;
   }
 `
 

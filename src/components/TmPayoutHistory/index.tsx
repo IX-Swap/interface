@@ -1,25 +1,22 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { t, Trans } from '@lingui/macro'
+import React, { useState, useEffect } from 'react'
+import { t } from '@lingui/macro'
 import dayjs from 'dayjs'
 
 import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
-import { ButtonGradientBorder } from 'components/Button'
 import { Table } from 'components/Table'
-import { useSecTokenById } from 'state/secTokens/hooks'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { ReactComponent as EyeIcon } from 'assets/images/eye.svg'
-import { useCurrency, useToken } from 'hooks/Tokens'
+import { useCurrency } from 'hooks/Tokens'
 import { useGeyPayoutHistory, useTokenManagerState } from 'state/token-manager/hooks'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { CopyAddress } from 'components/CopyAddress'
+import { PayoutHistory } from 'state/token-manager/types'
+import { PAYOUT_TYPE_LABEL } from 'components/TmPayoutEvents/constants'
 
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
-import { PAYOUT_TYPE_LABEL } from './constants'
-import { PayoutHistory } from 'state/token-manager/types'
 
 const headerCells = [
   t`Recipient's wallet`,
@@ -57,7 +54,6 @@ export const TmPayoutHistory = () => {
             filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
             searchPlaceholder="Search by Wallet"
             onFiltersChange={handleFilters}
-            callback={getPayoutHistory}
           />
           {payoutHistory.items?.length ? (
             <>

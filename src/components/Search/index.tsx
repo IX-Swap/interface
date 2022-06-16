@@ -44,6 +44,7 @@ export const Search = ({ setSearchValue, placeholder, style, value }: Props) => 
 
 const Container = styled.div`
   position: relative;
+  width: 100%;
 `
 
 const SearchIcon = styled.img`

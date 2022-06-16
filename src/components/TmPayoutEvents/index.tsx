@@ -6,7 +6,6 @@ import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
 import { ButtonGradientBorder } from 'components/Button'
 import { Table } from 'components/Table'
-import { useSecTokenById } from 'state/secTokens/hooks'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { ReactComponent as EyeIcon } from 'assets/images/eye.svg'
@@ -15,11 +14,11 @@ import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { TmEmptyPage } from 'components/TmEmptyPage'
+import { PayoutEvent } from 'state/token-manager/types'
 
 import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
-import { PayoutEvent } from 'state/token-manager/types'
 
 const headerCells = [
   t`ID`,

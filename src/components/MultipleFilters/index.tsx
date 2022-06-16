@@ -12,6 +12,7 @@ import { DateRangePickerFilter } from 'components/DateRangePicker'
 import { useSimpleTokens } from 'hooks/Tokens'
 import dayjs from 'dayjs'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'
+import { SecToken } from 'types/secToken'
 
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
 import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
@@ -62,7 +63,7 @@ export const MultipleFilters = ({
 
   const secTokensOptions = useMemo(() => {
     if (secTokens?.length) {
-      return secTokens.map((token) => ({
+      return secTokens.map((token: SecToken) => ({
         label: token.symbol,
         value: token.id,
         icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
@@ -210,7 +211,7 @@ export const MultipleFilters = ({
         onChange={(value) =>
           setFieldValue(
             FILTERS.PAYOUT_PERIOD,
-            value.map((el) => (el ? dayjs(el).toISOString() : el))
+            value.map((el) => dayjs(el).toISOString())
           )
         }
         maxDate={new Date()}
