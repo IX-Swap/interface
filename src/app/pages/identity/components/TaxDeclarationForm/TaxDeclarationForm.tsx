@@ -6,7 +6,6 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 import { TaxResidencyFieldArray } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
 import { TaxDeclarationInfo } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfo'
 import useStyles from './TaxDeclarationForm.style'
-import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export interface TaxDeclarationFormProps {
   identityType?: 'individual' | 'corporate'
@@ -38,7 +37,6 @@ export const TaxDeclarationForm = ({
           </>
         ) : null}
       </Grid>
-      <ValidateOnMount />
     </Paper>
   )
 }

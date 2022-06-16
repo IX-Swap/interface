@@ -70,9 +70,9 @@ export const getCorporateInvestorDeclarationRequestPayload = (
 ) => {
   const documents = Object.values(values).reduce<
     Array<{ value: DataroomFile }>
-  >((result, documents) => {
-    if (Array.isArray(documents)) {
-      return [...result, ...documents.map(document => document.value._id)]
+  >((result, docs) => {
+    if (Array.isArray(docs)) {
+      return [...result, ...docs.map(document => document.value._id)]
     }
 
     return result

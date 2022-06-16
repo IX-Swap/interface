@@ -5,14 +5,12 @@ import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDe
 import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
-import { useServices } from 'hooks/useServices'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
 import { InstitutionalInvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements'
 import { Divider } from 'ui/Divider'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
-import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -23,19 +21,40 @@ export const InvestorDeclarationForm = ({
   identityType = 'individual',
   corporateType = 'issuer'
 }: InvestorDeclarationFormProps) => {
-  const { snackbarService } = useServices()
-  const { errors } = useFormContext()
-  const declarationsError = errors.investorDeclarations
-  const optInAgreementsError = errors.optInAgreements
+  const { formState, trigger } = useFormContext()
+
+  const {
+    assets,
+    trustee,
+    accreditedShareholders,
+    partnership,
+    accreditedBeneficiaries,
+    accreditedSettlors,
+    optInAgreements,
+    digitalSecurities,
+    primaryOfferingServices,
+    digitalSecuritiesIssuance,
+    allServices,
+    isInstitutionalInvestor
+  } = formState.dirtyFields
 
   useEffect(() => {
-    if (declarationsError !== undefined) {
-      void snackbarService.showSnackbar(declarationsError.message, 'error')
-    }
-    if (optInAgreementsError !== undefined) {
-      void snackbarService.showSnackbar(optInAgreementsError.message, 'error')
-    }
-  }, [declarationsError, optInAgreementsError]) // eslint-disable-line
+    void trigger()
+  }, [
+    assets,
+    trustee,
+    accreditedShareholders,
+    partnership,
+    accreditedBeneficiaries,
+    accreditedSettlors,
+    optInAgreements,
+    digitalSecurities,
+    primaryOfferingServices,
+    digitalSecuritiesIssuance,
+    allServices,
+    isInstitutionalInvestor,
+    trigger
+  ])
 
   return (
     <Grid container direction={'column'} spacing={2}>
@@ -132,7 +151,7 @@ export const InvestorDeclarationForm = ({
         <CorporateDocuments corporateType={corporateType} />
       )}
 
-      <ValidateOnMount />
+      {/* <ValidateOnMount /> */}
     </Grid>
   )
 }

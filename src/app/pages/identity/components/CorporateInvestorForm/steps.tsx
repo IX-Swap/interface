@@ -67,20 +67,18 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
   {
     label: 'Review & Submit',
     getFormValues: (data: any) => {
-      const allData = {
+      return {
         ...getCorporateInfoFormValues(data),
         ...getCorporateInvestorTaxDeclarationFormValues(data),
         ...getDirectorsAndBeneficialOwnersFormValues(data)
       }
-      return allData
     },
     getRequestPayload: (data: any) => {
-      const allData = {
+      return {
         ...getCorporateInfoRequestPayload(data),
         ...getDirectorsAndBeneficialOwnerRequestPayload(data),
         ...getTaxDeclarationRequestPayload(data)
       }
-      return allData
     },
     validationSchema: corporateInvestorSchema,
     component: () => <CorporateIdentityContainer />,

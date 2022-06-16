@@ -12,7 +12,10 @@ import {
 import {
   addressSchema,
   documentsSchema,
+  institutionalInvestorDocumentsSchema,
   emailSchema,
+  investorStatusDeclarationItemSchema,
+  optInAgreementsDependentValueSchema,
   taxIdentificationNumberSchema,
   validationMessages
 } from 'validation/shared'
@@ -183,42 +186,25 @@ export const corporateInvestorStatusDeclarationSchema = yup
     CorporateInvestorDeclarationFormValues &
       CorporateInvestorDocumentsFormValues
   >({
-    assets: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    trustee: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedBeneficiaries: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedSettlors: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedShareholders: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    partnership: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
+    assets: investorStatusDeclarationItemSchema,
+    trustee: investorStatusDeclarationItemSchema,
+    accreditedBeneficiaries: investorStatusDeclarationItemSchema,
+    accreditedSettlors: investorStatusDeclarationItemSchema,
+    accreditedShareholders: investorStatusDeclarationItemSchema,
+    partnership: investorStatusDeclarationItemSchema,
+
+    isInstitutionalInvestor: yup.bool(),
 
     optInAgreements: yup
       .bool()
       .oneOf([true], 'Opt-In Requirement is required')
       .required(validationMessages.required),
 
-    primaryOfferingServices: yup.bool(),
-    digitalSecurities: yup.bool(),
-    digitalSecuritiesIssuance: yup.bool(),
-    allServices: yup.bool(),
-    // @ts-expect-error
-    institutionalInvestorDocuments: documentsSchema,
+    primaryOfferingServices: optInAgreementsDependentValueSchema,
+    digitalSecurities: optInAgreementsDependentValueSchema,
+    digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
+    allServices: optInAgreementsDependentValueSchema,
+    institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
     // @ts-expect-error
     evidenceOfAccreditation: documentsSchema,
     // @ts-expect-error
@@ -226,32 +212,6 @@ export const corporateInvestorStatusDeclarationSchema = yup
     // @ts-expect-error
     financialDocuments: documentsSchema
   })
-  .test(
-    'investorDeclarations',
-    'Please choose at least one option under "Investor Status Declaration" section',
-    function (values) {
-      if (values === undefined || values === null) {
-        return false
-      }
-
-      const financialDeclarations = Object.entries(values)
-        .filter(([key]) => {
-          return (
-            key === 'assets' ||
-            key === 'trustee' ||
-            key === 'accreditedBeneficiaries' ||
-            key === 'accreditedSettlors' ||
-            key === 'accreditedShareholders' ||
-            key === 'partnership'
-          )
-        })
-        .map(([_key, value]) => value)
-
-      const result = financialDeclarations.every(value => value === false)
-
-      return !result
-    }
-  )
 
 export const corporateInvestorAgreementsSchema = yup
   .object()
