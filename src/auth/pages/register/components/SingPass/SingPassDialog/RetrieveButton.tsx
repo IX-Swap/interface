@@ -46,7 +46,8 @@ export const RetrieveButton = ({
             '&.Mui-disabled': {
               bgcolor: '#F0F2F7',
               color: '#A2ACBF'
-            }
+            },
+            textTransform: 'capitalize'
           }}
           fullWidth
           disabled={!checked && !hideCheckBox}
