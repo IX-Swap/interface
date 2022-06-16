@@ -257,7 +257,7 @@ export const UserModal: FC<Props> = ({ item, close }) => {
               )}
               <ButtonWrapper>
                 <StyledButton type="submit">
-                  <Trans>{item ? 'Update User' : 'Add User'}</Trans>
+                  <Trans>{item ? 'Update' : 'Add User'}</Trans>
                 </StyledButton>
               </ButtonWrapper>
             </form>
