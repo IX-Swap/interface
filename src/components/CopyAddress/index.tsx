@@ -33,7 +33,15 @@ export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isSh
       ) : (
         <Flex style={wrapperStyles}>
           {isShortenAddress ? shortenAddress(address || '') : address}
-          <IconWrapper style={wrapperStyles} size={size} onClick={() => setCopied(address || '')}>
+          <IconWrapper
+            style={wrapperStyles}
+            size={size}
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setCopied(address || '')
+            }}
+          >
             <StyledCopy />
           </IconWrapper>
         </Flex>
