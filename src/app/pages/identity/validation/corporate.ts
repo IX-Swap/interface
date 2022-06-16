@@ -9,7 +9,6 @@ import {
   InvestorDirectorsAndBeneficialOwnersFormValues,
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
-import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
   addressSchema,
   documentsSchema,
@@ -254,38 +253,6 @@ export const corporateInvestorStatusDeclarationSchema = yup
     }
   )
 
-export const corporateInvestorDocumentsSchema = yup
-  .object()
-  .shape<CorporateInvestorDocumentsFormValues>({
-    evidenceOfAccreditation: yup
-      .array<FormArrayElement<DataroomFile>>()
-      .min(1)
-      .required(validationMessages.required),
-    corporateDocuments: yup
-      .array<FormArrayElement<DataroomFile>>()
-      .min(1)
-      .required(validationMessages.required),
-    financialDocuments: yup
-      .array<FormArrayElement<DataroomFile>>()
-      .min(1)
-      .required(validationMessages.required),
-    institutionalInvestorDocuments: yup
-      .array<FormArrayElement<DataroomFile>>()
-      .min(1)
-      .required(validationMessages.required)
-  })
-
-export const corporateIssuerDocumentsSchema = yup.object().shape({
-  corporateDocuments: yup
-    .array<DataroomFile>()
-    .min(1)
-    .required(validationMessages.required),
-  financialDocuments: yup
-    .array<DataroomFile>()
-    .min(1)
-    .required(validationMessages.required)
-})
-
 export const corporateInvestorAgreementsSchema = yup
   .object()
   .shape<CorporateInvestorAgreementsFormValues>({
@@ -296,7 +263,6 @@ export const corporateInvestorAgreementsSchema = yup
 
 export const corporateInvestorSchema = yup.object().shape<any>({
   ...corporateInvestorInfoSchema.fields,
-  ...corporateIssuerDocumentsSchema.fields,
   ...corporateTaxDeclarationSchema.fields,
   ...directorsAndBeneficialOwnersSchema.fields
 })

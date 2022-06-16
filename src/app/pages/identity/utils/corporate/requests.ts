@@ -89,24 +89,6 @@ export const getCorporateInvestorDeclarationRequestPayload = (
   }
 }
 
-export const getCorporateInvestorDocumentsRequestPayload = (
-  values: CorporateInvestorDocumentsFormValues
-) => {
-  const documents = Object.values(values).reduce<
-    Array<{ value: DataroomFile }>
-  >((result, documents) => {
-    if (Array.isArray(documents)) {
-      return [...result, ...documents.map(document => document.value._id)]
-    }
-
-    return result
-  }, [])
-
-  return {
-    documents: documents.filter(doc => doc !== undefined)
-  }
-}
-
 export const getCorporateInvestorAgreementsRequestPayload = (
   values: AgreementsAndDisclosures
 ) => {

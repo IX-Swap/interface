@@ -4,22 +4,18 @@ import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/identity/component
 import {
   getCorporateInfoFormValues,
   getCorporateInvestorDeclarationFormValues,
-  getCorporateInvestorDocumentsFormValues,
   getCorporateInvestorTaxDeclarationFormValues,
   getDirectorsAndBeneficialOwnersFormValues
 } from 'app/pages/identity/utils/corporate/forms'
 import {
   getCorporateInfoRequestPayload,
   getCorporateInvestorDeclarationRequestPayload,
-  getCorporateInvestorDocumentsRequestPayload,
   getDirectorsAndBeneficialOwnerRequestPayload
 } from 'app/pages/identity/utils/corporate/requests'
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
-import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
 import {
-  corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,
   corporateInvestorSchema,
   corporateInvestorStatusDeclarationSchema,
@@ -69,19 +65,10 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     formId: 'investor-declaration'
   },
   {
-    label: 'Upload Documents',
-    getFormValues: getCorporateInvestorDocumentsFormValues,
-    getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
-    validationSchema: corporateInvestorDocumentsSchema,
-    component: () => <CorporateDocuments corporateType='investor' />,
-    formId: 'documents'
-  },
-  {
     label: 'Review & Submit',
     getFormValues: (data: any) => {
       const allData = {
         ...getCorporateInfoFormValues(data),
-        ...getCorporateInvestorDocumentsFormValues(data),
         ...getCorporateInvestorTaxDeclarationFormValues(data),
         ...getDirectorsAndBeneficialOwnersFormValues(data)
       }
@@ -90,7 +77,6 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     getRequestPayload: (data: any) => {
       const allData = {
         ...getCorporateInfoRequestPayload(data),
-        ...getCorporateInvestorDocumentsRequestPayload(data),
         ...getDirectorsAndBeneficialOwnerRequestPayload(data),
         ...getTaxDeclarationRequestPayload(data)
       }
