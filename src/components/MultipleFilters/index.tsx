@@ -166,7 +166,7 @@ export const MultipleFilters = ({
     ),
     [FILTERS.ROLES]: (
       <FilterDropdown
-        placeholder="Roles"
+        placeholder="Role"
         selectedItems={values.roles}
         onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
         items={rolesOptions}
