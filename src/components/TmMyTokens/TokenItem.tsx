@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { useSecTokenById } from 'state/secTokens/hooks'
 import { routes } from 'utils/routes'
 import { ManagerOfToken } from 'state/user/actions'
 
@@ -13,11 +12,8 @@ interface Props {
   item: ManagerOfToken
 }
 
-export const TokenItem = ({ item }: Props) => {
-  const token = useSecTokenById(item.tokenId)
+export const TokenItem = ({ item: { token } }: Props) => {
   const history = useHistory()
-
-  if (!token) return null
 
   const currency = new WrappedTokenInfo(token)
 

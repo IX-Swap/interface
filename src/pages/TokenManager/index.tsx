@@ -44,7 +44,7 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
 }
 
 const TokenManager = () => {
-  const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('payout-events')
+  const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('my-tokens')
 
   const history = useHistory()
   const params = useParams<TokenManagerParams>()

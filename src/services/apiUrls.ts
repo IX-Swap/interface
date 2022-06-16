@@ -24,7 +24,7 @@ export const admin = {
 }
 
 export const tokenManager = {
-  myPayouts: 'payout/list/my',
+  myPayouts: 'payout/list',
 }
 
 export const vesting = {

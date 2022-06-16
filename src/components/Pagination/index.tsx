@@ -41,6 +41,8 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
     onPageChange(inputPage - 1)
   }
 
+  if (!totalPages) return null
+
   return (
     <Container>
       <ReactPaginate

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 import { BodyRow, HeaderRow } from 'components/Table'
 import { Colors } from 'theme/styled'
+import { ButtonIXSGradient } from 'components/Button'
 
 export const Container = styled.div`
   display: flex;
@@ -66,4 +67,12 @@ export const StatusContainer = styled.div<{ color: keyof Colors | 'transparent' 
       color: ${({ theme }) => theme.text2};
       border: ${({ theme }) => `1px solid ${theme.text2}`};
     `};
+`
+export const CreateButton = styled(ButtonIXSGradient)`
+  min-height: 52px;
+  height: 52px;
+  padding: 16px 24px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
 `
