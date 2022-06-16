@@ -2,33 +2,80 @@ import { TableBody, TableCell, TableRow } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrders.styles'
 import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
+import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
 import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getExpiresOrderMessage } from 'helpers/dates'
 import React, { useContext } from 'react'
-import { OTCOrder } from 'types/otcOrder'
+import { ColumnOTCMatch, OpenOTCOrder, OTCMatch } from 'types/otcOrder'
 import { OpenOrdersContext } from '../../context/OpenOrdersContextWrapper'
-import { needsConfirmation, sortOpenOrders, useOpenOrderState } from './helpers'
-import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
+import { nestedcolumns } from './columns'
+import { needsConfirmation, useOpenOrderState } from './helpers'
+import { ConfirmOTCOrderActions } from './OTCOrderActions'
 
-export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
+const getColumnMatchedOrder = (
+  row: OpenOTCOrder,
+  matched: OTCMatch
+): ColumnOTCMatch => {
+  return {
+    ...matched,
+    pair: row.pair,
+    createdAt: row.createdAt,
+    orderType: row.orderType,
+    parentOrder: row._id,
+    parentAmount: row.amount
+  }
+}
+
+export const OpenOTCTableBody = (
+  props: TableViewRendererProps<OpenOTCOrder>
+) => {
   const classes = useStyles()
   const theme = useTheme()
-  const { columns, items, actions, hasActions, cacheQueryKey } = props
+  const { columns, items: sorted, actions, hasActions, cacheQueryKey } = props
   const { showEmptyState, columnCount, rowColor } = useOpenOrderState(props)
   const context = useContext(OpenOrdersContext)
 
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
-  const sorted = items?.sort(sortOpenOrders) ?? []
+  // const sorted = items?.sort(sortOpenOrders) ?? []
+  const renderMatches = (row: OpenOTCOrder) => (
+    <>
+      {row?.matches?.map((match: OTCMatch) => (
+        <TableRow
+          key={`${match._id}-child`}
+          style={{
+            border: 'transparent'
+          }}
+        >
+          {nestedcolumns.map(column => (
+            <TableCellWrapper
+              bordered={true}
+              key={column.key}
+              column={column}
+              row={getColumnMatchedOrder(row, match)}
+            />
+          ))}
+
+          {hasActions && (
+            <TableCell align='right'>
+              <ConfirmOTCOrderActions
+                item={getColumnMatchedOrder(row, match)}
+              />
+            </TableCell>
+          )}
+        </TableRow>
+      ))}
+    </>
+  )
 
   return (
     <TableBody>
       {sorted.map((row, i) => (
         <>
           <TableRow
-            key={i}
+            key={row._id}
             style={{
               backgroundColor: rowColor(row),
               border: 'transparent',
@@ -55,34 +102,12 @@ export const OpenOTCTableBody = (props: TableViewRendererProps<OTCOrder>) => {
               />
             )}
           </TableRow>
-          {context?.isIndexOpen(row._id) === true && (
-            <TableRow
-              key={`${i}-subrow`}
-              style={{
-                border: 'transparent'
-              }}
-            >
-              {columns.map(column => (
-                <TableCellWrapper
-                  bordered={true}
-                  key={column.key}
-                  column={column}
-                  row={row}
-                />
-              ))}
-
-              {hasActions && (
-                <ActionTableCell
-                  row={row}
-                  cacheQueryKey={cacheQueryKey}
-                  actions={actions}
-                />
-              )}
-            </TableRow>
-          )}
+          {context?.isIndexOpen(row._id) === true &&
+            row?.matches &&
+            row?.matches?.length > 0 && <>{renderMatches(row)}</>}
           {needsConfirmation(row) && (
             <TableRow
-              key={`${i}-timeout`}
+              key={`${row._id}-timeout`}
               className={classes.infoRow}
               style={{
                 backgroundColor: rowColor(row),

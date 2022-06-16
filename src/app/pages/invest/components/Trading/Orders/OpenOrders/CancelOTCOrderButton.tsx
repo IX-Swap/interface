@@ -2,9 +2,9 @@ import { Box, Button, ButtonProps, CircularProgress } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/CancelOTCOrder.styles'
 import { useCancelOTCOrder } from 'app/pages/invest/hooks/useCancelOTCOrder'
 import React from 'react'
-import { OTCOrder } from 'types/otcOrder'
+import { OpenOTCOrder } from 'types/otcOrder'
 export interface CancelOTCOrderButtonProps extends ButtonProps {
-  order: OTCOrder
+  order: OpenOTCOrder
 }
 
 export const CancelOTCOrderButton = ({

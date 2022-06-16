@@ -1,10 +1,10 @@
+import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 import { Box, IconButton } from '@mui/material'
 import React, { useContext } from 'react'
+import { OpenOTCOrder } from 'types/otcOrder'
 import { OpenOrdersContext } from '../../context/OpenOrdersContextWrapper'
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
-import { OTCOrder } from 'types/otcOrder'
 export interface DropDownOTCRowProps {
-  order: OTCOrder
+  order: OpenOTCOrder
 }
 
 export const DropDownOTCRow = ({ order }: DropDownOTCRowProps) => {

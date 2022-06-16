@@ -5,8 +5,8 @@ import { TableViewRendererProps } from 'components/TableWithPagination/TableView
 import { getExpiresOrderMessage } from 'helpers/dates'
 import get from 'lodash/get'
 import React from 'react'
-import { OTCOrder } from 'types/otcOrder'
-import { needsConfirmation, sortOpenOrders, useOpenOrderState } from './helpers'
+import { OpenOTCOrder } from 'types/otcOrder'
+import { needsConfirmation, useOpenOrderState } from './helpers'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OTCOrderActionsMobile } from './OTCOrderActionsMobile'
 
@@ -14,15 +14,15 @@ export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
 }
 
-export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
-  const { columns, items } = props
+export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
+  const { columns, items: sorted } = props
   const { showEmptyState, mobileRowColor } = useOpenOrderState(props)
   const classes = useStyles()
 
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
-  const sorted = items?.sort(sortOpenOrders) ?? []
+  // const sorted = items?.sort(sortOpenOrders) ?? []
   return (
     <TableBody>
       {sorted.map((item, i) => (

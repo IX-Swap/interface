@@ -3,40 +3,81 @@ import { CancelOTCOrderButton } from 'app/pages/invest/components/Trading/Orders
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
-import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
-import { ConfirmOTCOrderButton } from './ConfirmOTCOrderButton'
+import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 
 export interface OTCOrderActionsProps {
-  item: OTCOrder
+  item: OpenOTCOrder
   type: 'Cancel' | 'Confirm'
 }
+// const showConfirm =
+//     item?.status === OTCOrderStatus.CONFIRMED && item.orderType === 'SELL'
 
 export const OTCOrderActionsMobile = ({ item, type }: OTCOrderActionsProps) => {
-  const showConfirm =
-    item?.matches?.status === OTCOrderStatus.CONFIRMED &&
-    item.orderType === 'SELL'
   const orderFinished = [
     OTCOrderStatus.COMPLETED,
     OTCOrderStatus.CANCELLED,
     OTCOrderStatus.PENDING
-  ].includes(item?.matches?.status as any)
+  ].includes(item?.status as any)
   const showCancel = !orderFinished
   const { isMiniLaptop } = useAppBreakpoints()
   if (!isMiniLaptop) {
     return null
   }
-  if (!(showCancel || showConfirm) && type === 'Cancel') {
+  if (!showCancel) {
     return (
-      <Box textAlign={'left'}>
-        {capitalizeFirstLetter(item?.matches?.status ?? '')}
-      </Box>
+      <Box textAlign={'left'}>{capitalizeFirstLetter(item?.status ?? '')}</Box>
     )
   }
-  if (showCancel && type === 'Cancel') {
+  if (showCancel) {
     return <CancelOTCOrderButton variant='text' order={item} />
-  }
-  if (showConfirm && type !== 'Cancel') {
-    return <ConfirmOTCOrderButton order={item} />
   }
   return null
 }
+
+// import { Box } from '@mui/material'
+// import { CancelOTCOrderButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/CancelOTCOrderButton'
+// import { capitalizeFirstLetter } from 'helpers/strings'
+// import React from 'react'
+// import {
+//   ColumnOTCMatch,
+//   OpenOTCOrder,
+//   OTCOrder,
+//   OTCOrderStatus
+// } from 'types/otcOrder'
+// import { ConfirmOTCOrderButton } from './ConfirmOTCOrderButton'
+// import { DropDownOTCRow } from './DropDownOTCRow'
+
+// export interface OTCOrderActionsProps {
+//   item: OpenOTCOrder
+// }
+// export interface ConfirmOrderActionsProps {
+//   item: ColumnOTCMatch
+// }
+// export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
+//   const orderFinished = [
+//     OTCOrderStatus.COMPLETED,
+//     OTCOrderStatus.CANCELLED,
+//     OTCOrderStatus.PENDING
+//   ].includes(item?.status as any)
+//   const showCancel = !orderFinished
+//   const showDropdown = Number(item?.matches?.length) > 0
+//   return (
+//     <Box display='flex' justifyContent='space-between'>
+//       {showCancel && <CancelOTCOrderButton variant='text' order={item} />}
+//       {!showCancel && (
+//         <Box textAlign={'left'}>
+//           {capitalizeFirstLetter(item?.status ?? '')}
+//         </Box>
+//       )}
+//       {showDropdown && <DropDownOTCRow order={item} />}
+//     </Box>
+//   )
+// }
+
+// export const ConfirmOTCOrderActions = ({ item }: ConfirmOrderActionsProps) => {
+//   const showConfirm =
+//     item?.status === OTCOrderStatus.CONFIRMED && item.orderType === 'SELL'
+//   return (
+//     <>{showConfirm && <ConfirmOTCOrderButton variant='text' order={item} />}</>
+//   )
+// }

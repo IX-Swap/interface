@@ -4,9 +4,9 @@ import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenA
 import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useState } from 'react'
-import { OTCOrder } from 'types/otcOrder'
+import { ColumnOTCMatch } from 'types/otcOrder'
 export interface ConfirmOTCOrderButtonProps extends ButtonProps {
-  order: OTCOrder
+  order: ColumnOTCMatch
 }
 export const ConfirmOTCOrderButton = ({
   order,
@@ -24,18 +24,17 @@ export const ConfirmOTCOrderButton = ({
     setLoadingTransaction(true)
     try {
       console.log({
-        amount: order.matches?.matchedAmount,
-        address: order.matches?.ethAddress
+        amount: order.matchedAmount,
+        address: order.ethAddress
       })
       const sendingResult = await sendToken(
-        order.matches?.matchedAmount ?? 0,
-        order.matches?.ethAddress
+        order.matchedAmount ?? 0,
+        order.ethAddress
       )
       if (sendingResult) {
         await confirmMatch({
-          orderId: order._id,
-
-          matchedOrderId: order.matches?.order ?? ''
+          orderId: order.parentOrder,
+          matchedOrderId: order.matchedOrder?._id ?? ''
         })
       }
     } catch {

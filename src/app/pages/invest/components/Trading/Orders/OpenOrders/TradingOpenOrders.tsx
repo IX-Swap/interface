@@ -16,7 +16,7 @@ import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import { OTCOrder } from 'types/otcOrder'
+import { OpenOTCOrder } from 'types/otcOrder'
 import { OpenOrdersContextWrapper } from '../../context/OpenOrdersContextWrapper'
 import { CompactOpenOTCOrder } from './CompactOpenOTCOrder'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
@@ -31,7 +31,7 @@ export const TradingOpenOrders = () => {
   return (
     <OpenOrdersContextWrapper>
       <Grid>
-        <TableView<OTCOrder>
+        <TableView<OpenOTCOrder>
           name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
           uri={trading.getMyOrdersList(account)}
           size='small'
@@ -52,10 +52,10 @@ export const TradingOpenOrders = () => {
           }
         >
           {isMiniLaptop
-            ? (props: TableViewRendererProps<OTCOrder>) => (
+            ? (props: TableViewRendererProps<OpenOTCOrder>) => (
                 <CompactOpenOTCOrder {...props} columns={compactColumns} />
               )
-            : (props: TableViewRendererProps<OTCOrder>) => (
+            : (props: TableViewRendererProps<OpenOTCOrder>) => (
                 <OpenOTCTableBody {...props} columns={columns} />
               )}
         </TableView>
