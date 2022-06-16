@@ -23,7 +23,7 @@ interface Props {
 }
 
 export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
-  const { tokenId, tokenAmount, recordDate } = values
+  const { token, tokenAmount, recordDate } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
 
@@ -67,9 +67,9 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
           <Select
             label="Payout Token"
             placeholder="Select token"
-            selectedItem={tokenId}
+            selectedItem={token}
             items={tokensOptions}
-            onSelect={(item) => onValueChange('tokenId', item)}
+            onSelect={(item) => onValueChange('token', item)}
             required
           />
           <TextInput
@@ -79,11 +79,11 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
             value={tokenAmount}
           />
         </FormGrid>
-        {recordDate && tokenAmount && tokenId && (
+        {recordDate && tokenAmount && token && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
               {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${tokenAmount} ${
-                tokenId.label
+                token.label
               } per SEC token`}
             </TYPE.description2>
           </ExtraInfoCard>

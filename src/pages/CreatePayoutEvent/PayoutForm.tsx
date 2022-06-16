@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Formik } from 'formik'
 import { Trans } from '@lingui/macro'
+// import { useHistory } from 'react-router-dom'
 
 import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
@@ -8,6 +9,7 @@ import { useCreateDraftPayout } from 'state/payout/hooks'
 import { TYPE } from 'theme'
 import { FormGrid } from 'pages/KYC/styleds'
 import { useTokensList } from 'hooks/useTokensList'
+import { useAddPopup } from 'state/application/hooks'
 
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
@@ -18,11 +20,29 @@ import { transformPayoutDraftDTO } from './utils'
 export const PayoutForm: FC = () => {
   const { secTokensOptions } = useTokensList()
   const createDraft = useCreateDraftPayout()
+  const addPopup = useAddPopup()
+  // const history = useHistory()
 
   const handleFormSubmit = async (values: any) => {
     const body = transformPayoutDraftDTO(values)
     const data = await createDraft(body)
-    console.log('data', data)
+
+    if (data?.id) {
+      // history.push('/kyc') redirect to my payouts page
+      addPopup({
+        info: {
+          success: true,
+          summary: 'Payout was successfully created',
+        },
+      })
+    } else {
+      addPopup({
+        info: {
+          success: false,
+          summary: 'Something went wrong',
+        },
+      })
+    }
   }
 
   return (
@@ -50,9 +70,9 @@ export const PayoutForm: FC = () => {
                 <Select
                   label="Sec Token"
                   placeholder="Choose SEC token"
-                  selectedItem={values.secTokenId}
+                  selectedItem={values.secToken}
                   items={secTokensOptions}
-                  onSelect={(item) => onValueChange('secTokenId', item)}
+                  onSelect={(item) => onValueChange('secToken', item)}
                   required
                 />
                 <DateInput

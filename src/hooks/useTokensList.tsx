@@ -13,7 +13,7 @@ export const useTokensList = () => {
 
   const tokensOptions = useMemo(() => {
     if (Object.values(tokens)?.length) {
-      const list = Object.values(tokens).map((token: any) => {
+      const list: any = Object.values(tokens).map((token: any) => {
         return {
           label: token.tokenInfo?.symbol || token.symbol,
           value: token.address,
@@ -26,6 +26,8 @@ export const useTokensList = () => {
           label: native.symbol,
           value: native.symbol,
           icon: <CurrencyLogo currency={native} />,
+          address: native.wrapped.address,
+          isNative: true,
         })
       }
       return list
