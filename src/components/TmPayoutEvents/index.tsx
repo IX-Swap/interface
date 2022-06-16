@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 
@@ -11,12 +11,14 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { ReactComponent as EyeIcon } from 'assets/images/eye.svg'
 import { useCurrency } from 'hooks/Tokens'
-import { useGetMyPayout } from 'state/token-manager/hooks'
+import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
+import { Pagination } from 'components/Pagination'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { TmEmptyPage } from 'components/TmEmptyPage'
 
 import { StatusCell } from './StatusCell'
-import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer } from './styleds'
+import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
-import { Pagination } from 'components/Pagination'
 
 const headerCells = [
   t`ID`,
@@ -30,34 +32,14 @@ const headerCells = [
 ]
 
 export const TmPayoutEvents = () => {
-  const getMyPayouts = useGetMyPayout()
-  const [page, handlePage] = useState(0)
+  const [filters, handleFilters] = useState<Record<string, any>>({})
 
-  // TO DO - use real data
-  const items = [
-    {
-      id: 1,
-      status: 'draft',
-      type: 'rewards',
-      secTokenId: 3,
-      payoutStartDate: new Date(),
-      payoutEndDate: new Date(),
-      recordDate: new Date(),
-      amountCalimed: 100,
-      total: 1200,
-      tokenToClaimAddress: '0xdCFaB8057d08634279f8201b55d311c2a67897D2',
-    },
-    {
-      id: 2,
-      status: 'announced',
-      type: 'rewards',
-      secTokenId: 3,
-      payoutStartDate: new Date(),
-      recordDate: new Date(),
-      total: 1200,
-      tokenToClaimAddress: '0xdCFaB8057d08634279f8201b55d311c2a67897D2',
-    },
-  ]
+  const { payoutList, isLoading } = useTokenManagerState()
+  const getMyPayouts = useGetMyPayout()
+
+  useEffect(() => {
+    getMyPayouts({ ...filters, offset: 10 })
+  }, [filters, getMyPayouts])
 
   const fetch = (params: Record<string, any>) => {
     getMyPayouts(params)
@@ -67,22 +49,41 @@ export const TmPayoutEvents = () => {
     // TO DO - redirect to edit event
   }
 
+  const onPageChange = (page: number) => {
+    fetch({ ...filters, page, offset: 10 })
+  }
+
   return (
-    <Container>
-      <MultipleFilters
-        filters={[
-          FILTERS.STATUS,
-          FILTERS.PAYOUT_TYPE,
-          FILTERS.SEC_TOKENS,
-          FILTERS.PAYOUT_PERIOD,
-          FILTERS.RECORD_DATE,
-          FILTERS.PAYOUT_TOKEN,
-        ]}
-        callback={fetch}
-      />
-      <Table body={<Body onEdit={onEdit} items={items} />} header={<Header />} />
-      <Pagination totalPages={12} page={page} onPageChange={handlePage} />
-    </Container>
+    <>
+      <LoadingIndicator isLoading={isLoading} />
+      {payoutList.items?.length ? (
+        <Container>
+          <MultipleFilters
+            filters={[
+              FILTERS.STATUS,
+              FILTERS.PAYOUT_TYPE,
+              FILTERS.SEC_TOKENS,
+              FILTERS.PAYOUT_PERIOD,
+              FILTERS.RECORD_DATE,
+              FILTERS.PAYOUT_TOKEN,
+            ]}
+            onFiltersChange={handleFilters}
+          />
+          <Table body={<Body onEdit={onEdit} items={payoutList.items} />} header={<Header />} />
+          <Pagination
+            totalPages={payoutList.totalPages}
+            page={(payoutList.page || 1) - 1}
+            onPageChange={onPageChange}
+          />
+        </Container>
+      ) : (
+        <TmEmptyPage tab="payout-events">
+          <CreateButton>
+            <Trans>Create Payout Event</Trans>
+          </CreateButton>
+        </TmEmptyPage>
+      )}
+    </>
   )
 }
 

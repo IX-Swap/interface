@@ -19,13 +19,19 @@ import { FilterDropdown } from './FilterDropdown'
 
 interface Props {
   filters: FILTERS[]
-  callback: (params: Record<string, any>) => void
+  callback?: (params: Record<string, any>) => void
   searchPlaceholder?: string
+  onFiltersChange?: (params: Record<string, any>) => void
 }
 
 let timer = null as any
 
-export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search for Wallet' }: Props) => {
+export const MultipleFilters = ({
+  filters,
+  callback,
+  searchPlaceholder = 'Search for Wallet',
+  onFiltersChange,
+}: Props) => {
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
   const tokens = useSimpleTokens()
@@ -93,7 +99,9 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
       const filtredValues = Object.keys(values).reduce((acc, key: string) => {
         const value = values[key]
         if (value) {
-          if (Array.isArray(value) && value.length) {
+          if (Array.isArray(value)) {
+            if (!value.length) return acc
+
             return {
               ...acc,
               [key]: values[key].join(','),
@@ -107,7 +115,11 @@ export const MultipleFilters = ({ filters, callback, searchPlaceholder = 'Search
         return acc
       }, {})
 
-      callback(filtredValues)
+      if (onFiltersChange) {
+        onFiltersChange(filtredValues)
+      } else if (callback) {
+        callback(filtredValues)
+      }
     }, 250)
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [values])

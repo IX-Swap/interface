@@ -10,7 +10,7 @@ export interface TokenManagerState {
 }
 
 export const initialState: TokenManagerState = {
-  payoutList: { page: 0, offset: 0, totalItems: 0, totalPages: 0, itemCount: 0, items: [], nextPage: 0, prevPage: 0 },
+  payoutList: { page: 1, offset: 10, totalItems: 0, totalPages: 0, itemCount: 0, items: [], nextPage: 2, prevPage: 0 },
   error: null,
   isLoading: false,
 }

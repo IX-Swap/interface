@@ -18,12 +18,15 @@ export const getMyPayout = async (params: Record<string, any>) => {
 
 export const useGetMyPayout = () => {
   const dispatch = useDispatch<AppDispatch>()
+  const {
+    payoutList: { page, offset },
+  } = useTokenManagerState()
 
   const callback = useCallback(
     async (params: Record<string, any>) => {
       try {
         dispatch(getMyPayoutList.pending())
-        const data = await getMyPayout(params)
+        const data = await getMyPayout({ page, offset, ...params })
         dispatch(getMyPayoutList.fulfilled(data))
         return data
       } catch (error: any) {
