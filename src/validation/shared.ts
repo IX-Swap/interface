@@ -5,6 +5,7 @@ import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
 import {
+  DocumentFieldArrayItemValue,
   PersonalProfile,
   Personnel,
   TaxResidency
@@ -132,3 +133,18 @@ export const taxResidenciesSchema = yup.object().shape<TaxResidency>({
 export const taxResidenciesArraySchema = yup
   .array<TaxResidency>()
   .of(taxResidenciesSchema.required(validationMessages.required))
+
+export const documentsSchema = yup
+  .array<DocumentFieldArrayItemValue>()
+  .of(
+    yup.object<DocumentFieldArrayItemValue>({
+      // @ts-expect-error
+      value: yup.object<DataroomFile>().test(
+        'isMoreThanZeroFilesUpload',
+        'validationMessages.required',
+        // @ts-expect-errors
+        value => Object.keys(value).length > 0
+      )
+    })
+  )
+  .required(validationMessages.required)

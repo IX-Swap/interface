@@ -37,7 +37,7 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
 
   return (
     <FieldContainer>
-      <Grid container spacing={6}>
+      <Grid container spacing={5}>
         <Grid
           item
           container
@@ -76,7 +76,7 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
                 onClick={handleAppend}
                 startIcon={<Icon name='plus' />}
               >
-                Company Authorized Personnel
+                Add Company Authorized Personnel
               </Button>
             </Grid>
           ) : null}

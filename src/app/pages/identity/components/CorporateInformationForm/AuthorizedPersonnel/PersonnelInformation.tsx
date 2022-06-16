@@ -23,9 +23,9 @@ export const PersonnelInformation = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={5}>
       <Grid item xs={12}>
-        <Grid container spacing={6}>
+        <Grid container spacing={5}>
           <Grid item xs={12} md={6}>
             <TypedField
               key={fieldId}
@@ -35,6 +35,8 @@ export const PersonnelInformation = ({
               variant='outlined'
               name={[rootName, index, 'fullName']}
               label='Full Name'
+              placeholder='Full Name'
+              hideIcon
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -46,6 +48,8 @@ export const PersonnelInformation = ({
               variant='outlined'
               name={[rootName, index, 'designation']}
               label='Designation'
+              placeholder='Add Designation'
+              hideIcon
             />
           </Grid>
         </Grid>
@@ -61,6 +65,8 @@ export const PersonnelInformation = ({
               variant='outlined'
               name={[rootName, index, 'email']}
               label='Email Address'
+              placeholder='Email Address'
+              hideIcon
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -72,7 +78,6 @@ export const PersonnelInformation = ({
               control={control}
               name={[rootName, index, 'contactNumber']}
               label='Contact Number'
-              customRenderer
               fullWidth
             />
           </Grid>

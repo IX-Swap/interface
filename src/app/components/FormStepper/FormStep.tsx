@@ -99,6 +99,11 @@ export const FormStep = (props: FormStepProps) => {
     return undefined
   }
 
+  const nextCallback = () => {
+    setCompleted?.()
+    setActiveStep(activeStep + 1)
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
@@ -142,7 +147,7 @@ export const FormStep = (props: FormStepProps) => {
               step={index}
               transformData={step.getRequestPayload}
               mutation={saveMutation}
-              successCallback={() => setActiveStep(activeStep + 1)}
+              successCallback={nextCallback}
               variant='contained'
               color='primary'
             >

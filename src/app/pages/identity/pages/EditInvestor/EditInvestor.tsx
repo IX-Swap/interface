@@ -21,7 +21,7 @@ const EditInvestorForm = ({
   return (
     <Grid container style={{ display: 'table' }}>
       <Grid item xs={12}>
-        <PageHeader title={data.companyLegalName} />
+        <PageHeader title='Edit Corporate Investor Identity' />
       </Grid>
       <RootContainer>
         <Grid item xs={12}>
