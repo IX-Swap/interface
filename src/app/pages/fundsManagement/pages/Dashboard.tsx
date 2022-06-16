@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { DSOFilters } from 'app/pages/issuance/components/DSOFilters/DSOFilters'
 import { DSOCards } from 'app/pages/issuance/components/DSOCards'
 import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement/AssetsUnderManagement'
@@ -32,67 +32,72 @@ export const Dashboard = () => {
       <Grid item xs={12}>
         <PageHeader title='InvestaX Digital Fund VCC' />
       </Grid>
-      <RootContainer>
-        <Box pl={3}>
-          <Grid item xs={12}>
-            <VSpacer size={'medium'} />
-            <DSOFilters />
-            <VSpacer size={'medium'} />
+
+      <Grid item xs={12} pl={3}>
+        <RootContainer>
+          <VSpacer size={'medium'} />
+          <DSOFilters />
+          <VSpacer size={'medium'} />
+        </RootContainer>
+      </Grid>
+
+      {hasSubfunds && !isSubFundStatsLoading && (
+        <>
+          <Grid item container pl={3}>
+            <RootContainer>
+              <DSOCards />
+            </RootContainer>
           </Grid>
 
-          {hasSubfunds && !isSubFundStatsLoading && (
-            <>
-              <Grid item container>
-                <DSOCards />
-              </Grid>
-
-              <Grid item container>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
-                    {isStatusClosed ? (
-                      <AssetsUnderManagement
-                        isLoading={isSubFundStatsLoading}
-                        assets={subFundStatsData?.assetsUnderManagement}
-                      />
-                    ) : (
-                      <InvestmentsOverview
-                        isLoading={isSubFundStatsLoading}
-                        investments={subFundStatsData?.assetsUnderManagement}
-                      />
-                    )}
-                  </Grid>
-
-                  <Grid item xs={12} md={6}>
-                    <TopInvestorsTable
+          <Grid item container pl={3}>
+            <RootContainer>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6}>
+                  {isStatusClosed ? (
+                    <AssetsUnderManagement
                       isLoading={isSubFundStatsLoading}
-                      investors={subFundStatsData?.topInvestors}
-                      title={
-                        isStatusClosed
-                          ? 'Top Investors From Closed'
-                          : 'Top Investors Open Deals'
-                      }
+                      assets={subFundStatsData?.assetsUnderManagement}
                     />
-                  </Grid>
+                  ) : (
+                    <InvestmentsOverview
+                      isLoading={isSubFundStatsLoading}
+                      investments={subFundStatsData?.assetsUnderManagement}
+                    />
+                  )}
                 </Grid>
-              </Grid>
 
-              {!isStatusClosed && (
-                <Grid item xs={12}>
-                  <InvestorsChart
-                    investmentStats={subFundInvestmentStatsData}
-                    isLoading={isSubFundInvestmentStatsLoading}
+                <Grid item xs={12} md={6}>
+                  <TopInvestorsTable
+                    isLoading={isSubFundStatsLoading}
+                    investors={subFundStatsData?.topInvestors}
+                    title={
+                      isStatusClosed
+                        ? 'Top Investors From Closed'
+                        : 'Top Investors Open Deals'
+                    }
                   />
                 </Grid>
-              )}
-            </>
-          )}
+              </Grid>
+            </RootContainer>
+          </Grid>
 
-          {isSubFundStatsLoading && <LoadingIndicator />}
-          {!hasSubfunds && !isSubFundStatsLoading && (
-            <Typography variant='subtitle1'>You have no subfunds</Typography>
+          {!isStatusClosed && (
+            <Grid item xs={12} pl={3}>
+              <RootContainer>
+                <InvestorsChart
+                  investmentStats={subFundInvestmentStatsData}
+                  isLoading={isSubFundInvestmentStatsLoading}
+                />
+              </RootContainer>
+            </Grid>
           )}
-        </Box>
-      </RootContainer>
+        </>
+      )}
+
+      {isSubFundStatsLoading && <LoadingIndicator />}
+      {!hasSubfunds && !isSubFundStatsLoading && (
+        <Typography variant='subtitle1'>You have no subfunds</Typography>
+      )}
     </Grid>
   )
 }
