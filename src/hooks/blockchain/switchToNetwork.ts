@@ -22,14 +22,12 @@ export async function switchToNetwork({
     ;({ chainId } = await library.getNetwork())
   }
   const formattedChainId = hexStripZeros(BigNumber.from(chainId).toHexString())
-  console.log('switch to network', { formattedChainId })
   try {
     await library?.provider.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: formattedChainId }]
     })
   } catch (error) {
-    console.log({ error, chainId })
     // 4902 is the error code for attempting to switch to an unrecognized chainId
     const isUnrecognized =
       (error as any)?.code === 4902 ||

@@ -6,6 +6,9 @@ export const textStaging = {
   ETH_ADDRESS: '0x5455D6D8ae4263d69b29d1DeD8eCD361b6498446',
   ETH_ADDRESS_SHORT: '0x54...8446',
   ETH_NET_NAME: 'Ethereum Testnet',
+  NFT_DSO_NAME: 'AQANFTTEST',
+  NFT_CONTRACT_ADDRESS: '0xCD21c24DFDa445BAE7A25e6769A1A42c5C19a510',
+  dsoForCommitment: 'Cucumber',
 
   requests: {
     IXPS_SGD_PAIR: 'app/otc-market/market/61a71463ad10390e378804e3',
@@ -39,8 +42,6 @@ export const textStaging = {
   docs: {
     pathToFile: '__tests__/lib/documents/test-img.jpg',
     pdfFilePath: '__tests__/lib/documents/pdfTest.pdf',
-    docBenefitsAddress: '__tests__/lib/documents/docBenefitsAddress.docx',
-    docBenefitsIdentify: '__tests__/lib/documents/docBenefitsIdentify.docx',
     docBenefitsAddressName: 'pdfTest.pdf',
     docBenefitsIdentifyName: 'pdfTest.pdf',
     uploaded: ['625408bbdf302d0d8cb5b402', '625408b6df302d0d8cb5b3ff', '625408b2df302d0d8cb5b3fc']

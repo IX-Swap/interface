@@ -6,6 +6,10 @@ export const textDev = {
   ETH_ADDRESS: '0x78140B507Ca3CCA6A2174d8eb5A642F36EBc4051',
   ETH_NET_NAME: 'Ethereum TestNet',
   ETH_ADDRESS_SHORT: '0x78...4051',
+  NFT_DSO_NAME: 'NFTAQATEST',
+  NFT_CONTRACT_ADDRESS: '0x2887d4bD236D7C3825Bab5C29AFa4E1417b26647',
+  dsoForCommitment: 'AQAcommitTEST',
+
   requests: {
     IXPS_SGD_PAIR: 'app/otc-market/market/61a71463ad10390e378804e3',
     USERS_LIST: 'auth/users/list',
@@ -39,8 +43,6 @@ export const textDev = {
   docs: {
     pathToFile: '__tests__/lib/documents/test-img.jpg',
     pdfFilePath: '__tests__/lib/documents/pdfTest.pdf',
-    docBenefitsAddress: '__tests__/lib/documents/docBenefitsAddress.docx',
-    docBenefitsIdentify: '__tests__/lib/documents/docBenefitsIdentify.docx',
     docBenefitsAddressName: 'pdfTest.pdf',
     docBenefitsIdentifyName: 'pdfTest.pdf',
     uploaded: ['625fcb4c6589dc0d889a8517', '625fcb4eb364cd0d8c9118c4', '625fcb4f6589dc0d889a851a']

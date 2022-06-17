@@ -17,9 +17,10 @@ const config: PlaywrightTestConfig = {
   updateSnapshots: 'missing',
 
   /* Retry on CI only */
-  retries: process.env.CI !== undefined ? 2 : 0,
-  /* The maximum number of test failures. 
-  After reaching this number, testing will stop and exit with an error. */
+
+  retries: process.env.CI !== undefined ? 1 : 0,
+
+  /* The maximum number of test failures. After reaching this number, testing will stop and exit with an error. */
 
   reporter: [['html', { outputFolder: 'reports/html' }], ['list']],
   outputDir: 'reports',
