@@ -3,10 +3,24 @@ import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamask
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getRoundedPercentage } from 'helpers/numbers'
-import { OpenOTCOrder } from 'types/otcOrder'
+import { ColumnOTCMatch, OpenOTCOrder, OTCMatch } from 'types/otcOrder'
 
 export const needsConfirmation = (item: OpenOTCOrder) => {
   return item.orderType === 'SELL'
+}
+
+export const getColumnMatchedOrder = (
+  row: OpenOTCOrder,
+  matched: OTCMatch
+): ColumnOTCMatch => {
+  return {
+    ...matched,
+    pair: row.pair,
+    createdAt: row.createdAt,
+    orderType: row.orderType,
+    parentOrder: row._id,
+    parentAmount: row.amount
+  }
 }
 
 export const useOpenOrderState = (

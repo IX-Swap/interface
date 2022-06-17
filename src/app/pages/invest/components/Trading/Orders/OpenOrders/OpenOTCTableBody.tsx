@@ -7,25 +7,15 @@ import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrappe
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getExpiresOrderMessage } from 'helpers/dates'
 import React, { useContext } from 'react'
-import { ColumnOTCMatch, OpenOTCOrder, OTCMatch } from 'types/otcOrder'
+import { OpenOTCOrder, OTCMatch } from 'types/otcOrder'
 import { OpenOrdersContext } from '../../context/OpenOrdersContextWrapper'
 import { nestedcolumns } from './columns'
-import { needsConfirmation, useOpenOrderState } from './helpers'
+import {
+  getColumnMatchedOrder,
+  needsConfirmation,
+  useOpenOrderState
+} from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import { ConfirmOTCOrderActions } from './OTCOrderActions'
-
-const getColumnMatchedOrder = (
-  row: OpenOTCOrder,
-  matched: OTCMatch
-): ColumnOTCMatch => {
-  return {
-    ...matched,
-    pair: row.pair,
-    createdAt: row.createdAt,
-    orderType: row.orderType,
-    parentOrder: row._id,
-    parentAmount: row.amount
-  }
-}
 
 export const OpenOTCTableBody = (
   props: TableViewRendererProps<OpenOTCOrder>
@@ -71,60 +61,62 @@ export const OpenOTCTableBody = (
   )
 
   return (
-    <TableBody>
-      {sorted.map((row, i) => (
-        <>
-          <TableRow
-            key={row._id}
-            style={{
-              backgroundColor: rowColor(row),
-              border: 'transparent',
-              borderBottom:
-                needsConfirmation(row) || i === sorted.length - 1
-                  ? 'initial'
-                  : `12px solid ${theme.palette.background.paper}`
-            }}
-          >
-            {columns.map(column => (
-              <TableCellWrapper
-                bordered={true}
-                key={column.key}
-                column={column}
-                row={row}
-              />
-            ))}
-
-            {hasActions && (
-              <ActionTableCell
-                row={row}
-                cacheQueryKey={cacheQueryKey}
-                actions={actions}
-              />
-            )}
-          </TableRow>
-          {context?.isIndexOpen(row._id) === true &&
-            row?.matches &&
-            row?.matches?.length > 0 && <>{renderMatches(row)}</>}
-          {needsConfirmation(row) && (
+    <>
+      <TableBody>
+        {sorted.map((row, i) => (
+          <>
             <TableRow
-              key={`${row._id}-timeout`}
-              className={classes.infoRow}
+              key={row._id}
               style={{
                 backgroundColor: rowColor(row),
-                borderBottom: `12px solid ${theme.palette.background.paper}`
+                border: 'transparent',
+                borderBottom:
+                  needsConfirmation(row) || i === sorted.length - 1
+                    ? 'initial'
+                    : `12px solid ${theme.palette.background.paper}`
               }}
             >
-              <TableCell
-                align='right'
-                colSpan={columnCount}
-                className={classes.infoCell}
-              >
-                {getExpiresOrderMessage(new Date(row.createdAt))}
-              </TableCell>
+              {columns.map(column => (
+                <TableCellWrapper
+                  bordered={true}
+                  key={column.key}
+                  column={column}
+                  row={row}
+                />
+              ))}
+
+              {hasActions && (
+                <ActionTableCell
+                  row={row}
+                  cacheQueryKey={cacheQueryKey}
+                  actions={actions}
+                />
+              )}
             </TableRow>
-          )}
-        </>
-      ))}
-    </TableBody>
+            {context?.isIndexOpen(row._id) === true &&
+              row?.matches &&
+              row?.matches?.length > 0 && <>{renderMatches(row)}</>}
+            {needsConfirmation(row) && (
+              <TableRow
+                key={`${row._id}-timeout`}
+                className={classes.infoRow}
+                style={{
+                  backgroundColor: rowColor(row),
+                  borderBottom: `12px solid ${theme.palette.background.paper}`
+                }}
+              >
+                <TableCell
+                  align='right'
+                  colSpan={columnCount}
+                  className={classes.infoCell}
+                >
+                  {getExpiresOrderMessage(new Date(row.createdAt))}
+                </TableCell>
+              </TableRow>
+            )}
+          </>
+        ))}
+      </TableBody>
+    </>
   )
 }
