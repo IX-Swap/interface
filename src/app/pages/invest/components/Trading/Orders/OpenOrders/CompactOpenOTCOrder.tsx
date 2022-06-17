@@ -9,6 +9,7 @@ import { OpenOTCOrder } from 'types/otcOrder'
 import { needsConfirmation, useOpenOrderState } from './helpers'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OTCOrderActionsMobile } from './OTCOrderActionsMobile'
+import { ToggleDetailsButton } from './ToggleDetailsButton'
 
 export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
@@ -22,7 +23,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
-  // const sorted = items?.sort(sortOpenOrders) ?? []
+
   return (
     <TableBody>
       {sorted.map((item, i) => (
@@ -68,24 +69,27 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
                 )
               )}
               {needsConfirmation(item) && (
-                <Grid
-                  item
-                  xs={12}
-                  key={`${item._id}-timeout`}
-                  style={{
-                    backgroundColor: mobileRowColor(item),
-                    textAlign: 'center'
-                  }}
-                >
-                  <Box className={classes.infoCell}>
-                    <Box className={classes.separator} />
-                    {getExpiresOrderMessage(new Date(item.createdAt))}
-                  </Box>
-                </Grid>
+                <>
+                  <Grid
+                    item
+                    xs={12}
+                    key={`${item._id}-timeout`}
+                    style={{
+                      backgroundColor: mobileRowColor(item),
+                      textAlign: 'center'
+                    }}
+                  >
+                    <Box className={classes.infoCell}>
+                      <Box className={classes.separator} />
+                      {getExpiresOrderMessage(new Date(item.createdAt))}
+                    </Box>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <ToggleDetailsButton item={item} />
+                  </Grid>
+                </>
               )}
-              <Grid item xs={12}>
-                <OTCOrderActionsMobile item={item} type='Confirm' />
-              </Grid>
             </Grid>
           </TableCell>
         </TableRow>

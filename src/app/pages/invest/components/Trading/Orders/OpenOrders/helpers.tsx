@@ -3,10 +3,10 @@ import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamask
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getRoundedPercentage } from 'helpers/numbers'
-import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
+import { OpenOTCOrder } from 'types/otcOrder'
 
 export const needsConfirmation = (item: OpenOTCOrder) => {
-  return item.status === OTCOrderStatus.CONFIRMED && item.orderType === 'SELL'
+  return item.orderType === 'SELL'
 }
 
 export const useOpenOrderState = (

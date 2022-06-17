@@ -19,6 +19,7 @@ import { useParams } from 'react-router-dom'
 import { OpenOTCOrder } from 'types/otcOrder'
 import { OpenOrdersContextWrapper } from '../../context/OpenOrdersContextWrapper'
 import { CompactOpenOTCOrder } from './CompactOpenOTCOrder'
+import { MobileNestedOrders } from './MobileNestedOrders'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
 
@@ -59,6 +60,7 @@ export const TradingOpenOrders = () => {
                 <OpenOTCTableBody {...props} columns={columns} />
               )}
         </TableView>
+        <MobileNestedOrders />
       </Grid>
     </OpenOrdersContextWrapper>
   )

@@ -11,11 +11,7 @@ export const DropDownOTCRow = ({ order }: DropDownOTCRowProps) => {
   const context = useContext(OpenOrdersContext)
   const isOpen = context?.isIndexOpen?.(order._id)
   const handleClick = () => {
-    if (isOpen === true) {
-      context?.closeRow?.(order._id)
-    } else {
-      context?.openRow?.(order._id)
-    }
+    context?.toggleRow(order._id)
   }
 
   return (
