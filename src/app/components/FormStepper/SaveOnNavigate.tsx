@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Prompt, useHistory } from 'react-router-dom'
-import { Action, Location } from 'history'
+import { Location } from 'history'
 import { MutationResultPair, useMutation } from 'react-query'
 
 export interface SaveOnNavigateProps {
@@ -17,30 +17,21 @@ export const SaveOnNavigate = ({
   const values = watch()
   const [save] = mutation
   const history = useHistory()
-  const [nextLocation, setNextLocation] = useState<
-    Location<unknown> | undefined
-  >(undefined)
 
   const handleSave = async () => {
     const payload = transformData(values)
-    return await save(payload, {
-      onSuccess: () => {
-        if (nextLocation !== undefined) {
-          history.push(nextLocation)
-        }
-      }
-    })
+    return await save(payload, {})
   }
 
   const [saveForm] = useMutation(handleSave)
 
-  const saveOnNavigate = (location: Location<unknown>, action: Action) => {
-    setNextLocation(location)
-    void saveForm()
-    if (action === 'REPLACE') {
-      return false
+  const saveOnNavigate = (location: Location<unknown>) => {
+    if (history.location.search !== location.search) {
+      void saveForm()
+      return true
     }
-    return true
+
+    return false
   }
 
   return <Prompt when={formState.isDirty} message={saveOnNavigate} />
