@@ -10,6 +10,7 @@ import { VSpacer } from 'components/VSpacer'
 import { NextButton } from 'app/components/FormStepper/NextButton'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
+import { isSuccessRequest } from 'helpers/strings'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -70,7 +71,7 @@ export const FormStep = (props: FormStepProps) => {
     const payload = step.getRequestPayload(values)
 
     const onSubmitSuccess = (data: any) => {
-      if (data?.message === 'OK' && !isLastStep) {
+      if (isSuccessRequest(data.status) && !isLastStep) {
         setCompleted?.()
         setActiveStep(activeStep + 1)
       }

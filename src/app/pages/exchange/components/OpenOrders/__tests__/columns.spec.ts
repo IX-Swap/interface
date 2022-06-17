@@ -1,8 +1,6 @@
 import { render } from 'test-utils'
-import {
-  renderTicker,
-  renderMoney
-} from 'app/pages/exchange/components/OpenOrders/columns'
+import { renderTicker } from 'helpers/tables'
+import { renderMoney } from 'helpers/numbers'
 
 describe('columns', () => {
   afterEach(async () => {

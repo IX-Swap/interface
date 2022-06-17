@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockchainAddress should match snapshot 1`] = `
+<div>
+  <div
+    class="makeStyles-addressBlock-2 MuiBox-root css-0"
+  >
+    <img
+      alt="Icon"
+      class="makeStyles-chainLogo-3"
+      src="image-mock"
+    />
+    <h6
+      class="MuiTypography-root MuiTypography-subtitle2 css-s0c2fe-MuiTypography-root"
+    >
+      wallet : 
+      0x67ed...8cbc
+    </h6>
+  </div>
+</div>
+`;

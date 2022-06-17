@@ -6,6 +6,7 @@ import { injected } from 'config/blockchain/connectors'
 import { NetworkContextName } from 'config/blockchain/constants'
 import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { Web3ProviderAx } from 'types/blockchain'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> {
   const context = useWeb3ReactCore<Web3Provider>()
@@ -85,4 +86,11 @@ export function useInactiveListener(suppress = false) {
     }
     return undefined
   }, [active, error, suppress, activate])
+}
+
+export const isMetamaskOrWalletConnect = (library?: Web3ProviderAx) => {
+  return (
+    library?.provider?.isMetaMask === true ||
+    library?.provider?.isWalletConnect === true
+  )
 }

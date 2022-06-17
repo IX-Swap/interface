@@ -64,7 +64,11 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
     if (
       isOpen &&
       ((active && !activePrevious) ||
-        (connector != null && connector !== connectorPrevious && error == null))
+        (connector != null &&
+          connector !== undefined &&
+          connector !== connectorPrevious &&
+          error !== null &&
+          error !== undefined))
     ) {
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
@@ -87,7 +91,6 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
         return true
       })
       // log selected wallet
-
       setPendingWallet(connector) // set wallet for pending view
       setWalletView(WALLET_VIEWS.PENDING)
 
@@ -98,7 +101,7 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
       ) {
         connector.walletConnectProvider = undefined
       }
-      if (connector != null) {
+      if (connector != null && connector !== undefined) {
         try {
           await activate(connector, undefined, true)
         } catch (error) {
@@ -194,7 +197,7 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
   }
 
   function getModalContent() {
-    if ((error ?? false) !== false) {
+    if (error !== null && error !== undefined) {
       return <ErrorSection error={error} toggleWalletModal={toggleModal} />
     }
     return (

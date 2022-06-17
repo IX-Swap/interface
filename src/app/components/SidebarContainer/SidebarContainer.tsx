@@ -9,6 +9,7 @@ import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import { ReactComponent as OTCMarketIcon } from 'assets/icons/navigation/otc-market.svg'
+import { ReactComponent as TradingIcon } from 'assets/icons/navigation/trading.svg'
 import { HomeOutlined as HomeIcon } from '@mui/icons-material'
 import { SwipeableDrawer } from '@mui/material'
 import { useAppActions, useAppState } from 'app/hooks/useAppState'
@@ -42,6 +43,11 @@ export const SidebarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
+    },
+    {
+      label: 'Trading',
+      link: InvestRoute.trading,
+      icon: TradingIcon
     },
     {
       label: 'Exchange',
