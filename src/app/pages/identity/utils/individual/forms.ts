@@ -53,6 +53,8 @@ export const getTaxDeclarationFormValues = (
   const result: Partial<IndividualTaxDeclarationFormValues> = {}
   const isSingPass = data?.uinfin !== undefined
 
+  const country = titleCase(data?.address?.country)
+
   if (
     isSingPass ||
     (taxResidencies !== undefined && taxResidencies.length > 0)
@@ -61,7 +63,7 @@ export const getTaxDeclarationFormValues = (
       ? [
           {
             residentOfSingapore: true,
-            countryOfResidence: data?.address.country,
+            countryOfResidence: country,
             taxIdentificationNumber: data?.uinfin,
             taxIdAvailable: true
           }
