@@ -45,7 +45,7 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     getRequestPayload: getDirectorsAndBeneficialOwnerRequestPayload,
     validationSchema: directorsAndBeneficialOwnersSchema,
     component: () => <DirectorsAndBeneficialOwnerDetails />,
-    formId: 'ownder-details'
+    formId: 'owner-details'
   },
   {
     label: 'Tax Declaration',
