@@ -22,18 +22,19 @@ const getStatusColor = (value: string) => {
     case 'announced': return '#FF6D41'
     case 'scheduled': return '#F2F99D'
     case 'delayed': return '#ED0376'
+
+    default:
+      return '#FFFFFF'
   }
 }
 
 const getStatusTextColor = (value: string) => {
   switch (value) {
-    case 'started': 
-    case 'announced': 
-    case 'delayed': 
-      return '#FFFFFF'
-
     case 'scheduled':
       return '#1A123A'
+      
+    default:
+      return '#FFFFFF'
   }
 }
 
@@ -79,8 +80,8 @@ export const TokenManagerTokens = ({ items }: Props) => {
                     </TokenPayoutEventType> 
                     -
                     <TokenPayoutEventStatus
-                      color={getStatusColor(event.status)!}
-                      text={getStatusTextColor(event.status)!}
+                      color={getStatusColor(event.status)}
+                      text={getStatusTextColor(event.status)}
                     >
                       {capitalize(event.status)}
                     </TokenPayoutEventStatus>
