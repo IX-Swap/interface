@@ -96,7 +96,9 @@ export const Dashboard = () => {
 
       {isSubFundStatsLoading && <LoadingIndicator />}
       {!hasSubfunds && !isSubFundStatsLoading && (
-        <Typography variant='subtitle1'>You have no subfunds</Typography>
+        <RootContainer>
+          <Typography variant='subtitle1'>You have no subfunds</Typography>
+        </RootContainer>
       )}
     </Grid>
   )

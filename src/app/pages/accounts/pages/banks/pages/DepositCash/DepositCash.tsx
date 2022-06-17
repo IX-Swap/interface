@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import { RecentDeposits } from 'app/pages/accounts/pages/banks/pages/DepositCash/RecentDeposits'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CashDepositButton } from 'app/pages/accounts/components/CashDepositButton/CashDepositButton'
@@ -29,32 +29,37 @@ export const DepositCash: React.FC = () => {
       <Grid item>
         <PageHeader title='Cash Deposits' />
       </Grid>
-      <RootContainer>
-        <Box className={styles.wrapper}>
-          {data === undefined ? (
-            <Grid item>
-              <AutoAssignVirtualAccountForm />
-            </Grid>
-          ) : (
-            <>
-              <Grid item>
-                <CashDepositVirtualAccountDetails
-                  selectedAccount={selectedAccount}
-                  handleChange={handleChange}
-                  defaultValue={data.accountNumber}
-                />
-              </Grid>
-              <Grid item>
-                <CashDepositButton virtualAccountId={selectedAccount} />
-              </Grid>
-            </>
-          )}
-          <Grid item>
-            <VSpacer size='medium' />
-            <RecentDeposits virtualAccountNumber={selectedAccount} />
+
+      {data === undefined ? (
+        <Grid item className={styles.wrapper}>
+          <RootContainer>
+            <AutoAssignVirtualAccountForm />
+          </RootContainer>
+        </Grid>
+      ) : (
+        <>
+          <Grid item className={styles.wrapper}>
+            <RootContainer>
+              <CashDepositVirtualAccountDetails
+                selectedAccount={selectedAccount}
+                handleChange={handleChange}
+                defaultValue={data.accountNumber}
+              />
+            </RootContainer>
           </Grid>
-        </Box>
-      </RootContainer>
+          <Grid item className={styles.wrapper}>
+            <RootContainer>
+              <CashDepositButton virtualAccountId={selectedAccount} />
+            </RootContainer>
+          </Grid>
+        </>
+      )}
+      <Grid item className={styles.wrapper}>
+        <RootContainer>
+          <VSpacer size='medium' />
+          <RecentDeposits virtualAccountNumber={selectedAccount} />
+        </RootContainer>
+      </Grid>
     </Grid>
   )
 }

@@ -58,8 +58,9 @@ export const AuthorizerView = <T,>(
       <Grid item>
         <PageHeader title={title} />
       </Grid>
-      <RootContainer className={privateClassNames()} style={{ padding: 40 }}>
-        <Grid item className={styles.wrapper}>
+
+      <Grid item className={styles.wrapper}>
+        <RootContainer className={privateClassNames()} style={{ padding: 40 }}>
           <Grid container spacing={6} wrap='wrap-reverse'>
             {hasIdentity && (
               <Grid item xs={12} md={3}>
@@ -151,8 +152,8 @@ export const AuthorizerView = <T,>(
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </RootContainer>
+        </RootContainer>
+      </Grid>
     </Grid>
   )
 }

@@ -1,4 +1,4 @@
-import { Grid, Typography, Box } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { HoldingsTables } from 'app/pages/accounts/components/HoldingsTables/HoldingsTables'
 import { VSpacer } from 'components/VSpacer'
@@ -19,19 +19,20 @@ export const MyHoldings = () => {
       <Grid item>
         <PageHeader title='My Holdings' showBreadcrumbs />
       </Grid>
-      <RootContainer>
-        <Box pl={2}>
-          <Grid item>
-            <Typography variant='h3'>{headerContent.title}</Typography>
-            <VSpacer size='small' />
-            <Typography variant='body1'>{headerContent.subtitle}</Typography>
-          </Grid>
-          <Grid item>
-            <VSpacer size='small' />
-            <HoldingsTables setHeaderContent={setHeaderContent} />
-          </Grid>
-        </Box>
-      </RootContainer>
+
+      <Grid item>
+        <RootContainer>
+          <Typography variant='h3'>{headerContent.title}</Typography>
+          <VSpacer size='small' />
+          <Typography variant='body1'>{headerContent.subtitle}</Typography>
+        </RootContainer>
+      </Grid>
+      <Grid item>
+        <RootContainer>
+          <VSpacer size='small' />
+          <HoldingsTables setHeaderContent={setHeaderContent} />
+        </RootContainer>
+      </Grid>
     </Grid>
   )
 }
