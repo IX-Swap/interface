@@ -16,7 +16,13 @@ export const createDraftPayout = async (newPayoutDraft: any) => {
   const formData = new FormData()
 
   for (const key in newPayoutDraft) {
-    formData.append(key, newPayoutDraft[key])
+    if (key === 'files') {
+      newPayoutDraft[key].forEach((item: any) => {
+        formData.append(`${key}`, item)
+      })
+    } else {
+      formData.append(key, newPayoutDraft[key])
+    }
   }
 
   const result = await apiService.post(payout.createDraft, formData)

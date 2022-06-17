@@ -10,10 +10,12 @@ import { Textarea } from 'components/Input'
 import { Label } from 'components/Label'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { momentFormatDate } from 'pages/PayoutItem/utils'
+import { useTokensList } from 'hooks/useTokensList'
+import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
+import { useShowError } from 'state/application/hooks'
 
 import { PayoutType } from './PayoutType'
 import { FormCard } from './styleds'
-import { mockSecTokens } from './mock'
 
 interface Props {
   values: any
@@ -21,7 +23,28 @@ interface Props {
 }
 
 export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
-  const { tokenId, tokenAmount, recordDate } = values
+  const { token, tokenAmount, recordDate } = values
+  const { tokensOptions } = useTokensList()
+  const showError = useShowError()
+
+  const handleDropImage = (acceptedFile: any) => {
+    const file = acceptedFile
+    if (file?.size > MAX_FILE_UPLOAD_SIZE) {
+      showError(MAX_FILE_UPLOAD_SIZE_ERROR)
+    } else {
+      const arrayOfFiles = [...values.files]
+      arrayOfFiles.push(file)
+
+      onValueChange('files', arrayOfFiles)
+    }
+  }
+
+  const handleImageDelete = (index: number) => {
+    const arrayOfFiles = [...values.files]
+    arrayOfFiles.splice(index, 1)
+
+    onValueChange('files', arrayOfFiles)
+  }
 
   const isButtonDisabled = useMemo(() => {
     for (const key in values) {
@@ -44,9 +67,9 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
           <Select
             label="Payout Token"
             placeholder="Select token"
-            selectedItem={tokenId}
-            items={mockSecTokens}
-            onSelect={(item) => onValueChange('tokenId', item)}
+            selectedItem={token}
+            items={tokensOptions}
+            onSelect={(item) => onValueChange('token', item)}
             required
           />
           <TextInput
@@ -56,11 +79,11 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
             value={tokenAmount}
           />
         </FormGrid>
-        {recordDate && tokenAmount && tokenId && (
+        {recordDate && tokenAmount && token && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
               {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${tokenAmount} ${
-                tokenId.label
+                token.label
               } per SEC token`}
             </TYPE.description2>
           </ExtraInfoCard>
@@ -109,7 +132,13 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
         </Box>
       </FormGrid>
 
-      <Uploader title="Payout Attachments" files={[]} onDrop={() => null} handleDeleteClick={() => null} required />
+      <Uploader
+        title="Payout Attachments"
+        files={values.files}
+        onDrop={handleDropImage}
+        handleDeleteClick={handleImageDelete}
+        required
+      />
 
       <Flex justifyContent="center" marginTop="32px">
         <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={isButtonDisabled}>
