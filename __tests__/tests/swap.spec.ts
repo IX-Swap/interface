@@ -1,8 +1,8 @@
-import { test as base } from '../lib/fixture'
-import { auth } from '../lib/selectors/metamask'
+import { test as base } from '../fixtures/fixture'
+import { auth } from '../page-objects/selectors/metamask'
 
 import { expect } from '@playwright/test'
-import { ixswap, metamask } from '../lib/helpers/credentials'
+import { ixswap, metamask } from '../testData/credentials'
 import {
   click,
   navigate,
@@ -13,13 +13,13 @@ import {
   screenshotMatching,
   typeText,
   shouldExist,
-} from '../lib/helpers/helpers'
-import { amounts, notifications, urls } from '../lib/helpers/text-helpers'
+} from '../helpers/helpers'
+import { amounts, notifications, urls } from '../helpers/text-helpers'
 
-import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
-import { SwapIX } from '../lib/page-objects/ixswap-objects'
-import { Metamask } from '../lib/page-objects/metamask-objects'
-import { swap, pool } from '../lib/selectors/ixswap'
+import { getBalanceOtherCurrency, getEthBalance } from '../helpers/web3-helpers'
+import { SwapIX } from '../page-objects/ixswap-objects'
+import { Metamask } from '../page-objects/metamask-objects'
+import { swap, pool } from '../page-objects/selectors/ixswap'
 
 const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
   metaMask: async ({ page }, use) => {
