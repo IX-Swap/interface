@@ -3,22 +3,38 @@ import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamask
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getRoundedPercentage } from 'helpers/numbers'
-import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
+import { ColumnOTCMatch, OpenOTCOrder, OTCMatch } from 'types/otcOrder'
 
-export const needsConfirmation = (item: OTCOrder) => {
-  return (
-    item.matches?.status === OTCOrderStatus.CONFIRMED &&
-    item.orderType === 'SELL'
-  )
+export const needsConfirmation = (item: OpenOTCOrder) => {
+  return item.orderType === 'SELL'
 }
 
-export const useOpenOrderState = (props: TableViewRendererProps<OTCOrder>) => {
+export const getColumnMatchedOrder = (
+  row: OpenOTCOrder,
+  matched: OTCMatch
+): ColumnOTCMatch => {
+  return {
+    ...matched,
+    pair: row.pair,
+    createdAt: row.createdAt,
+    orderType: row.orderType,
+    parentOrder: row._id,
+    parentAmount: row.amount
+  }
+}
+
+export const useOpenOrderState = (
+  props: TableViewRendererProps<OpenOTCOrder>
+) => {
   const { columns, items, hasActions, loading } = props
   const theme = useTheme()
-  const rowColor = (item: OTCOrder) => {
+  const mobileRowColor = (item: OpenOTCOrder) => {
     if (!needsConfirmation(item)) {
       return 'initial'
     }
+    return theme.palette.mode === 'light' ? '#F6F4FD' : '#494166'
+  }
+  const rowColor = (item: OpenOTCOrder) => {
     return theme.palette.mode === 'light' ? '#F6F4FD' : '#494166'
   }
   const columnCount = columns.length + Number(hasActions)
@@ -28,24 +44,19 @@ export const useOpenOrderState = (props: TableViewRendererProps<OTCOrder>) => {
     accountState !== AccountState.SAME_CHAIN ||
     !found ||
     (items?.length === 0 && loading !== true)
-  return { showEmptyState, columnCount, rowColor }
+  return { showEmptyState, columnCount, mobileRowColor, rowColor }
 }
 
-export const sortOpenOrders = (first: OTCOrder, _: OTCOrder) =>
-  first.matches?.status === OTCOrderStatus.CONFIRMED &&
+export const sortOpenOrders = (first: OpenOTCOrder, _: OpenOTCOrder) =>
+  first?.matches !== undefined &&
+  first.matches.length > 0 &&
   first.orderType === 'SELL'
     ? -1
     : 1
 
-export const renderOpenOrderPercentage = (row: OTCOrder) => {
-  if (
-    row.matches?.status !== OTCOrderStatus.SETTLED &&
-    row.orderType === 'BUY'
-  ) {
-    return '0'
-  }
+export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
   return getRoundedPercentage({
     amount: row.amount,
-    matchedAmount: row.matches?.matchedAmount ?? 0
+    matchedAmount: row.amount - row.availableAmount ?? 0
   })
 }

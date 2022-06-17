@@ -2,35 +2,48 @@ import { Box } from '@mui/material'
 import { CancelOTCOrderButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/CancelOTCOrderButton'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import React from 'react'
-import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
+import { ColumnOTCMatch, OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { ConfirmOTCOrderButton } from './ConfirmOTCOrderButton'
+import { DropDownOTCRow } from './DropDownOTCRow'
 
 export interface OTCOrderActionsProps {
-  item: OTCOrder
+  item: OpenOTCOrder
 }
-
+export interface ConfirmOrderActionsProps {
+  item: ColumnOTCMatch
+}
 export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
-  const showConfirm =
-    item?.matches?.status === OTCOrderStatus.CONFIRMED &&
-    item.orderType === 'SELL'
   const orderFinished = [
     OTCOrderStatus.COMPLETED,
     OTCOrderStatus.CANCELLED,
     OTCOrderStatus.PENDING
-  ].includes(item?.matches?.status as any)
+  ].includes(item?.status as any)
   const showCancel = !orderFinished
-  if (!(showCancel || showConfirm)) {
-    return (
-      <Box textAlign={'left'}>
-        {capitalizeFirstLetter(item?.matches?.status ?? '')}
-      </Box>
-    )
-  }
-
+  const showDropdown =
+    Number(item?.matches?.length) > 0 && item.orderType === 'SELL'
   return (
     <Box display='flex' justifyContent='space-between'>
       {showCancel && <CancelOTCOrderButton variant='text' order={item} />}
+      {!showCancel && (
+        <Box textAlign={'left'}>
+          {capitalizeFirstLetter(item?.status ?? '')}
+        </Box>
+      )}
+      {showDropdown && <DropDownOTCRow order={item} />}
+    </Box>
+  )
+}
+
+export const ConfirmOTCOrderActions = ({ item }: ConfirmOrderActionsProps) => {
+  const showConfirm = item?.status === OTCOrderStatus.CONFIRMED
+  return (
+    <Box display='flex' justifyContent='space-between'>
       {showConfirm && <ConfirmOTCOrderButton variant='text' order={item} />}
+      {!showConfirm && (
+        <Box textAlign={'center'} pl={1.25}>
+          {capitalizeFirstLetter(item?.status ?? '')}
+        </Box>
+      )}
     </Box>
   )
 }
