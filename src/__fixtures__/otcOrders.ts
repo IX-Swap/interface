@@ -43,7 +43,7 @@ const fakeOTCMatch: OTCMatch = {
   status: OTCOrderStatus.MATCH
 }
 
-const fakeOTCMatch1: OTCMatch = {
+export const fakeOTCMatch1: OTCMatch = {
   _id: '609d1d93c54af74af46c027d',
   order: '609d1d93c54af74af46c027c',
   user: '609d1d93c54af74af46c027c',
