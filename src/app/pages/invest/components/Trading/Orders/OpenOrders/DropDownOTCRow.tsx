@@ -2,7 +2,7 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 import { Box, IconButton } from '@mui/material'
 import React, { useContext } from 'react'
 import { OpenOTCOrder } from 'types/otcOrder'
-import { OpenOrdersContext } from '../../context/OpenOrdersContextWrapper'
+import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 export interface DropDownOTCRowProps {
   order: OpenOTCOrder
 }

@@ -8,7 +8,7 @@ import { TableViewRendererProps } from 'components/TableWithPagination/TableView
 import { getExpiresOrderMessage } from 'helpers/dates'
 import React, { useContext } from 'react'
 import { OpenOTCOrder, OTCMatch } from 'types/otcOrder'
-import { OpenOrdersContext } from '../../context/OpenOrdersContextWrapper'
+import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 import { nestedcolumns } from './columns'
 import {
   getColumnMatchedOrder,

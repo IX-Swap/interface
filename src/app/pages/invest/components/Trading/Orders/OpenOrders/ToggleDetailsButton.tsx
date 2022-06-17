@@ -2,7 +2,7 @@ import { Box, Button, ButtonProps } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/CancelOTCOrder.styles'
 import React, { useContext } from 'react'
 import { OpenOTCOrder } from 'types/otcOrder'
-import { OpenOrdersContext } from '../../context/OpenOrdersContextWrapper'
+import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 
 export interface ToggleDetailsButtonProps extends ButtonProps {
   item: OpenOTCOrder
