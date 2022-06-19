@@ -30,7 +30,7 @@ export default function PayoutItem({
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
   const isLoggedIn = !!token && !!account
-  const status = PAYOUT_STATUS.STARTED
+  const status = PAYOUT_STATUS.DELAYED
 
   return (
     <Loadable loading={!isLoggedIn}>
@@ -42,7 +42,7 @@ export default function PayoutItem({
             deadlineDate={new Date(2022, 6, 12)}
             startDate={new Date(2022, 5, 12)}
           />
-          <PayoutActionBlock status={status} isManager={true} />
+          <PayoutActionBlock status={status} isManager={false} />
         </Column>
       </StyledBodyWrapper>
     </Loadable>

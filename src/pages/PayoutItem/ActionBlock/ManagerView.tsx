@@ -1,13 +1,11 @@
 import React, { FC } from 'react'
 import { t } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
-import styled from 'styled-components'
 
-import { ButtonIXSGradient } from 'components/Button'
 import CurrencyLogo from 'components/CurrencyLogo'
 import Column from 'components/Column'
 
-import { Container } from './styleds'
+import { Container, StyledButtonIXSGradient } from './styleds'
 import { PAYOUT_STATUS } from '..'
 import { momentFormatDate } from '../utils'
 
@@ -86,18 +84,10 @@ export const ManagerView: FC<Props> = ({ status }) => {
         )
       case PAYOUT_STATUS.ANNOUNCED:
         return t`Your record date has not come yet, tokens will be counted on March 12, 2022.`
+      default:
+        return null
     }
   }
 
   return <Container>{getContentByStatus()}</Container>
 }
-
-const StyledButtonIXSGradient = styled(ButtonIXSGradient)`
-  font-size: 16px;
-  line-height: 16px;
-  font-weight: 600;
-  max-height: 40px;
-  min-height: 40px;
-  border-radius: 40px;
-  padding: 12px 24px;
-`
