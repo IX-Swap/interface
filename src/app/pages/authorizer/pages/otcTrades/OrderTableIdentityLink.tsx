@@ -9,7 +9,8 @@ export interface OrderTableLinkParams {
   identityType: 'corporate' | 'individual'
   name: string
 }
-const getIdentityDetails = (
+
+export const getIdentityDetails = (
   userId: string,
   identity?: OTCIdentity
 ): OrderTableLinkParams => {
@@ -60,6 +61,7 @@ export const renderIdentityLink = (
   const identityDetails = renderParticipant(item, side)
   return <OrderTableIdentityLink {...identityDetails} />
 }
+
 export const OrderTableIdentityLink = ({
   userId,
   identityId,
