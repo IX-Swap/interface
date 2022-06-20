@@ -16,7 +16,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Overview
           </h5>
@@ -199,7 +199,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Address
           </h5>
@@ -266,7 +266,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Company Authorized Personnel
           </h5>
@@ -283,7 +283,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Directors/Partners/People with Executive Authority
           </h5>
@@ -301,7 +301,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Beneficial Owners Information
           </h5>
@@ -318,7 +318,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Investor Declaration
           </h5>
@@ -370,7 +370,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
                       data-testid="declarations-list-item-label"
                     >
-                      An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency; or
+                      An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency
                     </p>
                   </div>
                 </div>
@@ -404,7 +404,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
                       data-testid="declarations-list-item-label"
                     >
-                      The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency; or
+                      The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency
                     </p>
                   </div>
                 </div>
@@ -438,7 +438,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
                       data-testid="declarations-list-item-label"
                     >
-                      A corporation where all the shareholders are Accredited Investors; or
+                      A corporation where all the shareholders are Accredited Investors
                     </p>
                   </div>
                 </div>
@@ -472,7 +472,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
                       data-testid="declarations-list-item-label"
                     >
-                      A partnership (other than a limited liability partnership) where all the partners are Accredited Investors; or
+                      A partnership (other than a limited liability partnership) where all the partners are Accredited Investors
                     </p>
                   </div>
                 </div>
@@ -506,7 +506,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
                       data-testid="declarations-list-item-label"
                     >
-                      A trust where all the beneficiaries are Accredited Investors; or
+                      A trust where all the beneficiaries are Accredited Investors
                     </p>
                   </div>
                 </div>
@@ -605,24 +605,26 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                     class="MuiBox-root css-d0uhtl"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
                     >
                       I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.
+                       
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
                     >
                       I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
                       <span
                         class="MuiTypography-root MuiTypography-body1 css-1okvd07-MuiTypography-root"
-                        style="text-decoration: underline; cursor: pointer;"
+                        style="text-decoration: none; cursor: pointer;"
                       >
                         safeguards
                       </span>
                        for Accredited Investors.
+                       
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
                     >
                       I have been informed of and understand my right to
                        
@@ -647,7 +649,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Tax Declaration
           </h5>
@@ -664,7 +666,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           class="MuiBox-root css-0"
         >
           <h5
-            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
             Company Documents
           </h5>

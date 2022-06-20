@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
-import { CorporateUploadDocumentsForm } from 'app/pages/identity/components/UploadDocumentsForm/CorporateUploadDocumentsForm'
+import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclarationForm/CorporateDocuments/CorporateDocuments'
 
 jest.mock(
   'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
@@ -10,13 +10,13 @@ jest.mock(
   })
 )
 
-describe('IndividualUploadDocumentsForm', () => {
+describe('CorporateDocuments', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
   it('renders Upload fields correctly for the investor', () => {
-    render(<CorporateUploadDocumentsForm corporateType='investor' />)
+    render(<CorporateDocuments corporateType='investor' />)
 
     expect(UploadDocumentField).toHaveBeenNthCalledWith(
       1,
@@ -47,7 +47,7 @@ describe('IndividualUploadDocumentsForm', () => {
   })
 
   it('renders Upload fields correctly for the issuer', () => {
-    render(<CorporateUploadDocumentsForm corporateType='issuer' />)
+    render(<CorporateDocuments corporateType='issuer' />)
 
     expect(UploadDocumentField).toHaveBeenNthCalledWith(
       1,

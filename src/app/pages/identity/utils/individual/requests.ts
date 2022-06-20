@@ -1,6 +1,6 @@
 import {
   IndividualAgreementsFormValues,
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
@@ -69,7 +69,7 @@ export const getInvestorDeclarationRequestPayload = (
 }
 
 export const getDocumentsRequestPayload = (
-  values: IndividualDocumentsFormValues
+  values: IdentityDocumentsFormValues
 ) => {
   const documents = {
     documents: Object.values(values).reduce<string[]>((result, documents) => {

@@ -2,6 +2,10 @@ import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclar
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
+import {
+  corporateInvestorAgreementsMap,
+  individualInvestorAgreementsMap
+} from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
 
 describe('InvestorAgreements', () => {
   afterEach(async () => {
@@ -19,11 +23,9 @@ describe('InvestorAgreements', () => {
       getByText('I declare that I am "Corporate Accredited Investor"')
     ).toBeTruthy()
 
-    expect(
-      getByText(
-        'An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency; or'
-      )
-    ).toBeTruthy()
+    for (const item of Object.values(corporateInvestorAgreementsMap)) {
+      expect(getByText(item)).toBeTruthy()
+    }
   })
 
   it('renders correct data when type is individual', () => {
@@ -37,10 +39,8 @@ describe('InvestorAgreements', () => {
       getByText('I declare that I am "Individual Accredited Investor"')
     ).toBeTruthy()
 
-    expect(
-      getByText(
-        'My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million or its equivalent in foreign currency; or'
-      )
-    ).toBeTruthy()
+    for (const item of Object.values(individualInvestorAgreementsMap)) {
+      expect(getByText(item)).toBeTruthy()
+    }
   })
 })

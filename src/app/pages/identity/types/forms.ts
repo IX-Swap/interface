@@ -1,4 +1,4 @@
-import { DataroomFile, FormArray } from 'types/dataroomFile'
+import { DataroomFile, FormArray, FormArrayElement } from 'types/dataroomFile'
 import User from 'types/user'
 import {
   CorporateDeclarations,
@@ -115,7 +115,7 @@ export interface IndividualInvestorDeclarationFormValues
     OptOutRequirements,
     OptInAgreements {}
 
-export interface IndividualDocumentsFormValues {
+export interface IdentityDocumentsFormValues {
   evidenceOfAccreditation: DataroomFile[]
   proofOfIdentity: DataroomFile[]
   proofOfAddress: DataroomFile[]
@@ -155,12 +155,15 @@ export interface CorporateInvestorTaxDeclarationFormValues {
 export interface CorporateInvestorDeclarationFormValues
   extends CorporateInvestorStatus,
     OptInAgreements,
-    OptOutRequirements {}
+    OptOutRequirements {
+  isInstitutionalInvestor: boolean
+}
 
 export interface CorporateInvestorDocumentsFormValues {
-  evidenceOfAccreditation: DataroomFile[]
-  corporateDocuments: DataroomFile[]
-  financialDocuments: DataroomFile[]
+  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
+  corporateDocuments: Array<FormArrayElement<DataroomFile>>
+  financialDocuments: Array<FormArrayElement<DataroomFile>>
+  institutionalInvestorDocuments: Array<FormArrayElement<DataroomFile>>
 }
 export interface DocumentFieldArrayItemValue {
   value: DataroomFile
@@ -246,6 +249,7 @@ export interface CorporateFields {
   numberOfBusinessOwners: string
   businessActivity: string
   sourceOfFund: string
+  isInstitutionalInvestor: boolean
   type:
     | 'investor'
     | 'issuer'
