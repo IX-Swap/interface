@@ -20,7 +20,7 @@ export const BeneficialOwnersInformationFields = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={5}>
       <Grid item xs={12} md={6}>
         <TypedField
           key={fieldId}
@@ -30,6 +30,7 @@ export const BeneficialOwnersInformationFields = ({
           name={[rootName, index, 'fullName']}
           label='Full Name'
           placeholder='Full Name'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -43,6 +44,7 @@ export const BeneficialOwnersInformationFields = ({
           variant='outlined'
           fullWidth
           placeholder='Percentage Shareholding'
+          hideIcon
         />
       </Grid>
     </Grid>

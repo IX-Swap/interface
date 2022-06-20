@@ -7,14 +7,17 @@ import { RootContainer } from 'ui/RootContainer'
 
 export const Commitments = () => {
   return (
-    <Grid container direction='column' spacing={2} style={{ display: 'table' }}>
-      <PageHeader title='Pending Commitments' />
-      <RootContainer>
-        <VSpacer size='small' />
-        <Grid item>
+    <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader title='Pending Commitments' />
+      </Grid>
+
+      <Grid item pl='30px'>
+        <RootContainer>
+          <VSpacer size='small' />
           <CommitmentsTable />
-        </Grid>
-      </RootContainer>
+        </RootContainer>
+      </Grid>
     </Grid>
   )
 }

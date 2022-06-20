@@ -14,7 +14,9 @@ export const TaxDeclarationForm = ({
   const classes = useStyles()
   return (
     <Paper className={classes.container}>
-      <FormSectionHeader title='Tax Declaration' />
+      <Grid item className={classes.header}>
+        <FormSectionHeader title='Tax Declaration' />
+      </Grid>
       <Grid data-testid='taxDeclaration' container direction='column'>
         <Grid item className={classes.taxDeclaration}>
           <TaxDeclarationInfo />

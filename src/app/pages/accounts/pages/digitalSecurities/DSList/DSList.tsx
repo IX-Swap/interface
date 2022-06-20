@@ -35,7 +35,7 @@ export const DSList: React.FC = () => {
             </Button>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} paddingLeft={3}>
           <DSTabs />
         </Grid>
       </RootContainer>

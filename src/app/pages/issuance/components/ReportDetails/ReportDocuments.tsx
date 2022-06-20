@@ -11,7 +11,7 @@ export interface ReportDocumentsProps {
 export const ReportDocuments = ({ report }: ReportDocumentsProps) => {
   return (
     <TableContainer>
-      <Table>
+      <Table sx={{ minWidth: 470 }}>
         <DataroomHeader />
         <TableBody>
           {report.reportDocuments.map((document, index) => (

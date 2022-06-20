@@ -8,7 +8,6 @@ import { Switch } from 'react-router-dom'
 import { IdentityRoute } from './config'
 import { SuccessPage } from 'app/pages/identity/pages/SuccessPage/SuccessPage'
 
-
 export const IdentityRouter = () => {
   return (
     <Switch>

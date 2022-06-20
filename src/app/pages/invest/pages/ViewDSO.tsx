@@ -19,11 +19,11 @@ export const ViewDSO = () => {
       <Grid item xs={12}>
         <PageHeader title={data.tokenName} />
       </Grid>
-      <RootContainer>
-        <Grid item xs={12}>
+      <Grid item xs={12} pl={3}>
+        <RootContainer>
           <DSOInvestorView dso={data} />
-        </Grid>
-      </RootContainer>
+        </RootContainer>
+      </Grid>
     </Grid>
   )
 }

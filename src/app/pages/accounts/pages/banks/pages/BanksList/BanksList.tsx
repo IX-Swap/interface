@@ -17,7 +17,7 @@ export const BanksList: React.FC = () => {
           <Header />
         </Grid>
         <VSpacer size='small' />
-        <Grid item>
+        <Grid item ml='10px'>
           <Table />
         </Grid>
       </RootContainer>
