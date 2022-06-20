@@ -47,6 +47,7 @@ export const SaveButton = (props: SaveButtonProps) => {
       color={color}
       onClick={async () => void handleClick()}
       disabled={isLoading}
+      size='large'
     >
       {children}
     </Button>

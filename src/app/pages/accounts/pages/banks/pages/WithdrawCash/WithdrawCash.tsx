@@ -11,7 +11,7 @@ export const WithdrawCash: React.FC = () => {
         <PageHeader title='Cash Withdrawals' />
       </Grid>
       <RootContainer>
-        <Grid item>
+        <Grid item pl={2}>
           <WithdrawView />
         </Grid>
       </RootContainer>

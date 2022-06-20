@@ -1,5 +1,4 @@
 import { Grid } from '@mui/material'
-import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { Address } from 'app/pages/identity/types/forms'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { OptionalLabel } from 'components/form/OptionalLabel'
@@ -101,7 +100,6 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           hideIcon
         />
       </Grid>
-      <ValidateOnMount />
     </Grid>
   )
 }

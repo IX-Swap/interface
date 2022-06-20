@@ -5,7 +5,6 @@ import {
   CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
   DirectorFormValues,
-  DocumentFieldArrayItemValue,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
@@ -105,18 +104,22 @@ export const directorsAndBeneficialOwnersSchema = yup
           .object<DirectorFormValues>({
             fullName: yup.string().required(validationMessages.required),
             designation: yup.string().required(validationMessages.required),
+            legalEntityStatus: yup
+              .string()
+              .required(validationMessages.required),
+            countryOfFormation: yup
+              .string()
+              .required(validationMessages.required),
             email: emailSchema.required(validationMessages.required),
             contactNumber: yup
               .string()
               .phone()
               .required(validationMessages.required),
             address: addressSchema.required(validationMessages.required),
-            proofOfIdentity: yup
-              .array<DocumentFieldArrayItemValue>()
-              .required(validationMessages.required),
-            proofOfAddress: yup
-              .array<DocumentFieldArrayItemValue>()
-              .required(validationMessages.required)
+            // @ts-expect-error
+            proofOfIdentity: documentsSchema,
+            // @ts-expect-error
+            proofOfAddress: documentsSchema
           })
           .required(validationMessages.required)
       )
@@ -134,12 +137,10 @@ export const directorsAndBeneficialOwnersSchema = yup
               })
               .typeError('Percentage shareholding must be a number')
               .required(validationMessages.required),
-            proofOfIdentity: yup
-              .array<DocumentFieldArrayItemValue>()
-              .required(validationMessages.required),
-            proofOfAddress: yup
-              .array<DocumentFieldArrayItemValue>()
-              .required(validationMessages.required)
+            // @ts-expect-error
+            proofOfIdentity: documentsSchema,
+            // @ts-expect-error
+            proofOfAddress: documentsSchema
           })
           .required(validationMessages.required)
       )

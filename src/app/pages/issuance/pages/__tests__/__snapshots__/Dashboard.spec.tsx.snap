@@ -47,10 +47,10 @@ exports[`Dashboard should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1e9o0n3-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
       >
         <div
           class="MuiBox-root css-12aw9rk"
@@ -59,8 +59,12 @@ exports[`Dashboard should match snapshot 1`] = `
           class="MuiBox-root css-12aw9rk"
         />
       </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item css-vewc99-MuiGrid-root"
+    >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+        class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
@@ -217,8 +221,12 @@ exports[`Dashboard should match snapshot 1`] = `
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item css-vewc99-MuiGrid-root"
+    >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+        class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
@@ -346,8 +354,12 @@ exports[`Dashboard should match snapshot 1`] = `
           </div>
         </div>
       </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1e9o0n3-MuiGrid-root"
+    >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
       >
         <div
           class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-1nt1r1b-MuiPaper-root"

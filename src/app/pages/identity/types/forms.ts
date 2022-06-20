@@ -92,6 +92,8 @@ export interface Personnel {
   documents: DataroomFile[]
   address: Address
   percentageShareholding: number
+  legalEntityStatus: string
+  countryOfFormation: string
 }
 
 export interface IndividualFinancialInfoFormValues {
@@ -179,6 +181,8 @@ export interface DirectorFormValues {
   email: string
   contactNumber: string
   address: Address
+  legalEntityStatus: string
+  countryOfFormation: string
   proofOfIdentity?: DocumentFieldArrayItemValue[]
   proofOfAddress?: DocumentFieldArrayItemValue[]
 }

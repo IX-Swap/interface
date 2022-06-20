@@ -22,6 +22,7 @@ export interface TaxResidencyFieldProps {
   max: number
   total: number
   defaultValue: TaxResidency
+  identityType?: 'individual' | 'corporate'
 }
 
 export const TaxResidencyField = ({
@@ -32,7 +33,8 @@ export const TaxResidencyField = ({
   isLast,
   max,
   total,
-  defaultValue
+  defaultValue,
+  identityType = 'corporate'
 }: TaxResidencyFieldProps) => {
   const { control, watch } = useFormContext()
   const residencyList = watch('taxResidencies')
@@ -40,6 +42,13 @@ export const TaxResidencyField = ({
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('md'))
   const classes = useStyles()
+  const country = residencyList[index].countryOfResidence
+  const label =
+    identityType === 'individual'
+      ? country !== 'Singapore'
+        ? 'Tax Identification Number'
+        : 'NRIC/FIN'
+      : 'Tax Identification Number'
 
   const getSelectedCountries = () => {
     if (residencyList === undefined || residencyList.length < 1) {
@@ -110,8 +119,8 @@ export const TaxResidencyField = ({
               hideIcon
               control={control}
               component={TextInput}
-              label='Tax Identification Number'
-              placeholder={'Tax Identification Number'}
+              label={label}
+              placeholder={label}
               defaultValue={defaultValue?.taxIdentificationNumber ?? ''}
               name={['taxResidencies', index, 'taxIdentificationNumber']}
               variant='outlined'

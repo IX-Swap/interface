@@ -46,6 +46,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           disabled={isApproved || isLoading || isSubmitted || !isValid}
           disableElevation
           fullWidth={fullWidth}
+          size='large'
         >
           {isApproved
             ? 'Approved'

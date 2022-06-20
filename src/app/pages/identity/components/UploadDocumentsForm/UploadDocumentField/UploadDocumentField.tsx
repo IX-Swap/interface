@@ -26,7 +26,8 @@ export const UploadDocumentField = ({
   helperElement,
   tooltipContent
 }: UploadDocumentFieldProps) => {
-  const { control, watch } = useFormContext()
+  const { control, watch, formState } = useFormContext()
+
   const defaultUploadedFiles =
     watch(name) !== undefined && Array.isArray(watch(name))
       ? watch(name).map((file: { value: DataroomFile }) => file.value)
@@ -42,9 +43,10 @@ export const UploadDocumentField = ({
     setUploadedFiles([...uploadedFiles, value])
   }
   const handleRemoveFile = (value: DataroomFile) => {
-    const filteredValue = uploadedFiles.filter(
-      (it: DataroomFile) => it !== value
-    )
+    const filteredValue = uploadedFiles.filter((it: DataroomFile) => {
+      return it._id !== value._id
+    })
+
     setUploadedFiles(filteredValue)
   }
 
@@ -81,6 +83,9 @@ export const UploadDocumentField = ({
                       name={[name, index, 'value']}
                       control={control}
                       component={FileUpload}
+                      isValid={
+                        formState.isValid ? true : uploadedFiles.length > 0
+                      }
                       label='Upload File'
                       valueExtractor={plainValueExtractor}
                       accept={DataroomFileType.document}

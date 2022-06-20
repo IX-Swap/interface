@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { DSOInvestorViewHeader } from 'app/components/DSO/components/DSOInvestorViewHeader'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Tabs, Tab, Grid } from '@mui/material'
+import { Tabs, Tab, Grid, Box } from '@mui/material'
 import { DSOPricingViewCompact } from 'app/components/DSO/components/DSOPricingViewCompact'
 import { DSOTermsViewCompact } from 'app/components/DSO/DSOPreview/DSOTermsViewCompact'
 import { TabPanel } from 'components/TabPanel'
@@ -38,13 +38,13 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
       </Tabs>
 
       <TabPanel value={selectedIdx} index={0}>
-        <Grid container spacing={9}>
+        <Grid container spacing={9} pl={3}>
           <Grid item xs={12}>
             <DSOPricingViewCompact dso={dso} />
           </Grid>
 
           {dso.isCampaign !== true && (
-            <Grid item xs={12}>
+            <Grid item xs={12} pl={3}>
               <DSOTermsViewCompact dso={dso} />
             </Grid>
           )}
@@ -52,22 +52,30 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
       </TabPanel>
 
       <TabPanel value={selectedIdx} index={1}>
-        <DSOInvestorInformationView dso={dso} />
+        <Box pl={3}>
+          <DSOInvestorInformationView dso={dso} />
+        </Box>
       </TabPanel>
 
       <TabPanel value={selectedIdx} index={2}>
-        <DSODataroomView dso={dso} showTitle={false} />
+        <Box pl={3}>
+          <DSODataroomView dso={dso} showTitle={false} />
+        </Box>
       </TabPanel>
 
       {isDSOVideosVisible ? (
         <TabPanel value={selectedIdx} index={3}>
-          <DSOVideoLinksView dso={dso} />
+          <Box pl={3}>
+            <DSOVideoLinksView dso={dso} />
+          </Box>
         </TabPanel>
       ) : null}
 
       {isDSOFAQsVisible ? (
         <TabPanel value={selectedIdx} index={4}>
-          <DSOFAQsView dso={dso} isTitleVisible isNewThemeOn />
+          <Box pl={3}>
+            <DSOFAQsView dso={dso} isTitleVisible isNewThemeOn />
+          </Box>
         </TabPanel>
       ) : null}
     </Fragment>

@@ -103,6 +103,8 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
     .mixed<DataroomFile[], object>()
     .required(validationMessages.required),
   address: addressSchema.required(validationMessages.required),
+  legalEntityStatus: yup.string().required(validationMessages.required),
+  countryOfFormation: yup.string().required(validationMessages.required),
   percentageShareholding: yup
     .number()
     .transform((value, originalValue) => {
