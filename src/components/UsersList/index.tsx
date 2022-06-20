@@ -140,7 +140,7 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
   const { tokens } = useSecTokenState()
 
   const icons = useMemo(() => {
-    const ids = props.items.map(i => i.token.id);
+    const ids = props.items.slice(0, 5).map(i => i.token.id);
 
     return tokens
       ?.filter(token => ids.includes(token.id))
