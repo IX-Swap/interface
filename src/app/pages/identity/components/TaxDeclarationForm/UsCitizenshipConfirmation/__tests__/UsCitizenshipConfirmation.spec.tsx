@@ -16,7 +16,7 @@ describe('UsCitizenshipConfirmation', () => {
     )
 
     expect(
-      getByText('Declaration of US Citizenship or US Residence for')
+      getByText('Declaration of US Citizenship or US Residence')
     ).toBeTruthy()
   })
 
@@ -36,7 +36,7 @@ describe('UsCitizenshipConfirmation', () => {
     )
 
     const yesRadio = getByLabelText(
-      'I confirm that I am a US citizen and/or resident in the US for tax purposes and my U.S. federal Taxpayer Identifying Number (US TIN) is as follows:'
+      'I confirm that I am a US citizen and/or resident in the US for tax purposes and my U.S. federal'
     )
     const noRadio = getByLabelText(
       'I confirm that I am not a US citizen or resident in the US for tax purposes.'

@@ -1,20 +1,12 @@
 import { TaxDeclarationForm } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationForm'
 import React from 'react'
 import { render } from 'test-utils'
-import { TaxResidencyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields'
-import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
+import { TaxResidencyFieldArray } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
 
 jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields',
+  'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray',
   () => ({
-    TaxResidencyFields: jest.fn(() => null)
-  })
-)
-
-jest.mock(
-  'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation',
-  () => ({
-    UsCitizenshipConfirmation: jest.fn(() => null)
+    TaxResidencyFieldArray: jest.fn(() => null)
   })
 )
 
@@ -26,7 +18,6 @@ describe('TaxDeclarationForm', () => {
   it('renders child components correctly', () => {
     render(<TaxDeclarationForm />)
 
-    expect(TaxResidencyFields).toHaveBeenCalled()
-    expect(UsCitizenshipConfirmation).toHaveBeenCalled()
+    expect(TaxResidencyFieldArray).toHaveBeenCalled()
   })
 })
