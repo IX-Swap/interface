@@ -9,7 +9,7 @@ import { useAuthState } from 'state/auth/hooks'
 import { ButtonText } from 'components/Button'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { usePayoutState } from 'state/payout/hooks'
-import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
+import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 
 import { PayoutForm } from './PayoutForm'

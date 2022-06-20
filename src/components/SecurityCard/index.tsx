@@ -8,7 +8,6 @@ import styled, { CSSProperties } from 'styled-components/macro'
 
 import { AccreditationStatusEnum } from 'components/Vault/enum'
 import { useActiveWeb3React } from 'hooks/web3'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -80,7 +79,7 @@ export default function SecurityCard({
       <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
         <StyledPositionCard
           as={Link}
-          to={routes.securityTokens(currency as WrappedTokenInfo)}
+          to={routes.securityToken((currency as any).tokenInfo.catalogId)}
           data-testid="custodian-sec-token-info"
         >
           <Column>

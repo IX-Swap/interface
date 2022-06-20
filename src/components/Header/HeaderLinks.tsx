@@ -107,7 +107,14 @@ export const HeaderLinks = () => {
       )}
 
       {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink disabled={!isKycApproved} id={`stake-nav-link`} to={routes.securityTokens()}>
+        <StyledNavLink
+          disabled={!isKycApproved}
+          id={`stake-nav-link`}
+          to={routes.securityTokens('tokens')}
+          isActive={(match, { pathname }) => {
+            return pathname.includes('security-token')
+          }}
+        >
           <Trans>Security Tokens</Trans>
         </StyledNavLink>
       )}

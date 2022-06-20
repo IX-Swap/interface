@@ -39,7 +39,7 @@ export const ProductsBlock = () => {
           </NavLink>
         )}
         {isKycApproved && account && chainId && chains.includes(chainId) && isWhitelisted && (
-          <NavLink to={routes.securityTokens()}>
+          <NavLink to={routes.securityTokens('tokens')}>
             <Trans>Securities</Trans>
           </NavLink>
         )}

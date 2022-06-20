@@ -76,11 +76,7 @@ export const TmPayoutEvents = () => {
           {payoutList.items?.length ? (
             <>
               <Table body={<Body onEdit={onEdit} items={payoutList.items} />} header={<Header />} />
-              <Pagination
-                totalPages={payoutList.totalPages}
-                page={(payoutList.page || 1) - 1}
-                onPageChange={onPageChange}
-              />
+              <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
             </>
           ) : (
             <TmEmptyPage tab="payout-events" filtred />

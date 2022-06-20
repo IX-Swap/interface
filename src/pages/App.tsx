@@ -41,8 +41,7 @@ const KYC = lazy(() => import('./KYC'))
 const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
 const CreatePayoutEvent = lazy(() => import('./CreatePayoutEvent'))
 const CorporateKYC = lazy(() => import('./KYC/CorporateKycForm'))
-// const Custodian = lazy(() => import('./Custodian'))
-const CustodianV2 = lazy(() => import('./CustodianV2'))
+const SecurityTokens = lazy(() => import('./SecurityTokens'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
 const ListNFT = lazy(() => import('./ListNFT'))
 const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
@@ -78,7 +77,7 @@ const BodyWrapper = styled.div`
   `};
 `
 
-const ToggleableBody = styled(BodyWrapper) <{ isVisible?: boolean }>`
+const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   min-height: calc(100vh - 120px);
   padding-bottom: 48px;
@@ -219,7 +218,7 @@ export default function App() {
                 )}
                 {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
                 {isWhitelisted && <Route exact strict path={routes.createPayoutEvent} component={CreatePayoutEvent} />}
-                {isWhitelisted && <Route exact strict path={routes.payoutItem} component={PayoutItem} />}
+                {isWhitelisted && <Route exact strict path={routes.payoutItem()} component={PayoutItem} />}
                 {isWhitelisted && canAccessKycForm('individual') && (
                   <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
                 )}
@@ -256,10 +255,20 @@ export default function App() {
                 )}
 
                 {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                  <Route exact strict path={routes.securityToken()} component={SecTokenDetails} />
                 )}
+
                 {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
+                  <Route
+                    exact
+                    strict
+                    path="/security-tokens"
+                    render={() => <Redirect to={routes.securityTokens('tokens')} />}
+                  />
+                )}
+
+                {chainId && chains.includes(chainId) && isWhitelisted && (
+                  <Route exact strict path={routes.securityTokens()} component={SecurityTokens} />
                 )}
 
                 <Route exact strict path={routes.staking} component={StakingTab} />

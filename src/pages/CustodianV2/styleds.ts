@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 import { Box } from 'rebass'
 
-import { BodyWrapper } from 'pages/AppBody'
 import { ArrowWrapper } from 'components/swap/styleds'
 import { SearchInput } from 'components/SearchModal/styleds'
 import { DarkBlueCard } from 'components/Card'
@@ -11,13 +10,6 @@ export const cardCommonStyles = css`
   border-radius: 30px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-`
-
-export const StyledBodyWrapper = styled(BodyWrapper)`
-  background: transparent;
-  width: 100%;
-  max-width: 1270px;
-  padding-top: 0px;
 `
 
 export const MySecTokensTab = styled(Box)`
