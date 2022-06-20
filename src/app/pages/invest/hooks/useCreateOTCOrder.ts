@@ -1,4 +1,4 @@
-import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
+import { PlaceOrderArgs } from 'app/pages/invest/types/form'
 import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
