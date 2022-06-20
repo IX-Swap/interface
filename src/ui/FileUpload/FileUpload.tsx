@@ -26,6 +26,7 @@ export interface FileUploadProps {
   size?: number | [number, number] | [string, string]
   uploadFunction?: any
   minSize?: number
+  isValid?: boolean
   maxSize?: number
   remove?: () => void
   onSuccessUploadCallback?: (value: any) => void
@@ -44,6 +45,7 @@ export const FileUpload = (props: FileUploadProps) => {
     multiple = false,
     fullWidth = false,
     disabled = false,
+    isValid = true,
     minSize = 0,
     maxSize = 10,
     remove
@@ -157,7 +159,7 @@ export const FileUpload = (props: FileUploadProps) => {
   }
 
   if (fullWidth) {
-    return <File {...fileProps} />
+    return <File {...fileProps} hasError={!isValid} />
   }
 
   return <Avatar {...fileProps} />

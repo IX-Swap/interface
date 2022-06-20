@@ -2,7 +2,10 @@ import subDays from 'date-fns/subDays'
 import subHours from 'date-fns/subHours'
 import subMinutes from 'date-fns/subMinutes'
 import {
-  convertDateToISO, formatDateAndTime, formatDateToMMDDYY, getTimeAgo
+  convertDateToISO,
+  formatDateAndTime,
+  formatDateToMMDDYY,
+  getTimeAgo
 } from 'helpers/dates'
 
 describe('getTimeAgo', () => {
@@ -72,4 +75,3 @@ describe('convertDateToISO', () => {
     expect(convertDateToISO('')).toEqual(undefined)
   })
 })
-

@@ -10,7 +10,10 @@ import { useTheme } from '@mui/material/styles'
 import useStyles from './TextInput.styles'
 import classnames from 'classnames'
 
-type InputProps = TextFieldProps & { loading?: boolean; hideIcon?: boolean }
+export type InputProps = TextFieldProps & {
+  loading?: boolean
+  hideIcon?: boolean
+}
 
 export const TextInput = (props: InputProps) => {
   const {
