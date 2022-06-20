@@ -18,7 +18,7 @@ export const Balances: React.FC = () => {
         <PageHeader title='Asset Balances' />
       </Grid>
       <RootContainer>
-        <Grid item>
+        <Grid item pl='20px'>
           <TableView<AssetBalance>
             uri={`/accounts/currency-balance/${getIdFromObj(user)}`}
             name={balanceQueryKeys.getByUserId(getIdFromObj(user))}

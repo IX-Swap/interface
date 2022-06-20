@@ -19,17 +19,20 @@ export const MyHoldings = () => {
       <Grid item>
         <PageHeader title='My Holdings' showBreadcrumbs />
       </Grid>
-      <RootContainer>
-        <Grid item>
+
+      <Grid item>
+        <RootContainer>
           <Typography variant='h3'>{headerContent.title}</Typography>
           <VSpacer size='small' />
           <Typography variant='body1'>{headerContent.subtitle}</Typography>
-        </Grid>
-        <Grid item>
+        </RootContainer>
+      </Grid>
+      <Grid item>
+        <RootContainer>
           <VSpacer size='small' />
           <HoldingsTables setHeaderContent={setHeaderContent} />
-        </Grid>
-      </RootContainer>
+        </RootContainer>
+      </Grid>
     </Grid>
   )
 }

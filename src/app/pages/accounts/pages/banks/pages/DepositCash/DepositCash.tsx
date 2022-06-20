@@ -8,6 +8,7 @@ import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { AutoAssignVirtualAccountForm } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/AutoAssignVirtualAccountForm'
 import { VSpacer } from 'components/VSpacer'
 import { RootContainer } from 'ui/RootContainer'
+import { useStyles } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositCash.styles'
 
 export const DepositCash: React.FC = () => {
   const { data, isLoading } = useVirtualAccount()
@@ -17,6 +18,7 @@ export const DepositCash: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedAccount(event.target.value as string)
   }
+  const styles = useStyles()
 
   if (isLoading) {
     return null
@@ -27,30 +29,37 @@ export const DepositCash: React.FC = () => {
       <Grid item>
         <PageHeader title='Cash Deposits' />
       </Grid>
-      <RootContainer>
-        {data === undefined ? (
-          <Grid item>
+
+      {data === undefined ? (
+        <Grid item className={styles.wrapper}>
+          <RootContainer>
             <AutoAssignVirtualAccountForm />
-          </Grid>
-        ) : (
-          <>
-            <Grid item>
+          </RootContainer>
+        </Grid>
+      ) : (
+        <>
+          <Grid item className={styles.wrapper}>
+            <RootContainer>
               <CashDepositVirtualAccountDetails
                 selectedAccount={selectedAccount}
                 handleChange={handleChange}
                 defaultValue={data.accountNumber}
               />
-            </Grid>
-            <Grid item>
+            </RootContainer>
+          </Grid>
+          <Grid item className={styles.wrapper}>
+            <RootContainer>
               <CashDepositButton virtualAccountId={selectedAccount} />
-            </Grid>
-          </>
-        )}
-        <Grid item>
+            </RootContainer>
+          </Grid>
+        </>
+      )}
+      <Grid item className={styles.wrapper}>
+        <RootContainer>
           <VSpacer size='medium' />
           <RecentDeposits virtualAccountNumber={selectedAccount} />
-        </Grid>
-      </RootContainer>
+        </RootContainer>
+      </Grid>
     </Grid>
   )
 }

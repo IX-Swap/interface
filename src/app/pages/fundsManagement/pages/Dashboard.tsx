@@ -32,20 +32,25 @@ export const Dashboard = () => {
       <Grid item xs={12}>
         <PageHeader title='InvestaX Digital Fund VCC' />
       </Grid>
-      <RootContainer>
-        <Grid item xs={12}>
+
+      <Grid item xs={12} pl={3}>
+        <RootContainer>
           <VSpacer size={'medium'} />
           <DSOFilters />
           <VSpacer size={'medium'} />
-        </Grid>
+        </RootContainer>
+      </Grid>
 
-        {hasSubfunds && !isSubFundStatsLoading && (
-          <>
-            <Grid item container>
+      {hasSubfunds && !isSubFundStatsLoading && (
+        <>
+          <Grid item container pl={3}>
+            <RootContainer>
               <DSOCards />
-            </Grid>
+            </RootContainer>
+          </Grid>
 
-            <Grid item container>
+          <Grid item container pl={3}>
+            <RootContainer>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                   {isStatusClosed ? (
@@ -73,24 +78,28 @@ export const Dashboard = () => {
                   />
                 </Grid>
               </Grid>
-            </Grid>
+            </RootContainer>
+          </Grid>
 
-            {!isStatusClosed && (
-              <Grid item xs={12}>
+          {!isStatusClosed && (
+            <Grid item xs={12} pl={3}>
+              <RootContainer>
                 <InvestorsChart
                   investmentStats={subFundInvestmentStatsData}
                   isLoading={isSubFundInvestmentStatsLoading}
                 />
-              </Grid>
-            )}
-          </>
-        )}
+              </RootContainer>
+            </Grid>
+          )}
+        </>
+      )}
 
-        {isSubFundStatsLoading && <LoadingIndicator />}
-        {!hasSubfunds && !isSubFundStatsLoading && (
+      {isSubFundStatsLoading && <LoadingIndicator />}
+      {!hasSubfunds && !isSubFundStatsLoading && (
+        <RootContainer>
           <Typography variant='subtitle1'>You have no subfunds</Typography>
-        )}
-      </RootContainer>
+        </RootContainer>
+      )}
     </Grid>
   )
 }

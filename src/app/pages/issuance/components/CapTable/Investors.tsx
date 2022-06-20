@@ -12,12 +12,14 @@ import { formatAmount } from 'helpers/numbers'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { useStyles } from 'app/pages/issuance/components/CapTable/Investors.styles'
 
 export const Investors = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(dsoId, issuerId)
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
+  const styles = useStyles()
 
   if (
     data === undefined ||
@@ -52,7 +54,7 @@ export const Investors = () => {
           <Grid item xs={12} md={4}>
             <SearchFilter fullWidth placeholder='Search Name' />
           </Grid>
-          <Grid item>
+          <Grid item className={styles.wrapper}>
             <Button
               component={AppRouterLinkComponent}
               to={generatePath(IssuanceRoute.manageDistributions, {
