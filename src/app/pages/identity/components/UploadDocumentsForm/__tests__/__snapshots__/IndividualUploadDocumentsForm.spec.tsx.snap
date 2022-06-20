@@ -9,13 +9,13 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
       class="MuiBox-root css-0"
     >
       <h5
-        class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
       >
         Upload Documents
       </h5>
     </div>
     <p
-      class="MuiTypography-root MuiTypography-body1 makeStyles-text-1 css-1b4l2pg-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-body1 makeStyles-text-1 css-e3fhh0-MuiTypography-root"
     >
       Please upload the following documents. All account statements and documents should be dated within 3 months. 
       <br />
@@ -92,7 +92,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root css-0"
-                  role="button"
                   tabindex="0"
                 >
                   <p
@@ -197,7 +196,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root css-0"
-                  role="button"
                   tabindex="0"
                 >
                   <p
@@ -309,7 +307,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root css-0"
-                  role="button"
                   tabindex="0"
                 >
                   <p

@@ -21,12 +21,13 @@ describe('DeclartionsListFields', () => {
     jest.clearAllMocks()
   })
 
-  it('renders title correctly', () => {
-    const { getByTestId } = render(
+  it('should match snapshot', () => {
+    const { container } = render(
       <Form>
         <DeclarationsListFields {...props} />
       </Form>
     )
-    expect(getByTestId('Declaration-select')).toBeInTheDocument()
+
+    expect(container).toMatchSnapshot()
   })
 })

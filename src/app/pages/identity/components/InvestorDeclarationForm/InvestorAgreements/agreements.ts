@@ -15,7 +15,7 @@ export const corporateInvestorAgreementsMap = {
 
 export const individualInvestorAgreementsMap = {
   personalAssets:
-    'My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million ',
+    'My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million',
   income:
     'My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)',
   financialAsset:

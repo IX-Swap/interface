@@ -37,18 +37,18 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
               <div
                 class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                >
+                  I declare that I am "Individual Accredited Investor"
+                </p>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1c439vl-MuiGrid-root"
-                  >
-                    <h6
-                      class="MuiTypography-root MuiTypography-subtitle1 makeStyles-title-1 css-1b4l2pg-MuiTypography-root"
-                    >
-                      I declare that I am "Individual Accredited Investor"
-                    </h6>
-                  </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
                   >
@@ -86,7 +86,7 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
                         style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
                       >
-                        My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million or its equivalent in foreign currency; or
+                        My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
                       </p>
                     </label>
                   </div>
@@ -127,7 +127,7 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
                         style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
                       >
-                        My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency); or
+                        My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
                       </p>
                     </label>
                   </div>
@@ -168,7 +168,7 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
                         style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
                       >
-                        My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or its equivalent in foreign currency; or
+                        My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or its equivalent
                       </p>
                     </label>
                   </div>
@@ -263,8 +263,8 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                     >
                       <label
                         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                        id="optInAgreements"
-                        path="optInAgreements"
+                        id="optInAgreements1"
+                        path="optInAgreements1"
                         style="align-items: flex-start;"
                       >
                         <span
@@ -273,7 +273,7 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                           <input
                             class="PrivateSwitchBase-input css-1m9pwf3"
                             data-indeterminate="false"
-                            name="optInAgreements"
+                            name="optInAgreements1"
                             type="checkbox"
                           />
                           <svg
@@ -295,252 +295,65 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                           class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
                           style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
                         >
-                          <p
-                            class="MuiTypography-root MuiTypography-body1 makeStyles-text-2 css-1b4l2pg-MuiTypography-root"
+                          I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
+                            style="cursor: pointer;"
                           >
-                            I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.
-                             
-                          </p>
-                          <p
-                            class="MuiTypography-root MuiTypography-body1 makeStyles-text-2 css-1b4l2pg-MuiTypography-root"
-                          >
-                            I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
-                            <span
-                              class="MuiTypography-root MuiTypography-body1 css-1okvd07-MuiTypography-root"
-                              style="text-decoration: none; cursor: pointer;"
-                            >
-                              safeguards
-                            </span>
-                             for Accredited Investors.
-                             
-                          </p>
-                          <p
-                            class="MuiTypography-root MuiTypography-body1 makeStyles-text-2 css-1b4l2pg-MuiTypography-root"
-                          >
-                            I have been informed of and understand my right to
-                             
-                            <span
-                              class="MuiTypography-root MuiTypography-body1 css-1okvd07-MuiTypography-root"
-                              style="text-decoration: none; cursor: pointer;"
-                            >
-                              opt out
-                            </span>
-                             of the Accredited Investors status with InvestaX at any point in time.
-                          </p>
+                            safeguards
+                          </span>
+                           for Accredited Investors.
                         </p>
                       </label>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-      >
-        <div
-          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-0"
-              >
-                <h5
-                  class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
-                >
-                  Institutional Investor Status Declaration
-                </h5>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1c439vl-MuiGrid-root"
-                >
-                  <h6
-                    class="MuiTypography-root MuiTypography-subtitle1 makeStyles-title-1 css-1b4l2pg-MuiTypography-root"
-                  />
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-                >
-                  <label
-                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                    id="isInstitutionalInvestor"
-                    path="isInstitutionalInvestor"
-                    style="align-items: flex-start;"
-                  >
-                    <span
-                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
                     >
-                      <input
-                        class="PrivateSwitchBase-input css-1m9pwf3"
-                        data-indeterminate="false"
-                        name="isInstitutionalInvestor"
-                        type="checkbox"
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                        data-testid="CheckBoxOutlineBlankIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
+                      <label
+                        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                        id="optInAgreements2"
+                        path="optInAgreements2"
+                        style="align-items: flex-start;"
                       >
-                        <path
-                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        />
-                      </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
-                    </span>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
-                      style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 makeStyles-container-10 css-1b4l2pg-MuiTypography-root"
-                      >
-                        I declare I am an Institutional Investor
-                         
                         <span
-                          class="MuiTypography-root MuiTypography-body1 css-1okvd07-MuiTypography-root"
-                          style="text-decoration: none; cursor: pointer;"
+                          class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
                         >
-                          Institutional Investor
-                        </span>
-                      </p>
-                    </p>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-11xgqjs-MuiGrid-root"
-            >
-              <div
-                class="ForwardRef(Box)-root-11 ForwardRef(Box)-root-12 MuiBox-root css-0"
-              />
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiBox-root css-0"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-container MuiGrid-item css-lx31tv-MuiGrid-root"
-                      >
-                        <h5
-                          class="MuiTypography-root MuiTypography-h5 css-1ulog8p-MuiTypography-root"
-                        >
-                          Institutional Investor Documents
-                        </h5>
-                        <div
-                          class="MuiBox-root css-111wug5"
-                        />
-                      </div>
-                    </div>
-                    <div
-                      class="MuiBox-root css-0"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-1253jl5-MuiTypography-root"
-                      >
-                        Institutional Investor Documents - License issued by Regulator
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-                      >
-                        <div
-                          class=" MuiBox-root css-1r25d6u"
-                        >
-                          <div
-                            class="MuiBox-root css-70qvj9"
+                          <input
+                            class="PrivateSwitchBase-input css-1m9pwf3"
+                            data-indeterminate="false"
+                            name="optInAgreements2"
+                            type="checkbox"
+                          />
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                            data-testid="CheckBoxOutlineBlankIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
                           >
-                            <svg
-                              class="css-1s8o7ec"
-                              fill="#778194"
-                              height="24px"
-                              width="24px"
-                            >
-                              <use
-                                href="image-mock#file"
-                              />
-                            </svg>
-                            <p
-                              class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
-                            >
-                              Upload File
-                            </p>
-                          </div>
-                          <div
-                            class="MuiBox-root css-0"
-                            role="button"
-                            tabindex="0"
-                          >
-                            <p
-                              class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
-                            >
-                              Browse
-                            </p>
-                            <input
-                              accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
-                              autocomplete="off"
-                              hidden=""
-                              id="institutionalInvestorDocuments[0].value"
-                              name="institutionalInvestorDocuments[0].value"
-                              style="display: none;"
-                              tabindex="-1"
-                              type="file"
+                            <path
+                              d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
                             />
-                          </div>
-                          <div
-                            class="MuiBox-root css-16mkun2"
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                          />
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                          style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                        >
+                          I have been informed of and understand my right to
+                           
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
+                            style="cursor: pointer;"
                           >
-                            <span
-                              aria-valuemax="100"
-                              aria-valuemin="0"
-                              aria-valuenow="0"
-                              class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
-                              role="progressbar"
-                            >
-                              <span
-                                class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
-                                style="transform: translateX(-100%);"
-                              />
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                            opt out
+                          </span>
+                           of the Accredited Investors status
+                        </p>
+                      </label>
                     </div>
                   </div>
                 </div>

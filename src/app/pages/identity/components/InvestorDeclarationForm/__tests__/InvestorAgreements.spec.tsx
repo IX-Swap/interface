@@ -21,7 +21,7 @@ describe('InvestorAgreements', () => {
 
     expect(
       getByText(
-        'An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency; or'
+        'An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency'
       )
     ).toBeTruthy()
   })
