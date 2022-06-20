@@ -21,11 +21,8 @@ export const EmptyState = ({ filtred }: Props) => {
       ) : (
         <>
           <EmptyText>
-            <Trans>{`Oops, you don't have any Payout Events!`}</Trans>
+            <Trans>{`No Payout Events!`}</Trans>
           </EmptyText>
-          <ButtonIXSGradient>
-            <Trans>Buy Now</Trans>
-          </ButtonIXSGradient>
         </>
       )}
     </EmptyContainer>
