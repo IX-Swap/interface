@@ -3,9 +3,9 @@ import { useCallback } from 'react'
 import { switchToNetwork } from './switchToNetwork'
 import { isMetamaskOrWalletConnect, useActiveWeb3React } from './web3'
 
-export default function useSwitchChain(): {
+export const useSwitchChain = (): {
   switchChain: (switchToChainId?: number) => void
-} {
+} => {
   const { library, chainId } = useActiveWeb3React()
 
   const switchChain = useCallback(
