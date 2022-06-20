@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 
@@ -16,6 +16,7 @@ import { useShowError } from 'state/application/hooks'
 
 import { PayoutType } from './PayoutType'
 import { FormCard } from './styleds'
+import { PublishPayoutModal } from './PublishPayoutModal'
 
 interface Props {
   values: any
@@ -23,9 +24,18 @@ interface Props {
 }
 
 export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
+  const [openModal, setOpenModal] = useState(true)
   const { token, tokenAmount, recordDate } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
+
+  const open = () => {
+    setOpenModal(true)
+  }
+
+  const close = () => {
+    setOpenModal(false)
+  }
 
   const handleDropImage = (acceptedFile: any) => {
     const file = acceptedFile
@@ -144,10 +154,12 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
         <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={isButtonDisabled}>
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
-        <ButtonIXSGradient padding="16px 24px" disabled>
+        <ButtonIXSGradient padding="16px 24px" onClick={open}>
           Publish Payout Event
         </ButtonIXSGradient>
       </Flex>
+
+      {openModal && <PublishPayoutModal close={close} />}
     </FormCard>
   )
 }
