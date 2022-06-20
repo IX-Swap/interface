@@ -10,7 +10,7 @@ export const UsCitizenshipConfirmation = () => {
   const styles = useStyles()
   return (
     <>
-      <Box display='flex' flexDirection='row'>
+      <Box display='flex' flexDirection='row' mb={2}>
         <FormSectionHeader title={'FATCA'} />
         &nbsp;
         <Tooltip

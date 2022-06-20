@@ -29,6 +29,7 @@ import { AddressFields } from 'app/pages/identity/components/AddressFields/Addre
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
+import { VSpacer } from 'components/VSpacer'
 
 export const individualInvestorFormSteps = [
   {
@@ -41,12 +42,14 @@ export const individualInvestorFormSteps = [
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 4 }}>
             <FormSectionHeader title={'Personal Information'} />
+            <VSpacer size='medium' />
             <IndividualInfoFields />
           </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 4 }}>
             <FormSectionHeader title={'Address'} />
+            <VSpacer size='medium' />
             <AddressFields />
           </Paper>
         </Grid>
