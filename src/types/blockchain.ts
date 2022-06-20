@@ -1,3 +1,5 @@
+import { Web3Provider, ExternalProvider } from '@ethersproject/providers'
+
 export type MetaDataField = [string, string, string]
 
 export interface BlockchainNetwork {
@@ -24,4 +26,10 @@ export enum BlockchainNetworks {
   XTZ = 'Tezos',
   HBAR = 'Hedera',
   ALGO = 'Algorand'
+}
+export interface ExternalProviderAx extends ExternalProvider {
+  isWalletConnect?: boolean
+}
+export interface Web3ProviderAx extends Web3Provider {
+  provider: ExternalProviderAx
 }

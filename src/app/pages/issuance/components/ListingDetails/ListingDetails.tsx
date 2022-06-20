@@ -32,7 +32,7 @@ export const ListingDetails = ({
               logoId={data.logo}
               name={data.tokenName}
               symbol={data.tokenSymbol}
-              companyName={data.corporate.companyLegalName}
+              companyName={data.corporate?.companyLegalName}
               markets={data.markets}
             />
           </Grid>

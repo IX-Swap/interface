@@ -7,10 +7,12 @@ export const adminEl = {
   USERS_PAGE: '[href="/app/admin/users"]',
   VIRTUAL_ACCOUNT: '[href="/app/admin/virtualAccount"]',
   UNASSIGNED_SUCCESSFULLY: 'text="Virtual account unassigned successfully!"',
+  FUNDS_MANAGEMENT_SECTION: '[href="/app/funds-management"]',
   TABLE: '[data-testid="table"] > tbody tr',
+  SETTINGS: '[href="/app/settings"]',
 
   buttons: {
-    FIRST_IN_TABLE: '//td/button',
+    FIRST_IN_TABLE: '//td//input',
     PROFILE_VIEW: '[aria-controls="profile-menu"]',
     DISABLE_THIS_USER: 'button >> text="DISABLE THIS USER"',
     DISABLE: 'button >> text="DISABLE"',
@@ -20,7 +22,8 @@ export const adminEl = {
     ADD_ACCOUNTS: 'BUTTON >> text="ADD ACCOUNTS"',
     CONFIRM: 'text="Confirm"',
     AVAILABLE_ACCOUNTS: 'button>>text="Available Accounts"',
-    SAVE: 'button >> text="Save"'
+    SAVE: 'button >> text="Save"',
+    OK: '[role="dialog"] >> text="Ok"'
   },
 
   fields: {
@@ -35,6 +38,8 @@ export const adminEl = {
     NO_IDENTITY: 'text="No Identity Created Yet"',
     IDENTITY_TYPE: '[aria-haspopup="listbox"]',
     INDIVIDUAL_VALUE: '[data-value="individual"]',
+    CORPORATE_VALUE: '[data-value="corporate"]',
+
     ISSUER_RIGHTS: '[data-value="issuer"]',
     AUTHORIZER_RIGHTS: '[data-value="authorizer"]',
     FUNDMANAGER_RIGHTS: '[data-value="fundmanager"]',

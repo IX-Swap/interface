@@ -14,10 +14,7 @@ const detachedState = {
 }
 
 async function waitNewPage(context, page, element) {
-  const [secondPage] = await Promise.all([
-    context.waitForEvent('page'),
-    page.click(element)
-  ])
+  const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(element)])
   return secondPage
 }
 
@@ -29,7 +26,6 @@ const randomString = (length = 8) => {
   for (let i = 0; i < length; i++) {
     str += chars.charAt(Math.floor(Math.random() * chars.length))
   }
-
   return str
 }
 
@@ -44,7 +40,7 @@ async function uploadFiles(page, element, file, resp = 'yes') {
   for (const element of inputsFile) {
     await element.setInputFiles(file)
     if (resp === 'yes') {
-      await waitForResponseInclude(page, '/dataroom')
+      await waitForResponseInclude(page, '/dataroom/')
     }
   }
   return { inputsFile }
@@ -86,10 +82,7 @@ async function clearAndTypeText(selector, words, page) {
 
 async function waitForText(page, words) {
   try {
-    await page.waitForSelector(
-      `//*[contains(text(),'${words}')]`,
-      attachedState
-    )
+    await page.waitForSelector(`//*[contains(text(),'${words}')]`, attachedState)
     return true
   } catch {
     throw new Error(`Text: ${words} not found `)
@@ -113,7 +106,7 @@ async function shouldNotExist(selector, page) {
     throw new Error(`Selector: ${selector} exist but should not `)
   }
 }
-async function isDisabledList(list: Array<[]>, page) {
+async function isDisabledList(list, page) {
   let result = new Array()
   for (const item of list) {
     const isDis = await page.isDisabled(item)
@@ -122,14 +115,16 @@ async function isDisabledList(list: Array<[]>, page) {
   return result
 }
 
-async function getMessage(email, page, messageTitle = 'Invitation') {
+const delay = ms => new Promise(res => setTimeout(res, ms))
+
+async function getMessage(email, messageTitle = 'Invitation') {
   const partsEmail = email.split('@')
   let results
   let link
   let messageId
 
   for (const i of [1, 2, 3, 4]) {
-    await page.waitForTimeout(5000)
+    await delay(5000)
     results = await fetch(
       `https://www.1secmail.com/api/v1/?action=getMessages&login=${partsEmail[0]}&domain=${partsEmail[1]}`
     ).then(res => res.json())
@@ -161,11 +156,9 @@ async function getMessage(email, page, messageTitle = 'Invitation') {
 
 async function waitForResponseInclude(page, responseText) {
   try {
-    await page.waitForResponse(
-      response =>
-        response.url().includes(`${responseText}`) && response.status() === 200,
-      { timeout: DEFAULT_SELECTOR_TIMEOUT }
-    )
+    await page.waitForResponse(response => response.url().includes(`${responseText}`) && response.status() === 200, {
+      timeout: DEFAULT_SELECTOR_TIMEOUT
+    })
   } catch {
     throw new Error(`Response url does NOT include: ${responseText} `)
   }
@@ -174,14 +167,11 @@ async function waitForResponseInclude(page, responseText) {
 async function waitForRequestInclude(page, requestText, method = 'GET') {
   try {
     const request = await page.waitForRequest(
-      request =>
-        request.url().includes(requestText) && request.method() === method
+      request => request.url().includes(requestText) && request.method() === method
     )
     return request
   } catch {
-    throw new Error(
-      `Request url does NOT include: ${requestText} or the method is not ${method} `
-    )
+    throw new Error(`Request url does NOT include: ${requestText} or the method is not ${method} `)
   }
 }
 
@@ -230,5 +220,6 @@ export {
   waitNewPage,
   isDisabledList,
   getCount,
-  LOADER
+  LOADER,
+  delay
 }

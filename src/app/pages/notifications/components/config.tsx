@@ -5,6 +5,8 @@ import { NotificationType } from 'types/notification'
 
 export const notificationIconMap: Record<NotificationType, ElementType> = {
   success: Check,
+  SELL: Check,
+  BUY: Check,
   error: Close,
   info: PriorityHigh,
   warning: PriorityHigh
@@ -12,6 +14,8 @@ export const notificationIconMap: Record<NotificationType, ElementType> = {
 
 export const notificationColorMap: Record<NotificationType, string> = {
   success: themeColors.success,
+  BUY: themeColors.success,
+  SELL: themeColors.success,
   error: themeColors.error,
   info: themeColors.info,
   warning: themeColors.warning
