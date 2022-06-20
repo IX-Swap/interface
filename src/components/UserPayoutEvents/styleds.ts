@@ -68,8 +68,22 @@ export const EmptyText = styled.div`
   font-weight: 600;
   font-size: 24px;
   line-height: 24px;
-  margin: 60px 0 40px;
+  margin-top: 60px;
   text-align: center;
+`
+
+export const NothingFound = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  align-items: center;
+
+  > div:last-child {
+    font-weight: 600;
+    line-height: 24px;
+    font-size: 18px;
+    color: ${({ theme }) => theme.text9};
+  }
 `
 
 export const AllPayoutContainer = styled.div`

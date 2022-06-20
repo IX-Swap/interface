@@ -2,9 +2,8 @@ import React from 'react'
 import { Trans } from '@lingui/macro'
 
 import logoImg from 'assets/svg/logo-white.svg'
-import { ButtonIXSGradient } from 'components/Button'
 
-import { EmptyContainer, EmptyText } from './styleds'
+import { EmptyContainer, EmptyText, NothingFound } from './styleds'
 
 interface Props {
   filtred?: boolean
@@ -15,9 +14,14 @@ export const EmptyState = ({ filtred }: Props) => {
     <EmptyContainer>
       <img src={logoImg} alt="logoImg" />
       {filtred ? (
-        <EmptyText>
-          <Trans>{`We couldn't find anything with this criteria`}</Trans>
-        </EmptyText>
+        <NothingFound>
+          <EmptyText>
+            <Trans>Nothing found</Trans>
+          </EmptyText>
+          <div>
+            <Trans>{`We couldn't find anything with this criteria`}</Trans>
+          </div>
+        </NothingFound>
       ) : (
         <>
           <EmptyText>
