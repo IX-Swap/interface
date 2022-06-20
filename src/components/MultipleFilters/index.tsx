@@ -158,16 +158,16 @@ export const MultipleFilters = ({
   const filterComponents = {
     [FILTERS.SEARCH]: (
       <Search
+        value={values[FILTERS.SEARCH]}
         setSearchValue={(value: string) => setFieldValue(FILTERS.SEARCH, value)}
         placeholder={t`${searchPlaceholder}`}
         style={{ margin: 0 }}
-        value={values.search}
       />
     ),
     [FILTERS.ROLES]: (
       <FilterDropdown
         placeholder="Role"
-        selectedItems={values.roles}
+        selectedItems={values[FILTERS.ROLES]}
         onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
         items={rolesOptions}
       />
@@ -175,7 +175,7 @@ export const MultipleFilters = ({
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
         placeholder="Sec Token"
-        selectedItems={values.tokens}
+        selectedItems={values[FILTERS.SEC_TOKENS]}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
         items={secTokensOptions}
       />
@@ -183,7 +183,7 @@ export const MultipleFilters = ({
     [FILTERS.STATUS]: (
       <FilterDropdown
         placeholder="Status"
-        selectedItems={values.status}
+        selectedItems={values[FILTERS.STATUS]}
         onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
         items={statusOptions}
       />
@@ -191,7 +191,7 @@ export const MultipleFilters = ({
     [FILTERS.PAYOUT_TYPE]: (
       <FilterDropdown
         placeholder="Payout type"
-        selectedItems={values.payoutType}
+        selectedItems={values[FILTERS.PAYOUT_TYPE]}
         onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item.value)}
         items={payoutTypeOptions}
       />
@@ -199,7 +199,7 @@ export const MultipleFilters = ({
     [FILTERS.PAYOUT_TOKEN]: (
       <FilterDropdown
         placeholder="Payout token"
-        selectedItems={values.payoutToken}
+        selectedItems={values[FILTERS.PAYOUT_TOKEN]}
         onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item.value)}
         items={tokensOptions}
       />
@@ -207,7 +207,7 @@ export const MultipleFilters = ({
     [FILTERS.PAYOUT_PERIOD]: (
       <DateRangePickerFilter
         label="Payment period"
-        value={values.payoutPeriod}
+        value={values[FILTERS.PAYOUT_PERIOD]}
         onChange={(value) =>
           setFieldValue(
             FILTERS.PAYOUT_PERIOD,
@@ -219,7 +219,7 @@ export const MultipleFilters = ({
     ),
     [FILTERS.RECORD_DATE]: (
       <MobileDatePicker
-        value={values.recordDate}
+        value={values[FILTERS.RECORD_DATE]}
         onChange={(value) => {
           setFieldValue(FILTERS.RECORD_DATE, dayjs(value).toISOString())
         }}
@@ -244,7 +244,7 @@ export const MultipleFilters = ({
     ),
     [FILTERS.DATE_OF_CLAIM]: (
       <MobileDatePicker
-        value={values.createdAt}
+        value={values[FILTERS.DATE_OF_CLAIM]}
         onChange={(value) => {
           setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).toISOString())
         }}

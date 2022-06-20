@@ -36,7 +36,8 @@ export const DarkBlueCard = styled.div<{ isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 176px;
+  flex: 1;
+  min-width: 150px;
   width: 100%;
   height: 60px;
   cursor: pointer;

@@ -64,6 +64,11 @@ export const StatusContainer = styled.div<{ color: keyof Colors | 'transparent' 
       color: ${({ theme }) => theme.text2};
       border: ${({ theme }) => `1px solid ${theme.text2}`};
     `};
+  ${({ color }) =>
+    color === 'yellow4' &&
+    css`
+      color: ${({ theme }) => theme.bg1};
+    `};
 `
 export const CreateButton = styled(ButtonIXSGradient)`
   min-height: 52px;

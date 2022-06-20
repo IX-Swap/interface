@@ -140,7 +140,7 @@ function CurrencyRow({
       <Row style={{ position: 'relative', height: '100%', alignItems: 'center' }}>
         <UnapprovedTokenWrapper
           as={Link}
-          to={routes.securityTokens(currency as WrappedTokenInfo)}
+          to={routes.securityToken((currency as any).tokenInfo.catalogId)}
           data-testid="currency-search-sec-token-info"
         >
           <CurrencyLogo currency={currency} size={'24px'} />

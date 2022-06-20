@@ -6,7 +6,7 @@ import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 
-import { createDraft } from './actions'
+import { createDraft, getPayoutList } from './actions'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -39,5 +39,34 @@ export function useCreateDraftPayout() {
     },
     [dispatch]
   )
+  return callback
+}
+
+export const getPayouts = async (params: Record<string, any>) => {
+  const result = await apiService.get(payout.payoutsList, undefined, params)
+  return result.data
+}
+
+export const useGetPayoutList = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const {
+    list: { page, offset },
+  } = usePayoutState()
+
+  const callback = useCallback(
+    async (params: Record<string, any>) => {
+      try {
+        dispatch(getPayoutList.pending())
+        const data = await getPayouts({ page, offset, ...params })
+        dispatch(getPayoutList.fulfilled({ data }))
+        return data
+      } catch (error: any) {
+        dispatch(getPayoutList.rejected({ errorMessage: 'Could not get payouts' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
   return callback
 }

@@ -11,6 +11,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import CurrencyLogo from 'components/CurrencyLogo'
 
 import { MySecTokenCard } from './styleds'
+import { routes } from 'utils/routes'
 
 interface Props {
   token: any
@@ -47,7 +48,7 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
   }, [wrappedToken])
 
   return (
-    <NavLink style={{ textDecoration: 'none', overflow: 'hidden' }} to={`/security-tokens/${token.id}`}>
+    <NavLink style={{ textDecoration: 'none', overflow: 'hidden' }} to={routes.securityToken(token.id)}>
       <MySecTokenCard isPending={status !== 'approved'}>
         <Flex flexDirection={isMobileOnly ? 'column' : 'row'} justifyContent="space-between">
           <Flex

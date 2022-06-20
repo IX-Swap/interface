@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import apiService from 'services/apiService'
-import { tokenManager } from 'services/apiUrls'
+import { payout } from 'services/apiUrls'
 
 import { AppDispatch, AppState } from '../index'
 import { getMyPayoutList, getPayoutHistoryList } from './actions'
@@ -12,7 +12,7 @@ export const useTokenManagerState = () => {
 }
 
 export const getMyPayout = async (params: Record<string, any>) => {
-  const result = await apiService.get(tokenManager.myPayouts, undefined, params)
+  const result = await apiService.get(payout.payoutsList, undefined, params)
   return result.data
 }
 
@@ -41,7 +41,7 @@ export const useGetMyPayout = () => {
 }
 
 export const geyPayoutHistory = async (params: Record<string, any>) => {
-  const result = await apiService.get(tokenManager.payoutHistory, undefined, params)
+  const result = await apiService.get(payout.payoutHistory, undefined, params)
   return result.data
 }
 

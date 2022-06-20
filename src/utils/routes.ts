@@ -13,7 +13,8 @@ export const routes = {
   kycIndividual: '/kyc/individual',
   kycCorporate: '/kyc/corporate',
   createPayoutEvent: '/payout/create',
-  securityTokens: (currency?: any) => `/security-tokens${currency ? `/${currency?.tokenInfo?.catalogId}` : ''}`,
+  securityTokens: (tab?: string) => `/security-tokens/${tab || ':tab'}`,
+  securityToken: (id?: number) => `/security-token/${id || ':currencyId'}`,
   staking: '/staking',
   vesting: '/vesting',
   nftList: '/nft',
@@ -27,5 +28,5 @@ export const routes = {
   nftViewCollection: (address: string) => `/nft/collections/${address}`,
   nftItemPath: `/nft/collections/:collectionAddress/:itemId`,
   nftItem: (address: string, id: number) => `/nft/collections/${address}/${id}`,
-  payoutItem: '/payout/:payoutId',
+  payoutItem: (id?: number) => `/payout/${id || ':payoutId'}`,
 }

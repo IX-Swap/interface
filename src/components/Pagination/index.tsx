@@ -18,11 +18,11 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
   const [inputPage, hanldeInputPage] = useState(0)
 
   useEffect(() => {
-    hanldeInputPage(page + 1)
+    hanldeInputPage(page)
   }, [page])
 
   const onPageClick = ({ selected }: { selected: number }) => {
-    onPageChange(selected)
+    onPageChange(selected + 1)
   }
 
   const onPageInputChange = ({ target: { value } }: { target: { value: string } }) => {
@@ -38,7 +38,7 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
   }
 
   const onClickButton = () => {
-    onPageChange(inputPage - 1)
+    onPageChange(inputPage)
   }
 
   if (!totalPages) return null
@@ -46,7 +46,7 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
   return (
     <Container>
       <ReactPaginate
-        forcePage={page}
+        forcePage={page - 1}
         breakLabel="..."
         onPageChange={onPageClick}
         pageRangeDisplayed={3}

@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie'
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
-import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
+import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
 
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
