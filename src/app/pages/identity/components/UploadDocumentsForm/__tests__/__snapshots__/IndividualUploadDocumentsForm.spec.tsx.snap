@@ -92,6 +92,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root css-0"
+                  role="button"
                   tabindex="0"
                 >
                   <p
@@ -196,6 +197,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root css-0"
+                  role="button"
                   tabindex="0"
                 >
                   <p
@@ -307,6 +309,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root css-0"
+                  role="button"
                   tabindex="0"
                 >
                   <p
