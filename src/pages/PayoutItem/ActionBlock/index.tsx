@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
 import { Box } from 'rebass'
 
-import { PAYOUT_STATUS } from '..'
+import { PAYOUT_STATUS } from 'constants/enums'
+
 import { ManagerView } from './ManagerView'
 import { UserView } from './UserView'
 

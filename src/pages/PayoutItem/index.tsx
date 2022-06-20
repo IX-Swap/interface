@@ -7,20 +7,12 @@ import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
 import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutHistory } from './History'
-
-export enum PAYOUT_STATUS {
-  DRAFT = 'draft',
-  ANNOUNCED = 'announced',
-  SCHEDULED = 'scheduled',
-  STARTED = 'started',
-  ENDED = 'ended',
-  DELAYED = 'delayed',
-}
 
 export default function PayoutItem({
   match: {

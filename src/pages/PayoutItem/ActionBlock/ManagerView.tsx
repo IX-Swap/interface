@@ -4,9 +4,9 @@ import { Box, Flex } from 'rebass'
 
 import CurrencyLogo from 'components/CurrencyLogo'
 import Column from 'components/Column'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
-import { PAYOUT_STATUS } from '..'
 import { momentFormatDate } from '../utils'
 
 interface Props {

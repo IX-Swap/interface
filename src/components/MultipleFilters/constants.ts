@@ -1,7 +1,7 @@
 import { capitalize } from '@material-ui/core'
 import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
 import { ROLES, ROLES_LABEL } from 'constants/roles'
-import { PAYOUT_STATUS } from 'pages/PayoutItem'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 export enum FILTERS {
   SEARCH = 'search',
