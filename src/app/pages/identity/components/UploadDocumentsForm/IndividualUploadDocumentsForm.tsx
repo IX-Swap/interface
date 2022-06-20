@@ -17,7 +17,7 @@ export const IndividualUploadDocumentsForm = () => {
   return (
     <Fragment>
       <FormSectionHeader title={'Upload Documents'} />
-      <Typography className={styles.text}>
+      <Typography className={styles.text} mt={2}>
         Please upload the following documents. All account statements and
         documents should be dated within 3 months. <br /> Type of document
         format supported is jpg, jpeg, png, gif, tiff, webp, svg, apng, avif,

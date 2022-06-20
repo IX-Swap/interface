@@ -35,7 +35,12 @@ export const InvestorDeclarationForm = ({
   return (
     <>
       <FormSectionHeader title='Investor Status Declaration' />
-      <Grid data-testid='investorStatusDeclaration' container spacing={3}>
+      <Grid
+        data-testid='investorStatusDeclaration'
+        container
+        spacing={3}
+        pt={2}
+      >
         <Grid item xs={12}>
           <Typography>{title}</Typography>
         </Grid>

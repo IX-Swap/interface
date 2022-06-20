@@ -96,9 +96,7 @@ export const individualInvestorFormSteps = [
         </Grid>
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <Paper sx={{ borderRadius: 2, p: 5 }}>
-              <IndividualUploadDocumentsForm />
-            </Paper>
+            <IndividualUploadDocumentsForm />
           </Paper>
         </Grid>
       </Grid>

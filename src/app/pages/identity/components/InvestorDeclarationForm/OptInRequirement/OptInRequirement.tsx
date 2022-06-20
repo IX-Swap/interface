@@ -9,7 +9,7 @@ export const OptInRequirement = () => {
   return (
     <Fragment>
       <FormSectionHeader title={'Opt-In Requirement'} />
-      <Box mb={2}>
+      <Box mb={2} mt={2}>
         <Typography variant='subtitle1'>
           I confirm to be treated as an “Accredited Investor” by InvestaX
         </Typography>
