@@ -25,7 +25,7 @@ export const useMetamaskWalletState = ({
     } else if (
       chainId !== undefined &&
       tokenChainId !== undefined &&
-      !(tokenChainId === chainId)
+      tokenChainId !== chainId
     ) {
       if (accountState !== AccountState.DIFFERENT_CHAIN) {
         setAccountState(AccountState.DIFFERENT_CHAIN)

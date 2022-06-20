@@ -8,7 +8,5 @@ export const useCurrencyBalance = (currencyName?: string) => {
           (item: { currency: string }) => item.currency === currencyName
         )
       : undefined
-  const currencyBalance =
-    virtualAccount !== undefined ? virtualAccount.balance.outstanding : 0
-  return currencyBalance
+  return virtualAccount !== undefined ? virtualAccount.balance.outstanding : 0
 }

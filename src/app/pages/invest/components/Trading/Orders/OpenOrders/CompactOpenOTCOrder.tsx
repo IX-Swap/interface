@@ -14,6 +14,23 @@ export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
 }
 
+export const renderCell = ({
+  key,
+  render,
+  item
+}: {
+  key: string
+  render: any
+  item: OTCOrder
+}) => {
+  if (key.length > 0) {
+    if (typeof render === 'function') {
+      return render(get(item, key), item)
+    }
+    return get(item, key)
+  }
+}
+
 export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
   const { columns, items } = props
   const { showEmptyState, rowColor } = useOpenOrderState(props)
@@ -22,7 +39,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
-  const sorted = items?.sort(sortOpenOrders) ?? []
+  const sorted = [...items]?.sort(sortOpenOrders) ?? []
   return (
     <TableBody>
       {sorted.map((item, i) => (
@@ -38,12 +55,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
                 index === 0 ? (
                   <React.Fragment key={key}>
                     <Grid item container justifyContent='space-between'>
-                      <Grid item>
-                        {key.length > 0 &&
-                          (typeof render === 'function'
-                            ? render(get(item, key), item)
-                            : get(item, key))}
-                      </Grid>
+                      <Grid item>{renderCell({ key, render, item })}</Grid>
                       <Grid item>
                         <OTCOrderActionsMobile item={item} type='Cancel' />
                       </Grid>
@@ -59,10 +71,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OTCOrder>) => {
                       xs={6}
                       style={{ textAlign: 'right', fontWeight: 400 }}
                     >
-                      {key.length > 0 &&
-                        (typeof render === 'function'
-                          ? render(get(item, key), item)
-                          : get(item, key))}
+                      {renderCell({ key, render, item })}
                     </Grid>
                   </React.Fragment>
                 )

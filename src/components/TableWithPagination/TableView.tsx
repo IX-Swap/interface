@@ -1,28 +1,29 @@
-import React from 'react'
 import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  LinearProgress,
-  TablePagination,
-  Paper,
+  FormControlLabel,
   Grid,
+  LinearProgress,
+  Paper,
   PaperProps,
-  FormControlLabel
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow
 } from '@mui/material'
-import { TableColumn, BaseFilter } from 'types/util'
+import { useTheme } from '@mui/material/styles'
+import { ThemeVariant } from '@mui/material/styles/overrides'
+import { NoData } from 'app/components/NoData/NoData'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
+import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'components/TableWithPagination/TableRows'
-import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
-import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
-import { useTheme } from '@mui/material/styles'
-import useStyles from './TableView.styles'
-import { NoData } from 'app/components/NoData/NoData'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { useHeaderColor } from 'helpers/tables'
+import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
+import React from 'react'
+import { BaseFilter, TableColumn } from 'types/util'
+import useStyles from './TableView.styles'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -54,7 +55,7 @@ export interface TableViewProps<T> {
   paperProps?: PaperProps
   defaultRowsPerPage?: number
   size?: 'small' | 'medium'
-  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+  themeVariant?: ThemeVariant
   noDataComponent?: JSX.Element
   noHeader?: boolean
   actionHeader?: string

@@ -26,6 +26,14 @@ export const TradingBody = () => {
   const submitForm = async (values: PlaceOrderArgs) => {
     return await create({ args: values, account })
   }
+  const renderSuffix = ({ tab }: { tab: number }) => (
+    <PlaceOrderSuffix
+      tab={tab}
+      currencyBalance={currencyBalance}
+      tokenBalance={balance}
+      tokenName={tokenName}
+    />
+  )
   const isFetching = false
   const createOrderStatus = ''
   return (
@@ -49,14 +57,7 @@ export const TradingBody = () => {
             tokenLabel={tokenName}
             isDisabled={!found || isLoading}
             currencyBalance={currencyBalance}
-            suffix={({ tab }: { tab: number }) => (
-              <PlaceOrderSuffix
-                tab={tab}
-                currencyBalance={currencyBalance}
-                tokenBalance={balance}
-                tokenName={tokenName}
-              />
-            )}
+            suffix={renderSuffix}
             tokenBalance={balance}
             onSubmit={submitForm}
           />
@@ -71,14 +72,7 @@ export const TradingBody = () => {
           tokenName={tokenName}
           currencyBalance={currencyBalance}
           tokenBalance={{ data: { amount: balance } }}
-          suffix={({ tab }: { tab: number }) => (
-            <PlaceOrderSuffix
-              tab={tab}
-              currencyBalance={currencyBalance}
-              tokenBalance={balance}
-              tokenName={tokenName}
-            />
-          )}
+          suffix={renderSuffix}
           submitForm={submitForm}
         />
       </Hidden>
