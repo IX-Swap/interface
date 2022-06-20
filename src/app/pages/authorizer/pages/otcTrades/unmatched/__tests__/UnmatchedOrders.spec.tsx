@@ -3,7 +3,7 @@ import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import React from 'react'
 import { renderWithInitialWidth } from 'test-utils'
-import { UnmatchedOrders } from '../UnmatchedOrders'
+import { UnmatchedOrders } from 'app/pages/authorizer/pages/otcTrades/unmatched/UnmatchedOrders'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
