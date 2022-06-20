@@ -29,7 +29,6 @@ import { AddressFields } from 'app/pages/identity/components/AddressFields/Addre
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
-import { OptInRequirement } from 'app/pages/identity/components/InvestorDeclarationForm/OptInRequirement/OptInRequirement'
 
 export const individualInvestorFormSteps = [
   {
@@ -85,14 +84,7 @@ export const individualInvestorFormSteps = [
     component: () => (
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <InvestorDeclarationForm />
-          </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <OptInRequirement />
-          </Paper>
+          <InvestorDeclarationForm />
         </Grid>
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 5 }}>
