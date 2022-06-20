@@ -89,13 +89,6 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
 
   const tryActivation = useCallback(
     async (connector: AbstractConnector | undefined) => {
-      Object.keys(SUPPORTED_WALLETS).map(key => {
-        if (connector === SUPPORTED_WALLETS[key].connector) {
-          return SUPPORTED_WALLETS[key].name
-        }
-        return true
-      })
-      // log selected wallet
       setPendingWallet(connector) // set wallet for pending view
       setWalletView(WALLET_VIEWS.PENDING)
 
