@@ -2,6 +2,10 @@ import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclar
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
+import {
+  corporateInvestorAgreementsMap,
+  individualInvestorAgreementsMap
+} from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/agreements'
 
 describe('InvestorAgreements', () => {
   afterEach(async () => {

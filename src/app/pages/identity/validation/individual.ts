@@ -10,7 +10,7 @@ import {
 } from 'validation/shared'
 import {
   IndividualAgreementsFormValues,
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues,
@@ -169,7 +169,7 @@ export const individualInvestorStatusDeclarationSchema = yup
 
 export const individualInvestorDocumentsSchema = yup
   .object()
-  .shape<IndividualDocumentsFormValues>({
+  .shape<IdentityDocumentsFormValues>({
     evidenceOfAccreditation: yup
       .array<DataroomFile>()
       .min(1)

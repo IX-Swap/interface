@@ -2,12 +2,12 @@ import React from 'react'
 import { Button } from '@mui/material'
 import { withStyles } from '@mui/styles'
 
-export interface SafeguardInfoActionProps {
+export interface InstitutionalInvestorInfoActionProps {
   close?: () => void
 }
-export const SafeguardInfoAction: React.FC<SafeguardInfoActionProps> = ({
-  close
-}) => {
+export const InstitutionalInvestorInfoAction: React.FC<
+  InstitutionalInvestorInfoActionProps
+> = ({ close }) => {
   const StyledButton = withStyles(theme => {
     return {
       root: {

@@ -11,9 +11,7 @@ export const OptOutInfoAction: React.FC<OptOutInfoActionProps> = ({
   const StyledButton = withStyles({
     root: {
       textTransform: 'none',
-      '&:first-child': {
-        marginRight: 24
-      }
+      whiteSpace: 'nowrap'
     }
   })(Button)
 

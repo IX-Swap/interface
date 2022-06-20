@@ -1,5 +1,5 @@
 import {
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualIdentity,
   IndividualInvestorDeclarationFormValues,
@@ -79,7 +79,7 @@ export const getInvestorDeclarationFormValues = (
 
 export const getDocumentsFormValues = (
   data: IndividualIdentity
-): IndividualDocumentsFormValues => {
+): IdentityDocumentsFormValues => {
   if (data === undefined) {
     return {
       evidenceOfAccreditation: [],

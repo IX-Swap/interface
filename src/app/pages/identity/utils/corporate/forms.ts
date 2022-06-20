@@ -4,7 +4,6 @@ import {
   CorporateIdentity,
   CorporateInvestorDeclarationFormValues,
   CorporateInvestorTaxDeclarationFormValues,
-  IndividualDocumentsFormValues,
   InvestorCorporateInfoFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   Personnel
@@ -98,15 +97,16 @@ export const getCorporateInvestorTaxDeclarationFormValues = (
 export const getCorporateInvestorDeclarationFormValues = (
   data: CorporateIdentity | undefined
 ): Partial<CorporateInvestorDeclarationFormValues> => {
-  return data?.declarations?.investorsStatus ?? {}
-}
+  const declarations = data?.declarations?.investorsStatus ?? {}
+  const isInstitutionalInvestor = data?.isInstitutionalInvestor
 
-export const getCorporateInvestorDocumentsFormValues = (
-  data: CorporateIdentity | undefined
-): IndividualDocumentsFormValues => {
-  return data?.documents.reduce((result: any, document) => {
-    const { evidenceOfAccreditation, financialDocuments, corporateDocuments } =
-      result
+  const documents = data?.documents.reduce((result: any, document) => {
+    const {
+      evidenceOfAccreditation,
+      financialDocuments,
+      corporateDocuments,
+      institutionalInvestorDocuments
+    } = result
 
     if (document.type === 'Evidence of Accreditation') {
       return {
@@ -135,8 +135,25 @@ export const getCorporateInvestorDocumentsFormValues = (
       }
     }
 
+    if (document.type === 'Institutional Investor Documents') {
+      return {
+        ...result,
+        institutionalInvestorDocuments: Array.isArray(
+          institutionalInvestorDocuments
+        )
+          ? [...institutionalInvestorDocuments, { value: document }]
+          : [{ value: document }]
+      }
+    }
+
     return result
   }, {})
+
+  return {
+    ...declarations,
+    ...documents,
+    isInstitutionalInvestor: isInstitutionalInvestor
+  }
 }
 
 export const getCorporateInvestorAgreementsAndDisclosuresFormValues = (

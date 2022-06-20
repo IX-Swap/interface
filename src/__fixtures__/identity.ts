@@ -12,8 +12,32 @@ import {
 import {
   CorporateIdentity,
   IndividualIdentity,
-  IndividualIdentityFormValues
+  IndividualIdentityFormValues,
+  InvestorCorporateInfoFormValues
 } from 'app/pages/identity/types/forms'
+
+export const corporateInfoRequestPayload: InvestorCorporateInfoFormValues = {
+  logo: undefined,
+  companyLegalName: 'InvestaX',
+  registrationNumber: '12345',
+  legalEntityStatus: 'status',
+  countryOfFormation: 'Singapore',
+  companyAddress: address,
+  mailingAddress: address,
+  isMailingAddressSame: true,
+  representatives: [
+    {
+      fullName: 'John Doe',
+      designation: 'CEO',
+      email: 'johnsemail',
+      contactNumber: '+6512345678901',
+      documents: []
+    }
+  ],
+  numberOfBusinessOwners: '2',
+  businessActivity: 'test',
+  sourceOfFund: 'LOAN'
+}
 
 export const corporate: CorporateIdentity = {
   _id: '1',
@@ -73,6 +97,7 @@ export const corporate: CorporateIdentity = {
   email: '',
   contactNumber: '',
   user,
+  isInstitutionalInvestor: false,
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],

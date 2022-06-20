@@ -14,7 +14,10 @@ export const FormSectionHeader = ({
 }: FormSectionHeaderProps) => {
   return (
     <Box>
-      <Typography variant={variant === 'section' ? 'h5' : 'subtitle1'}>
+      <Typography
+        variant={variant === 'section' ? 'h5' : 'subtitle1'}
+        color={'otpInput.color '}
+      >
         {title}
       </Typography>
 

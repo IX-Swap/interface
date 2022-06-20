@@ -2,16 +2,19 @@ import {
   Address,
   BeneficialOwnerFormValues,
   CorporateInvestorAgreementsFormValues,
+  CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
   DirectorFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
-import { DataroomFile } from 'types/dataroomFile'
 import {
   addressSchema,
   documentsSchema,
+  institutionalInvestorDocumentsSchema,
   emailSchema,
+  investorStatusDeclarationItemSchema,
+  optInAgreementsDependentValueSchema,
   taxIdentificationNumberSchema,
   validationMessages
 } from 'validation/shared'
@@ -180,96 +183,36 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
 
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
-  .shape<any>({
-    assets: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    trustee: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedBeneficiaries: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedSettlors: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedShareholders: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    partnership: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
+  .shape<
+    CorporateInvestorDeclarationFormValues &
+      CorporateInvestorDocumentsFormValues
+  >({
+    assets: investorStatusDeclarationItemSchema,
+    trustee: investorStatusDeclarationItemSchema,
+    accreditedBeneficiaries: investorStatusDeclarationItemSchema,
+    accreditedSettlors: investorStatusDeclarationItemSchema,
+    accreditedShareholders: investorStatusDeclarationItemSchema,
+    partnership: investorStatusDeclarationItemSchema,
+
+    isInstitutionalInvestor: yup.bool(),
 
     optInAgreements: yup
       .bool()
       .oneOf([true], 'Opt-In Requirement is required')
       .required(validationMessages.required),
 
-    primaryOfferingServices: yup.bool(),
-    digitalSecurities: yup.bool(),
-    digitalSecuritiesIssuance: yup.bool(),
-    allServices: yup.bool()
+    primaryOfferingServices: optInAgreementsDependentValueSchema,
+    digitalSecurities: optInAgreementsDependentValueSchema,
+    digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
+    allServices: optInAgreementsDependentValueSchema,
+    institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
+    // @ts-expect-error
+    evidenceOfAccreditation: documentsSchema,
+    // @ts-expect-error
+    corporateDocuments: documentsSchema,
+    // @ts-expect-error
+    financialDocuments: documentsSchema
   })
-  .test(
-    'investorDeclarations',
-    'Please choose at least one option under "Investor Status Declaration" section',
-    function (values) {
-      if (values === undefined || values === null) {
-        return false
-      }
-
-      const financialDeclarations = Object.entries(values)
-        .filter(([key]) => {
-          return (
-            key === 'assets' ||
-            key === 'trustee' ||
-            key === 'accreditedBeneficiaries' ||
-            key === 'accreditedSettlors' ||
-            key === 'accreditedShareholders' ||
-            key === 'partnership'
-          )
-        })
-        .map(([_key, value]) => value)
-
-      const result = financialDeclarations.every(value => value === false)
-
-      return !result
-    }
-  )
-
-export const corporateInvestorDocumentsSchema = yup
-  .object()
-  .shape<CorporateInvestorDocumentsFormValues>({
-    evidenceOfAccreditation: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    corporateDocuments: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    financialDocuments: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required)
-  })
-
-export const corporateIssuerDocumentsSchema = yup.object().shape({
-  corporateDocuments: yup
-    .array<DataroomFile>()
-    .min(1)
-    .required(validationMessages.required),
-  financialDocuments: yup
-    .array<DataroomFile>()
-    .min(1)
-    .required(validationMessages.required)
-})
 
 export const corporateInvestorAgreementsSchema = yup
   .object()
@@ -281,7 +224,6 @@ export const corporateInvestorAgreementsSchema = yup
 
 export const corporateInvestorSchema = yup.object().shape<any>({
   ...corporateInvestorInfoSchema.fields,
-  ...corporateIssuerDocumentsSchema.fields,
   ...corporateTaxDeclarationSchema.fields,
   ...directorsAndBeneficialOwnersSchema.fields
 })

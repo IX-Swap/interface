@@ -16,7 +16,8 @@ export default makeStyles(theme => ({
   icon: {
     position: 'absolute',
     top: 0,
-    right: 0
+    right: 0,
+    cursor: 'pointer'
   },
   actions: {
     padding: 0
