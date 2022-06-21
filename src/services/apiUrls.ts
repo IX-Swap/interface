@@ -43,6 +43,7 @@ export const payout = {
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',
   myPayoutsList: 'payout/list/my',
+  totalAmount: (tokenId: number) => `payout/total-amount/${tokenId}`,
 }
 
 export const kyc = {

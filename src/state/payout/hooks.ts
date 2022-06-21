@@ -53,6 +53,11 @@ export const getPayouts = async (params: Record<string, any>) => {
   return result.data
 }
 
+export const getTotalAmountByRecordDate = async (tokenId: number) => {
+  const result = await apiService.get(payout.totalAmount(tokenId))
+  return result.data
+}
+
 export const useGetPayoutList = () => {
   const dispatch = useDispatch<AppDispatch>()
   const {

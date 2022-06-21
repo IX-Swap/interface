@@ -21,10 +21,12 @@ import { PublishPayoutModal } from './PublishPayoutModal'
 interface Props {
   values: any
   onValueChange: (key: string, value: any) => void
+  isRecordFuture: boolean
+  totalSecTokenSum: number
 }
 
-export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
-  const [openModal, setOpenModal] = useState(true)
+export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, values, onValueChange }) => {
+  const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
@@ -89,12 +91,12 @@ export const PayoutEventBlock: FC<Props> = ({ values, onValueChange }) => {
             value={tokenAmount}
           />
         </FormGrid>
-        {recordDate && tokenAmount && token && (
+        {!isRecordFuture && recordDate && tokenAmount && token && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
-              {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${tokenAmount} ${
-                token.label
-              } per SEC token`}
+              {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${(
+                totalSecTokenSum / +tokenAmount
+              ).toFixed(2)} ${token.label} per SEC token`}
             </TYPE.description2>
           </ExtraInfoCard>
         )}
