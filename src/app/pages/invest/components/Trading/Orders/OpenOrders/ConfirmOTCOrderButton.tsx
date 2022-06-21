@@ -45,7 +45,7 @@ export const ConfirmOTCOrderButton = ({
   return (
     <>
       {(isLoading || loadingTransaction) && (
-        <Box className={classes.loader}>
+        <Box className={classes.loader} data-testid='loader'>
           <CircularProgress size={14} />
         </Box>
       )}
@@ -56,6 +56,7 @@ export const ConfirmOTCOrderButton = ({
               disabled={isLoading || loadingTransaction}
               onClick={handleClick}
               color='primary'
+              data-testid='confirmButton'
               size='small'
               {...rest}
             >
@@ -68,6 +69,7 @@ export const ConfirmOTCOrderButton = ({
               onClick={handleClick}
               variant='contained'
               color='primary'
+              data-testid='confirmButtonMobile'
               fullWidth
               {...rest}
             >
