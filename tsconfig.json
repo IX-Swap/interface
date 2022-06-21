@@ -30,10 +30,11 @@
   "include": [
     "src/**/*",
     "tests/*.ts",
+    "playwright.config.ts"
   ],
   "exclude": [
     "node_modules",
     "jest.config.js",
-    "**/*.test.{ts,tsx}"
+    "**/*.test.{ts,tsx}",
   ]
 }

@@ -1,5 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+
 import { NetworkConnector } from './NetworkConnector'
 import getLibrary from './getLibrary'
 
@@ -33,3 +35,8 @@ export function getNetworkLibrary(): Web3Provider {
 }
 
 export const injected = new InjectedConnector({})
+
+export const walletconnect = new WalletConnectConnector({
+  rpc: NETWORK_URLS,
+  qrcode: true
+})

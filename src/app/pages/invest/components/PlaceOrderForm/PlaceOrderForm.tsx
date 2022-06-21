@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@mui/material'
-import { Form } from 'components/form/Form'
-import { formatMoney, formatTokenBalance } from 'helpers/numbers'
-import { TabPanel } from 'components/TabPanel'
-import { LabelledValue } from 'components/LabelledValue'
+import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
+import { PlaceOrderFields } from 'app/pages/invest/components/PlaceOrderFields/PlaceOrderFields'
+import { useStyles } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderForm.styles'
 import {
   PlaceOrderArgs,
   PlaceOrderFormValues
 } from 'app/pages/invest/types/form'
-import { PlaceOrderFields } from 'app/pages/invest/components/PlaceOrderFields/PlaceOrderFields'
-import { useStyles } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderForm.styles'
-import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/invest/utils/order'
-import { useParams } from 'react-router-dom'
+import { Form } from 'components/form/Form'
+import { LabelledValue } from 'components/LabelledValue'
+import { TabPanel } from 'components/TabPanel'
+import { formatMoney, formatTokenBalance } from 'helpers/numbers'
 import { isEmptyString } from 'helpers/strings'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { OrderSide } from 'types/order'
-import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
+import { PlaceOrderFormSubmitButton } from './PlaceOrderFormSubmitButton'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -28,6 +28,8 @@ export interface PlaceOrderFormProps {
   isFetching?: boolean
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
   defaultActiveTab?: number
+  isDisabled?: boolean
+  suffix?: ({ tab }: { tab: number }) => React.ReactNode
 }
 
 export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
@@ -36,7 +38,9 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   tokenLabel,
   currencyBalance,
   tokenBalance,
+  suffix,
   isFetching = false,
+  isDisabled = false,
   onSubmit,
   defaultActiveTab = 0
 }) => {
@@ -122,20 +126,16 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             </TabPanel>
           )
         })}
-        <Grid item className={classes.buttonWrapper}>
-          <TwoFADialogWrapper>
-            <Submit
-              createOrderStatus={createOrderStatus}
-              disabled={isFetching}
-              data-testid='submit'
-              size='large'
-              variant='contained'
-              className={classes.button}
-            >
-              PLACE ORDER
-            </Submit>
-          </TwoFADialogWrapper>
-        </Grid>
+        <TwoFADialogWrapper>
+          <PlaceOrderFormSubmitButton
+            createOrderStatus={createOrderStatus}
+            isFetching={isFetching}
+            isDisabled={isDisabled}
+            balance={balance}
+            activeTabNameIdx={activeTabNameIdx}
+          />
+        </TwoFADialogWrapper>
+        {suffix?.({ tab: activeTabNameIdx })}
       </Grid>
     </Form>
   )

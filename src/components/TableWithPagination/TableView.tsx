@@ -1,27 +1,29 @@
-import React from 'react'
 import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  LinearProgress,
-  TablePagination,
-  Paper,
+  FormControlLabel,
   Grid,
+  LinearProgress,
+  Paper,
   PaperProps,
-  FormControlLabel
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow
 } from '@mui/material'
-import { TableColumn, BaseFilter } from 'types/util'
+import { useTheme } from '@mui/material/styles'
+import { ThemeVariant } from '@mui/material/styles/overrides'
+import { NoData } from 'app/components/NoData/NoData'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
+import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'components/TableWithPagination/TableRows'
-import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
-import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
-import { useTheme } from '@mui/material/styles'
-import useStyles from './TableView.styles'
-import { NoData } from 'app/components/NoData/NoData'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+import { useHeaderColor } from 'helpers/tables'
+import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
+import React from 'react'
+import { BaseFilter, TableColumn } from 'types/util'
+import useStyles from './TableView.styles'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -29,6 +31,7 @@ export interface TableViewRendererProps<T> {
   hasActions: boolean
   actions?: ActionsType<T>
   cacheQueryKey: any
+  loading?: boolean
 }
 export interface RenderHeadCellArgs<T> {
   item?: TableColumn<T>
@@ -52,7 +55,7 @@ export interface TableViewProps<T> {
   paperProps?: PaperProps
   defaultRowsPerPage?: number
   size?: 'small' | 'medium'
-  themeVariant?: 'default' | 'primary'
+  themeVariant?: ThemeVariant
   noDataComponent?: JSX.Element
   noHeader?: boolean
   actionHeader?: string
@@ -97,15 +100,9 @@ export const TableView = <T,>({
     queryEnabled: queryEnabled,
     defaultRowsPerPage: defaultRowsPerPage
   })
-
+  const headColor = useHeaderColor(themeVariant)
   const theme = useTheme()
   const classes = useStyles()
-  const headColor =
-    themeVariant === 'primary'
-      ? theme.palette.mode === 'light'
-        ? '#141272'
-        : theme.palette.primary.main
-      : 'initial'
   const headHeight = themeVariant === 'primary' ? 50 : 'initial'
   const headDisplay = noHeader ? 'none' : 'table-header-group'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
@@ -173,10 +170,9 @@ export const TableView = <T,>({
     >
       <b
         style={{
-          color:
-            themeVariant === 'primary'
-              ? theme.palette.slider.activeColor
-              : 'initial'
+          color: ['primary', 'success', 'error'].includes(themeVariant)
+            ? theme.palette.slider.activeColor
+            : 'initial'
         }}
       >
         {item?.label ?? content}
@@ -215,7 +211,8 @@ export const TableView = <T,>({
                   columns,
                   hasActions,
                   actions,
-                  cacheQueryKey
+                  cacheQueryKey,
+                  loading: isLoading
                 })
               ) : (
                 <TableRows

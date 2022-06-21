@@ -7,7 +7,7 @@ export const SOCKET_TRANSPORTS = getSocketTransports(
 )
 export const ENVIRONMENT = getEnvironment(API_URL)
 export const FULLSTORY = process.env.REACT_APP_FULLSTORY
-
+export const GAS = process.env.REACT_APP_GAS ?? 'low'
 export const isDevEnv = ENVIRONMENT === 'dev'
 export const isProdEnv = ENVIRONMENT === 'prime'
 export const DATE_FORMAT = 'MM/DD/YYYY'

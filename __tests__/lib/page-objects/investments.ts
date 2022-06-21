@@ -1,4 +1,7 @@
-import { getRequest } from '../helpers/api'
+import { Locator } from '@playwright/test'
+import { getCookies, getRequest, postRequest } from '../api/api'
+import { sendMoneyToEmail } from '../api/api-body'
+
 import { baseCreds } from '../helpers/creds'
 import {
   click,
@@ -8,15 +11,34 @@ import {
   uploadFiles,
   waitForRequestInclude,
   waitForText,
-  waitNewPage
+  waitNewPage,
+  delay
 } from '../helpers/helpers'
 import { text } from '../helpers/text'
 import { invest } from '../selectors/invest'
+import { issuance } from '../selectors/issuance'
 import { kyc } from './../selectors/kyc-form'
-class Invest {
+import { Admin } from './admin'
+class Invest extends Admin {
   page: any
+  SEARCH_FIELD: Locator
+  OTP_LOCATOR: Locator
+  PERSONAL_INFORMATION: Locator
+  ARROW_DROPDOWN_ICON: Locator
   constructor(page) {
+    super(page)
     this.page = page
+    this.SEARCH_FIELD = page.locator(invest.fields.SEARCH)
+    this.OTP_LOCATOR = page.locator(invest.fields.OTP)
+    this.PERSONAL_INFORMATION = page.locator('[data-testid="PersonIcon"]')
+    this.ARROW_DROPDOWN_ICON = page.locator('[data-testid="ArrowDropDownIcon"]')
+  }
+
+  getValueFromOTP = async () => {
+    await this.OTP_LOCATOR.click()
+    await this.OTP_LOCATOR.press('Control+V')
+    const val = await this.OTP_LOCATOR.getAttribute('value')
+    return val
   }
 
   getBalance = async (cookies, userId) => {
@@ -25,8 +47,8 @@ class Invest {
       const balance = resp.data[0].documents[0].balance
       return balance
     } catch (error) {
-      console.log('getBalance', error)
-      console.log(resp.data[0].documents)
+      console.error('getBalance', error)
+      console.error(resp.data[0].documents)
     }
   }
 
@@ -42,31 +64,13 @@ class Invest {
   }
 
   fullBalances = async cookies => {
-    const user1tokenBalance = await this.getTokenBalance(
-      cookies[0],
-      baseCreds.firstUserId
-    )
-    const user2tokenBalance = await this.getTokenBalance(
-      cookies[1],
-      baseCreds.secondUserId
-    )
-    const user3tokenBalance = await this.getTokenBalance(
-      cookies[2],
-      baseCreds.thirdUserId
-    )
+    const user1tokenBalance = await this.getTokenBalance(cookies[0], baseCreds.firstUserId)
+    const user2tokenBalance = await this.getTokenBalance(cookies[1], baseCreds.secondUserId)
+    const user3tokenBalance = await this.getTokenBalance(cookies[2], baseCreds.thirdUserId)
 
-    const user1SGDBalance = await this.getBalance(
-      cookies[0],
-      baseCreds.firstUserId
-    )
-    const user2SGDBalance = await this.getBalance(
-      cookies[1],
-      baseCreds.secondUserId
-    )
-    const user3SGDBalance = await this.getBalance(
-      cookies[2],
-      baseCreds.thirdUserId
-    )
+    const user1SGDBalance = await this.getBalance(cookies[0], baseCreds.firstUserId)
+    const user2SGDBalance = await this.getBalance(cookies[1], baseCreds.secondUserId)
+    const user3SGDBalance = await this.getBalance(cookies[2], baseCreds.thirdUserId)
 
     return {
       user1tokenBalance,
@@ -88,13 +92,17 @@ class Invest {
     await click(invest.OVERVIEW_PAGE, this.page)
   }
 
-  goToAvailableDso = async () => {
-    await click(invest.INVEST_TAB, this.page)
-    await click(invest.PRIMARY_SECTION, this.page)
-    await click(invest.buttons.INVEST_ACCOUNT, this.page)
+  goToAvailableDso = async (dsoName = 'fullDSOflow testing') => {
+    await this.goToPrimarySection()
+    const searchField = await this.page.locator(invest.fields.SEARCH_DSO)
+    await this.checkSearch(searchField, dsoName, 'issuance/dso/approved/list')
+  }
+
+  viewDSO = async () => {
+    await click(invest.buttons.VIEW_INVEST, this.page)
+    await click(invest.buttons.INVEST_LANDING, this.page)
   }
   downloadDocument = async context => {
-    await this.goToAvailableDso()
     await waitNewPage(context, this.page, invest.buttons.DOWNLOAD_DOC)
     return context.pages().length
   }
@@ -104,23 +112,36 @@ class Invest {
     await waitForText(this.page, text.notification.custodyAddress)
   }
   createNewInvestment = async () => {
-    await this.goToAvailableDso()
-    await uploadFiles(
-      this.page,
-      invest.fields.UPLOAD_SIGNED_DOC,
-      text.docs.pathToFile
-    )
+    await uploadFiles(this.page, invest.fields.UPLOAD_SIGNED_DOC, text.docs.pathToFile)
     await typeText(invest.fields.NUMBER_UNITS, '10', this.page)
     await click(invest.listBox.DESTINATION_WALLET_ADDRESS, this.page)
-    await click(invest.listBox.WALLET_ADDRESS_AQA_VALUE, this.page)
+    await click(issuance.dso.listBox.CORPORATE_VALUE, this.page)
+    await click(invest.checkBox.I_HAVE_READ, this.page)
     await typeText(invest.fields.OTP, '111111', this.page)
-    await click(invest.buttons.SUBMIT_INVEST, this.page)
+  }
+
+  investToNFT = async () => {
+    await click(invest.listBox.DESTINATION_WALLET_ADDRESS, this.page)
+    await click(issuance.dso.listBox.CORPORATE_VALUE, this.page)
+    await typeText(invest.fields.OTP, '111111', this.page)
+    await click(invest.checkBox.I_HAVE_READ, this.page)
+  }
+
+  createNewCommitment = async () => {
+    await uploadFiles(this.page, invest.fields.UPLOAD_SIGNED_DOC, text.docs.pathToFile)
+    await typeText(invest.fields.NUMBER_UNITS, '10', this.page)
+    await click(invest.listBox.DESTINATION_WALLET_ADDRESS, this.page)
+    await click(issuance.dso.listBox.CORPORATE_VALUE, this.page)
+    await typeText(invest.fields.OTP, '111111', this.page)
+  }
+
+  goToPrimarySection = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.PRIMARY_SECTION, this.page)
   }
 
   checkThatInvestmentLandingAvailable = async () => {
-    await click(invest.INVEST_TAB, this.page)
-    await click(invest.PRIMARY_SECTION, this.page)
-    await click(invest.buttons.LEARN_MORE, this.page)
+    await this.page.locator(invest.buttons.LEARN_MORE).last().click()
     await shouldExist(invest.LANDING_TABLES_PANEL, this.page)
   }
 
@@ -140,11 +161,7 @@ class Invest {
     await typeText(invest.fields.PRICE, price, this.page)
     await typeText(invest.fields.AMOUNT, amount, this.page)
     await click(invest.buttons.PLACE_ORDER, this.page)
-    await waitForRequestInclude(
-      this.page,
-      `${baseCreds.BASE_API}exchange/orders`,
-      'POST'
-    )
+    await waitForRequestInclude(this.page, `${baseCreds.BASE_API}exchange/orders`, 'POST')
     const toast = await this.page.innerText(invest.TOAST_NOTIFICATIONS)
     return toast.includes('Order created')
   }
@@ -176,17 +193,19 @@ class Invest {
   }
 
   checkCommitmentsPage = async () => {
-    await click(invest.INVEST_TAB, this.page)
-    await click(invest.PRIMARY_SECTION, this.page)
     await click(invest.ACCOUNTS_COMMITMENTS, this.page)
     await shouldExist(invest.TABLE, this.page)
   }
   checkRedirectionToCommitment = async () => {
     await click(invest.buttons.VIEW_SECOND_DSO, this.page)
-    const locator = this.page.locator(
-      '[class="MuiGrid-root fs-exclude MuiGrid-container MuiGrid-spacing-xs-4"]'
-    )
+    const locator = this.page.locator('[id="root"]')
     return locator
+  }
+
+  makeDeposit = async (email: string) => {
+    sendMoneyToEmail['email'] = email
+    const { cookies, request } = await getCookies(baseCreds.ADMIN)
+    await postRequest(sendMoneyToEmail, cookies, 'virtual-accounts/admin/deposits')
   }
 }
 export { Invest }

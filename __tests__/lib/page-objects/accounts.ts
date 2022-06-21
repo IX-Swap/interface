@@ -1,6 +1,4 @@
-import { bankAccounts } from '../selectors/accounts'
-import { text } from '../helpers/text'
-import { baseCreds } from '../helpers/creds'
+import { accountsTab } from '../selectors/accounts'
 
 import {
   click,
@@ -9,107 +7,103 @@ import {
   shouldNotExist,
   shouldExist,
   clearAndTypeText,
-  waitForResponseInclude
+  waitForResponseInclude,
+  randomString
 } from '../helpers/helpers'
-import { getCookies, getRequest } from '../helpers/api'
+import { getCookies, getRequest } from '../api/api'
+import { Locator } from '@playwright/test'
 
-class BankAccounts {
+class Accounts {
   page: any
+  AMOUNT: Locator
+  CONNECT: Locator
+  SUBMIT_BUTTON: Locator
+  CONFIRM_WITHDRAWAL_BUTTON: Locator
   constructor(page) {
     this.page = page
+    this.CONFIRM_WITHDRAWAL_BUTTON = page.locator('text="Confirm Withdrawal"')
+    this.SUBMIT_BUTTON = page.locator('[type="submit"]')
+    this.CONNECT = page.locator(accountsTab.buttons.CONNECT)
+    this.AMOUNT = page.locator(accountsTab.fields.AMOUNT)
   }
+
   tokenDepositRequest = async () => {
-    await click(bankAccounts.buttons.DEPOSIT, this.page)
-    await click(bankAccounts.listBox.TOKEN, this.page)
-    await click(bankAccounts.listBox.TOKEN_VALUE, this.page)
+    await click(accountsTab.buttons.DEPOSIT, this.page)
+    await click(accountsTab.listBox.TOKEN, this.page)
+    await click(accountsTab.listBox.TOKEN_VALUE, this.page)
     await waitForText(this.page, '0.0.609610')
   }
   tokenWithdrawalRequest = async () => {
-    await click(bankAccounts.buttons.WITHDRAW_SECTON, this.page)
-    await click(bankAccounts.listBox.TOKEN, this.page)
-    await click(bankAccounts.listBox.TOKEN_VALUE, this.page)
-    await typeText(bankAccounts.fields.WALLET, '0.0.609610', this.page)
-    await click(bankAccounts.fields.AMOUNT, this.page)
-    await typeText(bankAccounts.fields.AMOUNT, '1', this.page)
-    await click(bankAccounts.buttons.CONFIRM, this.page)
+    await click(accountsTab.buttons.WITHDRAW_SECTON, this.page)
+    await click(accountsTab.listBox.TOKEN, this.page)
+    await click(accountsTab.listBox.TOKEN_VALUE, this.page)
+    await typeText(accountsTab.fields.WALLET, '0.0.609610', this.page)
+    await click(accountsTab.fields.AMOUNT, this.page)
+    await typeText(accountsTab.fields.AMOUNT, '1', this.page)
+    await click(accountsTab.buttons.CONFIRM, this.page)
     await waitForText(this.page, 'Success')
   }
 
   fillAccountInfoForm = async () => {
-    await click(bankAccounts.buttons.ADD_BANK_ACCOUNT, this.page)
-    await typeText(bankAccounts.fields.BANK_NAME, 'BANK_NAME', this.page)
-    await typeText(
-      bankAccounts.fields.ACCOUNT_HOLDER_NAME,
-      'ACCOUNT_HOLDER_NAME',
-      this.page
-    )
-    await typeText(bankAccounts.fields.BANK_ACCOUNT_NUMBER, '937', this.page)
-    await typeText(bankAccounts.fields.SWIFT_CODE, '123123', this.page)
-    await click(bankAccounts.listBox.CURRENCY, this.page)
-    await click(bankAccounts.listBox.CURRENCY_VALUE_SGD, this.page)
+    await click(accountsTab.buttons.ADD_BANK_ACCOUNT, this.page)
+    await typeText(accountsTab.fields.BANK_NAME, 'BANK_NAME', this.page)
+    await typeText(accountsTab.fields.ACCOUNT_HOLDER_NAME, 'ACCOUNT_HOLDER_NAME', this.page)
+    await typeText(accountsTab.fields.BANK_ACCOUNT_NUMBER, randomString(1) + '937', this.page)
+    await typeText(accountsTab.fields.SWIFT_CODE, '123123', this.page)
+    await click(accountsTab.listBox.CURRENCY, this.page)
+    await click(accountsTab.listBox.CURRENCY_VALUE_SGD, this.page)
   }
 
   fillBankAddressForm = async () => {
-    await typeText(
-      bankAccounts.fields.ADDRESS_LINE,
-      'shevchenko 250',
-      this.page
-    )
-    await typeText(bankAccounts.fields.CITY, 'lviv', this.page)
-    await typeText(bankAccounts.fields.STATE, 'lviv', this.page)
-    await typeText(bankAccounts.fields.POSTAL_CODE, '18000', this.page)
-    await click(bankAccounts.listBox.COUNTRY, this.page)
-    await click(bankAccounts.listBox.COUNTRY_VALUE, this.page)
-    await click(bankAccounts.fields.BANK_NAME, this.page)
-    await click(bankAccounts.buttons.SUBMIT_ACCOUNT, this.page)
-    const exist = await shouldExist(bankAccounts.buttons.MORE, this.page)
+    await typeText(accountsTab.fields.ADDRESS_LINE, 'shevchenko 250', this.page)
+    await typeText(accountsTab.fields.CITY, 'lviv', this.page)
+    await typeText(accountsTab.fields.STATE, 'lviv', this.page)
+    await typeText(accountsTab.fields.POSTAL_CODE, '18000', this.page)
+    await click(accountsTab.listBox.COUNTRY, this.page)
+    await click(accountsTab.listBox.COUNTRY_VALUE, this.page)
+    await click(accountsTab.fields.BANK_NAME, this.page)
+    await click(accountsTab.buttons.SUBMIT_ACCOUNT, this.page)
+    const exist = await shouldExist(accountsTab.buttons.MORE, this.page)
     return exist
   }
   editBankAccount = async () => {
-    await click(bankAccounts.buttons.MORE, this.page)
-    await click(bankAccounts.buttons.EDIT, this.page)
-    await typeText(
-      bankAccounts.fields.ADDRESS_LINE2,
-      'ADDRESS_LINE2',
-      this.page
-    )
-    await clearAndTypeText(
-      bankAccounts.fields.ACCOUNT_HOLDER_NAME,
-      'newHolderName',
-      this.page
-    )
-    await click(bankAccounts.buttons.SAVE, this.page)
-    await waitForText(this.page, 'newHolderName')
+    const randomName = 'newHolderName' + randomString()
+    await click(accountsTab.buttons.MORE, this.page)
+    await click(accountsTab.buttons.EDIT, this.page)
+    await clearAndTypeText(accountsTab.fields.ACCOUNT_HOLDER_NAME, randomName, this.page)
+    return randomName
   }
   viewBankAccount = async () => {
-    await click(bankAccounts.buttons.MORE, this.page)
-    await click(bankAccounts.buttons.VIEW_ACCOUNT, this.page)
-    await shouldExist(bankAccounts.ACCOUNT_INFORMATION, this.page)
+    await click(accountsTab.buttons.MORE, this.page)
+    await click(accountsTab.buttons.VIEW_ACCOUNT, this.page)
+    await shouldExist(accountsTab.ACCOUNT_INFORMATION, this.page)
   }
 
   removeBankAccount = async () => {
-    await click(bankAccounts.buttons.MORE, this.page)
-    await click(bankAccounts.buttons.REMOVE, this.page)
+    await click(accountsTab.buttons.MORE, this.page)
+    await click(accountsTab.buttons.REMOVE, this.page)
     const code = await this.page.$$('input')
     for (const digit of code) {
       await digit.fill('1')
     }
-    await click(bankAccounts.buttons.CONFIRM, this.page)
+    await click(accountsTab.buttons.CONFIRM, this.page)
     await waitForResponseInclude(this.page, '/remove')
-    await shouldNotExist(bankAccounts.buttons.MORE, this.page)
+    await shouldNotExist(accountsTab.buttons.MORE, this.page)
   }
 
-  createWithdrawalsRequest = async () => {
-    await click(bankAccounts.listBox.TO_BANK_ACCOUNT, this.page)
-    const locator = await this.page.locator(bankAccounts.listBox.BANK)
+  createWithdrawalsRequest = async (amaunt = '10000', isApprove = true) => {
+    await click(accountsTab.listBox.TO_BANK_ACCOUNT, this.page)
+    const locator = await this.page.locator(accountsTab.listBox.BANK)
     await locator.last().click()
-    await typeText(bankAccounts.fields.AMOUNT, '10000', this.page)
-    await click(bankAccounts.buttons.CONFIRMATION_WITHDRAWAL, this.page)
-    const code = await this.page.$$('[role="dialog"] input')
-    for (const digit of code) {
-      await digit.fill('1')
+    await typeText(accountsTab.fields.AMOUNT, amaunt, this.page)
+    if (isApprove) {
+      await click(accountsTab.buttons.CONFIRMATION_WITHDRAWAL, this.page)
+      const code = await this.page.$$('[role="dialog"] input')
+      for (const digit of code) {
+        await digit.fill('1')
+      }
+      await click(accountsTab.buttons.WITHDRAW, this.page)
     }
-    await click(bankAccounts.buttons.WITHDRAW, this.page)
   }
 
   getBalances = async email => {
@@ -122,4 +116,4 @@ class BankAccounts {
   }
 }
 
-export { BankAccounts }
+export { Accounts }
