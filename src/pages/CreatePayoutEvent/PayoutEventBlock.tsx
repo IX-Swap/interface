@@ -1,6 +1,7 @@
 import React, { FC, useMemo, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
+import moment from 'moment'
 
 import { TYPE } from 'theme'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
@@ -27,7 +28,7 @@ interface Props {
 
 export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, values, onValueChange }) => {
   const [openModal, setOpenModal] = useState(false)
-  const { token, tokenAmount, recordDate } = values
+  const { token, tokenAmount, recordDate, startDate, secToken } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
 
@@ -91,7 +92,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
             value={tokenAmount}
           />
         </FormGrid>
-        {!isRecordFuture && recordDate && tokenAmount && token && (
+        {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
               {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${(
@@ -107,8 +108,9 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
+          minDate={recordDate && moment(new Date(recordDate)).add(1, 'days')}
           openTo="date"
-          value={values.startDate}
+          value={startDate}
           onChange={(newDate) => onValueChange('startDate', newDate)}
           required
         />
@@ -116,6 +118,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
+          minDate={startDate && moment(new Date(startDate)).add(1, 'days')}
           openTo="date"
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', newDate)}
@@ -156,12 +159,12 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
         <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={isButtonDisabled}>
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
-        <ButtonIXSGradient padding="16px 24px" onClick={open}>
+        <ButtonIXSGradient type="button" padding="16px 24px" onClick={open} disabled={isButtonDisabled}>
           Publish Payout Event
         </ButtonIXSGradient>
       </Flex>
 
-      {openModal && <PublishPayoutModal close={close} />}
+      {openModal && <PublishPayoutModal values={values} close={close} isRecordFuture={isRecordFuture} />}
     </FormCard>
   )
 }

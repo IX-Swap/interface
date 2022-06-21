@@ -12,7 +12,24 @@ export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
 }
 
-export const createDraftPayout = async (newPayoutDraft: any) => {
+const publishPayout = async (newPayoutDraft: any) => {
+  const formData = new FormData()
+
+  for (const key in newPayoutDraft) {
+    if (key === 'files') {
+      newPayoutDraft[key].forEach((item: any) => {
+        formData.append(`${key}`, item)
+      })
+    } else {
+      formData.append(key, newPayoutDraft[key])
+    }
+  }
+
+  const result = await apiService.post(payout.publish, formData)
+  return result.data
+}
+
+const createDraftPayout = async (newPayoutDraft: any) => {
   const formData = new FormData()
 
   for (const key in newPayoutDraft) {
@@ -27,6 +44,25 @@ export const createDraftPayout = async (newPayoutDraft: any) => {
 
   const result = await apiService.post(payout.createDraft, formData)
   return result.data
+}
+
+export function usePublishPayout() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (newPayoutDraft: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await publishPayout(newPayoutDraft)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: 'Could not create draft payout' }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
 }
 
 export function useCreateDraftPayout() {

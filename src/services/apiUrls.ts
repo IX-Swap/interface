@@ -40,6 +40,7 @@ export const auth = {
 
 export const payout = {
   createDraft: `payout/draft`,
+  publish: `payout/publish`,
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',
   myPayoutsList: 'payout/list/my',
