@@ -17,7 +17,9 @@ import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders
 import { renderTotal } from 'helpers/numbers'
 import React, { useContext, useMemo } from 'react'
 import { OpenOTCOrder } from 'types/otcOrder'
+import { MobileConfirmationMessage } from './MobileConfirmationMessage'
 import { ConfirmOTCOrderActions } from './OTCOrderActions'
+import { ToggleDetailsButton } from './ToggleDetailsButton'
 
 export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
   const context = useContext(OpenOrdersContext)
@@ -88,6 +90,9 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
                 />
               </Box>
             ))}
+            <MobileConfirmationMessage item={selectedItem} color='initial' />
+            <Box mb={2} />
+            <ToggleDetailsButton item={selectedItem} />
           </Grid>
         </Box>
       </Drawer>
