@@ -5,16 +5,18 @@ import { Box, Flex } from 'rebass'
 import CurrencyLogo from 'components/CurrencyLogo'
 import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
+import { PayoutEvent } from 'state/token-manager/types'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { momentFormatDate } from '../utils'
 
 interface Props {
-  status: PAYOUT_STATUS
+  payout: PayoutEvent
+  payoutToken: any
 }
 
-export const ManagerView: FC<Props> = ({ status }) => {
-  const isPaid = false
+export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
+  const { status, isPaid } = payout
 
   const getContentByStatus = () => {
     switch (status) {
@@ -23,8 +25,8 @@ export const ManagerView: FC<Props> = ({ status }) => {
           <>
             {t`Already claimed:`}
             <Flex alignItems="center" fontWeight={600}>
-              <CurrencyLogo size="24px" />
-              <Flex marginLeft="4px" fontSize="24px" lineHeight="36px">{`COIN 345/1000`}</Flex>
+              <CurrencyLogo currency={payoutToken} size="24px" />
+              <Flex marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken?.symbol} 345/1000`}</Flex>
             </Flex>
           </>
         )
@@ -39,8 +41,8 @@ export const ManagerView: FC<Props> = ({ status }) => {
           <>
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
               <Box marginRight="4px" fontSize="20px" lineHeight="30px">{t`You have allocated for this event`}</Box>
-              <CurrencyLogo size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`BUSD 10000`}</Box>
+              <CurrencyLogo currency={payoutToken} size="24px" />
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} 10000`}</Box>
             </Flex>
             <Flex>
               <Box marginRight="4px">{t`Users will be able to start claiming on`}</Box>
@@ -55,13 +57,20 @@ export const ManagerView: FC<Props> = ({ status }) => {
               <Box>{t`The event has been ended.`}</Box>
               <Flex alignItems="center">
                 <Box marginRight="4px">{t`You can Claim Back`}</Box>
-                <CurrencyLogo size="20px" />
-                <Box marginX="4px" fontWeight={600}>{`COIN`}</Box>
+                <CurrencyLogo currency={payoutToken} size="20px" />
+                <Box marginX="4px" fontWeight={600}>
+                  {payoutToken.symbol}
+                </Box>
                 {t`tokens.`}
               </Flex>
               <Flex alignItems="center">
-                <CurrencyLogo size="24px" />
-                <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>{`COIN 12.432`}</Box>
+                <CurrencyLogo currency={payoutToken} size="24px" />
+                <Box
+                  marginLeft="4px"
+                  fontSize="24px"
+                  lineHeight="36px"
+                  fontWeight={600}
+                >{`${payoutToken.symbol} 12.432`}</Box>
               </Flex>
             </Column>
             <StyledButtonIXSGradient>{t`Claim Back COIN`}</StyledButtonIXSGradient>

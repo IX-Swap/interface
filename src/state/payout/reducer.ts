@@ -3,7 +3,7 @@ import { createReducer } from '@reduxjs/toolkit'
 import { postLogin } from 'state/auth/actions'
 import { PayoutList } from 'state/token-manager/types'
 
-import { createDraft, getPayoutList, getMyPayoutList } from './actions'
+import { createDraft, getPayoutItem, getPayoutList, getMyPayoutList } from './actions'
 
 export interface PayoutState {
   loadingRequest: boolean
@@ -96,6 +96,18 @@ export default createReducer<PayoutState>(initialState, (builder) =>
       }
     })
     .addCase(getMyPayoutList.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingRequest = false
+      state.error = errorMessage
+    })
+    .addCase(getPayoutItem.pending, (state) => {
+      state.loadingRequest = true
+      state.error = null
+    })
+    .addCase(getPayoutItem.fulfilled, (state) => {
+      state.loadingRequest = false
+      state.error = null
+    })
+    .addCase(getPayoutItem.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
     })

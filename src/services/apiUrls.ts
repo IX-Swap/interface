@@ -44,6 +44,7 @@ export const payout = {
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',
   myPayoutsList: 'payout/list/my',
+  payoutById: (id: number) => `/payout/${id}`,
   totalAmount: (tokenId: number) => `payout/total-amount/${tokenId}`,
 }
 

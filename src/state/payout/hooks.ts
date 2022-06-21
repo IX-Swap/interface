@@ -6,10 +6,15 @@ import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 
-import { createDraft, getPayoutList, getMyPayoutList } from './actions'
+import { createDraft, getPayoutList, getPayoutItem as getPayoutItemAction, getMyPayoutList } from './actions'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
+}
+
+const getPayoutItem = async (id: number) => {
+  const result = await apiService.get(payout.payoutById(id))
+  return result.data
 }
 
 const publishPayout = async (newPayoutDraft: any) => {
@@ -76,6 +81,25 @@ export function useCreateDraftPayout() {
         return data
       } catch (error: any) {
         dispatch(createDraft.rejected({ errorMessage: 'Could not create draft payout' }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useGetPayoutItem() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(getPayoutItemAction.pending())
+        const data = await getPayoutItem(id)
+        dispatch(getPayoutItemAction.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(getPayoutItemAction.rejected({ errorMessage: 'Could not create draft payout' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
