@@ -11,7 +11,10 @@ import { ReactComponent as InfoIcon } from 'assets/icons/alerts/info.svg'
 import { ReactComponent as WarningIcon } from 'assets/icons/alerts/warning.svg'
 import { Icon } from 'ui/Icons/Icon'
 import { AlertContent } from 'ui/Alerts/AlertsContent/AlertsContent'
-import { Notification as TNotification } from 'types/notification'
+import {
+  Notification as TNotification,
+  NotificationType
+} from 'types/notification'
 import { AppFeature } from 'types/app'
 import { useHistory } from 'react-router-dom'
 
@@ -36,7 +39,7 @@ const CloseIcon = ({ closeToast }: CloseButtonProps) => (
   <Icon name={'close'} onClick={closeToast} size={17} />
 )
 
-const getToastIcon = (type: TypeOptions) => {
+const getToastIcon = (type: NotificationType) => {
   switch (type) {
     case 'success':
       return SuccessIcon
@@ -52,7 +55,7 @@ const getToastIcon = (type: TypeOptions) => {
 }
 
 const getToastOptions = (
-  type: TypeOptions,
+  type: NotificationType,
   withLoading: boolean,
   toastId: ReactText,
   actions: Action[]

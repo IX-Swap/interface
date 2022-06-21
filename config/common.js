@@ -10,7 +10,16 @@ module.exports = {
   context: process.cwd(),
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
-    modules: ['src', 'node_modules']
+    modules: ['src', 'node_modules'],
+    fallback: {
+     "buffer": require.resolve("buffer/"),
+      util: require.resolve('util/'),
+      url: require.resolve('url'),
+      assert: require.resolve('assert'), 
+    },
+    alias: {
+     "buffer": "buffer",
+  },
   },
   entry: ['./src/index.tsx'],
   performance: {
@@ -84,7 +93,10 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(process.env)
-    })
+    }),
+    new webpack.ProvidePlugin({
+            Buffer: ['buffer', 'Buffer'],
+        }),
   ],
   watchOptions: {
     ignored: path.resolve('./src/assets/icons/sprite')

@@ -3,13 +3,21 @@ dotenv.config()
 import { devCreds } from '../credentials/dev'
 import { stagingCreds } from '../credentials/staging'
 
-const setENV = 'staging'
+const setENV = process.env.BRANCHE_NAME || 'otc'
 let baseCreds
 
-if (setENV === 'staging') {
+if (setENV?.includes('staging')) {
   baseCreds = stagingCreds
+} else if (setENV?.includes('otc')) {
+  baseCreds = devCreds
+  baseCreds.HOST = 'api.otc.mozork.com'
+  baseCreds.BASE_API = 'https://api.otc.mozork.com/'
+  baseCreds.URL = 'https://otc.mozork.com/'
 } else {
   baseCreds = devCreds
 }
-
-export { baseCreds }
+baseCreds['httpCredentials'] = {
+  username: 'ixprime',
+  password: '!nv35taX2K2!*'
+}
+export { baseCreds, setENV }

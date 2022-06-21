@@ -1,4 +1,4 @@
-export const bankAccounts = {
+export const accountsTab = {
   ACCOUNTS_SECTION: '[href="/app/accounts"]',
   BANK_ACCOUNTS: '[href="/app/accounts/bank-accounts"]',
   ACCOUNT_INFORMATION: '[role="dialog"]',
@@ -8,8 +8,17 @@ export const bankAccounts = {
   ASSET_BALANCES_PAGE: '[href="/app/accounts/balances"]',
   DIGITAL_SECURITIES: '[href="/app/accounts/digital-security"]',
   TRANSACTIONS: '[href="/app/accounts/transactions"]',
+  BLOCKCHAIN_ADDRESSES: '[href="/app/accounts/withdrawal-addresses"]',
+  BLOCKCHAIN_FORM: '[data-testid="blockchain-address-form"]',
+  DASHBOARD_PAGE: '[href="/app/accounts/dashboard"]',
+  MY_REPORTS_PAGE: '[href="/app/accounts/reports"]',
+  REPORTS_INFORMATION: '[role="region"]',
+  MY_EXCHANGE_HOLDINGS: '[href="/app/otc-market/holdings"]',
 
   buttons: {
+    VIEW_REPORT: '[data-testid="table"] >> text="View Report"',
+    PRIMARY_MARKET: 'text="primary market"',
+    ADD_ADDRESS: '[href="/app/accounts/withdrawal-addresses/create"]',
     SGD: "//*[contains(text(),'(SGD)')]",
     ADD_BANK_ACCOUNT: '[href="/app/accounts/bank-accounts/create"]',
     MORE: '[data-testid="more-button"]',
@@ -17,6 +26,7 @@ export const bankAccounts = {
     REMOVE: '[data-testid="dropdown"] >> text="Remove"',
     EDIT: '[data-testid="dropdown"] >> text="Edit"',
     SAVE: 'button >> text="Save"',
+    CONNECT: 'text="Connect"',
     CASH_DEPOSIT: 'button >> text="CASH DEPOSIT"',
     SUBMIT_ACCOUNT: 'button >> text="Add Bank Account"',
     CONFIRM: 'button >> text="Confirm"',
@@ -27,6 +37,7 @@ export const bankAccounts = {
     WITHDRAW_SECTON: '[href="/app/accounts/digital-security/withdraw"]'
   },
   fields: {
+    BLOCKCHAIN_ADDRESS: '[id="address"]',
     BANK_NAME: "[id='bankName']",
     ACCOUNT_HOLDER_NAME: '[id="accountHolderName"]',
     BANK_ACCOUNT_NUMBER: '[id="bankAccountNumber"]',
@@ -41,16 +52,19 @@ export const bankAccounts = {
   },
   listBox: {
     CURRENCY: '[id="asset"]',
-    CURRENCY_VALUE_SGD: '[data-value="5fa95e07231c63088311b178"]',
-    CURRENCY_VALUE_USD: '[data-value="5fc25b1f4f97ed7f3444cac3"]',
+    CURRENCY_VALUE_SGD: '[role="option"] >> text="SGD"',
+    CURRENCY_VALUE_USD: '[role="option"] >> text="USD"',
 
     COUNTRY: '[id="address.country"]',
     COUNTRY_VALUE: '[data-value="Ukraine"]',
 
-    TO_BANK_ACCOUNT: '[id="bankAccountId"]',
+    TO_BANK_ACCOUNT: '[id="To Bank Account-select-input"]',
     BANK: '[role="option"]',
 
     TOKEN: '[id="token"]',
-    TOKEN_VALUE: '[data-value="IX-IXPS HHT"]'
+    TOKEN_VALUE: '[data-value="IX-IXPS HHT"]',
+
+    ASSET: '[id="asset"]',
+    ASSET_VALUE: '[data-value="6196283c14fbb72482369f01"]'
   }
 }

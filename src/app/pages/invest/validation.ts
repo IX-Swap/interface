@@ -5,6 +5,7 @@ import {
   CommitmentIssuanceFormValues
 } from 'types/commitment'
 import { validationMessages } from 'validation/shared'
+import { CreateOTCOrderArgs } from 'types/otcOrder'
 
 export const commitmentFormValidationSchema = {
   pricePerUnit: yup.number().required(validationMessages.required),
@@ -36,3 +37,14 @@ export const commitmentIssuanceValidationSchema = yup
     withdrawalAddress: yup.string().required(validationMessages.required),
     releaseDate: yup.date().nullable()
   })
+
+export const validateOTCOrder = (values: CreateOTCOrderArgs) => {
+  let message = ''
+  if (!Number.isInteger(values.amount)) {
+    message = 'Floating point amounts are not allowed'
+  }
+  if (values.amount <= 0 || values.price <= 0) {
+    message = 'Amount and price must be greater than 0'
+  }
+  return message
+}

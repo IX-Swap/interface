@@ -14,7 +14,7 @@ import { shortenAddress } from 'helpers/blockchain'
 import { copyToClipboard } from 'helpers/clipboard'
 import { isTruthy } from 'helpers/strings'
 import { useAddTokenToMetamask } from 'hooks/blockchain/useAddTokenToMetamask'
-import useSwitchChain from 'hooks/blockchain/useSwitchChain'
+import { useSwitchChain } from 'hooks/blockchain/useSwitchChain'
 import React, { useState } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useStyles } from './DSOBlockainDetails.styles'
@@ -34,7 +34,7 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
   })
   const { switchChain } = useSwitchChain()
   const { accountState } = useMetamaskWalletState({
-    dsoChainId: dsoChainId as number
+    tokenChainId: dsoChainId as number
   })
 
   const info = CHAIN_INFO[dsoChainId as number]
