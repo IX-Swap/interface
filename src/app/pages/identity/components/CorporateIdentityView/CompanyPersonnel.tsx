@@ -1,75 +1,88 @@
-import { Box, Grid, Typography } from '@mui/material'
-import { DataroomHeader } from 'components/dataroom/DataroomHeader'
-import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
+import { Grid } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
-import { hasValue } from 'helpers/forms'
 import React from 'react'
 import { Personnel } from 'app/pages/identity/types/forms'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { File } from 'ui/FileUpload/File'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 
 export interface PersonnelProps {
   personnel: Personnel
-  showDocumentHeader: boolean
-  documentsTitle: string
+  documentTitle: string
 }
 
 export const CompanyPersonnel = ({
   personnel,
-  showDocumentHeader,
-  documentsTitle
+  documentTitle
 }: PersonnelProps) => {
+  const { isMobile } = useAppBreakpoints()
+
   return (
-    <Grid container direction='column' spacing={2}>
-      <Grid item>
-        <Grid container>
-          <Grid item xs={12} md={4}>
-            <LabelledValue value={personnel.fullName} label='Full Name' />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <LabelledValue value={personnel.designation} label='Designation' />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <LabelledValue value={personnel.email} label='Email Address' />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item container>
-        <Grid item xs={12} md={4}>
-          <LabelledValue
-            value={personnel.contactNumber}
-            label='Contact Number'
-          />
-        </Grid>
-        {personnel.address !== undefined ? (
-          <Grid item xs={12} md={4}>
-            <LabelledValue
-              value={Object.values(personnel.address)
-                .filter(address => hasValue(address))
-                .join(', ')}
-              label='Residental Address'
-            />
-          </Grid>
-        ) : null}
-      </Grid>
-      <Box mb={3} />
-      {personnel.documents !== undefined ? (
+    <FieldContainer>
+      <Grid item container direction={'column'} spacing={5}>
         <Grid item>
-          <Typography variant='body1'>
-            <Box component='span' fontWeight='bold'>
-              {documentsTitle}
-            </Box>
-          </Typography>
-          <Box mb={1} />
-          <>
-            {showDocumentHeader ? <DataroomHeader /> : null}
-            <DataroomViewRow
-              showDivider={false}
-              title=''
-              document={(personnel.documents as any).value}
-              key={(personnel.documents as any).value._id}
-            />
-          </>
+          <FormSectionHeader title={documentTitle} />
         </Grid>
-      ) : null}
-    </Grid>
+
+        <Grid
+          item
+          container
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr'
+          }}
+        >
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.fullName}
+                label='Full Name'
+              />
+            </Grid>
+
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.email}
+                label='Email Address'
+              />
+            </Grid>
+          </Grid>
+
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.contactNumber}
+                label='Contact Number'
+              />
+            </Grid>
+
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.designation}
+                label='Designation'
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item container direction={'column'} spacing={5}>
+          <Grid item>
+            <FormSectionHeader title='Authorization Document' />
+          </Grid>
+
+          <Grid item container direction={'column'} spacing={5}>
+            {personnel.documents.map(file => (
+              <Grid item>
+                <File label={file.title} value={file} readonly />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </Grid>
+    </FieldContainer>
   )
 }

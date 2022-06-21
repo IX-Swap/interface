@@ -1,12 +1,12 @@
-import { Grid, Box, Hidden } from '@mui/material'
+import { Grid } from '@mui/material'
 import { Avatar } from 'components/Avatar'
 import { LabelledValue } from 'components/LabelledValue'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
 import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
-import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+// import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar.svg'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
@@ -14,70 +14,91 @@ export interface CorporateInfoProps {
 
 export const CorporateInfo = ({ data }: CorporateInfoProps) => {
   const { isMobile } = useAppBreakpoints()
+
   const getLegalEntityStatus = (value: string) => {
     const status = LEGAL_ENTITY_STATUS_LIST.find(
       item => item.value === value
     )?.label
     return status ?? value
   }
-  const riskRating = data?.cynopsis?.riskRating ?? 'UNKNOWN'
+
   return (
-    <Box display={'flex'} flexDirection={isMobile ? 'column' : 'row'}>
-      <Box marginBottom={6}>
+    <Grid item container flexDirection={'column'} spacing={5}>
+      <Grid item>
         <Avatar
           documentId={data.logo}
           ownerId={data.user._id}
           variant='square'
-          size={128}
+          size={120}
+          borderRadius={16}
+          // fallback={<AvatarPhoto />}
         />
-      </Box>
-      <Hidden smDown>
-        <Box width={62} />
-      </Hidden>
-      <Grid container spacing={3} direction='column'>
-        <Grid item style={{ paddingBottom: 0 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
-              <LabelledValue
-                value={data.companyLegalName}
-                label='Company Name'
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <LabelledValue
-                value={data.registrationNumber}
-                label='Company Registration Number/UEN'
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <LabelledValue value=' ' label='Status of Risk Report' />
-              <AuthorizableStatus
-                status={riskRating}
-                compact={false}
-                isNewTheme
-              />
-            </Grid>
+      </Grid>
+      <Grid
+        item
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr'
+        }}
+        container
+      >
+        <Grid
+          item
+          container
+          direction={'column'}
+          justifyContent={'flex-end'}
+          spacing={5}
+        >
+          <Grid item>
+            <LabelledValue
+              isRedesigned
+              value={data.companyLegalName}
+              label='Company Name'
+            />
+          </Grid>
+
+          <Grid item>
+            <LabelledValue
+              isRedesigned
+              value={data.countryOfFormation}
+              label='Country of Incorporation'
+            />
+          </Grid>
+
+          <Grid item>
+            <LabelledValue
+              isRedesigned
+              value={data.sourceOfFund}
+              label='Source of Funds'
+            />
           </Grid>
         </Grid>
-        <Grid item style={{ paddingTop: 0 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
-              <LabelledValue
-                value={data.countryOfFormation}
-                label='Country of Incorporation'
-              />
-            </Grid>
 
-            <Grid item xs={12} sm={4}>
-              <LabelledValue
-                label='Legal Entity'
-                className={privateClassNames()}
-                value={getLegalEntityStatus(data.legalEntityStatus)}
-              />
-            </Grid>
+        <Grid
+          item
+          container
+          direction={'column'}
+          justifyContent={'flex-end'}
+          spacing={5}
+        >
+          <Grid item />
+          <Grid item>
+            <LabelledValue
+              isRedesigned
+              value={data.registrationNumber}
+              label='Registration Number/UEN'
+            />
+          </Grid>
+          <Grid item>
+            <LabelledValue
+              isRedesigned
+              label='Legal Entity'
+              className={privateClassNames()}
+              value={getLegalEntityStatus(data.legalEntityStatus)}
+            />
           </Grid>
         </Grid>
       </Grid>
-    </Box>
+    </Grid>
   )
 }

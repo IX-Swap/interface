@@ -63,6 +63,7 @@ export interface LabelledValueProps {
   labelColor?: 'default' | 'light' | 'dark' | 'gray' | 'bright'
   valueColor?: string
   isNewThemeOn?: boolean
+  isRedesigned?: boolean
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -79,6 +80,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     labelColor = 'default',
     valueColor,
     isNewThemeOn = false,
+    isRedesigned = false,
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
@@ -98,7 +100,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     {
       text: label,
       styles: {
-        fontWeight: labelWeightMap[labelWeight],
+        fontWeight: isRedesigned ? 500 : labelWeightMap[labelWeight],
         fontSize: reverse ? labelFontSize : undefined,
         width: '100%',
         color: isNewThemeOn
@@ -109,7 +111,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     {
       text: formatValue(val),
       styles: {
-        fontWeight: valueWeightMap[valueWeight],
+        fontWeight: isRedesigned ? 500 : valueWeightMap[valueWeight],
         fontSize: reverse ? valueFontSize : undefined,
         color: valueColor ?? undefined,
         opacity: isNewThemeOn ? 0.6 : 1,
@@ -123,7 +125,10 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
 
   return (
     <Grid {...rest} item container direction={direction}>
-      <Typography style={first.styles}>
+      <Typography
+        style={first.styles}
+        color={isRedesigned ? 'text.primary' : undefined}
+      >
         {first.text}
         {row && !reverse && ':'}
       </Typography>
@@ -140,7 +145,11 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
           {last.text}
         </Box>
       ) : (
-        <Typography style={last.styles} align={align}>
+        <Typography
+          style={last.styles}
+          align={align}
+          color={isRedesigned ? 'text.secondary' : undefined}
+        >
           {last.text}
         </Typography>
       )}

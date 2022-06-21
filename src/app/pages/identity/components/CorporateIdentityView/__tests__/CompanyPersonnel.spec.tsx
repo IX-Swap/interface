@@ -12,8 +12,7 @@ describe('CompanyPersonnel', () => {
     const { queryByText } = render(
       <CompanyPersonnel
         personnel={[{ value: corporate.representatives[0] }] as any}
-        showDocumentHeader={false}
-        documentsTitle='Documents'
+        documentTitle='Documents'
       />
     )
 
