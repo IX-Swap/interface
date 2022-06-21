@@ -22,7 +22,7 @@ export const MobileConfirmationMessage = ({
           <Grid
             item
             xs={12}
-            key={`${item._id}-timeout`}
+            key={`${String(item._id)}-timeout`}
             style={{
               backgroundColor: color,
               textAlign: 'center'
