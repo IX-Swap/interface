@@ -254,6 +254,7 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                     >
                       <h6
                         class="MuiTypography-root MuiTypography-subtitle1 makeStyles-title-1 css-1b4l2pg-MuiTypography-root"
+                        data-testid="title-typo"
                       >
                         I confirm to be treated as an “Accredited Investor” by InvestaX
                       </h6>
