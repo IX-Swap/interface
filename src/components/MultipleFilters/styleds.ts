@@ -36,7 +36,8 @@ export const DarkBlueCard = styled.div<{ isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 176px;
+  flex: 1;
+  min-width: 150px;
   width: 100%;
   height: 60px;
   cursor: pointer;
@@ -91,4 +92,5 @@ export const ResetFilters = styled(ButtonText)`
   line-height: 20px;
   color: ${({ theme }) => theme.text2};
   white-space: nowrap;
+  text-decoration: underline;
 `

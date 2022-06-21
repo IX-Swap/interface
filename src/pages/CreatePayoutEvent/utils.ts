@@ -1,11 +1,11 @@
 export const transformPayoutDraftDTO = (values: any) => {
-  const { type, otherType, tokenId, secTokenId } = values
+  const { type, otherType, token, secToken } = values
 
   return {
     ...values,
     type: type !== 'Other' ? type : otherType,
-    tokenId: tokenId.value, // replace with id after metamask integration
-    secTokenId: secTokenId.value,
-    secTokenAmount: '100',
+    payoutToken: token.isNative ? token.address : token.value,
+    secTokenId: secToken.value,
+    secTokenAmount: 100,
   }
 }

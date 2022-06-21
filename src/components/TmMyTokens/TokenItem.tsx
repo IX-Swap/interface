@@ -18,7 +18,7 @@ export const TokenItem = ({ item: { token } }: Props) => {
   const currency = new WrappedTokenInfo(token)
 
   const onClick = () => {
-    history.push(routes.securityTokens(currency))
+    history.push(routes.securityToken((currency.tokenInfo as any).catalogId))
   }
 
   return (

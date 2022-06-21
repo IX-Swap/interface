@@ -1,27 +1,37 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
+import styled from 'styled-components'
+
 import { Trans, t } from '@lingui/macro'
 import { AccordionSummary, AccordionDetails } from '@material-ui/core'
 
-import { Container } from 'components/AdminAccreditationTable'
 import { Wallet } from 'components/AdminKyc'
-import { LoadingIndicator } from 'components/LoadingIndicator'
-import { useAdminState, useGetUsersList, useOnlyAdminAccess } from 'state/admin/hooks'
-import { adminOffset as offset } from 'state/admin/constants'
-import { User } from 'state/admin/actions'
 import { CopyAddress } from 'components/CopyAddress'
-import { ButtonGradientBorder } from 'components/Button'
 import { NoData } from 'components/UsersList/styleds'
+import { ButtonGradientBorder } from 'components/Button'
+import { MultipleFilters } from 'components/MultipleFilters'
+import { Container } from 'components/AdminAccreditationTable'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { FILTERS } from 'components/MultipleFilters/constants'
+
+import { useSecTokenState } from 'state/secTokens/hooks'
+import { useAdminState, useGetUsersList, useOnlyAdminAccess } from 'state/admin/hooks'
+
+import { adminOffset as offset } from 'state/admin/constants'
+import { TokenManagerEntry, User } from 'state/admin/actions'
+
 import checkIcon from 'assets/images/check-success.svg'
 import notCheckIcon from 'assets/images/reject.svg'
 import expandIcon from 'assets/images/dropdown.svg'
+
 import { ROLES_LABEL, ROLES } from 'constants/roles'
-import { MultipleFilters } from 'components/MultipleFilters'
-import { FILTERS } from 'components/MultipleFilters/constants'
 
 import { Table } from '../Table'
 import { UserModal } from './UserModal'
 import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon, AddButton } from './styleds'
 import { TokenManagerTokens } from './TokenManagerTokens'
+import CurrencyLogo from 'components/CurrencyLogo'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+
 
 const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Whitelisted`, '']
 
@@ -105,6 +115,43 @@ export const UsersList: FC = () => {
   )
 }
 
+interface TokenListPreviewProps {
+  items: TokenManagerEntry[]
+}
+
+const TokenList = styled.div`
+  display: flex;
+
+  flex-flow: row nowrap;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  > * {
+    margin-left: -10px;
+  }
+
+  > *:first-child {
+    margin-left: 0
+  }
+`
+
+const TokenListPreview = (props: TokenListPreviewProps) => {
+  const { tokens } = useSecTokenState()
+
+  const icons = useMemo(() => {
+    const ids = props.items.slice(0, 5).map(i => i.token.id);
+
+    return tokens
+      ?.filter(token => ids.includes(token.id))
+      ?.map(token => (<CurrencyLogo key={`logo-${token.id}`} size="28px" currency={new WrappedTokenInfo(token)} />))
+  }, [props.items, tokens])
+
+  return (
+    <TokenList>{icons}</TokenList>
+  )
+}
+
 const Row: FC<RowProps> = ({ item, changeUser }) => {
   const [expanded, handleExpanded] = useState(false)
   const { ethAddress, role, username, isWhitelisted, managerOf } = item
@@ -128,7 +175,10 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
             </Wallet>
             <div>{ROLES_LABEL[role]}</div>
             <div>{username || '-'}</div>
-            <div>{role === ROLES.TOKEN_MANAGER ? `${managerOf?.length || 0} SEC Token's` : '-'}</div>
+
+            {role === ROLES.TOKEN_MANAGER && (<TokenListPreview items={managerOf as TokenManagerEntry[]} />)}
+            {role !== ROLES.TOKEN_MANAGER && (<div> - </div>)}
+
             <div>
               <img src={isWhitelisted ? checkIcon : notCheckIcon} alt="is-whitelisted" />
             </div>
@@ -158,17 +208,7 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
           </StyledBodyRow>
         </AccordionSummary>
         <AccordionDetails>
-          <hr />
-          <StyledBodyRow>
-            <div />
-            <div />
-            <div />
-            <div>
-              <TokenManagerTokens items={managerOf} />
-            </div>
-            <div />
-            <div />
-          </StyledBodyRow>
+          <TokenManagerTokens items={managerOf as TokenManagerEntry[]} />
         </AccordionDetails>
       </StyledAccordion>
     </>
@@ -193,3 +233,4 @@ const Header = () => {
     </StyledHeaderRow>
   )
 }
+

@@ -12,8 +12,9 @@ import { DateRangePickerFilter } from 'components/DateRangePicker'
 import { useSimpleTokens } from 'hooks/Tokens'
 import dayjs from 'dayjs'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'
+import { SecToken } from 'types/secToken'
 
-import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions, payoutTokenOptions } from './constants'
+import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
 import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
 
@@ -62,7 +63,7 @@ export const MultipleFilters = ({
 
   const secTokensOptions = useMemo(() => {
     if (secTokens?.length) {
-      return secTokens.map((token) => ({
+      return secTokens.map((token: SecToken) => ({
         label: token.symbol,
         value: token.id,
         icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
@@ -86,7 +87,7 @@ export const MultipleFilters = ({
     return {}
   }, [filters])
 
-  const { setFieldValue, values, resetForm } = useFormik({
+  const { setFieldValue, values, setValues } = useFormik({
     initialValues,
     onSubmit: () => {
       // must have onSubmit
@@ -149,7 +150,7 @@ export const MultipleFilters = ({
   }
 
   const onResetFilters = () => {
-    resetForm()
+    setValues({ ...initialValues, ...(withSearch && { search: values.search }) })
   }
 
   const isEmpty = useMemo(() => Object.values(values).every((value) => !value || value?.length === 0), [values])
@@ -157,6 +158,7 @@ export const MultipleFilters = ({
   const filterComponents = {
     [FILTERS.SEARCH]: (
       <Search
+        value={values[FILTERS.SEARCH]}
         setSearchValue={(value: string) => setFieldValue(FILTERS.SEARCH, value)}
         placeholder={t`${searchPlaceholder}`}
         style={{ margin: 0 }}
@@ -164,8 +166,8 @@ export const MultipleFilters = ({
     ),
     [FILTERS.ROLES]: (
       <FilterDropdown
-        placeholder="Roles"
-        selectedItems={values.roles}
+        placeholder="Role"
+        selectedItems={values[FILTERS.ROLES]}
         onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
         items={rolesOptions}
       />
@@ -173,7 +175,7 @@ export const MultipleFilters = ({
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
         placeholder="Sec Token"
-        selectedItems={values.tokens}
+        selectedItems={values[FILTERS.SEC_TOKENS]}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
         items={secTokensOptions}
       />
@@ -181,7 +183,7 @@ export const MultipleFilters = ({
     [FILTERS.STATUS]: (
       <FilterDropdown
         placeholder="Status"
-        selectedItems={values.status}
+        selectedItems={values[FILTERS.STATUS]}
         onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
         items={statusOptions}
       />
@@ -189,7 +191,7 @@ export const MultipleFilters = ({
     [FILTERS.PAYOUT_TYPE]: (
       <FilterDropdown
         placeholder="Payout type"
-        selectedItems={values.payoutType}
+        selectedItems={values[FILTERS.PAYOUT_TYPE]}
         onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item.value)}
         items={payoutTypeOptions}
       />
@@ -197,7 +199,7 @@ export const MultipleFilters = ({
     [FILTERS.PAYOUT_TOKEN]: (
       <FilterDropdown
         placeholder="Payout token"
-        selectedItems={values.payoutToken}
+        selectedItems={values[FILTERS.PAYOUT_TOKEN]}
         onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item.value)}
         items={tokensOptions}
       />
@@ -205,16 +207,21 @@ export const MultipleFilters = ({
     [FILTERS.PAYOUT_PERIOD]: (
       <DateRangePickerFilter
         label="Payment period"
-        value={values.payoutPeriod}
-        onChange={(value) => setFieldValue(FILTERS.PAYOUT_PERIOD, value)}
+        value={values[FILTERS.PAYOUT_PERIOD]}
+        onChange={(value) =>
+          setFieldValue(
+            FILTERS.PAYOUT_PERIOD,
+            value.map((el) => dayjs(el).toISOString())
+          )
+        }
         maxDate={new Date()}
       />
     ),
     [FILTERS.RECORD_DATE]: (
       <MobileDatePicker
-        value={values.recordDate}
+        value={values[FILTERS.RECORD_DATE]}
         onChange={(value) => {
-          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).toString())
+          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).toISOString())
         }}
         views={['year', 'month', 'date']}
         renderInput={({ inputProps, focused }) => (
@@ -230,6 +237,31 @@ export const MultipleFilters = ({
               style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
             >
               <Trans>Record date</Trans>
+            </TYPE.body2>
+          </DarkBlueCard>
+        )}
+      />
+    ),
+    [FILTERS.DATE_OF_CLAIM]: (
+      <MobileDatePicker
+        value={values[FILTERS.DATE_OF_CLAIM]}
+        onChange={(value) => {
+          setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).toISOString())
+        }}
+        views={['year', 'month', 'date']}
+        renderInput={({ inputProps, focused }) => (
+          <DarkBlueCard
+            className="dropdown"
+            onClick={inputProps?.onClick as any}
+            isOpen={Boolean(focused || values.createdAt)}
+          >
+            <TYPE.body2
+              color="inherit"
+              fontWeight={300}
+              overflow="hidden"
+              style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+            >
+              <Trans>Date of claim</Trans>
             </TYPE.body2>
           </DarkBlueCard>
         )}

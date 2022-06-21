@@ -48,7 +48,7 @@ export default function SecTokenDetails({
   }, [currencyId])
 
   const onBack = () => {
-    history.push(routes.securityTokens())
+    history.push(routes.securityTokens('tokens'))
   }
 
   if (!isLoggedIn) return <NotAvailablePage />

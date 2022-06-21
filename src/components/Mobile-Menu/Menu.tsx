@@ -56,7 +56,7 @@ export const Menu = ({ close }: Props) => {
             <MenuListItem
               disabled={!isKycApproved}
               id={`security-nav-link`}
-              to={routes.securityTokens()}
+              to={routes.securityTokens('tokens')}
               onClick={close}
             >
               <Trans>Security Tokens</Trans>

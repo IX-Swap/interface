@@ -1,17 +1,18 @@
 import { capitalize } from '@material-ui/core'
 import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
 import { ROLES, ROLES_LABEL } from 'constants/roles'
-import { PAYOUT_STATUS } from 'pages/PayoutItem'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 export enum FILTERS {
   SEARCH = 'search',
   ROLES = 'roles',
   SEC_TOKENS = 'tokens',
   STATUS = 'status',
-  PAYOUT_TYPE = 'payoutType',
+  PAYOUT_TYPE = 'type',
   PAYOUT_PERIOD = 'payoutPeriod',
   RECORD_DATE = 'recordDate',
   PAYOUT_TOKEN = 'payoutToken',
+  DATE_OF_CLAIM = 'createdAt',
 }
 
 export const defaultValues = {
@@ -19,10 +20,11 @@ export const defaultValues = {
   roles: [],
   tokens: [],
   status: [],
-  payoutType: [],
+  type: [],
   payoutPeriod: [],
   recordDate: null,
   payoutToken: [],
+  createdAt: null,
 } as Record<string, any>
 
 export const rolesOptions = [
@@ -48,9 +50,4 @@ export const payoutTypeOptions = [
   { label: capitalize(PAYOUT_TYPE.INTEREST), value: PAYOUT_TYPE.INTEREST },
   { label: capitalize(PAYOUT_TYPE.AIRDROPS), value: PAYOUT_TYPE.AIRDROPS },
   { label: capitalize(PAYOUT_TYPE.OTHERS), value: PAYOUT_TYPE.OTHERS },
-]
-
-export const payoutTokenOptions = [
-  { label: 'USDC', value: 'usdc' },
-  { label: 'USDT', value: 'usdc' },
 ]

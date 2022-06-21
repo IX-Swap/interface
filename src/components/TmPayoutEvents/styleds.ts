@@ -7,9 +7,6 @@ import { ButtonIXSGradient } from 'components/Button'
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  .dropdown {
-    height: 40px;
-  }
 `
 
 export const BodyContainer = styled.div`
@@ -66,6 +63,11 @@ export const StatusContainer = styled.div<{ color: keyof Colors | 'transparent' 
     css`
       color: ${({ theme }) => theme.text2};
       border: ${({ theme }) => `1px solid ${theme.text2}`};
+    `};
+  ${({ color }) =>
+    color === 'yellow4' &&
+    css`
+      color: ${({ theme }) => theme.bg1};
     `};
 `
 export const CreateButton = styled(ButtonIXSGradient)`

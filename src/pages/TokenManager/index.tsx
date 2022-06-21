@@ -10,6 +10,7 @@ import { ROLES } from 'constants/roles'
 import { TmMyTokens } from 'components/TmMyTokens'
 import { ButtonIXSGradient } from 'components/Button'
 import { TmPayoutEvents } from 'components/TmPayoutEvents'
+import { TmPayoutHistory } from 'components/TmPayoutHistory'
 
 export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
@@ -36,8 +37,7 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
     case 'payout-events':
       return <TmPayoutEvents />
     case 'payout-history':
-      return <div>Payout history</div>
-
+      return <TmPayoutHistory />
     default:
       return null
   }

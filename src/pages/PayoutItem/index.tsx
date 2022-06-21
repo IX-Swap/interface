@@ -5,20 +5,14 @@ import { useCookies } from 'react-cookie'
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
-import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
+import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
 import { PayoutHeader } from './PayoutHeader'
-
-export enum PAYOUT_STATUS {
-  DRAFT = 'draft',
-  ANNOUNCED = 'announced',
-  SCHEDULED = 'scheduled',
-  STARTED = 'started',
-  ENDED = 'ended',
-  DELAYED = 'delayed',
-}
+import { PayoutActionBlock } from './ActionBlock'
+import { PayoutHistory } from './History'
 
 export default function PayoutItem({
   match: {
@@ -41,6 +35,8 @@ export default function PayoutItem({
             deadlineDate={new Date(2022, 6, 12)}
             startDate={new Date(2022, 5, 12)}
           />
+          <PayoutActionBlock status={status} isManager={false} />
+          {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && <PayoutHistory />}
         </Column>
       </StyledBodyWrapper>
     </Loadable>

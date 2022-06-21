@@ -1,5 +1,5 @@
 import React, { ReactChildren } from 'react'
-import { DatePicker } from '@material-ui/pickers'
+import { MobileDatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
 
@@ -35,13 +35,13 @@ export const DateInput = ({
   return (
     <Container>
       <Label label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
-      <DatePicker
+      <MobileDatePicker
         value={value || null}
         onChange={onChange}
         openTo={openTo ?? 'year'}
         views={['year', 'month', 'date']}
         inputFormat="DD/MM/YYYY"
-        renderInput={(props: Record<string, any>) => <TextField {...props} />}
+        renderInput={({ inputProps }: Record<string, any>) => <TextField {...inputProps} />}
         maxDate={maxDate}
         {...props}
       />

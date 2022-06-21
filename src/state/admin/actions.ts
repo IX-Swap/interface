@@ -217,6 +217,26 @@ export interface User {
   managerOf: any[]
 }
 
+export interface TokenManagerEntry {
+  token: Token
+}
+
+export interface Token {
+  id: number
+
+  name: string
+  address: string
+
+  payoutEvents: PayoutEvent[]
+}
+
+export interface PayoutEvent {
+  id: number
+
+  type: string
+  status: string
+}
+
 export interface UsersList {
   page: number
   totalPages: number

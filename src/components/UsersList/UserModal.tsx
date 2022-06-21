@@ -186,11 +186,11 @@ export const UserModal: FC<Props> = ({ item, close }) => {
         <ModalBlurWrapper data-testid="user-modal" style={{ maxWidth: '547px', width: '100%', position: 'relative' }}>
           <LoadingIndicator isLoading={adminLoading} isRelative />
           <ModalContent>
+            <Title>
+              <Trans>{item ? 'Update User' : 'Add User'}</Trans>
+              <CloseIcon data-testid="cross" onClick={close} />
+            </Title>
             <form onSubmit={handleSubmit}>
-              <Title>
-                <Trans>{item ? 'Update User' : 'Add User'}</Trans>
-                <CloseIcon data-testid="cross" onClick={close} />
-              </Title>
               {item ? (
                 <ExistingWallet>
                   <Label marginBottom="11px" htmlFor="ethAddress">
@@ -257,7 +257,7 @@ export const UserModal: FC<Props> = ({ item, close }) => {
               )}
               <ButtonWrapper>
                 <StyledButton type="submit">
-                  <Trans>{item ? 'Update User' : 'Add User'}</Trans>
+                  <Trans>{item ? 'Update' : 'Add User'}</Trans>
                 </StyledButton>
               </ButtonWrapper>
             </form>
@@ -291,11 +291,16 @@ const StyledButton = styled(ButtonIXSGradient)`
 
 const ModalContent = styled(ModalContentWrapper)`
   overflow: auto;
+  > div {
+    padding: 20px 23px;
+    border-radius: 20px 20px 0px 0px;
+  }
   > form {
-    display: flex;
-    flex-direction: column;
     padding: 20px 23px;
     border-radius: 20px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
     row-gap: 24px;
     label {
       margin-bottom: 8px;

@@ -1,5 +1,8 @@
 import { createReducer } from '@reduxjs/toolkit'
+
+import { ManagerOfToken } from 'state/user/actions'
 import { getTokenExpiration } from 'utils/time'
+
 import {
   postLogin,
   logout,
@@ -265,7 +268,10 @@ export default createReducer<AdminState>(initialState, (builder) =>
     .addCase(postUser.fulfilled, (state, { payload: { data } }) => {
       state.adminLoading = false
       state.adminError = null
-      state.usersList = { ...state.usersList, items: [data, ...state.usersList.items] }
+      state.usersList = {
+        ...state.usersList,
+        items: [{ ...data, managerOf: data.managerOf || [] }, ...state.usersList.items],
+      }
     })
     .addCase(postUser.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
@@ -281,7 +287,9 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.usersList = {
         ...state.usersList,
         items: state.usersList.items.map((el) =>
-          el.id === data.id ? { ...data, managerOf: data.tokens.map((token: any) => ({ token })) } : el
+          el.id === data.id
+            ? { ...data, managerOf: (data.tokens || []).map((token: ManagerOfToken) => ({ token })) }
+            : el
         ),
       }
     })

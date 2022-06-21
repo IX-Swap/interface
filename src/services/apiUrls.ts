@@ -23,10 +23,6 @@ export const admin = {
   addOrRemoveWhitelisted: (address: string) => `users/whitelist/address/${address}`,
 }
 
-export const tokenManager = {
-  myPayouts: 'payout/list',
-}
-
 export const vesting = {
   privateBuyer: 'investor/me',
 }
@@ -44,6 +40,8 @@ export const auth = {
 
 export const payout = {
   createDraft: `payout/draft`,
+  payoutsList: 'payout/list',
+  payoutHistory: 'payout/history',
 }
 
 export const kyc = {

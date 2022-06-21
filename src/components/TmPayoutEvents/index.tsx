@@ -6,7 +6,6 @@ import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
 import { ButtonGradientBorder } from 'components/Button'
 import { Table } from 'components/Table'
-import { useSecTokenById } from 'state/secTokens/hooks'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { ReactComponent as EyeIcon } from 'assets/images/eye.svg'
@@ -15,6 +14,7 @@ import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { TmEmptyPage } from 'components/TmEmptyPage'
+import { PayoutEvent } from 'state/token-manager/types'
 
 import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton } from './styleds'
@@ -33,11 +33,15 @@ const headerCells = [
 
 export const TmPayoutEvents = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
+  const [haveFilters, handleHaveFilters] = useState(false)
 
   const { payoutList, isLoading } = useTokenManagerState()
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
+    if (Object.keys(filters).length) {
+      handleHaveFilters(true)
+    }
     getMyPayouts({ ...filters, offset: 10 })
   }, [filters, getMyPayouts])
 
@@ -56,7 +60,7 @@ export const TmPayoutEvents = () => {
   return (
     <>
       <LoadingIndicator isLoading={isLoading} />
-      {payoutList.items?.length ? (
+      {payoutList.items?.length || haveFilters ? (
         <Container>
           <MultipleFilters
             filters={[
@@ -69,12 +73,14 @@ export const TmPayoutEvents = () => {
             ]}
             onFiltersChange={handleFilters}
           />
-          <Table body={<Body onEdit={onEdit} items={payoutList.items} />} header={<Header />} />
-          <Pagination
-            totalPages={payoutList.totalPages}
-            page={(payoutList.page || 1) - 1}
-            onPageChange={onPageChange}
-          />
+          {payoutList.items?.length ? (
+            <>
+              <Table body={<Body onEdit={onEdit} items={payoutList.items} />} header={<Header />} />
+              <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
+            </>
+          ) : (
+            <TmEmptyPage tab="payout-events" filtred />
+          )}
         </Container>
       ) : (
         <TmEmptyPage tab="payout-events">
@@ -88,28 +94,16 @@ export const TmPayoutEvents = () => {
 }
 
 interface IRow {
-  item: any
-  onEdit: (item: any) => void
+  item: PayoutEvent
+  onEdit: (item: PayoutEvent) => void
 }
 
 const Row = ({ item, onEdit }: IRow) => {
-  const {
-    id,
-    status,
-    type,
-    secTokenId,
-    payoutStartDate,
-    payoutEndDate,
-    recordDate,
-    amountCalimed,
-    total,
-    tokenToClaimAddress,
-  } = item
-
-  const secToken = useSecTokenById(secTokenId)
+  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken } = item
+  const amountClaimed = 0
 
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
-  const currency = useCurrency(tokenToClaimAddress)
+  const currency = useCurrency(payoutToken)
 
   const dateFormat = 'MMM d, YYYY'
 
@@ -129,21 +123,21 @@ const Row = ({ item, onEdit }: IRow) => {
         {secToken?.symbol || '-'}
       </div>
       <div>
-        {dayjs(payoutStartDate).format(dateFormat)}
-        {Boolean(payoutEndDate) && (
+        {dayjs(startDate).format(dateFormat)}
+        {Boolean(endDate) && (
           <>
             &nbsp;-
             <br />
-            {dayjs(payoutEndDate).format(dateFormat)}
+            {dayjs(endDate).format(dateFormat)}
           </>
         )}
       </div>
       <div>{dayjs(recordDate).format(dateFormat)}</div>
       <div style={{ fontWeight: 500 }}>
-        {amountCalimed ? (
+        {amountClaimed ? (
           <>
             <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
-            {currency?.symbol || '-'}&nbsp;{amountCalimed}/{total}
+            {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
           </>
         ) : (
           '-'
@@ -168,8 +162,8 @@ const Row = ({ item, onEdit }: IRow) => {
 }
 
 interface IBody {
-  items: any[]
-  onEdit: (item: any) => void
+  items: PayoutEvent[]
+  onEdit: (item: PayoutEvent) => void
 }
 
 const Body = ({ items, onEdit }: IBody) => {
