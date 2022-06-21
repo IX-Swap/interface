@@ -1,16 +1,9 @@
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
-import { userRegistration } from '../helpers/api'
+import { userRegistration } from '../api/api'
 import { text } from '../helpers/text'
 
-import {
-  click,
-  typeText,
-  getMessage,
-  navigate,
-  waitForText,
-  shouldExist
-} from '../helpers/helpers'
+import { click, typeText, getMessage, navigate, waitForText, shouldExist, emailCreate } from '../helpers/helpers'
 
 class Authentication {
   page: any
@@ -19,9 +12,12 @@ class Authentication {
   }
   confirmation = async email => {
     const re = /https:[\'"]?([^\'" >]+\d+\w+)/g
-    const message = await getMessage(email, this.page)
-    const confirmLink = message.htmlBody.match(re)[0]
-    await navigate(confirmLink, this.page)
+    const message = await getMessage(email)
+    let confirmLink = message.htmlBody.match(re)[0]
+    if (baseCreds.URL?.includes('otc')) {
+      confirmLink = confirmLink.replace('dev', 'otc')
+    }
+    return confirmLink
   }
 
   loginWithout2fa = async (email, password, page = this.page) => {
@@ -56,29 +52,33 @@ class Authentication {
     await click(authForms.buttons.AGREE, this.page)
     await click(authForms.buttons.SUBMIT, this.page)
     await finishLoad
-    await this.confirmation(email)
+    const confirmLink = await this.confirmation(email)
+    await navigate(confirmLink, this.page)
   }
 
-  submitRegistrationFormByAPI = async email => {
+  submitRegistrationFormByAPI = async (login = true) => {
+    let email = await emailCreate()
     const resp = await userRegistration(email)
-    await this.confirmation(email)
-    await this.login(email, baseCreds.PASSWORD)
-    return resp
+    const confirmLink = await this.confirmation(email)
+    if (login === true) {
+      await navigate(confirmLink, this.page)
+      await this.login(email, baseCreds.PASSWORD)
+    }
+    return { resp, email }
   }
 
   resetPassword = async email => {
+    const passwordForReset = emailCreate()
     await click(authForms.buttons.FORGOT, this.page)
     await typeText(authForms.fields.EMAIL, email, this.page)
     await click(authForms.buttons.SUBMIT, this.page)
-    await this.confirmation(email)
+    const confirmLink = await this.confirmation(email)
+    await navigate(confirmLink, this.page)
     await typeText(authForms.fields.EMAIL, email, this.page)
-    await typeText(
-      authForms.fields.NEW_PASSWORD,
-      baseCreds.PASSWORD_RESET,
-      this.page
-    )
+    await typeText(authForms.fields.NEW_PASSWORD, passwordForReset, this.page)
     await click(authForms.buttons.SUBMIT, this.page)
     await waitForText(this.page, text.notification.resetPassword)
+    return passwordForReset
   }
 
   signOut = async () => {

@@ -9,7 +9,7 @@ export default makeStyles(theme => ({
   },
   icon: {
     marginLeft: theme.spacing(1.5),
-    marginBottom: theme.spacing(0.25)
+    marginBottom: theme.spacing(-0.5)
   },
   path: {
     fill: theme.palette.primary.main

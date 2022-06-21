@@ -31,7 +31,9 @@ export const Register: React.FC = observer(() => {
     await signup({
       name: values.name,
       email: values.email,
-      password: values.password
+      singPassLogin: false,
+      password: values.password,
+      accountType: identity?.toLocaleUpperCase()
     })
   }
 

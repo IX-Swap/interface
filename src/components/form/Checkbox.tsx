@@ -9,7 +9,6 @@ import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export interface CheckboxProps extends Omit<FormControlLabelProps, 'control'> {
   reverse?: boolean
-  labelClassName?: string
 }
 
 export const Checkbox = (
@@ -19,12 +18,22 @@ export const Checkbox = (
     name,
     value,
     label,
-    labelClassName = '',
     error = true,
     control,
     reverse = false,
     ...rest
   } = props
+
+  const getColor = () => {
+    if (error) {
+      return 'error'
+    }
+    if (value) {
+      return reverse ? 'text.secondary' : 'text.primary'
+    }
+
+    return reverse ? 'text.primary' : 'text.secondary'
+  }
 
   return (
     <FormControlLabel
@@ -39,9 +48,8 @@ export const Checkbox = (
         <Typography
           fontWeight={400}
           variant='body1'
-          color={error ? 'error' : 'inherit'}
-          style={{ marginTop: 10, fontSize: 13.5 }}
-          className={labelClassName}
+          color={getColor()}
+          style={{ marginTop: 8, fontSize: 14, lineHeight: 1.5 }}
         >
           {label}
         </Typography>

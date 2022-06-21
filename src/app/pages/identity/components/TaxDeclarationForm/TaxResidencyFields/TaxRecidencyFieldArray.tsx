@@ -6,7 +6,13 @@ import { TaxResidencyField } from 'app/pages/identity/components/TaxDeclarationF
 import { TaxResidency } from 'app/pages/identity/types/forms'
 import { MAX_TAX_RESIDENCIES } from 'app/pages/identity/const/declarations'
 
-export const TaxResidencyFieldArray = () => {
+export interface TaxResidencyFieldArrayProps {
+  identityType?: 'individual' | 'corporate'
+}
+
+export const TaxResidencyFieldArray = ({
+  identityType = 'corporate'
+}: TaxResidencyFieldArrayProps) => {
   const { control } = useFormContext()
 
   useEffect(() => {
@@ -34,6 +40,7 @@ export const TaxResidencyFieldArray = () => {
                   max={MAX_TAX_RESIDENCIES}
                   total={fields.length}
                   defaultValue={field as TaxResidency}
+                  identityType={identityType}
                 />
               </Grid>
             </Fragment>

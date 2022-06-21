@@ -1,18 +1,11 @@
 import { issuance } from './../selectors/issuance'
 import { invest } from '../selectors/invest'
-import { bankAccounts } from '../selectors/accounts'
+import { accountsTab } from '../selectors/accounts'
 import { authorizerEl } from '../selectors/authorizer'
-import { baseCreds } from '../helpers/creds'
+import { baseCreds, setENV } from '../helpers/creds'
 import { text } from '../helpers/text'
-import { postRequest, getCookies } from '../helpers/api'
-import {
-  bankAccount,
-  cashWithdrawal,
-  blockchainAddresses,
-  dso,
-  commitment,
-  approvedApi
-} from '../helpers/api-body'
+import { postRequest, getCookies } from '../api/api'
+import { bankAccount, cashWithdrawal, blockchainAddresses, dso, commitment, approvedApi } from '../api/api-body'
 
 import {
   click,
@@ -21,57 +14,59 @@ import {
   shouldExist,
   getMessage,
   shouldNotExist,
-  LOADER
+  LOADER,
+  uploadFiles
 } from '../helpers/helpers'
 
 class Authorizer {
+  static createBlockchainAddressByApi = async email => {
+    const { cookies, request } = await getCookies(email)
+    const id = (await request.json()).data._id
+    const createBankAccount = await postRequest(blockchainAddresses, cookies, `accounts/withdrawal-addresses/${id}`)
+    return createBankAccount
+  }
+
   page: any
   constructor(page) {
     this.page = page
   }
 
+  viewProfileCheckUploadDocument = async () => {
+    await shouldExist(authorizerEl.viewProfileSection.UPLOAD_DOCUMENT, this.page)
+    await this.page.reload()
+    await shouldExist(authorizerEl.viewProfileSection.UPLOAD_DOCUMENT, this.page)
+  }
+
   createBankAccountByApi = async () => {
     const { cookies, request } = await getCookies(baseCreds.AUTHORIZER_USER)
     const id = (await request.json()).data._id
-    const createBankAccount = await postRequest(
-      bankAccount,
-      cookies,
-      `accounts/banks/${id}`
-    )
+    if (baseCreds.URL.includes('otc' || 'dev')) {
+      bankAccount['asset'] = '5fd7199deb87068672a27016'
+    }
+    const createBankAccount = await postRequest(bankAccount, cookies, `accounts/banks/${id}`)
     return createBankAccount
   }
 
   createCommitmentsByApi = async () => {
     const { cookies, request } = await getCookies(baseCreds.EMAIL_APPROVED)
     const id = (await request.json()).data._id
-    const createBankAccount = await postRequest(
-      commitment,
-      cookies,
-      `issuance/commitments/${id}`
-    )
+    const createBankAccount = await postRequest(commitment, cookies, `issuance/commitments/${id}`)
     return createBankAccount
   }
 
-  getDataForIdentityTable = async (
-    state,
-    link = text.requests.identityIndividualsList
-  ) => {
-    const { cookies, request } = await getCookies('oleksiyk@titanium-tech.net')
+  getDataForIdentityTable = async (state, link = text.requests.identityIndividualsList) => {
+    const { cookies, request } = await getCookies(baseCreds.ADMIN)
     const createBankAccount = await postRequest(state, cookies, link)
-    const identitiesCount = await createBankAccount.data[0].count
+    const identitiesCount = (await createBankAccount?.data[0]?.count) ?? 0
     return identitiesCount
   }
 
   getUserForVirtualAccountCreation = async () => {
     const { cookies, request } = await getCookies(baseCreds.AUTHORIZER_USER)
-    const listOfUsers = await postRequest(
-      approvedApi,
-      cookies,
-      text.requests.identityCorporatesList
-    )
+    const listOfUsers = await postRequest(approvedApi, cookies, text.requests.identityCorporatesList)
     let identity
     for (let user of await listOfUsers.data[0].documents) {
-      if (user.companyLegalName === 'middle') {
+      if (user.companyLegalName.includes('middle')) {
         identity = user.user.email
         break
       }
@@ -103,41 +98,16 @@ class Authorizer {
     const { cookies, request } = await getCookies(baseCreds.AUTHORIZER_USER)
     const userId = (await request.json()).data._id
     dso['tokenSymbol'] = Date.now().toString().slice(-6)
-    const createNewDSO = (
-      await postRequest(dso, cookies, `issuance/dso/${userId}`)
-    ).data.id
-
-    const submitDSO = await postRequest(
-      {},
-      cookies,
-      `issuance/dso/${userId}/${createNewDSO}/submit`,
-      'PATCH'
-    )
+    const createNewDSO = (await postRequest(dso, cookies, `issuance/dso/${userId}`)).data.id
+    const submitDSO = await postRequest({}, cookies, `issuance/dso/${userId}/${createNewDSO}/submit`, 'PATCH')
     return submitDSO
-  }
-  createBlockchainAddressByApi = async () => {
-    const { cookies, request } = await getCookies(baseCreds.BANK_ACCOUNT)
-    const id = (await request.json()).data._id
-    blockchainAddresses['address'] =
-      '0x5455D6D8ae4263d69b29d1DeD8eCD361b6' + Date.now().toString().slice(-6)
-    const createBankAccount = await postRequest(
-      blockchainAddresses,
-      cookies,
-      `accounts/withdrawal-addresses/${id}`
-    )
-
-    return createBankAccount
   }
 
   createCashWithdrawalRequestByApi = async () => {
     const { cookies, request } = await getCookies(baseCreds.AUTHORIZER_USER)
-    const id = (await request.json()).data._id
-    const createBankAccount = await postRequest(
-      cashWithdrawal,
-      cookies,
-      text.requests.withdrawalsVirtualAccount
-    )
-
+    if (baseCreds.URL.includes('otc' || 'dev'))
+      (cashWithdrawal['bankAccountId'] = '62334307a5e68410ff43de25'), (cashWithdrawal['amount'] = 10000)
+    const createBankAccount = await postRequest(cashWithdrawal, cookies, text.requests.withdrawalsVirtualAccount)
     return createBankAccount
   }
 
@@ -154,7 +124,7 @@ class Authorizer {
   }
   approve = async () => {
     await click(authorizerEl.buttons.APPROVE, this.page)
-    await waitForRequestInclude(this.page, '/approve', 'PUT')
+    // await waitForRequestInclude(this.page, '/approve', 'PUT')
   }
   reject = async () => {
     await click(authorizerEl.buttons.REJECT, this.page)
@@ -176,18 +146,11 @@ class Authorizer {
   approveCashWithdraw = async () => {
     await this.approve()
     await navigate(baseCreds.URL + text.requests.cashWithdrawal, this.page)
-    await shouldExist(
-      `${invest.TABLE} >> text="less than a minute ago"`,
-      this.page
-    )
+    await shouldExist(`${invest.TABLE} >> text="less than a minute ago"`, this.page)
   }
   rejectCashWithdraw = async () => {
     await this.reject()
-    const message = await getMessage(
-      baseCreds.AUTHORIZER_USER,
-      this.page,
-      'Your Withdrawal'
-    )
+    const message = await getMessage(baseCreds.AUTHORIZER_USER, 'Your Withdrawal')
     return message.subject
   }
   deleteBankAccount = async () => {
@@ -197,7 +160,7 @@ class Authorizer {
     for (const digit of code) {
       await digit.fill('1')
     }
-    await click(bankAccounts.buttons.CONFIRM, this.page)
+    await click(accountsTab.buttons.CONFIRM, this.page)
     await waitForRequestInclude(this.page, '/remove', 'PUT')
   }
 }

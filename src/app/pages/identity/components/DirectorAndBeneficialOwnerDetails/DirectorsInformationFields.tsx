@@ -23,7 +23,7 @@ export const DirectorsInformationFields = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container spacing={6}>
+    <Grid container spacing={5}>
       <Grid item xs={12} md={6}>
         <TypedField
           key={fieldId}
@@ -33,6 +33,7 @@ export const DirectorsInformationFields = ({
           name={[rootName, index, 'fullName']}
           label='Full Name'
           placeholder='Full Name'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -45,6 +46,7 @@ export const DirectorsInformationFields = ({
           label='Designation'
           fullWidth
           placeholder='Add Designation'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -57,6 +59,7 @@ export const DirectorsInformationFields = ({
           label='Email Address'
           fullWidth
           placeholder='Email Address'
+          hideIcon
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -67,7 +70,6 @@ export const DirectorsInformationFields = ({
           valueExtractor={plainValueExtractor}
           name={[rootName, index, 'contactNumber']}
           label='Contact Number'
-          customRenderer
           fullWidth
         />
       </Grid>

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SafeguardInfoAction invokes onClose function on button click, should match snapshot 1`] = `
+<div>
+  <button
+    class="ForwardRef(Button)-root-1 MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-13e45tm-MuiButtonBase-root-MuiButton-root"
+    tabindex="0"
+    type="button"
+  >
+    Ok
+    <span
+      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+    />
+  </button>
+</div>
+`;

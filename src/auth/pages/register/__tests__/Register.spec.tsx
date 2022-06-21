@@ -74,7 +74,9 @@ describe('Register', () => {
       expect(signup).toHaveBeenCalledWith({
         name: signupArgs.name,
         email: signupArgs.email,
-        password: 'Dr0wss@pDr0wss@p'
+        password: 'Dr0wss@pDr0wss@p',
+        singPassLogin: false,
+        accountType: undefined
       })
     })
   })
