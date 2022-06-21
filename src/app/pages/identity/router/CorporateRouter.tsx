@@ -46,7 +46,10 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.createIssuer}
       >
-        <CreateCorporateIdentity type='issuer' />
+        <CreateCorporateIdentity
+          type='issuer'
+          title='Create Corporate Issuer Identity'
+        />
       </AppRoute>
 
       <AppRoute
