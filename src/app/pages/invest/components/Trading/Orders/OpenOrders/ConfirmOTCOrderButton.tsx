@@ -5,6 +5,7 @@ import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useState } from 'react'
 import { ColumnOTCMatch } from 'types/otcOrder'
+import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ConfirmOTCOrderButton.styles'
 export interface ConfirmOTCOrderButtonProps extends ButtonProps {
   order: ColumnOTCMatch
 }
@@ -14,6 +15,7 @@ export const ConfirmOTCOrderButton = ({
 }: ConfirmOTCOrderButtonProps) => {
   const { chainId, address } = usePairTokenAddressNetwork()
   const [loadingTransaction, setLoadingTransaction] = useState(false)
+  const classes = useStyles()
   const sendToken = useSendToken({
     address: address,
     tokenChainId: chainId
@@ -41,15 +43,20 @@ export const ConfirmOTCOrderButton = ({
   const { isMiniLaptop } = useAppBreakpoints()
 
   return (
-    <Box display='flex' justifyContent='center' alignItems={'center'}>
-      {(isLoading || loadingTransaction) && <CircularProgress size={14} />}
+    <>
+      {(isLoading || loadingTransaction) && (
+        <Box className={classes.loader} data-testid='loader'>
+          <CircularProgress size={14} />
+        </Box>
+      )}
       {!(isLoading || loadingTransaction) && (
-        <>
+        <Box display='flex' alignItems={'center'} minWidth={'100%'}>
           {!isMiniLaptop && (
             <Button
               disabled={isLoading || loadingTransaction}
               onClick={handleClick}
               color='primary'
+              data-testid='confirmButton'
               size='small'
               {...rest}
             >
@@ -62,14 +69,15 @@ export const ConfirmOTCOrderButton = ({
               onClick={handleClick}
               variant='contained'
               color='primary'
+              data-testid='confirmButtonMobile'
               fullWidth
               {...rest}
             >
               Confirm
             </Button>
           )}
-        </>
+        </Box>
       )}
-    </Box>
+    </>
   )
 }

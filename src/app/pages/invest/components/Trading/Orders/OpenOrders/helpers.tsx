@@ -3,7 +3,12 @@ import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamask
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { getRoundedPercentage } from 'helpers/numbers'
-import { ColumnOTCMatch, OpenOTCOrder, OTCMatch } from 'types/otcOrder'
+import {
+  ColumnOTCMatch,
+  OpenOTCOrder,
+  OTCMatch,
+  OTCOrderStatus
+} from 'types/otcOrder'
 
 export const needsConfirmation = (item: OpenOTCOrder) => {
   return item.orderType === 'SELL'
@@ -55,8 +60,28 @@ export const sortOpenOrders = (first: OpenOTCOrder, _: OpenOTCOrder) =>
     : 1
 
 export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
-  return getRoundedPercentage({
-    amount: row.amount,
-    matchedAmount: row.amount - row.availableAmount ?? 0
-  })
+  if (row.orderType === 'SELL') {
+    return getRoundedPercentage({
+      amount: row.amount,
+      matchedAmount: row.amount - row.availableAmount ?? 0
+    })
+  }
+  const statusesWhereToShowFilled = [
+    OTCOrderStatus.PENDING,
+    OTCOrderStatus.COMPLETED
+  ]
+  const matchedAmounts = row?.matches
+    ?.filter(match => statusesWhereToShowFilled.includes(match.status))
+    .map(matched => matched.matchedAmount)
+  const matchedAmount =
+    matchedAmounts?.reduce(
+      (previous, currentAmount) => previous + currentAmount,
+      0
+    ) ?? 0
+  return matchedAmount === 0
+    ? '0'
+    : getRoundedPercentage({
+        amount: row.amount,
+        matchedAmount
+      })
 }

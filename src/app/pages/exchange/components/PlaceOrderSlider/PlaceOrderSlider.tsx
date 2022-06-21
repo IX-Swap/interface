@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Slider } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderSlider/PlaceOrderSlider.style'
+import { isEmptyString } from 'helpers/strings'
 
 export interface PlaceOrderFieldsProps {
   balance: number
@@ -64,7 +65,7 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
         mark: classes.mark,
         markActive: classes.markActive
       }}
-      disabled={price === null || price === undefined}
+      disabled={isEmptyString(String(price))}
       data-testid='slider'
       onChange={computeAmount}
     />

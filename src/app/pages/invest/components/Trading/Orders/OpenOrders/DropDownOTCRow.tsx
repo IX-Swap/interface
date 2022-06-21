@@ -17,8 +17,8 @@ export const DropDownOTCRow = ({ order }: DropDownOTCRowProps) => {
   return (
     <Box display='flex' justifyContent='center' alignItems={'center'}>
       <IconButton data-testid='more-button' size='small' onClick={handleClick}>
-        {isOpen === true && <ArrowDropDown color='primary' />}
-        {isOpen !== true && <ArrowDropUp color='primary' />}
+        {isOpen !== true && <ArrowDropDown color='primary' />}
+        {isOpen === true && <ArrowDropUp color='primary' />}
       </IconButton>
     </Box>
   )
