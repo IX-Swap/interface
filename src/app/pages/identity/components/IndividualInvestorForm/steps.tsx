@@ -1,7 +1,5 @@
-import React, { Fragment } from 'react'
-import { VSpacer } from 'components/VSpacer'
-import { Grid, Paper, Typography } from '@mui/material'
-
+import React from 'react'
+import { Grid, Paper } from '@mui/material'
 import {
   getDocumentsFormValues,
   getFinancialInfoFormValues,
@@ -19,7 +17,6 @@ import {
 import {
   individualInvestorValidationSchema,
   financialInfoSchema,
-  individualInvestorDocumentsSchema,
   individualInvestorStatusDeclarationSchema,
   personalInfoSchema
 } from 'app/pages/identity/validation/individual'
@@ -32,6 +29,7 @@ import { AddressFields } from 'app/pages/identity/components/AddressFields/Addre
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
+import { VSpacer } from 'components/VSpacer'
 
 export const individualInvestorFormSteps = [
   {
@@ -44,12 +42,14 @@ export const individualInvestorFormSteps = [
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 4 }}>
             <FormSectionHeader title={'Personal Information'} />
+            <VSpacer size='medium' />
             <IndividualInfoFields />
           </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 4 }}>
             <FormSectionHeader title={'Address'} />
+            <VSpacer size='medium' />
             <AddressFields />
           </Paper>
         </Grid>
@@ -80,47 +80,18 @@ export const individualInvestorFormSteps = [
     )
   },
   {
-    label: 'Investor Status Declaration',
+    label: 'Investor Declaration',
     getFormValues: getInvestorDeclarationFormValues,
     getRequestPayload: getInvestorDeclarationRequestPayload,
     validationSchema: individualInvestorStatusDeclarationSchema,
     component: () => (
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <InvestorDeclarationForm />
-          </Paper>
+          <InvestorDeclarationForm />
         </Grid>
-      </Grid>
-    )
-  },
-  {
-    label: 'Upload Documents',
-    getFormValues: getDocumentsFormValues,
-    getRequestPayload: getDocumentsRequestPayload,
-    validationSchema: individualInvestorDocumentsSchema,
-    component: () => (
-      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <Fragment>
-              <FormSectionHeader title={'Upload Documents'} />
-              <Typography
-                variant='subtitle2'
-                color='textSecondary'
-                style={{ marginTop: -30, fontSize: 16 }}
-              >
-                Please upload the following documents. All account statements
-                and documents should be dated within 3 months.
-              </Typography>
-              <Typography variant='subtitle2' color='textSecondary'>
-                Notes: Type of document format supported is jpg, jpeg, png, gif,
-                tiff, webp, svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf,
-                and odt.
-              </Typography>
-              <VSpacer size='medium' />
-              <IndividualUploadDocumentsForm />
-            </Fragment>
+            <IndividualUploadDocumentsForm />
           </Paper>
         </Grid>
       </Grid>

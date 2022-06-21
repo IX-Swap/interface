@@ -45,8 +45,10 @@ export const File = ({
 }: FileProps) => {
   const renderLabel = () => {
     if (
-      (!multiple && Object.keys(value as DataroomFile).length > 0) ||
-      (value as DataroomFile).originalFileName !== undefined
+      (!multiple &&
+        value != null &&
+        Object.keys(value as DataroomFile).length > 0) ||
+      (value as DataroomFile)?.originalFileName !== undefined
     ) {
       return (value as DataroomFile)?.originalFileName
     }

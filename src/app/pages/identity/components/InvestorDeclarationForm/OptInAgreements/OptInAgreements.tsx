@@ -1,7 +1,7 @@
-import { Typography } from '@mui/material'
 import { OptOutInfoDialog } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutDialog'
-import { SafeguardInfoDialog } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoDialog'
 import React, { Fragment } from 'react'
+import { SafeguardInfoDialog } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoDialog'
+import { Typography } from '@mui/material'
 import useStyles from './OptInAgreements.style'
 
 export interface OptInAgreementsProps {
@@ -29,6 +29,18 @@ export const OptInAgreements = ({
         {showOptOutDialog ? <OptOutInfoDialog /> : 'opt out'} of the Accredited
         Investors status with InvestaX at any point in time.
       </Typography>
+    </Fragment>
+  )
+}
+
+export const OptInAgreementsIndividual = ({
+  showOptOutDialog = false
+}: OptInAgreementsProps) => {
+  return (
+    <Fragment>
+      I have been informed of and understand my right to{' '}
+      {showOptOutDialog ? <OptOutInfoDialog /> : 'opt out'} of the Accredited
+      Investors status
     </Fragment>
   )
 }

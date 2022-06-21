@@ -27,7 +27,11 @@ export const DeclarationsListFields = ({
     <Grid container spacing={1}>
       {title !== undefined && (
         <Grid item xs={12} mb={2}>
-          <Typography variant={'subtitle1'} className={classes.title}>
+          <Typography
+            data-testid={'title-typo'}
+            variant={'subtitle1'}
+            className={classes.title}
+          >
             {title}
           </Typography>
         </Grid>

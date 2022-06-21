@@ -2,7 +2,10 @@ import React, { useEffect } from 'react'
 import { Grid, Typography } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
-import { OptInAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
+import {
+  OptInAgreements,
+  OptInAgreementsIndividual
+} from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { InvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorAgreements/InvestorAgreements'
 import { useFormContext } from 'react-hook-form'
 import { IdentityType } from 'app/pages/identity/utils/shared'
@@ -11,6 +14,7 @@ import { CorporateDocuments } from 'app/pages/identity/components/InvestorDeclar
 import { InstitutionalInvestorAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/InstitutionalInvestorAgreements/InstitutionalInvestorAgreements'
 import { Divider } from 'ui/Divider'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
+import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -21,7 +25,33 @@ export const InvestorDeclarationForm = ({
   identityType = 'individual',
   corporateType = 'issuer'
 }: InvestorDeclarationFormProps) => {
+  const isCorporate = identityType === 'corporate'
+  const title = `I declare that I am "${
+    isCorporate ? 'Corporate' : 'Individual'
+  } Accredited Investor"`
   const { formState, trigger } = useFormContext()
+
+  const getOptInData = (type: IdentityType) => {
+    if (type === 'individual') {
+      return [
+        {
+          name: 'optInAgreements1',
+          label: <SafeguardAgreements />
+        },
+        {
+          name: 'optInAgreements2',
+          label: <OptInAgreementsIndividual showOptOutDialog />
+        }
+      ]
+    }
+
+    return [
+      {
+        name: 'optInAgreements',
+        label: <OptInAgreements showOptOutDialog />
+      }
+    ]
+  }
 
   const {
     assets,
@@ -72,6 +102,9 @@ export const InvestorDeclarationForm = ({
                 <FormSectionHeader title='Investor Status Declaration' />
               </Grid>
               <Grid item>
+                <Typography>{title}</Typography>
+              </Grid>
+              <Grid item>
                 <InvestorAgreements type={identityType} />
               </Grid>
             </Grid>
@@ -88,12 +121,7 @@ export const InvestorDeclarationForm = ({
                 <Grid item>
                   <DeclarationsListFields
                     title='I confirm to be treated as an “Accredited Investor” by InvestaX'
-                    data={[
-                      {
-                        name: 'optInAgreements',
-                        label: <OptInAgreements showOptOutDialog />
-                      }
-                    ]}
+                    data={getOptInData(identityType)}
                   />
                 </Grid>
               </Grid>
@@ -102,50 +130,52 @@ export const InvestorDeclarationForm = ({
         </Grid>
       </Grid>
 
-      <Grid item xs={12}>
-        <FieldContainer>
-          <Grid item container direction={'column'}>
-            <Grid item>
-              <FormSectionHeader title='Institutional Investor Status Declaration' />
-            </Grid>
-
-            <Grid item>
-              <DeclarationsListFields
-                title=''
-                data={[
-                  {
-                    name: 'isInstitutionalInvestor',
-                    label: <InstitutionalInvestorAgreements />
-                  }
-                ]}
-              />
-            </Grid>
-
-            <Grid item mt={3} mb={3}>
-              <Divider />
-            </Grid>
-
-            <Grid item>
+      {identityType !== 'individual' && (
+        <Grid item xs={12}>
+          <FieldContainer>
+            <Grid item container direction={'column'}>
               <Grid item>
-                <UploadDocumentField
-                  name='institutionalInvestorDocuments'
-                  label='Institutional Investor Documents'
-                  helperElement={
-                    <Typography
-                      color={'text.secondary'}
-                      mt={1.5}
-                      fontWeight={400}
-                    >
-                      Institutional Investor Documents - License issued by
-                      Regulator
-                    </Typography>
-                  }
+                <FormSectionHeader title='Institutional Investor Status Declaration' />
+              </Grid>
+
+              <Grid item>
+                <DeclarationsListFields
+                  title=''
+                  data={[
+                    {
+                      name: 'isInstitutionalInvestor',
+                      label: <InstitutionalInvestorAgreements />
+                    }
+                  ]}
                 />
               </Grid>
+
+              <Grid item mt={3} mb={3}>
+                <Divider />
+              </Grid>
+
+              <Grid item>
+                <Grid item>
+                  <UploadDocumentField
+                    name='institutionalInvestorDocuments'
+                    label='Institutional Investor Documents'
+                    helperElement={
+                      <Typography
+                        color={'text.secondary'}
+                        mt={1.5}
+                        fontWeight={400}
+                      >
+                        Institutional Investor Documents - License issued by
+                        Regulator
+                      </Typography>
+                    }
+                  />
+                </Grid>
+              </Grid>
             </Grid>
-          </Grid>
-        </FieldContainer>
-      </Grid>
+          </FieldContainer>
+        </Grid>
+      )}
 
       {identityType !== 'individual' && (
         <CorporateDocuments corporateType={corporateType} />

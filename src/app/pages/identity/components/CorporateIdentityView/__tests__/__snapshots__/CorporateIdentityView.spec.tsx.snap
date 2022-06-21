@@ -615,8 +615,8 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                     >
                       I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
                       <span
-                        class="MuiTypography-root MuiTypography-body1 css-1okvd07-MuiTypography-root"
-                        style="text-decoration: none; cursor: pointer;"
+                        class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
+                        style="cursor: pointer;"
                       >
                         safeguards
                       </span>
