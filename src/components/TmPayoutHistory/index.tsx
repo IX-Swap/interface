@@ -7,7 +7,7 @@ import { FILTERS } from 'components/MultipleFilters/constants'
 import { Table } from 'components/Table'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { useCurrency } from 'hooks/Tokens'
+import { useToken } from 'hooks/Tokens'
 import { useGeyPayoutHistory, useTokenManagerState } from 'state/token-manager/hooks'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { Pagination } from 'components/Pagination'
@@ -86,10 +86,9 @@ const Row = ({ item }: IRow) => {
     createdAt,
     sum,
   } = item
-  const token = useCurrency(payoutToken)
+  const token = useToken(payoutToken)
 
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
-  const tokenCurrency = token ? new WrappedTokenInfo(token as any) : undefined
 
   return (
     <StyledBodyRow>
@@ -101,10 +100,10 @@ const Row = ({ item }: IRow) => {
         <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
         {secToken?.symbol || '-'}
       </div>
-      <div>{dayjs(createdAt).format('MMM d, YYYY - HH:mm')}</div>
+      <div>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</div>
       <div style={{ fontWeight: 500 }}>
-        <CurrencyLogo currency={tokenCurrency} style={{ marginRight: 4 }} size="24px" />
-        {tokenCurrency?.symbol || '-'}&nbsp;{sum}
+        <CurrencyLogo currency={token} style={{ marginRight: 4 }} size="24px" />
+        {token?.symbol || '-'}&nbsp;{sum}
       </div>
 
       <div>

@@ -21,3 +21,13 @@ export const getPayoutList: Readonly<{
   fulfilled: createAction('payout/getPayoutList/fulfilled'),
   rejected: createAction('payout/getPayoutList/rejected'),
 }
+
+export const getMyPayoutList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: PayoutList; type: string }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/getMyPayoutList/pending'),
+  fulfilled: createAction('payout/getMyPayoutList/fulfilled'),
+  rejected: createAction('payout/getMyPayoutList/rejected'),
+}

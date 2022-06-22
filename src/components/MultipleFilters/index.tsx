@@ -2,7 +2,11 @@ import React, { useEffect, useMemo } from 'react'
 import { useFormik } from 'formik'
 import { t, Trans } from '@lingui/macro'
 import { MobileDatePicker } from '@material-ui/pickers'
+import { capitalize } from '@material-ui/core'
+import { useLocation } from 'react-router-dom'
+import dayjs from 'dayjs'
 
+import { PAYOUT_STATUS } from 'pages/PayoutItem'
 import { Search } from 'components/Search'
 import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -10,7 +14,6 @@ import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useSecTokenState } from 'state/secTokens/hooks'
 import { DateRangePickerFilter } from 'components/DateRangePicker'
 import { useSimpleTokens } from 'hooks/Tokens'
-import dayjs from 'dayjs'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { SecToken } from 'types/secToken'
 
@@ -33,6 +36,7 @@ export const MultipleFilters = ({
   searchPlaceholder = 'Search for Wallet',
   onFiltersChange,
 }: Props) => {
+  const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
   const tokens = useSimpleTokens()
@@ -44,7 +48,7 @@ export const MultipleFilters = ({
         return {
           label: token.tokenInfo?.symbol || token.symbol,
           value: token.address,
-          icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+          icon: <CurrencyLogo size="20px" currency={new WrappedTokenInfo(token)} />,
         }
       })
 
@@ -52,7 +56,7 @@ export const MultipleFilters = ({
         list.unshift({
           label: native.symbol,
           value: native.symbol,
-          icon: <CurrencyLogo currency={native} />,
+          icon: <CurrencyLogo size="20px" currency={native} />,
         })
       }
       return list
@@ -66,12 +70,19 @@ export const MultipleFilters = ({
       return secTokens.map((token: SecToken) => ({
         label: token.symbol,
         value: token.id,
-        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        icon: <CurrencyLogo size="20px" currency={new WrappedTokenInfo(token)} />,
       }))
     }
 
     return []
   }, [secTokens])
+
+  const statusOptionsFormatted = useMemo(() => {
+    if (pathname === '/token-manager/payout-events') {
+      return [{ label: capitalize(PAYOUT_STATUS.DRAFT), value: PAYOUT_STATUS.DRAFT }, ...statusOptions]
+    }
+    return statusOptions
+  }, [pathname])
 
   const initialValues = useMemo((): Record<string, any> => {
     if (filters.length) {
@@ -185,7 +196,7 @@ export const MultipleFilters = ({
         placeholder="Status"
         selectedItems={values[FILTERS.STATUS]}
         onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
-        items={statusOptions}
+        items={statusOptionsFormatted}
       />
     ),
     [FILTERS.PAYOUT_TYPE]: (
@@ -207,14 +218,12 @@ export const MultipleFilters = ({
     [FILTERS.PAYOUT_PERIOD]: (
       <DateRangePickerFilter
         label="Payment period"
-        value={values[FILTERS.PAYOUT_PERIOD]}
-        onChange={(value) =>
-          setFieldValue(
-            FILTERS.PAYOUT_PERIOD,
-            value.map((el) => dayjs(el).toISOString())
-          )
-        }
-        maxDate={new Date()}
+        value={[values.startDate, values.endDate]}
+        onChange={(value) => {
+          setFieldValue('startDate', value[0] ? dayjs(value[0]).toISOString() : value[0])
+          setFieldValue('endDate', value[1] ? dayjs(value[1]).toISOString() : value[1])
+        }}
+        // maxDate={new Date()}
       />
     ),
     [FILTERS.RECORD_DATE]: (

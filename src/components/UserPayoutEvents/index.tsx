@@ -1,10 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { t } from '@lingui/macro'
 
-import { useGetPayoutList } from 'state/payout/hooks'
-
-import { AllPayouts } from './AllPayout'
-import { MyPayouts } from './MyPayout'
+import { AllPayoutEvents } from './AllPayoutEvents'
+import { MyPayouts } from './MyPayoutEvents'
 import { Container, Tab, Tabs, Body } from './styleds'
 
 const tabs = [
@@ -18,7 +16,7 @@ export const UserPayoutEvents = () => {
   const tabComponent = useMemo(() => {
     switch (tab) {
       case 'all':
-        return <AllPayouts />
+        return <AllPayoutEvents />
       case 'my':
         return <MyPayouts />
       default:
