@@ -121,6 +121,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             >
               <PlaceOrderFields
                 balance={balance}
+                activeTab={activeTabNameIdx}
                 totalCurrencyLabel={totalCurrencyLabel}
               />
             </TabPanel>
