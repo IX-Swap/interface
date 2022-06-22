@@ -20,7 +20,8 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     width: '55%',
-    height: '100vh',
+    height: '100%',
+    minHeight: '100vh',
     position: 'relative',
     backgroundColor: 'transparent',
     display: 'flex',
