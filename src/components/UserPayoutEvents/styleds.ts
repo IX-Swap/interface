@@ -168,3 +168,59 @@ export const PayoutValue = styled.div`
   display: flex;
   align-items: center;
 `
+
+export const MyPayoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  position: relative;
+  row-gap: 24px;
+`
+
+export const MyPayoutListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+`
+
+export const MyListTitle = styled.div`
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 24px;
+`
+
+export const MyListContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0px, 1fr));
+  row-gap: 40px;
+  column-gap: 12px;
+  @media (max-width: ${MEDIA_WIDTHS.upToLarge}px) {
+    grid-template-columns: repeat(3, minmax(0px, 1fr));
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    grid-template-columns: repeat(2, minmax(0px, 1fr));
+    row-gap: 24px;
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    row-gap: 12px;
+    grid-template-columns: minmax(0px, 1fr);
+  }
+`
+
+export const Hr = styled.div`
+  background-color: ${({ theme }) => theme.text9};
+  height: 1px;
+  width: 100%;
+`
+
+export const ViewMoreBtnContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  > button {
+    min-height: 32px;
+    height: 32px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+  }
+`

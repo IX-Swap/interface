@@ -1,4 +1,5 @@
 import { capitalize } from '@material-ui/core'
+
 import { PAYOUT_TYPE } from 'components/TmPayoutEvents/constants'
 import { ROLES, ROLES_LABEL } from 'constants/roles'
 import { PAYOUT_STATUS } from 'constants/enums'
@@ -21,7 +22,8 @@ export const defaultValues = {
   tokens: [],
   status: [],
   type: [],
-  payoutPeriod: [],
+  startDate: null,
+  endDate: null,
   recordDate: null,
   payoutToken: [],
   createdAt: null,
@@ -35,7 +37,6 @@ export const rolesOptions = [
 ]
 
 export const statusOptions = [
-  { label: capitalize(PAYOUT_STATUS.DRAFT), value: PAYOUT_STATUS.DRAFT },
   { label: capitalize(PAYOUT_STATUS.ANNOUNCED), value: PAYOUT_STATUS.ANNOUNCED },
   { label: capitalize(PAYOUT_STATUS.STARTED), value: PAYOUT_STATUS.STARTED },
   { label: capitalize(PAYOUT_STATUS.SCHEDULED), value: PAYOUT_STATUS.SCHEDULED },
@@ -44,7 +45,6 @@ export const statusOptions = [
 ]
 
 export const payoutTypeOptions = [
-  { label: capitalize(PAYOUT_TYPE.REWARDS), value: PAYOUT_TYPE.REWARDS },
   { label: capitalize(PAYOUT_TYPE.ROYALTIES), value: PAYOUT_TYPE.ROYALTIES },
   { label: capitalize(PAYOUT_TYPE.DIVIDENDS), value: PAYOUT_TYPE.DIVIDENDS },
   { label: capitalize(PAYOUT_TYPE.INTEREST), value: PAYOUT_TYPE.INTEREST },

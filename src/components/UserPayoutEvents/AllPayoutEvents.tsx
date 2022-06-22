@@ -10,23 +10,23 @@ import { EmptyState } from './EmptyState'
 import { Card } from './Card'
 import { AllPayoutContainer, AllPayoutListContainer } from './styleds'
 
-export const AllPayouts = () => {
+export const AllPayoutEvents = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
 
   const { list, loadingRequest } = usePayoutState()
 
-  const gePayoutList = useGetPayoutList()
+  const getPayoutList = useGetPayoutList()
 
   useEffect(() => {
     if (Object.keys(filters).length) {
       handleHaveFilters(true)
     }
-    gePayoutList({ ...filters, offset: 16 })
-  }, [filters, gePayoutList])
+    getPayoutList({ ...filters, offset: 16, page: 1 })
+  }, [filters, getPayoutList])
 
   const onPageChange = async (page: number) => {
-    await gePayoutList({ ...filters, page, offset: 16 })
+    await getPayoutList({ ...filters, page, offset: 16 })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
