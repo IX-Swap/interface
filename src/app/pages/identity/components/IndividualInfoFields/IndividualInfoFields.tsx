@@ -145,7 +145,6 @@ export const IndividualInfoFields = (
               valueExtractor={dateTimeValueExtractor}
               maxDate={subYears(new Date(), 18)}
               disabled={isSingPass && hasValue(singPassData?.dob)}
-              variant='date'
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
