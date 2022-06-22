@@ -3,22 +3,15 @@ import { CancelOTCOrderButton } from 'app/pages/invest/components/Trading/Orders
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
-import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
-
+import { OpenOTCOrder } from 'types/otcOrder'
+import { showCancelButton } from './helpers'
 export interface OTCOrderActionsProps {
   item: OpenOTCOrder
   type: 'Cancel' | 'Confirm'
 }
-// const showConfirm =
-//     item?.status === OTCOrderStatus.CONFIRMED && item.orderType === 'SELL'
 
 export const OTCOrderActionsMobile = ({ item }: OTCOrderActionsProps) => {
-  const orderFinished = [
-    OTCOrderStatus.COMPLETED,
-    OTCOrderStatus.CANCELLED,
-    OTCOrderStatus.PENDING
-  ].includes(item?.status as any)
-  const showCancel = !orderFinished
+  const showCancel = showCancelButton({ item })
   const { isMiniLaptop } = useAppBreakpoints()
   if (!isMiniLaptop) {
     return null

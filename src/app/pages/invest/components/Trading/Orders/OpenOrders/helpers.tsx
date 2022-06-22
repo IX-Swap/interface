@@ -2,6 +2,7 @@ import { useTheme } from '@mui/material'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
+import { isNonEmptyArray } from 'helpers/arrays'
 import { getRoundedPercentage } from 'helpers/numbers'
 import {
   ColumnOTCMatch,
@@ -84,4 +85,19 @@ export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
         amount: row.amount,
         matchedAmount
       })
+}
+
+export const showCancelButton = ({ item }: { item: OpenOTCOrder }) => {
+  if (item.orderType === 'SELL') {
+    const disableCancelStatuses = [
+      OTCOrderStatus.COMPLETED,
+      OTCOrderStatus.CANCELLED,
+      OTCOrderStatus.PENDING
+    ]
+    return !disableCancelStatuses.includes(item?.status as any)
+  }
+  const pendingMatches = item?.matches?.filter(
+    item => item.status === OTCOrderStatus.PENDING
+  )
+  return !isNonEmptyArray(pendingMatches)
 }
