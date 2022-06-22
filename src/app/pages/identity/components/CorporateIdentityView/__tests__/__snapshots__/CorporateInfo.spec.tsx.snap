@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CorporateInfo should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 css-ktynep-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    />
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item css-oo37o-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-3l9fq4-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+            >
+              Company Name
+            </p>
+            <div
+              class="MuiBox-root css-1gbh5gc"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+            >
+              InvestaX
+            </p>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+            >
+              Country of Incorporation
+            </p>
+            <div
+              class="MuiBox-root css-1gbh5gc"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+            >
+              Russian Federation
+            </p>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+            >
+              Source of Funds
+            </p>
+            <div
+              class="MuiBox-root css-1gbh5gc"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+            >
+              LOAN
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-3l9fq4-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        />
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+            >
+              Registration Number/UEN
+            </p>
+            <div
+              class="MuiBox-root css-1gbh5gc"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+            >
+              123456
+            </p>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column fs-exclude css-80wlp8-MuiGrid-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+            >
+              Legal Entity
+            </p>
+            <div
+              class="MuiBox-root css-1gbh5gc"
+            />
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+            >
+              Others (Please specify)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

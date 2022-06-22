@@ -47,6 +47,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           disableElevation
           fullWidth={fullWidth}
           size='large'
+          style={{ minWidth: 'max-content' }}
         >
           {isApproved
             ? 'Approved'

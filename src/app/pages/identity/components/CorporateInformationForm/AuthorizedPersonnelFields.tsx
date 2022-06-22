@@ -19,7 +19,7 @@ export const AuthorizedPersonnelFields = () => {
   return (
     <FieldsArray name='representatives' control={control}>
       {({ fields, append, remove }) => (
-        <Grid container spacing={5}>
+        <Grid container spacing={2}>
           {fields.map((field, index) => (
             <Grid item xs={12} key={field.id}>
               <AuthorizedPersonnel

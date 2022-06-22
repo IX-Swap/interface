@@ -7,8 +7,9 @@ export interface PersonnelListProps {
   personnel: Personnel[]
 }
 
+export const titleText = 'Company Authorized Personnel'
+
 export const PersonnelList = ({ personnel }: PersonnelListProps) => {
-  const titleText = 'Company Authorized Personnel'
   const getDocumentTitle = (index: number) =>
     personnel.length > 1 ? `(${index + 1}) ${titleText}` : titleText
 
