@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export interface OwnershipStructureProps {
@@ -9,15 +8,14 @@ export interface OwnershipStructureProps {
 }
 
 export const OwnershipStructure = ({ data }: OwnershipStructureProps) => {
-  const { isMobile } = useAppBreakpoints()
-
   return (
     <Grid
       item
       container
+      spacing={5}
       sx={{
         display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr'
+        gridTemplateColumns: { sx: '1fr', sm: '1fr 1fr' }
       }}
     >
       <Grid item>

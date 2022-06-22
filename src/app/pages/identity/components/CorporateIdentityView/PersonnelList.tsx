@@ -20,10 +20,7 @@ export const PersonnelList = ({ personnel }: PersonnelListProps) => {
     <Grid item container direction='column' spacing={2}>
       {personnel.map((personnel, i) => (
         <Grid item key={i}>
-          <CompanyPersonnel
-            personnel={personnel}
-            documentTitle={getDocumentTitle(i)}
-          />
+          <CompanyPersonnel personnel={personnel} title={getDocumentTitle(i)} />
         </Grid>
       ))}
     </Grid>

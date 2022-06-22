@@ -5,16 +5,13 @@ import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
 import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-// import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar.svg'
+import { ReactComponent as AvatarPhoto } from 'assets/icons/new/avatar_identity.svg'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
 }
 
 export const CorporateInfo = ({ data }: CorporateInfoProps) => {
-  const { isMobile } = useAppBreakpoints()
-
   const getLegalEntityStatus = (value: string) => {
     const status = LEGAL_ENTITY_STATUS_LIST.find(
       item => item.value === value
@@ -31,14 +28,14 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           variant='square'
           size={120}
           borderRadius={16}
-          // fallback={<AvatarPhoto />}
+          fallback={<AvatarPhoto />}
         />
       </Grid>
       <Grid
         item
         sx={{
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr'
+          gridTemplateColumns: { sx: '1fr', sm: '1fr 1fr' }
         }}
         container
       >

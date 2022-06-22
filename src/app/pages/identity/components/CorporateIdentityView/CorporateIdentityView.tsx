@@ -11,6 +11,7 @@ import { InvestorDeclarationView } from 'app/pages/identity/components/Individua
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { OwnershipStructure } from 'app/pages/identity/components/CorporateIdentityView/OwnershipStructure'
+import { DirectorList } from 'app/pages/identity/components/CorporateIdentityView/DirectorList'
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
@@ -54,34 +55,22 @@ export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
       </Grid>
 
       <Grid item>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Directors/Partners/People with Executive Authority' />
-          <PersonnelList personnel={data.directors ?? []} />
-        </Paper>
-      </Grid>
-
-      <Grid item style={{ paddingBottom: 0, paddingTop: 0 }}>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Beneficial Owners Information' />
-          <BeneficialOwnersList
-            personnel={data.beneficialOwners ?? []}
-            showDocumentHeader
-          />
-        </Paper>
+        <DirectorList data={data} />
       </Grid>
 
       <Grid item>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
+        <BeneficialOwnersList data={data} />
+      </Grid>
+
+      <Grid item>
+        <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
+      </Grid>
+
+      <Grid item>
+        <FieldContainer>
           <FormSectionHeader title='Investor Declaration' />
           <InvestorDeclarationView identityType='corporate' data={data} />
-        </Paper>
-      </Grid>
-
-      <Grid item>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Tax Declaration' />
-          <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
-        </Paper>
+        </FieldContainer>
       </Grid>
 
       <Grid item>

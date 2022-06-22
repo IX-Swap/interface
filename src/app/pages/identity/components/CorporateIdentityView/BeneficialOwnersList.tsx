@@ -1,32 +1,27 @@
 import { Grid } from '@mui/material'
 import { BeneficialOwner } from 'app/pages/identity/components/CorporateIdentityView/BeneficialOwner'
 import React from 'react'
-import { Personnel } from 'app/pages/identity/types/forms'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export interface BeneficialOwnersListProps {
-  personnel: Personnel[]
-  showDocumentHeader?: boolean
-  documentsTitle?: string
+  data: CorporateIdentity
 }
 
-export const BeneficialOwnersList = ({
-  personnel,
-  showDocumentHeader = false,
-  documentsTitle = 'Documents'
-}: BeneficialOwnersListProps) => {
-  if (personnel.length < 1) {
+export const BeneficialOwnersList = ({ data }: BeneficialOwnersListProps) => {
+  const { beneficialOwners } = data
+  const titleText = 'Beneficial Owners Information'
+  const getDocumentTitle = (index: number) =>
+    beneficialOwners.length > 1 ? `(${index + 1}) ${titleText}` : titleText
+
+  if (beneficialOwners.length < 1) {
     return null
   }
 
   return (
-    <Grid container direction='column' spacing={6}>
-      {personnel.map((personnel, i) => (
+    <Grid item container direction='column' spacing={2}>
+      {beneficialOwners.map((item, i) => (
         <Grid item key={i}>
-          <BeneficialOwner
-            personnel={personnel}
-            showDocumentHeader={showDocumentHeader}
-            documentsTitle={documentsTitle}
-          />
+          <BeneficialOwner title={getDocumentTitle(i)} data={item} />
         </Grid>
       ))}
     </Grid>
