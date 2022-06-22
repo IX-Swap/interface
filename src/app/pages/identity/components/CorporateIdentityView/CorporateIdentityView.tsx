@@ -1,25 +1,25 @@
-import { Grid, Paper } from '@mui/material'
+import React from 'react'
+import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { PersonnelList } from 'app/pages/identity/components/CorporateIdentityView/PersonnelList'
 import { BeneficialOwnersList } from 'app/pages/identity/components/CorporateIdentityView/BeneficialOwnersList'
 import { CorporateAddress } from 'app/pages/identity/components/CorporateIdentityView/CorporateAddress'
 import { CorporateInfo } from 'app/pages/identity/components/CorporateIdentityView/CorporateInfo'
-import React from 'react'
-import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { InvestorDeclarationView } from 'app/pages/identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { OwnershipStructure } from 'app/pages/identity/components/CorporateIdentityView/OwnershipStructure'
 import { DirectorList } from 'app/pages/identity/components/CorporateIdentityView/DirectorList'
+import { CorporateInvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/CorporateInvestorDeclarationView'
+import { OptInView } from 'app/pages/identity/components/CorporateIdentityView/OptInView'
+import { DocumentsView } from 'app/pages/identity/components/CorporateIdentityView/DocumentsView'
+import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InstitutionalInvestorDeclarationView'
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
 }
 
 export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
-  console.log('data', data)
-
   return (
     <Grid container spacing={2} direction='column'>
       <Grid item>
@@ -67,17 +67,19 @@ export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
       </Grid>
 
       <Grid item>
-        <FieldContainer>
-          <FormSectionHeader title='Investor Declaration' />
-          <InvestorDeclarationView identityType='corporate' data={data} />
-        </FieldContainer>
+        <CorporateInvestorDeclarationView data={data} />
       </Grid>
 
       <Grid item>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Company Documents' />
-          <IdentityDocumentsView data={data.documents} type='corporate' />
-        </Paper>
+        <OptInView data={data} />
+      </Grid>
+
+      <Grid item>
+        <InstitutionalInvestorDeclarationView data={data} />
+      </Grid>
+
+      <Grid item>
+        <DocumentsView data={data.documents} />
       </Grid>
     </Grid>
   )
