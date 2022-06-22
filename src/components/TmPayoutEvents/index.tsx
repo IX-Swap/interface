@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
+import { useHistory } from 'react-router-dom'
 
+import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
 import { ButtonGradientBorder } from 'components/Button'
@@ -32,6 +34,7 @@ const headerCells = [
 ]
 
 export const TmPayoutEvents = () => {
+  const history = useHistory()
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
 
@@ -55,6 +58,10 @@ export const TmPayoutEvents = () => {
 
   const onPageChange = (page: number) => {
     fetch({ ...filters, page, offset: 4 })
+  }
+
+  const goToCreate = () => {
+    history.push(routes.createPayoutEvent)
   }
 
   return (
@@ -84,7 +91,7 @@ export const TmPayoutEvents = () => {
         </Container>
       ) : (
         <TmEmptyPage tab="payout-events">
-          <CreateButton>
+          <CreateButton onClick={goToCreate}>
             <Trans>Create Payout Event</Trans>
           </CreateButton>
         </TmEmptyPage>
@@ -99,6 +106,8 @@ interface IRow {
 }
 
 const Row = ({ item, onEdit }: IRow) => {
+  const history = useHistory()
+
   const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken } = item
   const amountClaimed = 0
 
@@ -108,7 +117,7 @@ const Row = ({ item, onEdit }: IRow) => {
   const dateFormat = 'MMM d, YYYY'
 
   const clickView = () => {
-    // TO DO - redirect to detailed event page
+    history.push(routes.payoutItem(id))
   }
 
   return (

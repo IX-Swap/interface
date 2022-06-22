@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { ButtonGradientBorder, ButtonPrimary, ButtonText } from 'components/Button'
@@ -11,6 +11,7 @@ import Column from 'components/Column'
 import { TYPE } from 'theme'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
+import { routes } from 'utils/routes'
 
 import { useStatusButtonInfo } from './utils'
 import { InfoBlock } from './InfoBlock'
@@ -20,11 +21,16 @@ interface Props {
 }
 
 export const PayoutHeader: FC<Props> = ({ status }) => {
+  const history = useHistory()
+  const goBack = () => {
+    history.push(routes.securityTokens('payout-events'))
+  }
+
   return (
     <Column style={{ gap: '32px' }}>
       <Flex justifyContent="space-between">
         <Flex>
-          <ButtonText height="fit-content" marginTop="16px" marginRight="16px">
+          <ButtonText height="fit-content" marginTop="16px" marginRight="16px" onClick={goBack}>
             <ArrowLeft fill="white !important" />
           </ButtonText>
           <CurrencyLogo size="52px" />
@@ -32,7 +38,7 @@ export const PayoutHeader: FC<Props> = ({ status }) => {
             <TYPE.title4>
               <Trans>Payout Title</Trans>
             </TYPE.title4>
-            <SecTokenLink to={`/security-tokens/4`}>MSTO</SecTokenLink>
+            <SecTokenLink to={routes.securityToken(4)}>MSTO</SecTokenLink>
           </Box>
         </Flex>
 
