@@ -1,7 +1,7 @@
 import useTheme from 'hooks/useTheme'
 import moment from 'moment'
 
-import { PAYOUT_STATUS } from '.'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 export const useStatusButtonInfo = (title: PAYOUT_STATUS) => {
   const theme = useTheme()

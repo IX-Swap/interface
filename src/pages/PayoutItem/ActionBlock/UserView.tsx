@@ -4,8 +4,8 @@ import { Trans, t } from '@lingui/macro'
 
 import Column from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
+import { PAYOUT_STATUS } from 'constants/enums'
 
-import { PAYOUT_STATUS } from '..'
 import { Container, FuturePayoutContainer, StyledButtonIXSGradient } from './styleds'
 
 interface Props {

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 
 import { Colors } from 'theme/styled'
-import { PAYOUT_STATUS } from 'pages/PayoutItem'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { StatusContainer } from './styleds'
 
