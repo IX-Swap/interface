@@ -10,6 +10,7 @@ import { FeaturedTokenCard } from './styleds'
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
 import { NavLink } from 'react-router-dom'
+import { routes } from 'utils/routes'
 
 interface Props {
   token: any
@@ -31,7 +32,7 @@ const Info: FC<InfoProps> = ({ label, title }: InfoProps) => {
 
 export const FeaturedToken: FC<Props> = ({ token }: Props) => {
   return (
-    <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={`/security-tokens/${token.id}`}>
+    <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={routes.securityToken(token.id)}>
       <FeaturedTokenCard>
         <Flex flexDirection="row-reverse">
           <MouseoverTooltip

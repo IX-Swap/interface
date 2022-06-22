@@ -11,6 +11,7 @@ import { TmMyTokens } from 'components/TmMyTokens'
 import { ButtonIXSGradient } from 'components/Button'
 import { TmPayoutEvents } from 'components/TmPayoutEvents'
 import { TmPayoutHistory } from 'components/TmPayoutHistory'
+import { routes } from 'utils/routes'
 
 export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
@@ -70,6 +71,10 @@ const TokenManager = () => {
     }
   }, [me, history])
 
+  const goToCreate = () => {
+    history.push(routes.createPayoutEvent)
+  }
+
   return (
     <Container>
       <Body>
@@ -81,7 +86,7 @@ const TokenManager = () => {
             </ToggleOption>
           ))}
           <ButtonContainer>
-            <CreateButton>
+            <CreateButton onClick={goToCreate}>
               <Trans>Create Payout Event</Trans>
             </CreateButton>
           </ButtonContainer>
