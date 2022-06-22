@@ -36,7 +36,7 @@ export const CurrentHoldingsTable = () => {
           style={{ paddingLeft: 24, paddingRight: 24 }}
         >
           <Grid item xs={12} md={6}>
-            <Box width={300}>
+            <Box width={350}>
               <SearchFilter
                 fullWidth
                 placeholder='Search'
