@@ -31,14 +31,14 @@ describe('EmploymentField', () => {
       .spyOn(useIsSingPass, 'useIsSingPass')
       .mockImplementation(() => objResponse as any)
 
-    const { getByLabelText, getByRole } = render(
+    const { getByLabelText } = render(
       <Form>
         <EmploymentField />
       </Form>
     )
 
-    const occupation = getByLabelText('Occupation')
-    const status = getByLabelText('Employment Status')
+    const occupation = getByLabelText('Occupation (Optional)')
+    const status = getByLabelText('Employment Sector')
     const employer = getByLabelText('Employer')
 
     expect(occupation).toHaveAttribute('aria-disabled', 'true')
