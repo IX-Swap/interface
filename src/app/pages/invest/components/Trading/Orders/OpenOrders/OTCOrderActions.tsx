@@ -5,6 +5,7 @@ import React from 'react'
 import { ColumnOTCMatch, OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { ConfirmOTCOrderButton } from './ConfirmOTCOrderButton'
 import { DropDownOTCRow } from './DropDownOTCRow'
+import { showCancelButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 
 export interface OTCOrderActionsProps {
   item: OpenOTCOrder
@@ -12,13 +13,9 @@ export interface OTCOrderActionsProps {
 export interface ConfirmOrderActionsProps {
   item: ColumnOTCMatch
 }
+
 export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
-  const orderFinished = [
-    OTCOrderStatus.COMPLETED,
-    OTCOrderStatus.CANCELLED,
-    OTCOrderStatus.PENDING
-  ].includes(item?.status as any)
-  const showCancel = !orderFinished
+  const showCancel = showCancelButton({ item })
   const showDropdown =
     Number(item?.matches?.length) > 0 && item.orderType === 'SELL'
   return (

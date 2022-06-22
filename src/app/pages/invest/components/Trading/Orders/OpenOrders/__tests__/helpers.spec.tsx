@@ -9,6 +9,7 @@ import {
 import {
   needsConfirmation,
   renderOpenOrderPercentage,
+  showCancelButton,
   sortOpenOrders
 } from '../helpers'
 import * as helpers from 'helpers/numbers'
@@ -37,5 +38,12 @@ describe('renderOpenOrderPercentage', () => {
   it('renders 0 for buy order without pending or completed matches', () => {
     jest.spyOn(helpers, 'getRoundedPercentage').mockReturnValueOnce('5%')
     expect(renderOpenOrderPercentage(order3Buy)).toEqual('0')
+  })
+})
+
+describe('showCancelButton', () => {
+  it('checks if a order needs confirmation correctly', () => {
+    expect(showCancelButton({ item: order4 })).toEqual(true)
+    expect(showCancelButton({ item: order2 })).toEqual(false)
   })
 })
