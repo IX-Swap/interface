@@ -91,6 +91,7 @@ export const corporate: CorporateIdentity = {
   directors: [],
   registrationNumber: '123456',
   representatives: [],
+  isInstitutionalInvestor: false,
   email: '',
   contactNumber: '',
   user,

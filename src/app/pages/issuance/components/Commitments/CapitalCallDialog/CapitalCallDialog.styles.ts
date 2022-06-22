@@ -34,16 +34,12 @@ export default makeStyles(theme => ({
     top: theme.spacing(1.8),
     right: theme.spacing(2),
     opacity: 0.6,
-    color: theme.palette.getContrastText(theme.palette.primary.main)
+    color: '#ffff'
   },
   actions: {
-    paddingLeft: '5em',
-    paddingRight: '5em',
-    paddingTop: 0,
-    paddingBottom: 0,
-    marginBottom: theme.spacing(3),
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'flex-start'
   },
   multiEmail: {
     position: 'relative',
@@ -51,8 +47,9 @@ export default makeStyles(theme => ({
     height: 156,
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     padding: `${theme.spacing(3)}!important`,
-    borderColor: `${theme.palette.primary.main}!important`,
-    backgroundColor: `${theme.palette.background.default}!important`,
+    borderColor: `${theme.palette.input.border}!important`,
+    backgroundColor: `${theme.palette.background.paper}!important`,
+    borderRadius: '8px',
 
     '& input': {
       width: '100%',
@@ -60,20 +57,19 @@ export default makeStyles(theme => ({
       color: `${theme.palette.text.primary}!important`
     },
     '& span': {
-      position: 'absolute!important',
-      top: '-13px!important',
-      left: '8px!important',
       background: 'inherit!important',
-      display: 'block!important',
-      color: `${theme.palette.primary.main}!important`
+      color: `${theme.palette.text.secondary}!important`,
+      lineHeight: '18px'
     }
   },
   emailItem: {
-    borderRadius: '54px!important',
-    backgroundColor: '#F0F0F0!important'
+    borderRadius: '4px!important',
+    background: '#4C88FF !important',
+    color: '#ffff',
+    fontWeight: 400
   },
   removeItem: {
-    backgroundColor: '#C4C4C4!important',
+    backgroundColor: '#4C88FF!important',
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
@@ -81,7 +77,10 @@ export default makeStyles(theme => ({
     fontSize: 17,
     color: '#F0F0F0!important',
     width: 14,
-    height: 14
+    height: 14,
+    '& svg': {
+      fill: '#ffff'
+    }
   },
   buttonsBlock: {
     marginLeft: '0!important',
@@ -90,10 +89,10 @@ export default makeStyles(theme => ({
   cancelButton: {
     marginRight: theme.spacing(3),
     fontSize: 14,
-    fontWeight: 400
+    fontWeight: 500
   },
   confirmButton: {
     fontSize: 14,
-    fontWeight: 400
+    fontWeight: 500
   }
 }))

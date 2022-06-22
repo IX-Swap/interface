@@ -91,7 +91,7 @@ const order2: OTCOrder = {
   status: OTCOrderStatus.CONFIRMED,
   ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
 }
-const order3: OTCOrder = {
+export const order3: OTCOrder = {
   _id: '609d1d93c54af74af46c027e',
   createdAt: '2022-05-10T12:47:07.411Z',
   pair: fakeOTCMarket,
@@ -111,7 +111,16 @@ export const order4: OTCOrder = {
   pair: fakeOTCMarket,
   orderType: 'SELL',
   availableAmount: 1,
-
+  identity: {
+    individual: {
+      _id: '46677',
+      firstName: 'A',
+      lastName: 'B',
+      middleName: 'C',
+      companyLegalName: 'ABT',
+      contactNumber: '43245'
+    }
+  },
   price: 8500,
   user: '1234',
   matches: fakeOTCMatch2,

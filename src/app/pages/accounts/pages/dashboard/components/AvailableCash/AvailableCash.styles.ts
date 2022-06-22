@@ -22,10 +22,12 @@ export const useStyles = makeStyles(theme => ({
   },
   label: {
     fontWeight: 600,
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    color: theme.palette.primary.contrastText
   },
   value: {
     whiteSpace: 'nowrap',
+    color: theme.palette.primary.contrastText,
     [theme.breakpoints.up('lg')]: {
       '&:not(:last-child)': {
         paddingRight: theme.spacing(3)

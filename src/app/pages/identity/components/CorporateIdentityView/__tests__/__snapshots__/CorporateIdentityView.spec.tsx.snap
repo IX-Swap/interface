@@ -3,681 +3,635 @@
 exports[`CorporateIdentityView should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6 MuiGrid-direction-xs-column css-82hyqs-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6 MuiGrid-direction-xs-column css-167wck0-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
       style="padding-bottom: 0px;"
     >
       <div
-        class="MuiBox-root css-5vb4lz"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
       >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
+        <div
+          class="MuiBox-root css-0"
         >
-          Overview
-        </h5>
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Overview
+          </h5>
+        </div>
         <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
-      </div>
-      <div
-        class="MuiBox-root css-1xhj18k"
-      >
-        <div
-          class="MuiBox-root css-8qb8m4"
+          class="MuiBox-root css-1xhj18k"
         >
           <div
-            class="MuiAvatar-root MuiAvatar-square MuiAvatar-colorDefault css-u1gwme-MuiAvatar-root"
-            style="width: 128px; height: 128px; border-radius: initial; max-width: initial;"
+            class="MuiBox-root css-8qb8m4"
           >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-1xvwp0k-MuiSvgIcon-root-MuiAvatar-fallback"
-              data-testid="PersonIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
+            <div
+              class="MuiAvatar-root MuiAvatar-square MuiAvatar-colorDefault css-19j9e2s-MuiAvatar-root"
+              style="width: 128px; height: 128px; border-radius: initial; max-width: initial;"
             >
-              <path
-                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-1ql7le6-MuiSvgIcon-root-MuiAvatar-fallback"
+                data-testid="PersonIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              style="padding-bottom: 0px;"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-n7cpkr-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                    >
+                      Company Name
+                    </p>
+                    <div
+                      class="MuiBox-root css-1gbh5gc"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                      style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+                    >
+                      InvestaX
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-n7cpkr-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                    >
+                      Company Registration Number/UEN
+                    </p>
+                    <div
+                      class="MuiBox-root css-1gbh5gc"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                      style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+                    >
+                      123456
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-n7cpkr-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                    >
+                      Status of Risk Report
+                    </p>
+                    <div
+                      class="MuiBox-root css-1gbh5gc"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                      style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+                    >
+                       
+                    </p>
+                  </div>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-authStatus-1 makeStyles-unknown-8 makeStyles-authStatusNewTheme-2 makeStyles-unknownNewTheme-9 css-1b4l2pg-MuiTypography-root"
+                  >
+                    UNKNOWN
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              style="padding-top: 0px;"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-n7cpkr-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                    >
+                      Country of Incorporation
+                    </p>
+                    <div
+                      class="MuiBox-root css-1gbh5gc"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                      style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+                    >
+                      Russian Federation
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-n7cpkr-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column fs-exclude css-80wlp8-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                    >
+                      Legal Entity
+                    </p>
+                    <div
+                      class="MuiBox-root css-1gbh5gc"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                      style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+                    >
+                      other
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Address
+          </h5>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-15fcrl2-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+              >
+                Address for Correspondence
+              </p>
+              <div
+                class="MuiBox-root css-1gbh5gc"
               />
-            </svg>
-          </div>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-bjcb1i-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
-            style="padding-bottom: 0px;"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-izaklv-MuiGrid-root"
-            >
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-kozxwa-MuiGrid-root"
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
               >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
-                  >
-                    Company Name
-                  </p>
-                  <div
-                    class="MuiBox-root css-1gbh5gc"
-                  />
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
-                    style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
-                  >
-                    InvestaX
-                  </p>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-kozxwa-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
-                  >
-                    Company Registration Number/UEN
-                  </p>
-                  <div
-                    class="MuiBox-root css-1gbh5gc"
-                  />
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
-                    style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
-                  >
-                    123456
-                  </p>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-kozxwa-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
-                  >
-                    Status of Risk Report
-                  </p>
-                  <div
-                    class="MuiBox-root css-1gbh5gc"
-                  />
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
-                    style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
-                  >
-                     
-                  </p>
-                </div>
-                <p
-                  class="MuiTypography-root MuiTypography-body1 makeStyles-authStatus-1 makeStyles-unknown-8 makeStyles-authStatusNewTheme-2 makeStyles-unknownNewTheme-9 css-3a17l8-MuiTypography-root"
-                >
-                  UNKNOWN
-                </p>
-              </div>
+                Omsk, Russian Federation, Siberia, Address line 1, Address line 2, 123456
+              </p>
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
-            style="padding-top: 0px;"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-15fcrl2-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-izaklv-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
             >
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-kozxwa-MuiGrid-root"
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
               >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
-                  >
-                    Country of Incorporation
-                  </p>
-                  <div
-                    class="MuiBox-root css-1gbh5gc"
-                  />
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
-                    style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
-                  >
-                    Russian Federation
-                  </p>
-                </div>
-              </div>
+                Registered Address
+              </p>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-kozxwa-MuiGrid-root"
+                class="MuiBox-root css-1gbh5gc"
+              />
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
+                style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
               >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column fs-exclude css-brqso2-MuiGrid-root"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
-                  >
-                    Legal Entity
-                  </p>
-                  <div
-                    class="MuiBox-root css-1gbh5gc"
-                  />
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
-                    style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
-                  >
-                    other
-                  </p>
-                </div>
-              </div>
+                Omsk, Russian Federation, Siberia, Address line 1, Address line 2, 123456
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="MuiBox-root css-5vb4lz"
-      >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
-        >
-          Address
-        </h5>
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-izaklv-MuiGrid-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-4nwxvm-MuiGrid-root"
+          class="MuiBox-root css-0"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-              style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
-            >
-              Address for Correspondence
-            </p>
-            <div
-              class="MuiBox-root css-1gbh5gc"
-            />
-            <p
-              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
-              style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
-            >
-              Omsk, Russian Federation, Siberia, Address line 1, Address line 2, 123456
-            </p>
-          </div>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-4nwxvm-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
-          >
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-              style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
-            >
-              Registered Address
-            </p>
-            <div
-              class="MuiBox-root css-1gbh5gc"
-            />
-            <p
-              class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
-              style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
-            >
-              Omsk, Russian Federation, Siberia, Address line 1, Address line 2, 123456
-            </p>
-          </div>
+            Company Authorized Personnel
+          </h5>
         </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="MuiBox-root css-5vb4lz"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
       >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
+        <div
+          class="MuiBox-root css-0"
         >
-          Company Authorized Personnel
-        </h5>
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Directors/Partners/People with Executive Authority
+          </h5>
+        </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
-    >
-      <div
-        class="MuiBox-root css-5vb4lz"
-      >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
-        >
-          Directors/Partners/People with Executive Authority
-        </h5>
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
-      </div>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
       style="padding-bottom: 0px; padding-top: 0px;"
     >
       <div
-        class="MuiBox-root css-5vb4lz"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
       >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
+        <div
+          class="MuiBox-root css-0"
         >
-          Beneficial Owners Information
-        </h5>
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Beneficial Owners Information
+          </h5>
+        </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="MuiBox-root css-5vb4lz"
-      >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
-        >
-          Investor Declaration
-        </h5>
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-container css-1kca4ek-MuiGrid-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-tkfwqb-MuiGrid-root"
+          class="MuiBox-root css-0"
         >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
           >
-            <h6
-              class="MuiTypography-root MuiTypography-subtitle1 css-19nocy2-MuiTypography-root"
-            >
-              I declare that I am a corporate "Accredited Investor"
-            </h6>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-9b2ou0-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-1yp4ln"
-              >
-                <div
-                  class="MuiBox-root css-0"
-                  style="opacity: 0.5;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rpgn4r-MuiSvgIcon-root"
-                    data-testid="declarations-list-item-unchecked"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="MuiBox-root css-d0uhtl"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    data-testid="declarations-list-item-label"
-                  >
-                    An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency; or
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-1yp4ln"
-              >
-                <div
-                  class="MuiBox-root css-0"
-                  style="opacity: 0.5;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rpgn4r-MuiSvgIcon-root"
-                    data-testid="declarations-list-item-unchecked"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="MuiBox-root css-d0uhtl"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    data-testid="declarations-list-item-label"
-                  >
-                    The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency; or
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-1yp4ln"
-              >
-                <div
-                  class="MuiBox-root css-0"
-                  style="opacity: 0.5;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rpgn4r-MuiSvgIcon-root"
-                    data-testid="declarations-list-item-unchecked"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="MuiBox-root css-d0uhtl"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    data-testid="declarations-list-item-label"
-                  >
-                    A corporation where all the shareholders are Accredited Investors; or
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-1yp4ln"
-              >
-                <div
-                  class="MuiBox-root css-0"
-                  style="opacity: 0.5;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rpgn4r-MuiSvgIcon-root"
-                    data-testid="declarations-list-item-unchecked"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="MuiBox-root css-d0uhtl"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    data-testid="declarations-list-item-label"
-                  >
-                    A partnership (other than a limited liability partnership) where all the partners are Accredited Investors; or
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-1yp4ln"
-              >
-                <div
-                  class="MuiBox-root css-0"
-                  style="opacity: 0.5;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rpgn4r-MuiSvgIcon-root"
-                    data-testid="declarations-list-item-unchecked"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="MuiBox-root css-d0uhtl"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    data-testid="declarations-list-item-label"
-                  >
-                    A trust where all the beneficiaries are Accredited Investors; or
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-1yp4ln"
-              >
-                <div
-                  class="MuiBox-root css-0"
-                  style="opacity: 0.5;"
-                >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rpgn4r-MuiSvgIcon-root"
-                    data-testid="declarations-list-item-unchecked"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="MuiBox-root css-d0uhtl"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    data-testid="declarations-list-item-label"
-                  >
-                    A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            Investor Declaration
+          </h5>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
         >
           <div
-            class="MuiBox-root css-h8m1q6"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-480o17-MuiGrid-root"
           >
             <div
-              class="makeStyles-formHeader-28 MuiBox-root css-1xn0qx2"
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
             >
-              <h5
-                class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
               >
-                Opt-In Requirement
-              </h5>
+                I declare that I am a corporate "Accredited Investor"
+              </h6>
             </div>
-          </div>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-tkfwqb-MuiGrid-root"
-        >
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-          >
-            <h6
-              class="MuiTypography-root MuiTypography-subtitle1 css-19nocy2-MuiTypography-root"
-            >
-              I confirm to be treated as an “Accredited Investor” by InvestaX
-            </h6>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-9b2ou0-MuiGrid-root"
-          >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-1tw2i9j-MuiGrid-root"
             >
               <div
-                class="MuiBox-root css-1yp4ln"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
               >
                 <div
-                  class="MuiBox-root css-0"
-                  style="opacity: 0.5;"
+                  class="MuiBox-root css-1yp4ln"
                 >
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rpgn4r-MuiSvgIcon-root"
-                    data-testid="declarations-list-item-unchecked"
-                    focusable="false"
-                    viewBox="0 0 24 24"
+                  <div
+                    class="MuiBox-root css-0"
+                    style="opacity: 0.5;"
                   >
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="MuiBox-root css-d0uhtl"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                  >
-                    I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                  >
-                    I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
-                    <span
-                      class="MuiTypography-root MuiTypography-body1 css-tqmfip-MuiTypography-root"
-                      style="text-decoration: underline; cursor: pointer;"
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                      data-testid="declarations-list-item-unchecked"
+                      focusable="false"
+                      viewBox="0 0 24 24"
                     >
-                      safeguards
-                    </span>
-                     for Accredited Investors.
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiBox-root css-d0uhtl"
                   >
-                    I have been informed of and understand my right to
-                     
-                    opt out
-                     of the Accredited Investors status with InvestaX at any point in time.
-                  </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      data-testid="declarations-list-item-label"
+                    >
+                      An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-1yp4ln"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                    style="opacity: 0.5;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                      data-testid="declarations-list-item-unchecked"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiBox-root css-d0uhtl"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      data-testid="declarations-list-item-label"
+                    >
+                      The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-1yp4ln"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                    style="opacity: 0.5;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                      data-testid="declarations-list-item-unchecked"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiBox-root css-d0uhtl"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      data-testid="declarations-list-item-label"
+                    >
+                      A corporation where all the shareholders are Accredited Investors
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-1yp4ln"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                    style="opacity: 0.5;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                      data-testid="declarations-list-item-unchecked"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiBox-root css-d0uhtl"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      data-testid="declarations-list-item-label"
+                    >
+                      A partnership (other than a limited liability partnership) where all the partners are Accredited Investors
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-1yp4ln"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                    style="opacity: 0.5;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                      data-testid="declarations-list-item-unchecked"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiBox-root css-d0uhtl"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      data-testid="declarations-list-item-label"
+                    >
+                      A trust where all the beneficiaries are Accredited Investors
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-1yp4ln"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                    style="opacity: 0.5;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                      data-testid="declarations-list-item-unchecked"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiBox-root css-d0uhtl"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                      data-testid="declarations-list-item-label"
+                    >
+                      A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-h8m1q6"
+            >
+              <div
+                class="makeStyles-formHeader-28 MuiBox-root css-1xn0qx2"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+                >
+                  Opt-In Requirement
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-480o17-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+              >
+                I confirm to be treated as an “Accredited Investor” by InvestaX
+              </h6>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-1tw2i9j-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-1yp4ln"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                    style="opacity: 0.5;"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                      data-testid="declarations-list-item-unchecked"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="MuiBox-root css-d0uhtl"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
+                    >
+                      I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.
+                       
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
+                    >
+                      I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
+                      <span
+                        class="MuiTypography-root MuiTypography-body1 css-1okvd07-MuiTypography-root"
+                        style="text-decoration: none; cursor: pointer;"
+                      >
+                        safeguards
+                      </span>
+                       for Accredited Investors.
+                       
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
+                    >
+                      I have been informed of and understand my right to
+                       
+                      opt out
+                       of the Accredited Investors status with InvestaX at any point in time.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -686,101 +640,85 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="MuiBox-root css-5vb4lz"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
       >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
+        <div
+          class="MuiBox-root css-0"
         >
-          Tax Declaration
-        </h5>
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Tax Declaration
+          </h5>
+        </div>
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="MuiBox-root css-5vb4lz"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
       >
-        <h5
-          class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
+        <div
+          class="MuiBox-root css-0"
         >
-          Company Documents
-        </h5>
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Company Documents
+          </h5>
+        </div>
         <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <hr
-          class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
-        />
-        <div
-          class="MuiBox-root css-1ynyhby"
-        />
-        <div
-          class="MuiBox-root css-1jpm9pd"
-        />
-      </div>
-      <div
-        class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
-      >
-        <table
-          class="MuiTable-root css-me9vuo-MuiTable-root"
+          class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
         >
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-wrap-xs-nowrap css-1srlmzw-MuiGrid-root"
+          <table
+            class="MuiTable-root css-7mlt34-MuiTable-root"
           >
             <div
-              class="MuiBox-root css-1ezo613"
+              class="MuiGrid-root MuiGrid-container MuiGrid-wrap-xs-nowrap css-1ledfka-MuiGrid-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                style="font-weight: 500;"
+              <div
+                class="MuiBox-root css-1ezo613"
               >
-                File
-              </p>
-            </div>
-            <div
-              class="MuiBox-root css-19afw6t"
-            >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                style="font-weight: 500;"
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                  style="font-weight: 500;"
+                >
+                  File
+                </p>
+              </div>
+              <div
+                class="MuiBox-root css-19afw6t"
               >
-                Type
-              </p>
-            </div>
-            <div
-              class="MuiBox-root css-19afw6t"
-            >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                style="font-weight: 500;"
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                  style="font-weight: 500;"
+                >
+                  Type
+                </p>
+              </div>
+              <div
+                class="MuiBox-root css-19afw6t"
               >
-                Uploaded At
-              </p>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                  style="font-weight: 500;"
+                >
+                  Uploaded At
+                </p>
+              </div>
+              <div
+                class="MuiBox-root css-19afw6t"
+              />
             </div>
-            <div
-              class="MuiBox-root css-19afw6t"
+            <tbody
+              class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
             />
-          </div>
-          <tbody
-            class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
-          />
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   </div>

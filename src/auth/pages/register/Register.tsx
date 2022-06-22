@@ -51,6 +51,7 @@ export const Register: React.FC = observer(() => {
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
   const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
+
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,

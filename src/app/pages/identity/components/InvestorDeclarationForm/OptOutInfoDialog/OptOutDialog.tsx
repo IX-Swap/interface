@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dialog } from 'app/pages/identity/components/Dialog'
+import { Dialog } from 'app/pages/identity/components/Dialog/Dialog'
 import { Typography } from '@mui/material'
 import { OptOutInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoContent/OptOutInfoContent'
 import { OptOutInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoAction/OptOutInfoAction'
@@ -12,7 +12,7 @@ export const OptOutInfoDialog = () => {
         <Typography
           component='span'
           color='primary'
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
+          style={{ textDecoration: 'none', cursor: 'pointer' }}
         >
           opt out
         </Typography>
@@ -22,7 +22,7 @@ export const OptOutInfoDialog = () => {
       actions={<OptOutInfoAction />}
       fullWidth
       scroll='body'
-      maxWidth='md'
+      maxWidth='sm'
     />
   )
 }

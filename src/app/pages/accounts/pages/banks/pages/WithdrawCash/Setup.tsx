@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
-import { Grid, InputAdornment, Typography } from '@mui/material'
+import { Box, Grid, InputAdornment, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { TypedField } from 'components/form/TypedField'
@@ -17,8 +17,10 @@ import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCas
 import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 import { usePaymentMethod } from 'app/pages/accounts/pages/banks/hooks/usePaymentMethods'
 import { VSpacer } from 'components/VSpacer'
+import { useStyles } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/Setup.styles'
 
 export const Setup: React.FC = () => {
+  const { inputWrapper } = useStyles()
   const { watch, control, formState, reset, getValues } =
     useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
@@ -119,7 +121,9 @@ export const Setup: React.FC = () => {
             helperText='Please select your bank account in which you want to transfer your fund'
             endAdornment={
               <InputAdornment position='end'>
-                <MaxButton onClick={setMaxValue} />
+                <Box className={inputWrapper}>
+                  <MaxButton onClick={setMaxValue} />
+                </Box>
               </InputAdornment>
             }
           />

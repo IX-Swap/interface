@@ -11,7 +11,7 @@ exports[`BlockchainAddress should match snapshot 1`] = `
       src="image-mock"
     />
     <h6
-      class="MuiTypography-root MuiTypography-subtitle2 css-s0c2fe-MuiTypography-root"
+      class="MuiTypography-root MuiTypography-subtitle2 css-ymfzov-MuiTypography-root"
     >
       wallet : 
       0x67ed...8cbc

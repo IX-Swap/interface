@@ -5,6 +5,7 @@ import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
 import {
+  DocumentFieldArrayItemValue,
   PersonalProfile,
   Personnel,
   TaxResidency
@@ -102,6 +103,8 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
     .mixed<DataroomFile[], object>()
     .required(validationMessages.required),
   address: addressSchema.required(validationMessages.required),
+  legalEntityStatus: yup.string().required(validationMessages.required),
+  countryOfFormation: yup.string().required(validationMessages.required),
   percentageShareholding: yup
     .number()
     .transform((value, originalValue) => {
@@ -132,3 +135,67 @@ export const taxResidenciesSchema = yup.object().shape<TaxResidency>({
 export const taxResidenciesArraySchema = yup
   .array<TaxResidency>()
   .of(taxResidenciesSchema.required(validationMessages.required))
+
+export const documentsSchema = yup
+  .array<DocumentFieldArrayItemValue>()
+  .of(
+    yup.object<DocumentFieldArrayItemValue>({
+      // @ts-expect-error
+      value: yup.object<DataroomFile>().test(
+        'isMoreThanZeroFilesUpload',
+        'validationMessages.required',
+        // @ts-expect-errors
+        value => Object.keys(value).length > 0
+      )
+    })
+  )
+  .required(validationMessages.required)
+
+export const institutionalInvestorDocumentsSchema = yup
+  .array<DocumentFieldArrayItemValue>()
+  .when('isInstitutionalInvestor', {
+    is: true,
+    then: documentsSchema
+  })
+  .required(validationMessages.required)
+
+export const investorStatusDeclarationItemSchema = yup
+  .bool()
+  .oneOf([true, false])
+  .test(
+    'oneOfInvestorDeclarationFormValueShouldBeTrue',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function () {
+      const parent = this.parent
+      return (
+        (parent.assets as boolean) ||
+        (parent.trustee as boolean) ||
+        (parent.accreditedBeneficiaries as boolean) ||
+        (parent.accreditedSettlors as boolean) ||
+        (parent.accreditedShareholders as boolean) ||
+        (parent.partnership as boolean)
+      )
+    }
+  )
+  .required(validationMessages.required)
+
+export const optInAgreementsDependentValueSchema = yup
+  .bool()
+  .test(
+    'oneOfOptOutFormValueShouldBeTrue',
+    'Please choose at least one option under "Accredited Investor Opt-Out" section',
+    function () {
+      const parent = this.parent
+
+      if (parent.optInAgreements as boolean) {
+        return (
+          (parent.digitalSecurities as boolean) ||
+          (parent.primaryOfferingServices as boolean) ||
+          (parent.digitalSecuritiesIssuance as boolean) ||
+          (parent.allServices as boolean)
+        )
+      }
+      return true
+    }
+  )
+  .required(validationMessages.required)

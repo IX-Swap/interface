@@ -8,7 +8,7 @@ export const TokensField = () => {
   const { control } = useFormContext()
 
   return (
-    <Grid container alignItems='flex-start' spacing={2}>
+    <Grid container alignItems='center' spacing={2}>
       <Grid item xs={3}>
         <Typography variant='body1' align='right'>
           <Box component='span' fontWeight='bold'>
@@ -23,6 +23,7 @@ export const TokensField = () => {
           name='token'
           label='Tokens'
           variant='outlined'
+          placeholder='Select Tokens'
           fullWidth
         />
       </Grid>

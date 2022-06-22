@@ -10,10 +10,10 @@ export const OTCTrades = () => {
     <WideContainer>
       <Grid container direction='column'>
         <Grid item>
-          <PageHeader title='Authorize OTC Trades' />
+          <PageHeader styled={false} title='Authorize OTC Trades' />
         </Grid>
         <Grid item container direction='column' gap={6}>
-          <Grid item container direction='column' gap={2}>
+          <Grid item container direction='column' gap={2} mt={2}>
             <Typography variant='h4' fontWeight={600}>
               Matched Orders
             </Typography>

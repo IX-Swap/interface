@@ -1,5 +1,5 @@
 import { Typography, Link } from '@mui/material'
-import { useCreateCustodianWallet } from 'app/pages/exchange/hooks/useCreateCustodianWallet'
+import { useCreateCustodianWallet } from 'app/pages/invest/hooks/useCreateCustodianWallet'
 import { AssigningDialog } from 'app/pages/invest/components/CreateCustodyWithdrawalAddressButton/AssigningDialog'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'

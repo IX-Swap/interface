@@ -9,7 +9,7 @@ export const useCryptoBalance = (tokenAddress?: string) => {
   const [balance, setBalance] = useState(0)
   const fetchBalance = useCallback(async () => {
     if (account === undefined || account === null) {
-      return 0
+      return
     }
     const rawBalance = await contract?.balanceOf(account)
     const value = parseFloat(ethers.utils.formatUnits(rawBalance ?? 0, 0))
@@ -25,5 +25,6 @@ export const useCryptoBalance = (tokenAddress?: string) => {
     }, 5000)
     return () => clearInterval(interval)
   }, [fetchBalance])
+
   return balance
 }

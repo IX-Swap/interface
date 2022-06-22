@@ -1,26 +1,17 @@
 import React from 'react'
-import useStyles from './FormDialog.styles'
 import DialogTitle from '@mui/material/DialogTitle'
-import { IconButton } from '@mui/material'
-import CloseIcon from '@mui/icons-material/Close'
+import { Box } from '@mui/material'
 
 export interface TitleProps {
-  label: string
+  label: string | JSX.Element
   onClose: () => void
 }
 export const FormDialogTitle = ({ label, onClose, ...rest }: TitleProps) => {
-  const classes = useStyles()
-
   return (
-    <DialogTitle className={classes.title} {...rest}>
-      {label}
-      <IconButton
-        className={classes.closeButton}
-        onClick={onClose}
-        size='large'
-      >
-        <CloseIcon className={classes.closeIcon} />
-      </IconButton>
+    <DialogTitle {...rest}>
+      <Box pt={2} textAlign='center'>
+        {label}
+      </Box>
     </DialogTitle>
   )
 }

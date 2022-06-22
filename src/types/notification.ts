@@ -1,12 +1,7 @@
+import { TypeOptions } from 'react-toastify'
 import { AppFeature } from './app'
 
-export type NotificationType =
-  | 'success'
-  | 'error'
-  | 'info'
-  | 'warning'
-  | 'BUY'
-  | 'SELL'
+export type NotificationType = TypeOptions | 'BUY' | 'SELL'
 
 export interface Notification {
   _id: string

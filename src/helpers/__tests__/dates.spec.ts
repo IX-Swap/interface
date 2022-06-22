@@ -2,12 +2,15 @@ import subDays from 'date-fns/subDays'
 import subHours from 'date-fns/subHours'
 import subMinutes from 'date-fns/subMinutes'
 import {
-  convertDateToISO, formatDateAndTime, formatDateToMMDDYY, getTimeAgo
+  convertDateToISO,
+  formatDateAndTime,
+  formatDateToMMDDYY,
+  getTimeAgo
 } from 'helpers/dates'
 
 describe('getTimeAgo', () => {
-  it('returns "Just now" if current time is passed', () => {
-    expect(getTimeAgo(new Date().toISOString())).toEqual('Just now')
+  it('returns "Now" if current time is passed', () => {
+    expect(getTimeAgo(new Date().toISOString())).toEqual('Now')
   })
 
   it('returns "x m" if input time is few mins ago from current time', () => {
@@ -72,4 +75,3 @@ describe('convertDateToISO', () => {
     expect(convertDateToISO('')).toEqual(undefined)
   })
 })
-

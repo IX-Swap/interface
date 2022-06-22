@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Grid } from '@mui/material'
-import { ReasonFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields'
+import { reverseBooleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
-import { reverseBooleanValueExtractor } from 'helpers/forms'
 import { TaxResidency } from 'app/pages/identity/types/forms'
 import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { ReasonFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields/ReasonFields/ReasonFields'
+import useStyles from './TinUnavailableFields.style'
 
 export interface TinUnavailableFieldsProps {
   index: number
@@ -16,6 +17,7 @@ export interface TinUnavailableFieldsProps {
 export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   const { index, defaultValue } = props
   const { control, watch, setValue, clearErrors } = useFormContext()
+  const classes = useStyles()
 
   const { singaporeOnly } = control.getValues()
   const isTinAvailable: boolean = watch<string, boolean>(
@@ -31,21 +33,22 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   }, [isTinAvailable]) // eslint-disable-line
 
   return (
-    <Grid container direction='column' spacing={2}>
+    <Grid container direction='column'>
       <Grid item>
         <TypedField
           customRenderer
           component={Checkbox}
           defaultValue={defaultValue?.taxIdAvailable ?? true}
           reverse
+          className={classes.checkbox}
           valueExtractor={reverseBooleanValueExtractor}
           control={control}
           name={['taxResidencies', index, 'taxIdAvailable']}
-          label='if TIN is not available please indicate reason:'
           disabled={
             isSingPass &&
             watch(`taxResidencies[${index}].countryOfResidence`) === 'Singapore'
           }
+          label='TIN Is Not Available (Please Indicate Reason):'
         />
       </Grid>
       {!isTinAvailable && (

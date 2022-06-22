@@ -5,13 +5,14 @@ import { ActionTableCell } from './ActionTableCell'
 import { TableCellWrapper } from './TableCellWrapper'
 import { useTheme } from '@mui/material/styles'
 import { getRowColor } from 'helpers/tables'
+import { ThemeVariant } from '@mui/material/styles/overrides'
 
 export interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
   cacheQueryKey: any
   bordered: boolean
   isLoading: boolean
-  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+  themeVariant?: ThemeVariant
   noHeader?: boolean
 }
 

@@ -1,16 +1,11 @@
 import React from 'react'
-import {
-  Box,
-  Grid,
-  Typography,
-  Radio,
-  FormControlLabel,
-  TextField
-} from '@mui/material'
+import { Box, FormControlLabel, Grid, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
-import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
 import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { UIRadio } from 'components/UIRadio/UIRadio'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const SingaporeOnlyFields = () => {
   const { control } = useFormContext()
@@ -27,7 +22,7 @@ export const SingaporeOnlyFields = () => {
         <FormControlLabel
           label='YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
           value='yes'
-          control={<Radio />}
+          control={<UIRadio />}
         />
       </Grid>
       {singaporeOnly === 'yes' && (
@@ -40,7 +35,7 @@ export const SingaporeOnlyFields = () => {
 
           <VSpacer size='small' />
           <TypedField
-            component={TextField}
+            component={TextInput}
             variant='outlined'
             control={control}
             name={['taxResidencies', 0, 'taxIdentificationNumber']}

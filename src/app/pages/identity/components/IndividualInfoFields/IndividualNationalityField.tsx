@@ -1,4 +1,3 @@
-import { MenuItem, TextField } from '@mui/material'
 import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 import { titleCase } from 'app/pages/identity/utils/shared'
 import { NationalitySelect } from 'components/form/NationalitySelect'
@@ -25,19 +24,15 @@ export const IndividualNationalityField = ({
   return (
     <TypedField
       rootName={rootName}
-      component={isSingPass ? TextField : NationalitySelect}
+      component={NationalitySelect}
       control={control}
       name='nationality'
       label='Nationality'
       variant='outlined'
       disabled={isSingPass}
-      select={isSingPass}
-    >
-      {isSingPass ? (
-        <MenuItem value={titleCase(individualIdentity?.nationality)}>
-          {titleCase(individualIdentity?.nationality)}
-        </MenuItem>
-      ) : null}
-    </TypedField>
+      isSingPass={isSingPass}
+      singPassValue={titleCase(individualIdentity?.nationality)}
+      placeholder='Select Nationality'
+    />
   )
 }

@@ -1,7 +1,9 @@
+import { SelectProps } from '@mui/material'
+import { renderValue } from 'helpers/forms'
 import React from 'react'
-import { MenuItem, SelectProps, TextFieldProps } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface DSOSelectProps extends Partial<SelectProps> {
   options: DigitalSecurityOffering[]
@@ -9,15 +11,28 @@ export interface DSOSelectProps extends Partial<SelectProps> {
 
 export const DSOSelect = (props: DSOSelectProps): JSX.Element => {
   const { options, ...rest } = props
-
+  const renderName = (value: any) => {
+    return renderValue({
+      value: value.split(':')?.[0],
+      list: options,
+      extractor: ({ tokenName }: DigitalSecurityOffering) => tokenName
+    })
+  }
   return (
-    <TextFieldSelect variant='outlined' fullWidth {...(rest as TextFieldProps)}>
-      {options.length < 1 && <MenuItem disabled>No Deals Found</MenuItem>}
+    <Select
+      {...rest}
+      fullWidth={false}
+      renderValue={renderName}
+      label={undefined}
+    >
+      {options.length < 1 && <SelectItem disabled>No Deals Found</SelectItem>}
       {options.map(({ _id, tokenName, user }) => (
-        <MenuItem key={_id} value={[_id, user].join(':')}>
+        <SelectItem key={_id} value={[_id, user].join(':')}>
           {tokenName}
-        </MenuItem>
+        </SelectItem>
       ))}
-    </TextFieldSelect>
+    </Select>
   )
 }
+
+DSOSelect.displayName = 'Select_DSOSelect'

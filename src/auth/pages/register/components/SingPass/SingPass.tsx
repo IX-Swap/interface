@@ -1,5 +1,6 @@
 import { SingPassButton } from 'auth/pages/register/components/SingPass/SingPassButton'
 import { SingPassDialog } from 'auth/pages/register/components/SingPass/SingPassDialog/SingPassDialog'
+import { hasValue } from 'helpers/forms'
 import React, { useState } from 'react'
 
 export const SingPass = () => {
@@ -9,6 +10,20 @@ export const SingPass = () => {
   }
   const handleClose = () => {
     setOpen(false)
+  }
+
+  console.log(
+    !hasValue(process.env.SING_PASS_AUTH_URL) ||
+      !hasValue(process.env.SING_PASS_CLIENT_ID) ||
+      !hasValue(process.env.SING_PASS_REDIRECT_URL)
+  )
+
+  if (
+    !hasValue(process.env.SING_PASS_AUTH_URL) ||
+    !hasValue(process.env.SING_PASS_CLIENT_ID) ||
+    !hasValue(process.env.SING_PASS_REDIRECT_URL)
+  ) {
+    return null
   }
 
   return (

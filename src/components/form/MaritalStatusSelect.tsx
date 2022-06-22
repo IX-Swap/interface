@@ -1,15 +1,16 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { renderSelectItems } from 'helpers/rendering'
 import { MARITAL_STATUSES_OPTS } from 'app/pages/identity/const'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const MaritalStatusSelect = (props: any): JSX.Element => {
   return (
     <Select {...props}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Martial Status
-      </MenuItem>
-      {renderMenuItems(MARITAL_STATUSES_OPTS)}
+      </SelectItem>
+      {renderSelectItems(MARITAL_STATUSES_OPTS)}
     </Select>
   )
 }

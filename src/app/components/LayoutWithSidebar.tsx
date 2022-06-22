@@ -34,7 +34,7 @@ export const LayoutWithSidebar = (props: LayoutWithSidebarProps) => {
     <RootContainer className={containerClass}>
       <Grid container direction='column'>
         <Grid item className={classes.header}>
-          <PageHeader title={title} />
+          <PageHeader styled={false} title={title} />
         </Grid>
         <Grid item container className={classes.wrapper}>
           {isTablet && (

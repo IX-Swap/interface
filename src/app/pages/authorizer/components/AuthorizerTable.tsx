@@ -14,6 +14,7 @@ import {
   AuthorizerSelectionActions,
   SelectionActions
 } from 'app/pages/authorizer/components/SelectionAction/SelectionActions'
+import { ThemeVariant } from '@mui/material/styles/overrides'
 interface AuthorizerViewProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
     Viewable<T> {
@@ -21,7 +22,7 @@ interface AuthorizerViewProps<T>
   title: string
   selectable?: boolean
   selectionActions?: AuthorizerSelectionActions
-  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+  themeVariant?: ThemeVariant
 }
 
 export const AuthorizerTable = <T,>(

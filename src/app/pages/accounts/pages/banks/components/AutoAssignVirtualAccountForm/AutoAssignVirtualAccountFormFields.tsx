@@ -1,15 +1,11 @@
-import {
-  Button,
-  FormControlLabel,
-  Grid,
-  Radio,
-  Typography
-} from '@mui/material'
+import { Button, FormControlLabel, Grid, Typography } from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { UIRadio } from 'components/UIRadio/UIRadio'
+import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 
 export interface AutoAssignVirtualAccountFormFieldsProps {
   handleOpen: () => void
@@ -53,14 +49,14 @@ export const AutoAssignVirtualAccountFormFields = ({
                   <FormControlLabel
                     label='SGD'
                     value='SGD'
-                    control={<Radio />}
+                    control={<UIRadio />}
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
                     label='USD'
                     value='USD'
-                    control={<Radio />}
+                    control={<UIRadio />}
                   />
                 </Grid>
               </>
@@ -69,7 +65,7 @@ export const AutoAssignVirtualAccountFormFields = ({
                 <FormControlLabel
                   label={currencyAvailable}
                   value={currencyAvailable}
-                  control={<Radio />}
+                  control={<UIRadio />}
                 />
               </Grid>
             )}
@@ -77,15 +73,18 @@ export const AutoAssignVirtualAccountFormFields = ({
         </TypedField>
       </Grid>
       <Grid item>
-        <Button
-          onClick={handleOpen}
-          type='button'
-          variant={noData ? 'contained' : 'outlined'}
-          color='primary'
-          disableElevation
-        >
-          {noData ? 'Confirm' : 'Add account'}
-        </Button>
+        <TwoFADialogWrapper>
+          <Button
+            data-testid={'button'}
+            onClick={handleOpen}
+            type='button'
+            variant={noData ? 'contained' : 'outlined'}
+            color='primary'
+            disableElevation
+          >
+            {noData ? 'Confirm' : 'Add account'}
+          </Button>
+        </TwoFADialogWrapper>
       </Grid>
     </Grid>
   )

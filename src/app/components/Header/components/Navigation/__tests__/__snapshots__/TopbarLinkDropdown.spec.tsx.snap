@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopbarLinkDropdown should match snapshot 1`] = `
+<div>
+  <div
+    class="makeStyles-wrapper-1"
+  >
+    <a
+      class="makeStyles-wrapper-6 makeStyles-wrapper-9"
+      href="/test"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 makeStyles-text-7 css-1b4l2pg-MuiTypography-root"
+      >
+        label
+      </p>
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-icon-8 css-1oaawcc-MuiSvgIcon-root"
+        data-testid="ArrowDropDownIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="m7 10 5 5 5-5z"
+        />
+      </svg>
+    </a>
+  </div>
+</div>
+`;

@@ -19,7 +19,7 @@ export const useConfirmMyOrder = () => {
 
   return useMutation(confirmMyOrder, {
     onSuccess: async () => {
-      void snackbarService.showSnackbar(
+      snackbarService.showSnackbar(
         'You have confirmed the token transfer',
         'success'
       )
@@ -27,7 +27,7 @@ export const useConfirmMyOrder = () => {
       void queryCache.invalidateQueries(tradingQueryKeys.pastOrders)
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

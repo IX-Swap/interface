@@ -1,5 +1,5 @@
 import {
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualIdentity,
   IndividualInvestorDeclarationFormValues,
@@ -24,6 +24,7 @@ export const getPersonalInfoFormValues = (
     contactNumber: data?.contactNumber,
     nationality,
     gender: data?.gender,
+    nric: data?.uinfin ?? data?.nric,
     address: {
       line1: data?.address?.line1,
       line2: data?.address?.line2,
@@ -43,16 +44,22 @@ export const getFinancialInfoFormValues = (
     employer: data?.employer,
     employmentStatus: data?.employmentStatus,
     annualIncome: data?.annualIncome,
-    sourceOfFund: data?.sourceOfFund
+    sourceOfFund: data?.sourceOfFund,
+    ...getTaxDeclarationFormValues(data)
   }
 }
 
 export const getTaxDeclarationFormValues = (
   data: IndividualIdentity
 ): Partial<IndividualTaxDeclarationFormValues> => {
-  const { taxResidencies, declarations } = data
   const result: Partial<IndividualTaxDeclarationFormValues> = {}
   const isSingPass = data?.uinfin !== undefined
+
+  if (data === undefined) {
+    return result
+  }
+
+  const { taxResidencies, declarations } = data
 
   if (
     isSingPass ||
@@ -62,7 +69,7 @@ export const getTaxDeclarationFormValues = (
       ? [
           {
             residentOfSingapore: true,
-            countryOfResidence: data?.address.country,
+            countryOfResidence: titleCase(data?.address.country),
             taxIdentificationNumber: data?.uinfin,
             taxIdAvailable: true
           }
@@ -91,7 +98,15 @@ export const getInvestorDeclarationFormValues = (
 
 export const getDocumentsFormValues = (
   data: IndividualIdentity
-): IndividualDocumentsFormValues => {
+): IdentityDocumentsFormValues => {
+  if (data === undefined) {
+    return {
+      evidenceOfAccreditation: [],
+      proofOfAddress: [],
+      proofOfIdentity: []
+    }
+  }
+
   return data.documents.reduce((result: any, document) => {
     const { evidenceOfAccreditation, proofOfAddress, proofOfIdentity } = result
 
@@ -99,8 +114,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-          ? [...evidenceOfAccreditation, document]
-          : [document]
+          ? [...evidenceOfAccreditation, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -108,8 +123,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         proofOfAddress: Array.isArray(proofOfAddress)
-          ? [...proofOfAddress, document]
-          : [document]
+          ? [...proofOfAddress, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -117,8 +132,8 @@ export const getDocumentsFormValues = (
       return {
         ...result,
         proofOfIdentity: Array.isArray(proofOfIdentity)
-          ? [...proofOfIdentity, document]
-          : [document]
+          ? [...proofOfIdentity, { value: document }]
+          : [{ value: document }]
       }
     }
 

@@ -1,9 +1,13 @@
-import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
+import { SelectProps } from '@mui/material'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { privateClassNames } from 'helpers/classnames'
-import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { renderValue } from 'helpers/forms'
+import React from 'react'
 import { QueryStatus } from 'react-query'
+import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface WithdrawalAddressSelectProps extends SelectProps {
   list: WithdrawalAddress[]
@@ -17,14 +21,25 @@ export const WithdrawalAddressSelect: React.FC<
 
   const queryStatus = queryStatusRenderer(status)
   if (queryStatus !== undefined) return queryStatus
-
+  const renderName = (value: any) => {
+    return renderValue({
+      value,
+      list,
+      extractor: (item: WithdrawalAddress) => item.label
+    })
+  }
   return (
-    <Select {...rest}>
-      {list.map(({ label, _id }) => (
-        <MenuItem key={_id} value={_id} className={privateClassNames()}>
-          {label}
-        </MenuItem>
-      ))}
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select displayEmpty {...rest} label={undefined} renderValue={renderName}>
+        {list.map(({ label, _id }) => (
+          <SelectItem key={_id} value={_id} className={privateClassNames()}>
+            {label}
+          </SelectItem>
+        ))}
+      </Select>
+    </>
   )
 }
+
+WithdrawalAddressSelect.displayName = 'Select_WithdrawalAddressSelect'

@@ -17,7 +17,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
   const getLegalEntityStatus = (value: string) => {
     const status = LEGAL_ENTITY_STATUS_LIST.find(
       item => item.value === value
-    )?.name
+    )?.label
     return status ?? value
   }
   const riskRating = data?.cynopsis?.riskRating ?? 'UNKNOWN'

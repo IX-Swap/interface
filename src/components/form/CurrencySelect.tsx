@@ -1,6 +1,8 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { renderSelectItems } from 'helpers/rendering'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 const CURRENCIES = [
   {
@@ -15,11 +17,21 @@ const CURRENCIES = [
 
 export const CurrencySelect = (props: any): JSX.Element => {
   return (
-    <Select {...props}>
-      <MenuItem disabled value={undefined}>
-        Currency
-      </MenuItem>
-      {renderMenuItems(CURRENCIES)}
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select
+        {...props}
+        label={undefined}
+        placeholder={String(props.label)}
+        displayEmpty
+      >
+        <SelectItem disabled value={undefined}>
+          Currency
+        </SelectItem>
+        {renderSelectItems(CURRENCIES)}
+      </Select>
+    </>
   )
 }
+
+CurrencySelect.displayName = 'Select_CurrencySelect'

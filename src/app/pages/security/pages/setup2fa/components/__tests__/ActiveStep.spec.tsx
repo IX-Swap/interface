@@ -3,25 +3,22 @@ import { render } from 'test-utils'
 import { ActiveStep } from 'app/pages/security/pages/setup2fa/components/ActiveStep'
 import { fakeTwoFaData } from '__fixtures__/security'
 
-jest.mock('app/pages/security/pages/setup2fa/components/Step1Download', () => ({
-  Step1Download: jest.fn(() => <div data-testid='step-1' />)
+jest.mock(
+  'app/pages/security/pages/setup2fa/components/Step1Download/Step1Download',
+  () => ({
+    Step1Download: jest.fn(() => <div data-testid='step-1' />)
+  })
+)
+jest.mock('app/pages/security/components/Step2Scan/Step2Scan', () => ({
+  Step2Scan: jest.fn(() => <div data-testid='step-2' />)
 }))
-jest.mock(
-  'app/pages/security/pages/setup2fa/components/Step2Scan/Step2Scan',
-  () => ({
-    Step2Scan: jest.fn(() => <div data-testid='step-2' />)
-  })
-)
-jest.mock(
-  'app/pages/security/pages/setup2fa/components/Step3Backup/Step3Backup',
-  () => ({
-    Step3Backup: jest.fn(() => <div data-testid='step-3' />)
-  })
-)
-jest.mock('app/pages/security/components/Step4Enable', () => ({
+jest.mock('app/pages/security/components/Step3Backup/Step3Backup', () => ({
+  Step3Backup: jest.fn(() => <div data-testid='step-3' />)
+}))
+jest.mock('app/pages/security/components/Step4Enable/Step4Enable', () => ({
   Step4Enable: jest.fn(() => <div data-testid='step-4' />)
 }))
-jest.mock('app/pages/security/pages/setup2fa/components/Enabled', () => ({
+jest.mock('app/pages/security/components/Enabled/Enabled', () => ({
   Enabled: jest.fn(() => <div data-testid='step-5' />)
 }))
 

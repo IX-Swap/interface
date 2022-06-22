@@ -1,7 +1,6 @@
-import { Grid, TextField } from '@mui/material'
+import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { Checkbox } from 'components/form/Checkbox'
@@ -14,6 +13,8 @@ import { booleanValueExtractor, dateTimeValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -32,7 +33,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         <Grid item>
           <TypedField
             customRenderer
-            component={Dropzone}
+            component={FileUpload}
             name='logo'
             label='Upload Logo'
             control={control}
@@ -73,7 +74,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Token Name'
                 name='tokenName'
                 disabled={isLive}
@@ -84,7 +85,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Symbol'
                 name='tokenSymbol'
                 disabled={isLive}
@@ -99,7 +100,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Unique Identifier Code'
                 name='uniqueIdentifierCode'
                 disabled={isLive}
@@ -124,7 +125,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Issuer Name'
                 name='issuerName'
                 control={control}

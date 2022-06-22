@@ -1,5 +1,4 @@
 import {
-  Dialog,
   DialogContent,
   DialogActions,
   Typography,
@@ -10,6 +9,7 @@ import {
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { ConfirmDisableButton } from 'app/pages/admin/components/DisableAccountsButton/ConfirmDisableButton'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ConfirmDisableDialogBoxProps {
   open: boolean
@@ -21,7 +21,7 @@ export const ConfirmDisableDialogBox = ({
   close
 }: ConfirmDisableDialogBoxProps) => {
   return (
-    <Dialog open={open}>
+    <UIDialog open={open}>
       <Box py={4} px={3}>
         <Typography variant='subtitle1' align='center'>
           Are You Sure You Want to Disable the Virtual Account(s)?
@@ -46,6 +46,6 @@ export const ConfirmDisableDialogBox = ({
           </Grid>
         </DialogActions>
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

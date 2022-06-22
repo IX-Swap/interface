@@ -10,6 +10,7 @@ import {
   getIssuerDocumentsRequestPayload
 } from 'app/pages/identity/utils/detailsOfIssuance/requests'
 import {
+  detailsOfIssuanceSchema,
   issuerDetailsSchema,
   issuerDocumentsSchema
 } from 'app/pages/identity/validation/detailsOfIssuance'
@@ -40,9 +41,21 @@ export const detailsOfIssuanceFormSteps = [
   },
   {
     label: 'Review & Submit',
-    getFormValues: () => null,
-    getRequestPayload: {},
-    validationSchema: {},
+    getFormValues: (data: any) => {
+      const allData = {
+        ...getIssuerDetailsFormValues(data),
+        ...getIssuerDocumentsFormValues(data)
+      }
+      return allData
+    },
+    getRequestPayload: (data: any) => {
+      const allData = {
+        ...getIssuerDetailsRequestPayload(data),
+        ...getIssuerDocumentsRequestPayload(data)
+      }
+      return allData
+    },
+    validationSchema: detailsOfIssuanceSchema,
     component: () => (
       <Fragment>
         <DetailsOfIssuanceView />

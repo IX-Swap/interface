@@ -1,5 +1,8 @@
 import { InternalRouteProps } from 'types/util'
-import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
+import {
+  ReactComponent as HoldingsIcon,
+  ReactComponent as AccountIcon
+} from 'assets/icons/navigation/account.svg'
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
 import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
@@ -25,7 +28,8 @@ export const AccountsRoute = {
   ]),
   commitments: makeURL(['app', 'account', 'commitments']),
   dashboard: makeURL(['app', 'account', 'dashboard']),
-  reports: '/app/accounts/reports'
+  reports: '/app/accounts/reports',
+  myHoldings: '/app/accounts/holdings'
 }
 
 export const accountsLandingLinks: InternalRouteProps[] = [
@@ -87,5 +91,11 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     label: 'My Reports',
     path: AccountsRoute.reports,
     color: '#e6d200'
+  },
+  {
+    label: 'My Exchange Holdings',
+    path: AccountsRoute.myHoldings,
+    color: '#2B78FD',
+    icon: HoldingsIcon
   }
 ]

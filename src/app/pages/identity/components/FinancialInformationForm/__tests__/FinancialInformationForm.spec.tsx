@@ -36,7 +36,6 @@ describe('FinancialInformationForm', () => {
     render(<FinancialInformationForm />)
 
     expect(EmploymentField).toHaveBeenCalled()
-    expect(FundSource).toHaveBeenCalled()
   })
 
   it('does not render NoticeOfAssesment if singpass data is missing', () => {

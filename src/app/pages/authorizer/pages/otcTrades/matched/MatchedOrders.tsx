@@ -9,7 +9,7 @@ import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
 import { columns } from './columns'
 
-const Actions: ActionsType<OTCOrder> = ({ item }) => {
+export const Actions: ActionsType<OTCOrder> = ({ item }) => {
   const [confirmOrder, { isLoading }] = useConfirmMatchOrder()
   if (item?.matches?.status === 'MATCH') {
     return (
@@ -17,6 +17,7 @@ const Actions: ActionsType<OTCOrder> = ({ item }) => {
         <Button
           color='primary'
           variant='outlined'
+          data-testid={'matchOrderConfirm'}
           disableElevation
           disabled={isLoading}
           onClick={async () =>
@@ -32,7 +33,7 @@ const Actions: ActionsType<OTCOrder> = ({ item }) => {
     )
   }
   return (
-    <Box textAlign={'left'}>
+    <Box textAlign={'left'} data-testid={'matchOrderStatus'}>
       {capitalizeFirstLetter(item?.matches?.status ?? '')}
     </Box>
   )

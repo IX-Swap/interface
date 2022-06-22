@@ -61,3 +61,18 @@ export const titleCase = (value?: string) => {
 export const checkSingPassDisabled = (isSingPass: boolean, value?: string) => {
   return value !== undefined && value.trim() !== '' && isSingPass
 }
+
+export const adjustIdentityOccupation = (str?: string) => {
+  if (str === undefined) {
+    return ''
+  }
+
+  const res = str.split('').map(el => el.toLowerCase())
+  res[0] = res[0]?.toUpperCase()
+  for (let i = 0; i < res.length; i++) {
+    if (res[i] === ' ' || res[i] === '/') {
+      res.splice(i + 1, 1, res[i + 1].toUpperCase())
+    }
+  }
+  return res.join('')
+}

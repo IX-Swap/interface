@@ -9,6 +9,7 @@ export default interface User {
   accountType: string
   totpConfirmed: boolean
   accessToken: string
+  enable2Fa: boolean | undefined
 }
 
 export interface CustomField {

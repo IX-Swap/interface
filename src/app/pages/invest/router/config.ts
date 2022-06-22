@@ -1,9 +1,9 @@
 import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const InvestRoute = {
   landing: makeURL(['app', 'invest']),
+  exchange: '/app/invest/exchange/:pairId',
   overview: makeURL(['app', 'invest', 'overview']),
   view: makeURL(['app', 'invest', 'offerings', 'issuerId', 'dsoId', 'view']),
   viewListing: makeURL([
@@ -33,13 +33,21 @@ export const CommitmentRoute = {
   view: makeURL(['app', 'invest', 'commitments', 'commitmentId', 'view'])
 }
 
-export const InvestLandingLinks: InternalRouteProps[] = [
+export const investLandingLinks: InternalRouteProps[] = [
+  {
+    label: 'Overview',
+    path: InvestRoute.overview
+  },
   {
     label: 'Primary',
     path: InvestRoute.landing
   },
   {
-    label: 'OTC Market',
-    path: OTCMarketRoute.landing
+    label: 'Exchange',
+    path: InvestRoute.exchange
+  },
+  {
+    label: 'Trading',
+    path: InvestRoute.trading
   }
 ]

@@ -1,7 +1,7 @@
 import { Button, FormControlLabel, Grid } from '@mui/material'
 import { generateSingPassAuthorizeUrl } from 'hooks/utils'
 import React, { useState } from 'react'
-import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export interface RetrieveButtonProps {
   hideCheckBox?: boolean

@@ -1,11 +1,12 @@
-import React from 'react'
-import { Grid, TextField } from '@mui/material'
+import { Grid } from '@mui/material'
 import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel/BigCheckboxWithLabel'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
 import { booleanValueExtractor } from 'helpers/forms'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const WAInfoFields = () => {
   const { control } = useFormContext<WithdrawalAddressFormValues>()
@@ -16,7 +17,7 @@ export const WAInfoFields = () => {
         <TypedField
           className={privateClassNames()}
           control={control}
-          component={TextField}
+          component={TextInput}
           name='label'
           label='Address Label'
           variant='outlined'
@@ -27,7 +28,7 @@ export const WAInfoFields = () => {
         <TypedField
           className={privateClassNames()}
           control={control}
-          component={TextField}
+          component={TextInput}
           name='memo'
           label='Memo'
           variant='outlined'

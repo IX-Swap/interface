@@ -15,7 +15,7 @@ export const estimateGas = async (chainId?: number) => {
   try {
     const result = await axios.get(CHAIN_INFO[chainId ?? 137].gasTrackerUrl)
     const innerResult = result?.data?.result
-    console.log({ GAS })
+
     const value =
       GAS === 'low'
         ? innerResult?.standardgaspricegwei ?? innerResult?.SafeGasPrice
@@ -48,7 +48,7 @@ export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
         chainId !== tokenChainId ||
         recipient === undefined
       ) {
-        void snackbarService.showSnackbar(
+        snackbarService.showSnackbar(
           'Could not get details from metamask. Please refresh and try again',
           'error'
         )
@@ -70,7 +70,7 @@ export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
         return false
       } catch (error: any) {
         if (error?.message?.includes('404') === false) {
-          void snackbarService.showSnackbar(error.message, 'error')
+          snackbarService.showSnackbar(error.message, 'error')
           return false
         }
         return true

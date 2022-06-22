@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dialog } from 'app/pages/identity/components/Dialog'
+import { Dialog } from 'app/pages/identity/components/Dialog/Dialog'
 import { Typography } from '@mui/material'
 import { SafeguardInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoAction/SafeguardInfoAction'
 import { SafeguardInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoContent/SafeguardInfoContent'
@@ -11,7 +11,7 @@ export const SafeguardInfoDialog = () => {
         <Typography
           component='span'
           color='primary'
-          style={{ textDecoration: 'underline', cursor: 'pointer' }}
+          style={{ textDecoration: 'none', cursor: 'pointer' }}
         >
           safeguards
         </Typography>

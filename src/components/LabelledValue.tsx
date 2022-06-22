@@ -60,7 +60,7 @@ export interface LabelledValueProps {
   labelFontSize?: number
   valueFontSize?: number
   align?: TextAlignment
-  labelColor?: 'default' | 'light' | 'dark'
+  labelColor?: 'default' | 'light' | 'dark' | 'gray' | 'bright'
   valueColor?: string
   isNewThemeOn?: boolean
 }
@@ -89,7 +89,9 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     default: theme.palette.text.primary,
     // @ts-expect-error
     light: theme.palette.text.hint,
-    dark: 'rgba(255,255,255,.7)'
+    dark: 'rgba(255,255,255,.7)',
+    gray: theme.palette.text.secondary,
+    bright: theme.palette.switch.color
   }
 
   const items: Array<{ text: string; styles: React.CSSProperties }> = [

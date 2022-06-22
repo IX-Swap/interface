@@ -17,10 +17,11 @@ export const MinimumInvesmentField = (props: NumericInputProps) => {
           </Typography>
         </Box>
       ) : null}
-
       <FormControl fullWidth>
         <NumericInput {...props} />
       </FormControl>
     </Box>
   )
 }
+
+MinimumInvesmentField.displayName = 'TextField_MinimumInvesmentField'

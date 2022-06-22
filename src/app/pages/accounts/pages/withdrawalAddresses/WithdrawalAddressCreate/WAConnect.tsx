@@ -1,25 +1,27 @@
-import React, { ReactElement, useEffect } from 'react'
 import { FileCopyOutlined } from '@mui/icons-material'
 import {
+  Alert,
   CircularProgress,
   DialogActions,
   Grid,
   IconButton,
   InputAdornment,
-  TextField,
-  Alert
+  Typography,
+  useTheme
 } from '@mui/material'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { WalletConnectionStatus } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
 import { WAConnectActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectActions'
 import { WAInfoFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAInfoFields'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
-import { useCheckAddress } from '../hooks/useCheckAddress'
-import { useDebouncedCallback } from 'use-debounce'
+import { copyToClipboard } from 'helpers/clipboard'
+import React, { ReactElement, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
-import { copyToClipboard } from 'helpers/clipboard'
+import { TextInput } from 'ui/TextInput/TextInput'
+import { useDebouncedCallback } from 'use-debounce'
+import { useCheckAddress } from '../hooks/useCheckAddress'
 import { WAPair } from './WAPair'
 
 export interface WAConnectProps {
@@ -30,6 +32,7 @@ export interface WAConnectProps {
 
 export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
   const { watch, control } = useFormContext<WithdrawalAddressFormValues>()
+  const theme = useTheme()
   const address = watch('address')
   const wallet = watch('wallet')
   const [checkAddress, { isLoading, data, isSuccess }] = useCheckAddress({
@@ -61,12 +64,20 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
   return (
     <>
       <Grid item mt={3}>
+        <Typography
+          color={theme.palette.dialog.color}
+          style={{ marginBottom: 10 }}
+          fontSize={14}
+          fontWeight={500}
+          lineHeight='17px'
+        >
+          Blockchain address
+        </Typography>
         <TypedField
           className={privateClassNames()}
-          component={TextField}
+          component={TextInput}
           control={control}
           name='address'
-          label='Blockchain Address'
           variant='outlined'
           disabled={allowConnect}
           InputProps={{
@@ -101,7 +112,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
       {hasWallet && <WAInfoFields />}
       {!hasWallet && hint}
       <DialogActions>
-        <Grid item container justifyContent='flex-end'>
+        <Grid mt={2} item container justifyContent='center'>
           <WAConnectActions
             isVerifying={isVerifying}
             isVerified={isVerified}
