@@ -42,11 +42,11 @@ export const TmPayoutEvents = () => {
     if (Object.keys(filters).length) {
       handleHaveFilters(true)
     }
-    getMyPayouts({ ...filters, offset: 10 })
+    getMyPayouts({ ...filters, offset: 4, my: true })
   }, [filters, getMyPayouts])
 
   const fetch = (params: Record<string, any>) => {
-    getMyPayouts(params)
+    getMyPayouts({ ...params, my: true })
   }
 
   const onEdit = () => {
@@ -54,7 +54,7 @@ export const TmPayoutEvents = () => {
   }
 
   const onPageChange = (page: number) => {
-    fetch({ ...filters, page, offset: 10 })
+    fetch({ ...filters, page, offset: 4 })
   }
 
   return (

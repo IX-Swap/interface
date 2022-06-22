@@ -6,7 +6,7 @@ import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 
-import { createDraft, getPayoutList } from './actions'
+import { createDraft, getPayoutList, getMyPayoutList } from './actions'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -68,6 +68,37 @@ export const useGetPayoutList = () => {
         return data
       } catch (error: any) {
         dispatch(getPayoutList.rejected({ errorMessage: 'Could not get payouts' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+interface MyPayoutsParams {
+  listType: string
+  [key: string]: string | number
+}
+
+export const getMyPayouts = async (params: MyPayoutsParams) => {
+  const result = await apiService.get(payout.myPayoutsList, undefined, params)
+  return result.data
+}
+
+export const useGetMyPayoutList = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const callback = useCallback(
+    async ({ listType, ...params }: MyPayoutsParams) => {
+      try {
+        dispatch(getMyPayoutList.pending())
+        const data = await getMyPayouts({ listType, ...params })
+        dispatch(getMyPayoutList.fulfilled({ data, type: listType }))
+        return data
+      } catch (error: any) {
+        dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts by type' }))
         return null
       }
     },

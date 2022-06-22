@@ -42,6 +42,7 @@ export const payout = {
   createDraft: `payout/draft`,
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',
+  myPayoutsList: 'payout/list/my',
 }
 
 export const kyc = {
