@@ -1,12 +1,18 @@
 import React, { FC } from 'react'
 import { Flex, Box } from 'rebass'
 import { Trans, t } from '@lingui/macro'
+import { useHistory } from 'react-router-dom'
 
 import Column from 'components/Column'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { routes } from 'utils/routes'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { useAccreditationStatus } from 'state/secTokens/hooks'
 
 import { Container, FuturePayoutContainer, StyledButtonIXSGradient } from './styleds'
 
@@ -16,15 +22,21 @@ interface Props {
 }
 
 export const UserView: FC<Props> = ({ payout, payoutToken }) => {
+  const { account } = useActiveWeb3React()
   const { secToken, status } = payout
+  const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
+  const statuses = [custodianStatus, brokerDealerStatus]
+  const balance = useCurrencyBalance(account ?? undefined, (secToken as any) ?? undefined)
+  const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
+
   const secPayoutToken = new WrappedTokenInfo(secToken)
   const tokenInfo = secPayoutToken?.tokenInfo
-  const isNotAccredited = false
-  const isNotTokenHolder = false
+  const isNotAccredited = statuses.some((status) => !status)
+  const isNotTokenHolder = ['-', '0'].includes(secTokenBalance)
   const isClaimed = false
 
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
-  if (isNotAccredited) return <NotAccreditedView />
+  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.id} />
   if (isNotTokenHolder) return <NotTokenHoldersView status={status} />
 
   const getContentByStatus = () => {
@@ -152,11 +164,17 @@ const NotTokenHoldersView: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
   )
 }
 
-const NotAccreditedView: FC = () => {
+const NotAccreditedView: FC<{ secTokenId: any }> = ({ secTokenId }) => {
+  const history = useHistory()
+
+  const redirect = () => {
+    history.push(routes.securityToken(secTokenId))
+  }
+
   return (
     <Container>
       <Box marginBottom="24px">{t`You need to pass KYC and get accredited to be eligible for this payout.`}</Box>
-      <StyledButtonIXSGradient>{t`Pass Accreditation`}</StyledButtonIXSGradient>
+      <StyledButtonIXSGradient onClick={redirect}>{t`Pass Accreditation`}</StyledButtonIXSGradient>
     </Container>
   )
 }
