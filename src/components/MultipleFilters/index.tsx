@@ -6,7 +6,7 @@ import { capitalize } from '@material-ui/core'
 import { useLocation } from 'react-router-dom'
 import dayjs from 'dayjs'
 
-import { PAYOUT_STATUS } from 'pages/PayoutItem'
+import { PAYOUT_STATUS } from 'constants/enums'
 import { Search } from 'components/Search'
 import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
