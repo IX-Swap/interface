@@ -26,34 +26,25 @@ export const CorporateIssuerView = ({ data }: CorporateIssuerViewProps) => {
       <Grid item>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Address' />
-          <CorporateAddress
-            registeredAddress={data.companyAddress}
-            mailingAddress={data.mailingAddress}
-          />
+          <CorporateAddress data={data} />
         </Paper>
       </Grid>
       <Grid item>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Company Authorized Personnel' />
-          <PersonnelList
-            personnel={data.representatives ?? []}
-            documentsTitle='Authorization Documents'
-          />
+          <PersonnelList personnel={data.representatives ?? []} />
         </Paper>
       </Grid>
       <Grid item>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Directors/Partners/People with Executive Authority' />
-          <PersonnelList personnel={data.directors ?? []} showDocumentHeader />
+          <PersonnelList personnel={data.directors ?? []} />
         </Paper>
       </Grid>
       <Grid item>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Beneficial Owners Information' />
-          <BeneficialOwnersList
-            personnel={data.beneficialOwners ?? []}
-            showDocumentHeader
-          />
+          <BeneficialOwnersList data={data} />
         </Paper>
       </Grid>
       <Grid item>

@@ -49,10 +49,7 @@ export const AdminCorporateIdentityView = ({
       </Grid>
       <Grid item style={{ paddingBottom: 0, paddingTop: 0 }}>
         <FormSectionHeader title='Beneficial Owners Information' />
-        <BeneficialOwnersList
-          personnel={identity.beneficialOwners ?? []}
-          showDocumentHeader
-        />
+        <BeneficialOwnersList data={identity} />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Tax Declaration' />
