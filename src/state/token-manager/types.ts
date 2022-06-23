@@ -1,3 +1,4 @@
+import { PAYOUT_STATUS } from 'constants/enums'
 import { SecToken } from 'types/secToken'
 
 export interface PayoutEvent {
@@ -6,7 +7,7 @@ export interface PayoutEvent {
   description: string
   userId: number
   type: string
-  status: string
+  status: PAYOUT_STATUS
   secTokenId: number
   secTokenAmount: string
   recordDate: string

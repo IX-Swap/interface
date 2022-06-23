@@ -7,10 +7,11 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { ButtonGradient } from 'components/Button'
 import { TYPE } from 'theme'
 import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
+import { useCurrency } from 'hooks/Tokens'
 
 interface Props {
   type: string
-  token: any
+  token: string
   attachments: any[] // temporary 'any'
 }
 
@@ -20,19 +21,23 @@ interface ItemProps {
 }
 
 export const InfoBlock: FC<Props> = ({ type, token }) => {
+  const currency = useCurrency(token ?? undefined)
+
   return (
     <Flex alignItems="start" justifyContent="space-between">
       <Item title={t`TYPE:`} content={type} />
-      <Item
-        title={t`PAYOUT TOKEN:`}
-        content={
-          <>
-            <CurrencyLogo style={{ marginRight: 4 }} size="24px" />
-            {token.name}
-          </>
-        }
-      />
-      <Item
+      {currency && (
+        <Item
+          title={t`PAYOUT TOKEN:`}
+          content={
+            <>
+              <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              {currency.symbol}
+            </>
+          }
+        />
+      )}
+      <Item // TODO: integrate attachments after discussion
         title={t`ATTACHMENTS:`}
         content={
           <AttachmentsButton>

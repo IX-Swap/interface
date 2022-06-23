@@ -16,6 +16,7 @@ export interface SecToken extends TokenInfo {
   deletedAt: string | null
   isSecToken: true
   contractAddress?: string
+  originalSymbol?: string
   platform?: SecTokenPlatform
 }
 
