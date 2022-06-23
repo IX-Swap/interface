@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
+import { useWeb3React } from '@web3-react/core'
 
+import { NotAvailablePage } from 'components/NotAvailablePage'
 import { MEDIA_WIDTHS } from 'theme'
 import { useUserState, useGetMe } from 'state/user/hooks'
 import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
@@ -53,6 +55,8 @@ const renderTab = (selectedTab: AdminTab | string) => {
 }
 
 const Admin = () => {
+  const { account } = useWeb3React()
+
   const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
 
   const history = useHistory()
@@ -60,6 +64,8 @@ const Admin = () => {
 
   const { me } = useUserState()
   const getMe = useGetMe()
+
+  const isLogged = account && me?.role
 
   const fetchMe = useCallback(async () => {
     const result = await getMe()
@@ -99,6 +105,10 @@ const Admin = () => {
 
     history.push('/')
   }, [me, fetchMe, history])
+
+  if (!isLogged) {
+    return <NotAvailablePage />
+  }
 
   return (
     <Container>

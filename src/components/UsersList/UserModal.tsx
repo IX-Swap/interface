@@ -188,6 +188,14 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
     close()
   }
 
+  const canNotEditRole = useMemo(() => {
+    if (item && role === ROLES.TOKEN_MANAGER) {
+      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length))
+    }
+
+    return false
+  }, [item])
+
   return (
     <>
       <RedesignedWideModal isOpen onDismiss={close}>
@@ -249,12 +257,12 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
                 items={adminRoles}
                 onSelect={(selectedRole) => setFieldValue('role', selectedRole.value)}
                 error={
-                  item?.role === ROLES.TOKEN_MANAGER
-                    ? t`Token manager’s role can't be changed, while they have published payout events`
+                  canNotEditRole
+                    ? t`Token manager's role can't be changed, while they have published payout events`
                     : touched.role && errors.role
                 }
                 placeholder="Choose Role of User"
-                isDisabled={item?.role === ROLES.TOKEN_MANAGER}
+                isDisabled={canNotEditRole}
               />
               {role === ROLES.TOKEN_MANAGER && (
                 <Select

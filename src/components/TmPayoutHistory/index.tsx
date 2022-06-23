@@ -15,6 +15,7 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { CopyAddress } from 'components/CopyAddress'
 import { PayoutHistory } from 'state/token-manager/types'
 import { PAYOUT_TYPE_LABEL } from 'components/TmPayoutEvents/constants'
+import { useUserState } from 'state/user/hooks'
 
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
 
@@ -31,15 +32,19 @@ export const TmPayoutHistory = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
 
+  const { account } = useUserState()
+
   const { payoutHistory, isLoading } = useTokenManagerState()
   const getPayoutHistory = useGeyPayoutHistory()
 
   useEffect(() => {
-    if (Object.keys(filters).length) {
-      handleHaveFilters(true)
+    if (account) {
+      if (Object.keys(filters).length) {
+        handleHaveFilters(true)
+      }
+      getPayoutHistory({ ...filters, offset: 10 })
     }
-    getPayoutHistory({ ...filters, offset: 10 })
-  }, [filters, getPayoutHistory])
+  }, [filters, getPayoutHistory, account])
 
   const onPageChange = (page: number) => {
     getPayoutHistory({ ...filters, page, offset: 10 })

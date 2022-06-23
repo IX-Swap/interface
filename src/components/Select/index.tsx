@@ -30,7 +30,7 @@ const colourStyles = {
   option: (styles: Record<string, any>, { isSelected, isMulti }: { isSelected: boolean; isMulti: boolean }) => {
     return {
       ...styles,
-      backgroundColor: isSelected && !isMulti ? '#272046' : 'transparend',
+      backgroundColor: isSelected && !isMulti ? '#272046' : 'transparent',
       color: isSelected && !isMulti ? 'white' : 'rgba(237, 206, 255, 0.5)',
       fontWeight: isSelected && !isMulti ? '700' : '400',
     }
@@ -153,6 +153,7 @@ export const Select = ({
   }, [value, options, isMulti])
   return (
     <StyledReactSelect
+      menuIsOpen
       error={error}
       options={options}
       isSearchable={isSearchable}
@@ -212,6 +213,9 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
       border-radius: 12px;
       :hover {
         background: rgba(39, 31, 74, 0.4);
+      }
+      :active {
+        background-color: inherit;
       }
     }
   }

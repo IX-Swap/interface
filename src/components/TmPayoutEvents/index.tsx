@@ -17,6 +17,7 @@ import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
+import { useUserState } from 'state/user/hooks'
 
 import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton } from './styleds'
@@ -38,15 +39,18 @@ export const TmPayoutEvents = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
 
+  const { account } = useUserState()
   const { payoutList, isLoading } = useTokenManagerState()
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
-    if (Object.keys(filters).length) {
-      handleHaveFilters(true)
+    if (account) {
+      if (Object.keys(filters).length) {
+        handleHaveFilters(true)
+      }
+      getMyPayouts({ ...filters, offset: 4, my: true })
     }
-    getMyPayouts({ ...filters, offset: 4, my: true })
-  }, [filters, getMyPayouts])
+  }, [filters, getMyPayouts, account])
 
   const fetch = (params: Record<string, any>) => {
     getMyPayouts({ ...params, my: true })
