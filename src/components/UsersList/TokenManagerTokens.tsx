@@ -8,6 +8,8 @@ import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { TokenManagerEntry } from 'state/admin/actions'
 
 import { Option } from './TokensBlock'
+import { useHistory } from 'react-router-dom'
+import { routes } from 'utils/routes'
 
 interface Props {
   items: TokenManagerEntry[]
@@ -40,6 +42,7 @@ const getStatusTextColor = (value: string) => {
 }
 
 export const TokenManagerTokens = ({ items }: Props) => {
+  const history = useHistory()
   const { tokens: secTokens } = useSecTokenState()
 
   const tokensOptions = useMemo((): Record<number, Option> => {
@@ -63,6 +66,14 @@ export const TokenManagerTokens = ({ items }: Props) => {
 
   const data = useMemo(() => items.map((item) => tokensOptions[item.token.id]), [items, tokensOptions])
 
+  const redirectToEvent = (id: number) => {
+    history.push(routes.payoutItem(id))
+  }
+
+  const redirectToToken = (id: number) => {
+    history.push(routes.securityToken(id))
+  }
+
   return (
     <>
       <Hr />
@@ -71,14 +82,17 @@ export const TokenManagerTokens = ({ items }: Props) => {
           return (
             <>
               <TokenRow key={value}>
-                <TokenHeader>
+                <TokenHeader onClick={() => redirectToToken(+value)}>
                   {icon}
                   <div>{label}</div>
                 </TokenHeader>
                 {Boolean(items[idx].token.payoutEvents.length) && (
                   <TokenPayoutEventList>
                     {items[idx].token.payoutEvents.map((event) => (
-                      <TokenPayoutEventEntry key={`token-${value}-${event.id}`}>
+                      <TokenPayoutEventEntry
+                        key={`token-${value}-${event.id}`}
+                        onClick={() => redirectToEvent(event.id)}
+                      >
                         <TokenPayoutEventType>{capitalize(event.type)}</TokenPayoutEventType>-
                         <TokenPayoutEventStatus
                           color={getStatusColor(event.status)}
@@ -138,6 +152,7 @@ const TokenRow = styled.div`
 `
 
 const TokenHeader = styled.div`
+  cursor: pointer;
   display: flex;
 
   flex-flow: row nowrap;
@@ -160,6 +175,7 @@ const TokenPayoutEventList = styled.div`
 `
 
 const TokenPayoutEventEntry = styled.div`
+  cursor: pointer;
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
