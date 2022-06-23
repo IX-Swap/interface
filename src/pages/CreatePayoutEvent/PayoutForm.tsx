@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import { Formik } from 'formik'
 import { Trans } from '@lingui/macro'
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
@@ -28,25 +28,25 @@ export const PayoutForm: FC = () => {
   const [isAmountLoading, setIsAmountLoading] = useState(false)
   const createDraft = useCreateDraftPayout()
   const addPopup = useAddPopup()
-  // const history = useHistory()
+  const history = useHistory()
 
   const handleFormSubmit = async (values: any) => {
     const body = transformPayoutDraftDTO(values)
     const data = await createDraft(body)
 
     if (data?.id) {
-      // history.push('/kyc') redirect to my payouts page
       addPopup({
         info: {
           success: true,
           summary: 'Payout was successfully created',
         },
       })
+      history.push('/token-manager/payout-events')
     } else {
       addPopup({
         info: {
           success: false,
-          summary: 'Something went wrong',
+          summary: data?.message ?? 'Something went wrong',
         },
       })
     }
@@ -114,14 +114,15 @@ export const PayoutForm: FC = () => {
                 />
               </FormGrid>
 
-              <Summary
-                isRecordFuture={isRecordFuture}
-                isLoading={isAmountLoading}
-                tokenAmount={tokenAmount}
-              />
+              <Summary isRecordFuture={isRecordFuture} isLoading={isAmountLoading} tokenAmount={tokenAmount} />
             </FormCard>
 
-            <PayoutEventBlock isRecordFuture={isRecordFuture} values={values} onValueChange={onValueChange} totalSecTokenSum={tokenAmount.totalSum ?? 0} />
+            <PayoutEventBlock
+              isRecordFuture={isRecordFuture}
+              values={values}
+              onValueChange={onValueChange}
+              totalSecTokenSum={tokenAmount.totalSum ?? 0}
+            />
           </form>
         )
       }}

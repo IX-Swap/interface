@@ -26,7 +26,7 @@ export interface TokenManagerParams {
 }
 
 const tabs: Tab[] = [
-  { label: 'My Payout Tokens', value: 'my-tokens' },
+  { label: 'My Managed Tokens', value: 'my-tokens' },
   { label: 'Payout Events', value: 'payout-events' },
   { label: 'Payout History', value: 'payout-history' },
 ]
