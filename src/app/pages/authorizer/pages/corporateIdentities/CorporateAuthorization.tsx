@@ -1,7 +1,6 @@
 import React from 'react'
 import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
 import { AppFeature } from 'types/app'
-import { CorporateIssuerView } from 'app/pages/identity/components/CorporateIssuerView/CorporateIssuerView'
 import { CorporateIdentityView } from 'app/pages/identity/components/CorporateIdentityView/CorporateIdentityView'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 
@@ -14,11 +13,10 @@ export const CorporateAuthorization = () => {
           data={data}
           feature={AppFeature.Corporates}
         >
-          {data.type === 'issuer' ? (
-            <CorporateIssuerView data={data} />
-          ) : (
-            <CorporateIdentityView data={data} />
-          )}
+          <CorporateIdentityView
+            data={data}
+            isIssuer={data.type === 'issuer'}
+          />
         </AuthorizerView>
       )}
     />

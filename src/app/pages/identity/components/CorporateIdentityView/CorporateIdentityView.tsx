@@ -17,6 +17,7 @@ import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/compone
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
+  isIssuer?: boolean
 }
 
 export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {

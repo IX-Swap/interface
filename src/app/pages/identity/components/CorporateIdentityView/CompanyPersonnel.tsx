@@ -3,8 +3,8 @@ import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
 import { Personnel } from 'app/pages/identity/types/forms'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { File } from 'ui/FileUpload/File'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface PersonnelProps {
   personnel: Personnel
@@ -12,6 +12,9 @@ export interface PersonnelProps {
 }
 
 export const CompanyPersonnel = ({ personnel, title }: PersonnelProps) => {
+  const documents = personnel.documents.filter(
+    doc => doc !== undefined && Object.values(doc).length > 0
+  )
   return (
     <FieldContainer>
       <Grid item container direction={'column'} spacing={5}>
@@ -70,17 +73,7 @@ export const CompanyPersonnel = ({ personnel, title }: PersonnelProps) => {
           </Grid>
 
           <Grid item container direction={'column'} spacing={5}>
-            {personnel.documents.map(file => (
-              <Grid item>
-                <File
-                  hasError={Object.values(file).length === 0}
-                  isFileMissed={Object.values(file).length === 0}
-                  label={file.title}
-                  value={file}
-                  readonly
-                />
-              </Grid>
-            ))}
+            <Documents documents={documents} />
           </Grid>
         </Grid>
       </Grid>
