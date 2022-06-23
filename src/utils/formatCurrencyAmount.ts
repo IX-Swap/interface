@@ -1,4 +1,4 @@
-import { Price, CurrencyAmount, Currency, Fraction } from '@ixswap1/sdk-core'
+import { CurrencyAmount, Currency, Fraction } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
 
 export function floorTo4Decimals(num: number) {

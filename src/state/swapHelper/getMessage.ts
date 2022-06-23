@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro'
 
-export const getMessage = ({ name = '', isError = false }) => {
+export const getMessage = ({ isError = false }) => {
   if (isError) {
     return t`Transaction was not authorized by the broker-dealer. Something went wrong, try again later.`
   } else {

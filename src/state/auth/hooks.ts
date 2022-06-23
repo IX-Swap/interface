@@ -53,12 +53,6 @@ export function useUserisLoggedIn() {
   }, [token])
 }
 
-const awaitDispatch = (dispatch: any, action: any) =>
-  new Promise((resolve, reject) => {
-    dispatch(action())
-    resolve(null)
-  })
-
 export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(async () => {

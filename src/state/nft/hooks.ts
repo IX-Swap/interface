@@ -59,8 +59,6 @@ import {
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
-import { routes } from 'utils/routes'
-import { Description } from '@ethersproject/properties'
 import { Web3Provider } from '@ethersproject/providers'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -267,7 +265,7 @@ interface NftCollectionInfo extends NFTCollection {
 }
 
 export const useNftCollection = (address: string) => {
-  const { account, library, chainId } = useActiveWeb3React()
+  const { library, chainId } = useActiveWeb3React()
 
   const contract = useMemo(() => {
     const web3 = new Web3(library?.provider)
@@ -698,7 +696,6 @@ export const useCreateNftAssetForm = (history: H.History) => {
   const showError = useShowError()
   const { collection, newCollectionName, maxSupply, collectionDescription, collectionLogo } = form
   const { library, account, chainId } = useActiveWeb3React()
-  const { onSetActiveContractAddress } = useCreateAssetActionHandlers()
   return useCallback(async () => {
     try {
       // first we create the asset on backend (uploading all files, etc, and get an assetUri)

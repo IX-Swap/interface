@@ -29,7 +29,9 @@ jobs:
       # - run: CI=false yarn build
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - run: yarn start
-      - run: cd e2e_tests && yarn integration-test
+      - name: Run integration-test
+        run: cd e2e_tests && yarn integration-test
+
 
       - uses: actions/upload-artifact@v2
         if: failure()
