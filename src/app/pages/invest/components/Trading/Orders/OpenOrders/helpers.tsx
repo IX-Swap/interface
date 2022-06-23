@@ -1,10 +1,10 @@
-import { useTheme } from '@mui/material'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { isNonEmptyArray } from 'helpers/arrays'
 import { getRoundedPercentage } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
+import { useAppTheme } from 'hooks/useAppTheme'
 import {
   ColumnOTCMatch,
   OpenOTCOrder,
@@ -34,7 +34,7 @@ export const useOpenOrderState = (
   props: TableViewRendererProps<OpenOTCOrder>
 ) => {
   const { columns, items, hasActions, loading } = props
-  const theme = useTheme()
+  const { theme } = useAppTheme()
   const mobileRowColor = (item: OpenOTCOrder) => {
     if (!needsConfirmation(item)) {
       return 'initial'
