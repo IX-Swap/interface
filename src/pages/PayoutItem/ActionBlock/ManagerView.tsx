@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
-  const { status, isPaid } = payout
+  const { status, isPaid, tokenAmount } = payout
 
   const getContentByStatus = () => {
     switch (status) {
@@ -42,7 +42,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
               <Box marginRight="4px" fontSize="20px" lineHeight="30px">{t`You have allocated for this event`}</Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} 10000`}</Box>
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${tokenAmount}`}</Box>
             </Flex>
             <Flex>
               <Box marginRight="4px">{t`Users will be able to start claiming on`}</Box>

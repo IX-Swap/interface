@@ -61,7 +61,7 @@ export function usePublishPayout() {
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
-        dispatch(createDraft.rejected({ errorMessage: 'Could not create draft payout' }))
+        dispatch(createDraft.rejected({ errorMessage: 'Could not publish payout' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -99,7 +99,7 @@ export function useGetPayoutItem() {
         dispatch(getPayoutItemAction.fulfilled(data))
         return data
       } catch (error: any) {
-        dispatch(getPayoutItemAction.rejected({ errorMessage: 'Could not create draft payout' }))
+        dispatch(getPayoutItemAction.rejected({ errorMessage: 'Could not get payout item' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -168,7 +168,7 @@ export const useGetMyPayoutList = () => {
         dispatch(getMyPayoutList.fulfilled({ data, type: listType }))
         return data
       } catch (error: any) {
-        dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts by type' }))
+        dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts list' }))
         return null
       }
     },

@@ -32,9 +32,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
 
   const handleFormSubmit = async () => {
     const body = transformPayoutDraftDTO(values)
-    console.log({ body })
     const data = await publishPayout(body)
-    console.log({ data })
 
     if (data?.id) {
       // history.push('/kyc') redirect to my payouts page
