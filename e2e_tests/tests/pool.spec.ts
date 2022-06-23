@@ -1,8 +1,15 @@
 import { test } from '../fixtures/metamaskFixture'
 import { expect } from '@playwright/test'
 
+test.beforeEach(async ({page, connectWalletScreen}) => {
+  await page.pause();
+  await connectWalletScreen.connectMetaMask();
+})
+
 test.describe('Check pool functions', () => {
-  test('Check that the pool can be created', async ({ page, }) => {
+  test('Check that the pool can be created', async ({ page, topNavigationBar, liquidityPoolsPage }) => {
+    await topNavigationBar.clickLiquidityPoolsButton();
+    await liquidityPoolsPage.clickAddLiquidityButton();
 
   })
 

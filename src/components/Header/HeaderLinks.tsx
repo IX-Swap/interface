@@ -120,7 +120,7 @@ export const HeaderLinks = () => {
       )}
 
       {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
+        <StyledNavLink id={`pool-nav-link`} data-test-id={`liquidityPoolsButton`} to={'/pool'}>
           <Trans>Liquidity Pools</Trans>
         </StyledNavLink>
       )}

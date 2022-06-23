@@ -4,6 +4,7 @@ import {KycScreen} from "../page-object/kycScreen"
 import {MetamaskPage} from "../page-object/metamaskPage";
 import {WebPage} from "../page-object/webPage";
 import {TopNavigationBar} from "../page-object/topNavigationBar";
+import {LiquidityPoolsPage} from "../page-object/liquidityPoolsPage";
 
 type ixsFixtures = {
   connectWalletScreen: ConnectWalletScreen;
@@ -11,6 +12,7 @@ type ixsFixtures = {
   metamaskPage: MetamaskPage;
   topNavigationBar: TopNavigationBar;
   webPage: WebPage;
+  liquidityPoolsPage: LiquidityPoolsPage;
 };
 
 export const test = base.extend<ixsFixtures>({
@@ -47,6 +49,7 @@ export const test = base.extend<ixsFixtures>({
     const pageWithMetamask = await context.pages()[1];
     const metamaskPage = new MetamaskPage(pageWithMetamask);
 
+    await metamaskPage.makeSureMetamaskLoaded();
     await metamaskPage.fullyLoginToMetamask(process.env.METAMASK_RECOVERY, process.env.METAMASK_PASSWORD);
     await use(metamaskPage);
   }, { auto: true }],
@@ -63,8 +66,11 @@ export const test = base.extend<ixsFixtures>({
     await use(new WebPage(page, context));
   },
 
-  kycScreen: async ({ connectWalletScreen, page }, use) => {
-    await connectWalletScreen.connectMetaMask();
+  kycScreen: async ({ page, context }, use) => {
     await use(new KycScreen(page));
+  },
+
+  liquidityPoolsPage: async ({ page, context }, use) => {
+    await use(new LiquidityPoolsPage(page));
   },
 });

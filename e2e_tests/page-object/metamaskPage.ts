@@ -1,5 +1,6 @@
 import {WebPage} from "./webPage";
 import {Locator, Page, BrowserContext, expect} from '@playwright/test';
+import {timeouts} from "../helpers/timeouts";
 
 export class MetamaskPage extends WebPage{
   readonly context: BrowserContext;
@@ -47,6 +48,13 @@ export class MetamaskPage extends WebPage{
     this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]')
   }
 
+  async makeSureMetamaskLoaded() {
+    await this.confirmButton.waitFor()
+      .catch(async () => {
+        await this.reloadPage();
+      });
+  }
+
   async enterRecoveryPhrase(recoveryPhrase: string) {
     const arrayOfWords = recoveryPhrase.split(" ");
     const listOfFields = await this.secretWord.elementHandles();
@@ -69,7 +77,7 @@ export class MetamaskPage extends WebPage{
     await this.createNewWalletCheckbox.click();
     await this.confirmButton.click();
     await expect(this.endOfFlowEmoji).toBeVisible();
-    await this.page.waitForTimeout(3000);
+    await this.page.waitForTimeout(timeouts.tinyTimeout);
 
     // open wallet and close info pop-up
     await this.confirmButton.click();

@@ -1,8 +1,9 @@
 import { PlaywrightTestConfig } from '@playwright/test';
+import {timeouts} from './helpers/timeouts'
 
 const config: PlaywrightTestConfig = {
-  globalTimeout: 710000,
-  timeout: 210000,
+  globalTimeout: timeouts.globalTestsTimeout,
+  timeout: timeouts.testTimeout,
   retries: process.env.E2E_CI ? 2 : 0,
   reporter: [['list'], ['html', { outputFolder: 'test-results/report' }] ],
   testDir: './tests',
@@ -16,8 +17,8 @@ const config: PlaywrightTestConfig = {
     headless: false,
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    actionTimeout: 50000,
-    navigationTimeout: 40000,
+    actionTimeout: timeouts.mediumTimeout,
+    navigationTimeout: timeouts.mediumTimeout,
     permissions: ['clipboard-read', 'clipboard-write'],
   },
   expect: {

@@ -180,7 +180,6 @@
     "react-select": "^5.2.2",
     "react-sticky-box": "^0.9.3",
     "truffle-privatekey-provider": "^1.2.0",
-    "moment": "^2.29.1",
     "web3": "^1.7.3"
   }
 }
