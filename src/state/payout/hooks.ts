@@ -113,6 +113,11 @@ export const getPayouts = async (params: Record<string, any>) => {
   return result.data
 }
 
+export const getPayoutClaims = async (payoutId: number, params: Record<string, any>) => {
+  const result = await apiService.get(payout.claims(payoutId), undefined, params)
+  return result.data
+}
+
 export const getTotalAmountByRecordDate = async (tokenId: number) => {
   const result = await apiService.get(payout.totalAmount(tokenId))
   return result.data

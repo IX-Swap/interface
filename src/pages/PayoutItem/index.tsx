@@ -9,7 +9,7 @@ import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { useUserState } from 'state/user/hooks'
-import { useGetPayoutItem, usePayoutState } from 'state/payout/hooks'
+import { useGetPayoutItem, usePayoutState, getPayoutClaims as getPayoutClaimsAsync } from 'state/payout/hooks'
 import { PayoutEvent } from 'state/token-manager/types'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 
@@ -25,6 +25,7 @@ export default function PayoutItem({
 }: RouteComponentProps<{ payoutId: string }>) {
   const [cookies] = useCookies(['annoucementsSeen'])
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
+  const [claimHistory, setClaimHistory] = useState([])
   const { loadingRequest } = usePayoutState()
   const { me } = useUserState()
   const { account } = useActiveWeb3React()
@@ -44,6 +45,17 @@ export default function PayoutItem({
     getPayoutItem()
   }, [payoutId])
 
+  useEffect(() => {
+    const getPayoutClaims = async () => {
+      const data = await getPayoutClaimsAsync(+payoutId, { page: 1, offset: 5 })
+      if (data?.length > 0) {
+        setClaimHistory(data)
+      }
+    }
+
+    getPayoutClaims()
+  }, [payoutId])
+
   const isMyPayout = useMemo(() => payout?.userId === me.id, [me, payout])
 
   return (
@@ -55,7 +67,7 @@ export default function PayoutItem({
             <PayoutHeader payout={payout} isMyPayout={isMyPayout} />
             <PayoutTimeline payout={payout} />
             <PayoutActionBlock payout={payout} isMyPayout={isMyPayout} />
-            {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && <PayoutHistory />}
+            {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && <PayoutHistory claimHistory={claimHistory} />}
           </Column>
         )}
       </StyledBodyWrapper>
