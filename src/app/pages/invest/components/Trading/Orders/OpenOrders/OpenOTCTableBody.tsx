@@ -13,6 +13,7 @@ import { nestedcolumns } from './columns'
 import {
   getColumnMatchedOrder,
   needsConfirmation,
+  sortOpenOrders,
   useOpenOrderState
 } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import { ConfirmOTCOrderActions } from './OTCOrderActions'
@@ -22,14 +23,15 @@ export const OpenOTCTableBody = (
 ) => {
   const classes = useStyles()
   const theme = useTheme()
-  const { columns, items: sorted, actions, hasActions, cacheQueryKey } = props
+  const { columns, items, actions, hasActions, cacheQueryKey } = props
   const { showEmptyState, columnCount, rowColor } = useOpenOrderState(props)
   const context = useContext(OpenOrdersContext)
 
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
-  // const sorted = items?.sort(sortOpenOrders) ?? []
+  const sorted = [...items]?.sort(sortOpenOrders) ?? []
+
   const renderMatches = (row: OpenOTCOrder) => (
     <>
       {row?.matches?.map((match: OTCMatch) => (
@@ -98,7 +100,7 @@ export const OpenOTCTableBody = (
               row?.matches?.length > 0 && <>{renderMatches(row)}</>}
             {needsConfirmation(row) && (
               <TableRow
-                key={`${row._id}-timeout`}
+                key={`${row?._id ?? ''}-timeout`}
                 className={classes.infoRow}
                 style={{
                   backgroundColor: rowColor(row),

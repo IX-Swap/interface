@@ -4,6 +4,7 @@ import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { isNonEmptyArray } from 'helpers/arrays'
 import { getRoundedPercentage } from 'helpers/numbers'
+import { capitalizeFirstLetter } from 'helpers/strings'
 import {
   ColumnOTCMatch,
   OpenOTCOrder,
@@ -96,10 +97,17 @@ export const showCancelButton = ({ item }: { item: OpenOTCOrder }) => {
       OTCOrderStatus.PENDING,
       OTCOrderStatus.SETTLED
     ]
-    return !disableCancelStatuses.includes(item?.status as any)
+    return !disableCancelStatuses.includes(item?.status)
   }
   const pendingMatches = item?.matches?.filter(
     item => item.status === OTCOrderStatus.PENDING
   )
   return !isNonEmptyArray(pendingMatches)
+}
+
+export const renderOTCOrderStatus = ({ item }: { item: OpenOTCOrder }) => {
+  if (item.orderType === 'SELL') {
+    return capitalizeFirstLetter(item?.status ?? '')
+  }
+  return 'Pending'
 }

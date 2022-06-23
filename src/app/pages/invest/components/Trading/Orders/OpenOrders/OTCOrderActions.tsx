@@ -1,11 +1,14 @@
 import { Box } from '@mui/material'
 import { CancelOTCOrderButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/CancelOTCOrderButton'
+import {
+  renderOTCOrderStatus,
+  showCancelButton
+} from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import React from 'react'
 import { ColumnOTCMatch, OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { ConfirmOTCOrderButton } from './ConfirmOTCOrderButton'
 import { DropDownOTCRow } from './DropDownOTCRow'
-import { showCancelButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 
 export interface OTCOrderActionsProps {
   item: OpenOTCOrder
@@ -22,9 +25,7 @@ export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
     <Box display='flex' justifyContent='space-between'>
       {showCancel && <CancelOTCOrderButton variant='text' order={item} />}
       {!showCancel && (
-        <Box textAlign={'left'}>
-          {capitalizeFirstLetter(item?.status ?? '')}
-        </Box>
+        <Box textAlign={'left'}>{renderOTCOrderStatus({ item })}</Box>
       )}
       {showDropdown && <DropDownOTCRow order={item} />}
     </Box>
