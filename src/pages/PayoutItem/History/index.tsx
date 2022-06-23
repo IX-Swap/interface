@@ -8,30 +8,42 @@ import { CopyAddress } from 'components/CopyAddress'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ExternalLink, TYPE } from 'theme'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
-
-import { momentFormatDate } from '../utils'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useUserState } from 'state/user/hooks'
+
+import { momentFormatDate } from '../utils'
 
 const headerCells = [t`Recipient’s wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Transaction`]
 
 interface Props {
-  claimHistory: any[]
+  claimHistory: any
+  page: number
+  setPage: (page: number) => void
+  isLoading: boolean
 }
 
 interface RowProps {
   item: any
 }
 
-export const PayoutHistory: FC<Props> = ({ claimHistory }) => {
-  const onPageChange = () => {
-    console.log('page changes')
+export const PayoutHistory: FC<Props> = ({ page, isLoading, claimHistory, setPage }) => {
+  const onPageChange = (newPage: number) => {
+    setPage(newPage)
   }
 
   return claimHistory.length !== 0 ? (
     <Box marginTop="16px">
-      <Table style={{ marginBottom: 24 }} body={<Body claimHistory={claimHistory} />} header={<Header />} />
-      <Pagination page={1} totalPages={5} onPageChange={onPageChange} />
+      {isLoading ? (
+        <LoaderContainer>
+          <LoaderThin size={72} />
+        </LoaderContainer>
+      ) : (
+        <>
+          <Table style={{ marginBottom: 24 }} body={<Body claimHistory={claimHistory} />} header={<Header />} />
+          <Pagination page={page} totalPages={claimHistory.totalPages} onPageChange={onPageChange} />
+        </>
+      )}
     </Box>
   ) : null
 }
@@ -48,10 +60,10 @@ const Header = () => {
   )
 }
 
-const Body: FC<Props> = ({ claimHistory }) => {
+const Body: FC<{ claimHistory: any }> = ({ claimHistory }) => {
   return (
     <>
-      {claimHistory.map((item) => {
+      {claimHistory.items.map((item: any) => {
         return <Row key={`history-table-${item.id}`} item={item} />
       })}
     </>
@@ -107,4 +119,12 @@ const StyledBodyRow = styled(BodyRow)<{ isMyClaim?: boolean }>`
   > div:first-child {
     padding-left: 32px;
   }
+`
+
+const LoaderContainer = styled.div`
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

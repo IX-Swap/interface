@@ -25,7 +25,9 @@ export default function PayoutItem({
 }: RouteComponentProps<{ payoutId: string }>) {
   const [cookies] = useCookies(['annoucementsSeen'])
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
+  const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
+  const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
   const { loadingRequest } = usePayoutState()
   const { me } = useUserState()
   const { account } = useActiveWeb3React()
@@ -46,15 +48,18 @@ export default function PayoutItem({
   }, [payoutId])
 
   useEffect(() => {
+    setIsClaimHistoryLoading(true)
+
     const getPayoutClaims = async () => {
-      const data = await getPayoutClaimsAsync(+payoutId, { page: 1, offset: 5 })
-      if (data?.length > 0) {
+      const data = await getPayoutClaimsAsync(+payoutId, { page, offset: 5 })
+      if (data?.items.length > 0) {
         setClaimHistory(data)
       }
+      setIsClaimHistoryLoading(false)
     }
 
     getPayoutClaims()
-  }, [payoutId])
+  }, [payoutId, page])
 
   const isMyPayout = useMemo(() => payout?.userId === me.id, [me, payout])
 
@@ -67,7 +72,14 @@ export default function PayoutItem({
             <PayoutHeader payout={payout} isMyPayout={isMyPayout} />
             <PayoutTimeline payout={payout} />
             <PayoutActionBlock payout={payout} isMyPayout={isMyPayout} />
-            {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && <PayoutHistory claimHistory={claimHistory} />}
+            {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
+              <PayoutHistory
+                isLoading={isClaimHistoryLoading}
+                page={page}
+                setPage={setPage}
+                claimHistory={claimHistory}
+              />
+            )}
           </Column>
         )}
       </StyledBodyWrapper>

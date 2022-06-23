@@ -44,7 +44,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
             <TYPE.title4>
               <Trans>Payout Title</Trans>
             </TYPE.title4>
-            <SecTokenLink to={routes.securityToken(secToken.id)}>{secToken.originalSymbol ?? secToken.symbol}</SecTokenLink>
+            <SecTokenLink to={routes.securityToken(secToken.catalogId)}>{secToken.originalSymbol ?? secToken.symbol}</SecTokenLink>
           </Box>
         </Flex>
 

@@ -61,7 +61,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
 
   const isButtonDisabled = useMemo(() => {
     for (const key in values) {
-      if (['secTokenAmount', 'id', 'otherType'].includes(key)) continue
+      if (['secTokenAmount', 'id', 'otherType', 'tokenAmount', 'endDate'].includes(key)) continue
       if (!values[key]) return true
     }
     return false
@@ -156,7 +156,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
       />
 
       <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={isButtonDisabled}>
+        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={true}>
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
         <ButtonIXSGradient type="button" padding="16px 24px" onClick={open} disabled={isButtonDisabled}>
