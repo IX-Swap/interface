@@ -23,18 +23,20 @@ export const InstitutionalInvestorDeclarationView: React.FC<
 
   return (
     <FieldContainer>
-      <Grid container direction={'column'} spacing={3}>
+      <Grid container direction={'column'} spacing={5}>
         <Grid item>
           <FormSectionHeader title='Institutional Investor Status Declaration' />
         </Grid>
 
-        <DeclarationsListItem
-          label={'I declare that I am "Corporate Accredited Investor"'}
-          value={isInstitutionalInvestor}
-        />
+        <Grid item container direction={'column'} spacing={3}>
+          <DeclarationsListItem
+            label={'I declare that I am "Corporate Accredited Investor"'}
+            value={isInstitutionalInvestor}
+          />
 
-        <Grid item>
-          <DocumentsSection documents={institutionalInvestorDocuments} />
+          <Grid item>
+            <DocumentsSection documents={institutionalInvestorDocuments} />
+          </Grid>
         </Grid>
       </Grid>
     </FieldContainer>

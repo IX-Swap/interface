@@ -20,7 +20,6 @@ export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
     digitalSecurities,
     primaryOfferingServices,
     digitalSecuritiesIssuance,
-
     optInAgreements
   } = data.declarations?.investorsStatus ?? {}
 
@@ -61,21 +60,18 @@ export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
             />
           </Grid>
         </Grid>
-        {Object.values(accreditedInvestorOptOut).find(item => item) !==
-        undefined ? (
-          <Grid item container direction={'column'} spacing={3}>
-            <Grid item>
-              <FormSectionHeader title='Accredited Investor Opt-Out Form' />
-            </Grid>
-            <Grid item>
-              <CorporateDeclarationsList
-                subtitle='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.'
-                data={accreditedInvestorOptOut}
-                labelMap={accreditedInvestorOptOutLabelMap}
-              />
-            </Grid>
+        <Grid item container direction={'column'} spacing={5}>
+          <Grid item>
+            <FormSectionHeader title='Accredited Investor Opt-Out Form' />
           </Grid>
-        ) : null}
+          <Grid item>
+            <CorporateDeclarationsList
+              subtitle='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.'
+              data={accreditedInvestorOptOut}
+              labelMap={accreditedInvestorOptOutLabelMap}
+            />
+          </Grid>
+        </Grid>
       </Grid>
     </FieldContainer>
   )

@@ -25,29 +25,35 @@ export const DocumentsView = (props: DocumentsViewProps) => {
 
   return (
     <FieldContainer>
-      <Grid item container direction={'column'} spacing={3}>
-        <Grid item>
-          <FormSectionHeader title='Corporate Documents' />
+      <Grid item container direction={'column'} spacing={5}>
+        <Grid item container direction={'column'} spacing={3}>
+          <Grid item>
+            <FormSectionHeader title='Corporate Documents' />
+          </Grid>
+
+          <Grid item container direction={'column'} spacing={2}>
+            <DocumentsSection documents={corporateDocuments} />
+          </Grid>
         </Grid>
 
-        <Grid item container direction={'column'} spacing={2}>
-          <DocumentsSection documents={corporateDocuments} />
+        <Grid item container direction={'column'} spacing={3}>
+          <Grid item>
+            <FormSectionHeader title='Financial Documents' />
+          </Grid>
+
+          <Grid item container direction={'column'} spacing={2}>
+            <DocumentsSection documents={financialDocuments} />
+          </Grid>
         </Grid>
 
-        <Grid item>
-          <FormSectionHeader title='Financial Documents' />
-        </Grid>
+        <Grid item container direction={'column'} spacing={3}>
+          <Grid item>
+            <FormSectionHeader title='Evidence of Accreditation' />
+          </Grid>
 
-        <Grid item container direction={'column'} spacing={2}>
-          <DocumentsSection documents={financialDocuments} />
-        </Grid>
-
-        <Grid item>
-          <FormSectionHeader title='Evidence of Accreditation' />
-        </Grid>
-
-        <Grid item container direction={'column'} spacing={2}>
-          <DocumentsSection documents={evidenceDocuments} />
+          <Grid item container direction={'column'} spacing={2}>
+            <DocumentsSection documents={evidenceDocuments} />
+          </Grid>
         </Grid>
       </Grid>
     </FieldContainer>
