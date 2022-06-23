@@ -402,18 +402,3 @@ export const usePaidWithdrawFee = () => {
     [dispatch]
   )
 }
-
-export const usePrepareWithdrawFee = () => {
-  const dispatch = useDispatch<AppDispatch>()
-
-  return useCallback(
-    async (data: PaidFee) => {
-      try {
-        const response = await postPaidFeeReq(data)
-      } catch (error: any) {
-        dispatch(postPaidFee.rejected({ errorMessage: error.message }))
-      }
-    },
-    [dispatch]
-  )
-}

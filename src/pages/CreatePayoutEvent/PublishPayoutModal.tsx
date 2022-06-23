@@ -6,12 +6,18 @@ import { Box, Flex } from 'rebass'
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonIXSGradient } from 'components/Button'
-import CurrencyLogo from 'components/CurrencyLogo'
 import { Checkbox } from 'components/Checkbox'
 import Column from 'components/Column'
+import { momentFormatDate } from 'pages/PayoutItem/utils'
+import { useAddPopup } from 'state/application/hooks'
+import { usePublishPayout } from 'state/payout/hooks'
+
+import { transformPayoutDraftDTO } from './utils'
 
 interface Props {
   close: () => void
+  values: any
+  isRecordFuture: boolean
 }
 
 interface DataProps {
@@ -19,7 +25,34 @@ interface DataProps {
   value: any
 }
 
-export const PublishPayoutModal: FC<Props> = ({ close }) => {
+export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close }) => {
+  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type } = values
+  const publishPayout = usePublishPayout()
+  const addPopup = useAddPopup()
+
+  const handleFormSubmit = async () => {
+    const body = transformPayoutDraftDTO(values)
+    const data = await publishPayout(body)
+
+    if (data?.id) {
+      // history.push('/kyc') redirect to my payouts page
+      close()
+      addPopup({
+        info: {
+          success: true,
+          summary: 'Payout was successfully published',
+        },
+      })
+    } else {
+      addPopup({
+        info: {
+          success: false,
+          summary: 'Something went wrong',
+        },
+      })
+    }
+  }
+
   return (
     <RedesignedWideModal scrollable isOpen onDismiss={close}>
       <ModalBlurWrapper data-testid="user-modal" style={{ maxWidth: '569px', width: '100%', position: 'relative' }}>
@@ -40,33 +73,41 @@ export const PublishPayoutModal: FC<Props> = ({ close }) => {
               label={t`Security Token:`}
               value={
                 <Flex alignItems="center">
-                  <CurrencyLogo size="20px" />
-                  <Box marginLeft="4px"> {`TESLA`}</Box>
+                  {secToken.icon}
+                  <Box marginLeft="4px"> {secToken.label}</Box>
                 </Flex>
               }
             />
-            <Data label={t`Payout Type:`} value={t`Dividends`} />
-            <Data label={t`Record Date:`} value={t`Mar 12, 2022`} />
-            <Data label={t`Payment Start Date:`} value={t`May 22, 2022`} />
+            <Data label={t`Payout Type:`} value={type} />
+            <Data label={t`Record Date:`} value={momentFormatDate(recordDate)} />
+            <Data label={t`Payment Start Date:`} value={momentFormatDate(startDate)} />
+            {endDate && <Data label={t`Payment Deadline:`} value={momentFormatDate(endDate)} />}
           </Card>
           <Card marginBottom="24px">
             <span>{t`Payment Details:`}</span>
-            <Data
-              label={t`Payout Tokens:`}
-              value={
-                <Flex alignItems="center">
-                  <CurrencyLogo size="20px" />
-                  <Box marginX="4px"> {`TESLA`}</Box>
-                  <Box>{`1000`}</Box>
-                </Flex>
-              }
-            />
+            {isRecordFuture ? (
+              <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
+                {t`Wrapped token amounts to be computed and will become available on the Record Date you selected`}
+              </TYPE.title10>
+            ) : (
+              <Data
+                label={t`Payout Tokens:`}
+                value={
+                  <Flex alignItems="center">
+                    {token.icon}
+                    <Box marginX="4px"> {token.label}</Box>
+                    <Box>{tokenAmount}</Box>
+                  </Flex>
+                }
+              />
+            )}
           </Card>
 
           <Column style={{ gap: '16px', marginBottom: 32 }}>
             <Checkbox
               name="accredited"
               isRadio
+              disabled
               checked={false}
               onClick={() => null}
               label={
@@ -81,7 +122,7 @@ export const PublishPayoutModal: FC<Props> = ({ close }) => {
             <Checkbox
               name="accredited"
               isRadio
-              checked={false}
+              checked={true}
               onClick={() => null}
               label={
                 <Box>
@@ -94,7 +135,10 @@ export const PublishPayoutModal: FC<Props> = ({ close }) => {
             />
           </Column>
 
-          <StyledButtonIXSGradient width="100%">{t`Confirm Payment`}</StyledButtonIXSGradient>
+          <StyledButtonIXSGradient
+            type="button"
+            onClick={handleFormSubmit}
+          >{t`Confirm Payment`}</StyledButtonIXSGradient>
         </ModalBody>
       </ModalBlurWrapper>
     </RedesignedWideModal>

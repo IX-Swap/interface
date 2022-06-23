@@ -5,6 +5,7 @@ import { Flex } from 'rebass'
 
 import { TYPE } from 'theme'
 import { Label } from 'components/Label'
+import { ExtraInfoCard } from 'pages/KYC/styleds'
 
 const Card = styled.div`
   background: ${({ theme }) => theme.bg19};
@@ -19,11 +20,21 @@ const Divider = styled.div`
 `
 
 interface Props {
-  poolsAmount: number
-  walletsAmount: number
+  tokenAmount: any
+  isLoading: boolean
+  isRecordFuture: boolean
 }
 
-export const Summary: FC<Props> = ({ poolsAmount, walletsAmount }) => {
+export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture }) => {
+  const { poolsAmount, walletsAmount, totalSum } = tokenAmount
+
+  const getValue = (amount: number) => {
+    if (isLoading) return t`Loading...`
+    if (isRecordFuture) return t`Available on Record Date`
+    if (amount) return `${amount} tokens`
+    return '-'
+  }
+
   return (
     <>
       <Label label={t`Token Payout Summary`} />
@@ -33,13 +44,13 @@ export const Summary: FC<Props> = ({ poolsAmount, walletsAmount }) => {
           <TYPE.body3>
             <Trans>Wrapped Tokens (Pools)</Trans>
           </TYPE.body3>
-          <TYPE.body3>{`${poolsAmount} tokens`}</TYPE.body3>
+          <TYPE.body3>{getValue(poolsAmount)}</TYPE.body3>
         </Flex>
         <Flex marginBottom="8px" justifyContent="space-between" alignItems="center" opacity="50%">
           <TYPE.body3>
             <Trans>Wrapped Tokens (Wallets)</Trans>
           </TYPE.body3>
-          <TYPE.body3>{`${walletsAmount} tokens`}</TYPE.body3>
+          <TYPE.body3>{getValue(walletsAmount)}</TYPE.body3>
         </Flex>
 
         <Divider />
@@ -48,9 +59,17 @@ export const Summary: FC<Props> = ({ poolsAmount, walletsAmount }) => {
           <TYPE.body1 color={'text1'}>
             <Trans>Total Wrapped Token Supply</Trans>
           </TYPE.body1>
-          <TYPE.body1 color={'text1'}>{`${walletsAmount + poolsAmount} tokens`}</TYPE.body1>
+          <TYPE.body1 color={'text1'}>
+            {isLoading || isRecordFuture ? '' : walletsAmount || poolsAmount ? `${totalSum} tokens` : '-'}
+          </TYPE.body1>
         </Flex>
       </Card>
+
+      {isRecordFuture && (
+        <ExtraInfoCard style={{ marginTop: 16 }}>
+          <TYPE.title10 color="error">{t`Wrapped token amounts to be computed and will become available on the Record Date you selected.`}</TYPE.title10>
+        </ExtraInfoCard>
+      )}
     </>
   )
 }
