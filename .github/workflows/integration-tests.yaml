@@ -31,7 +31,7 @@ jobs:
       - run: yarn integration-test
 
       - uses: actions/upload-artifact@v2
-        if: false()
+        if: failure()
         with:
           name: my-artifact
           path: ./e2e_tests/test-results
