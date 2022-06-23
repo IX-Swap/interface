@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
+import { useActiveWeb3React } from 'hooks/web3'
 
 import { MEDIA_WIDTHS } from 'theme'
 import { useUserState } from 'state/user/hooks'
@@ -12,6 +13,7 @@ import { ButtonIXSGradient } from 'components/Button'
 import { TmPayoutEvents } from 'components/TmPayoutEvents'
 import { TmPayoutHistory } from 'components/TmPayoutHistory'
 import { routes } from 'utils/routes'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 export type TokenManagerTab = 'my-tokens' | 'payout-events' | 'payout-history'
 
@@ -46,11 +48,13 @@ const renderTab = (selectedTab: TokenManagerTab | string) => {
 
 const TokenManager = () => {
   const [selectedTab, setSelectedTab] = useState<TokenManagerTab>('my-tokens')
+  const { account } = useActiveWeb3React()
+  const { me } = useUserState()
+
+  const isLogged = account && me?.role
 
   const history = useHistory()
   const params = useParams<TokenManagerParams>()
-
-  const { me } = useUserState()
 
   const changeTab = useCallback(
     (tab: TokenManagerTab) => {
@@ -73,6 +77,10 @@ const TokenManager = () => {
 
   const goToCreate = () => {
     history.push(routes.createPayoutEvent)
+  }
+
+  if (!isLogged) {
+    return <NotAvailablePage />
   }
 
   return (

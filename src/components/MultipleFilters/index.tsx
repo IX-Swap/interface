@@ -86,13 +86,19 @@ export const MultipleFilters = ({
 
   const initialValues = useMemo((): Record<string, any> => {
     if (filters.length) {
-      return filters.reduce(
-        (acc, next) => ({
+      return filters.reduce((acc, next) => {
+        if (next === FILTERS.PAYOUT_PERIOD) {
+          return {
+            ...acc,
+            startDate: defaultValues.startDate,
+            endDate: defaultValues.endDate,
+          }
+        }
+        return {
           ...acc,
           [next]: defaultValues[next],
-        }),
-        {}
-      )
+        }
+      }, {})
     }
 
     return {}
