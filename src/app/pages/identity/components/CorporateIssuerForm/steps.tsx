@@ -3,11 +3,13 @@ import { CorporateInformationForm } from 'app/pages/identity/components/Corporat
 import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsAndBeneficialOwnerDetails'
 import {
   getCorporateInfoFormValues,
+  getCorporateInvestorDeclarationFormValues,
   getCorporateInvestorTaxDeclarationFormValues,
   getDirectorsAndBeneficialOwnersFormValues
 } from 'app/pages/identity/utils/corporate/forms'
 import {
   getCorporateInfoRequestPayload,
+  getCorporateInvestorDeclarationRequestPayload,
   getDirectorsAndBeneficialOwnerRequestPayload
 } from 'app/pages/identity/utils/corporate/requests'
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
@@ -15,10 +17,12 @@ import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import {
   corporateInvestorInfoSchema,
   corporateInvestorSchema,
+  corporateInvestorStatusDeclarationSchema,
   corporateTaxDeclarationSchema,
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/identity/validation/corporate'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
+import { InvestorDeclarationForm } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorDeclarationForm'
 
 export const corporateIssuerFormSteps = [
   {
@@ -41,6 +45,19 @@ export const corporateIssuerFormSteps = [
     getRequestPayload: getTaxDeclarationRequestPayload,
     validationSchema: corporateTaxDeclarationSchema,
     component: () => <TaxDeclarationForm identityType='corporate' />
+  },
+  {
+    label: 'Investor Declaration',
+    getFormValues: getCorporateInvestorDeclarationFormValues,
+    getRequestPayload: getCorporateInvestorDeclarationRequestPayload,
+    validationSchema: corporateInvestorStatusDeclarationSchema,
+    component: () => (
+      <InvestorDeclarationForm
+        identityType='corporate'
+        corporateType='issuer'
+      />
+    ),
+    formId: 'investor-declaration'
   },
   {
     label: 'Review & Submit',
