@@ -6,7 +6,7 @@ exports[`OTC Confirm order actions renders confirm actions correctly 1`] = `
     class="MuiBox-root css-gg4vpm"
   >
     <div
-      class="MuiBox-root css-18gezhf"
+      class="MuiBox-root css-19rkgp3"
     >
       Pending
     </div>
