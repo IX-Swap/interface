@@ -3,14 +3,10 @@ name: Integration Tests
 on:
   push:
     branches:
-      - main
       - development
-      - staging
   pull_request:
     branches:
-      - main
       - development
-      - staging
       - ci-update
 
 jobs:
@@ -35,7 +31,7 @@ jobs:
       - run: yarn integration-test
 
       - uses: actions/upload-artifact@v2
-        if: always()
+        if: false()
         with:
           name: my-artifact
-          path: ./e2e_tests
+          path: ./e2e_tests/test-results
