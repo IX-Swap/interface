@@ -264,8 +264,8 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                     >
                       <label
                         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                        id="optInAgreements1"
-                        path="optInAgreements1"
+                        id="optInAgreementsSafeguards"
+                        path="optInAgreementsSafeguards"
                         style="align-items: flex-start;"
                       >
                         <span
@@ -274,7 +274,7 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                           <input
                             class="PrivateSwitchBase-input css-1m9pwf3"
                             data-indeterminate="false"
-                            name="optInAgreements1"
+                            name="optInAgreementsSafeguards"
                             type="checkbox"
                           />
                           <svg
@@ -312,8 +312,8 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                     >
                       <label
                         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                        id="optInAgreements2"
-                        path="optInAgreements2"
+                        id="optInAgreementsOptOut"
+                        path="optInAgreementsOptOut"
                         style="align-items: flex-start;"
                       >
                         <span
@@ -322,7 +322,7 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                           <input
                             class="PrivateSwitchBase-input css-1m9pwf3"
                             data-indeterminate="false"
-                            name="optInAgreements2"
+                            name="optInAgreementsOptOut"
                             type="checkbox"
                           />
                           <svg

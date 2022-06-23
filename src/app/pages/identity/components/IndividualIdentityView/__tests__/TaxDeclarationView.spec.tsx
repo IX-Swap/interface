@@ -8,17 +8,6 @@ describe('TaxDeclarationView', () => {
     jest.clearAllMocks()
   })
 
-  it('renders correct label and content when singaporeOnly is false', () => {
-    const { getByText } = render(<TaxDeclarationView data={individual} />)
-
-    expect(getByText('Singapore')).toBeTruthy()
-    expect(
-      getByText(
-        'NO, I’m currently tax resident in the following list of jurisdictions (including Singapore, if applicable):'
-      )
-    ).toBeTruthy()
-  })
-
   it('renders correct label and content when singaporeOnly is true', () => {
     const { getByText } = render(
       <TaxDeclarationView
@@ -35,9 +24,7 @@ describe('TaxDeclarationView', () => {
 
     expect(getByText('My Singapore NRIC/FIN is:')).toBeTruthy()
     expect(
-      getByText(
-        'YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
-      )
+      getByText('Are you currently solely a tax resident of Singapore?')
     ).toBeTruthy()
   })
 })

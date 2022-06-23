@@ -4,15 +4,6 @@ import { render } from 'test-utils'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
 
 describe('DeclarationsListItem', () => {
-  it('renders DoneIcon when value is true', () => {
-    const { queryByTestId } = render(
-      <DeclarationsListItem label='Tax One' value={true} />
-    )
-
-    expect(queryByTestId('declarations-list-item-checked')).toBeTruthy()
-    expect(queryByTestId('declarations-list-item-unchecked')).toBeFalsy()
-  })
-
   it('renders CloseIcon when value is false', () => {
     const { queryByTestId } = render(
       <DeclarationsListItem label='Tax One' value={false} />

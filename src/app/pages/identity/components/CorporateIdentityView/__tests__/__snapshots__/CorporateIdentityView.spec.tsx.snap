@@ -324,224 +324,244 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           </h5>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-480o17-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-480o17-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item css-1mum6ye-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-            >
-              <h6
-                class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
-              >
-                I declare that I am a corporate "Accredited Investor"
-              </h6>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-1tw2i9j-MuiGrid-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                class="MuiBox-root css-0"
               >
-                <div
-                  class="MuiBox-root css-1yp4ln"
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
                 >
-                  <div
-                    class="MuiBox-root css-0"
-                    style="opacity: 0.5;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                      data-testid="declarations-list-item-unchecked"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiBox-root css-d0uhtl"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      data-testid="declarations-list-item-label"
-                    >
-                      An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency
-                    </p>
-                  </div>
-                </div>
+                  Investor Status Declaration
+                </h5>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-              >
-                <div
-                  class="MuiBox-root css-1yp4ln"
-                >
-                  <div
-                    class="MuiBox-root css-0"
-                    style="opacity: 0.5;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                      data-testid="declarations-list-item-unchecked"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiBox-root css-d0uhtl"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      data-testid="declarations-list-item-label"
-                    >
-                      The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency
-                    </p>
-                  </div>
-                </div>
-              </div>
+                class="MuiBox-root css-12aw9rk"
+              />
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-480o17-MuiGrid-root"
               >
                 <div
-                  class="MuiBox-root css-1yp4ln"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
                 >
-                  <div
-                    class="MuiBox-root css-0"
-                    style="opacity: 0.5;"
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle1 css-1zdpvo-MuiTypography-root"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                      data-testid="declarations-list-item-unchecked"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiBox-root css-d0uhtl"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      data-testid="declarations-list-item-label"
-                    >
-                      A corporation where all the shareholders are Accredited Investors
-                    </p>
-                  </div>
+                    I declare that I am a corporate "Accredited Investor"
+                  </h6>
                 </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-              >
                 <div
-                  class="MuiBox-root css-1yp4ln"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-1tw2i9j-MuiGrid-root"
                 >
                   <div
-                    class="MuiBox-root css-0"
-                    style="opacity: 0.5;"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                      data-testid="declarations-list-item-unchecked"
-                      focusable="false"
-                      viewBox="0 0 24 24"
+                    <div
+                      class="MuiBox-root css-1yp4ln"
                     >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
+                      <div
+                        class="MuiBox-root css-0"
+                        style="opacity: 0.5;"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="declarations-list-item-unchecked"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="MuiBox-root css-d0uhtl"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          data-testid="declarations-list-item-label"
+                        >
+                          An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   <div
-                    class="MuiBox-root css-d0uhtl"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      data-testid="declarations-list-item-label"
+                    <div
+                      class="MuiBox-root css-1yp4ln"
                     >
-                      A partnership (other than a limited liability partnership) where all the partners are Accredited Investors
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-              >
-                <div
-                  class="MuiBox-root css-1yp4ln"
-                >
-                  <div
-                    class="MuiBox-root css-0"
-                    style="opacity: 0.5;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                      data-testid="declarations-list-item-unchecked"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiBox-root css-d0uhtl"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      data-testid="declarations-list-item-label"
-                    >
-                      A trust where all the beneficiaries are Accredited Investors
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-              >
-                <div
-                  class="MuiBox-root css-1yp4ln"
-                >
-                  <div
-                    class="MuiBox-root css-0"
-                    style="opacity: 0.5;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                      data-testid="declarations-list-item-unchecked"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
+                      <div
+                        class="MuiBox-root css-0"
+                        style="opacity: 0.5;"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="declarations-list-item-unchecked"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="MuiBox-root css-d0uhtl"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          data-testid="declarations-list-item-label"
+                        >
+                          The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency
+                        </p>
+                      </div>
+                    </div>
                   </div>
                   <div
-                    class="MuiBox-root css-d0uhtl"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      data-testid="declarations-list-item-label"
+                    <div
+                      class="MuiBox-root css-1yp4ln"
                     >
-                      A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.
-                    </p>
+                      <div
+                        class="MuiBox-root css-0"
+                        style="opacity: 0.5;"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="declarations-list-item-unchecked"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="MuiBox-root css-d0uhtl"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          data-testid="declarations-list-item-label"
+                        >
+                          A corporation where all the shareholders are Accredited Investors
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-1yp4ln"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                        style="opacity: 0.5;"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="declarations-list-item-unchecked"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="MuiBox-root css-d0uhtl"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          data-testid="declarations-list-item-label"
+                        >
+                          A partnership (other than a limited liability partnership) where all the partners are Accredited Investors
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-1yp4ln"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                        style="opacity: 0.5;"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="declarations-list-item-unchecked"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="MuiBox-root css-d0uhtl"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          data-testid="declarations-list-item-label"
+                        >
+                          A trust where all the beneficiaries are Accredited Investors
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-1yp4ln"
+                    >
+                      <div
+                        class="MuiBox-root css-0"
+                        style="opacity: 0.5;"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="declarations-list-item-unchecked"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                      <div
+                        class="MuiBox-root css-d0uhtl"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          data-testid="declarations-list-item-label"
+                        >
+                          A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -551,89 +571,20 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
           >
             <div
-              class="MuiBox-root css-h8m1q6"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1syvn0i-MuiPaper-root"
             >
               <div
-                class="makeStyles-formHeader-28 MuiBox-root css-1xn0qx2"
+                class="MuiBox-root css-0"
               >
                 <h5
-                  class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
                 >
                   Opt-In Requirement
                 </h5>
               </div>
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-480o17-MuiGrid-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-            >
-              <h6
-                class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
-              >
-                I confirm to be treated as an “Accredited Investor” by InvestaX
-              </h6>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-1tw2i9j-MuiGrid-root"
-            >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-              >
-                <div
-                  class="MuiBox-root css-1yp4ln"
-                >
-                  <div
-                    class="MuiBox-root css-0"
-                    style="opacity: 0.5;"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
-                      data-testid="declarations-list-item-unchecked"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiBox-root css-d0uhtl"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
-                    >
-                      I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.
-                       
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
-                    >
-                      I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
-                      <span
-                        class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
-                        style="cursor: pointer;"
-                      >
-                        safeguards
-                      </span>
-                       for Accredited Investors.
-                       
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 makeStyles-text-29 css-1b4l2pg-MuiTypography-root"
-                    >
-                      I have been informed of and understand my right to
-                       
-                      opt out
-                       of the Accredited Investors status with InvestaX at any point in time.
-                    </p>
-                  </div>
-                </div>
-              </div>
+                class="MuiBox-root css-12aw9rk"
+              />
             </div>
           </div>
         </div>
@@ -672,53 +623,8 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           </h5>
         </div>
         <div
-          class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
-        >
-          <table
-            class="MuiTable-root css-7mlt34-MuiTable-root"
-          >
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-wrap-xs-nowrap css-1ledfka-MuiGrid-root"
-            >
-              <div
-                class="MuiBox-root css-1ezo613"
-              >
-                <p
-                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                  style="font-weight: 500;"
-                >
-                  File
-                </p>
-              </div>
-              <div
-                class="MuiBox-root css-19afw6t"
-              >
-                <p
-                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                  style="font-weight: 500;"
-                >
-                  Type
-                </p>
-              </div>
-              <div
-                class="MuiBox-root css-19afw6t"
-              >
-                <p
-                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                  style="font-weight: 500;"
-                >
-                  Uploaded At
-                </p>
-              </div>
-              <div
-                class="MuiBox-root css-19afw6t"
-              />
-            </div>
-            <tbody
-              class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
-            />
-          </table>
-        </div>
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+        />
       </div>
     </div>
   </div>
