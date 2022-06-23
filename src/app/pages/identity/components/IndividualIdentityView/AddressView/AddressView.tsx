@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, useTheme } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
@@ -9,26 +9,63 @@ export interface AddressViewProps {
 
 export const AddressView = (props: AddressViewProps) => {
   const { data } = props
+  const theme = useTheme()
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.line1} label='Line 1' />
+      <Grid item xs={12} sm={6} md={6}>
+        <LabelledValue
+          labelWeight='thin'
+          labelFontSize={14}
+          valueColor={theme.palette.text.secondary}
+          value={data.line1}
+          label='Line 1'
+        />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.line2} label='Line 2' />
+      <Grid item xs={12} sm={6} md={6}>
+        <LabelledValue
+          labelWeight='thin'
+          labelFontSize={14}
+          valueColor={theme.palette.text.secondary}
+          value={data.line2}
+          label='Line 2'
+        />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.city} label='City' />
+      <Grid item xs={12} sm={6} md={6}>
+        <LabelledValue
+          labelWeight='thin'
+          labelFontSize={14}
+          valueColor={theme.palette.text.secondary}
+          value={data.city}
+          label='City'
+        />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.state} label='State' />
+      <Grid item xs={12} sm={6} md={6}>
+        <LabelledValue
+          labelWeight='thin'
+          labelFontSize={14}
+          valueColor={theme.palette.text.secondary}
+          value={data.state}
+          label='State'
+        />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.country} label='Country' />
+      <Grid item xs={12} sm={6} md={6}>
+        <LabelledValue
+          labelWeight='thin'
+          labelFontSize={14}
+          valueColor={theme.palette.text.secondary}
+          value={data.country}
+          label='Country'
+        />
       </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue value={data.postalCode} label='Postal Code' />
+      <Grid item xs={12} sm={6} md={6}>
+        <LabelledValue
+          labelWeight='thin'
+          labelFontSize={14}
+          valueColor={theme.palette.text.secondary}
+          value={data.postalCode}
+          label='Postal Code'
+        />
       </Grid>
     </Grid>
   )

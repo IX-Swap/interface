@@ -1,9 +1,8 @@
 import React from 'react'
-import { DataroomHeader } from 'components/dataroom/DataroomHeader'
-import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
-import { Table, TableBody, TableContainer, TableRow } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
 import { IdentityType } from 'app/pages/identity/utils/shared'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
 
 export interface DocumentsViewProps {
   data: DataroomFile[]
@@ -14,21 +13,34 @@ export const IdentityDocumentsView = (props: DocumentsViewProps) => {
   const { data: documents } = props
 
   return (
-    <TableContainer>
-      <Table>
-        <DataroomHeader />
-        <TableBody>
-          {documents.map((document, index) => (
-            <TableRow key={index}>
-              <DataroomViewRow
-                showDivider={false}
-                title={document?.title ?? ''}
-                document={document}
+    <Grid container spacing={3}>
+      {documents.map((document, index) => {
+        console.log('dicusdasd', document)
+        return (
+          <Grid
+            item
+            key={index}
+            sx={{ width: '100%' }}
+            container
+            spacing={2}
+            direction='column'
+          >
+            <Grid item>
+              <Typography>{document.title}</Typography>
+            </Grid>
+            <Grid item>
+              <FileUpload
+                label={document.title}
+                value={document}
+                fullWidth
+                maxSize={10}
+                name={document.title}
+                readonly
               />
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            </Grid>
+          </Grid>
+        )
+      })}
+    </Grid>
   )
 }

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import DoneIcon from '@mui/icons-material/Done'
+import { ReactComponent as DoneIcon } from 'assets/icons/done.svg'
 import CloseIcon from '@mui/icons-material/Close'
 import { Box, Grid, Typography } from '@mui/material'
 
@@ -26,7 +26,10 @@ export const DeclarationsListItem = ({
           {React.isValidElement(label) ? (
             label
           ) : (
-            <Typography data-testid='declarations-list-item-label'>
+            <Typography
+              fontWeight={400}
+              data-testid='declarations-list-item-label'
+            >
               {label}
             </Typography>
           )}

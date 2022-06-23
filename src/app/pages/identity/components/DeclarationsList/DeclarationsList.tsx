@@ -16,7 +16,9 @@ export const DeclarationsList = ({
   return (
     <Grid container spacing={4}>
       <Grid item xs={12}>
-        <Typography variant={'subtitle1'}>{title}</Typography>
+        <Typography fontWeight={500} variant={'subtitle1'}>
+          {title}
+        </Typography>
       </Grid>
       <Grid item container spacing={2}>
         {Object.entries(data).map((item, index) => {
