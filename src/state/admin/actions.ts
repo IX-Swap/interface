@@ -1,6 +1,8 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 
+import { ManagerOfToken } from 'state/user/actions'
 import { timePeriods } from 'utils/time'
+import { PaginationDetails } from 'types/pagination'
 
 export const postLogin: Readonly<{
   pending: ActionCreatorWithoutPayload
@@ -214,7 +216,7 @@ export interface User {
   role: string
   tenant: string
   updatedAt: string
-  managerOf: any[]
+  managerOf: ManagerOfToken[]
 }
 
 export interface TokenManagerEntry {
@@ -237,9 +239,7 @@ export interface PayoutEvent {
   status: string
 }
 
-export interface UsersList {
-  page: number
-  totalPages: number
+export interface UsersList extends PaginationDetails {
   items: User[]
 }
 
