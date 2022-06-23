@@ -6,11 +6,12 @@ import {
   OTCOrderStatus,
   OTCParticipant
 } from 'types/otcOrder'
+import { dso } from '__fixtures__/issuance'
 
 const fakeOTCMarket: OTCMarket = {
   createdAt: '2022-05-10T12:45:07.411Z',
   isOtc: true,
-  listing: '609d1d93c54af74af46c027c',
+  dso,
   name: 'IX-APE/USD',
   quote: '609d1d93c54af74af46c027c',
   updatedAt: '2022-05-10T12:45:07.411Z',
