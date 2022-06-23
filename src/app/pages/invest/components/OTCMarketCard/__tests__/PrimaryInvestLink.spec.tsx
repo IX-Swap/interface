@@ -81,9 +81,9 @@ describe('PrimaryInvestLink', () => {
     expect(Button).toHaveBeenCalledWith(
       expect.objectContaining({
         ...defaultPrimaryInvestProps,
-        disabled: true,
-        // TODO Change route for OTC after complete OTC page
-        to: OTCMarketRoute.market,
+        disabled: false,
+        // TODO Change route when we will have more featured pairs
+        to: InvestRoute.trading,
         params: {
           pairId: dso._id
         },
