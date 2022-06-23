@@ -51,16 +51,7 @@ export const InvestOverview = () => {
       </Grid>
 
       <VSpacer size='large' />
-
-      <Grid container direction='column' spacing={4}>
-        <Grid item>
-          <Typography variant='h4'>OTC Market</Typography>
-        </Grid>
-        <Grid item>
-          <OTCMarket />
-        </Grid>
-      </Grid>
-
+      <OTCMarket />
       <VSpacer size='large' />
 
       <Grid container direction='column' spacing={4}>
