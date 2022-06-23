@@ -29,8 +29,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   boxContainer: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.getContrastText(theme.palette.primary.dark),
+    backgroundColor: 'rgb(2,0,113)',
+    color: 'rgb(255,255,255)',
     padding: theme.spacing(5),
     borderRadius: theme.spacing(6)
   }
