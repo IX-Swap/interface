@@ -28,7 +28,6 @@ jobs:
       - run: yarn
       # - run: CI=false yarn build
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - run: yarn start
       - name: Run integration-test
         run: cd e2e_tests && yarn integration-test
 
