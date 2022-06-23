@@ -38,58 +38,93 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
       context?.toggleRow(openIndex)
     }
   }
+  const matches = selectedItem.matches ?? []
   return (
     <Hidden mdUp>
-      <Drawer anchor='bottom' open={open} onClose={onClose}>
+      <Drawer
+        anchor='bottom'
+        open={open}
+        onClose={onClose}
+        PaperProps={{ sx: { backgroundColor: 'transparent' } }}
+      >
         <Box className={classes.drawer}>
           <Box className={classes.close}>
-            <IconButton onClick={onClose} size='large'>
+            <IconButton onClick={onClose} size='small'>
               <CloseIcon />
             </IconButton>
           </Box>
           <Grid flexDirection='column'>
             <Box>
-              <Typography className={classes.header} variant='subtitle2'>
+              <Typography
+                className={classes.header}
+                variant='subtitle2'
+                fontWeight={600}
+              >
                 {selectedItem.pair.name}
               </Typography>
             </Box>
-            {selectedItem.matches?.map(item => (
-              <Box display={'flex'}>
-                <Table>
-                  <TableBody>
-                    <TableRow key={`${item._id}-head`}>
-                      <TableCell key={`${item._id}-amount-head`}>
-                        Amount
-                      </TableCell>
-                      <TableCell key={`${item._id}-price-head`}>
-                        Price
-                      </TableCell>
-                      <TableCell key={`${item._id}-total-head`}>
-                        Total
-                      </TableCell>
-                    </TableRow>
-                    <TableRow key={`${item._id}-data`}>
-                      <TableCell key={`${item._id}-amount-data`}>
-                        {item.matchedAmount}
-                      </TableCell>
-                      <TableCell key={`${item._id}-price-data`}>
-                        {item.matchedPrice}
-                      </TableCell>
-                      <TableCell key={`${item._id}-total-data`}>
-                        {renderTotal({
-                          price: item.matchedPrice,
-                          amount: item.matchedAmount,
-                          row: selectedItem
-                        })}
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-                <ConfirmOTCOrderActions
-                  item={getColumnMatchedOrder(selectedItem, item)}
-                />
-              </Box>
-            ))}
+            <Box className={classes.separator} />
+            <Grid display='flex' flexDirection={'column'} gap={2}>
+              {matches?.map(item => (
+                <Box display={'flex'} className={classes.rowBox}>
+                  <Table>
+                    <TableBody>
+                      <TableRow
+                        key={`${item._id}-head`}
+                        className={classes.tableRow}
+                      >
+                        <TableCell
+                          key={`${item._id}-amount-head`}
+                          className={classes.headerCell}
+                        >
+                          <Typography variant={'subtitle2'}>Amount</Typography>
+                        </TableCell>
+
+                        <TableCell
+                          key={`${item._id}-price-head`}
+                          className={classes.headerCell}
+                        >
+                          <Typography variant={'subtitle2'}>Price</Typography>
+                        </TableCell>
+                        <TableCell
+                          key={`${item._id}-total-head`}
+                          className={classes.headerCell}
+                        >
+                          <Typography variant={'subtitle2'}>Total</Typography>
+                        </TableCell>
+                      </TableRow>
+                      <TableRow key={`${item._id}-data`}>
+                        <TableCell
+                          key={`${item._id}-amount-data`}
+                          className={classes.dataCell}
+                        >
+                          {item.matchedAmount}
+                        </TableCell>
+                        <TableCell
+                          key={`${item._id}-price-data`}
+                          className={classes.dataCell}
+                        >
+                          {item.matchedPrice}
+                        </TableCell>
+                        <TableCell
+                          key={`${item._id}-total-data`}
+                          className={classes.dataCell}
+                        >
+                          {renderTotal({
+                            price: item.matchedPrice,
+                            amount: item.matchedAmount,
+                            row: selectedItem
+                          })}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                  <ConfirmOTCOrderActions
+                    item={getColumnMatchedOrder(selectedItem, item)}
+                  />
+                </Box>
+              ))}
+            </Grid>
             <MobileConfirmationMessage item={selectedItem} color='initial' />
             <Box mb={2} />
             <ToggleDetailsButton item={selectedItem} />

@@ -38,7 +38,7 @@ export const ConfirmOTCOrderActions = ({ item }: ConfirmOrderActionsProps) => {
     <Box display='flex' justifyContent='space-between'>
       {showConfirm && <ConfirmOTCOrderButton variant='text' order={item} />}
       {!showConfirm && (
-        <Box textAlign={'center'} pl={1.25}>
+        <Box display='flex' alignItems={'center'} minWidth={'100%'} pl={1.25}>
           {capitalizeFirstLetter(item?.status ?? '')}
         </Box>
       )}
