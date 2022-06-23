@@ -4,7 +4,7 @@ import { DeclarationsListItem } from 'app/pages/identity/components/Declarations
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { DocumentsSection } from 'app/pages/identity/components/CorporateIdentityView/DocumentsSection'
+import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface InstitutionalInvestorDeclarationViewProps {
   data: CorporateIdentity
@@ -35,7 +35,7 @@ export const InstitutionalInvestorDeclarationView: React.FC<
           />
 
           <Grid item>
-            <DocumentsSection documents={institutionalInvestorDocuments} />
+            <Documents documents={institutionalInvestorDocuments} />
           </Grid>
         </Grid>
       </Grid>

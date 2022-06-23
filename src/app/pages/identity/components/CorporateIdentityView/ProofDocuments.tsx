@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import { File } from 'ui/FileUpload/File'
 import { DataroomFile } from 'types/dataroomFile'
+import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface ProofDocumentsProps {
   documents: DataroomFile[]
@@ -24,27 +24,7 @@ export const ProofDocuments = ({ documents }: ProofDocumentsProps) => {
         </Grid>
 
         <Grid item container direction={'column'} spacing={2}>
-          {filteredProofOfIdentityDocuments.length > 0 ? (
-            filteredProofOfIdentityDocuments.map(file => {
-              if (file.type === 'Proof of Identity') {
-                return (
-                  <Grid item>
-                    <File label={file.title} value={file} readonly />
-                  </Grid>
-                )
-              }
-            })
-          ) : (
-            <Grid item>
-              <File
-                hasError
-                isFileMissed
-                label={undefined}
-                value={undefined}
-                readonly
-              />
-            </Grid>
-          )}
+          <Documents documents={filteredProofOfIdentityDocuments} />
         </Grid>
       </Grid>
 
@@ -54,27 +34,7 @@ export const ProofDocuments = ({ documents }: ProofDocumentsProps) => {
         </Grid>
 
         <Grid item container direction={'column'} spacing={2}>
-          {filteredProofOfAddressDocuments.length > 0 ? (
-            filteredProofOfAddressDocuments.map(file => {
-              if (file.type === 'Proof of Address') {
-                return (
-                  <Grid item>
-                    <File label={file.title} value={file} readonly />
-                  </Grid>
-                )
-              }
-            })
-          ) : (
-            <Grid item>
-              <File
-                hasError
-                isFileMissed
-                label={undefined}
-                value={undefined}
-                readonly
-              />
-            </Grid>
-          )}
+          <Documents documents={filteredProofOfAddressDocuments} />
         </Grid>
       </Grid>
     </>

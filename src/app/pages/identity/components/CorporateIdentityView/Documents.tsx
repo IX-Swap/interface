@@ -3,11 +3,11 @@ import { Grid } from '@mui/material'
 import { File } from 'ui/FileUpload/File'
 import { DataroomFile } from 'types/dataroomFile'
 
-export interface DocumentsSectionProps {
+export interface DocumentsProps {
   documents: DataroomFile[]
 }
 
-export const DocumentsSection = ({ documents }: DocumentsSectionProps) => {
+export const Documents = ({ documents }: DocumentsProps) => {
   return documents.length > 0 ? (
     <>
       {documents.map(file => (

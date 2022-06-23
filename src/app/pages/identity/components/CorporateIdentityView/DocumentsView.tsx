@@ -3,7 +3,7 @@ import { Grid } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { DocumentsSection } from 'app/pages/identity/components/CorporateIdentityView/DocumentsSection'
+import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface DocumentsViewProps {
   data: DataroomFile[]
@@ -32,7 +32,7 @@ export const DocumentsView = (props: DocumentsViewProps) => {
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>
-            <DocumentsSection documents={corporateDocuments} />
+            <Documents documents={corporateDocuments} />
           </Grid>
         </Grid>
 
@@ -42,7 +42,7 @@ export const DocumentsView = (props: DocumentsViewProps) => {
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>
-            <DocumentsSection documents={financialDocuments} />
+            <Documents documents={financialDocuments} />
           </Grid>
         </Grid>
 
@@ -52,7 +52,7 @@ export const DocumentsView = (props: DocumentsViewProps) => {
           </Grid>
 
           <Grid item container direction={'column'} spacing={2}>
-            <DocumentsSection documents={evidenceDocuments} />
+            <Documents documents={evidenceDocuments} />
           </Grid>
         </Grid>
       </Grid>

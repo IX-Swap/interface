@@ -40,6 +40,7 @@ export const CorporateDeclarationsList = ({
                   <DeclarationsListItem key={index} label={key} value={value} />
                 )
               }
+              return null
             })}
 
             {Object.values(data).every(item => !item) &&

@@ -50,6 +50,7 @@ export const valueWeightMap = {
 }
 
 export type TextAlignment = 'left' | 'right' | 'center' | 'justify'
+export type LabelColor = 'default' | 'light' | 'dark' | 'gray' | 'bright'
 export interface LabelledValueProps {
   label: string
   value: any
@@ -60,7 +61,7 @@ export interface LabelledValueProps {
   labelFontSize?: number
   valueFontSize?: number
   align?: TextAlignment
-  labelColor?: 'default' | 'light' | 'dark' | 'gray' | 'bright'
+  labelColor?: LabelColor
   valueColor?: string
   isNewThemeOn?: boolean
   isRedesigned?: boolean

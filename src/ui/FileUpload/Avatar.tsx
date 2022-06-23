@@ -19,9 +19,7 @@ export const Avatar = ({
   rootProps,
   inputProps,
   disabled = false,
-  setCompleted = (num: number) => {},
   value,
-  completed = 0,
   readonly = false
 }: FileProps) => {
   const { setValue } = useFormContext()
