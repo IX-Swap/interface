@@ -16,7 +16,13 @@ export const PairSelect = (props: Partial<SelectProps>) => {
     <FormControl fullWidth variant='outlined'>
       <InputLabel>Pair</InputLabel>
 
-      <Select {...props} label={undefined}>
+      <Select
+        {...props}
+        label={undefined}
+        renderValue={(value: any) => data.map[value].name}
+        displayEmpty
+        placeholder='Pair'
+      >
         <SelectItem disabled value={undefined}>
           Pair
         </SelectItem>
