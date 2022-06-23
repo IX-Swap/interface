@@ -1,5 +1,4 @@
 import { Grid, Hidden } from '@mui/material'
-import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { PlaceOrderFormDialog } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog'
 import { useCurrencyBalance } from 'app/pages/exchange/hooks/useCurrencyBalance'
@@ -9,6 +8,8 @@ import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrder
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { useCreateOTCOrder } from 'app/pages/invest/hooks/useCreateOTCOrder'
 import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
+import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
+import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
@@ -19,13 +20,18 @@ export const TradingBody = () => {
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
-  const { found } = useWithdrawalAddressAdded(account)
+  const {
+    accountState,
+    isWhitelisted: { found }
+  } = useMetamaskConnectionManager()
   const { currencyName, tokenName } = useFeaturedPairNames()
   const currencyBalance = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
     return await create({ args: values, account })
   }
+  const disabledCreate =
+    !found || isLoading || accountState === AccountState.DIFFERENT_CHAIN
   const isFetching = false
   const createOrderStatus = ''
   return (
@@ -47,7 +53,7 @@ export const TradingBody = () => {
             isFetching={isFetching}
             currencyLabel={currencyName}
             tokenLabel={tokenName}
-            isDisabled={!found || isLoading}
+            isDisabled={disabledCreate}
             currencyBalance={currencyBalance}
             suffix={({ tab }: { tab: number }) => (
               <PlaceOrderSuffix
