@@ -69,7 +69,8 @@ export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
   }
   const statusesWhereToShowFilled = [
     OTCOrderStatus.PENDING,
-    OTCOrderStatus.COMPLETED
+    OTCOrderStatus.COMPLETED,
+    OTCOrderStatus.SETTLED
   ]
   const matchedAmounts = row?.matches
     ?.filter(match => statusesWhereToShowFilled.includes(match.status))
@@ -92,7 +93,8 @@ export const showCancelButton = ({ item }: { item: OpenOTCOrder }) => {
     const disableCancelStatuses = [
       OTCOrderStatus.COMPLETED,
       OTCOrderStatus.CANCELLED,
-      OTCOrderStatus.PENDING
+      OTCOrderStatus.PENDING,
+      OTCOrderStatus.SETTLED
     ]
     return !disableCancelStatuses.includes(item?.status as any)
   }
