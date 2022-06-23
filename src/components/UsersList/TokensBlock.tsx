@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { ReactComponent as DeleteIcon } from 'assets/images/cross.svg'
 
-export type Option = { label: string; value: string; icon: JSX.Element }
+export type Option = { label: string; value: string; icon: JSX.Element; isDisabled?: boolean }
 
 interface Props {
   onRemove: (value: Option[]) => void
@@ -32,11 +32,11 @@ export const TokensBlock = ({ onRemove, initialItems, currentItems }: Props) => 
     <Container>
       <Title>Managed Tokens:</Title>
       {!items.length && <NoTokens>No tokens</NoTokens>}
-      {items.map(({ label, value, icon }) => (
-        <Item key={value} disabled={isItemDisabled(value)}>
+      {items.map(({ label, value, icon, isDisabled }) => (
+        <Item key={value} disabled={isDisabled || isItemDisabled(value)}>
           {icon}
           <Label>{label}</Label>
-          <DeleteIcon onClick={() => !isItemDisabled(value) && onClickRemove(value)} style={{ cursor: 'pointer' }} />
+          <DeleteIcon onClick={() => !isDisabled && !isItemDisabled(value) && onClickRemove(value)} />
         </Item>
       ))}
     </Container>
@@ -71,10 +71,17 @@ const Item = styled.div<{ disabled: boolean }>`
   align-items: center;
   background: ${({ theme }) => theme.bg11};
   border-radius: 32px;
+  > svg {
+    cursor: pointer;
+  }
   ${({ disabled }) =>
     disabled &&
     css`
+      cursor: not-allowed;
       opacity: 0.4;
+      > svg {
+        cursor: not-allowed;
+      }
     `}
 `
 const Label = styled.div`

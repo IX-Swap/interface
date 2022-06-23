@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 
 import { Checkbox } from 'components/Checkbox'
 
-type Option = { label?: string; value?: any }
+type Option = { label?: string; value?: any; disabled?: boolean }
 
 interface Props {
   onSelect: (item: any) => void
@@ -17,6 +17,7 @@ interface Props {
   error?: string
   borderRadius?: string
   isDisabled?: boolean
+  isClearable?: boolean
 }
 
 const colourStyles = {
@@ -108,7 +109,7 @@ const MultiValue = (props: any) => {
 
 const SingleValue = (props: any) => {
   return (
-    <StyledValue>
+    <StyledValue disabled={props.isDisabled}>
       {props?.data?.icon}
       {props?.data?.label}
     </StyledValue>
@@ -118,7 +119,7 @@ const SingleValue = (props: any) => {
 const Option = (props: any) => {
   return (
     <components.Option {...props}>
-      <StyledValue>
+      <StyledValue disabled={props.isDisabled}>
         {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
         {props?.data?.icon}
         {props?.data?.label}
@@ -136,6 +137,7 @@ export const Select = ({
   isDisabled = false,
   isSearchable = true,
   isMulti = false,
+  isClearable = true,
   error = '',
   borderRadius = '36px',
 }: Props) => {
@@ -154,6 +156,7 @@ export const Select = ({
       error={error}
       options={options}
       isSearchable={isSearchable}
+      isClearable={isClearable}
       isMulti={isMulti}
       onChange={(option: unknown) => {
         onSelect(option as Option)
@@ -167,6 +170,7 @@ export const Select = ({
       isDisabled={isDisabled}
       hideSelectedOptions={false}
       closeMenuOnSelect={!isMulti}
+      isOptionDisabled={(option: any) => option.isDisabled}
     />
   )
 }
@@ -178,7 +182,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     height: 60px;
     border-radius: ${({ borderRadius }) => borderRadius};
     padding: 0px 16px;
-    background: ${({theme}) => theme.bg19};
+    background: ${({ theme }) => theme.bg19};
     border: none;
     /* ${({ error }) =>
       error &&
@@ -213,8 +217,13 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
   }
 `
 
-const StyledValue = styled.div`
+const StyledValue = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   column-gap: 4px;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.5;
+    `}
 `

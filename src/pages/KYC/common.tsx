@@ -43,6 +43,8 @@ interface SelectProps {
   name?: string
   isMulti?: boolean
   required?: boolean
+  isDisabled?: boolean
+  isClearable?: boolean
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement> & {

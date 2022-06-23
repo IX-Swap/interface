@@ -32,6 +32,7 @@ const initialState: EventLogState = {
   page: 1,
   tokenId: null,
   paginationDetails: {
+    page: 1,
     offset: 0,
     totalItems: 0,
     totalPages: 1,
@@ -95,9 +96,9 @@ export default createReducer<EventLogState>(initialState, (builder) =>
       state.eventLogLoading = false
       state.eventLog = response.items
       const { offset, totalItems, totalPages, itemCount, nextPage, prevPage } = response
-      state.paginationDetails = { offset, totalItems, totalPages, itemCount, nextPage, prevPage }
-      state.eventLogError = null
       const { page, filter, tokenId } = params
+      state.paginationDetails = { page: page || 1, offset, totalItems, totalPages, itemCount, nextPage, prevPage }
+      state.eventLogError = null
       if (page) {
         state.page = page
       }

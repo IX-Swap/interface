@@ -4,15 +4,16 @@ import { Trans } from '@lingui/macro'
 
 import { MEDIA_WIDTHS, ModalBlurWrapper } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { User } from 'state/admin/actions'
 import { CopyAddress } from 'components/CopyAddress'
 import { ROLES, ROLES_LABEL } from 'constants/roles'
 import checkIcon from 'assets/images/check-success.svg'
 import notCheckIcon from 'assets/images/reject.svg'
 import closeIcon from 'assets/images/cross.svg'
 
+import { Option } from './TokensBlock'
+
 interface Props {
-  item: User
+  item: { ethAddress: string; role: string; isWhitelisted: boolean; username: string; managerOf: Option[] }
   close: () => void
 }
 
