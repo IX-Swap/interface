@@ -126,7 +126,7 @@ export const InvestorDeclarationView: React.FC<
           )}
           {optInAgreementsOptOut !== undefined && (
             <DeclarationsList
-              title='I confirm to be treated as an “Accredited Investor” by InvestaX 22'
+              title='I confirm to be treated as an “Accredited Investor” by InvestaX'
               data={{ optInAgreementsOptOut }}
               labelMap={{
                 optInAgreementsOptOut: <OptInAgreementsIndividual />
@@ -135,7 +135,7 @@ export const InvestorDeclarationView: React.FC<
           )}
           {optInAgreementsSafeguards !== undefined && (
             <DeclarationsList
-              title='I confirm to be treated as an “Accredited Investor” by InvestaX 22'
+              title='I confirm to be treated as an “Accredited Investor” by InvestaX'
               data={{ optInAgreementsSafeguards }}
               labelMap={{
                 optInAgreementsSafeguards: <SafeguardAgreements />
