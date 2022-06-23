@@ -9,26 +9,31 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { ExternalLink, TYPE } from 'theme'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 
-import { payoutHistory } from './mock'
 import { momentFormatDate } from '../utils'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { useUserState } from 'state/user/hooks'
 
 const headerCells = [t`Recipient’s wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Transaction`]
+
+interface Props {
+  claimHistory: any[]
+}
 
 interface RowProps {
   item: any
 }
 
-export const PayoutHistory: FC = () => {
+export const PayoutHistory: FC<Props> = ({ claimHistory }) => {
   const onPageChange = () => {
     console.log('page changes')
   }
 
-  return (
+  return claimHistory.length !== 0 ? (
     <Box marginTop="16px">
-      <Table style={{ marginBottom: 24 }} body={<Body />} header={<Header />} />
+      <Table style={{ marginBottom: 24 }} body={<Body claimHistory={claimHistory} />} header={<Header />} />
       <Pagination page={1} totalPages={5} onPageChange={onPageChange} />
     </Box>
-  )
+  ) : null
 }
 
 const Header = () => {
@@ -43,10 +48,10 @@ const Header = () => {
   )
 }
 
-const Body = () => {
+const Body: FC<Props> = ({ claimHistory }) => {
   return (
     <>
-      {payoutHistory.map((item) => {
+      {claimHistory.map((item) => {
         return <Row key={`history-table-${item.id}`} item={item} />
       })}
     </>
@@ -54,20 +59,24 @@ const Body = () => {
 }
 
 const Row: FC<RowProps> = ({ item }) => {
-  const { ethAddress } = item
-  const now = new Date()
+  const { createdAt, payoutEvent, sum, userId, user } = item
+  const { me } = useUserState()
+  const { secToken } = payoutEvent
+  const currency = new WrappedTokenInfo(secToken)
 
   return (
-    <StyledBodyRow isMyClaim={item.id === 1}>
+    <StyledBodyRow isMyClaim={me.id === userId}>
       <div>
-        <CopyAddress address={ethAddress} />
+        <CopyAddress address={user.ethAddress} />
       </div>
       <Flex alignItems="center">
-        <CurrencyLogo size="20px" />
-        <Box marginX="4px">{`COIN`}</Box>
-        <Box>{`0.523`}</Box>
+        <CurrencyLogo currency={currency} size="20px" />
+        <Box marginX="4px">{secToken.originalSymbol ?? secToken.symbol}</Box>
+        <Box>{sum}</Box>
       </Flex>
-      <div>{`${momentFormatDate(now)} - ${now.getHours()}:${now.getMinutes()}`}</div>
+      <div>{`${momentFormatDate(createdAt)} - ${new Date(createdAt).getUTCHours()}:${new Date(
+        createdAt
+      ).getUTCMinutes()}`}</div>
       <div style={{ textDecoration: 'underline' }}>
         <ExternalLink href={`https://dev.ixswap.io`}>View</ExternalLink>
       </div>

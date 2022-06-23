@@ -6,13 +6,35 @@ import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 
-import { createDraft, getPayoutList, getMyPayoutList } from './actions'
+import { createDraft, getPayoutList, getPayoutItem as getPayoutItemAction, getMyPayoutList } from './actions'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
 }
 
-export const createDraftPayout = async (newPayoutDraft: any) => {
+const getPayoutItem = async (id: number) => {
+  const result = await apiService.get(payout.payoutById(id))
+  return result.data
+}
+
+const publishPayout = async (newPayoutDraft: any) => {
+  const formData = new FormData()
+
+  for (const key in newPayoutDraft) {
+    if (key === 'files') {
+      newPayoutDraft[key].forEach((item: any) => {
+        formData.append(`${key}`, item)
+      })
+    } else {
+      formData.append(key, newPayoutDraft[key])
+    }
+  }
+
+  const result = await apiService.post(payout.publish, formData)
+  return result.data
+}
+
+const createDraftPayout = async (newPayoutDraft: any) => {
   const formData = new FormData()
 
   for (const key in newPayoutDraft) {
@@ -27,6 +49,25 @@ export const createDraftPayout = async (newPayoutDraft: any) => {
 
   const result = await apiService.post(payout.createDraft, formData)
   return result.data
+}
+
+export function usePublishPayout() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (newPayoutDraft: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await publishPayout(newPayoutDraft)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: 'Could not publish payout' }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
 }
 
 export function useCreateDraftPayout() {
@@ -48,8 +89,37 @@ export function useCreateDraftPayout() {
   return callback
 }
 
+export function useGetPayoutItem() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(getPayoutItemAction.pending())
+        const data = await getPayoutItem(id)
+        dispatch(getPayoutItemAction.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(getPayoutItemAction.rejected({ errorMessage: 'Could not get payout item' }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
 export const getPayouts = async (params: Record<string, any>) => {
   const result = await apiService.get(payout.payoutsList, undefined, params)
+  return result.data
+}
+
+export const getPayoutClaims = async (payoutId: number, params: Record<string, any>) => {
+  const result = await apiService.get(payout.claims(payoutId), undefined, params)
+  return result.data
+}
+
+export const getTotalAmountByRecordDate = async (tokenId: number) => {
+  const result = await apiService.get(payout.totalAmount(tokenId))
   return result.data
 }
 
@@ -98,7 +168,7 @@ export const useGetMyPayoutList = () => {
         dispatch(getMyPayoutList.fulfilled({ data, type: listType }))
         return data
       } catch (error: any) {
-        dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts by type' }))
+        dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts list' }))
         return null
       }
     },

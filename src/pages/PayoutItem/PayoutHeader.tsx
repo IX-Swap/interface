@@ -12,16 +12,22 @@ import { TYPE } from 'theme'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { routes } from 'utils/routes'
+import { PayoutEvent } from 'state/token-manager/types'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 
 import { useStatusButtonInfo } from './utils'
 import { InfoBlock } from './InfoBlock'
 
 interface Props {
-  status: PAYOUT_STATUS
+  payout: PayoutEvent
+  isMyPayout: boolean
 }
 
-export const PayoutHeader: FC<Props> = ({ status }) => {
+export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
+  const { secToken, payoutToken, description, status, type, attachments } = payout
   const history = useHistory()
+  
   const goBack = () => {
     history.push(routes.securityTokens('payout-events'))
   }
@@ -33,28 +39,28 @@ export const PayoutHeader: FC<Props> = ({ status }) => {
           <ButtonText height="fit-content" marginTop="16px" marginRight="16px" onClick={goBack}>
             <ArrowLeft fill="white !important" />
           </ButtonText>
-          <CurrencyLogo size="52px" />
+          <CurrencyLogo currency={new WrappedTokenInfo(secToken)} size="52px" />
           <Box marginLeft="16px">
             <TYPE.title4>
               <Trans>Payout Title</Trans>
             </TYPE.title4>
-            <SecTokenLink to={routes.securityToken(4)}>MSTO</SecTokenLink>
+            <SecTokenLink to={routes.securityToken(secToken.id)}>{secToken.originalSymbol ?? secToken.symbol}</SecTokenLink>
           </Box>
         </Flex>
 
         <Flex marginTop="16px">
-          {false && <EditButton>Edit</EditButton>}
+          {isMyPayout && <EditButton>Edit</EditButton>}
           <PayoutStatus status={status} />
         </Flex>
       </Flex>
 
       <ReadMoreContainer>
         <ReadMore more={t`Read More`} less={t`Show Less`} lines={8}>
-          {'Description'}
+          {description}
         </ReadMore>
       </ReadMoreContainer>
 
-      <InfoBlock type="Rewards" token={{ name: 'COIN' }} attachments={[]} />
+      <InfoBlock type={capitalizeFirstLetter(type)} token={payoutToken} attachments={attachments} />
     </Column>
   )
 }
