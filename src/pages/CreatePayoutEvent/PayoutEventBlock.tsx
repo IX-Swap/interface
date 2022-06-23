@@ -96,7 +96,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
               {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${(
-                totalSecTokenSum / +tokenAmount
+                +tokenAmount / totalSecTokenSum
               ).toFixed(2)} ${token.label} per SEC token`}
             </TYPE.description2>
           </ExtraInfoCard>
@@ -108,7 +108,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
-          minDate={recordDate && moment(new Date(recordDate)).add(1, 'days')}
+          minDate={recordDate ? moment(new Date(recordDate)).add(1, 'days') : moment(new Date()).add(1, 'days')}
           openTo="date"
           value={startDate}
           onChange={(newDate) => onValueChange('startDate', newDate)}
@@ -118,7 +118,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
-          minDate={startDate && moment(new Date(startDate)).add(1, 'days')}
+          minDate={startDate ? moment(new Date(startDate)).add(1, 'days') : moment(new Date()).add(1, 'days')}
           openTo="date"
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', newDate)}

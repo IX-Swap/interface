@@ -63,29 +63,32 @@ export const PayoutForm: FC = () => {
       onSubmit={handleFormSubmit}
     >
       {({ values, setFieldValue, handleSubmit }) => {
+        const { recordDate, secToken } = values
+        const isRecordFuture = isBefore(values.recordDate)
+
         const onValueChange = (key: string, value: any) => {
           setFieldValue(key, value, false)
         }
 
-        const handleSecTokenChange = async (item: any) => {
-          setIsAmountLoading(true)
-          if (item?.value) {
-            const data = await getTotalAmountByRecordDate(item.value)
+        const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
+          const isRecordFuture = isBefore(values.recordDate)
+          if (secToken?.value && recordDate && !isRecordFuture) {
+            setIsAmountLoading(true)
+            const data = await getTotalAmountByRecordDate(secToken.value, recordDate)
+
             if (data) {
               const totalSum = (+data.walletTokens ?? 0) + (+data.poolTokens ?? 0)
               setTokenAmount({
                 walletsAmount: data.walletTokens ? +data.walletTokens : null,
                 poolsAmount: data.poolTokens ? +data.poolTokens : null,
-                totalSum,
+                totalSum: totalSum.toFixed(2),
               })
               onValueChange('secTokenAmount', totalSum)
             }
+            
+            setIsAmountLoading(false)
           }
-          onValueChange('secToken', item)
-          setIsAmountLoading(false)
         }
-
-        const isRecordFuture = isBefore(values.recordDate)
 
         return (
           <form onSubmit={handleSubmit}>
@@ -99,7 +102,10 @@ export const PayoutForm: FC = () => {
                   placeholder="Choose SEC token"
                   selectedItem={values.secToken}
                   items={secTokensOptions}
-                  onSelect={handleSecTokenChange}
+                  onSelect={(newToken) => {
+                    onValueChange('secToken', newToken)
+                    fetchAmountByRecordDate(newToken, recordDate)
+                  }}
                   required
                 />
                 <DateInput
@@ -108,7 +114,10 @@ export const PayoutForm: FC = () => {
                   maxHeight={60}
                   openTo="date"
                   value={values.recordDate}
-                  onChange={(newDate) => onValueChange('recordDate', newDate)}
+                  onChange={(newDate) => {
+                    onValueChange('recordDate', newDate)
+                    fetchAmountByRecordDate(secToken, newDate)
+                  }}
                   required
                   tooltipText="Record Date"
                 />

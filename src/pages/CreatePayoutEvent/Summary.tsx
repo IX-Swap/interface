@@ -44,13 +44,13 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture }) =
           <TYPE.body3>
             <Trans>Wrapped Tokens (Pools)</Trans>
           </TYPE.body3>
-          <TYPE.body3>{getValue(poolsAmount)}</TYPE.body3>
+          <TYPE.body3>{getValue(poolsAmount?.toFixed(2))}</TYPE.body3>
         </Flex>
         <Flex marginBottom="8px" justifyContent="space-between" alignItems="center" opacity="50%">
           <TYPE.body3>
             <Trans>Wrapped Tokens (Wallets)</Trans>
           </TYPE.body3>
-          <TYPE.body3>{getValue(walletsAmount)}</TYPE.body3>
+          <TYPE.body3>{getValue(walletsAmount?.toFixed(2))}</TYPE.body3>
         </Flex>
 
         <Divider />
