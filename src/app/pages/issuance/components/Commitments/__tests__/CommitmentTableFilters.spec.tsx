@@ -60,7 +60,8 @@ describe('CommitmentTableFilter', () => {
         style: {
           fontSize: 12,
           fontWeight: 400,
-          marginTop: 0
+          marginTop: 0,
+          height: 49
         }
       }),
       {}
@@ -84,7 +85,8 @@ describe('CommitmentTableFilter', () => {
         style: {
           fontSize: 12,
           fontWeight: 400,
-          marginTop: '16px'
+          marginTop: '16px',
+          height: 49
         }
       }),
       {}
