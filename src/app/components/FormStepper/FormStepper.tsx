@@ -111,29 +111,44 @@ export const FormStepper = (props: FormStepperProps) => {
     }
   }
 
+  const getCompletedStatus = (
+    lastStep: boolean,
+    isValid: boolean,
+    index: number
+  ) => {
+    if (lastStep) {
+      return data !== undefined
+        ? data?.status === 'Submitted' || data?.status === 'Approved'
+        : false
+    }
+
+    return completed.includes(index) ? isValid : false
+  }
+
+  const getErrorStatus = (
+    lastStep: boolean,
+    isValid: boolean,
+    index: number
+  ) => {
+    if (lastStep) {
+      return data?.status === 'Rejected'
+    }
+    return completed.includes(index) ? !isValid : false
+  }
+
   const getStepStatus = (
     step: FormStepperStep,
     index: number,
-    activeStep: number
+    activeStepValue: number
   ) => {
     const isValid: boolean =
       step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
 
     const lastStep = index === steps.length - 1
     return {
-      active: index === activeStep,
-      completed: lastStep
-        ? data !== undefined
-          ? data?.status === 'Submitted' || data?.status === 'Approved'
-          : false
-        : completed.includes(index)
-        ? isValid
-        : false,
-      error: lastStep
-        ? data?.status === 'Rejected'
-        : completed.includes(index)
-        ? !isValid
-        : false
+      active: index === activeStepValue,
+      completed: getCompletedStatus(lastStep, isValid, index),
+      error: getErrorStatus(lastStep, isValid, index)
     }
   }
 
