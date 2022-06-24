@@ -10,14 +10,12 @@ test.describe('Check pool functions', () => {
   test('Check that the pool can be created', async ({ page, topNavigationBar, liquidityPoolsPage }) => {
     await topNavigationBar.clickLiquidityPoolsButton();
     await liquidityPoolsPage.clickAddLiquidityButton();
-
   })
 
   test.skip('Check that crypto can be add to the pool', async ({ page,}) => {
   })
 
   test.skip('Check that the pool can be removed', async ({ page,}) => {
-
   })
 })
 

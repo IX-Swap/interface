@@ -88,4 +88,23 @@ export class MetamaskPage extends WebPage{
     await this.optionMenuButton.click();
     await this.accountDetailsMenuButton.click();
   }
+
+  async connectAndSignMetamask(openedMetamaskPage: Page) {
+    await Promise.all([
+      this.context.waitForEvent('page')
+        .then(async (page) => {
+          const signButton = page.locator(this.signMetamaskRequestPopUpButton);
+
+          await signButton.click();
+          await page.waitForEvent('close')
+        })
+        .catch(async () => {
+          const signButton = openedMetamaskPage.locator(this.signMetamaskRequestPopUpButton);
+
+          await signButton.click();
+          await openedMetamaskPage.waitForEvent('close')
+        }),
+      openedMetamaskPage.click(this.connectMetamaskPopUpButton)
+    ]);
+  }
 }

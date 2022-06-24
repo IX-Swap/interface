@@ -1,7 +1,6 @@
 import {WebPage} from "./webPage";
 import { Locator, Page, BrowserContext} from '@playwright/test';
 import {MetamaskPage} from "./metamaskPage";
-import {timeouts} from "../helpers/timeouts";
 
 export class ConnectWalletScreen extends WebPage {
   readonly connectWalletButton: Locator;
@@ -21,11 +20,9 @@ export class ConnectWalletScreen extends WebPage {
 
   async connectMetaMask() {
     await this.connectWalletButton.click();
-    const metamaskPopUpPage = await this.openNewPageBy(this.connectViaMetamaskButton.click());
+    const metamaskPopUpPage = await this.openNewPageByClick(this.page, this.connectViaMetamaskButtonSelector);
+    await metamaskPopUpPage.click(this.metamaskPage.metamaskElements.nextMetamaskPopUpButton);
 
-    await metamaskPopUpPage.click(this.metamaskPage.nextMetamaskPopUpButton);
-    await metamaskPopUpPage.waitForTimeout(timeouts.tinyTimeout);
-    const metamaskSignPopUpPage = await this.openNewPageBy(metamaskPopUpPage.click(this.metamaskPage.connectMetamaskPopUpButton));
-    await metamaskSignPopUpPage.click(this.metamaskPage.signMetamaskRequestPopUpButton);
+    await this.metamaskPage.connectAndSignMetamask(metamaskPopUpPage);
   }
 }
