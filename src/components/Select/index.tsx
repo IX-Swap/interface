@@ -147,10 +147,12 @@ export const Select = ({
         options.find((option) => option.label === (el?.label || el) || option.value === (el?.value || el))
       )
     }
-    return options.find(
-      (option) => option.label === (value?.label || value) || option.value === (value?.value || value)
+    return (
+      options.find((option) => option.label === (value?.label || value) || option.value === (value?.value || value)) ||
+      null
     )
   }, [value, options, isMulti])
+
   return (
     <StyledReactSelect
       error={error}

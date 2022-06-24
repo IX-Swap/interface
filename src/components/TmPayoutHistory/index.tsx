@@ -44,7 +44,7 @@ export const TmPayoutHistory = () => {
       if (Object.keys(filters).length) {
         handleHaveFilters(true)
       }
-      getPayoutHistory({ ...filters, offset: 10 })
+      getPayoutHistory({ ...filters, offset: 10, page:1 })
     }
   }, [filters, getPayoutHistory, account, token])
 

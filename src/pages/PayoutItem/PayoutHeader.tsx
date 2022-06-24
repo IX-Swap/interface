@@ -27,7 +27,7 @@ interface Props {
 export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
   const { secToken, payoutToken, description, status, type, attachments, title, otherType } = payout
   const history = useHistory()
-  
+
   const goBack = () => {
     history.push(routes.securityTokens('payout-events'))
   }
@@ -44,7 +44,9 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
             <TYPE.title4>
               <Trans>{title}</Trans>
             </TYPE.title4>
-            <SecTokenLink to={routes.securityToken(secToken.catalogId)}>{secToken.originalSymbol ?? secToken.symbol}</SecTokenLink>
+            <SecTokenLink to={routes.securityToken(secToken.catalogId)}>
+              {secToken.originalSymbol ?? secToken.symbol}
+            </SecTokenLink>
           </Box>
         </Flex>
 
@@ -60,7 +62,11 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
         </ReadMore>
       </ReadMoreContainer>
 
-      <InfoBlock type={capitalizeFirstLetter(type === 'other' ? otherType : type)} token={payoutToken} attachments={attachments} />
+      <InfoBlock
+        type={capitalizeFirstLetter(type === 'other' ? otherType : type)}
+        token={payoutToken}
+        attachments={attachments}
+      />
     </Column>
   )
 }
