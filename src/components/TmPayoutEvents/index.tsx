@@ -50,7 +50,7 @@ export const TmPayoutEvents = () => {
       if (Object.keys(filters).length) {
         handleHaveFilters(true)
       }
-      getMyPayouts({ ...filters, offset: 4, my: true })
+      getMyPayouts({ ...filters, offset: 10, my: true, page: 1 })
     }
   }, [filters, getMyPayouts, account, token])
 
@@ -64,7 +64,7 @@ export const TmPayoutEvents = () => {
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    fetch({ ...filters, page, offset: 4 })
+    fetch({ ...filters, page, offset: 10 })
   }
 
   const goToCreate = () => {

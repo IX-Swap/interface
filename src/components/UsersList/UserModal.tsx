@@ -176,7 +176,8 @@ export const UserModal: FC<Props> = ({ item, close, filters }) => {
   }
 
   const closeTokensWarning = () => {
-    handleTokensToRemove([])
+    handleShowDeleteTokensWarning(false)
+    setFieldValue('managerOf', initialValues.managerOf)
   }
 
   const closeRoleWarning = () => {

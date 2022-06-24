@@ -13,7 +13,7 @@ import {
   MyPayoutListContainer,
   Hr,
   ViewMoreBtnContainer,
-  EmptyText,
+  MyEventsEmptyText,
   MyListTitle,
   MyListContainer,
 } from './styleds'
@@ -66,9 +66,9 @@ export const MyPayouts = () => {
                     ))}
                   </MyListContainer>
                 ) : (
-                  <EmptyText style={{ marginTop: 0 }}>
+                  <MyEventsEmptyText>
                     <Trans>No Available Payout Events</Trans>
-                  </EmptyText>
+                  </MyEventsEmptyText>
                 )}
               </MyPayoutListContainer>
               {data.totalItems > 4 && (
