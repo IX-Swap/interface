@@ -7,6 +7,7 @@ export interface PayoutEvent {
   description: string
   userId: number
   type: string
+  otherType: string
   status: PAYOUT_STATUS
   secTokenId: number
   secTokenAmount: string

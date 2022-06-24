@@ -30,6 +30,7 @@ export const DateInput = ({
   maxDate,
   tooltipText,
   required,
+  placeholder,
   ...props
 }: Props & Partial<LabelProps>) => {
   return (
@@ -41,7 +42,7 @@ export const DateInput = ({
         openTo={openTo ?? 'year'}
         views={['year', 'month', 'date']}
         inputFormat="DD/MM/YYYY"
-        renderInput={({ inputProps }: Record<string, any>) => <TextField {...inputProps} />}
+        renderInput={({ inputProps }: Record<string, any>) => <TextField placeholder={placeholder} {...inputProps} />}
         maxDate={maxDate}
         {...props}
       />
