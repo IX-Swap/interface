@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper, Typography, Box } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { DeclarationsList } from 'app/pages/identity/components/DeclarationsList/DeclarationsList'
 import {
@@ -15,7 +15,6 @@ import {
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
 import { IdentityType } from 'app/pages/identity/utils/shared'
-import { VSpacer } from 'components/VSpacer'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
 
 export interface StatusDeclaration {
@@ -93,7 +92,7 @@ export const InvestorDeclarationView: React.FC<
       <Grid item sx={{ width: '100%' }}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Investor Status Declaration' />
-          <VSpacer size='medium' />
+          <Box py={2} />
           <DeclarationsList
             title={`I declare that I am ${
               isCorporate ? 'a corporate' : 'an individual'
@@ -114,10 +113,13 @@ export const InvestorDeclarationView: React.FC<
       <Grid item xs={12}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Opt-In Requirement' />
-          <VSpacer size='medium' />
+          <Box py={2} />
+          <Typography fontWeight={500} variant={'subtitle1'}>
+            I confirm to be treated as an “Accredited Investor” by InvestaX
+          </Typography>
           {optInAgreements && (
             <DeclarationsList
-              title='I confirm to be treated as an “Accredited Investor” by InvestaX'
+              title=''
               data={{ optInAgreements }}
               labelMap={{
                 optInAgreements: <OptInAgreements />
@@ -126,7 +128,7 @@ export const InvestorDeclarationView: React.FC<
           )}
           {optInAgreementsOptOut !== undefined && (
             <DeclarationsList
-              title='I confirm to be treated as an “Accredited Investor” by InvestaX'
+              title=''
               data={{ optInAgreementsOptOut }}
               labelMap={{
                 optInAgreementsOptOut: <OptInAgreementsIndividual />
@@ -135,7 +137,7 @@ export const InvestorDeclarationView: React.FC<
           )}
           {optInAgreementsSafeguards !== undefined && (
             <DeclarationsList
-              title='I confirm to be treated as an “Accredited Investor” by InvestaX'
+              title=''
               data={{ optInAgreementsSafeguards }}
               labelMap={{
                 optInAgreementsSafeguards: <SafeguardAgreements />
@@ -148,7 +150,7 @@ export const InvestorDeclarationView: React.FC<
             <>
               <Grid item xs={12}>
                 <FormSectionHeader title='Accredited Investor Opt-Out Form' />
-                <VSpacer size='medium' />
+                <Box py={2} />
               </Grid>
               <DeclarationsList
                 title='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.'

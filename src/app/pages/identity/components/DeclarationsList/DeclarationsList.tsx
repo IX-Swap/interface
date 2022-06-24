@@ -14,7 +14,7 @@ export const DeclarationsList = ({
   labelMap
 }: DeclarationsListProps) => {
   return (
-    <Grid container spacing={4}>
+    <Grid container spacing={3}>
       <Grid item xs={12}>
         <Typography fontWeight={500} variant={'subtitle1'}>
           {title}

@@ -2,10 +2,11 @@ import React from 'react'
 import { Grid, Box, Link, useTheme } from '@mui/material'
 import { Avatar } from 'components/Avatar'
 import { LabelledValue } from 'components/LabelledValue'
-import { formatDateToMMDDYY } from 'helpers/dates'
+import { formatDateToDDMonYYYY } from 'helpers/dates'
 import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { ExtendedIdentityProfile } from 'app/pages/identity/types/forms'
+import { GENDERS_OPTS } from 'app/pages/identity/const'
 
 export interface IndividualInfoViewProps {
   data: ExtendedIdentityProfile
@@ -16,6 +17,13 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
   const { isMobile } = useAppBreakpoints()
   const email = data.email ?? '-'
   const theme = useTheme()
+
+  const extractGender = (gender: string) => {
+    if (gender.length > 0) {
+      return GENDERS_OPTS.find(item => item.value === gender)?.label
+    }
+    return gender
+  }
 
   return (
     <Grid container>
@@ -61,7 +69,7 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
               valueColor={theme.palette.text.secondary}
               label='Date of Birth'
               className={privateClassNames()}
-              value={formatDateToMMDDYY(data.dob)}
+              value={formatDateToDDMonYYYY(data.dob)}
             />
           </Grid>
 
@@ -106,7 +114,7 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
               labelWeight='thin'
               labelFontSize={14}
               valueColor={theme.palette.text.secondary}
-              value={data.gender}
+              value={extractGender(data.gender)}
               label='Gender'
             />
           </Grid>

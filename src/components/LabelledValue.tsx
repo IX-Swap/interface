@@ -103,7 +103,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         width: '100%',
         color: isNewThemeOn
           ? theme.palette.slider.activeColor
-          : labelColorMap[labelColor]
+          : labelColorMap[labelColor],
+        marginBottom: '8px'
       }
     },
     {

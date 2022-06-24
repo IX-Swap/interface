@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Paper } from '@mui/material'
+import { Grid, Typography, Paper, Box } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { DeclarationsListItem } from '../../DeclarationsListItem/DeclarationsListItem'
 import { VSpacer } from 'components/VSpacer'
@@ -35,7 +35,7 @@ export const TaxDeclarationView = ({ data }: TaxDeclarationViewProps) => {
       <Grid container direction={'column'}>
         <Grid item>
           <FormSectionHeader title='FATCA' />
-          <VSpacer size='medium' />
+          <Box py={2} />
         </Grid>
         <Grid item>
           <Typography>

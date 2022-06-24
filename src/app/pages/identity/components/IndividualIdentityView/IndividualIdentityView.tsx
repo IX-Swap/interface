@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper, Box } from '@mui/material'
 import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { privateClassNames } from 'helpers/classnames'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
@@ -9,7 +9,6 @@ import { FinancialView } from './FinancialView/FinancialView'
 import { TaxDeclarationView } from './TaxDeclarationView/TaxDeclarationView'
 import { InvestorDeclarationView } from './InvestorDeclarationView/InvestorDeclarationView'
 import { IndividualIdentity } from '../../types/forms'
-import { VSpacer } from 'components/VSpacer'
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
@@ -23,7 +22,7 @@ export const IndividualIdentityView = ({
       <Grid item xs={12}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Personal Information' />
-          <VSpacer size='medium' />
+          <Box py={2} />
           <IndividualInfoView data={data} />
         </Paper>
       </Grid>
@@ -31,7 +30,7 @@ export const IndividualIdentityView = ({
       <Grid item xs={12} className={privateClassNames()}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Address' />
-          <VSpacer size='medium' />
+          <Box py={2} />
           <AddressView data={data.address} />
         </Paper>
       </Grid>
@@ -39,7 +38,7 @@ export const IndividualIdentityView = ({
       <Grid item xs={12} className={privateClassNames()}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Financial Information' />
-          <VSpacer size='medium' />
+          <Box py={2} />
           <FinancialView data={data} />
         </Paper>
       </Grid>
@@ -55,7 +54,7 @@ export const IndividualIdentityView = ({
       <Grid item xs={12}>
         <Paper sx={{ borderRadius: 2, p: 5 }}>
           <FormSectionHeader title='Documents' />
-          <VSpacer size='medium' />
+          <Box py={2} />
           <IdentityDocumentsView data={data.documents} type='individual' />
         </Paper>
       </Grid>
