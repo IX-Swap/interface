@@ -41,7 +41,7 @@ export const PayoutForm: FC = () => {
           summary: 'Payout was successfully created',
         },
       })
-      history.push('/token-manager/payout-events')
+      history.push(`/payout/${data.id}`)
     } else {
       addPopup({
         info: {
@@ -63,29 +63,32 @@ export const PayoutForm: FC = () => {
       onSubmit={handleFormSubmit}
     >
       {({ values, setFieldValue, handleSubmit }) => {
+        const { recordDate, secToken } = values
+        const isRecordFuture = isBefore(values.recordDate)
+
         const onValueChange = (key: string, value: any) => {
           setFieldValue(key, value, false)
         }
 
-        const handleSecTokenChange = async (item: any) => {
-          setIsAmountLoading(true)
-          if (item?.value) {
-            const data = await getTotalAmountByRecordDate(item.value)
+        const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
+          const isFuture = isBefore(recordDate)
+          if (secToken?.value && recordDate && !isFuture) {
+            setIsAmountLoading(true)
+            const data = await getTotalAmountByRecordDate(secToken.value, recordDate)
+
             if (data) {
               const totalSum = (+data.walletTokens ?? 0) + (+data.poolTokens ?? 0)
               setTokenAmount({
                 walletsAmount: data.walletTokens ? +data.walletTokens : null,
                 poolsAmount: data.poolTokens ? +data.poolTokens : null,
-                totalSum,
+                totalSum: totalSum.toFixed(2),
               })
               onValueChange('secTokenAmount', totalSum)
             }
-          }
-          onValueChange('secToken', item)
-          setIsAmountLoading(false)
-        }
 
-        const isRecordFuture = isBefore(values.recordDate)
+            setIsAmountLoading(false)
+          }
+        }
 
         return (
           <form onSubmit={handleSubmit}>
@@ -95,11 +98,14 @@ export const PayoutForm: FC = () => {
               </TYPE.title6>
               <FormGrid style={{ marginBottom: 20 }}>
                 <Select
-                  label="Sec Token"
+                  label="SEC Token"
                   placeholder="Choose SEC token"
                   selectedItem={values.secToken}
                   items={secTokensOptions}
-                  onSelect={handleSecTokenChange}
+                  onSelect={(newToken) => {
+                    onValueChange('secToken', newToken)
+                    fetchAmountByRecordDate(newToken, recordDate)
+                  }}
                   required
                 />
                 <DateInput
@@ -108,13 +114,22 @@ export const PayoutForm: FC = () => {
                   maxHeight={60}
                   openTo="date"
                   value={values.recordDate}
-                  onChange={(newDate) => onValueChange('recordDate', newDate)}
+                  onChange={(newDate) => {
+                    onValueChange('recordDate', newDate)
+                    fetchAmountByRecordDate(secToken, newDate)
+                  }}
                   required
                   tooltipText="Record Date"
                 />
               </FormGrid>
 
-              <Summary isRecordFuture={isRecordFuture} isLoading={isAmountLoading} tokenAmount={tokenAmount} />
+              <Summary
+                isRecordFuture={isRecordFuture}
+                isLoading={isAmountLoading}
+                tokenAmount={tokenAmount}
+                setTokenAmount={setTokenAmount}
+                onValueChange={onValueChange}
+              />
             </FormCard>
 
             <PayoutEventBlock

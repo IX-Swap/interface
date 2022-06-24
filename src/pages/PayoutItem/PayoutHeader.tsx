@@ -25,7 +25,7 @@ interface Props {
 }
 
 export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
-  const { secToken, payoutToken, description, status, type, attachments } = payout
+  const { secToken, payoutToken, description, status, type, attachments, title } = payout
   const history = useHistory()
   
   const goBack = () => {
@@ -42,7 +42,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
           <CurrencyLogo currency={new WrappedTokenInfo(secToken)} size="52px" />
           <Box marginLeft="16px">
             <TYPE.title4>
-              <Trans>Payout Title</Trans>
+              <Trans>{title}</Trans>
             </TYPE.title4>
             <SecTokenLink to={routes.securityToken(secToken.catalogId)}>{secToken.originalSymbol ?? secToken.symbol}</SecTokenLink>
           </Box>

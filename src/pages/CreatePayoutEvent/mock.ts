@@ -41,7 +41,7 @@ export const initialValues = {
   recordDate: '',
   startDate: '',
   endDate: '',
-  secToken: null,
-  token: null,
+  secToken: null as any,
+  token: null as any,
   files: [],
 }
