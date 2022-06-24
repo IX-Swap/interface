@@ -9,3 +9,13 @@ export interface Market {
   listing: Listing
   quote: Asset
 }
+
+export interface OTCMarket {
+  createdAt: string
+  isOtc: boolean
+  listing: string
+  name: string
+  quote: string
+  updatedAt: string
+  _id: string
+}

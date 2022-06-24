@@ -7,6 +7,15 @@ export const kyc = {
   HOME_SECTION: '[href="/app/home"]',
   USER_PHOTO: '[src*="blob:https://staging.mozork.com/"]',
   CREATE_IDENTITY_SECTION: '[href="/app/identity"]',
+  UPLOAD_DOCUMENTS_FORM: '//form >> text="Upload Documents"',
+  IF_TIN_AVALIABLE: '[id*="taxIdAvailable"]',
+
+  form: {
+    DOCUMENTS: '[data-testid="BackupOutlinedIcon"]',
+    TAX_DECLARATION: '[data-testid="taxDeclaration"]',
+    DIRECTORS: '[data-testid="directors"]',
+    INVESTOR_STATUS_DECLARATION: '[data-testid="investorStatusDeclaration"]'
+  },
 
   type: {
     INDIVIDUAL: '[href="/app/identity/individuals/create"]',
@@ -22,9 +31,20 @@ export const kyc = {
     CLICK_HERE: 'text="Click here"',
     FATCA: 'span >> text=FATCA'
   },
+  listBox: {
+    SOURCE_OF_FUNDS: '[id="Source of funds-select-input"]',
+    SOURCE_OF_FUNDS_VALUE: '[data-value="INVESTMENT GAIN"]',
+
+    NUMBER_BUSINESS_OWNERS: '[id="numberOfBusinessOwners"]',
+    NUMBER_BUSINESS_OWNERS_VALUE: '[data-value="3 OR MORE"]',
+
+    OCCUPATION: '[id="occupation"]',
+    OCCUPATION_VALUE: '[data-value="DRIVER"]'
+  },
 
   field: {
     issuer: {
+      BUSINESS_ACTIVITY: '[id="businessActivity"]',
       COMPANY_NAME: '[name="companyName"]',
       INDUSTRY: '[name="industry"]',
       FR_AMOUNT: '[name="fundRaisingAmount"]',
@@ -33,7 +53,6 @@ export const kyc = {
     },
     corporate: {
       LOGO: '[id="logo"]',
-      DOCUMENTS: '[id="representatives[0].documents"]',
       DESIGNATION: '[id="representatives[0].designation"]',
       OTHER: '[id="otherLegalEntityStatus"]',
       LEGAL_ENTITY_STATUS: '[id="legalEntityStatus"]',
@@ -46,11 +65,7 @@ export const kyc = {
       CITY: '[id="companyAddress.city"]',
       POSTAL_CODE: '[id="companyAddress.postalCode"]',
       STATE: 'input[id="companyAddress.state"]',
-      DOCS_INDIVIDUAL: [
-        '[id="proofOfIdentity"]',
-        '[name="proofOfAddress"]',
-        '[name="evidenceOfAccreditation"]'
-      ],
+      DOCS_INDIVIDUAL: ['[id="proofOfIdentity"]', '[name="proofOfAddress"]', '[name="evidenceOfAccreditation"]'],
       DOCS_ISSUER: ['[id="corporateDocuments"]', '[id="financialDocuments"]'],
 
       directors: {
@@ -59,7 +74,6 @@ export const kyc = {
         OTHER: '[id="otherLegalEntityStatus"]',
         LEGAL_ENTITY_STATUS: '[id="legalEntityStatus"]',
         COMPANY_OF_INCORPORATION: '[id="countryOfFormation"]',
-        CORPORATE_NAME: '[id="companyLegalName"]',
         STATE: 'input[id="directors[0].address.state"]',
         ADDRESS1: 'input[name="directors[0].address.line1"]',
         ADDRESS2: 'input[name="directors[0].address.line2"]',
@@ -68,12 +82,9 @@ export const kyc = {
         POSTAL_CODE: '[id="directors[0].address.postalCode"]',
         PROOF_IDENTITY: '[id="directors[0].documents.proofOfIdentity"]',
         PROOF_ADDRESS: '[id="directors[0].documents.proofOfAddress"]',
-        BENEFICIAL_PROOF_ADDRESS:
-          '[id="beneficialOwners[0].documents.proofOfAddress"]',
-        BENEFICIAL_PROOF_IDENTITY:
-          '[id="beneficialOwners[0].documents.proofOfIdentity"]',
-        PERCENTAGE_SHAREHOLDING:
-          '[id="beneficialOwners[0].percentageShareholding"]', //in percent
+        BENEFICIAL_PROOF_ADDRESS: '[id="beneficialOwners[0].documents.proofOfAddress"]',
+        BENEFICIAL_PROOF_IDENTITY: '[id="beneficialOwners[0].documents.proofOfIdentity"]',
+        PERCENTAGE_SHAREHOLDING: '[id="beneficialOwners[0].percentageShareholding"]', //in percent
         ADDRESS_COUNTRY: '[id="companyAddress.country"]'
       }
     },
@@ -83,8 +94,7 @@ export const kyc = {
     REGISTRATION_NUMBER: '[name*="egistrationNumber"]',
     TAX_RESIDENT: '[id="taxResidencies[0].countryOfResidence"]',
     TAX_RESIDENT_VALUE: '[data-value="Ukraine"]',
-    TAX_RESIDENT_IDENTIFICATION:
-      '[id="taxResidencies[0].taxIdentificationNumber"]',
+    TAX_RESIDENT_IDENTIFICATION: '[id="taxResidencies[0].taxIdentificationNumber"]',
     PHONE_NUMBER: '[placeholder="+1 (702) 123-4567"]',
     DATA: '[placeholder="mm/dd/yyyy"]',
     PHOTO: 'input#photo',
@@ -93,7 +103,7 @@ export const kyc = {
     ADDRESS1: 'input[name="address.line1"]',
     ADDRESS2: 'input[name="address.line2"]',
     CITIZENSHIP: '[id="nationality"]',
-    CITIZENSHIP_VALUE: '[data-value="Ukrainian"]',
+    CITIZENSHIP_VALUE: '[data-value="Ukraine"]',
     ADDRESS_COUNTRY: '[id="address.country"]',
     CITY: 'input[name="address.city"]',
     MIDDLENAME: 'input[name="middleName"]',
@@ -101,7 +111,6 @@ export const kyc = {
     LAST_NAME: '[id="lastName"]',
 
     NATIONAL: '[name="nationality"]',
-    OCCUPATION: '[id="occupation"]',
     EMPLOYMENT_STATUS: '[id="employmentStatus"]',
     STATUS: '[data-value="Own Business"]',
     EMPLOYER: '[name="employer"]',

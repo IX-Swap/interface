@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { DeploymentInfo } from 'types/dso'
-import { useActiveWeb3React } from './web3'
+import { isMetamaskOrWalletConnect, useActiveWeb3React } from './web3'
 
 interface AddTokenToMetamaskArgs {
   token: DeploymentInfo | undefined | null
@@ -19,7 +19,7 @@ export const useAddTokenToMetamask = ({
 
   const addToken = useCallback(async () => {
     if (
-      library?.provider?.isMetaMask === true &&
+      isMetamaskOrWalletConnect(library) &&
       library?.provider?.request != null &&
       token !== null &&
       token !== undefined

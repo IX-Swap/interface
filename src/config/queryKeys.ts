@@ -1,4 +1,5 @@
 import { AppFeature } from 'types/app'
+import { OrderType } from 'types/otcOrder'
 
 const generateQueryKey = (prefix?: string, ...params: any[]) => {
   return [prefix, ...params].join('-')
@@ -223,6 +224,18 @@ export const exchange = {
 export const exchangeMarketQueryKeys = {
   getOrdersList: (userId?: string, pairId?: string) =>
     generateQueryKey('orders-list', userId, pairId)
+}
+
+export const tradingQueryKeys = {
+  getMyOpenOrdersList: (
+    userId?: string,
+    pairId?: string,
+    account?: string | null
+  ) => generateQueryKey('my-trading-open-orders-list', userId, pairId, account),
+  getUnmatchedOrders: (side: OrderType) => `unmatched-orders-${side}`,
+  getMatchedOrders: `matched-orders`,
+  featuredPair: 'featured-pair',
+  pastOrders: 'past-orders'
 }
 
 export const listingsQueryKeys = {

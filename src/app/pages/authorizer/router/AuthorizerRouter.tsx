@@ -19,6 +19,7 @@ import { AuthorizerVirtualAccountsRouter } from 'app/pages/authorizer/pages/Virt
 import { AuthorizerDealClosureRouter } from 'app/pages/authorizer/pages/DealClosures/AuthorizerDealClosuerRouter'
 import { AuthorizerLandingPage } from 'app/components/LandingPage/AuthorizerLandingPage'
 import { TokenDeploymentRouter } from 'app/pages/authorizer/pages/TokenDeployment/TokenDeploymentRouter'
+import { OTCTrades } from '../pages/otcTrades/OTCTrades'
 
 export const AuthorizerRouter = () => {
   return (
@@ -65,7 +66,9 @@ export const AuthorizerRouter = () => {
       <AppRoute breadcrumb='Deal Closure' path={AuthorizerRoute.dealClosure}>
         <AuthorizerDealClosureRouter />
       </AppRoute>
-
+      <AppRoute breadcrumb='OTC Trades' path={AuthorizerRoute.otcTrades}>
+        <OTCTrades />
+      </AppRoute>
       <AppRoute breadcrumb='Commitments' path={AuthorizerRoute.commitments}>
         <AuthorizerCommitmentRouter />
       </AppRoute>
