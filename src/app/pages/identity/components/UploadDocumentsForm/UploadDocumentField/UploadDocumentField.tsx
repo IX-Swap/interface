@@ -56,7 +56,7 @@ export const UploadDocumentField = ({
         <Grid item xs={12}>
           <Box>
             <Grid item container alignItems='center'>
-              <Typography variant='h5' color={'otpInput.color'}>
+              <Typography variant='subtitle1' color={'otpInput.color'}>
                 {label}
               </Typography>
               <Box pr={1}></Box>
@@ -68,7 +68,9 @@ export const UploadDocumentField = ({
               ) : null}
             </Grid>
           </Box>
-          {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
+          {helperElement !== undefined ? (
+            <Box mt={1}>{helperElement}</Box>
+          ) : null}
         </Grid>
       )}
       <Grid item xs={12}>
