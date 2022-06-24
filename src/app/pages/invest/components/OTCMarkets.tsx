@@ -2,15 +2,14 @@ import React from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { Grid, Typography } from '@mui/material'
 import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
-import useStyles from 'app/pages/invest/components/styles/OTCMarket.style'
+import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { OTCUrl } from 'config/apiURL'
 import { otcQueryKeys } from 'config/queryKeys'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-
 // TODO: When we will have multiple OTC pairs adjust this
-import { useFeaturedPair } from '../hooks/useFeaturedPair'
+import { useFeaturedPair } from 'app/pages/invest/hooks/useFeaturedPair'
 
 export const OTCMarket = () => {
   const { getFilterValue } = useQueryFilter()

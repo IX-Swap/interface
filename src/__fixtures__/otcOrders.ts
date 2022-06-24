@@ -8,7 +8,7 @@ import {
 } from 'types/otcOrder'
 import { dso } from '__fixtures__/issuance'
 
-const fakeOTCMarket: OTCMarket = {
+export const fakeOTCMarket: OTCMarket = {
   createdAt: '2022-05-10T12:45:07.411Z',
   isOtc: true,
   dso,
