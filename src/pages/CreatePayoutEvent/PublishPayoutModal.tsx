@@ -45,13 +45,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
         },
       })
       history.push(`/payout/${data.id}`)
-    } else {
-      addPopup({
-        info: {
-          success: false,
-          summary: data?.message ?? 'Something went wrong',
-        },
-      })
     }
   }
 
