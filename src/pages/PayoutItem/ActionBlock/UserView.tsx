@@ -127,6 +127,12 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
 }
 
 const NotTokenHoldersView: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
+  const history = useHistory()
+
+  const onBuyClick = () => {
+    history.push('/swap')
+  }
+
   const getContentByStatus = () => {
     switch (status) {
       case PAYOUT_STATUS.ANNOUNCED:
@@ -159,7 +165,7 @@ const NotTokenHoldersView: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
   return (
     <Container>
       {getContentByStatus()}
-      <StyledButtonIXSGradient>{t`Buy Now`}</StyledButtonIXSGradient>
+      <StyledButtonIXSGradient onClick={onBuyClick}>{t`Buy Now`}</StyledButtonIXSGradient>
     </Container>
   )
 }
@@ -190,6 +196,12 @@ const PayoutEnded: FC = () => (
 )
 
 const FuturePayout: FC<{ payoutToken: any }> = ({ payoutToken }) => {
+  const history = useHistory()
+
+  const onBuyClick = () => {
+    history.push('/swap')
+  }
+
   return (
     <FuturePayoutContainer>
       <Flex marginBottom="12px" alignItems="center">
@@ -200,7 +212,7 @@ const FuturePayout: FC<{ payoutToken: any }> = ({ payoutToken }) => {
         </Box>
         <Box marginRight="4px">{t`to increase possible profits in future payout.`}</Box>
       </Flex>
-      <StyledButtonIXSGradient>{t`Buy Now`}</StyledButtonIXSGradient>
+      <StyledButtonIXSGradient onClick={onBuyClick}>{t`Buy Now`}</StyledButtonIXSGradient>
     </FuturePayoutContainer>
   )
 }
