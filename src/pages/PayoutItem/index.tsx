@@ -45,7 +45,7 @@ export default function PayoutItem({
     }
 
     getPayoutItem()
-  }, [payoutId])
+  }, [payoutId, account])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
