@@ -87,8 +87,7 @@ export const FormStepper = (props: FormStepperProps) => {
     return stepByFilterIndex > -1 ? stepByFilterIndex : undefined
   }
 
-  const activeStep: number =
-    getStepFilterValue() ?? defaultActiveStep ?? data?.step ?? 0
+  const activeStep: number = getStepFilterValue() ?? defaultActiveStep ?? 0
 
   const setActiveStep = (step: number) => {
     updateFilter('step', steps[step]?.label)
