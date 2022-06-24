@@ -26,7 +26,9 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
             {t`Already claimed:`}
             <Flex alignItems="center" fontWeight={600}>
               <CurrencyLogo currency={payoutToken} size="24px" />
-              <Flex marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken?.symbol} 345/1000`}</Flex>
+              <Flex marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
+                payoutToken?.symbol ?? 'Payout Token'
+              } 345/1000`}</Flex>
             </Flex>
           </>
         )
@@ -42,7 +44,9 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
             <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
               <Box marginRight="4px" fontSize="20px" lineHeight="30px">{t`You have allocated for this event`}</Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${tokenAmount}`}</Box>
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
+                payoutToken?.symbol ?? 'Payout Token'
+              } ${tokenAmount}`}</Box>
             </Flex>
             <Flex>
               <Box marginRight="4px">{t`Users will be able to start claiming on`}</Box>
@@ -59,18 +63,15 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
                 <Box marginRight="4px">{t`You can Claim Back`}</Box>
                 <CurrencyLogo currency={payoutToken} size="20px" />
                 <Box marginX="4px" fontWeight={600}>
-                  {payoutToken.symbol}
+                  {payoutToken?.symbol ?? 'Payout Token'}
                 </Box>
                 {t`tokens.`}
               </Flex>
               <Flex alignItems="center">
                 <CurrencyLogo currency={payoutToken} size="24px" />
-                <Box
-                  marginLeft="4px"
-                  fontSize="24px"
-                  lineHeight="36px"
-                  fontWeight={600}
-                >{`${payoutToken.symbol} 12.432`}</Box>
+                <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>{`${
+                  payoutToken?.symbol ?? 'Payout Token'
+                } 12.432`}</Box>
               </Flex>
             </Column>
             <StyledButtonIXSGradient>{t`Claim Back COIN`}</StyledButtonIXSGradient>

@@ -45,14 +45,17 @@ export const geyPayoutHistory = async (params: Record<string, any>) => {
   return result.data
 }
 
-export const useGeyPayoutHistory = () => {
+export const useGetPayoutHistory = () => {
   const dispatch = useDispatch<AppDispatch>()
+  const {
+    payoutList: { page, offset },
+  } = useTokenManagerState()
 
   const callback = useCallback(
     async (params: Record<string, any>) => {
       try {
         dispatch(getPayoutHistoryList.pending())
-        const data = await geyPayoutHistory(params)
+        const data = await geyPayoutHistory({ page, offset, ...params })
         dispatch(getPayoutHistoryList.fulfilled(data))
         return data
       } catch (error: any) {
