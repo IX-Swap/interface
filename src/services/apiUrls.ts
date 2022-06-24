@@ -46,7 +46,7 @@ export const payout = {
   myPayoutsList: 'payout/list/my',
   payoutById: (id: number) => `/payout/${id}`,
   claims: (payoutId: number) => `payout/claims?payoutId=${payoutId}`,
-  totalAmount: (tokenId: number) => `payout/total-amount/${tokenId}?recordDate=2022-06-22T07:50:20.000Z`,
+  totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
 }
 
 export const kyc = {

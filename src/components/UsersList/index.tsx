@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import { Trans, t } from '@lingui/macro'
@@ -23,24 +23,21 @@ import checkIcon from 'assets/images/check-success.svg'
 import notCheckIcon from 'assets/images/reject.svg'
 import expandIcon from 'assets/images/dropdown.svg'
 
+import CurrencyLogo from 'components/CurrencyLogo'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { Pagination } from 'components/Pagination'
 import { ROLES_LABEL, ROLES } from 'constants/roles'
 
 import { Table } from '../Table'
 import { UserModal } from './UserModal'
 import { TopContent, StyledBodyRow, StyledHeaderRow, StyledAccordion, ExpandIcon, AddButton } from './styleds'
 import { TokenManagerTokens } from './TokenManagerTokens'
-import CurrencyLogo from 'components/CurrencyLogo'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-
 
 const headerCells = [t`Wallet address`, t`Role`, t`Name`, t`Security Token`, t`Whitelisted`, '']
 
 interface BodyProps {
   changeUser: (item: User) => void
   items: User[]
-  callbackParams: any[]
-  setCallbackParams: (value: any[]) => void
-  refreshCallback: () => void
 }
 
 interface RowProps {
@@ -50,15 +47,19 @@ interface RowProps {
 
 export const UsersList: FC = () => {
   useOnlyAdminAccess()
+  const [filters, handleFilters] = useState<Record<string, any>>({})
+  const [haveFilters, handleHaveFilters] = useState(false)
   const [selectedItem, handleSelectedItem] = useState<User | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const { usersList, adminLoading } = useAdminState()
-  const [callbackParams, setCallbackParams] = useState<any>([])
-  const getAdminList = useGetUsersList()
+  const getUsersList = useGetUsersList()
 
-  const getPaginatedAdminList = (filters?: Record<string, any>) => {
-    getAdminList({ page: 1, offset, ...filters })
-  }
+  useEffect(() => {
+    if (Object.keys(filters).length) {
+      handleHaveFilters(true)
+    }
+    getUsersList({ ...filters, offset, page: 1 })
+  }, [filters, getUsersList])
 
   const openUpdateModal = () => {
     setModalOpen(true)
@@ -69,23 +70,23 @@ export const UsersList: FC = () => {
     handleSelectedItem(null)
   }
 
-  const refreshCallback = () => {
-    getPaginatedAdminList()
-  }
-
   const changeUser = (item: User) => {
     handleSelectedItem(item)
     setModalOpen(true)
   }
 
+  const onPageChange = (page: number) => {
+    getUsersList({ ...filters, page, offset })
+  }
+
   return (
     <Container>
       <LoadingIndicator isLoading={adminLoading} />
-      {modalOpen && <UserModal item={selectedItem} close={closeUpdateModal} />}
+      {modalOpen && <UserModal item={selectedItem} close={closeUpdateModal} filters={filters} />}
       <TopContent marginBottom="33px">
         <MultipleFilters
           filters={[FILTERS.SEARCH, FILTERS.ROLES, FILTERS.SEC_TOKENS]}
-          callback={getPaginatedAdminList}
+          onFiltersChange={handleFilters}
           searchPlaceholder="Search by Wallet or Name"
         />
         <AddButton onClick={openUpdateModal}>
@@ -94,21 +95,13 @@ export const UsersList: FC = () => {
       </TopContent>
 
       {usersList.items.length > 0 ? (
-        <Table
-          body={
-            <Body
-              callbackParams={callbackParams}
-              setCallbackParams={setCallbackParams}
-              changeUser={changeUser}
-              refreshCallback={refreshCallback}
-              items={usersList.items}
-            />
-          }
-          header={<Header />}
-        />
+        <>
+          <Table body={<Body changeUser={changeUser} items={usersList.items} />} header={<Header />} />
+          <Pagination totalPages={usersList.totalPages} page={usersList.page || 1} onPageChange={onPageChange} />
+        </>
       ) : (
         <NoData>
-          <Trans>No results</Trans>
+          <Trans>{haveFilters ? `We couldn't find anything with this criteria` : 'No results'}</Trans>
         </NoData>
       )}
     </Container>
@@ -132,7 +125,7 @@ const TokenList = styled.div`
   }
 
   > *:first-child {
-    margin-left: 0
+    margin-left: 0;
   }
 `
 
@@ -140,16 +133,14 @@ const TokenListPreview = (props: TokenListPreviewProps) => {
   const { tokens } = useSecTokenState()
 
   const icons = useMemo(() => {
-    const ids = props.items.slice(0, 5).map(i => i.token.id);
+    const ids = props.items.slice(0, 5).map((i) => i.token.id)
 
     return tokens
-      ?.filter(token => ids.includes(token.id))
-      ?.map(token => (<CurrencyLogo key={`logo-${token.id}`} size="28px" currency={new WrappedTokenInfo(token)} />))
+      ?.filter((token) => ids.includes(token.id))
+      ?.map((token) => <CurrencyLogo key={`logo-${token.id}`} size="28px" currency={new WrappedTokenInfo(token)} />)
   }, [props.items, tokens])
 
-  return (
-    <TokenList>{icons}</TokenList>
-  )
+  return <TokenList>{icons}</TokenList>
 }
 
 const Row: FC<RowProps> = ({ item, changeUser }) => {
@@ -167,7 +158,7 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
     <>
       <StyledAccordion elevation={0} expanded={expanded} onChange={toggleAccordion}>
         <AccordionSummary
-          style={{ margin: 0, background: 'transparent', cursor: needAccordion ? 'pointer' : 'default' }}
+          style={{ padding: 0, margin: 0, background: 'transparent', cursor: needAccordion ? 'pointer' : 'default' }}
         >
           <StyledBodyRow>
             <Wallet>
@@ -176,8 +167,8 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
             <div>{ROLES_LABEL[role]}</div>
             <div>{username || '-'}</div>
 
-            {role === ROLES.TOKEN_MANAGER && (<TokenListPreview items={managerOf as TokenManagerEntry[]} />)}
-            {role !== ROLES.TOKEN_MANAGER && (<div> - </div>)}
+            {role === ROLES.TOKEN_MANAGER && <TokenListPreview items={managerOf as TokenManagerEntry[]} />}
+            {role !== ROLES.TOKEN_MANAGER && <div> - </div>}
 
             <div>
               <img src={isWhitelisted ? checkIcon : notCheckIcon} alt="is-whitelisted" />
@@ -233,4 +224,3 @@ const Header = () => {
     </StyledHeaderRow>
   )
 }
-

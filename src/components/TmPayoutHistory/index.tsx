@@ -8,13 +8,15 @@ import { Table } from 'components/Table'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useToken } from 'hooks/Tokens'
-import { useGeyPayoutHistory, useTokenManagerState } from 'state/token-manager/hooks'
+import { useGetPayoutHistory, useTokenManagerState } from 'state/token-manager/hooks'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { CopyAddress } from 'components/CopyAddress'
 import { PayoutHistory } from 'state/token-manager/types'
 import { PAYOUT_TYPE_LABEL } from 'components/TmPayoutEvents/constants'
+import { useUserState } from 'state/user/hooks'
+import { useAuthState } from 'state/auth/hooks'
 
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
 
@@ -31,17 +33,23 @@ export const TmPayoutHistory = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
 
+  const { account } = useUserState()
+  const { token } = useAuthState()
+
   const { payoutHistory, isLoading } = useTokenManagerState()
-  const getPayoutHistory = useGeyPayoutHistory()
+  const getPayoutHistory = useGetPayoutHistory()
 
   useEffect(() => {
-    if (Object.keys(filters).length) {
-      handleHaveFilters(true)
+    if (account && token) {
+      if (Object.keys(filters).length) {
+        handleHaveFilters(true)
+      }
+      getPayoutHistory({ ...filters, offset: 10 })
     }
-    getPayoutHistory({ ...filters, offset: 10 })
-  }, [filters, getPayoutHistory])
+  }, [filters, getPayoutHistory, account, token])
 
   const onPageChange = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     getPayoutHistory({ ...filters, page, offset: 10 })
   }
 
@@ -60,7 +68,7 @@ export const TmPayoutHistory = () => {
               <Table body={<Body items={payoutHistory.items} />} header={<Header />} />
               <Pagination
                 totalPages={payoutHistory.totalPages}
-                page={(payoutHistory.page || 1) - 1}
+                page={payoutHistory.page || 1}
                 onPageChange={onPageChange}
               />
             </>

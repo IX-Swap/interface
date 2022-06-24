@@ -22,6 +22,7 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
 
   const todayPosition = useMemo(() => {
     if (isBefore(recordDate)) return '0px'
+    if (!endDate && recordDate && startDate) return '50%'
     if (isAfter(recordDate) && isBefore(startDate)) return '26%'
     if (isAfter(startDate) && isBefore(endDate)) return '75%'
   }, [recordDate, startDate, endDate])
@@ -30,9 +31,9 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
     <Box style={{ marginTop: 24, padding: '0px 36px' }}>
       <LineContainer>
         {todayPosition === '0px' && <FakeFirstButton />}
-        <TimelineDate date={recordDate} label="Record Date" />
-        <TimelineDate date={startDate} label="Payment Start Date" />
-        <TimelineDate withBackground={false} date={endDate} label="Payment Deadline" />
+        {recordDate && <TimelineDate date={recordDate} label="Record Date" />}
+        {startDate && <TimelineDate date={startDate} label="Payment Start Date" />}
+        {endDate && <TimelineDate withBackground={false} date={endDate} label="Payment Deadline" />}
         <Line>{!todayActionDate && <TodayIndicator left={todayPosition} />}</Line>
       </LineContainer>
     </Box>

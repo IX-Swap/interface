@@ -6,6 +6,7 @@ import { adminOffset } from 'state/admin/constants'
 import apiService from 'services/apiService'
 import { admin } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
+import { adminOffset as offset } from 'state/admin/constants'
 
 import {
   getBrokerDealerList,
@@ -97,6 +98,7 @@ interface CreateUser {
   isWhitelisted: boolean
   username: string
   managerOf: any[]
+  removedTokens?: any[]
   role: string
 }
 
@@ -107,12 +109,14 @@ export const createUser = async (params: CreateUser) => {
 
 export function useCreateUser() {
   const dispatch = useDispatch<AppDispatch>()
+  const getUsersList = useGetUsersList()
   const callback = useCallback(
-    async (params: CreateUser) => {
+    async (params: CreateUser, filters: Record<string, any>) => {
       try {
         dispatch(postUser.pending())
         const data = await createUser(params)
         dispatch(postUser.fulfilled({ data }))
+        await getUsersList({ page: 1, offset, ...filters })
         return data
       } catch (error: any) {
         dispatch(postUser.rejected({ errorMessage: error.message || 'Could not create user' }))
@@ -131,19 +135,26 @@ export const patchUser = async (id: number, updatedUser: Omit<CreateUser, 'ethAd
 
 export function useUpdateUser() {
   const dispatch = useDispatch<AppDispatch>()
+
+  const getUsersList = useGetUsersList()
+  const {
+    usersList: { page, offset },
+  } = useAdminState()
+
   const callback = useCallback(
-    async (id: number, params: Omit<CreateUser, 'ethAddress'>) => {
+    async (id: number, params: Omit<CreateUser, 'ethAddress'>, filters: Record<string, any>) => {
       try {
         dispatch(updateUser.pending())
         const data = await patchUser(id, params)
         dispatch(updateUser.fulfilled({ data }))
+        await getUsersList({ ...filters, page, offset })
         return data
       } catch (error: any) {
         dispatch(updateUser.rejected({ errorMessage: error.message || 'Could not update user' }))
         throw Error(error.message)
       }
     },
-    [dispatch]
+    [dispatch, page, offset]
   )
   return callback
 }

@@ -15,6 +15,10 @@ export const StyledBodyRow = styled(BodyRow)`
   > div {
     padding: 24px 10px;
   }
+  > div:last-child {
+    justify-self: flex-end;
+    min-width: 150px;
+  }
   button {
     min-height: 32px;
     height: 32px;
@@ -60,10 +64,9 @@ export const StyledAccordion = styled(Accordion)`
     margin: 0px !important;
   }
   hr {
-    margin: 0 22px;
     height: 1px;
     border: none;
-    background-color: ${({ theme }) => theme.text9};
+    background-color: ${({ theme }) => theme.bg7};
   }
   .MuiAccordionDetails-root {
     display: grid;

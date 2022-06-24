@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
@@ -23,10 +23,23 @@ interface Props {
   tokenAmount: any
   isLoading: boolean
   isRecordFuture: boolean
+  setTokenAmount: (newValue: any) => void
+  onValueChange: (key: string, value: any) => void
 }
 
-export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture }) => {
+export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, setTokenAmount, onValueChange }) => {
   const { poolsAmount, walletsAmount, totalSum } = tokenAmount
+
+  useEffect(() => {
+    if (isRecordFuture) {
+      setTokenAmount({
+        walletsAmount: null,
+        poolsAmount: null,
+        totalSum: null,
+      })
+      onValueChange('secTokenAmount', 0)
+    }
+  }, [isRecordFuture])
 
   const getValue = (amount: number) => {
     if (isLoading) return t`Loading...`
@@ -44,13 +57,13 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture }) =
           <TYPE.body3>
             <Trans>Wrapped Tokens (Pools)</Trans>
           </TYPE.body3>
-          <TYPE.body3>{getValue(poolsAmount)}</TYPE.body3>
+          <TYPE.body3>{getValue(poolsAmount?.toFixed(2))}</TYPE.body3>
         </Flex>
         <Flex marginBottom="8px" justifyContent="space-between" alignItems="center" opacity="50%">
           <TYPE.body3>
             <Trans>Wrapped Tokens (Wallets)</Trans>
           </TYPE.body3>
-          <TYPE.body3>{getValue(walletsAmount)}</TYPE.body3>
+          <TYPE.body3>{getValue(walletsAmount?.toFixed(2))}</TYPE.body3>
         </Flex>
 
         <Divider />

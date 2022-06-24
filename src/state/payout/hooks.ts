@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
 
 import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
@@ -61,7 +62,7 @@ export function usePublishPayout() {
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
-        dispatch(createDraft.rejected({ errorMessage: 'Could not publish payout' }))
+        dispatch(createDraft.rejected({ errorMessage: error }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -80,7 +81,7 @@ export function useCreateDraftPayout() {
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
-        dispatch(createDraft.rejected({ errorMessage: 'Could not create draft payout' }))
+        dispatch(createDraft.rejected({ errorMessage: error }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -118,8 +119,8 @@ export const getPayoutClaims = async (payoutId: number, params: Record<string, a
   return result.data
 }
 
-export const getTotalAmountByRecordDate = async (tokenId: number) => {
-  const result = await apiService.get(payout.totalAmount(tokenId))
+export const getTotalAmountByRecordDate = async (tokenId: number, recordDate: any) => {
+  const result = await apiService.get(payout.totalAmount(tokenId, moment(new Date(recordDate)).format('YYYY-MM-DD')))
   return result.data
 }
 

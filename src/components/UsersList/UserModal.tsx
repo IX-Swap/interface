@@ -1,7 +1,7 @@
 import React, { useState, FC, useMemo } from 'react'
 import styled from 'styled-components'
 import { Label } from '@rebass/forms'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { useFormik } from 'formik'
 
 import { User } from 'state/admin/actions'
@@ -29,10 +29,12 @@ import { UpdateSummary } from './UpdateSummary'
 interface Props {
   item: User | null
   close: () => void
+  filters: Record<string, any>
 }
 
-export const UserModal: FC<Props> = ({ item, close }) => {
+export const UserModal: FC<Props> = ({ item, close, filters }) => {
   const [tokensToRemove, handleTokensToRemove] = useState<Option[]>([])
+  const [showDeleteTokensWarning, handleShowDeleteTokensWarning] = useState(false)
   const [changeRole, handleChangeRole] = useState(false)
   const [showSummary, handleShowSummary] = useState(false)
   const { adminLoading } = useAdminState()
@@ -45,17 +47,23 @@ export const UserModal: FC<Props> = ({ item, close }) => {
 
   const tokensOptions = useMemo((): Record<number, Option> => {
     if (secTokens?.length) {
-      return secTokens.reduce(
-        (acc, token) => ({
+      return secTokens.reduce((acc, token) => {
+        const isDisabled = Boolean(
+          (item?.managerOf || []).find(({ token: { payoutEvents } }) =>
+            Boolean(payoutEvents.find(({ secTokenId }) => secTokenId === token.id))
+          )
+        )
+
+        return {
           ...acc,
           [token.id]: {
             label: token.symbol,
             value: token.id,
             icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+            isDisabled,
           },
-        }),
-        {}
-      )
+        }
+      }, {})
     }
 
     return {}
@@ -76,26 +84,35 @@ export const UserModal: FC<Props> = ({ item, close }) => {
   const submit = async () => {
     const isManager = role === ROLES.TOKEN_MANAGER
     try {
-      handleTokensToRemove([])
+      handleShowDeleteTokensWarning(false)
       handleChangeRole(false)
       if (item) {
-        await updateUser(item.id, {
-          role,
-          isWhitelisted,
-          username,
-          managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
-        })
+        await updateUser(
+          item.id,
+          {
+            role,
+            isWhitelisted,
+            username,
+            managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
+            removedTokens: tokensToRemove.map(({ value }) => value),
+          },
+          filters
+        )
         handleShowSummary(true)
       } else {
-        await createUser({
-          ethAddress,
-          role,
-          isWhitelisted,
-          username,
-          managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
-        })
+        await createUser(
+          {
+            ethAddress,
+            role,
+            isWhitelisted,
+            username,
+            managerOf: isManager ? managerOf.map((el) => el.value || el) : [],
+          },
+          filters
+        )
         close()
       }
+      handleTokensToRemove([])
 
       addPopup({
         info: {
@@ -104,6 +121,7 @@ export const UserModal: FC<Props> = ({ item, close }) => {
         },
       })
     } catch (err: any) {
+      handleTokensToRemove([])
       addPopup({
         info: {
           success: false,
@@ -134,6 +152,7 @@ export const UserModal: FC<Props> = ({ item, close }) => {
 
     if (tokensToDelete.length > 0) {
       handleTokensToRemove(tokensToDelete)
+      handleShowDeleteTokensWarning(true)
       return
     }
     submit()
@@ -169,10 +188,18 @@ export const UserModal: FC<Props> = ({ item, close }) => {
     close()
   }
 
+  const canNotEditRole = useMemo(() => {
+    if (item && role === ROLES.TOKEN_MANAGER) {
+      return item.managerOf.some(({ token: { payoutEvents } }) => Boolean(payoutEvents.length))
+    }
+
+    return false
+  }, [item])
+
   return (
     <>
       <RedesignedWideModal isOpen onDismiss={close}>
-        {Boolean(tokensToRemove.length) && (
+        {showDeleteTokensWarning && (
           <RemoveTokensWarning tokens={tokensToRemove} close={closeTokensWarning} onConfirm={submit} />
         )}
         {changeRole && (
@@ -180,7 +207,7 @@ export const UserModal: FC<Props> = ({ item, close }) => {
         )}
 
         {showSummary && (
-          <UpdateSummary item={{ ethAddress, role, isWhitelisted, username, managerOf } as User} close={closeSummary} />
+          <UpdateSummary item={{ ethAddress, role, isWhitelisted, username, managerOf }} close={closeSummary} />
         )}
 
         <ModalBlurWrapper data-testid="user-modal" style={{ maxWidth: '547px', width: '100%', position: 'relative' }}>
@@ -229,14 +256,21 @@ export const UserModal: FC<Props> = ({ item, close }) => {
                 selectedItem={role}
                 items={adminRoles}
                 onSelect={(selectedRole) => setFieldValue('role', selectedRole.value)}
-                error={touched.role && errors.role}
+                error={
+                  canNotEditRole
+                    ? t`Token manager's role can't be changed, while they have published payout events`
+                    : touched.role && errors.role
+                }
                 placeholder="Choose Role of User"
+                isDisabled={canNotEditRole}
               />
               {role === ROLES.TOKEN_MANAGER && (
                 <Select
                   withScroll
                   isMulti
+                  error={touched.managerOf && errors.managerOf}
                   label={`Security Tokens:`}
+                  isClearable={false}
                   selectedItem={managerOf}
                   items={Object.values(tokensOptions)}
                   onSelect={handleSelectedTokens}

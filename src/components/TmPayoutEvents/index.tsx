@@ -17,6 +17,8 @@ import { Pagination } from 'components/Pagination'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
+import { useUserState } from 'state/user/hooks'
+import { useAuthState } from 'state/auth/hooks'
 
 import { StatusCell } from './StatusCell'
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton } from './styleds'
@@ -38,15 +40,19 @@ export const TmPayoutEvents = () => {
   const [filters, handleFilters] = useState<Record<string, any>>({})
   const [haveFilters, handleHaveFilters] = useState(false)
 
+  const { account } = useUserState()
+  const { token } = useAuthState()
   const { payoutList, isLoading } = useTokenManagerState()
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
-    if (Object.keys(filters).length) {
-      handleHaveFilters(true)
+    if (account && token) {
+      if (Object.keys(filters).length) {
+        handleHaveFilters(true)
+      }
+      getMyPayouts({ ...filters, offset: 4, my: true })
     }
-    getMyPayouts({ ...filters, offset: 4, my: true })
-  }, [filters, getMyPayouts])
+  }, [filters, getMyPayouts, account, token])
 
   const fetch = (params: Record<string, any>) => {
     getMyPayouts({ ...params, my: true })
@@ -57,6 +63,7 @@ export const TmPayoutEvents = () => {
   }
 
   const onPageChange = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     fetch({ ...filters, page, offset: 4 })
   }
 
@@ -117,7 +124,7 @@ const Row = ({ item, onEdit }: IRow) => {
   const dateFormat = 'MMM d, YYYY'
 
   const clickView = () => {
-    history.push(routes.payoutItem(id))
+    history.push({ pathname: routes.payoutItem(id), state: { cameFromManagerPage: true } })
   }
 
   return (

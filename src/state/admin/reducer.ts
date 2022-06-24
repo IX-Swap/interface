@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { ManagerOfToken } from 'state/user/actions'
 import { getTokenExpiration } from 'utils/time'
 
 import {
@@ -78,7 +77,7 @@ const initialState: AdminState = {
     totalPages: 0,
     page: 1,
   },
-  usersList: { items: [], totalPages: 0, page: 1 },
+  usersList: { page: 1, offset: 10, totalItems: 0, totalPages: 0, itemCount: 0, items: [], nextPage: 0, prevPage: 0 },
 }
 
 export default createReducer<AdminState>(initialState, (builder) =>
@@ -265,13 +264,9 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(postUser.fulfilled, (state, { payload: { data } }) => {
+    .addCase(postUser.fulfilled, (state) => {
       state.adminLoading = false
       state.adminError = null
-      state.usersList = {
-        ...state.usersList,
-        items: [{ ...data, managerOf: data.managerOf || [] }, ...state.usersList.items],
-      }
     })
     .addCase(postUser.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
@@ -281,17 +276,9 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(updateUser.fulfilled, (state, { payload: { data } }: any) => {
+    .addCase(updateUser.fulfilled, (state) => {
       state.adminLoading = false
       state.adminError = null
-      state.usersList = {
-        ...state.usersList,
-        items: state.usersList.items.map((el) =>
-          el.id === data.id
-            ? { ...data, managerOf: (data.tokens || []).map((token: ManagerOfToken) => ({ token })) }
-            : el
-        ),
-      }
     })
     .addCase(updateUser.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false

@@ -1,5 +1,7 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
+
 import { SupportedLocale } from 'constants/locales'
+import { PayoutEvent } from 'state/token-manager/types'
 import { SecToken } from 'types/secToken'
 
 export interface SerializedToken {
@@ -87,7 +89,9 @@ export interface ManagerOfToken {
   createdAt: null | string
   updatedAt: null | string
   deletedAt: null | string
-  token: SecToken
+  token: SecToken & {
+    payoutEvents: PayoutEvent[]
+  }
 }
 
 export interface RawGetMePayload {

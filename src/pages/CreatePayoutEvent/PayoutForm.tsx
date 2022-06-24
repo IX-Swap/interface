@@ -1,14 +1,13 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState, useMemo } from 'react'
 import { Formik } from 'formik'
 import { Trans } from '@lingui/macro'
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-import { getTotalAmountByRecordDate, useCreateDraftPayout } from 'state/payout/hooks'
+import { getTotalAmountByRecordDate, useCreateDraftPayout, usePayoutState } from 'state/payout/hooks'
 import { TYPE } from 'theme'
 import { FormGrid } from 'pages/KYC/styleds'
-import { useTokensList } from 'hooks/useTokensList'
 import { useAddPopup } from 'state/application/hooks'
 
 import { Summary } from './Summary'
@@ -17,38 +16,59 @@ import { initialValues } from './mock'
 import { FormCard } from './styleds'
 import { transformPayoutDraftDTO } from './utils'
 import { isBefore } from 'pages/PayoutItem/utils'
+import { useUserState } from 'state/user/hooks'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import CurrencyLogo from 'components/CurrencyLogo'
 
 export const PayoutForm: FC = () => {
-  const { secTokensOptions } = useTokensList()
+  const { me } = useUserState()
+
+  const secTokensOptions = useMemo(() => {
+    if (me?.managerOf?.length) {
+      return me.managerOf.map(({ token }) => ({
+        label: token.symbol,
+        value: token.id,
+        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+      }))
+    }
+    return []
+  }, [me])
+
   const [tokenAmount, setTokenAmount] = useState<any>({
     walletsAmount: null,
     poolsAmount: null,
-    totalSum: null,
+    totalSum: 0,
   })
+  const { error } = usePayoutState()
   const [isAmountLoading, setIsAmountLoading] = useState(false)
   const createDraft = useCreateDraftPayout()
   const addPopup = useAddPopup()
-  // const history = useHistory()
+  const history = useHistory()
+
+  useEffect(() => {
+    if (error) {
+      addPopup({
+        info: {
+          success: false,
+          summary: error.message ?? 'Something went wrong',
+        },
+      })
+    }
+  }, [error])
 
   const handleFormSubmit = async (values: any) => {
     const body = transformPayoutDraftDTO(values)
     const data = await createDraft(body)
 
     if (data?.id) {
-      // history.push('/kyc') redirect to my payouts page
       addPopup({
         info: {
           success: true,
           summary: 'Payout was successfully created',
         },
       })
+      history.push(`/payout/${data.id}`)
     } else {
-      addPopup({
-        info: {
-          success: false,
-          summary: 'Something went wrong',
-        },
-      })
     }
   }
 
@@ -63,29 +83,32 @@ export const PayoutForm: FC = () => {
       onSubmit={handleFormSubmit}
     >
       {({ values, setFieldValue, handleSubmit }) => {
+        const { recordDate, secToken } = values
+        const isRecordFuture = isBefore(values.recordDate)
+
         const onValueChange = (key: string, value: any) => {
           setFieldValue(key, value, false)
         }
 
-        const handleSecTokenChange = async (item: any) => {
-          setIsAmountLoading(true)
-          if (item?.value) {
-            const data = await getTotalAmountByRecordDate(item.value)
+        const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
+          const isFuture = isBefore(recordDate)
+          if (secToken?.value && recordDate && !isFuture) {
+            setIsAmountLoading(true)
+            const data = await getTotalAmountByRecordDate(secToken.value, recordDate)
+
             if (data) {
               const totalSum = (+data.walletTokens ?? 0) + (+data.poolTokens ?? 0)
               setTokenAmount({
                 walletsAmount: data.walletTokens ? +data.walletTokens : null,
                 poolsAmount: data.poolTokens ? +data.poolTokens : null,
-                totalSum,
+                totalSum: totalSum.toFixed(2),
               })
               onValueChange('secTokenAmount', totalSum)
             }
-          }
-          onValueChange('secToken', item)
-          setIsAmountLoading(false)
-        }
 
-        const isRecordFuture = isBefore(values.recordDate)
+            setIsAmountLoading(false)
+          }
+        }
 
         return (
           <form onSubmit={handleSubmit}>
@@ -95,11 +118,14 @@ export const PayoutForm: FC = () => {
               </TYPE.title6>
               <FormGrid style={{ marginBottom: 20 }}>
                 <Select
-                  label="Sec Token"
+                  label="SEC Token"
                   placeholder="Choose SEC token"
                   selectedItem={values.secToken}
                   items={secTokensOptions}
-                  onSelect={handleSecTokenChange}
+                  onSelect={(newToken) => {
+                    onValueChange('secToken', newToken)
+                    fetchAmountByRecordDate(newToken, recordDate)
+                  }}
                   required
                 />
                 <DateInput
@@ -108,7 +134,10 @@ export const PayoutForm: FC = () => {
                   maxHeight={60}
                   openTo="date"
                   value={values.recordDate}
-                  onChange={(newDate) => onValueChange('recordDate', newDate)}
+                  onChange={(newDate) => {
+                    onValueChange('recordDate', newDate)
+                    fetchAmountByRecordDate(secToken, newDate)
+                  }}
                   required
                   tooltipText="Record Date"
                 />
@@ -118,10 +147,17 @@ export const PayoutForm: FC = () => {
                 isRecordFuture={isRecordFuture}
                 isLoading={isAmountLoading}
                 tokenAmount={tokenAmount}
+                setTokenAmount={setTokenAmount}
+                onValueChange={onValueChange}
               />
             </FormCard>
 
-            <PayoutEventBlock isRecordFuture={isRecordFuture} values={values} onValueChange={onValueChange} totalSecTokenSum={tokenAmount.totalSum ?? 0} />
+            <PayoutEventBlock
+              isRecordFuture={isRecordFuture}
+              values={values}
+              onValueChange={onValueChange}
+              totalSecTokenSum={tokenAmount.totalSum ?? 0}
+            />
           </form>
         )
       }}
