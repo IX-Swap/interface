@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import moment from 'moment'
@@ -32,6 +32,13 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
 
+  useEffect(() => {
+    const { title, secToken, type } = values
+    if (!title && secToken?.value && type) {
+      onValueChange('title', `${type} payout event for ${secToken.label}`)
+    }
+  }, [values])
+
   const open = () => {
     setOpenModal(true)
   }
@@ -60,6 +67,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
   }
 
   const isButtonDisabled = useMemo(() => {
+    if (values.files.length === 0) return true
     for (const key in values) {
       if (['secTokenAmount', 'id', 'otherType', 'tokenAmount', 'endDate'].includes(key)) continue
       if (!values[key]) return true
@@ -96,7 +104,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
               {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${(
-                totalSecTokenSum / +tokenAmount
+                +tokenAmount / totalSecTokenSum
               ).toFixed(2)} ${token.label} per SEC token`}
             </TYPE.description2>
           </ExtraInfoCard>
@@ -108,7 +116,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
-          minDate={recordDate && moment(new Date(recordDate)).add(1, 'days')}
+          minDate={recordDate ? moment(new Date(recordDate)).add(1, 'days') : moment(new Date()).add(1, 'days')}
           openTo="date"
           value={startDate}
           onChange={(newDate) => onValueChange('startDate', newDate)}
@@ -118,7 +126,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
-          minDate={startDate && moment(new Date(startDate)).add(1, 'days')}
+          minDate={startDate ? moment(new Date(startDate)).add(1, 'days') : moment(new Date()).add(1, 'days')}
           openTo="date"
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', newDate)}
@@ -156,7 +164,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
       />
 
       <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={true}>
+        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={isButtonDisabled}>
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
         <ButtonIXSGradient type="button" padding="16px 24px" onClick={open} disabled={isButtonDisabled}>

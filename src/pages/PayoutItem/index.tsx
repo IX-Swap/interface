@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { useLocation } from 'react-router-dom'
 
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
@@ -35,6 +36,7 @@ export default function PayoutItem({
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
+  const location: any = useLocation()
 
   useEffect(() => {
     const getPayoutItem = async () => {
@@ -45,7 +47,7 @@ export default function PayoutItem({
     }
 
     getPayoutItem()
-  }, [payoutId])
+  }, [payoutId, account])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
@@ -61,7 +63,10 @@ export default function PayoutItem({
     getPayoutClaims()
   }, [payoutId, page])
 
-  const isMyPayout = useMemo(() => payout?.userId === me.id, [me, payout])
+  const isMyPayout = useMemo(
+    () => payout?.userId === me.id && location?.state?.cameFromManagerPage,
+    [me, payout, location]
+  )
 
   return (
     <Loadable loading={!isLoggedIn}>

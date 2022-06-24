@@ -16,7 +16,7 @@ interface Props {
 }
 
 export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
-  const { status, isPaid, tokenAmount } = payout
+  const { status, isPaid, tokenAmount, recordDate } = payout
 
   const getContentByStatus = () => {
     switch (status) {
@@ -93,7 +93,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
           </>
         )
       case PAYOUT_STATUS.ANNOUNCED:
-        return t`Your record date has not come yet, tokens will be counted on March 12, 2022.`
+        return t`Your record date has not come yet, tokens will be counted on ${momentFormatDate(recordDate)}`
       default:
         return null
     }
