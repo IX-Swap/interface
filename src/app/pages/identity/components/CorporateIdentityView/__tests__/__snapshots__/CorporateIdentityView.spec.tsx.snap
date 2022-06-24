@@ -62,7 +62,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
                     >
                       Company Name
                     </p>
@@ -85,7 +85,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
                     >
                       Company Registration Number/UEN
                     </p>
@@ -108,7 +108,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
                     >
                       Status of Risk Report
                     </p>
@@ -145,7 +145,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
                     >
                       Country of Incorporation
                     </p>
@@ -168,7 +168,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                      style="font-weight: 700; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
                     >
                       Legal Entity
                     </p>
@@ -215,7 +215,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 700; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
               >
                 Address for Correspondence
               </p>
@@ -238,7 +238,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                style="font-weight: 700; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 700; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
               >
                 Registered Address
               </p>
@@ -342,10 +342,10 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </h5>
               </div>
               <div
-                class="MuiBox-root css-12aw9rk"
+                class="MuiBox-root css-1sf3xto"
               />
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 css-480o17-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
               >
                 <div
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
@@ -366,26 +366,18 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiBox-root css-1yp4ln"
                     >
                       <div
-                        class="MuiBox-root css-0"
+                        class="MuiBox-root css-btd8xd"
                         style="opacity: 0.5;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                        <span
                           data-testid="declarations-list-item-unchecked"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
+                        />
                       </div>
                       <div
                         class="MuiBox-root css-d0uhtl"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           data-testid="declarations-list-item-label"
                         >
                           An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency
@@ -400,26 +392,18 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiBox-root css-1yp4ln"
                     >
                       <div
-                        class="MuiBox-root css-0"
+                        class="MuiBox-root css-btd8xd"
                         style="opacity: 0.5;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                        <span
                           data-testid="declarations-list-item-unchecked"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
+                        />
                       </div>
                       <div
                         class="MuiBox-root css-d0uhtl"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           data-testid="declarations-list-item-label"
                         >
                           The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency
@@ -434,26 +418,18 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiBox-root css-1yp4ln"
                     >
                       <div
-                        class="MuiBox-root css-0"
+                        class="MuiBox-root css-btd8xd"
                         style="opacity: 0.5;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                        <span
                           data-testid="declarations-list-item-unchecked"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
+                        />
                       </div>
                       <div
                         class="MuiBox-root css-d0uhtl"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           data-testid="declarations-list-item-label"
                         >
                           A corporation where all the shareholders are Accredited Investors
@@ -468,26 +444,18 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiBox-root css-1yp4ln"
                     >
                       <div
-                        class="MuiBox-root css-0"
+                        class="MuiBox-root css-btd8xd"
                         style="opacity: 0.5;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                        <span
                           data-testid="declarations-list-item-unchecked"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
+                        />
                       </div>
                       <div
                         class="MuiBox-root css-d0uhtl"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           data-testid="declarations-list-item-label"
                         >
                           A partnership (other than a limited liability partnership) where all the partners are Accredited Investors
@@ -502,26 +470,18 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiBox-root css-1yp4ln"
                     >
                       <div
-                        class="MuiBox-root css-0"
+                        class="MuiBox-root css-btd8xd"
                         style="opacity: 0.5;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                        <span
                           data-testid="declarations-list-item-unchecked"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
+                        />
                       </div>
                       <div
                         class="MuiBox-root css-d0uhtl"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           data-testid="declarations-list-item-label"
                         >
                           A trust where all the beneficiaries are Accredited Investors
@@ -536,26 +496,18 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                       class="MuiBox-root css-1yp4ln"
                     >
                       <div
-                        class="MuiBox-root css-0"
+                        class="MuiBox-root css-btd8xd"
                         style="opacity: 0.5;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                        <span
                           data-testid="declarations-list-item-unchecked"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
+                        />
                       </div>
                       <div
                         class="MuiBox-root css-d0uhtl"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           data-testid="declarations-list-item-label"
                         >
                           A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.
@@ -583,8 +535,13 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </h5>
               </div>
               <div
-                class="MuiBox-root css-12aw9rk"
+                class="MuiBox-root css-1sf3xto"
               />
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle1 css-1zdpvo-MuiTypography-root"
+              >
+                I confirm to be treated as an “Accredited Investor” by InvestaX
+              </h6>
             </div>
           </div>
         </div>

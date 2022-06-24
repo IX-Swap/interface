@@ -118,7 +118,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); margin-bottom: 8px;"
                       >
                         Currency
                       </p>
@@ -141,7 +141,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); margin-bottom: 8px;"
                       >
                         Bank:
                       </p>
@@ -164,7 +164,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); margin-bottom: 8px;"
                       >
                         Beneficiary Account Name / Payee:
                       </p>
@@ -187,7 +187,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); margin-bottom: 8px;"
                       >
                         Beneficiary Account Number:
                       </p>
@@ -210,7 +210,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); margin-bottom: 8px;"
                       >
                         SWIFT Code:
                       </p>
@@ -233,7 +233,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); margin-bottom: 8px;"
                       >
                         Time Estimation for Deposit:
                       </p>

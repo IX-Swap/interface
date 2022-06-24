@@ -296,14 +296,18 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                           class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
                           style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
                         >
-                          I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
-                            style="cursor: pointer;"
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           >
-                            safeguards
-                          </span>
-                           for Accredited Investors.
+                            I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
+                            <span
+                              class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
+                              style="cursor: pointer;"
+                            >
+                              safeguards
+                            </span>
+                             for Accredited Investors.
+                          </p>
                         </p>
                       </label>
                     </div>
@@ -344,15 +348,19 @@ exports[`InvestorDeclarationForm should match snapshot 1`] = `
                           class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
                           style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
                         >
-                          I have been informed of and understand my right to
-                           
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
-                            style="cursor: pointer;"
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
                           >
-                            opt out
-                          </span>
-                           of the Accredited Investors status
+                            I have been informed of and understand my right to
+                             
+                            <span
+                              class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
+                              style="cursor: pointer;"
+                            >
+                              opt out
+                            </span>
+                             of the Accredited Investors status
+                          </p>
                         </p>
                       </label>
                     </div>
