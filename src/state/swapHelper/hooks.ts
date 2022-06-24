@@ -196,7 +196,7 @@ export function useSubmitBrokerDealerForm() {
         {
           info: {
             success,
-            summary: getMessage({ name: platform ?? '', isError: !success }),
+            summary: getMessage({ isError: !success }),
           },
         },
         address ?? undefined
@@ -343,7 +343,7 @@ export function useSwapConfirmDataFromURL(
         {
           info: {
             success,
-            summary: getMessage({ name: platform ?? '', isError: !success }),
+            summary: getMessage({ isError: !success }),
           },
         },
         address ?? undefined

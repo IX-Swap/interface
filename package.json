@@ -140,7 +140,7 @@
     "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts --max_old_space_size=8192 build",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
-    "integration-test": "concurrently \"yarn start\" \"wait-on http-get://localhost:3000 && xvfb-run npx playwright test /__tests__  --workers=1 --timeout 180000 \" --kill-others --success first",
+    "integration-test": "concurrently \"yarn start\" \"wait-on http-get://localhost:3000 && xvfb-run npx playwright test /e2e_test  --workers=1 --timeout 180000 \" --kill-others --success first",
     "postinstall": "yarn compile-contract-types",
     "start": "yarn compile-contract-types && react-scripts start",
     "test": "react-scripts test --env=jsdom"
@@ -172,7 +172,7 @@
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
     "moment": "^2.29.1",
-    "playwright": "^1.13.0",
+    "playwright": "^1.21.1",
     "react-cookie": "^4.1.1",
     "react-file-viewer": "^1.2.1",
     "react-lazy-load-image-component": "^1.5.1",

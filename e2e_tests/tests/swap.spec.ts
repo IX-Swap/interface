@@ -1,8 +1,8 @@
-import { test as base } from '../lib/fixture'
-import { auth } from '../lib/selectors/metamask'
-
+import { test } from '../fixtures/metamaskFixture'
+/*
+import { auth } from '../page-object/selectors/metamask'
 import { expect } from '@playwright/test'
-import { ixswap, metamask } from '../lib/helpers/credentials'
+import { ixswap, metamask } from '../testData/credentials'
 import {
   click,
   navigate,
@@ -13,24 +13,13 @@ import {
   screenshotMatching,
   typeText,
   shouldExist,
-} from '../lib/helpers/helpers'
-import { amounts, notifications, urls } from '../lib/helpers/text-helpers'
+} from '../helpers/helpers'
+import { amounts, notifications, urls } from '../helpers/text-helpers'
 
-import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
-import { SwapIX } from '../lib/page-objects/ixswap-objects'
-import { Metamask } from '../lib/page-objects/metamask-objects'
-import { swap, pool } from '../lib/selectors/ixswap'
-
-const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
-  metaMask: async ({ page }, use) => {
-    const metaMask = new Metamask(page)
-    await use(metaMask)
-  },
-  ixSwap: async ({ page }, use) => {
-    const ixSwap = new SwapIX(page)
-    await use(ixSwap)
-  },
-})
+import { getBalanceOtherCurrency, getEthBalance } from '../helpers/web3-helpers'
+import { SwapIX } from '../page-object/ixswap-objects'
+import { Metamask } from '../page-object/metamask-objects'
+import { swap, pool } from '../page-object/selectors/ixswap'
 
 let before
 
@@ -47,7 +36,7 @@ test.afterEach(async ({ page, context }, testInfo) => {
   await page.close()
 })
 
-test.describe('Check swap functions', () => {
+test.describe.skip('Check swap functions', () => {
   test('Check that the ETH can be exchanged for DAI', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.setTypeOfCurrency()
     await ixSwap.currencyExchange(amounts.swap)
@@ -90,7 +79,7 @@ test.describe('Check swap functions', () => {
   })
 })
 
-test.describe('Set value more that current balance', () => {
+test.describe.skip('Set value more that current balance', () => {
   test.beforeEach(async ({ page }) => {
     before = await getEthBalance()
     await navigate(ixswap.URL, page)
@@ -104,7 +93,7 @@ test.describe('Set value more that current balance', () => {
   })
 })
 
-test.describe('Run tests in expert mode', () => {
+test.describe.skip('Run tests in expert mode', () => {
   test.beforeEach(async ({ page, ixSwap }) => {
     await ixSwap.setExpertMode(page)
     before = await getEthBalance()
@@ -126,3 +115,4 @@ test.describe('Run tests in expert mode', () => {
     await waitForText(`Swap ${amounts.swap} ETH for`, page)
   })
 })
+ */

@@ -10,6 +10,7 @@ import { Currency, TradeType } from '@ixswap1/sdk-core'
 
 // // abis
 let PERIPHERY_LP_ABI = require('abis/IxsV2LiquidityRouter.json')
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 PERIPHERY_LP_ABI = PERIPHERY_LP_ABI.abi
 
 let SWAP_ROUTER_ABI = require('abis/IxsV2SwapRouter.json')
@@ -22,6 +23,7 @@ let PAIR_ABI = require('abis/IxsV2Pair.json')
 PAIR_ABI = PAIR_ABI.abi
 
 let ERC20_FAUCET_ABI = require('abis/Erc20Custom.json')
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 ERC20_FAUCET_ABI = ERC20_FAUCET_ABI.abi
 
 const Web3Global = require('web3')

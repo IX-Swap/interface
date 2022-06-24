@@ -21,7 +21,6 @@ import {
   useWatchAuthorizationExpire,
 } from 'state/swapHelper/hooks'
 import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
-import { useSecToken } from 'state/secTokens/hooks'
 
 import { AutoColumn } from '../../components/Column'
 import { CurrencyInput } from '../../components/swap/CurrencyInput'

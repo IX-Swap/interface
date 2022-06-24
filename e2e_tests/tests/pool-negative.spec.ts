@@ -1,6 +1,7 @@
-import { test as base } from '../lib/fixture'
+import { test } from '../fixtures/metamaskFixture'
+/*
 import { expect } from '@playwright/test'
-import { ixswap, metamask, metamask2 } from '../lib/helpers/credentials'
+import { ixswap, metamask, metamask2 } from '../testData/credentials'
 import {
   click,
   waitForText,
@@ -9,26 +10,17 @@ import {
   makeScreenOnError,
   navigate,
   shouldExist,
-} from '../lib/helpers/helpers'
-import { amounts, notifications } from '../lib/helpers/text-helpers'
+} from '../helpers/helpers'
+import { amounts, notifications } from '../helpers/text-helpers'
 
-import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
-import { SwapIX } from '../lib/page-objects/ixswap-objects'
-import { Metamask } from '../lib/page-objects/metamask-objects'
+import { getBalanceOtherCurrency, getEthBalance } from '../helpers/web3-helpers'
+import { SwapIX } from '../page-object/ixswap-objects'
+import { Metamask } from '../page-object/metamask-objects'
 
-import { auth } from '../lib/selectors/metamask'
-import { swap, pool } from '../lib/selectors/ixswap'
+import { auth } from '../page-object/selectors/metamask'
+import { swap, pool } from '../page-object/selectors/ixswap'
 
-const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
-  metaMask: async ({ page }, use) => {
-    const metaMask = new Metamask(page)
-    await use(metaMask)
-  },
-  ixSwap: async ({ page }, use) => {
-    const ixSwap = new SwapIX(page)
-    await use(ixSwap)
-  },
-})
+
 
 let before
 test.afterEach(async ({ page, context }, testInfo) => {
@@ -38,7 +30,7 @@ test.afterEach(async ({ page, context }, testInfo) => {
   }
   await page.close()
 })
-test.describe('Set value more that current balance', () => {
+test.describe.skip('Set value more that current balance', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
     await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
     before = await getEthBalance()
@@ -64,7 +56,7 @@ test.describe('Set value more that current balance', () => {
   })
 })
 
-test.describe('Cancel poll transaction', () => {
+test.describe.skip('Cancel poll transaction', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
     await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
     before = await getEthBalance()
@@ -121,7 +113,7 @@ test.describe('Cancel poll transaction', () => {
   })
 })
 
-test.describe('Check the behave when balance = 0', () => {
+test.describe.skip('Check the behave when balance = 0', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
     await metaMask.fullConnection(context, page, metamask2.SECRET_WORDS, metamask2.contractAddresses.eth)
     await navigate(ixswap.URL, page)
@@ -139,3 +131,4 @@ test.describe('Check the behave when balance = 0', () => {
     expect(swapConf).toBe(true)
   })
 })
+*/

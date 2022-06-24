@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
+/*
+import { ixswap } from '../testData/credentials'
+import { click, makeScreenOnError, navigate, screenshotMatching } from '../helpers/helpers'
 
-import { ixswap } from '../lib/helpers/credentials'
-import { click, makeScreenOnError, navigate, screenshotMatching } from '../lib/helpers/helpers'
+import { pool, settings, securityToken } from '../page-object/selectors/ixswap'
 
-import { pool, settings, securityToken } from '../lib/selectors/ixswap'
-
-test.describe('All page without Metamask connection ', () => {
+test.describe.skip('All page without Metamask connection ', () => {
   test.beforeEach(async ({ page }) => {
     await navigate(ixswap.URL, page)
   })
@@ -41,3 +41,4 @@ test.describe('All page without Metamask connection ', () => {
     await screenshotMatching('securityTokens', expect, page)
   })
 })
+ */
