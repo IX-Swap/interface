@@ -34,6 +34,7 @@ import { AppThemeProvider } from 'AppThemeProvider'
 import apiService from 'services/api'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
+import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -236,3 +237,24 @@ export const invokeMutationFn = async (result: any, payload: any) => {
 export * from '@testing-library/react'
 // eslint-disable-next-line import/export
 export { customRenderer as render }
+
+export interface FakeOpenOrdersContextWrapperProps {
+  context: {
+    isIndexOpen: (index: string) => boolean
+    toggleRow: (index: string) => void
+    hasOpenIndices: boolean
+    openIndex?: string
+  }
+}
+export const FakeOpenOrdersContextWrapper: React.FC<
+  FakeOpenOrdersContextWrapperProps
+> = ({ children, context }) => {
+  const { isIndexOpen, toggleRow, hasOpenIndices, openIndex } = context
+  return (
+    <OpenOrdersContext.Provider
+      value={{ isIndexOpen, toggleRow, hasOpenIndices, openIndex }}
+    >
+      {children}
+    </OpenOrdersContext.Provider>
+  )
+}
