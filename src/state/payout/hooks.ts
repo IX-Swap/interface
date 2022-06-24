@@ -49,7 +49,6 @@ const createDraftPayout = async (newPayoutDraft: any) => {
   }
 
   const result = await apiService.post(payout.createDraft, formData)
-  console.log(result)
   return result.data
 }
 
