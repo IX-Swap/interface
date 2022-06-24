@@ -113,7 +113,7 @@ export const directorsAndBeneficialOwnersSchema = yup
             email: emailSchema.required(validationMessages.required),
             contactNumber: yup
               .string()
-              .phone()
+              .phone(undefined, 'Must be a valid phone number"')
               .required(validationMessages.required),
             address: addressSchema.required(validationMessages.required),
             // @ts-expect-error
