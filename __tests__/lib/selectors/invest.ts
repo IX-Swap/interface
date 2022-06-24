@@ -5,7 +5,7 @@ export const invest = {
   TOAST_NOTIFICATIONS: '[data-testid="notification-inner"]',
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',
-  LANDING_TABLES_PANEL: '[role="tabpanel"]',
+  LANDING_TABLES_PANEL: '[role="tablist"]',
   OVERVIEW_PAGE: '[href="/app/invest/overview"]',
   SECOND_MARKET: '[href="/app/otc-market"]',
   CHECKBOX: '[type="checkbox"]',
@@ -15,30 +15,35 @@ export const invest = {
   OFFERS: '[href*="/app/invest/offerings/"]',
 
   buttons: {
+    COMMITMENTS_TAB: 'button >> text="Commitments"',
     INVEST: '[data-testid="otc-card-link"]',
     VIEW_INVEST: '[data-testid="view-button"]',
     CANCEL_ORDER: '[data-testid="table"] >> text="Cancel"',
     PLACE_ORDER: '[data-testid="submit"]',
-    DOWNLOAD_DOC: 'text="Download Subscription Document"',
+    // DOWNLOAD_DOC: 'text="Download Subscription Document"',
+    DOWNLOAD_DOC: `//*[contains(text(),'Download')]`,
+    CLICKABLE_ETH_ADDRESS: '[data-testid="FileCopyOutlinedIcon"]',
+    METAMASK_ICON: '[aria-label="add-to-metamask"]',
+    CONNECT_TO_METAMASK: '[id="connect-METAMASK"]',
     CREATE_CUSTODY_ADDRESS: 'text="Create custody withdrawal address"',
     SUBMIT_INVEST: 'button >> text="Invest"',
-    LEARN_MORE: 'span >> text="Learn More"',
+    SUBMIT_COMMIT: '[data-type="commit"]',
+    LEARN_MORE: 'a >> text="Learn More"',
     INVEST_LANDING: '[href*="/view/make-investment"]',
     I_AGREE: 'button >> text="I Agree"',
     DECLINE: 'button >> text="Decline"',
     SELL: 'button >> text="SELL"',
-    VIEW_SECOND_DSO:
-      '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
-    INVEST_ACCOUNT:
-      '[href="/app/invest/offerings/61c1ca2956e67e0e60c340f5/61c1e3e356e67e0e60c35854/view/make-investment"]'
+    VIEW_SECOND_DSO: '[href*="/app/invest/commitments/"]'
   },
   fields: {
     SEARCH: '[placeholder="Search"]',
     PRICE: '[id="price"]',
     AMOUNT: '[id="amount"]',
-    // SEARCH: '[placeholder="Search Offers"]',
+    SEARCH_DSO: '[placeholder="Search Offers"]',
     UPLOAD_SIGNED_DOC: '[name="signedSubscriptionDocument"]',
     NUMBER_UNITS: '[id="numberOfUnits"]',
+    TOTAL_AMOUNT: '[id="totalAmount"]',
+    PRICEPER_UNIT: '[id="pricePerUnit"]',
     OTP: '[id="otp"]'
   },
   listBox: {
@@ -47,5 +52,7 @@ export const invest = {
     IXPS_SGD_PAIR: '[href="/app/otc-market/market/61a71463ad10390e378804e3"]',
     PAIR_NAME: '[data-testid="pairName"]',
     PAIR_NAME_VALUE: 'a >> text="AQA##/SGD"'
-  }
+  },
+
+  checkBox: { I_HAVE_READ: '[name="tnc"]' }
 }

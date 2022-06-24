@@ -10,7 +10,10 @@ bfg.jar
 # testing
 .scannerwork
 coverage
-./reports
+reports
+storages/
+documents/
+
 .history
 allure-results/
 # production

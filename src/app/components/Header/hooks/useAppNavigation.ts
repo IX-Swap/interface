@@ -22,6 +22,7 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
+
 import { InternalRouteProps } from 'types/util'
 
 export const useAppNavigation = () => {

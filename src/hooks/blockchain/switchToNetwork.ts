@@ -29,7 +29,10 @@ export async function switchToNetwork({
     })
   } catch (error) {
     // 4902 is the error code for attempting to switch to an unrecognized chainId
-    if ((error as any)?.code === 4902 && chainId !== undefined) {
+    const isUnrecognized =
+      (error as any)?.code === 4902 ||
+      (error as any)?.message?.includes('Try adding the chain using')
+    if (Boolean(isUnrecognized) && chainId !== undefined) {
       const info = CHAIN_INFO[chainId]
 
       // metamask (only known implementer) automatically switches after a network is added

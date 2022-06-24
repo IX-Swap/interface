@@ -1,4 +1,4 @@
-import { isValid } from 'date-fns'
+import { addBusinessDays, differenceInBusinessDays, isValid } from 'date-fns'
 import differenceInDays from 'date-fns/differenceInDays'
 import differenceInHours from 'date-fns/differenceInHours'
 import differenceInMinutes from 'date-fns/differenceInMinutes'
@@ -130,4 +130,16 @@ export const getTimeAgoFromString = (date: string) => {
     return null
   }
   return formatDistance(new Date(date), new Date(), { addSuffix: true })
+}
+
+export const getExpiresOrderMessage = (date: Date) => {
+  const expirationDay = addBusinessDays(date, 3)
+  const now = new Date()
+  const daysLeft = differenceInBusinessDays(expirationDay, now)
+  const message = 'To complete the trade confirm token transfer ('
+  const daysLeftMessage =
+    daysLeft <= 0
+      ? 'Order expired)'
+      : `Order expires in ${daysLeft} business days)`
+  return message + daysLeftMessage
 }

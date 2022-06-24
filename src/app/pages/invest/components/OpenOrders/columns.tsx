@@ -1,18 +1,9 @@
-import React from 'react'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { formatMoney, formatPercent } from 'helpers/numbers'
-import { TableColumn } from 'types/util'
+import { formatPercent, renderMoney } from 'helpers/numbers'
 import { getOrderSideName } from 'helpers/strings'
+import { renderRowAmount, renderTicker } from 'helpers/tables'
 import { Order } from 'types/order'
-import { Typography } from '@mui/material'
-
-export const renderTicker = (value: string, row: any) => {
-  return <Typography variant='subtitle1'>{value}</Typography>
-}
-
-export const renderMoney = (value: any, row: any) => formatMoney(value, '')
-export const renderAmount = (value: any, row: any) =>
-  Number.isInteger(value) ? formatMoney(value, '') : value
+import { TableColumn } from 'types/util'
 
 export const columns: Array<TableColumn<Order>> = [
   {
@@ -37,7 +28,7 @@ export const columns: Array<TableColumn<Order>> = [
   {
     key: 'amount',
     label: 'Amount',
-    render: renderAmount
+    render: renderRowAmount
   },
   {
     key: 'total',

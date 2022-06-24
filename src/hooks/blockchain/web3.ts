@@ -6,6 +6,7 @@ import { injected } from 'config/blockchain/connectors'
 import { NetworkContextName } from 'config/blockchain/constants'
 import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import { Web3ProviderAx } from 'types/blockchain'
 
 export function useActiveWeb3React(): Web3ReactContextInterface<Web3Provider> {
   const context = useWeb3ReactCore<Web3Provider>()
@@ -59,16 +60,16 @@ export function useInactiveListener(suppress = false) {
     if (ethereum && ethereum.on && !active && error == null && !suppress) {
       const handleChainChanged = () => {
         // eat errors
-        activate(injected, undefined, true).catch(error => {
-          console.error('Failed to activate after chain changed', error)
+        activate(injected, undefined, true).catch(err => {
+          console.error('Failed to activate after chain changed', err)
         })
       }
 
       const handleAccountsChanged = (accounts: string[]) => {
         if (accounts.length > 0) {
           // eat errors
-          activate(injected, undefined, true).catch(error => {
-            console.error('Failed to activate after accounts changed', error)
+          activate(injected, undefined, true).catch(err => {
+            console.error('Failed to activate after accounts changed', err)
           })
         }
       }
@@ -85,4 +86,11 @@ export function useInactiveListener(suppress = false) {
     }
     return undefined
   }, [active, error, suppress, activate])
+}
+
+export const isMetamaskOrWalletConnect = (library?: Web3ProviderAx) => {
+  return (
+    library?.provider?.isMetaMask === true ||
+    library?.provider?.isWalletConnect === true
+  )
 }

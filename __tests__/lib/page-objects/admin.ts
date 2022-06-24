@@ -1,24 +1,41 @@
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
 import { adminEl } from '../selectors/admin'
-import {
-  click,
-  navigate,
-  typeText,
-  waitForRequestInclude,
-  waitForText
-} from '../helpers/helpers'
+import { click, navigate, typeText, waitForRequestInclude, waitForText } from '../helpers/helpers'
+import { Locator } from '@playwright/test'
+import { invest } from '../selectors/invest'
 
 class Admin {
   page: any
+  TABLE: Locator
+  UPDATE_BUTTON: Locator
+  USER_VIEW_CARD: Locator
+  CHANGE_BUTTON: Locator
+
   constructor(page) {
     this.page = page
+    this.TABLE = page.locator(invest.TABLE)
+    this.USER_VIEW_CARD = page.locator('[data-testid="LaunchIcon"]')
+    this.UPDATE_BUTTON = page.locator("text='Update'")
+    this.CHANGE_BUTTON = page.locator("text='Change'")
   }
   LOADER = '[role="progressbar"]'
 
+  updatePassword = async (oldPassword, newPassword) => {
+    await this.UPDATE_BUTTON.last().click()
+    await typeText(authForms.fields.OLD_PASSWORD, oldPassword, this.page)
+    await typeText(authForms.fields.NEW_PASSWORD, newPassword, this.page)
+    await typeText(authForms.fields.CONFIRM_PASSWORD, newPassword, this.page)
+    await this.CHANGE_BUTTON.last().click()
+  }
+
+  virtualAcccountsSelection = async () => {
+    await click("text='Virtual Accounts list'", this.page)
+    await click('[data-testid="LinkOffIcon"]', this.page)
+  }
   getLocator = async element => {
     await this.page.waitForSelector(this.LOADER, { state: 'detached' })
-    await this.page.waitForSelector(element, { state: 'attached' })
+    await this.page.waitForSelector(element, { state: 'visible' })
     const locator = await this.page.locator(element)
     return locator
   }
@@ -28,14 +45,10 @@ class Admin {
     await click(adminEl.SECTION, this.page)
   }
 
-  filterByIdentity = async () => {
+  filterByIdentity = async identityElValue => {
     await click(adminEl.dropDown.IDENTITY_TYPE, this.page)
-    await click(adminEl.dropDown.INDIVIDUAL_VALUE, this.page)
-    const tableRequest = await waitForRequestInclude(
-      this.page,
-      'identity/list',
-      'POST'
-    )
+    await click(identityElValue, this.page)
+    const tableRequest = await waitForRequestInclude(this.page, 'identity/list', 'POST')
     const userData = await (await tableRequest.response()).json()
     const identityType = userData.data[0].documents[0].type
     return identityType
@@ -45,7 +58,7 @@ class Admin {
     await click(adminEl.dropDown.IDENTITY_TYPE, page)
     await click(rightsType, page)
     await page.mouse.click(1, 100)
-    await click('[role="dialog"] >> text="Ok"', page)
+    await click(adminEl.buttons.OK, page)
   }
 
   disableUser = async page2 => {

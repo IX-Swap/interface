@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => {
   const activeColor = (active: any) =>
     active === 0
       ? theme.palette.backgrounds.alternative
-      : theme.palette.error.light
+      : theme.palette.error.main
 
   return {
     container: {

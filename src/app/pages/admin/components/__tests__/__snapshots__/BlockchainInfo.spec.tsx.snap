@@ -28,7 +28,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
         >
           Owner Wallet Address
         </p>
@@ -52,7 +52,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
         >
           Owner Wallet Balance
         </p>
@@ -76,7 +76,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
         >
           Reserve Wallet Address
         </p>
@@ -100,7 +100,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
         >
           Reserve Wallet Balance
         </p>
@@ -124,7 +124,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
         >
           RPC URL
         </p>

@@ -1,6 +1,7 @@
 import { issuance } from '../selectors/issuance'
 import { text } from '../helpers/text'
-import { baseCreds } from '../helpers/creds'
+import { baseCreds, setENV } from '../helpers/creds'
+import { Page, Locator } from '@playwright/test'
 
 import {
   click,
@@ -10,25 +11,38 @@ import {
   randomString,
   navigate,
   shouldNotExist,
-  shouldExist,
   clearAndTypeText,
   waitForResponseInclude,
   getMessage
 } from '../helpers/helpers'
 
 class Dso {
-  page: any
-  constructor(page) {
+  readonly page: Page
+  readonly OK_BUTTON: Locator
+  readonly lastDayOfMonth: Locator
+  readonly ERROR: Locator
+  readonly CALENDAR_RIGHT_BUTTON: Locator
+
+  constructor(page: Page) {
     this.page = page
+    this.OK_BUTTON = this.page.locator('[role="dialog"] >> text="OK"')
+    this.lastDayOfMonth = this.page.locator('[role="dialog"] [role="cell"] button')
+    this.ERROR = this.page.locator('[appearance="error"]')
+    this.CALENDAR_RIGHT_BUTTON = this.page.locator('[data-testid="ArrowRightIcon"]')
+  }
+
+  uploadDocuments = async () => {
+    await uploadFiles(this.page, issuance.dso.fields.SUBSCRIPTION_DOCUMENT, text.docs.pathToFile)
+    await uploadFiles(this.page, issuance.dso.fields.DATA_ROOM, text.docs.pathToFile)
   }
 
   capitalCall = async () => {
     await click('button >> text="Capital Call"', this.page)
-    await typeText('[role="dialog"] input', 'luch41638787427054@wwjmp.com', this.page)
+    await typeText('[role="dialog"] input', baseCreds.INVESTOR, this.page)
     await click('[data-placeholder="true"]', this.page)
     await click('button >> text="Confirm"', this.page)
     await waitForText(this.page, 'Email has been sent to investors')
-    const response = await getMessage('luch41638787427054@wwjmp.com', this.page, 'Capital call')
+    const response = await getMessage(baseCreds.INVESTOR, 'Capital call')
     return response
   }
 
@@ -74,11 +88,17 @@ class Dso {
     await typeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
     await typeText(issuance.dso.fields.TOKEN_SYMBOL, tokenSymbol, this.page)
     await typeText(issuance.dso.fields.ISSUER_NAME, 'Top issuer', this.page)
-    await typeText(issuance.dso.fields.LAUNCH_DATE, '11112022', this.page)
-    await typeText(issuance.dso.fields.COMPLETION_DATE, '11112023', this.page)
+    await click(issuance.dso.fields.LAUNCH_DATE, this.page)
+    await this.lastDayOfMonth.last().click()
+    await this.OK_BUTTON.click()
+    await click(issuance.dso.fields.COMPLETION_DATE, this.page)
+    await this.CALENDAR_RIGHT_BUTTON.click()
+    await this.lastDayOfMonth.last().click()
+    await this.OK_BUTTON.click()
     await typeText(issuance.dso.fields.IDENTIFIER_CODE, 's12345678900', this.page)
     return { tokenSymbol, tokenName }
   }
+
   fillDsoPricingForm = async () => {
     await typeText(issuance.dso.fields.PRICEPER_UNIT, '100000', this.page)
     await typeText(issuance.dso.fields.TOTAL_FUNDRAISING_AMOUNT, '100000000', this.page)
@@ -109,7 +129,11 @@ class Dso {
   }
   fillVideoAndFAQform = async () => {
     await typeText(issuance.dso.fields.VIDEO_TITLE, 'videoTitle', this.page)
-    await typeText(issuance.dso.fields.VIDEO_LINK, 'https://www.youtube.com/watch?v=UubZO2bPCgw&ab_channel=hate5six', this.page)
+    await typeText(
+      issuance.dso.fields.VIDEO_LINK,
+      'https://www.youtube.com/watch?v=UubZO2bPCgw&ab_channel=hate5six',
+      this.page
+    )
     await typeText(issuance.dso.fields.FAQ_1, 'FAQ_1', this.page)
     await typeText(issuance.dso.fields.FAQ_1_ANSWER, 'FAQ_1_ANSWER', this.page)
     await typeText(issuance.dso.fields.FAQ_2, 'FAQ_2', this.page)
@@ -144,19 +168,19 @@ class Dso {
     return inputs.length
   }
 
-  followToFundsManagement = async (auth, email) => {
+  followToFundsManagement = async () => {
     await navigate(baseCreds.URL, this.page)
-    await auth.loginWithout2fa(email, baseCreds.PASSWORD)
     await click(issuance.ISSUANCE_TAB, this.page)
     await click(issuance.FUNDS_MANAGEMENT_TAB, this.page)
   }
 }
-class Listing {
+
+class Listing extends Dso {
   page: any
   constructor(page) {
+    super(page)
     this.page = page
   }
-
   checkError = async text => {
     await click(issuance.dso.buttons.FINISH_LATER, this.page)
     const error = await waitForText(this.page, text)
@@ -166,11 +190,9 @@ class Listing {
   fillListeningOfferingTermsForm = async () => {
     await clearAndTypeText(issuance.dso.fields.INVESTMENT_PERIOD, '11', this.page)
     await click(issuance.dso.listBox.CURRENCY, this.page)
-    await clearAndTypeText(issuance.dso.fields.INTEREST_RATE, '10', this.page)
-    await clearAndTypeText(issuance.dso.fields.INVESTMENT_STRUCTURE, 'best Structure', this.page)
+    await typeText(issuance.dso.fields.DECIMALS, '2', this.page)
     await click(issuance.dso.listBox.DISTRIBUTION_FREQUENCY, this.page)
     await click(issuance.dso.listBox.DISTRIBUTION_VALUE, this.page)
-    await clearAndTypeText(issuance.dso.fields.LEVERAGE, '0.1', this.page)
   }
   fillListingGeneralInformationForm = async () => {
     const tokenName = 'TokenName' + randomString()
@@ -185,14 +207,18 @@ class Listing {
     await click(issuance.dso.listBox.NETWORK_VALUE, this.page)
     await typeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
     await typeText(issuance.dso.fields.TOKEN_SYMBOL, tokenSymbol, this.page)
-    await typeText(issuance.dso.fields.LAUNCH_DATE, '11112022', this.page)
-    await typeText(issuance.dso.fields.COMPLETION_DATE, '11112023', this.page)
+    await click(issuance.dso.fields.LAUNCH_DATE, this.page)
+    await this.lastDayOfMonth.last().click()
+    await this.OK_BUTTON.click()
+    await click(issuance.dso.fields.COMPLETION_DATE, this.page)
+    await this.lastDayOfMonth.last().click()
+    await this.OK_BUTTON.click()
+    await typeText(issuance.dso.fields.DECIMALS, '2', this.page)
     return { tokenSymbol, tokenName }
   }
 
   fillListingPricingForm = async () => {
     await typeText(issuance.listings.fields.MIN_TRADE_AMOUNT, '100000', this.page)
-
     await typeText(issuance.listings.fields.MAX_TRADE_AMOUNT, '100000000', this.page)
     await typeText(issuance.listings.fields.RAISED_AMOUNT, '100000000', this.page)
   }
@@ -204,7 +230,7 @@ class Listing {
     await typeText(issuance.dso.fields.TEAM_MEMBER_POSITION, 'Team member Position', this.page)
   }
   fillDocumentsForm = async () => {
-    const docFields = await uploadFiles(this.page, issuance.listings.fields.DOCS, text.docs.pathToFile)
+    const docFields = await uploadFiles(this.page, issuance.listings.fields.DOCS, text.docs.pathToFile, 'no')
     return docFields.inputsFile
   }
   checkThatTheListingWasCreated = async tokenName => {
@@ -220,9 +246,13 @@ class Listing {
     await click(issuance.listings.buttons.IMPORT_DSO, this.page)
     await shouldNotExist(issuance.listings.listBox.DSO_STATE, this.page)
     await click(issuance.listings.listBox.MY_DSO, this.page)
-    await click(issuance.listings.listBox.DSO_HYBRID_TEST, this.page)
+    if (baseCreds.URL.includes('otc' || 'dev')) {
+      await click('[data-value="62694db849676f304df525ff:62318fd4f6318a11f5455d73"]', this.page)
+    } else {
+      await click(issuance.listings.listBox.DSO_HYBRID_TEST, this.page)
+    }
     await click(issuance.listings.buttons.IMPORT, this.page)
-    await shouldExist(`${issuance.listings.GENERAL_FORM} ${issuance.listings.LOGO}`, this.page)
+    // await shouldExist(`${issuance.listings.GENERAL_FORM} ${issuance.listings.LOGO}`, this.page)
     const importedForm = await this.page.$(issuance.listings.GENERAL_FORM)
     return importedForm
   }

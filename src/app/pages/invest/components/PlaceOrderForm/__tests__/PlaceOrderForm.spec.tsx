@@ -61,4 +61,23 @@ describe('PlaceOrderForm', () => {
       {}
     )
   })
+  it('renders the suffix', () => {
+    const { getByText } = render(
+      <Form>
+        <PlaceOrderForm
+          tokenLabel={'IXPS'}
+          currencyLabel={'SGD'}
+          tokenBalance={300}
+          isDisabled={true}
+          currencyBalance={15000}
+          suffix={({ tab }: { tab: number }) => <div>TEST</div>}
+          onSubmit={async () => {}}
+        />
+      </Form>
+    )
+    const suffix = getByText('TEST')
+    const button = getByText('PLACE ORDER')
+    expect(suffix).toBeDefined()
+    expect(button).toHaveClass('Mui-disabled')
+  })
 })

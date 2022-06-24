@@ -5,9 +5,6 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { ViewInvestor } from 'app/pages/identity/pages/ViewInvestor/ViewInvestor'
 import { CreateCorporateIdentity } from 'app/pages/identity/pages/CreateInvestor/CreateInvestor'
 import { EditInvestor } from 'app/pages/identity/pages/EditInvestor/EditInvestor'
-import { CreateIssuer } from 'app/pages/identity/pages/CreateIssuer/CreateIssuer'
-import { EditIssuer } from 'app/pages/identity/pages/EditIssuer/EditIssuer'
-import { ViewIssuer } from 'app/pages/identity/pages/ViewIssuer/ViewIssuer'
 
 export const CorporateRouter = () => {
   return (
@@ -41,7 +38,7 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.viewIssuer}
       >
-        <ViewIssuer />
+        <ViewInvestor />
       </AppRoute>
 
       <AppRoute
@@ -49,7 +46,10 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.createIssuer}
       >
-        <CreateIssuer />
+        <CreateCorporateIdentity
+          type='issuer'
+          title='Create Corporate Issuer Identity'
+        />
       </AppRoute>
 
       <AppRoute
@@ -57,7 +57,7 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.editIssuer}
       >
-        <EditIssuer />
+        <EditInvestor type='issuer' />
       </AppRoute>
 
       <AppRoute

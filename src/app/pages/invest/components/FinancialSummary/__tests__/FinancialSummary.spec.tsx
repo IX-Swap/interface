@@ -29,7 +29,11 @@ describe('FinancialSummary', () => {
     jest.spyOn(useMarket, 'useMarket').mockReturnValue(
       generateQueryResult({
         data: {
-          listing: { markets: [{ currency: 'SGD' }, { currency: 'USD' }] }
+          listing: {
+            markets: [{ currency: 'SGD' }, { currency: 'USD' }],
+            _id: '1234',
+            createdBy: '12345'
+          }
         }
       })
     )

@@ -11,11 +11,13 @@ import { PlaceOrderSlider } from 'app/pages/invest/components/PlaceOrderSlider/P
 export interface PlaceOrderFieldsProps {
   balance: number
   totalCurrencyLabel: string
+  activeTab: number
 }
 
 export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
   totalCurrencyLabel,
-  balance
+  balance,
+  activeTab
 }) => {
   const classes = useStyles()
   const { control, setValue } = useFormContext()
@@ -71,7 +73,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
       </Grid>
 
       <Grid item className={classes.sliderWrapper}>
-        <PlaceOrderSlider balance={balance} />
+        <PlaceOrderSlider balance={balance} activeTab={activeTab} />
       </Grid>
 
       <Grid item className={classes.inputGrid}>

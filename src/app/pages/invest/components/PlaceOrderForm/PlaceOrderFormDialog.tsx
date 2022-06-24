@@ -11,12 +11,12 @@ export const PlaceOrderFormDialog = ({
   tokenName,
   currencyBalance,
   tokenBalance,
+  suffix,
   submitForm
 }: MarketViewProps) => {
   const theme = useTheme()
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<number | undefined>(undefined)
-
   const closeDrawer = () => {
     if (!isFetching) {
       setOpen(false)
@@ -82,6 +82,7 @@ export const PlaceOrderFormDialog = ({
           currencyLabel={currencyName}
           tokenLabel={tokenName}
           currencyBalance={currencyBalance}
+          suffix={suffix}
           tokenBalance={
             tokenBalance?.data !== undefined ? tokenBalance.data.amount : 0
           }
