@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Formik } from 'formik'
 import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
 
 import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-import { getTotalAmountByRecordDate, useCreateDraftPayout } from 'state/payout/hooks'
+import { getTotalAmountByRecordDate, useCreateDraftPayout, usePayoutState } from 'state/payout/hooks'
 import { TYPE } from 'theme'
 import { FormGrid } from 'pages/KYC/styleds'
 import { useTokensList } from 'hooks/useTokensList'
@@ -23,12 +23,24 @@ export const PayoutForm: FC = () => {
   const [tokenAmount, setTokenAmount] = useState<any>({
     walletsAmount: null,
     poolsAmount: null,
-    totalSum: null,
+    totalSum: 0,
   })
+  const { error } = usePayoutState()
   const [isAmountLoading, setIsAmountLoading] = useState(false)
   const createDraft = useCreateDraftPayout()
   const addPopup = useAddPopup()
   const history = useHistory()
+
+  useEffect(() => {
+    if (error) {
+      addPopup({
+        info: {
+          success: false,
+          summary: error.message ?? 'Something went wrong',
+        },
+      })
+    }
+  }, [error])
 
   const handleFormSubmit = async (values: any) => {
     const body = transformPayoutDraftDTO(values)
@@ -43,12 +55,7 @@ export const PayoutForm: FC = () => {
       })
       history.push(`/payout/${data.id}`)
     } else {
-      addPopup({
-        info: {
-          success: false,
-          summary: data?.message ?? 'Something went wrong',
-        },
-      })
+
     }
   }
 

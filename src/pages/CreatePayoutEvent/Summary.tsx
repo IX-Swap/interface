@@ -37,7 +37,7 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
         poolsAmount: null,
         totalSum: null,
       })
-      onValueChange('secTokenAmount', '')
+      onValueChange('secTokenAmount', 0)
     }
   }, [isRecordFuture])
 

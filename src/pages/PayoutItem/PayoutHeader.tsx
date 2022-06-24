@@ -25,7 +25,7 @@ interface Props {
 }
 
 export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
-  const { secToken, payoutToken, description, status, type, attachments, title } = payout
+  const { secToken, payoutToken, description, status, type, attachments, title, otherType } = payout
   const history = useHistory()
   
   const goBack = () => {
@@ -60,7 +60,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
         </ReadMore>
       </ReadMoreContainer>
 
-      <InfoBlock type={capitalizeFirstLetter(type)} token={payoutToken} attachments={attachments} />
+      <InfoBlock type={capitalizeFirstLetter(type === 'other' ? otherType : type)} token={payoutToken} attachments={attachments} />
     </Column>
   )
 }

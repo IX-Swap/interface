@@ -49,6 +49,7 @@ const createDraftPayout = async (newPayoutDraft: any) => {
   }
 
   const result = await apiService.post(payout.createDraft, formData)
+  console.log(result)
   return result.data
 }
 
@@ -62,7 +63,7 @@ export function usePublishPayout() {
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
-        dispatch(createDraft.rejected({ errorMessage: 'Could not publish payout' }))
+        dispatch(createDraft.rejected({ errorMessage: error }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -81,7 +82,7 @@ export function useCreateDraftPayout() {
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
-        dispatch(createDraft.rejected({ errorMessage: 'Could not create draft payout' }))
+        dispatch(createDraft.rejected({ errorMessage: error }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },

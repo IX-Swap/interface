@@ -153,7 +153,6 @@ export const Select = ({
   }, [value, options, isMulti])
   return (
     <StyledReactSelect
-      menuIsOpen
       error={error}
       options={options}
       isSearchable={isSearchable}
