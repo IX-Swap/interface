@@ -36,7 +36,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
   const isClaimed = false
 
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
-  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.id} />
+  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
   if (isNotTokenHolder) return <NotTokenHoldersView status={status} />
 
   const getContentByStatus = () => {
