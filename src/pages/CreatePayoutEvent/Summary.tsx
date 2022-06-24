@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import styled from 'styled-components'
 import { Flex } from 'rebass'
@@ -23,10 +23,23 @@ interface Props {
   tokenAmount: any
   isLoading: boolean
   isRecordFuture: boolean
+  setTokenAmount: (newValue: any) => void
+  onValueChange: (key: string, value: any) => void
 }
 
-export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture }) => {
+export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, setTokenAmount, onValueChange }) => {
   const { poolsAmount, walletsAmount, totalSum } = tokenAmount
+
+  useEffect(() => {
+    if (isRecordFuture) {
+      setTokenAmount({
+        walletsAmount: null,
+        poolsAmount: null,
+        totalSum: null,
+      })
+      onValueChange('secTokenAmount', '')
+    }
+  }, [isRecordFuture])
 
   const getValue = (amount: number) => {
     if (isLoading) return t`Loading...`

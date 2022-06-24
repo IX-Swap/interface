@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import styled from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
+import { useHistory } from 'react-router-dom'
 
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -29,13 +30,13 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
   const { token, secToken, tokenAmount, recordDate, startDate, endDate, type } = values
   const publishPayout = usePublishPayout()
   const addPopup = useAddPopup()
+  const history = useHistory()
 
   const handleFormSubmit = async () => {
     const body = transformPayoutDraftDTO(values)
     const data = await publishPayout(body)
 
     if (data?.id) {
-      // history.push('/kyc') redirect to my payouts page
       close()
       addPopup({
         info: {
@@ -43,11 +44,12 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
           summary: 'Payout was successfully published',
         },
       })
+      history.push(`/payout/${data.id}`)
     } else {
       addPopup({
         info: {
           success: false,
-          summary: 'Something went wrong',
+          summary: data?.message ?? 'Something went wrong',
         },
       })
     }
@@ -138,7 +140,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
           <StyledButtonIXSGradient
             type="button"
             onClick={handleFormSubmit}
-          >{t`Confirm Payment`}</StyledButtonIXSGradient>
+          >{t`Publish Payout Event`}</StyledButtonIXSGradient>
         </ModalBody>
       </ModalBlurWrapper>
     </RedesignedWideModal>

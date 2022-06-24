@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import moment from 'moment'
@@ -31,6 +31,13 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
   const { token, tokenAmount, recordDate, startDate, secToken } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
+
+  useEffect(() => {
+    const { title, secToken, type } = values
+    if (!title && secToken?.value && type) {
+      onValueChange('title', `${type} payout event for ${secToken.label}`)
+    }
+  }, [values])
 
   const open = () => {
     setOpenModal(true)
