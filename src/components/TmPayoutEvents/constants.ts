@@ -4,7 +4,7 @@ export enum PAYOUT_TYPE {
   INTEREST = 'interest',
   ROYALTIES = 'royalties',
   AIRDROPS = 'airdrops',
-  OTHERS = 'others',
+  OTHERS = 'other',
 }
 
 export const PAYOUT_TYPE_LABEL = {

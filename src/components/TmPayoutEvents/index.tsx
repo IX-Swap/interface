@@ -121,7 +121,7 @@ const Row = ({ item, onEdit }: IRow) => {
   const dateFormat = 'MMM d, YYYY'
 
   const clickView = () => {
-    history.push(routes.payoutItem(id))
+    history.push({ pathname: routes.payoutItem(id), state: { cameFromManagerPage: true } })
   }
 
   return (
