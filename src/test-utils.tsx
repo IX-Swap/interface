@@ -1,40 +1,39 @@
-import React from 'react'
-import { Route, Router } from 'react-router-dom'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import {
+  adaptV4Theme,
+  createTheme,
+  StyledEngineProvider,
+  ThemeProvider
+} from '@mui/material/styles'
+import createGenerateClassName from '@mui/styles/createGenerateClassName'
+import StylesProvider from '@mui/styles/StylesProvider'
 import {
   render,
-  waitFor,
   RenderOptions,
-  RenderResult
+  RenderResult,
+  waitFor
 } from '@testing-library/react'
-import {
-  ThemeProvider,
-  StyledEngineProvider,
-  createTheme,
-  adaptV4Theme
-} from '@mui/material/styles'
-import StylesProvider from '@mui/styles/StylesProvider'
-import createGenerateClassName from '@mui/styles/createGenerateClassName'
-import { history } from 'config/history'
+import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
+import { AppStateProvider } from 'app/hooks/useAppState'
+import { DepositStoreProvider } from 'app/pages/accounts/pages/banks/context'
+import { DepositStore } from 'app/pages/accounts/pages/banks/context/store'
+import { AppThemeProvider } from 'AppThemeProvider'
 import { UserProvider } from 'auth/context'
-import { UserStore } from 'auth/context/store'
 import { PasswordResetProvider } from 'auth/context/password-reset'
 import PasswordResetStore from 'auth/context/password-reset/store'
 import { PasswordResetStep } from 'auth/context/password-reset/types'
-import { DepositStore } from 'app/pages/accounts/pages/banks/context/store'
-import { DepositStoreProvider } from 'app/pages/accounts/pages/banks/context'
-import { ServicesProvider } from 'hooks/useServices'
-import { renderHook, RenderHookResult } from '@testing-library/react-hooks'
-import { BreadcrumbsProvider } from 'hooks/useBreadcrumbs'
-import { ToastProvider } from 'react-toast-notifications'
-import { AppStateProvider } from 'app/hooks/useAppState'
+import { UserStore } from 'auth/context/store'
 import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
-import { AppThemeProvider } from 'AppThemeProvider'
-import apiService from 'services/api'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { history } from 'config/history'
+import { BreadcrumbsProvider } from 'hooks/useBreadcrumbs'
+import { ServicesProvider } from 'hooks/useServices'
+import React from 'react'
 import { QueryCache, ReactQueryCacheProvider } from 'react-query'
-import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
+import { Route, Router } from 'react-router-dom'
+import { ToastProvider } from 'react-toast-notifications'
+import apiService from 'services/api'
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -245,16 +244,4 @@ export interface FakeOpenOrdersContextWrapperProps {
     hasOpenIndices: boolean
     openIndex?: string
   }
-}
-export const FakeOpenOrdersContextWrapper: React.FC<
-  FakeOpenOrdersContextWrapperProps
-> = ({ children, context }) => {
-  const { isIndexOpen, toggleRow, hasOpenIndices, openIndex } = context
-  return (
-    <OpenOrdersContext.Provider
-      value={{ isIndexOpen, toggleRow, hasOpenIndices, openIndex }}
-    >
-      {children}
-    </OpenOrdersContext.Provider>
-  )
 }

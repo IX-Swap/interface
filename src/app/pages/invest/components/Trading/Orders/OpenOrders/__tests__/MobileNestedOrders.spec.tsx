@@ -1,36 +1,33 @@
-import Grid from '@mui/material/Grid'
-import React from 'react'
-import { FakeOpenOrdersContextWrapper, render } from 'test-utils'
-import { Hidden } from '@mui/material'
 import * as useStyles from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders.styles'
-
-import {
-  OpenOrdersContext,
-  OpenOrdersContextWrapper
-} from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
-import { MobileNestedOrders } from '../MobileNestedOrders'
+import React from 'react'
+import { render } from '@testing-library/react'
+import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 import { orders } from '__fixtures__/otcOrders'
+import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
+import { MobileNestedOrders } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders'
 
-jest.mock('@mui/material/Hidden', () => jest.fn(({ children }) => children))
 jest.mock(
   'app/pages/invest/components/Trading/Orders/OpenOrders/MobileConfirmationMessage',
   () => ({
-    MobileConfirmationMessage: jest.fn()
+    MobileConfirmationMessage: jest.fn(() => null)
   })
 )
+
 jest.mock(
   'app/pages/invest/components/Trading/Orders/OpenOrders/MobileConfirmationMessage',
   () => ({
-    ConfirmOTCOrderActions: jest.fn()
+    MobileConfirmationMessage: jest.fn(() => null)
   })
 )
+
 jest.mock(
   'app/pages/invest/components/Trading/Orders/OpenOrders/ToggleDetailsButton',
   () => ({
-    ToggleDetailsButton: jest.fn()
+    ToggleDetailsButton: jest.fn(() => null)
   })
 )
-describe('MobileConfirmationMessage', () => {
+
+describe('MobileNestedOrders', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -43,11 +40,14 @@ describe('MobileConfirmationMessage', () => {
     tableHeader: 'f',
     dataCell: 'e'
   }
-  it('renders empty state correctly for account state', () => {
+  it('Renders mobile nested orders correctly when we have a list of matches', () => {
     jest.spyOn(useStyles, 'useStyles').mockReturnValueOnce(styles as any)
-    render(
-      <FakeOpenOrdersContextWrapper
-        context={{
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValue({
+      isDesktop: false
+    } as any)
+    const { getByTestId } = render(
+      <OpenOrdersContext.Provider
+        value={{
           isIndexOpen: () => true,
           toggleRow: () => undefined,
           hasOpenIndices: true,
@@ -55,9 +55,8 @@ describe('MobileConfirmationMessage', () => {
         }}
       >
         <MobileNestedOrders items={orders} />
-      </FakeOpenOrdersContextWrapper>
+      </OpenOrdersContext.Provider>
     )
-
-    expect(Hidden).toHaveBeenCalledTimes(1)
+    expect(getByTestId('matches-nested-mobile')).toBeDefined()
   })
 })
