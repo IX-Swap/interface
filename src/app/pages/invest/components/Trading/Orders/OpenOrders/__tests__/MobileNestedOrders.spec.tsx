@@ -43,7 +43,7 @@ describe('MobileNestedOrders', () => {
   it('Renders mobile nested orders correctly when we have a list of matches', () => {
     jest.spyOn(useStyles, 'useStyles').mockReturnValueOnce(styles as any)
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValue({
-      isDesktop: false
+      isMobile: true
     } as any)
     const { getByTestId } = render(
       <OpenOrdersContext.Provider

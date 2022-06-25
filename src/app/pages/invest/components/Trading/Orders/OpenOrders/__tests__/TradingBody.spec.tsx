@@ -74,7 +74,7 @@ describe('TradingBody', () => {
 
   it('renders TradingBody desktop correctly', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValue({
-      isDesktop: true
+      isMobile: false
     } as any)
     render(<TradingBody />)
     expect(TradingOrders).toHaveBeenCalledTimes(1)
@@ -92,7 +92,7 @@ describe('TradingBody', () => {
   })
   it('renders TradingBody mobile correctly', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isDesktop: false
+      isMobile: true
     } as any)
     render(<TradingBody />)
     expect(TradingOrders).toHaveBeenCalledTimes(1)

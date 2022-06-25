@@ -26,7 +26,7 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
   const open = context?.hasOpenIndices
   const classes = useStyles()
   const openIndex = context?.openIndex
-  const { isDesktop } = useAppBreakpoints()
+  const { isMobile } = useAppBreakpoints()
 
   const selectedItem = useMemo(
     () => items.filter(item => item._id === openIndex)?.[0],
@@ -41,10 +41,9 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
     }
   }
   const matches = selectedItem.matches ?? []
-  console.log({ matches })
   return (
     <>
-      {!isDesktop && (
+      {isMobile && (
         <Drawer
           anchor='bottom'
           open={open}
