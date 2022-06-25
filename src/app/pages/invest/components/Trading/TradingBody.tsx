@@ -1,4 +1,4 @@
-import { Grid, Hidden } from '@mui/material'
+import { Grid } from '@mui/material'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { PlaceOrderFormDialog } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog'
 import { useCurrencyBalance } from 'app/pages/exchange/hooks/useCurrencyBalance'
@@ -13,6 +13,7 @@ import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 
 export const TradingBody = () => {
@@ -20,6 +21,7 @@ export const TradingBody = () => {
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
+  const { isDesktop } = useAppBreakpoints()
   const {
     accountState,
     isWhitelisted: { found }
@@ -46,7 +48,8 @@ export const TradingBody = () => {
       <Grid item className={classes.colorGrid} minHeight={325} xs={12} md={8}>
         <TradingOrders />
       </Grid>
-      <Hidden lgDown>
+
+      {isDesktop && (
         <Grid item container xs={12} md={4}>
           <PlaceOrderForm
             createOrderStatus={createOrderStatus}
@@ -67,8 +70,9 @@ export const TradingBody = () => {
             onSubmit={submitForm}
           />
         </Grid>
-      </Hidden>
-      <Hidden mdUp>
+      )}
+
+      {!isDesktop && (
         <PlaceOrderFormDialog
           symbol={currencyName}
           createOrderStatus={createOrderStatus}
@@ -87,7 +91,7 @@ export const TradingBody = () => {
           )}
           submitForm={submitForm}
         />
-      </Hidden>
+      )}
     </Grid>
   )
 }
