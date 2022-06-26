@@ -7,6 +7,7 @@ import get from 'lodash/get'
 import React from 'react'
 import {
   needsConfirmation,
+  sortOpenOrders,
   useOpenOrderState
 } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
@@ -20,13 +21,14 @@ export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
 }
 
 export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
-  const { columns, items: sorted } = props
+  const { columns, items } = props
   const { showEmptyState, mobileRowColor } = useOpenOrderState(props)
   const classes = useStyles()
 
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
+  const sorted = [...items]?.sort(sortOpenOrders) ?? []
 
   return (
     <>
@@ -78,7 +80,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
                     <Grid
                       item
                       xs={12}
-                      key={`${item._id}-timeout`}
+                      key={`${item._id ?? ''}-timeout`}
                       style={{
                         backgroundColor: mobileRowColor(item),
                         textAlign: 'center'

@@ -15,10 +15,10 @@ describe('validateOTCOrder', () => {
   })
   it('shows validation message for invalid data', () => {
     expect(validateOTCOrder(invalidOTCOrderData)).toEqual(
-      'Amount and price must be greater than 0'
+      'Quantity and price must be greater than 0'
     )
     expect(validateOTCOrder(invalidFloatingPointAmount)).toEqual(
-      'Floating point amounts are not allowed'
+      'Floating point quantity is not allowed'
     )
   })
 })

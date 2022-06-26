@@ -1,9 +1,10 @@
-import { useTheme } from '@mui/material'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import { isNonEmptyArray } from 'helpers/arrays'
 import { getRoundedPercentage } from 'helpers/numbers'
+import { capitalizeFirstLetter } from 'helpers/strings'
+import { useAppTheme } from 'hooks/useAppTheme'
 import {
   ColumnOTCMatch,
   OpenOTCOrder,
@@ -33,7 +34,7 @@ export const useOpenOrderState = (
   props: TableViewRendererProps<OpenOTCOrder>
 ) => {
   const { columns, items, hasActions, loading } = props
-  const theme = useTheme()
+  const { theme } = useAppTheme()
   const mobileRowColor = (item: OpenOTCOrder) => {
     if (!needsConfirmation(item)) {
       return 'initial'
@@ -96,10 +97,17 @@ export const showCancelButton = ({ item }: { item: OpenOTCOrder }) => {
       OTCOrderStatus.PENDING,
       OTCOrderStatus.SETTLED
     ]
-    return !disableCancelStatuses.includes(item?.status as any)
+    return !disableCancelStatuses.includes(item?.status)
   }
   const pendingMatches = item?.matches?.filter(
     item => item.status === OTCOrderStatus.PENDING
   )
   return !isNonEmptyArray(pendingMatches)
+}
+
+export const renderOTCOrderStatus = ({ item }: { item: OpenOTCOrder }) => {
+  if (item.orderType === 'SELL') {
+    return capitalizeFirstLetter(item?.status ?? '')
+  }
+  return 'Pending'
 }

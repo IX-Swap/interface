@@ -9,5 +9,11 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       width: '100%'
     }
+  },
+  buttonMobile: {
+    textTransform: 'none',
+    backgroundColor: theme.palette.background.paper,
+    border: 'none',
+    fontWeight: 400
   }
 }))

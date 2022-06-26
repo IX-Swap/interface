@@ -1,6 +1,6 @@
 import makeStyles from '@mui/styles/makeStyles'
 
-export default makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   container: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr',

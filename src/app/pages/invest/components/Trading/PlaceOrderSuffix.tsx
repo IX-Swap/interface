@@ -139,7 +139,8 @@ export const PlaceOrderSuffix = ({
     found,
     switchChain,
     targetChainName,
-    connectCallback
+    connectCallback,
+    isTablet
   ])
 
   if (

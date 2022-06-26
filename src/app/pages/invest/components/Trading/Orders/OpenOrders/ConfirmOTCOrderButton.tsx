@@ -67,11 +67,11 @@ export const ConfirmOTCOrderButton = ({
             <Button
               disabled={isLoading || loadingTransaction}
               onClick={handleClick}
-              variant='contained'
+              variant='outlined'
               color='primary'
               data-testid='confirmButtonMobile'
               fullWidth
-              {...rest}
+              className={classes.buttonMobile}
             >
               Confirm
             </Button>

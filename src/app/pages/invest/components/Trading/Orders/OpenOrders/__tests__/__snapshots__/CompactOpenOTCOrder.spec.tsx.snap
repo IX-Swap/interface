@@ -1,0 +1,479 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
+<div>
+  <tbody
+    class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+  >
+    <tr
+      class="MuiTableRow-root css-17ivmep-MuiTableRow-root"
+    >
+      <td
+        class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a76h2d-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-r87p6a-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            >
+              05/10/2022
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Pair
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-19nocy2-MuiTypography-root"
+            >
+              IX-APE/USD
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Side
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            Sell
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Price
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 8,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Quantity
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            1
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Total
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 8,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Filled
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            0%
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+            style="text-align: center;"
+          >
+            <div
+              class="makeStyles-infoCell-3 MuiBox-root css-0"
+            >
+              <div
+                class="makeStyles-separator-1 MuiBox-root css-0"
+              />
+              Order expired
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-1n2mv2k"
+            >
+              <button
+                class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButtonBase-root makeStyles-toggleButton-5 css-1ohzc29-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Show details
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr
+      class="MuiTableRow-root css-17ivmep-MuiTableRow-root"
+    >
+      <td
+        class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a76h2d-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-r87p6a-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            >
+              05/10/2022
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Pair
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-19nocy2-MuiTypography-root"
+            >
+              IX-APE/USD
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Side
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            Sell
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Price
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 8,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Quantity
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            1
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Total
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 8,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Filled
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            0%
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+            style="text-align: center;"
+          >
+            <div
+              class="makeStyles-infoCell-3 MuiBox-root css-0"
+            >
+              <div
+                class="makeStyles-separator-1 MuiBox-root css-0"
+              />
+              To complete the trade confirm token transfer (Order expired)
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-1n2mv2k"
+            >
+              <button
+                class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButtonBase-root makeStyles-toggleButton-5 css-1ohzc29-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Show details
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr
+      class="MuiTableRow-root css-17ivmep-MuiTableRow-root"
+    >
+      <td
+        class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a76h2d-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-r87p6a-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            >
+              05/10/2022
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Pair
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-19nocy2-MuiTypography-root"
+            >
+              IX-APE/USD
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Side
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            Buy
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Price
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 8,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Quantity
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            5
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Total
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 42,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Filled
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            20%
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr
+      class="MuiTableRow-root css-17ivmep-MuiTableRow-root"
+    >
+      <td
+        class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a76h2d-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-r87p6a-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            >
+              05/10/2022
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Pair
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-19nocy2-MuiTypography-root"
+            >
+              IX-APE/USD
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Side
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            Sell
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Price
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 8,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Quantity
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            1
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Total
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            USD 8,500.00
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+          >
+            Filled
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1ka4sjm-MuiGrid-root"
+            style="text-align: right; font-weight: 400;"
+          >
+            0%
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+            style="text-align: center;"
+          >
+            <div
+              class="makeStyles-infoCell-3 MuiBox-root css-0"
+            >
+              <div
+                class="makeStyles-separator-1 MuiBox-root css-0"
+              />
+              To complete the trade confirm token transfer (Order expired)
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-1n2mv2k"
+            >
+              <button
+                class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButtonBase-root makeStyles-toggleButton-5 css-1ohzc29-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Show details
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</div>
+`;
