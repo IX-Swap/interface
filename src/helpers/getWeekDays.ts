@@ -13,7 +13,7 @@ export const getWeekDays = (data: InvestmentGrowthData) => {
     if (typeof found === 'undefined') {
       a.push(new Date(noHours))
     }
-    return a.map(it => new Date(it))
+    return a
   }, [])
   return weekDays
 }

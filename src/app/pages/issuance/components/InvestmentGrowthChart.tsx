@@ -11,12 +11,8 @@ import { prepareChartData } from 'helpers/prepareChartData'
 export const InvestmentGrowthChart = () => {
   const theme = useTheme()
   const { data, isLoading } = useInvestmentGrowth()
-  console.log('data', data)
 
   const hasData = data !== undefined && data.length > 0
-  if (hasData) {
-    console.log('getWeekDays(data.slice(1))', getWeekDays(data.slice(1)))
-  }
 
   const dateTicks = hasData ? getWeekDays(data.slice(1)) : undefined
 
