@@ -1,11 +1,11 @@
 /* eslint-disable */
 export default [
-  'Salary',
-  'Inheritance',
-  'Loan',
-  'Lottery/Windfall',
-  'Investment Gain',
-  'Rental Income',
-  'Business Revenue',
-  'Others'
+  'SALARY',
+  'INHERITANCE',
+  'LOAN',
+  'LOTTERY/WINDFALL',
+  'INVESTMENT GAIN',
+  'RENTAL INCOME',
+  'BUSINESS REVENUE',
+  'OTHERS'
 ]
