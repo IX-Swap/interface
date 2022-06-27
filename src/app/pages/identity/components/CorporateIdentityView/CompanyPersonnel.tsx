@@ -53,16 +53,16 @@ export const CompanyPersonnel = ({ personnel, title }: PersonnelProps) => {
             <Grid item>
               <LabelledValue
                 isRedesigned
-                value={personnel.contactNumber}
-                label='Contact Number'
+                value={personnel.designation}
+                label='Designation'
               />
             </Grid>
 
             <Grid item>
               <LabelledValue
                 isRedesigned
-                value={personnel.designation}
-                label='Designation'
+                value={personnel.contactNumber}
+                label='Contact Number'
               />
             </Grid>
           </Grid>

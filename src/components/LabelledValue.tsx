@@ -134,7 +134,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         {row && !reverse && ':'}
       </Typography>
       {row ? <Box px={0.5} /> : null}
-      {!row && !reverse ? <Box py={0.4} /> : null}
+      {!row && !reverse ? <Box py={isRedesigned ? 0.75 : 0.4} /> : null}
       {React.isValidElement(last.text) ? (
         <Box
           style={{
