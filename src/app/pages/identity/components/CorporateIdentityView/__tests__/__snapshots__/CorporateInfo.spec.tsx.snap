@@ -27,7 +27,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
               Company Name
             </p>
             <div
-              class="MuiBox-root css-1gbh5gc"
+              class="MuiBox-root css-1jhs511"
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -50,7 +50,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
               Country of Incorporation
             </p>
             <div
-              class="MuiBox-root css-1gbh5gc"
+              class="MuiBox-root css-1jhs511"
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -73,7 +73,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
               Source of Funds
             </p>
             <div
-              class="MuiBox-root css-1gbh5gc"
+              class="MuiBox-root css-1jhs511"
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -103,7 +103,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
               Registration Number/UEN
             </p>
             <div
-              class="MuiBox-root css-1gbh5gc"
+              class="MuiBox-root css-1jhs511"
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -126,7 +126,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
               Legal Entity
             </p>
             <div
-              class="MuiBox-root css-1gbh5gc"
+              class="MuiBox-root css-1jhs511"
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"

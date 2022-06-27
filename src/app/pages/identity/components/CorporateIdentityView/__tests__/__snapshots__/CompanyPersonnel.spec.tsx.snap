@@ -40,7 +40,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
                 Full Name
               </p>
               <div
-                class="MuiBox-root css-1gbh5gc"
+                class="MuiBox-root css-1jhs511"
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -63,7 +63,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
                 Email Address
               </p>
               <div
-                class="MuiBox-root css-1gbh5gc"
+                class="MuiBox-root css-1jhs511"
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -87,16 +87,16 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
                 style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
               >
-                Contact Number
+                Designation
               </p>
               <div
-                class="MuiBox-root css-1gbh5gc"
+                class="MuiBox-root css-1jhs511"
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
                 style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
               >
-                +6512345678901
+                CEO
               </p>
             </div>
           </div>
@@ -110,16 +110,16 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
                 style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
               >
-                Designation
+                Contact Number
               </p>
               <div
-                class="MuiBox-root css-1gbh5gc"
+                class="MuiBox-root css-1jhs511"
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
                 style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
               >
-                CEO
+                +6512345678901
               </p>
             </div>
           </div>

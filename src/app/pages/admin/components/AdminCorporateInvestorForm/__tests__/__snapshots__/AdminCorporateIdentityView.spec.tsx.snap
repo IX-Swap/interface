@@ -43,7 +43,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   Company Name
                 </p>
                 <div
-                  class="MuiBox-root css-1gbh5gc"
+                  class="MuiBox-root css-1jhs511"
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -66,7 +66,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   Country of Incorporation
                 </p>
                 <div
-                  class="MuiBox-root css-1gbh5gc"
+                  class="MuiBox-root css-1jhs511"
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -89,7 +89,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   Source of Funds
                 </p>
                 <div
-                  class="MuiBox-root css-1gbh5gc"
+                  class="MuiBox-root css-1jhs511"
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -119,7 +119,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   Registration Number/UEN
                 </p>
                 <div
-                  class="MuiBox-root css-1gbh5gc"
+                  class="MuiBox-root css-1jhs511"
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -142,7 +142,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   Legal Entity
                 </p>
                 <div
-                  class="MuiBox-root css-1gbh5gc"
+                  class="MuiBox-root css-1jhs511"
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -206,7 +206,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Line 1
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -229,7 +229,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     City
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -252,7 +252,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Country
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -279,7 +279,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Line 2
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -302,7 +302,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     State
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -325,7 +325,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Postal Code
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -369,7 +369,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Line 1
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -392,7 +392,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     City
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -415,7 +415,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Country
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -442,7 +442,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Line 2
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -465,7 +465,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     State
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -488,7 +488,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     Postal Code
                   </p>
                   <div
-                    class="MuiBox-root css-1gbh5gc"
+                    class="MuiBox-root css-1jhs511"
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -559,7 +559,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                         Full Name
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -582,7 +582,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                         Email Address
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
@@ -606,16 +606,16 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
                         style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
                       >
-                        Contact Number
+                        Designation
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
                         style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
                       >
-                        +6512345678901
+                        CEO
                       </p>
                     </div>
                   </div>
@@ -629,16 +629,16 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
                         style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
                       >
-                        Designation
+                        Contact Number
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
                         style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
                       >
-                        CEO
+                        +6512345678901
                       </p>
                     </div>
                   </div>
