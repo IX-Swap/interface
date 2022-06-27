@@ -30,6 +30,9 @@ export const SearchFilter = (props: SearchFilterProps) => {
           {...rest}
           margin='dense'
           defaultValue={value}
+          sx={{
+            height: 49
+          }}
           startAdornment={
             inputAdornmentPosition === 'start' ? (
               <InputAdornment position={inputAdornmentPosition}>

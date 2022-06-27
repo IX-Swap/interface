@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Grid } from '@mui/material'
+import { Button, Grid, Box } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { useTheme } from '@mui/material/styles'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
@@ -28,8 +28,10 @@ export const CommitmentTableFilter = () => {
           justifyContent={'space-between'}
         >
           <Grid item xs={12} md={5} lg={6}>
-            {isTablet && <VSpacer size={'small'} />}
-            <FundStatusFilter />
+            <Box mt='-28px'>
+              {isTablet && <VSpacer size={'small'} />}
+              <FundStatusFilter />
+            </Box>
           </Grid>
           <Grid
             item
@@ -45,6 +47,7 @@ export const CommitmentTableFilter = () => {
               style={{
                 fontSize: 12,
                 fontWeight: 400,
+                height: 49,
                 marginTop: isTablet ? theme.spacing(2) : 0
               }}
               onClick={() => setIsEmailPopupVisible(true)}

@@ -67,6 +67,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Token Name'
                   value={dso?.tokenName}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -74,6 +75,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Symbol'
                   value={dso?.tokenSymbol}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -81,6 +83,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Corporate'
                   value={dso?.corporate?.companyLegalName}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
             </Grid>
@@ -93,6 +96,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Network'
                   value={dso?.network?.name}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -100,6 +104,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Capital Structure'
                   value={dso?.capitalStructure}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -107,6 +112,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Decimal'
                   value={dso?.decimals}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
             </Grid>
@@ -119,6 +125,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Currency'
                   value={dso?.currency?.symbol}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -126,6 +133,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Launch Date'
                   value={dso?.launchDate}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -133,6 +141,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Completion Date'
                   value={dso?.completionDate}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
             </Grid>
@@ -144,6 +153,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                   label='Unique Identifier Code'
                   value={dso?.uniqueIdentifierCode}
                   isNewThemeOn
+                  valueColor='rgb(255,255,255)'
                 />
               </Grid>
             </Grid>
