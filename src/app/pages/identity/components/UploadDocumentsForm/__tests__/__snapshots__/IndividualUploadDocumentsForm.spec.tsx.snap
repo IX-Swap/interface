@@ -6,27 +6,31 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
     style="width: 100%;"
   >
     <div
-      class="MuiBox-root css-0"
-    >
-      <h5
-        class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
-      >
-        Upload Documents
-      </h5>
-    </div>
-    <p
-      class="MuiTypography-root MuiTypography-body1 makeStyles-text-1 css-e3fhh0-MuiTypography-root"
-    >
-      Please upload the following documents. All account statements and documents should be dated within 3 months. 
-      <br />
-       Type of document format supported is jpg, jpeg, png, gif, tiff, webp, svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
-    </p>
-    <div
-      class="MuiBox-root css-12aw9rk"
-    />
-    <div
       class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
     >
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Upload Documents
+          </h5>
+        </div>
+        <p
+          class="MuiTypography-root MuiTypography-body1 makeStyles-text-1 css-e3fhh0-MuiTypography-root"
+        >
+          Please upload the following documents. All account statements and documents should be dated within 3 months. 
+          <br />
+           Type of document format supported is jpg, jpeg, png, gif, tiff, webp, svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
+        </p>
+        <div
+          class="MuiBox-root css-12aw9rk"
+        />
+      </div>
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
       >
@@ -43,7 +47,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-lx31tv-MuiGrid-root"
               >
                 <h6
-                  class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-subtitle1 css-19iufmc-MuiTypography-root"
                 >
                   Proof of Identity
                 </h6>
@@ -58,7 +62,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 makeStyles-text-1 css-1b4l2pg-MuiTypography-root"
               >
-                Passport, Driving License, NRIC, Government Issued ID Card And Others
+                passport, driving license, NRIC, government issued ID card and others
               </p>
             </div>
           </div>
@@ -66,66 +70,70 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
             >
               <div
-                class=" MuiBox-root css-1r25d6u"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
               >
                 <div
-                  class="MuiBox-root css-70qvj9"
+                  class=" MuiBox-root css-1r25d6u"
                 >
-                  <svg
-                    class="css-1s8o7ec"
-                    fill="#778194"
-                    height="24px"
-                    width="24px"
+                  <div
+                    class="MuiBox-root css-70qvj9"
                   >
-                    <use
-                      href="image-mock#file"
+                    <svg
+                      class="css-1s8o7ec"
+                      fill="#778194"
+                      height="24px"
+                      width="24px"
+                    >
+                      <use
+                        href="image-mock#file"
+                      />
+                    </svg>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                    >
+                      Upload File
+                    </p>
+                  </div>
+                  <div
+                    class="MuiBox-root css-0"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
+                    >
+                      Browse
+                    </p>
+                    <input
+                      accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
+                      autocomplete="off"
+                      hidden=""
+                      id="proofOfIdentity[0].value"
+                      name="proofOfIdentity[0].value"
+                      style="display: none;"
+                      tabindex="-1"
+                      type="file"
                     />
-                  </svg>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
-                  >
-                    Upload File
-                  </p>
-                </div>
-                <div
-                  class="MuiBox-root css-0"
-                  role="button"
-                  tabindex="0"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
-                  >
-                    Browse
-                  </p>
-                  <input
-                    accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
-                    autocomplete="off"
-                    hidden=""
-                    id="proofOfIdentity"
-                    name="proofOfIdentity"
-                    style="display: none;"
-                    tabindex="-1"
-                    type="file"
-                  />
-                </div>
-                <div
-                  class="MuiBox-root css-16mkun2"
-                >
-                  <span
-                    aria-valuemax="100"
-                    aria-valuemin="0"
-                    aria-valuenow="0"
-                    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
-                    role="progressbar"
+                  </div>
+                  <div
+                    class="MuiBox-root css-16mkun2"
                   >
                     <span
-                      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
-                      style="transform: translateX(-100%);"
-                    />
-                  </span>
+                      aria-valuemax="100"
+                      aria-valuemin="0"
+                      aria-valuenow="0"
+                      class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                      role="progressbar"
+                    >
+                      <span
+                        class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                        style="transform: translateX(-100%);"
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -148,7 +156,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-lx31tv-MuiGrid-root"
               >
                 <h6
-                  class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-subtitle1 css-19iufmc-MuiTypography-root"
                 >
                   Proof of Address
                 </h6>
@@ -163,7 +171,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 makeStyles-text-1 css-1b4l2pg-MuiTypography-root"
               >
-                Utility Bills, Bank Statement/Credit Card Statement, Tenancy Agreement, Telecom Bill
+                utility bills, bank statement/credit card statement, tenancy agreement, telecom bill
               </p>
             </div>
           </div>
@@ -171,66 +179,70 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
             >
               <div
-                class=" MuiBox-root css-1r25d6u"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
               >
                 <div
-                  class="MuiBox-root css-70qvj9"
+                  class=" MuiBox-root css-1r25d6u"
                 >
-                  <svg
-                    class="css-1s8o7ec"
-                    fill="#778194"
-                    height="24px"
-                    width="24px"
+                  <div
+                    class="MuiBox-root css-70qvj9"
                   >
-                    <use
-                      href="image-mock#file"
+                    <svg
+                      class="css-1s8o7ec"
+                      fill="#778194"
+                      height="24px"
+                      width="24px"
+                    >
+                      <use
+                        href="image-mock#file"
+                      />
+                    </svg>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                    >
+                      Upload File
+                    </p>
+                  </div>
+                  <div
+                    class="MuiBox-root css-0"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
+                    >
+                      Browse
+                    </p>
+                    <input
+                      accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
+                      autocomplete="off"
+                      hidden=""
+                      id="proofOfAddress[0].value"
+                      name="proofOfAddress[0].value"
+                      style="display: none;"
+                      tabindex="-1"
+                      type="file"
                     />
-                  </svg>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
-                  >
-                    Upload File
-                  </p>
-                </div>
-                <div
-                  class="MuiBox-root css-0"
-                  role="button"
-                  tabindex="0"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
-                  >
-                    Browse
-                  </p>
-                  <input
-                    accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
-                    autocomplete="off"
-                    hidden=""
-                    id="proofOfAddress"
-                    name="proofOfAddress"
-                    style="display: none;"
-                    tabindex="-1"
-                    type="file"
-                  />
-                </div>
-                <div
-                  class="MuiBox-root css-16mkun2"
-                >
-                  <span
-                    aria-valuemax="100"
-                    aria-valuemin="0"
-                    aria-valuenow="0"
-                    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
-                    role="progressbar"
+                  </div>
+                  <div
+                    class="MuiBox-root css-16mkun2"
                   >
                     <span
-                      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
-                      style="transform: translateX(-100%);"
-                    />
-                  </span>
+                      aria-valuemax="100"
+                      aria-valuemin="0"
+                      aria-valuenow="0"
+                      class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                      role="progressbar"
+                    >
+                      <span
+                        class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                        style="transform: translateX(-100%);"
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -253,13 +265,25 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-item css-lx31tv-MuiGrid-root"
               >
                 <h6
-                  class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-subtitle1 css-19iufmc-MuiTypography-root"
                 >
                   Evidence of Accreditation
                 </h6>
                 <div
                   class="MuiBox-root css-111wug5"
                 />
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-colorDisabled MuiSvgIcon-fontSizeMedium css-fuvw14-MuiSvgIcon-root"
+                  data-mui-internal-clone-element="true"
+                  data-testid="upload-document-field-tooltip"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                  />
+                </svg>
               </div>
             </div>
             <div
@@ -283,66 +307,70 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
             >
               <div
-                class=" MuiBox-root css-1r25d6u"
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
               >
                 <div
-                  class="MuiBox-root css-70qvj9"
+                  class=" MuiBox-root css-1r25d6u"
                 >
-                  <svg
-                    class="css-1s8o7ec"
-                    fill="#778194"
-                    height="24px"
-                    width="24px"
+                  <div
+                    class="MuiBox-root css-70qvj9"
                   >
-                    <use
-                      href="image-mock#file"
+                    <svg
+                      class="css-1s8o7ec"
+                      fill="#778194"
+                      height="24px"
+                      width="24px"
+                    >
+                      <use
+                        href="image-mock#file"
+                      />
+                    </svg>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                    >
+                      Upload File
+                    </p>
+                  </div>
+                  <div
+                    class="MuiBox-root css-0"
+                    role="button"
+                    tabindex="0"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
+                    >
+                      Browse
+                    </p>
+                    <input
+                      accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
+                      autocomplete="off"
+                      hidden=""
+                      id="evidenceOfAccreditation[0].value"
+                      name="evidenceOfAccreditation[0].value"
+                      style="display: none;"
+                      tabindex="-1"
+                      type="file"
                     />
-                  </svg>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
-                  >
-                    Upload File
-                  </p>
-                </div>
-                <div
-                  class="MuiBox-root css-0"
-                  role="button"
-                  tabindex="0"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
-                  >
-                    Browse
-                  </p>
-                  <input
-                    accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
-                    autocomplete="off"
-                    hidden=""
-                    id="evidenceOfAccreditation"
-                    name="evidenceOfAccreditation"
-                    style="display: none;"
-                    tabindex="-1"
-                    type="file"
-                  />
-                </div>
-                <div
-                  class="MuiBox-root css-16mkun2"
-                >
-                  <span
-                    aria-valuemax="100"
-                    aria-valuemin="0"
-                    aria-valuenow="0"
-                    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
-                    role="progressbar"
+                  </div>
+                  <div
+                    class="MuiBox-root css-16mkun2"
                   >
                     <span
-                      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
-                      style="transform: translateX(-100%);"
-                    />
-                  </span>
+                      aria-valuemax="100"
+                      aria-valuemin="0"
+                      aria-valuenow="0"
+                      class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                      role="progressbar"
+                    >
+                      <span
+                        class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                        style="transform: translateX(-100%);"
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
