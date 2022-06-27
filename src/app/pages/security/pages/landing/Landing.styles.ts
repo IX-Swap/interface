@@ -8,8 +8,8 @@ export default makeStyles(theme => ({
     }
   },
   contentWrapper: {
-    width: 884,
-    maxWidth: 884,
+    // width: 884,
+    // maxWidth: 884,
     backgroundColor: theme.palette.background.paper,
     borderRadius: 16,
     boxShadow:
