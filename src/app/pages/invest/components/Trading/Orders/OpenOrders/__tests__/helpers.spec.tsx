@@ -2,12 +2,15 @@ import * as useAppTheme from 'hooks/useAppTheme'
 import {
   order1,
   order2,
+  order3,
   order3Buy,
   order4,
   orders,
   sortedOrders
 } from '__fixtures__/otcOrders'
 import {
+  hasApprovedMatches,
+  hasMatches,
   needsConfirmation,
   renderOpenOrderPercentage,
   renderOTCOrderStatus,
@@ -55,6 +58,19 @@ describe('showCancelButton', () => {
   it('checks if a order needs confirmation correctly', () => {
     expect(showCancelButton({ item: order4 })).toEqual(true)
     expect(showCancelButton({ item: order2 })).toEqual(false)
+  })
+})
+
+describe('hasMatches', () => {
+  it('checks if a order needs has matches', () => {
+    expect(hasMatches(order4)).toEqual(true)
+    expect(hasMatches(order3)).toEqual(false)
+  })
+})
+
+describe('hasApprovedMatches', () => {
+  it('checks if an order already has matched quantity', () => {
+    expect(hasApprovedMatches(order4)).toEqual(false)
   })
 })
 

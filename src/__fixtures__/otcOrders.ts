@@ -94,7 +94,7 @@ export const order2: OpenOTCOrder = {
   status: OTCOrderStatus.CONFIRMED,
   ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
 }
-const order3: OpenOTCOrder = {
+export const order3: OpenOTCOrder = {
   _id: '609d1d93c54af74af46c027e',
   createdAt: '2022-05-10T12:47:07.411Z',
   pair: fakeOTCMarket,

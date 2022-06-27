@@ -61,6 +61,12 @@ export const sortOpenOrders = (first: OpenOTCOrder, _: OpenOTCOrder) =>
     ? -1
     : 1
 
+export const hasMatches = (item: OpenOTCOrder) =>
+  item.matches !== undefined && item.matches.length > 0
+
+export const hasApprovedMatches = (row: OpenOTCOrder) =>
+  row.amount - row.availableAmount > 0
+
 export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
   if (row.orderType === 'SELL') {
     return getRoundedPercentage({

@@ -8,7 +8,9 @@ import React from 'react'
 import {
   needsConfirmation,
   sortOpenOrders,
-  useOpenOrderState
+  useOpenOrderState,
+  hasMatches,
+  hasApprovedMatches
 } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import { OpenOrdersEmptyState } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OpenOrdersEmptyState'
 import { OTCOrderActionsMobile } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OTCOrderActionsMobile'
@@ -77,24 +79,28 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
                 )}
                 {needsConfirmation(item) && (
                   <>
-                    <Grid
-                      item
-                      xs={12}
-                      key={`${item._id ?? ''}-timeout`}
-                      style={{
-                        backgroundColor: mobileRowColor(item),
-                        textAlign: 'center'
-                      }}
-                    >
-                      <Box className={classes.infoCell}>
-                        <Box className={classes.separator} />
-                        {getExpiresOrderMessage(new Date(item.createdAt))}
-                      </Box>
-                    </Grid>
+                    {hasApprovedMatches(item) && (
+                      <Grid
+                        item
+                        xs={12}
+                        key={`${item._id ?? ''}-timeout`}
+                        style={{
+                          backgroundColor: mobileRowColor(item),
+                          textAlign: 'center'
+                        }}
+                      >
+                        <Box className={classes.infoCell}>
+                          <Box className={classes.separator} />
+                          {getExpiresOrderMessage(new Date(item.createdAt))}
+                        </Box>
+                      </Grid>
+                    )}
 
-                    <Grid item xs={12}>
-                      <ToggleDetailsButton item={item} />
-                    </Grid>
+                    {hasMatches(item) && (
+                      <Grid item xs={12}>
+                        <ToggleDetailsButton item={item} />
+                      </Grid>
+                    )}
                   </>
                 )}
               </Grid>
