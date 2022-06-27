@@ -27,7 +27,10 @@ export const personalInfoSchema = yup
     lastName: nameSchema.required(validationMessages.required),
     nationality: yup.string().required(validationMessages.required),
     dob: birthdaySchema.required(validationMessages.required),
-    contactNumber: yup.string().phone().required(validationMessages.required),
+    contactNumber: yup
+      .string()
+      .phone(undefined, 'Must be a valid phone number')
+      .required(validationMessages.required),
     email: emailSchema.required(validationMessages.required),
     address: addressSchema.required(validationMessages.required),
     gender: yup.string().required(validationMessages.required),

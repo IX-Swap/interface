@@ -85,7 +85,10 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   nationality: yup.string().required(validationMessages.required),
   dob: birthdaySchema.required(validationMessages.required),
   countryOfResidence: yup.string().required(validationMessages.required),
-  contactNumber: yup.string().phone().required(validationMessages.required),
+  contactNumber: yup
+    .string()
+    .phone(undefined, 'Must be a valid phone number')
+    .required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
   gender: yup.string().required(validationMessages.required)
 })
@@ -98,7 +101,10 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
   fullName: yup.string().required(validationMessages.required),
   designation: yup.string().required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
-  contactNumber: yup.string().phone().required(validationMessages.required),
+  contactNumber: yup
+    .string()
+    .phone(undefined, 'Must be a valid phone number')
+    .required(validationMessages.required),
   documents: yup
     .mixed<DataroomFile[], object>()
     .required(validationMessages.required),
