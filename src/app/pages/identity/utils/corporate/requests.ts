@@ -15,6 +15,7 @@ export const getCorporateInfoRequestPayload = (
     legalEntityStatus,
     logo,
     representatives,
+    sourceOfFund,
     ...rest
   } = data
   const customLegalEntityStatus =
@@ -27,6 +28,7 @@ export const getCorporateInfoRequestPayload = (
 
   return {
     ...rest,
+    sourceOfFund: sourceOfFund.toUpperCase(),
     logo: (logo as DataroomFile)?._id,
     representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
