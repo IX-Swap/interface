@@ -8,19 +8,21 @@ import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarke
 import { OverviewPageFilters } from 'app/pages/invest/components/OverviwPageFilters'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const InvestOverview = () => {
   const theme = useTheme()
+  const { isMobile } = useAppBreakpoints()
 
   return (
     <>
       <Grid container justifyContent='space-between'>
         <Grid item container justifyContent={'flex-end'}>
-          <Grid item>
+          <Grid item xs={12} sm={'auto'}>
             <OverviewPageFilters />
           </Grid>
-          <Grid item>
-            <Box pl={2}>
+          <Grid item xs={12} sm={'auto'} order={isMobile ? -1 : 'initial'}>
+            <Box pl={{ sm: 2 }} pb={2}>
               <Button
                 component={AppRouterLinkComponent}
                 to={InvestRoute.commitments}
@@ -67,7 +69,7 @@ export const InvestOverview = () => {
         <Grid item>
           <Typography variant='h4'>Secondary Market</Typography>
         </Grid>
-        <Grid item>
+        <Grid item style={{ maxWidth: '100%' }}>
           <SecondaryMarketTable />
         </Grid>
       </Grid>
