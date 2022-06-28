@@ -19,7 +19,7 @@ import { LeavePageContext } from 'app/pages/issuance/context/LeavePageContext'
 import { renderTotal } from 'helpers/numbers'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useContext, useMemo } from 'react'
-import { OpenOTCOrder } from 'types/otcOrder'
+import { OpenOTCOrder, OTCMatch } from 'types/otcOrder'
 import { Icon } from 'ui/Icons/Icon'
 
 export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
@@ -73,7 +73,7 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
               </Box>
               <Box className={classes.separator} />
               <Grid display='flex' flexDirection={'column'} gap={2}>
-                {matches?.map(item => (
+                {matches?.map((item: OTCMatch) => (
                   <Box
                     display={'flex'}
                     className={classes.rowBox}
