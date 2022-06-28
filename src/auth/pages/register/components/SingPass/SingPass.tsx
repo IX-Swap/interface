@@ -12,12 +12,6 @@ export const SingPass = () => {
     setOpen(false)
   }
 
-  console.log(
-    !hasValue(process.env.SING_PASS_AUTH_URL) ||
-      !hasValue(process.env.SING_PASS_CLIENT_ID) ||
-      !hasValue(process.env.SING_PASS_REDIRECT_URL)
-  )
-
   if (
     !hasValue(process.env.SING_PASS_AUTH_URL) ||
     !hasValue(process.env.SING_PASS_CLIENT_ID) ||

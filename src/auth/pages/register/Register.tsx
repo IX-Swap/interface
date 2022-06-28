@@ -18,6 +18,7 @@ import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
+import { hasValue } from 'helpers/forms'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -68,9 +69,11 @@ export const Register: React.FC = observer(() => {
         name: values.name ?? 'singpassuser',
         email: values.email,
         singPassLogin: isMyInfo,
-        oldEmail: data?.email,
+        oldEmail: hasValue(data?.email) ? data?.email : 'no@email.com',
         mobileNo: values.phoneNumber,
-        oldMobileNo: data?.mobileno,
+        oldMobileNo: hasValue(data?.mobileno)
+          ? data?.mobileno
+          : 'no-old-mobile-no',
         password: values.password,
         accountType: identity?.toLocaleUpperCase()
       },
