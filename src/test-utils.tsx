@@ -236,12 +236,3 @@ export const invokeMutationFn = async (result: any, payload: any) => {
 export * from '@testing-library/react'
 // eslint-disable-next-line import/export
 export { customRenderer as render }
-
-export interface FakeOpenOrdersContextWrapperProps {
-  context: {
-    isIndexOpen: (index: string) => boolean
-    toggleRow: (index: string) => void
-    hasOpenIndices: boolean
-    openIndex?: string
-  }
-}
