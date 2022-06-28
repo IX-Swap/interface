@@ -78,8 +78,8 @@ describe('Register', () => {
           email: signupArgs.email,
           password: 'Dr0wss@pDr0wss@p',
           mobileNo: undefined,
-          oldEmail: undefined,
-          oldMobileNo: undefined,
+          oldEmail: 'no@email.com',
+          oldMobileNo: 'no-old-mobile-no',
           singPassLogin: false
         },
         undefined
