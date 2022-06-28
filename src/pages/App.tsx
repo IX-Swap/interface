@@ -17,6 +17,7 @@ import { KYCStatuses } from 'pages/KYC/enum'
 import { useAuthState } from 'state/auth/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { useGetWihitelabelConfig } from 'state/whitelabel/hooks'
 
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -93,6 +94,7 @@ export default function App() {
   const getMyKyc = useGetMyKyc()
   const { token } = useAuthState()
   const dispatch = useDispatch()
+  const getWitelabelConfig = useGetWihitelabelConfig()
 
   const { kyc } = useKYCState()
 
@@ -150,6 +152,7 @@ export default function App() {
 
   useEffect(() => {
     clearLocaleStorage()
+    getWitelabelConfig()
   }, [])
 
   useEffect(() => {
