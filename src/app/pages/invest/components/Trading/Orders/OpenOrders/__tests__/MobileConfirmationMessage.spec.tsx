@@ -1,9 +1,9 @@
+import Grid from '@mui/material/Grid'
 import { MobileConfirmationMessage } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileConfirmationMessage'
 import * as getExpiresOrderMessage from 'helpers/dates'
 import React from 'react'
 import { render } from 'test-utils'
-import { order1 } from '__fixtures__/otcOrders'
-import Grid from '@mui/material/Grid'
+import { order1Open } from '__fixtures__/otcOrders'
 
 jest.mock('@mui/material/Grid', () =>
   jest.fn(({ children }) => <>{children}</>)
@@ -18,7 +18,7 @@ describe('MobileConfirmationMessage', () => {
     jest
       .spyOn(getExpiresOrderMessage, 'getExpiresOrderMessage')
       .mockImplementation(() => 'Test message')
-    render(<MobileConfirmationMessage item={order1} color={'initial'} />)
+    render(<MobileConfirmationMessage item={order1Open} color={'initial'} />)
     expect(Grid).toHaveBeenCalledTimes(1)
   })
 })

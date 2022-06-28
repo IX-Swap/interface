@@ -3,6 +3,7 @@ import {
   CreateOTCOrderArgs,
   OpenOTCOrder,
   OTCMatch,
+  OTCOrder,
   OTCOrderStatus,
   OTCParticipant
 } from 'types/otcOrder'
@@ -68,7 +69,7 @@ const fakeOTCMatch2: OTCMatch = {
   },
   status: OTCOrderStatus.CONFIRMED
 }
-export const order1: OpenOTCOrder = {
+export const order1: OTCOrder = {
   _id: '609d1d93c54af74af46c027c',
   createdAt: '2022-05-10T12:45:07.411Z',
   pair: fakeOTCMarket,
@@ -79,9 +80,13 @@ export const order1: OpenOTCOrder = {
   user: '1234',
   status: OTCOrderStatus.CONFIRMED,
   ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1',
+  matches: fakeOTCMatch
+}
+export const order1Open: OpenOTCOrder = {
+  ...order1,
   matches: [fakeOTCMatch]
 }
-export const order2: OpenOTCOrder = {
+export const order2: OTCOrder = {
   _id: '609d1d93c54af74af46c027d',
   createdAt: '2022-05-10T12:46:07.411Z',
   pair: fakeOTCMarket,
@@ -90,30 +95,39 @@ export const order2: OpenOTCOrder = {
   availableAmount: 1,
   amount: 5,
   user: '1234',
-  matches: [fakeOTCMatch1],
+  matches: fakeOTCMatch1,
   status: OTCOrderStatus.CONFIRMED,
   ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
 }
-export const order3: OpenOTCOrder = {
+export const order2Open: OpenOTCOrder = {
+  ...order2,
+  matches: [fakeOTCMatch1]
+}
+
+export const order3: OTCOrder = {
   _id: '609d1d93c54af74af46c027e',
   createdAt: '2022-05-10T12:47:07.411Z',
   pair: fakeOTCMarket,
   orderType: 'SELL',
   availableAmount: 1,
-
   price: 8500,
   user: '1234',
-
   amount: 1,
   status: OTCOrderStatus.MATCH,
   ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
 }
+
+export const order3Open: OpenOTCOrder = {
+  ...order3,
+  matches: []
+}
+
 export const order3Buy: OpenOTCOrder = {
   ...order3,
   orderType: 'BUY',
   matches: [fakeOTCMatch]
 }
-export const order4: OpenOTCOrder = {
+export const order4: OTCOrder = {
   _id: '609d1d93c54af74af46c028a',
   createdAt: '2022-05-10T12:47:07.411Z',
   pair: fakeOTCMarket,
@@ -131,13 +145,28 @@ export const order4: OpenOTCOrder = {
   },
   price: 8500,
   user: '1234',
-  matches: [fakeOTCMatch2],
+  matches: fakeOTCMatch2,
   amount: 1,
   status: OTCOrderStatus.MATCH,
   ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1'
 }
-export const orders: OpenOTCOrder[] = [order1, order2, order3, order4]
-export const sortedOrders: OpenOTCOrder[] = [order4, order1, order2, order3]
+
+export const order4Open: OpenOTCOrder = {
+  ...order4,
+  matches: [fakeOTCMatch2]
+}
+export const orders: OpenOTCOrder[] = [
+  order1Open,
+  order2Open,
+  order3Open,
+  order4Open
+]
+export const sortedOrders: OpenOTCOrder[] = [
+  order4Open,
+  order1Open,
+  order2Open,
+  order3Open
+]
 
 export const validOTCOrderData: CreateOTCOrderArgs = {
   orderType: 'SELL',

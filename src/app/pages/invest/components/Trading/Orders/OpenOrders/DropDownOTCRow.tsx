@@ -1,8 +1,8 @@
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material'
 import { Box, IconButton } from '@mui/material'
+import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 import React, { useContext } from 'react'
 import { OpenOTCOrder } from 'types/otcOrder'
-import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
+import { Icon } from 'ui/Icons/Icon'
 export interface DropDownOTCRowProps {
   order: OpenOTCOrder
 }
@@ -13,12 +13,11 @@ export const DropDownOTCRow = ({ order }: DropDownOTCRowProps) => {
   const handleClick = () => {
     context?.toggleRow(order._id)
   }
-
+  const iconName = isOpen === true ? 'chevron-up' : 'chevron-down'
   return (
     <Box display='flex' justifyContent='center' alignItems={'center'}>
       <IconButton data-testid='more-button' size='small' onClick={handleClick}>
-        {isOpen !== true && <ArrowDropDown color='primary' />}
-        {isOpen === true && <ArrowDropUp color='primary' />}
+        <Icon name={iconName} />
       </IconButton>
     </Box>
   )

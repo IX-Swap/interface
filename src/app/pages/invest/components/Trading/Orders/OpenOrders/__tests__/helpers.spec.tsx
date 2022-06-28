@@ -1,10 +1,14 @@
 import * as useAppTheme from 'hooks/useAppTheme'
 import {
   order1,
+  order1Open,
   order2,
+  order2Open,
   order3,
   order3Buy,
+  order3Open,
   order4,
+  order4Open,
   orders,
   sortedOrders
 } from '__fixtures__/otcOrders'
@@ -35,18 +39,18 @@ describe('sortOpenOrders', () => {
 
 describe('needsConfirmation', () => {
   it('checks if a order needs confirmation correctly', () => {
-    expect(needsConfirmation(order4)).toEqual(true)
+    expect(needsConfirmation(order4Open)).toEqual(true)
   })
 })
 
 describe('renderOpenOrderPercentage', () => {
   it('renders open order percentage correctly for sell order', () => {
     jest.spyOn(helpers, 'getRoundedPercentage').mockReturnValueOnce('5%')
-    expect(renderOpenOrderPercentage(order1)).toEqual('5%')
+    expect(renderOpenOrderPercentage(order1Open)).toEqual('5%')
   })
   it('renders open order percentage correctly for buy order', () => {
     jest.spyOn(helpers, 'getRoundedPercentage').mockReturnValueOnce('5%')
-    expect(renderOpenOrderPercentage(order2)).toEqual('5%')
+    expect(renderOpenOrderPercentage(order2Open)).toEqual('5%')
   })
   it('renders 0 for buy order without pending or completed matches', () => {
     jest.spyOn(helpers, 'getRoundedPercentage').mockReturnValueOnce('5%')
@@ -56,28 +60,28 @@ describe('renderOpenOrderPercentage', () => {
 
 describe('showCancelButton', () => {
   it('checks if a order needs confirmation correctly', () => {
-    expect(showCancelButton({ item: order4 })).toEqual(true)
-    expect(showCancelButton({ item: order2 })).toEqual(false)
+    expect(showCancelButton({ item: order4Open })).toEqual(true)
+    expect(showCancelButton({ item: order2Open })).toEqual(false)
   })
 })
 
 describe('hasMatches', () => {
   it('checks if a order needs has matches', () => {
-    expect(hasMatches(order4)).toEqual(true)
-    expect(hasMatches(order3)).toEqual(false)
+    expect(hasMatches(order4Open)).toEqual(true)
+    expect(hasMatches(order3Open)).toEqual(false)
   })
 })
 
 describe('hasApprovedMatches', () => {
   it('checks if an order already has matched quantity', () => {
-    expect(hasApprovedMatches(order4)).toEqual(false)
+    expect(hasApprovedMatches(order4Open)).toEqual(false)
   })
 })
 
 describe('renderOTCOrderStatus', () => {
   it('Renders the order shown order status correctly depending on the type and matches status', () => {
-    expect(renderOTCOrderStatus({ item: order4 })).toEqual('Match')
-    expect(renderOTCOrderStatus({ item: order2 })).toEqual('Pending')
+    expect(renderOTCOrderStatus({ item: order4Open })).toEqual('Match')
+    expect(renderOTCOrderStatus({ item: order2Open })).toEqual('Pending')
   })
 })
 

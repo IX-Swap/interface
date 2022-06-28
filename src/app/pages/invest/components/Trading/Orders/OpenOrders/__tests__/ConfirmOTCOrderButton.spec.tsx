@@ -1,12 +1,12 @@
 import { ConfirmOTCOrderButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ConfirmOTCOrderButton'
+import { getColumnMatchedOrder } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import * as useConfirmMyOrder from 'app/pages/invest/hooks/useConfirmMyOrder'
 import * as usePairTokenAddressNetwork from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import * as useSendToken from 'app/pages/invest/hooks/useSendToken'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { render } from 'test-utils'
-import { fakeOTCMatch1, order1 } from '__fixtures__/otcOrders'
-import { getColumnMatchedOrder } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
+import { fakeOTCMatch1, order1Open } from '__fixtures__/otcOrders'
 
 describe('ConfirmOTCOrderButton', () => {
   afterEach(async () => {
@@ -33,7 +33,7 @@ describe('ConfirmOTCOrderButton', () => {
     } as any)
     const { getByTestId } = render(
       <ConfirmOTCOrderButton
-        order={getColumnMatchedOrder(order1, fakeOTCMatch1)}
+        order={getColumnMatchedOrder(order1Open, fakeOTCMatch1)}
       />
     )
     expect(getByTestId('confirmButton')).toBeDefined()
@@ -47,7 +47,7 @@ describe('ConfirmOTCOrderButton', () => {
     } as any)
     const { getByTestId } = render(
       <ConfirmOTCOrderButton
-        order={getColumnMatchedOrder(order1, fakeOTCMatch1)}
+        order={getColumnMatchedOrder(order1Open, fakeOTCMatch1)}
       />
     )
     expect(getByTestId('loader')).toBeDefined()
@@ -62,7 +62,7 @@ describe('ConfirmOTCOrderButton', () => {
     } as any)
     const { getByTestId } = render(
       <ConfirmOTCOrderButton
-        order={getColumnMatchedOrder(order1, fakeOTCMatch1)}
+        order={getColumnMatchedOrder(order1Open, fakeOTCMatch1)}
       />
     )
     expect(getByTestId('confirmButtonMobile')).toBeDefined()

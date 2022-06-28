@@ -15,7 +15,7 @@ export interface OTCIdentity {
   individual?: OTCParticipant
   corporate?: OTCParticipant
 }
-export interface OTCOrder {
+export interface BaseOTCOrder {
   _id: string
   price: number
   amount: number
@@ -26,23 +26,14 @@ export interface OTCOrder {
   status: OTCOrderStatus
   createdAt: string
   user: string
-  matches?: OTCMatch
   identity?: OTCIdentity
 }
+export interface OTCOrder extends BaseOTCOrder {
+  matches?: OTCMatch
+}
 
-export interface OpenOTCOrder {
-  _id: string
-  price: number
-  amount: number
-  ethAddress: string
-  pair: OTCMarket
-  orderType: OrderType
-  availableAmount: number
-  status: OTCOrderStatus
-  createdAt: string
-  user: string
+export interface OpenOTCOrder extends BaseOTCOrder {
   matches?: OTCMatch[]
-  identity?: OTCIdentity
 }
 
 export interface ColumnOTCMatch extends OTCMatch {
