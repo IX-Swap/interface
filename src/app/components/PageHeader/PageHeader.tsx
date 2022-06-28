@@ -59,7 +59,7 @@ export const PageHeader = (props: PageHeaderProps) => {
             </Grid>
           </Grid>
           {showBreadcrumbs && (
-            <Grid>
+            <Grid item>
               <Breadcrumbs />
             </Grid>
           )}
