@@ -4,9 +4,11 @@ import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenA
 import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useState } from 'react'
-import { OTCOrder } from 'types/otcOrder'
+import { ColumnOTCMatch } from 'types/otcOrder'
+import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ConfirmOTCOrderButton.styles'
+import { LeavePagePrompt } from 'components/LeavePagePrompt/LeavePagePrompt'
 export interface ConfirmOTCOrderButtonProps extends ButtonProps {
-  order: OTCOrder
+  order: ColumnOTCMatch
 }
 export const ConfirmOTCOrderButton = ({
   order,
@@ -14,43 +16,53 @@ export const ConfirmOTCOrderButton = ({
 }: ConfirmOTCOrderButtonProps) => {
   const { chainId, address } = usePairTokenAddressNetwork()
   const [loadingTransaction, setLoadingTransaction] = useState(false)
+  const [showPrompt, setShowPrompt] = useState(false)
+  const classes = useStyles()
+  const sendCallback = async () => {
+    await confirmMatch({
+      orderId: order.parentOrder,
+      matchedOrderId: order.matchedOrder?._id ?? ''
+    })
+  }
   const sendToken = useSendToken({
     address: address,
-    tokenChainId: chainId
+    tokenChainId: chainId,
+    amount: order.matchedAmount ?? 0,
+    recipient: order.ethAddress,
+    callback: sendCallback
   })
   const [confirmMatch, { isLoading }] = useConfirmMyOrder()
+
   const handleClick = async () => {
     setLoadingTransaction(true)
     try {
-      const sendingResult = await sendToken(
-        order.matches?.matchedAmount ?? 0,
-        order.matches?.ethAddress
-      )
-      if (sendingResult) {
-        await confirmMatch({
-          orderId: order._id,
-
-          matchedOrderId: order.matches?.order ?? ''
-        })
-      }
+      setShowPrompt(true)
+      await sendToken()
     } catch {
       console.error('error confirming')
     } finally {
+      setShowPrompt(false)
       setLoadingTransaction(false)
     }
   }
   const { isMiniLaptop } = useAppBreakpoints()
 
   return (
-    <Box display='flex' justifyContent='center' alignItems={'center'}>
-      {(isLoading || loadingTransaction) && <CircularProgress size={14} />}
+    <>
+      <LeavePagePrompt showPrompt={showPrompt} />
+      {(isLoading || loadingTransaction) && (
+        <Box className={classes.loader} data-testid='loader'>
+          <CircularProgress size={14} />
+        </Box>
+      )}
       {!(isLoading || loadingTransaction) && (
-        <>
+        <Box display='flex' alignItems={'center'} minWidth={'100%'}>
           {!isMiniLaptop && (
             <Button
               disabled={isLoading || loadingTransaction}
               onClick={handleClick}
               color='primary'
+              data-testid='confirmButton'
               size='small'
               {...rest}
             >
@@ -61,16 +73,17 @@ export const ConfirmOTCOrderButton = ({
             <Button
               disabled={isLoading || loadingTransaction}
               onClick={handleClick}
-              variant='contained'
+              variant='outlined'
               color='primary'
+              data-testid='confirmButtonMobile'
               fullWidth
-              {...rest}
+              className={classes.buttonMobile}
             >
               Confirm
             </Button>
           )}
-        </>
+        </Box>
       )}
-    </Box>
+    </>
   )
 }
