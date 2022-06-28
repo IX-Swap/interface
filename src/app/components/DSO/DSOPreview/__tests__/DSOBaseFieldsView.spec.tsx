@@ -33,18 +33,29 @@ describe('DSOBaseFieldsView', () => {
     render(<DSOBaseFieldsView dso={dso} />)
 
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Token Name', value: dso?.tokenName, isNewThemeOn: true },
+      {
+        label: 'Token Name',
+        value: dso?.tokenName,
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Symbol', value: dso.tokenSymbol, isNewThemeOn: true },
+      {
+        label: 'Symbol',
+        value: dso.tokenSymbol,
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
       {
         label: 'Corporate',
         value: dso.corporate.companyLegalName,
-        isNewThemeOn: true
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
       },
       {}
     )
@@ -52,7 +63,8 @@ describe('DSOBaseFieldsView', () => {
       {
         label: 'Network',
         value: dso.network?.name,
-        isNewThemeOn: true
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
       },
       {}
     )
@@ -60,27 +72,44 @@ describe('DSOBaseFieldsView', () => {
       {
         label: 'Capital Structure',
         value: dso.capitalStructure,
-        isNewThemeOn: true
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
       },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Decimal', value: dso.decimals, isNewThemeOn: true },
+      {
+        label: 'Decimal',
+        value: dso.decimals,
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Currency', value: dso.currency.symbol, isNewThemeOn: true },
+      {
+        label: 'Currency',
+        value: dso.currency.symbol,
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Launch Date', value: dso.launchDate, isNewThemeOn: true },
+      {
+        label: 'Launch Date',
+        value: dso.launchDate,
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
+      },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
       {
         label: 'Completion Date',
         value: dso.completionDate,
-        isNewThemeOn: true
+        isNewThemeOn: true,
+        valueColor: 'rgb(255,255,255)'
       },
       {}
     )

@@ -30,7 +30,7 @@ export const UserActionsDialog = (props: UserActionsDialogProps) => {
   }
 
   return (
-    <UIDialog maxWidth='xs' onClose={handleClose} {...rest}>
+    <UIDialog maxWidth='md' onClose={handleClose} {...rest}>
       <DialogTitle>
         <Box mt={2} maxWidth={410} textAlign='center'>
           {title}

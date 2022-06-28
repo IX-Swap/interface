@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react'
-import { ReactComponent as DoneIcon } from 'assets/icons/completed-icon.svg'
-import { ReactComponent as CloseIcon } from 'assets/icons/close.svg'
-import { Box, Grid, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface DeclarationsListItemProps {
   label: ReactNode
@@ -13,33 +12,19 @@ export const DeclarationsListItem = ({
   value
 }: DeclarationsListItemProps) => {
   return (
-    <Grid item xs={12}>
-      <Box display={'flex'} alignItems={'flex-start'}>
-        <Box style={{ opacity: 0.5 }} mt={0.4}>
-          {value ? (
-            <span data-testid='declarations-list-item-checked'>
-              <DoneIcon />
-            </span>
-          ) : (
-            <span data-testid='declarations-list-item-unchecked'>
-              <CloseIcon />
-            </span>
-          )}
-        </Box>
-        <Box marginLeft={2}>
-          {React.isValidElement(label) ? (
-            label
-          ) : (
-            <Typography
-              fontWeight={400}
-              data-testid='declarations-list-item-label'
-              lineHeight='160%'
-            >
-              {label}
-            </Typography>
-          )}
-        </Box>
-      </Box>
+    <Grid item container flexWrap={'nowrap'} alignItems={'flex-start'}>
+      <Grid item mr={1.5} mt={value ? -0.75 : -0.5}>
+        {value ? (
+          <Icon color={'#7DD320'} name={'check'} />
+        ) : (
+          <Icon color={'#F56283'} name={'close'} />
+        )}
+      </Grid>
+      <Grid item container spacing={1.5} direction={'column'}>
+        <Grid item>
+          <Typography fontWeight={400}>{label}</Typography>
+        </Grid>
+      </Grid>
     </Grid>
   )
 }

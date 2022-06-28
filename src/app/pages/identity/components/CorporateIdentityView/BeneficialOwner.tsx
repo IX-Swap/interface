@@ -1,57 +1,58 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@mui/material'
-import { DataroomHeader } from 'components/dataroom/DataroomHeader'
-import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
+import { Grid } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { Personnel } from 'app/pages/identity/types/forms'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+
+import { ProofDocuments } from 'app/pages/identity/components/CorporateIdentityView/ProofDocuments'
 
 export interface BeneficialOwnerProps {
-  personnel: Personnel
-  showDocumentHeader: boolean
-  documentsTitle: string
+  data: Personnel
+  title: string
 }
 
-export const BeneficialOwner = ({
-  personnel,
-  showDocumentHeader,
-  documentsTitle
-}: BeneficialOwnerProps) => {
+export const BeneficialOwner = ({ data, title }: BeneficialOwnerProps) => {
+  const { fullName, percentageShareholding, documents } = data
+
   return (
-    <Grid container direction={'column'} spacing={6}>
-      <Grid item container>
-        <Grid item xs={12} md={4}>
-          <LabelledValue value={personnel.fullName} label='Full Name' />
+    <FieldContainer>
+      <Grid container direction={'column'} spacing={5}>
+        <Grid item>
+          <FormSectionHeader title={title} />
         </Grid>
-        <Grid item xs={12} md={4}>
-          <LabelledValue
-            value={`${personnel.percentageShareholding}%`}
-            label='Percentage Shareholding'
-          />
-        </Grid>
-      </Grid>
-      <Grid item>
-        {personnel.documents !== undefined ? (
-          <Grid item>
-            <Typography variant='body1'>
-              <Box component='span' fontWeight='bold'>
-                {documentsTitle}
-              </Box>
-            </Typography>
-            <Box mb={1} />
-            <>
-              {showDocumentHeader ? <DataroomHeader /> : null}
-              {personnel.documents.map(document => (
-                <DataroomViewRow
-                  showDivider={false}
-                  title=''
-                  document={document}
-                  key={document._id}
-                />
-              ))}
-            </>
+
+        <Grid
+          item
+          container
+          spacing={5}
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { sx: '1fr', sm: '1fr 1fr' }
+          }}
+        >
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <LabelledValue isRedesigned value={fullName} label='Full Name' />
+            </Grid>
           </Grid>
-        ) : null}
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={
+                  percentageShareholding !== undefined
+                    ? `${percentageShareholding}%`
+                    : '–'
+                }
+                label='Percentage Shareholding'
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <ProofDocuments documents={documents} />
       </Grid>
-    </Grid>
+    </FieldContainer>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, Grid, FormHelperText } from '@mui/material'
-import { OTPInputField } from 'components/form/OTPInputField'
+import { OTPInputField } from 'ui/OTPInputField/OTPInputField'
 
 export interface Reset2FAOTPFieldProps {
   otp: string
@@ -21,7 +21,7 @@ export const Reset2FAOTPField = ({
   return (
     <Grid container direction='column' spacing={1}>
       <Grid item>
-        <Typography component='p' align='center' variant='caption'>
+        <Typography component='p' align='center' variant='caption' mb={2}>
           Please enter your OTP from Google Authenticator before proceeding
         </Typography>
       </Grid>

@@ -9,12 +9,7 @@ describe('CorporateAddress', () => {
   })
 
   it('does not render mailing address when it is undefined', () => {
-    const { queryByText } = render(
-      <CorporateAddress
-        registeredAddress={corporate.companyAddress}
-        mailingAddress={undefined}
-      />
-    )
+    const { queryByText } = render(<CorporateAddress data={corporate} />)
 
     expect(queryByText('Address for Correspondence')).not.toBeTruthy()
   })

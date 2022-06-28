@@ -1,5 +1,5 @@
 import { Box, IconButton, Typography, InputLabel } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AvatarBox } from 'ui/FileUpload/AvatarBox'
 import { FileProps } from 'ui/FileUpload/File'
 import { Icon } from 'ui/Icons/Icon'
@@ -19,14 +19,20 @@ export const Avatar = ({
   rootProps,
   inputProps,
   disabled = false,
-  setCompleted = (num: number) => {},
   value,
-  completed = 0,
   readonly = false
 }: FileProps) => {
   const { setValue } = useFormContext()
+
+  const [currentValue, setCurrentValue] = useState(value)
+
+  useEffect(() => {
+    setCurrentValue(value)
+  }, [value])
+
   const handleRemove = () => {
-    setValue(name, undefined)
+    setValue(name, undefined, { shouldDirty: true })
+    setCurrentValue(undefined)
   }
   return (
     <Box>
@@ -55,10 +61,10 @@ export const Avatar = ({
             cursor: 'pointer'
           }}
         >
-          {value !== undefined ? (
+          {currentValue !== undefined ? (
             <AvatarComponent
               size={120}
-              documentId={getDataroomFileId(value)}
+              documentId={getDataroomFileId(currentValue)}
               variant='square'
             />
           ) : (
@@ -74,7 +80,7 @@ export const Avatar = ({
           )}
           <input id={name} name={name} {...inputProps} disabled={disabled} />
         </Box>
-        {value !== undefined && !readonly ? (
+        {currentValue !== undefined && !readonly ? (
           <Box position='absolute' right={2} bottom={2}>
             <IconButton onClick={handleRemove}>
               <Icon name='trash' />

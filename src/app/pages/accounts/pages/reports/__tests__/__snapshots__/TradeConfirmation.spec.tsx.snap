@@ -32,7 +32,7 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
               </div>
             </div>
             <div
-              class="MuiGrid-root css-vj1n65-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <nav
                 class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
@@ -273,7 +273,7 @@ exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid-root css-vj1n65-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <nav
                 class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
@@ -401,7 +401,7 @@ exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid-root css-vj1n65-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <nav
                 class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"

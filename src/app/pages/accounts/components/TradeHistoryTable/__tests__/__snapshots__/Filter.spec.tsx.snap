@@ -12,7 +12,7 @@ exports[`Filters should match snapshot 1`] = `
         class="makeStyles-searchWrapper-2 MuiBox-root css-0"
       >
         <div
-          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-adornedEnd css-1c4a1fp-MuiInputBase-root-MuiOutlinedInput-root"
+          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-adornedEnd css-zb37ev-MuiInputBase-root-MuiOutlinedInput-root"
         >
           <input
             class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
