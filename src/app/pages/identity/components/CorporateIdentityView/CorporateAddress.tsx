@@ -1,38 +1,50 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import { LabelledValue } from 'components/LabelledValue'
-import { hasValue } from 'helpers/forms'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { AddressSection } from 'app/pages/identity/components/CorporateIdentityView/AddressSection'
 
 export interface CorporateAddressProps {
-  registeredAddress: CorporateIdentity['companyAddress']
-  mailingAddress?: CorporateIdentity['companyAddress']
+  data: CorporateIdentity
 }
 
-export const CorporateAddress = ({
-  registeredAddress,
-  mailingAddress
-}: CorporateAddressProps) => {
+export const CorporateAddress = ({ data }: CorporateAddressProps) => {
+  const { companyAddress, mailingAddress, isMailingAddressSame } = data
+  const currentMailingAddress = isMailingAddressSame
+    ? companyAddress
+    : mailingAddress
+
+  const renderMailingAddressSection = () => {
+    if (data.mailingAddress === undefined || data.isMailingAddressSame) {
+      return null
+    }
+
+    return (
+      <>
+        <Grid item>
+          <FormSectionHeader title='Mailing Address' />
+        </Grid>
+        <AddressSection address={currentMailingAddress} />
+      </>
+    )
+  }
+
   return (
-    <Grid container spacing={3}>
-      {mailingAddress !== undefined ? (
-        <Grid item xs={12} md={4}>
-          <LabelledValue
-            value={Object.values(mailingAddress)
-              .filter(address => hasValue(address))
-              .join(', ')}
-            label='Address for Correspondence'
+    <FieldContainer>
+      <Grid item container spacing={5}>
+        <Grid item>
+          <FormSectionHeader
+            title={
+              data.isMailingAddressSame
+                ? 'Registered & Mailing Address'
+                : 'Mailing Address'
+            }
           />
         </Grid>
-      ) : null}
-      <Grid item xs={12} md={4}>
-        <LabelledValue
-          value={Object.values(registeredAddress)
-            .filter(address => hasValue(address))
-            .join(', ')}
-          label='Registered Address'
-        />
+        <AddressSection address={companyAddress} />
+        {renderMailingAddressSection()}
       </Grid>
-    </Grid>
+    </FieldContainer>
   )
 }

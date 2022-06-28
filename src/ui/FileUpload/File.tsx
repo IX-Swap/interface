@@ -23,6 +23,7 @@ export interface FileProps {
   completed?: number
   readonly?: boolean
   isDisplay?: boolean
+  isFileMissed?: boolean
   remove?: () => void
 }
 
@@ -41,9 +42,13 @@ export const File = ({
   completed = 0,
   readonly = false,
   isDisplay = false,
-  remove
+  remove,
+  isFileMissed = false
 }: FileProps) => {
   const renderLabel = () => {
+    if (isFileMissed) {
+      return 'Missing file'
+    }
     if (
       (!multiple &&
         value != null &&
@@ -85,9 +90,12 @@ export const File = ({
         />
       ) : (
         <Box {...rootProps}>
-          <Typography sx={{ cursor: 'pointer' }} color='primary'>
-            Browse
-          </Typography>
+          {!isFileMissed && (
+            <Typography sx={{ cursor: 'pointer' }} color='primary'>
+              Browse
+            </Typography>
+          )}
+
           <input
             id={name}
             name={name}

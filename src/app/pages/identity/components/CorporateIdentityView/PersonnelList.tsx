@@ -5,28 +5,23 @@ import { Personnel } from 'app/pages/identity/types/forms'
 
 export interface PersonnelListProps {
   personnel: Personnel[]
-  showDocumentHeader?: boolean
-  documentsTitle?: string
 }
 
-export const PersonnelList = ({
-  personnel,
-  showDocumentHeader = false,
-  documentsTitle = 'Documents'
-}: PersonnelListProps) => {
+export const titleText = 'Company Authorized Personnel'
+
+export const PersonnelList = ({ personnel }: PersonnelListProps) => {
+  const getDocumentTitle = (index: number) =>
+    personnel.length > 1 ? `(${index + 1}) ${titleText}` : titleText
+
   if (personnel.length < 1) {
     return null
   }
 
   return (
-    <Grid container direction='column' spacing={6}>
+    <Grid item container direction='column' spacing={2}>
       {personnel.map((personnel, i) => (
         <Grid item key={i}>
-          <CompanyPersonnel
-            personnel={personnel}
-            showDocumentHeader={showDocumentHeader}
-            documentsTitle={documentsTitle}
-          />
+          <CompanyPersonnel personnel={personnel} title={getDocumentTitle(i)} />
         </Grid>
       ))}
     </Grid>

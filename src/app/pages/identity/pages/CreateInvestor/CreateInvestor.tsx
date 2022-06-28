@@ -21,7 +21,7 @@ export const CreateCorporateIdentity = ({
   title
 }: CreateCorporateIdentityProps) => {
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+  const matches = useMediaQuery(theme.breakpoints.down('md'))
   const { data, isSuccess } = useAllCorporates({ type })
 
   if (isSuccess && data.list.length > 0) {

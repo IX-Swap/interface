@@ -81,7 +81,7 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
           email: emailSchema.required(validationMessages.required),
           contactNumber: yup
             .string()
-            .phone()
+            .phone(undefined, 'Must be a valid phone number')
             .required(validationMessages.required),
           // @ts-expect-error
           documents: documentsSchema

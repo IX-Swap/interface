@@ -17,6 +17,18 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   const isSubmitted = data?.status === 'Submitted'
   const isApproved = data?.status === 'Approved'
 
+  const getButtonText = () => {
+    if (isApproved) {
+      return 'Approved'
+    }
+
+    if (isSubmitted) {
+      return 'Submitted'
+    }
+
+    return 'Submit Identity'
+  }
+
   const isValid: boolean =
     step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
 
@@ -47,12 +59,9 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           disableElevation
           fullWidth={fullWidth}
           size='large'
+          style={{ minWidth: 'max-content' }}
         >
-          {isApproved
-            ? 'Approved'
-            : isSubmitted
-            ? 'Submitted'
-            : 'Submit Identity'}
+          {getButtonText()}
         </Button>
       </Box>
     </Tooltip>
