@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { IndividualIdentityView } from 'app/pages/identity/components/IndividualIdentityView/IndividualIdentityView'
 import { IdentityRoute } from 'app/pages/identity/router/config'
@@ -35,12 +35,14 @@ export const ViewIndividual = () => {
 
               <Grid container item className={classes.rightBlock}>
                 <Grid item xs={12}>
-                  <EditButton
-                    fullWidth
-                    variant={'contained'}
-                    link={IdentityRoute.editIndividual}
-                    params={{ identityId: data._id, userId: data.user._id }} // TODO: ask backend to unify user field for all objects
-                  />
+                  <Paper sx={{ p: 4, borderRadius: 2 }}>
+                    <EditButton
+                      fullWidth
+                      variant={'contained'}
+                      link={IdentityRoute.editIndividual}
+                      params={{ identityId: data._id, userId: data.user._id }} // TODO: ask backend to unify user field for all objects
+                    />
+                  </Paper>
                 </Grid>
 
                 {!isMobile && (
