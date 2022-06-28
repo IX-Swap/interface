@@ -35,7 +35,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
               >
                 Full Name
               </p>
@@ -58,7 +58,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
               >
                 Email Address
               </p>
@@ -85,7 +85,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
               >
                 Designation
               </p>
@@ -108,7 +108,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
               >
                 Contact Number
               </p>
