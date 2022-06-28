@@ -22,7 +22,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
             >
               Company Name
             </p>
@@ -45,7 +45,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
             >
               Country of Incorporation
             </p>
@@ -68,7 +68,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
             >
               Source of Funds
             </p>
@@ -98,7 +98,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
             >
               Registration Number/UEN
             </p>
@@ -121,7 +121,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
             >
               Legal Entity
             </p>
