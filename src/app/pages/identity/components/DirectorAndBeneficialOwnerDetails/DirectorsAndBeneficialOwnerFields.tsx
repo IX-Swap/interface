@@ -27,7 +27,7 @@ export const DirectorsAndBeneficialOwnerFields = ({
   return (
     <FieldsArray name={name} control={control}>
       {({ fields, append, remove }) => (
-        <Grid container data-testid={name} direction='column'>
+        <Grid container data-testid={name} direction='column' spacing={2}>
           {fields.map((field, index) => (
             <Grid item key={field.id}>
               <FieldContainer>

@@ -1,4 +1,7 @@
-import { PersonnelList } from 'app/pages/identity/components/CorporateIdentityView/PersonnelList'
+import {
+  PersonnelList,
+  titleText
+} from 'app/pages/identity/components/CorporateIdentityView/PersonnelList'
 import React from 'react'
 import { render } from 'test-utils'
 import { corporate } from '__fixtures__/identity'
@@ -30,8 +33,8 @@ describe('PersonnelList', () => {
       1,
       {
         personnel: personnels[0],
-        showDocumentHeader: false,
-        documentsTitle: 'Documents'
+
+        title: titleText
       },
       {}
     )
