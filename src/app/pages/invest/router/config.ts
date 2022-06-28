@@ -43,11 +43,11 @@ export const investLandingLinks: InternalRouteProps[] = [
     path: InvestRoute.landing
   },
   {
-    label: 'Exchange',
-    path: InvestRoute.exchange
-  },
-  {
     label: 'Trading',
     path: InvestRoute.trading
+  },
+  {
+    label: 'Exchange',
+    path: InvestRoute.exchange
   }
 ]
