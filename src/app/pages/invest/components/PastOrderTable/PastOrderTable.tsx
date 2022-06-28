@@ -28,7 +28,7 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { filter } = usePastOrderFilter(pairId)
-  const { isMiniLaptop } = useAppBreakpoints()
+  const { isTablet } = useAppBreakpoints()
 
   return (
     <>
@@ -44,9 +44,9 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
           columns={columns}
           filter={{ ...filter, orderType: 'PAST' } as any}
           themeVariant={'primary'}
-          noHeader={isMiniLaptop}
+          noHeader={isTablet}
           paperProps={
-            isMiniLaptop
+            isTablet
               ? {
                   variant: 'elevation',
                   elevation: 0
@@ -54,7 +54,7 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
               : undefined
           }
         >
-          {isMiniLaptop
+          {isTablet
             ? (props: TableViewRendererProps<Order>) => (
                 <CompactBody {...props} columns={pastOrderCompactColumns} />
               )

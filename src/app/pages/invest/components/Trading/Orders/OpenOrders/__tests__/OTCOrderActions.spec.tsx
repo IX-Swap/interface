@@ -3,6 +3,7 @@ import { render } from 'test-utils'
 import { fakeOTCMatch1, order1, order1Open } from '__fixtures__/otcOrders'
 import { getColumnMatchedOrder } from '../helpers'
 import { ConfirmOTCOrderActions, OTCOrderActions } from '../OTCOrderActions'
+import * as useStyles from 'app/pages/invest/components/Trading/Orders/OpenOrders/OTCOrderActions.styles'
 
 describe('OTC order actions', () => {
   it('renders actions correctly', () => {
@@ -12,6 +13,9 @@ describe('OTC order actions', () => {
 })
 
 describe('OTC Confirm order actions', () => {
+  jest
+    .spyOn(useStyles, 'useStyles')
+    .mockReturnValueOnce({ status: 'abc' } as any)
   it('renders confirm actions correctly', () => {
     const { container } = render(
       <ConfirmOTCOrderActions

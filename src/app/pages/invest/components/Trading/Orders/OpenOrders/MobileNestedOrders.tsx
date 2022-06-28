@@ -1,4 +1,3 @@
-import CloseIcon from '@mui/icons-material/Close'
 import {
   Box,
   Drawer,
@@ -20,13 +19,14 @@ import { renderTotal } from 'helpers/numbers'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useContext, useMemo } from 'react'
 import { OpenOTCOrder } from 'types/otcOrder'
+import { Icon } from 'ui/Icons/Icon'
 
 export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
   const context = useContext(OpenOrdersContext)
   const open = context?.hasOpenIndices
   const classes = useStyles()
   const openIndex = context?.openIndex
-  const { isMobile } = useAppBreakpoints()
+  const { isTablet } = useAppBreakpoints()
 
   const selectedItem = useMemo(
     () => items.filter(item => item._id === openIndex)?.[0],
@@ -43,7 +43,7 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
   const matches = selectedItem.matches ?? []
   return (
     <>
-      {isMobile && (
+      {isTablet && (
         <Drawer
           anchor='bottom'
           open={open}
@@ -53,7 +53,7 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
           <Box className={classes.drawer}>
             <Box className={classes.close}>
               <IconButton onClick={onClose} size='small'>
-                <CloseIcon />
+                <Icon name='close' />
               </IconButton>
             </Box>
             <Grid flexDirection='column'>

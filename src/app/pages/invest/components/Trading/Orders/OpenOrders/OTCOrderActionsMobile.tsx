@@ -11,8 +11,8 @@ export interface OTCOrderActionsProps {
 
 export const OTCOrderActionsMobile = ({ item }: OTCOrderActionsProps) => {
   const showCancel = showCancelButton({ item })
-  const { isMiniLaptop } = useAppBreakpoints()
-  if (!isMiniLaptop) {
+  const { isTablet } = useAppBreakpoints()
+  if (!isTablet) {
     return null
   }
   if (!showCancel) {

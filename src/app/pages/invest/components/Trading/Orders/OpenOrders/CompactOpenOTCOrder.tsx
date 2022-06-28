@@ -62,10 +62,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
                     <React.Fragment key={key}>
                       <Grid item container justifyContent='space-between'>
                         <Grid item>
-                          {key.length > 0 &&
-                            (typeof render === 'function'
-                              ? render(get(item, key), item)
-                              : get(item, key))}
+                          {renderCell({ render, key, item, label })}
                         </Grid>
                         <Grid item>
                           <OTCOrderActionsMobile item={item} type='Cancel' />
@@ -82,10 +79,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
                         xs={6}
                         style={{ textAlign: 'right', fontWeight: 400 }}
                       >
-                        {key.length > 0 &&
-                          (typeof render === 'function'
-                            ? render(get(item, key), item)
-                            : get(item, key))}
+                        {renderCell({ render, key, item, label })}
                       </Grid>
                     </React.Fragment>
                   )

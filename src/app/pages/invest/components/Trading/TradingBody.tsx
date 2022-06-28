@@ -21,7 +21,7 @@ export const TradingBody = () => {
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
-  const { isMobile } = useAppBreakpoints()
+  const { isMiniLaptop } = useAppBreakpoints()
   const {
     accountState,
     isWhitelisted: { found }
@@ -53,12 +53,12 @@ export const TradingBody = () => {
       columnSpacing={2}
       ml={0}
     >
-      <Grid item className={classes.colorGrid} minHeight={325} xs={12} md={8}>
+      <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={8}>
         <TradingOrders />
       </Grid>
 
-      {!isMobile && (
-        <Grid item container xs={12} md={4}>
+      {!isMiniLaptop && (
+        <Grid item container xs={12} lg={4}>
           <PlaceOrderForm
             createOrderStatus={createOrderStatus}
             isFetching={isFetching}
@@ -73,7 +73,7 @@ export const TradingBody = () => {
         </Grid>
       )}
 
-      {isMobile && (
+      {isMiniLaptop && (
         <PlaceOrderFormDialog
           symbol={currencyName}
           createOrderStatus={createOrderStatus}

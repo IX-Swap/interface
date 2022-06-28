@@ -45,7 +45,7 @@ export const ConfirmOTCOrderButton = ({
       setLoadingTransaction(false)
     }
   }
-  const { isMiniLaptop } = useAppBreakpoints()
+  const { isTablet } = useAppBreakpoints()
 
   return (
     <>
@@ -57,7 +57,7 @@ export const ConfirmOTCOrderButton = ({
       )}
       {!(isLoading || loadingTransaction) && (
         <Box display='flex' alignItems={'center'} minWidth={'100%'}>
-          {!isMiniLaptop && (
+          {!isTablet && (
             <Button
               disabled={isLoading || loadingTransaction}
               onClick={handleClick}
@@ -69,7 +69,7 @@ export const ConfirmOTCOrderButton = ({
               Confirm
             </Button>
           )}
-          {isMiniLaptop && (
+          {isTablet && (
             <Button
               disabled={isLoading || loadingTransaction}
               onClick={handleClick}

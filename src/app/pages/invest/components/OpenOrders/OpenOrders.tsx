@@ -22,7 +22,7 @@ export const OpenOrders = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { pairId } = useParams<{ pairId: string }>()
-  const { isMiniLaptop } = useAppBreakpoints()
+  const { isTablet } = useAppBreakpoints()
 
   return (
     <Grid>
@@ -37,12 +37,12 @@ export const OpenOrders = () => {
           } as any
         }
         columns={columns}
-        noHeader={isMiniLaptop}
+        noHeader={isTablet}
         themeVariant={'primary'}
         hasActions
         actions={OrderActions}
         paperProps={
-          isMiniLaptop
+          isTablet
             ? {
                 variant: 'elevation',
                 elevation: 0
@@ -50,7 +50,7 @@ export const OpenOrders = () => {
             : undefined
         }
       >
-        {isMiniLaptop
+        {isTablet
           ? (props: TableViewRendererProps<Order>) => (
               <CompactBody {...props} columns={compactColumns} />
             )

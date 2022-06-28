@@ -20,24 +20,30 @@ export const CancelOTCOrderButton = ({
     void cancelOrder()
   }
   return (
-    <Box
-      display='flex'
-      justifyContent='center'
-      alignItems={'center'}
-      className={classes.button}
-    >
-      {status === 'loading' && <CircularProgress size={14} />}
-      {status !== 'loading' && (
-        <Button
-          onClick={handleClick}
-          variant='text'
-          color='primary'
-          size='small'
-          {...rest}
-        >
-          Cancel
-        </Button>
+    <>
+      {status === 'loading' && (
+        <Box display='flex' justifyContent='center' alignItems={'center'}>
+          <CircularProgress size={14} />
+        </Box>
       )}
-    </Box>
+      {status !== 'loading' && (
+        <Box
+          display='flex'
+          justifyContent='center'
+          alignItems={'center'}
+          className={classes.button}
+        >
+          <Button
+            onClick={handleClick}
+            variant='text'
+            color='primary'
+            size='small'
+            {...rest}
+          >
+            Cancel
+          </Button>
+        </Box>
+      )}
+    </>
   )
 }

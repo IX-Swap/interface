@@ -26,7 +26,7 @@ export const TradingOpenOrders = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { pairId } = useParams<{ pairId: string }>()
-  const { isMiniLaptop } = useAppBreakpoints()
+  const { isTablet } = useAppBreakpoints()
   const { account } = useActiveWeb3React()
   return (
     <OpenOrdersContextWrapper>
@@ -36,14 +36,14 @@ export const TradingOpenOrders = () => {
           uri={trading.getMyOrdersList(account)}
           size='small'
           columns={columns}
-          noHeader={isMiniLaptop}
+          noHeader={isTablet}
           themeVariant={'primary'}
           hasActions
           bordered={false}
           noDataComponent={<OpenOrdersEmptyState />}
           actions={OTCOrderActions}
           paperProps={
-            isMiniLaptop
+            isTablet
               ? {
                   variant: 'elevation',
                   elevation: 0
@@ -51,7 +51,7 @@ export const TradingOpenOrders = () => {
               : undefined
           }
         >
-          {isMiniLaptop
+          {isTablet
             ? (props: TableViewRendererProps<OpenOTCOrder>) => (
                 <CompactOpenOTCOrder {...props} columns={compactColumns} />
               )

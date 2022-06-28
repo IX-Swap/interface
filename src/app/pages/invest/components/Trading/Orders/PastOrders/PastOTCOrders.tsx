@@ -16,7 +16,7 @@ import { OTCOrder } from 'types/otcOrder'
 import { EmptyState } from '../EmptyState'
 
 export const PastOTCOrders = () => {
-  const { isMiniLaptop } = useAppBreakpoints()
+  const { isTablet } = useAppBreakpoints()
   return (
     <>
       <Grid>
@@ -26,7 +26,7 @@ export const PastOTCOrders = () => {
           uri={trading.getMyPastOrders}
           columns={columns}
           themeVariant={'primary'}
-          noHeader={isMiniLaptop}
+          noHeader={isTablet}
           noDataComponent={
             <EmptyState
               title='No past orders'
@@ -35,7 +35,7 @@ export const PastOTCOrders = () => {
             />
           }
           paperProps={
-            isMiniLaptop
+            isTablet
               ? {
                   variant: 'elevation',
                   elevation: 0
@@ -43,7 +43,7 @@ export const PastOTCOrders = () => {
               : undefined
           }
         >
-          {isMiniLaptop
+          {isTablet
             ? (args: TableViewRendererProps<OTCOrder>) => (
                 <CompactBody {...args} columns={compactColumns} />
               )

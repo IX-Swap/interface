@@ -16,17 +16,14 @@ import React from 'react'
 import { mockMetamaskDetailsEmptyWarning } from '__fixtures__/metamask'
 import { generateMutationResult } from '__fixtures__/useQuery'
 
-jest.mock(
-  'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm',
-  () => ({
-    PlaceOrderForm: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/invest/components/PlaceOrderForm/PlaceOrderForm', () => ({
+  PlaceOrderForm: jest.fn(() => null)
+}))
 jest.mock('app/pages/invest/components/Trading/Orders/TradingOrders', () => ({
   TradingOrders: jest.fn(() => null)
 }))
 jest.mock(
-  'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog',
+  'app/pages/invest/components/PlaceOrderForm/PlaceOrderFormDialog',
   () => ({
     PlaceOrderFormDialog: jest.fn(() => null)
   })
@@ -74,7 +71,7 @@ describe('TradingBody', () => {
 
   it('renders TradingBody desktop correctly', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValue({
-      isMobile: false
+      isMiniLaptop: false
     } as any)
     render(<TradingBody />)
     expect(TradingOrders).toHaveBeenCalledTimes(1)
@@ -92,7 +89,7 @@ describe('TradingBody', () => {
   })
   it('renders TradingBody mobile correctly', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: true
+      isMiniLaptop: true
     } as any)
     render(<TradingBody />)
     expect(TradingOrders).toHaveBeenCalledTimes(1)

@@ -9,7 +9,7 @@ import React from 'react'
 import { ColumnOTCMatch, OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { ConfirmOTCOrderButton } from './ConfirmOTCOrderButton'
 import { DropDownOTCRow } from './DropDownOTCRow'
-
+import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OTCOrderActions.styles'
 export interface OTCOrderActionsProps {
   item: OpenOTCOrder
 }
@@ -34,11 +34,12 @@ export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
 
 export const ConfirmOTCOrderActions = ({ item }: ConfirmOrderActionsProps) => {
   const showConfirm = item?.status === OTCOrderStatus.CONFIRMED
+  const classes = useStyles()
   return (
     <Box display='flex' justifyContent='space-between'>
       {showConfirm && <ConfirmOTCOrderButton variant='text' order={item} />}
       {!showConfirm && (
-        <Box display='flex' alignItems={'center'} minWidth={'100%'} pl={1.25}>
+        <Box className={classes.status}>
           {capitalizeFirstLetter(item?.status ?? '')}
         </Box>
       )}
