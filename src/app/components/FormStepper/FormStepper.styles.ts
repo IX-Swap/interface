@@ -7,6 +7,12 @@ export const useStyles = makeStyles(theme => ({
       width: '100%'
     }
   },
+  wrapper: {
+    flexDirection: 'column-reverse',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row'
+    }
+  },
   rightBlock: {
     width: 296,
     marginLeft: theme.spacing(2),

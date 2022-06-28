@@ -1,14 +1,16 @@
 import React from 'react'
-import { render } from 'test-utils'
-import { ViewInvestor } from 'app/pages/identity/pages/ViewInvestor/ViewInvestor'
+import {
+  getTitleText,
+  ViewInvestor
+} from 'app/pages/identity/pages/ViewInvestor/ViewInvestor'
 
 describe('ViewInvestor', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it('should match snapshot', () => {
-    const { container } = render(<ViewInvestor />)
-    expect(container).toMatchSnapshot()
+  it('getTitleText should return correct value', () => {
+    expect(getTitleText('issuer')).toEqual('View Corporate Issuer Identity')
+    expect(getTitleText('investor')).toEqual('View Corporate Investor Identity')
   })
 })

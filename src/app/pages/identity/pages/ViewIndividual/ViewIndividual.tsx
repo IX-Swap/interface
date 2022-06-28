@@ -4,27 +4,24 @@ import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessa
 import { IndividualIdentityView } from 'app/pages/identity/components/IndividualIdentityView/IndividualIdentityView'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { getPersonName } from 'helpers/strings'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { RootContainer } from 'ui/RootContainer'
 import { useStyles } from 'app/components/FormStepper/FormStepper.styles'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 
 export const ViewIndividual = () => {
   const classes = useStyles()
-  const { isMobile, isTablet } = useAppBreakpoints()
 
   return (
     <IndividualIdentityContainer
       component={({ data }) => (
         <Grid container style={{ display: 'table' }}>
           <Grid item xs={12}>
-            <PageHeader title={getPersonName(data)} />
+            <PageHeader title={'View Individual Investor Identity'} />
           </Grid>
           <RootContainer>
-            <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
+            <Grid container className={classes.wrapper}>
               <Grid item xs={12}>
                 <RejectionMessage data={data} />
               </Grid>
@@ -45,11 +42,9 @@ export const ViewIndividual = () => {
                   </Paper>
                 </Grid>
 
-                {!isMobile && (
-                  <Grid item xs={12}>
-                    <TwoFANotice />
-                  </Grid>
-                )}
+                <Grid item xs={12}>
+                  <TwoFANotice />
+                </Grid>
               </Grid>
             </Grid>
           </RootContainer>

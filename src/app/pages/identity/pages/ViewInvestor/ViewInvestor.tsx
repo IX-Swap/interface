@@ -9,26 +9,23 @@ import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { RootContainer } from 'ui/RootContainer'
 import { useStyles } from 'app/components/FormStepper/FormStepper.styles'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+
+export const getTitleText = (type: string) => {
+  if (type === 'issuer') {
+    return 'View Corporate Issuer Identity'
+  }
+
+  return 'View Corporate Investor Identity'
+}
 
 export const ViewInvestor = () => {
   const classes = useStyles()
-  const { isMobile, isTablet } = useAppBreakpoints()
-
   const editLinkMap = {
     investor: IdentityRoute.editCorporate,
     'Fund Manager': IdentityRoute.editFundManager,
     'Fund Administrator': IdentityRoute.editFundAdmin,
     'Portfolio Manager': IdentityRoute.editPortfolioManager,
     issuer: IdentityRoute.editIssuer
-  }
-
-  const getTitleText = (type: string) => {
-    if (type === 'issuer') {
-      return 'View Corporate Issuer Identity'
-    }
-
-    return 'View Corporate Investor Identity'
   }
 
   return (
@@ -39,7 +36,7 @@ export const ViewInvestor = () => {
             <PageHeader title={getTitleText(data.type)} />
           </Grid>
           <RootContainer>
-            <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
+            <Grid container className={classes.wrapper}>
               <Grid item xs={12}>
                 <RejectionMessage data={data} />
               </Grid>
@@ -59,11 +56,9 @@ export const ViewInvestor = () => {
                     />
                   </Paper>
                 </Grid>
-                {!isMobile && (
-                  <Grid item xs={12}>
-                    <TwoFANotice />
-                  </Grid>
-                )}
+                <Grid item xs={12}>
+                  <TwoFANotice />
+                </Grid>
               </Grid>
             </Grid>
           </RootContainer>
