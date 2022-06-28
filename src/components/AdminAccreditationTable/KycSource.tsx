@@ -2,10 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { KycItem } from 'state/admin/actions'
-import logo from 'assets/svg/logo-white.svg'
 import downloadIcon from 'assets/images/download.svg'
-import { getStatusIcon } from './utils'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
+import { AppLogo } from 'components/AppLogo'
+
+import { getStatusIcon } from './utils'
 
 interface Props {
   kyc: Record<string, any>
@@ -22,7 +23,7 @@ export const KycSource = ({ userKyc, onKycClick, status }: Props) => {
 
     return (
       <InternalKycContainer onClick={onKycClick}>
-        <img src={logo} alt="logo" />
+        <AppLogo />
         <div>{name}</div>
       </InternalKycContainer>
     )

@@ -1,13 +1,21 @@
-import { Trans } from '@lingui/macro'
-import { useCookies } from 'react-cookie'
-import useScrollPosition from '@react-hook/window-scroll'
-import useLightBackground from 'components/AppBackground/useLightBackground'
-import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import styled from 'styled-components'
-import LogoDark from '../../assets/svg/logo-white.svg'
+import { Trans } from '@lingui/macro'
+import { useCookies } from 'react-cookie'
+import useScrollPosition from '@react-hook/window-scroll'
+
+import useLightBackground from 'components/AppBackground/useLightBackground'
+import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
+import { TYPE } from 'theme'
+import { useKYCState } from 'state/kyc/hooks'
+import { ReactComponent as KYC } from 'assets/images/kyc.svg'
+import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { formatAmount } from 'utils/formatCurrencyAmount'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { AppLogo } from 'components/AppLogo'
+
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { MobileMenu } from '../Mobile-Menu'
@@ -17,13 +25,6 @@ import { HeaderLinks } from './HeaderLinks'
 import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
-import { TYPE } from 'theme'
-import { useKYCState } from 'state/kyc/hooks'
-
-import { ReactComponent as KYC } from 'assets/images/kyc.svg'
-import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
-import { formatAmount } from 'utils/formatCurrencyAmount'
-import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -229,7 +230,7 @@ export default function Header() {
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
-                <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
+                <AppLogo width="38px" height="47px" />
               </IXSIcon>
             </Title>
           </HeaderRow>

@@ -6,8 +6,7 @@ import { FileTypes } from 'components/Upload/types'
 import { ellipsisText, gradientBorder, TYPE } from 'theme'
 import { CollectionImage } from 'pages/NFTCollections/styleds'
 import { ImageLoader } from 'components/ImageLoader'
-
-import LogoWhite from '../../assets/svg/logo-white.svg'
+import { useAppLogoSrc } from 'components/AppLogo'
 
 interface NFTPreviewProps {
   uri: string
@@ -183,6 +182,8 @@ export const NftFilePreview = ({ type, path }: PreviewProps) => {
 const NFTPreview = (props: NFTPreviewProps) => {
   const [info, setInfo] = useState<NFTPreviewData | undefined>()
 
+  const appLogoSrc = useAppLogoSrc()
+
   useEffect(() => {
     fetch(props.uri)
       .then((res) => res.json())
@@ -204,7 +205,7 @@ const NFTPreview = (props: NFTPreviewProps) => {
     <NFTPreviewContainer>
       {info && (
         <>
-          <NftFilePreview type={info.type} path={info.file ?? LogoWhite} />
+          <NftFilePreview type={info.type} path={info.file ?? appLogoSrc} />
           <NFTPreviewNameContainer>
             <Name>{info?.name}</Name>
             {info.description && <Description>{info.description}</Description>}
@@ -219,7 +220,7 @@ const NFTPreview = (props: NFTPreviewProps) => {
 
       {!info && (
         <LoaderWrapper>
-          <CollectionImage height="100%" width="100%" src={LogoWhite} />
+          <CollectionImage height="100%" width="100%" src={appLogoSrc} />
           {/*<Dots>Loading</Dots>*/}
         </LoaderWrapper>
       )}
