@@ -38,6 +38,30 @@ export const PlaceOrderSuffix = ({
 
   const { found } = isWhitelisted
 
+  const wrongChainMessage = useMemo(() => {
+    if (isTablet) {
+      return (
+        <Typography variant='subtitle2'>
+          Please switch the Network to {targetChainName} on your wallet to place
+          order.
+        </Typography>
+      )
+    }
+    return (
+      <Typography variant='subtitle2'>
+        Please connect to
+        <Box
+          onClick={() => switchChain()}
+          className={classes.connectLink}
+          data-testId='place-order-suffix-switch-chain'
+        >
+          {targetChainName} network
+        </Box>
+        to place your order
+      </Typography>
+    )
+  }, [isTablet, targetChainName, switchChain, classes.connectLink])
+
   const noCurrencyBalance =
     (currencyBalance <= 0 ||
       currencyBalance < Number(amount) * Number(price)) &&
@@ -84,24 +108,7 @@ export const PlaceOrderSuffix = ({
       )
     }
     if (accountState === AccountState.DIFFERENT_CHAIN) {
-      return (
-        <Typography variant='subtitle2'>
-          Please connect to
-          {isTablet ? (
-            <> {targetChainName} network </>
-          ) : (
-            <Box
-              onClick={() => switchChain()}
-              className={classes.connectLink}
-              data-testId='place-order-suffix-switch-chain'
-            >
-              {targetChainName} network
-            </Box>
-          )}
-          {isTablet && <> in your Metamask app </>}
-          to place your order
-        </Typography>
-      )
+      return wrongChainMessage
     }
     if (noCurrencyBalance) {
       return (
@@ -137,10 +144,8 @@ export const PlaceOrderSuffix = ({
     noCurrencyBalance,
     noTokenBalance,
     found,
-    switchChain,
-    targetChainName,
     connectCallback,
-    isTablet
+    wrongChainMessage
   ])
 
   if (

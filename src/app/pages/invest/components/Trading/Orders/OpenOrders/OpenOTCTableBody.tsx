@@ -12,6 +12,7 @@ import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/O
 import { nestedcolumns } from './columns'
 import {
   getColumnMatchedOrder,
+  hasApprovedMatches,
   needsConfirmation,
   sortOpenOrders,
   useOpenOrderState
@@ -73,7 +74,8 @@ export const OpenOTCTableBody = (
                 backgroundColor: rowColor(row),
                 border: 'transparent',
                 borderBottom:
-                  needsConfirmation(row) || i === sorted.length - 1
+                  (needsConfirmation(row) && hasApprovedMatches(row)) ||
+                  i === sorted.length - 1
                     ? 'initial'
                     : `12px solid ${theme.palette.background.paper}`
               }}
@@ -98,7 +100,7 @@ export const OpenOTCTableBody = (
             {context?.isIndexOpen(row._id) === true &&
               row?.matches &&
               row?.matches?.length > 0 && <>{renderMatches(row)}</>}
-            {needsConfirmation(row) && (
+            {needsConfirmation(row) && hasApprovedMatches(row) && (
               <TableRow
                 key={`${row?._id ?? ''}-timeout`}
                 className={classes.infoRow}

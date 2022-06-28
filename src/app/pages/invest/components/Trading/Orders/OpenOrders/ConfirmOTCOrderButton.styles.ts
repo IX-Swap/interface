@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
-      width: '100%'
+      width: theme.spacing(10)
     }
   },
   buttonMobile: {

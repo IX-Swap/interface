@@ -19,28 +19,36 @@ export const OpenOrdersEmptyState = () => {
   const { found } = isWhitelisted
   const classes = useStyles()
   const { isTablet } = useAppBreakpoints()
+
+  const wrongChainMessage = useMemo(() => {
+    if (isTablet) {
+      return (
+        <>
+          Please switch the Network to {targetChainName} on your wallet to see
+          open trades.
+        </>
+      )
+    }
+    return (
+      <>
+        Please connect to
+        <Box onClick={switchChain} className={classes.connectLink}>
+          {targetChainName} network
+        </Box>
+        to see your open trades
+      </>
+    )
+  }, [isTablet, targetChainName, switchChain, classes.connectLink])
+
   const subtitle = useMemo(() => {
     if (accountState === AccountState.NOT_CONNECTED || !found) {
       return 'No orders yet, please connect wallet first'
     }
     if (accountState === AccountState.DIFFERENT_CHAIN) {
-      return (
-        <>
-          Please connect to
-          {isTablet ? (
-            <> {targetChainName} network </>
-          ) : (
-            <Box onClick={switchChain} className={classes.connectLink}>
-              {targetChainName} network
-            </Box>
-          )}
-          {isTablet && <> in your Metamask app </>}
-          to see your open trades
-        </>
-      )
+      return wrongChainMessage
     }
     return 'No orders on this wallet, make sure you are connected to the right address'
-  }, [accountState, found, targetChainName, switchChain, classes, isTablet])
+  }, [accountState, found, wrongChainMessage])
 
   return <EmptyState title={getTitle(accountState)} subtitle={subtitle} />
 }

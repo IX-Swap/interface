@@ -98,19 +98,6 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            style="text-align: center;"
-          >
-            <div
-              class="makeStyles-infoCell-3 MuiBox-root css-0"
-            >
-              <div
-                class="makeStyles-separator-1 MuiBox-root css-0"
-              />
-              Order expired
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
           >
             <div
               class="MuiBox-root css-1n2mv2k"
@@ -220,19 +207,6 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
             style="text-align: right; font-weight: 400;"
           >
             0%
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            style="text-align: center;"
-          >
-            <div
-              class="makeStyles-infoCell-3 MuiBox-root css-0"
-            >
-              <div
-                class="makeStyles-separator-1 MuiBox-root css-0"
-              />
-              To complete the trade confirm token transfer (Order expired)
-            </div>
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
@@ -439,37 +413,6 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
             style="text-align: right; font-weight: 400;"
           >
             0%
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-            style="text-align: center;"
-          >
-            <div
-              class="makeStyles-infoCell-3 MuiBox-root css-0"
-            >
-              <div
-                class="makeStyles-separator-1 MuiBox-root css-0"
-              />
-              To complete the trade confirm token transfer (Order expired)
-            </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
-          >
-            <div
-              class="MuiBox-root css-1n2mv2k"
-            >
-              <button
-                class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButtonBase-root makeStyles-toggleButton-5 css-1ohzc29-MuiButtonBase-root-MuiButton-root"
-                tabindex="0"
-                type="button"
-              >
-                Show details
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-            </div>
           </div>
         </div>
       </td>
