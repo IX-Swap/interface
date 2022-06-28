@@ -46,7 +46,7 @@ export const SectionBreak = styled.div`
 `
 
 export const BottomGrouping = styled.div`
-  margin-top: ;
+  margin-top: inherit;
   /* background-color: ${({ theme }) => theme.bg1}; */
 `
 

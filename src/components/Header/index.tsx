@@ -6,7 +6,7 @@ import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
@@ -46,6 +46,11 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position 0.1s, box-shadow 0.1s;
+  ${({ theme }) =>
+    theme.config.background &&
+    css`
+      background: ${({ theme }) => theme.config.background.secondary};
+    `}
   @media (max-width: 1400px) {
     grid-template-columns: 2fr auto auto;
     grid-gap: 28px;
@@ -191,6 +196,11 @@ const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 2;
+  ${({ theme }) =>
+    theme.config.background &&
+    css`
+      background: ${({ theme }) => theme.config.background.secondary};
+    `}
 `
 
 const KYCWrapper = styled.div`

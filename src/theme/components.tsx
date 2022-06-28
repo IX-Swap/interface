@@ -363,7 +363,7 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
   border: none;
   flex: 1 1 auto;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;

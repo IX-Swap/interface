@@ -1,10 +1,10 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 
-import { Whitelabel } from './types'
+import { WhitelabelRaw } from './types'
 
 export const getWhitelabelConfig: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<Whitelabel>
+  fulfilled: ActionCreatorWithPayload<WhitelabelRaw>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('whitelabel/getWhitelabelConfig/pending'),

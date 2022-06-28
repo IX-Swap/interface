@@ -4,7 +4,7 @@ import { isIOS, isIPad13, isSafari, isMobileSafari } from 'react-device-detect'
 import { darken } from 'polished'
 import { Check, ChevronDown, Plus } from 'react-feather'
 import { Button as RebassButton, ButtonProps as ButtonPropsOriginal } from 'rebass/styled-components'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
 import { RowBetween, RowCenter } from '../Row'
 import { gradientBorder } from 'theme'
 
@@ -80,7 +80,8 @@ export const ButtonPrimary = styled(Base)`
     border: 1px solid transparent;
     outline: none;
     opacity: 0.4;
-    background: linear-gradient(116.36deg, #3a2161 33.43%, #590d4c 95.41%);
+    background: ${({ theme }) =>
+      theme.config.primary?.main || 'linear-gradient(116.36deg, #3a2161 33.43%, #590d4c 95.41%)'};
     opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.5' : '0.4')};
   }
 `
@@ -194,17 +195,18 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
-  background-color: ${({ theme }) => theme.bg3};
-  background: ${({ theme }) => theme.bgG3};
+  background-color: ${({ theme }) => theme.config.primary?.main || theme.bg3};
+  background: ${({ theme }) => theme.config.primary?.main || theme.bgG3};
 `
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
 
   ${({ theme }) =>
-  isNotSupportGradient
-      ? `
-  border: 2px solid ${theme.bg20};`
+    isNotSupportGradient
+      ? css`
+          border: 2px solid ${theme.bg20};
+        `
       : gradientBorder}
   :focus,
   :hover {
@@ -235,7 +237,7 @@ export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
 `
 export const ButtonGradient = styled(Base)`
-  background: ${({ theme }) => theme.bgG1};
+  background: ${({ theme }) => theme.config.primary?.main || theme.bgG1};
   border-radius: 40px;
   font-weight: 600;
   font-size: 14px;

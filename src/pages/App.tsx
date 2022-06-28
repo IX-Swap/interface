@@ -17,7 +17,7 @@ import { KYCStatuses } from 'pages/KYC/enum'
 import { useAuthState } from 'state/auth/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-import { useGetWihitelabelConfig } from 'state/whitelabel/hooks'
+import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
 
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -95,6 +95,7 @@ export default function App() {
   const { token } = useAuthState()
   const dispatch = useDispatch()
   const getWitelabelConfig = useGetWihitelabelConfig()
+  const { config } = useWhitelabelState()
 
   const { kyc } = useKYCState()
 
@@ -165,6 +166,10 @@ export default function App() {
   }, [isAdminKyc, isSettingsOpen, account])
 
   const useRedirect = account ? kyc !== null : true
+
+  if (!config) {
+    return <LoadingIndicator isLoading />
+  }
 
   return (
     <ErrorBoundary>

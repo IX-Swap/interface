@@ -1,3 +1,4 @@
+import { WlColors } from 'state/whitelabel/types'
 import { FlattenSimpleInterpolation, ThemedCssFunction } from 'styled-components'
 
 export type Color = string
@@ -95,6 +96,7 @@ export interface Colors {
   success: Color
   warning: Color
   popUpInputBorder: Color
+  config: WlColors['dark' | 'light']
 }
 
 export interface Grids {

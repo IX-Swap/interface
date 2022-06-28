@@ -35,7 +35,7 @@ export const Input = styled.input<{ error?: boolean }>`
   border: none;
   flex: 1 1 auto;
   width: 0;
-  background-color: ${({ theme }) => theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
   transition: color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')};
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   overflow: hidden;
@@ -81,7 +81,7 @@ export const Input = styled.input<{ error?: boolean }>`
 `
 export const Textarea = styled.textarea`
   resize: none;
-  background-color: ${({ theme }) => theme.bg12};
+  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg12};
   font-weight: 300;
   font-size: 16px;
   border-radius: 36px;

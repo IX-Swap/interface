@@ -155,7 +155,10 @@ const apiService = {
   },
 
   _prepareHeaders(data: any) {
-    const headers: KeyValueMap = {}
+    const headers: KeyValueMap = {
+      // domain: window.location.host.split('.')[0],
+      'custom-origin': 'investax',
+    }
     const { auth, user } = store.getState()
 
     const token = auth.token[user.account ?? '']

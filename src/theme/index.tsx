@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react'
 import { Text, TextProps as TextPropsOriginal } from 'rebass'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { Whitelabel, WlColors } from 'state/whitelabel/types'
 import styled, {
   createGlobalStyle,
   css,
@@ -36,14 +38,17 @@ const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } 
 const white = '#FFFFFF'
 const black = '#000000'
 
-export function colors(darkMode: boolean): Colors {
+export function colors(darkMode: boolean, configColors?: WlColors): Colors {
+  const wlColorsByType = (darkMode ? configColors?.dark : configColors?.light) || ({} as WlColors['dark' | 'light'])
+
   return {
+    config: wlColorsByType,
     // base
     white,
     black,
 
     // text
-    text1: darkMode ? '#FFFFFF' : '#000000',
+    text1: wlColorsByType.text?.main || (darkMode ? '#FFFFFF' : '#000000'),
     text2: darkMode ? '#EDCEFF' : '#565A69',
     text3: darkMode ? '#6C7284' : '#888D9B',
     text4: darkMode ? '#565A69' : '#C3C5CB',
@@ -53,8 +58,8 @@ export function colors(darkMode: boolean): Colors {
     text8: darkMode ? '#9184C3' : '#9184C3',
     text9: darkMode ? '#EDCEFF80' : '#EDCEFF80',
     // backgrounds / greys
-    bg0: darkMode ? '#0D0415' : '#FFF',
-    bg1: darkMode ? '#1A123A' : '#F7F8FA',
+    bg0: wlColorsByType.background?.main || (darkMode ? '#0D0415' : '#FFF'),
+    bg1: wlColorsByType.background?.secondary || (darkMode ? '#1A123A' : '#F7F8FA'),
     bg2: darkMode ? '#2C2F36' : '#EDEEF2',
     bg3: darkMode ? '#40444F' : '#CED0D9',
     bg4: darkMode ? '#565A69' : '#888D9B',
@@ -143,10 +148,10 @@ export function colors(darkMode: boolean): Colors {
     divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
 
     //primary colors
-    primary1: darkMode ? '#2172E5' : '#ff007a',
-    primary2: darkMode ? '#3680E7' : '#FF8CC3',
-    primary3: darkMode ? '#4D8FEA' : '#FF99C9',
-    primary4: darkMode ? '#376bad70' : '#F6DDE8',
+    primary1: wlColorsByType.primary?.main || (darkMode ? '#2172E5' : '#ff007a'),
+    primary2: wlColorsByType.primary?.aditional1 || (darkMode ? '#3680E7' : '#FF8CC3'),
+    primary3: wlColorsByType.primary?.aditional2 || (darkMode ? '#4D8FEA' : '#FF99C9'),
+    primary4: wlColorsByType.primary?.aditional3 || (darkMode ? '#376bad70' : '#F6DDE8'),
     primary5: darkMode ? '#153d6f70' : '#FDEAF1',
 
     // color text
@@ -180,9 +185,9 @@ export function colors(darkMode: boolean): Colors {
   }
 }
 
-export function theme(darkMode: boolean): DefaultTheme {
+export function theme(darkMode: boolean, config: Whitelabel | null): DefaultTheme {
   return {
-    ...colors(darkMode),
+    ...colors(darkMode, config?.colors),
 
     grids: {
       sm: 8,
@@ -210,8 +215,9 @@ export function theme(darkMode: boolean): DefaultTheme {
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const darkMode = useIsDarkMode()
+  const { config } = useWhitelabelState()
 
-  const themeObject = useMemo(() => theme(darkMode), [darkMode])
+  const themeObject = useMemo(() => theme(darkMode, config), [darkMode, config])
 
   return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
 }
