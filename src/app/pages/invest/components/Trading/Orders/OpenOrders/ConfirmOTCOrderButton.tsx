@@ -6,6 +6,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useState } from 'react'
 import { ColumnOTCMatch } from 'types/otcOrder'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ConfirmOTCOrderButton.styles'
+import { LeavePagePrompt } from 'components/LeavePagePrompt/LeavePagePrompt'
 export interface ConfirmOTCOrderButtonProps extends ButtonProps {
   order: ColumnOTCMatch
 }
@@ -15,28 +16,32 @@ export const ConfirmOTCOrderButton = ({
 }: ConfirmOTCOrderButtonProps) => {
   const { chainId, address } = usePairTokenAddressNetwork()
   const [loadingTransaction, setLoadingTransaction] = useState(false)
+  const [showPrompt, setShowPrompt] = useState(false)
   const classes = useStyles()
+  const sendCallback = async () => {
+    await confirmMatch({
+      orderId: order.parentOrder,
+      matchedOrderId: order.matchedOrder?._id ?? ''
+    })
+  }
   const sendToken = useSendToken({
     address: address,
-    tokenChainId: chainId
+    tokenChainId: chainId,
+    amount: order.matchedAmount ?? 0,
+    recipient: order.ethAddress,
+    callback: sendCallback
   })
   const [confirmMatch, { isLoading }] = useConfirmMyOrder()
+
   const handleClick = async () => {
     setLoadingTransaction(true)
     try {
-      const sendingResult = await sendToken(
-        order.matchedAmount ?? 0,
-        order.ethAddress
-      )
-      if (sendingResult) {
-        await confirmMatch({
-          orderId: order.parentOrder,
-          matchedOrderId: order.matchedOrder?._id ?? ''
-        })
-      }
+      setShowPrompt(true)
+      await sendToken()
     } catch {
       console.error('error confirming')
     } finally {
+      setShowPrompt(false)
       setLoadingTransaction(false)
     }
   }
@@ -44,6 +49,7 @@ export const ConfirmOTCOrderButton = ({
 
   return (
     <>
+      <LeavePagePrompt showPrompt={showPrompt} />
       {(isLoading || loadingTransaction) && (
         <Box className={classes.loader} data-testid='loader'>
           <CircularProgress size={14} />
