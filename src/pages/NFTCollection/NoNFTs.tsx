@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import logoImg from 'assets/svg/logo-white.svg'
 import { gradientBorder, MEDIA_WIDTHS } from 'theme'
+import { AppLogo } from 'components/AppLogo'
 
 export const NoNFTs = () => {
   return (
     <Container>
-      <img src={logoImg} alt="logoImg" />
+      <AppLogo />
       <Text>
         <Trans>Oops, you don&apos;t have any NFTs yet!</Trans>
       </Text>
