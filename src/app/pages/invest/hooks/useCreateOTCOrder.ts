@@ -1,4 +1,4 @@
-import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
+import { PlaceOrderArgs } from 'app/pages/invest/types/form'
 import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
@@ -47,10 +47,10 @@ export const useCreateOTCOrder = () => {
     onSuccess: data => {
       void queryCache.invalidateQueries(tradingQueryKeys.getMyOpenOrdersList)
       void queryCache.invalidateQueries(tradingQueryKeys.pastOrders)
-      void snackbarService.showSnackbar('Order Placed', 'success')
+      snackbarService.showSnackbar('Order Placed', 'success')
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

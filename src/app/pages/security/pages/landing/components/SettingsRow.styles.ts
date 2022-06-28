@@ -2,8 +2,10 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   wrapper: {
-    [theme.breakpoints.up('sm')]: {
-      height: 40
+    marginRight: -30,
+    [theme.breakpoints.up('lg')]: {
+      height: 40,
+      marginRight: 0
     }
   },
   content: {

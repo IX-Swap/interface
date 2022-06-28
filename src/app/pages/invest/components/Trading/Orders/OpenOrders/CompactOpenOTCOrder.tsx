@@ -17,9 +17,22 @@ import { OTCOrderActionsMobile } from 'app/pages/invest/components/Trading/Order
 import { ToggleDetailsButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ToggleDetailsButton'
 import { MobileNestedOrders } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders'
 import { OpenOTCOrder } from 'types/otcOrder'
+import { TableColumn } from 'types/util'
 
 export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
+}
+
+export interface RenderCellProps extends TableColumn<OpenOTCOrder, string> {
+  item: OpenOTCOrder
+}
+export const renderCell = ({ render, key, item }: RenderCellProps) => {
+  return (
+    key.length > 0 &&
+    (typeof render === 'function'
+      ? render(get(item, key), item)
+      : get(item, key))
+  )
 }
 
 export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {

@@ -81,15 +81,18 @@ export function getContractInstance({
     ABI === undefined ||
     library === undefined ||
     chainId === undefined
-  )
+  ) {
     return null
+  }
   let address: string | undefined
   if (typeof addressOrAddressMap === 'string') {
     address = addressOrAddressMap
   } else {
     address = addressOrAddressMap[chainId]
   }
-  if (isEmptyString(address)) return null
+  if (isEmptyString(address)) {
+    return null
+  }
   try {
     return getContract(
       address,

@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material'
-import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
-import { PlaceOrderFormDialog } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog'
-import { useCurrencyBalance } from 'app/pages/exchange/hooks/useCurrencyBalance'
-import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
+import { PlaceOrderForm } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderForm'
+import { PlaceOrderFormDialog } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderFormDialog'
+import { useCurrencyBalance } from 'app/pages/invest/hooks/useCurrencyBalance'
+import { PlaceOrderArgs } from 'app/pages/invest/types/form'
 import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/TradingOrders'
 import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
@@ -34,6 +34,14 @@ export const TradingBody = () => {
   }
   const disabledCreate =
     !found || isLoading || accountState === AccountState.DIFFERENT_CHAIN
+  const renderSuffix = ({ tab }: { tab: number }) => (
+    <PlaceOrderSuffix
+      tab={tab}
+      currencyBalance={currencyBalance}
+      tokenBalance={balance}
+      tokenName={tokenName}
+    />
+  )
   const isFetching = false
   const createOrderStatus = ''
   return (
@@ -58,14 +66,7 @@ export const TradingBody = () => {
             tokenLabel={tokenName}
             isDisabled={disabledCreate}
             currencyBalance={currencyBalance}
-            suffix={({ tab }: { tab: number }) => (
-              <PlaceOrderSuffix
-                tab={tab}
-                currencyBalance={currencyBalance}
-                tokenBalance={balance}
-                tokenName={tokenName}
-              />
-            )}
+            suffix={renderSuffix}
             tokenBalance={balance}
             onSubmit={submitForm}
           />
@@ -81,14 +82,7 @@ export const TradingBody = () => {
           tokenName={tokenName}
           currencyBalance={currencyBalance}
           tokenBalance={{ data: { amount: balance } }}
-          suffix={({ tab }: { tab: number }) => (
-            <PlaceOrderSuffix
-              tab={tab}
-              currencyBalance={currencyBalance}
-              tokenBalance={balance}
-              tokenName={tokenName}
-            />
-          )}
+          suffix={renderSuffix}
           submitForm={submitForm}
         />
       )}

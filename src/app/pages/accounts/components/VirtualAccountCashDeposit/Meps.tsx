@@ -38,7 +38,7 @@ export const Meps = ({ accountId, currency }: DepositInfoProps) => {
               Bank charges may apply and will be borne by the clients
             </Typography>
           </Grid>
-          <Grid container spacing={1}>
+          <Grid container spacing={5}>
             <CashDepositDetails data={mepsDetails} />
           </Grid>
         </Box>

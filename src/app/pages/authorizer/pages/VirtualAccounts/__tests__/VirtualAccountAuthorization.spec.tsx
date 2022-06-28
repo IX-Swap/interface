@@ -1,4 +1,4 @@
-import * as useGetIdentities from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import * as useGetIdentities from 'app/hooks/onboarding/useGetIdentities'
 import * as useVirtualAccountById from 'app/pages/authorizer/hooks/useVirtualAccountById'
 import { VirtualAccountAuthorization } from 'app/pages/authorizer/pages/VirtualAccounts/VirtualAccountAuthorization'
 import React from 'react'

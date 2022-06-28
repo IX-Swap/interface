@@ -8,7 +8,8 @@ export const user: User = {
   email: 'alex@investax.io',
   name: 'Alex Solovev',
   roles: 'admin',
-  accessToken: ''
+  accessToken: '',
+  enable2Fa: undefined
 }
 
 export const managedUser: ManagedUser = {

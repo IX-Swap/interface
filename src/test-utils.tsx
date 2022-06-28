@@ -45,7 +45,7 @@ export const apiServiceMock = {
 export const snackbarServiceMock = {
   showSnackbar: jest.fn(),
   showNotification: jest.fn(),
-  showOnboardingDialog: jest.fn()
+  showDialog: jest.fn()
 }
 
 const generateClassName = createGenerateClassName({

@@ -8,15 +8,14 @@ describe('CompanyPersonnel', () => {
     jest.clearAllMocks()
   })
 
-  it('does not render address when it is undefined', () => {
-    const { queryByText } = render(
+  it('should match snapshot', () => {
+    const { container } = render(
       <CompanyPersonnel
         personnel={corporate.representatives[0]}
-        showDocumentHeader={false}
-        documentsTitle='Documents'
+        title='Documents'
       />
     )
 
-    expect(queryByText('Residential Address')).not.toBeTruthy()
+    expect(container).toMatchSnapshot()
   })
 })

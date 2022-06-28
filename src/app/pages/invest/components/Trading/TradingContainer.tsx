@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { WideContainer } from 'app/components/WideContainer/WideContainer'
-import { ShortFinancialSummary } from 'app/pages/exchange/components/FinancialSummary/ShortFinancialSummary'
+import { ShortFinancialSummary } from 'app/pages/invest/components/FinancialSummary/ShortFinancialSummary'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { WalletModalContextWrapper } from 'components/WalletModal/WalletModalContextWrapper'
 import React from 'react'
@@ -13,7 +13,11 @@ export const TradingContainer = () => {
     <WalletModalContextWrapper>
       <WideContainer>
         <Grid item>
-          <PageHeader title={'OTC Trading Market'} showBreadcrumbs={false} />
+          <PageHeader
+            title={'OTC Trading Market'}
+            styled={false}
+            showBreadcrumbs={false}
+          />
         </Grid>
         <Box>
           <Box className={classes.contentWrapper}>

@@ -10,11 +10,8 @@ describe('CorporateInfo', () => {
     jest.clearAllMocks()
   })
 
-  it('renders data labels correctly', () => {
-    const { getByText } = render(<CorporateInfo data={corporate} />)
-    expect(getByText('Company Name')).toBeTruthy()
-    expect(getByText('Company Registration Number/UEN')).toBeTruthy()
-    expect(getByText('Country of Incorporation')).toBeTruthy()
-    expect(getByText('Legal Entity')).toBeTruthy()
+  it('should match snapshot', () => {
+    const { container } = render(<CorporateInfo data={corporate} />)
+    expect(container).toMatchSnapshot()
   })
 })

@@ -1,16 +1,27 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export const BusinessOwnerSelect = (props: any): JSX.Element => {
   return (
-    <Select {...props}>
-      <MenuItem disabled value={undefined}>
-        Business owners
-      </MenuItem>
-      <MenuItem value='1'>1</MenuItem>
-      <MenuItem value='2'>2</MenuItem>
-      <MenuItem value='3 OR MORE'>3 or more</MenuItem>
-      <MenuItem value='UNKNOWN'>Unknown</MenuItem>
-    </Select>
+    <>
+      <InputLabel>{props.label}</InputLabel>
+      <Select
+        {...props}
+        placeholder='Select Number'
+        displayEmpty
+        label={undefined}
+      >
+        <SelectItem disabled value={undefined}>
+          Business owners
+        </SelectItem>
+        <SelectItem value='1'>1</SelectItem>
+        <SelectItem value='2'>2</SelectItem>
+        <SelectItem value='3 OR MORE'>3 or more</SelectItem>
+        <SelectItem value='UNKNOWN'>Unknown</SelectItem>
+      </Select>
+    </>
   )
 }
+BusinessOwnerSelect.displayName = 'Select_BusinessOwnerSelect'

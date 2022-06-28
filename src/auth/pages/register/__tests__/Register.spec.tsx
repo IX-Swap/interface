@@ -53,7 +53,7 @@ describe('Register', () => {
     const signup = jest.fn()
     jest
       .spyOn(useSignupHook, 'useSignup')
-      .mockReturnValueOnce([signup, generateMutationResult({})])
+      .mockImplementation(() => [signup, generateMutationResult({})])
 
     const { getByLabelText, getByTestId } = renderWithUserStore(<Register />)
     const name = getByLabelText(/name/i)
@@ -74,7 +74,9 @@ describe('Register', () => {
       expect(signup).toHaveBeenCalledWith({
         name: signupArgs.name,
         email: signupArgs.email,
-        password: 'Dr0wss@pDr0wss@p'
+        password: 'Dr0wss@pDr0wss@p',
+        singPassLogin: false,
+        accountType: undefined
       })
     })
   })

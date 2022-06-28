@@ -1,8 +1,9 @@
 import React from 'react'
-import { Divider, Grid, Typography } from '@mui/material'
+import { Grid } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
-import { DocumentTable } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTable'
 import { pathToString } from 'helpers/forms'
+import { Document } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/Document'
+import { DataroomFile } from 'types/dataroomFile'
 
 export interface DocumentListProps {
   name: any
@@ -19,18 +20,10 @@ export const DocumentList = ({ title, name }: DocumentListProps) => {
   }
 
   return (
-    <Grid item>
-      <Grid container direction='column' spacing={3}>
-        {title !== undefined ? (
-          <Grid item>
-            <Typography variant='subtitle1'>{title}</Typography>
-            <Divider />
-          </Grid>
-        ) : null}
-        <Grid item>
-          <DocumentTable name={stringName} documents={documents} />
-        </Grid>
-      </Grid>
+    <Grid item xs={12}>
+      {documents.map((document: DataroomFile) => (
+        <Document name={stringName} document={document} />
+      ))}
     </Grid>
   )
 }

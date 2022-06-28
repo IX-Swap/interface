@@ -1,18 +1,18 @@
+import React, { useState } from 'react'
+import classnames from 'classnames'
 import {
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Typography
 } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
-import { useStyles } from 'app/components/OnboardingDialog/OnboardingDialog.styles'
-import { BackDrop } from 'app/components/OnboardingDialog/BackDrop'
-import React, { useState } from 'react'
+import { useOnboardingPanel } from 'app/hooks/onboarding/useOnboardingPanel'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import classnames from 'classnames'
-import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
+import { useStyles } from './OnboardingDialog.styles'
+import { BackDrop } from 'app/components/BackDrop'
 
 export interface OnboardingDialogProps {
   message: string[]
@@ -35,7 +35,7 @@ export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
 
   return (
     <>
-      <Dialog
+      <UIDialog
         open={opened}
         onClose={handleClose}
         classes={{
@@ -73,7 +73,7 @@ export const OnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
             </Button>
           ) : null}
         </DialogActions>
-      </Dialog>
+      </UIDialog>
       <BackDrop onClick={handleClose} opened={opened} />
     </>
   )

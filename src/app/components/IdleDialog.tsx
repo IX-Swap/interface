@@ -1,6 +1,5 @@
 import {
   DialogTitle,
-  Dialog,
   DialogContent,
   Button,
   Box,
@@ -9,6 +8,7 @@ import {
 } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface IdleDialogProps {
   reset: () => void
@@ -39,7 +39,7 @@ export const IdleDialog = ({
   }
 
   return (
-    <Dialog open={open}>
+    <UIDialog open={open}>
       <Box p={4}>
         <DialogTitle>
           <Typography variant='h5'>Your session is about to expire</Typography>
@@ -73,6 +73,6 @@ export const IdleDialog = ({
         </Grid>
         <VSpacer size='small' />
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

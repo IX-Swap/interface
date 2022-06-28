@@ -1,7 +1,6 @@
 import {
   FormControlLabel,
   Grid,
-  Radio,
   RadioGroup,
   RadioGroupProps,
   Typography
@@ -9,6 +8,7 @@ import {
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import React from 'react'
 import { VirtualAccount } from 'types/virtualAccount'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export interface VirtualAccountSelectProps extends RadioGroupProps {
   customLabel?: string
@@ -36,7 +36,7 @@ export const VirtualAccountSelect = (props: VirtualAccountSelectProps) => {
             <FormControlLabel
               label={`${item.accountNumber} (${item.currency})`}
               value={item.accountNumber}
-              control={<Radio />}
+              control={<UIRadio />}
             />
           </Grid>
         ))}

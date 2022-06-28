@@ -12,7 +12,7 @@ export const WithdrawalAddressTooltip = ({
   const { iconButton } = useStyles()
 
   return (
-    <Tooltip arrow placement={placement} title={title}>
+    <Tooltip arrow placement={placement} title={title} enterTouchDelay={0}>
       <IconButton color='primary' className={iconButton} size='large'>
         <InfoOutlined />
       </IconButton>

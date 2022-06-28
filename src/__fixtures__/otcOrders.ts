@@ -119,7 +119,16 @@ export const order4: OpenOTCOrder = {
   pair: fakeOTCMarket,
   orderType: 'SELL',
   availableAmount: 1,
-
+  identity: {
+    individual: {
+      _id: '46677',
+      firstName: 'A',
+      lastName: 'B',
+      middleName: 'C',
+      companyLegalName: 'ABT',
+      contactNumber: '43245'
+    }
+  },
   price: 8500,
   user: '1234',
   matches: [fakeOTCMatch2],

@@ -1,7 +1,5 @@
-import { act } from '@testing-library/react-hooks'
 import axios from 'axios'
 import { BigNumber, ethers } from 'ethers'
-import { waitFor } from 'test-utils'
 import * as sendTokenFuns from '../useSendToken'
 
 describe('estimateMaxGas', () => {

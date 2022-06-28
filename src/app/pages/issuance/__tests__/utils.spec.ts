@@ -17,7 +17,7 @@ import {
   percentageToNumber,
   sortAssets,
   sortInvestors
-} from '../utils'
+} from 'app/pages/issuance/utils/utils'
 
 describe('getActivityUserInfo', () => {
   it('returns photo and name of the person if individual identity is present', () => {

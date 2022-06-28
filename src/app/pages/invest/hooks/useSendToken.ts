@@ -18,7 +18,7 @@ export const estimateGas = async (chainId?: number) => {
   try {
     const result = await axios.get(CHAIN_INFO[chainId ?? 137].gasTrackerUrl)
     const innerResult = result?.data?.result
-    console.log({ GAS })
+
     const value =
       GAS === 'low'
         ? innerResult?.standardgaspricegwei ?? innerResult?.SafeGasPrice

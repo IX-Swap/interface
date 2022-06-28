@@ -4,6 +4,7 @@ import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
+import useStyles from './DeclarationsListFields.style'
 
 export interface DeclarationsListItem {
   label: string | JSX.Element
@@ -20,12 +21,19 @@ export const DeclarationsListFields = ({
   data
 }: DeclarationsListFieldsProps) => {
   const { control } = useFormContext()
+  const classes = useStyles()
 
   return (
-    <Grid container>
+    <Grid container spacing={1}>
       {title !== undefined && (
-        <Grid item xs={12}>
-          <Typography variant={'subtitle1'}>{title}</Typography>
+        <Grid item xs={12} mb={2}>
+          <Typography
+            data-testid={'title-typo'}
+            variant={'subtitle1'}
+            className={classes.title}
+          >
+            {title}
+          </Typography>
         </Grid>
       )}
       {data.map(item => {

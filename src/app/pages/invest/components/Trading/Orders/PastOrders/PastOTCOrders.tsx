@@ -15,11 +15,7 @@ import React from 'react'
 import { OTCOrder } from 'types/otcOrder'
 import { EmptyState } from '../EmptyState'
 
-export interface PostOrderTableProps {
-  pairId?: string
-}
-
-export const PastOTCOrders = (props: PostOrderTableProps) => {
+export const PastOTCOrders = () => {
   const { isMiniLaptop } = useAppBreakpoints()
   return (
     <>
@@ -48,8 +44,8 @@ export const PastOTCOrders = (props: PostOrderTableProps) => {
           }
         >
           {isMiniLaptop
-            ? (props: TableViewRendererProps<OTCOrder>) => (
-                <CompactBody {...props} columns={compactColumns} />
+            ? (args: TableViewRendererProps<OTCOrder>) => (
+                <CompactBody {...args} columns={compactColumns} />
               )
             : undefined}
         </TableView>

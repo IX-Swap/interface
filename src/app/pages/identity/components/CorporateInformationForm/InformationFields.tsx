@@ -1,16 +1,16 @@
-import { Grid, TextField } from '@mui/material'
-import { documentValueExtractor } from 'app/components/DSO/utils'
+import { Box, Grid, Typography } from '@mui/material'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { Dropzone } from 'components/dataroom/Dropzone'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
 import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
 import { TypedField } from 'components/form/TypedField'
-import { privateClassNames } from 'helpers/classnames'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { plainValueExtractor } from 'helpers/forms'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface InformationFieldsProps {
   type?: CorporateType
@@ -21,7 +21,6 @@ export const InformationFields = ({
 }: InformationFieldsProps) => {
   const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
-  const { isMobile, isTablet } = useAppBreakpoints()
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
@@ -40,15 +39,25 @@ export const InformationFields = ({
 
   return (
     <>
-      <FormSectionHeader title={corporateInformationLabelMap[type]} />
-      <Grid container direction={'row'} alignItems={'flex-start'}>
-        <Grid item style={{ paddingRight: 24 }}>
+      <Grid container spacing={5}>
+        <Grid item xs={12}>
+          <FormSectionHeader title={corporateInformationLabelMap[type]} />
+        </Grid>
+        <Grid item xs={12}>
           <TypedField
             customRenderer
             control={control}
-            component={Dropzone}
-            label='Upload your logo (Optional)'
-            valueExtractor={documentValueExtractor}
+            component={FileUpload}
+            label={
+              <Typography>
+                Upload logo{' '}
+                <Box component={'span'} style={{ color: '#778194' }}>
+                  (Optional)
+                </Box>
+              </Typography>
+            }
+            placeHolder='Upload File'
+            valueExtractor={plainValueExtractor}
             documentInfo={{
               title: 'Logo',
               type: 'logo'
@@ -56,76 +65,76 @@ export const InformationFields = ({
             name='logo'
           />
         </Grid>
-        <Grid
-          container
-          spacing={3}
-          className={privateClassNames()}
-          md={8}
-          sm={12}
-          xs={12}
-          style={{ paddingTop: !isMobile && !isTablet ? 48 : 24 }}
-        >
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              fullWidth
-              component={TextField}
-              control={control}
-              variant='outlined'
-              name='companyLegalName'
-              label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={6} />
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              component={CountrySelect}
-              control={control}
-              variant='outlined'
-              name='countryOfFormation'
-              label='Country of Incorporation'
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              fullWidth
-              component={TextField}
-              control={control}
-              variant='outlined'
-              name='registrationNumber'
-              label='Registration Number/UEN'
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              component={LegalEntityStatusSelect}
-              control={control}
-              variant='outlined'
-              name='legalEntityStatus'
-              label='Legal Entity'
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              customRenderer
-              fullWidth
-              component={TextField}
-              control={control}
-              variant='outlined'
-              name='otherLegalEntityStatus'
-              label='Others (Please specify)'
-              disabled={legalEntityStatus !== 'others'}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              component={FundSourceSelect}
-              control={control}
-              variant='outlined'
-              name='sourceOfFund'
-              label='Source of funds'
-            />
-          </Grid>
+        <Grid item xs={12}>
+          <TypedField
+            fullWidth
+            component={TextInput}
+            control={control}
+            variant='outlined'
+            name='companyLegalName'
+            placeholder={
+              type === 'investor' ? 'Corporate Name' : 'Company Name'
+            }
+            defaultValue=''
+            label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
+            hideIcon
+          />
         </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            component={CountrySelect}
+            control={control}
+            variant='outlined'
+            name='countryOfFormation'
+            label='Country of Incorporation'
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            fullWidth
+            component={TextInput}
+            control={control}
+            variant='outlined'
+            name='registrationNumber'
+            defaultValue=''
+            label='Registration Number/UEN'
+            placeholder='Registration Number'
+            hideIcon
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            component={LegalEntityStatusSelect}
+            control={control}
+            variant='outlined'
+            name='legalEntityStatus'
+            label='Legal Entity'
+            placeholder='Legal Entity'
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            fullWidth
+            component={TextInput}
+            control={control}
+            variant='outlined'
+            name='otherLegalEntityStatus'
+            label='Others (Legal Entity)'
+            disabled={legalEntityStatus !== 'others'}
+            placeholder='Please specify'
+            hideIcon
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <TypedField
+            component={FundSourceSelect}
+            control={control}
+            variant='outlined'
+            name='sourceOfFund'
+            label='Source of Funds'
+          />
+        </Grid>
+        <ValidateOnMount />
       </Grid>
     </>
   )

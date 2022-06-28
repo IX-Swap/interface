@@ -1,8 +1,8 @@
-import React from 'react'
-import { InputAdornment, TextField } from '@mui/material'
-import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { Search as SearchIcon } from '@mui/icons-material'
-
+import { InputAdornment } from '@mui/material'
+import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import React from 'react'
+import { TextInput } from 'ui/TextInput/TextInput'
 interface GroupedSearchFilterProps {
   isCommitment?: boolean
 }
@@ -14,7 +14,7 @@ export const GroupedSearchFilter = ({
   return (
     <SearchQueryFilter groupFilter name={name}>
       {({ value, onChange }) => (
-        <TextField
+        <TextInput
           fullWidth
           label='Search'
           variant='outlined'

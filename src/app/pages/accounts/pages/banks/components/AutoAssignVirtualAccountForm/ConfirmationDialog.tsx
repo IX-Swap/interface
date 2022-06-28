@@ -1,7 +1,16 @@
-import { Box, Button, Dialog, Grid, Typography } from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Typography,
+  Box,
+  useTheme
+} from '@mui/material'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ConfirmationDialogProps {
   onClose: () => void
@@ -18,6 +27,7 @@ export const ConfirmationDialog = ({
 }: ConfirmationDialogProps) => {
   const { watch } = useFormContext()
   const currency: string = watch('currency', '')
+  const theme = useTheme()
 
   const title = isAdditional
     ? 'Request for New Account'
@@ -30,45 +40,55 @@ export const ConfirmationDialog = ({
   const confirmLabel = isAdditional ? 'Send request' : 'Yes'
 
   return (
-    <Dialog open={open} disablePortal onClose={onClose}>
-      <Box py='40px' px='60px' textAlign='center'>
-        <Grid container direction='column' spacing={2}>
-          <Grid item>
-            <Typography variant='subtitle1'>{title}</Typography>
+    <UIDialog maxWidth='sm' open={open} disablePortal onClose={onClose}>
+      <DialogTitle>
+        <Box textAlign='center'>{title}</Box>
+      </DialogTitle>
+      <DialogContent>
+        <Typography
+          align='center'
+          color={theme.palette.text.secondary}
+          variant='body1'
+        >
+          {bodyText}
+        </Typography>
+      </DialogContent>
+      <DialogActions>
+        <Grid
+          container
+          spacing={2}
+          justifyContent='center'
+          alignContent='center'
+        >
+          <Grid item xs={5}>
+            <Button
+              size='large'
+              fullWidth
+              onClick={onClose}
+              type='button'
+              variant='outlined'
+              color='primary'
+              disableElevation
+              disabled={assigning}
+            >
+              Cancel
+            </Button>
           </Grid>
-          <Grid item>
-            <Typography variant='body1'>{bodyText}</Typography>
-          </Grid>
-          <Grid item>
-            <VSpacer size='small' />
-            <Grid container spacing={1} justifyContent='center'>
-              <Grid item>
-                <Button
-                  onClick={onClose}
-                  type='button'
-                  variant='outlined'
-                  color='primary'
-                  disableElevation
-                  disabled={assigning}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  color='primary'
-                  disableElevation
-                  disabled={assigning}
-                >
-                  {confirmLabel}
-                </Button>
-              </Grid>
-            </Grid>
+          <Grid item xs={5}>
+            <Button
+              size='large'
+              fullWidth
+              type='submit'
+              variant='contained'
+              color='primary'
+              disableElevation
+              disabled={assigning}
+            >
+              {confirmLabel}
+            </Button>
           </Grid>
         </Grid>
-      </Box>
-    </Dialog>
+      </DialogActions>
+    </UIDialog>
   )
 }

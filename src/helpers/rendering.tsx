@@ -13,11 +13,12 @@ import { formatMoney } from './numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
 import { Order, OrderSide } from 'types/order'
-import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
-import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
+import { OrderStatus } from 'app/pages/invest/components/PastOrderTable/OrderStatus'
+import { Side } from 'app/pages/accounts/components/TradeHistoryTable/Side'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { sanitize } from 'dompurify'
 import { formatDateToMMDDYY, formatTime } from 'helpers/dates'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -26,6 +27,16 @@ export const renderMenuItems = (
     <MenuItem key={value} value={value}>
       {label}
     </MenuItem>
+  ))
+}
+
+export const renderSelectItems = (
+  items: Array<{ label: string; value: string | number }>
+): JSX.Element[] => {
+  return items.map(({ value, label }) => (
+    <SelectItem key={value} value={value}>
+      {label}
+    </SelectItem>
   ))
 }
 

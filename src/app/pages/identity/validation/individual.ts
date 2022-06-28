@@ -10,7 +10,7 @@ import {
 } from 'validation/shared'
 import {
   IndividualAgreementsFormValues,
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues,
@@ -27,10 +27,21 @@ export const personalInfoSchema = yup
     lastName: nameSchema.required(validationMessages.required),
     nationality: yup.string().required(validationMessages.required),
     dob: birthdaySchema.required(validationMessages.required),
-    contactNumber: yup.string().phone().required(validationMessages.required),
+    contactNumber: yup
+      .string()
+      .phone(undefined, 'Must be a valid phone number')
+      .required(validationMessages.required),
     email: emailSchema.required(validationMessages.required),
     address: addressSchema.required(validationMessages.required),
-    gender: yup.string().required(validationMessages.required)
+    gender: yup.string().required(validationMessages.required),
+    nric: yup.string().when('nationality', {
+      is: 'Singapore',
+      then: yup
+        .string()
+        .max(12, 'Maximum of 12 characters')
+        .required(validationMessages.required),
+      otherwise: yup.string()
+    })
   })
 
 export const financialInfoSchema = yup
@@ -161,7 +172,7 @@ export const individualInvestorStatusDeclarationSchema = yup
 
 export const individualInvestorDocumentsSchema = yup
   .object()
-  .shape<IndividualDocumentsFormValues>({
+  .shape<IdentityDocumentsFormValues>({
     evidenceOfAccreditation: yup
       .array<DataroomFile>()
       .min(1)
@@ -183,3 +194,11 @@ export const individualInvestorAgreementsSchema = yup
     investor: yup.bool().oneOf([true]).required(validationMessages.required),
     disclosure: yup.bool().oneOf([true]).required(validationMessages.required)
   })
+
+export const individualInvestorValidationSchema = yup.object().shape<any>({
+  ...financialInfoSchema.fields,
+  ...individualInvestorDocumentsSchema.fields,
+  ...individualInvestorStatusDeclarationSchema.fields,
+  ...personalInfoSchema.fields,
+  ...taxDeclarationSchema.fields
+})

@@ -1,21 +1,20 @@
 import { makeStyles } from '@mui/styles'
 
 export const useStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: theme.spacing(1.5, 2),
-    backgroundColor:
-      theme.palette.mode === 'light' ? '#F6F4FD' : theme.palette.primary.dark,
-    borderRadius: 4
-  },
   wrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
+    color: theme.palette.primary.main,
+    display: 'block',
+    whiteSpace: 'nowrap',
+    cursor: 'pointer',
+    padding: theme.spacing(2),
+    boxSizing: 'border-box',
+
+    '&:hover': {
+      opacity: 0.7
+    }
   },
-  text: {
-    margin: theme.spacing(0.5, 2, 0)
+  disabled: {
+    color: '#BEC4CF',
+    cursor: 'initial'
   }
 }))

@@ -1,4 +1,4 @@
-import { themeColors } from 'themes/old/colors'
+import { themeColors } from 'themes/app/colors'
 import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles((theme: any) => ({

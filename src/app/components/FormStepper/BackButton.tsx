@@ -59,6 +59,7 @@ export const BackButton = (props: BackButtonProps) => {
         onClick={handleSave}
         disabled={isLoading}
         disableElevation
+        size='large'
       >
         {children}
       </Button>

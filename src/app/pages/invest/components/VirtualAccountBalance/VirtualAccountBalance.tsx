@@ -5,8 +5,6 @@ import {
   CardContent,
   FormControl,
   Grid,
-  MenuItem,
-  Select,
   SelectChangeEvent,
   Typography
 } from '@mui/material'
@@ -17,6 +15,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { VirtualAccount } from 'types/virtualAccount'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const VirtualAccountBalance = () => {
   const { list, isLoading } = useVirtualAccount()
@@ -43,9 +43,9 @@ export const VirtualAccountBalance = () => {
   )
 
   const menuItems = list.map(item => (
-    <MenuItem key={item._id} value={item.currency}>
+    <SelectItem key={item._id} value={item.currency} style={{ minWidth: 100 }}>
       {item.currency}
-    </MenuItem>
+    </SelectItem>
   ))
 
   return (
@@ -81,6 +81,7 @@ export const VirtualAccountBalance = () => {
                 <Select
                   value={selected}
                   onChange={handleSelect}
+                  style={{ marginTop: 0, height: 50 }}
                   className={classes.currencySelect}
                 >
                   {menuItems}
@@ -92,6 +93,7 @@ export const VirtualAccountBalance = () => {
                 component={Link}
                 to={AccountsRoute.depositCash}
                 variant='outlined'
+                size='large'
                 className={classes.depositLink}
                 disableRipple
               >

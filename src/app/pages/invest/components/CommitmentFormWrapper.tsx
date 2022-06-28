@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CommitmentFormCommitButton } from 'app/pages/invest/components/CommitFormCommitButton'
 import { capitalStructureWithFunds } from 'types/dso'
+import { RootContainer } from 'ui/RootContainer'
 
 export const CommitmentFormWrapper = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
@@ -23,7 +24,6 @@ export const CommitmentFormWrapper = () => {
   if (isLoading || data === undefined) {
     return null
   }
-
   const isCampaign = data?.isCampaign === true
   const downloadButton = isCampaign
     ? 'Download Investment Agreement'
@@ -36,62 +36,71 @@ export const CommitmentFormWrapper = () => {
       currency={data.currency._id}
       defaultValues={{ pricePerUnit: data.pricePerUnit, tnc: false }}
     >
-      <Grid container direction='column' spacing={3}>
+      <Grid
+        container
+        direction='column'
+        spacing={3}
+        style={{ display: 'table' }}
+      >
         <Grid item>
           <PageHeader title={data.tokenName} />
         </Grid>
-        <Grid item>
-          <CommitmentHeader dso={data} />
-        </Grid>
-        <Grid item container justifyContent='center'>
-          <Card style={{ width: 450 }} elevation={0}>
-            <CardContent>
-              <DownloadDSOSubscriptionDocument
-                dsoId={data._id}
-                variant='contained'
-                color='primary'
-                size='medium'
-                fullWidth
-              >
-                {downloadButton}
-              </DownloadDSOSubscriptionDocument>
-              <VSpacer size='small' />
-              <CommitmentFormFields
-                decimalScale={data.deploymentInfo?.decimals}
-                symbol={data.currency.symbol}
-                network={data.network?._id}
-                isCampaign={isCampaign}
-              />
-              <VSpacer size='medium' />
-              <Grid container spacing={2} justifyContent='center'>
-                <Grid item xs={4}>
-                  <CommitmentFormCancelButton />
-                </Grid>
-                {!isCampaign &&
-                  capitalStructureWithFunds.includes(data.capitalStructure) && (
-                    <Grid item xs={4}>
-                      <CommitmentFormCommitButton
-                        assetId={data.currency._id}
-                        minInvestment={data.minimumInvestment}
-                        dsoId={params.dsoId}
-                        currency={data.currency._id}
-                      />
-                    </Grid>
-                  )}
+        <RootContainer>
+          <Grid item>
+            <CommitmentHeader dso={data} />
+          </Grid>
+          <Grid item container justifyContent='center'>
+            <Card style={{ width: 450 }} elevation={0}>
+              <CardContent>
+                <DownloadDSOSubscriptionDocument
+                  dsoId={data._id}
+                  variant='contained'
+                  color='primary'
+                  size='medium'
+                  fullWidth
+                >
+                  {downloadButton}
+                </DownloadDSOSubscriptionDocument>
+                <VSpacer size='small' />
+                <CommitmentFormFields
+                  decimalScale={data.deploymentInfo?.decimals}
+                  symbol={data.currency.symbol}
+                  network={data.network?._id}
+                  isCampaign={isCampaign}
+                />
+                <VSpacer size='medium' />
+                <Grid container spacing={2} justifyContent='center'>
+                  <Grid item xs={4}>
+                    <CommitmentFormCancelButton />
+                  </Grid>
+                  {!isCampaign &&
+                    capitalStructureWithFunds.includes(
+                      data.capitalStructure
+                    ) && (
+                      <Grid item xs={4}>
+                        <CommitmentFormCommitButton
+                          assetId={data.currency._id}
+                          minInvestment={data.minimumInvestment}
+                          dsoId={params.dsoId}
+                          currency={data.currency._id}
+                        />
+                      </Grid>
+                    )}
 
-                <Grid item xs={4}>
-                  <CommitmentFormSubmitButton
-                    assetId={data.currency._id}
-                    minInvestment={data.minimumInvestment}
-                    dsoId={params.dsoId}
-                    currency={data.currency._id}
-                    disabled={data?.disableInvestInCampaign === true}
-                  />
+                  <Grid item xs={4}>
+                    <CommitmentFormSubmitButton
+                      assetId={data.currency._id}
+                      minInvestment={data.minimumInvestment}
+                      dsoId={params.dsoId}
+                      currency={data.currency._id}
+                      disabled={data?.disableInvestInCampaign === true}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
-        </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+        </RootContainer>
       </Grid>
     </CommitmentForm>
   )

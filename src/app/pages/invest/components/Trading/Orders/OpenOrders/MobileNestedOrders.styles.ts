@@ -24,10 +24,12 @@ export const useStyles = makeStyles(theme => ({
   },
   headerCell: {
     color: theme.palette.mode === 'light' ? '#666666' : '#ffffff',
-    padding: theme.spacing(0, 2, 0, 0)
+    padding: theme.spacing(0, 2, 0, 0),
+    borderBottom: 'none'
   },
   dataCell: {
-    padding: theme.spacing(0, 2, 0, 0)
+    padding: theme.spacing(0, 2, 0, 0),
+    borderBottom: 'none'
   },
   rowBox: {
     backgroundColor: theme.palette.mode === 'light' ? '#F6F4FD' : '#494166',

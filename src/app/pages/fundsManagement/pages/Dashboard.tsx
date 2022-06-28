@@ -11,6 +11,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { RootContainer } from 'ui/RootContainer'
 
 export const Dashboard = () => {
   const {
@@ -27,58 +28,67 @@ export const Dashboard = () => {
   const hasSubfunds = subfunds !== undefined
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} style={{ display: 'table' }}>
       <Grid item xs={12}>
         <PageHeader title='InvestaX Digital Fund VCC' />
       </Grid>
 
-      <Grid item xs={12}>
-        <DSOFilters />
-        <VSpacer size={'medium'} />
+      <Grid item xs={12} pl={3}>
+        <RootContainer>
+          <VSpacer size={'medium'} />
+          <DSOFilters />
+          <VSpacer size={'medium'} />
+        </RootContainer>
       </Grid>
 
       {hasSubfunds && !isSubFundStatsLoading && (
         <>
-          <Grid item container>
-            <DSOCards />
+          <Grid item container pl={3}>
+            <RootContainer>
+              <DSOCards />
+            </RootContainer>
           </Grid>
 
-          <Grid item container>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                {isStatusClosed ? (
-                  <AssetsUnderManagement
-                    isLoading={isSubFundStatsLoading}
-                    assets={subFundStatsData?.assetsUnderManagement}
-                  />
-                ) : (
-                  <InvestmentsOverview
-                    isLoading={isSubFundStatsLoading}
-                    investments={subFundStatsData?.assetsUnderManagement}
-                  />
-                )}
-              </Grid>
+          <Grid item container pl={3}>
+            <RootContainer>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6}>
+                  {isStatusClosed ? (
+                    <AssetsUnderManagement
+                      isLoading={isSubFundStatsLoading}
+                      assets={subFundStatsData?.assetsUnderManagement}
+                    />
+                  ) : (
+                    <InvestmentsOverview
+                      isLoading={isSubFundStatsLoading}
+                      investments={subFundStatsData?.assetsUnderManagement}
+                    />
+                  )}
+                </Grid>
 
-              <Grid item xs={12} md={6}>
-                <TopInvestorsTable
-                  isLoading={isSubFundStatsLoading}
-                  investors={subFundStatsData?.topInvestors}
-                  title={
-                    isStatusClosed
-                      ? 'Top Investors From Closed'
-                      : 'Top Investors Open Deals'
-                  }
-                />
+                <Grid item xs={12} md={6}>
+                  <TopInvestorsTable
+                    isLoading={isSubFundStatsLoading}
+                    investors={subFundStatsData?.topInvestors}
+                    title={
+                      isStatusClosed
+                        ? 'Top Investors From Closed'
+                        : 'Top Investors Open Deals'
+                    }
+                  />
+                </Grid>
               </Grid>
-            </Grid>
+            </RootContainer>
           </Grid>
 
           {!isStatusClosed && (
-            <Grid item xs={12}>
-              <InvestorsChart
-                investmentStats={subFundInvestmentStatsData}
-                isLoading={isSubFundInvestmentStatsLoading}
-              />
+            <Grid item xs={12} pl={3}>
+              <RootContainer>
+                <InvestorsChart
+                  investmentStats={subFundInvestmentStatsData}
+                  isLoading={isSubFundInvestmentStatsLoading}
+                />
+              </RootContainer>
             </Grid>
           )}
         </>
@@ -86,7 +96,9 @@ export const Dashboard = () => {
 
       {isSubFundStatsLoading && <LoadingIndicator />}
       {!hasSubfunds && !isSubFundStatsLoading && (
-        <Typography variant='subtitle1'>You have no subfunds</Typography>
+        <RootContainer>
+          <Typography variant='subtitle1'>You have no subfunds</Typography>
+        </RootContainer>
       )}
     </Grid>
   )

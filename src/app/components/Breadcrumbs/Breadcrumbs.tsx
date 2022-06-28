@@ -3,6 +3,7 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { useStyles } from 'app/components/Breadcrumbs/Breadcrumbs.styles'
 
 export const Breadcrumbs = () => {
   const params = useParams()
@@ -10,6 +11,7 @@ export const Breadcrumbs = () => {
   const crumbsLength = crumbs.length
   const lastCrumb = crumbs[crumbsLength - 1]
   const links = crumbs.slice(0, crumbsLength - 1)
+  const classes = useStyles()
 
   return (
     <MuiBreadcrumbs>
@@ -18,7 +20,9 @@ export const Breadcrumbs = () => {
           {label}
         </AppRouterLink>
       ))}
-      {lastCrumb !== undefined && <Typography>{lastCrumb.label}</Typography>}
+      {lastCrumb !== undefined && (
+        <Typography className={classes.title}>{lastCrumb.label}</Typography>
+      )}
     </MuiBreadcrumbs>
   )
 }

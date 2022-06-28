@@ -16,7 +16,8 @@ module.exports = {
     '!src/__fixtures__/**',
     '!src/**/*.d.ts',
     '!src/**/*.styles.ts',
-    '!src/**/styles.ts'
+    '!src/**/styles.ts',
+    '!src/abis/**'
   ],
   transformIgnorePatterns: ['node_modules/(?!mui-rte)'],
   coverageThreshold: {

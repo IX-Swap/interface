@@ -1,3 +1,4 @@
+import { DataroomFile } from 'types/dataroomFile'
 import {
   AgreementsAndDisclosures,
   CorporateInvestorDeclarationFormValues,
@@ -9,12 +10,25 @@ import {
 export const getCorporateInfoRequestPayload = (
   data: InvestorCorporateInfoFormValues
 ) => {
-  const { otherLegalEntityStatus, legalEntityStatus, ...rest } = data
+  const {
+    otherLegalEntityStatus,
+    legalEntityStatus,
+    logo,
+    representatives,
+    ...rest
+  } = data
   const customLegalEntityStatus =
     otherLegalEntityStatus !== undefined && otherLegalEntityStatus.trim() !== ''
 
+  const representativesTransformed = representatives.map(rep => ({
+    ...rep,
+    documents: rep.documents?.map(doc => ({ ...doc.value }))
+  }))
+
   return {
     ...rest,
+    logo: (logo as DataroomFile)?._id,
+    representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus
       : legalEntityStatus
@@ -30,45 +44,48 @@ export const getDirectorsAndBeneficialOwnerRequestPayload = (
     directors: directors.map(director => {
       return {
         ...director,
-        documents: Object.values(director.documents).reduce(
-          (result, values) => [...result, ...values],
-          []
-        )
+        documents: [
+          ...(director.proofOfAddress?.map(doc => ({ ...doc.value })) ?? []),
+          ...(director.proofOfIdentity?.map(doc => ({ ...doc.value })) ?? [])
+        ]
       }
     }),
     beneficialOwners: beneficialOwners.map(beneficialOwner => {
       return {
         ...beneficialOwner,
-        documents: Object.values(beneficialOwner.documents).reduce(
-          (result, values) => [...result, ...values],
-          []
-        )
+        documents: [
+          ...(beneficialOwner.proofOfAddress?.map(doc => ({ ...doc.value })) ??
+            []),
+          ...(beneficialOwner.proofOfIdentity?.map(doc => ({ ...doc.value })) ??
+            [])
+        ]
       }
     })
   }
 }
 
 export const getCorporateInvestorDeclarationRequestPayload = (
-  values: CorporateInvestorDeclarationFormValues
+  values: CorporateInvestorDeclarationFormValues &
+    CorporateInvestorDocumentsFormValues
 ) => {
+  const documents = Object.values(values).reduce<
+    Array<{ value: DataroomFile }>
+  >((result, docs) => {
+    if (Array.isArray(docs)) {
+      return [...result, ...docs.map(document => document.value._id)]
+    }
+
+    return result
+  }, [])
+
+  const isInstitutionalInvestor = values.isInstitutionalInvestor
+
   return {
     declarations: {
       investorsStatus: values
-    }
-  }
-}
-
-export const getCorporateInvestorDocumentsRequestPayload = (
-  values: CorporateInvestorDocumentsFormValues
-) => {
-  return {
-    documents: Object.values(values).reduce<string[]>((result, documents) => {
-      if (Array.isArray(documents)) {
-        return [...result, ...documents.map(document => document._id)]
-      }
-
-      return result
-    }, [])
+    },
+    documents: documents.filter(doc => doc !== undefined),
+    isInstitutionalInvestor: isInstitutionalInvestor
   }
 }
 

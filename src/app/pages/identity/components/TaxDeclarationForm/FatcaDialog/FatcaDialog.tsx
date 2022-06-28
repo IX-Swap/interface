@@ -1,12 +1,13 @@
 import React from 'react'
-import { Dialog } from 'app/pages/identity/components/Dialog'
+import { Dialog } from 'app/pages/identity/components/Dialog/Dialog'
 import { Typography } from '@mui/material'
-import { TaxDeclarationInfoAction } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoActions'
+import { TaxDeclarationInfoAction } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfoDialog/TaxDeclarationInfoActions'
 import { FatcaContent } from 'app/pages/identity/components/TaxDeclarationForm/FatcaDialog/FatcaContent'
 
 export const FatcaDialog = () => {
   return (
     <Dialog
+      maxWidth='xs'
       fullWidth
       scroll='body'
       button={
@@ -14,16 +15,13 @@ export const FatcaDialog = () => {
           component='span'
           color='primary'
           style={{
-            textDecoration: 'underline',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-            fontSize: 'inherit'
+            cursor: 'pointer'
           }}
         >
-          FATCA
+          Learn More
         </Typography>
       }
-      title='Under FATCA, you are a citizen of the United States of America if:'
+      title='Under FATCA, You are Citizen Of The United States Of America if:'
       content={<FatcaContent />}
       actions={<TaxDeclarationInfoAction />}
     />

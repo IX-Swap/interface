@@ -1,6 +1,6 @@
 import {
   IndividualAgreementsFormValues,
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
@@ -10,7 +10,13 @@ import {
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
 ) => {
-  return values
+  if (values.dob === null || values.dob === undefined) {
+    delete values.dob
+  }
+  return {
+    ...values,
+    nric: values.nationality === 'Singapore' ? values.nric : undefined
+  }
 }
 
 export const getFinancialInfoRequestPayload = (
@@ -63,17 +69,18 @@ export const getInvestorDeclarationRequestPayload = (
 }
 
 export const getDocumentsRequestPayload = (
-  values: IndividualDocumentsFormValues
+  values: IdentityDocumentsFormValues
 ) => {
-  return {
+  const documents = {
     documents: Object.values(values).reduce<string[]>((result, documents) => {
       if (Array.isArray(documents)) {
-        return [...result, ...documents.map(document => document._id)]
+        return [...result, ...documents.map(document => document.value._id)]
       }
 
       return result
     }, [])
   }
+  return documents.documents.length > 0 ? documents : {}
 }
 
 export const getAgreementsRequestPayload = (

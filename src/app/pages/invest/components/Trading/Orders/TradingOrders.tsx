@@ -1,13 +1,11 @@
 import { Grid, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { TradingOpenOrders } from './OpenOrders/TradingOpenOrders'
 import { PastOTCOrders } from './PastOrders/PastOTCOrders'
 
 export const TradingOrders = () => {
   const [selectedIdx, setSelectedIdx] = useState(0)
-  const { pairId } = useParams<{ pairId: string }>()
 
   return (
     <Grid>
@@ -26,7 +24,7 @@ export const TradingOrders = () => {
       </TabPanel>
 
       <TabPanel pt={3} value={selectedIdx} index={1}>
-        <PastOTCOrders pairId={pairId} />
+        <PastOTCOrders />
       </TabPanel>
     </Grid>
   )

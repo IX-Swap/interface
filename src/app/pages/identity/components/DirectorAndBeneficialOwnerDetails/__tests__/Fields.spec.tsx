@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { fireEvent } from '@testing-library/react'
+import { fireEvent, getByTestId } from '@testing-library/react'
 import {
   Fields,
   FieldsProps
@@ -40,8 +40,7 @@ describe('Fields', () => {
     total: 1,
     max: 5,
     sectionTitle: 'Directors',
-    informationFields: <></>,
-    defaultValue: {} as any
+    informationFields: <></>
   }
 
   afterEach(async () => {
@@ -51,14 +50,13 @@ describe('Fields', () => {
   it('render FormSectionHeader when index > 0', () => {
     render(
       <Form>
-        <Fields {...props} index={1} />
+        <Fields {...props} index={1} total={2} />
       </Form>
     )
 
     expect(FormSectionHeader).toHaveBeenCalledWith(
       {
-        title: '(2) Directors',
-        variant: 'subsection'
+        title: '(2) Directors'
       },
       {}
     )
@@ -78,13 +76,13 @@ describe('Fields', () => {
   })
 
   it('handles Delete button correctly', () => {
-    const { getByText } = render(
+    const { getByTestId } = render(
       <Form>
         <Fields {...props} index={1} isLast={false} total={5} />
       </Form>
     )
 
-    const deleteButton = getByText('Delete') as HTMLButtonElement
+    const deleteButton = getByTestId('delete-button') as HTMLButtonElement
     expect(deleteButton).toBeInTheDocument()
 
     fireEvent.click(deleteButton, { bubbles: true, cancellable: true })

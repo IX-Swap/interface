@@ -3,9 +3,7 @@ import { ErrorBoundary } from '@sentry/react'
 import { Grid } from '@mui/material'
 import { AppError } from 'app/components/AppError'
 import { useDataFromURL } from 'hooks/location/useDataFromURL'
-import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
-import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
 import { AppRouter } from 'app/router/AppRouter'
 import { IdleDialog } from 'app/components/IdleDialog'
 import { useIdleTimers } from 'app/hooks/useIdleTimers'
@@ -24,13 +22,10 @@ export const AppRoot = () => {
         <Grid item>
           <Header />
         </Grid>
-        <SidebarContainer />
         <AppContentWrapper item container>
-          <OnboardingContentWrapper>
-            <Web3ReactManager>
-              <AppRouter />
-            </Web3ReactManager>
-          </OnboardingContentWrapper>
+          <Web3ReactManager>
+            <AppRouter />
+          </Web3ReactManager>
         </AppContentWrapper>
       </Grid>
       <IdleDialog

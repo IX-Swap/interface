@@ -7,6 +7,7 @@ export interface IconProps extends React.ComponentProps<any> {
   size?: number
   color?: string
   hoverColor?: string
+  noHover?: boolean
 }
 
 export const Icon = ({
@@ -14,14 +15,17 @@ export const Icon = ({
   color = '#778194',
   hoverColor = '#4C88FF',
   size = 24,
+  noHover = false,
   ...props
 }: IconProps) => {
+  const hover = noHover ? color : hoverColor
+
   return (
     <StyledSVG
       width={`${size}px`}
       height={`${size}px`}
       fill={color}
-      hoverColor={hoverColor}
+      hoverColor={hover}
       {...props}
     >
       <use href={Icons + `#${name}`} />

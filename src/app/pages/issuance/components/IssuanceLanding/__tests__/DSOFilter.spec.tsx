@@ -32,7 +32,6 @@ describe('DSOFilter', () => {
     expect(DSOSelect).toHaveBeenCalledTimes(1)
     expect(DSOSelect).toHaveBeenCalledWith(
       {
-        fullWidth: true,
         onChange: handleChange,
         options: [dso],
         value: null
