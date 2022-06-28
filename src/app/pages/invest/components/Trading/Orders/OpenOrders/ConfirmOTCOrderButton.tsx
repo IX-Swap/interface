@@ -1,12 +1,12 @@
 import { Box, Button, ButtonProps, CircularProgress } from '@mui/material'
+import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ConfirmOTCOrderButton.styles'
 import { useConfirmMyOrder } from 'app/pages/invest/hooks/useConfirmMyOrder'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
+import { LeavePageContext } from 'app/pages/issuance/context/LeavePageContext'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ColumnOTCMatch } from 'types/otcOrder'
-import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ConfirmOTCOrderButton.styles'
-import { LeavePagePrompt } from 'components/LeavePagePrompt/LeavePagePrompt'
 export interface ConfirmOTCOrderButtonProps extends ButtonProps {
   order: ColumnOTCMatch
 }
@@ -16,7 +16,7 @@ export const ConfirmOTCOrderButton = ({
 }: ConfirmOTCOrderButtonProps) => {
   const { chainId, address } = usePairTokenAddressNetwork()
   const [loadingTransaction, setLoadingTransaction] = useState(false)
-  const [showPrompt, setShowPrompt] = useState(false)
+  const context = useContext(LeavePageContext)
   const classes = useStyles()
   const sendCallback = async () => {
     await confirmMatch({
@@ -36,12 +36,12 @@ export const ConfirmOTCOrderButton = ({
   const handleClick = async () => {
     setLoadingTransaction(true)
     try {
-      setShowPrompt(true)
+      context?.openPrompt()
       await sendToken()
     } catch {
       console.error('error confirming')
     } finally {
-      setShowPrompt(false)
+      context?.closePrompt()
       setLoadingTransaction(false)
     }
   }
@@ -49,7 +49,6 @@ export const ConfirmOTCOrderButton = ({
 
   return (
     <>
-      <LeavePagePrompt showPrompt={showPrompt} />
       {(isLoading || loadingTransaction) && (
         <Box className={classes.loader} data-testid='loader'>
           <CircularProgress size={14} />

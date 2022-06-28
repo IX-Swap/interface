@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     [theme.breakpoints.up('md')]: {
-      width: theme.spacing(14)
+      width: theme.spacing(13.5)
     }
   }
 }))

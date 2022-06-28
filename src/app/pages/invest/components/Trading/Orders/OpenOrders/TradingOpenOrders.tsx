@@ -21,6 +21,7 @@ import { OpenOrdersContextWrapper } from 'app/pages/invest/components/Trading/co
 import { CompactOpenOTCOrder } from './CompactOpenOTCOrder'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
+import { LeavePageContextWrapper } from 'app/pages/issuance/context/LeavePageContext'
 
 export const TradingOpenOrders = () => {
   const { user } = useAuth()
@@ -29,37 +30,39 @@ export const TradingOpenOrders = () => {
   const { isTablet } = useAppBreakpoints()
   const { account } = useActiveWeb3React()
   return (
-    <OpenOrdersContextWrapper>
-      <Grid>
-        <TableView<OpenOTCOrder>
-          name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
-          uri={trading.getMyOrdersList(account)}
-          size='small'
-          columns={columns}
-          noHeader={isTablet}
-          themeVariant={'primary'}
-          hasActions
-          bordered={false}
-          noDataComponent={<OpenOrdersEmptyState />}
-          actions={OTCOrderActions}
-          paperProps={
-            isTablet
-              ? {
-                  variant: 'elevation',
-                  elevation: 0
-                }
-              : undefined
-          }
-        >
-          {isTablet
-            ? (props: TableViewRendererProps<OpenOTCOrder>) => (
-                <CompactOpenOTCOrder {...props} columns={compactColumns} />
-              )
-            : (props: TableViewRendererProps<OpenOTCOrder>) => (
-                <OpenOTCTableBody {...props} columns={columns} />
-              )}
-        </TableView>
-      </Grid>
-    </OpenOrdersContextWrapper>
+    <LeavePageContextWrapper>
+      <OpenOrdersContextWrapper>
+        <Grid>
+          <TableView<OpenOTCOrder>
+            name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
+            uri={trading.getMyOrdersList(account)}
+            size='small'
+            columns={columns}
+            noHeader={isTablet}
+            themeVariant={'primary'}
+            hasActions
+            bordered={false}
+            noDataComponent={<OpenOrdersEmptyState />}
+            actions={OTCOrderActions}
+            paperProps={
+              isTablet
+                ? {
+                    variant: 'elevation',
+                    elevation: 0
+                  }
+                : undefined
+            }
+          >
+            {isTablet
+              ? (props: TableViewRendererProps<OpenOTCOrder>) => (
+                  <CompactOpenOTCOrder {...props} columns={compactColumns} />
+                )
+              : (props: TableViewRendererProps<OpenOTCOrder>) => (
+                  <OpenOTCTableBody {...props} columns={columns} />
+                )}
+          </TableView>
+        </Grid>
+      </OpenOrdersContextWrapper>
+    </LeavePageContextWrapper>
   )
 }

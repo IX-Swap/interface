@@ -29,7 +29,7 @@ describe('ConfirmOTCOrderButton', () => {
       .spyOn(useConfirmMyOrder, 'useConfirmMyOrder')
       .mockImplementation(() => notLoadingResponse as any)
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMiniLaptop: false
+      isTablet: false
     } as any)
     const { getByTestId } = render(
       <ConfirmOTCOrderButton
@@ -43,7 +43,7 @@ describe('ConfirmOTCOrderButton', () => {
       .spyOn(useConfirmMyOrder, 'useConfirmMyOrder')
       .mockImplementation(() => loadingResponse as any)
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMiniLaptop: false
+      isTablet: false
     } as any)
     const { getByTestId } = render(
       <ConfirmOTCOrderButton
@@ -58,7 +58,7 @@ describe('ConfirmOTCOrderButton', () => {
       .mockImplementation(() => notLoadingResponse as any)
 
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMiniLaptop: true
+      isTablet: true
     } as any)
     const { getByTestId } = render(
       <ConfirmOTCOrderButton

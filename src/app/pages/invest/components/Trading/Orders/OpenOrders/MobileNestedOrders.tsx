@@ -15,6 +15,7 @@ import { MobileConfirmationMessage } from 'app/pages/invest/components/Trading/O
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders.styles'
 import { ConfirmOTCOrderActions } from 'app/pages/invest/components/Trading/Orders/OpenOrders/OTCOrderActions'
 import { ToggleDetailsButton } from 'app/pages/invest/components/Trading/Orders/OpenOrders/ToggleDetailsButton'
+import { LeavePageContext } from 'app/pages/issuance/context/LeavePageContext'
 import { renderTotal } from 'helpers/numbers'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useContext, useMemo } from 'react'
@@ -23,6 +24,7 @@ import { Icon } from 'ui/Icons/Icon'
 
 export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
   const context = useContext(OpenOrdersContext)
+  const leavePageContext = useContext(LeavePageContext)
   const open = context?.hasOpenIndices
   const classes = useStyles()
   const openIndex = context?.openIndex
@@ -36,6 +38,9 @@ export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
     return null
   }
   const onClose = () => {
+    if (leavePageContext?.showPrompt === true) {
+      return
+    }
     if (openIndex !== undefined) {
       context?.toggleRow(openIndex)
     }
