@@ -1,10 +1,11 @@
 import {
   IndividualAgreementsFormValues,
   IdentityDocumentsFormValues,
-  IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
-  IndividualTaxDeclarationFormValues
+  FinancialAndTaxDeclarationFormValues,
+  IndividualTaxDeclarationFormValues,
+  IndividualFinancialInfoFormValues
 } from 'app/pages/identity/types/forms'
 
 export const getPersonalInfoRequestPayload = (
@@ -37,6 +38,39 @@ export const getTaxDeclarationRequestPayload = (
         fatca: fatca === 'yes'
       }
     }
+  }
+
+  if (taxResidencies !== undefined) {
+    payload.taxResidencies = taxResidencies.map(taxResidency => {
+      const payload = taxResidency
+
+      payload.residentOfSingapore = singaporeOnly === 'yes'
+
+      for (const [key, value] of Object.entries(payload)) {
+        if (typeof value === 'string' && value.trim() === '') {
+          delete payload[key as keyof typeof payload] // eslint-disable-line
+        }
+      }
+
+      return payload
+    })
+  }
+
+  return payload
+}
+
+export const getFinancialAndTaxDeclarationRequestPayload = (
+  values: FinancialAndTaxDeclarationFormValues
+) => {
+  const { taxResidencies, singaporeOnly, fatca, usTin, ...other } = values
+  const payload: any = {
+    declarations: {
+      tax: {
+        fatca: fatca === 'yes',
+        usTin
+      }
+    },
+    ...other
   }
 
   if (taxResidencies !== undefined) {

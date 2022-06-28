@@ -35,11 +35,11 @@ export const InvestorDeclarationForm = ({
     if (type === 'individual') {
       return [
         {
-          name: 'optInAgreements1',
+          name: 'optInAgreementsSafeguards',
           label: <SafeguardAgreements />
         },
         {
-          name: 'optInAgreements2',
+          name: 'optInAgreementsOptOut',
           label: <OptInAgreementsIndividual showOptOutDialog />
         }
       ]

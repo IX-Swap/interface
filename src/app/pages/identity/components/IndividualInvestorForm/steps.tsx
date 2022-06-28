@@ -2,23 +2,21 @@ import React from 'react'
 import { Grid, Paper } from '@mui/material'
 import {
   getDocumentsFormValues,
-  getFinancialInfoFormValues,
   getInvestorDeclarationFormValues,
   getPersonalInfoFormValues,
-  getTaxDeclarationFormValues
+  getFinancialAndTaxDeclarationFormValues
 } from 'app/pages/identity/utils/individual/forms'
 import {
   getDocumentsRequestPayload,
-  getFinancialInfoRequestPayload,
   getInvestorDeclarationRequestPayload,
   getPersonalInfoRequestPayload,
-  getTaxDeclarationRequestPayload
+  getFinancialAndTaxDeclarationRequestPayload
 } from 'app/pages/identity/utils/individual/requests'
 import {
   individualInvestorValidationSchema,
-  financialInfoSchema,
   individualInvestorStatusDeclarationSchema,
-  personalInfoSchema
+  personalInfoSchema,
+  financialAndTaxDeclarationSchema
 } from 'app/pages/identity/validation/individual'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { FinancialInformationForm } from 'app/pages/identity/components/FinancialInformationForm/FinancialInformationForm'
@@ -58,9 +56,9 @@ export const individualInvestorFormSteps = [
   },
   {
     label: 'Financial and Tax Information',
-    getFormValues: getFinancialInfoFormValues,
-    getRequestPayload: getFinancialInfoRequestPayload,
-    validationSchema: financialInfoSchema,
+    getFormValues: getFinancialAndTaxDeclarationFormValues,
+    getRequestPayload: getFinancialAndTaxDeclarationRequestPayload,
+    validationSchema: financialAndTaxDeclarationSchema,
     component: () => (
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -102,20 +100,18 @@ export const individualInvestorFormSteps = [
     getFormValues: (data: any) => {
       const allData = {
         ...getDocumentsFormValues(data),
-        ...getFinancialInfoFormValues(data),
         ...getInvestorDeclarationFormValues(data),
         ...getPersonalInfoFormValues(data),
-        ...getTaxDeclarationFormValues(data)
+        ...getFinancialAndTaxDeclarationFormValues(data)
       }
       return allData
     },
     getRequestPayload: (data: any) => {
       return {
         ...getDocumentsRequestPayload(data),
-        ...getFinancialInfoRequestPayload(data),
         ...getInvestorDeclarationRequestPayload(data),
         ...getPersonalInfoRequestPayload(data),
-        ...getTaxDeclarationRequestPayload(data)
+        ...getFinancialAndTaxDeclarationRequestPayload(data)
       }
     },
     validationSchema: individualInvestorValidationSchema,

@@ -110,6 +110,18 @@ export interface IndividualTaxDeclarationFormValues {
   taxResidencies: TaxResidencies
 }
 
+export interface FinancialAndTaxDeclarationFormValues {
+  sourceOfFund: string | FundSource[]
+  occupation: string
+  employer: string
+  employmentStatus: string
+  annualIncome: string
+  singaporeOnly: 'yes' | 'no'
+  fatca: 'yes' | 'no'
+  taxResidencies: TaxResidencies
+  usTin?: string
+}
+
 export interface IndividualInvestorDeclarationFormValues
   extends IndividualInvestorStatus,
     OptOutRequirements,
@@ -280,7 +292,9 @@ export interface OptOutRequirements {
 }
 
 export interface OptInAgreements {
-  optInAgreements: boolean
+  optInAgreements?: boolean
+  optInAgreementsSafeguards?: boolean
+  optInAgreementsOptOut?: boolean
 }
 
 export interface IndividualInvestorStatus {
@@ -300,7 +314,7 @@ export interface CorporateInvestorStatus {
 }
 
 export interface IdentityDeclarations {
-  tax: { fatca: boolean }
+  tax: { fatca: boolean; usTin?: string }
   investorsStatus: IndividualInvestorStatus &
     CorporateInvestorStatus &
     OptInAgreements &

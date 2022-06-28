@@ -1,10 +1,9 @@
 import {
   IdentityDocumentsFormValues,
-  IndividualFinancialInfoFormValues,
   IndividualIdentity,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
-  IndividualTaxDeclarationFormValues
+  FinancialAndTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
 
 export const getPersonalInfoFormValues = (
@@ -32,28 +31,22 @@ export const getPersonalInfoFormValues = (
   }
 }
 
-export const getFinancialInfoFormValues = (
+export const getFinancialAndTaxDeclarationFormValues = (
   data: IndividualIdentity
-): Partial<IndividualFinancialInfoFormValues> => {
-  return {
-    occupation: data?.occupation,
-    employer: data?.employer,
-    employmentStatus: data?.employmentStatus,
-    annualIncome: data?.annualIncome,
-    sourceOfFund: data?.sourceOfFund
-  }
-}
-
-export const getTaxDeclarationFormValues = (
-  data: IndividualIdentity
-): Partial<IndividualTaxDeclarationFormValues> => {
-  const result: Partial<IndividualTaxDeclarationFormValues> = {}
+): Partial<FinancialAndTaxDeclarationFormValues> => {
+  const result: Partial<FinancialAndTaxDeclarationFormValues> = {}
 
   if (data === undefined) {
     return result
   }
 
   const { taxResidencies, declarations } = data
+
+  result.occupation = data?.occupation
+  result.employer = data?.employer
+  result.employmentStatus = data?.employmentStatus
+  result.annualIncome = data?.annualIncome
+  result.sourceOfFund = data?.sourceOfFund
 
   if (taxResidencies !== undefined && taxResidencies.length > 0) {
     result.taxResidencies = taxResidencies.map(({ _id, ...rest }: any) => rest)
@@ -66,6 +59,7 @@ export const getTaxDeclarationFormValues = (
 
   if (declarations?.tax?.fatca !== undefined) {
     result.fatca = declarations.tax.fatca ? 'yes' : 'no'
+    result.usTin = declarations.tax.usTin
   }
 
   return result
