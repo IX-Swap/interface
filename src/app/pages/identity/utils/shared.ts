@@ -71,7 +71,7 @@ export const adjustIdentityOccupation = (str?: string) => {
   res[0] = res[0]?.toUpperCase()
   for (let i = 0; i < res.length; i++) {
     if (res[i] === ' ' || res[i] === '/') {
-      res.splice(i + 1, 1, res[i + 1].toUpperCase())
+      res.splice(i + 1, 1, res[i + 1]?.toUpperCase())
     }
   }
   return res.join('')
