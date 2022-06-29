@@ -7,6 +7,7 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
   >
     <tr
       class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
+      style="border-bottom: 12px solid #FFFFFF;"
     >
       <td
         class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
@@ -119,6 +120,7 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
     </tr>
     <tr
       class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
+      style="border-bottom: 12px solid #FFFFFF;"
     >
       <td
         class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
@@ -231,6 +233,7 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
     </tr>
     <tr
       class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
+      style="border-bottom: 12px solid #FFFFFF;"
     >
       <td
         class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
@@ -325,6 +328,7 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
     </tr>
     <tr
       class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
+      style="border-bottom: 12px solid #FFFFFF;"
     >
       <td
         class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-17e0zod-MuiTableCell-root"
