@@ -15,7 +15,7 @@ export const TwoFANotice = () => {
   }
 
   return (
-    <Paper sx={{ p: 5 }}>
+    <Paper sx={{ p: 5, borderRadius: 2 }}>
       <Grid container spacing={2}>
         <Grid item container spacing={2} justifyContent='space-between' xs={12}>
           <Grid item>
@@ -26,7 +26,11 @@ export const TwoFANotice = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Typography variant='body1' color='textSecondary' sx={{ mb: 1 }}>
+          <Typography
+            variant='body1'
+            color='textSecondary'
+            sx={{ mb: 1, mr: 2.5 }}
+          >
             Secure your account with two-factor authentication
           </Typography>
         </Grid>

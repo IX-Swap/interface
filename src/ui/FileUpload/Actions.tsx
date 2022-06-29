@@ -1,9 +1,8 @@
-import { Box, IconButton } from '@mui/material'
+import { Box } from '@mui/material'
 import React from 'react'
 import { DataroomFile } from 'types/dataroomFile'
-import { Icon } from 'ui/Icons/Icon'
-import { useFormContext } from 'react-hook-form'
 import { Download } from 'ui/FileUpload/Download'
+import { RemoveButton } from 'ui/FileUpload/RemoveButton'
 
 export interface ActionsProps {
   name: string
@@ -21,23 +20,10 @@ export const Actions = ({
   remove,
   setCompleted
 }: ActionsProps) => {
-  const { setValue } = useFormContext()
-  const handleDelete = () => {
-    if (remove !== undefined) {
-      remove()
-      return
-    }
-
-    setValue(name, undefined)
-    setCompleted(0)
-  }
-
   return (
     <Box display={'flex'} ml={1}>
       {!readonly && (
-        <IconButton onClick={handleDelete} size='large'>
-          <Icon name='trash' />
-        </IconButton>
+        <RemoveButton name={name} setCompleted={setCompleted} remove={remove} />
       )}
 
       <Download documentId={document._id} />
