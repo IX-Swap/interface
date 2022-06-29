@@ -889,16 +889,16 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                     class="MuiGrid-root MuiGrid-container MuiGrid-item css-dw5ume-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item css-siseil-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-1yiji47-MuiGrid-root"
                     >
                       <svg
                         class="css-1s8o7ec"
-                        fill="#7DD320"
+                        fill="#F56283"
                         height="24px"
                         width="24px"
                       >
                         <use
-                          href="image-mock#check"
+                          href="image-mock#close"
                         />
                       </svg>
                     </div>
