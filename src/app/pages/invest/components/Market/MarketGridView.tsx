@@ -14,6 +14,7 @@ export interface MarketViewProps {
   symbol: string
   datafeed?: IBasicDataFeed
   createOrderStatus: string
+  isDisabled?: boolean
   isFetching: boolean
   currencyName: string
   tokenName: string
