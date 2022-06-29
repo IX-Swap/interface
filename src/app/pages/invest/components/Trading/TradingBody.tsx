@@ -1,5 +1,4 @@
-import { Grid, Hidden } from '@mui/material'
-import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
+import { Grid } from '@mui/material'
 import { PlaceOrderForm } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderForm'
 import { PlaceOrderFormDialog } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderFormDialog'
 import { useCurrencyBalance } from 'app/pages/invest/hooks/useCurrencyBalance'
@@ -9,9 +8,12 @@ import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrder
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { useCreateOTCOrder } from 'app/pages/invest/hooks/useCreateOTCOrder'
 import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
+import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
+import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 
 export const TradingBody = () => {
@@ -19,13 +21,19 @@ export const TradingBody = () => {
   const { address } = usePairTokenAddressNetwork()
   const balance = useCryptoBalance(address)
   const { account } = useActiveWeb3React()
-  const { found } = useWithdrawalAddressAdded(account)
+  const { isMiniLaptop } = useAppBreakpoints()
+  const {
+    accountState,
+    isWhitelisted: { found }
+  } = useMetamaskConnectionManager()
   const { currencyName, tokenName } = useFeaturedPairNames()
   const currencyBalance = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
     return await create({ args: values, account })
   }
+  const disabledCreate =
+    !found || isLoading || accountState === AccountState.DIFFERENT_CHAIN
   const renderSuffix = ({ tab }: { tab: number }) => (
     <PlaceOrderSuffix
       tab={tab}
@@ -45,25 +53,27 @@ export const TradingBody = () => {
       columnSpacing={2}
       ml={0}
     >
-      <Grid item className={classes.colorGrid} minHeight={325} xs={12} md={8}>
+      <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={8}>
         <TradingOrders />
       </Grid>
-      <Hidden lgDown>
-        <Grid item container xs={12} md={4}>
+
+      {!isMiniLaptop && (
+        <Grid item container xs={12} lg={4}>
           <PlaceOrderForm
             createOrderStatus={createOrderStatus}
             isFetching={isFetching}
             currencyLabel={currencyName}
             tokenLabel={tokenName}
-            isDisabled={!found || isLoading}
+            isDisabled={disabledCreate}
             currencyBalance={currencyBalance}
             suffix={renderSuffix}
             tokenBalance={balance}
             onSubmit={submitForm}
           />
         </Grid>
-      </Hidden>
-      <Hidden mdUp>
+      )}
+
+      {isMiniLaptop && (
         <PlaceOrderFormDialog
           symbol={currencyName}
           createOrderStatus={createOrderStatus}
@@ -75,7 +85,7 @@ export const TradingBody = () => {
           suffix={renderSuffix}
           submitForm={submitForm}
         />
-      </Hidden>
+      )}
     </Grid>
   )
 }

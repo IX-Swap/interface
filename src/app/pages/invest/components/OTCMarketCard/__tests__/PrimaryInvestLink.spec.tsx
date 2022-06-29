@@ -82,8 +82,9 @@ describe('PrimaryInvestLink', () => {
     expect(Button).toHaveBeenCalledWith(
       expect.objectContaining({
         ...defaultPrimaryInvestProps,
-        disabled: true,
-        to: InvestRoute.exchange,
+        disabled: false,
+        // TODO Change route when we will have more featured pairs
+        to: InvestRoute.trading,
         params: {
           pairId: dso._id
         },

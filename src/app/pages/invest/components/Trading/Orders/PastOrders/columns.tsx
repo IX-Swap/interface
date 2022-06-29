@@ -3,8 +3,8 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
   formatRoundedAmount,
+  getFilledRoundedPercentage,
   getOrderCurrency,
-  getRoundedPercentage,
   renderTotal
 } from 'helpers/numbers'
 import { capitalizeFirstLetter } from 'helpers/strings'
@@ -64,9 +64,9 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     key: '_id',
     label: 'Filled',
     render: (_, row) =>
-      getRoundedPercentage({
+      getFilledRoundedPercentage({
         amount: row.amount,
-        matchedAmount: row.availableAmount ?? 0
+        availableAmount: row.availableAmount ?? 0
       })
   },
   {
@@ -113,9 +113,9 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
     key: '_id',
     label: 'Filled',
     render: (_, row) =>
-      getRoundedPercentage({
+      getFilledRoundedPercentage({
         amount: row.amount,
-        matchedAmount: row.availableAmount ?? 0
+        availableAmount: row.availableAmount ?? 0
       })
   },
   {

@@ -14,12 +14,9 @@ export interface PrimaryInvestLinkProps {
 export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
   const { user } = useAuth()
 
-  // TODO Add disabled logic for OTC
-  const isDisabled = type !== 'OTC' ? data.createdBy === user?._id : true
+  const isDisabled = data.createdBy === user?._id
 
-  const link =
-    // TODO Change route for OTC after complete OTC page
-    type !== 'OTC' ? InvestRoute.makeInvestment : InvestRoute.exchange
+  const link = type !== 'OTC' ? InvestRoute.makeInvestment : InvestRoute.trading
 
   const params =
     type !== 'OTC'
