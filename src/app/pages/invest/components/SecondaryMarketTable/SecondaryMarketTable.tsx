@@ -10,17 +10,19 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useTheme } from '@mui/material/styles'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const SecondaryMarketTable = () => {
   const theme = useTheme()
   const { getFilterValue } = useQueryFilter()
+  const { isMobile } = useAppBreakpoints()
   const search = getFilterValue('search')
   const secondaryMarketSearch = getFilterValue('secondaryMarketSearch')
 
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item container justifyContent={'space-between'}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={5} md={4} lg={3}>
           <SearchFilter
             data-testid='secondaryMarketSearch'
             fullWidth
@@ -29,7 +31,7 @@ export const SecondaryMarketTable = () => {
             placeholder='Search'
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={12} sm={'auto'} order={isMobile ? -1 : 'initial'} pb={2}>
           <Button
             component={AppRouterLinkComponent}
             to={AccountsRoute.myHoldings}
@@ -43,7 +45,7 @@ export const SecondaryMarketTable = () => {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid item xs={12} style={{ overflowX: 'scroll', maxWidth: '100%' }}>
         <TableView
           uri={exchangeURL.marketList}
           name={exchangeQueryKeys.marketList}

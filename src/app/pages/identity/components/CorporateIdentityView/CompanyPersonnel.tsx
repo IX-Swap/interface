@@ -15,6 +15,7 @@ export const CompanyPersonnel = ({ personnel, title }: PersonnelProps) => {
   const documents = personnel.documents.filter(
     doc => doc !== undefined && Object.values(doc).length > 0
   )
+
   return (
     <FieldContainer>
       <Grid item container direction={'column'} spacing={5}>

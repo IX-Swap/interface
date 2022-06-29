@@ -1,14 +1,19 @@
 import {
   IdentityDocumentsFormValues,
+  IndividualFinancialInfoFormValues,
   IndividualIdentity,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
-  FinancialAndTaxDeclarationFormValues
+  IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
+import { titleCase } from 'app/pages/identity/utils/shared'
 
 export const getPersonalInfoFormValues = (
   data: IndividualIdentity
 ): IndividualPersonalInfoFormValues => {
+  const country = titleCase(data?.address?.country)
+  const nationality = titleCase(data?.nationality)
+
   return {
     photo: data?.photo,
     firstName: data?.firstName,
@@ -17,24 +22,38 @@ export const getPersonalInfoFormValues = (
     dob: data?.dob,
     email: data?.email,
     contactNumber: data?.contactNumber,
-    nationality: data?.nationality,
+    nationality,
     gender: data?.gender,
-    nric: data?.nric,
+    nric: data?.uinfin ?? data?.nric,
     address: {
       line1: data?.address?.line1,
       line2: data?.address?.line2,
       state: data?.address?.state,
       postalCode: data?.address?.postalCode,
-      country: data?.address?.country,
+      country,
       city: data?.address?.city
     }
   }
 }
 
-export const getFinancialAndTaxDeclarationFormValues = (
+export const getFinancialInfoFormValues = (
   data: IndividualIdentity
-): Partial<FinancialAndTaxDeclarationFormValues> => {
-  const result: Partial<FinancialAndTaxDeclarationFormValues> = {}
+): Partial<IndividualFinancialInfoFormValues> => {
+  return {
+    occupation: data?.occupation,
+    employer: data?.employer,
+    employmentStatus: data?.employmentStatus,
+    annualIncome: data?.annualIncome,
+    sourceOfFund: data?.sourceOfFund,
+    ...getTaxDeclarationFormValues(data)
+  }
+}
+
+export const getTaxDeclarationFormValues = (
+  data: IndividualIdentity
+): Partial<IndividualTaxDeclarationFormValues> => {
+  const result: Partial<IndividualTaxDeclarationFormValues> = {}
+  const isSingPass = data?.uinfin !== undefined
 
   if (data === undefined) {
     return result
@@ -42,17 +61,24 @@ export const getFinancialAndTaxDeclarationFormValues = (
 
   const { taxResidencies, declarations } = data
 
-  result.occupation = data?.occupation
-  result.employer = data?.employer
-  result.employmentStatus = data?.employmentStatus
-  result.annualIncome = data?.annualIncome
-  result.sourceOfFund = data?.sourceOfFund
-
-  if (taxResidencies !== undefined && taxResidencies.length > 0) {
-    result.taxResidencies = taxResidencies.map(({ _id, ...rest }: any) => rest)
+  if (
+    isSingPass ||
+    (taxResidencies !== undefined && taxResidencies.length > 0)
+  ) {
+    result.taxResidencies = isSingPass
+      ? [
+          {
+            residentOfSingapore: true,
+            countryOfResidence: titleCase(data?.address.country),
+            taxIdentificationNumber: data?.uinfin,
+            taxIdAvailable: true
+          }
+        ]
+      : taxResidencies.map(({ _id, ...rest }: any) => rest)
     result.singaporeOnly =
-      taxResidencies.length === 1 &&
-      Boolean(taxResidencies[0].residentOfSingapore)
+      (taxResidencies.length === 1 &&
+        Boolean(taxResidencies[0].residentOfSingapore)) ||
+      (isSingPass && taxResidencies.length < 1)
         ? 'yes'
         : 'no'
   }

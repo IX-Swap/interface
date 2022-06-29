@@ -71,7 +71,7 @@ export const InvestorDeclarationView: React.FC<
   }
 
   const optInRequirement = {
-    optInAgreements: optInAgreements !== undefined
+    optInAgreements: optInAgreements !== undefined ? optInAgreements : false
   }
 
   const accreditedInvestorOptOutLabelMap = {

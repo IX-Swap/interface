@@ -5,6 +5,7 @@ import { reverseBooleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { TaxResidency } from 'app/pages/identity/types/forms'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
 import { ReasonFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/ReasonFields/ReasonFields/ReasonFields'
 import useStyles from './TinUnavailableFields.style'
 
@@ -22,6 +23,7 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   const isTinAvailable: boolean = watch<string, boolean>(
     `taxResidencies[${index}].taxIdAvailable`
   )
+  const { isSingPass } = useIsSingPass()
 
   useEffect(() => {
     if (!isTinAvailable) {
@@ -42,6 +44,10 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
           valueExtractor={reverseBooleanValueExtractor}
           control={control}
           name={['taxResidencies', index, 'taxIdAvailable']}
+          disabled={
+            isSingPass &&
+            watch(`taxResidencies[${index}].countryOfResidence`) === 'Singapore'
+          }
           label='TIN Is Not Available (Please Indicate Reason):'
         />
       </Grid>

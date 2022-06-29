@@ -46,6 +46,7 @@ export type TaxResidencies = Array<Partial<TaxResidency>>
 
 export interface TaxDeclaration {
   taxResidencies: TaxResidencies
+  uinfin?: string
 }
 
 export interface TaxDeclarationFormData {
@@ -108,6 +109,8 @@ export interface IndividualTaxDeclarationFormValues {
   singaporeOnly: 'yes' | 'no'
   fatca: 'yes' | 'no'
   taxResidencies: TaxResidencies
+  uinfin?: string
+  usTin?: string
 }
 
 export interface FinancialAndTaxDeclarationFormValues {
@@ -349,11 +352,20 @@ export interface DeclarationTemplate {
   subLevel?: boolean
 }
 
+export interface Noa {
+  noa_basic: {
+    assessable_income?: string
+    noa_type?: string
+    year_of_assessment?: string
+  }
+}
+
 export type IndividualIdentity = BaseIdentity &
   PersonalProfileWithAddress &
   IdentityFinancials &
   Authorizable &
-  TaxDeclaration
+  TaxDeclaration &
+  Noa
 
 export type CorporateIdentity = BaseIdentity &
   CorporateFields &

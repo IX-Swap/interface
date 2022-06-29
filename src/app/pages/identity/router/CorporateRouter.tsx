@@ -10,7 +10,7 @@ export const CorporateRouter = () => {
   return (
     <Switch>
       <AppRoute
-        breadcrumb='View Corporate Investor'
+        breadcrumb='View Corporate Investor Identity'
         exact
         path={IdentityRoute.viewCorporate}
       >
@@ -34,7 +34,7 @@ export const CorporateRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='View Corporate Issuer'
+        breadcrumb='View Corporate Issuer Identity'
         exact
         path={IdentityRoute.viewIssuer}
       >

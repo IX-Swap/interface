@@ -43,6 +43,8 @@ export interface QueryFilters {
   tab: string | undefined
   reportId: string | undefined
   step: string | undefined
+  errorType: 'email' | 'connection' | undefined
+  code: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

@@ -1,19 +1,27 @@
 import React, { useEffect } from 'react'
-import { registerFormValidationSchema } from 'validation/auth'
+import {
+  registerFormValidationSchema,
+  singpassFormValidationSchema
+} from 'validation/auth'
 import { SignupArgs } from 'types/auth'
 import { observer } from 'mobx-react'
 import { useSignup } from 'auth/hooks/useSignup'
-import { Button, Divider, Grid, Typography } from '@mui/material'
+import { Box, Button, Divider, Grid, Typography } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
 import { Submit } from 'components/form/Submit'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { AuthRoute } from 'auth/router/config'
 import { useStyles } from './Register.styles'
-import { VSpacer } from 'components/VSpacer'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
+import { Redirect } from 'react-router-dom'
+import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
+import { history } from 'config/history'
+import { hasValue } from 'helpers/forms'
 
 export const registerFormInitialValues = {
+  isMyInfo: false,
   name: '',
   email: '',
   password: '',
@@ -27,19 +35,9 @@ export const Register: React.FC = observer(() => {
   const identity = getFilterValue('identityType')
   const isIndividual = identity === 'individual'
 
-  const handleSubmit = async (values: SignupArgs) => {
-    await signup({
-      name: values.name,
-      email: values.email,
-      singPassLogin: false,
-      password: values.password,
-      accountType: identity?.toLocaleUpperCase()
-    })
-  }
-
   useEffect(() => {
     if (identity === undefined || identity === '') {
-      updateFilter('identityType', 'corporate')
+      updateFilter('identityType', 'individual')
     }
   }, [identity, updateFilter])
 
@@ -52,11 +50,67 @@ export const Register: React.FC = observer(() => {
     updateFilter('identityType', 'individual')
   }
 
+  const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
+  const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
+
+  const defaultFormValues = isMyInfo
+    ? {
+        isMyInfo: true,
+        email: data?.email,
+        phoneNumber: data?.mobileno,
+        password: '',
+        agree: true
+      }
+    : registerFormInitialValues
+
+  const handleSubmit = async (values: SignupArgs) => {
+    await signup(
+      {
+        name: values.name ?? 'singpassuser',
+        email: values.email,
+        singPassLogin: isMyInfo,
+        oldEmail: hasValue(data?.email) ? data?.email : 'no@email.com',
+        mobileNo: values.phoneNumber,
+        oldMobileNo: hasValue(data?.mobileno)
+          ? data?.mobileno
+          : 'no-old-mobile-no',
+        password: values.password,
+        accountType: identity?.toLocaleUpperCase()
+      },
+      isMyInfo
+        ? {
+            onError: (error: any) => {
+              if (
+                error?.message ===
+                'Sorry but this email address is already taken'
+              ) {
+                history.push(`${AuthRoute.myinfoError}?errorType=email`)
+              }
+            }
+          }
+        : undefined
+    )
+  }
+
+  if (authorizeLoading) {
+    return <LoadingFullScreen />
+  }
+
+  if (data?.emailExists === true) {
+    return <Redirect to={`${AuthRoute.myinfoError}?errorType=email`} />
+  }
+
+  if (isError) {
+    return <Redirect to={`${AuthRoute.myinfoError}?errorType=connection`} />
+  }
+
   return (
     <Form
       data-testid='register-form'
-      defaultValues={registerFormInitialValues}
-      validationSchema={registerFormValidationSchema}
+      defaultValues={defaultFormValues}
+      validationSchema={
+        isMyInfo ? singpassFormValidationSchema : registerFormValidationSchema
+      }
       onSubmit={handleSubmit}
       criteriaMode='all'
     >
@@ -65,28 +119,33 @@ export const Register: React.FC = observer(() => {
           <Typography align='center' variant='h3' className={title}>
             Sign up
           </Typography>
-          <Typography align='center' sx={{ color: 'rgba(255, 255, 255, .5)' }}>
-            Creating {isIndividual ? 'a ' : 'an '}
-            <Button
-              variant='text'
-              onClick={handleIdentityChange}
-              disableRipple
-              sx={{
-                textTransform: 'capitalize',
-                color: 'rgba(255,255,255,1)',
-                padding: 0,
-                ':hover': {
-                  backgroundColor: 'transparent'
-                }
-              }}
+          {!isMyInfo ? (
+            <Typography
+              align='center'
+              sx={{ color: 'rgba(255, 255, 255, .5)' }}
             >
-              {isIndividual ? 'Corporate' : 'Individual'} Account
-            </Button>{' '}
-            ?
-          </Typography>
+              Creating {isIndividual ? 'a ' : 'an '}
+              <Button
+                variant='text'
+                onClick={handleIdentityChange}
+                disableRipple
+                sx={{
+                  textTransform: 'capitalize',
+                  color: 'rgba(255,255,255,1)',
+                  padding: 0,
+                  ':hover': {
+                    backgroundColor: 'transparent'
+                  }
+                }}
+              >
+                {isIndividual ? 'Corporate' : 'Individual'} Account
+              </Button>{' '}
+              ?
+            </Typography>
+          ) : null}
         </Grid>
         <Grid item xs={12}>
-          <RegisterFields />
+          <RegisterFields isMyInfo={isMyInfo} />
         </Grid>
         <Grid item container justifyContent='center'>
           <Submit
@@ -97,18 +156,19 @@ export const Register: React.FC = observer(() => {
             color='primary'
             disabled={isLoading}
           >
-            Create an account
+            {isMyInfo ? 'Sign Up' : 'Create an account'}
           </Submit>
         </Grid>
         <Grid item>
-          <VSpacer size='small' />
-          <Divider />
+          <Box py={3}>
+            <Divider />
+          </Box>
         </Grid>
         <Grid item>
           <Typography align='center' className={question}>
             Already have an account?{' '}
             <AppRouterLink to={AuthRoute.login} className={link}>
-              Sign In.
+              Log In
             </AppRouterLink>
           </Typography>
         </Grid>
