@@ -54,6 +54,7 @@ export const financialInfoSchema = yup
       .max(50, 'Maximum of 50 characters')
       .required('This field is required'),
     employmentStatus: yup.string().required(validationMessages.required),
+    annualIncome: yup.string().required(validationMessages.required),
     sourceOfFund: yup.string().required(validationMessages.required)
   })
 
