@@ -51,7 +51,8 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'price',
     label: 'Price',
-    render: (value, row) => formatMoney(value, getOrderCurrency(row), false)
+    render: (_, row) =>
+      formatMoney(row?.matches?.matchedPrice ?? 0, getOrderCurrency(row), false)
   },
   {
     key: 'availableAmount',

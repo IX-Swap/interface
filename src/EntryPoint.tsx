@@ -6,6 +6,8 @@ import { useAppInit } from 'hooks/useAppInit'
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { Redirect, Switch, useLocation } from 'react-router-dom'
 import { Page404 } from 'components/Page404/Page404'
+import { AuthRoute } from 'auth/router/config'
+import { Callback } from 'auth/pages/myinfo/Callback'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -54,6 +56,9 @@ export const EntryPoint = () => {
             path='/'
             render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
           />
+          <SentryRoute path={AuthRoute.callback}>
+            <Callback />
+          </SentryRoute>
           <SentryRoute component={Page404} />
         </Switch>
       </BreadcrumbsProvider>

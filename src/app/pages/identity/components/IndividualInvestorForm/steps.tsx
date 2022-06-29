@@ -25,9 +25,9 @@ import { FinancialInformationForm } from 'app/pages/identity/components/Financia
 import { TaxDeclarationForm } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationForm'
 import { IndividualUploadDocumentsForm } from 'app/pages/identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
+import { IndividualAddressFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualAddressFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 import { VSpacer } from 'components/VSpacer'
 
@@ -50,7 +50,7 @@ export const individualInvestorFormSteps = [
           <Paper sx={{ borderRadius: 2, p: 4 }}>
             <FormSectionHeader title={'Address'} />
             <VSpacer size='medium' />
-            <AddressFields />
+            <IndividualAddressFields />
           </Paper>
         </Grid>
       </Grid>
@@ -64,9 +64,7 @@ export const individualInvestorFormSteps = [
     component: () => (
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <FinancialInformationForm />
-          </Paper>
+          <FinancialInformationForm />
         </Grid>
         <Grid item xs={12}>
           <TaxDeclarationForm />

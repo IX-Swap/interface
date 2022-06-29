@@ -1,6 +1,8 @@
 import { Button, Grid, IconButton, useMediaQuery } from '@mui/material'
 import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
 import { TaxResidency } from 'app/pages/identity/types/forms'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+
 import { CountrySelect } from 'components/form/CountrySelect'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
@@ -10,6 +12,7 @@ import useStyles from './TaxResidencyField.style'
 import { Icon } from 'ui/Icons/Icon'
 import { useTheme } from '@mui/styles'
 import { Divider } from 'ui/Divider'
+
 export interface TaxResidencyFieldProps {
   field: Partial<TaxResidency & { id: string }>
   append: (
@@ -38,7 +41,11 @@ export const TaxResidencyField = ({
 }: TaxResidencyFieldProps) => {
   const { control, watch } = useFormContext()
   const residencyList = watch('taxResidencies')
-  const { taxIdAvailable } = residencyList[index] as TaxResidency
+  const { taxIdAvailable, countryOfResidence } = residencyList[
+    index
+  ] as TaxResidency
+  const { isSingPass } = useIsSingPass()
+  const disableField = isSingPass && countryOfResidence === 'Singapore'
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('md'))
   const classes = useStyles()
@@ -110,6 +117,7 @@ export const TaxResidencyField = ({
               control={control}
               key={field.id}
               filter={getSelectedCountries()}
+              disabled={disableField}
             />
           </Grid>
 
@@ -124,7 +132,7 @@ export const TaxResidencyField = ({
               defaultValue={defaultValue?.taxIdentificationNumber ?? ''}
               name={['taxResidencies', index, 'taxIdentificationNumber']}
               variant='outlined'
-              disabled={!taxIdAvailable}
+              disabled={!taxIdAvailable || disableField}
               key={field.id}
             />
           </Grid>

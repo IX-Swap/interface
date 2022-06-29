@@ -9,6 +9,7 @@ import { history } from 'config/history'
 import * as useSignupHook from 'auth/hooks/useSignup'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { Form } from 'components/form/Form'
+import { AuthRoute } from 'auth/router/config'
 
 describe('Register', () => {
   beforeEach(() => {
@@ -71,13 +72,18 @@ describe('Register', () => {
 
     await waitFor(() => {
       expect(signup).toHaveBeenCalledTimes(1)
-      expect(signup).toHaveBeenCalledWith({
-        name: signupArgs.name,
-        email: signupArgs.email,
-        password: 'Dr0wss@pDr0wss@p',
-        singPassLogin: false,
-        accountType: undefined
-      })
+      expect(signup).toHaveBeenCalledWith(
+        {
+          name: signupArgs.name,
+          email: signupArgs.email,
+          password: 'Dr0wss@pDr0wss@p',
+          mobileNo: undefined,
+          oldEmail: 'no@email.com',
+          oldMobileNo: 'no-old-mobile-no',
+          singPassLogin: false
+        },
+        undefined
+      )
     })
   })
 })

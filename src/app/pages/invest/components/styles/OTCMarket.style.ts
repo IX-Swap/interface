@@ -1,6 +1,6 @@
 import makeStyles from '@mui/styles/makeStyles'
 
-export default makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   container: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr',
@@ -8,7 +8,7 @@ export default makeStyles(theme => ({
     [theme.breakpoints.down('lg')]: {
       gridTemplateColumns: '1fr 1fr'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: '1fr'
     }
   }

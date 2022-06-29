@@ -92,7 +92,7 @@ export const OverviewPageFilters = () => {
   return (
     <Grid container spacing={2} direction='column'>
       <Grid item container spacing={2}>
-        <Grid item xs={6} md={4}>
+        <Grid item xs={12} sm={4}>
           <Select
             fullWidth
             variant='outlined'
@@ -109,7 +109,7 @@ export const OverviewPageFilters = () => {
           </Select>
         </Grid>
 
-        <Grid data-testid='primarySearch' item xs={12} md={8}>
+        <Grid data-testid='primarySearch' item xs={12} sm={8}>
           <SearchFilter
             fullWidth
             placeholder='Search'

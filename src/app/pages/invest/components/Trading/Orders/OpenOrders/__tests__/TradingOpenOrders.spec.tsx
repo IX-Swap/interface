@@ -23,7 +23,7 @@ jest.mock('react-router-dom', () => ({
 describe('TradingOpenOrders', () => {
   it('Renders TableView with correct props', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMiniLaptop: false
+      isTablet: false
     } as any)
     jest.spyOn(useActiveWeb3React, 'useActiveWeb3React').mockReturnValueOnce({
       account: '12345'

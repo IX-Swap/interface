@@ -65,7 +65,7 @@ export const PlaceOrderFormDialog = ({
               fullWidth
               color='primary'
               style={{
-                backgroundColor: theme.palette.error.light,
+                backgroundColor: theme.palette.error.main,
                 color: '#FFF'
               }}
               onClick={setSellActive}

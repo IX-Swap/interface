@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropdown otc row renders dropdown correctly 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-1n2mv2k"
+  >
+    <button
+      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1smi836-MuiButtonBase-root-MuiIconButton-root"
+      data-testid="more-button"
+      tabindex="0"
+      type="button"
+    >
+      <svg
+        class="css-1s8o7ec"
+        fill="#778194"
+        height="24px"
+        width="24px"
+      >
+        <use
+          href="image-mock#chevron-down"
+        />
+      </svg>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</div>
+`;

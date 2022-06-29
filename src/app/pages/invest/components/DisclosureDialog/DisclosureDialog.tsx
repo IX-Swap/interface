@@ -40,7 +40,12 @@ export const DisclosureDialog = ({
   }
 
   return (
-    <UIDialog open={isOpen} maxWidth={'md'} classes={{ paper: classes.root }}>
+    <UIDialog
+      open={isOpen}
+      maxWidth={'md'}
+      classes={{ paper: classes.root }}
+      onClose={handleClose}
+    >
       <DialogTitle classes={{ root: classes.title }}>Disclosures</DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
         <Box className={classes.scrollable}>{renderStringToHTML(content)}</Box>

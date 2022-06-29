@@ -92,7 +92,7 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
       max={sliderRange.to}
       marks={marks}
       step={0.05}
-      disabled={price === null || price === undefined}
+      disabled={isEmptyString(String(price))}
       data-testid='slider'
       size='small'
       onChange={computeAmount}
