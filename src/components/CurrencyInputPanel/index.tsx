@@ -25,7 +25,7 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
   position: relative;
   border-radius: ${({ hideInput }) => (hideInput ? '16px' : '36px')};
   background-color: ${({ theme, hideInput }) =>
-    hideInput ? 'transparent' : theme.config.background?.secondary || theme.bg2};
+    hideInput ? 'transparent' : theme.config.background?.main || theme.bg2};
   z-index: 1;
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
 `
@@ -35,7 +35,7 @@ const FixedContainer = styled.div`
   height: 100%;
   position: absolute;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
   opacity: 0.95;
   display: flex;
   align-items: center;
@@ -45,7 +45,7 @@ const FixedContainer = styled.div`
 
 const Container = styled.div<{ hideInput: boolean }>`
   border-radius: 36px;
-  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       border-radius: 20px;
@@ -54,8 +54,8 @@ const Container = styled.div<{ hideInput: boolean }>`
 
 const CurrencySelect = styled(ButtonEmpty)<{ selected: boolean; hideInput?: boolean }>`
   align-items: center;
-  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
-  color: ${({ selected, theme }) => (selected ? theme.text1 : theme.white)};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
+  color: ${({ selected, theme }) => (selected ? theme.text1 : theme.config.text?.additional1 || theme.white)};
   border-radius: 16px;
   outline: none;
   cursor: pointer;

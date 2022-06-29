@@ -83,7 +83,7 @@ const Container = styled.div`
       align-items: center;
       padding: 2px 12px;
       font-size: 16px;
-      color: ${({ theme }) => `${theme.text2}50`};
+      color: ${({ theme }) => theme.text9};
       border-radius: 12px;
 
       .flag {

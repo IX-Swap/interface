@@ -363,7 +363,7 @@ export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: stri
   border: none;
   flex: 1 1 auto;
   font-weight: 600;
-  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.main || theme.bg7};
   text-align: ${({ align }) => align && align};
   white-space: nowrap;
   overflow: hidden;
@@ -397,7 +397,8 @@ export const SvgIconWrapper = styled.div<{ size?: number }>`
   align-items: center;
   justify-content: center;
   & > img,
-  span {
+  span,
+  svg {
     height: ${({ size }) => (size ? size + 'px' : '32px')};
     width: ${({ size }) => (size ? size + 'px' : '32px')};
   }
@@ -504,7 +505,7 @@ export const ModalContentWrapper = styled(Column)`
   width: 100%;
   flex: 1 1;
   position: relative;
-  background: ${({ theme }) => theme.bgG4};
+  background: ${({ theme }) => theme.config.background?.secondary || theme.bgG4};
 `
 export const ModalPadding = styled.div`
   padding: 37px 40px 19px 40px;

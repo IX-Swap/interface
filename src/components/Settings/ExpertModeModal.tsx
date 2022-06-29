@@ -22,8 +22,7 @@ const ExpertModalContentWrapper = styled.div`
   }
 
   border-radius: 20px;
-  background: radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%),
-    #0f0518;
+  background: ${({ theme }) => theme.bgG4};
   text-align: center;
 `
 
@@ -31,9 +30,7 @@ const ExpertModalOuterBorder = styled.div`
   padding: 35px 32px;
 
   backdrop-filter: blur(20px);
-  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%),
-    rgba(44, 37, 74, 0.2);
-
+  background: ${({ theme }) => theme.bgG5};
   border-radius: 20px;
 
   @media (min-width: 720px) {
@@ -108,7 +105,7 @@ export const ExpertModeModal = ({ showConfirmation = false, toggleConfirmation }
       <ExpertModalOuterBorder>
         <ExpertModalContentWrapper>
           <AutoColumn gap="30px" style={{ maxWidth: '400px' }}>
-            <Text fontWeight={600} fontSize={28} lineHeight="42px" color={theme.bg10}>
+            <Text fontWeight={600} fontSize={28} lineHeight="42px" color={theme.text2}>
               <Trans>Are you sure?</Trans>
             </Text>
 

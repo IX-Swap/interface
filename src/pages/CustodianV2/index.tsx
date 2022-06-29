@@ -102,7 +102,7 @@ export default function CustodianV2() {
               </GradientText>
               {approvedSecTokens.length > 0 && (
                 <>
-                  <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
+                  <TYPE.title6 marginBottom="32px" color="text9">
                     <Trans>ACCREDITED</Trans>
                   </TYPE.title6>
                   <MySecTokensGrid>
@@ -115,7 +115,7 @@ export default function CustodianV2() {
               {pendingSecTokens.length > 0 && (
                 <>
                   <Divider />
-                  <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
+                  <TYPE.title6 marginBottom="32px" color="text9">
                     <Trans>PENDING ACCREDITATION</Trans>
                   </TYPE.title6>
                   <MySecTokensGrid>

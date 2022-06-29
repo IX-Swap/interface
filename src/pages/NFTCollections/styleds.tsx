@@ -98,7 +98,7 @@ export const SortText = styled.button`
   font-size: 16px;
   line-height: 24px;
   padding: 0px 8px;
-  color: ${active ? '#FFFFFF' : '#EDCEFF'};
+  color: ${active ? '#FFFFFF' : 'text2'};
   margin-top: ${active ? '4px' : '0px'};
   outline: none;
 
@@ -136,7 +136,7 @@ export const TextInfo = styled.div`
   flex-direction: column;
   row-gap: 8px;
   text-align: center;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   font-weight: 500;
   font-size: 12px;
   > div {

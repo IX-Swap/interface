@@ -395,7 +395,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   I have read{' '}
                   <a
                     onClick={onClickStakingContitions}
-                    style={{ color: '#EDCEFF' }}
+                    style={{ color: 'text2' }}
                     href="https://ixswap.io/ixs-staking-vaults/"
                     target="blank"
                   >

@@ -11,7 +11,7 @@ export const FancyButton = styled.button`
   min-width: 3.5rem;
   border: 1px solid ${({ theme }) => theme.bg3};
   outline: none;
-  background: ${({ theme }) => theme.bg1};
+  background: ${({ theme }) => theme.config.background?.main || theme.bg1};
   :hover {
     border: 1px solid ${({ theme }) => theme.bg4};
   }

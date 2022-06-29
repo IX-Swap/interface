@@ -39,5 +39,5 @@ const Container = styled.div`
 const Info = styled.div`
   font-weight: 400;
   font-size: 12px;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
 `

@@ -41,7 +41,7 @@ const Container = styled.div<{ paid: boolean }>`
   font-weight: 500;
   font-size: 14px;
   row-gap: 4px;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   svg {
     margin-left: 12px;
     path {

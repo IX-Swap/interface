@@ -93,7 +93,7 @@ export const Textarea = styled.textarea`
     -webkit-appearance: none;
   }
   ::placeholder {
-    color: #edceff50;
+    color: ${({ theme }) => theme.text9};
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
   padding: 16px 22px;

@@ -59,6 +59,7 @@ export interface Colors {
   bgG16: Gradient
   bgG17: Gradient
   bgG18: Gradient
+  bgG19: Gradient
   borderG1: Gradient
   borderG2: Gradient
   borderG3: Gradient
@@ -96,7 +97,7 @@ export interface Colors {
   success: Color
   warning: Color
   popUpInputBorder: Color
-  config: WlColors['dark' | 'light']
+  config: WlColors
 }
 
 export interface Grids {

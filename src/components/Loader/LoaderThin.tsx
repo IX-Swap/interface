@@ -1,6 +1,7 @@
 import React from 'react'
-import LoadingThin from 'assets/images/loader_thin.svg'
-import styled, { keyframes } from 'styled-components'
+import styled, { keyframes, css } from 'styled-components'
+
+import { ReactComponent as LoadingThin } from 'assets/images/loader_thin.svg'
 import { SvgIconWrapper } from 'theme'
 
 const rotate = keyframes`
@@ -17,6 +18,16 @@ const StyledRotate = styled.div`
   width: fit-content;
 `
 
+const StyledLoading = styled(LoadingThin)`
+  path {
+    ${({ theme }) =>
+      theme.config.elements?.hover &&
+      css`
+        fill: ${({ theme }) => `${theme.config.elements.hover} !important`};
+      `};
+  }
+`
+
 /**
  * Takes in custom size and stroke for circle color, default to primary color as fill,
  * need ...rest for layered styles on top
@@ -25,7 +36,7 @@ export const LoaderThin = ({ size = 16 }: { size?: number; stroke?: string; thin
   return (
     <StyledRotate>
       <SvgIconWrapper size={size}>
-        <img src={LoadingThin} alt={'Loading...'} />
+        <StyledLoading />
       </SvgIconWrapper>
     </StyledRotate>
   )

@@ -1,13 +1,21 @@
-import { Trans } from '@lingui/macro'
-import { useCookies } from 'react-cookie'
-import useScrollPosition from '@react-hook/window-scroll'
-import useLightBackground from 'components/AppBackground/useLightBackground'
-import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import styled, { css } from 'styled-components'
-import LogoDark from '../../assets/svg/logo-white.svg'
+import { Trans } from '@lingui/macro'
+import { useCookies } from 'react-cookie'
+import useScrollPosition from '@react-hook/window-scroll'
+
+import useLightBackground from 'components/AppBackground/useLightBackground'
+import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
+import { TYPE } from 'theme'
+import { useKYCState } from 'state/kyc/hooks'
+import { ReactComponent as KYC } from 'assets/images/kyc.svg'
+import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { formatAmount } from 'utils/formatCurrencyAmount'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { AppLogo } from 'components/AppLogo'
+
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { MobileMenu } from '../Mobile-Menu'
@@ -17,13 +25,7 @@ import { HeaderLinks } from './HeaderLinks'
 import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
-import { TYPE } from 'theme'
-import { useKYCState } from 'state/kyc/hooks'
-
-import { ReactComponent as KYC } from 'assets/images/kyc.svg'
-import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
-import { formatAmount } from 'utils/formatCurrencyAmount'
-import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -132,7 +134,7 @@ const BalanceText = styled(Text)`
   color: ${({ theme }) => theme.text2};
   font-weight: 600;
   font-size: 12px;
-  opacity: 0.5;
+  opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
   border-radius: 0 0 40px 40px;
   padding: 0 18px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -228,6 +230,7 @@ export default function Header() {
   const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
+  const { config } = useWhitelabelState()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
@@ -239,7 +242,7 @@ export default function Header() {
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
-                <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
+                <AppLogo width="auto" height="47px" {...config?.customStyles?.logo} />
               </IXSIcon>
             </Title>
           </HeaderRow>

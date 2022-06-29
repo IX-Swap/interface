@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
+import { AppLogo } from 'components/AppLogo'
+
 import { ReactComponent as Close } from '../../assets/images/delete-basket.svg'
-import { ReactComponent as LogoDark } from '../../assets/svg/logo-white.svg'
 
 export const PreviewParent = styled.div<{ isLogo: boolean; width: string; height: string }>`
   cursor: pointer;
@@ -55,7 +56,7 @@ export const StyledClose = styled(Close)`
   top: -18px;
   right: -15px;
 `
-export const StyledLogo = styled(LogoDark)`
+export const StyledLogo = styled(AppLogo)`
   width: 100%;
   height: 100%;
   opacity: 0.4;

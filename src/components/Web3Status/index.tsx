@@ -86,7 +86,7 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 `
 
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background: ${({ theme }) => theme.bgG1};
+  background: ${({ theme }) => theme.config.text?.main || theme.bgG1};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
   padding: 0 18px;
   color: ${({ theme }) => theme.white};

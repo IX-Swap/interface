@@ -80,7 +80,7 @@ export const MenuItem = styled(RowBetween)`
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};
   :hover {
-    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.bg10, 0.1)}`};
+    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.text2, 0.1)}`};
     backdrop-filter: blur(4px);
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
@@ -92,7 +92,7 @@ export const UnapprovedMenuItem = styled(Row)`
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};
   :hover {
-    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.bg10, 0.1)}`};
+    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.text2, 0.1)}`};
     backdrop-filter: blur(4px);
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
@@ -149,7 +149,7 @@ export const UnapprovedTokenWrapper = styled.div`
   width: 100%;
   grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
   text-decoration: none;
-  color: white;
+  color: ${({ theme: { config } }) => config.text.main || 'white'};
 `
 
 export const StyledToggleWrapper = styled(ToggleWrapper)`

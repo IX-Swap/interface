@@ -6,8 +6,7 @@ export const Container = styled.div`
   max-width: 592px;
   width: 100%;
   border-radius: 30px;
-  background: radial-gradient(39.01% 78.49% at 10.99% 63.28%, rgba(138, 54, 152, 0.18) 18.75%, rgba(0, 0, 0, 0) 100%),
-    radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(154, 55, 114, 0.33) 0%, rgba(26, 18, 58, 0) 100%) #29113d;
+  background: ${({ theme }) => theme.bgG19};
   padding: 52px 58px;
   text-align: center;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {

@@ -25,7 +25,11 @@ export default createReducer<WhitelabelState>(initialState, (builder) =>
     .addCase(getWhitelabelConfig.fulfilled, (state, { payload }) => {
       state.isLoading = false
       state.error = null
-      state.config = { ...payload, colors: JSON.parse(payload.colors) }
+      state.config = {
+        ...payload,
+        colors: JSON.parse(payload.colors || ''),
+        customStyles: JSON.parse(payload.customStyles || ''),
+      }
     })
     .addCase(getWhitelabelConfig.rejected, (state, { payload: { errorMessage } }) => {
       state.isLoading = false

@@ -69,7 +69,7 @@ const inputStyles = css`
     font-weight: normal;
     font-size: 16px;
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
     opacity: 1; /* Firefox */
   }
 
@@ -77,14 +77,14 @@ const inputStyles = css`
     font-weight: normal;
     font-size: 16px;
     /* Internet Explorer 10-11 */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
   }
 
   ::-ms-input-placeholder {
     font-weight: normal;
     font-size: 16px;
     /* Microsoft Edge */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
   }
 `
 
@@ -285,7 +285,7 @@ export const LevelCard = styled.div`
     }
     > div:last-child {
       font-size: 12px;
-      color: rgba(237, 206, 255, 0.5);
+      color: ${({ theme }) => theme.text9};
     }
   }
 
