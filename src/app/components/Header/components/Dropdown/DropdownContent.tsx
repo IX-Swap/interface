@@ -25,6 +25,7 @@ export const DropdownContent = (props: DropdownContentProps) => {
       {...bindPopper(popupState)}
       placement={placement}
       className={classes.popper}
+      disablePortal
     >
       <ClickAwayListener onClickAway={handleClickAway}>
         <Paper>
