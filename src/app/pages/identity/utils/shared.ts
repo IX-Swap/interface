@@ -48,13 +48,27 @@ export const prepareDeclarationsForUpload = (
   }))
 }
 
+export const titleCase = (value?: string) => {
+  if (value === undefined) {
+    return ''
+  }
+
+  return value
+    .toLowerCase()
+    .replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())
+}
+
+export const checkSingPassDisabled = (isSingPass: boolean, value?: string) => {
+  return value !== undefined && value.trim() !== '' && isSingPass
+}
+
 export const adjustIdentityOccupation = (str?: string) => {
   if (str === undefined) {
     return ''
   }
 
   const res = str.split('').map(el => el.toLowerCase())
-  res[0] = res[0].toUpperCase()
+  res[0] = res[0]?.toUpperCase()
   for (let i = 0; i < res.length; i++) {
     if (res[i] === ' ' || res[i] === '/') {
       res.splice(i + 1, 1, res[i + 1].toUpperCase())

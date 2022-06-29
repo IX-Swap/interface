@@ -158,7 +158,8 @@ export const individual: IndividualIdentity = {
   documents: [],
   address,
   user,
-  createdBy: '12345'
+  createdBy: '12345',
+  noa_basic: {}
 }
 
 export const dsWithdrawal: DSWithdrawal = {

@@ -1,8 +1,7 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, TextField } from '@mui/material'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { GenderSelect } from 'components/form/GenderSelect'
-import { NationalitySelect } from 'components/form/NationalitySelect'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { TypedField } from 'components/form/TypedField'
 import { DataroomFileType } from 'config/dataroom'
@@ -10,17 +9,20 @@ import { subYears } from 'date-fns'
 import { privateClassNames } from 'helpers/classnames'
 import {
   dateTimeValueExtractor,
+  hasValue,
   plainValueExtractor,
   textValueExtractor
 } from 'helpers/forms'
 import { capitalizeFirstLetter } from 'helpers/strings'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { DatePicker } from 'components/form/DatePicker'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { IndividualNationalityField } from 'app/pages/identity/components/IndividualInfoFields/IndividualNationalityField'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
-import { DatePicker } from 'ui/DateTimePicker/DatePicker'
 import { OptionalLabel } from 'components/form/OptionalLabel'
 
 export interface IndividualInfoFieldsProps {
@@ -40,6 +42,7 @@ export const IndividualInfoFields = (
     middleName: defaultMiddleName
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
+  const { isSingPass, singPassData } = useIsSingPass()
   const nationality = watch('nationality')
 
   useEffect(() => {
@@ -68,7 +71,17 @@ export const IndividualInfoFields = (
             }}
           />
         </Box>
-        <Grid container spacing={2} style={{ marginTop: isMobile ? 8 : 20 }}>
+        <Grid container spacing={6} style={{ marginTop: isMobile ? 8 : 20 }}>
+          {isSingPass && (
+            <Grid item xs={12}>
+              <TextField
+                label='Principal Name'
+                value={singPassData?.name}
+                disabled
+                fullWidth
+              />
+            </Grid>
+          )}
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
@@ -131,7 +144,7 @@ export const IndividualInfoFields = (
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
               maxDate={subYears(new Date(), 18)}
-              variant='date'
+              disabled={isSingPass && hasValue(singPassData?.dob)}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
@@ -144,6 +157,7 @@ export const IndividualInfoFields = (
               variant='outlined'
               customRenderer
               placeholder='Select Gender'
+              disabled={isSingPass && hasValue(singPassData?.sex)}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
@@ -154,9 +168,9 @@ export const IndividualInfoFields = (
               control={control}
               name='email'
               label='Email'
-              // disabled={isEmailDisabled}
               defaultValue={defaultEmail}
               variant='outlined'
+              disabled={isSingPass && hasValue(singPassData?.email)}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
@@ -177,26 +191,28 @@ export const IndividualInfoFields = (
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
               rootName={rootName}
-              component={NationalitySelect}
+              component={IndividualNationalityField}
               control={control}
               name='nationality'
               label='Nationality'
-              variant='outlined'
-              placeholder='Select Nationality'
             />
           </Grid>
 
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
-              disabled={nationality !== 'Singapore'}
               rootName={rootName}
               component={TextInput}
               control={control}
               name='nric'
               label='NRIC/FIN'
               variant='outlined'
+              hideIcon
               placeholder={
                 nationality !== 'Singapore' ? 'Not Required' : 'NRIC/FIN'
+              }
+              disabled={
+                (isSingPass && hasValue(singPassData?.uinfin)) ||
+                nationality !== 'Singapore'
               }
             />
           </Grid>

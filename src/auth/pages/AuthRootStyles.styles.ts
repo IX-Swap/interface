@@ -20,7 +20,8 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     width: '55%',
-    height: '100vh',
+    height: '100%',
+    minHeight: '100vh',
     position: 'relative',
     backgroundColor: 'transparent',
     display: 'flex',
@@ -37,7 +38,8 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: 50,
     paddingBottom: 50,
     [theme.breakpoints.down('md')]: {
-      marginTop: 0
+      paddingTop: 24,
+      paddingBottom: 24
     }
   },
   background: {
@@ -49,7 +51,10 @@ export const useStyles = makeStyles(theme => ({
     backgroundPosition: 'right center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    height: '100vh',
     [theme.breakpoints.down('md')]: {
       display: 'none'
     }
@@ -72,9 +77,7 @@ export const useStyles = makeStyles(theme => ({
     left: 0,
     top: 33,
     [theme.breakpoints.down('md')]: {
-      position: 'static',
-      marginBottom: 30,
-      marginTop: 9
+      top: 0
     }
   }
 }))

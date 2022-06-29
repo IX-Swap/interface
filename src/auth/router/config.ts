@@ -5,5 +5,7 @@ export const AuthRoute = {
   passwordReset: '/auth/reset',
   successfulSignup: '/auth/successful-signup',
   successfulPasswordReset: '/auth/successful-reset',
-  declineInvitation: '/auth/invitations/decline/:roleId'
+  declineInvitation: '/auth/invitations/decline/:roleId',
+  myinfoError: '/auth/myinfo',
+  callback: '/callback'
 }
