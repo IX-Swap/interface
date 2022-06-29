@@ -10,7 +10,6 @@ import storageService from 'services/storage'
 import User from 'types/user'
 import { userURL } from 'config/apiURL'
 import { getIdFromObj } from 'helpers/strings'
-import { OnboardingDialog } from 'app/components/OnboardingDialog/OnboardingDialog'
 
 export interface SnackbarService {
   showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
@@ -29,7 +28,7 @@ export const useSnackbar = (): SnackbarService => {
     })
   }
 
-  const showOnboardingCompleteDialog = (notification: TNotification) => {
+  const handleOnboardingComplete = (notification: TNotification) => {
     const individualIdentityApproved =
       notification.feature === 'individuals' &&
       notification.subject === 'Identity Approved'
@@ -53,19 +52,6 @@ export const useSnackbar = (): SnackbarService => {
       const waitingForInvestorApproval =
         item === 'individual' || item === 'investor'
 
-      const completeDialog = {
-        title: 'Onboarding Complete!',
-        message: [
-          `You have completed the Onboarding journey. Our authorizer has approved your identity. ${
-            waitingForIssuerApproval ? '' : 'Happy investing!'
-          }`
-        ],
-        actionLabel: 'Okay',
-        action: waitingForIssuerApproval
-          ? '/app/educationCentre'
-          : '/app/invest'
-      }
-
       if (waitingForInvestorApproval || waitingForIssuerApproval) {
         const user = storageService.get<User>('user')
 
@@ -74,12 +60,6 @@ export const useSnackbar = (): SnackbarService => {
           .then(data => {
             storageService.set('user', data.data)
             storageService.set('visitedUrl', [])
-
-            addToast(<OnboardingDialog {...completeDialog} />, {
-              appearance: 'info',
-              autoDismiss: false
-            })
-
             localStorage.removeItem(notification.resourceId)
           })
       }
@@ -106,7 +86,7 @@ export const useSnackbar = (): SnackbarService => {
     showNotification: (notification: TNotification) => {
       const showAllNotifications = () => {
         addToast(<NotificationToast data={notification} />)
-        showOnboardingCompleteDialog(notification)
+        handleOnboardingComplete(notification)
       }
       return showAllNotifications()
     },
