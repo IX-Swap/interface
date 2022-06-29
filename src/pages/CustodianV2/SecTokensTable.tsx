@@ -253,7 +253,7 @@ const StyledBodyRow = styled(BodyRow)`
   background: transparent;
   margin-bottom: 8px;
   border: none;
-  background: rgba(39, 31, 74, 0.3);
+  background: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};
   min-width: 1000px;
 
   > div {

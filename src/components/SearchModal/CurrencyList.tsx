@@ -12,7 +12,7 @@ import { VariableSizeList as List } from 'react-window'
 import { Box, Text } from 'rebass'
 import { useSecTokens } from 'state/secTokens/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
 import { routes } from 'utils/routes'
 import TokenListLogo from '../../assets/svg/tokenlist.svg'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
@@ -39,6 +39,11 @@ function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
 }
 const StyledBalanceText = styled(Text)`
+  ${({ theme: { config } }) =>
+    config.text &&
+    css`
+      color: ${({ theme: { config } }) => config.text.main};
+    `}
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;

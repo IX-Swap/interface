@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react'
 import { Text, TextProps as TextPropsOriginal } from 'rebass'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { Whitelabel, WlColors } from 'state/whitelabel/types'
 import styled, {
   createGlobalStyle,
   css,
@@ -36,126 +38,123 @@ const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } 
 const white = '#FFFFFF'
 const black = '#000000'
 
-export function colors(darkMode: boolean): Colors {
+export function colors(configColors?: WlColors): Colors {
+  const wlColorsByType = configColors || ({} as WlColors)
+
   return {
+    config: wlColorsByType,
     // base
     white,
     black,
 
     // text
-    text1: darkMode ? '#FFFFFF' : '#000000',
-    text2: darkMode ? '#EDCEFF' : '#565A69',
-    text3: darkMode ? '#6C7284' : '#888D9B',
-    text4: darkMode ? '#565A69' : '#C3C5CB',
-    text5: darkMode ? '#2C2F36' : '#EDEEF2',
-    text6: darkMode ? '#8275BC' : '#8275BC',
-    text7: darkMode ? '#9184C4' : '#9184C4',
-    text8: darkMode ? '#9184C3' : '#9184C3',
-    text9: darkMode ? '#EDCEFF80' : '#EDCEFF80',
+    text1: wlColorsByType.text?.main || '#FFFFFF',
+    text2: wlColorsByType.text?.additional1 || '#EDCEFF',
+    text3: wlColorsByType.text?.main || '#6C7284',
+    text4: wlColorsByType.text?.main || '#565A69',
+    text5: wlColorsByType.text?.main || '#2C2F36',
+    text6: wlColorsByType.text?.main || '#8275BC',
+    text7: wlColorsByType.text?.main || '#9184C4',
+    text8: wlColorsByType.text?.main || '#9184C3',
+    text9: wlColorsByType.text?.main || '#EDCEFF80',
     // backgrounds / greys
-    bg0: darkMode ? '#0D0415' : '#FFF',
-    bg1: darkMode ? '#1A123A' : '#F7F8FA',
-    bg2: darkMode ? '#2C2F36' : '#EDEEF2',
-    bg3: darkMode ? '#40444F' : '#CED0D9',
-    bg4: darkMode ? '#565A69' : '#888D9B',
-    bg5: darkMode ? '#6C7284' : '#888D9B',
-    bg6: darkMode ? '#1A2028' : '#6C7284',
-    bg7: darkMode ? '#372E5E' : '#372E5E',
-    bg8: darkMode ? '#0F0518' : '#0F0518',
-    bg9: darkMode ? '#372E5D' : '#372E5D',
-    bg10: darkMode ? '#EDCEFF' : '#EDCEFF',
-    bg11: darkMode ? '#272046' : '#272046',
-    bg12: darkMode ? '#271F4A' : '#271F4A',
-    bg13: darkMode ? '#2F254E' : '#2F254E',
-    bg14: darkMode ? '#ED0376' : '#ED0376',
-    bg15: darkMode ? '#2C254A' : '#2C254A',
-    bg16: darkMode ? '#170626' : '#170626',
-    bg17: darkMode ? '#1C112D' : '#1C112D',
-    bg18: darkMode ? '#27204666' : '#27204666',
-    bg19: darkMode ? '#271F4A66' : '#271F4A66',
-    bg20: darkMode ? '#7B42A9' : '#7B42A9',
-    bgG1: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
-    bgG2: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%,rgba(206,20,132,0.1) 0%,rgba(26,18,58,0.4) 100%),rgb(44,37,74,0.6);'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%,rgba(206,20,132,0.1) 0%,rgba(26,18,58,0.4) 100%),rgb(44,37,74,0.6);',
-    bgG3: darkMode
-      ? 'linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%), #0C469C;'
-      : 'linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%), #0C469C;',
-    bgG4: darkMode
-      ? 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%), #0F0518;'
-      : 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%), #0F0518;',
-    bgG5: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
-    bgG6: darkMode
-      ? 'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);'
-      : 'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);',
-    bgG7: darkMode
-      ? 'linear-gradient(0deg, #272046, #272046), #170E20;'
-      : 'linear-gradient(0deg, #272046, #272046), #170E20;',
-    bgG8: darkMode
-      ? 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;'
-      : 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;',
-    bgG9: darkMode
-      ? 'linear-gradient(0deg, #14051B 0%, rgba(20, 5, 27, 0) 82.89%);'
-      : 'linear-gradient(0deg, #14051B 0%, rgba(20, 5, 27, 0) 82.89%);',
-    bgG10: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.231) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.1);'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.231) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.1);',
-    bgG11: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.5);'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.5);',
-    bgG12: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)',
-    bgG13: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);',
-    bgG14: darkMode
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.033) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.5);'
-      : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.033) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.5);',
-    bgG15: darkMode
-      ? 'radial-gradient(76.91% 60% at 2.38% 3.84%, rgba(123, 66, 169, 0.195) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(79.76% 116.06% at 44.22% 136.36%, rgba(102, 20, 206, 0.132) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.132) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)'
-      : 'radial-gradient(76.91% 60% at 2.38% 3.84%, rgba(123, 66, 169, 0.195) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(79.76% 116.06% at 44.22% 136.36%, rgba(102, 20, 206, 0.132) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.132) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)',
-    bgG16: darkMode
-      ? 'linear-gradient(0deg, rgba(13, 4, 21, 0.7), rgba(13, 4, 21, 0.7)), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);'
-      : 'linear-gradient(0deg, rgba(13, 4, 21, 0.7), rgba(13, 4, 21, 0.7)), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
-    bgG17: darkMode
-      ? 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.028) 0%, rgba(237, 3, 118, 0.014) 100%), rgba(15, 5, 24, 0.7);'
-      : 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.028) 0%, rgba(237, 3, 118, 0.014) 100%), rgba(15, 5, 24, 0.7);',
-    bgG18: darkMode
-      ? 'radial-gradient(83.59% 55.66% at 2.38% 3.84%, rgba(123, 66, 169, 0.39) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(50.28% 108.33% at 73.7% 9%, rgba(102, 20, 206, 0.165) 1.94%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);'
-      : 'radial-gradient(83.59% 55.66% at 2.38% 3.84%, rgba(123, 66, 169, 0.39) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(50.28% 108.33% at 73.7% 9%, rgba(102, 20, 206, 0.165) 1.94%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);',
+    bg0: wlColorsByType.background?.main || '#0D0415',
+    bg1: wlColorsByType.background?.secondary || '#1A123A',
+    bg2: '#2C2F36',
+    bg3: '#40444F',
+    bg4: '#565A69',
+    bg5: '#6C7284',
+    bg6: '#1A2028',
+    bg7: wlColorsByType.background?.main || '#372E5E',
+    bg8: wlColorsByType.background?.main || '#0F0518',
+    bg9: '#372E5D',
+    bg10: '#EDCEFF',
+    bg11: wlColorsByType.background?.main || '#272046',
+    bg12: '#271F4A',
+    bg13: '#2F254E',
+    bg14: '#ED0376',
+    bg15: '#2C254A',
+    bg16: wlColorsByType.background?.secondary || '#170626',
+    bg17: '#1C112D',
+    bg18: wlColorsByType.background?.main || '#27204666',
+    bg19: wlColorsByType.background?.main || '#271F4A66',
+    bg20: '#7B42A9',
+    bgG1:
+      wlColorsByType.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
+    bgG2:
+      wlColorsByType.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%,rgba(206,20,132,0.1) 0%,rgba(26,18,58,0.4) 100%),rgb(44,37,74,0.6);',
+    bgG3: wlColorsByType.background?.main || 'linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%), #0C469C;',
+    bgG4:
+      wlColorsByType.background?.main ||
+      'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%), #0F0518;',
+    bgG5:
+      wlColorsByType.background?.secondary ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
+    bgG6:
+      wlColorsByType.background?.secondary ||
+      'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);',
+    bgG7: wlColorsByType.background?.main || 'linear-gradient(0deg, #272046, #272046), #170E20;',
+    bgG8: wlColorsByType.background?.main || 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;',
+    bgG9: wlColorsByType.background?.main || 'linear-gradient(0deg, #14051B 0%, rgba(20, 5, 27, 0) 82.89%);',
+    bgG10:
+      wlColorsByType.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.231) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.1);',
+    bgG11:
+      wlColorsByType.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.5);',
+    bgG12:
+      wlColorsByType.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)',
+    bgG13:
+      wlColorsByType.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);',
+    bgG14:
+      wlColorsByType.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.033) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.5);',
+    bgG15:
+      wlColorsByType.background?.main ||
+      'radial-gradient(76.91% 60% at 2.38% 3.84%, rgba(123, 66, 169, 0.195) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(79.76% 116.06% at 44.22% 136.36%, rgba(102, 20, 206, 0.132) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.132) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)',
+    bgG16:
+      wlColorsByType.background?.main ||
+      'linear-gradient(0deg, rgba(13, 4, 21, 0.7), rgba(13, 4, 21, 0.7)), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
+    bgG17:
+      wlColorsByType.background?.secondary ||
+      'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.028) 0%, rgba(237, 3, 118, 0.014) 100%), rgba(15, 5, 24, 0.7);',
+    bgG18:
+      wlColorsByType.background?.main ||
+      'radial-gradient(83.59% 55.66% at 2.38% 3.84%, rgba(123, 66, 169, 0.39) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(50.28% 108.33% at 73.7% 9%, rgba(102, 20, 206, 0.165) 1.94%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);',
+
+    bgG19:
+      wlColorsByType.background?.main ||
+      'radial-gradient(39.01% 78.49% at 10.99% 63.28%, rgba(138, 54, 152, 0.18) 18.75%, rgba(0, 0, 0, 0) 100%),radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(154, 55, 114, 0.33) 0%, rgba(26, 18, 58, 0) 100%) #29113d',
     //specialty colors
-    borderG1: darkMode
-      ? 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);'
-      : 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);',
-    borderG2: darkMode
-      ? 'linear-gradient(116.36deg, rgb(123, 66, 169) 33.43%, rgb(237, 3, 118) 95.41%), rgb(12, 70, 156);'
-      : 'linear-gradient(116.36deg, rgb(123, 66, 169) 33.43%, rgb(237, 3, 118) 95.41%), rgb(12, 70, 156);',
-    borderG3: darkMode
-      ? 'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);'
-      : 'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);',
-    modalBG: darkMode ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.3)',
-    advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
-    divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
+    borderG1: wlColorsByType.background?.main || 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);',
+    borderG2:
+      wlColorsByType.text?.main ||
+      'linear-gradient(116.36deg, rgb(123, 66, 169) 33.43%, rgb(237, 3, 118) 95.41%), rgb(12, 70, 156);',
+    borderG3:
+      wlColorsByType.background?.main ||
+      'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);',
+    modalBG: 'rgba(0,0,0,0.9)',
+    advancedBG: wlColorsByType.background?.main || 'rgba(0,0,0,0.1)',
+    divider: wlColorsByType.background?.main || 'rgba(43, 43, 43, 0.435)',
 
     //primary colors
-    primary1: darkMode ? '#2172E5' : '#ff007a',
-    primary2: darkMode ? '#3680E7' : '#FF8CC3',
-    primary3: darkMode ? '#4D8FEA' : '#FF99C9',
-    primary4: darkMode ? '#376bad70' : '#F6DDE8',
-    primary5: darkMode ? '#153d6f70' : '#FDEAF1',
+    primary1: wlColorsByType.primary?.main || '#2172E5',
+    primary2: wlColorsByType.primary?.additional1 || '#3680E7',
+    primary3: wlColorsByType.primary?.additional2 || '#4D8FEA',
+    primary4: wlColorsByType.primary?.additional3 || '#376bad70',
+    primary5: '#153d6f70',
 
     // color text
-    primaryText1: darkMode ? '#6da8ff' : '#ff007a',
+    primaryText1: '#6da8ff',
 
     // secondary colors
-    secondary1: darkMode ? '#2172E5' : '#ff007a',
-    secondary2: darkMode ? '#17000b26' : '#F6DDE8',
-    secondary3: darkMode ? '#17000b26' : '#FDEAF1',
+    secondary1: '#2172E5',
+    secondary2: '#17000b26',
+    secondary3: '#17000b26',
 
     // other
     red1: '#FD4040',
@@ -172,7 +171,7 @@ export function colors(darkMode: boolean): Colors {
     error: '#ED0376',
     success: '#27AE60',
     warning: '#ff8f00',
-    popUpInputBorder: darkMode ? '#7A02E0' : '#7A02E0',
+    popUpInputBorder: '#7A02E0',
 
     // dont wanna forget these blue yet
     // blue4: darkMode ? '#153d6f70' : '#C4D9F8',
@@ -180,9 +179,9 @@ export function colors(darkMode: boolean): Colors {
   }
 }
 
-export function theme(darkMode: boolean): DefaultTheme {
+export function theme(darkMode: boolean, config: Whitelabel | null): DefaultTheme {
   return {
-    ...colors(darkMode),
+    ...colors(config?.colors),
 
     grids: {
       sm: 8,
@@ -210,8 +209,9 @@ export function theme(darkMode: boolean): DefaultTheme {
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const darkMode = useIsDarkMode()
+  const { config } = useWhitelabelState()
 
-  const themeObject = useMemo(() => theme(darkMode), [darkMode])
+  const themeObject = useMemo(() => theme(darkMode, config), [darkMode, config])
 
   return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
 }
@@ -365,12 +365,27 @@ export const TYPE = {
 }
 
 export const ThemedGlobalStyle = createGlobalStyle`
-html {
-  color: ${({ theme }) => theme.text1};
-  background-color: ${({ theme }) => theme.bg0} !important;
-}
+  html {
+    color: ${({ theme }) => theme.text1};
+    background-color: ${({ theme }) => theme.bg0} !important;
+  }
 
-a {
- color: ${({ theme }) => theme.blue1}; 
-}
+  a {
+    color: ${({ theme }) => theme.blue1}; 
+  }
+
+  /* path {
+    ${({ theme }) =>
+      theme.config.elements &&
+      css`
+        fill: ${({ theme }) => theme.config.elements.main};
+      `};
+  } */
+  /* svg{
+    ${({ theme }) =>
+      theme.config.elements &&
+      css`
+        stroke: ${({ theme }) => theme.config.elements.main};
+      `};
+  } */
 `

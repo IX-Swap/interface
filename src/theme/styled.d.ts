@@ -1,3 +1,4 @@
+import { WlColors } from 'state/whitelabel/types'
 import { FlattenSimpleInterpolation, ThemedCssFunction } from 'styled-components'
 
 export type Color = string
@@ -58,6 +59,7 @@ export interface Colors {
   bgG16: Gradient
   bgG17: Gradient
   bgG18: Gradient
+  bgG19: Gradient
   borderG1: Gradient
   borderG2: Gradient
   borderG3: Gradient
@@ -95,6 +97,7 @@ export interface Colors {
   success: Color
   warning: Color
   popUpInputBorder: Color
+  config: WlColors
 }
 
 export interface Grids {

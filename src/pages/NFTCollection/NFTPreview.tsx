@@ -120,7 +120,7 @@ const Name = styled.div`
 const Description = styled.div`
   font-weight: 500;
   font-size: 12px;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   ${ellipsisText}
 `
 

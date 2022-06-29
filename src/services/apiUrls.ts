@@ -93,7 +93,7 @@ export const users = {
 }
 
 export const whitelabel = {
-  config: '/whitelibel/config',
+  config: '/white-label/config',
 }
 
 export interface PaginateWithFilter {

@@ -14,7 +14,7 @@ export const cardCommonStyles = css`
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
-  background: transparent;
+  background: ${({ theme }) => theme.config.background?.secondary || 'transparent'};
   width: 100%;
   max-width: 1270px;
   padding-top: 0px;
@@ -24,7 +24,7 @@ export const MySecTokensTab = styled(Box)`
   padding: 32px;
   background: ${({ theme }) => theme.bgG17};
   border-radius: 30px;
-  border: 2px solid rgb(123, 66, 169);
+  border: ${({ theme }) => `2px solid ${theme.config.text?.main || 'rgb(123, 66, 169)'}`};
 `
 
 export const MySecTokensGrid = styled(Box)`

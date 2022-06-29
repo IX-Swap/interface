@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import useScrollPosition from '@react-hook/window-scroll'
@@ -25,6 +25,7 @@ import { HeaderLinks } from './HeaderLinks'
 import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -47,6 +48,11 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position 0.1s, box-shadow 0.1s;
+  ${({ theme }) =>
+    theme.config.background &&
+    css`
+      background: ${({ theme }) => theme.config.background.secondary};
+    `}
   @media (max-width: 1400px) {
     grid-template-columns: 2fr auto auto;
     grid-gap: 28px;
@@ -128,7 +134,7 @@ const BalanceText = styled(Text)`
   color: ${({ theme }) => theme.text2};
   font-weight: 600;
   font-size: 12px;
-  opacity: 0.5;
+  opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
   border-radius: 0 0 40px 40px;
   padding: 0 18px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -192,6 +198,11 @@ const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 2;
+  ${({ theme }) =>
+    theme.config.background &&
+    css`
+      background: ${({ theme }) => theme.config.background.secondary};
+    `}
 `
 
 const KYCWrapper = styled.div`
@@ -219,6 +230,7 @@ export default function Header() {
   const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
+  const { config } = useWhitelabelState()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
@@ -230,7 +242,7 @@ export default function Header() {
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
-                <AppLogo width="38px" height="47px" />
+                <AppLogo width="auto" height="47px" {...config?.customStyles?.logo} />
               </IXSIcon>
             </Title>
           </HeaderRow>

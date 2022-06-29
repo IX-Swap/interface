@@ -220,14 +220,14 @@ const navLinkStyles = css`
   font-weight: 600;
   &.${activeClassName} {
     opacity: 1;
-    color: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.config.text?.main || theme.text1};
   }
 
   :hover,
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text2)};
     &.${activeClassName} {
-      color: ${({ theme }) => theme.white};
+      color: ${({ theme }) => theme.config.text?.main || theme.white};
     }
   }
   @media (max-width: 1500px) {

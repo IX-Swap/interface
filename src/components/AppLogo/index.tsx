@@ -20,9 +20,9 @@ export const useAppLogoSrc = (withText = false) => {
 
   const src = useMemo(() => {
     if (withText) {
-      return config?.logo || defaultLogoWithText
+      return config?.logoUrl || defaultLogoWithText
     }
-    return config?.logo || defaultLogo
+    return config?.logoUrl || defaultLogo
   }, [config, withText])
 
   return src

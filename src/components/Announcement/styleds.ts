@@ -5,7 +5,7 @@ import { RowCenter } from 'components/Row'
 export const Card = styled(RowCenter)`
   height: 40px;
   align-items: center;
-  background-color: ${({ theme }) => theme.bg10};
+  background-color: ${({ theme }) => theme.text2};
 
   ${({ theme }) => theme.mediaWidth.upToLarge`
     height: 100%;

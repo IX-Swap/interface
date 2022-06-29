@@ -17,7 +17,7 @@ import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
 export const StatusCard = styled(Card)`
   display: flex;
   justify-content: center;
-  background: ${({ theme }) => theme.bgG13};
+  background: ${({ theme }) => theme.config.background?.secondary || theme.bgG13};
   width: 100%;
   min-height: 630px;
   padding-bottom: 100px;
@@ -215,4 +215,11 @@ export const Divider = styled.div`
   background-color: ${({ theme: { text2 } }) => `${text2}50`};
   width: 100%;
   opacity: 0.2;
+`
+
+export const DateInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: ${({ theme: { text9 } }) => text9};
 `

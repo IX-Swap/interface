@@ -70,7 +70,7 @@ const Spacer = styled.div`
 `
 
 const Separator = styled.hr`
-  background: #edceff;
+  background: ${({ theme }) => theme.text2};
 
   width: 100%;
   opacity: 0.2;
@@ -80,7 +80,7 @@ const Button = styled.button`
   background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%),
     #2c254a;
 
-  color: #edceff;
+  color: ${({ theme }) => theme.text2};
   border-radius: 40px;
   border: none;
   margin: 0px 24px;
@@ -175,7 +175,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   return (
     <KycSourceContainer>
       <KycRow>
-        <TYPE.small style={{ fontSize: '12px', color: '#EDCEFF' }}>KYC source</TYPE.small>
+        <TYPE.small style={{ fontSize: '12px', color: 'text2' }}>KYC source</TYPE.small>
       </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
         <TYPE.body1 minWidth="auto" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -428,7 +428,7 @@ const BrokerDealersGrid = styled(BrokerDealersGridHeader)`
 const Line = styled.div`
   height: 3px;
   width: 10px;
-  background-color: #edceff;
+  background-color: ${({ theme }) => theme.text2};
   opacity: 0.5;
 `
 

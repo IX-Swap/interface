@@ -22,7 +22,7 @@ import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
 
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
-import { Content, getStatusDescription, StatusCard } from './styleds'
+import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
 
 interface DescriptionProps {
   description: string | null
@@ -43,7 +43,7 @@ const DateInfo: FC<DateInfoProps> = ({
   approvedDate,
   changeRequestDate,
 }: DateInfoProps) => (
-  <Flex textAlign="center" color="#EDCEFF80" flexDirection="column">
+  <DateInfoContainer>
     {info && (
       <TYPE.description3 marginTop="40px" marginBottom="16px" color="inherit">
         {info}
@@ -69,7 +69,7 @@ const DateInfo: FC<DateInfoProps> = ({
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
-  </Flex>
+  </DateInfoContainer>
 )
 
 const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) => (
