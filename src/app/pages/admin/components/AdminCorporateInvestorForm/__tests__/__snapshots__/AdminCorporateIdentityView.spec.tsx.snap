@@ -38,7 +38,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                 >
                   Company Name
                 </p>
@@ -47,7 +47,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                 >
                   InvestaX
                 </p>
@@ -61,7 +61,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                 >
                   Country of Incorporation
                 </p>
@@ -70,7 +70,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                 >
                   Russian Federation
                 </p>
@@ -84,7 +84,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                 >
                   Source of Funds
                 </p>
@@ -93,7 +93,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                 >
                   LOAN
                 </p>
@@ -114,7 +114,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                 >
                   Registration Number/UEN
                 </p>
@@ -123,7 +123,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                 >
                   123456
                 </p>
@@ -137,7 +137,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                 >
                   Legal Entity
                 </p>
@@ -146,7 +146,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 />
                 <p
                   class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                  style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                 >
                   Others (Please specify)
                 </p>
@@ -201,7 +201,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Line 1
                   </p>
@@ -210,7 +210,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Address line 1
                   </p>
@@ -224,7 +224,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     City
                   </p>
@@ -233,7 +233,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Omsk
                   </p>
@@ -247,7 +247,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Country
                   </p>
@@ -256,7 +256,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Russian Federation
                   </p>
@@ -274,7 +274,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Line 2
                   </p>
@@ -283,7 +283,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Address line 2
                   </p>
@@ -297,7 +297,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     State
                   </p>
@@ -306,7 +306,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Siberia
                   </p>
@@ -320,7 +320,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Postal Code
                   </p>
@@ -329,7 +329,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     123456
                   </p>
@@ -364,7 +364,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Line 1
                   </p>
@@ -373,7 +373,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Address line 1
                   </p>
@@ -387,7 +387,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     City
                   </p>
@@ -396,7 +396,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Omsk
                   </p>
@@ -410,7 +410,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Country
                   </p>
@@ -419,7 +419,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Russian Federation
                   </p>
@@ -437,7 +437,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Line 2
                   </p>
@@ -446,7 +446,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Address line 2
                   </p>
@@ -460,7 +460,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     State
                   </p>
@@ -469,7 +469,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     Siberia
                   </p>
@@ -483,7 +483,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                   >
                     Postal Code
                   </p>
@@ -492,7 +492,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                    style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                   >
                     123456
                   </p>
@@ -554,7 +554,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                       >
                         Full Name
                       </p>
@@ -563,7 +563,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         John Doe
                       </p>
@@ -577,7 +577,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                       >
                         Email Address
                       </p>
@@ -586,7 +586,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         johnsemail
                       </p>
@@ -604,7 +604,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                       >
                         Designation
                       </p>
@@ -613,7 +613,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         CEO
                       </p>
@@ -627,7 +627,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+                        style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
                       >
                         Contact Number
                       </p>
@@ -636,7 +636,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         +6512345678901
                       </p>
@@ -830,194 +830,7 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-1tw2i9j-MuiGrid-root"
-              >
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-dw5ume-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-1yiji47-MuiGrid-root"
-                  >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#F56283"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#close"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
-                      >
-                        An entity or corporation with net assets exceeding SGD 10 million or its equivalent in foreign currency
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-dw5ume-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-1yiji47-MuiGrid-root"
-                  >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#F56283"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#close"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
-                      >
-                        The trustee of a trust the subject matter of which exceeds SGD 10 million or its equivalent in foreign currency
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-dw5ume-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-1yiji47-MuiGrid-root"
-                  >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#F56283"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#close"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
-                      >
-                        A corporation where all the shareholders are Accredited Investors
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-dw5ume-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-1yiji47-MuiGrid-root"
-                  >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#F56283"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#close"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
-                      >
-                        A partnership (other than a limited liability partnership) where all the partners are Accredited Investors
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-dw5ume-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-1yiji47-MuiGrid-root"
-                  >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#F56283"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#close"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
-                      >
-                        A trust where all the beneficiaries are Accredited Investors
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-dw5ume-MuiGrid-root"
-                >
-                  <div
-                    class="MuiGrid-root MuiGrid-item css-1yiji47-MuiGrid-root"
-                  >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#F56283"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#close"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-156hzlq-MuiTypography-root"
-                      >
-                        A trust where all the settlors are Accredited Investors and have reserved to themselves all powers of investment and asset management functions under the trust, and have reserved to themselves the power to revoke the trust.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              />
             </div>
           </div>
         </div>
@@ -1044,6 +857,20 @@ exports[`AdminCorporateIdentityView should match snapshot 1`] = `
             >
               I confirm to be treated as an “Accredited Investor” by InvestaX
             </h6>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+              >
+                <h6
+                  class="MuiTypography-root MuiTypography-subtitle1 css-1zdpvo-MuiTypography-root"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-1tw2i9j-MuiGrid-root"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -22,7 +22,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
             >
               Company Name
             </p>
@@ -31,7 +31,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
             >
               InvestaX
             </p>
@@ -45,7 +45,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
             >
               Country of Incorporation
             </p>
@@ -54,7 +54,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
             >
               Russian Federation
             </p>
@@ -68,7 +68,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
             >
               Source of Funds
             </p>
@@ -77,7 +77,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
             >
               LOAN
             </p>
@@ -98,7 +98,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
             >
               Registration Number/UEN
             </p>
@@ -107,7 +107,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
             >
               123456
             </p>
@@ -121,7 +121,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); margin-bottom: 8px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
             >
               Legal Entity
             </p>
@@ -130,7 +130,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+              style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
             >
               Others (Please specify)
             </p>
