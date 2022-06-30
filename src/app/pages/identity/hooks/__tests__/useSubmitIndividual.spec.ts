@@ -49,7 +49,7 @@ describe('useSubmitIndividual', () => {
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate(individual._id)
+          void mutate(individual)
           expect(apiFn).toHaveBeenCalledWith(uri, {})
           expect(showSnackbar).toHaveBeenCalled()
           expect(callback).toHaveBeenCalled()
