@@ -49,9 +49,10 @@ export class MetamaskPage extends WebPage{
   }
 
   async makeSureMetamaskLoaded() {
-    await this.confirmButton.waitFor()
+    await this.confirmButton.waitFor({timeout: timeouts.shortTimeout})
       .catch(async () => {
         await this.reloadPage();
+        await this.page.waitForTimeout(timeouts.tinyTimeout)
       });
   }
 
@@ -64,11 +65,25 @@ export class MetamaskPage extends WebPage{
     }
   }
 
-  async fullyLoginToMetamask(recoveryPhrase: string, password: string) {
-    // proceed to recovery phrase
+
+  async proceedToRecoveryPhrase() {
     await this.confirmButton.click();
     await this.iAmNewButton.click();
     await this.nextButton.click();
+
+    await expect(this.passwordField).toBeVisible()
+      .catch(async () => {
+        await this.confirmButton.click();
+        await this.iAmNewButton.click();
+        await this.nextButton.click();
+      })
+  }
+
+  async fullyLoginToMetamask(recoveryPhrase: string, password: string) {
+    if (!recoveryPhrase) throw new Error('Recovery phrase for Metamask is not set');
+    if (!password) throw new Error('Password for Metamask is not set');
+
+    await this.proceedToRecoveryPhrase();
 
     // enter recovery phrase and password
     await this.enterRecoveryPhrase(recoveryPhrase);
@@ -89,22 +104,27 @@ export class MetamaskPage extends WebPage{
     await this.accountDetailsMenuButton.click();
   }
 
-  async connectAndSignMetamask(openedMetamaskPage: Page) {
-    await Promise.all([
-      this.context.waitForEvent('page')
-        .then(async (page) => {
-          const signButton = page.locator(this.signMetamaskRequestPopUpButton);
+  async signMetamask(page: Page) {
+    const signButton = page.locator(this.signMetamaskRequestPopUpButton);
 
-          await signButton.click();
-          await page.waitForEvent('close')
-        })
-        .catch(async () => {
-          const signButton = openedMetamaskPage.locator(this.signMetamaskRequestPopUpButton);
+    await page.waitForTimeout(timeouts.tinyTimeout);
+    await signButton.click();
+    await page.waitForEvent('close')
+  }
 
-          await signButton.click();
-          await openedMetamaskPage.waitForEvent('close')
-        }),
-      openedMetamaskPage.click(this.connectMetamaskPopUpButton)
-    ]);
+  async changeNetworkToKovan(context) {
+    const pageWithMetamask = await context.pages()[1];
+    // Click div[role="button"]:has-text("Сеть Ethereum Mainnet")
+    await pageWithMetamask.locator('div[role="button"]:has-text("Сеть Ethereum Mainnet")').click();
+    // Click text=Показать/скрыть
+    await pageWithMetamask.locator('text=Показать/скрыть').click();
+    // assert.equal(page1.url(), 'chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/home.html#settings/advanced');
+    // Click div:nth-child(7) > div:nth-child(2) > .settings-page__content-item-col > .toggle-button > div > div:nth-child(2) > div
+    await pageWithMetamask.locator('div:nth-child(7) > div:nth-child(2) > .settings-page__content-item-col > .toggle-button > div > div:nth-child(2) > div').click();
+    // Click div[role="button"]:has-text("Сеть Ethereum Mainnet")
+    await pageWithMetamask.locator('div[role="button"]:has-text("Сеть Ethereum Mainnet")').click();
+    // Click text=Тестовая сеть Kovan
+    await pageWithMetamask.locator('text=Тестовая сеть Kovan').click();
+
   }
 }
