@@ -6,7 +6,7 @@ exports[`OTC Confirm order actions renders confirm actions correctly 1`] = `
     class="MuiBox-root css-gg4vpm"
   >
     <div
-      class="abc MuiBox-root css-0"
+      class="makeStyles-status-3 MuiBox-root css-0"
     >
       Pending
     </div>

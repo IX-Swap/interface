@@ -80,6 +80,7 @@ export const TradingBody = () => {
           isFetching={isFetching}
           currencyName={currencyName}
           tokenName={tokenName}
+          isDisabled={disabledCreate}
           currencyBalance={currencyBalance}
           tokenBalance={{ data: { amount: balance } }}
           suffix={renderSuffix}
