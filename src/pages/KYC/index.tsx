@@ -198,7 +198,7 @@ export default function KYC() {
                 marginBottom={isMobile ? '12px' : '0px'}
                 textAlign="center"
                 marginTop="24px"
-                color="white"
+                color="text1"
               >
                 You need to pass KYC to access the full IX Swap App and trade Security Tokens
               </TYPE.mediumHeader>

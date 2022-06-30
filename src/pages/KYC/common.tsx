@@ -277,9 +277,9 @@ const StyledInput = styled(Input)`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
-  background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
+  background-color: ${({ theme: { bg19 } }) => bg19};
   :focus {
-    background-color: ${({ theme: { bg7 } }) => bg7};
+    background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
   }
 `
 

@@ -201,11 +201,12 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
+  color: ${({ theme }) => theme.text1};
 
   ${({ theme }) =>
     isNotSupportGradient
       ? css`
-          border: 2px solid ${theme.bg20};
+          border: 2px solid ${theme.bg20} !important;
         `
       : gradientBorder}
   :focus,
@@ -216,6 +217,7 @@ export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   &:disabled {
     background-color: transparent;
     background: transparent;
+    color: ${({ theme }) => theme.text1};
   }
 `
 export const ButtonPinkBorder = styled(ButtonIXSGradient)`

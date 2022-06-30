@@ -66,10 +66,10 @@ export function colors(configColors?: WlColors): Colors {
     bg5: '#6C7284',
     bg6: '#1A2028',
     bg7: wlColorsByType.background?.main || '#372E5E',
-    bg8: wlColorsByType.background?.main || '#0F0518',
+    bg8: wlColorsByType.background?.secondary || '#0F0518',
     bg9: '#372E5D',
     bg10: '#EDCEFF',
-    bg11: wlColorsByType.background?.main || '#272046',
+    bg11: wlColorsByType.background?.secondary || '#272046',
     bg12: '#271F4A',
     bg13: '#2F254E',
     bg14: '#ED0376',
@@ -77,7 +77,7 @@ export function colors(configColors?: WlColors): Colors {
     bg16: wlColorsByType.background?.secondary || '#170626',
     bg17: '#1C112D',
     bg18: wlColorsByType.background?.main || '#27204666',
-    bg19: wlColorsByType.background?.main || '#271F4A66',
+    bg19: wlColorsByType.background?.secondary || '#271F4A66',
     bg20: '#7B42A9',
     bgG1:
       wlColorsByType.background?.main ||
@@ -85,7 +85,8 @@ export function colors(configColors?: WlColors): Colors {
     bgG2:
       wlColorsByType.background?.main ||
       'radial-gradient(93.65% 93.65% at 58.57% 22.42%,rgba(206,20,132,0.1) 0%,rgba(26,18,58,0.4) 100%),rgb(44,37,74,0.6);',
-    bgG3: wlColorsByType.background?.main || 'linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%), #0C469C;',
+    bgG3:
+      wlColorsByType.background?.secondary || 'linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%), #0C469C;',
     bgG4:
       wlColorsByType.background?.main ||
       'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%), #0F0518;',
@@ -127,7 +128,7 @@ export function colors(configColors?: WlColors): Colors {
       'radial-gradient(83.59% 55.66% at 2.38% 3.84%, rgba(123, 66, 169, 0.39) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(50.28% 108.33% at 73.7% 9%, rgba(102, 20, 206, 0.165) 1.94%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);',
 
     bgG19:
-      wlColorsByType.background?.main ||
+      wlColorsByType.background?.secondary ||
       'radial-gradient(39.01% 78.49% at 10.99% 63.28%, rgba(138, 54, 152, 0.18) 18.75%, rgba(0, 0, 0, 0) 100%),radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(154, 55, 114, 0.33) 0%, rgba(26, 18, 58, 0) 100%) #29113d',
     //specialty colors
     borderG1: wlColorsByType.background?.main || 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);',
@@ -164,7 +165,7 @@ export function colors(configColors?: WlColors): Colors {
     yellow1: '#e3a507',
     yellow2: '#ff8f00',
     yellow3: '#F3B71E',
-    yellow4: '#F2F99D',
+    yellow4: wlColorsByType.status?.warning || '#F2F99D',
     blue1: '#2172E5',
     blue2: '#5199FF',
 
@@ -374,13 +375,14 @@ export const ThemedGlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.blue1}; 
   }
 
-  /* path {
+  path {
     ${({ theme }) =>
       theme.config.elements &&
       css`
         fill: ${({ theme }) => theme.config.elements.main};
       `};
-  } */
+  }
+
   /* svg{
     ${({ theme }) =>
       theme.config.elements &&

@@ -15,7 +15,7 @@ import { TextGradient, TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
 
 import { Vesting } from './Vesting/Vesting'
-import { BodyWrapper } from 'pages/AppBody'
+import { StyledBodyWrapper } from './styleds'
 
 const PaddedRow = styled(RowBetween)`
   padding: 0 15px;
@@ -37,10 +37,7 @@ export const VestingTab = () => {
   return (
     <>
       <LightBackground />
-      <BodyWrapper
-        hasAnnouncement={!cookies.annoucementsSeen}
-        style={{ background: 'transparent', padding: 0, width: '100%', maxWidth: 1299 }}
-      >
+      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         <PaddedRow>
           <TYPE.title4>
             <Trans>Vesting {IXSCurrency?.symbol}</Trans>
@@ -53,7 +50,7 @@ export const VestingTab = () => {
         </PaddedRow>
 
         <Vesting />
-      </BodyWrapper>
+      </StyledBodyWrapper>
     </>
   )
 }
