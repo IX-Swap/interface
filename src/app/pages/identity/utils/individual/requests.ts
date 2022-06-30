@@ -98,7 +98,12 @@ export const getInvestorDeclarationRequestPayload = (
   return {
     declarations: {
       investorsStatus: values
-    }
+    },
+    ...getDocumentsRequestPayload({
+      proofOfIdentity: values.proofOfIdentity,
+      proofOfAddress: values.proofOfAddress,
+      evidenceOfAccreditation: values.evidenceOfAccreditation
+    })
   }
 }
 

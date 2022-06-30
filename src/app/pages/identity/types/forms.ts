@@ -126,7 +126,8 @@ export interface FinancialAndTaxDeclarationFormValues {
 }
 
 export interface IndividualInvestorDeclarationFormValues
-  extends IndividualInvestorStatus,
+  extends IdentityDocumentsFormValues,
+    IndividualInvestorStatus,
     OptOutRequirements,
     OptInAgreements {}
 
