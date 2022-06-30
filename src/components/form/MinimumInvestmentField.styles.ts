@@ -10,7 +10,7 @@ export const useStyles = makeStyles(theme => ({
     position: 'absolute',
     height: 'fit-content',
     padding: 14,
-    top: 28,
+    top: 30,
     right: 2,
     lineHeight: '100%',
     backgroundColor: theme.palette.backgrounds.lighter,
