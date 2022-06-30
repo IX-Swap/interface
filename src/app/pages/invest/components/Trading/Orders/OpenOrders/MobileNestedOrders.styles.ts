@@ -25,11 +25,13 @@ export const useStyles = makeStyles(theme => ({
   headerCell: {
     color: theme.palette.mode === 'light' ? '#666666' : '#ffffff',
     padding: theme.spacing(0, 2, 0, 0),
-    borderBottom: 'none'
+    borderBottom: 'none',
+    textAlign: 'center'
   },
   dataCell: {
     padding: theme.spacing(0, 2, 0, 0),
-    borderBottom: 'none'
+    borderBottom: 'none',
+    textAlign: 'center'
   },
   rowBox: {
     backgroundColor: theme.palette.mode === 'light' ? '#F6F4FD' : '#494166',

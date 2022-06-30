@@ -11,6 +11,7 @@ export const PlaceOrderFormDialog = ({
   tokenName,
   currencyBalance,
   tokenBalance,
+  isDisabled,
   suffix,
   submitForm
 }: MarketViewProps) => {
@@ -81,6 +82,7 @@ export const PlaceOrderFormDialog = ({
           isFetching={isFetching}
           currencyLabel={currencyName}
           tokenLabel={tokenName}
+          isDisabled={isDisabled}
           currencyBalance={currencyBalance}
           suffix={suffix}
           tokenBalance={

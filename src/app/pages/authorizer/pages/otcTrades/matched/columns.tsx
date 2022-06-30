@@ -66,7 +66,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     render: (_, row) =>
       renderTotal({
         amount: row?.matches?.matchedAmount ?? 0,
-        price: row.price,
+        price: row?.matches?.matchedPrice ?? 0,
         row
       })
   }
