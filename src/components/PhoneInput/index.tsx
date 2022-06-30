@@ -43,22 +43,22 @@ const Container = styled.div`
   .react-tel-input {
     background-color: transparent;
     border-radius: 36px;
-    border: ${({ theme: { bg12 } }) => `1px solid ${bg12}40`};
+    border: ${({ theme: { bg19 } }) => `1px solid ${bg19}`};
   }
 
   .form-control {
     position: relative;
     padding: 18px 20px 18px 52px;
     border-radius: 36px;
-    background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
-    color: white;
+    background-color: ${({ theme: { bg19 } }) => bg19};
+    color: ${({ theme: { text1 } }) => text1};
     border: none;
     width: 100%;
   }
   .form-control:focus {
     background-color: ${({ theme }) => theme.bg7};
     .react-tel-input {
-      border-color: ${({ theme: { bg10 } }) => `${bg10}50`};
+      border-color: ${({ theme: { text9 } }) => text9};
     }
     box-shadow: none;
   }
@@ -95,7 +95,7 @@ const Container = styled.div`
   }
 
   .country:hover {
-    background-color: ${({ theme }) => `${theme.bg12}40 !important`};
+    background-color: ${({ theme }) => `${theme.bg19} !important`};
   }
 
   .flag-dropdown.open {

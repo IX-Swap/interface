@@ -42,7 +42,7 @@ const inputStyles = css`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
-  background-color: rgba(39, 31, 74, 0.4);
+  background-color: ${({ theme }) => theme.bg19};
   :focus {
     background-color: ${({ theme: { bg7 } }) => bg7};
   }

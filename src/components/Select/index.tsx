@@ -21,15 +21,15 @@ const colourStyles = {
   option: (styles: Record<string, any>, { isSelected }: { isSelected: boolean }) => {
     return {
       ...styles,
-      backgroundColor: isSelected ? '#272046' : 'transparend',
-      color: isSelected ? 'white' : 'rgba(237, 206, 255, 0.5)',
+      backgroundColor: isSelected ? 'bg11' : 'transparend',
+      color: isSelected ? 'text1' : 'text9',
       fontWeight: isSelected ? '700' : '400',
     }
   },
   singleValue: (styles: Record<string, any>) => {
     return {
       ...styles,
-      color: 'white',
+      color: 'text1',
       fontSize: '16px',
     }
   },
@@ -39,7 +39,7 @@ const colourStyles = {
   ) => {
     return {
       ...styles,
-      color: '#9184C3',
+      color: 'text8',
       svg: {
         ...(menuIsOpen && {
           transform: 'rotate(180deg)',
@@ -50,7 +50,7 @@ const colourStyles = {
   menuList: (styles: Record<string, any>) => {
     return {
       ...styles,
-      color: 'white',
+      color: 'text1',
       maxHeight: '188px',
     }
   },
@@ -99,7 +99,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     height: 60px;
     border-radius: ${({ borderRadius }) => borderRadius};
     padding: 0px 16px;
-    background: rgba(39, 31, 74, 0.4);
+    background: ${({ theme }) => theme.bg19};
     border: none;
     ${({ error }) =>
       error &&
@@ -128,7 +128,7 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
       cursor: pointer;
       border-radius: 12px;
       :hover {
-        background: rgba(39, 31, 74, 0.4);
+        background: ${({ theme }) => theme.bg19};
       }
     }
   }

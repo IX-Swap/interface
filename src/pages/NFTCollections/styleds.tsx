@@ -98,7 +98,7 @@ export const SortText = styled.button`
   font-size: 16px;
   line-height: 24px;
   padding: 0px 8px;
-  color: ${active ? '#FFFFFF' : 'text2'};
+  color: ${active ? 'text1' : 'text2'};
   margin-top: ${active ? '4px' : '0px'};
   outline: none;
 

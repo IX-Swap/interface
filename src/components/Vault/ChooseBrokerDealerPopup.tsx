@@ -77,8 +77,7 @@ const Separator = styled.hr`
 `
 
 const Button = styled.button`
-  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%),
-    #2c254a;
+  background: ${({ theme }) => theme.bgG1};
 
   color: ${({ theme }) => theme.text2};
   border-radius: 40px;
@@ -280,8 +279,8 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
       mobileMaxHeight={90}
     >
       <ModalBlurWrapper data-testid="choose-broker-dealer-and-custodian-popup">
-        <ModalContentWrapper style={{ borderRadius: '12px', backgroundColor: '#272046' }}>
-          <div style={{ backgroundColor: '#0F0518', borderRadius: '12px 12px 0px 0px' }}>
+        <StyledModalContentWrapper>
+          <div>
             <ModalPadding>
               <ModalHeader>
                 <TYPE.title5>
@@ -387,7 +386,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
               )}
             </Row>
           </StartAccreditationButtonWrapper>
-        </ModalContentWrapper>
+        </StyledModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
@@ -466,4 +465,12 @@ const StartAccreditationButtonWrapper = styled(ModalPadding)`
       margin-bottom: 10px !important;
     }
   `};
+`
+const StyledModalContentWrapper = styled(ModalContentWrapper)`
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.bg11};
+  > div:first-child {
+    background-color: ${({ theme }) => theme.bg8};
+    border-radius: 12px 12px 0px 0px;
+  }
 `

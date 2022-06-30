@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { hexToRGBA } from 'utils/themeHelper'
 import { ReactComponent as InfoSvg } from '../../assets/images/attention.svg'
 import { RowStart } from 'components/Row'
+import { BodyWrapper } from 'pages/AppBody'
 
 export const LoaderContainer = styled.div`
   position: fixed;
@@ -196,4 +197,11 @@ export const UseWeb3Browser = styled.div`
   font-size: 14px;
   font-weight: 300;
   margin-top: 15px;
+`
+
+export const StyledBodyWrapper = styled(BodyWrapper)`
+  background: ${({ theme }) => theme.config.background?.secondary || 'transparent'};
+  width: 100%;
+  max-width: 1400px;
+  padding-top: 0px;
 `

@@ -55,7 +55,7 @@ const TextField = styled(Input)<{ maxHeight?: number }>`
   background-image: ${`url("${calendarIcon}")`};
   background-repeat: no-repeat;
   background-position: right 26px top 19px;
-  background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
+  background-color: ${({ theme: { bg19 } }) => bg19};
 `
 
 const Label = styled.div`
