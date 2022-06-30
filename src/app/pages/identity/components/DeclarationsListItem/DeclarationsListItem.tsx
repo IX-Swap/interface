@@ -13,7 +13,7 @@ export const DeclarationsListItem = ({
 }: DeclarationsListItemProps) => {
   return (
     <Grid item container flexWrap={'nowrap'} alignItems={'flex-start'}>
-      <Grid item mr={1.5} mt={value ? -0.75 : -0.5}>
+      <Grid item mr={1.5} mt={-0.3}>
         {value ? (
           <Icon color={'#7DD320'} name={'check'} />
         ) : (

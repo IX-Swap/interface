@@ -107,7 +107,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         color: isNewThemeOn
           ? theme.palette.slider.activeColor
           : labelColorMap[labelColor],
-        marginBottom: '8px'
+        lineHeight: '17px'
       }
     },
     {
@@ -118,7 +118,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         color: valueColor ?? undefined,
         opacity: isNewThemeOn ? 0.6 : 1,
         width: '100%',
-        wordBreak: 'break-word'
+        wordBreak: 'break-word',
+        lineHeight: '17px'
       }
     }
   ]

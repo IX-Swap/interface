@@ -117,7 +117,7 @@ export const InvestorDeclarationView: React.FC<
           <Typography fontWeight={500} variant={'subtitle1'}>
             I confirm to be treated as an “Accredited Investor” by InvestaX
           </Typography>
-          {optInAgreements && (
+          {optInAgreements !== undefined && (
             <DeclarationsList
               title=''
               data={{ optInAgreements }}
