@@ -58,7 +58,7 @@ export const TwoFADialog = ({
       </DialogTitle>
       <DialogContent className={classes.content}>{renderBody()}</DialogContent>
       <DialogActions className={classes.actions}>
-        <Actions enable2fa={enable2Fa} handleClose={() => onClose} />
+        <Actions enable2fa={enable2Fa} handleClose={() => onClose()} />
       </DialogActions>
     </Dialog>
   )
