@@ -5,7 +5,10 @@ export const useStyles = makeStyles(theme => ({
   fullwidth: {
     width: '100%',
     justifyContent: 'center',
-    gap: 16
+    gap: 16,
+    [theme.breakpoints.down('sm')]: {
+      gap: 0
+    }
   },
   base: {
     height: 70,
@@ -19,7 +22,11 @@ export const useStyles = makeStyles(theme => ({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      width: `45px !important`,
+      height: 50
+    }
   },
   standard: {
     border: 'none',
