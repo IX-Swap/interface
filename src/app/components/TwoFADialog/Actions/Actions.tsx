@@ -22,14 +22,10 @@ export const Actions = ({ handleClose, enable2fa }: ActionsProps) => {
 
   const handleSecondButtonClick = async () => {
     if (enable2fa === true) {
-      console.log('1')
       push(SecurityRoute.change2fa)
-      console.log('2')
     }
     if (enable2fa === undefined) {
-      console.log('3')
       await disable2fa()
-      console.log('4')
     }
     handleClose()
   }
