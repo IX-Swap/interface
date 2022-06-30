@@ -28,7 +28,7 @@ export const OTPDialogContent = ({
 
   return (
     <>
-      <DialogContent>
+      <DialogContent sx={{ px: 0 }}>
         {content !== undefined ? <>{content}</> : null}
         <TypedField
           control={control}
@@ -37,10 +37,15 @@ export const OTPDialogContent = ({
           name='otp'
           label={
             <Box
-              style={{
+              sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                alignItems: 'flex-start'
+                alignItems: 'flex-start',
+                flexWrap: 'nowrap',
+                pl: {
+                  xs: 3,
+                  md: 0
+                }
               }}
             >
               <Typography color={theme.palette.dialog.color}>OTP</Typography>
