@@ -3,7 +3,6 @@ export const useTypedForm = (): any =>
     TextField: jest.fn(() => null),
     NumericField: jest.fn(() => null),
     AssetSelect: jest.fn(() => null),
-    BalanceSelect: jest.fn(() => null),
     BankSelect: jest.fn(() => null),
     CountrySelect: jest.fn(() => null),
     NationalitySelect: jest.fn(() => null),
