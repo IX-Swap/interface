@@ -10,10 +10,6 @@ export const GENDERS_OPTS = [
   { value: 'F', label: 'Female' },
   { value: 'O', label: 'Unknown' }
 ]
-export const YES_OR_NO_OPTS = [
-  { value: 'true', label: 'Yes' },
-  { value: 'false', label: 'No' }
-]
 
 export const ALPHA_NUMERIC_OR_EMPTY_REGEX = /^([a-z0-9]|(?![\s\S]))+$/i
 

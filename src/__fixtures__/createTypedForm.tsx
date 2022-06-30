@@ -9,7 +9,6 @@ export const useTypedForm = (): any =>
     GenderSelect: jest.fn(() => null),
     MartialStatusSelect: jest.fn(() => null),
     Checkbox: jest.fn(() => null),
-    YesOrNo: jest.fn(() => null),
     DataroomDocument: jest.fn(() => null),
     Form: jest.fn(() => null),
     TypedField: jest.fn(() => null),
