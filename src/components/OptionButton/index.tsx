@@ -39,7 +39,7 @@ export const Option = styled(FancyButton)<{ active: boolean }>`
     background: ${({ theme }) => theme.bgG6};
   }
   background: ${({ active, theme }) => (active ? theme.bgG6 : theme.bg12)};
-  color: ${({ active, theme }) => (active ? theme.white : theme.text1)};
+  color: ${({ theme }) => theme.text1};
   ${({ theme }) => theme.mediaWidth.upToSmall`
     width: 100%  
   `}
