@@ -44,7 +44,7 @@ export const TmPayoutHistory = () => {
       if (Object.keys(filters).length) {
         handleHaveFilters(true)
       }
-      getPayoutHistory({ ...filters, offset: 10, page:1 })
+      getPayoutHistory({ ...filters, offset: 10, page: 1 })
     }
   }, [filters, getPayoutHistory, account, token])
 
@@ -60,8 +60,9 @@ export const TmPayoutHistory = () => {
         <Container>
           <MultipleFilters
             filters={[FILTERS.SEARCH, FILTERS.DATE_OF_CLAIM, FILTERS.SEC_TOKENS]}
-            searchPlaceholder="Search by Wallet"
+            searchPlaceholder="Search by Wallet or ID"
             onFiltersChange={handleFilters}
+            forManager
           />
           {payoutHistory.items?.length ? (
             <>

@@ -86,6 +86,7 @@ export const TmPayoutEvents = () => {
               FILTERS.PAYOUT_TOKEN,
             ]}
             onFiltersChange={handleFilters}
+            forManager
           />
           {payoutList.items?.length ? (
             <>
@@ -121,7 +122,7 @@ const Row = ({ item, onEdit }: IRow) => {
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
   const currency = useCurrency(payoutToken)
 
-  const dateFormat = 'MMM d, YYYY'
+  const dateFormat = 'MMM DD, YYYY'
 
   const clickView = () => {
     history.push({ pathname: routes.payoutItem(id), state: { cameFromManagerPage: true } })
