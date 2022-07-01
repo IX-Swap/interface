@@ -14,8 +14,7 @@ import {
   IndividualFinancialInfoFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues,
-  TaxResidency,
-  FinancialAndTaxDeclarationFormValues
+  TaxResidency
 } from 'app/pages/identity/types/forms'
 import { DataroomFile } from 'types/dataroomFile'
 
@@ -56,84 +55,6 @@ export const financialInfoSchema = yup
     employmentStatus: yup.string().required(validationMessages.required),
     annualIncome: yup.string().required(validationMessages.required),
     sourceOfFund: yup.string().required(validationMessages.required)
-  })
-
-export const financialAndTaxDeclarationSchema = yup
-  .object()
-  .shape<FinancialAndTaxDeclarationFormValues>({
-    occupation: yup.string().required(validationMessages.required),
-    employer: yup
-      .string()
-      .max(50, 'Maximum of 50 characters')
-      .required('This field is required'),
-    employmentStatus: yup.string().required(validationMessages.required),
-    annualIncome: yup.string().required(validationMessages.required),
-    sourceOfFund: yup.string().required(validationMessages.required),
-    singaporeOnly: yup
-      .string()
-      .oneOf(['yes', 'no'])
-      .required(validationMessages.required),
-    fatca: yup
-      .string()
-      .oneOf(['yes', 'no'])
-      .required(validationMessages.required),
-    taxResidencies: yup
-      .array<TaxResidency>()
-      .when('singaporeOnly', {
-        is: 'yes',
-        then: yup.array().of(
-          yup.object({
-            taxIdentificationNumber: taxIdentificationNumberSchema
-              .required(validationMessages.required)
-              .test(
-                'nric',
-                'Invalid FIN/NRIC',
-                function (value: string | null | undefined) {
-                  if (value === undefined || value === null) {
-                    return false
-                  }
-
-                  const isValid = /^[STFG]\d{7}[A-Z]$/.test(value)
-                  return isValid
-                }
-              )
-          })
-        ),
-        otherwise: yup.array().of(
-          yup
-            .object({
-              taxIdAvailable: yup.boolean(),
-              countryOfResidence: yup
-                .string()
-                .required(validationMessages.required),
-              taxIdentificationNumber: taxIdentificationNumberSchema.when(
-                'taxIdAvailable',
-                {
-                  is: true,
-                  then: taxIdentificationNumberSchema.required(
-                    validationMessages.required
-                  ),
-                  otherwise: taxIdentificationNumberSchema
-                }
-              ),
-              reason: yup.string().when('taxIdAvailable', {
-                is: false,
-                then: yup
-                  .string()
-                  .oneOf(['A', 'B', 'C'])
-                  .required(validationMessages.required),
-                otherwise: yup.string()
-              }),
-              customReason: yup.string().when('reason', {
-                is: 'B',
-                then: yup.string().required(validationMessages.required),
-                otherwise: yup.string()
-              })
-            })
-            .required(validationMessages.required)
-        )
-      })
-      .required(validationMessages.required)
   })
 
 export const taxDeclarationSchema = yup
@@ -284,5 +205,10 @@ export const individualInvestorValidationSchema = yup.object().shape<any>({
   ...individualInvestorDocumentsSchema.fields,
   ...individualInvestorStatusDeclarationSchema.fields,
   ...personalInfoSchema.fields,
+  ...taxDeclarationSchema.fields
+})
+
+export const financialAndTaxDeclarationSchema = yup.object().shape<any>({
+  ...financialInfoSchema.fields,
   ...taxDeclarationSchema.fields
 })
