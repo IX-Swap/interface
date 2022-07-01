@@ -16,7 +16,7 @@ import { IdentityType } from 'app/pages/identity/utils/shared'
 export interface StatusDeclaration {
   accreditedInvestorDeclaration: Record<string, boolean>
   optInRequirement: Record<string, boolean>
-  accreditedInvestorOptOut: Record<string, boolean>
+  accreditedInvestorOptOut: Record<string, boolean | undefined>
 }
 
 export interface InvestorDeclarationViewProps {

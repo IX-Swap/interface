@@ -7,7 +7,7 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 export interface CorporateDeclarationsListProps {
   title?: string
   subtitle: string
-  data: Record<string, boolean>
+  data: Record<string, boolean | undefined>
   labelMap: Record<string, React.ReactNode>
 }
 
@@ -35,7 +35,7 @@ export const CorporateDeclarationsList = ({
             {Object.entries(data).map((item, index) => {
               const key = labelMap[item[0]]
               const value = item[1]
-              if (value) {
+              if (value === true) {
                 return (
                   <DeclarationsListItem key={index} label={key} value={value} />
                 )
@@ -43,7 +43,7 @@ export const CorporateDeclarationsList = ({
               return null
             })}
 
-            {Object.values(data).every(item => !item) &&
+            {Object.values(data).every(item => item !== true) &&
               Object.values(labelMap).map((label, i) => (
                 <DeclarationsListItem key={i} label={label} value={false} />
               ))}

@@ -4,7 +4,7 @@ import { Icon } from 'ui/Icons/Icon'
 
 export interface DeclarationsListItemProps {
   label: ReactNode
-  value: boolean
+  value: boolean | undefined
 }
 
 export const DeclarationsListItem = ({
@@ -13,8 +13,8 @@ export const DeclarationsListItem = ({
 }: DeclarationsListItemProps) => {
   return (
     <Grid item container flexWrap={'nowrap'} alignItems={'flex-start'}>
-      <Grid item mr={1.5} mt={value ? -0.75 : -0.5}>
-        {value ? (
+      <Grid item mr={1.5} mt={value === true ? -0.75 : -0.5}>
+        {value === true ? (
           <Icon color={'#7DD320'} name={'check'} />
         ) : (
           <Icon color={'#F56283'} name={'close'} />

@@ -4,7 +4,7 @@ import { DeclarationsListItem } from 'app/pages/identity/components/Declarations
 
 export interface DeclarationsListProps {
   title: string
-  data: Record<string, boolean>
+  data: Record<string, boolean | undefined>
   labelMap: Record<string, React.ReactNode>
 }
 
