@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-import arrowIcon from '../../assets/images/chevron.svg'
+import { ReactComponent as ArrowIcon } from '../../assets/images/chevron.svg'
 
 interface Props {
   page: number
@@ -17,7 +17,7 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
   return (
     <Container>
       <Button disabled={page === 1} onClick={prevPage}>
-        <Prev src={arrowIcon} alt="prevIcon" />
+        <Prev />
       </Button>
       <Text>
         <Trans>
@@ -25,7 +25,7 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
         </Trans>
       </Text>
       <Button disabled={page === totalPages} onClick={nextPage}>
-        <Next src={arrowIcon} alt="nextIcon" />
+        <Next />
       </Button>
     </Container>
   )
@@ -58,9 +58,9 @@ const Text = styled.div`
   text-align: center;
 `
 
-const Next = styled.img``
+const Next = styled(ArrowIcon)``
 
-const Prev = styled.img`
+const Prev = styled(ArrowIcon)`
   transform: rotate(-180deg);
 `
 

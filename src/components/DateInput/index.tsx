@@ -5,7 +5,7 @@ import { t } from '@lingui/macro'
 
 import { TYPE } from 'theme'
 import { Input } from 'components/Input'
-import calendarIcon from 'assets/images/calendar.svg'
+import { ReactComponent as CalendarIcon } from 'assets/images/calendar.svg'
 
 interface Props {
   value?: string | Date | number
@@ -32,7 +32,12 @@ export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate
         openTo="year"
         views={['year', 'month', 'date']}
         format="DD/MM/YYYY"
-        TextFieldComponent={(props: Record<string, any>) => <TextField {...props} />}
+        TextFieldComponent={(props: Record<string, any>) => (
+          <TextFieldContainer>
+            <TextField {...props} />
+            <StyledCalendarIcon />
+          </TextFieldContainer>
+        )}
         maxDate={maxDate}
         {...props}
       />
@@ -45,6 +50,16 @@ export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate
   )
 }
 
+const TextFieldContainer = styled.div`
+  position: relative;
+`
+
+const StyledCalendarIcon = styled(CalendarIcon)`
+  position: absolute;
+  right: 26px;
+  top: 19px;
+`
+
 const TextField = styled(Input)<{ maxHeight?: number }>`
   border-radius: 36px;
   height: 60px;
@@ -52,9 +67,6 @@ const TextField = styled(Input)<{ maxHeight?: number }>`
   padding: 11px 66px 9px 21px;
   font-weight: normal;
   font-size: 16px;
-  background-image: ${`url("${calendarIcon}")`};
-  background-repeat: no-repeat;
-  background-position: right 26px top 19px;
   background-color: ${({ theme: { bg19 } }) => bg19};
 `
 

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Box, Flex } from 'rebass'
 import React from 'react'
 import { t } from '@lingui/macro'
@@ -151,16 +151,29 @@ export const BeneficialOwnersTableContainer = styled.div`
   `};
 `
 
+const RejectedIcon = styled(NonTradable)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      circle {
+        fill: ${theme.config.elements?.main};
+      }
+      path {
+        fill: white;
+      }
+    `}
+`
+
 /* eslint-disable react/display-name */
 export const KYCStatusIcons = {
   [KYCStatuses.PENDING]: () => <LoaderThin size={20} />,
   [KYCStatuses.APPROVED]: () => <Passed />,
   [KYCStatuses.NOT_SUBMITTED]: () => null,
   [KYCStatuses.CHANGES_REQUESTED]: () => <Attention />,
-  [KYCStatuses.REJECTED]: () => <NonTradable />,
+  [KYCStatuses.REJECTED]: () => <RejectedIcon />,
   [KYCStatuses.DRAFT]: () => <LoaderThin size={20} />,
   [KYCStatuses.IN_PROGRESS]: () => <LoaderThin size={20} />,
-  [KYCStatuses.FAILED]: () => <NonTradable />,
+  [KYCStatuses.FAILED]: () => <RejectedIcon />,
 }
 
 const KYCStatusText = {
