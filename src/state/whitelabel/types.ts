@@ -5,6 +5,7 @@ export interface WhitelabelRaw {
   id: number
   updatedAt: string | null
   colors: string
+  tokens: string
   logoUrl: string
   customStyles: string
 }
@@ -16,6 +17,7 @@ export interface Whitelabel {
   id: number
   updatedAt: string | null
   colors: WlColors
+  tokens: string[]
   customStyles: {
     logo?: Record<string, string>
   }
