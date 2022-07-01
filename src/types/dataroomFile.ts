@@ -8,20 +8,6 @@ export interface DataroomFile {
   createdAt: string
   updatedAt: string
 }
-
-export interface ListingDataroomFile {
-  value: {
-    _id: string
-    title: string
-    type: string
-    user: string
-    originalFileName: string
-    url?: string
-    createdAt: string
-    updatedAt: string
-  }
-}
-
 export interface FileGuide {
   title: string
   label: string

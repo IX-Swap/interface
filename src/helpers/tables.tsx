@@ -37,13 +37,6 @@ export const renderAssetName = (a: Asset): string => a.name
 export const renderAssetBalance = (val: string, row: AssetBalance): string =>
   `${row.name} (${val})`
 
-export const renderFirstName = (
-  val: string,
-  row: CashDeposit | CashWithdrawal | Commitment
-): string => {
-  return ''
-}
-
 export const renderName = (val: string, row: PersonName) => {
   const names = [row.firstName, row.middleName, row.lastName]
   return names.filter(s => s !== undefined).join(' ')

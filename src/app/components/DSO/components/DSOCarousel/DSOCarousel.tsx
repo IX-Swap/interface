@@ -15,9 +15,6 @@ import { CurrentSlideWatcher } from 'app/components/DSO/components/DSOCarousel/C
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-export interface DSOCarouselProps {
-  totalSlides: number
-}
 
 export const DSOCarousel = (props: any) => {
   const classes = useStyles()

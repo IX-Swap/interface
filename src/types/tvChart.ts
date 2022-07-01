@@ -48,14 +48,6 @@ export interface HistoryResponse {
   nextTime?: number
 }
 
-export interface BarValue {
-  time: number
-  close: number
-  open: number
-  high: number
-  low: number
-}
-
 export const barsStatusNonError = [BarsStatus.OK, BarsStatus.NO_DATA]
 
 export interface GetBarsResult {

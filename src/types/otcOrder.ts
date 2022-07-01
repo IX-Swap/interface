@@ -68,15 +68,6 @@ export interface OTCParticipant {
   contactNumber?: string
 }
 
-export interface UnmatchedOTCOrder {
-  _id: string
-  price: number
-  amount: number
-  pair: OTCMarket
-  user: OTCParticipant
-  orderType: 'SELL' | 'BUY'
-}
-
 export interface CreateOTCOrderArgs {
   orderType: 'SELL' | 'BUY'
   price: number
