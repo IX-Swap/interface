@@ -185,23 +185,4 @@ export const investorStatusDeclarationItemSchema = yup
   )
   .required(validationMessages.required)
 
-export const optInAgreementsDependentValueSchema = yup
-  .bool()
-  .test(
-    'oneOfOptOutFormValueShouldBeTrue',
-    'Please choose at least one option under "Accredited Investor Opt-Out" section',
-    function () {
-      const parent = this.parent
-
-      if (parent.optInAgreements as boolean) {
-        return (
-          (parent.digitalSecurities as boolean) ||
-          (parent.primaryOfferingServices as boolean) ||
-          (parent.digitalSecuritiesIssuance as boolean) ||
-          (parent.allServices as boolean)
-        )
-      }
-      return true
-    }
-  )
-  .required(validationMessages.required)
+export const optInAgreementsDependentValueSchema = yup.bool()
