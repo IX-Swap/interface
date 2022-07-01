@@ -6,6 +6,7 @@ import { t, Trans } from '@lingui/macro'
 import { TextRow } from 'components/TextRow/TextRow'
 import { TipWithMessage } from 'components/TipWithMessage'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
+import AppBody from 'pages/AppBody'
 import React, { useCallback, useMemo, useState } from 'react'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router'
@@ -37,7 +38,6 @@ import { ModalBottom } from './ModalBottom'
 import { ModalHeader } from './ModalHeader'
 import { RemoveAmount } from './RemoveAmount'
 import { RemovedLiquidity } from './RemovedLiquidity'
-import { RemoveLiquidityBody } from './styled'
 import useCurrencyInput from './useCurrencyInput'
 
 const DEFAULT_REMOVE_LIQUIDITY_SLIPPAGE_TOLERANCE = new Percent(5, 100)
@@ -315,7 +315,7 @@ export default function RemoveLiquidity({
           </Trans>
         }
       />
-      <RemoveLiquidityBody>
+      <AppBody>
         <AddRemoveTabs creating={false} adding={false} showBadge={mitigationEnabled} />
         <Box>
           <AutoColumn gap="md">
@@ -379,7 +379,7 @@ export default function RemoveLiquidity({
             </div>
           </AutoColumn>
         </Box>
-      </RemoveLiquidityBody>
+      </AppBody>
 
       {pair ? <MinimalPositionCard showUnwrapped={oneCurrencyIsWETH} pair={pair} /> : null}
     </>
