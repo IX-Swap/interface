@@ -66,7 +66,10 @@ export const columns: Array<TableColumn<OTCOrder>> = [
     render: (_, row) =>
       getFilledRoundedPercentage({
         amount: row.amount,
-        availableAmount: row.availableAmount ?? 0
+        availableAmount:
+          row.status === OTCOrderStatus.CANCELLED
+            ? row.amount
+            : row.availableAmount ?? 0
       })
   },
   {
@@ -115,7 +118,10 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
     render: (_, row) =>
       getFilledRoundedPercentage({
         amount: row.amount,
-        availableAmount: row.availableAmount ?? 0
+        availableAmount:
+          row.status === OTCOrderStatus.CANCELLED
+            ? row.amount
+            : row.availableAmount ?? 0
       })
   },
   {
