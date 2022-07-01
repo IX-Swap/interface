@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { Flex } from 'rebass'
+import styled, { css } from 'styled-components'
 
 import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
@@ -31,8 +32,8 @@ export const Checkbox: FC<Props> = ({
   disabled = false,
 }: Props) => {
   const style = { transform: `scale(${scaleSize})` }
-  const checkedImage = isRadio ? <RadioChecked style={style} /> : <Checked style={style} />
-  const notCheckedImage = isRadio ? <RadioNotChecked style={style} /> : <NotChecked style={style} />
+  const checkedImage = isRadio ? <StyledRadioChecked style={style} /> : <StyledChecked style={style} />
+  const notCheckedImage = isRadio ? <StyledRadioNotChecked style={style} /> : <StyledNotChecked style={style} />
 
   return (
     <ButtonText
@@ -56,3 +57,52 @@ export const Checkbox: FC<Props> = ({
     </ButtonText>
   )
 }
+
+const StyledChecked = styled(Checked)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      rect {
+        fill: ${theme.config.elements?.main};
+      }
+      path {
+        fill: white;
+      }
+    `}
+`
+
+const StyledNotChecked = styled(NotChecked)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      rect {
+        fill: ${theme.config.elements?.main};
+      }
+      path {
+        fill: white;
+      }
+    `}
+`
+
+const StyledRadioChecked = styled(RadioChecked)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      circle:first-child {
+        fill: ${theme.config.elements?.main};
+      }
+      circle:last-child {
+        fill: white;
+      }
+    `}
+`
+
+const StyledRadioNotChecked = styled(RadioNotChecked)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      circle:first-child {
+        fill: ${theme.config.elements?.main};
+      }
+    `}
+`

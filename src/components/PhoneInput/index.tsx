@@ -56,7 +56,7 @@ const Container = styled.div`
     width: 100%;
   }
   .form-control:focus {
-    background-color: ${({ theme }) => theme.bg7};
+    background-color: ${({ theme }) => (theme.config.background ? theme.bg19 : theme.bg7)};
     .react-tel-input {
       border-color: ${({ theme: { text9 } }) => text9};
     }
@@ -75,7 +75,7 @@ const Container = styled.div`
     .highlight,
     .prefered {
       background-color: ${({ theme }) => theme.bg11} !important;
-      color: ${({ theme }) => theme.white} !important;
+      color: ${({ theme }) => theme.text1} !important;
       font-weight: bold;
     }
     .country {

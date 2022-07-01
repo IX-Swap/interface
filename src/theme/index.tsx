@@ -67,11 +67,11 @@ export function colors(configColors?: WlColors): Colors {
     bg6: '#1A2028',
     bg7: wlColorsByType.background?.main || '#372E5E',
     bg8: wlColorsByType.background?.secondary || '#0F0518',
-    bg9: '#372E5D',
+    bg9: wlColorsByType.background?.main || '#372E5D',
     bg10: '#EDCEFF',
     bg11: wlColorsByType.background?.secondary || '#272046',
     bg12: wlColorsByType.background?.secondary || '#271F4A',
-    bg13: '#2F254E',
+    bg13: wlColorsByType.background?.secondary || '#2F254E',
     bg14: '#ED0376',
     bg15: '#2C254A',
     bg16: wlColorsByType.background?.secondary || '#170626',
@@ -375,13 +375,14 @@ export const ThemedGlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.blue1}; 
   }
 
-  path {
-    ${({ theme }) =>
-      theme.config.elements &&
-      css`
-        fill: ${({ theme }) => theme.config.elements.main};
-      `};
-  }
+  ${({ theme }) =>
+    theme.config.elements &&
+    css`
+      path {
+        fill: ${theme.config.elements.main};
+      }
+    `};
+
 
   /* svg{
     ${({ theme }) =>

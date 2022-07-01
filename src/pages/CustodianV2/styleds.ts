@@ -7,6 +7,9 @@ import { SearchInput } from 'components/SearchModal/styleds'
 import { DarkBlueCard } from 'components/Card'
 import { TYPE } from 'theme'
 
+import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
+import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
+
 export const cardCommonStyles = css`
   border-radius: 30px;
   backdrop-filter: blur(20px);
@@ -109,4 +112,34 @@ export const StyledButtonMuted = styled(TYPE.buttonMuted)`
   background: rgba(145, 132, 196, 0.1);
   border-radius: 16px;
   padding: 4px 8px;
+`
+
+export const StyledTradable = styled(Tradable)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      g {
+        circle {
+          fill: ${theme.config.elements?.main};
+        }
+        path {
+          fill: white;
+        }
+      }
+    `}
+`
+
+export const StyledNonTradable = styled(NonTradable)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      g {
+        circle {
+          fill: ${theme.config.elements?.main};
+        }
+        path {
+          fill: white;
+        }
+      }
+    `}
 `
