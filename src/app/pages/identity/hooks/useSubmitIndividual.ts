@@ -11,8 +11,8 @@ export const useSubmitIndividual = (callback?: () => void) => {
   const queryCache = useQueryCache()
   const { replace } = useHistory()
 
-  const submitIndividual = async (id: string) => {
-    const uri = identityURL.individuals.submit(id)
+  const submitIndividual = async (data: IndividualIdentity) => {
+    const uri = identityURL.individuals.submit(data._id)
     return await apiService.patch<IndividualIdentity>(uri, {})
   }
 
