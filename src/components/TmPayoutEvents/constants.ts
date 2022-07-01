@@ -3,7 +3,7 @@ export enum PAYOUT_TYPE {
   REWARDS = 'rewards',
   INTEREST = 'interest',
   ROYALTIES = 'royalties',
-  AIRDROPS = 'airdrops',
+  AIRDROPS = 'airdrop',
   OTHERS = 'other',
 }
 
@@ -12,6 +12,6 @@ export const PAYOUT_TYPE_LABEL = {
   [PAYOUT_TYPE.REWARDS]: 'Rewards',
   [PAYOUT_TYPE.INTEREST]: 'Interest',
   [PAYOUT_TYPE.ROYALTIES]: 'Royalties',
-  [PAYOUT_TYPE.AIRDROPS]: 'Airdrops',
+  [PAYOUT_TYPE.AIRDROPS]: 'Airdrop',
   [PAYOUT_TYPE.OTHERS]: 'Others',
 } as Record<string, string>

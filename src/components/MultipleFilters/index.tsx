@@ -15,6 +15,7 @@ import { useSecTokenState } from 'state/secTokens/hooks'
 import { DateRangePickerFilter } from 'components/DateRangePicker'
 import { useSimpleTokens } from 'hooks/Tokens'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'
+import { useUserState } from 'state/user/hooks'
 import { SecToken } from 'types/secToken'
 
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
@@ -26,6 +27,7 @@ interface Props {
   callback?: (params: Record<string, any>) => void
   searchPlaceholder?: string
   onFiltersChange?: (params: Record<string, any>) => void
+  forManager?: boolean
 }
 
 let timer = null as any
@@ -35,10 +37,12 @@ export const MultipleFilters = ({
   callback,
   searchPlaceholder = 'Search for Wallet',
   onFiltersChange,
+  forManager = false,
 }: Props) => {
   const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
+  const { me } = useUserState()
   const tokens = useSimpleTokens()
   const native = useNativeCurrency()
 
@@ -76,6 +80,17 @@ export const MultipleFilters = ({
 
     return []
   }, [secTokens])
+
+  const managerSecTokensOptions = useMemo(() => {
+    if (me?.managerOf?.length) {
+      return me.managerOf.map(({ token }) => ({
+        label: token.symbol,
+        value: token.id,
+        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+      }))
+    }
+    return []
+  }, [me])
 
   const statusOptionsFormatted = useMemo(() => {
     if (pathname === '/token-manager/payout-events') {
@@ -191,10 +206,10 @@ export const MultipleFilters = ({
     ),
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
-        placeholder="Sec Token"
+        placeholder="SEC Token"
         selectedItems={values[FILTERS.SEC_TOKENS]}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
-        items={secTokensOptions}
+        items={forManager ? managerSecTokensOptions : secTokensOptions}
       />
     ),
     [FILTERS.STATUS]: (

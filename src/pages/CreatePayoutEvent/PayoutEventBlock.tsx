@@ -68,6 +68,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
 
   const isButtonDisabled = useMemo(() => {
     if (values.files.length === 0) return true
+    if (values.type === 'Other' && !values.otherType) return true
     for (const key in values) {
       if (['secTokenAmount', 'id', 'otherType', 'tokenAmount', 'endDate'].includes(key)) continue
       if (!values[key]) return true
