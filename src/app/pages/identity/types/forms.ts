@@ -113,17 +113,9 @@ export interface IndividualTaxDeclarationFormValues {
   usTin?: string
 }
 
-export interface FinancialAndTaxDeclarationFormValues {
-  sourceOfFund: string | FundSource[]
-  occupation: string
-  employer: string
-  employmentStatus: string
-  annualIncome: string
-  singaporeOnly: 'yes' | 'no'
-  fatca: 'yes' | 'no'
-  taxResidencies: TaxResidencies
-  usTin?: string
-}
+export interface FinancialAndTaxDeclarationFormValues
+  extends IndividualFinancialInfoFormValues,
+    IndividualTaxDeclarationFormValues {}
 
 export interface IndividualInvestorDeclarationFormValues
   extends IdentityDocumentsFormValues,

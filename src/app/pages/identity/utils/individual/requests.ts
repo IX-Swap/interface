@@ -63,33 +63,10 @@ export const getFinancialAndTaxDeclarationRequestPayload = (
   values: FinancialAndTaxDeclarationFormValues
 ) => {
   const { taxResidencies, singaporeOnly, fatca, usTin, ...other } = values
-  const payload: any = {
-    declarations: {
-      tax: {
-        fatca: fatca === 'yes',
-        usTin
-      }
-    },
-    ...other
-  }
+  const payload = getTaxDeclarationRequestPayload(values)
+  payload.declarations.tax.usTin = usTin
 
-  if (taxResidencies !== undefined) {
-    payload.taxResidencies = taxResidencies.map(taxResidency => {
-      const payload = taxResidency
-
-      payload.residentOfSingapore = singaporeOnly === 'yes'
-
-      for (const [key, value] of Object.entries(payload)) {
-        if (typeof value === 'string' && value.trim() === '') {
-          delete payload[key as keyof typeof payload] // eslint-disable-line
-        }
-      }
-
-      return payload
-    })
-  }
-
-  return payload
+  return { ...payload, ...other }
 }
 
 export const getInvestorDeclarationRequestPayload = (
