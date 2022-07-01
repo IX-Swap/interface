@@ -71,9 +71,7 @@ export const useStyles = makeStyles(theme => ({
     position: 'relative',
     height: '100%',
     maxWidth: 480,
-    [theme.breakpoints.down('md')]: {
-      minHeight: '100vh'
-    }
+    minHeight: '100vh'
   },
   logo: {
     position: 'absolute',

@@ -33,7 +33,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
 
   const handleSave = async () => {
-    return await save(data._id)
+    return await save(data)
   }
 
   return (

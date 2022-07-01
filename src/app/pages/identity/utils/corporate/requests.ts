@@ -98,3 +98,29 @@ export const getCorporateInvestorAgreementsRequestPayload = (
     }
   }
 }
+
+export const getCorporateSubmitPayload = (values: any) => {
+  return {
+    logo: values.logo,
+    type: values.type,
+    companyLegalName: values.companyLegalName,
+    registrationNumber: values.registrationNumber,
+    countryOfFormation: values.countryOfFormation,
+    identityStatus: values.status,
+    sourceOfFund: values.sourceOfFund,
+    isIncorporated: values.isIncorporated,
+    businessActivity: values.businessActivity,
+    numberOfBusinessOwners: values.numberOfBusinessOwners,
+    legalEntityStatus: values.legalEntityStatus,
+    companyAddress: values.companyAddress,
+    isMailingAddressSame: values.isMailingAddressSame,
+    mailingAddress: values.mailingAddress,
+    representatives: values.representatives,
+    directors: values.directors,
+    beneficialOwners: values.beneficialOwners,
+    documents: values.documents.map((item: { _id: any }) => item._id),
+    declarations: values.declarations,
+    taxResidencies: values.taxResidencies,
+    isInstitutionalInvestor: values.isInstitutionalInvestor
+  }
+}
