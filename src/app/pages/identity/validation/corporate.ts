@@ -21,6 +21,26 @@ import {
 import * as yup from 'yup'
 import 'yup-phone-lite'
 import { validateUEN } from 'validation/validators'
+import apiService from 'services/api'
+
+export interface CorporateDataValidation {
+  exist: boolean
+}
+
+const validateCorporateData = async (field: string, value: string) => {
+  const data = await apiService.post<CorporateDataValidation>(
+    '/identity/corporates/check',
+    {
+      [field]: value
+    }
+  )
+
+  if (data === undefined) {
+    return false
+  }
+
+  return !data.data.exist
+}
 
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
 export const corporateInvestorInfoSchema = yup.object().shape<any>({
@@ -32,25 +52,43 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
     .matches(
       /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
       'Must include only letters, numbers and this special characters . , -'
-    ),
-
-  registrationNumber: yup.string().when('countryOfFormation', {
-    is: 'Singapore',
-    then: taxIdentificationNumberSchema.test(
-      'validateUEN',
-      'Must be a valid UEN',
-      function (value) {
-        const error = validateUEN(value)
-        if (typeof error === 'string') {
-          return new yup.ValidationError(error, value, 'registrationNumber')
-        }
+    )
+    .test('checkExists', 'Company name already exists', function (value) {
+      if (value === undefined || value === null) {
         return true
       }
+      return validateCorporateData('companyName', value)
+    }),
+
+  registrationNumber: yup
+    .string()
+    .when('countryOfFormation', {
+      is: 'Singapore',
+      then: taxIdentificationNumberSchema.test(
+        'validateUEN',
+        'Must be a valid UEN',
+        function (value) {
+          const error = validateUEN(value)
+          if (typeof error === 'string') {
+            return new yup.ValidationError(error, value, 'registrationNumber')
+          }
+          return true
+        }
+      ),
+      otherwise: taxIdentificationNumberSchema.required(
+        validationMessages.required
+      )
+    })
+    .test(
+      'checkExists',
+      'Registration number already exists',
+      function (value) {
+        if (value === undefined || value === null) {
+          return true
+        }
+        return validateCorporateData('registrationNumber', value)
+      }
     ),
-    otherwise: taxIdentificationNumberSchema.required(
-      validationMessages.required
-    )
-  }),
   legalEntityStatus: yup.string().required(validationMessages.required),
   otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
     is: 'others',

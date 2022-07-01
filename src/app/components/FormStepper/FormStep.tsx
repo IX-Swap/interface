@@ -42,8 +42,7 @@ export const FormStep = (props: FormStepProps) => {
     submitMutation,
     shouldSaveOnMove,
     setCompleted,
-    skippable,
-    completed
+    skippable
   } = props
 
   const isCurrentStep = activeStep === index
@@ -88,18 +87,6 @@ export const FormStep = (props: FormStepProps) => {
     return await mutation(payload).then(onSubmitSuccess)
   }
 
-  const getValidationSchema = () => {
-    if (isLastStep) {
-      return step.validationSchema
-    }
-
-    if (completed.includes(index)) {
-      return step.validationSchema
-    }
-
-    return undefined
-  }
-
   const nextCallback = () => {
     setCompleted?.()
     setActiveStep(activeStep + 1)
@@ -108,10 +95,11 @@ export const FormStep = (props: FormStepProps) => {
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={getValidationSchema()}
+      validationSchema={step.validationSchema}
       onSubmit={handleSubmit}
       allowInvalid
       id={`${step.formId ?? 'form'}-${index}`}
+      mode='onChange'
     >
       <SaveOnNavigate
         transformData={step.getRequestPayload}
