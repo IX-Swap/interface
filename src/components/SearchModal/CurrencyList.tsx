@@ -29,6 +29,7 @@ import Row, { RowBetween, RowFixed } from '../Row'
 import { MouseoverTooltip } from '../Tooltip'
 import ImportRow from './ImportRow'
 import { isMobile } from 'react-device-detect'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { MenuItem, UnapprovedMenuItem, UnapprovedTokenWrapper } from './styleds'
 import { formatAmount } from 'utils/formatCurrencyAmount'
@@ -290,6 +291,8 @@ export default function CurrencyList({
   showImportView: () => void
   setImportToken: (token: Token) => void
 }) {
+  const { config } = useWhitelabelState()
+
   const sortedBySecList = useMemo(() => {
     const { sec, rest, wixs, usdc } = currencies.reduce(
       (
@@ -301,6 +304,12 @@ export default function CurrencyList({
         },
         next: any
       ) => {
+        const token = next?.wrapped ?? next?.tokenInfo
+
+        if (config && config.tokens.length > 0 && !config?.tokens.includes(token.address)) {
+          return acc
+        }
+
         if (next.isSecToken) {
           acc.sec.push(next)
         } else if (next?.tokenInfo?.symbol === 'USDC') {
