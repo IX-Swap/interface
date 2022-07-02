@@ -23,6 +23,10 @@ export class MetamaskPage extends WebPage{
   readonly optionMenuButton: Locator;
   readonly accountDetailsMenuButton: Locator;
   readonly endOfFlowEmoji: Locator;
+  readonly networksDropdown: string;
+  readonly showTestNetworksButton: string;
+  readonly showTestNetworksToggle: string;
+  readonly kovanNetworkButton: string;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page);
@@ -45,7 +49,11 @@ export class MetamaskPage extends WebPage{
     this.copyMetamaskAccountAddressButton = page.locator('[class="qr-code__address"]');
     this.optionMenuButton = page.locator('[data-testid="account-options-menu-button"]');
     this.accountDetailsMenuButton = page.locator('[data-testid="account-options-menu__account-details"]');
-    this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]')
+    this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]');
+    this.networksDropdown = ('div[role="button"]:has-text("Сеть Ethereum Mainnet")');
+    this.showTestNetworksButton = ('text=Показать/скрыть');
+    this.showTestNetworksToggle = ('[class="settings-page__content-item-col"] >> nth=6');
+    this.kovanNetworkButton = ('text=Тестовая сеть Kovan');
   }
 
   async makeSureMetamaskLoaded() {
@@ -64,7 +72,6 @@ export class MetamaskPage extends WebPage{
       await listOfFields[i].fill(arrayOfWords[i]);
     }
   }
-
 
   async proceedToRecoveryPhrase() {
     await this.confirmButton.click();
@@ -114,17 +121,10 @@ export class MetamaskPage extends WebPage{
 
   async changeNetworkToKovan(context) {
     const pageWithMetamask = await context.pages()[1];
-    // Click div[role="button"]:has-text("Сеть Ethereum Mainnet")
-    await pageWithMetamask.locator('div[role="button"]:has-text("Сеть Ethereum Mainnet")').click();
-    // Click text=Показать/скрыть
-    await pageWithMetamask.locator('text=Показать/скрыть').click();
-    // assert.equal(page1.url(), 'chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/home.html#settings/advanced');
-    // Click div:nth-child(7) > div:nth-child(2) > .settings-page__content-item-col > .toggle-button > div > div:nth-child(2) > div
-    await pageWithMetamask.locator('div:nth-child(7) > div:nth-child(2) > .settings-page__content-item-col > .toggle-button > div > div:nth-child(2) > div').click();
-    // Click div[role="button"]:has-text("Сеть Ethereum Mainnet")
-    await pageWithMetamask.locator('div[role="button"]:has-text("Сеть Ethereum Mainnet")').click();
-    // Click text=Тестовая сеть Kovan
-    await pageWithMetamask.locator('text=Тестовая сеть Kovan').click();
-
+    await pageWithMetamask.click(this.networksDropdown);
+    await pageWithMetamask.click(this.showTestNetworksButton);
+    await pageWithMetamask.click(this.showTestNetworksToggle);
+    await pageWithMetamask.click(this.networksDropdown);
+    await pageWithMetamask.click(this.kovanNetworkButton);
   }
 }
