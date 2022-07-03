@@ -1,7 +1,9 @@
 import {WebPage} from "./webPage";
 import { Locator, Page, BrowserContext} from '@playwright/test';
+import {MetamaskPage} from "./metamaskPage";
 
 export class LiquidityPoolsPage extends WebPage {
+  readonly metamaskPage: MetamaskPage;
   readonly addLiquidityButton: Locator;
   readonly firstAmountOfTokensField: Locator;
   readonly chooseFirstTokenDropdown: Locator;
@@ -11,6 +13,12 @@ export class LiquidityPoolsPage extends WebPage {
   readonly supplyButton: Locator;
   readonly confirmSupplyButton: string;
   readonly transactionSubmittedPopUpCloseButton: Locator;
+
+  readonly isxEthPoolDetailsDropdown: Locator;
+  readonly removeLiquidityButton: Locator;
+  readonly maxRemovePercentageButton: Locator;
+  readonly approveRemovePoolButton: string;
+  readonly confirmRemovePoolButton: string;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -23,6 +31,12 @@ export class LiquidityPoolsPage extends WebPage {
     this.supplyButton = page.locator('[data-testid="supply"]');
     this.confirmSupplyButton = ('[data-testid="create-or-supply"]');
     this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
+
+    this.isxEthPoolDetailsDropdown = page.locator('text=IXS/ETHM >> [data-testid="openTable"]');
+    this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
+    this.maxRemovePercentageButton = page.locator('[data-testid="percentage_100"]');
+    this.approveRemovePoolButton = ('[data-testid="approve-currency-a-remove"]');
+    this.confirmRemovePoolButton = ('[data-testid="confirm-remove"]');
   }
 
   async clickAddLiquidityButton() {
@@ -54,53 +68,29 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   async fillFirstAmountOfTokensField(value) {
-    await this.firstAmountOfTokensField.fill(value)
+    await this.firstAmountOfTokensField.fill(value);
   }
 
-  async removeCreatedLiqudityPool() {
-    // Click text=IXS/ETHM >> [data-testid="openTable"]
-    await page2.locator('text=IXS/ETHM >> [data-testid="openTable"]').click();
-    // Click [data-testid="remove-liquidity"]
-    await page2.locator('[data-testid="remove-liquidity"]').click();
-    // assert.equal(page2.url(), 'http://localhost:3000/#/remove/0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2/ETH');
-    // Click [data-testid="percentage_100"]
-    await page2.locator('[data-testid="percentage_100"]').click();
-    // Click [data-testid="approve-currency-a-remove"]
-    await page2.locator('[data-testid="approve-currency-a-remove"]').click();
-    // Open new page
-    const page3 = await context.newPage();
-    await page3.goto('chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html');
-    // Go to chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction
-    await page3.goto('chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction');
-    // Go to chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction/4156744718616053/signature-request
-    await page3.goto('chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction/4156744718616053/signature-request');
-    // Click text=Подписать
-    await Promise.all([
-      page3.waitForNavigation(/*{ url: 'chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#' }*/),
-      page3.locator('text=Подписать').click()
-    ]);
-    // Close page
-    await page3.close();
-    // Click [data-testid="approve-currency-b-remove"]
-    await page2.locator('[data-testid="approve-currency-b-remove"]').click();
-    // Click [data-testid="confirm-remove"]
-    await page2.locator('[data-testid="confirm-remove"]').click();
-    // Open new page
-    const page4 = await context.newPage();
-    await page4.goto('chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html');
-    // Go to chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction
-    await page4.goto('chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction');
-    // Go to chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction/4156744718616075/token-method
-    await page4.goto('chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#confirm-transaction/4156744718616075/token-method');
-    // Click [data-testid="page-container-footer-next"]
-    await Promise.all([
-      page4.waitForNavigation(/*{ url: 'chrome-extension://pmbfdjmegeilncmapoaopcnafeiafnfk/notification.html#' }*/),
-      page4.locator('[data-testid="page-container-footer-next"]').click()
-    ]);
-    // Close page
-    await page4.close();
-    // Click [data-testid="return-close"]
-    await page2.locator('[data-testid="return-close"]').click();
-    // assert.equal(page2.url(), 'http://localhost:3000/#/pool');
+  async clickIsxEthPoolDetailsDropdown() {
+    await this.isxEthPoolDetailsDropdown.click();
+  }
+
+  async clickRemoveLiquidityButton() {
+    await this.removeLiquidityButton.click();
+  }
+
+  async clickMaxRemovePercentageButton() {
+    await this.maxRemovePercentageButton.click();
+  }
+
+  async removeCreatedLiqudityPool(page) {
+    await this.clickIsxEthPoolDetailsDropdown();
+    await this.clickRemoveLiquidityButton();
+    await this.clickMaxRemovePercentageButton();
+    const metamaskPopUp = await this.openNewPageByClick(page, this.approveRemovePoolButton);
+    await metamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+    const metamaskPopUp2 = await this.openNewPageByClick(page, this.confirmRemovePoolButton);
+    await metamaskPopUp2.click(this.metamaskPage.connectMetamaskPopUpButton);
+    await this.clickTransactionSubmittedPopUpCloseButton();
   }
 }

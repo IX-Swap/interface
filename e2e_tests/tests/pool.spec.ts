@@ -3,9 +3,12 @@ import { expect } from '@playwright/test'
 
 test.beforeEach(async ({page, connectWalletScreen, metamaskPage, context}) => {
   await connectWalletScreen.connectMetaMask();
-  await page.pause();
   await metamaskPage.changeNetworkToKovan(context);
   await connectWalletScreen.clickToPlaygroundWarningIUnderstandButton();
+})
+
+test.afterEach(async ({page, context, liquidityPoolsPage}) => {
+  await liquidityPoolsPage.removeCreatedLiqudityPool(page);
 })
 
 test.describe('Check pool functions', () => {
