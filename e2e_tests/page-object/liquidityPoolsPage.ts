@@ -13,7 +13,6 @@ export class LiquidityPoolsPage extends WebPage {
   readonly supplyButton: Locator;
   readonly confirmSupplyButton: string;
   readonly transactionSubmittedPopUpCloseButton: Locator;
-
   readonly isxEthPoolDetailsDropdown: Locator;
   readonly removeLiquidityButton: Locator;
   readonly maxRemovePercentageButton: Locator;
@@ -31,7 +30,6 @@ export class LiquidityPoolsPage extends WebPage {
     this.supplyButton = page.locator('[data-testid="supply"]');
     this.confirmSupplyButton = ('[data-testid="create-or-supply"]');
     this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
-
     this.isxEthPoolDetailsDropdown = page.locator('text=IXS/ETHM >> [data-testid="openTable"]');
     this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
     this.maxRemovePercentageButton = page.locator('[data-testid="percentage_100"]');
