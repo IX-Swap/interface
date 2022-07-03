@@ -5,8 +5,8 @@ export const getWeekDays = (data: InvestmentGrowthData) => {
   if (typeof data === 'undefined') {
     return []
   }
-  const weekDays = data.map(item => new Date(item[0]))
-  return weekDays
+
+  return data.map(item => new Date(new Date(item[0]).setHours(0, 0, 0, 0)))
 }
 
 export const removeHours = (date: Date) => format(new Date(date), 'yyyy MM dd')
