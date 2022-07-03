@@ -274,10 +274,10 @@ export interface AgreementsAndDisclosures {
 }
 
 export interface OptOutRequirements {
-  digitalSecurities: boolean
-  primaryOfferingServices: boolean
-  digitalSecuritiesIssuance: boolean
-  allServices: boolean
+  digitalSecurities?: boolean
+  primaryOfferingServices?: boolean
+  digitalSecuritiesIssuance?: boolean
+  allServices?: boolean
 }
 
 export interface OptInAgreements {
