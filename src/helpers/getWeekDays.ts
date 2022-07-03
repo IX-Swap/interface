@@ -7,11 +7,9 @@ export const getWeekDays = (data: InvestmentGrowthData) => {
     return []
   }
 
-  const newData = uniq(
-    data.map(item => new Date(item[0]).setHours(0, 0, 0, 0))
-  ).map(it => new Date(it))
-
-  return newData
+  return uniq(data.map(item => new Date(item[0]).setHours(0, 0, 0, 0))).map(
+    it => new Date(it)
+  )
 }
 
 export const removeHours = (date: Date) => format(new Date(date), 'yyyy MM dd')
