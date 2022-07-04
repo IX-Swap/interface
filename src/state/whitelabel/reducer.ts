@@ -27,9 +27,10 @@ export default createReducer<WhitelabelState>(initialState, (builder) =>
       state.error = null
       state.config = {
         ...payload,
-        tokens: JSON.parse(payload.tokens),
-        colors: JSON.parse(payload.colors || ''),
-        customStyles: JSON.parse(payload.customStyles || ''),
+        tokens: JSON.parse(payload.tokens || '[]'),
+        colors: JSON.parse(payload.colors || '{}'),
+        pages: JSON.parse(payload.pages || '[]'),
+        customStyles: JSON.parse(payload.customStyles || '{}'),
       }
     })
     .addCase(getWhitelabelConfig.rejected, (state, { payload: { errorMessage } }) => {
