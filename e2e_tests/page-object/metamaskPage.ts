@@ -27,6 +27,7 @@ export class MetamaskPage extends WebPage{
   readonly showTestNetworksButton: string;
   readonly showTestNetworksToggle: string;
   readonly kovanNetworkButton: string;
+  readonly signButton: string;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page);
@@ -54,6 +55,7 @@ export class MetamaskPage extends WebPage{
     this.showTestNetworksButton = ('text=Показать/скрыть');
     this.showTestNetworksToggle = ('[class="settings-page__content-item-col"] >> nth=6');
     this.kovanNetworkButton = ('text=Тестовая сеть Kovan');
+    this.signButton = ('text=Подписать');
   }
 
   async makeSureMetamaskLoaded() {

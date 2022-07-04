@@ -17,7 +17,11 @@ export class LiquidityPoolsPage extends WebPage {
   readonly removeLiquidityButton: Locator;
   readonly maxRemovePercentageButton: Locator;
   readonly approveRemovePoolButton: string;
+  readonly removePoolButton: Locator;
   readonly confirmRemovePoolButton: string;
+  readonly quarterRemovePercentageButton: Locator;
+  readonly halfRemovePercentageButton: Locator;
+  readonly halfAndQuarterRemovePercentageButton: Locator;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -32,9 +36,25 @@ export class LiquidityPoolsPage extends WebPage {
     this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
     this.isxEthPoolDetailsDropdown = page.locator('text=IXS/ETHM >> [data-testid="openTable"]');
     this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
+    this.quarterRemovePercentageButton = page.locator('[data-testid="percentage_25"]');
+    this.halfRemovePercentageButton = page.locator('[data-testid="percentage_50"]');
+    this.halfAndQuarterRemovePercentageButton = page.locator('[data-testid="percentage_75"]');
     this.maxRemovePercentageButton = page.locator('[data-testid="percentage_100"]');
     this.approveRemovePoolButton = ('[data-testid="approve-currency-a-remove"]');
+    this.removePoolButton = page.locator('[data-testid="approve-currency-b-remove"]');
     this.confirmRemovePoolButton = ('[data-testid="confirm-remove"]');
+  }
+
+  async clickQuarterRemovePercentageButton() {
+    await this.quarterRemovePercentageButton.click();
+  }
+
+  async clickHalfRemovePercentageButton() {
+    await this.halfRemovePercentageButton.click();
+  }
+
+  async clickHalfAndQuarterRemovePercentageButton() {
+    await this.halfAndQuarterRemovePercentageButton.click();
   }
 
   async clickAddLiquidityButton() {
@@ -81,14 +101,20 @@ export class LiquidityPoolsPage extends WebPage {
     await this.maxRemovePercentageButton.click();
   }
 
+  async clickRemovePoolButton() {
+    await this.removePoolButton.click();
+  }
+/* openNewPageByClick isn't working from pageObject
   async removeCreatedLiqudityPool(page) {
     await this.clickIsxEthPoolDetailsDropdown();
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();
-    const metamaskPopUp = await this.openNewPageByClick(page, this.approveRemovePoolButton);
-    await metamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
-    const metamaskPopUp2 = await this.openNewPageByClick(page, this.confirmRemovePoolButton);
-    await metamaskPopUp2.click(this.metamaskPage.connectMetamaskPopUpButton);
+    const approveMetamaskPopUp = await this.openNewPageByClick(page, this.approveRemovePoolButton);
+    await approveMetamaskPopUp.click(this.metamaskPage.signButton);
+    await this.clickRemovePoolButton();
+    const confirmMetamaskPopUp = await this.openNewPageByClick(page, this.confirmRemovePoolButton);
+    await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
     await this.clickTransactionSubmittedPopUpCloseButton();
   }
+ */
 }
