@@ -28,11 +28,16 @@ export interface CorporateDataValidation {
   exist: boolean
 }
 
-const validateCorporateData = async (field: string, value: string) => {
+const validateCorporateData = async (
+  field: string,
+  value: string,
+  id?: string
+) => {
   const data = await apiService.post<CorporateDataValidation>(
     '/identity/corporates/check',
     {
-      [field]: value
+      [field]: value,
+      id
     }
   )
 
@@ -51,7 +56,7 @@ export const initialCorporateInvestorInfoSchema = (data?: CorporateIdentity) =>
         if (value === undefined || value === null) {
           return true
         }
-        return validateCorporateData('companyName', value)
+        return validateCorporateData('companyName', value, data?._id)
       }),
 
     registrationNumber: yup
@@ -60,15 +65,10 @@ export const initialCorporateInvestorInfoSchema = (data?: CorporateIdentity) =>
         'checkExists',
         'Registration number already exists',
         function (value) {
-          if (
-            value === undefined ||
-            value === null ||
-            data?.status === 'Submitted' ||
-            data?.status === 'Approved'
-          ) {
+          if (value === undefined || value === null) {
             return true
           }
-          return validateCorporateData('registrationNumber', value)
+          return validateCorporateData('registrationNumber', value, data?._id)
         }
       )
   })
@@ -89,7 +89,7 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
         if (value === undefined || value === null) {
           return true
         }
-        return validateCorporateData('companyName', value)
+        return validateCorporateData('companyName', value, data?._id)
       }),
 
     registrationNumber: yup
@@ -115,15 +115,10 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
         'checkExists',
         'Registration number already exists',
         function (value) {
-          if (
-            value === undefined ||
-            value === null ||
-            data?.status === 'Submitted' ||
-            data?.status === 'Approved'
-          ) {
+          if (value === undefined || value === null) {
             return true
           }
-          return validateCorporateData('registrationNumber', value)
+          return validateCorporateData('registrationNumber', value, data?._id)
         }
       ),
     legalEntityStatus: yup.string().required(validationMessages.required),

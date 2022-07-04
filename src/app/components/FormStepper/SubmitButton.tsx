@@ -43,7 +43,6 @@ export const SubmitButton = (props: SubmitButtonProps) => {
         step.getFormValues(data)
       )
       setIsValid(isValid)
-      return isValid
     } catch (error) {
     } finally {
       setValidating(false)
