@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
-import PlaygroundModal from 'components/PlaygroundModal'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -18,6 +17,7 @@ import { useAuthState } from 'state/auth/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
+import { CustomHeaders } from 'components/CustomHeaders'
 
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -178,8 +178,8 @@ export default function App() {
       <Route component={ApeModeQueryParamReader} />
       <AppBackground />
       <Popups />
+      <CustomHeaders />
       <AppWrapper>
-        <PlaygroundModal />
         {!isAdminKyc && <Header />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />

@@ -8,6 +8,10 @@ export interface WhitelabelRaw {
   tokens: string
   logoUrl: string
   customStyles: string
+  name: string
+  title: string
+  pages: string
+  faviconUrl: string
 }
 
 export interface Whitelabel {
@@ -22,6 +26,10 @@ export interface Whitelabel {
     logo?: Record<string, string>
   }
   logoUrl: string
+  name: string
+  title: string
+  pages: string[]
+  faviconUrl: string
 }
 
 export interface WlColors {

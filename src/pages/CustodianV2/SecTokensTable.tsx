@@ -13,6 +13,7 @@ import { useFetchIssuers, useFetchTokens, useSecCatalogState } from 'state/secCa
 import { MouseoverTooltip } from 'components/Tooltip'
 import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { StyledSearchInput, StyledNonTradable, StyledTradable } from './styleds'
 
@@ -43,6 +44,8 @@ const Header = () => {
 }
 
 const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
+  const { config } = useWhitelabelState()
+
   return (
     <>
       {tokens.map((token: any, index) => (
@@ -78,7 +81,7 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
               <MouseoverTooltip
                 style={{ padding: 8 }}
                 placement="top"
-                text={`${token?.token ? 'Ready' : 'Not ready'} for trading on IX Swap`}
+                text={`${token?.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
               >
                 {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
               </MouseoverTooltip>

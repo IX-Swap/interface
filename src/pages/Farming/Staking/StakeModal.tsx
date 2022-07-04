@@ -1,4 +1,8 @@
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Text } from 'rebass'
+import JSBI from 'jsbi'
 import { t, Trans } from '@lingui/macro'
+
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
@@ -16,8 +20,8 @@ import { periodsInDays, periodsInSeconds } from 'constants/stakingPeriods'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Text } from 'rebass'
+
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { formatNumberValue } from 'components/NumericalInput'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
@@ -38,9 +42,10 @@ import styled from 'styled-components'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import { floorToDecimals, formatAmount } from 'utils/formatCurrencyAmount'
 import { dateFormatter } from 'utils/time'
+
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from './style'
-import JSBI from 'jsbi'
+
 interface StakingModalProps {
   onDismiss: () => void
 }
@@ -67,6 +72,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const balanceNum = Number(IXSBalance?.amount?.toSignificant(12))
   const balanceString = formatAmount(balanceNum)
   const hasBalance = JSBI.greaterThan(IXSBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
+  const { config } = useWhitelabelState()
 
   function calcPoolLimitation(): string {
     const filled = tryParseAmount(poolSizeState[period], currency ?? undefined)
@@ -302,7 +308,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                       style={{ whiteSpace: 'pre-line' }}
                       text={t`IXSgov is a tokenized asset representing your staked ${
                         currency?.symbol
-                      } on a 1:1 basis. IX Swap distributes the IXSgov to your wallet.
+                      } on a 1:1 basis. ${config?.name || 'IX Swap'} distributes the IXSgov to your wallet.
                               ${'' ?? ''}
                               You should swap your IXSgov back to ${currency?.symbol} during the unstaking process. 
                               ${'' ?? ''}
@@ -331,7 +337,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked ${
                   currency?.symbol
-                } on a 1:1 basis. IX Swap distributes the IXSgov to your wallet.
+                } on a 1:1 basis. ${config?.name || 'IX Swap'} distributes the IXSgov to your wallet.
                               ${'' ?? ''}
                               You should swap your IXSgov back to ${currency?.symbol} during the unstaking process. 
                               ${'' ?? ''}
