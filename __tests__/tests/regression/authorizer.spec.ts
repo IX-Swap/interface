@@ -1,17 +1,17 @@
-import { test } from '../lib/fixtures/fixtures'
+import { test } from '../../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
-import { invest } from '../lib/selectors/invest'
-import { authorizerEl } from '../lib/selectors/authorizer'
-import { text } from '../lib/helpers/text'
+import { invest } from '../../lib/selectors/invest'
+import { authorizerEl } from '../../lib/selectors/authorizer'
+import { text } from '../../lib/helpers/text'
 import {
   approveIdentity,
   createIdentity,
   createIssuerIdentity,
   userRegistrationConfirmation2FA
-} from '../lib/api/create-identities'
-import { baseCreds } from '../lib/helpers/creds'
-import { bankAccount, rejectedApi, approvedApi, rejectedFunds, dso } from '../lib/api/api-body'
-import * as individualBody from '../lib/api/individual-identity'
+} from '../../lib/api/create-identities'
+import { baseCreds } from '../../lib/helpers/creds'
+import { bankAccount, rejectedApi, approvedApi, rejectedFunds, dso } from '../../lib/api/api-body'
+import * as individualBody from '../../lib/api/individual-identity'
 import {
   navigate,
   click,
@@ -21,9 +21,9 @@ import {
   emailCreate,
   uploadFiles,
   shouldExist
-} from '../lib/helpers/helpers'
-import { issuance } from '../lib/selectors/issuance'
-import { Authorizer } from '../lib/page-objects/authorizer'
+} from '../../lib/helpers/helpers'
+import { issuance } from '../../lib/selectors/issuance'
+import { Authorizer } from '../../lib/page-objects/authorizer'
 
 test.use({ storageState: './__tests__/lib/storages/authorizerStorageState.json' })
 
@@ -46,7 +46,7 @@ test.describe('Check Dashboard page', () => {
 
   test('All sections should be displayed on the table ', async ({ page }) => {
     const sections = await getCount(page, authorizerEl.PENDING_ITEMS)
-    expect(sections).toBe(13)
+    expect(sections).toBe(14)
   })
 })
 
@@ -79,6 +79,7 @@ test.describe('Check The Bank Accounts page', () => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approveBankAccount()
   })
+
   test('Check view bank account from the dropdown list', async ({ page, authorizer }) => {
     await click(authorizerEl.buttons.MORE, page)
     await click(authorizerEl.buttons.VIEW, page)
@@ -227,8 +228,9 @@ test.describe('Check Corporate Identities page', () => {
     await authorizer.viewProfileCheckUploadDocument()
   })
 
-  test('Search should work (IXPRIME-606)', async ({ authorizer }) => {
+  test('Search should work (IXPRIME-606)', async ({ authorizer, page }) => {
     const table = await authorizer.checkAuthorizePagesSearch('middle', corporate)
+    await click(authorizerEl.buttons.ALL, page)
     await expect(table).toContainText('middle')
   })
 
@@ -403,14 +405,14 @@ test.describe('Check Blockchain Addresses page', () => {
   //   await expect(table).toContainText('Cucumber')
   // })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test.skip('(For now, approve automatically) Should be rejected from the view page', async ({ authorizer, page }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
     const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test.skip('(For now, approve automatically) Should be approved from the view page', async ({ authorizer, page }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
     const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
@@ -616,3 +618,11 @@ test.describe('Check Token Deployment page', () => {
 //     await shouldNotExist(authorizerEl.DROP_DOWN, page)
 //   })
 // })
+test.describe('Check OTC Trades page', () => {
+  test.beforeEach(async ({ page }) => {
+    await click(authorizerEl.pages.OTC_TRADES, page)
+  })
+  test('Check that the page exist', async ({ page }) => {
+    await expect(page).toHaveURL(/app\/authorizer\/otc-trades$/g)
+  })
+})

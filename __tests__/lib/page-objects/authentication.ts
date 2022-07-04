@@ -59,10 +59,12 @@ class Authentication {
   submitRegistrationFormByAPI = async (login = true) => {
     let email = await emailCreate()
     const resp = await userRegistration(email)
+    console.log(resp)
     const confirmLink = await this.confirmation(email)
     if (login === true) {
       await navigate(confirmLink, this.page)
-      await this.login(email, baseCreds.PASSWORD)
+      // await this.login(email, baseCreds.PASSWORD)
+      await this.loginWithout2fa(email, baseCreds.PASSWORD)
     }
     return { resp, email }
   }

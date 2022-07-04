@@ -1,6 +1,6 @@
-import { test, expect } from '../lib/fixtures/fixtures'
-import { click, shouldExist, isDisabledList, navigate, typeText } from '../lib/helpers/helpers'
-import { baseCreds } from '../lib/helpers/creds'
+import { test, expect } from '../../lib/fixtures/fixtures'
+import { click, shouldExist, isDisabledList, navigate, typeText } from '../../lib/helpers/helpers'
+import { baseCreds } from '../../lib/helpers/creds'
 
 test.afterEach(async ({ page }) => {
   await page.close()
@@ -14,7 +14,7 @@ test.describe('Check functionality', () => {
     await click(issuance.ISSUANCE_TAB, page)
     await click(issuance.sections.CREATE_DSO, page)
   })
-  test('New DSO should be created ', async ({ dso }) => {
+  test('New DSO should be created (IXPRIME-760) ', async ({ dso }) => {
     const token = (await dso.fillDsoInformationForm()).tokenName
     await dso.fillDsoPricingForm()
     await dso.fillDsoOfferingTermsForm()
@@ -56,7 +56,7 @@ test.describe('Check functionality', () => {
   })
 })
 
-test('DSO creation is available', async ({ dso, auth, page, issuance }) => {
+test('DSO creation is available (IXPRIME-273)', async ({ dso, auth, page, issuance }) => {
   await dso.followToFundsManagement()
   await click(issuance.dso.buttons.CREATE_DSO, page)
   await shouldExist(issuance.dso.FORM, page)
@@ -67,16 +67,16 @@ test.skip('The fields should be editable if the DSO has not started.', async ({ 
   expect(formsIsEdited).toStrictEqual([true, true])
 })
 
-test.describe('Funds Management More Option section', () => {
+test.describe('Issuance section - Overview page', () => {
   test.beforeEach(async ({ dso, auth }) => {
     await dso.followToFundsManagement()
   })
-  test('View DSO is available', async ({ issuance, page }) => {
+  test('View DSO is available (IXPRIME-271)', async ({ issuance, page }) => {
     await click(issuance.dso.buttons.VIEW_THIS_DSO, page)
     await shouldExist(issuance.dso.DSO_INFORMATION, page)
   })
 
-  test('View My DSOs is available', async ({ issuance, page }) => {
+  test('View My DSOs is available (IXPRIME-272)', async ({ issuance, page }) => {
     await click(issuance.dso.buttons.VIEW_MY_DSO, page)
     await expect(page).toHaveURL(`${baseCreds.URL}app/issuance/offerings`)
   })
@@ -90,7 +90,7 @@ test.describe('Funds Management More Option section', () => {
     await click(issuance.dso.buttons.EDIT_DSO, page)
     await shouldExist(issuance.dso.FORM, page)
   })
-  test.describe('Edit form', () => {
+  test.describe('Edit form (IXPRIME-274)', () => {
     test.beforeEach(async ({ issuance, page }) => {
       await click(issuance.dso.buttons.EDIT_DSO, page)
     })
@@ -125,7 +125,7 @@ test.describe('Commitments', () => {
     await click(invest.buttons.VIEW_INVEST, page)
     await click(invest.buttons.COMMITMENTS_TAB, page)
   })
-  test('The page and table should exist', async ({ page, invest }) => {
+  test('The page and table should exist (IXPRIME-452)', async ({ page, invest }) => {
     await expect(page).toHaveURL(/app\/issuance\/offerings\/\S+\/view/g)
     await shouldExist(invest.TABLE, page)
   })
@@ -134,7 +134,7 @@ test.describe('Commitments', () => {
     expect(messageTitle.subject).toBe('Capital call')
   })
 })
-test.describe('Negative tests', () => {
+test.describe('Negative tests (IXPRIME-766)', () => {
   test.beforeEach(async ({ page, issuance }) => {
     await navigate(baseCreds.URL, page)
     await click(issuance.ISSUANCE_TAB, page)

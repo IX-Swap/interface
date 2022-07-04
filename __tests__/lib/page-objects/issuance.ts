@@ -1,4 +1,5 @@
 import { issuance } from '../selectors/issuance'
+import { accountsTab } from '../selectors/accounts'
 import { text } from '../helpers/text'
 import { baseCreds, setENV } from '../helpers/creds'
 import { Page, Locator } from '@playwright/test'
@@ -37,10 +38,10 @@ class Dso {
   }
 
   capitalCall = async () => {
-    await click('button >> text="Capital Call"', this.page)
+    await click(issuance.dso.buttons.CAPITAL_CALL, this.page)
     await typeText('[role="dialog"] input', baseCreds.INVESTOR, this.page)
     await click('[data-placeholder="true"]', this.page)
-    await click('button >> text="Confirm"', this.page)
+    await click(accountsTab.buttons.CONFIRM, this.page)
     await waitForText(this.page, 'Email has been sent to investors')
     const response = await getMessage(baseCreds.INVESTOR, 'Capital call')
     return response

@@ -1,5 +1,5 @@
-import { test } from '../lib/fixtures/fixtures'
-import { click } from '../lib/helpers/helpers'
+import { test } from '../../lib/fixtures/fixtures'
+import { click } from '../../lib/helpers/helpers'
 import { expect } from '@playwright/test'
 
 test.beforeEach(async ({ page, dso, auth, issuance }) => {

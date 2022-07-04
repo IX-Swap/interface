@@ -32,7 +32,7 @@ export const kyc = {
     FATCA: 'span >> text=FATCA'
   },
   listBox: {
-    SOURCE_OF_FUNDS: '[id="Source of funds-select-input"]',
+    SOURCE_OF_FUNDS: '[id="sourceOfFund"]',
     SOURCE_OF_FUNDS_VALUE: '[data-value="INVESTMENT GAIN"]',
 
     NUMBER_BUSINESS_OWNERS: '[id="numberOfBusinessOwners"]',

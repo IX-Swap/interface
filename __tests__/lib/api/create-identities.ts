@@ -21,6 +21,7 @@ export async function userRegistrationConfirmation2FA(email) {
   await postRequest({}, cookies, `auth/2fa/setup/${id}/confirm/111111`, 'POST')
   return { id, cookies, userName }
 }
+
 export async function createIdentity(email, identityType, identityForms) {
   const { id, cookies, userName } = await userRegistrationConfirmation2FA(email)
   // Fill all form by API

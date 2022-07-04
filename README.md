@@ -38,3 +38,5 @@ Amplify Hooks
 - For now by default Tests runs for CI only on chrome browser, pay attention to the [package.json/tests:e2e]
 
 - Test results are saved in the "reports" folder. Report types [html,trace]
+
+- A bit more information > https://docs.google.com/document/d/1ZPds0yk0yERrQOSmFYr1bfMUCwWwhLp48Rca8GJRgSI/edit?usp=sharing

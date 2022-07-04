@@ -2,10 +2,9 @@ import { PlaywrightTestConfig } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
   /* Directory that will be recursively scanned for test files. */
-  testDir: './__tests__/tests',
 
   /* Opt out of parallel tests on CI. */
-  workers: 2,
+  workers: 1,
 
   /* This is a base timeout for all tests. */
   timeout: 180 * 1000,
@@ -35,32 +34,38 @@ const config: PlaywrightTestConfig = {
 
   globalSetup: require.resolve('./__tests__/lib/global-setup'),
   use: {
-    headless: true,
-    viewport: { width: 1900, height: 1000 },
+    acceptDownloads: true,
+    viewport: { width: 1920, height: 1080 },
     ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
-    video: 'off',
-    httpCredentials: {
-      username: 'ixprime',
-      password: '!nv35taX2K2!*'
-    }
+    video: 'off'
+    // httpCredentials: {
+    //   username: 'ixprime',
+    //   password: '!nv35taX2K2!*'
+    // }
   },
   projects: [
     {
       name: 'Chrome',
-      use: { browserName: 'chromium' }
+      testDir: './__tests__/tests/regression',
+      use: { browserName: 'chromium', headless: true }
     },
 
     {
-      name: 'Webkit',
-      use: { browserName: 'webkit' }
-    },
-
-    {
-      name: 'Firefox',
-      use: { browserName: 'firefox' }
+      name: 'Chrome-Metamask',
+      testDir: './__tests__/tests/metamask',
+      use: { browserName: 'chromium', headless: false }
     }
+    // {
+    //   name: 'Webkit',
+    //   use: { browserName: 'webkit' }
+    // },
+
+    // {
+    //   name: 'Firefox',
+    //   use: { browserName: 'firefox' }
+    // }
 
     // {
     //   name: 'iPhone',

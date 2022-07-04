@@ -1,8 +1,8 @@
-import { baseCreds } from '../lib/helpers/creds'
-import { click, navigate, typeText, waitForText } from '../lib/helpers/helpers'
-import { test, expect } from '../lib/fixtures/fixtures'
-import { accountsTab } from '../lib/selectors/accounts'
-import { text } from '../lib/helpers/text'
+import { baseCreds } from '../../lib/helpers/creds'
+import { click, navigate, typeText, waitForText } from '../../lib/helpers/helpers'
+import { test, expect } from '../../lib/fixtures/fixtures'
+import { accountsTab } from '../../lib/selectors/accounts'
+import { text } from '../../lib/helpers/text'
 
 test.use({ storageState: './__tests__/lib/storages/accountsStorageState.json' })
 

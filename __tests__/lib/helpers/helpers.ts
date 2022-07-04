@@ -14,7 +14,8 @@ const detachedState = {
 }
 
 async function waitNewPage(context, page, element) {
-  const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(element)])
+  await page.waitForTimeout(1000)
+  const [secondPage] = await Promise.all([context.waitForEvent('page'), await page.locator(element).click()])
   return secondPage
 }
 
@@ -128,6 +129,7 @@ async function getMessage(email, messageTitle = 'Invitation') {
     results = await fetch(
       `https://www.1secmail.com/api/v1/?action=getMessages&login=${partsEmail[0]}&domain=${partsEmail[1]}`
     ).then(res => res.json())
+
     if (results > 0) {
       break
     } else if (i === 4 && results === null) {

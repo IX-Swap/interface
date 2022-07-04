@@ -14,18 +14,23 @@ import {
   waitForRequestInclude,
   shouldExist
 } from '../helpers/helpers'
+import { authForms } from '../selectors/auth'
 
 class UserForms {
   page: any
   ERROR: Locator
   FULL_NAME: Locator
   ERROR_NOTIFICATION: Locator
+  DATA_FIELD: Locator
+  SET_DATA_BUTTON: Locator
 
   constructor(page) {
     this.page = page
     this.ERROR = page.locator('[class*=Mui-error]')
     this.FULL_NAME = page.locator(kyc.field.FULL_NAME)
     this.ERROR_NOTIFICATION = page.locator("[appearance='error']")
+    this.DATA_FIELD = page.locator('[name="dob"]')
+    this.SET_DATA_BUTTON = page.locator(`text="Set Date"`)
   }
 
   followToViewIdentity = async () => {
@@ -171,7 +176,8 @@ class UserForms {
     await click('[id="gender"]', this.page)
     await click('[data-value="F"]', this.page)
     await typeText(kyc.field.MIDDLENAME, 'Middle', this.page)
-    await typeText(kyc.field.DATA, '12/11/1990', this.page)
+    await this.DATA_FIELD.click()
+    await this.SET_DATA_BUTTON.click()
     await clearAndTypeText(kyc.field.PHONE_NUMBER, '13022462220', this.page)
     await click(kyc.field.CITIZENSHIP, this.page)
     await click(kyc.field.CITIZENSHIP_VALUE, this.page)
@@ -185,7 +191,8 @@ class UserForms {
     await click(kyc.field.ADDRESS_COUNTRY, this.page)
     await click('text="Azerbaijan"', this.page)
     await typeText(kyc.field.CITY, 'Baku', this.page)
-    await click(kyc.buttons.SUBMIT, this.page)
+    await click(authForms.buttons.NEXT, this.page)
+    await click(authForms.buttons.NEXT, this.page)
     await shouldExist(kyc.listBox.OCCUPATION, this.page)
   }
 
@@ -199,18 +206,18 @@ class UserForms {
     await click(kyc.field.SET_INCOME, this.page)
     await click(kyc.listBox.SOURCE_OF_FUNDS, this.page)
     await click(kyc.listBox.SOURCE_OF_FUNDS_VALUE, this.page)
-    await click(kyc.buttons.SUBMIT, this.page)
+    // await click(authForms.buttons.NEXT, this.page)
     await shouldExist(kyc.form.TAX_DECLARATION, this.page)
   }
 
   fillTaxDeclaration = async () => {
-    await click(kyc.checkbox.YES_SINGAPORE_RESIDENT, this.page)
+    // await click(kyc.checkbox.YES_SINGAPORE_RESIDENT, this.page)
     await typeText(kyc.field.IDENTIFICATION_NUMBER, 'S4235022B', this.page)
     await click(kyc.checkbox.NO_US_RESIDENT, this.page)
   }
   investorStatusDeclaration = async (identities = 'default') => {
     if (identities === 'individual') {
-      await click('[name="personalAssets"]', this.page)
+      await click('[name="income"]', this.page)
     } else {
       await click('[name="trustee"]', this.page)
     }
@@ -232,7 +239,8 @@ class UserForms {
     const city = await clearAndTypeText(kyc.field.CITY, 'City' + string, this.page)
     const state = await clearAndTypeText(kyc.field.ADDRESS, 'Kyiv' + string, this.page)
     await this.updateData()
-    await click(kyc.buttons.SUBMIT, this.page)
+    // await click(kyc.buttons.SUBMIT, this.page)
+    await click(authForms.buttons.NEXT, this.page)
 
     await click(kyc.listBox.OCCUPATION, this.page)
     await click(kyc.listBox.OCCUPATION_VALUE, this.page)

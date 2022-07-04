@@ -1,12 +1,11 @@
-import { baseCreds, setENV } from '../lib/helpers/creds'
-import { navigate, click, shouldExist, typeText, emailCreate } from '../lib/helpers/helpers'
-import { adminEl } from '../lib/selectors/admin'
-import { test } from '../lib/fixtures/fixtures'
+import { test } from '../../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
-import { accountsTab } from '../lib/selectors/accounts'
-import { approveIdentity, createCorporateIdentity, createIdentity } from '../lib/api/create-identities'
-import * as corporateBody from '../lib/api/corporate-identity'
-import * as individualBody from '../lib/api/individual-identity'
+import { accountsTab } from '../../lib/selectors/accounts'
+import { approveIdentity, createCorporateIdentity, createIdentity } from '../../lib/api/create-identities'
+import * as corporateBody from '../../lib/api/corporate-identity'
+import * as individualBody from '../../lib/api/individual-identity'
+import { baseCreds } from '../../lib/helpers/creds'
+import { navigate, click, shouldExist, typeText, emailCreate } from '../../lib/helpers/helpers'
 
 test.use({ storageState: './__tests__/lib/storages/accountsStorageState.json' })
 

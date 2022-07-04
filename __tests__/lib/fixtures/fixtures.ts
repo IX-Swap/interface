@@ -81,9 +81,7 @@ export const test = base.extend<{
     await use(invest)
   },
   page2: async ({}, use) => {
-    const browser = await chromium.launchPersistentContext('', {
-      httpCredentials: baseCreds.httpCredentials
-    })
+    const browser = await chromium.launchPersistentContext('', {})
     const page2 = await browser.newPage()
     await use(page2)
   }

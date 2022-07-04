@@ -63,7 +63,7 @@ if (baseCreds.URL.includes('otc' || 'dev')) {
     otp: '123456',
     withdrawalAddress: '623b12cb20881232eb9532e3',
     signedSubscriptionDocument: '623b173320881232eb95363d',
-    dso: '627a6f58d59cdc7755742033',
+    dso: '6299b10910267105170482ab',
     currency: '5fd7199deb87068672a27016'
   }
   dso = {

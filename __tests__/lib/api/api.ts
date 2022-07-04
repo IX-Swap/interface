@@ -1,6 +1,10 @@
 import fetch from 'node-fetch'
 import { baseCreds } from '../helpers/creds'
 
+const fs = require('fs')
+const util = require('util')
+const streamPipeline = util.promisify(require('stream').pipeline)
+
 const defaultHeaders = {
   Connection: 'keep-alive',
   'Content-Type': 'application/json',
@@ -15,7 +19,11 @@ export async function userRegistration(email, fullName = 'Fredericka Erickson') 
     const user = {
       name: fullName,
       email: email,
-      password: baseCreds.PASSWORD
+      singPassLogin: false,
+      oldEmail: 'no@email.com',
+      oldMobileNo: 'no-old-mobile-no',
+      password: 'Pa$$w0rd!qwe',
+      accountType: 'INDIVIDUAL'
     }
     const register = await fetch(`${baseCreds.BASE_API}auth/registrations`, {
       method: 'POST',
@@ -130,4 +138,12 @@ export async function putRequest(cookies, link) {
     console.log(error)
     throw new Error(`PUT request by API failed`)
   }
+}
+
+export async function downloadMetamask(path) {
+  const response = await fetch(
+    'https://github.com/MetaMask/metamask-extension/releases/download/v10.15.0/metamask-chrome-10.15.0.zip'
+  )
+  if (!response.ok) throw new Error(`unexpected response ${response.statusText}`)
+  await streamPipeline(response.body, fs.createWriteStream(path))
 }

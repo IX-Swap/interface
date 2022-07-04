@@ -1,13 +1,14 @@
-import { kyc } from '../lib/selectors/kyc-form'
-import { text } from '../lib/helpers/text'
-import { test, expect } from '../lib/fixtures/fixtures'
-import { baseCreds } from '../lib/helpers/creds'
-import { createIdentity, approveIdentity, createCorporateIdentity } from '../lib/api/create-identities'
-import * as individualBody from '../lib/api/individual-identity'
-import * as corporateBody from '../lib/api/corporate-identity'
+import { kyc } from '../../lib/selectors/kyc-form'
+import { text } from '../../lib/helpers/text'
+import { test, expect } from '../../lib/fixtures/fixtures'
+import { baseCreds } from '../../lib/helpers/creds'
+import { authForms } from '../../lib/selectors/auth'
+import { createIdentity, approveIdentity, createCorporateIdentity } from '../../lib/api/create-identities'
+import * as individualBody from '../../lib/api/individual-identity'
+import * as corporateBody from '../../lib/api/corporate-identity'
 
-import { click, waitForText, navigate, shouldExist, emailCreate, screenshotMatching } from '../lib/helpers/helpers'
-import { accountsTab } from '../lib/selectors/accounts'
+import { click, waitForText, navigate, shouldExist, emailCreate, screenshotMatching } from '../../lib/helpers/helpers'
+import { accountsTab } from '../../lib/selectors/accounts'
 
 test.afterEach(async ({ page }) => {
   await page.close()
@@ -21,12 +22,13 @@ test.describe.parallel('Check identities form', () => {
   test('Test the ability to Create Individual Identity (IXPRIME-7)', async ({ page, kycForms }) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
-      await click(kyc.buttons.OKAY, page)
       await kycForms.fillPersonalInformationForm()
       await kycForms.fillAddressForm()
       await kycForms.fillFinancialInformation()
+
       await kycForms.fillTaxDeclaration()
-      await click(kyc.buttons.SUBMIT, page)
+
+      await click(authForms.buttons.NEXT, page)
     })
 
     await test.step('Investor Status Declaration', async () => {

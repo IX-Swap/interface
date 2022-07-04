@@ -7,7 +7,10 @@ on:
       - dev
     types: 
       - closed
-     
+  push:
+    branches:
+      - e2e-**
+
 jobs:
   e2e-tests:
     if: github.event.pull_request.merged == true || github.event_name == 'push'
@@ -32,15 +35,15 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
  
-      - name: Run regression testing
-        if: ${{ env.BRANCHE_NAME == 'staging' }}
-        run: |
-           yarn test:e2e 
+      # - name: Run regression testing
+      #   run: |
+      #     yarn test:e2e 
 
-      - name: Run smoke testing
-        if: ${{ env.BRANCHE_NAME == 'otc' || env.BRANCHE_NAME == 'dev' }}
+      - name: Run metamask testing
+        env:
+          TEST_TYPE: "METAMASK"
         run: |
-           yarn test:smoke 
+          yarn test:metamask 
 
       - uses: actions/upload-artifact@v2
         if: always()

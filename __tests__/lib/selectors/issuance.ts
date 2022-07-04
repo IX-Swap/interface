@@ -54,7 +54,7 @@ export const issuance = {
       ADD_TEAM_MEMBER: 'text="Add Team Member"',
       SUBSCRIPTION_DOCUMENT: '[id="subscriptionDocument"]',
       DATA_ROOM_FILE: '[id="dataroom-upload-and-append"]',
-
+      CAPITAL_CALL: 'button >> text="Capital Call"',
       FINISH_LATER: 'text=/Save\\s*draft/i',
       VIEW_THIS_DSO: 'text=View this DSO',
       VIEW_MY_DSO: 'text=View My DSOs',
