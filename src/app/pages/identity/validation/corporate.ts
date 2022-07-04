@@ -225,5 +225,6 @@ export const corporateInvestorAgreementsSchema = yup
 export const corporateInvestorSchema = yup.object().shape<any>({
   ...corporateInvestorInfoSchema.fields,
   ...corporateTaxDeclarationSchema.fields,
-  ...directorsAndBeneficialOwnersSchema.fields
+  ...directorsAndBeneficialOwnersSchema.fields,
+  ...corporateInvestorStatusDeclarationSchema.fields
 })
