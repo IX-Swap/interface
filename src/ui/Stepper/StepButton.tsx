@@ -15,7 +15,7 @@ export interface VariantsConditions {
 export interface StepButtonProps extends MuiStepButtonProps {
   step: number
   variantsConditions: VariantsConditions
-  stepData: any
+  stepData?: any
 }
 
 const getIconType = ({ active, completed, error }: VariantsConditions) => {
