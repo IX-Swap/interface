@@ -58,11 +58,13 @@ export const StepButton = ({
     }
 
     try {
+      const schema =
+        typeof stepData.step?.validationSchema === 'function'
+          ? stepData.step?.validationSchema(stepData.formData)
+          : stepData.step?.validationSchema
       setValidating(true)
       setValidState(
-        await stepData.step?.validationSchema?.isValid(
-          stepData.step?.getFormValues(stepData.formData)
-        )
+        await schema?.isValid(stepData.step?.getFormValues(stepData.formData))
       )
     } catch (error) {
       console.log(error)

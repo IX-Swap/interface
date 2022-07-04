@@ -93,13 +93,20 @@ export const FormStep = (props: FormStepProps) => {
     setActiveStep(activeStep + 1)
   }
 
+  const getSchema = (schema?: any) => {
+    if (typeof schema === 'function') {
+      return schema(data)
+    }
+    return schema
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
       validationSchema={
         completed.includes(index)
-          ? step.validationSchema
-          : step.initialValidationSchema
+          ? getSchema(step.validationSchema)
+          : getSchema(step.initialValidationSchema)
       }
       onSubmit={handleSubmit}
       allowInvalid

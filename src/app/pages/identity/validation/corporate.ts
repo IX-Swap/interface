@@ -1,6 +1,7 @@
 import {
   Address,
   BeneficialOwnerFormValues,
+  CorporateIdentity,
   CorporateInvestorAgreementsFormValues,
   CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
@@ -42,119 +43,131 @@ const validateCorporateData = async (field: string, value: string) => {
   return !data.data.exist
 }
 
-export const initialCorporateInvestorInfoSchema = yup.object().shape<any>({
-  companyLegalName: yup
-    .string()
-    .test('checkExists', 'Company name already exists', function (value) {
-      if (value === undefined || value === null) {
-        return true
-      }
-      return validateCorporateData('companyName', value)
-    }),
-
-  registrationNumber: yup
-    .string()
-    .test(
-      'checkExists',
-      'Registration number already exists',
-      function (value) {
+export const initialCorporateInvestorInfoSchema = (data?: CorporateIdentity) =>
+  yup.object().shape<any>({
+    companyLegalName: yup
+      .string()
+      .test('checkExists', 'Company name already exists', function (value) {
         if (value === undefined || value === null) {
           return true
         }
-        return validateCorporateData('registrationNumber', value)
-      }
-    )
-})
+        return validateCorporateData('companyName', value)
+      }),
+
+    registrationNumber: yup
+      .string()
+      .test(
+        'checkExists',
+        'Registration number already exists',
+        function (value) {
+          if (
+            value === undefined ||
+            value === null ||
+            data?.status === 'Submitted' ||
+            data?.status === 'Approved'
+          ) {
+            return true
+          }
+          return validateCorporateData('registrationNumber', value)
+        }
+      )
+  })
 
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
-export const corporateInvestorInfoSchema = yup.object().shape<any>({
-  logo: yup.string(),
-  companyLegalName: yup
-    .string()
-    .max(50, 'Maximum of 50 characters')
-    .required(validationMessages.required)
-    .matches(
-      /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
-      'Must include only letters, numbers and this special characters . , -'
-    )
-    .test('checkExists', 'Company name already exists', function (value) {
-      if (value === undefined || value === null) {
-        return true
-      }
-      return validateCorporateData('companyName', value)
-    }),
-
-  registrationNumber: yup
-    .string()
-    .when('countryOfFormation', {
-      is: 'Singapore',
-      then: taxIdentificationNumberSchema.test(
-        'validateUEN',
-        'Must be a valid UEN',
-        function (value) {
-          const error = validateUEN(value)
-          if (typeof error === 'string') {
-            return new yup.ValidationError(error, value, 'registrationNumber')
-          }
-          return true
-        }
-      ),
-      otherwise: taxIdentificationNumberSchema.required(
-        validationMessages.required
+export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
+  yup.object().shape<any>({
+    logo: yup.string(),
+    companyLegalName: yup
+      .string()
+      .max(50, 'Maximum of 50 characters')
+      .required(validationMessages.required)
+      .matches(
+        /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
+        'Must include only letters, numbers and this special characters . , -'
       )
-    })
-    .test(
-      'checkExists',
-      'Registration number already exists',
-      function (value) {
+      .test('checkExists', 'Company name already exists', function (value) {
         if (value === undefined || value === null) {
           return true
         }
-        return validateCorporateData('registrationNumber', value)
-      }
-    ),
-  legalEntityStatus: yup.string().required(validationMessages.required),
-  otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
-    is: 'others',
-    then: yup.string().required(validationMessages.required),
-    otherwise: yup.string()
-  }),
-  countryOfFormation: yup.string().required(validationMessages.required),
-  companyAddress: addressSchema.required(validationMessages.required),
-  isMailingAddressSame: yup.bool().required(validationMessages.required),
-  mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
-    is: false,
-    then: addressSchema.required(validationMessages.required),
-    otherwise: yup.object().notRequired()
-  }),
-  representatives: yup
-    .array<RepresentativeFormValues>()
-    .of(
-      yup
-        .object<RepresentativeFormValues>({
-          fullName: yup
-            .string()
-            .required(validationMessages.required)
-            .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
-          designation: yup
-            .string()
-            .required(validationMessages.required)
-            .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
-          email: emailSchema.required(validationMessages.required),
-          contactNumber: yup
-            .string()
-            .phone(undefined, 'Must be a valid phone number')
-            .required(validationMessages.required),
-          // @ts-expect-error
-          documents: documentsSchema
-        })
-        .required(validationMessages.required)
-    )
-    .required(validationMessages.required),
-  sourceOfFund: yup.string().required(validationMessages.required),
-  numberOfBusinessOwners: yup.string().required(validationMessages.required),
-  businessActivity: yup.string().required(validationMessages.required)
-})
+        return validateCorporateData('companyName', value)
+      }),
+
+    registrationNumber: yup
+      .string()
+      .when('countryOfFormation', {
+        is: 'Singapore',
+        then: taxIdentificationNumberSchema.test(
+          'validateUEN',
+          'Must be a valid UEN',
+          function (value) {
+            const error = validateUEN(value)
+            if (typeof error === 'string') {
+              return new yup.ValidationError(error, value, 'registrationNumber')
+            }
+            return true
+          }
+        ),
+        otherwise: taxIdentificationNumberSchema.required(
+          validationMessages.required
+        )
+      })
+      .test(
+        'checkExists',
+        'Registration number already exists',
+        function (value) {
+          if (
+            value === undefined ||
+            value === null ||
+            data?.status === 'Submitted' ||
+            data?.status === 'Approved'
+          ) {
+            return true
+          }
+          return validateCorporateData('registrationNumber', value)
+        }
+      ),
+    legalEntityStatus: yup.string().required(validationMessages.required),
+    otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
+      is: 'others',
+      then: yup.string().required(validationMessages.required),
+      otherwise: yup.string()
+    }),
+    countryOfFormation: yup.string().required(validationMessages.required),
+    companyAddress: addressSchema.required(validationMessages.required),
+    isMailingAddressSame: yup.bool().required(validationMessages.required),
+    mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
+      is: false,
+      then: addressSchema.required(validationMessages.required),
+      otherwise: yup.object().notRequired()
+    }),
+    representatives: yup
+      .array<RepresentativeFormValues>()
+      .of(
+        yup
+          .object<RepresentativeFormValues>({
+            fullName: yup
+              .string()
+              .required(validationMessages.required)
+              .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
+            designation: yup
+              .string()
+              .required(validationMessages.required)
+              .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
+            email: emailSchema.required(validationMessages.required),
+            contactNumber: yup
+              .string()
+              .phone(undefined, 'Must be a valid phone number')
+              .required(validationMessages.required),
+            // @ts-expect-error
+            documents: documentsSchema
+          })
+          .required(validationMessages.required)
+      )
+      .required(validationMessages.required),
+    sourceOfFund: yup.string().required(validationMessages.required),
+    numberOfBusinessOwners: yup.string().required(validationMessages.required),
+    businessActivity: yup.string().required(validationMessages.required)
+  })
 
 export const directorsAndBeneficialOwnersSchema = yup
   .object()
@@ -285,7 +298,7 @@ export const corporateInvestorAgreementsSchema = yup
   })
 
 export const corporateInvestorSchema = yup.object().shape<any>({
-  ...corporateInvestorInfoSchema.fields,
+  ...corporateInvestorInfoSchema().fields,
   ...corporateTaxDeclarationSchema.fields,
   ...directorsAndBeneficialOwnersSchema.fields
 })
