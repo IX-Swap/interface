@@ -28,6 +28,7 @@ export default createReducer<WhitelabelState>(initialState, (builder) =>
       state.config = {
         ...payload,
         tokens: JSON.parse(payload.tokens),
+        pages: JSON.parse(payload.pages),
         colors: JSON.parse(payload.colors || ''),
         customStyles: JSON.parse(payload.customStyles || ''),
       }
