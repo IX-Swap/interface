@@ -42,6 +42,30 @@ const validateCorporateData = async (field: string, value: string) => {
   return !data.data.exist
 }
 
+export const initialCorporateInvestorInfoSchema = yup.object().shape<any>({
+  companyLegalName: yup
+    .string()
+    .test('checkExists', 'Company name already exists', function (value) {
+      if (value === undefined || value === null) {
+        return true
+      }
+      return validateCorporateData('companyName', value)
+    }),
+
+  registrationNumber: yup
+    .string()
+    .test(
+      'checkExists',
+      'Registration number already exists',
+      function (value) {
+        if (value === undefined || value === null) {
+          return true
+        }
+        return validateCorporateData('registrationNumber', value)
+      }
+    )
+})
+
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
 export const corporateInvestorInfoSchema = yup.object().shape<any>({
   logo: yup.string(),

@@ -42,7 +42,8 @@ export const FormStep = (props: FormStepProps) => {
     submitMutation,
     shouldSaveOnMove,
     setCompleted,
-    skippable
+    skippable,
+    completed
   } = props
 
   const isCurrentStep = activeStep === index
@@ -95,7 +96,11 @@ export const FormStep = (props: FormStepProps) => {
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={step.validationSchema}
+      validationSchema={
+        completed.includes(index)
+          ? step.validationSchema
+          : step.initialValidationSchema
+      }
       onSubmit={handleSubmit}
       allowInvalid
       id={`${step.formId ?? 'form'}-${index}`}

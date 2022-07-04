@@ -18,6 +18,7 @@ export interface FormStepperStep {
   getFormValues: any
   getRequestPayload: any
   validationSchema?: any
+  initialValidationSchema?: any
   formId?: string
 }
 
