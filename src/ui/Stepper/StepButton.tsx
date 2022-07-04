@@ -38,7 +38,7 @@ export const StepButton = ({
   variantsConditions,
   step,
   children,
-  stepData,
+  stepData = {},
   ...props
 }: StepButtonProps) => {
   const [validState, setValidState] = useState(false)
