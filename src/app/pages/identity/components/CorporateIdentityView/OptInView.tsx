@@ -31,7 +31,7 @@ export const OptInView: React.FC<OptInViewProps> = ({ data }) => {
   }
 
   const optInRequirement = {
-    optInAgreements: optInAgreements !== undefined ? optInAgreements : false
+    optInAgreements: optInAgreements ?? false
   }
 
   const accreditedInvestorOptOutLabelMap = {
