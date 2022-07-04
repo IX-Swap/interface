@@ -48,7 +48,7 @@ export const generateSingPassAuthorizeUrl = () => {
   const purpose = 'identification'
   const state = encodeURIComponent('123')
   const redirectUrl = process.env.SING_PASS_REDIRECT_URL ?? ''
-  const attributes = process.env.SING_PASS_ATTRIBUTES ?? 'uinfin,name,email'
+  const attributes = process.env.SING_PASS_ATTRIBUTES ?? ''
 
   return `${url}?client_id=${clientId}&attributes=${attributes}&purpose=${purpose}&state=${state}&redirect_uri=${redirectUrl}`
 }
