@@ -7,9 +7,6 @@ on:
       - dev
     types: 
       - closed
-  push:
-    branches:
-      - e2e-**
 
 jobs:
   e2e-tests:
@@ -35,9 +32,9 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=8192"
  
-      # - name: Run regression testing
-      #   run: |
-      #     yarn test:e2e 
+      - name: Run regression testing
+        run: |
+          yarn test:e2e 
 
       - name: Run metamask testing
         env:
