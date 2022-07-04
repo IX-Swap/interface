@@ -1,21 +1,15 @@
 import { format } from 'date-fns'
+import { uniq } from 'lodash'
 import { InvestmentGrowthData } from 'types/charts'
 
 export const getWeekDays = (data: InvestmentGrowthData) => {
   if (typeof data === 'undefined') {
     return []
   }
-  const weekDays = data.reduce<Date[]>((a, d, i) => {
-    const noHours = removeHours(d[0])
-    const found = a.find(
-      el => new Date(el).getTime() === new Date(noHours).getTime()
-    )
-    if (typeof found === 'undefined') {
-      a.push(new Date(noHours))
-    }
-    return a
-  }, [])
-  return weekDays
+
+  return uniq(data.map(item => new Date(item[0]).setHours(0, 0, 0, 0))).map(
+    it => new Date(it)
+  )
 }
 
 export const removeHours = (date: Date) => format(new Date(date), 'yyyy MM dd')
