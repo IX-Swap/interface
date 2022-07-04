@@ -68,7 +68,6 @@ export const MyInfo = () => {
           <Typography
             align='center'
             variant='body1'
-            fontFamily='Clash Display'
             fontSize={16}
             lineHeight='19px'
           >
