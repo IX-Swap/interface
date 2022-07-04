@@ -76,10 +76,10 @@ export const getInvestorDeclarationRequestPayload = (
     declarations: {
       investorsStatus: values
     },
-    ...getDocumentsRequestPayload({
-      proofOfIdentity: values.proofOfIdentity,
-      proofOfAddress: values.proofOfAddress,
-      evidenceOfAccreditation: values.evidenceOfAccreditation
+    documents: getDocumentsRequestPayload({
+      proofOfIdentity: values.proofOfIdentity ?? [],
+      proofOfAddress: values.proofOfAddress ?? [],
+      evidenceOfAccreditation: values.evidenceOfAccreditation ?? []
     })
   }
 }
@@ -96,7 +96,8 @@ export const getDocumentsRequestPayload = (
       return result
     }, [])
   }
-  return documents.documents.length > 0 ? documents : {}
+  console.log('dics', documents)
+  return documents.documents.filter(doc => doc !== undefined)
 }
 
 export const getAgreementsRequestPayload = (

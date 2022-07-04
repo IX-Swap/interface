@@ -6,7 +6,8 @@ import {
   nameSchema,
   birthdaySchema,
   taxIdentificationNumberSchema,
-  validationMessages
+  validationMessages,
+  documentsSchema
 } from 'validation/shared'
 import {
   IndividualAgreementsFormValues,
@@ -16,7 +17,6 @@ import {
   IndividualTaxDeclarationFormValues,
   TaxResidency
 } from 'app/pages/identity/types/forms'
-import { DataroomFile } from 'types/dataroomFile'
 
 export const personalInfoSchema = yup
   .object()
@@ -178,18 +178,12 @@ export const individualInvestorStatusDeclarationSchema = yup
 export const individualInvestorDocumentsSchema = yup
   .object()
   .shape<IdentityDocumentsFormValues>({
-    evidenceOfAccreditation: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    proofOfAddress: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    proofOfIdentity: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required)
+    // @ts-expect-error
+    evidenceOfAccreditation: documentsSchema,
+    // @ts-expect-error
+    proofOfAddress: documentsSchema,
+    // @ts-expect-error
+    proofOfIdentity: documentsSchema
   })
 
 export const individualInvestorAgreementsSchema = yup
