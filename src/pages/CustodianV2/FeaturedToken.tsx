@@ -6,6 +6,7 @@ import Column from 'components/Column'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { FeaturedTokenCard, StyledNonTradable, StyledTradable } from './styleds'
 
@@ -28,6 +29,8 @@ const Info: FC<InfoProps> = ({ label, title }: InfoProps) => {
 }
 
 export const FeaturedToken: FC<Props> = ({ token }: Props) => {
+  const { config } = useWhitelabelState()
+
   return (
     <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={`/security-tokens/${token.id}`}>
       <FeaturedTokenCard>
@@ -35,7 +38,7 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
           <MouseoverTooltip
             style={{ padding: 8 }}
             placement="top"
-            text={`${token.token ? 'Ready' : 'Not ready'} for trading on IX Swap`}
+            text={`${token.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
           >
             {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
           </MouseoverTooltip>

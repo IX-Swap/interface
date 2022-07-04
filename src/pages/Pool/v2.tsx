@@ -1,4 +1,8 @@
+import React, { FC } from 'react'
+import { Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
+import styled from 'styled-components'
+
 import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
 import { TipCard } from 'components/Card'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -6,12 +10,11 @@ import { RowCenter } from 'components/Row'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
-import React, { FC } from 'react'
-import { Flex } from 'rebass'
 import { getPoolTransactionHash } from 'state/pool/hooks'
 import { useIsTransactionPending } from 'state/transactions/hooks'
-import styled from 'styled-components'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 import { DesktopOnly, ExternalLink, MobileAndTablet, TYPE } from 'theme'
+
 import { ReactComponent as ExternalIcon } from '../../assets/images/external.svg'
 import { AutoColumn } from '../../components/Column'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
@@ -49,6 +52,7 @@ const StyledTipCard = styled(TipCard)`
 `
 
 const TopContent: FC = () => {
+  const { config } = useWhitelabelState()
   return (
     <StyledTipCard as={ExternalLink} href="https://info.ixswap.io/home">
       <StyledRowCenter>
@@ -56,7 +60,7 @@ const TopContent: FC = () => {
           <LinkTitle style={{ fontSize: '16px' }}>Top Pools</LinkTitle>
           <ExternalIcon></ExternalIcon>
         </Flex>
-        <TYPE.body1 textAlign="center">Explore popular pools on IX Swap Analytics</TYPE.body1>
+        <TYPE.body1 textAlign="center">Explore popular pools on {config?.name || 'IX Swap'} Analytics</TYPE.body1>
       </StyledRowCenter>
     </StyledTipCard>
   )
