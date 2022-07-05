@@ -12,6 +12,7 @@ export interface WhitelabelRaw {
   name: string
   title: string
   faviconUrl: string
+  footerConfig: string
 }
 
 export interface Whitelabel {
@@ -30,6 +31,14 @@ export interface Whitelabel {
   name: string
   title: string
   faviconUrl: string
+  footerConfig: {
+    termsLink: string
+    privacyLink: string
+    socialLinks: Record<string, string>
+    block1?: string
+    block2?: string
+    block3?: string
+  }
 }
 
 export interface WlColors {
