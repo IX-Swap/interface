@@ -100,7 +100,11 @@ export default function App() {
   }
   
   const isAllowed = useCallback((route: RouteMapEntry): boolean => {
-    if (!config || config.pages.length === 0) {
+    if (!config) {
+      return false
+    }
+
+    if (config.pages.length === 0) {
       return true
     }
 

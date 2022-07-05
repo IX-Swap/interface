@@ -11,7 +11,6 @@ export interface WhitelabelRaw {
   customStyles: string
   name: string
   title: string
-  pages: string
   faviconUrl: string
 }
 
@@ -30,7 +29,6 @@ export interface Whitelabel {
   logoUrl: string
   name: string
   title: string
-  pages: string[]
   faviconUrl: string
 }
 
