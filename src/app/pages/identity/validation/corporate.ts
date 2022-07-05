@@ -23,6 +23,8 @@ import * as yup from 'yup'
 import 'yup-phone-lite'
 import { validateUEN } from 'validation/validators'
 import apiService from 'services/api'
+import { identityURL } from 'config/apiURL'
+import { isEmptyString } from 'helpers/strings'
 
 export interface CorporateDataValidation {
   exist: boolean
@@ -30,11 +32,15 @@ export interface CorporateDataValidation {
 
 const validateCorporateData = async (
   field: string,
-  value: string,
+  value: string | null | undefined,
   id?: string
 ) => {
+  if (isEmptyString(value)) {
+    return true
+  }
+
   const data = await apiService.post<CorporateDataValidation>(
-    '/identity/corporates/check',
+    identityURL.corporates.validateData,
     {
       [field]: value,
       id
@@ -52,23 +58,25 @@ export const initialCorporateInvestorInfoSchema = (data?: CorporateIdentity) =>
   yup.object().shape<any>({
     companyLegalName: yup
       .string()
-      .test('checkExists', 'Company name already exists', function (value) {
-        if (value === undefined || value === null) {
-          return true
+      .test(
+        'checkExists',
+        'Company name already exists',
+        async function (value) {
+          return await validateCorporateData('companyName', value, data?._id)
         }
-        return validateCorporateData('companyName', value, data?._id)
-      }),
+      ),
 
     registrationNumber: yup
       .string()
       .test(
         'checkExists',
         'Registration number already exists',
-        function (value) {
-          if (value === undefined || value === null) {
-            return true
-          }
-          return validateCorporateData('registrationNumber', value, data?._id)
+        async function (value) {
+          return await validateCorporateData(
+            'registrationNumber',
+            value,
+            data?._id
+          )
         }
       )
   })
@@ -85,12 +93,13 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
         /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
         'Must include only letters, numbers and this special characters . , -'
       )
-      .test('checkExists', 'Company name already exists', function (value) {
-        if (value === undefined || value === null) {
-          return true
+      .test(
+        'checkExists',
+        'Company name already exists',
+        async function (value) {
+          return await validateCorporateData('companyName', value, data?._id)
         }
-        return validateCorporateData('companyName', value, data?._id)
-      }),
+      ),
 
     registrationNumber: yup
       .string()
@@ -114,11 +123,12 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
       .test(
         'checkExists',
         'Registration number already exists',
-        function (value) {
-          if (value === undefined || value === null) {
-            return true
-          }
-          return validateCorporateData('registrationNumber', value, data?._id)
+        async function (value) {
+          return await validateCorporateData(
+            'registrationNumber',
+            value,
+            data?._id
+          )
         }
       ),
     legalEntityStatus: yup.string().required(validationMessages.required),
