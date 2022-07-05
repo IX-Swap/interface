@@ -1,59 +1,40 @@
-import React, { lazy, Suspense, useEffect, useMemo } from 'react'
+import React, { Suspense, useCallback, useEffect, useMemo } from 'react'
 import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 import { useDispatch } from 'react-redux'
 
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+
+import { useActiveWeb3React } from 'hooks/web3'
+import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
+
+import { KYCStatuses } from 'pages/KYC/enum'
+
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+
+import Header from 'components/Header'
+import Popups from 'components/Popups'
+import ErrorBoundary from 'components/ErrorBoundary'
+import Web3ReactManager from 'components/Web3ReactManager'
+import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
+
+import { Footer } from 'components/Footer'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
-import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useAccount, useGetMe } from 'state/user/hooks'
-import { routes } from 'utils/routes'
-import { SupportedChainId } from 'constants/chains'
-import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
-import { KYCStatuses } from 'pages/KYC/enum'
+
+import DarkModeQueryParamReader from 'theme/DarkModeQueryParamReader'
+
 import { useAuthState } from 'state/auth/hooks'
-import { LoadingIndicator } from 'components/LoadingIndicator'
-import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { useModalOpen } from 'state/application/hooks'
+import { useAccount, useGetMe } from 'state/user/hooks'
+import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
 import { CustomHeaders } from 'components/CustomHeaders'
 
-import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
-import ErrorBoundary from '../components/ErrorBoundary'
-import Header from '../components/Header'
-import Popups from '../components/Popups'
-import Web3ReactManager from '../components/Web3ReactManager'
-import { ApplicationModal, clearStore } from '../state/application/actions'
-import { useModalOpen } from '../state/application/hooks'
-import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
-import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
-import { StakingTab } from './Farming/StakingTab'
-import { VestingTab } from './Farming/VestingTab'
-import Faucet from './Faucet'
-import PoolFinder from './PoolFinder'
-import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
-import { Footer } from '../components/Footer'
+import { ApplicationModal, clearStore } from 'state/application/actions'
 
-const Admin = lazy(() => import('./Admin'))
-
-const KYC = lazy(() => import('./KYC'))
-const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
-const CorporateKYC = lazy(() => import('./KYC/CorporateKycForm'))
-// const Custodian = lazy(() => import('./Custodian'))
-const CustodianV2 = lazy(() => import('./CustodianV2'))
-const CreateNFT = lazy(() => import('./CreateNFT'))
-const ListNFT = lazy(() => import('./ListNFT'))
-const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
-const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
-const Swap = lazy(() => import('./Swap'))
-const PoolV2 = lazy(() => import('./Pool/v2'))
-const NftImport = lazy(() => import('./NftImport'))
-const NFTCollections = lazy(() => import('./NFTCollections'))
-const NFTCollection = lazy(() => import('./NFTCollection'))
-const UpdateCollection = lazy(() => import('./UpdateCollection'))
-const CreateCollection = lazy(() => import('./CreateCollection'))
-const NftAssetPage = lazy(() => import('./NFTAsset'))
+import { routeConfigs, RouteMapEntry } from './AppRoutes'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -85,6 +66,8 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
   `}
 `
 
+const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+
 export default function App() {
   const getMe = useGetMe()
 
@@ -99,19 +82,7 @@ export default function App() {
 
   const { kyc } = useKYCState()
 
-  const chains = useMemo(() => ENV_SUPPORTED_TGE_CHAINS || [42], [])
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-
-  const defaultPage = useMemo(() => {
-    if (kyc?.status !== KYCStatuses.APPROVED || !account) {
-      return '/kyc'
-    }
-    if (kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
-      return '/security-tokens'
-    }
-
-    return '/kyc'
-  }, [kyc, account, chainId, isWhitelisted, chains])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -127,6 +98,25 @@ export default function App() {
 
     return true
   }
+  
+  const isAllowed = useCallback((route: RouteMapEntry): boolean => {
+    if (!config || config.pages.length === 0) {
+      return true
+    }
+
+    return config.pages.includes(route.path)
+  }, [config])
+  
+  const defaultPage = useMemo(() => {
+    if (isAllowed({ path: '/kyc' }) && kyc?.status !== KYCStatuses.APPROVED || !account) {
+      return '/kyc'
+    }
+    if (isAllowed({ path: '/security-tokens'}) && kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
+      return '/security-tokens'
+    }
+
+    return (config?.pages ?? []).length > 0 ? config?.pages[0] : '/kyc'
+  }, [kyc, account, chainId, isWhitelisted, chains])
 
   useAccount()
 
@@ -165,6 +155,23 @@ export default function App() {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
+
+  const routeGenerator = useCallback((route: RouteMapEntry) => {
+    const guards = [
+      !isAllowed(route),
+      route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
+      route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
+      route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
+      route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess)
+    ];
+
+    if (guards.some(guard => guard === true)) {
+      return null
+    }
+
+    return <Route exact strict path={route.path} component={route.component} render={route.render} />
+  }, [isAllowed, canAccessKycForm, chainId, isWhitelisted])
+
   const useRedirect = account ? kyc !== null : true
 
   if (!config) {
@@ -192,80 +199,7 @@ export default function App() {
               }
             >
               <Switch>
-                <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
-
-                <Route exact strict path="/admin/:tab/:id?" component={Admin} />
-
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCreate} component={CreateNFT} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftList} component={ListNFT} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCollections} component={NFTCollections} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftEditCollectionPath} component={UpdateCollection} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
-                )}
-
-                {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
-                {isWhitelisted && canAccessKycForm('individual') && (
-                  <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
-                )}
-                {isWhitelisted && canAccessKycForm('corporate') && (
-                  <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
-                )}
-
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/swap" component={Swap} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/find" component={PoolFinder} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/pool" component={PoolV2} />
-                )}
-
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
-                )}
-
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
-                )}
-
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.faucet} component={Faucet} />
-                )}
-
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
-                )}
-
-                <Route exact strict path={routes.staking} component={StakingTab} />
-                <Route exact strict path={routes.vesting} component={VestingTab} />
+                {routeConfigs.map(routeGenerator).filter(route => !!route)}
 
                 {useRedirect && (
                   <Route

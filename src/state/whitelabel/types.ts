@@ -6,6 +6,7 @@ export interface WhitelabelRaw {
   updatedAt: string | null
   colors: string
   tokens: string
+  pages: string
   logoUrl: string
   customStyles: string
   name: string
@@ -22,6 +23,7 @@ export interface Whitelabel {
   updatedAt: string | null
   colors: WlColors
   tokens: string[]
+  pages: string[]
   customStyles: {
     logo?: Record<string, string>
   }
