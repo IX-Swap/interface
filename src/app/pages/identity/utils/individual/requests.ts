@@ -1,10 +1,11 @@
 import {
   IndividualAgreementsFormValues,
   IdentityDocumentsFormValues,
-  IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
   IndividualPersonalInfoFormValues,
-  IndividualTaxDeclarationFormValues
+  FinancialAndTaxDeclarationFormValues,
+  IndividualTaxDeclarationFormValues,
+  IndividualFinancialInfoFormValues
 } from 'app/pages/identity/types/forms'
 
 export const getPersonalInfoRequestPayload = (
@@ -58,13 +59,28 @@ export const getTaxDeclarationRequestPayload = (
   return payload
 }
 
+export const getFinancialAndTaxDeclarationRequestPayload = (
+  values: FinancialAndTaxDeclarationFormValues
+) => {
+  const { taxResidencies, singaporeOnly, fatca, usTin, ...other } = values
+  const payload = getTaxDeclarationRequestPayload(values)
+  payload.declarations.tax.usTin = usTin
+
+  return { ...payload, ...other }
+}
+
 export const getInvestorDeclarationRequestPayload = (
   values: IndividualInvestorDeclarationFormValues
 ) => {
   return {
     declarations: {
       investorsStatus: values
-    }
+    },
+    documents: getDocumentsRequestPayload({
+      proofOfIdentity: values.proofOfIdentity ?? [],
+      proofOfAddress: values.proofOfAddress ?? [],
+      evidenceOfAccreditation: values.evidenceOfAccreditation ?? []
+    })
   }
 }
 
@@ -80,7 +96,7 @@ export const getDocumentsRequestPayload = (
       return result
     }, [])
   }
-  return documents.documents.length > 0 ? documents : {}
+  return documents.documents.filter(doc => doc !== undefined)
 }
 
 export const getAgreementsRequestPayload = (

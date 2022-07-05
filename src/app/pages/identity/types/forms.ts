@@ -109,10 +109,16 @@ export interface IndividualTaxDeclarationFormValues {
   fatca: 'yes' | 'no'
   taxResidencies: TaxResidencies
   uinfin?: string
+  usTin?: string
 }
 
+export interface FinancialAndTaxDeclarationFormValues
+  extends IndividualFinancialInfoFormValues,
+    IndividualTaxDeclarationFormValues {}
+
 export interface IndividualInvestorDeclarationFormValues
-  extends IndividualInvestorStatus,
+  extends IdentityDocumentsFormValues,
+    IndividualInvestorStatus,
     OptOutRequirements,
     OptInAgreements {}
 
@@ -281,7 +287,9 @@ export interface OptOutRequirements {
 }
 
 export interface OptInAgreements {
-  optInAgreements: boolean
+  optInAgreements?: boolean
+  optInAgreementsSafeguards?: boolean
+  optInAgreementsOptOut?: boolean
 }
 
 export interface IndividualInvestorStatus {
@@ -301,7 +309,7 @@ export interface CorporateInvestorStatus {
 }
 
 export interface IdentityDeclarations {
-  tax: { fatca: boolean }
+  tax: { fatca: boolean; usTin?: string }
   investorsStatus: IndividualInvestorStatus &
     CorporateInvestorStatus &
     OptInAgreements &
