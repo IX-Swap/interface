@@ -96,7 +96,6 @@ export const getDocumentsRequestPayload = (
       return result
     }, [])
   }
-  console.log('dics', documents)
   return documents.documents.filter(doc => doc !== undefined)
 }
 
