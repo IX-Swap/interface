@@ -58,7 +58,6 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.clickRemovePoolButton();
 
       // Assertion
-      await page.pause();
       await liquidityPoolsPage.isEthAmountThatWillBeReceivedIsShown(ethAmountForLiquidityPool);
 
       const confirmMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmRemovePoolButton);
@@ -116,7 +115,6 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.clickSupplyButton();
 
       const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButton);
-      await page.pause();
       await metamaskPopUp.click(metamaskPage.rejectButton);
 
       // Assertion

@@ -66,7 +66,7 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   async isEthAmountThatWillBeReceivedIsShown(amount) {
-    await expect(this.page.locator(`text=${amount} nth=2`)).toBeVisible();
+    await expect(this.page.locator(`text=${amount} >> nth=1`)).toBeVisible();
   }
 
   // Actions
