@@ -13,10 +13,18 @@ export const CopyrightBlock = () => {
   return (
     <CopyrightBlockContainer>
       <div>
-        <a href="https://ixswap.io/terms-and-conditions/" target="_blank" rel="noreferrer">
+        <a
+          href={config?.footerConfig?.termsLink || 'https://ixswap.io/terms-and-conditions/'}
+          target="_blank"
+          rel="noreferrer"
+        >
           <Trans>Terms & Conditions</Trans>
         </a>
-        <a href="https://ixswap.io/privacy-policy/" target="_blank" rel="noreferrer">
+        <a
+          href={config?.footerConfig?.privacyLink || 'https://ixswap.io/privacy-policy/'}
+          target="_blank"
+          rel="noreferrer"
+        >
           <Trans>Privacy Policy</Trans>
         </a>
       </div>

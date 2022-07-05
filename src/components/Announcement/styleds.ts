@@ -11,4 +11,7 @@ export const Card = styled(RowCenter)`
     height: 100%;
     padding: 16px;
   `};
+  line {
+    stroke: inherit;
+  }
 `
