@@ -50,7 +50,7 @@ export const TmPayoutEvents = () => {
       if (Object.keys(filters).length) {
         handleHaveFilters(true)
       }
-      getMyPayouts({ ...filters, offset: 4, my: true })
+      getMyPayouts({ ...filters, offset: 10, my: true, page: 1 })
     }
   }, [filters, getMyPayouts, account, token])
 
@@ -64,7 +64,7 @@ export const TmPayoutEvents = () => {
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
-    fetch({ ...filters, page, offset: 4 })
+    fetch({ ...filters, page, offset: 10 })
   }
 
   const goToCreate = () => {
@@ -86,6 +86,7 @@ export const TmPayoutEvents = () => {
               FILTERS.PAYOUT_TOKEN,
             ]}
             onFiltersChange={handleFilters}
+            forManager
           />
           {payoutList.items?.length ? (
             <>
@@ -121,7 +122,7 @@ const Row = ({ item, onEdit }: IRow) => {
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
   const currency = useCurrency(payoutToken)
 
-  const dateFormat = 'MMM d, YYYY'
+  const dateFormat = 'MMM DD, YYYY'
 
   const clickView = () => {
     history.push({ pathname: routes.payoutItem(id), state: { cameFromManagerPage: true } })

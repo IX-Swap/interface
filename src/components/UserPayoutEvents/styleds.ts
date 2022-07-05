@@ -224,3 +224,12 @@ export const ViewMoreBtnContainer = styled.div`
     line-height: 16px;
   }
 `
+
+export const MyEventsEmptyText = styled.div`
+  color: ${({ theme }) => theme.text9};
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  margin: 20px 0px 56px;
+`
