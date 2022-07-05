@@ -1,11 +1,11 @@
 import {WebPage} from "./webPage";
 import { Locator, Page, BrowserContext} from '@playwright/test';
-import {MetamaskPage} from "./metamaskPage";
+import { expect } from '@playwright/test'
 
 export class LiquidityPoolsPage extends WebPage {
-  readonly metamaskPage: MetamaskPage;
   readonly addLiquidityButton: Locator;
   readonly firstAmountOfTokensField: Locator;
+  readonly secondAmountOfTokensField: Locator;
   readonly chooseFirstTokenDropdown: Locator;
   readonly chooseSecondTokenDropdown: Locator;
   readonly ethTokenItem: Locator;
@@ -22,11 +22,15 @@ export class LiquidityPoolsPage extends WebPage {
   readonly quarterRemovePercentageButton: Locator;
   readonly halfRemovePercentageButton: Locator;
   readonly halfAndQuarterRemovePercentageButton: Locator;
+  readonly addNewAmountToliqudityPoolButton: Locator;
+  readonly transactionSubmittedPopUpText: Locator;
+  readonly waitingForConfirmationPopUpText: Locator;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
     this.addLiquidityButton = page.locator('[data-testid="add-liquidity"]');
     this.firstAmountOfTokensField = page.locator('#add-liquidity-input-tokena >> [type="text"]');
+    this.secondAmountOfTokensField = page.locator('#add-liquidity-input-tokenb >> [type="text"]');
     this.chooseFirstTokenDropdown = page.locator('#add-liquidity-input-tokena button:has-text("Choose token")');
     this.chooseSecondTokenDropdown = page.locator('#add-liquidity-input-tokenb button:has-text("Choose token")');
     this.ethTokenItem = page.locator('[title="Ether"]');
@@ -43,8 +47,29 @@ export class LiquidityPoolsPage extends WebPage {
     this.approveRemovePoolButton = ('[data-testid="approve-currency-a-remove"]');
     this.removePoolButton = page.locator('[data-testid="approve-currency-b-remove"]');
     this.confirmRemovePoolButton = ('[data-testid="confirm-remove"]');
+    this.addNewAmountToliqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
+    this.transactionSubmittedPopUpText = page.locator('text=Transaction Submitted');
+    this.waitingForConfirmationPopUpText = page.locator('text=Waiting For Confirmation');
   }
 
+  // Assertions
+  async isTransactionSubmittedPopUpTextShown() {
+    await expect(this.transactionSubmittedPopUpText).toBeVisible();
+  }
+
+  async isWaitingForConfirmationPopUpTextShown() {
+    await expect(this.waitingForConfirmationPopUpText).toBeVisible();
+  }
+
+  async isConfirmSupplyButtonVisible() {
+    await expect(this.page.locator(this.confirmSupplyButton)).toBeVisible();
+  }
+
+  async isEthAmountThatWillBeReceivedIsShown(amount) {
+    await expect(this.page.locator(`text=${amount} nth=2`)).toBeVisible();
+  }
+
+  // Actions
   async clickQuarterRemovePercentageButton() {
     await this.quarterRemovePercentageButton.click();
   }
@@ -89,6 +114,10 @@ export class LiquidityPoolsPage extends WebPage {
     await this.firstAmountOfTokensField.fill(value);
   }
 
+  async fillSecondAmountOfTokensField(value) {
+    await this.secondAmountOfTokensField.fill(value);
+  }
+
   async clickIsxEthPoolDetailsDropdown() {
     await this.isxEthPoolDetailsDropdown.click();
   }
@@ -104,17 +133,40 @@ export class LiquidityPoolsPage extends WebPage {
   async clickRemovePoolButton() {
     await this.removePoolButton.click();
   }
-/* openNewPageByClick isn't working from pageObject
-  async removeCreatedLiqudityPool(page) {
+
+  async clickAddNewAmountToliqudityPoolButton() {
+    await this.addNewAmountToliqudityPoolButton.click();
+  }
+
+  async removeCreatedLiqudityPool(page, pageObject) {
     await this.clickIsxEthPoolDetailsDropdown();
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();
+
     const approveMetamaskPopUp = await this.openNewPageByClick(page, this.approveRemovePoolButton);
-    await approveMetamaskPopUp.click(this.metamaskPage.signButton);
+    await approveMetamaskPopUp.click(pageObject.signButton);
+
     await this.clickRemovePoolButton();
+
     const confirmMetamaskPopUp = await this.openNewPageByClick(page, this.confirmRemovePoolButton);
-    await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+    await confirmMetamaskPopUp.click(pageObject.connectMetamaskPopUpButton);
+
     await this.clickTransactionSubmittedPopUpCloseButton();
   }
- */
+
+  async createLiqudityPoolWithDefinedAmountOfEth(page, pageObject, ethAmount) {
+    await this.clickAddLiquidityButton();
+    await this.clickChooseFirstTokenDropdown();
+    await this.clickEthTokenItem();
+    await this.fillFirstAmountOfTokensField(ethAmount);
+    await this.clickChooseSecondTokenDropdown() ;
+    await this.clickIxsTokenItem();
+
+    await this.clickSupplyButton();
+
+    const metamaskPopUp = await this.openNewPageByClick(page, this.confirmSupplyButton);
+    await metamaskPopUp.click(pageObject.connectMetamaskPopUpButton);
+
+    await this.clickTransactionSubmittedPopUpCloseButton();
+  }
 }

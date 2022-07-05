@@ -67,10 +67,10 @@ export const test = base.extend<ixsFixtures>({
   },
 
   kycScreen: async ({ page, context }, use) => {
-    await use(new KycScreen(page));
+    await use(new KycScreen(page,context));
   },
 
   liquidityPoolsPage: async ({ page, context }, use) => {
-    await use(new LiquidityPoolsPage(page));
+    await use(new LiquidityPoolsPage(page, context));
   },
 });
