@@ -15,6 +15,7 @@ import { InstitutionalInvestorAgreements } from 'app/pages/identity/components/I
 import { Divider } from 'ui/Divider'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export interface InvestorDeclarationFormProps {
   identityType?: IdentityType
@@ -65,7 +66,13 @@ export const InvestorDeclarationForm = ({
     primaryOfferingServices,
     digitalSecuritiesIssuance,
     allServices,
-    isInstitutionalInvestor
+    isInstitutionalInvestor,
+    financialAsset,
+    income,
+    personalAssets,
+    jointlyHeldAccount,
+    optInAgreementsOptOut,
+    optInAgreementsSafeguards
   } = formState.dirtyFields
 
   useEffect(() => {
@@ -83,6 +90,12 @@ export const InvestorDeclarationForm = ({
     digitalSecuritiesIssuance,
     allServices,
     isInstitutionalInvestor,
+    financialAsset,
+    income,
+    personalAssets,
+    jointlyHeldAccount,
+    optInAgreementsOptOut,
+    optInAgreementsSafeguards,
     trigger
   ])
 
@@ -181,7 +194,7 @@ export const InvestorDeclarationForm = ({
         <CorporateDocuments corporateType={corporateType} />
       )}
 
-      {/* <ValidateOnMount /> */}
+      <ValidateOnMount />
     </Grid>
   )
 }

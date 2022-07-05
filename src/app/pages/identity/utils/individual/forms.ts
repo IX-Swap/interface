@@ -84,6 +84,9 @@ export const getTaxDeclarationFormValues = (
 
   if (declarations?.tax?.fatca !== undefined) {
     result.fatca = declarations.tax.fatca ? 'yes' : 'no'
+    if (declarations.tax.fatca) {
+      result.usTin = declarations.tax.usTin
+    }
   }
 
   return result
@@ -92,7 +95,10 @@ export const getTaxDeclarationFormValues = (
 export const getInvestorDeclarationFormValues = (
   data: IndividualIdentity
 ): IndividualInvestorDeclarationFormValues => {
-  return data?.declarations?.investorsStatus
+  return {
+    ...data?.declarations?.investorsStatus,
+    ...getDocumentsFormValues(data)
+  }
 }
 
 export const getDocumentsFormValues = (

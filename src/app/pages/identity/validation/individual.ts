@@ -6,7 +6,10 @@ import {
   nameSchema,
   birthdaySchema,
   taxIdentificationNumberSchema,
-  validationMessages
+  validationMessages,
+  documentsSchema,
+  individualInvestorStatusDeclarationItemSchema,
+  optInAgreementsDependentValueSchema
 } from 'validation/shared'
 import {
   IndividualAgreementsFormValues,
@@ -14,9 +17,9 @@ import {
   IndividualFinancialInfoFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues,
-  TaxResidency
+  TaxResidency,
+  IndividualInvestorDeclarationFormValues
 } from 'app/pages/identity/types/forms'
-import { DataroomFile } from 'types/dataroomFile'
 
 export const personalInfoSchema = yup
   .object()
@@ -128,22 +131,34 @@ export const taxDeclarationSchema = yup
 
 export const individualInvestorStatusDeclarationSchema = yup
   .object()
-  .shape<any>({
-    financialAsset: yup.bool().required(validationMessages.required),
-    income: yup.bool().required(validationMessages.required),
-    personalAssets: yup.bool().required(validationMessages.required),
-    jointlyHeldAccount: yup.bool().required(validationMessages.required),
+  .shape<IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues>(
+    {
+      financialAsset: individualInvestorStatusDeclarationItemSchema,
+      income: individualInvestorStatusDeclarationItemSchema,
+      personalAssets: individualInvestorStatusDeclarationItemSchema,
+      jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
 
-    optInAgreements: yup
-      .bool()
-      .oneOf([true], 'Opt-In Requirement is required')
-      .required(validationMessages.required),
+      optInAgreementsOptOut: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required),
+      optInAgreementsSafeguards: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required),
 
-    primaryOfferingServices: yup.bool(),
-    digitalSecurities: yup.bool(),
-    digitalSecuritiesIssuance: yup.bool(),
-    allServices: yup.bool()
-  })
+      primaryOfferingServices: optInAgreementsDependentValueSchema,
+      digitalSecurities: optInAgreementsDependentValueSchema,
+      digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
+      allServices: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
+      evidenceOfAccreditation: documentsSchema,
+      // @ts-expect-error
+      proofOfAddress: documentsSchema,
+      // @ts-expect-error
+      proofOfIdentity: documentsSchema
+    }
+  )
   .test(
     'investorDeclarations',
     'Please choose at least one option under "Investor Status Declaration" section',
@@ -169,23 +184,6 @@ export const individualInvestorStatusDeclarationSchema = yup
     }
   )
 
-export const individualInvestorDocumentsSchema = yup
-  .object()
-  .shape<IdentityDocumentsFormValues>({
-    evidenceOfAccreditation: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    proofOfAddress: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    proofOfIdentity: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required)
-  })
-
 export const individualInvestorAgreementsSchema = yup
   .object()
   .shape<IndividualAgreementsFormValues>({
@@ -196,7 +194,6 @@ export const individualInvestorAgreementsSchema = yup
 
 export const individualInvestorValidationSchema = yup.object().shape<any>({
   ...financialInfoSchema.fields,
-  ...individualInvestorDocumentsSchema.fields,
   ...individualInvestorStatusDeclarationSchema.fields,
   ...personalInfoSchema.fields,
   ...taxDeclarationSchema.fields

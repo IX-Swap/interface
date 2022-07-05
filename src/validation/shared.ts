@@ -185,6 +185,24 @@ export const investorStatusDeclarationItemSchema = yup
   )
   .required(validationMessages.required)
 
+export const individualInvestorStatusDeclarationItemSchema = yup
+  .bool()
+  .oneOf([true, false])
+  .test(
+    'oneOfInvestorStatusDeclarationValuesShouldBeTrue',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function () {
+      const parent = this.parent
+      return (
+        (parent.financialAsset as boolean) ||
+        (parent.income as boolean) ||
+        (parent.personalAssets as boolean) ||
+        (parent.jointlyHeldAccount as boolean)
+      )
+    }
+  )
+  .required(validationMessages.required)
+
 export const optInAgreementsDependentValueSchema = yup
   .bool()
   .test(
@@ -193,7 +211,10 @@ export const optInAgreementsDependentValueSchema = yup
     function () {
       const parent = this.parent
 
-      if (parent.optInAgreements as boolean) {
+      if (
+        (parent.optInAgreements as boolean) ||
+        (parent.optInAgreementsOptOut as boolean)
+      ) {
         return (
           (parent.digitalSecurities as boolean) ||
           (parent.primaryOfferingServices as boolean) ||
