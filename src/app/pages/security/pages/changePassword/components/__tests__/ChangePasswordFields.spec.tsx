@@ -32,7 +32,6 @@ describe('ChangePasswordFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        type: 'password',
         label: 'Old Password',
         name: 'oldPassword'
       }),
@@ -41,7 +40,6 @@ describe('ChangePasswordFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        type: 'password',
         label: 'New Password',
         name: 'newPassword'
       }),
@@ -50,7 +48,6 @@ describe('ChangePasswordFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        type: 'password',
         label: 'Confirm New Password',
         name: 'confirmPassword'
       }),
