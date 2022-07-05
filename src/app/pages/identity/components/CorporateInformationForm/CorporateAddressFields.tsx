@@ -6,6 +6,7 @@ import { Grid } from '@mui/material'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export const CorporateAddressFields = () => {
   const { control, watch, reset, getValues } = useFormContext()
@@ -46,6 +47,7 @@ export const CorporateAddressFields = () => {
           </Grid>
         </>
       ) : null}
+      <ValidateOnMount />
     </Grid>
   )
 }

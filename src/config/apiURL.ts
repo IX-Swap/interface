@@ -36,7 +36,8 @@ export const identityURL = {
       `/identity/corporates/${userId}/${corporateId}`,
     submit: (id?: string) => `/identity/corporates/${id}/submit`,
     get: (userId?: string, identityId?: string) =>
-      `/identity/corporates/${userId}/${identityId}`
+      `/identity/corporates/${userId}/${identityId}`,
+    validateData: '/identity/corporates/check'
   },
   individuals: {
     create: (userId?: string) => `/identity/individuals/${userId}`,

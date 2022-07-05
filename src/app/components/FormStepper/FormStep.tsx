@@ -88,30 +88,30 @@ export const FormStep = (props: FormStepProps) => {
     return await mutation(payload).then(onSubmitSuccess)
   }
 
-  const getValidationSchema = () => {
-    if (isLastStep) {
-      return step.validationSchema
-    }
-
-    if (completed.includes(index)) {
-      return step.validationSchema
-    }
-
-    return undefined
-  }
-
   const nextCallback = () => {
     setCompleted?.()
     setActiveStep(activeStep + 1)
   }
 
+  const getSchema = (schema?: any) => {
+    if (typeof schema === 'function') {
+      return schema(data)
+    }
+    return schema
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={getValidationSchema()}
+      validationSchema={
+        completed.includes(index)
+          ? getSchema(step.validationSchema)
+          : getSchema(step.initialValidationSchema)
+      }
       onSubmit={handleSubmit}
       allowInvalid
       id={`${step.formId ?? 'form'}-${index}`}
+      mode='onChange'
     >
       <SaveOnNavigate
         transformData={step.getRequestPayload}
