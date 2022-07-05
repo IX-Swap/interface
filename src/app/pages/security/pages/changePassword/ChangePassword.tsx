@@ -24,11 +24,11 @@ export const ChangePassword = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader styled={false} title='Change Password' />
+        <PageHeader styled={false} title='Change Password' alignment='center' />
       </Grid>
       <RootContainer>
         <Grid container alignItems='center' justifyContent='center'>
-          <Grid container lg={4} item>
+          <Grid container lg={5} item>
             <Form
               defaultValues={defaultValues}
               validationSchema={changePasswordFormValuesSchema}
@@ -36,10 +36,10 @@ export const ChangePassword = () => {
             >
               <Paper elevation={1}>
                 <Box p={3}>
-                  <Grid container>
+                  <Grid container spacing={3}>
                     <ChangePasswordFields />
                     <Grid item xs={12} md={12} lg={12}>
-                      <Submit>Change</Submit>
+                      <Submit fullWidth>Change</Submit>
                     </Grid>
                   </Grid>
                 </Box>
