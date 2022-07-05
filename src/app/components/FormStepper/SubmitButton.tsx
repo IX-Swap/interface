@@ -1,5 +1,5 @@
 import { Box, Button, Tooltip, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MutationResultPair } from 'react-query'
 import { ButtonProps } from '@mui/material/Button'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
@@ -17,6 +17,9 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   const isSubmitted = data?.status === 'Submitted'
   const isApproved = data?.status === 'Approved'
 
+  const [validating, setValidating] = useState(false)
+  const [isValid, setIsValid] = useState(true)
+
   const getButtonText = () => {
     if (isApproved) {
       return 'Approved'
@@ -29,11 +32,25 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     return 'Submit Identity'
   }
 
-  const isValid: boolean =
-    step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
+  useEffect(() => {
+    void checkValidation()
+  }, [data]) // eslint-disable-line
+
+  const checkValidation = async () => {
+    setValidating(true)
+    try {
+      const isValid = await step.validationSchema?.isValid(
+        step.getFormValues(data)
+      )
+      setIsValid(isValid)
+    } catch (error) {
+    } finally {
+      setValidating(false)
+    }
+  }
 
   const handleSave = async () => {
-    return await save(data._id)
+    return await save(data)
   }
 
   return (
@@ -55,7 +72,9 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           variant='contained'
           color='primary'
           onClick={async () => void handleSave()}
-          disabled={isApproved || isLoading || isSubmitted || !isValid}
+          disabled={
+            isApproved || isLoading || isSubmitted || validating || !isValid
+          }
           disableElevation
           fullWidth={fullWidth}
           size='large'

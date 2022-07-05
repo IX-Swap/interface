@@ -52,12 +52,25 @@ export const MyInfo = () => {
     <Box width='100%' maxWidth={480}>
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Typography align='center' variant='h3' textTransform='uppercase'>
+          <Typography
+            align='center'
+            variant='h2'
+            textTransform='uppercase'
+            fontFamily='Clash Display'
+            fontSize={32}
+            fontWeight={700}
+            lineHeight='39px'
+          >
             {errorMap[errorType].title}
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography align='center' variant='body1'>
+          <Typography
+            align='center'
+            variant='body1'
+            fontSize={16}
+            lineHeight='19px'
+          >
             {errorMap[errorType].message}
           </Typography>
         </Grid>

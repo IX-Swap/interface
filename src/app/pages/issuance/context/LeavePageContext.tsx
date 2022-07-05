@@ -8,15 +8,16 @@ export const LeavePageContext = createContext<{
 } | null>(null)
 
 export const LeavePageContextWrapper: React.FC = ({ children }) => {
-  const [showPrompt, setShowPrompt] = useState(false)
-
-  const openPrompt = () => setShowPrompt(true)
-  const closePrompt = () => setShowPrompt(false)
+  const [promptCounter, setPromptCounter] = useState(0)
+  const openPrompt = () => setPromptCounter(count => count + 1)
+  const closePrompt = () => setPromptCounter(count => count - 1)
 
   return (
-    <LeavePageContext.Provider value={{ openPrompt, closePrompt, showPrompt }}>
+    <LeavePageContext.Provider
+      value={{ openPrompt, closePrompt, showPrompt: promptCounter > 0 }}
+    >
       {children}
-      <LeavePagePrompt showPrompt={showPrompt} />
+      <LeavePagePrompt showPrompt={promptCounter > 0} />
     </LeavePageContext.Provider>
   )
 }

@@ -118,11 +118,6 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   disableInvestInCampaign?: boolean
 }
 
-export type DeploymentInfoFormValues = Omit<
-  DeploymentInfo,
-  '_id' | 'createdBy' | 'createdAt' | 'updatedAt' | '__v'
->
-
 export type DSOFormValues = Omit<
   DigitalSecurityOffering,
   | '_id'

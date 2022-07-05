@@ -19,13 +19,15 @@ export interface ConfirmOrderActionsProps {
 
 export const OTCOrderActions = ({ item }: OTCOrderActionsProps) => {
   const showCancel = showCancelButton({ item })
+  const classes = useStyles()
+
   const showDropdown =
     Number(item?.matches?.length) > 0 && item.orderType === 'SELL'
   return (
     <Box display='flex' justifyContent='space-between'>
       {showCancel && <CancelOTCOrderButton variant='text' order={item} />}
       {!showCancel && (
-        <Box textAlign={'left'}>{renderOTCOrderStatus({ item })}</Box>
+        <Box className={classes.status}>{renderOTCOrderStatus({ item })}</Box>
       )}
       {showDropdown && <DropDownOTCRow order={item} />}
     </Box>

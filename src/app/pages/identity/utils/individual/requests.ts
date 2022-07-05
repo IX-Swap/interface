@@ -3,6 +3,7 @@ import {
   IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
+  FinancialAndTaxDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
@@ -65,6 +66,16 @@ export const getTaxDeclarationRequestPayload = (
   }
 
   return payload
+}
+
+export const getFinancialAndTaxDeclarationRequestPayload = (
+  values: FinancialAndTaxDeclarationFormValues
+) => {
+  const { taxResidencies, singaporeOnly, fatca, usTin, ...other } = values
+  const payload = getTaxDeclarationRequestPayload(values)
+  payload.declarations.tax.usTin = usTin
+
+  return { ...payload, ...other }
 }
 
 export const getInvestorDeclarationRequestPayload = (

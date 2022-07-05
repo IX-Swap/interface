@@ -9,6 +9,7 @@ import { user } from '__fixtures__/user'
 import * as ReactQuery from 'react-query'
 import { history } from 'config/history'
 import { identityURL } from 'config/apiURL'
+import { getCorporateSubmitPayload } from 'app/pages/identity/utils/corporate/requests'
 
 describe('useSubmitCorporate', () => {
   const callback = jest.fn()
@@ -49,8 +50,11 @@ describe('useSubmitCorporate', () => {
       await waitFor(
         () => {
           const [mutate] = result.current
-          void mutate()
-          expect(apiFn).toHaveBeenCalledWith(uri, {})
+          void mutate(corporate)
+          expect(apiFn).toHaveBeenCalledWith(
+            uri,
+            getCorporateSubmitPayload(corporate)
+          )
           expect(showSnackbar).toHaveBeenCalled()
           expect(callback).toHaveBeenCalled()
         },

@@ -184,6 +184,17 @@ export const individualInvestorStatusDeclarationSchema = yup
     }
   )
 
+export const individualInvestorDocumentsSchema = yup
+  .object()
+  .shape<IdentityDocumentsFormValues>({
+    // @ts-expect-error
+    evidenceOfAccreditation: documentsSchema,
+    // @ts-expect-error
+    proofOfAddress: documentsSchema,
+    // @ts-expect-error
+    proofOfIdentity: documentsSchema
+  })
+
 export const individualInvestorAgreementsSchema = yup
   .object()
   .shape<IndividualAgreementsFormValues>({
@@ -196,5 +207,10 @@ export const individualInvestorValidationSchema = yup.object().shape<any>({
   ...financialInfoSchema.fields,
   ...individualInvestorStatusDeclarationSchema.fields,
   ...personalInfoSchema.fields,
+  ...taxDeclarationSchema.fields
+})
+
+export const financialAndTaxDeclarationSchema = yup.object().shape<any>({
+  ...financialInfoSchema.fields,
   ...taxDeclarationSchema.fields
 })

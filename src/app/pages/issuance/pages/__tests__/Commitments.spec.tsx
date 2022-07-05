@@ -63,13 +63,6 @@ jest.mock(
   })
 )
 
-jest.mock(
-  'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog',
-  () => ({
-    CloseDealDialog: jest.fn(() => null)
-  })
-)
-
 jest.mock('components/VSpacer', () => ({
   VSpacer: jest.fn(() => null)
 }))

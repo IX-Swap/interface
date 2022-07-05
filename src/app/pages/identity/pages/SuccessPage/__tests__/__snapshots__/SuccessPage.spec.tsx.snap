@@ -109,10 +109,9 @@ Object {
         </div>
         <div
           class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
-          style="padding-top: 0px;"
         >
           <div
-            class="makeStyles-boxAlert-2 MuiBox-root css-1pxauac"
+            class="makeStyles-boxAlert-2 MuiBox-root css-1n7ubnh"
           >
             <div
               class="MuiGrid-root makeStyles-iconSuccess-4 css-vj1n65-MuiGrid-root"
@@ -201,10 +200,9 @@ Object {
       </div>
       <div
         class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
-        style="padding-top: 0px;"
       >
         <div
-          class="makeStyles-boxAlert-2 MuiBox-root css-1pxauac"
+          class="makeStyles-boxAlert-2 MuiBox-root css-1n7ubnh"
         >
           <div
             class="MuiGrid-root makeStyles-iconSuccess-4 css-vj1n65-MuiGrid-root"

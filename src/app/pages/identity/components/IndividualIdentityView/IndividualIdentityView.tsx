@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper, Box } from '@mui/material'
+import { Grid } from '@mui/material'
 import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { privateClassNames } from 'helpers/classnames'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
@@ -9,6 +9,7 @@ import { FinancialView } from './FinancialView/FinancialView'
 import { TaxDeclarationView } from './TaxDeclarationView/TaxDeclarationView'
 import { InvestorDeclarationView } from './InvestorDeclarationView/InvestorDeclarationView'
 import { IndividualIdentity } from '../../types/forms'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
@@ -18,45 +19,65 @@ export const IndividualIdentityView = ({
   data
 }: IndividualIdentityViewProps) => {
   return (
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Personal Information' />
-          <Box py={2} />
-          <IndividualInfoView data={data} />
-        </Paper>
+    <Grid container direction={'column'} spacing={2}>
+      <Grid item>
+        <FieldContainer>
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <FormSectionHeader title='Personal Information' />
+            </Grid>
+            <Grid item>
+              <IndividualInfoView data={data} />
+            </Grid>
+          </Grid>
+        </FieldContainer>
       </Grid>
 
-      <Grid item xs={12} className={privateClassNames()}>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Address' />
-          <Box py={2} />
-          <AddressView data={data.address} />
-        </Paper>
+      <Grid item className={privateClassNames()}>
+        <FieldContainer>
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <FormSectionHeader title='Address' />
+            </Grid>
+            <Grid item>
+              <AddressView data={data.address} />
+            </Grid>
+          </Grid>
+        </FieldContainer>
       </Grid>
 
-      <Grid item xs={12} className={privateClassNames()}>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Financial Information' />
-          <Box py={2} />
-          <FinancialView data={data} />
-        </Paper>
+      <Grid item className={privateClassNames()}>
+        <FieldContainer>
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <FormSectionHeader title='Financial Information' />
+            </Grid>
+            <Grid item>
+              <FinancialView data={data} />
+            </Grid>
+          </Grid>
+        </FieldContainer>
       </Grid>
 
-      <Grid item xs={12} className={privateClassNames()}>
+      <Grid item className={privateClassNames()}>
         <TaxDeclarationView data={data} />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item>
         <InvestorDeclarationView data={data} />
       </Grid>
 
-      <Grid item xs={12}>
-        <Paper sx={{ borderRadius: 2, p: 5 }}>
-          <FormSectionHeader title='Documents' />
-          <Box py={2} />
-          <IdentityDocumentsView data={data.documents} type='individual' />
-        </Paper>
+      <Grid item>
+        <FieldContainer>
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <FormSectionHeader title='Documents' />
+            </Grid>
+            <Grid item>
+              <IdentityDocumentsView data={data.documents} type='individual' />
+            </Grid>
+          </Grid>
+        </FieldContainer>
       </Grid>
     </Grid>
   )

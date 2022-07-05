@@ -22,13 +22,8 @@ export const SuccessPage = () => {
       <Grid item xs={12} className={classes.pageHeader}>
         <PageHeader title={name} />
       </Grid>
-      <RootContainer style={{ paddingTop: 0 }}>
-        <Box
-          className={classes.boxAlert}
-          mb={2}
-          height={372}
-          mt={isMobile ? 5 : 0}
-        >
+      <RootContainer>
+        <Box className={classes.boxAlert} mb={2} height={372}>
           <Grid className={classes.iconSuccess}>
             <Success height={isMobile ? 60 : 80} width={isMobile ? 60 : 80} />
           </Grid>

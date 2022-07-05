@@ -112,8 +112,13 @@ export interface IndividualTaxDeclarationFormValues {
   usTin?: string
 }
 
+export interface FinancialAndTaxDeclarationFormValues
+  extends IndividualFinancialInfoFormValues,
+    IndividualTaxDeclarationFormValues {}
+
 export interface IndividualInvestorDeclarationFormValues
-  extends IndividualInvestorStatus,
+  extends IdentityDocumentsFormValues,
+    IndividualInvestorStatus,
     OptOutRequirements,
     OptInAgreements {}
 
@@ -283,8 +288,8 @@ export interface OptOutRequirements {
 
 export interface OptInAgreements {
   optInAgreements: boolean
-  optInAgreementsSafeguards?: boolean
-  optInAgreementsOptOut?: boolean
+  optInAgreementsSafeguards: boolean
+  optInAgreementsOptOut: boolean
 }
 
 export interface IndividualInvestorStatus {

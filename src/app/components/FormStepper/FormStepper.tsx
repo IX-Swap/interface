@@ -18,6 +18,7 @@ export interface FormStepperStep {
   getFormValues: any
   getRequestPayload: any
   validationSchema?: any
+  initialValidationSchema?: any
   formId?: string
 }
 
@@ -79,7 +80,7 @@ export const FormStepper = (props: FormStepperProps) => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('md'))
 
-  const getStepFilterValue = () => {
+  const getStepFilterValue: () => number | undefined = () => {
     const stepByFilterIndex = steps.findIndex(
       (step: FormStepperStep) => step.label === stepFilter
     )
@@ -111,29 +112,21 @@ export const FormStepper = (props: FormStepperProps) => {
     }
   }
 
-  const getCompletedStatus = (
-    lastStep: boolean,
-    isValid: boolean,
-    index: number
-  ) => {
+  const getCompletedStatus = (lastStep: boolean, index: number) => {
     if (lastStep) {
       return data !== undefined
         ? data?.status === 'Submitted' || data?.status === 'Approved'
         : false
     }
 
-    return completed.includes(index) ? isValid : false
+    return completed.includes(index)
   }
 
-  const getErrorStatus = (
-    lastStep: boolean,
-    isValid: boolean,
-    index: number
-  ) => {
+  const getErrorStatus = (lastStep: boolean, index: number) => {
     if (lastStep) {
       return data?.status === 'Rejected'
     }
-    return completed.includes(index) ? !isValid : false
+    return false
   }
 
   const getStepStatus = (
@@ -141,14 +134,11 @@ export const FormStepper = (props: FormStepperProps) => {
     index: number,
     activeStepValue: number
   ) => {
-    const isValid: boolean =
-      step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
-
     const lastStep = index === steps.length - 1
     return {
       active: index === activeStepValue,
-      completed: getCompletedStatus(lastStep, isValid, index),
-      error: getErrorStatus(lastStep, isValid, index)
+      completed: getCompletedStatus(lastStep, index),
+      error: getErrorStatus(lastStep, index)
     }
   }
 
@@ -206,12 +196,6 @@ export const FormStepper = (props: FormStepperProps) => {
                         steps[activeStep].formId ?? 'form'
                       }-${activeStep}`}
                       disabled={
-                        (activeStep === steps.length - 1 &&
-                          !(
-                            (steps[activeStep].validationSchema?.isValidSync(
-                              steps[activeStep].getFormValues(data)
-                            ) as boolean) ?? true
-                          )) ||
                         data?.status === 'Submitted' ||
                         data?.status === 'Approved'
                       }
@@ -231,6 +215,12 @@ export const FormStepper = (props: FormStepperProps) => {
                         index,
                         activeStep
                       )}
+                      stepData={{
+                        step: steps[index],
+                        formData: data,
+                        isLast: index === steps.length - 1,
+                        shouldValidate: completed.includes(index)
+                      }}
                       onClick={handleStepButtonClick(index)}
                     >
                       {formStep.label}

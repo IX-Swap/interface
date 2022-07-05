@@ -11,12 +11,10 @@ export interface DocumentsViewProps {
 
 export const IdentityDocumentsView = (props: DocumentsViewProps) => {
   const { data: documents } = props
-  console.log('test', props)
 
   return (
     <Grid container spacing={3}>
       {documents.map((document, index) => {
-        console.log('dicusdasd', document)
         return (
           <Grid
             item

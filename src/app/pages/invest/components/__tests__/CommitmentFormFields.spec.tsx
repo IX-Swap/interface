@@ -92,8 +92,7 @@ describe('CommitmentFormFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
-        name: 'otp',
-        label: 'OTP'
+        name: 'otp'
       }),
       {}
     )

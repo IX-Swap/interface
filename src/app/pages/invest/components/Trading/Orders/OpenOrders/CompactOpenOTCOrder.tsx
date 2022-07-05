@@ -18,6 +18,7 @@ import { ToggleDetailsButton } from 'app/pages/invest/components/Trading/Orders/
 import { MobileNestedOrders } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders'
 import { OpenOTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { useAppTheme } from 'hooks/useAppTheme'
 
 export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
@@ -39,7 +40,7 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
   const { columns, items } = props
   const { showEmptyState, mobileRowColor } = useOpenOrderState(props)
   const classes = useStyles()
-
+  const { theme } = useAppTheme()
   if (showEmptyState) {
     return <OpenOrdersEmptyState />
   }
@@ -52,7 +53,10 @@ export const CompactOpenOTCOrder = (props: CompactBodyProps<OpenOTCOrder>) => {
           <TableRow
             key={i}
             style={{
-              backgroundColor: mobileRowColor(item)
+              backgroundColor: mobileRowColor(item),
+              borderBottom: `12px solid ${
+                theme.palette.background.paper ?? 'white'
+              }`
             }}
           >
             <TableCell>

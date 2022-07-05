@@ -1,4 +1,4 @@
-import { Button, FormControlLabel, Grid } from '@mui/material'
+import { Button, FormControlLabel, Grid, Typography } from '@mui/material'
 import { generateSingPassAuthorizeUrl } from 'hooks/utils'
 import React, { useState } from 'react'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
@@ -47,14 +47,21 @@ export const RetrieveButton = ({
               bgcolor: '#F0F2F7',
               color: '#A2ACBF'
             },
-            textTransform: 'capitalize'
+            textTransform: 'uppercase'
           }}
           fullWidth
           disabled={!checked && !hideCheckBox}
           variant='contained'
           href={authoriseUrl}
         >
-          {label}
+          <Typography
+            component='span'
+            fontWeight={900}
+            fontSize={12}
+            lineHeight='130%'
+          >
+            {label}
+          </Typography>
         </Button>
       </Grid>
     </Grid>
