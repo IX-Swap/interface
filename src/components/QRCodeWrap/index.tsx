@@ -9,6 +9,14 @@ const Wrap = styled.div`
   background: #fff;
   border-radius: 10px;
   position: relative;
+  svg {
+    > path[fill='#000000'] {
+      fill: #000000;
+    }
+    > path[fill='#FFFFFF'] {
+      fill: #ffffff;
+    }
+  }
 `
 export const QRCodeWrap = ({
   value,

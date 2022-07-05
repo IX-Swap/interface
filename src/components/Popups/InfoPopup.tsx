@@ -8,6 +8,12 @@ import { AutoRow } from '../Row'
 const RowNoFlex = styled(AutoRow)`
   flex-wrap: nowrap;
   padding-right: 15px;
+  path {
+    fill: none;
+  }
+  line {
+    stroke: inherit;
+  }
 `
 
 export default function InfoPopup({ success, summary }: { success?: boolean; summary?: string }) {
