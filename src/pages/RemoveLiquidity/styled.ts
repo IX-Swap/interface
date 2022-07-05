@@ -38,9 +38,6 @@ export const RemovedLiquidityWrapper = styled(DarkCard)`
   padding-bottom: 5px;
 `
 
-export const RemoveLiquidityBody = styled(AppBody)`
-  background: ${({ theme }) => theme.bgG8};
-`
 export const ModalHeaderWrapper = styled.div`
   padding-bottom: 1rem;
   margin-left: 40px;

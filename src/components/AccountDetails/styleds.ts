@@ -122,6 +122,8 @@ export const IconWrapperWithBg = styled(IconWrapper)<{ bg?: string; padding?: st
   border-radius: 100%;
   justify-content: center;
   align-items: center;
+  min-width: 24px;
+  min-height: 24px;
 `
 
 export const TransactionListWrapper = styled.div`

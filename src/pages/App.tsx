@@ -15,7 +15,6 @@ import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import Header from 'components/Header'
 import Popups from 'components/Popups'
 import ErrorBoundary from 'components/ErrorBoundary'
-import PlaygroundModal from 'components/PlaygroundModal'
 import Web3ReactManager from 'components/Web3ReactManager'
 import GoogleAnalyticsReporter from 'components/analytics/GoogleAnalyticsReporter'
 
@@ -31,6 +30,7 @@ import { useModalOpen } from 'state/application/hooks'
 import { useAccount, useGetMe } from 'state/user/hooks'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
+import { CustomHeaders } from 'components/CustomHeaders'
 
 import { ApplicationModal, clearStore } from 'state/application/actions'
 
@@ -185,8 +185,8 @@ export default function App() {
       <Route component={ApeModeQueryParamReader} />
       <AppBackground />
       <Popups />
+      <CustomHeaders />
       <AppWrapper>
-        <PlaygroundModal />
         {!isAdminKyc && <Header />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />

@@ -1,15 +1,14 @@
 import React, { FC } from 'react'
 import { Flex } from 'rebass'
+import { NavLink } from 'react-router-dom'
 
 import Column from 'components/Column'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
-import { FeaturedTokenCard } from './styleds'
-import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
-import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
-import { NavLink } from 'react-router-dom'
+import { FeaturedTokenCard, StyledNonTradable, StyledTradable } from './styleds'
 
 interface Props {
   token: any
@@ -30,6 +29,8 @@ const Info: FC<InfoProps> = ({ label, title }: InfoProps) => {
 }
 
 export const FeaturedToken: FC<Props> = ({ token }: Props) => {
+  const { config } = useWhitelabelState()
+
   return (
     <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={`/security-tokens/${token.id}`}>
       <FeaturedTokenCard>
@@ -37,9 +38,9 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
           <MouseoverTooltip
             style={{ padding: 8 }}
             placement="top"
-            text={`${token.token ? 'Ready' : 'Not ready'} for trading on IX Swap`}
+            text={`${token.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
           >
-            {token.token ? <Tradable width={22} height={22} /> : <NonTradable width={22} height={22} />}
+            {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
           </MouseoverTooltip>
         </Flex>
         <Flex alignItems="center" marginBottom="32px">

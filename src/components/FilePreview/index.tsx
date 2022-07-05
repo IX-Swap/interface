@@ -6,8 +6,7 @@ import { KYCStatusIcons } from 'pages/KYC/styleds'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { ButtonText } from 'components/Button'
 
-import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
-import { Wrapper } from './styleds'
+import { Wrapper, StyledPdfImage } from './styleds'
 
 interface Props {
   index: number
@@ -22,7 +21,7 @@ export const FilePreview: FC<Props> = ({ file, style, handleDeleteClick, withBac
 
   return (
     <Wrapper withBackground={withBackground} marginBottom="10px" width="fit-content" alignItems="center" style={style}>
-      <PdfImage style={{ minWidth: 32, minHeight: 32 }} />
+      <StyledPdfImage style={{ minWidth: 32, minHeight: 32 }} />
       <TYPE.subHeader
         style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
         lineHeight="40px"

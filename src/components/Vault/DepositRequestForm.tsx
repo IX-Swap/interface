@@ -129,7 +129,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
         </BlueGreyCard>
       </Column>
       <ArrowWrapper>
-        <ArrowDown width="22px" height="22px" color={`${theme.text2}80`} />
+        <ArrowDown width="22px" height="22px" color={theme.text9} />
       </ArrowWrapper>
       <Column style={{ gap: '25px', marginTop: '16px' }}>
         <BlueGreyCard>

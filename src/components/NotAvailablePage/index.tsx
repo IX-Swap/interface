@@ -11,6 +11,7 @@ import { SupportedChainId } from 'constants/chains'
 import { ButtonIXSGradient } from 'components/Button'
 import { useWalletModalToggle } from 'state/application/hooks'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import {
   Container,
@@ -27,7 +28,7 @@ export const NotAvailablePage = () => {
   const { chainId, library, account } = useActiveWeb3React()
   const { pathname } = useLocation()
   const [cookies] = useCookies(['annoucementsSeen'])
-
+  const { config } = useWhitelabelState()
   const toggleWalletModal = useWalletModalToggle()
 
   const farming = ['/vesting', '/staking'].includes(pathname)
@@ -42,7 +43,7 @@ export const NotAvailablePage = () => {
     return (
       <ConnectWalletContainer hasAnnouncement={!cookies.annoucementsSeen}>
         <div>
-          <Trans>Welcome to IX Swap</Trans>
+          <Trans>Welcome to {config?.name || 'IX Swap'}</Trans>
         </div>
         <div>Please connect your wallet to use the application.</div>
         <ButtonIXSGradient onClick={toggleWalletModal}>Connect Wallet</ButtonIXSGradient>
@@ -74,10 +75,10 @@ export const NotAvailablePage = () => {
   return (
     <Container>
       <Title>
-        {t`IX Swap is not available`}
+        {t`${config?.name || 'IX Swap'} is not available`}
         <br /> {t`on this Blockchain network`}
       </Title>
-      <Info>{t`IX Swap is available only on:`}</Info>
+      <Info>{t`${config?.name || 'IX Swap'} is available only on:`}</Info>
 
       <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (

@@ -7,16 +7,16 @@ import { isMobile } from 'react-device-detect'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { TYPE } from 'theme'
-import { Pagination } from 'components/AdminAccreditationTable/Pagination'
+import { Pagination } from 'components/Pagination'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useFetchIssuers, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { RowCenter } from 'components/Row'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
-import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
-import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
-import { StyledSearchInput } from './styleds'
+import { StyledSearchInput, StyledNonTradable, StyledTradable } from './styleds'
+
 interface Props {
   tokens: any[]
   page: number
@@ -44,6 +44,8 @@ const Header = () => {
 }
 
 const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
+  const { config } = useWhitelabelState()
+
   return (
     <>
       {tokens.map((token: any, index) => (
@@ -79,9 +81,9 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
               <MouseoverTooltip
                 style={{ padding: 8 }}
                 placement="top"
-                text={`${token?.token ? 'Ready' : 'Not ready'} for trading on IX Swap`}
+                text={`${token?.token ? 'Ready' : 'Not ready'} for trading on ${config?.name || 'IX Swap'}`}
               >
-                {token.token ? <Tradable width={22} height={22} /> : <NonTradable width={22} height={22} />}
+                {token.token ? <StyledTradable width={22} height={22} /> : <StyledNonTradable width={22} height={22} />}
               </MouseoverTooltip>
             </div>
           </StyledBodyRow>

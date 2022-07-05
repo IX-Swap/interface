@@ -19,6 +19,7 @@ import { ModalBlurWrapper, ModalContentWrapper, ModalPadding, CloseIcon, TYPE } 
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { useActiveWeb3React } from 'hooks/web3'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const KycSourceContainer = styled.div`
   width: 100%;
@@ -126,6 +127,7 @@ interface KycSourceSelectorProps {
 const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const history = useHistory()
   const { kyc } = useKYCState()
+  const { config } = useWhitelabelState()
 
   const [selected, setSelected] = useState<KycSource | undefined>(undefined)
   const [statusDesc, setStatusDesc] = useState('')
@@ -143,7 +145,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       case KYCStatuses.NOT_SUBMITTED:
         return t`KYC: NOT_SUBMITTED`
       default:
-        return t`Pass KYC on IX Swap`
+        return t`Pass KYC on ${config?.name || 'IX Swap'}`
     }
   }
 
@@ -178,7 +180,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
         <TYPE.body1 minWidth="auto" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          My IX Swap KYC
+          My {config?.name || 'IX Swap'} KYC
         </TYPE.body1>
 
         <KycSourceTooltip text="Recommended" />
@@ -193,7 +195,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
             {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
           </IconWrapper>
         ) : (
-          <KycSourceTooltip text="Pass KYC on IX Swap to enable this option">
+          <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IX Swap'} to enable this option`}>
             <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
               {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
             </IconWrapper>

@@ -67,11 +67,11 @@ export function colors(configColors?: WlColors): Colors {
     bg6: '#1A2028',
     bg7: wlColorsByType.background?.main || '#372E5E',
     bg8: wlColorsByType.background?.secondary || '#0F0518',
-    bg9: '#372E5D',
+    bg9: wlColorsByType.background?.main || '#372E5D',
     bg10: '#EDCEFF',
     bg11: wlColorsByType.background?.secondary || '#272046',
-    bg12: '#271F4A',
-    bg13: '#2F254E',
+    bg12: wlColorsByType.background?.secondary || '#271F4A',
+    bg13: wlColorsByType.background?.secondary || '#2F254E',
     bg14: '#ED0376',
     bg15: '#2C254A',
     bg16: wlColorsByType.background?.secondary || '#170626',
@@ -94,7 +94,7 @@ export function colors(configColors?: WlColors): Colors {
       wlColorsByType.background?.secondary ||
       'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
     bgG6:
-      wlColorsByType.background?.secondary ||
+      wlColorsByType.background?.main ||
       'linear-gradient(0deg, #ED0376, #ED0376), linear-gradient(116.36deg, #7B42A9 33.43%, #ED0376 95.41%);',
     bgG7: wlColorsByType.background?.main || 'linear-gradient(0deg, #272046, #272046), #170E20;',
     bgG8: wlColorsByType.background?.main || 'linear-gradient(0deg, #1A123A, #1A123A), #170E20;',
@@ -375,13 +375,14 @@ export const ThemedGlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.blue1}; 
   }
 
-  path {
-    ${({ theme }) =>
-      theme.config.elements &&
-      css`
-        fill: ${({ theme }) => theme.config.elements.main};
-      `};
-  }
+  ${({ theme }) =>
+    theme.config.elements &&
+    css`
+      path {
+        fill: ${theme.config.elements.main};
+      }
+    `};
+
 
   /* svg{
     ${({ theme }) =>
