@@ -161,7 +161,7 @@ export function colors(configColors?: WlColors): Colors {
     red1: '#FD4040',
     red2: '#F82D3A',
     red3: '#D60000',
-    green1: '#9DF9B1',
+    green1: wlColorsByType.status?.success || '#9DF9B1',
     yellow1: '#e3a507',
     yellow2: '#ff8f00',
     yellow3: '#F3B71E',
@@ -169,9 +169,9 @@ export function colors(configColors?: WlColors): Colors {
     blue1: '#2172E5',
     blue2: '#5199FF',
 
-    error: '#ED0376',
-    success: '#27AE60',
-    warning: '#ff8f00',
+    error: wlColorsByType.status?.error || '#ED0376',
+    success: wlColorsByType.status?.success || '#27AE60',
+    warning: wlColorsByType.status?.warning || '#ff8f00',
     popUpInputBorder: '#7A02E0',
 
     // dont wanna forget these blue yet
@@ -380,6 +380,9 @@ export const ThemedGlobalStyle = createGlobalStyle`
     css`
       path {
         fill: ${theme.config.elements.main};
+      }
+      line {
+        stroke: ${theme.config.elements.main};
       }
     `};
 

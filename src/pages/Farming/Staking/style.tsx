@@ -245,7 +245,7 @@ export const StakeInfoContainer = styled(Column)`
     > :last-child {
       width: 100%;
       > div {
-        color: white;
+        color: ${({ theme }) => theme.text1};
         font-size: 16px;
         width: 100%;
         text-align: right;
