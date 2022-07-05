@@ -84,17 +84,6 @@ export default function App() {
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
-  const defaultPage = useMemo(() => {
-    if (kyc?.status !== KYCStatuses.APPROVED || !account) {
-      return '/kyc'
-    }
-    if (kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
-      return '/security-tokens'
-    }
-
-    return '/kyc'
-  }, [kyc, account, chainId, isWhitelisted, chains])
-
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
     if (!kyc) return true
@@ -109,6 +98,25 @@ export default function App() {
 
     return true
   }
+  
+  const isAllowed = useCallback((route: RouteMapEntry): boolean => {
+    if (!config || config.pages.length === 0) {
+      return true
+    }
+
+    return config.pages.includes(route.path)
+  }, [config])
+  
+  const defaultPage = useMemo(() => {
+    if (isAllowed({ path: '/kyc' }) && kyc?.status !== KYCStatuses.APPROVED || !account) {
+      return '/kyc'
+    }
+    if (isAllowed({ path: '/security-tokens'}) && kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
+      return '/security-tokens'
+    }
+
+    return (config?.pages ?? []).length > 0 ? config?.pages[0] : '/kyc'
+  }, [kyc, account, chainId, isWhitelisted, chains])
 
   useAccount()
 
@@ -147,13 +155,6 @@ export default function App() {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
-  const isAllowed = useCallback((route: RouteMapEntry): boolean => {
-    if (!config || config.pages.length === 0) {
-      return true
-    }
-
-    return config.pages.includes(route.path)
-  }, [config])
 
   const routeGenerator = useCallback((route: RouteMapEntry) => {
     const guards = [

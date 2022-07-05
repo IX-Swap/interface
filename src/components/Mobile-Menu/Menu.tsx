@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { ExternalLink } from 'theme'
@@ -13,6 +13,8 @@ import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 import closeIcon from '../../assets/images/cross.svg'
 import { disabledStyle } from 'components/Header/HeaderLinks'
+import { RouteMapEntry } from 'pages/AppRoutes'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
   close: () => void
@@ -20,6 +22,7 @@ interface Props {
 
 export const Menu = ({ close }: Props) => {
   const { chainId, account } = useActiveWeb3React()
+  const { config } = useWhitelabelState()
 
   useEffect(() => {
     const body = document.getElementsByTagName('body')[0]
@@ -38,6 +41,14 @@ export const Menu = ({ close }: Props) => {
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
+  
+  const isAllowed = useCallback((path: string): boolean => {
+    if (!config || config.pages.length === 0) {
+      return true
+    }
+
+    return config.pages.includes(path)
+  }, [config])
 
   return (
     <ModalContainer>
@@ -46,13 +57,13 @@ export const Menu = ({ close }: Props) => {
           <CloseIcon src={closeIcon} alt={closeIcon} onClick={close} />
         </CloseContainer>
         <MenuList>
-          {chainId && chains.includes(chainId) && isWhitelisted && (
+          {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
             <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close}>
               <Trans>Swap/Trade</Trans>
             </MenuListItem>
           )}
 
-          {chainId && chains.includes(chainId) && isWhitelisted && (
+          {isAllowed(routes.securityTokens()) && chainId && chains.includes(chainId) && isWhitelisted && (
             <MenuListItem
               disabled={!isKycApproved}
               id={`security-nav-link`}
@@ -63,7 +74,7 @@ export const Menu = ({ close }: Props) => {
             </MenuListItem>
           )}
 
-          {chainId && chains.includes(chainId) && isWhitelisted && (
+          {isAllowed('/pool') && chainId && chains.includes(chainId) && isWhitelisted && (
             <MenuListItem id={`pool-nav-link`} to={`/pool`} onClick={close}>
               <Trans>Liquidity Pools</Trans>
             </MenuListItem>
@@ -83,13 +94,17 @@ export const Menu = ({ close }: Props) => {
             <Trans>Live Pools</Trans>
           </ExternalListItem>
 
-          <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
-            <Trans>Legacy Pools (Closed)</Trans>
-          </MenuListItem>
+          {isAllowed(routes.staking) && (
+            <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
+              <Trans>Legacy Pools (Closed)</Trans>
+            </MenuListItem>
+          )}
 
-          <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
-            <Trans>Token Sale Distribution</Trans>
-          </MenuListItem>
+          {isAllowed(routes.vesting) && (
+            <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
+              <Trans>Token Sale Distribution</Trans>
+            </MenuListItem>
+          )}
 
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
             <Trans>Liquidity Mining Program (Quickswap)</Trans>
@@ -101,14 +116,17 @@ export const Menu = ({ close }: Props) => {
             </ExternalListItem>
           )}
 
-          {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+          {isAllowed('/faucet') && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
             <MenuListItem disabled={!isKycApproved} id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
               <Trans>Faucet</Trans>
             </MenuListItem>
           )}
-          <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
-            <Trans>KYC</Trans>
-          </MenuListItem>
+
+          {isAllowed('/kyc') && (
+            <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
+              <Trans>KYC</Trans>
+            </MenuListItem>
+          )}
         </MenuList>
       </Container>
     </ModalContainer>
