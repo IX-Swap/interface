@@ -146,10 +146,13 @@ export const individualInvestorStatusDeclarationSchema = yup
         .bool()
         .oneOf([true], 'Opt-In Requirement is required')
         .required(validationMessages.required),
-
+      // @ts-expect-error
       primaryOfferingServices: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
       digitalSecurities: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
       digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
       allServices: optInAgreementsDependentValueSchema,
       // @ts-expect-error
       evidenceOfAccreditation: documentsSchema,

@@ -79,7 +79,7 @@ export const IndividualIdentityView = ({
 
       <Grid item>
         <FieldContainer>
-          <Grid item container direction={'column'} spacing={5}>
+          <Grid item container direction={'column'} spacing={3}>
             <Grid item>
               <FormSectionHeader title='Documents' />
             </Grid>
