@@ -12,6 +12,7 @@ import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxD
 import { FatcaView } from 'app/pages/identity/components/IndividualIdentityView/FatcaView/FatcaViewView'
 import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InvestorDeclarationView'
 import { OptInRequirementView } from 'app/pages/identity/components/IndividualIdentityView/OptInRequirementView/OptInRequirementView'
+import { NoticeOfAssessmentView } from 'app/pages/identity/components/IndividualIdentityView/NoticeOfAssessment/NoticeOfAssessmentView'
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
@@ -60,6 +61,8 @@ export const IndividualIdentityView = ({
           </Grid>
         </FieldContainer>
       </Grid>
+
+      <NoticeOfAssessmentView />
 
       <Grid item className={privateClassNames()}>
         <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
