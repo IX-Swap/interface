@@ -92,7 +92,7 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
       .required(validationMessages.required)
       .matches(
         corporateName,
-        'Must include only letters, numbers and these special characters . , - ; &'
+        "Must include only letters, numbers and these special characters . , - ; & '"
       )
       .test(
         'checkExists',

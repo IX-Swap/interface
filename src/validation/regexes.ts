@@ -16,7 +16,7 @@ export const address = /^[A-Za-z0-9'.\-\s,/#"]+$/
 // accept numbers letters - ' . spaces
 export const postalCode = /^[0-9a-zA-Z-.\s']+$/
 
-// starts with letter number . , - ; can continue with letter number . , - ; space &
-export const corporateName = /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; &]+)*$/
+// starts with letter number . , - ; can continue with letter number . , - ; space & '
+export const corporateName = /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; &']+)*$/
 
 export const lettersOrSpaces = /^[a-zA-Z\s]+$/g
