@@ -52,11 +52,11 @@ export class MetamaskPage extends WebPage{
     this.optionMenuButton = page.locator('[data-testid="account-options-menu-button"]');
     this.accountDetailsMenuButton = page.locator('[data-testid="account-options-menu__account-details"]');
     this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]');
-    this.networksDropdown = ('div[role="button"]:has-text("Сеть Ethereum Mainnet")');
-    this.showTestNetworksButton = ('text=Показать/скрыть');
+    this.networksDropdown = ('//div[contains(@class, "network-display")]');
+    this.showTestNetworksButton = ('[class="network-dropdown-content--link"]');
     this.showTestNetworksToggle = ('[class="settings-page__content-item-col"] >> nth=6');
-    this.kovanNetworkButton = ('text=Тестовая сеть Kovan');
-    this.signButton = ('text=Подписать');
+    this.kovanNetworkButton = ('//span[contains(text(), "Kovan")]');
+    this.signButton = ('button.button.btn-primary');
     this.rejectButton = ('[data-testid="page-container-footer-cancel"]');
   }
 
@@ -123,12 +123,11 @@ export class MetamaskPage extends WebPage{
     await page.waitForEvent('close')
   }
 
-  async changeNetworkToKovan(context) {
-    const pageWithMetamask = await context.pages()[1];
-    await pageWithMetamask.click(this.networksDropdown);
-    await pageWithMetamask.click(this.showTestNetworksButton);
-    await pageWithMetamask.click(this.showTestNetworksToggle);
-    await pageWithMetamask.click(this.networksDropdown);
-    await pageWithMetamask.click(this.kovanNetworkButton);
+  async changeNetworkToKovan() {
+    await this.page.click(this.networksDropdown);
+    await this.page.click(this.showTestNetworksButton);
+    await this.page.click(this.showTestNetworksToggle);
+    await this.page.click(this.networksDropdown);
+    await this.page.click(this.kovanNetworkButton);
   }
 }

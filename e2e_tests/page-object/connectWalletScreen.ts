@@ -44,9 +44,6 @@ export class ConnectWalletScreen extends WebPage {
 
       openedMetamaskPage.click(this.metamaskPage.connectMetamaskPopUpButton),
     ]);
-
-    // const numberOfPagesAfterSign = await this.context.pages().length;
-    // await expect(numberOfPagesAfterSign).toBe(numberOfPagesBeforeSign - 1);
   }
 
   async connectMetaMask() {

@@ -1,15 +1,17 @@
 import { test } from '../fixtures/metamaskFixture'
 
-test.beforeEach(async ({page, connectWalletScreen, metamaskPage, context, topNavigationBar, liquidityPoolsPage}) => {
+test.beforeEach(async ({connectWalletScreen, metamaskPage, topNavigationBar}) => {
   await connectWalletScreen.connectMetaMask();
-  await metamaskPage.changeNetworkToKovan(context);
+  await metamaskPage.changeNetworkToKovan();
   await connectWalletScreen.clickToPlaygroundWarningIUnderstandButton();
   await topNavigationBar.clickLiquidityPoolsButton();
 })
 
 test.describe('Check Liquidity pool functions', () => {
 
-  const ethAmountForLiquidityPool = '0.00001'
+  const ethAmountForLiquidityPool = '0.00001';
+  const ethTokenTitle = 'Ether';
+  const ixsTokenTitle = 'Ixs Token';
 
   test.describe('Check Creating pool functions', () => {
     test.afterEach(async ({page,  liquidityPoolsPage, metamaskPage}) => {
@@ -19,10 +21,10 @@ test.describe('Check Liquidity pool functions', () => {
     test('Test the ability to create a pool (Token - Token pair)', async ({ page, liquidityPoolsPage, webPage, metamaskPage }) => {
       await liquidityPoolsPage.clickAddLiquidityButton();
       await liquidityPoolsPage.clickChooseFirstTokenDropdown();
-      await liquidityPoolsPage.clickEthTokenItem();
+      await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
       await liquidityPoolsPage.fillFirstAmountOfTokensField(ethAmountForLiquidityPool);
       await liquidityPoolsPage.clickChooseSecondTokenDropdown() ;
-      await liquidityPoolsPage.clickIxsTokenItem();
+      await liquidityPoolsPage.clickTokenItem(ixsTokenTitle);
       await liquidityPoolsPage.clickSupplyButton();
 
       const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButton);
@@ -36,12 +38,15 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.isTransactionSubmittedPopUpTextShown();
 
       await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
+
+      // Assertion
+      await liquidityPoolsPage.isCreatedIsxEthPoolShown();
     })
   })
 
   test.describe('Check Removing pool functions', () => {
     test.beforeEach(async ({page, metamaskPage, liquidityPoolsPage}) => {
-      await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, metamaskPage, ethAmountForLiquidityPool);
+      await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, metamaskPage, ethAmountForLiquidityPool, ethTokenTitle, ixsTokenTitle);
     })
 
     test('Test the ability to "Remove Liquidity" from a pool that is already been created', async ({ page, liquidityPoolsPage, webPage, metamaskPage }) => {
@@ -58,7 +63,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.clickRemovePoolButton();
 
       // Assertion
-      await liquidityPoolsPage.isEthAmountThatWillBeReceivedIsShown(ethAmountForLiquidityPool);
+      await liquidityPoolsPage.isEthAmountThatWillBeReceivedShown(ethAmountForLiquidityPool);
 
       const confirmMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmRemovePoolButton);
 
@@ -76,7 +81,7 @@ test.describe('Check Liquidity pool functions', () => {
 
   test.describe('Check Editing pool functions', () => {
     test.beforeEach(async ({page, metamaskPage, liquidityPoolsPage}) => {
-      await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, metamaskPage, ethAmountForLiquidityPool);
+      await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, metamaskPage, ethAmountForLiquidityPool, ethTokenTitle, ixsTokenTitle);
     })
 
     test.afterEach(async ({page,  liquidityPoolsPage, metamaskPage}) => {
@@ -108,10 +113,10 @@ test.describe('Check Liquidity pool functions', () => {
     test('Test the ability to create a pool (Negative TC)', async ({ page, liquidityPoolsPage, webPage, metamaskPage }) => {
       await liquidityPoolsPage.clickAddLiquidityButton();
       await liquidityPoolsPage.clickChooseFirstTokenDropdown();
-      await liquidityPoolsPage.clickEthTokenItem();
+      await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
       await liquidityPoolsPage.fillFirstAmountOfTokensField(ethAmountForLiquidityPool);
       await liquidityPoolsPage.clickChooseSecondTokenDropdown() ;
-      await liquidityPoolsPage.clickIxsTokenItem();
+      await liquidityPoolsPage.clickTokenItem(ixsTokenTitle);
       await liquidityPoolsPage.clickSupplyButton();
 
       const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButton);

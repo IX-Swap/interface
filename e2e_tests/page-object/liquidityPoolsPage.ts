@@ -25,6 +25,7 @@ export class LiquidityPoolsPage extends WebPage {
   readonly addNewAmountToliqudityPoolButton: Locator;
   readonly transactionSubmittedPopUpText: Locator;
   readonly waitingForConfirmationPopUpText: Locator;
+  readonly createdIsxEthPool: Locator;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -50,6 +51,7 @@ export class LiquidityPoolsPage extends WebPage {
     this.addNewAmountToliqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
     this.transactionSubmittedPopUpText = page.locator('text=Transaction Submitted');
     this.waitingForConfirmationPopUpText = page.locator('text=Waiting For Confirmation');
+    this.createdIsxEthPool = page.locator('//span[text()="My Liquidity"]//following::div[text()="IXS/ETH"]');
   }
 
   // Assertions
@@ -65,11 +67,19 @@ export class LiquidityPoolsPage extends WebPage {
     await expect(this.page.locator(this.confirmSupplyButton)).toBeVisible();
   }
 
-  async isEthAmountThatWillBeReceivedIsShown(amount) {
+  async isEthAmountThatWillBeReceivedShown(amount) {
     await expect(this.page.locator(`text=${amount} >> nth=1`)).toBeVisible();
   }
 
+  async isCreatedIsxEthPoolShown() {
+    await expect(this.createdIsxEthPool).toBeVisible();
+  }
+
   // Actions
+  async clickTokenItem(token) {
+    await this.page.locator(`//div[text()='${token}']`).click();
+  }
+
   async clickQuarterRemovePercentageButton() {
     await this.quarterRemovePercentageButton.click();
   }
@@ -92,14 +102,6 @@ export class LiquidityPoolsPage extends WebPage {
 
   async clickChooseSecondTokenDropdown() {
     await this.chooseSecondTokenDropdown.click();
-  }
-
-  async clickEthTokenItem() {
-    await this.ethTokenItem.click();
-  }
-
-  async clickIxsTokenItem() {
-    await this.ixsTokenItem.click();
   }
 
   async clickSupplyButton() {
@@ -154,13 +156,13 @@ export class LiquidityPoolsPage extends WebPage {
     await this.clickTransactionSubmittedPopUpCloseButton();
   }
 
-  async createLiqudityPoolWithDefinedAmountOfEth(page, pageObject, ethAmount) {
+  async createLiqudityPoolWithDefinedAmountOfEth(page, pageObject, ethAmount, firstToken, secondToken) {
     await this.clickAddLiquidityButton();
     await this.clickChooseFirstTokenDropdown();
-    await this.clickEthTokenItem();
+    await this.clickTokenItem(firstToken);
     await this.fillFirstAmountOfTokensField(ethAmount);
     await this.clickChooseSecondTokenDropdown() ;
-    await this.clickIxsTokenItem();
+    await this.clickTokenItem(secondToken);
 
     await this.clickSupplyButton();
 
