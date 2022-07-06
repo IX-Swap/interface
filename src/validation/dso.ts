@@ -64,7 +64,7 @@ export const dsoFormBaseValidationSchema = {
     .required('Corporate is required')
     .matches(
       corporateName,
-      'Corporate must include only letters, numbers and this special characters . , -'
+      "Corporate must include only letters, numbers and these special characters . , - ; & '"
     ),
   currency: string().required('Currency is required'),
   distributionFrequency: string().when('capitalStructure', {

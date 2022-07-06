@@ -54,7 +54,7 @@ export const financialInfoSchema = yup
       .max(50, 'Maximum of 50 characters')
       .matches(
         corporateName,
-        'Must include only letters, numbers and these special characters . , - ; &'
+        "Must include only letters, numbers and these special characters . , - ; & '"
       )
       .required('This field is required'),
     employmentStatus: yup.string().required(validationMessages.required),
