@@ -44,6 +44,7 @@ export const getFinancialInfoFormValues = (
     employer: data?.employer,
     employmentStatus: data?.employmentStatus,
     sourceOfFund: data?.sourceOfFund,
+    annualIncome: data?.annualIncome,
     ...getTaxDeclarationFormValues(data)
   }
 }
