@@ -18,6 +18,7 @@ import {
   TaxResidency,
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
+import { corporateName } from 'validation/regexes'
 import { isEmptyString } from 'helpers/strings'
 
 export const personalInfoSchema = yup
@@ -52,6 +53,10 @@ export const financialInfoSchema = (data?: IndividualIdentity) =>
     employer: yup
       .string()
       .max(50, 'Maximum of 50 characters')
+      .matches(
+        corporateName,
+        "Must include only letters, numbers and these special characters . , - ; & '"
+      )
       .required('This field is required'),
     employmentStatus: yup.string().required(validationMessages.required),
     annualIncome: yup

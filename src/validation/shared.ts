@@ -1,8 +1,3 @@
-import * as yup from 'yup'
-import 'yup-phone-lite'
-import { passwordValidator } from 'validation/validators'
-import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
 import {
   DocumentFieldArrayItemValue,
@@ -11,6 +6,20 @@ import {
   TaxResidency
 } from 'app/pages/identity/types/forms'
 import { differenceInYears } from 'date-fns'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
+import { Maybe } from 'types/util'
+import {
+  address,
+  fullName,
+  lettersAndNumbers,
+  lettersOrSpaces,
+  name,
+  postalCode,
+  toponym
+} from 'validation/regexes'
+import { passwordValidator } from 'validation/validators'
+import * as yup from 'yup'
+import 'yup-phone-lite'
 
 export const validationMessages = {
   required: 'This field is required'
@@ -57,7 +66,7 @@ export const birthdaySchema = dateSchema.test(
 export const taxIdentificationNumberSchema = yup
   .string()
   .max(20, 'Maximum of 20 characters')
-  .matches(/^[a-zA-Z0-9]*$/, 'Must include only letters and numbers only')
+  .matches(lettersAndNumbers, 'Must include only letters and numbers only')
 
 export const documentsArraySchema =
   yup.array<FormArrayElement<Maybe<DataroomFile>>>()
@@ -66,14 +75,29 @@ export const nameSchema = yup
   .string()
   .trim()
   .max(50, 'Maximum of 50 characters')
-  .matches(/^[a-zA-Z-]*$/, 'Invalid name')
+  .matches(name, 'Invalid name')
 
 export const addressSchema = yup.object().shape<AddressValues>({
-  line1: yup.string().required(validationMessages.required),
-  line2: yup.string(),
-  city: yup.string().required(validationMessages.required),
-  postalCode: yup.string().required(validationMessages.required),
-  state: yup.string(),
+  line1: yup
+    .string()
+    .matches(address, 'Invalid address')
+    .required(validationMessages.required),
+  line2: yup.string().matches(address, {
+    excludeEmptyString: true,
+    message: 'Invalid address'
+  }),
+  city: yup
+    .string()
+    .matches(toponym, 'Invalid city')
+    .required(validationMessages.required),
+  postalCode: yup
+    .string()
+    .matches(postalCode, 'Invalid postal code')
+    .required(validationMessages.required),
+  state: yup.string().matches(toponym, {
+    excludeEmptyString: true,
+    message: 'Invalid state'
+  }),
   country: yup.string().required(validationMessages.required)
 })
 
@@ -98,8 +122,14 @@ export const personalProfileArraySchema = yup
   .of(personalProfileSchema.required(validationMessages.required))
 
 export const personnelProfileSchema = yup.object().shape<Personnel>({
-  fullName: yup.string().required(validationMessages.required),
-  designation: yup.string().required(validationMessages.required),
+  fullName: yup
+    .string()
+    .matches(fullName, 'Invalid full name')
+    .required(validationMessages.required),
+  designation: yup
+    .string()
+    .matches(lettersOrSpaces, 'Invalid designation')
+    .required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
   contactNumber: yup
     .string()
