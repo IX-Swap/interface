@@ -1,5 +1,5 @@
 import { Button, Grid } from '@mui/material'
-import { SelectionIdentityCard } from 'app/pages/identity/components/CorporateIdentityCard/CorporateIdentityCard'
+import { SelectionIdentityCard } from 'app/pages/identity/components/SelectionIdentityCard/SelectionIdentityCard'
 import React from 'react'
 import { ReactComponent as CorporateImage } from 'assets/images/corporate.svg'
 import { ReactComponent as IssuerImage } from 'assets/images/issuer.svg'
