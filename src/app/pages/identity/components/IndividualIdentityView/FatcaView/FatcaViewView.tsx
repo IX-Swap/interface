@@ -28,6 +28,7 @@ export const FatcaView = ({ data }: FatcaViewProps) => {
                       fontSize={'inherit'}
                       color={'text.secondary'}
                       mt={0.35}
+                      textTransform={'capitalize'}
                     >
                       I confirm that{' '}
                       <Typography
@@ -62,6 +63,7 @@ export const FatcaView = ({ data }: FatcaViewProps) => {
                   fontWeight={'inherit'}
                   fontSize={'inherit'}
                   color={'text.secondary'}
+                  textTransform={'capitalize'}
                 >
                   I confirm that{' '}
                   <Typography
