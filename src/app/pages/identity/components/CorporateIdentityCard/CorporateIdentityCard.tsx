@@ -1,19 +1,19 @@
 import { Grid, Typography, Paper } from '@mui/material'
 import React, { useState } from 'react'
 
-export interface CorporateIdentityCardProps {
+export interface SelectionIdentityCardProps {
   title: string
   description?: string
   actionButton?: React.ReactComponentElement<any>
   image?: React.ReactComponentElement<any>
 }
 
-export const CorporateIdentityCard = ({
+export const SelectionIdentityCard = ({
   title,
   description,
   actionButton,
   image
-}: CorporateIdentityCardProps) => {
+}: SelectionIdentityCardProps) => {
   const [raised, setRaised] = useState(false)
   const handleMouseEnter = () => {
     setRaised(true)
