@@ -158,7 +158,7 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
             designation: yup
               .string()
               .required(validationMessages.required)
-              .matches(lettersOrSpaces, 'Must include letters only'),
+              .matches(lettersOrSpaces, 'Invalid designation'),
             email: emailSchema.required(validationMessages.required),
             contactNumber: yup
               .string()
@@ -192,7 +192,7 @@ export const directorsAndBeneficialOwnersSchema = yup
               .required(validationMessages.required),
             designation: yup
               .string()
-              .matches(lettersOrSpaces, 'Must include letters only')
+              .matches(lettersOrSpaces, 'Invalid designation')
               .required(validationMessages.required),
             legalEntityStatus: yup
               .string()

@@ -88,7 +88,7 @@ export const addressSchema = yup.object().shape<AddressValues>({
   }),
   city: yup
     .string()
-    .matches(toponym, 'Invalid city name')
+    .matches(toponym, 'Invalid city')
     .required(validationMessages.required),
   postalCode: yup
     .string()
@@ -96,7 +96,7 @@ export const addressSchema = yup.object().shape<AddressValues>({
     .required(validationMessages.required),
   state: yup.string().matches(toponym, {
     excludeEmptyString: true,
-    message: 'Invalid state name'
+    message: 'Invalid state'
   }),
   country: yup.string().required(validationMessages.required)
 })
