@@ -1,6 +1,5 @@
 import React from 'react'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
-import { DeclarationsList } from 'app/pages/identity/components/DeclarationsList/DeclarationsList'
 import { SafeguardAgreements } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardsAgreements/SafeguardAgreements'
 import { OptInAgreementsIndividual } from 'app/pages/identity/components/InvestorDeclarationForm/OptInAgreements/OptInAgreements'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
@@ -17,20 +16,6 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
     data.declarations.investorsStatus.optInAgreementsSafeguards
   const optInAgreementsOptOut =
     data.declarations.investorsStatus.optInAgreementsOptOut
-  const isOptInRequirementEmpty =
-    !optInAgreementsSafeguards && !optInAgreementsOptOut
-
-  const renderNoOneValuesComponent = () => {
-    return (
-      <Grid item container direction={'column'} spacing={2}>
-        <DeclarationsListItem label={<SafeguardAgreements />} value={false} />
-        <DeclarationsListItem
-          label={<OptInAgreementsIndividual />}
-          value={false}
-        />
-      </Grid>
-    )
-  }
 
   return (
     <FieldContainer>
@@ -45,23 +30,16 @@ export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
             </Typography>
           </Grid>
 
-          {isOptInRequirementEmpty && renderNoOneValuesComponent()}
-        </Grid>
-
-        <Grid item>
-          {!isOptInRequirementEmpty && (
-            <DeclarationsList
-              title={''}
-              data={{
-                optInAgreementsSafeguards,
-                optInAgreementsOptOut
-              }}
-              labelMap={{
-                optInAgreementsSafeguards: <SafeguardAgreements />,
-                optInAgreementsOptOut: <OptInAgreementsIndividual />
-              }}
+          <Grid item container direction={'column'} spacing={2}>
+            <DeclarationsListItem
+              label={<SafeguardAgreements />}
+              value={optInAgreementsSafeguards}
             />
-          )}
+            <DeclarationsListItem
+              label={<OptInAgreementsIndividual />}
+              value={optInAgreementsOptOut}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </FieldContainer>
