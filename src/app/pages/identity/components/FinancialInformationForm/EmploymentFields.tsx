@@ -9,6 +9,7 @@ import { hasValue } from 'helpers/forms'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
 import { OptionalLabel } from 'components/form/OptionalLabel'
+import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'
 
 export const EmploymentField = () => {
   const { control } = useFormContext()
@@ -76,6 +77,19 @@ export const EmploymentField = () => {
               disabled={isSingPass && hasValue(singPassData?.employment)}
             />
           </Grid>
+          {!isSingPass && (
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={AnnualIncomeSelect}
+                control={control}
+                variant='outlined'
+                name='annualIncome'
+                label='Income in SGD in preceding 12 months'
+                placeholder='Please select one'
+                fullWidth
+              />
+            </Grid>
+          )}
           <Grid item xs={12} md={6}>
             <TypedField
               component={FundSourceSelect}
