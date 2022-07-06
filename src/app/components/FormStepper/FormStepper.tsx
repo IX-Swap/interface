@@ -59,8 +59,10 @@ export const FormStepper = (props: FormStepperProps) => {
       return steps.length
     }
 
+    const dataStep = (data?.step ?? 0) + 1 // eslint-disable-line
+
     if (shouldSaveOnMove) {
-      return defaultActiveStep ?? data?.step ?? 0
+      return defaultActiveStep ?? dataStep ?? 0
     }
 
     return steps.length
@@ -186,6 +188,7 @@ export const FormStepper = (props: FormStepperProps) => {
                         data={data}
                         step={steps[steps.length - 1]}
                         fullWidth
+                        size='medium'
                       />
                     </Grid>
                   )}

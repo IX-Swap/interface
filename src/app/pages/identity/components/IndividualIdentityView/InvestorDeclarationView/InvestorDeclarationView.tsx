@@ -38,12 +38,6 @@ export const InvestorDeclarationView: React.FC<
     partnership,
     accreditedBeneficiaries,
     accreditedSettlors,
-
-    allServices,
-    digitalSecurities,
-    primaryOfferingServices,
-    digitalSecuritiesIssuance,
-
     optInAgreements
   } = data.declarations?.investorsStatus ?? {}
 
@@ -63,24 +57,8 @@ export const InvestorDeclarationView: React.FC<
     accreditedSettlors
   }
 
-  const accreditedInvestorOptOut = {
-    allServices,
-    digitalSecurities,
-    primaryOfferingServices,
-    digitalSecuritiesIssuance
-  }
-
   const optInRequirement = {
     optInAgreements: optInAgreements ?? false
-  }
-
-  const accreditedInvestorOptOutLabelMap = {
-    digitalSecurities:
-      'Trading in digital securities on the InvestaX private exchange',
-    primaryOfferingServices:
-      'Use of Primary Offering Services for the purpose of fundraising',
-    digitalSecuritiesIssuance: 'Issuance of Digital Securities by the Issuers',
-    allServices: 'Any/all Services/Products offered by InvestaX'
   }
 
   const isCorporate = identityType === 'corporate'
@@ -114,24 +92,6 @@ export const InvestorDeclarationView: React.FC<
           optInAgreements: <OptInAgreements />
         }}
       />
-      {Object.values(accreditedInvestorOptOut).find(item => item) !==
-      undefined ? (
-        <>
-          <Grid item xs={12}>
-            <Box marginTop={8}>
-              <FormSectionHeader
-                title='Accredited Investor Opt-Out Form'
-                variant='h5'
-              />
-            </Box>
-          </Grid>
-          <DeclarationsList
-            title='My/Our withdrawal of consent to be treated as an Accredited Investor by InvestaX is in respect of the following services.'
-            data={accreditedInvestorOptOut}
-            labelMap={accreditedInvestorOptOutLabelMap}
-          />
-        </>
-      ) : null}
     </Grid>
   )
 }
