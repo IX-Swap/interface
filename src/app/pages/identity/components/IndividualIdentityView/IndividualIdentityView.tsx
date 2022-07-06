@@ -6,10 +6,11 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 import { IndividualInfoView } from './IndividualInfoView/IndividualInfoView'
 import { AddressView } from './AddressView/AddressView'
 import { FinancialView } from './FinancialView/FinancialView'
-import { TaxDeclarationView } from './TaxDeclarationView/TaxDeclarationView'
 import { InvestorDeclarationView } from './InvestorDeclarationView/InvestorDeclarationView'
 import { IndividualIdentity } from '../../types/forms'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
+import { FatcaView } from 'app/pages/identity/components/IndividualIdentityView/FatcaView/FatcaViewView'
 
 export interface IndividualIdentityViewProps {
   data: IndividualIdentity
@@ -60,7 +61,11 @@ export const IndividualIdentityView = ({
       </Grid>
 
       <Grid item className={privateClassNames()}>
-        <TaxDeclarationView data={data} />
+        <CountryTaxDeclaration taxResidencies={data.taxResidencies} />
+      </Grid>
+
+      <Grid item>
+        <FatcaView data={data} />
       </Grid>
 
       <Grid item>
