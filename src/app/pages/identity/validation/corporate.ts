@@ -25,7 +25,7 @@ import { validateUEN } from 'validation/validators'
 import apiService from 'services/api'
 import { identityURL } from 'config/apiURL'
 import { isEmptyString } from 'helpers/strings'
-import { activityOrDesignation, fullName } from 'validation/regexes'
+import { corporateName, fullName, lettersOrSpaces } from 'validation/regexes'
 
 export interface CorporateDataValidation {
   exist: boolean
@@ -91,8 +91,8 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
       .max(50, 'Maximum of 50 characters')
       .required(validationMessages.required)
       .matches(
-        /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
-        'Must include only letters, numbers and this special characters . , -'
+        corporateName,
+        'Must include only letters, numbers and these special characters . , - ; &'
       )
       .test(
         'checkExists',
@@ -158,7 +158,7 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
             designation: yup
               .string()
               .required(validationMessages.required)
-              .matches(activityOrDesignation, 'Must include letters only'),
+              .matches(lettersOrSpaces, 'Must include letters only'),
             email: emailSchema.required(validationMessages.required),
             contactNumber: yup
               .string()
@@ -174,7 +174,7 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
     numberOfBusinessOwners: yup.string().required(validationMessages.required),
     businessActivity: yup
       .string()
-      .matches(activityOrDesignation, 'Invalid business activity')
+      .matches(lettersOrSpaces, 'Invalid business activity')
       .required(validationMessages.required)
   })
 
@@ -192,7 +192,7 @@ export const directorsAndBeneficialOwnersSchema = yup
               .required(validationMessages.required),
             designation: yup
               .string()
-              .matches(activityOrDesignation, 'Must include letters only')
+              .matches(lettersOrSpaces, 'Must include letters only')
               .required(validationMessages.required),
             legalEntityStatus: yup
               .string()

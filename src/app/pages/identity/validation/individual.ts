@@ -17,6 +17,7 @@ import {
   IndividualTaxDeclarationFormValues,
   TaxResidency
 } from 'app/pages/identity/types/forms'
+import { corporateName } from 'validation/regexes'
 
 export const personalInfoSchema = yup
   .object()
@@ -51,6 +52,10 @@ export const financialInfoSchema = yup
     employer: yup
       .string()
       .max(50, 'Maximum of 50 characters')
+      .matches(
+        corporateName,
+        'Must include only letters, numbers and these special characters . , - ; &'
+      )
       .required('This field is required'),
     employmentStatus: yup.string().required(validationMessages.required),
     sourceOfFund: yup.string().required(validationMessages.required)

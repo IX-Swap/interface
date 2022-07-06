@@ -1,6 +1,7 @@
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
 import { array, number, object, string } from 'yup'
+import { corporateName, lettersOrSpaces } from 'validation/regexes'
 import { dateSchema, validationMessages } from './shared'
 import {
   isBeforeDate,
@@ -62,7 +63,7 @@ export const dsoFormBaseValidationSchema = {
     .max(50, 'Maximum of 50 characters')
     .required('Corporate is required')
     .matches(
-      /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
+      corporateName,
       'Corporate must include only letters, numbers and this special characters . , -'
     ),
   currency: string().required('Currency is required'),
@@ -153,7 +154,7 @@ export const dsoFormBaseValidationSchema = {
   subscriptionDocument: object<DataroomFile>(),
   tokenName: string()
     .required('Token Name is required')
-    .matches(/^[a-zA-Z\s]*$/g, 'Token Name must not have special characters'),
+    .matches(lettersOrSpaces, 'Token Name must not have special characters'),
   tokenSymbol: string().required('Token Symbol is required'),
   totalFundraisingAmount: number()
     .required('Total Fundraising Amount is required')

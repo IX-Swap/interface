@@ -1,8 +1,3 @@
-import * as yup from 'yup'
-import 'yup-phone-lite'
-import { passwordValidator } from 'validation/validators'
-import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
 import {
   DocumentFieldArrayItemValue,
@@ -11,15 +6,20 @@ import {
   TaxResidency
 } from 'app/pages/identity/types/forms'
 import { differenceInYears } from 'date-fns'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
+import { Maybe } from 'types/util'
 import {
-  toponym,
-  lettersAndNumbers,
-  name,
   address,
-  postalCode,
   fullName,
-  activityOrDesignation
-} from './regexes'
+  lettersAndNumbers,
+  lettersOrSpaces,
+  name,
+  postalCode,
+  toponym
+} from 'validation/regexes'
+import { passwordValidator } from 'validation/validators'
+import * as yup from 'yup'
+import 'yup-phone-lite'
 
 export const validationMessages = {
   required: 'This field is required'
@@ -128,7 +128,7 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
     .required(validationMessages.required),
   designation: yup
     .string()
-    .matches(activityOrDesignation, 'Invalid designation')
+    .matches(lettersOrSpaces, 'Invalid designation')
     .required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
   contactNumber: yup
