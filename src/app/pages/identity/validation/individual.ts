@@ -15,8 +15,10 @@ import {
   IndividualFinancialInfoFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues,
-  TaxResidency
+  TaxResidency,
+  IndividualIdentity
 } from 'app/pages/identity/types/forms'
+import { isEmptyString } from 'helpers/strings'
 
 export const personalInfoSchema = yup
   .object()
@@ -44,15 +46,22 @@ export const personalInfoSchema = yup
     })
   })
 
-export const financialInfoSchema = yup
-  .object()
-  .shape<IndividualFinancialInfoFormValues>({
+export const financialInfoSchema = (data?: IndividualIdentity) =>
+  yup.object().shape<IndividualFinancialInfoFormValues>({
     occupation: yup.string().required(validationMessages.required),
     employer: yup
       .string()
       .max(50, 'Maximum of 50 characters')
       .required('This field is required'),
     employmentStatus: yup.string().required(validationMessages.required),
+    annualIncome: yup
+      .string()
+      .test('checkIsSingPass', validationMessages.required, function (value) {
+        if (data?.uinfin === undefined && isEmptyString(value)) {
+          return false
+        }
+        return true
+      }),
     sourceOfFund: yup.string().required(validationMessages.required)
   })
 
@@ -193,15 +202,17 @@ export const individualInvestorAgreementsSchema = yup
     disclosure: yup.bool().oneOf([true]).required(validationMessages.required)
   })
 
-export const individualInvestorValidationSchema = yup.object().shape<any>({
-  ...financialInfoSchema.fields,
-  ...individualInvestorDocumentsSchema.fields,
-  ...individualInvestorStatusDeclarationSchema.fields,
-  ...personalInfoSchema.fields,
-  ...taxDeclarationSchema.fields
-})
+export const individualInvestorValidationSchema = (data?: IndividualIdentity) =>
+  yup.object().shape<any>({
+    ...financialInfoSchema(data).fields,
+    ...individualInvestorDocumentsSchema.fields,
+    ...individualInvestorStatusDeclarationSchema.fields,
+    ...personalInfoSchema.fields,
+    ...taxDeclarationSchema.fields
+  })
 
-export const financialAndTaxDeclarationSchema = yup.object().shape<any>({
-  ...financialInfoSchema.fields,
-  ...taxDeclarationSchema.fields
-})
+export const financialAndTaxDeclarationSchema = (data?: IndividualIdentity) =>
+  yup.object().shape<any>({
+    ...financialInfoSchema(data).fields,
+    ...taxDeclarationSchema.fields
+  })
