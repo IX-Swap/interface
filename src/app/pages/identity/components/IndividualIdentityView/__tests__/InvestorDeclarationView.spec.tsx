@@ -27,32 +27,4 @@ describe('InvestorDeclarationView', () => {
       getByText('I declare that I am a corporate "Accredited Investor"')
     ).toBeTruthy()
   })
-
-  it('renders accreditedInvestorOptOut when it has values', () => {
-    const { getByText } = render(
-      <InvestorDeclarationView
-        data={{
-          ...individual,
-          declarations: {
-            ...individual.declarations,
-            investorsStatus: {
-              ...individual.declarations.investorsStatus,
-              allServices: true
-            }
-          }
-        }}
-        identityType='corporate'
-      />
-    )
-
-    expect(getByText('Accredited Investor Opt-Out Form')).toBeTruthy()
-  })
-
-  it('does not render accreditedInvestorOptOut when it has no values', () => {
-    const { queryByText } = render(
-      <InvestorDeclarationView data={individual} identityType='individual' />
-    )
-
-    expect(queryByText('Accredited Investor Opt-Out Form')).toBeFalsy()
-  })
 })

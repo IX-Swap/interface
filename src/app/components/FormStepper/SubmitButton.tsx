@@ -11,7 +11,7 @@ export interface SubmitButtonProps extends ButtonProps {
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { mutation, data, step, fullWidth } = props
+  const { mutation, data, step, fullWidth, size = 'large' } = props
 
   const [save, { isLoading }] = mutation
   const isSubmitted = data?.status === 'Submitted'
@@ -56,7 +56,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   return (
     <Tooltip
       title={
-        !isValid ? (
+        !isValid && !isApproved && !isSubmitted ? (
           <Typography color='error'>
             Please fill in all the required steps
           </Typography>
@@ -77,7 +77,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
           }
           disableElevation
           fullWidth={fullWidth}
-          size='large'
+          size={size}
           style={{ minWidth: 'max-content' }}
         >
           {getButtonText()}

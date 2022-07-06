@@ -25,6 +25,7 @@ import { validateUEN } from 'validation/validators'
 import apiService from 'services/api'
 import { identityURL } from 'config/apiURL'
 import { isEmptyString } from 'helpers/strings'
+import { corporateName, fullName, lettersOrSpaces } from 'validation/regexes'
 
 export interface CorporateDataValidation {
   exist: boolean
@@ -90,8 +91,8 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
       .max(50, 'Maximum of 50 characters')
       .required(validationMessages.required)
       .matches(
-        /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
-        'Must include only letters, numbers and this special characters . , -'
+        corporateName,
+        "Must include only letters, numbers and these special characters . , - ; & '"
       )
       .test(
         'checkExists',
@@ -153,11 +154,11 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
             fullName: yup
               .string()
               .required(validationMessages.required)
-              .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
+              .matches(fullName, 'Invalid full name'),
             designation: yup
               .string()
               .required(validationMessages.required)
-              .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
+              .matches(lettersOrSpaces, 'Invalid designation'),
             email: emailSchema.required(validationMessages.required),
             contactNumber: yup
               .string()
@@ -171,7 +172,10 @@ export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
       .required(validationMessages.required),
     sourceOfFund: yup.string().required(validationMessages.required),
     numberOfBusinessOwners: yup.string().required(validationMessages.required),
-    businessActivity: yup.string().required(validationMessages.required)
+    businessActivity: yup
+      .string()
+      .matches(lettersOrSpaces, 'Invalid business activity')
+      .required(validationMessages.required)
   })
 
 export const directorsAndBeneficialOwnersSchema = yup
@@ -182,8 +186,14 @@ export const directorsAndBeneficialOwnersSchema = yup
       .of(
         yup
           .object<DirectorFormValues>({
-            fullName: yup.string().required(validationMessages.required),
-            designation: yup.string().required(validationMessages.required),
+            fullName: yup
+              .string()
+              .matches(fullName, 'Invalid full name')
+              .required(validationMessages.required),
+            designation: yup
+              .string()
+              .matches(lettersOrSpaces, 'Invalid designation')
+              .required(validationMessages.required),
             legalEntityStatus: yup
               .string()
               .required(validationMessages.required),
@@ -209,7 +219,10 @@ export const directorsAndBeneficialOwnersSchema = yup
       .of(
         yup
           .object<BeneficialOwnerFormValues>({
-            fullName: yup.string().required(validationMessages.required),
+            fullName: yup
+              .string()
+              .matches(fullName, 'Invalid full name')
+              .required(validationMessages.required),
             percentageShareholding: yup
               .number()
               .transform((value, originalValue) => {

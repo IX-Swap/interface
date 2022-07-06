@@ -102,6 +102,7 @@ export interface IndividualFinancialInfoFormValues {
   occupation: string
   employer: string
   employmentStatus: string
+  annualIncome?: string
 }
 
 export interface IndividualTaxDeclarationFormValues {
