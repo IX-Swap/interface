@@ -10,7 +10,7 @@ import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { OwnershipStructure } from 'app/pages/identity/components/CorporateIdentityView/OwnershipStructure'
 import { DirectorList } from 'app/pages/identity/components/CorporateIdentityView/DirectorList'
-import { CorporateInvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/CorporateInvestorDeclarationView'
+import { InvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InvestorDeclarationView'
 import { OptInView } from 'app/pages/identity/components/CorporateIdentityView/OptInView'
 import { DocumentsView } from 'app/pages/identity/components/CorporateIdentityView/DocumentsView'
 import { InstitutionalInvestorDeclarationView } from 'app/pages/identity/components/CorporateIdentityView/InstitutionalInvestorDeclarationView'
@@ -68,7 +68,7 @@ export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
       </Grid>
 
       <Grid item>
-        <CorporateInvestorDeclarationView data={data} />
+        <InvestorDeclarationView data={data} />
       </Grid>
 
       <Grid item>

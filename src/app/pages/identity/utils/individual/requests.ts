@@ -1,12 +1,13 @@
 import {
   IndividualAgreementsFormValues,
   IdentityDocumentsFormValues,
+  IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
-  IndividualPersonalInfoFormValues,
   FinancialAndTaxDeclarationFormValues,
-  IndividualTaxDeclarationFormValues,
-  IndividualFinancialInfoFormValues
+  IndividualPersonalInfoFormValues,
+  IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
@@ -21,10 +22,18 @@ export const getPersonalInfoRequestPayload = (
 }
 
 export const getFinancialInfoRequestPayload = (
-  values: IndividualFinancialInfoFormValues
+  values: IndividualFinancialInfoFormValues & IndividualTaxDeclarationFormValues
 ) => {
+  const { fatca, usTin, ...rest } = values
+
   return {
-    ...values
+    ...rest,
+    declarations: {
+      tax: {
+        fatca: fatca === 'yes',
+        usTin: usTin
+      }
+    }
   }
 }
 
@@ -70,17 +79,23 @@ export const getFinancialAndTaxDeclarationRequestPayload = (
 }
 
 export const getInvestorDeclarationRequestPayload = (
-  values: IndividualInvestorDeclarationFormValues
+  values: IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues
 ) => {
+  const { evidenceOfAccreditation, proofOfIdentity, proofOfAddress, ...rest } =
+    values
+
+  const getDocuments = (documents: Array<FormArrayElement<DataroomFile>>) =>
+    documents.map(doc => doc.value._id).filter(doc => doc !== undefined)
+
   return {
     declarations: {
-      investorsStatus: values
+      investorsStatus: rest
     },
-    documents: getDocumentsRequestPayload({
-      proofOfIdentity: values.proofOfIdentity ?? [],
-      proofOfAddress: values.proofOfAddress ?? [],
-      evidenceOfAccreditation: values.evidenceOfAccreditation ?? []
-    })
+    documents: [
+      ...getDocuments(evidenceOfAccreditation),
+      ...getDocuments(proofOfAddress),
+      ...getDocuments(proofOfIdentity)
+    ]
   }
 }
 
@@ -96,7 +111,7 @@ export const getDocumentsRequestPayload = (
       return result
     }, [])
   }
-  return documents.documents.filter(doc => doc !== undefined)
+  return documents.documents.length > 0 ? documents : {}
 }
 
 export const getAgreementsRequestPayload = (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper } from '@mui/material'
+import { Grid } from '@mui/material'
 import {
   getDocumentsFormValues,
   getInvestorDeclarationFormValues,
@@ -27,7 +27,7 @@ import { IndividualIdentityContainer } from 'app/pages/identity/containers/Indiv
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import { IndividualAddressFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualAddressFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
-import { VSpacer } from 'components/VSpacer'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 
 export const individualInvestorFormSteps = [
   {
@@ -38,18 +38,28 @@ export const individualInvestorFormSteps = [
     component: () => (
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 4 }}>
-            <FormSectionHeader title={'Personal Information'} />
-            <VSpacer size='medium' />
-            <IndividualInfoFields />
-          </Paper>
+          <FieldContainer>
+            <Grid container spacing={5} direction={'column'}>
+              <Grid item>
+                <FormSectionHeader title={'Personal Information'} />
+              </Grid>
+              <Grid item>
+                <IndividualInfoFields />
+              </Grid>
+            </Grid>
+          </FieldContainer>
         </Grid>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 4 }}>
-            <FormSectionHeader title={'Address'} />
-            <VSpacer size='medium' />
-            <IndividualAddressFields />
-          </Paper>
+          <FieldContainer>
+            <Grid container spacing={5} direction={'column'}>
+              <Grid item>
+                <FormSectionHeader title={'Address'} />
+              </Grid>
+              <Grid item>
+                <IndividualAddressFields />
+              </Grid>
+            </Grid>
+          </FieldContainer>
         </Grid>
       </Grid>
     )
@@ -68,9 +78,9 @@ export const individualInvestorFormSteps = [
           <TaxDeclarationForm />
         </Grid>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FieldContainer>
             <UsCitizenshipConfirmation />
-          </Paper>
+          </FieldContainer>
         </Grid>
       </Grid>
     )
@@ -86,9 +96,9 @@ export const individualInvestorFormSteps = [
           <InvestorDeclarationForm />
         </Grid>
         <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FieldContainer>
             <IndividualUploadDocumentsForm />
-          </Paper>
+          </FieldContainer>
         </Grid>
       </Grid>
     )

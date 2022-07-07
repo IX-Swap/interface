@@ -85,7 +85,9 @@ export const getTaxDeclarationFormValues = (
 
   if (declarations?.tax?.fatca !== undefined) {
     result.fatca = declarations.tax.fatca ? 'yes' : 'no'
-    result.usTin = declarations.tax.usTin
+    if (declarations.tax.fatca) {
+      result.usTin = declarations.tax.usTin
+    }
   }
 
   return result

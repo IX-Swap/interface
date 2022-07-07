@@ -28,7 +28,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
         >
           Owner Wallet Address
         </p>
@@ -37,7 +37,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
         >
           32134413213
         </p>
@@ -52,7 +52,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
         >
           Owner Wallet Balance
         </p>
@@ -61,7 +61,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
         >
           100.3451
         </p>
@@ -76,7 +76,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
         >
           Reserve Wallet Address
         </p>
@@ -85,7 +85,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
         >
           99832671623
         </p>
@@ -100,7 +100,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
         >
           Reserve Wallet Balance
         </p>
@@ -109,7 +109,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
         >
           14.1233
         </p>
@@ -124,7 +124,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+          style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
         >
           RPC URL
         </p>
@@ -133,7 +133,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
         >
           https://rpc-url-2.com
         </p>

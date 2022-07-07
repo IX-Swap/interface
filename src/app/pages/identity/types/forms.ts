@@ -124,9 +124,9 @@ export interface IndividualInvestorDeclarationFormValues
     OptInAgreements {}
 
 export interface IdentityDocumentsFormValues {
-  evidenceOfAccreditation: DataroomFile[]
-  proofOfIdentity: DataroomFile[]
-  proofOfAddress: DataroomFile[]
+  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
+  proofOfIdentity: Array<FormArrayElement<DataroomFile>>
+  proofOfAddress: Array<FormArrayElement<DataroomFile>>
 }
 
 export interface IndividualAgreementsFormValues {
@@ -281,16 +281,16 @@ export interface AgreementsAndDisclosures {
 }
 
 export interface OptOutRequirements {
-  digitalSecurities?: boolean
-  primaryOfferingServices?: boolean
-  digitalSecuritiesIssuance?: boolean
-  allServices?: boolean
+  digitalSecurities: boolean
+  primaryOfferingServices: boolean
+  digitalSecuritiesIssuance: boolean
+  allServices: boolean
 }
 
 export interface OptInAgreements {
-  optInAgreements?: boolean
-  optInAgreementsSafeguards?: boolean
-  optInAgreementsOptOut?: boolean
+  optInAgreements: boolean
+  optInAgreementsSafeguards: boolean
+  optInAgreementsOptOut: boolean
 }
 
 export interface IndividualInvestorStatus {
@@ -358,7 +358,8 @@ export type IndividualIdentity = BaseIdentity &
   IdentityFinancials &
   Authorizable &
   TaxDeclaration &
-  Noa
+  Noa &
+  Partial<IdentityDeclarations>
 
 export type CorporateIdentity = BaseIdentity &
   CorporateFields &

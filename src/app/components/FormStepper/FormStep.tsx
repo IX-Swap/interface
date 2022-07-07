@@ -5,7 +5,6 @@ import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
-import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
@@ -129,7 +128,7 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {hasPrevStep && (
+          {hasPrevStep && !isLastStep && (
             <Fragment>
               <BackButton
                 fullWidth
@@ -158,15 +157,6 @@ export const FormStep = (props: FormStepProps) => {
             >
               Next
             </SaveButton>
-          )}
-
-          {isLastStep && (
-            <SubmitButton
-              fullWidth
-              mutation={submitMutation}
-              data={data}
-              step={step}
-            />
           )}
         </Box>
       </Grid>

@@ -37,10 +37,10 @@ export const OptInAgreementsIndividual = ({
   showOptOutDialog = false
 }: OptInAgreementsProps) => {
   return (
-    <Fragment>
+    <Typography fontWeight={400} lineHeight='160%' style={{ color: 'inherit' }}>
       I have been informed of and understand my right to{' '}
       {showOptOutDialog ? <OptOutInfoDialog /> : 'opt out'} of the Accredited
       Investors status
-    </Fragment>
+    </Typography>
   )
 }
