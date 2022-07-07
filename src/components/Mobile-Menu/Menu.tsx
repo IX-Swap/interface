@@ -90,9 +90,11 @@ export const Menu = ({ close }: Props) => {
             </ExternalListItem>
           )}
 
-          <ExternalListItem href={`https://ixswap.defiterm.io/`}>
-            <Trans>Live Pools</Trans>
-          </ExternalListItem>
+          {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+            <ExternalListItem href={`https://ixswap.defiterm.io/`}>
+              <Trans>Live Pools</Trans>
+            </ExternalListItem>
+          )}
 
           {isAllowed(routes.staking) && (
             <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
@@ -106,9 +108,11 @@ export const Menu = ({ close }: Props) => {
             </MenuListItem>
           )}
 
-          <ExternalListItem href={`https://ixswap.defiterm.io/`}>
-            <Trans>Liquidity Mining Program (Quickswap)</Trans>
-          </ExternalListItem>
+          {isAllowed(routes.vesting) && isAllowed(routes.staking) && (
+            <ExternalListItem href={`https://ixswap.defiterm.io/`}>
+              <Trans>Liquidity Mining Program (Quickswap)</Trans>
+            </ExternalListItem>
+          )}
 
           {isWhitelisted && (
             <ExternalListItem disabled={!isKycApproved} target="_self" href={'https://info.ixswap.io/home'}>
