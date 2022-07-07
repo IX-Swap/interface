@@ -44,8 +44,8 @@ export const SubmitButton = (props: SubmitButtonProps) => {
 
     setValidating(true)
     try {
-      const isValid = await schema?.isValid(step.getFormValues(data))
-      setIsValid(isValid)
+      const isFormDataValid = await schema?.isValid(step.getFormValues(data))
+      setIsValid(isFormDataValid)
     } catch (error) {
     } finally {
       setValidating(false)
@@ -74,7 +74,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
         <Button
           variant='contained'
           color='primary'
-          onClick={async () => void handleSave()}
+          onClick={async () => await handleSave()}
           disabled={
             isApproved || isLoading || isSubmitted || validating || !isValid
           }
