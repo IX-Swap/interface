@@ -22,7 +22,7 @@ export const SingPassButton = (props: ButtonProps) => {
         <Grid item xs={12}>
           <SingpassLogo />
         </Grid>
-        <Grid item xs={12}>
+        <Grid data-testid='singpass-button' item xs={12}>
           <Typography variant='caption' sx={{ textTransform: 'none' }}>
             Sign up in minutes using Myinfo
           </Typography>
