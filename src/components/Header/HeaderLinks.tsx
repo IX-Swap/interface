@@ -146,7 +146,7 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink
           disabled={!isKycApproved}
           target="_self"
@@ -154,7 +154,7 @@ export const HeaderLinks = () => {
         >
           <Trans>FNFT</Trans>
         </MenuExternalLink>
-      )}
+      )} */}
 
       {/* {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
         <StyledNavLink
@@ -172,7 +172,7 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )} */}
 
-      {account && chainId && account && (
+      {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && account && (
         <StyledNavLink
           ref={farmNode as any}
           id={`farming-nav-link`}

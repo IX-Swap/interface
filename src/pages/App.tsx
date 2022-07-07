@@ -112,10 +112,10 @@ export default function App() {
   }, [config])
   
   const defaultPage = useMemo(() => {
-    if (isAllowed({ path: '/kyc' }) && kyc?.status !== KYCStatuses.APPROVED || !account) {
+    if (isAllowed({ path: '/kyc' }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
       return '/kyc'
     }
-    if (isAllowed({ path: '/security-tokens'}) && kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
+    if (isAllowed({ path: '/security-tokens'}) && (kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted)) {
       return '/security-tokens'
     }
 
