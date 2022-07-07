@@ -28,6 +28,7 @@ import { IndividualInfoFields } from 'app/pages/identity/components/IndividualIn
 import { IndividualAddressFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualAddressFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export const individualInvestorFormSteps = [
   {
@@ -36,32 +37,35 @@ export const individualInvestorFormSteps = [
     getRequestPayload: getPersonalInfoRequestPayload,
     validationSchema: personalInfoSchema,
     component: () => (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <FieldContainer>
-            <Grid container spacing={5} direction={'column'}>
-              <Grid item>
-                <FormSectionHeader title={'Personal Information'} />
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <Grid container spacing={5} direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader title={'Personal Information'} />
+                </Grid>
+                <Grid item>
+                  <IndividualInfoFields />
+                </Grid>
               </Grid>
-              <Grid item>
-                <IndividualInfoFields />
+            </FieldContainer>
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <Grid container spacing={5} direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader title={'Address'} />
+                </Grid>
+                <Grid item>
+                  <IndividualAddressFields />
+                </Grid>
               </Grid>
-            </Grid>
-          </FieldContainer>
+            </FieldContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <FieldContainer>
-            <Grid container spacing={5} direction={'column'}>
-              <Grid item>
-                <FormSectionHeader title={'Address'} />
-              </Grid>
-              <Grid item>
-                <IndividualAddressFields />
-              </Grid>
-            </Grid>
-          </FieldContainer>
-        </Grid>
-      </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
@@ -70,19 +74,22 @@ export const individualInvestorFormSteps = [
     getRequestPayload: getFinancialAndTaxDeclarationRequestPayload,
     validationSchema: financialAndTaxDeclarationSchema,
     component: () => (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <FinancialInformationForm />
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FinancialInformationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <TaxDeclarationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <UsCitizenshipConfirmation />
+            </FieldContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TaxDeclarationForm />
-        </Grid>
-        <Grid item xs={12}>
-          <FieldContainer>
-            <UsCitizenshipConfirmation />
-          </FieldContainer>
-        </Grid>
-      </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
@@ -91,16 +98,19 @@ export const individualInvestorFormSteps = [
     getRequestPayload: getInvestorDeclarationRequestPayload,
     validationSchema: individualInvestorStatusDeclarationSchema,
     component: () => (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <InvestorDeclarationForm />
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <InvestorDeclarationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <IndividualUploadDocumentsForm />
+            </FieldContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <FieldContainer>
-            <IndividualUploadDocumentsForm />
-          </FieldContainer>
-        </Grid>
-      </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
