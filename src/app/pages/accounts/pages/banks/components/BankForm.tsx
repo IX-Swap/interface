@@ -69,7 +69,11 @@ export const BankForm: React.FC<BankFormProps> = props => {
         </Grid>
 
         <Grid container item xs={12} justifyContent='center'>
-          <Button component={AppRouterLinkComponent} to={BanksRoute.list}>
+          <Button
+            variant={'outlined'}
+            component={AppRouterLinkComponent}
+            to={BanksRoute.list}
+          >
             Cancel
           </Button>
           <Box marginX={1} />
