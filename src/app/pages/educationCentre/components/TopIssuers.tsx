@@ -18,7 +18,7 @@ export const TopIssuers = () => {
           firstName,
           middleName,
           lastName
-        } as any) as string,
+        } as any),
         _id
       }))}
     />
