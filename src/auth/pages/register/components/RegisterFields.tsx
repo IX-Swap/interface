@@ -104,7 +104,7 @@ export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
 
       {isMyInfo ? (
         <Grid item>
-          <PhoneField isMyInfo={isMyInfo} />
+          <PhoneField />
         </Grid>
       ) : null}
 
