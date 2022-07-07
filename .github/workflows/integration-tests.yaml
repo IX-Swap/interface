@@ -12,6 +12,10 @@ on:
 jobs:
   integration-tests:
     name: Integration Tests
+    env:
+      METAMASK_RECOVERY: ${{ secrets.METAMASK_RECOVERY }}
+      METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
+      METAMASK_PRIVATE_KEY: ${{ secrets.METAMASK_PRIVATE_KEY }}
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
     steps:
