@@ -8,6 +8,7 @@ import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { DataPreview } from 'app/pages/identity/components/DataPreview/DataPreview'
 import { adjustIdentityOccupation } from 'app/pages/identity/utils/shared'
+import { isEmptyString } from 'helpers/strings'
 
 export interface IndividualPreviewProps {
   data?: IndividualIdentity
@@ -19,13 +20,17 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
   if (data === undefined) {
     return null
   }
-
-  const name = `[${data.status}] ${data.firstName} ${data.lastName}`
+  const individualName =
+    !isEmptyString(data?.firstName) && !isEmptyString(data?.lastName)
+      ? data.firstName + ' ' + data.lastName
+      : data?.user?.name ?? '-'
+  const name = `[${data.status}] ${individualName}`
   const status = data.status.toLowerCase()
+
   const individualIdentityFields = [
     {
       key: 'Full Name',
-      value: data.firstName + ' ' + data.lastName
+      value: individualName
     },
     {
       key: 'Occupation',

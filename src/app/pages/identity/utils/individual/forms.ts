@@ -39,11 +39,15 @@ export const getPersonalInfoFormValues = (
 export const getFinancialInfoFormValues = (
   data: IndividualIdentity
 ): Partial<IndividualFinancialInfoFormValues> => {
+  const sourceOfFund = Array.isArray(data?.sourceOfFund)
+    ? undefined
+    : data?.sourceOfFund
+
   return {
     occupation: data?.occupation,
     employer: data?.employer,
     employmentStatus: data?.employmentStatus,
-    sourceOfFund: data?.sourceOfFund,
+    sourceOfFund: sourceOfFund,
     annualIncome: data?.annualIncome,
     ...getTaxDeclarationFormValues(data)
   }
