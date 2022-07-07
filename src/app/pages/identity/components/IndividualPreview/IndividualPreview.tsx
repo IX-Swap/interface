@@ -26,7 +26,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
       : data?.user?.name ?? '-'
   const name = `[${data.status}] ${individualName}`
   const status = data.status.toLowerCase()
-  console.log({ data })
+
   const individualIdentityFields = [
     {
       key: 'Full Name',
