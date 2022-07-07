@@ -9,7 +9,6 @@ export interface AddressViewProps {
 
 export const AddressView = (props: AddressViewProps) => {
   const { data } = props
-
   return (
     <Grid
       item
@@ -21,30 +20,30 @@ export const AddressView = (props: AddressViewProps) => {
     >
       <Grid item container direction={'column'} spacing={5}>
         <Grid item>
-          <LabelledValue isRedesigned value={data.line1} label='Line 1' />
+          <LabelledValue isRedesigned value={data?.line1} label='Line 1' />
         </Grid>
 
         <Grid item>
-          <LabelledValue isRedesigned value={data.city} label='City' />
+          <LabelledValue isRedesigned value={data?.city} label='City' />
         </Grid>
 
         <Grid item>
-          <LabelledValue isRedesigned value={data.country} label='Country' />
+          <LabelledValue isRedesigned value={data?.country} label='Country' />
         </Grid>
       </Grid>
       <Grid item container direction={'column'} spacing={5}>
         <Grid item>
-          <LabelledValue isRedesigned value={data.line2} label='Line 2' />
+          <LabelledValue isRedesigned value={data?.line2} label='Line 2' />
         </Grid>
 
         <Grid item>
-          <LabelledValue isRedesigned value={data.state} label='State' />
+          <LabelledValue isRedesigned value={data?.state} label='State' />
         </Grid>
 
         <Grid item>
           <LabelledValue
             isRedesigned
-            value={data.postalCode}
+            value={data?.postalCode}
             label='Postal Code'
           />
         </Grid>
