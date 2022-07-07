@@ -8,7 +8,7 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 export const FundSourceSelect = (props: any): JSX.Element => {
   return (
     <>
-      <InputLabel>{props.label}</InputLabel>
+      <InputLabel disabled={props.disabled}>{props.label}</InputLabel>
       <Select
         {...props}
         label={undefined}
