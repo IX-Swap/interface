@@ -1,7 +1,14 @@
 import React from 'react'
-import { useDownloadRawFile } from 'hooks/useDownloadRawFile'
+import {
+  useDownloadRawFile,
+  useOldDownloadRawFile
+} from 'hooks/useDownloadRawFile'
 import { IconButton, Tooltip } from '@mui/material'
-import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import {
+  convertBlobToFile,
+  downloadByAnchor,
+  openFileInNewTab
+} from 'hooks/utils'
 import { Launch } from '@mui/icons-material'
 
 export interface DownloadDSODocumentProps {
@@ -12,21 +19,36 @@ export interface DownloadDSODocumentProps {
 
 export const DownloadDSODocument = (props: DownloadDSODocumentProps) => {
   const { dsoId, documentId, type = 'document' } = props
-  const uri =
-    type === 'document'
-      ? `/issuance/dso/dataroom/documents/raw/${dsoId}/${documentId}`
-      : `/issuance/dso/dataroom/subscription/raw/${dsoId}`
-  const [download, { isLoading }] = useDownloadRawFile(uri, {
+  const isDocument = type === 'document'
+  const uri = isDocument
+    ? `/issuance/dso/dataroom/documents/raw/${dsoId}/${documentId}`
+    : `/issuance/dso/dataroom/subscription/raw/${dsoId}`
+  const [download, { isLoading }] = useOldDownloadRawFile(uri, {
     onSuccess: ({ data }) => {
       const file = convertBlobToFile(data, '')
       openFileInNewTab(file)
     }
   })
-  const handleDownload = async () => await download()
+  const [downloadNew, { isLoading: isLoadingNew }] = useDownloadRawFile(uri, {
+    onSuccess: data => {
+      downloadByAnchor(data, dsoId)
+    }
+  })
+  const handleDownload = async () => {
+    if (isDocument) {
+      await download()
+    } else {
+      await downloadNew()
+    }
+  }
 
   return (
     <Tooltip title='Download File'>
-      <IconButton disabled={isLoading} onClick={handleDownload} size='large'>
+      <IconButton
+        disabled={isLoading || isLoadingNew}
+        onClick={handleDownload}
+        size='large'
+      >
         <Launch color='disabled' style={{ width: 23, height: 23 }} />
       </IconButton>
     </Tooltip>
