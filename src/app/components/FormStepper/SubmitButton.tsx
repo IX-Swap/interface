@@ -37,11 +37,14 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   }, [data]) // eslint-disable-line
 
   const checkValidation = async () => {
+    const schema =
+      typeof step.validationSchema === 'function'
+        ? step.validationSchema(step.getFormValues(data))
+        : step.validationSchema
+
     setValidating(true)
     try {
-      const isValid = await step.validationSchema?.isValid(
-        step.getFormValues(data)
-      )
+      const isValid = await schema?.isValid(step.getFormValues(data))
       setIsValid(isValid)
     } catch (error) {
     } finally {

@@ -17,7 +17,7 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
   const email = data.email ?? '-'
 
   const extractGender = (gender: string) => {
-    if (gender.length > 0) {
+    if (gender?.length > 0) {
       return GENDERS_OPTS.find(item => item.value === gender)?.label
     }
     return gender

@@ -13,9 +13,9 @@ export interface OptInRequirementViewProps {
 
 export const OptInRequirementView = ({ data }: OptInRequirementViewProps) => {
   const optInAgreementsSafeguards =
-    data.declarations.investorsStatus.optInAgreementsSafeguards
+    data.declarations.investorsStatus?.optInAgreementsSafeguards
   const optInAgreementsOptOut =
-    data.declarations.investorsStatus.optInAgreementsOptOut
+    data.declarations.investorsStatus?.optInAgreementsOptOut
 
   return (
     <FieldContainer>

@@ -110,7 +110,6 @@ export const FormStep = (props: FormStepProps) => {
       onSubmit={handleSubmit}
       allowInvalid
       id={`${step.formId ?? 'form'}-${index}`}
-      mode='onChange'
     >
       <SaveOnNavigate
         transformData={step.getRequestPayload}
