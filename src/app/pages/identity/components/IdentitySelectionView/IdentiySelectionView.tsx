@@ -1,8 +1,9 @@
 import { Button, Grid } from '@mui/material'
-import { CorporateIdentityCard } from 'app/pages/identity/components/CorporateIdentityCard/CorporateIdentityCard'
+import { SelectionIdentityCard } from 'app/pages/identity/components/SelectionIdentityCard/SelectionIdentityCard'
 import React from 'react'
 import { ReactComponent as CorporateImage } from 'assets/images/corporate.svg'
 import { ReactComponent as IssuerImage } from 'assets/images/issuer.svg'
+import { ReactComponent as IndividualImage } from 'assets/images/individual.svg'
 import { Icon } from 'ui/Icons/Icon'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 
@@ -10,7 +11,25 @@ export const IdentitySelectionView = () => {
   return (
     <Grid container spacing={3} justifyContent='center'>
       <Grid item>
-        <CorporateIdentityCard
+        <SelectionIdentityCard
+          title='Individual'
+          description='Suitable for users who are individual investors'
+          image={<IndividualImage />}
+          actionButton={
+            <Button
+              disableElevation
+              fullWidth
+              variant='outlined'
+              href={IdentityRoute.createIndividual}
+              startIcon={<Icon name='plus' />}
+            >
+              Individual Identity
+            </Button>
+          }
+        />
+      </Grid>
+      <Grid item>
+        <SelectionIdentityCard
           title='Corporate'
           description='Suitable for users who want to invest via a corporate capacity'
           image={<CorporateImage />}
@@ -28,7 +47,7 @@ export const IdentitySelectionView = () => {
         />
       </Grid>
       <Grid item>
-        <CorporateIdentityCard
+        <SelectionIdentityCard
           title='Issuer'
           description='Suitable for users who want to use platform for fundraising'
           image={<IssuerImage />}
@@ -44,16 +63,6 @@ export const IdentitySelectionView = () => {
             </Button>
           }
         />
-      </Grid>
-      <Grid item xs={12} container justifyContent='center'>
-        <Button
-          disableElevation
-          variant='outlined'
-          href={IdentityRoute.createIndividual}
-          startIcon={<Icon name='plus' />}
-        >
-          Individual Identity
-        </Button>
       </Grid>
     </Grid>
   )
