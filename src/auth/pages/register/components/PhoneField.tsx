@@ -1,30 +1,27 @@
-import { TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { SignupArgs } from 'types/auth'
 import { FocusButton } from 'auth/pages/register/components/FocusButton'
 import { useInputFocus } from 'auth/pages/register/hooks/useInputFocus'
+import { PhoneInput } from 'components/form/PhoneInput'
+import { plainValueExtractor } from 'helpers/forms'
 
-export interface PhoneFieldProps {
-  isMyInfo?: boolean
-}
-
-export const PhoneField = ({ isMyInfo = false }: PhoneFieldProps) => {
+export const PhoneField = () => {
   const { control } = useFormContext<SignupArgs>()
 
-  const { inputRef, handelInputFocus, inputDisabled } = useInputFocus()
+  const { handelInputFocus, inputDisabled } = useInputFocus()
 
   return (
     <TypedField
-      component={TextField}
+      component={PhoneInput}
       control={control}
       name='phoneNumber'
       label='Phone Number'
-      customRenderer
+      valueExtractor={plainValueExtractor}
       fullWidth
+      defaultValue={''}
       InputProps={{
-        inputRef: inputRef,
         sx: {
           paddingRight: 0,
           input: {
