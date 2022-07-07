@@ -35,6 +35,7 @@ test.describe('Cash Withdrawal (IXPRIME-168 / IXPRIME-169)', () => {
     await bankAccount.createWithdrawalsRequest('0', false)
     await bankAccount.AMOUNT.type('111111111', { delay: 150 })
     await waitForText(page, 'Insufficient balance')
+
     await expect(bankAccount.CONFIRM_WITHDRAWAL_BUTTON).toBeDisabled()
   })
 

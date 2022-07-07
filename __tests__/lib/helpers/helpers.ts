@@ -1,7 +1,8 @@
+import { Download } from 'ui/FileUpload/Download'
 import fetch from 'node-fetch'
-import { expect } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 
-const LOADER = '[role="progressbar"]'
+const LOADER = '[data-testid="progress"]'
 const DEFAULT_SELECTOR_TIMEOUT = 50000
 
 const attachedState = {
@@ -11,6 +12,21 @@ const attachedState = {
 const detachedState = {
   state: 'detached',
   timeout: DEFAULT_SELECTOR_TIMEOUT
+}
+
+export async function downloadFile(page: Page, element, saveTo?: string) {
+  const [download] = await Promise.all([
+    // Start waiting for the download
+    page.waitForEvent('download'),
+    // Perform the action that initiates download
+    page.locator(element).click()
+  ])
+
+  // Wait for the download process to complete
+  const fileName = await download.suggestedFilename()
+  const pathToFile = await download.path()
+  if (saveTo) console.log(saveTo)
+  return [fileName, pathToFile]
 }
 
 async function waitNewPage(context, page, element) {
@@ -44,7 +60,7 @@ async function uploadFiles(page, element, file, resp = 'yes') {
       await waitForResponseInclude(page, '/dataroom/')
     }
   }
-  return { inputsFile }
+  return inputsFile
 }
 
 async function click(selector, page) {

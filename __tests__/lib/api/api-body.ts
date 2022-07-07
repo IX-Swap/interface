@@ -10,7 +10,7 @@ export const sendMoneyToEmail = {
 export const bankAccount = {
   bankName: 'Teegan Ward',
   accountHolderName: 'Hayley Solis',
-  asset: '5fc25b004f97ed7f3444cac1',
+  asset: '5fd7199deb87068672a27015',
   bankAccountNumber: time6,
   swiftCode: 'Aut perspiciatis op',
   address: {
@@ -57,7 +57,7 @@ export const blockchainAddresses = {
   memo: 'q'
 }
 let dso, commitment
-if (baseCreds.URL.includes('otc' || 'dev')) {
+if (baseCreds.URL.includes('dev')) {
   commitment = {
     numberOfUnits: 20,
     otp: '123456',
@@ -70,7 +70,7 @@ if (baseCreds.URL.includes('otc' || 'dev')) {
     logo: '623aeea5256f6c7bfa540827',
     capitalStructure: 'Fund - Feeder/Sub-Fund',
     network: '5f88035d7ae447ee9274d4fa',
-    tokenName: 'fullDSOflow testing',
+    tokenName: 'fullDSOflow',
     tokenSymbol: time6,
     uniqueIdentifierCode: 'myDSOcore123',
     corporate: '622f3b77d2d8a30e183e0b9d',
@@ -94,7 +94,7 @@ if (baseCreds.URL.includes('otc' || 'dev')) {
     useOfProceeds: '<p>Zx</p>\n',
     fundraisingMilestone: '<p>ZxZ</p>\n',
     team: [{ photo: '623aeee2256f6c7bfa540840', name: 'Zx', position: 'zx', about: '<p>ZcxZ</p>\n' }],
-    subscriptionDocument: '623aeeeb256f6c7bfa540845',
+    subscriptionDocument: '62b96761baf9ee3a6bd80478',
     videos: [],
     faqs: [{ question: 'Zx', answer: 'ZxZxZ' }],
     documents: ['623aeef4256f6c7bfa54085d']

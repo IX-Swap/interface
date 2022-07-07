@@ -25,7 +25,6 @@ test.describe('Bank accounts', () => {
   test('Account creation should be canceled (IXPRIME-157)', async ({ bankAccount, page }) => {
     await bankAccount.fillAccountInfoForm()
     await click(accountsTab.buttons.CANCEL, page)
-    // await shouldNotExist(accountsTab.buttons.MORE, page)
   })
 
   test('Account should be created (IXPRIME-153)', async ({ bankAccount }) => {
@@ -74,24 +73,18 @@ test.describe.parallel('Cash deposit', () => {
 
   const corporatesType = 'corporates'
 
-  test(`Virtual account should be assignet ${corporatesType}`, async ({ auth, page2 }) => {
+  test(`Virtual account should be assignet ${corporatesType}`, async ({ bankAccount, page2 }) => {
     const identityResponce = await createCorporateIdentity(email, corporatesType, corporateBody)
     await approveIdentity(identityResponce.submitId, corporatesType)
-    await navigate(baseCreds.URL, page2)
-    await auth.loginWithout2fa(email, baseCreds.PASSWORD, page2)
-    await navigate(baseCreds.URL + 'app/accounts/cash-deposits', page2)
-    await shouldExist('[data-testid="RadioButtonUncheckedIcon"]', page2)
+    await bankAccount.checkThatTheAccountAssigned(page2, email)
   })
 
   const identityType = 'individuals'
 
-  test(`Virtual account should be assignet ${identityType}`, async ({ auth, page2 }) => {
+  test(`Virtual account should be assignet ${identityType}`, async ({ auth, page2, bankAccount }) => {
     const identityResponce = await createIdentity(email, identityType, individualBody)
     await approveIdentity(identityResponce.submitId, identityType)
-    await navigate(baseCreds.URL, page2)
-    await auth.loginWithout2fa(email, baseCreds.PASSWORD, page2)
-    await navigate(baseCreds.URL + 'app/accounts/cash-deposits', page2)
-    await shouldExist('[data-testid="RadioButtonUncheckedIcon"]', page2)
+    await bankAccount.checkThatTheAccountAssigned(page2, email)
   })
 })
 test.describe('Commitments', () => {
@@ -118,9 +111,9 @@ test.describe('Cash withdrawals', () => {
   })
 
   //need to ADD MAX BUTTON ON OTC
-  test.skip('Fill amount input field by "Max" button at USD account (IXPRIME-171)', async ({ bankAccount, page }) => {
+  test('Fill amount input field by "Max" button at USD account (IXPRIME-171)', async ({ bankAccount, page }) => {
     await bankAccount.createWithdrawalsRequest('0', false)
-    // await click('button > text="MAX"', page)
+    await click('button > text="MAX"', page)
     const val = await bankAccount.AMOUNT.getAttribute('value')
     expect(USD.outstanding).toEqual(Number(val))
   })
@@ -171,7 +164,7 @@ test.describe('The Transactions page', () => {
   })
   test('Check that the data displayed in the table', async ({ invest, page }) => {
     await click(accountsTab.listBox.ASSET, page)
-    if (baseCreds.URL.includes('otc' || 'dev')) {
+    if (baseCreds.URL.includes('dev')) {
       await click('[data-value="61e51b1421b1911c3f5ed1c4"]', page)
     } else {
       await click(accountsTab.listBox.ASSET_VALUE, page)

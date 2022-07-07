@@ -39,11 +39,11 @@ const config: PlaywrightTestConfig = {
     ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
-    video: 'off'
-    // httpCredentials: {
-    //   username: 'ixprime',
-    //   password: '!nv35taX2K2!*'
-    // }
+    video: 'off',
+    httpCredentials: {
+      username: 'ixprime',
+      password: '!nv35taX2K2!*'
+    }
   },
   projects: [
     {

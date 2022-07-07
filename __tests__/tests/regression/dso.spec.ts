@@ -61,8 +61,9 @@ test('DSO creation is available (IXPRIME-273)', async ({ dso, auth, page, issuan
   await click(issuance.dso.buttons.CREATE_DSO, page)
   await shouldExist(issuance.dso.FORM, page)
 })
-test.skip('The fields should be editable if the DSO has not started.', async ({ dso, auth }) => {
+test('The fields should be editable if the DSO has not started.', async ({ dso, page, issuance }) => {
   await dso.followToFundsManagement()
+  await click(issuance.dso.buttons.EDIT_DSO, page)
   const formsIsEdited = await dso.editDsoInformationForm()
   expect(formsIsEdited).toStrictEqual([true, true])
 })

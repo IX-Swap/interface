@@ -40,8 +40,8 @@ class Authorizer {
   createBankAccountByApi = async () => {
     const { cookies, request } = await getCookies(baseCreds.AUTHORIZER_USER)
     const id = (await request.json()).data._id
-    if (baseCreds.URL.includes('otc' || 'dev')) {
-      bankAccount['asset'] = '5fd7199deb87068672a27016'
+    if (baseCreds.URL.includes('dev')) {
+      bankAccount['asset'] = '5fd7199deb87068672a27015'
     }
     const createBankAccount = await postRequest(bankAccount, cookies, `accounts/banks/${id}`)
     return createBankAccount
@@ -105,7 +105,7 @@ class Authorizer {
 
   createCashWithdrawalRequestByApi = async () => {
     const { cookies, request } = await getCookies(baseCreds.AUTHORIZER_USER)
-    if (baseCreds.URL.includes('otc' || 'dev'))
+    if (baseCreds.URL.includes('dev'))
       (cashWithdrawal['bankAccountId'] = '62334307a5e68410ff43de25'), (cashWithdrawal['amount'] = 10000)
     const createBankAccount = await postRequest(cashWithdrawal, cookies, text.requests.withdrawalsVirtualAccount)
     return createBankAccount

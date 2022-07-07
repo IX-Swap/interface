@@ -8,7 +8,7 @@ export const issuance = {
 
   sections: {
     CREATE_DSO: '[href="/app/issuance/offerings/create"]',
-    VIEW_DSO_LISTENING: '[href="/app/issuance/dashboard"]',
+    VIEW_DSO_LISTENING: '[href="/app/issuance/offerings"]',
     VIEW_EXCHANGE_LISTINGS: '[href="/app/otc-market/my-listings"]',
     CREATE_EXCHANGE_LISTINGS: '[href="/app/otc-market/my-listings/create"]'
   },
@@ -86,7 +86,7 @@ export const issuance = {
       TOTAL_FUNDRAISING_AMOUNT: '[id="totalFundraisingAmount"]',
       PRICEPER_UNIT: '[id="pricePerUnit"]',
       COMPLETION_DATE: '[id="mui-4"]', //id="completionDate"
-      LAUNCH_DATE: '[id="mui-2"]', // [id="launchDate"]
+      LAUNCH_DATE: '[aria-label*="Choose date"]', // '[id="mui-2"]', // [id="launchDate"]
       TOKEN_NAME: '[id="tokenName"]',
       TOKEN_SYMBOL: '[id="tokenSymbol"]',
       IDENTIFIER_CODE: '[id="uniqueIdentifierCode"]',

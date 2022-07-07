@@ -1,3 +1,4 @@
+import { Locator } from '@playwright/test'
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
 import { userRegistration } from '../api/api'
@@ -7,9 +8,13 @@ import { click, typeText, getMessage, navigate, waitForText, shouldExist, emailC
 
 class Authentication {
   page: any
+  // SINGPASS_LOGIN_BUTTON: Locator
+
   constructor(page) {
     this.page = page
+    // this.SINGPASS_LOGIN_BUTTON = page.locator("[data-testid='singpass-button']")
   }
+
   confirmation = async email => {
     const re = /https:[\'"]?([^\'" >]+\d+\w+)/g
     const message = await getMessage(email)
@@ -26,6 +31,8 @@ class Authentication {
     await click(authForms.buttons.LOGIN, page)
     await shouldExist(authForms.buttons.PROFILE_VIEW, page)
   }
+
+  loginWithSingpass = async () => {}
 
   login = async (email, password) => {
     await typeText(authForms.fields.EMAIL, email, this.page)

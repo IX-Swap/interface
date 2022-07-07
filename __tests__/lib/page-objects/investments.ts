@@ -94,7 +94,7 @@ class Invest extends Admin {
     await click(invest.OVERVIEW_PAGE, this.page)
   }
 
-  goToAvailableDso = async (dsoName = 'fullDSOflow testing') => {
+  goToAvailableDso = async (dsoName = 'fullDSOflow') => {
     await this.goToPrimarySection()
     const searchField = await this.page.locator(invest.fields.SEARCH_DSO)
     await this.checkSearch(searchField, dsoName, 'issuance/dso/approved/list')

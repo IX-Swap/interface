@@ -2,6 +2,7 @@ import { baseCreds } from '../../lib/helpers/creds'
 import { test } from '../../lib/fixtures/fixtures'
 import {
   click,
+  downloadFile,
   emailCreate,
   isDisabledList,
   LOADER,
@@ -35,13 +36,15 @@ test.describe('', () => {
   })
 
   test.describe('Primary', () => {
-    test('Download subscription docs', async ({ investment, context, admin }) => {
+    test('Download subscription docs', async ({ investment, admin, page }) => {
       await investment.goToAvailableDso()
       await admin.USER_VIEW_CARD.first().click()
       await investment.INVEST_BUTTON.click()
-      const pages = await investment.downloadDocument(context)
-      expect(pages).toBe(2)
+      const [fileName] = await downloadFile(page, invest.buttons.DOWNLOAD_DOC)
+      //after bug fixing expected file name should be changed to the correct name
+      expect(fileName, 'File name is incorrect').toEqual(text.docs.docBenefitsIdentifyName)
     })
+
     test('Test the ability to click on "Deposit" button (IXPRIME-229)', async ({ investment, page }) => {
       await investment.goToPrimarySection()
       await click('text=DEPOSIT', page)

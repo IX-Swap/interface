@@ -7,7 +7,15 @@ import { createIdentity, approveIdentity, createCorporateIdentity } from '../../
 import * as individualBody from '../../lib/api/individual-identity'
 import * as corporateBody from '../../lib/api/corporate-identity'
 
-import { click, waitForText, navigate, shouldExist, emailCreate, screenshotMatching } from '../../lib/helpers/helpers'
+import {
+  click,
+  waitForText,
+  navigate,
+  shouldExist,
+  emailCreate,
+  screenshotMatching,
+  downloadFile
+} from '../../lib/helpers/helpers'
 import { accountsTab } from '../../lib/selectors/accounts'
 
 test.afterEach(async ({ page }) => {
@@ -46,11 +54,14 @@ test.describe.parallel('Check identities form', () => {
     })
   })
   test('Check the ability to Create Corporate Investor Identity (IXPRIME-336)', async ({ page, kycForms }) => {
+    //Extends time for the test running
     test.setTimeout(220000)
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.CORPORATE, page)
       await kycForms.fillCorporateInformation()
       await kycForms.fillCorporateAddressForm()
+      const [fileName] = await downloadFile(page, '[href*="eye"]')
+      await expect(fileName, 'File name is incorrect').toEqual(text.docs.docBenefitsIdentifyName)
       await kycForms.fillCompanyAuthorizedPersonnel()
       await kycForms.fillPeopleWithExecutiveAuthorityForm()
       await kycForms.fillCorporateDirectorAddressForm()
@@ -58,17 +69,14 @@ test.describe.parallel('Check identities form', () => {
     })
 
     await test.step('Investor Status Declaration', async () => {
-      await kycForms.investorStatusDeclaration()
-    })
-
-    await test.step('Upload Documents', async () => {
-      await kycForms.uploadDocument([kyc.field.EVIDENCE_ACCREDITATION, ...kyc.field.corporate.DOCS_ISSUER])
-      await click(kyc.buttons.SUBMIT, page)
+      const allInputs = await kycForms.investorStatusDeclaration()
+      await expect(allInputs.length, 'Amount of fields is incorrect').toEqual(4)
     })
 
     await test.step('Check the form submit', async () => {
+      await click(kyc.buttons.SUBMIT, page)
       await waitForText(page, text.docs.docBenefitsAddressName)
-      await click(kyc.buttons.SUBMIT_TEXT, page)
+      await click(kyc.buttons.SUBMIT_IDENTITY, page)
       await waitForText(page, text.notification.submitIdentity)
     })
   })

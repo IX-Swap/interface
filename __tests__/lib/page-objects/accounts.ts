@@ -8,18 +8,23 @@ import {
   shouldExist,
   clearAndTypeText,
   waitForResponseInclude,
-  randomString
+  randomString,
+  navigate
 } from '../helpers/helpers'
 import { getCookies, getRequest } from '../api/api'
 import { Locator } from '@playwright/test'
+import { baseCreds } from '../helpers/creds'
+import { Authentication } from './authentication'
 
-class Accounts {
+class Accounts extends Authentication {
   page: any
   AMOUNT: Locator
   CONNECT: Locator
   SUBMIT_BUTTON: Locator
   CONFIRM_WITHDRAWAL_BUTTON: Locator
+
   constructor(page) {
+    super(page)
     this.page = page
     this.CONFIRM_WITHDRAWAL_BUTTON = page.locator('text="Confirm Withdrawal"')
     this.SUBMIT_BUTTON = page.locator('[type="submit"]')
@@ -52,6 +57,13 @@ class Accounts {
     await typeText(accountsTab.fields.SWIFT_CODE, '123123', this.page)
     await click(accountsTab.listBox.CURRENCY, this.page)
     await click(accountsTab.listBox.CURRENCY_VALUE_SGD, this.page)
+  }
+
+  checkThatTheAccountAssigned = async (page, email) => {
+    await navigate(baseCreds.URL, page)
+    await this.loginWithout2fa(email, baseCreds.PASSWORD, page)
+    await navigate(baseCreds.URL + 'app/accounts/cash-deposits', page)
+    await shouldExist('[data-testid="RadioButtonUncheckedIcon"]', page)
   }
 
   fillBankAddressForm = async () => {
@@ -91,11 +103,11 @@ class Accounts {
     await shouldNotExist(accountsTab.buttons.MORE, this.page)
   }
 
-  createWithdrawalsRequest = async (amaunt = '10000', isApprove = true) => {
+  createWithdrawalsRequest = async (amount = '10000', isApprove = true) => {
     await click(accountsTab.listBox.TO_BANK_ACCOUNT, this.page)
     const locator = await this.page.locator(accountsTab.listBox.BANK)
     await locator.last().click()
-    await typeText(accountsTab.fields.AMOUNT, amaunt, this.page)
+    await typeText(accountsTab.fields.AMOUNT, amount, this.page)
     if (isApprove) {
       await click(accountsTab.buttons.CONFIRMATION_WITHDRAWAL, this.page)
       const code = await this.page.$$('[role="dialog"] input')

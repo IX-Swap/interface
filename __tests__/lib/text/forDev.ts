@@ -1,5 +1,5 @@
 export const textDev = {
-  dsoName: 'fullDSOflow testing',
+  dsoName: 'fullDSOflow',
   secondaryName: 'Tether',
   USER_NAME_ADMIN_TESTING: 'Xanthus Bass',
   USER_FOR_DISABLING: 'app/admin/users/61e1696047ade252462cf361/view',
@@ -54,7 +54,7 @@ export const textDev = {
   },
   notification: {
     resetPassword: 'Password reset has been successful',
-    submitIdentity: 'Thanks For Submitting Your Identity!',
+    submitIdentity: 'Thank you for your application!',
     custodyAddress: 'You have been assigned with the blockchain address'
   }
 }
