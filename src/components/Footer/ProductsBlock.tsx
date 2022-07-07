@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Trans } from '@lingui/macro'
 import { NavLink } from 'react-router-dom'
 
@@ -12,6 +12,7 @@ import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { isDevelopment } from 'utils/isEnvMode'
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 export const ProductsBlock = () => {
   const { chainId, account } = useActiveWeb3React()
@@ -19,6 +20,17 @@ export const ProductsBlock = () => {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { kyc } = useKYCState()
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+  
+  const { config } = useWhitelabelState()
+  
+  const isAllowed = useCallback((path: string): boolean => {
+    if (!config || config.pages.length === 0) {
+      return true
+    }
+
+    return config.pages.includes(path)
+  }, [config])
+
 
   return (
     <ProductsBlockContainer>
@@ -28,22 +40,22 @@ export const ProductsBlock = () => {
         </div>
       )}
       <div>
-        {account && chainId && chains.includes(chainId) && isWhitelisted && (
+        {isAllowed(routes.swap) && account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.swap}>
             <Trans>Swap</Trans>
           </NavLink>
         )}
-        {account && chainId && [...chains, 1].includes(chainId) && (
+        {isAllowed(routes.staking) && account && chainId && [...chains, 1].includes(chainId) && (
           <NavLink to={routes.staking}>
             <Trans>Staking</Trans>
           </NavLink>
         )}
-        {isKycApproved && account && chainId && chains.includes(chainId) && isWhitelisted && (
+        {isAllowed(routes.securityTokens()) && isKycApproved && account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.securityTokens()}>
             <Trans>Securities</Trans>
           </NavLink>
         )}
-        {account && chainId && chains.includes(chainId) && isWhitelisted && (
+        {isAllowed(routes.pool) && account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.pool}>
             <Trans>Pools</Trans>
           </NavLink>

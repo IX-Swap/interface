@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import styled, { css } from 'styled-components'
@@ -26,6 +26,7 @@ import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { routes } from 'utils/routes'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -233,6 +234,14 @@ export default function Header() {
   const { config } = useWhitelabelState()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+  
+  const isAllowed = useCallback((path: string): boolean => {
+    if (!config || config.pages.length === 0) {
+      return true
+    }
+
+    return config.pages.includes(path)
+  }, [config])
 
   return (
     <>
@@ -248,7 +257,7 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {isWhitelisted && (
+            {isAllowed(routes.kyc) && isWhitelisted && (
               <KYCWrapper>
                 <HeaderElement>
                   <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
