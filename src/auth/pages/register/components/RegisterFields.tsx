@@ -71,17 +71,30 @@ export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
   const nameErrors = errors.name
   const agreeErrors = errors.agree
 
+  const renderSingPassButton = () => {
+    if (isMyInfo) {
+      return null
+    }
+    return <SingPass />
+  }
+
+  const getLabel = () => {
+    if (isIndividual) {
+      return 'Full Name'
+    }
+    return 'Corporate Name'
+  }
   return (
     <Grid container spacing={6} direction='column'>
-      <Grid item>{isIndividual ? isMyInfo ? null : <SingPass /> : null}</Grid>
+      <Grid item>{isIndividual ? renderSingPassButton() : null}</Grid>
       {!isMyInfo ? (
         <Grid item>
           <TypedField
             control={control}
             component={TextField}
             name='name'
-            label={isIndividual ? 'Full Name' : 'Corporate Name'}
-            placeholder={isIndividual ? 'Full Name' : 'Corporate Name'}
+            label={getLabel()}
+            placeholder={getLabel()}
             fullWidth
             InputLabelProps={{
               shrink: true
