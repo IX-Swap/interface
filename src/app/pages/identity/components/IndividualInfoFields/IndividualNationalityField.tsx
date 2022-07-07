@@ -34,7 +34,6 @@ export const IndividualNationalityField = ({
       isSingPass={isSingPass}
       singPassValue={titleCase(individualIdentity?.nationality)}
       placeholder='Select Nationality'
-      customRenderer
     />
   )
 }
