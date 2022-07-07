@@ -17,8 +17,8 @@ const config: PlaywrightTestConfig = {
     headless: false,
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    actionTimeout: timeouts.mediumTimeout,
-    navigationTimeout: timeouts.mediumTimeout,
+    actionTimeout: timeouts.longTimeout,
+    navigationTimeout: timeouts.longTimeout,
     permissions: ['clipboard-read', 'clipboard-write'],
   },
   expect: {

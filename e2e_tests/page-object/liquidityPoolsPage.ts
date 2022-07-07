@@ -29,6 +29,8 @@ export class LiquidityPoolsPage extends WebPage {
   readonly waitingForConfirmationPopUpText: Locator;
   readonly createdIsxEthPool: Locator;
   readonly secondTokenValueInLiquidityPool: Locator;
+  readonly liquidityPoolLoading: Locator;
+  readonly liquidityPoolPreloader: Locator;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -58,6 +60,8 @@ export class LiquidityPoolsPage extends WebPage {
     this.waitingForConfirmationPopUpText = page.locator('text=Waiting For Confirmation');
     this.createdIsxEthPool = page.locator('//span[text()="My Liquidity"]//following::div[text()="IXS/ETH"]');
     this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
+    this.liquidityPoolLoading = page.locator('text=Loading');
+    this.liquidityPoolPreloader = page.locator('[alt="Loading..."]')
   }
 
   // Assertions
@@ -135,7 +139,30 @@ export class LiquidityPoolsPage extends WebPage {
     return await this.secondAmountOfTokensField.getAttribute('value');
   }
 
+  async  removeCreatedLiqudityPoolIfItPresent() {
+    await expect(this.liquidityPoolLoading).not.toBeVisible();
+    await this.page.waitForTimeout(1000);
+    if (await this.createdIsxEthPool.isVisible()) {
+      await this.clickIsxEthPoolDetailsDropdown();
+      await this.clickRemoveLiquidityButton();
+      await this.clickMaxRemovePercentageButton();
+
+      const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
+      await approveMetamaskPopUp.click(this.metamaskPage.signButton);
+
+      await this.clickRemovePoolButton();
+
+      const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
+      await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+
+      await this.clickTransactionSubmittedPopUpCloseButton();
+    }
+  }
+
   async removeCreatedLiqudityPool() {
+    await this.page.reload();
+    await this.page.waitForLoadState();
+
     await this.clickIsxEthPoolDetailsDropdown();
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();
