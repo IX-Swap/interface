@@ -17,7 +17,7 @@ export const FatcaView = ({ data }: FatcaViewProps) => {
           <FormSectionHeader title='FATCA' />
         </Grid>
         <Grid item>
-          {data.declarations.tax.fatca ? (
+          {data.declarations.tax?.fatca ? (
             <Grid container direction={'column'} spacing={1.5}>
               <Grid item>
                 <DeclarationsListItem
@@ -50,7 +50,7 @@ export const FatcaView = ({ data }: FatcaViewProps) => {
                   <Typography fontWeight={500} display={'inline'}>
                     US Tin:
                   </Typography>{' '}
-                  {data.declarations.tax.usTin}
+                  {data.declarations.tax?.usTin}
                 </Typography>
               </Grid>
             </Grid>
