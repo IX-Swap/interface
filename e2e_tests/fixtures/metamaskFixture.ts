@@ -13,6 +13,7 @@ type ixsFixtures = {
   topNavigationBar: TopNavigationBar;
   webPage: WebPage;
   liquidityPoolsPage: LiquidityPoolsPage;
+  kovanNetwork: ConnectWalletScreen;
 };
 
 export const test = base.extend<ixsFixtures>({
@@ -73,4 +74,12 @@ export const test = base.extend<ixsFixtures>({
   liquidityPoolsPage: async ({ page, context }, use) => {
     await use(new LiquidityPoolsPage(page, context));
   },
+
+  kovanNetwork: async ({ connectWalletScreen, metamaskPage }, use) => {
+    await connectWalletScreen.connectMetaMask();
+    await metamaskPage.changeNetworkToKovan();
+    await connectWalletScreen.clickToPlaygroundWarningIUnderstandButton();
+
+    await use(connectWalletScreen);
+  }
 });
