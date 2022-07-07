@@ -39,7 +39,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   const checkValidation = async () => {
     const schema =
       typeof step.validationSchema === 'function'
-        ? step.validationSchema(step.getFormValues(data))
+        ? step.validationSchema(data)
         : step.validationSchema
 
     setValidating(true)
