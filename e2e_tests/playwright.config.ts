@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
   testDir: './tests',
   globalSetup: './setup/globalSetup.ts',
   outputDir: './test-results',
-  workers: 2,
+  workers: 1,
   use: {
     baseURL: process.env.E2E_URL || 'http://localhost:3000/',
     browserName: 'chromium',
