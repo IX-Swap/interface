@@ -273,9 +273,11 @@ export default function Header() {
                 </HeaderElement>
               </KYCWrapper>
             )}
-            <HeaderElement>
-              <IXSBalance />
-            </HeaderElement>
+            {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
+              <HeaderElement>
+                <IXSBalance />
+              </HeaderElement>
+            )}
             <HeaderElement>
               <NetworkCard />
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
