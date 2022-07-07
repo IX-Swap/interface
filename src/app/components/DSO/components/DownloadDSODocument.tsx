@@ -1,24 +1,25 @@
-import React from 'react'
+import { Launch } from '@mui/icons-material'
+import { IconButton, Tooltip } from '@mui/material'
 import {
   useDownloadRawFile,
   useOldDownloadRawFile
 } from 'hooks/useDownloadRawFile'
-import { IconButton, Tooltip } from '@mui/material'
 import {
   convertBlobToFile,
   downloadByAnchor,
-  openFileInNewTab
+  downloadByFile
 } from 'hooks/utils'
-import { Launch } from '@mui/icons-material'
+import React from 'react'
 
 export interface DownloadDSODocumentProps {
   dsoId: string
   documentId: string
   type?: 'document' | 'subscriptionDocument'
+  name?: string
 }
 
 export const DownloadDSODocument = (props: DownloadDSODocumentProps) => {
-  const { dsoId, documentId, type = 'document' } = props
+  const { dsoId, documentId, name = 'file.txt', type = 'document' } = props
   const isDocument = type === 'document'
   const uri = isDocument
     ? `/issuance/dso/dataroom/documents/raw/${dsoId}/${documentId}`
@@ -26,7 +27,7 @@ export const DownloadDSODocument = (props: DownloadDSODocumentProps) => {
   const [download, { isLoading }] = useOldDownloadRawFile(uri, {
     onSuccess: ({ data }) => {
       const file = convertBlobToFile(data, '')
-      openFileInNewTab(file)
+      downloadByFile(file, name)
     }
   })
   const [downloadNew, { isLoading: isLoadingNew }] = useDownloadRawFile(uri, {

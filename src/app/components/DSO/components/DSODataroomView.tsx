@@ -42,6 +42,7 @@ export const DSODataroomView = (props: DSODataroomViewProps) => {
                   dsoId={dso._id}
                   type={'subscriptionDocument'}
                   documentId={dso.subscriptionDocument?._id}
+                  name={dso.subscriptionDocument?.originalFileName}
                 />
               }
             />
@@ -77,6 +78,7 @@ export const DSODataroomView = (props: DSODataroomViewProps) => {
                   <DownloadDSODocument
                     dsoId={dso._id}
                     documentId={document._id}
+                    name={document.originalFileName}
                   />
                 }
               />

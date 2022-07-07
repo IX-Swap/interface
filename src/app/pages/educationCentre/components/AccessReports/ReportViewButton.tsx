@@ -2,7 +2,7 @@ import { Button } from '@mui/material'
 import { Report } from 'app/pages/educationCentre/components/AccessReports/ReportRow'
 import { getDocumentType, isImage } from 'components/dataroom/DataroomColumns'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
-import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import { convertBlobToFile, downloadByFile } from 'hooks/utils'
 import React from 'react'
 
 export interface ReportViewButtonProps {
@@ -21,7 +21,7 @@ export const ReportViewButton = ({
     {
       onSuccess: ({ data }) => {
         const file = convertBlobToFile(data, '')
-        openFileInNewTab(file)
+        downloadByFile(file, item.originalFileName)
       }
     }
   )

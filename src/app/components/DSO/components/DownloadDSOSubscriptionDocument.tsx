@@ -5,12 +5,13 @@ import React from 'react'
 
 export interface DownloadDSOSubscriptionDocumentProps extends ButtonProps {
   dsoId: string
+  name?: string
 }
 
 export const DownloadDSOSubscriptionDocument = (
   props: DownloadDSOSubscriptionDocumentProps
 ) => {
-  const { dsoId, children = 'Download', ...rest } = props
+  const { dsoId, name, children = 'Download', ...rest } = props
   const uri = `/issuance/dso/dataroom/subscription/raw/${dsoId}`
   const [download, { isLoading }] = useDownloadRawFile(uri, {
     onSuccess: data => {
