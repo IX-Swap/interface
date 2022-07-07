@@ -59,7 +59,7 @@ export const FormStepper = (props: FormStepperProps) => {
       return steps.length
     }
 
-    const dataStep = (data?.step ?? 0) + 1 // eslint-disable-line
+    const dataStep = data?.step !== undefined ? (data?.step ?? 0) + 1 : 0 // eslint-disable-line
 
     if (shouldSaveOnMove) {
       return defaultActiveStep ?? dataStep ?? 0
