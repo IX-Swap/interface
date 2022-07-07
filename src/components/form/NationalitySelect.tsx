@@ -9,7 +9,7 @@ import { MenuItem } from '@mui/material'
 export const NationalitySelect = (props: any): JSX.Element => {
   return (
     <>
-      <InputLabel>{props.label}</InputLabel>
+      <InputLabel disabled={props.disabled}>{props.label}</InputLabel>
       <Select displayEmpty {...props} label={undefined}>
         <SelectItem disabled value={undefined}>
           Nationality

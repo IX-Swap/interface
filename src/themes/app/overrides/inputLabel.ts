@@ -5,6 +5,13 @@ export const inputLabel = (theme: Theme) => {
     defaultProps: {
       shrink: true
     },
-    styleOverrides: {}
+    styleOverrides: {
+      root: {
+        '&.Miu-disabled': {
+          color: 'rgb(119, 129, 148)',
+          opacity: 0.7
+        }
+      }
+    }
   }
 }

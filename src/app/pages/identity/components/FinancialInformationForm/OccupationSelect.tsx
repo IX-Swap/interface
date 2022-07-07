@@ -64,7 +64,7 @@ export const OccupationSelect = (props: any) => {
 
   return (
     <>
-      <InputLabel>{props.label}</InputLabel>
+      <InputLabel disabled={props.disabled}>{props.label}</InputLabel>
       <Select
         {...rest}
         style={{ minWidth: 100 }}
