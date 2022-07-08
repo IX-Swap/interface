@@ -13,6 +13,7 @@ import { KYCStatuses } from './enum'
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
 import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
+import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 
 export const StatusCard = styled(Card)`
   display: flex;
@@ -163,13 +164,57 @@ const RejectedIcon = styled(NonTradable)`
       }
     `}
 `
+const AttentionIcon = styled(Attention)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      > circle[fill='#ED0376'] {
+        fill: ${theme.error};
+      }
+      > circle[stroke='#ED0376'] {
+        stroke: ${theme.error};
+      }
+      line {
+        stroke: ${theme.error};
+      }
+      > circle[fill='#372E5E'] {
+        fill: ${theme.config.elements?.main};
+      }
+    `}
+`
+
+export const PassedIcon = styled(Passed)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      > path {
+        fill: ${theme.success};
+      }
+      > circle {
+        fill: ${theme.config.elements?.main};
+      }
+    `}
+`
+
+export const StyledBigPassed = styled(BigPassed)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      > path {
+        fill: ${theme.success};
+      }
+      > circle {
+        fill: ${theme.config.elements?.main};
+      }
+    `}
+`
 
 /* eslint-disable react/display-name */
 export const KYCStatusIcons = {
   [KYCStatuses.PENDING]: () => <LoaderThin size={20} />,
-  [KYCStatuses.APPROVED]: () => <Passed />,
+  [KYCStatuses.APPROVED]: () => <PassedIcon />,
   [KYCStatuses.NOT_SUBMITTED]: () => null,
-  [KYCStatuses.CHANGES_REQUESTED]: () => <Attention />,
+  [KYCStatuses.CHANGES_REQUESTED]: () => <AttentionIcon />,
   [KYCStatuses.REJECTED]: () => <RejectedIcon />,
   [KYCStatuses.DRAFT]: () => <LoaderThin size={20} />,
   [KYCStatuses.IN_PROGRESS]: () => <LoaderThin size={20} />,

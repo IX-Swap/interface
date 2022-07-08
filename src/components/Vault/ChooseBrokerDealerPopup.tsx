@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
 
-import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
+import { PassedIcon } from 'pages/KYC/styleds'
 import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -192,12 +192,12 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <Spacer />
         {kyc?.status === KYCStatuses.APPROVED ? (
           <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
-            {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+            {selected === KycSource.IXSwap ? <PassedIcon className="selected-checkmark" /> : <CheckmarkPlaceholder />}
           </IconWrapper>
         ) : (
           <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IX Swap'} to enable this option`}>
             <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
-              {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+              {selected === KycSource.IXSwap ? <PassedIcon className="selected-checkmark" /> : <CheckmarkPlaceholder />}
             </IconWrapper>
           </KycSourceTooltip>
         )}
@@ -211,7 +211,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <Spacer />
 
         <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
-          {selected === KycSource.InvestaX ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+          {selected === KycSource.InvestaX ? <PassedIcon className="selected-checkmark" /> : <CheckmarkPlaceholder />}
         </IconWrapper>
       </KycRow> */}
     </KycSourceContainer>
@@ -353,7 +353,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 <Text style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</Text>
                 <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
                   {selectedBrokerPair === pair?.id ? (
-                    <Checkmark className="selected-checkmark" />
+                    <PassedIcon className="selected-checkmark" />
                   ) : (
                     <CheckmarkPlaceholder />
                   )}

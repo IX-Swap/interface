@@ -13,9 +13,11 @@ export interface WhitelabelRaw {
   title: string
   faviconUrl: string
   footerConfig: string
+  defaultUrl: string
 }
 
 export interface Whitelabel {
+  defaultUrl: string
   createdAt: string
   deletedAt: null
   domain: string

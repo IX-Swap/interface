@@ -30,7 +30,6 @@ import { useModalOpen } from 'state/application/hooks'
 import { useAccount, useGetMe } from 'state/user/hooks'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
-import { CustomHeaders } from 'components/CustomHeaders'
 
 import { ApplicationModal, clearStore } from 'state/application/actions'
 
@@ -98,24 +97,33 @@ export default function App() {
 
     return true
   }
-  
-  const isAllowed = useCallback((route: RouteMapEntry): boolean => {
-    if (!config) {
-      return false
-    }
 
-    if (config.pages.length === 0) {
-      return true
-    }
+  const isAllowed = useCallback(
+    (route: RouteMapEntry): boolean => {
+      if (!config) {
+        return false
+      }
 
-    return config.pages.includes(route.path)
-  }, [config])
-  
+      if (config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(route.path)
+    },
+    [config]
+  )
+
   const defaultPage = useMemo(() => {
     if (isAllowed({ path: '/kyc' }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
       return '/kyc'
     }
-    if (isAllowed({ path: '/security-tokens'}) && (kyc?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted)) {
+    if (
+      isAllowed({ path: '/security-tokens' }) &&
+      kyc?.status === KYCStatuses.APPROVED &&
+      chainId &&
+      chains.includes(chainId) &&
+      isWhitelisted
+    ) {
       return '/security-tokens'
     }
 
@@ -159,22 +167,24 @@ export default function App() {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
+  const routeGenerator = useCallback(
+    (route: RouteMapEntry) => {
+      const guards = [
+        !isAllowed(route),
+        route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
+        route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
+        route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
+        route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
+      ]
 
-  const routeGenerator = useCallback((route: RouteMapEntry) => {
-    const guards = [
-      !isAllowed(route),
-      route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
-      route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
-      route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
-      route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess)
-    ];
+      if (guards.some((guard) => guard === true)) {
+        return null
+      }
 
-    if (guards.some(guard => guard === true)) {
-      return null
-    }
-
-    return <Route exact strict path={route.path} component={route.component} render={route.render} />
-  }, [isAllowed, canAccessKycForm, chainId, isWhitelisted])
+      return <Route exact strict path={route.path} component={route.component} render={route.render} />
+    },
+    [isAllowed, canAccessKycForm, chainId, isWhitelisted]
+  )
 
   const useRedirect = account ? kyc !== null : true
 
@@ -189,7 +199,6 @@ export default function App() {
       <Route component={ApeModeQueryParamReader} />
       <AppBackground />
       <Popups />
-      <CustomHeaders />
       <AppWrapper>
         {!isAdminKyc && <Header />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
@@ -203,7 +212,7 @@ export default function App() {
               }
             >
               <Switch>
-                {routeConfigs.map(routeGenerator).filter(route => !!route)}
+                {routeConfigs.map(routeGenerator).filter((route) => !!route)}
 
                 {useRedirect && (
                   <Route

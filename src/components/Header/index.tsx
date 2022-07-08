@@ -234,14 +234,17 @@ export default function Header() {
   const { config } = useWhitelabelState()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  
-  const isAllowed = useCallback((path: string): boolean => {
-    if (!config || config.pages.length === 0) {
-      return true
-    }
 
-    return config.pages.includes(path)
-  }, [config])
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
 
   return (
     <>
@@ -249,7 +252,7 @@ export default function Header() {
         {!cookies.annoucementsSeen && <Announcement />}
         <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
-            <Title href=".">
+            <Title href={config?.defaultUrl || '.'}>
               <IXSIcon>
                 <AppLogo width="auto" height="47px" {...config?.customStyles?.logo} />
               </IXSIcon>
