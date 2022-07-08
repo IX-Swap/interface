@@ -1,8 +1,9 @@
-import React from 'react'
-import { TypedField } from 'components/form/TypedField'
-import { TextField, Grid, Typography } from '@mui/material'
-import { useFormContext } from 'react-hook-form'
+import { Grid, Typography } from '@mui/material'
 import { RevokeAccessInputs } from 'app/pages/admin/components/RevokeAccess'
+import { TypedField } from 'components/form/TypedField'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const RevokeAccessFields = () => {
   const { control } = useFormContext<RevokeAccessInputs>()
@@ -14,7 +15,7 @@ export const RevokeAccessFields = () => {
       </Grid>
       <Grid item xs={12} md={6} lg={4}>
         <TypedField
-          component={TextField}
+          component={TextInput}
           variant='outlined'
           control={control}
           name='sessionId'

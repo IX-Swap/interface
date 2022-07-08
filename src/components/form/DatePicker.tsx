@@ -1,9 +1,10 @@
-import React from 'react'
 import MUIDatePicker, {
   DatePickerProps as MUIDatePickerProps
 } from '@mui/lab/DatePicker'
-import { FormHelperText, TextField } from '@mui/material'
+import { FormHelperText } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
+import React from 'react'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface DatePickerProps
   extends Omit<MUIDatePickerProps, 'renderInput'> {
@@ -15,7 +16,7 @@ export const DatePickerComponent = (props: DatePickerProps) => {
     <MUIDatePicker
       {...props}
       renderInput={inputProps => (
-        <TextField
+        <TextInput
           fullWidth
           margin='none'
           variant='outlined'

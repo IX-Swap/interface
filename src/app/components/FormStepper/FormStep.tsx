@@ -5,12 +5,12 @@ import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
-import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
-import { NextButton } from 'app/components/FormStepper/NextButton'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
 import { isSuccessRequest } from 'helpers/strings'
+import { SaveOnNavigate } from 'app/components/FormStepper/SaveOnNavigate'
+import { useStyles } from 'app/components/FormStepper/FormStep.styles'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -25,6 +25,7 @@ export interface FormStepProps {
   shouldSaveOnMove: boolean
   setCompleted?: () => void
   skippable?: boolean
+  completed: number[]
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -40,10 +41,12 @@ export const FormStep = (props: FormStepProps) => {
     submitMutation,
     shouldSaveOnMove,
     setCompleted,
-    skippable
+    skippable,
+    completed
   } = props
 
   const isCurrentStep = activeStep === index
+  const classes = useStyles()
 
   if (!isCurrentStep) {
     return null
@@ -72,29 +75,51 @@ export const FormStep = (props: FormStepProps) => {
 
     const onSubmitSuccess = (data: any) => {
       if (isSuccessRequest(data.status) && !isLastStep) {
+        //eslint-disable-line
         setCompleted?.()
-        setActiveStep(activeStep + 1)
       }
     }
 
-    if (shouldSaveStep) {
+    if (shouldSaveStep && (data?.step ?? 0) < activeStep + 1) {
       payload.step = activeStep + 1
     }
 
     return await mutation(payload).then(onSubmitSuccess)
   }
 
+  const nextCallback = () => {
+    setCompleted?.()
+    setActiveStep(activeStep + 1)
+  }
+
+  const getSchema = (schema?: any) => {
+    if (typeof schema === 'function') {
+      return schema(data)
+    }
+    return schema
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={step.validationSchema}
+      validationSchema={
+        completed.includes(index)
+          ? getSchema(step.validationSchema)
+          : getSchema(step.initialValidationSchema)
+      }
       onSubmit={handleSubmit}
+      allowInvalid
+      id={`${step.formId ?? 'form'}-${index}`}
     >
+      <SaveOnNavigate
+        transformData={step.getRequestPayload}
+        mutation={saveMutation}
+      />
       <Grid item>{createElement(step.component)}</Grid>
-      <VSpacer size='large' />
+      <VSpacer size='small' />
 
       <Grid item container justifyContent='flex-end'>
-        <Box display='flex'>
+        <Box className={classes.stepButtons}>
           {skippable !== undefined && skippable && !isLastStep && (
             <Fragment>
               <SkipButton mutation={saveMutation} />
@@ -102,9 +127,10 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {hasPrevStep && (
+          {hasPrevStep && !isLastStep && (
             <Fragment>
               <BackButton
+                fullWidth
                 mutation={editMutation}
                 getRequestPayload={step.getRequestPayload}
                 shouldSaveStep={shouldSaveOnMove}
@@ -118,22 +144,19 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {!isLastStep && (
-            <Fragment>
-              <SaveButton
-                step={index}
-                transformData={step.getRequestPayload}
-                mutation={saveMutation}
-              >
-                {shouldSaveOnMove ? 'Save & Finish Later' : 'Update'}
-              </SaveButton>
-              <Box mx={1} />
-            </Fragment>
+          {hasNextStep && (
+            <SaveButton
+              fullWidth
+              step={index}
+              transformData={step.getRequestPayload}
+              mutation={saveMutation}
+              successCallback={nextCallback}
+              variant='contained'
+              color='primary'
+            >
+              Next
+            </SaveButton>
           )}
-
-          {hasNextStep && <NextButton />}
-
-          {isLastStep && <SubmitButton mutation={submitMutation} data={data} />}
         </Box>
       </Grid>
       <ScrollToTop />

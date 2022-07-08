@@ -40,6 +40,14 @@ export const formatDateToMMDDYY = (s?: string): string => {
   return s.length > 0 ? format(new Date(s), 'MM/dd/yyyy') : s
 }
 
+export const formatDateToDDMonYYYY = (s?: string): string => {
+  if (s === undefined) {
+    return ''
+  }
+
+  return s.length > 0 ? format(new Date(s), 'dd MMM. yyyy') : s
+}
+
 export const formatDate = (s?: string): string => {
   if (s === undefined) {
     return ''
@@ -100,7 +108,7 @@ export const getTimeAgo = (datetime: string) => {
     const days = differenceInDays(now, from)
 
     if (minutes === 0) {
-      return 'Just now'
+      return 'Now'
     } else if (hours === 0) {
       return `${minutes} m`
     } else if (days === 0) {

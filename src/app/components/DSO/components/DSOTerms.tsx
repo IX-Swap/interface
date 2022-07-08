@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
-import { Grid, TextField } from '@mui/material'
-import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
-import { TypedField } from 'components/form/TypedField'
-import { NumericInput } from 'components/form/NumericInput'
-import { numericValueExtractor } from 'helpers/forms'
+import { Grid } from '@mui/material'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DistributionFrequencySelect } from 'components/form/DistributionFrequencySelect'
+import { NumericInput } from 'components/form/NumericInput'
+import { TypedField } from 'components/form/TypedField'
+import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
+import { numericValueExtractor } from 'helpers/forms'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const DSOTerms = () => {
   const { control, watch, setValue } = useFormContext<DSOFormValues>()
@@ -55,7 +56,6 @@ export const DSOTerms = () => {
                 label='Dividend Yield'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='in percent'
                 variant='outlined'
                 disabled={isDebt}
               />
@@ -68,7 +68,6 @@ export const DSOTerms = () => {
                 name='interestRate'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='in percent'
                 variant='outlined'
                 disabled={isEquity}
               />
@@ -81,7 +80,6 @@ export const DSOTerms = () => {
                 label='Gross IRR'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='in percent'
                 variant='outlined'
                 disabled={isDebt}
               />
@@ -93,7 +91,7 @@ export const DSOTerms = () => {
             <Grid item xs={12} sm={6} md={6}>
               <TypedField
                 control={control}
-                component={TextField}
+                component={TextInput}
                 label='Investment Structure'
                 name='investmentStructure'
                 variant='outlined'

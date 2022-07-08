@@ -1,18 +1,24 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
+import { useHistory, useParams } from 'react-router-dom'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { useParams } from 'react-router-dom'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { getCorporateSubmitPayload } from 'app/pages/identity/utils/corporate/requests'
 
 export const useSubmitCorporate = (callback?: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
   const params = useParams<{ identityId: string }>()
   const queryCache = useQueryCache()
+  const { replace } = useHistory()
 
-  const submitCorporate = async () => {
+  const submitCorporate = async (data: CorporateIdentity) => {
     const uri = identityURL.corporates.submit(params.identityId)
-    return await apiService.patch<CorporateIdentity>(uri, {})
+    return await apiService.patch<CorporateIdentity>(
+      uri,
+      getCorporateSubmitPayload(data)
+    )
   }
 
   return useMutation(submitCorporate, {
@@ -25,6 +31,8 @@ export const useSubmitCorporate = (callback?: () => void) => {
       if (data.data.authorizations.length === 0) {
         storageService.set(data.data._id, data.data.type)
       }
+
+      replace(IdentityRoute.identitySuccess)
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

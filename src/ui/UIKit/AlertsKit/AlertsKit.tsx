@@ -1,94 +1,27 @@
-import { Box, Button, Grid, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
-import {
-  toast,
-  TypeOptions,
-  ToastContentProps,
-  CloseButtonProps,
-  ToastOptions
-} from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { ReactComponent as SuccessIcon } from 'assets/icons/alerts/success.svg'
-import { ReactComponent as ErrorIcon } from 'assets/icons/alerts/error.svg'
-import { ReactComponent as InfoIcon } from 'assets/icons/alerts/info.svg'
-import { ReactComponent as WarningIcon } from 'assets/icons/alerts/warning.svg'
-import { AlertsContainer } from 'ui/UIKit/AlertsKit/AlertsContainer'
-import { Icon } from 'ui/Icons/Icon'
+import { AlertsContainer } from 'ui/Alerts/AlertsContainer/AlertsContainer'
 import { VSpacer } from 'components/VSpacer'
+import { useServices } from 'hooks/useServices'
+import { Actions } from 'hooks/useToast'
+import { notificationForAlert } from '__fixtures__/notification'
 
 export const AlertsKit = () => {
-  const getToastIcon = (type: TypeOptions) => {
-    switch (type) {
-      case 'success':
-        return SuccessIcon
-      case 'error':
-        return ErrorIcon
-      case 'info':
-        return InfoIcon
-      case 'warning':
-        return WarningIcon
-      default:
-        return SuccessIcon
+  const { toastsService } = useServices()
+  const content = 'The bank account was successfully created'
+  const errorContent = 'There was an error creating the bank account'
+
+  const actions: Actions = [
+    {
+      buttonText: 'Accept',
+      callback: () => console.log('Accept')
+    },
+    {
+      buttonText: 'Deny',
+      callback: () => console.log('Deny')
     }
-  }
-
-  const CloseIcon = ({ closeToast }: CloseButtonProps) => (
-    <Icon name={'close'} onClick={closeToast} size={17} />
-  )
-
-  const Content = () => (
-    <Box width={145}>The bank account was successfully created</Box>
-  )
-  const ErrorContent = () => (
-    <Box width={145}>There was an error creating the bank account</Box>
-  )
-  const ActionContent = ({ closeToast }: ToastContentProps) => {
-    const closeAlert = () => {
-      if (closeToast !== undefined) {
-        closeToast()
-      }
-    }
-
-    return (
-      <Box display={'flex'}>
-        <Content />
-
-        <Button
-          variant={'text'}
-          style={{ marginRight: 8, marginLeft: 16 }}
-          onClick={() => {
-            closeAlert()
-          }}
-        >
-          Accept
-        </Button>
-        <Button
-          variant={'text'}
-          style={{ marginRight: 16 }}
-          onClick={() => {
-            closeAlert()
-          }}
-        >
-          Deny
-        </Button>
-      </Box>
-    )
-  }
-
-  const getToastOptions = (
-    type: TypeOptions,
-    variant: 'default' | 'loading' | 'action'
-  ) => {
-    return {
-      position: 'bottom-right',
-      type: type,
-      hideProgressBar: variant !== 'loading',
-      icon: getToastIcon(type),
-      closeButton: CloseIcon,
-      style: { width: variant !== 'action' ? 320 : 'initial' }
-    } as ToastOptions
-  }
+  ]
 
   return (
     <UIKitThemeWrapper>
@@ -100,9 +33,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() =>
-                toast(Content, getToastOptions('success', 'default'))
-              }
+              onClick={() => toastsService.showToast(content, 'success')}
             >
               Success
             </Button>
@@ -110,9 +41,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() =>
-                toast(ErrorContent, getToastOptions('error', 'default'))
-              }
+              onClick={() => toastsService.showToast(errorContent, 'error')}
             >
               Error
             </Button>
@@ -120,7 +49,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() => toast(Content, getToastOptions('info', 'default'))}
+              onClick={() => toastsService.showToast(content, 'info')}
             >
               Info
             </Button>
@@ -128,9 +57,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() =>
-                toast(ErrorContent, getToastOptions('warning', 'default'))
-              }
+              onClick={() => toastsService.showToast(content, 'warning')}
             >
               Warning
             </Button>
@@ -147,9 +74,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() =>
-                toast(Content, getToastOptions('success', 'loading'))
-              }
+              onClick={() => toastsService.showToast(content, 'success', true)}
             >
               Success
             </Button>
@@ -158,7 +83,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(ErrorContent, getToastOptions('error', 'loading'))
+                toastsService.showToast(errorContent, 'error', true)
               }
             >
               Error
@@ -167,7 +92,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() => toast(Content, getToastOptions('info', 'loading'))}
+              onClick={() => toastsService.showToast(content, 'info', true)}
             >
               Info
             </Button>
@@ -175,9 +100,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() =>
-                toast(ErrorContent, getToastOptions('warning', 'loading'))
-              }
+              onClick={() => toastsService.showToast(content, 'warning', true)}
             >
               Warning
             </Button>
@@ -195,7 +118,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(ActionContent, getToastOptions('success', 'action'))
+                toastsService.showToast(content, 'success', false, actions)
               }
             >
               Success
@@ -205,7 +128,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(ActionContent, getToastOptions('error', 'action'))
+                toastsService.showToast(errorContent, 'error', false, actions)
               }
             >
               Error
@@ -215,7 +138,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(ActionContent, getToastOptions('info', 'action'))
+                toastsService.showToast(content, 'info', false, actions)
               }
             >
               Info
@@ -225,10 +148,29 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(ActionContent, getToastOptions('warning', 'action'))
+                toastsService.showToast(content, 'warning', false, actions)
               }
             >
               Warning
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={1} flexDirection={'column'}>
+        <VSpacer size={'medium'} />
+        <Grid item>
+          <Typography>Notification</Typography>
+        </Grid>
+        <Grid item container spacing={1} xs={12} md={3}>
+          <Grid item>
+            <Button
+              variant={'outlined'}
+              onClick={() =>
+                toastsService.showNotification(notificationForAlert)
+              }
+            >
+              Notification
             </Button>
           </Grid>
         </Grid>

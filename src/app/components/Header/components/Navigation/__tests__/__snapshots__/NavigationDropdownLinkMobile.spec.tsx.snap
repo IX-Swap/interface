@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationDropdownLinkMobile should match snapshot 1`] = `
+<div>
+  <a
+    class="makeStyles-wrapper-1 makeStyles-wrapper-4"
+    href="/test"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 makeStyles-text-2 css-1b4l2pg-MuiTypography-root"
+    >
+      label
+    </p>
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium makeStyles-icon-3 css-1oaawcc-MuiSvgIcon-root"
+      data-testid="ArrowDropDownIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="m7 10 5 5 5-5z"
+      />
+    </svg>
+  </a>
+  <div
+    class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+    style="min-height: 0px;"
+  >
+    <div
+      class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+    >
+      <div
+        class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+      >
+        <div
+          class="MuiBox-root css-d0uhtl"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

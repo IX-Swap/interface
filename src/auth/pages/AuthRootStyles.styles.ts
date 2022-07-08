@@ -20,21 +20,26 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     width: '55%',
-    minHeight: '100%',
+    height: '100%',
+    minHeight: '100vh',
     position: 'relative',
     backgroundColor: 'transparent',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
-      width: '100%'
+      width: '100%',
+      overflowY: 'scroll'
     }
   },
   formContainer: {
     marginTop: 'auto',
     marginBottom: 'auto',
+    paddingTop: 50,
+    paddingBottom: 50,
     [theme.breakpoints.down('md')]: {
-      marginTop: 0
+      paddingTop: 24,
+      paddingBottom: 24
     }
   },
   background: {
@@ -46,7 +51,10 @@ export const useStyles = makeStyles(theme => ({
     backgroundPosition: 'right center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    height: '100vh',
     [theme.breakpoints.down('md')]: {
       display: 'none'
     }
@@ -62,16 +70,15 @@ export const useStyles = makeStyles(theme => ({
   formWrapper: {
     position: 'relative',
     height: '100%',
-    maxWidth: 480
+    maxWidth: 480,
+    minHeight: '100vh'
   },
   logo: {
     position: 'absolute',
     left: 0,
     top: 33,
     [theme.breakpoints.down('md')]: {
-      position: 'static',
-      marginBottom: 30,
-      marginTop: 9
+      top: 0
     }
   }
 }))

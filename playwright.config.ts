@@ -18,7 +18,7 @@ const config: PlaywrightTestConfig = {
 
   /* Retry on CI only */
 
-   retries: process.env.CI !== undefined ? 1 : 0,
+  retries: process.env.CI !== undefined ? 1 : 0,
 
   /* The maximum number of test failures. After reaching this number, testing will stop and exit with an error. */
 

@@ -22,7 +22,7 @@ describe('PastOTCORders', () => {
         name: tradingQueryKeys.pastOrders,
         uri: trading.getMyPastOrders,
         themeVariant: 'primary',
-        noHeader: false
+        noHeader: undefined
       }),
       {}
     )

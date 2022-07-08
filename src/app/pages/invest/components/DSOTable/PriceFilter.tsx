@@ -1,6 +1,7 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ChangeEvent } from 'react'
-import { FormControlLabel, Grid, Radio, RadioGroup } from '@mui/material'
+import { FormControlLabel, Grid, RadioGroup } from '@mui/material'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export const PriceFilter = () => {
   const { getFilterValue, updateFilter } = useQueryFilter()
@@ -21,11 +22,15 @@ export const PriceFilter = () => {
           <FormControlLabel
             label='Low - High'
             value='yes'
-            control={<Radio />}
+            control={<UIRadio />}
           />
         </Grid>
         <Grid item>
-          <FormControlLabel label='High - Low' value='no' control={<Radio />} />
+          <FormControlLabel
+            label='High - Low'
+            value='no'
+            control={<UIRadio />}
+          />
         </Grid>
       </Grid>
     </RadioGroup>

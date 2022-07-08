@@ -1,19 +1,21 @@
 import React from 'react'
-import { InputProps, TextField } from '@mui/material'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
+import { TextInput } from 'ui/TextInput/TextInput'
+import { InputProps } from '@mui/material'
 
 const InputComponent: React.FC = (props: NumberFormatProps<any>) => {
   const { onValueChange, onChange, inputRef, ...rest } = props
   return (
     <NumberFormat
       {...rest}
-      customInput={TextField}
+      customInput={TextInput}
       onValueChange={onValueChange}
     />
   )
 }
 
 export interface NumericInputProps {
+  hideIcon?: boolean
   numberFormat: NumberFormatProps<any>
   onChange?: any
   variant?: 'outlined' | 'standard'
@@ -33,3 +35,5 @@ export const NumericInput = (
     />
   )
 }
+
+NumericInput.displayName = 'TextField_NumericInput'

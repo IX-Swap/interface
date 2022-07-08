@@ -2,7 +2,7 @@ import {
   getCreateDSOPayload,
   getUpdateDSOPayload,
   validateTeamField
-} from 'app/pages/issuance/utils'
+} from 'app/pages/issuance/utils/utils'
 import { useEffect, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import {

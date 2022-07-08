@@ -17,7 +17,7 @@ export const DSOInvestorInformationView = (
   const classes = useStyles()
 
   return (
-    <Grid container direction='column' spacing={5}>
+    <Grid container direction='column' spacing={5} pl={3}>
       <Grid item className={classes.newDSOViewItemStyles}>
         <Typography
           variant={'h4'}

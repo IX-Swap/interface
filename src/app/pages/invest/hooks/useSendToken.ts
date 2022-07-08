@@ -9,13 +9,16 @@ import { useCallback } from 'react'
 
 export interface SendTokenArgs {
   address?: string
+  amount: number
   tokenChainId?: number
+  recipient?: string
+  callback: () => Promise<void>
 }
 export const estimateGas = async (chainId?: number) => {
   try {
     const result = await axios.get(CHAIN_INFO[chainId ?? 137].gasTrackerUrl)
     const innerResult = result?.data?.result
-    console.log({ GAS })
+
     const value =
       GAS === 'low'
         ? innerResult?.standardgaspricegwei ?? innerResult?.SafeGasPrice
@@ -34,48 +37,61 @@ export const getTransferProps = async (chainId?: number) => {
   }
   return props
 }
-export const useSendToken = ({ address, tokenChainId }: SendTokenArgs) => {
+export const useSendToken = ({
+  address,
+  tokenChainId,
+  amount,
+  recipient,
+  callback
+}: SendTokenArgs) => {
   const { account, chainId } = useActiveWeb3React()
   const tokenContract = useErc20Contract(address, true)
   const { snackbarService } = useServices()
 
-  return useCallback(
-    async (value: number, recipient?: string) => {
-      if (
-        tokenContract === null ||
-        account === undefined ||
-        account === null ||
-        chainId !== tokenChainId ||
-        recipient === undefined
-      ) {
-        void snackbarService.showSnackbar(
-          'Could not get details from metamask. Please refresh and try again',
-          'error'
-        )
-        return false
+  return useCallback(async () => {
+    if (
+      tokenContract === null ||
+      account === undefined ||
+      account === null ||
+      chainId !== tokenChainId ||
+      recipient === undefined ||
+      amount === 0
+    ) {
+      let message =
+        'Could not get details from metamask. Please refresh and try again'
+      if (amount === 0) {
+        message = 'Invalid amount'
       }
-      try {
-        const props = await getTransferProps(chainId)
-        const result = await tokenContract.transfer(
-          recipient,
-          BigNumber.from(value),
-          { ...props }
-        )
+      if (chainId !== tokenChainId) {
+        message = 'Wrong chain'
+      }
+      void snackbarService.showSnackbar(message, 'error')
+      return
+    }
+    try {
+      const props = await getTransferProps(chainId)
+      const result = await tokenContract.transfer(
+        recipient,
+        BigNumber.from(amount),
+        { ...props }
+      )
+      await callback()
 
-        const receipt = await result.wait()
-        if (receipt.status === 1) {
-          return true
-        }
-        snackbarService.showSnackbar('Transaction failed', 'error')
-        return false
-      } catch (error: any) {
-        if (error?.message?.includes('404') === false) {
-          void snackbarService.showSnackbar(error.message, 'error')
-          return false
-        }
-        return true
+      await result.wait()
+      void snackbarService.showSnackbar('Token transfer finished', 'info')
+    } catch (error: any) {
+      if (error?.message?.includes('404') === false) {
+        void snackbarService.showSnackbar(error.message, 'error')
       }
-    },
-    [account, chainId, tokenChainId, tokenContract, snackbarService]
-  )
+    }
+  }, [
+    account,
+    chainId,
+    tokenChainId,
+    tokenContract,
+    snackbarService,
+    recipient,
+    amount,
+    callback
+  ])
 }

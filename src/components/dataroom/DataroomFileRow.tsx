@@ -35,7 +35,11 @@ export const DataroomFileRow = (props: DataroomFileRowProps) => {
   }
 
   return (
-    <DownloadDocument documentId={document._id} ownerId={document.user}>
+    <DownloadDocument
+      documentId={document._id}
+      ownerId={document.user}
+      name={document.originalFileName}
+    >
       {({ download, isLoading: isDownloading }) => (
         <DataroomEditRow
           title={document.title}

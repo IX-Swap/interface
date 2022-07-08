@@ -6,6 +6,7 @@ import { BankFormValues } from 'app/pages/accounts/types'
 import { useParams } from 'react-router-dom'
 import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { RootContainer } from 'ui/RootContainer'
 
 export const EditBank: React.FC = () => {
   const { bankId } = useParams<{ bankId: string }>()
@@ -24,17 +25,19 @@ export const EditBank: React.FC = () => {
   const bank = data.map[bankId]
 
   return (
-    <Grid container direction='column'>
+    <Grid container direction='column' spacing={2} style={{ display: 'table' }}>
       <Grid item>
         <PageHeader title={bank.bankName} />
       </Grid>
-      <Grid item>
-        <BankForm
-          submitButtonLabel='Save'
-          bank={bank}
-          onSubmit={handleSubmit}
-        />
-      </Grid>
+      <RootContainer>
+        <Grid item>
+          <BankForm
+            submitButtonLabel='Save'
+            bank={bank}
+            onSubmit={handleSubmit}
+          />
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }

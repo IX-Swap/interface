@@ -33,7 +33,10 @@ export const useStyles = makeStyles(theme => ({
   iconBlock: {
     position: 'absolute',
     right: -8,
-    top: -3
+    top: -3,
+    '& svg': {
+      fill: theme.palette.switch.color
+    }
   },
   icon: {
     color: theme.palette.slider.activeColor
@@ -43,12 +46,14 @@ export const useStyles = makeStyles(theme => ({
     display: 'block',
     fontWeight: 600,
     whiteSpace: 'pre-wrap',
+    color: theme.palette.primary.contrastText,
     paddingRight: theme.spacing(3.75),
     [theme.breakpoints.down('sm')]: {
       position: 'initial'
     }
   },
   value: {
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    color: theme.palette.primary.contrastText
   }
 }))

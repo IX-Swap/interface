@@ -1,9 +1,9 @@
 import React from 'react'
-import { Step1RemoveAuthenticator } from 'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator'
-import { Step2Scan } from 'app/pages/security/pages/update2fa/components/Step2Scan/Step2Scan'
-import { Step3Backup } from 'app/pages/security/pages/update2fa/components/Step3Backup/Step3Backup'
-import { Step4Enable } from 'app/pages/security/components/Step4Enable'
-import { Enabled } from 'app/pages/security/pages/update2fa/components/Enabled/Enabled'
+import { Step1RemoveAuthenticator } from 'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator/Step1RemoveAuthenticator'
+import { Step2Scan } from 'app/pages/security/components/Step2Scan/Step2Scan'
+import { Step3Backup } from 'app/pages/security/components/Step3Backup/Step3Backup'
+import { Step4Enable } from 'app/pages/security/components/Step4Enable/Step4Enable'
+import { Enabled } from 'app/pages/security/components/Enabled/Enabled'
 import { TwoFaData } from 'app/pages/security/types'
 
 export interface ActiveStepProps {
@@ -27,12 +27,12 @@ export const ActiveStep = ({
         />
       )
     case 1:
-      return <Step2Scan twoFaData={twoFaData} />
+      return <Step2Scan twoFaData={twoFaData} update2FA />
     case 2:
       return <Step3Backup twoFaData={twoFaData} />
     case 3:
       return <Step4Enable nextStep={nextStep} update2FA />
     default:
-      return <Enabled />
+      return <Enabled update2FA />
   }
 }

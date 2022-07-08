@@ -1,5 +1,4 @@
-import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+import * as useOnboardingJourneys from 'app/hooks/onboarding/useOnboardingJourneys'
 import { IndividualInvestorForm } from 'app/pages/identity/components/IndividualInvestorForm/IndividualInvestorForm'
 import * as useCreateIndividual from 'app/pages/identity/hooks/useCreateIndividual'
 import * as useSubmitIndividual from 'app/pages/identity/hooks/useSubmitIndividual'
@@ -36,10 +35,6 @@ describe('IndividualInvestorForm', () => {
   const useCreateIndividualResponse = [mutationFn, generateMutationResult({})]
   const useSubmitIndividualResponse = [mutationFn, generateMutationResult({})]
 
-  const showPreIdentityCreateDialogFn = jest.fn()
-  const useOnboardingDialogResponse = {
-    showPreIdentityCreateDialog: showPreIdentityCreateDialogFn
-  }
   const useOnboardingJourneysResponse = { isIndividualJourneyCompleted: true }
 
   const closeDialog = jest.fn()
@@ -62,10 +57,6 @@ describe('IndividualInvestorForm', () => {
     jest
       .spyOn(useSubmitIndividual, 'useSubmitIndividual')
       .mockImplementation(() => useSubmitIndividualResponse as any)
-
-    jest
-      .spyOn(useOnboardingDialog, 'useOnboardingDialog')
-      .mockImplementation(() => useOnboardingDialogResponse as any)
 
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -92,21 +83,6 @@ describe('IndividualInvestorForm', () => {
     const { getByText } = render(<IndividualInvestorForm />)
 
     expect(getByText('Loading...')).toBeTruthy()
-  })
-
-  it('invokes showPreIdentityCreateDialog when data id undefined', () => {
-    const useIndividualIdentityResponse = generateQueryResult({
-      data: undefined,
-      isLoading: false
-    })
-
-    jest
-      .spyOn(useIndividualIdentity, 'useIndividualIdentity')
-      .mockImplementation(() => useIndividualIdentityResponse as any)
-
-    render(<IndividualInvestorForm />)
-
-    expect(showPreIdentityCreateDialogFn).toHaveBeenCalled()
   })
 
   it('redirects path to editIndividual when identity exists', () => {

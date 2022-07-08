@@ -1,6 +1,13 @@
-import { Dialog, DialogTitle, Typography, Box } from '@mui/material'
+import {
+  DialogTitle,
+  Typography,
+  Box,
+  useTheme,
+  useMediaQuery
+} from '@mui/material'
 import { OTPDialogContent } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 import React from 'react'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 interface CommitmentInvestOTPDialogProps {
   close: () => void
@@ -11,10 +18,28 @@ export const CommitmentInvestOTPDialog = ({
   close,
   open
 }: CommitmentInvestOTPDialogProps) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
+
   return (
-    <Dialog disablePortal open={open} maxWidth='md' onClose={close}>
-      <Box py={4} px={10}>
-        <DialogTitle>
+    <UIDialog
+      disablePortal
+      open={open}
+      maxWidth={isMobile ? 'sm' : 'md'}
+      onClose={close}
+      sx={{
+        maxWidth: '100vw',
+        maxHeight: '100vh'
+      }}
+      PaperProps={{
+        sx: {
+          m: isMobile ? 1 : undefined,
+          p: isMobile ? '40px 0' : undefined
+        }
+      }}
+    >
+      <Box py={{ xs: 1, md: 4 }} px={{ xs: 1, md: 10 }}>
+        <DialogTitle sx={{ p: isMobile ? 3 : undefined }}>
           <Typography
             variant='h5'
             align='center'
@@ -30,6 +55,6 @@ export const CommitmentInvestOTPDialog = ({
         </Box>
         <OTPDialogContent close={close} actionLabel='Confirm' />
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

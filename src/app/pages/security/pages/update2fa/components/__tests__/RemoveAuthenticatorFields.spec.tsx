@@ -17,33 +17,34 @@ describe('RemoveAuthenticatorFields', () => {
   it('renders disabled button', () => {
     const { getByText } = render(
       <Form defaultValues={{ otp: '', emailCode: '' }}>
-        <RemoveAuthenticatorFields email={'test'} isLoading={false} />
+        <RemoveAuthenticatorFields isRemove2FALoading={false} />
       </Form>
     )
 
-    expect(getByText('Remove and continue')).toBeInTheDocument()
-    expect(getByText('Remove and continue')).toBeDisabled()
+    expect(getByText('Remove and Continue')).toBeInTheDocument()
+    expect(getByText('Remove and Continue')).toBeDisabled()
   })
 
   it('disables submit button when isLoading is true', async () => {
-    const { getByText, container } = render(
+    const { getByText, container, getAllByPlaceholderText } = render(
       <Form defaultValues={{ otp: '', emailCode: '' }}>
-        <RemoveAuthenticatorFields email={'test'} isLoading={true} />
+        <RemoveAuthenticatorFields isRemove2FALoading={true} />
       </Form>
     )
 
-    const otpField = container.querySelector(
-      'input[name="otp"]'
-    ) as HTMLInputElement
+    const otpFields = getAllByPlaceholderText('_')
     const emailCodeField = container.querySelector(
       'input[name="emailCode"]'
     ) as HTMLInputElement
 
-    fireEvent.change(otpField, {
-      target: {
-        value: '123456'
-      }
+    otpFields.forEach(otpField => {
+      fireEvent.change(otpField, {
+        target: {
+          value: '1'
+        }
+      })
     })
+
     fireEvent.change(emailCodeField, {
       target: {
         value: '123456'
@@ -51,29 +52,19 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue')).toBeDisabled()
+      expect(getByText('Remove and Continue')).toBeDisabled()
     })
   })
 
-  it('enables submit button if all fields gave more than 6 digits and isLoading is false', async () => {
-    const { getByText, container } = render(
-      <Form defaultValues={{ otp: '', emailCode: '' }}>
-        <RemoveAuthenticatorFields email={'test'} isLoading={false} />
+  it('enables submit button if all fields gave 6 digits and isLoading is false', async () => {
+    const { getByText, container, getAllByPlaceholderText } = render(
+      <Form defaultValues={{ otp: '123456', emailCode: '123456' }}>
+        <RemoveAuthenticatorFields isRemove2FALoading={false} />
       </Form>
     )
 
-    const otpField = container.querySelector('input[name="otp"]')
+    const otpFields = getAllByPlaceholderText('_')
     const emailCodeField = container.querySelector('input[name="emailCode"]')
-
-    fireEvent.change(otpField as HTMLInputElement, {
-      target: {
-        value: '123456'
-      }
-    })
-
-    await waitFor(() => {
-      expect(getByText('Remove and continue')).toBeDisabled()
-    })
 
     fireEvent.change(emailCodeField as HTMLInputElement, {
       target: {
@@ -82,7 +73,19 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue')).toBeEnabled()
+      expect(getByText('Remove and Continue')).toBeDisabled()
+    })
+
+    otpFields.forEach(otpField => {
+      fireEvent.change(otpField, {
+        target: {
+          value: '2'
+        }
+      })
+    })
+
+    await waitFor(() => {
+      expect(getByText('Remove and Continue')).toBeEnabled()
     })
   })
 })

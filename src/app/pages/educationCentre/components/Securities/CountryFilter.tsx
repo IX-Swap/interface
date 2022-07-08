@@ -1,7 +1,10 @@
-import { FormControl, InputLabel, MenuItem } from '@mui/material'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { FormControl } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { isEmptyString } from 'helpers/strings'
 import React from 'react'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const countries = [
   'United States',
@@ -28,21 +31,20 @@ export const CountryFilter = () => {
     <SearchQueryFilter<'country'> name='country' defaultValue=''>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
-          <InputLabel shrink>Country</InputLabel>
-          <TextFieldSelect
-            label='Country'
+          <InputLabel>Country</InputLabel>
+          <Select
             onChange={event => {
-              onChange(event.target.value)
+              onChange(event.target.value as string)
             }}
-            value={value}
+            value={isEmptyString(value) ? 'All Countries' : value}
           >
-            <MenuItem value=''>All Countries</MenuItem>
+            <SelectItem value=''>All Countries</SelectItem>
             {countries.map(country => (
-              <MenuItem key={country} value={country}>
+              <SelectItem key={country} value={country}>
                 {country}
-              </MenuItem>
+              </SelectItem>
             ))}
-          </TextFieldSelect>
+          </Select>
         </FormControl>
       )}
     </SearchQueryFilter>

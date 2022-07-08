@@ -1,5 +1,6 @@
 import { Theme, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { ThemeVariant } from '@mui/material/styles/overrides'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
 import {
@@ -9,6 +10,7 @@ import {
 } from 'app/pages/identity/types/forms'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
+import React from 'react'
 import { Asset } from 'types/asset'
 import { AssetBalance } from 'types/balance'
 import { CashDeposit } from 'types/cashDeposit'
@@ -18,7 +20,6 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { PersonName } from './types'
-import React from 'react'
 export const renderMinimumInvestment = (
   amount: number,
   row: DigitalSecurityOffering
@@ -35,14 +36,6 @@ export const renderAssetName = (a: Asset): string => a.name
 
 export const renderAssetBalance = (val: string, row: AssetBalance): string =>
   `${row.name} (${val})`
-
-export const renderFirstName = (
-  val: string,
-  row: CashDeposit | CashWithdrawal | Commitment
-): string => {
-  return ''
-  // return `${val} ${row.individual.lastName}`
-}
 
 export const renderName = (val: string, row: PersonName) => {
   const names = [row.firstName, row.middleName, row.lastName]
@@ -62,10 +55,14 @@ export const renderRepresentativeName = (
     .join(', ')
 }
 
-export const renderLastName = (
-  val: string,
-  row: CorporateIdentity | DSWithdrawal | IndividualIdentity | Commitment | any
-): string => {
+type RenderLastNameRow =
+  | CorporateIdentity
+  | DSWithdrawal
+  | IndividualIdentity
+  | Commitment
+  | any
+
+export const renderLastName = (val: string, row: RenderLastNameRow): string => {
   let lastName: string
 
   if ('lastName' in row) {
@@ -102,17 +99,18 @@ export const getCorporateRepresentativeName = (corporate: any): string => {
   }
   return ''
 }
+type NameRenderRow =
+  | CorporateIdentity
+  | DSWithdrawal
+  | IndividualIdentity
+  | Commitment
+  | CashDeposit
+  | CashWithdrawal
+  | WithdrawalAddress
 
 export const renderIndividualOrCompanyName = (
   val: string | undefined,
-  row:
-    | CorporateIdentity
-    | DSWithdrawal
-    | IndividualIdentity
-    | Commitment
-    | CashDeposit
-    | CashWithdrawal
-    | WithdrawalAddress
+  row: NameRenderRow
 ): string => {
   let lastName = ''
   let companyName = ''
@@ -136,16 +134,15 @@ export const renderIndividualOrCompanyName = (
   return `${val} ${lastName}`
 }
 
-export const renderAmount = (
-  val: string,
-  row:
-    | CashDeposit
-    | CashWithdrawal
-    | Commitment
-    | DSWithdrawal
-    | DigitalSecurityOffering
-    | AssetBalance
-): string => {
+type RenderAmountRow =
+  | CashDeposit
+  | CashWithdrawal
+  | Commitment
+  | DSWithdrawal
+  | DigitalSecurityOffering
+  | AssetBalance
+
+export const renderAmount = (val: string, row: RenderAmountRow): string => {
   const amount = Number.isNaN(val) ? 0 : parseFloat(val)
   let symbol
 
@@ -189,9 +186,7 @@ export const getUserNameById = (userId: string) => {
   return data?.name
 }
 
-export const useHeaderColor = (
-  themeVariant?: 'default' | 'primary' | 'error' | 'success'
-) => {
+export const useHeaderColor = (themeVariant?: ThemeVariant) => {
   const theme = useTheme()
   if (themeVariant === 'primary') {
     return theme.palette.mode === 'light'
@@ -209,7 +204,7 @@ export const useHeaderColor = (
 
 interface RowColorArgs {
   theme: Theme
-  themeVariant?: 'default' | 'primary' | 'error' | 'success'
+  themeVariant?: ThemeVariant
   count: number
 }
 

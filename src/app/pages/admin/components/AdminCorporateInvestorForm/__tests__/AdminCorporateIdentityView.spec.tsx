@@ -8,12 +8,6 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 window.URL.revokeObjectURL = jest.fn()
 
 describe('AdminCorporateIdentityView', () => {
-  beforeEach(() => {
-    // jest
-    //   .spyOn(useAdminRouter, 'useAdminRouter')
-    //   .mockImplementation(() => useAdminRouterResponse as any)
-  })
-
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -30,5 +24,19 @@ describe('AdminCorporateIdentityView', () => {
     const { container } = render(<AdminCorporateIdentityView />)
 
     expect(container).toBeEmptyDOMElement()
+  })
+
+  it('should match snapshot', () => {
+    const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
+      list: [corporate],
+      isLoading: false
+    })
+
+    jest
+      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
+      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
+    const { container } = render(<AdminCorporateIdentityView />)
+
+    expect(container).toMatchSnapshot()
   })
 })

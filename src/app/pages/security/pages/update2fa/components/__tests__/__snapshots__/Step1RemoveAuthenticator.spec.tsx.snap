@@ -3,95 +3,102 @@
 exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has successful response 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-bjcb1i-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
     >
-      <h5
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-1f4u6as-MuiTypography-root"
+      <h2
+        class="MuiTypography-root MuiTypography-h2 MuiTypography-alignCenter css-2xfiep-MuiTypography-root"
       >
-        Remove Authenticator by Verifying Your Identity
-      </h5>
-      <div
-        class="MuiBox-root css-1jpm9pd"
-      />
+        Update Authenticator by 
+        <br />
+         Verifying Your Identity
+      </h2>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6 MuiGrid-direction-xs-column css-82hyqs-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-t0zib5-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-description-3 css-1gd5lqg-MuiTypography-root"
+          >
+            To update your Authenticator please remove the current one
+          </p>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item makeStyles-info-1 css-13i4rnv-MuiGrid-root"
         >
           <div
-            class="makeStyles-container-1 MuiBox-root css-0"
+            class="makeStyles-wrapper-4 MuiBox-root css-0"
           >
-            <div
-              class="makeStyles-wrapper-2 MuiBox-root css-0"
+            <p
+              class="MuiTypography-root MuiTypography-body1 makeStyles-text-5 css-1b4l2pg-MuiTypography-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 makeStyles-text-3 css-3a17l8-MuiTypography-root"
-              >
-                Verification code has been sent.
-              </p>
-            </div>
-            <button
-              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled  css-1idzk2v-MuiButtonBase-root-MuiButton-root"
-              disabled=""
-              tabindex="-1"
-              type="button"
-            >
-              Resend Code
-            </button>
+              Verification code has been sent
+            </p>
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item makeStyles-formBlock-2 css-13i4rnv-MuiGrid-root"
         >
           <form
             data-testid="remove-authenticator-form"
             style="width: 100%;"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-direction-xs-column css-ela01g-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1pdmnkq-MuiFormControl-root-MuiTextField-root"
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-9 css-26lyh4-MuiFormControl-root-MuiTextField-root"
                     control="[object Object]"
                     path="emailCode"
                   >
+                    <label
+                      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
+                      data-shrink="true"
+                      for="emailCode"
+                      id="emailCode-label"
+                    >
+                      Verification Code
+                    </label>
                     <div
-                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ppeiam-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-1c4a1fp-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <input
                         aria-invalid="false"
-                        class="MuiOutlinedInput-input MuiInputBase-input css-1od30sg-MuiInputBase-input-MuiOutlinedInput-input"
+                        class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
                         id="emailCode"
                         name="emailCode"
                         placeholder="E-mail verification code"
                         type="text"
                         value=""
                       />
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 makeStyles-wrapper-12 css-1b4l2pg-MuiTypography-root"
+                      >
+                        Send
+                      </p>
                       <fieldset
                         aria-hidden="true"
                         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-nnbavb"
+                          class="css-173wfxe"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
+                          <span>
+                            Verification Code
                           </span>
                         </legend>
                       </fieldset>
@@ -99,79 +106,148 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-4 css-3a17l8-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-6 css-1b4l2pg-MuiTypography-root"
                   >
                     Enter the 6-digit code sent to 
-                    tes***@undefined
+                    
                   </p>
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-7 css-1b4l2pg-MuiTypography-root"
+                  >
+                    Authenticator Code
+                  </p>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-19hkhe-MuiGrid-root"
                 >
                   <div
-                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1pdmnkq-MuiFormControl-root-MuiTextField-root"
-                    control="[object Object]"
-                    path="otp"
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <div
-                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ppeiam-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
                     >
-                      <input
-                        aria-invalid="false"
-                        class="MuiOutlinedInput-input MuiInputBase-input css-1od30sg-MuiInputBase-input-MuiOutlinedInput-input"
-                        id="otp"
-                        name="otp"
-                        placeholder="Authenticator Code"
-                        type="text"
-                        value=""
-                      />
-                      <fieldset
-                        aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                      <div
+                        class="makeStyles-container-14 makeStyles-fullwidth-15"
+                        style="display: flex;"
                       >
-                        <legend
-                          class="css-nnbavb"
+                        <div
+                          style="display: flex; align-items: center;"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
-                        </legend>
-                      </fieldset>
+                          <input
+                            aria-label="Please enter verification code. Digit 1"
+                            autocomplete="off"
+                            class="makeStyles-input-16  "
+                            maxlength="1"
+                            placeholder="_"
+                            style="width: 1em; text-align: center;"
+                            type="tel"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          style="display: flex; align-items: center;"
+                        >
+                          <input
+                            aria-label="Digit 2"
+                            autocomplete="off"
+                            class="makeStyles-input-16 "
+                            maxlength="1"
+                            placeholder="_"
+                            style="width: 1em; text-align: center;"
+                            type="tel"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          style="display: flex; align-items: center;"
+                        >
+                          <input
+                            aria-label="Digit 3"
+                            autocomplete="off"
+                            class="makeStyles-input-16 "
+                            maxlength="1"
+                            placeholder="_"
+                            style="width: 1em; text-align: center;"
+                            type="tel"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          style="display: flex; align-items: center;"
+                        >
+                          <input
+                            aria-label="Digit 4"
+                            autocomplete="off"
+                            class="makeStyles-input-16 "
+                            maxlength="1"
+                            placeholder="_"
+                            style="width: 1em; text-align: center;"
+                            type="tel"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          style="display: flex; align-items: center;"
+                        >
+                          <input
+                            aria-label="Digit 5"
+                            autocomplete="off"
+                            class="makeStyles-input-16 "
+                            maxlength="1"
+                            placeholder="_"
+                            style="width: 1em; text-align: center;"
+                            type="tel"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          style="display: flex; align-items: center;"
+                        >
+                          <input
+                            aria-label="Digit 6"
+                            autocomplete="off"
+                            class="makeStyles-input-16 "
+                            maxlength="1"
+                            placeholder="_"
+                            style="width: 1em; text-align: center;"
+                            type="tel"
+                            value=""
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-4 css-3a17l8-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-helperText-6 css-1b4l2pg-MuiTypography-root"
                   >
-                    Enter the 6-digit code from your existing authenticator app
+                    Enter the 6-digit code from your existing Authenticator App
                   </p>
                 </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-swu7xy-MuiGrid-root"
-              >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <button
-                    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButtonBase-root Mui-disabled  css-f35ack-MuiButtonBase-root-MuiButton-root"
+                    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButtonBase-root Mui-disabled makeStyles-button-8 css-r7zh34-MuiButtonBase-root-MuiButton-root"
                     disabled=""
                     tabindex="-1"
                     type="submit"
                   >
-                    Remove and continue
+                    Remove and Continue
                   </button>
                 </div>
               </div>

@@ -4,26 +4,24 @@ import { DirectorsAndBeneficialOwnerDetails } from 'app/pages/identity/component
 import {
   getCorporateInfoFormValues,
   getCorporateInvestorDeclarationFormValues,
-  getCorporateInvestorDocumentsFormValues,
   getCorporateInvestorTaxDeclarationFormValues,
   getDirectorsAndBeneficialOwnersFormValues
 } from 'app/pages/identity/utils/corporate/forms'
 import {
   getCorporateInfoRequestPayload,
   getCorporateInvestorDeclarationRequestPayload,
-  getCorporateInvestorDocumentsRequestPayload,
   getDirectorsAndBeneficialOwnerRequestPayload
 } from 'app/pages/identity/utils/corporate/requests'
 import { getTaxDeclarationRequestPayload } from '../../utils/individual/requests'
 import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
-import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
 import {
-  corporateInvestorDocumentsSchema,
   corporateInvestorInfoSchema,
+  corporateInvestorSchema,
   corporateInvestorStatusDeclarationSchema,
   corporateTaxDeclarationSchema,
-  directorsAndBeneficialOwnersSchema
+  directorsAndBeneficialOwnersSchema,
+  initialCorporateInvestorInfoSchema
 } from 'app/pages/identity/validation/corporate'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
@@ -35,41 +33,59 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     getFormValues: getCorporateInfoFormValues,
     getRequestPayload: getCorporateInfoRequestPayload,
     validationSchema: corporateInvestorInfoSchema,
-    component: () => <CorporateInformationForm type={type} />
+    initialValidationSchema: initialCorporateInvestorInfoSchema,
+    component: () => <CorporateInformationForm type={type} />,
+    formId: 'information'
   },
   {
     label: 'Directors and Beneficial Owner Details',
     getFormValues: getDirectorsAndBeneficialOwnersFormValues,
     getRequestPayload: getDirectorsAndBeneficialOwnerRequestPayload,
     validationSchema: directorsAndBeneficialOwnersSchema,
-    component: () => <DirectorsAndBeneficialOwnerDetails />
+    component: () => <DirectorsAndBeneficialOwnerDetails />,
+    formId: 'owner-details'
   },
   {
     label: 'Tax Declaration',
     getFormValues: getCorporateInvestorTaxDeclarationFormValues,
     getRequestPayload: getTaxDeclarationRequestPayload,
     validationSchema: corporateTaxDeclarationSchema,
-    component: () => <TaxDeclarationForm identityType='corporate' />
+    component: () => <TaxDeclarationForm identityType='corporate' />,
+    formId: 'tax-declaration'
   },
   {
-    label: 'Investor Status Declaration',
+    label: 'Investor Declaration',
     getFormValues: getCorporateInvestorDeclarationFormValues,
     getRequestPayload: getCorporateInvestorDeclarationRequestPayload,
     validationSchema: corporateInvestorStatusDeclarationSchema,
-    component: () => <InvestorDeclarationForm identityType='corporate' />
-  },
-  {
-    label: 'Upload Documents',
-    getFormValues: getCorporateInvestorDocumentsFormValues,
-    getRequestPayload: getCorporateInvestorDocumentsRequestPayload,
-    validationSchema: corporateInvestorDocumentsSchema,
-    component: () => <CorporateUploadDocumentsForm corporateType='investor' />
+    component: () => (
+      <InvestorDeclarationForm
+        identityType='corporate'
+        corporateType='investor'
+      />
+    ),
+    formId: 'investor-declaration'
   },
   {
     label: 'Review & Submit',
-    getFormValues: () => null,
-    getRequestPayload: {},
-    validationSchema: {},
-    component: () => <CorporateIdentityContainer />
+    getFormValues: (data: any) => {
+      return {
+        ...getCorporateInfoFormValues(data),
+        ...getCorporateInvestorTaxDeclarationFormValues(data),
+        ...getDirectorsAndBeneficialOwnersFormValues(data),
+        ...getCorporateInvestorDeclarationFormValues(data)
+      }
+    },
+    getRequestPayload: (data: any) => {
+      return {
+        ...getCorporateInfoRequestPayload(data),
+        ...getDirectorsAndBeneficialOwnerRequestPayload(data),
+        ...getTaxDeclarationRequestPayload(data),
+        ...getCorporateInvestorDeclarationRequestPayload(data)
+      }
+    },
+    validationSchema: corporateInvestorSchema,
+    component: () => <CorporateIdentityContainer />,
+    formId: 'submit'
   }
 ]

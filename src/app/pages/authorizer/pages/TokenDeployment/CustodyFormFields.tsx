@@ -13,7 +13,7 @@ export const CustodyFormFields = ({ isLoading }: CustodyFormFieldsProps) => {
   const custody = watch('custody', undefined)
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} alignItems='center'>
       <Grid item xs={4}>
         <TypedField
           control={control}

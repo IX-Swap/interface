@@ -17,7 +17,10 @@ export const issuerDetailsSchema = yup.object().shape<any>({
     .string()
     .test('isValidPhone', 'Invalid phone number', value => {
       if (value !== undefined && value !== null && value.length > 0) {
-        return yup.string().phone().isValidSync(value)
+        return yup
+          .string()
+          .phone(undefined, 'Must be a valid phone number')
+          .isValidSync(value)
       }
       return true
     }),
@@ -35,4 +38,9 @@ export const issuerDocumentsSchema = yup.object().shape<any>({
     .array<DataroomFile>()
     .required(validationMessages.required),
   financial: yup.array<DataroomFile>().required(validationMessages.required)
+})
+
+export const detailsOfIssuanceSchema = yup.object().shape<any>({
+  ...issuerDetailsSchema.fields,
+  ...issuerDocumentsSchema.fields
 })

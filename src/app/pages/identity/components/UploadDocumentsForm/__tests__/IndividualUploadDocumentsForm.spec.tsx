@@ -1,48 +1,17 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { IndividualUploadDocumentsForm } from 'app/pages/identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
+import { Form } from 'components/form/Form'
 
-jest.mock(
-  'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField',
-  () => ({
-    UploadDocumentField: jest.fn(() => null)
-  })
-)
+window.URL.revokeObjectURL = jest.fn()
 
-describe('IndividualUploadDocumentsForm', () => {
-  afterEach(async () => {
-    jest.clearAllMocks()
-  })
-
-  it('renders Upload fields correctly', () => {
-    render(<IndividualUploadDocumentsForm />)
-
-    expect(UploadDocumentField).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({
-        name: 'proofOfIdentity',
-        label: 'Proof of Identity'
-      }),
-      {}
+describe('CorporateIdentityView', () => {
+  it('should match snapshot', () => {
+    const { container } = render(
+      <Form>
+        <IndividualUploadDocumentsForm />
+      </Form>
     )
-
-    expect(UploadDocumentField).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
-        name: 'proofOfAddress',
-        label: 'Proof of Address'
-      }),
-      {}
-    )
-
-    expect(UploadDocumentField).toHaveBeenNthCalledWith(
-      3,
-      expect.objectContaining({
-        name: 'evidenceOfAccreditation',
-        label: 'Evidence of Accreditation'
-      }),
-      {}
-    )
+    expect(container).toMatchSnapshot()
   })
 })

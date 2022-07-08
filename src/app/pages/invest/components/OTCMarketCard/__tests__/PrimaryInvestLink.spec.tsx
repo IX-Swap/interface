@@ -7,12 +7,18 @@ import {
 } from 'app/pages/invest/components/OTCMarketCard/PrimaryInvestLink'
 import * as Button from '@mui/material/Button'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
 describe('PrimaryInvestLink', () => {
+  const defaultPrimaryInvestProps = {
+    style: { fontSize: 16, marginTop: 16 },
+    variant: 'contained',
+    color: 'primary',
+    component: AppRouterLinkComponent
+  }
+
   const primaryProps: PrimaryInvestLinkProps = {
     type: 'Primary',
     data: dso
@@ -26,12 +32,7 @@ describe('PrimaryInvestLink', () => {
     type: 'Primary',
     data: dso
   }
-  const defaultPrimaryInvestProps = {
-    style: { fontSize: 16, marginTop: 16 },
-    variant: 'contained',
-    color: 'primary',
-    component: AppRouterLinkComponent
-  }
+
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -81,9 +82,9 @@ describe('PrimaryInvestLink', () => {
     expect(Button).toHaveBeenCalledWith(
       expect.objectContaining({
         ...defaultPrimaryInvestProps,
-        disabled: true,
-        // TODO Change route for OTC after complete OTC page
-        to: OTCMarketRoute.market,
+        disabled: false,
+        // TODO Change route when we will have more featured pairs
+        to: InvestRoute.trading,
         params: {
           pairId: dso._id
         },

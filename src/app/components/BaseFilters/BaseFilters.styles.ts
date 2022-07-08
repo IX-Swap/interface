@@ -6,6 +6,19 @@ export const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(3)
   },
   searchWrapper: {
-    width: 300
+    width: 280
+  },
+  filterWrapper: {
+    marginTop: -24,
+    [theme.breakpoints.down('lg')]: {
+      paddingTop: 24,
+      marginTop: 0
+    }
+  },
+  childrenWRapper: {
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down('lg')]: {
+      justifyContent: 'flex-start'
+    }
   }
 }))

@@ -10,7 +10,7 @@ export const IndividualRouter = () => {
   return (
     <Switch>
       <AppRoute
-        breadcrumb='View Individual Investor'
+        breadcrumb='View Individual Investor Identity'
         exact
         path={IdentityRoute.viewIndividual}
       >
@@ -18,7 +18,7 @@ export const IndividualRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Create Individual Investor'
+        breadcrumb='Create Individual Investor Identity'
         exact
         path={IdentityRoute.createIndividual}
       >
@@ -26,7 +26,7 @@ export const IndividualRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Edit Individual Investor'
+        breadcrumb='Edit Individual Investor Identity'
         exact
         path={IdentityRoute.editIndividual}
       >

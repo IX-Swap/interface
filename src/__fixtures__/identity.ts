@@ -12,8 +12,32 @@ import {
 import {
   CorporateIdentity,
   IndividualIdentity,
-  IndividualIdentityFormValues
+  IndividualIdentityFormValues,
+  InvestorCorporateInfoFormValues
 } from 'app/pages/identity/types/forms'
+
+export const corporateInfoRequestPayload: InvestorCorporateInfoFormValues = {
+  logo: undefined,
+  companyLegalName: 'InvestaX',
+  registrationNumber: '12345',
+  legalEntityStatus: 'status',
+  countryOfFormation: 'Singapore',
+  companyAddress: address,
+  mailingAddress: address,
+  isMailingAddressSame: true,
+  representatives: [
+    {
+      fullName: 'John Doe',
+      designation: 'CEO',
+      email: 'johnsemail',
+      contactNumber: '+6512345678901',
+      documents: []
+    }
+  ],
+  numberOfBusinessOwners: '2',
+  businessActivity: 'test',
+  sourceOfFund: 'LOAN'
+}
 
 export const corporate: CorporateIdentity = {
   _id: '1',
@@ -48,7 +72,7 @@ export const corporate: CorporateIdentity = {
       digitalSecuritiesIssuance: false,
       allServices: false,
       primaryOfferingServices: false
-    }
+    } as any
   },
   status: 'Submitted',
   beneficialOwners: [],
@@ -65,12 +89,15 @@ export const corporate: CorporateIdentity = {
       contactNumber: '+6512345678901',
       documents: [],
       address: address,
-      percentageShareholding: 0
+      percentageShareholding: 0,
+      legalEntityStatus: 'status',
+      countryOfFormation: 'country'
     }
   ],
   email: '',
   contactNumber: '',
   user,
+  isInstitutionalInvestor: false,
   authorizationDocuments: [],
   authorization: authorizationInfo,
   authorizations: [],
@@ -137,13 +164,14 @@ export const individual: IndividualIdentity = {
       digitalSecuritiesIssuance: false,
       allServices: false,
       primaryOfferingServices: false
-    }
+    } as any
   },
   documents: [],
   address,
   user,
   sourceOfFund: 'LOAN',
-  createdBy: '12345'
+  createdBy: '12345',
+  noa_basic: {}
 }
 
 export const document: DataroomFile = {

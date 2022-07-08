@@ -8,7 +8,12 @@ import {
 } from '@hookform/strictly-typed/dist/types'
 import { Control } from 'react-hook-form'
 import { OverrideProps } from '@mui/material/OverridableComponent'
-import { getErrorFromControl, pathToString, hasValue } from 'helpers/forms'
+import {
+  getErrorFromControl,
+  pathToString,
+  hasValue,
+  showInputLabel
+} from 'helpers/forms'
 import { FormControl, InputLabel, FormHelperText } from '@mui/material'
 import { ErrorMessage } from '@hookform/error-message'
 
@@ -129,13 +134,10 @@ export const TypedField = <
             }
           })
         }
-
-        // temporarily fix to prevent input label
-        const isTextField = (component as any)?.render?.name === 'TextField'
-
+        // TODO: When all inputs are replaced, use new input label
         return (
           <FormControl fullWidth variant={rest?.variant}>
-            {!isTextField && label !== undefined && (
+            {showInputLabel(component) && label !== undefined && (
               <InputLabel
                 htmlFor={path}
                 variant={rest?.variant}

@@ -8,7 +8,7 @@ export interface LoginArgs extends BaseArgs {
 
 export interface SignupArgs extends BaseArgs {
   email: string
-  name: string
+  name?: string
   password: string
 }
 

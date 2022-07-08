@@ -1,10 +1,9 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
-import { TaxResidencyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields'
-import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
+import { Grid, Paper } from '@mui/material'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { TaxResidencyFieldArray } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
-import { TaxDeclarationInfoDialog } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoDialog'
+import { TaxDeclarationInfo } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfo/TaxDeclarationInfo'
+import useStyles from './TaxDeclarationForm.style'
 
 export interface TaxDeclarationFormProps {
   identityType?: 'individual' | 'corporate'
@@ -12,37 +11,20 @@ export interface TaxDeclarationFormProps {
 export const TaxDeclarationForm = ({
   identityType = 'individual'
 }: TaxDeclarationFormProps) => {
+  const classes = useStyles()
   return (
-    <>
-      <FormSectionHeader title='Tax Declaration' />
-      <Grid
-        data-testid='taxDeclaration'
-        container
-        direction='column'
-        spacing={6}
-      >
-        <Grid item>
-          <Typography>
-            <TaxDeclarationInfoDialog /> to know why we need your tax
-            information.
-          </Typography>
-        </Grid>
-        <Grid item>
-          {identityType === 'individual' ? (
-            <TaxResidencyFields />
-          ) : (
-            <TaxResidencyFieldArray />
-          )}
-        </Grid>
-        {identityType === 'individual' ? (
-          <>
-            <Grid item>
-              <FormSectionHeader title={'FATCA'} />
-              <UsCitizenshipConfirmation />
-            </Grid>
-          </>
-        ) : null}
+    <Paper className={classes.container}>
+      <Grid item className={classes.header}>
+        <FormSectionHeader title='Tax Declaration' />
       </Grid>
-    </>
+      <Grid data-testid='taxDeclaration' container direction='column'>
+        <Grid item className={classes.taxDeclaration}>
+          <TaxDeclarationInfo />
+        </Grid>
+        <Grid item>
+          <TaxResidencyFieldArray identityType={identityType} />
+        </Grid>
+      </Grid>
+    </Paper>
   )
 }

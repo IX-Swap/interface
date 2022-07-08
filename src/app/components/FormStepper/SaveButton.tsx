@@ -6,10 +6,20 @@ export interface SaveButtonProps extends ButtonProps {
   step: number
   transformData: any
   mutation: MutationResultPair<any, any, any, any>
+  successCallback?: () => void
 }
 
 export const SaveButton = (props: SaveButtonProps) => {
-  const { step, mutation, transformData, children, ...rest } = props
+  const {
+    step,
+    mutation,
+    transformData,
+    children,
+    successCallback,
+    variant = 'outlined',
+    color = 'primary',
+    ...rest
+  } = props
   const { watch } = useFormContext()
   const values = watch()
   const [save] = mutation
@@ -21,7 +31,11 @@ export const SaveButton = (props: SaveButtonProps) => {
       payload.step = step
     }
 
-    return await save(payload)
+    return await save(payload, {
+      onSuccess: () => {
+        successCallback?.()
+      }
+    })
   }
 
   const [handleClick, { isLoading }] = useMutation(handleSave)
@@ -29,10 +43,11 @@ export const SaveButton = (props: SaveButtonProps) => {
   return (
     <Button
       {...rest}
-      variant='outlined'
-      color='primary'
+      variant={variant}
+      color={color}
       onClick={async () => void handleClick()}
       disabled={isLoading}
+      size='large'
     >
       {children}
     </Button>

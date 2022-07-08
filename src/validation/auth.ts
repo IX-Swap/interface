@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import 'yup-phone-lite'
 import {
   CompletePasswordResetArgs,
   LoginArgs,
@@ -25,6 +26,15 @@ export const registerFormValidationSchema = yup.object<SignupArgs>({
     .boolean()
     .test('consent', 'You must agree to these terms', value => value === true)
     .required('You must agree to these terms')
+})
+
+export const singpassFormValidationSchema = yup.object<SignupArgs>({
+  email: emailSchema.required(validationMessages.required),
+  phoneNumber: yup
+    .string()
+    .phone(undefined, 'Must be a valid phone number')
+    .required(validationMessages.required),
+  password: passwordSchema.required(validationMessages.required)
 })
 
 export const requestPasswordResetValidationSchema =

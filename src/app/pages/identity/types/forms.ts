@@ -1,4 +1,4 @@
-import { DataroomFile, FormArray } from 'types/dataroomFile'
+import { DataroomFile, FormArray, FormArrayElement } from 'types/dataroomFile'
 import User from 'types/user'
 import {
   CorporateDeclarations,
@@ -24,12 +24,13 @@ export interface IndividualPersonalInfoFormValues {
   firstName: string
   middleName?: string
   lastName: string
-  dob: string
+  dob?: string
   nationality: string
   email?: string
   contactNumber: string
   address: Address
   gender: string
+  nric?: string
 }
 
 export interface TaxResidency {
@@ -45,6 +46,7 @@ export type TaxResidencies = Array<Partial<TaxResidency>>
 
 export interface TaxDeclaration {
   taxResidencies: TaxResidencies
+  uinfin?: string
 }
 
 export interface TaxDeclarationFormData {
@@ -66,6 +68,7 @@ export interface PersonalProfile {
   contactNumber: string
   email?: string
   gender: string
+  nric?: string
 }
 
 export type IndividualPersonalInformation = Omit<
@@ -90,6 +93,8 @@ export interface Personnel {
   documents: DataroomFile[]
   address: Address
   percentageShareholding: number
+  legalEntityStatus: string
+  countryOfFormation: string
 }
 
 export interface IndividualFinancialInfoFormValues {
@@ -97,24 +102,31 @@ export interface IndividualFinancialInfoFormValues {
   occupation: string
   employer: string
   employmentStatus: string
-  annualIncome: string
+  annualIncome?: string
 }
 
 export interface IndividualTaxDeclarationFormValues {
   singaporeOnly: 'yes' | 'no'
   fatca: 'yes' | 'no'
   taxResidencies: TaxResidencies
+  uinfin?: string
+  usTin?: string
 }
 
+export interface FinancialAndTaxDeclarationFormValues
+  extends IndividualFinancialInfoFormValues,
+    IndividualTaxDeclarationFormValues {}
+
 export interface IndividualInvestorDeclarationFormValues
-  extends IndividualInvestorStatus,
+  extends IdentityDocumentsFormValues,
+    IndividualInvestorStatus,
     OptOutRequirements,
     OptInAgreements {}
 
-export interface IndividualDocumentsFormValues {
-  evidenceOfAccreditation: DataroomFile[]
-  proofOfIdentity: DataroomFile[]
-  proofOfAddress: DataroomFile[]
+export interface IdentityDocumentsFormValues {
+  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
+  proofOfIdentity: Array<FormArrayElement<DataroomFile>>
+  proofOfAddress: Array<FormArrayElement<DataroomFile>>
 }
 
 export interface IndividualAgreementsFormValues {
@@ -124,7 +136,7 @@ export interface IndividualAgreementsFormValues {
 }
 
 export interface InvestorCorporateInfoFormValues {
-  logo?: string
+  logo?: DataroomFile | string
   companyLegalName: string
   registrationNumber: string
   legalEntityStatus: string
@@ -151,19 +163,25 @@ export interface CorporateInvestorTaxDeclarationFormValues {
 export interface CorporateInvestorDeclarationFormValues
   extends CorporateInvestorStatus,
     OptInAgreements,
-    OptOutRequirements {}
+    OptOutRequirements {
+  isInstitutionalInvestor: boolean
+}
 
 export interface CorporateInvestorDocumentsFormValues {
-  evidenceOfAccreditation: DataroomFile[]
-  corporateDocuments: DataroomFile[]
-  financialDocuments: DataroomFile[]
+  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
+  corporateDocuments: Array<FormArrayElement<DataroomFile>>
+  financialDocuments: Array<FormArrayElement<DataroomFile>>
+  institutionalInvestorDocuments: Array<FormArrayElement<DataroomFile>>
+}
+export interface DocumentFieldArrayItemValue {
+  value: DataroomFile
 }
 export interface RepresentativeFormValues {
   fullName: string
   designation: string
   email: string
   contactNumber: string
-  documents: DataroomFile[]
+  documents: DocumentFieldArrayItemValue[]
 }
 export interface DirectorFormValues {
   fullName: string
@@ -171,19 +189,17 @@ export interface DirectorFormValues {
   email: string
   contactNumber: string
   address: Address
-  documents: {
-    proofOfIdentity: DataroomFile[]
-    proofOfAddress: DataroomFile[]
-  }
+  legalEntityStatus: string
+  countryOfFormation: string
+  proofOfIdentity?: DocumentFieldArrayItemValue[]
+  proofOfAddress?: DocumentFieldArrayItemValue[]
 }
 
 export interface BeneficialOwnerFormValues {
   fullName: string
   percentageShareholding: number
-  documents: {
-    proofOfIdentity: DataroomFile[]
-    proofOfAddress: DataroomFile[]
-  }
+  proofOfIdentity?: DocumentFieldArrayItemValue[]
+  proofOfAddress?: DocumentFieldArrayItemValue[]
 }
 export interface CorporateInvestorAgreementsFormValues {
   investor: boolean
@@ -241,6 +257,7 @@ export interface CorporateFields {
   numberOfBusinessOwners: string
   businessActivity: string
   sourceOfFund: string
+  isInstitutionalInvestor: boolean
   type:
     | 'investor'
     | 'issuer'
@@ -272,6 +289,8 @@ export interface OptOutRequirements {
 
 export interface OptInAgreements {
   optInAgreements: boolean
+  optInAgreementsSafeguards: boolean
+  optInAgreementsOptOut: boolean
 }
 
 export interface IndividualInvestorStatus {
@@ -291,7 +310,7 @@ export interface CorporateInvestorStatus {
 }
 
 export interface IdentityDeclarations {
-  tax: { fatca: boolean }
+  tax: { fatca: boolean; usTin?: string }
   investorsStatus: IndividualInvestorStatus &
     CorporateInvestorStatus &
     OptInAgreements &
@@ -326,11 +345,21 @@ export interface DeclarationTemplate {
   subLevel?: boolean
 }
 
+export interface Noa {
+  noa_basic: {
+    assessable_income?: string
+    noa_type?: string
+    year_of_assessment?: string
+  }
+}
+
 export type IndividualIdentity = BaseIdentity &
   PersonalProfileWithAddress &
   IdentityFinancials &
   Authorizable &
-  TaxDeclaration
+  TaxDeclaration &
+  Noa &
+  Partial<IdentityDeclarations>
 
 export type CorporateIdentity = BaseIdentity &
   CorporateFields &

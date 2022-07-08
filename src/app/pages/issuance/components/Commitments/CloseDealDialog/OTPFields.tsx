@@ -9,9 +9,14 @@ import { plainValueExtractor } from 'helpers/forms'
 export interface OTPFieldsProps {
   isLoading: boolean
   onClose: () => void
+  placeholder?: string
 }
 
-export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
+export const OTPFields = ({
+  isLoading,
+  onClose,
+  placeholder
+}: OTPFieldsProps) => {
   const { control, watch } = useFormContext()
   const isOTPFull = watch('otp').length === 6
 
@@ -28,11 +33,13 @@ export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
           variant='outlined'
           valueExtractor={plainValueExtractor}
           shouldAutoFocus
+          placeholder={placeholder}
         />
       </Grid>
       <Grid item container justifyContent='center' spacing={2}>
-        <Grid item>
+        <Grid item xs={6}>
           <Button
+            fullWidth
             size='large'
             variant='outlined'
             color='primary'
@@ -41,8 +48,9 @@ export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
             Cancel
           </Button>
         </Grid>
-        <Grid item>
+        <Grid item xs={6}>
           <Submit
+            fullWidth
             size='large'
             variant='contained'
             color='primary'

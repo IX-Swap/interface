@@ -8,15 +8,16 @@ export const useStyles = makeStyles(theme => ({
   },
   capsule: {
     position: 'absolute',
-    height: '100%',
-    padding: theme.spacing(2),
-    top: 0,
-    right: 0,
+    height: 'fit-content',
+    padding: 14,
+    top: 30,
+    right: 2,
     lineHeight: '100%',
-    backgroundColor: theme.palette.backgrounds.light,
-    borderRadius: '0 6px 6px 0',
+    backgroundColor: theme.palette.backgrounds.lighter,
+    borderRadius: '0 8px 8px 0',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    zIndex: 2
   }
 }))

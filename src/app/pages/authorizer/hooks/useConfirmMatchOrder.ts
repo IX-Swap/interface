@@ -19,11 +19,11 @@ export const useConfirmMatchOrder = () => {
 
   return useMutation(confirmMatchOrder, {
     onSuccess: async () => {
-      void snackbarService.showSnackbar('Match confirmed', 'success')
+      snackbarService.showSnackbar('Match confirmed', 'success')
       await queryCache.invalidateQueries(tradingQueryKeys.getMatchedOrders)
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

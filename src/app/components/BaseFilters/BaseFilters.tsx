@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import React, { PropsWithChildren } from 'react'
@@ -11,7 +11,7 @@ export const BaseFilters = ({
   const classes = useStyles()
   return (
     <Grid container justifyContent='space-between' className={classes.wrapper}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} lg={2}>
         <Box className={classes.searchWrapper}>
           <SearchFilter
             fullWidth
@@ -20,22 +20,19 @@ export const BaseFilters = ({
           />
         </Box>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} lg={10} className={classes.filterWrapper}>
         <Grid
           container
           direction='row'
-          justifyContent='flex-end'
+          className={classes.childrenWRapper}
           spacing={2}
           alignItems='center'
         >
           <Grid item>
-            <Typography>Date:</Typography>
+            <DateFilter name='fromDate' label='From' width={155} />
           </Grid>
           <Grid item>
-            <DateFilter name='fromDate' label='From' />
-          </Grid>
-          <Grid item>
-            <DateFilter name='toDate' label='To' />
+            <DateFilter name='toDate' label='To' width={155} />
           </Grid>
           {children}
         </Grid>

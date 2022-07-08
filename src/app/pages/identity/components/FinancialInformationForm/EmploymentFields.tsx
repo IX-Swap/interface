@@ -1,68 +1,103 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid, TextField, Typography } from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
+import { Grid, MenuItem, TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
-import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'
 import { EmploymentStatusSelect } from 'app/pages/identity/components/FinancialInformationForm/EmploymentStatusSelect'
 import { OccupationSelect } from './OccupationSelect'
+import { useIsSingPass } from 'app/pages/identity/hooks/useIsSingPass'
+import { hasValue } from 'helpers/forms'
+import { TextInput } from 'ui/TextInput/TextInput'
+import { FundSourceSelect } from 'components/form/FundSourceSelect'
+import { OptionalLabel } from 'components/form/OptionalLabel'
+import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'
 
 export const EmploymentField = () => {
   const { control } = useFormContext()
+  const { isSingPass, singPassData, individualIdentity } = useIsSingPass()
+
+  const occupationIsSingPass =
+    isSingPass && hasValue(singPassData?.employmentsector)
+
+  const statusIsSingPass =
+    isSingPass && hasValue(singPassData?.employmentstatus)
 
   return (
     <Grid container direction='column'>
       <Grid item>
-        <Grid container spacing={6}>
-          <Grid item xs={12} md={4}>
+        <Grid container spacing={5}>
+          <Grid item xs={12} md={6}>
             <TypedField
-              component={OccupationSelect}
+              component={occupationIsSingPass ? TextField : OccupationSelect}
               control={control}
               variant='outlined'
               name='occupation'
-              label='Occupation'
+              label={<OptionalLabel label='Occupation' />}
+              placeholder='Occupation'
               data-testid='Occupation-select'
               fullWidth
-            />
+              disabled={occupationIsSingPass}
+              select={occupationIsSingPass}
+            >
+              {occupationIsSingPass ? (
+                <MenuItem value={individualIdentity?.occupation}>
+                  {individualIdentity?.occupation}
+                </MenuItem>
+              ) : null}
+            </TypedField>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
-              component={EmploymentStatusSelect}
+              component={statusIsSingPass ? TextField : EmploymentStatusSelect}
               control={control}
               variant='outlined'
               name='employmentStatus'
-              label='Employment Status'
+              label='Employment Sector'
               data-testid='Employment-select'
               fullWidth
-            />
+              disabled={statusIsSingPass}
+              select={statusIsSingPass}
+              placeholder='Select Employment Status'
+            >
+              {statusIsSingPass ? (
+                <MenuItem value={individualIdentity?.employmentStatus}>
+                  {individualIdentity?.employmentStatus}
+                </MenuItem>
+              ) : null}
+            </TypedField>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <TypedField
-              component={TextField}
+              component={TextInput}
               control={control}
               variant='outlined'
               name='employer'
               label='Employer'
-              helperText='Name of the company you own or you are employed'
+              placeholder='Name of the company'
               fullWidth
+              disabled={isSingPass && hasValue(singPassData?.employment)}
             />
           </Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-        <Typography variant='subtitle1'>
-          Income in SGD in preceding 12 months:
-        </Typography>
-        <VSpacer size='small' />
-        <Grid container spacing={6}>
-          <Grid item xs={12} md={4}>
+          {!isSingPass && (
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={AnnualIncomeSelect}
+                control={control}
+                variant='outlined'
+                name='annualIncome'
+                label='Income in SGD in preceding 12 months'
+                placeholder='Please select one'
+                fullWidth
+              />
+            </Grid>
+          )}
+          <Grid item xs={12} md={6}>
             <TypedField
-              component={AnnualIncomeSelect}
+              component={FundSourceSelect}
               control={control}
               variant='outlined'
-              name='annualIncome'
-              label='Please select one'
-              fullWidth
+              name='sourceOfFund'
+              label='Source of funds'
+              placeholder='Select Source Of Funds'
             />
           </Grid>
         </Grid>

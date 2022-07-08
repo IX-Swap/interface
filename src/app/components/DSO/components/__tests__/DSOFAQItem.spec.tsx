@@ -4,8 +4,8 @@ import { Form } from 'components/form/Form'
 import { faqItem } from '__fixtures__/issuance'
 import { DSOFAQItem } from 'app/components/DSO/components/DSOFAQItem'
 import { TypedField } from 'components/form/TypedField'
-import { TextField } from '@mui/material'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -40,7 +40,7 @@ describe('DSOFAQItem', () => {
       1,
       expect.objectContaining({
         fullWidth: true,
-        component: TextField,
+        component: TextInput,
         defaultValue: faqItem.question,
         label: 'FAQ #2',
         name: ['faqs', 1, 'question'],
@@ -54,7 +54,7 @@ describe('DSOFAQItem', () => {
       2,
       expect.objectContaining({
         fullWidth: true,
-        component: TextField,
+        component: TextInput,
         defaultValue: faqItem.answer,
         label: 'Input answer here',
         name: ['faqs', 1, 'answer'],

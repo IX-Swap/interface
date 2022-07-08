@@ -46,7 +46,8 @@ describe('DataroomViewRow', () => {
     expect(DownloadDocument).toHaveBeenCalledWith(
       {
         documentId: document._id,
-        ownerId: document.user
+        ownerId: document.user,
+        name: document.originalFileName
       },
       {}
     )

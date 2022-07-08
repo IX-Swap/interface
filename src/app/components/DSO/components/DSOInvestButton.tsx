@@ -1,9 +1,11 @@
 import { Button, ButtonProps } from '@mui/material'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { useAuth } from 'hooks/auth/useAuth'
+import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+
 import { useStyles } from 'app/components/DSO/components/DSOContainer.styles'
 export interface DSOInvestButtonProps extends ButtonProps {
   dso: DigitalSecurityOffering
@@ -11,20 +13,23 @@ export interface DSOInvestButtonProps extends ButtonProps {
 
 export const DSOInvestButton = ({ dso }: DSOInvestButtonProps) => {
   const { user } = useAuth()
+  const params = { dsoId: dso._id, issuerId: dso.user }
   const isInvestButtonDisabled =
     dso.createdBy === user?._id || dso?.disableInvestInCampaign === true
   const classes = useStyles()
   return (
-    <Button
-      variant='contained'
-      disabled={isInvestButtonDisabled}
-      disableElevation
-      className={classes.button}
-      component={AppRouterLinkComponent}
-      to={InvestRoute.makeInvestment}
-      params={{ dsoId: dso._id, issuerId: dso.user }}
-    >
-      Invest
-    </Button>
+    <TwoFADialogWrapper>
+      <Button
+        variant='contained'
+        disabled={isInvestButtonDisabled}
+        disableElevation
+        className={classes.button}
+        component={AppRouterLinkComponent}
+        to={InvestRoute.makeInvestment}
+        params={params}
+      >
+        Invest
+      </Button>
+    </TwoFADialogWrapper>
   )
 }

@@ -1,34 +1,15 @@
 import React from 'react'
 import {
-  Dialog,
   DialogActions,
   DialogProps,
   DialogTitle,
   Button,
-  Theme,
-  Typography,
   DialogContent,
-  Box
+  Box,
+  Grid
 } from '@mui/material'
 import { ButtonTransparent } from 'app/components/ButtonTransparent'
-import { withStyles } from '@mui/styles'
-
-const styles: (theme: Theme) => any = theme => {
-  return {
-    paper: {
-      paddingTop: theme.spacing(4),
-      paddingBottom: theme.spacing(4),
-      paddingLeft: theme.spacing(5),
-      paddingRight: theme.spacing(5),
-      width: '90%',
-      maxWidth: 800,
-      borderRadius: theme.shape.borderRadius,
-      '&>div': {
-        padding: 0
-      }
-    }
-  }
-}
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface UserActionsDialogProps extends DialogProps {
   action: () => void
@@ -37,46 +18,57 @@ export interface UserActionsDialogProps extends DialogProps {
   closeDialog: () => void
 }
 
-export const UserActionsDialog = withStyles(styles)(
-  (props: UserActionsDialogProps) => {
-    const { action, actionLabel, title, closeDialog, children, ...rest } = props
+export const UserActionsDialog = (props: UserActionsDialogProps) => {
+  const { action, actionLabel, title, closeDialog, children, ...rest } = props
 
-    const handleClose = () => {
-      closeDialog()
-    }
-
-    const handleAction = () => {
-      action()
-    }
-
-    return (
-      <Dialog {...rest}>
-        <DialogTitle>
-          <Typography component='div' variant='h6' align='center'>
-            {title}
-          </Typography>
-        </DialogTitle>
-        <Box paddingY={3} component='span' display='block' />
-        <DialogContent>{children}</DialogContent>
-        <Box paddingY={3} component='span' display='block' />
-        <DialogActions>
-          <ButtonTransparent
-            variant='contained'
-            disableElevation
-            onClick={handleClose}
-          >
-            Cancel
-          </ButtonTransparent>
-          <Button
-            onClick={handleAction}
-            variant='contained'
-            disableElevation
-            color='primary'
-          >
-            {actionLabel}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    )
+  const handleClose = () => {
+    closeDialog()
   }
-)
+
+  const handleAction = () => {
+    action()
+  }
+
+  return (
+    <UIDialog maxWidth='md' onClose={handleClose} {...rest}>
+      <DialogTitle>
+        <Box mt={2} maxWidth={410} textAlign='center'>
+          {title}
+        </Box>
+      </DialogTitle>
+      <DialogContent>
+        <Box pt={1} pb={2}>
+          {children}
+        </Box>
+      </DialogContent>
+
+      <DialogActions>
+        <Grid container spacing={3} justifyContent='center' alignItems='center'>
+          <Grid item xs={5}>
+            <ButtonTransparent
+              fullWidth
+              variant='contained'
+              disableElevation
+              onClick={handleClose}
+              size='large'
+            >
+              Cancel
+            </ButtonTransparent>
+          </Grid>
+          <Grid item xs={5}>
+            <Button
+              fullWidth
+              onClick={handleAction}
+              variant='contained'
+              disableElevation
+              color='primary'
+              size='large'
+            >
+              {actionLabel}
+            </Button>
+          </Grid>
+        </Grid>
+      </DialogActions>
+    </UIDialog>
+  )
+}

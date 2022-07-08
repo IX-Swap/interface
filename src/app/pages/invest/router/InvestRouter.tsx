@@ -1,9 +1,10 @@
-import { ViewListing } from 'app/pages/invest/components/SecondaryMarketTable/ViewListing'
-import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
-import { InvestOverview } from 'app/pages/invest/pages/InvestOverview'
+import { ViewListing } from 'app/pages/invest/router/ViewListing'
+import { InvestOverview } from 'app/pages/invest/router/InvestOverview'
+import { Market } from 'app/pages/invest/pages/market/Market'
 import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
+import { InvestLanding } from 'app/pages/invest/router/InvestLanding'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Redirect, Switch } from 'react-router-dom'
@@ -26,6 +27,11 @@ export const InvestRouter = () => {
           <InvestDSORouter />
         </RootContainer>
       </AppRoute>
+
+      <AppRoute breadcrumb='Exchange' exact path={InvestRoute.exchange}>
+        <Market />
+      </AppRoute>
+
       <AppRoute path={InvestRoute.viewListing}>
         <RootContainer>
           <ViewListing />

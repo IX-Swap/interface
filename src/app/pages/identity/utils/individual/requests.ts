@@ -1,23 +1,39 @@
 import {
   IndividualAgreementsFormValues,
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
+  FinancialAndTaxDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
 ) => {
-  return values
+  if (values.dob === null || values.dob === undefined) {
+    delete values.dob
+  }
+  return {
+    ...values,
+    nric: values.nationality === 'Singapore' ? values.nric : undefined
+  }
 }
 
 export const getFinancialInfoRequestPayload = (
-  values: IndividualFinancialInfoFormValues
+  values: IndividualFinancialInfoFormValues & IndividualTaxDeclarationFormValues
 ) => {
+  const { fatca, usTin, ...rest } = values
+
   return {
-    ...values
+    ...rest,
+    declarations: {
+      tax: {
+        fatca: fatca === 'yes',
+        usTin: usTin
+      }
+    }
   }
 }
 
@@ -52,28 +68,50 @@ export const getTaxDeclarationRequestPayload = (
   return payload
 }
 
-export const getInvestorDeclarationRequestPayload = (
-  values: IndividualInvestorDeclarationFormValues
+export const getFinancialAndTaxDeclarationRequestPayload = (
+  values: FinancialAndTaxDeclarationFormValues
 ) => {
+  const { taxResidencies, singaporeOnly, fatca, usTin, ...other } = values
+  const payload = getTaxDeclarationRequestPayload(values)
+  payload.declarations.tax.usTin = usTin
+
+  return { ...payload, ...other }
+}
+
+export const getInvestorDeclarationRequestPayload = (
+  values: IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues
+) => {
+  const { evidenceOfAccreditation, proofOfIdentity, proofOfAddress, ...rest } =
+    values
+
+  const getDocuments = (documents: Array<FormArrayElement<DataroomFile>>) =>
+    documents.map(doc => doc.value._id).filter(doc => doc !== undefined)
+
   return {
     declarations: {
-      investorsStatus: values
-    }
+      investorsStatus: rest
+    },
+    documents: [
+      ...getDocuments(evidenceOfAccreditation),
+      ...getDocuments(proofOfAddress),
+      ...getDocuments(proofOfIdentity)
+    ]
   }
 }
 
 export const getDocumentsRequestPayload = (
-  values: IndividualDocumentsFormValues
+  values: IdentityDocumentsFormValues
 ) => {
-  return {
+  const documents = {
     documents: Object.values(values).reduce<string[]>((result, documents) => {
       if (Array.isArray(documents)) {
-        return [...result, ...documents.map(document => document._id)]
+        return [...result, ...documents.map(document => document.value._id)]
       }
 
       return result
     }, [])
   }
+  return documents.documents.length > 0 ? documents : {}
 }
 
 export const getAgreementsRequestPayload = (

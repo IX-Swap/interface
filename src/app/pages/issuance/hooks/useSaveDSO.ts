@@ -1,16 +1,14 @@
+import { getUpdateDSOPayload } from 'app/pages/issuance/utils/utils'
 import { getIdFromObj } from 'helpers/strings'
-import { useServices } from 'hooks/useServices'
 import { useCallback } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormActionsProps, DSOFormValues } from 'types/dso'
-import { getUpdateDSOPayload } from '../utils'
 import { useCreateDSO } from './useCreateDSO'
 import { useUpdateDSO } from './useUpdateDSO'
 
 export const useSaveDSO = ({ dso, schema }: DSOFormActionsProps) => {
-  const { snackbarService } = useServices()
   const dsoId = getIdFromObj(dso)
-  const { getValues } = useFormContext<DSOFormValues>()
+  const { getValues, setError } = useFormContext<DSOFormValues>()
   const [createDSO, { isLoading: isCreating }] = useCreateDSO()
   const [updateDSO, { isLoading: isUpdating }] = useUpdateDSO(
     dsoId,
@@ -20,7 +18,7 @@ export const useSaveDSO = ({ dso, schema }: DSOFormActionsProps) => {
   const onSubmit = useCallback(async () => {
     try {
       const values = getValues()
-      await schema.validate(values)
+      await schema.validate(values, { abortEarly: false })
       const formValues = getUpdateDSOPayload({
         ...values,
         status: 'Draft'
@@ -31,9 +29,12 @@ export const useSaveDSO = ({ dso, schema }: DSOFormActionsProps) => {
         await updateDSO(formValues)
       }
     } catch (e: any) {
-      void snackbarService.showSnackbar(e.message, 'error')
+      const errors = e.inner
+      errors.forEach((error: any) => {
+        setError(error?.path, { message: error?.message })
+      })
     }
-  }, [dso, createDSO, getValues, schema, updateDSO, snackbarService])
+  }, [dso, createDSO, getValues, setError, schema, updateDSO])
 
   return { onSubmit, isLoading: isCreating || isUpdating }
 }

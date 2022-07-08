@@ -4,11 +4,15 @@ export const useStyles = makeStyles(theme => ({
   container: {},
   fullwidth: {
     width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    gap: 16,
+    [theme.breakpoints.down('sm')]: {
+      gap: 0
+    }
   },
   base: {
-    height: 38,
-    width: `38px !important`,
+    height: 70,
+    width: `55px !important`,
     padding: theme.spacing(1),
     display: 'block',
     outline: 'none',
@@ -18,7 +22,11 @@ export const useStyles = makeStyles(theme => ({
     marginTop: 0,
     marginBottom: 0,
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      width: `45px !important`,
+      height: 50
+    }
   },
   standard: {
     border: 'none',

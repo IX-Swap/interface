@@ -1,4 +1,4 @@
-import { useMarket } from 'app/pages/exchange/hooks/useMarket'
+import { useMarket } from 'app/pages/invest/hooks/useMarket'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useParams } from 'react-router-dom'
 

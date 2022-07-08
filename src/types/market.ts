@@ -1,4 +1,5 @@
 import { Asset } from './asset'
+import { DigitalSecurityOffering } from './dso'
 import { Listing } from './listing'
 
 export interface Market {
@@ -13,9 +14,10 @@ export interface Market {
 export interface OTCMarket {
   createdAt: string
   isOtc: boolean
-  listing: string
+  listing?: Listing
   name: string
   quote: string
   updatedAt: string
   _id: string
+  dso: DigitalSecurityOffering
 }

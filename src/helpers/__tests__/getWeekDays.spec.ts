@@ -15,6 +15,7 @@ describe('getWeekDays', () => {
 
   it('returns correct week day from the data', () => {
     const days = getWeekDays(investmentGrowthData)
+
     expect(days).toEqual(dates)
   })
 })

@@ -14,6 +14,10 @@ import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { useStyles } from 'auth/pages/register/Register.styles'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { SingPass } from 'auth/pages/register/components/SingPass/SingPass'
+import { EmailField } from 'auth/pages/register/components/EmailField'
+import { PhoneField } from 'auth/pages/register/components/PhoneField'
 
 export interface CheckboxLabelProps {
   isError: boolean
@@ -53,72 +57,90 @@ const CheckboxLabel = ({ isError }: CheckboxLabelProps) => {
   )
 }
 
-export const RegisterFields = () => {
+export interface RegisterFieldsProps {
+  isMyInfo?: boolean
+}
+
+export const RegisterFields = ({ isMyInfo = false }: RegisterFieldsProps) => {
+  const { getFilterValue } = useQueryFilter()
+  const identity = getFilterValue('identityType')
+  const isIndividual = identity === 'individual'
+
   const { control, errors } = useFormContext<SignupArgs>()
   const { bottomBlock, topBlock } = useStyles({})
   const nameErrors = errors.name
-  const emailErrors = errors.email
   const agreeErrors = errors.agree
 
+  const renderSingPassButton = () => {
+    if (isMyInfo) {
+      return null
+    }
+    return <SingPass />
+  }
+
+  const getLabel = () => {
+    if (isIndividual) {
+      return 'Full Name'
+    }
+    return 'Corporate Name'
+  }
   return (
     <Grid container spacing={6} direction='column'>
+      <Grid item>{isIndividual ? renderSingPassButton() : null}</Grid>
+      {!isMyInfo ? (
+        <Grid item>
+          <TypedField
+            control={control}
+            component={TextField}
+            name='name'
+            label={getLabel()}
+            placeholder={getLabel()}
+            fullWidth
+            InputLabelProps={{
+              shrink: true
+            }}
+            InputProps={{
+              endAdornment:
+                nameErrors !== undefined ? (
+                  <InputAdornment position='end'>
+                    <WarningIcon />
+                  </InputAdornment>
+                ) : null
+            }}
+          />
+        </Grid>
+      ) : null}
+
       <Grid item>
-        <TypedField
-          control={control}
-          component={TextField}
-          name='name'
-          label='Full Name'
-          placeholder={'Full Name'}
-          fullWidth
-          InputLabelProps={{
-            shrink: true
-          }}
-          InputProps={{
-            endAdornment:
-              nameErrors !== undefined ? (
-                <InputAdornment position={'end'}>
-                  <WarningIcon />
-                </InputAdornment>
-              ) : null
-          }}
-        />
+        <EmailField isMyInfo={isMyInfo} />
       </Grid>
-      <Grid item>
-        <TypedField
-          control={control}
-          component={TextField}
-          name='email'
-          label='Email'
-          type='email'
-          fullWidth
-          placeholder={'Email Address'}
-          InputLabelProps={{
-            shrink: true
-          }}
-          InputProps={{
-            endAdornment:
-              emailErrors !== undefined ? (
-                <InputAdornment position={'end'}>
-                  <WarningIcon />
-                </InputAdornment>
-              ) : null
-          }}
-        />
-      </Grid>
+
+      {isMyInfo ? (
+        <Grid item>
+          <PhoneField />
+        </Grid>
+      ) : null}
+
       <Grid item className={topBlock}>
-        <PasswordField withPasswordValidation showErrorMessages={false} />
-      </Grid>
-      <Grid item className={bottomBlock}>
-        <TypedField
-          customRenderer
-          valueExtractor={booleanValueExtractor}
-          component={Checkbox}
-          control={control}
-          label={(<CheckboxLabel isError={agreeErrors} />) as any}
-          name='agree'
-          data-testid='agree-to-terms'
+        <PasswordField
+          isMyInfo={isMyInfo}
+          withPasswordValidation
+          showErrorMessages={false}
         />
       </Grid>
+      {!isMyInfo ? (
+        <Grid item className={bottomBlock}>
+          <TypedField
+            customRenderer
+            valueExtractor={booleanValueExtractor}
+            component={Checkbox}
+            control={control}
+            label={(<CheckboxLabel isError={agreeErrors} />) as any}
+            name='agree'
+            data-testid='agree-to-terms'
+          />
+        </Grid>
+      ) : null}
     </Grid>
   )
 }

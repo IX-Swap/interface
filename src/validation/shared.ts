@@ -1,15 +1,25 @@
-import * as yup from 'yup'
-import 'yup-phone-lite'
-import { passwordValidator } from 'validation/validators'
-import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-import { Maybe } from 'types/util'
 import { AddressValues } from 'app/pages/accounts/types'
 import {
+  DocumentFieldArrayItemValue,
   PersonalProfile,
   Personnel,
   TaxResidency
 } from 'app/pages/identity/types/forms'
 import { differenceInYears } from 'date-fns'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
+import { Maybe } from 'types/util'
+import {
+  address,
+  fullName,
+  lettersAndNumbers,
+  lettersOrSpaces,
+  name,
+  postalCode,
+  toponym
+} from 'validation/regexes'
+import { passwordValidator } from 'validation/validators'
+import * as yup from 'yup'
+import 'yup-phone-lite'
 
 export const validationMessages = {
   required: 'This field is required'
@@ -56,7 +66,7 @@ export const birthdaySchema = dateSchema.test(
 export const taxIdentificationNumberSchema = yup
   .string()
   .max(20, 'Maximum of 20 characters')
-  .matches(/^[a-zA-Z0-9]*$/, 'Must include only letters and numbers only')
+  .matches(lettersAndNumbers, 'Must include only letters and numbers only')
 
 export const documentsArraySchema =
   yup.array<FormArrayElement<Maybe<DataroomFile>>>()
@@ -65,14 +75,29 @@ export const nameSchema = yup
   .string()
   .trim()
   .max(50, 'Maximum of 50 characters')
-  .matches(/^[a-zA-Z-]*$/, 'Invalid name')
+  .matches(name, 'Invalid name')
 
 export const addressSchema = yup.object().shape<AddressValues>({
-  line1: yup.string().required(validationMessages.required),
-  line2: yup.string(),
-  city: yup.string().required(validationMessages.required),
-  postalCode: yup.string().required(validationMessages.required),
-  state: yup.string(),
+  line1: yup
+    .string()
+    .matches(address, 'Invalid address')
+    .required(validationMessages.required),
+  line2: yup.string().matches(address, {
+    excludeEmptyString: true,
+    message: 'Invalid address'
+  }),
+  city: yup
+    .string()
+    .matches(toponym, 'Invalid city')
+    .required(validationMessages.required),
+  postalCode: yup
+    .string()
+    .matches(postalCode, 'Invalid postal code')
+    .required(validationMessages.required),
+  state: yup.string().matches(toponym, {
+    excludeEmptyString: true,
+    message: 'Invalid state'
+  }),
   country: yup.string().required(validationMessages.required)
 })
 
@@ -84,7 +109,10 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   nationality: yup.string().required(validationMessages.required),
   dob: birthdaySchema.required(validationMessages.required),
   countryOfResidence: yup.string().required(validationMessages.required),
-  contactNumber: yup.string().phone().required(validationMessages.required),
+  contactNumber: yup
+    .string()
+    .phone(undefined, 'Must be a valid phone number')
+    .required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
   gender: yup.string().required(validationMessages.required)
 })
@@ -94,14 +122,25 @@ export const personalProfileArraySchema = yup
   .of(personalProfileSchema.required(validationMessages.required))
 
 export const personnelProfileSchema = yup.object().shape<Personnel>({
-  fullName: yup.string().required(validationMessages.required),
-  designation: yup.string().required(validationMessages.required),
+  fullName: yup
+    .string()
+    .matches(fullName, 'Invalid full name')
+    .required(validationMessages.required),
+  designation: yup
+    .string()
+    .matches(lettersOrSpaces, 'Invalid designation')
+    .required(validationMessages.required),
   email: emailSchema.required(validationMessages.required),
-  contactNumber: yup.string().phone().required(validationMessages.required),
+  contactNumber: yup
+    .string()
+    .phone(undefined, 'Must be a valid phone number')
+    .required(validationMessages.required),
   documents: yup
     .mixed<DataroomFile[], object>()
     .required(validationMessages.required),
   address: addressSchema.required(validationMessages.required),
+  legalEntityStatus: yup.string().required(validationMessages.required),
+  countryOfFormation: yup.string().required(validationMessages.required),
   percentageShareholding: yup
     .number()
     .transform((value, originalValue) => {
@@ -132,3 +171,66 @@ export const taxResidenciesSchema = yup.object().shape<TaxResidency>({
 export const taxResidenciesArraySchema = yup
   .array<TaxResidency>()
   .of(taxResidenciesSchema.required(validationMessages.required))
+
+export const documentsSchema = yup
+  .array<DocumentFieldArrayItemValue>()
+  .of(
+    yup.object<DocumentFieldArrayItemValue>({
+      // @ts-expect-error
+      value: yup.object<DataroomFile>().test(
+        'isMoreThanZeroFilesUpload',
+        'validationMessages.required',
+        // @ts-expect-errors
+        value => Object.keys(value).length > 0
+      )
+    })
+  )
+  .required(validationMessages.required)
+
+export const institutionalInvestorDocumentsSchema = yup
+  .array<DocumentFieldArrayItemValue>()
+  .when('isInstitutionalInvestor', {
+    is: true,
+    then: documentsSchema
+  })
+  .required(validationMessages.required)
+
+export const investorStatusDeclarationItemSchema = yup
+  .bool()
+  .oneOf([true, false])
+  .test(
+    'oneOfInvestorDeclarationFormValueShouldBeTrue',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function () {
+      const parent = this.parent
+      return (
+        (parent.assets as boolean) ||
+        (parent.trustee as boolean) ||
+        (parent.accreditedBeneficiaries as boolean) ||
+        (parent.accreditedSettlors as boolean) ||
+        (parent.accreditedShareholders as boolean) ||
+        (parent.partnership as boolean)
+      )
+    }
+  )
+  .required(validationMessages.required)
+
+export const individualInvestorStatusDeclarationItemSchema = yup
+  .bool()
+  .oneOf([true, false])
+  .test(
+    'oneOfInvestorStatusDeclarationValuesShouldBeTrue',
+    'Please choose at least one option under "Investor Status Declaration" section',
+    function () {
+      const parent = this.parent
+      return (
+        (parent.financialAsset as boolean) ||
+        (parent.income as boolean) ||
+        (parent.personalAssets as boolean) ||
+        (parent.jointlyHeldAccount as boolean)
+      )
+    }
+  )
+  .required(validationMessages.required)
+
+export const optInAgreementsDependentValueSchema = yup.bool()

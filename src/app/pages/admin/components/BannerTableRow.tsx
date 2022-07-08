@@ -94,7 +94,10 @@ export const BannerTableRow = ({ banner }: BannerTableRowProps) => {
         align='right'
         style={tableCellStyle}
       >
-        <ViewUploadedBanner bannerId={banner._id} />
+        <ViewUploadedBanner
+          bannerId={banner._id}
+          name={banner.originalFileName}
+        />
         <IconButton
           onClick={() => {
             void removeBanner()

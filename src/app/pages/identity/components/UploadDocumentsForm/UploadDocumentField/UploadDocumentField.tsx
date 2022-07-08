@@ -1,12 +1,15 @@
 import { Grid, Typography, Box } from '@mui/material'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { TypedField } from 'components/form/TypedField'
-import { documentValueExtractor } from 'app/components/DSO/utils'
-import React from 'react'
+import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DataroomFileType } from 'config/dataroom'
-import { DocumentList } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentList'
 import { Tooltip } from 'app/pages/identity/components/UploadDocumentsForm/Tooltip/Tooltip'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
+import { FieldsArray } from 'components/form/FieldsArray'
+import { plainValueExtractor } from 'helpers/forms'
+import { Icon } from 'ui/Icons/Icon'
+import { AddDocumentButton } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/AddDocumentButton'
+import { DataroomFile } from 'types/dataroomFile'
 
 export interface UploadDocumentFieldProps {
   name: any
@@ -21,50 +24,106 @@ export const UploadDocumentField = ({
   name,
   label,
   helperElement,
-  tooltipContent,
-  fieldId,
-  defaultValue
+  tooltipContent
 }: UploadDocumentFieldProps) => {
-  const { control } = useFormContext()
+  const { control, watch, formState } = useFormContext()
+
+  const defaultUploadedFiles =
+    watch(name) !== undefined && Array.isArray(watch(name))
+      ? watch(name).map((file: { value: DataroomFile }) => file.value)
+      : []
+  const filteredDefaultUploadedFiles = defaultUploadedFiles.filter(
+    (file: DataroomFile) => Object.keys(file).length > 0
+  )
+  const [uploadedFiles, setUploadedFiles] = useState<DataroomFile[]>(
+    filteredDefaultUploadedFiles
+  )
+
+  const handleSuccessFileUpload = (value: DataroomFile) => {
+    setUploadedFiles([...uploadedFiles, value])
+  }
+  const handleRemoveFile = (value: DataroomFile) => {
+    const filteredValue = uploadedFiles.filter((it: DataroomFile) => {
+      return it._id !== value._id
+    })
+
+    setUploadedFiles(filteredValue)
+  }
 
   return (
-    <Grid container spacing={3} direction='column'>
-      <Grid item>
-        <Box>
-          <Grid item container alignItems='center'>
-            <Typography variant='subtitle1'>{label}</Typography>
-            <Box pr={1}></Box>
-            {tooltipContent !== undefined ? (
-              <Tooltip
-                data-testid='upload-document-field-tooltip'
-                title={tooltipContent}
+    <Grid container spacing={3}>
+      {label !== '' && (
+        <Grid item xs={12}>
+          <Box>
+            <Grid item container alignItems='center'>
+              <Typography variant='subtitle1' color={'otpInput.color'}>
+                {label}
+              </Typography>
+              <Box pr={1}></Box>
+              {tooltipContent !== undefined ? (
+                <Tooltip
+                  data-testid='upload-document-field-tooltip'
+                  title={tooltipContent}
+                />
+              ) : null}
+            </Grid>
+          </Box>
+          {helperElement !== undefined ? (
+            <Box mt={1}>{helperElement}</Box>
+          ) : null}
+        </Grid>
+      )}
+      <Grid item xs={12}>
+        <FieldsArray name={name} control={control}>
+          {({ fields, append, remove }) => (
+            <Grid container spacing={2}>
+              {fields.map((field, index) => {
+                return (
+                  <Grid item xs={12} key={field.id}>
+                    <TypedField
+                      customRenderer
+                      name={[name, index, 'value']}
+                      control={control}
+                      component={FileUpload}
+                      isValid={
+                        formState.isValid ? true : uploadedFiles.length > 0
+                      }
+                      label='Upload File'
+                      valueExtractor={plainValueExtractor}
+                      accept={DataroomFileType.document}
+                      fullWidth
+                      maxSize={10}
+                      documentInfo={{
+                        type: label,
+                        title: label
+                      }}
+                      remove={() => {
+                        remove(index)
+                      }}
+                      onSuccessUploadCallback={handleSuccessFileUpload}
+                      onRemoveCallback={handleRemoveFile}
+                      defaultValue={field.value}
+                    />
+                  </Grid>
+                )
+              })}
+
+              <AddDocumentButton
+                name={name}
+                isVisible={
+                  fields.length === uploadedFiles.length || fields.length === 0
+                }
+                onClick={() => {
+                  append({ value: {} })
+                }}
+                variant='outlined'
+                startIcon={<Icon name='plus' />}
+                sx={{ width: '100%' }}
               />
-            ) : null}
-          </Grid>
-        </Box>
-        {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
+            </Grid>
+          )}
+        </FieldsArray>
       </Grid>
-      <Grid item>
-        <TypedField
-          key={fieldId}
-          control={control}
-          customRenderer
-          component={Dropzone}
-          name={name}
-          label=''
-          valueExtractor={documentValueExtractor}
-          multiple
-          fullWidth
-          accept={DataroomFileType.report}
-          documentInfo={{
-            title: label,
-            type: label
-          }}
-          showAcceptable
-          defaultValue={defaultValue}
-        />
-      </Grid>
-      <DocumentList name={name} />
     </Grid>
   )
 }

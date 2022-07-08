@@ -13,6 +13,9 @@ import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
 import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
 import { FinancialReportsRouter } from 'app/pages/issuance/router/FinancialReportsRouter'
+import { RootContainer } from 'ui/RootContainer'
+import { CreateListing } from 'app/pages/issuance/pages/CreateListing'
+import { MyListingsRouter } from 'app/pages/invest/router/MyListingsRouter'
 
 export const IssuanceRouter = () => {
   const isIssuer = useIsIssuer()
@@ -22,6 +25,7 @@ export const IssuanceRouter = () => {
       <AppRoute exact path={IssuanceRoute.root}>
         <Redirect to={IssuanceRoute.insight} />
       </AppRoute>
+
       <AppRoute
         breadcrumb='Create Digital Security Offering'
         exact
@@ -59,7 +63,9 @@ export const IssuanceRouter = () => {
         exact
         path={IssuanceRoute.deployToken}
       >
-        <DeployToken />
+        <RootContainer>
+          <DeployToken />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
@@ -74,13 +80,23 @@ export const IssuanceRouter = () => {
         <IssuanceLanding />
       </AppRoute>
 
+      <AppRoute breadcrumb='My Listings' path={IssuanceRoute.myListings}>
+        <MyListingsRouter />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Create Listing' path={IssuanceRoute.createListing}>
+        <CreateListing />
+      </AppRoute>
+
       {isIssuer ? (
         <AppRoute
           breadcrumb='Commitments'
           exact
           path={IssuanceRoute.commitments}
         >
-          <Commitments />
+          <RootContainer>
+            <Commitments />
+          </RootContainer>
         </AppRoute>
       ) : null}
 

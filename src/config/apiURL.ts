@@ -36,13 +36,15 @@ export const identityURL = {
       `/identity/corporates/${userId}/${corporateId}`,
     submit: (id?: string) => `/identity/corporates/${id}/submit`,
     get: (userId?: string, identityId?: string) =>
-      `/identity/corporates/${userId}/${identityId}`
+      `/identity/corporates/${userId}/${identityId}`,
+    validateData: '/identity/corporates/check'
   },
   individuals: {
     create: (userId?: string) => `/identity/individuals/${userId}`,
     update: (userId?: string) => `/identity/individuals/${userId}`,
     get: (userId?: string) => `/identity/individuals/${userId}`,
-    submit: (id?: string) => `/identity/individuals/${id}/submit`
+    submit: (id?: string) => `/identity/individuals/${id}/submit`,
+    getSingPassData: '/sing-pass/getuser'
   },
   detailsOfIssuance: {
     create: (userId?: string) => `/identity/issuance-detail/${userId}`,
@@ -199,6 +201,7 @@ export const authURL = {
   resetPasswordConfirm: '/auth/password/reset/confirm',
   enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
+  disable2fa: (userId: string) => `/auth/2fa/disable/${userId}`,
   setup2fa: (userId?: string) => `/auth/2fa/setup/${userId}`,
   remove2fa: (userId?: string) => `/auth/2fa/change/${userId}`,
   getEmailCode: (userId?: string) => `/auth/email-code/${userId}`,

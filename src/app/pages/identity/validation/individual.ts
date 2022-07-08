@@ -6,17 +6,23 @@ import {
   nameSchema,
   birthdaySchema,
   taxIdentificationNumberSchema,
-  validationMessages
+  validationMessages,
+  documentsSchema,
+  individualInvestorStatusDeclarationItemSchema,
+  optInAgreementsDependentValueSchema
 } from 'validation/shared'
 import {
   IndividualAgreementsFormValues,
-  IndividualDocumentsFormValues,
+  IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues,
-  TaxResidency
+  TaxResidency,
+  IndividualInvestorDeclarationFormValues,
+  IndividualIdentity
 } from 'app/pages/identity/types/forms'
-import { DataroomFile } from 'types/dataroomFile'
+import { corporateName } from 'validation/regexes'
+import { isEmptyString } from 'helpers/strings'
 
 export const personalInfoSchema = yup
   .object()
@@ -27,22 +33,43 @@ export const personalInfoSchema = yup
     lastName: nameSchema.required(validationMessages.required),
     nationality: yup.string().required(validationMessages.required),
     dob: birthdaySchema.required(validationMessages.required),
-    contactNumber: yup.string().phone().required(validationMessages.required),
+    contactNumber: yup
+      .string()
+      .phone(undefined, 'Must be a valid phone number')
+      .required(validationMessages.required),
     email: emailSchema.required(validationMessages.required),
     address: addressSchema.required(validationMessages.required),
-    gender: yup.string().required(validationMessages.required)
+    gender: yup.string().required(validationMessages.required),
+    nric: yup.string().when('nationality', {
+      is: 'Singapore',
+      then: yup
+        .string()
+        .max(12, 'Maximum of 12 characters')
+        .required(validationMessages.required),
+      otherwise: yup.string()
+    })
   })
 
-export const financialInfoSchema = yup
-  .object()
-  .shape<IndividualFinancialInfoFormValues>({
+export const financialInfoSchema = (data?: IndividualIdentity) =>
+  yup.object().shape<IndividualFinancialInfoFormValues>({
     occupation: yup.string().required(validationMessages.required),
     employer: yup
       .string()
       .max(50, 'Maximum of 50 characters')
+      .matches(
+        corporateName,
+        "Must include only letters, numbers and these special characters . , - ; & '"
+      )
       .required('This field is required'),
     employmentStatus: yup.string().required(validationMessages.required),
-    annualIncome: yup.string().required(validationMessages.required),
+    annualIncome: yup
+      .string()
+      .test('checkIsSingPass', validationMessages.required, function (value) {
+        if (data?.uinfin === undefined && isEmptyString(value)) {
+          return false
+        }
+        return true
+      }),
     sourceOfFund: yup.string().required(validationMessages.required)
   })
 
@@ -118,22 +145,37 @@ export const taxDeclarationSchema = yup
 
 export const individualInvestorStatusDeclarationSchema = yup
   .object()
-  .shape<any>({
-    financialAsset: yup.bool().required(validationMessages.required),
-    income: yup.bool().required(validationMessages.required),
-    personalAssets: yup.bool().required(validationMessages.required),
-    jointlyHeldAccount: yup.bool().required(validationMessages.required),
+  .shape<IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues>(
+    {
+      financialAsset: individualInvestorStatusDeclarationItemSchema,
+      income: individualInvestorStatusDeclarationItemSchema,
+      personalAssets: individualInvestorStatusDeclarationItemSchema,
+      jointlyHeldAccount: individualInvestorStatusDeclarationItemSchema,
 
-    optInAgreements: yup
-      .bool()
-      .oneOf([true], 'Opt-In Requirement is required')
-      .required(validationMessages.required),
-
-    primaryOfferingServices: yup.bool(),
-    digitalSecurities: yup.bool(),
-    digitalSecuritiesIssuance: yup.bool(),
-    allServices: yup.bool()
-  })
+      optInAgreementsOptOut: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required),
+      optInAgreementsSafeguards: yup
+        .bool()
+        .oneOf([true], 'Opt-In Requirement is required')
+        .required(validationMessages.required),
+      // @ts-expect-error
+      primaryOfferingServices: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
+      digitalSecurities: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
+      digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
+      allServices: optInAgreementsDependentValueSchema,
+      // @ts-expect-error
+      evidenceOfAccreditation: documentsSchema,
+      // @ts-expect-error
+      proofOfAddress: documentsSchema,
+      // @ts-expect-error
+      proofOfIdentity: documentsSchema
+    }
+  )
   .test(
     'investorDeclarations',
     'Please choose at least one option under "Investor Status Declaration" section',
@@ -161,19 +203,13 @@ export const individualInvestorStatusDeclarationSchema = yup
 
 export const individualInvestorDocumentsSchema = yup
   .object()
-  .shape<IndividualDocumentsFormValues>({
-    evidenceOfAccreditation: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    proofOfAddress: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    proofOfIdentity: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required)
+  .shape<IdentityDocumentsFormValues>({
+    // @ts-expect-error
+    evidenceOfAccreditation: documentsSchema,
+    // @ts-expect-error
+    proofOfAddress: documentsSchema,
+    // @ts-expect-error
+    proofOfIdentity: documentsSchema
   })
 
 export const individualInvestorAgreementsSchema = yup
@@ -182,4 +218,19 @@ export const individualInvestorAgreementsSchema = yup
     custody: yup.bool().oneOf([true]).required(validationMessages.required),
     investor: yup.bool().oneOf([true]).required(validationMessages.required),
     disclosure: yup.bool().oneOf([true]).required(validationMessages.required)
+  })
+
+export const individualInvestorValidationSchema = (data?: IndividualIdentity) =>
+  yup.object().shape<any>({
+    ...financialInfoSchema(data).fields,
+    ...individualInvestorDocumentsSchema.fields,
+    ...individualInvestorStatusDeclarationSchema.fields,
+    ...personalInfoSchema.fields,
+    ...taxDeclarationSchema.fields
+  })
+
+export const financialAndTaxDeclarationSchema = (data?: IndividualIdentity) =>
+  yup.object().shape<any>({
+    ...financialInfoSchema(data).fields,
+    ...taxDeclarationSchema.fields
   })

@@ -1,15 +1,11 @@
 import React from 'react'
 import { ROLES } from 'config/roles'
-import {
-  Grid,
-  Checkbox,
-  FormControlLabel,
-  Button,
-  Typography
-} from '@mui/material'
+import { Grid, FormControlLabel, Button, Typography } from '@mui/material'
 import { useRoleManagement } from 'app/pages/admin/hooks/useRoleManagement'
 import isEqual from 'lodash/isEqual'
 import sortBy from 'lodash/sortBy'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+
 export interface RoleManagementProps {
   activeRoles: string[]
 }
@@ -29,7 +25,7 @@ export const RoleManagement = ({ activeRoles }: RoleManagementProps) => {
             <Grid item key={name}>
               <FormControlLabel
                 control={
-                  <Checkbox
+                  <UICheckbox
                     checked={selectedRoles.includes(name)}
                     onChange={handleChange}
                     name={name}

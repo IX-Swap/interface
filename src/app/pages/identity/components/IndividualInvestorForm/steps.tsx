@@ -1,36 +1,34 @@
-import React, { Fragment } from 'react'
-import { VSpacer } from 'components/VSpacer'
-import { Typography } from '@mui/material'
-
+import React from 'react'
+import { Grid } from '@mui/material'
 import {
   getDocumentsFormValues,
-  getFinancialInfoFormValues,
   getInvestorDeclarationFormValues,
   getPersonalInfoFormValues,
-  getTaxDeclarationFormValues
+  getFinancialInfoFormValues
 } from 'app/pages/identity/utils/individual/forms'
 import {
   getDocumentsRequestPayload,
-  getFinancialInfoRequestPayload,
   getInvestorDeclarationRequestPayload,
   getPersonalInfoRequestPayload,
-  getTaxDeclarationRequestPayload
+  getFinancialAndTaxDeclarationRequestPayload
 } from 'app/pages/identity/utils/individual/requests'
 import {
-  financialInfoSchema,
-  individualInvestorDocumentsSchema,
+  individualInvestorValidationSchema,
   individualInvestorStatusDeclarationSchema,
   personalInfoSchema,
-  taxDeclarationSchema
+  financialAndTaxDeclarationSchema
 } from 'app/pages/identity/validation/individual'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { FinancialInformationForm } from 'app/pages/identity/components/FinancialInformationForm/FinancialInformationForm'
 import { TaxDeclarationForm } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationForm'
 import { IndividualUploadDocumentsForm } from 'app/pages/identity/components/UploadDocumentsForm/IndividualUploadDocumentsForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { IndividualIdentityContainer } from 'app/pages/identity/containers/IndividualIdentityContainer'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
+import { IndividualAddressFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualAddressFields'
+import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export const individualInvestorFormSteps = [
   {
@@ -39,82 +37,102 @@ export const individualInvestorFormSteps = [
     getRequestPayload: getPersonalInfoRequestPayload,
     validationSchema: personalInfoSchema,
     component: () => (
-      <Fragment>
-        <FormSectionHeader title={'Personal Information'} />
-        <IndividualInfoFields />
-        <VSpacer size='large' />
-        <FormSectionHeader title={'Address'} />
-        <Typography variant='subtitle2' color='textSecondary'>
-          Please provide your current address
-        </Typography>
-        <VSpacer size='medium' />
-        <AddressFields />
-      </Fragment>
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <Grid container spacing={5} direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader title={'Personal Information'} />
+                </Grid>
+                <Grid item>
+                  <IndividualInfoFields />
+                </Grid>
+              </Grid>
+            </FieldContainer>
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <Grid container spacing={5} direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader title={'Address'} />
+                </Grid>
+                <Grid item>
+                  <IndividualAddressFields />
+                </Grid>
+              </Grid>
+            </FieldContainer>
+          </Grid>
+        </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
-    label: 'Financial Information',
+    label: 'Financial and Tax Information',
     getFormValues: getFinancialInfoFormValues,
-    getRequestPayload: getFinancialInfoRequestPayload,
-    validationSchema: financialInfoSchema,
+    getRequestPayload: getFinancialAndTaxDeclarationRequestPayload,
+    validationSchema: financialAndTaxDeclarationSchema,
     component: () => (
-      <Fragment>
-        <FinancialInformationForm />
-      </Fragment>
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FinancialInformationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <TaxDeclarationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <UsCitizenshipConfirmation />
+            </FieldContainer>
+          </Grid>
+        </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
-    label: 'Tax Declaration',
-    getFormValues: getTaxDeclarationFormValues,
-    getRequestPayload: getTaxDeclarationRequestPayload,
-    validationSchema: taxDeclarationSchema,
-    component: () => (
-      <Fragment>
-        <TaxDeclarationForm />
-      </Fragment>
-    )
-  },
-  {
-    label: 'Investor Status Declaration',
+    label: 'Investor Declaration',
     getFormValues: getInvestorDeclarationFormValues,
     getRequestPayload: getInvestorDeclarationRequestPayload,
     validationSchema: individualInvestorStatusDeclarationSchema,
     component: () => (
-      <Fragment>
-        <InvestorDeclarationForm />
-      </Fragment>
-    )
-  },
-  {
-    label: 'Upload Documents',
-    getFormValues: getDocumentsFormValues,
-    getRequestPayload: getDocumentsRequestPayload,
-    validationSchema: individualInvestorDocumentsSchema,
-    component: () => (
-      <Fragment>
-        <FormSectionHeader title={'Upload Documents'} />
-        <Typography
-          variant='subtitle2'
-          color='textSecondary'
-          style={{ marginTop: -30, fontSize: 16 }}
-        >
-          Please upload the following documents. All account statements and
-          documents should be dated within 3 months.
-        </Typography>
-        <Typography variant='subtitle2' color='textSecondary'>
-          Notes: Type of document format supported is jpg, jpeg, png, gif, tiff,
-          webp, svg, apng, avif, jfif, pjpeg, pjp, docx, xlsx, pdf, and odt.
-        </Typography>
-        <VSpacer size='medium' />
-        <IndividualUploadDocumentsForm />
-      </Fragment>
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <InvestorDeclarationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <IndividualUploadDocumentsForm />
+            </FieldContainer>
+          </Grid>
+        </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
     label: 'Review & Submit',
-    getFormValues: () => {},
-    getRequestPayload: () => {},
-    validationSchema: null,
+    getFormValues: (data: any) => {
+      const allData = {
+        ...getDocumentsFormValues(data),
+        ...getInvestorDeclarationFormValues(data),
+        ...getPersonalInfoFormValues(data),
+        ...getFinancialInfoFormValues(data)
+      }
+      return allData
+    },
+    getRequestPayload: (data: any) => {
+      return {
+        ...getDocumentsRequestPayload(data),
+        ...getInvestorDeclarationRequestPayload(data),
+        ...getPersonalInfoRequestPayload(data),
+        ...getFinancialAndTaxDeclarationRequestPayload(data)
+      }
+    },
+    validationSchema: individualInvestorValidationSchema,
     component: () => <IndividualIdentityContainer />
   }
 ]

@@ -1,12 +1,13 @@
-import React from 'react'
-import { Container, Paper, Grid, Box } from '@mui/material'
-import { ChangePasswordFormValues } from './types'
-import { changePasswordFormValuesSchema } from './validation'
-import { useChangePassword } from './hooks/useChangePassword'
+import { Box, Grid, Paper } from '@mui/material'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
-import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import React from 'react'
+import { RootContainer } from 'ui/RootContainer'
+import { useChangePassword } from './hooks/useChangePassword'
+import { ChangePasswordFormValues } from './types'
+import { changePasswordFormValuesSchema } from './validation'
 
 const defaultValues = {
   oldPassword: '',
@@ -21,28 +22,32 @@ export const ChangePassword = () => {
   }
 
   return (
-    <Container style={{ backgroundColor: 'transparent' }}>
-      <PageHeader title='Change Password' />
-      <Grid container alignItems='center' justifyContent='center'>
-        <Grid container lg={4} item>
-          <Form
-            defaultValues={defaultValues}
-            validationSchema={changePasswordFormValuesSchema}
-            onSubmit={onSubmit}
-          >
-            <Paper elevation={1}>
-              <Box p={3}>
-                <Grid container>
-                  <ChangePasswordFields />
-                  <Grid item xs={12} md={12} lg={12}>
-                    <Submit>Change</Submit>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Paper>
-          </Form>
-        </Grid>
+    <Grid container direction='column' style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader styled={false} title='Change Password' alignment='center' />
       </Grid>
-    </Container>
+      <RootContainer>
+        <Grid container alignItems='center' justifyContent='center'>
+          <Grid container lg={5} item>
+            <Form
+              defaultValues={defaultValues}
+              validationSchema={changePasswordFormValuesSchema}
+              onSubmit={onSubmit}
+            >
+              <Paper elevation={1}>
+                <Box p={3}>
+                  <Grid container spacing={3}>
+                    <ChangePasswordFields />
+                    <Grid item xs={12} md={12} lg={12}>
+                      <Submit fullWidth>Change</Submit>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </Paper>
+            </Form>
+          </Grid>
+        </Grid>
+      </RootContainer>
+    </Grid>
   )
 }

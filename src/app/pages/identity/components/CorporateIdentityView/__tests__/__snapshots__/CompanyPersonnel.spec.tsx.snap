@@ -1,0 +1,204 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompanyPersonnel should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-8ffqm3-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+          >
+            Documents
+          </h5>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 css-pn2ne7-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-8ffqm3-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              >
+                Full Name
+              </p>
+              <div
+                class="MuiBox-root css-1jhs511"
+              />
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+              >
+                John Doe
+              </p>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              >
+                Email Address
+              </p>
+              <div
+                class="MuiBox-root css-1jhs511"
+              />
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+              >
+                johnsemail
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-8ffqm3-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              >
+                Designation
+              </p>
+              <div
+                class="MuiBox-root css-1jhs511"
+              />
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+              >
+                CEO
+              </p>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              >
+                Contact Number
+              </p>
+              <div
+                class="MuiBox-root css-1jhs511"
+              />
+              <p
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+              >
+                +6512345678901
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-8ffqm3-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+        >
+          <div
+            class="MuiBox-root css-0"
+          >
+            <h5
+              class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+            >
+              Authorization Document
+            </h5>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-8ffqm3-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <div
+              class="hasError MuiBox-root css-1r25d6u"
+            >
+              <div
+                class="MuiBox-root css-70qvj9"
+              >
+                <svg
+                  class="css-1s8o7ec"
+                  fill="#778194"
+                  height="24px"
+                  width="24px"
+                >
+                  <use
+                    href="image-mock#file"
+                  />
+                </svg>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                >
+                  Missing file
+                </p>
+              </div>
+              <div
+                class="MuiBox-root css-0"
+              >
+                <input
+                  hidden=""
+                  id=""
+                  name=""
+                />
+              </div>
+              <div
+                class="MuiBox-root css-16mkun2"
+              >
+                <span
+                  aria-valuemax="100"
+                  aria-valuemin="0"
+                  aria-valuenow="0"
+                  class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                  role="progressbar"
+                >
+                  <span
+                    class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                    style="transform: translateX(-100%);"
+                  />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

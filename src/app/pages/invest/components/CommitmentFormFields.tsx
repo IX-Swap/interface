@@ -1,4 +1,10 @@
-import { Grid, InputAdornment, OutlinedInput } from '@mui/material'
+import {
+  Grid,
+  InputAdornment,
+  OutlinedInput,
+  Typography,
+  Box
+} from '@mui/material'
 import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSignedSubscriptionDocument'
@@ -132,13 +138,15 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
       </Grid>
 
       <Grid item>
+        <Typography variant='subtitle1'>OTP</Typography>
+        <Box py={0.4} />
         <TypedField
           className={privateClassNames()}
           component={OutlinedInput}
           control={control}
           name='otp'
-          label='OTP'
           autoComplete='off'
+          placeholder='OTP'
         />
       </Grid>
       {isCampaign && (

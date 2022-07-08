@@ -1,9 +1,10 @@
 import React from 'react'
-import { Grid, Button } from '@mui/material'
+import { Grid, Button, IconButton, useMediaQuery } from '@mui/material'
 import { DocumentFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { VSpacer } from 'components/VSpacer'
-import { Personnel } from 'app/pages/identity/types/forms'
+import { Icon } from 'ui/Icons/Icon'
+import { useTheme } from '@mui/material/styles'
+import { Divider } from 'ui/Divider'
 
 export interface FieldsProps {
   rootName: string
@@ -16,7 +17,8 @@ export interface FieldsProps {
   max: number
   sectionTitle: string
   informationFields: React.ReactElement
-  defaultValue: Personnel
+  addButtonLabel?: string
+  removeButtonLabel?: string
 }
 
 export const Fields = ({
@@ -30,8 +32,12 @@ export const Fields = ({
   max,
   sectionTitle,
   informationFields,
-  defaultValue
+  addButtonLabel = 'Add more',
+  removeButtonLabel = 'Remove'
 }: FieldsProps) => {
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
+
   const handleAppend = () => {
     append({})
   }
@@ -41,50 +47,86 @@ export const Fields = ({
   }
 
   return (
-    <>
-      <FormSectionHeader
-        title={`${index > 0 ? `(${index + 1}) ` : ''}${sectionTitle}`}
-        variant={index > 0 ? 'subsection' : 'section'}
-      />
-      <Grid container direction='column' spacing={3}>
-        <Grid item>{informationFields}</Grid>
+    <Grid container spacing={5}>
+      <Grid
+        item
+        xs={12}
+        container
+        justifyContent='space-between'
+        alignItems='center'
+      >
         <Grid item>
-          <DocumentFields
-            defaultValue={defaultValue}
-            rootName={rootName}
-            index={index}
-            fieldId={fieldId}
+          <FormSectionHeader
+            title={`${total > 1 ? `(${index + 1}) ` : ''}${sectionTitle}`}
           />
         </Grid>
-        <Grid item>
-          <Grid container justifyContent='flex-end' spacing={2}>
-            {total > 1 ? (
-              <Grid item>
-                <Button
-                  variant='outlined'
-                  color='primary'
-                  onClick={handleRemove}
-                >
-                  Delete
-                </Button>
-              </Grid>
-            ) : null}
+        {total > 1 && !matches ? (
+          <Grid>
+            <IconButton
+              onClick={handleRemove}
+              size='large'
+              data-testid='delete-button'
+              sx={{
+                borderRadius: 2
+              }}
+            >
+              <Icon name='trash' />
+            </IconButton>
+          </Grid>
+        ) : null}
+      </Grid>
+      <Grid item xs={12}>
+        {informationFields}
+      </Grid>
+      <Grid item>
+        <DocumentFields rootName={rootName} index={index} fieldId={fieldId} />
+      </Grid>
+      {total > 1 && matches ? (
+        <Grid item xs={12}>
+          <Button
+            fullWidth
+            variant='contained'
+            startIcon={<Icon name='trash' />}
+            onClick={handleRemove}
+            disableElevation
+            sx={{
+              backgroundColor: '#F7F9FA',
+              borderColor: '#F7F9FA',
+              color: theme.palette.input.placeholder,
+              svg: {
+                fill: theme.palette.input.placeholder
+              }
+            }}
+          >
+            {removeButtonLabel}
+          </Button>
+        </Grid>
+      ) : null}
 
-            {isLast && total < max ? (
-              <Grid item>
+      {isLast && total < max ? (
+        <Grid item xs={12}>
+          <Grid container justifyContent='flex-end' spacing={6}>
+            <>
+              {matches ? (
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+              ) : null}
+              <Grid item xs={matches ? 12 : undefined}>
                 <Button
                   variant='outlined'
                   color='primary'
                   onClick={handleAppend}
+                  startIcon={<Icon name='plus' />}
+                  fullWidth={matches}
                 >
-                  Add more
+                  {addButtonLabel}
                 </Button>
-                <VSpacer size='medium' />
               </Grid>
-            ) : null}
+            </>
           </Grid>
         </Grid>
-      </Grid>
-    </>
+      ) : null}
+    </Grid>
   )
 }

@@ -1,7 +1,10 @@
-import { FormControl, InputLabel, MenuItem } from '@mui/material'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { FormControl } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { isEmptyString } from 'helpers/strings'
 import React from 'react'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const protocols = [
   'ERC-20',
@@ -19,21 +22,20 @@ export const ProtocolFilter = () => {
     <SearchQueryFilter<'protocol'> name='protocol' defaultValue=''>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
-          <InputLabel shrink>Protocol</InputLabel>
-          <TextFieldSelect
-            label='Protocol'
+          <InputLabel>Protocol</InputLabel>
+          <Select
             onChange={event => {
-              onChange(event.target.value)
+              onChange(event.target.value as string)
             }}
-            value={value}
+            value={isEmptyString(value) ? 'All Protocols' : value}
           >
-            <MenuItem value=''>All Protocols</MenuItem>
+            <SelectItem value=''>All Protocols</SelectItem>
             {protocols.map(protocol => (
-              <MenuItem key={protocol} value={protocol}>
+              <SelectItem key={protocol} value={protocol}>
                 {protocol}
-              </MenuItem>
+              </SelectItem>
             ))}
-          </TextFieldSelect>
+          </Select>
         </FormControl>
       )}
     </SearchQueryFilter>

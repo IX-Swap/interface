@@ -1,54 +1,67 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { renderSelectItems } from 'helpers/rendering'
 
 export const LEGAL_ENTITY_STATUS_LIST = [
-  { name: 'Public Company', value: 'publicCompany' },
-  { name: 'Private Company', value: 'privateCompany' },
-  { name: 'Limited Liability Company', value: 'limitedLiabilityCompany' },
-  { name: 'Partnership', value: 'partnership' },
+  { label: 'Public Company', value: 'publicCompany' },
+  { label: 'Private Company', value: 'privateCompany' },
+  { label: 'Limited Liability Company', value: 'limitedLiabilityCompany' },
+  { label: 'Partnership', value: 'partnership' },
   {
-    name: 'Limited Liability Partnership',
+    label: 'Limited Liability Partnership',
     value: 'limitedLiabilityPartnership'
   },
-  { name: 'Society', value: 'society' },
-  { name: 'Trust', value: 'trust' },
+  { label: 'Society', value: 'society' },
+  { label: 'Trust', value: 'trust' },
 
   {
-    name: 'Exempt Private Company Limited by Shares',
+    label: 'Exempt Private Company Limited by Shares',
     value: 'exemptPrivateCompanyLimitedByShares'
   },
-  { name: 'Limited (LTD)', value: 'limitedLTD' },
+  { label: 'Limited (LTD)', value: 'limitedLTD' },
   {
-    name: 'Private Company Limited by Shares (LTD)',
+    label: 'Private Company Limited by Shares (LTD)',
     value: 'privateCompanyLimitedBySharesLTD'
   },
-  { name: 'Proprietary Limited (PTY LTD)', value: 'proprietaryLimitedPTYLTD' },
+  { label: 'Proprietary Limited (PTY LTD)', value: 'proprietaryLimitedPTYLTD' },
   {
-    name: 'Public Company Limited by Guarantee',
+    label: 'Public Company Limited by Guarantee',
     value: 'publicCompanyLimitedByGuarantee'
   },
   {
-    name: 'Public Company Limited by Shares',
+    label: 'Public Company Limited by Shares',
     value: 'publicCompanyLimitedByShares'
   },
-  { name: 'Public Limited Company (PLC)', value: 'publicLimitedCompanyPLC' },
+  { label: 'Public Limited Company (PLC)', value: 'publicLimitedCompanyPLC' },
 
-  { name: 'Others (Please specify)', value: 'others' }
+  { label: 'Others (Please specify)', value: 'others' }
 ]
 
 export const LegalEntityStatusSelect = (props: any) => {
   return (
-    <Select {...props} style={{ minWidth: 100 }} label={props.label}>
-      <MenuItem disabled value={undefined}>
-        Legal Entity
-      </MenuItem>
-      {LEGAL_ENTITY_STATUS_LIST.map(({ value, name }) => {
-        return (
-          <MenuItem value={value} key={value}>
-            {name}
-          </MenuItem>
-        )
-      })}
-    </Select>
+    <>
+      <InputLabel disabled={props.disabled}>{props.label}</InputLabel>
+      <Select
+        {...props}
+        style={{ minWidth: 100 }}
+        label={undefined}
+        renderValue={value => {
+          const item = LEGAL_ENTITY_STATUS_LIST.find(
+            ({ value: v }) => v === value
+          )
+          return item?.label
+        }}
+        displayEmpty
+        placeholder='Select Legal Entity'
+      >
+        <SelectItem disabled value={undefined}>
+          Legal Entity
+        </SelectItem>
+        {renderSelectItems(LEGAL_ENTITY_STATUS_LIST)}
+      </Select>
+    </>
   )
 }
+LegalEntityStatusSelect.displayName = 'Select_LegalEntityStatusSelect'

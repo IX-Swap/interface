@@ -1,95 +1,182 @@
 import {
   Address,
   BeneficialOwnerFormValues,
+  CorporateIdentity,
   CorporateInvestorAgreementsFormValues,
+  CorporateInvestorDeclarationFormValues,
   CorporateInvestorDocumentsFormValues,
   DirectorFormValues,
   InvestorDirectorsAndBeneficialOwnersFormValues,
   RepresentativeFormValues
 } from 'app/pages/identity/types/forms'
-import { DataroomFile } from 'types/dataroomFile'
 import {
   addressSchema,
+  documentsSchema,
+  institutionalInvestorDocumentsSchema,
   emailSchema,
+  investorStatusDeclarationItemSchema,
+  optInAgreementsDependentValueSchema,
   taxIdentificationNumberSchema,
   validationMessages
 } from 'validation/shared'
 import * as yup from 'yup'
 import 'yup-phone-lite'
 import { validateUEN } from 'validation/validators'
+import apiService from 'services/api'
+import { identityURL } from 'config/apiURL'
+import { isEmptyString } from 'helpers/strings'
+import { corporateName, fullName, lettersOrSpaces } from 'validation/regexes'
+
+export interface CorporateDataValidation {
+  exist: boolean
+}
+
+const validateCorporateData = async (
+  field: string,
+  value: string | null | undefined,
+  id?: string
+) => {
+  if (isEmptyString(value)) {
+    return true
+  }
+
+  const data = await apiService.post<CorporateDataValidation>(
+    identityURL.corporates.validateData,
+    {
+      [field]: value,
+      id
+    }
+  )
+
+  if (data === undefined) {
+    return false
+  }
+
+  return !data.data.exist
+}
+
+export const initialCorporateInvestorInfoSchema = (data?: CorporateIdentity) =>
+  yup.object().shape<any>({
+    companyLegalName: yup
+      .string()
+      .test(
+        'checkExists',
+        'Company name already exists',
+        async function (value) {
+          return await validateCorporateData('companyName', value, data?._id)
+        }
+      ),
+
+    registrationNumber: yup
+      .string()
+      .test(
+        'checkExists',
+        'Registration number already exists',
+        async function (value) {
+          return await validateCorporateData(
+            'registrationNumber',
+            value,
+            data?._id
+          )
+        }
+      )
+  })
 
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)
-export const corporateInvestorInfoSchema = yup.object().shape<any>({
-  logo: yup.string(),
-  companyLegalName: yup
-    .string()
-    .max(50, 'Maximum of 50 characters')
-    .required(validationMessages.required)
-    .matches(
-      /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
-      'Must include only letters, numbers and this special characters . , -'
-    ),
-
-  registrationNumber: yup.string().when('countryOfFormation', {
-    is: 'Singapore',
-    then: taxIdentificationNumberSchema.test(
-      'validateUEN',
-      'Must be a valid UEN',
-      function (value) {
-        const error = validateUEN(value)
-        if (typeof error === 'string') {
-          return new yup.ValidationError(error, value, 'registrationNumber')
+export const corporateInvestorInfoSchema = (data?: CorporateIdentity) =>
+  yup.object().shape<any>({
+    logo: yup.string(),
+    companyLegalName: yup
+      .string()
+      .max(50, 'Maximum of 50 characters')
+      .required(validationMessages.required)
+      .matches(
+        corporateName,
+        "Must include only letters, numbers and these special characters . , - ; & '"
+      )
+      .test(
+        'checkExists',
+        'Company name already exists',
+        async function (value) {
+          return await validateCorporateData('companyName', value, data?._id)
         }
-        return true
-      }
-    ),
-    otherwise: taxIdentificationNumberSchema.required(
-      validationMessages.required
-    )
-  }),
-  legalEntityStatus: yup.string().required(validationMessages.required),
-  otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
-    is: 'others',
-    then: yup.string().required(validationMessages.required),
-    otherwise: yup.string()
-  }),
-  countryOfFormation: yup.string().required(validationMessages.required),
-  companyAddress: addressSchema.required(validationMessages.required),
-  isMailingAddressSame: yup.bool().required(validationMessages.required),
-  mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
-    is: false,
-    then: addressSchema.required(validationMessages.required),
-    otherwise: yup.object().notRequired()
-  }),
-  representatives: yup
-    .array<RepresentativeFormValues>()
-    .of(
-      yup
-        .object<RepresentativeFormValues>({
-          fullName: yup
-            .string()
-            .required(validationMessages.required)
-            .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
-          designation: yup
-            .string()
-            .required(validationMessages.required)
-            .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
-          email: emailSchema.required(validationMessages.required),
-          contactNumber: yup
-            .string()
-            .phone()
-            .required(validationMessages.required),
-          documents: yup
-            .array<DataroomFile>()
-            .required(validationMessages.required)
-        })
-        .required(validationMessages.required)
-    )
-    .required(validationMessages.required),
-  sourceOfFund: yup.string().required(validationMessages.required),
-  numberOfBusinessOwners: yup.string().required(validationMessages.required),
-  businessActivity: yup.string().required(validationMessages.required)
-})
+      ),
+
+    registrationNumber: yup
+      .string()
+      .when('countryOfFormation', {
+        is: 'Singapore',
+        then: taxIdentificationNumberSchema.test(
+          'validateUEN',
+          'Must be a valid UEN',
+          function (value) {
+            const error = validateUEN(value)
+            if (typeof error === 'string') {
+              return new yup.ValidationError(error, value, 'registrationNumber')
+            }
+            return true
+          }
+        ),
+        otherwise: taxIdentificationNumberSchema.required(
+          validationMessages.required
+        )
+      })
+      .test(
+        'checkExists',
+        'Registration number already exists',
+        async function (value) {
+          return await validateCorporateData(
+            'registrationNumber',
+            value,
+            data?._id
+          )
+        }
+      ),
+    legalEntityStatus: yup.string().required(validationMessages.required),
+    otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
+      is: 'others',
+      then: yup.string().required(validationMessages.required),
+      otherwise: yup.string()
+    }),
+    countryOfFormation: yup.string().required(validationMessages.required),
+    companyAddress: addressSchema.required(validationMessages.required),
+    isMailingAddressSame: yup.bool().required(validationMessages.required),
+    mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
+      is: false,
+      then: addressSchema.required(validationMessages.required),
+      otherwise: yup.object().notRequired()
+    }),
+    representatives: yup
+      .array<RepresentativeFormValues>()
+      .of(
+        yup
+          .object<RepresentativeFormValues>({
+            fullName: yup
+              .string()
+              .required(validationMessages.required)
+              .matches(fullName, 'Invalid full name'),
+            designation: yup
+              .string()
+              .required(validationMessages.required)
+              .matches(lettersOrSpaces, 'Invalid designation'),
+            email: emailSchema.required(validationMessages.required),
+            contactNumber: yup
+              .string()
+              .phone(undefined, 'Must be a valid phone number')
+              .required(validationMessages.required),
+            // @ts-expect-error
+            documents: documentsSchema
+          })
+          .required(validationMessages.required)
+      )
+      .required(validationMessages.required),
+    sourceOfFund: yup.string().required(validationMessages.required),
+    numberOfBusinessOwners: yup.string().required(validationMessages.required),
+    businessActivity: yup
+      .string()
+      .matches(lettersOrSpaces, 'Invalid business activity')
+      .required(validationMessages.required)
+  })
 
 export const directorsAndBeneficialOwnersSchema = yup
   .object()
@@ -99,24 +186,30 @@ export const directorsAndBeneficialOwnersSchema = yup
       .of(
         yup
           .object<DirectorFormValues>({
-            fullName: yup.string().required(validationMessages.required),
-            designation: yup.string().required(validationMessages.required),
+            fullName: yup
+              .string()
+              .matches(fullName, 'Invalid full name')
+              .required(validationMessages.required),
+            designation: yup
+              .string()
+              .matches(lettersOrSpaces, 'Invalid designation')
+              .required(validationMessages.required),
+            legalEntityStatus: yup
+              .string()
+              .required(validationMessages.required),
+            countryOfFormation: yup
+              .string()
+              .required(validationMessages.required),
             email: emailSchema.required(validationMessages.required),
             contactNumber: yup
               .string()
-              .phone()
+              .phone(undefined, 'Must be a valid phone number"')
               .required(validationMessages.required),
             address: addressSchema.required(validationMessages.required),
-            documents: yup
-              .object({
-                proofOfIdentity: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required),
-                proofOfAddress: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required)
-              })
-              .required(validationMessages.required)
+            // @ts-expect-error
+            proofOfIdentity: documentsSchema,
+            // @ts-expect-error
+            proofOfAddress: documentsSchema
           })
           .required(validationMessages.required)
       )
@@ -126,7 +219,10 @@ export const directorsAndBeneficialOwnersSchema = yup
       .of(
         yup
           .object<BeneficialOwnerFormValues>({
-            fullName: yup.string().required(validationMessages.required),
+            fullName: yup
+              .string()
+              .matches(fullName, 'Invalid full name')
+              .required(validationMessages.required),
             percentageShareholding: yup
               .number()
               .transform((value, originalValue) => {
@@ -134,16 +230,10 @@ export const directorsAndBeneficialOwnersSchema = yup
               })
               .typeError('Percentage shareholding must be a number')
               .required(validationMessages.required),
-            documents: yup
-              .object({
-                proofOfIdentity: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required),
-                proofOfAddress: yup
-                  .array<DataroomFile>()
-                  .required(validationMessages.required)
-              })
-              .required(validationMessages.required)
+            // @ts-expect-error
+            proofOfIdentity: documentsSchema,
+            // @ts-expect-error
+            proofOfAddress: documentsSchema
           })
           .required(validationMessages.required)
       )
@@ -186,96 +276,39 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
 
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
-  .shape<any>({
-    assets: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    trustee: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedBeneficiaries: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedSettlors: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    accreditedShareholders: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
-    partnership: yup
-      .bool()
-      .oneOf([true, false])
-      .required(validationMessages.required),
+  .shape<
+    CorporateInvestorDeclarationFormValues &
+      CorporateInvestorDocumentsFormValues
+  >({
+    assets: investorStatusDeclarationItemSchema,
+    trustee: investorStatusDeclarationItemSchema,
+    accreditedBeneficiaries: investorStatusDeclarationItemSchema,
+    accreditedSettlors: investorStatusDeclarationItemSchema,
+    accreditedShareholders: investorStatusDeclarationItemSchema,
+    partnership: investorStatusDeclarationItemSchema,
+
+    isInstitutionalInvestor: yup.bool(),
 
     optInAgreements: yup
       .bool()
       .oneOf([true], 'Opt-In Requirement is required')
       .required(validationMessages.required),
-
-    primaryOfferingServices: yup.bool(),
-    digitalSecurities: yup.bool(),
-    digitalSecuritiesIssuance: yup.bool(),
-    allServices: yup.bool()
+    // @ts-expect-error
+    primaryOfferingServices: optInAgreementsDependentValueSchema,
+    // @ts-expect-error
+    digitalSecurities: optInAgreementsDependentValueSchema,
+    // @ts-expect-error
+    digitalSecuritiesIssuance: optInAgreementsDependentValueSchema,
+    // @ts-expect-error
+    allServices: optInAgreementsDependentValueSchema,
+    institutionalInvestorDocuments: institutionalInvestorDocumentsSchema,
+    // @ts-expect-error
+    evidenceOfAccreditation: documentsSchema,
+    // @ts-expect-error
+    corporateDocuments: documentsSchema,
+    // @ts-expect-error
+    financialDocuments: documentsSchema
   })
-  .test(
-    'investorDeclarations',
-    'Please choose at least one option under "Investor Status Declaration" section',
-    function (values) {
-      if (values === undefined || values === null) {
-        return false
-      }
-
-      const financialDeclarations = Object.entries(values)
-        .filter(([key]) => {
-          return (
-            key === 'assets' ||
-            key === 'trustee' ||
-            key === 'accreditedBeneficiaries' ||
-            key === 'accreditedSettlors' ||
-            key === 'accreditedShareholders' ||
-            key === 'partnership'
-          )
-        })
-        .map(([_key, value]) => value)
-
-      const result = financialDeclarations.every(value => value === false)
-
-      return !result
-    }
-  )
-
-export const corporateInvestorDocumentsSchema = yup
-  .object()
-  .shape<CorporateInvestorDocumentsFormValues>({
-    evidenceOfAccreditation: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    corporateDocuments: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required),
-    financialDocuments: yup
-      .array<DataroomFile>()
-      .min(1)
-      .required(validationMessages.required)
-  })
-
-export const corporateIssuerDocumentsSchema = yup.object().shape({
-  corporateDocuments: yup
-    .array<DataroomFile>()
-    .min(1)
-    .required(validationMessages.required),
-  financialDocuments: yup
-    .array<DataroomFile>()
-    .min(1)
-    .required(validationMessages.required)
-})
 
 export const corporateInvestorAgreementsSchema = yup
   .object()
@@ -284,3 +317,10 @@ export const corporateInvestorAgreementsSchema = yup
     investor: yup.bool().oneOf([true]).required(validationMessages.required),
     disclosure: yup.bool().oneOf([true]).required(validationMessages.required)
   })
+
+export const corporateInvestorSchema = yup.object().shape<any>({
+  ...corporateInvestorInfoSchema().fields,
+  ...corporateTaxDeclarationSchema.fields,
+  ...directorsAndBeneficialOwnersSchema.fields,
+  ...corporateInvestorStatusDeclarationSchema.fields
+})

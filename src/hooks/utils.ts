@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { PaginatedData } from 'services/api/types'
+import { BlobWithExtension, PaginatedData } from 'services/api/types'
 
 export const convertPaginatedResultToFlatArray = <DataType = any>(
   pages: Array<AxiosResponse<PaginatedData<DataType>>>
@@ -29,8 +29,42 @@ export const convertBlobToFile = (blob: Blob, filename?: string) => {
   return new File([blob], filename ?? '', { type: blob.type }) // TODO: fix file name
 }
 
+export const getBlobFromResponse = (
+  data: AxiosResponse<any>
+): BlobWithExtension => {
+  const { response } = data.request
+  const objectResponse = JSON.parse(response)
+  const blob = new Blob([new Uint8Array(objectResponse?.file?.data)], {
+    type: objectResponse?.extension
+  })
+  return {
+    blob,
+    extension: objectResponse?.extension
+  }
+}
+
+export const downloadByAnchor = (data: BlobWithExtension, name: string) => {
+  const url = URL.createObjectURL(data.blob)
+  const download = `${name}.${data?.extension ?? 'txt'}`
+  downloadObjectURL(url, download)
+}
+
+export const downloadObjectURL = (url: string, name: string) => {
+  const link = document.createElement('a')
+  link.download = name
+  link.href = url
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
 export const createObjectURLFromFile = (file: File) => {
   return window.URL.createObjectURL(file)
+}
+
+export const downloadByFile = (file: File, name: string) => {
+  const url = createObjectURLFromFile(file)
+  downloadObjectURL(url, name)
 }
 
 export const revokeObjectURL = (url: string) => {
@@ -40,4 +74,15 @@ export const revokeObjectURL = (url: string) => {
 export const openFileInNewTab = (file: File) => {
   const url = createObjectURLFromFile(file)
   window.open(url)
+}
+
+export const generateSingPassAuthorizeUrl = () => {
+  const url = process.env.SING_PASS_AUTH_URL ?? ''
+  const clientId = process.env.SING_PASS_CLIENT_ID ?? ''
+  const purpose = 'identification'
+  const state = encodeURIComponent('123')
+  const redirectUrl = process.env.SING_PASS_REDIRECT_URL ?? ''
+  const attributes = process.env.SING_PASS_ATTRIBUTES ?? ''
+
+  return `${url}?client_id=${clientId}&attributes=${attributes}&purpose=${purpose}&state=${state}&redirect_uri=${redirectUrl}`
 }

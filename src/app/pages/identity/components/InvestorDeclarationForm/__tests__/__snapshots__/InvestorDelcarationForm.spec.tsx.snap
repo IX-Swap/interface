@@ -1,0 +1,377 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InvestorDeclarationForm should match snapshot 1`] = `
+<div>
+  <form
+    style="width: 100%;"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-1rl1og4-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-10h8c1q-MuiGrid-root"
+        data-testid="investorStatusDeclaration"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-0"
+                >
+                  <h5
+                    class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+                  >
+                    Investor Status Declaration
+                  </h5>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                >
+                  I declare that I am "Individual Accredited Investor"
+                </p>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                      id="personalAssets"
+                      path="personalAssets"
+                      style="align-items: flex-start;"
+                    >
+                      <span
+                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                      >
+                        <input
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          data-indeterminate="false"
+                          name="personalAssets"
+                          type="checkbox"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="CheckBoxOutlineBlankIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                          />
+                        </svg>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </span>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                        style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                      >
+                        My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
+                      </p>
+                    </label>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                      id="income"
+                      path="income"
+                      style="align-items: flex-start;"
+                    >
+                      <span
+                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                      >
+                        <input
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          data-indeterminate="false"
+                          name="income"
+                          type="checkbox"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="CheckBoxOutlineBlankIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                          />
+                        </svg>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </span>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                        style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                      >
+                        My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
+                      </p>
+                    </label>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                      id="financialAsset"
+                      path="financialAsset"
+                      style="align-items: flex-start;"
+                    >
+                      <span
+                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                      >
+                        <input
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          data-indeterminate="false"
+                          name="financialAsset"
+                          type="checkbox"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="CheckBoxOutlineBlankIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                          />
+                        </svg>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </span>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                        style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                      >
+                        My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or its equivalent
+                      </p>
+                    </label>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                      id="jointlyHeldAccount"
+                      path="jointlyHeldAccount"
+                      style="align-items: flex-start;"
+                    >
+                      <span
+                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                      >
+                        <input
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          data-indeterminate="false"
+                          name="jointlyHeldAccount"
+                          type="checkbox"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                          data-testid="CheckBoxOutlineBlankIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                          />
+                        </svg>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </span>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                        style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                      >
+                        My jointly held account with my spouse/any individual meets any of the above
+                      </p>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-vacfyj-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-ttp6t5-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                >
+                  <div
+                    class="MuiBox-root css-0"
+                  >
+                    <h5
+                      class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+                    >
+                      Opt-In Requirement
+                    </h5>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1c439vl-MuiGrid-root"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-subtitle1 makeStyles-title-1 css-1b4l2pg-MuiTypography-root"
+                        data-testid="title-typo"
+                      >
+                        I confirm to be treated as an “Accredited Investor” by InvestaX
+                      </h6>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                    >
+                      <label
+                        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                        id="optInAgreementsSafeguards"
+                        path="optInAgreementsSafeguards"
+                        style="align-items: flex-start;"
+                      >
+                        <span
+                          class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                        >
+                          <input
+                            class="PrivateSwitchBase-input css-1m9pwf3"
+                            data-indeterminate="false"
+                            name="optInAgreementsSafeguards"
+                            type="checkbox"
+                          />
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                            data-testid="CheckBoxOutlineBlankIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                            />
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                          />
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                          style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
+                          >
+                            I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
+                            <span
+                              class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
+                              style="cursor: pointer;"
+                            >
+                              safeguards
+                            </span>
+                             for Accredited Investors.
+                          </p>
+                        </p>
+                      </label>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                    >
+                      <label
+                        class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                        id="optInAgreementsOptOut"
+                        path="optInAgreementsOptOut"
+                        style="align-items: flex-start;"
+                      >
+                        <span
+                          class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                        >
+                          <input
+                            class="PrivateSwitchBase-input css-1m9pwf3"
+                            data-indeterminate="false"
+                            name="optInAgreementsOptOut"
+                            type="checkbox"
+                          />
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                            data-testid="CheckBoxOutlineBlankIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                            />
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                          />
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                          style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-162bbhf-MuiTypography-root"
+                          >
+                            I have been informed of and understand my right to
+                             
+                            <span
+                              class="MuiTypography-root MuiTypography-body1 css-movqfk-MuiTypography-root"
+                              style="cursor: pointer;"
+                            >
+                              opt out
+                            </span>
+                             of the Accredited Investors status
+                          </p>
+                        </p>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

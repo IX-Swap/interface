@@ -11,5 +11,12 @@ export const PhoneInput = (props: MuiPhoneNumberProps) => (
     onChange={(...args: any[]) => {
       props.onChange?.(args[0])
     }}
+    sx={{
+      '.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.MuiPhoneNumber-flagButton > svg':
+        {
+          height: 30,
+          width: 30
+        }
+    }}
   />
 )

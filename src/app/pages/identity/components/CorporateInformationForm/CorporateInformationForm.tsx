@@ -5,6 +5,7 @@ import { CorporateAddressFields } from 'app/pages/identity/components/CorporateI
 import { AuthorizedPersonnelFields } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnelFields'
 import { OwnershipStructureFields } from 'app/pages/identity/components/CorporateInformationForm/OwnershipStructureFields'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 
 export interface CorporateInformationFormProps {
   type?: CorporateType
@@ -14,22 +15,23 @@ export const CorporateInformationForm = ({
   type = 'investor'
 }: CorporateInformationFormProps) => {
   return (
-    <Grid
-      data-testid='corporateInformationForm'
-      container
-      spacing={8}
-      direction='column'
-    >
-      <Grid item>
-        <InformationFields type={type} />
+    <Grid data-testid='corporateInformationForm' container spacing={2}>
+      <Grid item xs={12}>
+        <FieldContainer>
+          <InformationFields type={type} />
+        </FieldContainer>
       </Grid>
-      <Grid item>
-        <OwnershipStructureFields />
+      <Grid item xs={12}>
+        <FieldContainer>
+          <CorporateAddressFields />
+        </FieldContainer>
       </Grid>
-      <Grid item>
-        <CorporateAddressFields />
+      <Grid item xs={12}>
+        <FieldContainer>
+          <OwnershipStructureFields />
+        </FieldContainer>
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <AuthorizedPersonnelFields />
       </Grid>
     </Grid>

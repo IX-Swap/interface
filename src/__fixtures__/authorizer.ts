@@ -81,7 +81,7 @@ export const corporate: CorporateIdentity = {
       digitalSecuritiesIssuance: false,
       allServices: false,
       primaryOfferingServices: false
-    }
+    } as any
   },
   status: 'Submitted',
   beneficialOwners: [],
@@ -91,6 +91,7 @@ export const corporate: CorporateIdentity = {
   directors: [],
   registrationNumber: '123456',
   representatives: [],
+  isInstitutionalInvestor: false,
   email: '',
   contactNumber: '',
   user,
@@ -152,12 +153,13 @@ export const individual: IndividualIdentity = {
       digitalSecuritiesIssuance: false,
       allServices: false,
       primaryOfferingServices: false
-    }
+    } as any
   },
   documents: [],
   address,
   user,
-  createdBy: '12345'
+  createdBy: '12345',
+  noa_basic: {}
 }
 
 export const dsWithdrawal: DSWithdrawal = {

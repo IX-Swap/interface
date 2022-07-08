@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   Grid,
@@ -11,6 +10,7 @@ import { useUnassignVirtualAccount } from 'app/pages/admin/hooks/useUnassignVirt
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { VirtualAccount } from 'types/virtualAccount'
+import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ConfirmUnassignDialogProps {
   account: VirtualAccount
@@ -31,7 +31,7 @@ export const ConfirmUnassignDialog = ({
   }
 
   return (
-    <Dialog open={open}>
+    <UIDialog open={open}>
       <Box p={4}>
         <Typography variant='subtitle1' align='center'>
           Are You Sure You Want to Unassign This Virtual Account?
@@ -65,6 +65,6 @@ export const ConfirmUnassignDialog = ({
           </Grid>
         </DialogActions>
       </Box>
-    </Dialog>
+    </UIDialog>
   )
 }

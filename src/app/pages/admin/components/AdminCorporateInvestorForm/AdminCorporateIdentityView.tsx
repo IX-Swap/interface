@@ -37,31 +37,19 @@ export const AdminCorporateIdentityView = ({
       </Grid>
       <Grid item>
         <FormSectionHeader title='Address' />
-        <CorporateAddress
-          registeredAddress={identity.companyAddress}
-          mailingAddress={identity.mailingAddress}
-        />
+        <CorporateAddress data={identity} />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Company Authorized Personnel' />
-        <PersonnelList
-          personnel={identity.representatives ?? []}
-          documentsTitle='Authorization Documents'
-        />
+        <PersonnelList personnel={identity.representatives ?? []} />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Directors/Partners/People with Executive Authority' />
-        <PersonnelList
-          personnel={identity.directors ?? []}
-          showDocumentHeader
-        />
+        <PersonnelList personnel={identity.directors ?? []} />
       </Grid>
       <Grid item style={{ paddingBottom: 0, paddingTop: 0 }}>
         <FormSectionHeader title='Beneficial Owners Information' />
-        <BeneficialOwnersList
-          personnel={identity.beneficialOwners ?? []}
-          showDocumentHeader
-        />
+        <BeneficialOwnersList data={identity} />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Tax Declaration' />

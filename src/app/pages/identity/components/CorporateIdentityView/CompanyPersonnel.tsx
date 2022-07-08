@@ -1,77 +1,83 @@
-import { Box, Grid, Typography } from '@mui/material'
-import { DataroomHeader } from 'components/dataroom/DataroomHeader'
-import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
+import { Grid } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
-import { hasValue } from 'helpers/forms'
 import React from 'react'
 import { Personnel } from 'app/pages/identity/types/forms'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface PersonnelProps {
   personnel: Personnel
-  showDocumentHeader: boolean
-  documentsTitle: string
+  title: string
 }
 
-export const CompanyPersonnel = ({
-  personnel,
-  showDocumentHeader,
-  documentsTitle
-}: PersonnelProps) => {
+export const CompanyPersonnel = ({ personnel, title }: PersonnelProps) => {
+  const documents = personnel.documents.filter(
+    doc => doc !== undefined && Object.values(doc).length > 0
+  )
+
   return (
-    <Grid container direction='column' spacing={2}>
-      <Grid item>
-        <Grid container>
-          <Grid item xs={12} md={4}>
-            <LabelledValue value={personnel.fullName} label='Full Name' />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <LabelledValue value={personnel.designation} label='Designation' />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <LabelledValue value={personnel.email} label='Email Address' />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item container>
-        <Grid item xs={12} md={4}>
-          <LabelledValue
-            value={personnel.contactNumber}
-            label='Contact Number'
-          />
-        </Grid>
-        {personnel.address !== undefined ? (
-          <Grid item xs={12} md={4}>
-            <LabelledValue
-              value={Object.values(personnel.address)
-                .filter(address => hasValue(address))
-                .join(', ')}
-              label='Residental Address'
-            />
-          </Grid>
-        ) : null}
-      </Grid>
-      <Box mb={3} />
-      {personnel.documents !== undefined ? (
+    <FieldContainer>
+      <Grid item container direction={'column'} spacing={5}>
         <Grid item>
-          <Typography variant='body1'>
-            <Box component='span' fontWeight='bold'>
-              {documentsTitle}
-            </Box>
-          </Typography>
-          <Box mb={1} />
-          <>
-            {showDocumentHeader ? <DataroomHeader /> : null}
-            {personnel.documents.map(document => (
-              <DataroomViewRow
-                showDivider={false}
-                title=''
-                document={document}
-                key={document._id}
-              />
-            ))}
-          </>
+          <FormSectionHeader title={title} />
         </Grid>
-      ) : null}
-    </Grid>
+
+        <Grid
+          item
+          container
+          spacing={5}
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { sx: '1fr', sm: '1fr 1fr' }
+          }}
+        >
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.fullName}
+                label='Full Name'
+              />
+            </Grid>
+
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.email}
+                label='Email Address'
+              />
+            </Grid>
+          </Grid>
+
+          <Grid item container direction={'column'} spacing={5}>
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.designation}
+                label='Designation'
+              />
+            </Grid>
+
+            <Grid item>
+              <LabelledValue
+                isRedesigned
+                value={personnel.contactNumber}
+                label='Contact Number'
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item container direction={'column'} spacing={5}>
+          <Grid item>
+            <FormSectionHeader title='Authorization Document' />
+          </Grid>
+
+          <Grid item container direction={'column'} spacing={5}>
+            <Documents documents={documents} />
+          </Grid>
+        </Grid>
+      </Grid>
+    </FieldContainer>
   )
 }

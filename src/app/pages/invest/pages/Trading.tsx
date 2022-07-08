@@ -1,4 +1,4 @@
-import { isPairIdFalsy } from 'app/pages/exchange/utils/order'
+import { isPairIdFalsy } from 'app/pages/invest/utils/order'
 import React from 'react'
 import { Redirect, useParams } from 'react-router-dom'
 import { TradingContainer } from '../components/Trading/TradingContainer'

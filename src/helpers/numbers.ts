@@ -1,5 +1,5 @@
 import getSymbolFromCurrency from 'currency-symbol-map'
-import { OTCOrder } from 'types/otcOrder'
+import { ColumnOTCMatch, OpenOTCOrder, OTCOrder } from 'types/otcOrder'
 
 export const isNotNullish = (value?: number | null) => {
   return value !== undefined && value !== null && value > 0
@@ -25,7 +25,9 @@ export const formatAmount = (value: number) => {
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
 export const formatRoundedAmount = (value: number) => {
-  if (value === undefined || value === null) return ''
+  if (value === undefined || value === null) {
+    return ''
+  }
   return Math.round(Number(value.toFixed(2)))
 }
 
@@ -153,10 +155,11 @@ export const renderTotal = ({
 }: {
   price: number
   amount: number
-  row: OTCOrder
+  row: OTCOrder | OpenOTCOrder | ColumnOTCMatch
 }) => {
   return formatMoney(amount * price, getOrderCurrency(row), false)
 }
 
-export const getOrderCurrency = (row: OTCOrder) =>
-  row?.pair?.name?.split('/')[1]
+export const getOrderCurrency = (
+  row: OTCOrder | OpenOTCOrder | ColumnOTCMatch
+) => row?.pair?.name?.split('/')[1]
