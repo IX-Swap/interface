@@ -105,12 +105,14 @@ export const Setup: React.FC = () => {
         ) : null}
       </Grid>
 
-      <Grid container direction='row' spacing={3}>
-        <Grid item xs={6}>
+      <Grid container direction='column' xs={6}>
+        <Grid item mt={2}>
           <FormSectionHeader
             title='Withdraw Cash From Your Account'
             variant='subsection'
           />
+        </Grid>
+        <Grid item mt={2}>
           <TypedField
             control={control}
             variant='outlined'
@@ -119,17 +121,10 @@ export const Setup: React.FC = () => {
             name='bankAccountId'
             label='To Bank Account'
             helperText='Please select your bank account in which you want to transfer your fund'
-            endAdornment={
-              <InputAdornment position='end'>
-                <Box className={inputWrapper}>
-                  <MaxButton onClick={setMaxValue} />
-                </Box>
-              </InputAdornment>
-            }
           />
         </Grid>
       </Grid>
-      <Grid>
+      <Grid container direction={'column'} xs={6}>
         {bankId !== null &&
         bankId !== undefined &&
         virtualAccountId !== undefined ? (
@@ -138,18 +133,26 @@ export const Setup: React.FC = () => {
               <Typography variant='body1'>{paymentMethodData?.name}</Typography>
               <VSpacer size='small' />
             </Grid>
-            <Grid container direction='row' spacing={3}>
-              <Grid item xs={6}>
-                <TypedField
-                  control={control}
-                  variant='outlined'
-                  component={NumericInput}
-                  name='amount'
-                  label='Amount'
-                  valueExtractor={numericValueExtractor}
-                  numberFormat={moneyNumberFormat}
-                />
-              </Grid>
+            <Grid item>
+              <TypedField
+                control={control}
+                variant='outlined'
+                component={NumericInput}
+                name='amount'
+                label='Amount'
+                valueExtractor={numericValueExtractor}
+                numberFormat={moneyNumberFormat}
+                // @ts-expect-error
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <Box className={inputWrapper}>
+                        <MaxButton onClick={setMaxValue} />
+                      </Box>
+                    </InputAdornment>
+                  )
+                }}
+              />
             </Grid>
           </>
         ) : null}
