@@ -104,7 +104,7 @@ export default function App() {
       return false
     }
 
-    if (config.pages.length === 0) {
+    if (!config.pages || config.pages.length === 0) {
       return true
     }
 

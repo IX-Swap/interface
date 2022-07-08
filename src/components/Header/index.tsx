@@ -236,7 +236,7 @@ export default function Header() {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   
   const isAllowed = useCallback((path: string): boolean => {
-    if (!config || config.pages.length === 0) {
+    if (!config || !config.pages || config.pages.length === 0) {
       return true
     }
 

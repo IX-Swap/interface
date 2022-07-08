@@ -30,7 +30,7 @@ const HeaderPopover = () => {
   const { config } = useWhitelabelState()
   
   const isAllowed = useCallback((path: string): boolean => {
-    if (!config || config.pages.length === 0) {
+    if (!config || !config.pages ||config.pages.length === 0) {
       return true
     }
 
@@ -119,7 +119,7 @@ export const HeaderLinks = () => {
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
   
   const isAllowed = useCallback((path: string): boolean => {
-    if (!config || config.pages.length === 0) {
+    if (!config || !config.pages ||config.pages.length === 0) {
       return true
     }
 
