@@ -237,7 +237,7 @@ export default function Header() {
 
   const isAllowed = useCallback(
     (path: string): boolean => {
-      if (!config || config.pages.length === 0) {
+      if (!config || !config.pages || config.pages.length === 0) {
         return true
       }
 
