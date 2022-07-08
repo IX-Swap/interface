@@ -24,7 +24,7 @@ export const AccreditationStatus = ({ brokerDealerStatus, custodianStatus, messa
     statuses.includes(status)
   )
 
-  const getStatusInfo = useCallback((status) => {
+  const getStatusInfo = useCallback((status: string) => {
     switch (status) {
       case AccreditationStatusEnum.DECLINED:
         return {

@@ -2,7 +2,9 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 
 export const admin = {
   login: 'auth/login',
-  adminList: 'users/admin',
+  usersList: 'users',
+  createUser: '/users/create',
+  updateUser: (id: number) => `/users/${id}`,
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
   accreditationList: '/kyc/list',
@@ -34,6 +36,17 @@ export const metamask = {
 export const auth = {
   refresh: `auth/refresh`,
   me: 'auth/me',
+}
+
+export const payout = {
+  createDraft: `payout/draft`,
+  publish: `payout/publish`,
+  payoutsList: 'payout/list',
+  payoutHistory: 'payout/history',
+  myPayoutsList: 'payout/list/my',
+  payoutById: (id: number) => `/payout/${id}`,
+  claims: (payoutId: number) => `payout/claims?payoutId=${payoutId}`,
+  totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
 }
 
 export const kyc = {

@@ -103,7 +103,7 @@ interface KycSourceTooltipProps {
   text: string
 }
 
-const KycSourceTooltip: React.FC<KycSourceTooltipProps> = (props: React.PropsWithChildren<KycSourceTooltipProps>) => {
+const KycSourceTooltip = (props: React.PropsWithChildren<KycSourceTooltipProps>) => {
   const [show, setShow] = useState(false)
 
   return (

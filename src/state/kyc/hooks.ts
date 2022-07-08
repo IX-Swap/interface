@@ -5,7 +5,7 @@ import apiService from 'services/apiService'
 import { kyc } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
-import { createKYC, fetchGetMyKyc, MyKyc, updateKYC } from './actions'
+import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 
 import { LONG_WAIT_RESPONSE } from 'constants/misc'
 import { KYCStatuses } from 'pages/KYC/enum'

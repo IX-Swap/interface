@@ -18,6 +18,7 @@ export interface Colors {
   text7: Color
   text8: Color
   text9: Color
+  text10: Color
 
   // backgrounds / greys
   bg0: Color
@@ -41,6 +42,8 @@ export interface Colors {
   bg18: Color
   bg19: Color
   bg20: Color
+  bg21: Color
+  bg22: Color
   bgG1: Gradient
   bgG2: Gradient
   bgG3: Gradient
@@ -86,12 +89,17 @@ export interface Colors {
   red2: Color
   red3: Color
   green1: Color
+  green2: Color
+  green3: Color
   yellow1: Color
   yellow2: Color
   yellow3: Color
   yellow4: Color
+  orange: Color
   blue1: Color
   blue2: Color
+  blue3: Color
+  orange1: Color
 
   error: Color
   success: Color

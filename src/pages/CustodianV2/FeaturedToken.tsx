@@ -7,6 +7,7 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { routes } from 'utils/routes'
 
 import { FeaturedTokenCard, StyledNonTradable, StyledTradable } from './styleds'
 
@@ -32,7 +33,7 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
   const { config } = useWhitelabelState()
 
   return (
-    <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={`/security-tokens/${token.id}`}>
+    <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to={routes.securityToken(token.id)}>
       <FeaturedTokenCard>
         <Flex flexDirection="row-reverse">
           <MouseoverTooltip

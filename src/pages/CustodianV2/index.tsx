@@ -1,42 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
-import { useCookies } from 'react-cookie'
 
 import { TYPE } from 'theme'
-import { FeaturedToken } from './FeaturedToken'
-import { SecTokensTable } from './SecTokensTable'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
-import AppBody from 'pages/AppBody'
-import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { getMyTokens, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
-import { MySecToken } from './MySecToken'
-import { NotAvailablePage } from 'components/NotAvailablePage'
-
-import {
-  StyledBodyWrapper,
-  FeaturedTokensGrid,
-  MySecTokensTab,
-  GradientText,
-  MySecTokensGrid,
-  Divider,
-} from './styleds'
-import { Info } from './Info'
 import { useUserState } from 'state/user/hooks'
+
+import { FeaturedToken } from './FeaturedToken'
+import { SecTokensTable } from './SecTokensTable'
+import { MySecToken } from './MySecToken'
+import { Info } from './Info'
+import { FeaturedTokensGrid, MySecTokensTab, GradientText, MySecTokensGrid, Divider } from './styleds'
 
 export default function CustodianV2() {
   const offset = 10
   const { token } = useAuthState()
   const [mySecTokens, setMySecTokens] = useState([])
-  const [cookies] = useCookies(['annoucementsSeen'])
   const fetchTokens = useFetchTokens()
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const { account: userAccount } = useUserState()
 
-  const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
 
   useEffect(() => {
@@ -79,14 +66,8 @@ export default function CustodianV2() {
       )
     : []
 
-  if (!isLoggedIn) return <NotAvailablePage />
-
-  return blurred ? (
-    <AppBody blurred>
-      <Trans>Security Tokens</Trans>
-    </AppBody>
-  ) : (
-    <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
+  return (
+    <>
       <TYPE.title4 marginBottom="16px">
         <Trans>Security tokens</Trans>
       </TYPE.title4>
@@ -148,6 +129,6 @@ export default function CustodianV2() {
           />
         </>
       )}
-    </StyledBodyWrapper>
+    </>
   )
 }

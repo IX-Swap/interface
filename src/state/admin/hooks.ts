@@ -6,6 +6,7 @@ import { adminOffset } from 'state/admin/constants'
 import apiService from 'services/apiService'
 import { admin } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
+import { adminOffset as offset } from 'state/admin/constants'
 
 import {
   getBrokerDealerList,
@@ -20,9 +21,11 @@ import {
   postRejectKyc,
   postResetKyc,
   postResubmitKyc,
-  getAdminList,
+  getUsersList,
   getWhitelistedList,
   patchAddOrRemoveWhitelisted,
+  postUser,
+  updateUser,
 } from './actions'
 import { useUserState } from 'state/user/hooks'
 import { useDeleteConfirmationPopupToggle } from 'state/application/hooks'
@@ -66,26 +69,92 @@ export function useAdminState(): AppState['admin'] {
   return useSelector<AppState, AppState['admin']>((state) => state.admin)
 }
 
-export const adminList = async (params?: Record<string, string | number>) => {
-  const result = await apiService.get(admin.adminList, undefined, params)
+export const usersList = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.usersList, undefined, params)
   return result.data
 }
 
-export function useGetAdminList() {
+export function useGetUsersList() {
   const dispatch = useDispatch<AppDispatch>()
   const callback = useCallback(
     async (params?: Record<string, string | number>) => {
       try {
-        dispatch(getAdminList.pending())
-        const data = await adminList(params)
-        dispatch(getAdminList.fulfilled({ data }))
+        dispatch(getUsersList.pending())
+        const data = await usersList(params)
+        dispatch(getUsersList.fulfilled({ data }))
         return data
       } catch (error: any) {
-        dispatch(getAdminList.rejected({ errorMessage: 'Could not get me' }))
+        dispatch(getUsersList.rejected({ errorMessage: 'Could not get users list' }))
         return null
       }
     },
     [dispatch]
+  )
+  return callback
+}
+
+interface CreateUser {
+  ethAddress: string
+  isWhitelisted: boolean
+  username: string
+  managerOf: any[]
+  removedTokens?: any[]
+  role: string
+}
+
+export const createUser = async (params: CreateUser) => {
+  const result = await apiService.post(admin.createUser, params)
+  return result.data
+}
+
+export function useCreateUser() {
+  const dispatch = useDispatch<AppDispatch>()
+  const getUsersList = useGetUsersList()
+  const callback = useCallback(
+    async (params: CreateUser, filters: Record<string, any>) => {
+      try {
+        dispatch(postUser.pending())
+        const data = await createUser(params)
+        dispatch(postUser.fulfilled({ data }))
+        await getUsersList({ page: 1, offset, ...filters })
+        return data
+      } catch (error: any) {
+        dispatch(postUser.rejected({ errorMessage: error.message || 'Could not create user' }))
+        throw new Error(error)
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export const patchUser = async (id: number, updatedUser: Omit<CreateUser, 'ethAddress'>) => {
+  const result = await apiService.patch(admin.updateUser(id), updatedUser)
+  return result.data
+}
+
+export function useUpdateUser() {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const getUsersList = useGetUsersList()
+  const {
+    usersList: { page, offset },
+  } = useAdminState()
+
+  const callback = useCallback(
+    async (id: number, params: Omit<CreateUser, 'ethAddress'>, filters: Record<string, any>) => {
+      try {
+        dispatch(updateUser.pending())
+        const data = await patchUser(id, params)
+        dispatch(updateUser.fulfilled({ data }))
+        await getUsersList({ ...filters, page, offset })
+        return data
+      } catch (error: any) {
+        dispatch(updateUser.rejected({ errorMessage: error.message || 'Could not update user' }))
+        throw Error(error.message)
+      }
+    },
+    [dispatch, page, offset]
   )
   return callback
 }

@@ -77,7 +77,7 @@ export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
 }
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
-  [42]: '0xda02eAf1c33ff04ec18329E25004Ea2DED3c5Fd9',
+  [42]: '0x1b44F01C0abEd5C4dF8b55B2d33cEf46b0CAcc95',
   [80001]: '',
   [137]: '0x0A2ca0C9f1B55bcEc0d9E34c6A8fFb3Fb3fbD3f9',
 }

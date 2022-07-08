@@ -22,6 +22,10 @@ const rowStyle = css`
     padding-left: 22px;
   }
 
+  > div:last-child {
+    padding-right: 22px;
+  }
+
   > div {
     display: flex;
     align-items: center;

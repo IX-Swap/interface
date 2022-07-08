@@ -46,7 +46,10 @@ export const Input = styled.input<{ error?: boolean }>`
   line-height: 40px;
   width: 100%;
   ::placeholder {
-    color: ${({ theme }) => theme.text4};
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: ${({ theme }) => theme.text9};
   }
   padding: 0px;
   -webkit-appearance: textfield;
@@ -92,7 +95,10 @@ export const Textarea = styled.textarea`
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
-  ::placeholder {
+  &::placeholder {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
     color: ${({ theme }) => theme.text9};
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};

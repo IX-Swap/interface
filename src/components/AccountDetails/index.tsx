@@ -1,8 +1,8 @@
-import { Trans } from '@lingui/macro'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback } from 'react'
+import { t, Trans } from '@lingui/macro'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
-import { ThemeContext } from 'styled-components'
+import { useTheme } from 'styled-components'
 // import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import { ReactComponent as ExternalBright } from '../../assets/images/external-bright.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
@@ -64,8 +64,8 @@ export default function AccountDetails({
   ENSName,
 }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
-  const theme = useContext(ThemeContext)
   const dispatch = useDispatch<AppDispatch>()
+  const theme = useTheme()
 
   function formatConnectorName() {
     const { ethereum } = window
@@ -78,9 +78,7 @@ export default function AccountDetails({
       .map((k) => SUPPORTED_WALLETS[k].name)[0]
     return (
       <Box style={{ opacity: 0.7, display: 'flex' }}>
-        <TYPE.description2>
-          <Trans>Connected with {name}</Trans>
-        </TYPE.description2>
+        <TYPE.description2>{t`Connected with ${name}`}</TYPE.description2>
       </Box>
     )
   }
@@ -138,9 +136,7 @@ export default function AccountDetails({
     <>
       <UpperSection>
         <HeaderRow>
-          <TYPE.title5>
-            <Trans>Account</Trans>
-          </TYPE.title5>
+          <TYPE.title5>{t`Account`}</TYPE.title5>
           <CloseIcon onClick={toggleWalletModal}>
             <CloseColor />
           </CloseIcon>
@@ -158,7 +154,7 @@ export default function AccountDetails({
                         ;(connector as any).close()
                       }}
                     >
-                      <Trans>Disconnect</Trans>
+                      {t`Disconnect`}
                     </WalletAction>
                   )}
                   {/* TODO: uncomment when we have more options */}
@@ -193,16 +189,12 @@ export default function AccountDetails({
                         <IconWrapperWithBg size={8}>
                           <ExternalBright />
                         </IconWrapperWithBg>
-                        <TYPE.description2 style={{ marginLeft: '4px' }}>
-                          <Trans>View on Explorer</Trans>
-                        </TYPE.description2>
+                        <TYPE.description2 style={{ marginLeft: '4px' }}>{t`View on Explorer`}</TYPE.description2>
                       </AddressLink>
                     )}
                     {account && (
                       <Copy toCopy={account}>
-                        <TYPE.description2 style={{ marginLeft: '4px' }}>
-                          <Trans>Copy Address</Trans>
-                        </TYPE.description2>
+                        <TYPE.description2 style={{ marginLeft: '4px' }}>{t`Copy Address`}</TYPE.description2>
                       </Copy>
                     )}
                   </>
@@ -215,13 +207,9 @@ export default function AccountDetails({
       {!!pendingTransactions.length || !!confirmedTransactions.length ? (
         <LowerSection>
           <AutoRow mb={'1rem'} style={{ justifyContent: 'space-between', textTransform: 'uppercase' }}>
-            <TYPE.title6>
-              <Trans>Recent Transactions</Trans>
-            </TYPE.title6>
+            <TYPE.title6>{t`Recent Transactions`}</TYPE.title6>
             <LinkStyledButton onClick={clearAllTransactionsCallback}>
-              <TYPE.description2>
-                <Trans>Clear all</Trans>
-              </TYPE.description2>
+              <TYPE.description2>{t`Clear all`}</TYPE.description2>
             </LinkStyledButton>
           </AutoRow>
           {renderTransactions(pendingTransactions)}

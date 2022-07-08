@@ -36,7 +36,7 @@ const Button = styled.div<{ disabled?: boolean }>`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: rgba(237, 206, 255, 0.05);
+  background-color: ${({ theme }) => theme.text10};
   display: flex;
   align-items: center;
   justify-content: center;

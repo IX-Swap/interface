@@ -109,7 +109,7 @@ export default function Slider({
   ...rest
 }: InputSliderProps) {
   const changeCallback = useCallback(
-    (e) => {
+    (e: any) => {
       onChange(parseInt(e.target.value))
     },
     [onChange]

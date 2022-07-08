@@ -48,7 +48,7 @@ export default function SecTokenDetails({
   }, [currencyId])
 
   const onBack = () => {
-    history.push(routes.securityTokens())
+    history.push(routes.securityTokens('tokens'))
   }
 
   if (!isLoggedIn) return <NotAvailablePage />
@@ -58,7 +58,7 @@ export default function SecTokenDetails({
       <DepositPopup currency={token?.token} token={token} />
       <WithdrawPopup currency={token?.token} token={token} />
       <LightBackground />
-      <Container width={['100%', '90%']} maxWidth={'920px'}>
+      <Container>
         <InfoTitle>
           <BackArrowButton onBack={onBack} />
           {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}

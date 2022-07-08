@@ -10,7 +10,7 @@ export interface WhitelabelState {
 }
 
 const initialState: WhitelabelState = {
-  config: null,
+  config: window.location.host.split('.')[1] === 'ixswap' ? ({} as Whitelabel) : null,
   error: null,
   isLoading: false,
 }
@@ -25,6 +25,8 @@ export default createReducer<WhitelabelState>(initialState, (builder) =>
     .addCase(getWhitelabelConfig.fulfilled, (state, { payload }) => {
       state.isLoading = false
       state.error = null
+      console.log('log => payload', payload)
+
       state.config = {
         ...payload,
         tokens: JSON.parse(payload.tokens || '[]'),

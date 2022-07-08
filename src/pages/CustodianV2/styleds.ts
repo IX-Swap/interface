@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components'
 import { Box } from 'rebass'
 
-import { BodyWrapper } from 'pages/AppBody'
 import { ArrowWrapper } from 'components/swap/styleds'
 import { SearchInput } from 'components/SearchModal/styleds'
 import { DarkBlueCard } from 'components/Card'
 import { TYPE } from 'theme'
+import { BodyWrapper } from 'pages/AppBody'
 
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'

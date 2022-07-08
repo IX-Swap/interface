@@ -1,4 +1,3 @@
-import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { ButtonEmpty, ButtonGradient } from 'components/Button'
@@ -6,10 +5,13 @@ import { isNotSupportGradient } from 'components/Button'
 import { RowStart } from 'components/Row'
 import { TYPE, MEDIA_WIDTHS, gradientBorder } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
+import { BodyWrapper } from 'pages/AppBody'
 
-export const Container = styled(Box)`
+export const Container = styled(BodyWrapper)`
   background: ${({ theme }) => theme.bg1};
   height: fit-content;
+  width: 100%;
+  max-width: 920px;
 `
 export const InfoTitle = styled(RowStart)`
   gap: 21px;

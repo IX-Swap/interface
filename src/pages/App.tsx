@@ -34,6 +34,7 @@ import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/ho
 import { ApplicationModal, clearStore } from 'state/application/actions'
 
 import { routeConfigs, RouteMapEntry } from './AppRoutes'
+import { routes } from 'utils/routes'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -114,20 +115,20 @@ export default function App() {
   )
 
   const defaultPage = useMemo(() => {
-    if (isAllowed({ path: '/kyc' }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
-      return '/kyc'
+    if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
+      return routes.kyc
     }
     if (
-      isAllowed({ path: '/security-tokens' }) &&
+      isAllowed({ path: routes.securityTokens('tokens') }) &&
       kyc?.status === KYCStatuses.APPROVED &&
       chainId &&
       chains.includes(chainId) &&
       isWhitelisted
     ) {
-      return '/security-tokens'
+      return routes.securityTokens('tokens')
     }
 
-    return (config?.pages ?? []).length > 0 ? config?.pages[0] : '/kyc'
+    return (config?.pages ?? []).length > 0 ? config?.pages[0] : routes.kyc
   }, [kyc, account, chainId, isWhitelisted, chains])
 
   useAccount()
@@ -155,7 +156,12 @@ export default function App() {
 
   useEffect(() => {
     clearLocaleStorage()
-    getWitelabelConfig()
+  }, [])
+
+  useEffect(() => {
+    if (window.location.host.split('.')[1] !== 'ixswap') {
+      getWitelabelConfig()
+    }
   }, [])
 
   useEffect(() => {

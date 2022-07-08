@@ -1,12 +1,13 @@
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { ArrowDown } from 'react-feather'
+
 import { ButtonIXSWide, ButtonGradient, ButtonText } from 'components/Button'
 import Column from 'components/Column'
 import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect } from 'react'
 import {
   useDepositActionHandlers,
   useDepositCallback,
@@ -19,15 +20,17 @@ import { BlueGreyCard } from 'components/Card'
 import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
-import { AddressInput } from '../AddressInputPanel/AddressInput'
-import { AmountInput } from './AmountInput'
 import { HideSmall, SmallOnly } from 'theme'
-import useTheme from 'hooks/useTheme'
-import info from '../../assets/images/info-filled.svg'
-import { chainIdToNetworkName, getNetworkFromToken } from 'components/CurrencyLogo'
+import { chainIdToNetworkName, getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 import { SupportedChainId } from 'constants/chains'
 import { SecCurrency } from 'types/secToken'
+import useTheme from 'hooks/useTheme'
+
+import { AddressInput } from '../AddressInputPanel/AddressInput'
+import { AmountInput } from './AmountInput'
+import info from '../../assets/images/info-filled.svg'
+import { DepositWarningModal } from './DepositWarningModal'
 
 export const ArrowWrapper = styled.div`
   padding: 7px 5px;
@@ -46,6 +49,8 @@ interface Props {
 }
 
 export const DepositRequestForm = ({ currency, token }: Props) => {
+  const [isWarningOpen, handleIsWarningOpen] = useState(false)
+
   const theme = useTheme()
   const showAboutWrapping = useShowAboutWrappingCallback()
   const { account, chainId } = useActiveWeb3React()
@@ -56,7 +61,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
-  const networkName = getNetworkFromToken(tokenInfo)
+  const networkName = getOriginalNetworkFromToken(tokenInfo)
   const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
   const computedAddress = networkName === 'Ethereum' ? address : sender
   const accountNetwork = chainId ? chainIdToNetworkName(chainId as SupportedChainId) : ''
@@ -65,7 +70,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     onResetDeposit()
   }, [])
 
-  const onClick = () => {
+  const makeDeposit = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
       deposit({
@@ -74,6 +79,10 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
         fromAddress: computedAddress || '',
       })
     }
+  }
+
+  const onClick = () => {
+    handleIsWarningOpen(true)
   }
 
   useEffect(() => {
@@ -87,8 +96,16 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
+  const closeWarning = () => {
+    handleIsWarningOpen(false)
+    makeDeposit()
+  }
+
   return (
     <div style={{ position: 'relative' }}>
+      {isWarningOpen && (
+        <DepositWarningModal networkName={networkName} symbol={currency?.originalSymbol} close={closeWarning} />
+      )}
       <Column style={{ gap: '25px', marginTop: '16px' }}>
         <BlueGreyCard>
           <Column style={{ gap: '11px' }}>
@@ -107,8 +124,10 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
           </Column>
           <Column style={{ marginTop: '20px', gap: '11px' }}>
             <Row>
-              <TYPE.body1>
-                <Trans>{`From my ${networkName || ''} wallet`}</Trans>
+              <TYPE.body1 style={{ display: 'flex' }}>
+                <Trans>
+                  From my&nbsp;<TYPE.body1 color="error">{`${networkName || ''} wallet:`}</TYPE.body1>
+                </Trans>
               </TYPE.body1>
             </Row>
             <AddressInput

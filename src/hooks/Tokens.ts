@@ -231,5 +231,6 @@ export function useCurrencyFromMap(tokens: any, currencyId?: string | null): Cur
 
 export function useCurrency(currencyId: string | undefined): Currency | null | undefined {
   const tokens = useAllTokens()
+
   return useCurrencyFromMap(tokens, currencyId)
 }

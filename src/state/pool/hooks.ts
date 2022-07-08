@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { Contract } from 'ethers'
 import { usePairContract } from 'hooks/useContract'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
-import { isExternal } from 'util/types'
 import { setPoolTransctionHash } from './actions'
 
 export function getPoolTransactionHash(): null | string {

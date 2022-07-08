@@ -20,6 +20,7 @@ import { adminOffset as offset } from 'state/admin/constants'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { getAtlasIdByTicker } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { AcceptFiles } from 'components/Upload/types'
 
 import { Dropdown } from './Dropdown'
 import { Radio } from './Radio'
@@ -252,7 +253,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                             id: 'token-address',
                             value: token.address,
                             error: !Boolean(isValidAddress(token?.address || '')),
-                            onChange: (e) => setToken({ ...token, address: e }),
+                            onChange: (e: any) => setToken({ ...token, address: e }),
                             placeholder: ' ',
                           }}
                         />
@@ -274,7 +275,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                               <Input
                                 id="token-ticker"
                                 value={token.ticker}
-                                onChange={(e) => setToken({ ...token, ticker: e.currentTarget.value })}
+                                onChange={(e: any) => setToken({ ...token, ticker: e.currentTarget.value })}
                               />
                             </InputContainer>
                           </ContainerRow>
@@ -292,7 +293,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </TYPE.title11>
                         </Label>
                         <ButtonText>
-                          <Upload file={token.file} onDrop={(file) => handleDropImage(file)}>
+                          <Upload accept={AcceptFiles.IMAGE} file={token.file} onDrop={(file) => handleDropImage(file)}>
                             <Logo error={errors?.logo}>
                               {token.filePath || token.logo?.public ? (
                                 <img
@@ -365,7 +366,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                               <Input
                                 id="token-company-name"
                                 value={token.companyName}
-                                onChange={(e) => setToken({ ...token, companyName: e.currentTarget.value })}
+                                onChange={(e: any) => setToken({ ...token, companyName: e.currentTarget.value })}
                               />
                             </InputContainer>
                           </ContainerRow>
@@ -388,7 +389,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                               <Input
                                 id="token-website"
                                 value={token.url}
-                                onChange={(e) => setToken({ ...token, url: e.currentTarget.value })}
+                                onChange={(e: any) => setToken({ ...token, url: e.currentTarget.value })}
                               />
                             </InputContainer>
                           </ContainerRow>
@@ -446,7 +447,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                               <Input
                                 id="token-atlas-id"
                                 value={token.atlasOneId}
-                                onChange={(e) => setToken({ ...token, atlasOneId: e.currentTarget.value })}
+                                onChange={(e: any) => setToken({ ...token, atlasOneId: e.currentTarget.value })}
                               />
                             </InputContainer>
                           </ContainerRow>
@@ -462,7 +463,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         <Textarea
                           value={token.description}
                           style={{ height: '290px', background: '#372E5E', marginBottom: 0 }}
-                          onChange={(e) => setToken({ ...token, description: e.currentTarget.value })}
+                          onChange={(e: any) => setToken({ ...token, description: e.currentTarget.value })}
                         />
                         {errors?.description && (
                           <TYPE.small marginTop="4px" color={'red1'}>

@@ -32,7 +32,7 @@ export default function SecTokensList({
   }, [currencies])
 
   const Row = useCallback(
-    function TokenRow({ data, index, style }) {
+    function TokenRow({ data, index, style }: any) {
       const row: Currency = data[index]
       const currency = row
       if (currency) {

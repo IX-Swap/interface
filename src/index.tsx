@@ -6,13 +6,13 @@ import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DayJsUtils from '@date-io/dayjs'
+import { LocalizationProvider } from '@material-ui/pickers'
+import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
 
 import getLibrary from './utils/getLibrary'
-import { CustomHeaders } from './components/CustomHeaders'
 import { MuiThemeProvider } from './theme/muiTheme'
+import { CustomHeaders } from './components/CustomHeaders'
 import Blocklist from './components/Blocklist'
 import { NetworkContextName } from './constants/misc'
 import { LanguageProvider } from './i18n'
@@ -79,13 +79,13 @@ ReactDOM.render(
                 <ThemeProvider>
                   <ThemedGlobalStyle />
                   <MuiThemeProvider>
-                    <MuiPickersUtilsProvider utils={DayJsUtils}>
+                    <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
                         <CustomHeaders />
 
                         <App />
                       </CookiesProvider>
-                    </MuiPickersUtilsProvider>
+                    </LocalizationProvider>
                   </MuiThemeProvider>
                 </ThemeProvider>
               </Blocklist>

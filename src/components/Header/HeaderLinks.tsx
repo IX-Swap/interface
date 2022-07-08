@@ -20,7 +20,7 @@ import { ExternalLink, TYPE } from 'theme'
 import { isDevelopment } from 'utils/isEnvMode'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
-import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import Row, { RowFixed } from '../Row'
 
@@ -28,19 +28,22 @@ const activeClassName = 'ACTIVE'
 
 const HeaderPopover = () => {
   const { config } = useWhitelabelState()
-  
-  const isAllowed = useCallback((path: string): boolean => {
-    if (!config || !config.pages ||config.pages.length === 0) {
-      return true
-    }
 
-    return config.pages.includes(path)
-  }, [config])
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
 
   return (
     <PopOverContent
-      onClick={(e) => (e ? e.stopPropagation() : null)}
-      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+      onClick={(e: any) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
     >
       <Column style={{ gap: 3 }}>
         <TYPE.body2 fontWeight={600} marginBottom="4px">
@@ -84,8 +87,8 @@ const HeaderPopover = () => {
 // const NFTPopover = () => {
 //   return (
 //     <PopOverContent
-//       onClick={(e) => (e ? e.stopPropagation() : null)}
-//       onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+//       onClick={(e: any) => (e ? e.stopPropagation() : null)}
+//       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
 //     >
 //       <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections} exact>
 //         <Trans>My Collections</Trans>
@@ -117,14 +120,17 @@ export const HeaderLinks = () => {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
-  
-  const isAllowed = useCallback((path: string): boolean => {
-    if (!config || !config.pages ||config.pages.length === 0) {
-      return true
-    }
 
-    return config.pages.includes(path)
-  }, [config])
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
 
   return (
     <HeaderLinksWrap links={7}>
@@ -135,7 +141,14 @@ export const HeaderLinks = () => {
       )}
 
       {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink disabled={!isKycApproved} id={`stake-nav-link`} to={routes.securityTokens()}>
+        <StyledNavLink
+          disabled={!isKycApproved}
+          id={`stake-nav-link`}
+          to={routes.securityTokens('tokens')}
+          isActive={(match, { pathname }) => {
+            return pathname.includes('security-token')
+          }}
+        >
           <Trans>Security Tokens</Trans>
         </StyledNavLink>
       )}

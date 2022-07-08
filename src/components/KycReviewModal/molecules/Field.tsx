@@ -11,7 +11,7 @@ export const Field = ({ label, value }: Props) => {
   return (
     <Container>
       <span>{t`${label}`}</span>
-      <span>{value}</span>
+      <span>{value || 'Not completed'}</span>
     </Container>
   )
 }

@@ -1,4 +1,5 @@
 import { Currency } from '@ixswap1/sdk-core'
+
 import { currencyId } from './currencyId'
 
 export const routes = {
@@ -11,8 +12,9 @@ export const routes = {
   kyc: '/kyc',
   kycIndividual: '/kyc/individual',
   kycCorporate: '/kyc/corporate',
-  securityTokens: (currency?: Currency & { tokenInfo?: { catalogId: number } }) =>
-    `/security-tokens${currency ? `/${currency?.tokenInfo?.catalogId}` : ''}`,
+  createPayoutEvent: '/payout/create',
+  securityTokens: (tab?: string) => `/security-tokens/${tab || ':tab'}`,
+  securityToken: (id?: number) => `/security-token/${id || ':currencyId'}`,
   staking: '/staking',
   vesting: '/vesting',
   nftList: '/nft',
@@ -26,4 +28,8 @@ export const routes = {
   nftViewCollection: (address: string) => `/nft/collections/${address}`,
   nftItemPath: `/nft/collections/:collectionAddress/:itemId`,
   nftItem: (address: string, id: number) => `/nft/collections/${address}/${id}`,
+  payoutItem: (id?: number) => `/payout/${id || ':payoutId'}`,
+  payoutItemManager: (id?: number) => `/payout/${id || ':payoutId'}/manager`,
+  tokenManager: (tab?: string, id?: number) => `/token-manager/${tab || ':tab'}/${id || ':id?'}`,
+  admin: (tab?: string, id?: number) => `/admin/${tab || ':tab'}/${id || ':id?'}`,
 }

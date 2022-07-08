@@ -23,6 +23,8 @@ export const useGetWihitelabelConfig = () => {
     try {
       dispatch(getWhitelabelConfig.pending())
       const response = await getWhitelabelConfigReq()
+      console.log('log => response', response)
+
       dispatch(getWhitelabelConfig.fulfilled(response))
     } catch (error: any) {
       dispatch(getWhitelabelConfig.rejected({ errorMessage: error.message }))

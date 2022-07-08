@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 import { ExternalLink, TYPE } from 'theme'
 import { Container } from 'components/AdminAccreditationTable'
 import { ButtonIXSGradient, ButtonText } from 'components/Button'
-import { Search } from 'components/AdminAccreditationTable/Search'
+import { Search } from 'components/Search'
 import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
 import { useAddPopup, useTokenPopupToggle, useDeleteTokenPopupToggle } from 'state/application/hooks'
 import {
@@ -24,7 +24,8 @@ import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { adminOffset as offset } from 'state/admin/constants'
 import { useOnlyAdminAccess } from 'state/admin/hooks'
 import { Pagination } from 'components/Pagination'
-import { NoData } from 'components/Whitelist/styleds'
+import { NoData } from 'components/UsersList/styleds'
+import { AcceptFiles } from 'components/Upload/types'
 
 import { TokenPopup } from './TokenPopup'
 import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
@@ -198,7 +199,7 @@ export const AdminSecurityCatalog: FC = () => {
                         <Input
                           id="issuer-name"
                           value={currentIssuer?.name}
-                          onChange={(e) => setCurrentIssuer({ ...currentIssuer, name: e.currentTarget.value })}
+                          onChange={(e: any) => setCurrentIssuer({ ...currentIssuer, name: e.currentTarget.value })}
                         />
                       </InputContainer>
                     </ContainerRow>
@@ -221,7 +222,7 @@ export const AdminSecurityCatalog: FC = () => {
                         <Input
                           id="issuer-url"
                           value={currentIssuer?.url}
-                          onChange={(e) => setCurrentIssuer({ ...currentIssuer, url: e.currentTarget.value })}
+                          onChange={(e: any) => setCurrentIssuer({ ...currentIssuer, url: e.currentTarget.value })}
                         />
                       </InputContainer>
                     </ContainerRow>
@@ -239,7 +240,11 @@ export const AdminSecurityCatalog: FC = () => {
                     </TYPE.title11>
                   </Label>
                   <ButtonText>
-                    <Upload file={currentIssuer?.file} onDrop={(file) => handleDropImage(file)}>
+                    <Upload
+                      accept={AcceptFiles.IMAGE}
+                      file={currentIssuer?.file}
+                      onDrop={(file) => handleDropImage(file)}
+                    >
                       <Logo>
                         {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
                           <img
@@ -267,7 +272,7 @@ export const AdminSecurityCatalog: FC = () => {
               {showMode === 'edit_issuer' && (
                 <EditButton marginBottom="20px" onClick={() => handleEditTokenClick(null)}>
                   <TYPE.body3 color="white" fontWeight={600}>
-                    <Trans>+ Add token</Trans>
+                    {t`+ Add token`}
                   </TYPE.body3>
                 </EditButton>
               )}
@@ -298,9 +303,7 @@ export const AdminSecurityCatalog: FC = () => {
                         <TYPE.body3 color="text1">{wrappedToken ? 'Tradable' : 'Non Tradable'}</TYPE.body3>
                         <Box>
                           <EditButton onClick={() => handleEditTokenClick(token)}>
-                            <TYPE.body3 fontWeight={600}>
-                              <Trans>Edit</Trans>
-                            </TYPE.body3>
+                            <TYPE.body3 fontWeight={600}>{t`Edit`}</TYPE.body3>
                           </EditButton>
                         </Box>
                         <Box>

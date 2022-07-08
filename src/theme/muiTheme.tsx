@@ -1,8 +1,8 @@
 import React from 'react'
 import { createTheme, MuiThemeProvider as ThemeProvider } from '@material-ui/core'
+import { DefaultTheme } from 'styled-components'
 
 import useTheme from 'hooks/useTheme'
-import { DefaultTheme } from 'styled-components'
 
 export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text9, config }: DefaultTheme) =>
   createTheme({
@@ -155,6 +155,7 @@ interface Props {
 
 export const MuiThemeProvider = ({ children }: Props) => {
   const theme = useTheme()
+  console.log('log => theme', theme)
 
   return <ThemeProvider theme={muiTheme(theme)}>{children}</ThemeProvider>
 }

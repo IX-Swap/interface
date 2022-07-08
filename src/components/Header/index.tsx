@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Flex, Text } from 'rebass'
+import { Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
@@ -8,13 +8,16 @@ import useScrollPosition from '@react-hook/window-scroll'
 
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
-import { TYPE } from 'theme'
 import { useKYCState } from 'state/kyc/hooks'
+import { AppLogo } from 'components/AppLogo'
+import { routes } from 'utils/routes'
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-import { AppLogo } from 'components/AppLogo'
+import { useUserState } from 'state/user/hooks'
+import { ROLES } from 'constants/roles'
 
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
@@ -26,7 +29,6 @@ import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-import { routes } from 'utils/routes'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -74,26 +76,6 @@ const HeaderControls = styled.div`
   flex-direction: row;
   align-items: center;
   justify-self: flex-end;
-
-  /* ${({ theme }) => theme.mediaWidth.upToLarge`
-    flex-direction: row;
-    justify-content: space-between;
-    justify-self: center;
-    width: 100%;
-    max-width: 960px;
-    padding: 1rem;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
-    z-index: 99;
-    height: 72px;
-    border-radius: 12px 12px 0 0;
-    background-color: ${({ theme }) => theme.bgG1};
-  `};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding-top: 3rem;
-  `}; */
 `
 
 const HeaderElement = styled.div`
@@ -206,20 +188,11 @@ const HeaderWrapper = styled.div`
     `}
 `
 
-const KYCWrapper = styled.div`
+const IconWrapper = styled.div`
   display: block;
 
   ${({ theme }) => theme.mediaWidth.upToExtremelySmall`
     display: none;
-  `};
-`
-
-const KYCCard = styled(Flex)`
-  padding: 0px 7px 3px 7px;
-  background: ${({ theme }) => theme.bgG13};
-  border-radius: 4px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none !important;
   `};
 `
 
@@ -232,6 +205,7 @@ export default function Header() {
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
+  const { me } = useUserState()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
@@ -260,21 +234,23 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {isAllowed(routes.kyc) && isWhitelisted && (
-              <KYCWrapper>
+            {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && me?.role === ROLES.TOKEN_MANAGER && (
+              <IconWrapper>
                 <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
-                    <KYCCard flexDirection="column" alignItems="center" justifyContent="center">
-                      {kyc?.status === 'approved' ? (
-                        <KYCApproved style={{ width: 30, height: 30 }} />
-                      ) : (
-                        <KYC style={{ marginTop: 5 }} />
-                      )}
-                      <TYPE.smallError color={kyc?.status !== 'approved' ? 'error' : 'green1'}>KYC</TYPE.smallError>
-                    </KYCCard>
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }} to="/token-manager">
+                    <TokenManager />
                   </NavLink>
                 </HeaderElement>
-              </KYCWrapper>
+              </IconWrapper>
+            )}
+            {isAllowed(routes.kyc) && isWhitelisted && (
+              <IconWrapper>
+                <HeaderElement>
+                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
+                    {kyc?.status === 'approved' ? <KYCApproved /> : <KYC />}
+                  </NavLink>
+                </HeaderElement>
+              </IconWrapper>
             )}
             {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
               <HeaderElement>

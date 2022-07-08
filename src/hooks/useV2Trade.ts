@@ -1,13 +1,18 @@
 import { Currency, CurrencyAmount, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade } from '@ixswap1/v2-sdk'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { useSecToken } from 'state/secTokens/hooks'
 import { isTradeBetter } from 'utils/isTradeBetter'
 import { BETTER_TRADE_LESS_HOPS_THRESHOLD } from '../constants/misc'
 import { useAllCurrencyCombinations } from './useAllCurrencyCombinations'
 import { PairState, useV2Pairs } from './useV2Pairs'
 
-function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): { isLoading: boolean; allowedPairs: Pair[] } {
-  const allCurrencyCombinations = useAllCurrencyCombinations(currencyA, currencyB)
+function useAllCommonPairs(
+  currencyA?: Currency,
+  currencyB?: Currency,
+  tokensToExclude?: string[]
+): { isLoading: boolean; allowedPairs: Pair[] } {
+  const allCurrencyCombinations = useAllCurrencyCombinations(currencyA, currencyB, tokensToExclude)
   const allPairs = useV2Pairs(allCurrencyCombinations)
 
   // only pass along valid pairs, non-duplicated pairs
@@ -45,7 +50,9 @@ export function useV2TradeExactIn(
   currencyOut?: Currency,
   { maxHops = MAX_HOPS } = {}
 ): { V2TradeExactIn: Trade<Currency, Currency, TradeType.EXACT_INPUT> | null; isLoading: boolean } {
-  const { allowedPairs, isLoading } = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
+  const [tokensToExclude, handleTokensToExclude] = useState<string[]>([])
+
+  const { allowedPairs, isLoading } = useAllCommonPairs(currencyAmountIn?.currency, currencyOut, tokensToExclude)
 
   const V2TradeExactIn = useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
@@ -72,6 +79,16 @@ export function useV2TradeExactIn(
     return null
   }, [allowedPairs, currencyAmountIn, currencyOut, maxHops])
 
+  const tokenPath = V2TradeExactIn?.route?.path || []
+  const lastButOneToken = tokenPath[tokenPath.length - 2]
+  const secToken = useSecToken({ currencyId: lastButOneToken?.address })
+  const invalidRoute = tokenPath.length > 2 && Boolean(secToken?.isSecToken)
+
+  if (V2TradeExactIn && secToken && invalidRoute && !tokensToExclude.includes(secToken.address)) {
+    handleTokensToExclude((state) => [...state, secToken.address])
+    return { V2TradeExactIn: null, isLoading }
+  }
+
   return { V2TradeExactIn, isLoading }
 }
 
@@ -83,7 +100,9 @@ export function useV2TradeExactOut(
   currencyAmountOut?: CurrencyAmount<Currency>,
   { maxHops = MAX_HOPS } = {}
 ): { V2TradeExactOut: Trade<Currency, Currency, TradeType.EXACT_OUTPUT> | null; isLoading: boolean } {
-  const { allowedPairs, isLoading } = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
+  const [tokensToExclude, handleTokensToExclude] = useState<string[]>([])
+
+  const { allowedPairs, isLoading } = useAllCommonPairs(currencyIn, currencyAmountOut?.currency, tokensToExclude)
 
   const V2TradeExactOut = useMemo(() => {
     if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
@@ -107,6 +126,16 @@ export function useV2TradeExactOut(
     }
     return null
   }, [currencyIn, currencyAmountOut, allowedPairs, maxHops])
+
+  const tokenPath = V2TradeExactOut?.route?.path || []
+  const lastButOneToken = tokenPath[tokenPath.length - 2]
+  const secToken = useSecToken({ currencyId: lastButOneToken?.address })
+  const invalidRoute = Boolean(secToken?.isSecToken)
+
+  if (V2TradeExactOut && secToken && invalidRoute && !tokensToExclude.includes(secToken.address)) {
+    handleTokensToExclude((state) => [...state, secToken.address])
+    return { V2TradeExactOut: null, isLoading }
+  }
 
   return { V2TradeExactOut, isLoading }
 }

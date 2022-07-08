@@ -4,7 +4,7 @@ import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
 
 import { ButtonText } from 'components/Button'
-import { getNetworkFromToken } from 'components/CurrencyLogo'
+import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
 import { AppDispatch } from 'state'
@@ -36,7 +36,7 @@ export const DepositPopup = ({ currency, token }: Props) => {
   const { modalView } = useDepositState()
   const dispatch = useDispatch<AppDispatch>()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
-  const networkName = getNetworkFromToken(tokenInfo)
+  const networkName = getOriginalNetworkFromToken(tokenInfo)
 
   const onClose = useCallback(() => {
     dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))

@@ -6,6 +6,7 @@ import { CloseIcon, TYPE } from 'theme'
 import { Card } from './styleds'
 
 export const Announcement: FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_cookies, setCookie] = useCookies(['annoucementsSeen'])
   const annoumcementText =
     'To get the best performance of the app, we recommend using any of the recent stable versions of the Chrome, Brave, or any Firefox browsers. For wallets, we recommend Trust Wallet, Metamask, or Coinbase Wallet.'

@@ -57,6 +57,7 @@ export function colors(configColors?: WlColors): Colors {
     text7: wlColors.text?.main || '#9184C4',
     text8: wlColors.text?.main || '#9184C3',
     text9: wlColors.text?.main || '#EDCEFF80',
+    text10: wlColors.text?.main || '#EDCEFF0D', // rgba(237, 206, 255, 0.05)
     // backgrounds / greys
     bg0: wlColors.background?.main || '#0D0415',
     bg1: wlColors.background?.secondary || '#1A123A',
@@ -79,6 +80,8 @@ export function colors(configColors?: WlColors): Colors {
     bg18: wlColors.background?.main || '#27204666',
     bg19: wlColors.background?.secondary || '#271F4A66',
     bg20: '#7B42A9',
+    bg21: wlColors.background?.secondary || '#EDCEFF80',
+    bg22: wlColors.background?.secondary || '#2C254A80',
     bgG1:
       wlColors.background?.main ||
       'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -161,12 +164,17 @@ export function colors(configColors?: WlColors): Colors {
     red2: '#F82D3A',
     red3: '#D60000',
     green1: wlColors.status?.success || '#9DF9B1',
+    green2: '#9DF9B1B2',
+    green3: '#9DF9B1B3',
     yellow1: '#e3a507',
     yellow2: '#ff8f00',
     yellow3: '#F3B71E',
     yellow4: wlColors.status?.warning || '#F2F99D',
+    orange: '#FF6D41',
     blue1: '#2172E5',
     blue2: '#5199FF',
+    blue3: '#5B7BCF',
+    orange1: '#FF6D41',
 
     error: wlColors.status?.error || '#ED0376',
     success: wlColors.status?.success || '#27AE60',

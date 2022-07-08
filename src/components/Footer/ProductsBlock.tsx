@@ -20,17 +20,19 @@ export const ProductsBlock = () => {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { kyc } = useKYCState()
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
-  
+
   const { config } = useWhitelabelState()
-  
-  const isAllowed = useCallback((path: string): boolean => {
-    if (!config || !config.pages || config.pages.length === 0) {
-      return true
-    }
 
-    return config.pages.includes(path)
-  }, [config])
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
 
+      return config.pages.includes(path)
+    },
+    [config]
+  )
 
   return (
     <ProductsBlockContainer>
@@ -50,11 +52,16 @@ export const ProductsBlock = () => {
             <Trans>Staking</Trans>
           </NavLink>
         )}
-        {isAllowed(routes.securityTokens()) && isKycApproved && account && chainId && chains.includes(chainId) && isWhitelisted && (
-          <NavLink to={routes.securityTokens()}>
-            <Trans>Securities</Trans>
-          </NavLink>
-        )}
+        {isAllowed(routes.securityTokens()) &&
+          isKycApproved &&
+          account &&
+          chainId &&
+          chains.includes(chainId) &&
+          isWhitelisted && (
+            <NavLink to={routes.securityTokens('tokens')}>
+              <Trans>Securities</Trans>
+            </NavLink>
+          )}
         {isAllowed(routes.pool) && account && chainId && chains.includes(chainId) && isWhitelisted && (
           <NavLink to={routes.pool}>
             <Trans>Pools</Trans>

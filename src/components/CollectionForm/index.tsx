@@ -116,7 +116,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
               </Label>
               <StyledInput
                 style={{ fontWeight: 600 }}
-                onChange={(e) => setName(e?.target?.value)}
+                onChange={(e: any) => setName(e?.target?.value)}
                 name="name"
                 onBlur={setTouched}
                 placeholder={t`Collection Name...`}
@@ -143,7 +143,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
               </Label>
 
               <StyledInput
-                onChange={(e) => setMaxSupply(e?.target?.valueAsNumber)}
+                onChange={(e: any) => setMaxSupply(e?.target?.valueAsNumber)}
                 name="maxSupply"
                 onBlur={setTouched}
                 placeholder={t`1000`}
@@ -174,7 +174,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
               name="description"
               onBlur={setTouched}
               style={{ height: '126px' }}
-              onChange={(e) => setDescription(e?.target?.value)}
+              onChange={(e: any) => setDescription(e?.target?.value)}
               placeholder={t`Provide a detailed description of your item`}
               value={description}
             />
@@ -182,7 +182,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
           </Box>
           <Images collection={collection} setPending={setPending} />
           <ActionsContainer>
-            <ButtonIXSGradient onClick={(e) => handleSubmit(e)}>{actionName}</ButtonIXSGradient>
+            <ButtonIXSGradient onClick={(e: any) => handleSubmit(e)}>{actionName}</ButtonIXSGradient>
           </ActionsContainer>
         </form>
       </Container>

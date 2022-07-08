@@ -12,7 +12,7 @@ import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import apiService from 'services/apiService'
-import { auth, broker, kyc, tokens, users } from 'services/apiUrls'
+import { auth, broker, kyc, tokens } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
 import { LOGIN_STATUS, useLogin, useUserisLoggedIn } from 'state/auth/hooks'
 import { useAuthState } from 'state/auth/hooks'
@@ -29,6 +29,7 @@ import { clearSwapState } from 'state/swap/actions'
 import { clearSwapHelperState } from 'state/swapHelper/actions'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
+import { KYCStatuses } from 'pages/KYC/enum'
 
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
@@ -52,7 +53,6 @@ import {
   updateUserSlippageTolerance,
   getMe,
 } from './actions'
-import { KYCStatuses } from 'pages/KYC/enum'
 
 function serializeToken(token: Token): SerializedToken {
   // TO DO - refactor
@@ -445,11 +445,6 @@ export const restartAccreditation = async ({ accreditationId }: { accreditationI
 
 export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
   const result = await apiService.post(broker.choose(pairId), {})
-  return result.data
-}
-
-export const updateUser = async (address: string, updatedUser: any) => {
-  const result = await apiService.patch(users.update(address), updatedUser)
   return result.data
 }
 

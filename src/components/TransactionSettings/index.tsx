@@ -117,7 +117,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                 <Input
                   placeholder={placeholderSlippage.toFixed(2)}
                   value={displayUserSlippageTolerance({ slippageInput, userSlippageTolerance })}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     parseSlippageInput(e.target.value)
                   }}
                   onBlur={() => resetSlippage()}
@@ -171,7 +171,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               <Input
                 placeholder={(DEFAULT_DEADLINE_FROM_NOW / 60).toString()}
                 value={displayDeadline({ deadlineInput, deadline })}
-                onChange={(e) => parseCustomDeadline(e.target.value)}
+                onChange={(e: any) => parseCustomDeadline(e.target.value)}
                 onBlur={() => resetDeadline()}
                 color={deadlineError ? 'red' : ''}
               />

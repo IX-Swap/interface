@@ -23,7 +23,7 @@ const KYC = lazy(() => import('pages/KYC'))
 const IndividualKYC = lazy(() => import('pages/KYC/IndividualKycForm'))
 const CorporateKYC = lazy(() => import('pages/KYC/CorporateKycForm'))
 
-const CustodianV2 = lazy(() => import('pages/CustodianV2'))
+const SecurityTokens = lazy(() => import('pages/SecurityTokens'))
 
 const ListNFT = lazy(() => import('pages/ListNFT'))
 const CreateNFT = lazy(() => import('pages/CreateNFT'))
@@ -50,35 +50,71 @@ export interface RouteMapEntry {
 }
 
 export const routeConfigs: RouteMapEntry[] = [
-  { path: "/admin", render: () => <Redirect to="/admin/accreditation" /> },
-  { path: "/admin/:tab/:id?", component: Admin },
+  { path: '/admin', render: () => <Redirect to={routes.admin('accreditation')} /> },
+  { path: routes.admin(), component: Admin },
 
-  { path: routes.nftCreate, component: CreateNFT, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
+  {
+    path: routes.nftCreate,
+    component: CreateNFT,
+    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+  },
   { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
-  { path: routes.nftCollections, component: NFTCollections, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
-  { path: routes.nftCollectionCreate, component: CreateCollection, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
-  { path: routes.nftEditCollectionPath, component: UpdateCollection, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
-  { path: routes.nftCollectionImport, component: NftImport, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
-  { path: routes.nftViewCollectionPath, component: NFTCollection, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
-  { path: routes.nftItemPath, component: NftAssetPage, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
+  {
+    path: routes.nftCollections,
+    component: NFTCollections,
+    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+  },
+  {
+    path: routes.nftCollectionCreate,
+    component: CreateCollection,
+    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+  },
+  {
+    path: routes.nftEditCollectionPath,
+    component: UpdateCollection,
+    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+  },
+  {
+    path: routes.nftCollectionImport,
+    component: NftImport,
+    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+  },
+  {
+    path: routes.nftViewCollectionPath,
+    component: NFTCollection,
+    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+  },
+  {
+    path: routes.nftItemPath,
+    component: NftAssetPage,
+    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+  },
 
   { path: routes.kyc, component: KYC, conditions: { isWhitelisted: true } },
-  { path: routes.kycIndividual, component: IndividualKYC, conditions: { isWhitelisted: true, kycFormAccess: 'individual' } },
-  { path: routes.kycCorporate, component: CorporateKYC, conditions: { isWhitelisted: true, kycFormAccess: 'corporate' } },
-  { path: "/send", component: RedirectPathToSwapOnly, conditions: { isWhitelisted: true, chainIsSupported: true } },
-  { path: "/swap/:outputCurrency", component: RedirectToSwap },
-  { path: "/swap", component: Swap },
-  { path: "/find", component: PoolFinder },
-  { path: "/pool", component: PoolV2 },
+  {
+    path: routes.kycIndividual,
+    component: IndividualKYC,
+    conditions: { isWhitelisted: true, kycFormAccess: 'individual' },
+  },
+  {
+    path: routes.kycCorporate,
+    component: CorporateKYC,
+    conditions: { isWhitelisted: true, kycFormAccess: 'corporate' },
+  },
+  { path: '/send', component: RedirectPathToSwapOnly, conditions: { isWhitelisted: true, chainIsSupported: true } },
+  { path: '/swap/:outputCurrency', component: RedirectToSwap },
+  { path: '/swap', component: Swap },
+  { path: '/find', component: PoolFinder },
+  { path: '/pool', component: PoolV2 },
 
-  { path: "/add/:currencyIdA?/:currencyIdB?", component: RedirectDuplicateTokenIdsV2 },
+  { path: '/add/:currencyIdA?/:currencyIdB?', component: RedirectDuplicateTokenIdsV2 },
 
-  { path: "/remove/:currencyIdA/:currencyIdB", component: RemoveLiquidity },
+  { path: '/remove/:currencyIdA/:currencyIdB', component: RemoveLiquidity },
 
   { path: routes.faucet, component: Faucet },
 
-  { path: "/security-tokens/:currencyId", component: SecTokenDetails },
-  { path: routes.securityTokens(), component: CustodianV2 },
+  { path: routes.securityToken(), component: SecTokenDetails },
+  { path: routes.securityTokens(), component: SecurityTokens },
 
   { path: routes.staking, component: StakingTab },
   { path: routes.vesting, component: VestingTab },

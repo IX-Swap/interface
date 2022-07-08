@@ -1,8 +1,8 @@
-import { DarkCard } from 'components/Card'
-import { MaxButton } from 'pages/Pool/styleds'
 import { Text } from 'rebass'
 import styled from 'styled-components/macro'
-import AppBody from '../AppBody'
+
+import { DarkCard } from 'components/Card'
+import { MaxButton } from 'pages/Pool/styleds'
 
 export const Wrapper = styled.div`
   position: relative;
