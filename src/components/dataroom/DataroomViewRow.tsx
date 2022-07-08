@@ -32,6 +32,7 @@ export const DataroomViewRow = (props: DataroomViewRowProps) => {
               <DownloadDocument
                 documentId={document._id}
                 ownerId={document.user}
+                name={document.originalFileName}
               />
             )}
           </Box>
