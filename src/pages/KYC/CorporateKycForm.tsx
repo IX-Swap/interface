@@ -20,7 +20,6 @@ import { useAuthState } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
-import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
@@ -30,7 +29,7 @@ import { DateInput } from 'components/DateInput'
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, Divider, StyledStickyBox } from './styleds'
+import { FormCard, FormGrid, ExtraInfoCard, Divider, StyledStickyBox, StyledBigPassed } from './styleds'
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
@@ -345,7 +344,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Corporate Information</Trans>
                           </TYPE.title6>
-                          {infoFilled && <BigPassed />}
+                          {infoFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
@@ -435,7 +434,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Company Authorized Personnel</Trans>
                           </TYPE.title6>
-                          {authorizedPersonnelFilled && <BigPassed />}
+                          {authorizedPersonnelFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
@@ -497,7 +496,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Address</Trans>
                           </TYPE.title6>
-                          {addressFilled && <BigPassed />}
+                          {addressFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
@@ -542,7 +541,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Residential Address</Trans>
                           </TYPE.title6>
-                          {residentialAddressFilled && <BigPassed />}
+                          {residentialAddressFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
@@ -598,7 +597,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Source of Funds</Trans>
                           </TYPE.title6>
-                          {fundsFilled && <BigPassed />}
+                          {fundsFilled && <StyledBigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
                           {corporateSourceOfFunds.map(({ value, label }: any) => (
@@ -631,7 +630,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Investor Status Declaration</Trans>
                           </TYPE.title6>
-                          {investorFilled && <BigPassed />}
+                          {investorFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '34px' }}>
@@ -664,7 +663,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>FATCA</Trans>
                           </TYPE.title6>
-                          {fatcaFilled && <BigPassed />}
+                          {fatcaFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -708,7 +707,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Tax Declaration</Trans>
                           </TYPE.title6>
-                          {taxDeclarationFilled && <BigPassed />}
+                          {taxDeclarationFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -743,7 +742,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Beneficial Owners Information</Trans>
                           </TYPE.title6>
-                          {beneficialOwnersFilled && <BigPassed />}
+                          {beneficialOwnersFilled && <StyledBigPassed />}
                         </RowBetween>
                         <ExtraInfoCard style={{ marginBottom: 20 }}>
                           <TYPE.buttonMuted>
@@ -880,7 +879,7 @@ export default function CorporateKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Corporate Documents</Trans>
                           </TYPE.title6>
-                          {filesFilled && <BigPassed />}
+                          {filesFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '40px' }}>

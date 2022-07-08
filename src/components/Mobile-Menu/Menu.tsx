@@ -11,9 +11,8 @@ import { KYCStatuses } from 'pages/KYC/enum'
 import { routes } from 'utils/routes'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
-import closeIcon from '../../assets/images/cross.svg'
+import { ReactComponent as CloseIcon } from '../../assets/images/cross.svg'
 import { disabledStyle } from 'components/Header/HeaderLinks'
-import { RouteMapEntry } from 'pages/AppRoutes'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 interface Props {
@@ -41,20 +40,23 @@ export const Menu = ({ close }: Props) => {
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
-  
-  const isAllowed = useCallback((path: string): boolean => {
-    if (!config || !config.pages ||config.pages.length === 0) {
-      return true
-    }
 
-    return config.pages.includes(path)
-  }, [config])
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
 
   return (
     <ModalContainer>
       <Container>
         <CloseContainer>
-          <CloseIcon src={closeIcon} alt={closeIcon} onClick={close} />
+          <StyledCloseIcon onClick={close} />
         </CloseContainer>
         <MenuList>
           {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
@@ -169,7 +171,7 @@ const CloseContainer = styled.div`
   right: 0;
 `
 
-const CloseIcon = styled.img`
+const StyledCloseIcon = styled(CloseIcon)`
   width: 18px;
   height: 18px;
   cursor: pointer;
@@ -193,7 +195,7 @@ const listItemStyle = css`
   cursor: pointer;
   text-decoration: none;
   text-align: center;
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.config?.text?.main || theme.text2};
   opacity: 0.6;
   &.active-item {
     opacity: 1;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-import menuIcon from '../../assets/images/burger-menu.svg'
+import { ReactComponent as MenuIcon } from '../../assets/images/burger-menu.svg'
 import { Menu } from './Menu'
 
 export const MobileMenu = () => {
@@ -13,7 +13,7 @@ export const MobileMenu = () => {
   return (
     <>
       <IconContainer>
-        <MenuIcon src={menuIcon} alt="menu-burger" onClick={toggle} />
+        <StyledMenuIcon onClick={toggle} />
       </IconContainer>
       {open && <Menu close={close} />}
     </>
@@ -31,6 +31,6 @@ const IconContainer = styled.div`
   } ;
 `
 
-const MenuIcon = styled.img`
+const StyledMenuIcon = styled(MenuIcon)`
   cursor: pointer;
 `
