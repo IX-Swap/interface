@@ -14,6 +14,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { usePublishPayout } from 'state/payout/hooks'
 
 import { transformPayoutDraftDTO } from './utils'
+import { routes } from 'utils/routes'
 
 interface Props {
   close: () => void
@@ -44,7 +45,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
           summary: 'Payout was successfully published',
         },
       })
-      history.push(`/payout/${data.id}`)
+      history.push({ pathname: routes.payoutItemManager(data.id) })
     }
   }
 
