@@ -1,18 +1,12 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
+import styled from 'styled-components/macro'
+
 import { AutoColumn } from 'components/Column'
-import { DynamicSection } from 'pages/AddLiquidity/styled'
 import { TYPE } from 'theme'
 import { RowBetween } from 'components/Row'
 import { ButtonRadioChecked } from 'components/Button'
-import styled from 'styled-components/macro'
 import { FeeAmount } from 'constants/enums'
-
-const ResponsiveText = styled(TYPE.label)`
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    font-size: 12px;
-  `};
-`
 
 export default function FeeSelector({
   disabled = false,
@@ -80,3 +74,14 @@ export default function FeeSelector({
     </AutoColumn>
   )
 }
+
+const DynamicSection = styled(AutoColumn)<{ disabled?: boolean }>`
+  opacity: ${({ disabled }) => (disabled ? '0.3' : '1')};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'initial')};
+`
+
+const ResponsiveText = styled(TYPE.label)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    font-size: 12px;
+    `};
+`

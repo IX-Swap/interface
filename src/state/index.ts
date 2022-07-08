@@ -28,6 +28,7 @@ import assetForm from './nft/assetForm.reducer'
 import collectionForm from './nft/collectionForm.reducer'
 import secCatalog from './secCatalog/reducer'
 import kyc from './kyc/reducer'
+import whitelabel from './whitelabel/reducer'
 import payout from './payout/reducer'
 import tokenManager from './token-manager/reducer'
 
@@ -49,6 +50,7 @@ const combinedReducer = combineReducers({
   mint,
   multicall,
   nft,
+  payout,
   pool,
   secCatalog,
   secTokens,
@@ -61,8 +63,8 @@ const combinedReducer = combineReducers({
   unstaking,
   user,
   vesting,
+  whitelabel,
   withdraw,
-  payout,
 })
 
 const rootReducer = (state: any, action: any) => {

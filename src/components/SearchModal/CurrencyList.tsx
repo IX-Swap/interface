@@ -12,7 +12,7 @@ import { VariableSizeList as List } from 'react-window'
 import { Box, Text } from 'rebass'
 import { useSecTokens } from 'state/secTokens/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
 import { routes } from 'utils/routes'
 import TokenListLogo from '../../assets/svg/tokenlist.svg'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
@@ -29,6 +29,7 @@ import Row, { RowBetween, RowFixed } from '../Row'
 import { MouseoverTooltip } from '../Tooltip'
 import ImportRow from './ImportRow'
 import { isMobile } from 'react-device-detect'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { MenuItem, UnapprovedMenuItem, UnapprovedTokenWrapper } from './styleds'
 import { formatAmount } from 'utils/formatCurrencyAmount'
@@ -39,6 +40,11 @@ function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
 }
 const StyledBalanceText = styled(Text)`
+  ${({ theme: { config } }) =>
+    config.text &&
+    css`
+      color: ${({ theme: { config } }) => config.text.main};
+    `}
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
@@ -285,6 +291,8 @@ export default function CurrencyList({
   showImportView: () => void
   setImportToken: (token: Token) => void
 }) {
+  const { config } = useWhitelabelState()
+
   const sortedBySecList = useMemo(() => {
     const { sec, rest, wixs, usdc } = currencies.reduce(
       (
@@ -296,6 +304,12 @@ export default function CurrencyList({
         },
         next: any
       ) => {
+        const token = next?.wrapped ?? next?.tokenInfo
+
+        if (config && config.tokens.length > 0 && !config?.tokens.includes(token.address)) {
+          return acc
+        }
+
         if (next.isSecToken) {
           acc.sec.push(next)
         } else if (next?.tokenInfo?.symbol === 'USDC') {

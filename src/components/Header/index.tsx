@@ -1,13 +1,24 @@
+import React, { useCallback } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Text } from 'rebass'
+import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { useCookies } from 'react-cookie'
 import useScrollPosition from '@react-hook/window-scroll'
+
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { Text } from 'rebass'
-import styled from 'styled-components'
-import LogoDark from '../../assets/svg/logo-white.svg'
+import { useKYCState } from 'state/kyc/hooks'
+import { AppLogo } from 'components/AppLogo'
+import { routes } from 'utils/routes'
+import { ReactComponent as KYC } from 'assets/images/kyc.svg'
+import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
+import { formatAmount } from 'utils/formatCurrencyAmount'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { useUserState } from 'state/user/hooks'
+import { ROLES } from 'constants/roles'
+
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { MobileMenu } from '../Mobile-Menu'
@@ -17,15 +28,7 @@ import { HeaderLinks } from './HeaderLinks'
 import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
-import { useKYCState } from 'state/kyc/hooks'
-
-import { ReactComponent as KYC } from 'assets/images/kyc.svg'
-import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
-import { ReactComponent as TokenManager } from 'assets/images/token-manager.svg'
-import { formatAmount } from 'utils/formatCurrencyAmount'
-import { isUserWhitelisted } from 'utils/isUserWhitelisted'
-import { useUserState } from 'state/user/hooks'
-import { ROLES } from 'constants/roles'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -48,6 +51,11 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position 0.1s, box-shadow 0.1s;
+  ${({ theme }) =>
+    theme.config.background &&
+    css`
+      background: ${({ theme }) => theme.config.background.secondary};
+    `}
   @media (max-width: 1400px) {
     grid-template-columns: 2fr auto auto;
     grid-gap: 28px;
@@ -68,26 +76,6 @@ const HeaderControls = styled.div`
   flex-direction: row;
   align-items: center;
   justify-self: flex-end;
-
-  /* ${({ theme }) => theme.mediaWidth.upToLarge`
-    flex-direction: row;
-    justify-content: space-between;
-    justify-self: center;
-    width: 100%;
-    max-width: 960px;
-    padding: 1rem;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
-    z-index: 99;
-    height: 72px;
-    border-radius: 12px 12px 0 0;
-    background-color: ${({ theme }) => theme.bgG1};
-  `};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding-top: 3rem;
-  `}; */
 `
 
 const HeaderElement = styled.div`
@@ -129,7 +117,7 @@ const BalanceText = styled(Text)`
   color: ${({ theme }) => theme.text2};
   font-weight: 600;
   font-size: 12px;
-  opacity: 0.5;
+  opacity: ${({ theme }) => (theme.config.background ? '1' : '0.5')};
   border-radius: 0 0 40px 40px;
   padding: 0 18px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -193,6 +181,11 @@ const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 2;
+  ${({ theme }) =>
+    theme.config.background &&
+    css`
+      background: ${({ theme }) => theme.config.background.secondary};
+    `}
 `
 
 const IconWrapper = styled.div`
@@ -211,9 +204,21 @@ export default function Header() {
   const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
+  const { config } = useWhitelabelState()
   const { me } = useUserState()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
 
   return (
     <>
@@ -221,15 +226,15 @@ export default function Header() {
         {!cookies.annoucementsSeen && <Announcement />}
         <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
-            <Title href=".">
+            <Title href={config?.defaultUrl || '.'}>
               <IXSIcon>
-                <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
+                <AppLogo width="auto" height="47px" {...config?.customStyles?.logo} />
               </IXSIcon>
             </Title>
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {isWhitelisted && me?.role === ROLES.TOKEN_MANAGER && (
+            {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && me?.role === ROLES.TOKEN_MANAGER && (
               <IconWrapper>
                 <HeaderElement>
                   <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }} to="/token-manager">
@@ -238,7 +243,7 @@ export default function Header() {
                 </HeaderElement>
               </IconWrapper>
             )}
-            {isWhitelisted && (
+            {isAllowed(routes.kyc) && isWhitelisted && (
               <IconWrapper>
                 <HeaderElement>
                   <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
@@ -247,9 +252,11 @@ export default function Header() {
                 </HeaderElement>
               </IconWrapper>
             )}
-            <HeaderElement>
-              <IXSBalance />
-            </HeaderElement>
+            {isAllowed(routes.staking) && isAllowed(routes.vesting) && (
+              <HeaderElement>
+                <IXSBalance />
+              </HeaderElement>
+            )}
             <HeaderElement>
               <NetworkCard />
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>

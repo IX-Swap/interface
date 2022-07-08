@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { Trans } from '@lingui/macro'
 import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
@@ -20,12 +20,26 @@ import { ExternalLink, TYPE } from 'theme'
 import { isDevelopment } from 'utils/isEnvMode'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import Row, { RowFixed } from '../Row'
 
 const activeClassName = 'ACTIVE'
 
 const HeaderPopover = () => {
+  const { config } = useWhitelabelState()
+
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
+
   return (
     <PopOverContent
       onClick={(e: any) => (e ? e.stopPropagation() : null)}
@@ -40,9 +54,11 @@ const HeaderPopover = () => {
           <Trans>Live Pools</Trans>
         </SubMenuExternalLink>
 
-        <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-          <Trans>Legacy Pools (Closed)</Trans>
-        </SubMenuLink>
+        {isAllowed(routes.staking) && (
+          <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
+            <Trans>Legacy Pools (Closed)</Trans>
+          </SubMenuLink>
+        )}
       </Column>
 
       <Row style={{ padding: '0', margin: '5px 0' }}>
@@ -58,9 +74,11 @@ const HeaderPopover = () => {
           <Line />
         </Row>
 
-        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-          <Trans>Token Sale Distribution</Trans>
-        </SubMenuLink>
+        {isAllowed(routes.vesting) && (
+          <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
+            <Trans>Token Sale Distribution</Trans>
+          </SubMenuLink>
+        )}
       </Column>
     </PopOverContent>
   )
@@ -86,27 +104,43 @@ const HeaderPopover = () => {
 // }
 
 export const HeaderLinks = () => {
-  const { chainId, account } = useActiveWeb3React()
   const [open, toggle] = useToggle(false)
   const [openNFT, toggleNFT] = useToggle(false)
+
   const farmNode = useRef<HTMLDivElement>()
   const nftNode = useRef<HTMLDivElement>()
+
   const { kyc } = useKYCState()
+  const { config } = useWhitelabelState()
+  const { chainId, account } = useActiveWeb3React()
+
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
+
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
+  const isAllowed = useCallback(
+    (path: string): boolean => {
+      if (!config || !config.pages || config.pages.length === 0) {
+        return true
+      }
+
+      return config.pages.includes(path)
+    },
+    [config]
+  )
+
   return (
     <HeaderLinksWrap links={7}>
-      {account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}
 
-      {account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
           disabled={!isKycApproved}
           id={`stake-nav-link`}
@@ -119,13 +153,13 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {isAllowed('/pool') && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`pool-nav-link`} to={'/pool'}>
           <Trans>Liquidity Pools</Trans>
         </StyledNavLink>
       )}
 
-      {account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink
           disabled={!isKycApproved}
           target="_self"
@@ -133,7 +167,7 @@ export const HeaderLinks = () => {
         >
           <Trans>FNFT</Trans>
         </MenuExternalLink>
-      )}
+      )} */}
 
       {/* {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
         <StyledNavLink
@@ -151,7 +185,7 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )} */}
 
-      {account && chainId && account && (
+      {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && account && (
         <StyledNavLink
           ref={farmNode as any}
           id={`farming-nav-link`}
@@ -177,7 +211,7 @@ export const HeaderLinks = () => {
         </MenuExternalLink>
       )}
 
-      {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+      {isAllowed(routes.faucet) && account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink disabled={!isKycApproved} id={`faucet-nav-link`} to={routes.faucet}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
@@ -227,14 +261,14 @@ const navLinkStyles = css`
   font-weight: 600;
   &.${activeClassName} {
     opacity: 1;
-    color: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.config.text?.main || theme.text1};
   }
 
   :hover,
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text2)};
     &.${activeClassName} {
-      color: ${({ theme }) => theme.white};
+      color: ${({ theme }) => theme.config.text?.main || theme.white};
     }
   }
   @media (max-width: 1500px) {

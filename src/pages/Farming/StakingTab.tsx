@@ -11,7 +11,7 @@ import { LightBackground } from 'theme/Background'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 
 import { Staking } from './Staking'
-import { BodyWrapper } from 'pages/AppBody'
+import { StyledBodyWrapper } from './styleds'
 
 const StyledStakingTab = styled.div`
   max-width: 90vw;
@@ -37,17 +37,14 @@ export const StakingTab = () => {
   return (
     <>
       <LightBackground />
-      <BodyWrapper
-        hasAnnouncement={!cookies.annoucementsSeen}
-        style={{ background: 'transparent', padding: 0, width: '100%', maxWidth: 1400 }}
-      >
+      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         <StyledStakingTab>
           <TYPE.title4>
             <Trans>Staking {IXSCurrency?.symbol}</Trans>
           </TYPE.title4>
         </StyledStakingTab>
         <Staking />
-      </BodyWrapper>
+      </StyledBodyWrapper>
     </>
   )
 }

@@ -5,6 +5,10 @@ import { ArrowWrapper } from 'components/swap/styleds'
 import { SearchInput } from 'components/SearchModal/styleds'
 import { DarkBlueCard } from 'components/Card'
 import { TYPE } from 'theme'
+import { BodyWrapper } from 'pages/AppBody'
+
+import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
+import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
 
 export const cardCommonStyles = css`
   border-radius: 30px;
@@ -12,11 +16,18 @@ export const cardCommonStyles = css`
   -webkit-backdrop-filter: blur(20px);
 `
 
+export const StyledBodyWrapper = styled(BodyWrapper)`
+  background: ${({ theme }) => theme.config.background?.secondary || 'transparent'};
+  width: 100%;
+  max-width: 1270px;
+  padding-top: 0px;
+`
+
 export const MySecTokensTab = styled(Box)`
   padding: 32px;
   background: ${({ theme }) => theme.bgG17};
   border-radius: 30px;
-  border: 2px solid rgb(123, 66, 169);
+  border: ${({ theme }) => `2px solid ${theme.config.text?.main || 'rgb(123, 66, 169)'}`};
 `
 
 export const MySecTokensGrid = styled(Box)`
@@ -101,4 +112,34 @@ export const StyledButtonMuted = styled(TYPE.buttonMuted)`
   background: rgba(145, 132, 196, 0.1);
   border-radius: 16px;
   padding: 4px 8px;
+`
+
+export const StyledTradable = styled(Tradable)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      g {
+        circle {
+          fill: ${theme.config.elements?.main};
+        }
+        path {
+          fill: white;
+        }
+      }
+    `}
+`
+
+export const StyledNonTradable = styled(NonTradable)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      g {
+        circle {
+          fill: ${theme.config.elements?.main};
+        }
+        path {
+          fill: white;
+        }
+      }
+    `}
 `

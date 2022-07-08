@@ -3,12 +3,12 @@ import { createPortal } from 'react-dom'
 import { Flex } from 'rebass'
 import styled from 'styled-components'
 
-import LogoDark from '../../assets/svg/logo-white.svg'
 import { DesktopOnly, MobileAndTablet, TYPE } from 'theme'
 import Column from 'components/Column'
 import { LoadingDots } from 'components/LoadingDots'
 import { useBrokerDealerState, useToggleFakeApproval } from 'state/application/hooks'
 import { useSubmitBrokerDealerForm } from 'state/swapHelper/hooks'
+import { AppLogo } from 'components/AppLogo'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -71,7 +71,7 @@ export const FakeBrokerDealerApproval: FC<Props> = ({ formRef }) => {
       <Wrapper>
         <Column style={{ justifyContent: 'space-between', height: 'calc(100vh - 240px)' }}>
           <Flex alignItems="center">
-            <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
+            <AppLogo width={'38px'} height={'47px'} />
             <TYPE.title4 marginLeft="16px">InvestaX</TYPE.title4>
           </Flex>
 

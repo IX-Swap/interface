@@ -10,7 +10,7 @@ interface Props {
 }
 
 interface Info {
-  color: keyof Colors | 'transparent'
+  color: Exclude<keyof Colors | 'transparent', 'config'>
   text: string
 }
 

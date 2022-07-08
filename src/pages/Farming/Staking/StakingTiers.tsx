@@ -48,7 +48,7 @@ export const StakingTiers = () => {
         </CardsRow>
       </CardsWrapper>
       <RowCenter marginTop={21}>
-        <TYPE.title7 color="#edceff9e">
+        <TYPE.title7 color="text2">
           <Trans>You will receive 1 IXSGov for each 1 staked {currency?.symbol}.</Trans>
         </TYPE.title7>
       </RowCenter>

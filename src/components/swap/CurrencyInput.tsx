@@ -112,6 +112,7 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
           width="16px"
           height="16px"
           color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+          fill={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
         />
       </ArrowWrapper>
       <CurrencyInputPanel

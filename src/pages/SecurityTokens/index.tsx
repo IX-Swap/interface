@@ -13,6 +13,8 @@ import { useWeb3React } from '@web3-react/core'
 import { useCookies } from 'react-cookie'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useAuthState } from 'state/auth/hooks'
+import { routes } from 'utils/routes'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 type SecurityTab = 'tokens' | 'payout-events'
 
@@ -52,12 +54,14 @@ const SecurityTokens = () => {
   const history = useHistory()
   const params = useParams<AdminParams>()
 
+  const { config } = useWhitelabelState()
+
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
 
   const changeTab = useCallback(
     (tab: SecurityTab) => {
-      history.push(`/security-tokens/${tab}`)
+      history.push(routes.securityTokens(tab))
     },
     [history]
   )
@@ -76,16 +80,18 @@ const SecurityTokens = () => {
     </AppBody>
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-      <TabsContainer>
-        {tabs.map(({ value, label }, index) => (
-          <>
-            <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-              <Trans>{label}</Trans>
-              <Border active={selectedTab === value} />
-            </ToggleOption>
-          </>
-        ))}
-      </TabsContainer>
+      {!config?.id && (
+        <TabsContainer>
+          {tabs.map(({ value, label }, index) => (
+            <>
+              <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
+                <Trans>{label}</Trans>
+                <Border active={selectedTab === value} />
+              </ToggleOption>
+            </>
+          ))}
+        </TabsContainer>
+      )}
 
       {renderTab(selectedTab)}
     </StyledBodyWrapper>
@@ -106,7 +112,7 @@ const TabsContainer = styled.div`
 `
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
-  background: transparent;
+  background: ${({ theme }) => theme.config.background?.secondary || 'transparent'};
   width: 100%;
   max-width: 1358px;
   padding-top: 0px;

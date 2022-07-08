@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate'
 import { Input } from 'components/Input'
 import { inputGradientBorder } from 'theme'
 
-import arrowIcon from '../../assets/images/chevron.svg'
+import { ReactComponent as ArrowIcon } from '../../assets/images/chevron.svg'
 
 interface Props {
   page: number
@@ -52,8 +52,8 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
         pageRangeDisplayed={3}
         marginPagesDisplayed={3}
         pageCount={totalPages}
-        previousLabel={<Prev src={arrowIcon} alt="prevIcon" />}
-        nextLabel={<Next src={arrowIcon} alt="nextIcon" />}
+        previousLabel={<Prev />}
+        nextLabel={<Next />}
         containerClassName="pagination-container"
         pageClassName="page"
       />
@@ -63,7 +63,7 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
           <StyledInput value={inputPage} onChange={onPageInputChange} />
         </InputContainer>
         <Button onClick={onClickButton}>
-          <Next src={arrowIcon} alt="nextIcon" />
+          <Next />
         </Button>
       </GoToContaner>
     </Container>
@@ -117,7 +117,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     > a {
-      color: white;
+      color: ${({ theme }) => theme.text1};
       width: 100%;
       height: 100%;
       display: flex;
@@ -160,7 +160,7 @@ const Button = styled.div<{ disabled?: boolean }>`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: rgba(237, 206, 255, 0.05);
+  background-color: ${({ theme }) => theme.text10};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,8 +176,8 @@ const Button = styled.div<{ disabled?: boolean }>`
   }
 `
 
-const Next = styled.img``
+const Next = styled(ArrowIcon)``
 
-const Prev = styled.img`
+const Prev = styled(ArrowIcon)`
   transform: rotate(-180deg);
 `

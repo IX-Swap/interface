@@ -15,7 +15,7 @@ export const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  color: ${({ theme }) => `${theme.text2}50`};
+  color: ${({ theme }) => theme.text9};
   * {
     font-weight: 600;
   }
@@ -36,7 +36,7 @@ export const ProductsBlockContainer = styled.div`
   font-size: 14px;
   > div:last-child {
     * {
-      color: ${({ theme }) => theme.white};
+      color: ${({ theme }) => theme.text1};
       text-decoration: none;
       font-weight: 600;
       line-height: 21px;

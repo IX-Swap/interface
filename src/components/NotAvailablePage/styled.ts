@@ -6,8 +6,7 @@ export const Container = styled.div`
   max-width: 592px;
   width: 100%;
   border-radius: 30px;
-  background: radial-gradient(39.01% 78.49% at 10.99% 63.28%, rgba(138, 54, 152, 0.18) 18.75%, rgba(0, 0, 0, 0) 100%),
-    radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(154, 55, 114, 0.33) 0%, rgba(26, 18, 58, 0) 100%) #29113d;
+  background: ${({ theme }) => theme.bgG19};
   padding: 52px 58px;
   text-align: center;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -19,7 +18,7 @@ export const Title = styled.div`
   font-weight: 700;
   font-size: 32px;
   line-height: 145%;
-  background: linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
+  background: ${({ theme }) => theme.config.text?.main || theme.bgG1};
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -33,7 +32,7 @@ export const Info = styled.div`
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
-  color: #ffffff;
+  color: ${({ theme }) => theme.text1};
 `
 
 export const NetworksRow = styled.div<{ elements: number }>`
@@ -57,7 +56,7 @@ export const NetworkCard = styled.div`
   font-size: 14px;
   line-height: 21px;
   text-align: center;
-  color: #ffffff;
+  color: ${({ theme }) => theme.text1};
   position: relative;
   ${gradientBorder}
   :before {
@@ -91,7 +90,7 @@ export const PlaygroundBadge = styled.div`
   position: absolute;
   top: -10px;
   right: -19px;
-  background: #ffffff;
+  background: ${({ theme }) => theme.text1};
   border-radius: 32px;
   padding: 2px 6px;
 
@@ -99,7 +98,7 @@ export const PlaygroundBadge = styled.div`
     font-weight: 600;
     font-size: 10px;
     line-height: 15px;
-    background: linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
+    background: ${({ theme }) => theme.bgG1};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -118,19 +117,19 @@ export const KovanRow = styled.div`
 export const ConnectWalletContainer = styled(Container)<{ hasAnnouncement?: boolean }>`
   margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? 3 : 1)}rem;
   a {
-    color: white;
+    color: ${({ theme }) => theme.text1};
   }
   > div:first-child {
     font-weight: 600;
     font-size: 24px;
     line-height: 160%;
     text-align: center;
-    color: #ffffff;
+    color: ${({ theme }) => theme.text1};
     margin-bottom: 4px;
   }
   > div:nth-child(2) {
     text-align: center;
-    color: #ffffff;
+    color: ${({ theme }) => theme.text1};
     margin-bottom: 32px;
   }
   > button {
@@ -143,7 +142,7 @@ export const ConnectWalletContainer = styled(Container)<{ hasAnnouncement?: bool
     font-weight: 500;
     font-size: 12px;
     text-align: center;
-    color: #ffffff;
+    color: ${({ theme }) => theme.text1};
   }
 
   ${({ theme, hasAnnouncement }) => theme.mediaWidth.upToMedium`

@@ -61,7 +61,7 @@ const inputStyles = css`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
-  background-color: rgba(39, 31, 74, 0.4);
+  background-color: ${({ theme }) => theme.bg19};
   :focus {
     background-color: ${({ theme: { bg7 } }) => bg7};
   }
@@ -69,7 +69,7 @@ const inputStyles = css`
     font-weight: normal;
     font-size: 16px;
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
     opacity: 1; /* Firefox */
   }
 
@@ -77,14 +77,14 @@ const inputStyles = css`
     font-weight: normal;
     font-size: 16px;
     /* Internet Explorer 10-11 */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
   }
 
   ::-ms-input-placeholder {
     font-weight: normal;
     font-size: 16px;
     /* Microsoft Edge */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
   }
 `
 

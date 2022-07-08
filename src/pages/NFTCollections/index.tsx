@@ -13,8 +13,8 @@ import { NFTCollectionImage } from 'state/nft/types'
 import { useUserisLoggedIn } from 'state/auth/hooks'
 import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { useAppLogoSrc } from 'components/AppLogo'
 
-import LogoWhite from '../../assets/svg/logo-white.svg'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
 import {
   CollectionCard,
@@ -76,7 +76,10 @@ const NFTCollections: FC = () => {
     onSetCollectionState()
   }, [isLoggedIn, chainId, onSetCollectionState])
 
+  const appLogoSrc = useAppLogoSrc()
+
   if (!account) return <NFTConnectWallet />
+
   return (
     <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
       <Container style={{ width: '100%' }}>
@@ -118,11 +121,11 @@ const NFTCollections: FC = () => {
                     <CollectionImage
                       height="100%"
                       width="100%"
-                      src={getImage(cover) ?? LogoWhite}
+                      src={getImage(cover) ?? appLogoSrc}
                       style={{ objectFit: cover ? 'cover' : 'contain' }}
                     />
 
-                    <CollectionLogo src={getImage(logo) ?? LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
+                    <CollectionLogo src={getImage(logo) ?? appLogoSrc} style={!logo ? { objectFit: 'contain' } : {}} />
                   </CollectionImageWrapper>
                   <TextInfo>
                     <div>{name}</div>

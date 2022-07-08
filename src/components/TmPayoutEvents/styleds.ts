@@ -48,7 +48,7 @@ export const StyledHeaderRow = styled(HeaderRow)`
   }
 `
 
-export const StatusContainer = styled.div<{ color: keyof Colors | 'transparent' }>`
+export const StatusContainer = styled.div<{ color: Exclude<keyof Colors | 'transparent', 'config'> }>`
   width: 100%;
   text-align: center;
   color: white;
