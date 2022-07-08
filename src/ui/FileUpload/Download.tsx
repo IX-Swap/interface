@@ -14,9 +14,15 @@ export interface DownloadProps {
 
 export const Download = ({ documentId, name = 'file.txt' }: DownloadProps) => {
   const { user } = useAuth()
+  const isAuthorizer = user?.roles.includes('authorizer') ?? false
 
   const [downloadDocument, { isLoading }] = useDownloadRawDocument(
-    { documentId, uri: documentsURL.getById(getIdFromObj(user), documentId) },
+    {
+      documentId,
+      uri: isAuthorizer
+        ? documentsURL.getBySuperUser(documentId)
+        : documentsURL.getById(getIdFromObj(user), documentId)
+    },
     {
       onSuccess: ({ data }) => {
         const file = convertBlobToFile(data, '')
