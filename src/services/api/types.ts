@@ -33,3 +33,8 @@ export interface PaginationArgs {
   skip: number
   limit: number
 }
+
+export interface BlobWithExtension {
+  blob: Blob
+  extension: string
+}

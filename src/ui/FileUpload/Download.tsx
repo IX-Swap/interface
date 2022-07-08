@@ -3,15 +3,16 @@ import { documentsURL } from 'config/apiURL'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
-import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import { convertBlobToFile, downloadByFile } from 'hooks/utils'
 import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
 
 export interface DownloadProps {
   documentId: string
+  name?: string
 }
 
-export const Download = ({ documentId }: DownloadProps) => {
+export const Download = ({ documentId, name = 'file.txt' }: DownloadProps) => {
   const { user } = useAuth()
 
   const [downloadDocument, { isLoading }] = useDownloadRawDocument(
@@ -19,7 +20,7 @@ export const Download = ({ documentId }: DownloadProps) => {
     {
       onSuccess: ({ data }) => {
         const file = convertBlobToFile(data, '')
-        openFileInNewTab(file)
+        downloadByFile(file, name)
       }
     }
   )
