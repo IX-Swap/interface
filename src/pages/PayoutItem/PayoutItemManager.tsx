@@ -65,9 +65,9 @@ export default function PayoutItemForUser({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout={true} />
+            <PayoutHeader payout={payout} isMyPayout />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout={true} />
+            <PayoutActionBlock payout={payout} isMyPayout />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
