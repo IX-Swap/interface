@@ -110,6 +110,7 @@ export const FormStepper = (props: FormStepperProps) => {
 
   const handleComplete = () => {
     if (!completed.includes(activeStep)) {
+      console.log('set completed')
       setCompleted([...completed, activeStep])
     }
   }
