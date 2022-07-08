@@ -10,9 +10,9 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 
 export const NoticeOfAssessmentView = () => {
   const { isSingPass, singPassData } = useIsSingPass()
-  const noas = singPassData?.noahistory.noas ?? []
+  const noas = singPassData?.noahistory?.noas ?? []
 
-  if (isSingPass || noas.length < 1) {
+  if (!isSingPass || noas?.length < 1) {
     return null
   }
 
