@@ -26,7 +26,6 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { countriesList } from 'constants/countriesList'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
-import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
 import { Select, TextInput, Uploader } from './common'
@@ -40,7 +39,7 @@ import {
   promptValue,
   occupationList,
 } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
+import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox, StyledBigPassed } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses, IdentityDocumentType } from './enum'
@@ -320,7 +319,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Personal Information</Trans>
                           </TYPE.title6>
-                          {personalFilled && <BigPassed />}
+                          {personalFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
@@ -413,7 +412,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Identity Document</Trans>
                           </TYPE.title6>
-                          {identityDocumentFilled && <BigPassed />}
+                          {identityDocumentFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
@@ -465,7 +464,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Address</Trans>
                           </TYPE.title6>
-                          {addressFilled && <BigPassed />}
+                          {addressFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
@@ -515,7 +514,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Source of Funds</Trans>
                           </TYPE.title6>
-                          {fundsFilled && <BigPassed />}
+                          {fundsFilled && <StyledBigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
                           {sourceOfFunds.map(({ value, label }: any) => (
@@ -550,7 +549,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Investor Status Declaration</Trans>
                           </TYPE.title6>
-                          {investorFilled && <BigPassed />}
+                          {investorFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '34px' }}>
@@ -583,7 +582,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>FATCA</Trans>
                           </TYPE.title6>
-                          {fatcaFilled && <BigPassed />}
+                          {fatcaFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -629,7 +628,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Employment Information</Trans>
                           </TYPE.title6>
-                          {employmentInfoFilled && <BigPassed />}
+                          {employmentInfoFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <Select
@@ -669,7 +668,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Upload Documents</Trans>
                           </TYPE.title6>
-                          {filesFilled && <BigPassed />}
+                          {filesFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '40px' }}>

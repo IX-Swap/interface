@@ -35,7 +35,7 @@ export const Input = styled.input<{ error?: boolean }>`
   border: none;
   flex: 1 1 auto;
   width: 0;
-  background-color: ${({ theme }) => theme.bg7};
+  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg7};
   transition: color 300ms ${({ error }) => (error ? 'step-end' : 'step-start')};
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
   overflow: hidden;
@@ -60,7 +60,7 @@ export const Input = styled.input<{ error?: boolean }>`
     border: none;
     -webkit-text-fill-color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
     color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
-    -webkit-box-shadow: ${({ theme: { bg12 } }) => `0 0 0px 1000px ${`${bg12}40`} inset`};
+    -webkit-box-shadow: ${({ theme: { bg19 } }) => `0 0 0px 1000px ${`${bg19}`} inset`};
     transition: background-color 100000s ease-in-out 0s;
   }
 
@@ -84,7 +84,7 @@ export const Input = styled.input<{ error?: boolean }>`
 `
 export const Textarea = styled.textarea`
   resize: none;
-  background-color: ${({ theme }) => theme.bg12};
+  background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg12};
   font-weight: 300;
   font-size: 16px;
   border-radius: 36px;
@@ -99,7 +99,7 @@ export const Textarea = styled.textarea`
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
-    color: ${({ theme }) => theme.bg21};
+    color: ${({ theme }) => theme.text9};
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
   padding: 16px 22px;

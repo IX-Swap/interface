@@ -14,7 +14,7 @@ import { RowBetween, RowFixed, RowStart } from '../Row'
 import { displayDeadline, displayUserSlippageTolerance } from './helpers'
 
 const Input = styled.input`
-  background: ${({ theme }) => theme.bg1};
+  background: ${({ theme }) => theme.config.background?.main || theme.bg1};
   font-weight: 600;
   font-size: 22px;
   line-height: 40px;

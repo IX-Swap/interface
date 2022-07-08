@@ -167,7 +167,7 @@ export const NoData = styled.div`
   font-weight: 400;
   color: ${({ theme: { text2 } }) => text2};
   text-align: center;
-  background-color: #2c254a80;
+  background-color: ${({ theme: { config } }) => config.background?.secondary || '#2c254a80'};
   border-radius: 30px;
   padding: 36px;
 `
@@ -245,7 +245,7 @@ export const StakeInfoContainer = styled(Column)`
     > :last-child {
       width: 100%;
       > div {
-        color: white;
+        color: ${({ theme }) => theme.text1};
         font-size: 16px;
         width: 100%;
         text-align: right;

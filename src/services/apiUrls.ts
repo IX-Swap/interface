@@ -105,6 +105,10 @@ export const users = {
   update: (address: string) => `/users/settings/address/${address}`,
 }
 
+export const whitelabel = {
+  config: '/white-label/config',
+}
+
 export interface PaginateWithFilter {
   tokenId?: number | null
   page?: number

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
 
-import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
+import { PassedIcon } from 'pages/KYC/styleds'
 import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -19,6 +19,7 @@ import { ModalBlurWrapper, ModalContentWrapper, ModalPadding, CloseIcon, TYPE } 
 import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from 'pages/KYC/enum'
 import { useActiveWeb3React } from 'hooks/web3'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 const KycSourceContainer = styled.div`
   width: 100%;
@@ -70,17 +71,16 @@ const Spacer = styled.div`
 `
 
 const Separator = styled.hr`
-  background: #edceff;
+  background: ${({ theme }) => theme.text2};
 
   width: 100%;
   opacity: 0.2;
 `
 
 const Button = styled.button`
-  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%),
-    #2c254a;
+  background: ${({ theme }) => theme.bgG1};
 
-  color: #edceff;
+  color: ${({ theme }) => theme.text2};
   border-radius: 40px;
   border: none;
   margin: 0px 24px;
@@ -127,6 +127,7 @@ interface KycSourceSelectorProps {
 const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const history = useHistory()
   const { kyc } = useKYCState()
+  const { config } = useWhitelabelState()
 
   const [selected, setSelected] = useState<KycSource | undefined>(undefined)
   const [statusDesc, setStatusDesc] = useState('')
@@ -144,7 +145,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       case KYCStatuses.NOT_SUBMITTED:
         return t`KYC: NOT_SUBMITTED`
       default:
-        return t`Pass KYC on IX Swap`
+        return t`Pass KYC on ${config?.name || 'IX Swap'}`
     }
   }
 
@@ -175,11 +176,11 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   return (
     <KycSourceContainer>
       <KycRow>
-        <TYPE.small style={{ fontSize: '12px', color: '#EDCEFF' }}>KYC source</TYPE.small>
+        <TYPE.small style={{ fontSize: '12px', color: 'text2' }}>KYC source</TYPE.small>
       </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
         <TYPE.body1 minWidth="auto" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          My IX Swap KYC
+          My {config?.name || 'IX Swap'} KYC
         </TYPE.body1>
 
         <KycSourceTooltip text="Recommended" />
@@ -191,12 +192,12 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <Spacer />
         {kyc?.status === KYCStatuses.APPROVED ? (
           <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
-            {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+            {selected === KycSource.IXSwap ? <PassedIcon className="selected-checkmark" /> : <CheckmarkPlaceholder />}
           </IconWrapper>
         ) : (
-          <KycSourceTooltip text="Pass KYC on IX Swap to enable this option">
+          <KycSourceTooltip text={`Pass KYC on ${config?.name || 'IX Swap'} to enable this option`}>
             <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
-              {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+              {selected === KycSource.IXSwap ? <PassedIcon className="selected-checkmark" /> : <CheckmarkPlaceholder />}
             </IconWrapper>
           </KycSourceTooltip>
         )}
@@ -210,7 +211,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <Spacer />
 
         <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
-          {selected === KycSource.InvestaX ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+          {selected === KycSource.InvestaX ? <PassedIcon className="selected-checkmark" /> : <CheckmarkPlaceholder />}
         </IconWrapper>
       </KycRow> */}
     </KycSourceContainer>
@@ -280,8 +281,8 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
       mobileMaxHeight={90}
     >
       <ModalBlurWrapper data-testid="choose-broker-dealer-and-custodian-popup">
-        <ModalContentWrapper style={{ borderRadius: '12px', backgroundColor: '#272046' }}>
-          <div style={{ backgroundColor: '#0F0518', borderRadius: '12px 12px 0px 0px' }}>
+        <StyledModalContentWrapper>
+          <div>
             <ModalPadding>
               <ModalHeader>
                 <TYPE.title5>
@@ -352,7 +353,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 <Text style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</Text>
                 <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
                   {selectedBrokerPair === pair?.id ? (
-                    <Checkmark className="selected-checkmark" />
+                    <PassedIcon className="selected-checkmark" />
                   ) : (
                     <CheckmarkPlaceholder />
                   )}
@@ -387,7 +388,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
               )}
             </Row>
           </StartAccreditationButtonWrapper>
-        </ModalContentWrapper>
+        </StyledModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
@@ -428,7 +429,7 @@ const BrokerDealersGrid = styled(BrokerDealersGridHeader)`
 const Line = styled.div`
   height: 3px;
   width: 10px;
-  background-color: #edceff;
+  background-color: ${({ theme }) => theme.text2};
   opacity: 0.5;
 `
 
@@ -466,4 +467,12 @@ const StartAccreditationButtonWrapper = styled(ModalPadding)`
       margin-bottom: 10px !important;
     }
   `};
+`
+const StyledModalContentWrapper = styled(ModalContentWrapper)`
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.bg11};
+  > div:first-child {
+    background-color: ${({ theme }) => theme.bg8};
+    border-radius: 12px 12px 0px 0px;
+  }
 `

@@ -238,7 +238,7 @@ const progressBarAnimation = keyframes`
  100% { background-position: -200px -26px; }
 `
 
-export const LiniarProgressContainer = styled.div<{ statusColor: keyof Colors }>`
+export const LiniarProgressContainer = styled.div<{ statusColor: Exclude<keyof Colors, 'config'> }>`
   > div {
     width: 100%;
   }

@@ -1,8 +1,8 @@
-import { DarkCard } from 'components/Card'
-import { MaxButton } from 'pages/Pool/styleds'
 import { Text } from 'rebass'
 import styled from 'styled-components/macro'
-import AppBody from '../AppBody'
+
+import { DarkCard } from 'components/Card'
+import { MaxButton } from 'pages/Pool/styleds'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -38,9 +38,6 @@ export const RemovedLiquidityWrapper = styled(DarkCard)`
   padding-bottom: 5px;
 `
 
-export const RemoveLiquidityBody = styled(AppBody)`
-  background: ${({ theme }) => theme.bgG8};
-`
 export const ModalHeaderWrapper = styled.div`
   padding-bottom: 1rem;
   margin-left: 40px;

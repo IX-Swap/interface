@@ -1,7 +1,7 @@
 import React, { CSSProperties, FC, HTMLProps, ReactChildren } from 'react'
 import { Box, Flex } from 'rebass'
+import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
-import styled from 'styled-components'
 import { FileWithPath } from 'react-dropzone'
 
 import { Input } from 'components/Input'
@@ -12,10 +12,11 @@ import Upload from 'components/Upload'
 import { FilePreview } from 'components/FilePreview'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { Select as ReactSelect } from 'components/Select'
+import { AcceptFiles } from 'components/Upload/types'
+
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
-import { AcceptFiles } from 'components/Upload/types'
 
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 
@@ -162,7 +163,7 @@ export const Uploader: FC<UploaderProps> = ({
       <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles} file={null} onDrop={onDrop}>
         <UploaderCard>
           <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-            <UploadLogo />
+            <StyledUploadLogo />
             <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
               Drag and Drop
             </TYPE.small>
@@ -249,6 +250,17 @@ export const DeleteRow = ({ children, onClick }: DeleteRowTypes) => {
   )
 }
 
+const StyledUploadLogo = styled(UploadLogo)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      path {
+        stroke: ${theme.config.elements?.main};
+        fill: none;
+      }
+    `}
+`
+
 const StyledDescription = styled(TYPE.description3)`
   color: ${({ theme: { text2 } }) => `${text2}50`};
   ul {
@@ -271,7 +283,7 @@ const StyledInput = styled(Input)`
   font-size: 16px;
   background-color: ${({ theme: { bg19 } }) => bg19};
   :focus {
-    background-color: ${({ theme: { bg7 } }) => bg7};
+    background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
   }
 `
 

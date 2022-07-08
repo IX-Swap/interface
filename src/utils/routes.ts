@@ -30,4 +30,6 @@ export const routes = {
   nftItem: (address: string, id: number) => `/nft/collections/${address}/${id}`,
   payoutItem: (id?: number) => `/payout/${id || ':payoutId'}`,
   payoutItemManager: (id?: number) => `/payout/${id || ':payoutId'}/manager`,
+  tokenManager: (tab?: string, id?: number) => `/token-manager/${tab || ':tab'}/${id || ':id?'}`,
+  admin: (tab?: string, id?: number) => `/admin/${tab || ':tab'}/${id || ':id?'}`,
 }

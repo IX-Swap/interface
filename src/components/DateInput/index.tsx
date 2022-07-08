@@ -6,8 +6,8 @@ import { t } from '@lingui/macro'
 import { Label } from 'components/Label'
 import { TYPE } from 'theme'
 import { Input } from 'components/Input'
+import { ReactComponent as CalendarIcon } from 'assets/images/calendar.svg'
 import { Props as LabelProps } from 'components/Label'
-import calendarIcon from 'assets/images/calendar.svg'
 
 interface Props {
   value?: string | Date | number
@@ -35,14 +35,19 @@ export const DateInput = ({
 }: Props & Partial<LabelProps>) => {
   return (
     <Container>
-      <Label label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
+      <StyledLabel label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
       <MobileDatePicker
         value={value || null}
         onChange={onChange}
         openTo={openTo ?? 'year'}
         views={['year', 'month', 'date']}
         inputFormat="DD/MM/YYYY"
-        renderInput={({ inputProps }: Record<string, any>) => <TextField placeholder={placeholder} {...inputProps} />}
+        renderInput={({ inputProps }: Record<string, any>) => (
+          <TextFieldContainer>
+            <TextField {...inputProps} placeholder={placeholder} />
+            <StyledCalendarIcon />
+          </TextFieldContainer>
+        )}
         maxDate={maxDate}
         {...props}
       />
@@ -55,6 +60,16 @@ export const DateInput = ({
   )
 }
 
+const TextFieldContainer = styled.div`
+  position: relative;
+`
+
+const StyledCalendarIcon = styled(CalendarIcon)`
+  position: absolute;
+  right: 26px;
+  top: 19px;
+`
+
 const TextField = styled(Input)<{ maxHeight?: number }>`
   border-radius: 36px;
   height: 60px;
@@ -62,10 +77,11 @@ const TextField = styled(Input)<{ maxHeight?: number }>`
   padding: 11px 66px 9px 21px;
   font-weight: normal;
   font-size: 16px;
-  background-image: ${`url("${calendarIcon}")`};
-  background-repeat: no-repeat;
-  background-position: right 26px top 19px;
   background-color: ${({ theme: { bg19 } }) => bg19};
+`
+
+const StyledLabel = styled(Label)`
+  color: ${({ theme }) => theme.text2};
 `
 
 const Container = styled.div`

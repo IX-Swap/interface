@@ -58,7 +58,7 @@ export default function SecTokenDetails({
       <DepositPopup currency={token?.token} token={token} />
       <WithdrawPopup currency={token?.token} token={token} />
       <LightBackground />
-      <Container width={['100%', '90%']} maxWidth={'920px'}>
+      <Container>
         <InfoTitle>
           <BackArrowButton onBack={onBack} />
           {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}

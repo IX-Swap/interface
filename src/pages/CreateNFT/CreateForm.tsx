@@ -197,7 +197,7 @@ export const CreateForm = () => {
     display: flex;
     background-color: #380846;
 
-    color: #ffffff;
+    color: ${({ theme }) => theme.text1};
     pointer-events: auto;
 
     align-items: center;

@@ -4,9 +4,8 @@ import React, { FC, useState, useCallback } from 'react'
 import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { TYPE } from 'theme'
-import { ReactComponent as Passed } from 'assets/images/check-success.svg'
 
-import { FormCard, PageLink } from './styleds'
+import { FormCard, PageLink, KYCStatusIcons } from './styleds'
 
 interface Props {
   topics: any[]
@@ -32,7 +31,12 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
     <div>
       {description && (
         <FormCard style={{ padding: 24, marginBottom: 24 }}>
-          <TYPE.title6 fontSize={15} marginBottom="16px" style={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }} color={'bg14'}>
+          <TYPE.title6
+            fontSize={15}
+            marginBottom="16px"
+            style={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }}
+            color={'bg14'}
+          >
             <Trans>Reason of changes requested</Trans>
           </TYPE.title6>
 
@@ -65,7 +69,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
                   key={`page-nav-${index}`}
                 >
                   {title}
-                  {passed && <Passed />}
+                  {passed && KYCStatusIcons.approved()}
                 </PageLink>
               )
           )}
