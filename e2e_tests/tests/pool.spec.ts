@@ -14,7 +14,7 @@ test.describe('Check Liquidity pool functions', () => {
 
   test.describe('Check Creating pool functions', () => {
     test.afterEach(async ({page, liquidityPoolsPage}) => {
-      await liquidityPoolsPage.removeCreatedLiqudityPool();
+      await liquidityPoolsPage.removeCreatedLiqudityPool(page);
     })
 
     test('Test the ability to create a pool (Token - Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
@@ -96,8 +96,8 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, ethAmountForLiquidityPool, ethTokenTitle, ixsTokenTitle);
     })
 
-    test.afterEach(async ({liquidityPoolsPage}) => {
-      await liquidityPoolsPage.removeCreatedLiqudityPool();
+    test.afterEach(async ({page, liquidityPoolsPage}) => {
+      await liquidityPoolsPage.removeCreatedLiqudityPool(page);
     })
 
     test('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
@@ -113,6 +113,8 @@ test.describe('Check Liquidity pool functions', () => {
       await metamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
 
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
+
+      await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
     })
   })
 

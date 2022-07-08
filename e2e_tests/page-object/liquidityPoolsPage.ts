@@ -159,7 +159,7 @@ export class LiquidityPoolsPage extends WebPage {
     }
   }
 
-  async removeCreatedLiqudityPool() {
+  async removeCreatedLiqudityPool(page) {
     await this.page.reload();
     await this.page.waitForLoadState();
 
@@ -167,12 +167,12 @@ export class LiquidityPoolsPage extends WebPage {
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();
 
-    const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
+    const approveMetamaskPopUp = await this.openNewPageByClick(page, this.approveRemovePoolButton);
     await approveMetamaskPopUp.click(this.metamaskPage.signButton);
 
     await this.clickRemovePoolButton();
 
-    const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
+    const confirmMetamaskPopUp = await this.openNewPageByClick(page, this.confirmRemovePoolButton);
     await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
 
     await this.clickTransactionSubmittedPopUpCloseButton();
