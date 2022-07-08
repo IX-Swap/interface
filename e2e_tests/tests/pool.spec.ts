@@ -1,9 +1,9 @@
 import { test } from '../fixtures/metamaskFixture'
 import { expect } from '@playwright/test'
 
-test.beforeEach(async ({page, kovanNetwork, topNavigationBar, liquidityPoolsPage}) => {
+test.beforeEach(async ({ kovanNetwork, topNavigationBar, liquidityPoolsPage}) => {
   await topNavigationBar.clickLiquidityPoolsButton();
-  await liquidityPoolsPage.removeCreatedLiqudityPoolIfItPresent(page);
+  await liquidityPoolsPage.removeCreatedLiqudityPoolIfItPresent();
 })
 
 test.describe('Check Liquidity pool functions', () => {
@@ -13,8 +13,8 @@ test.describe('Check Liquidity pool functions', () => {
   let secondTokenValue;
 
   test.describe('Check Creating pool functions', () => {
-    test.afterEach(async ({page, liquidityPoolsPage}) => {
-      await liquidityPoolsPage.removeCreatedLiqudityPool(page);
+    test.afterEach(async ({ liquidityPoolsPage}) => {
+      await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
 
     test('Test the ability to create a pool (Token - Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
@@ -97,7 +97,7 @@ test.describe('Check Liquidity pool functions', () => {
     })
 
     test.afterEach(async ({page, liquidityPoolsPage}) => {
-      await liquidityPoolsPage.removeCreatedLiqudityPool(page);
+      await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
 
     test('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
@@ -113,8 +113,6 @@ test.describe('Check Liquidity pool functions', () => {
       await metamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
 
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
-
-      await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
     })
   })
 

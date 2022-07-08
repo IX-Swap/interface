@@ -1,6 +1,7 @@
 import { WebPage } from './webPage'
 import { BrowserContext, expect, Locator, Page } from '@playwright/test'
 import { MetamaskPage } from '../page-object/metamaskPage'
+import config from '../playwright.config'
 
 export class LiquidityPoolsPage extends WebPage {
   readonly metamaskPage: MetamaskPage;
@@ -139,31 +140,31 @@ export class LiquidityPoolsPage extends WebPage {
     return await this.secondAmountOfTokensField.getAttribute('value');
   }
 
-  async  removeCreatedLiqudityPoolIfItPresent(page) {
+  async  removeCreatedLiqudityPoolIfItPresent() {
     await expect(this.liquidityPoolLoading).not.toBeVisible();
     await this.page.waitForTimeout(1000);
     if (await this.createdIsxEthPool.isVisible()) {
-      await this.removeLiquidityPool(page)
+      await this.removeLiquidityPool()
     }
   }
 
-  async removeCreatedLiqudityPool(page) {
-    await this.page.reload();
+  async removeCreatedLiqudityPool() {
+    await this.page.goto(config.use.baseURL + '#/pool')
 
-    await this.removeLiquidityPool(page)
+    await this.removeLiquidityPool()
   }
 
-  async removeLiquidityPool(page) {
+  async removeLiquidityPool() {
     await this.clickIsxEthPoolDetailsDropdown();
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();
 
-    const approveMetamaskPopUp = await this.openNewPageByClick(page, this.approveRemovePoolButton);
+    const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
     await approveMetamaskPopUp.click(this.metamaskPage.signButton);
 
     await this.clickRemovePoolButton();
 
-    const confirmMetamaskPopUp = await this.openNewPageByClick(page, this.confirmRemovePoolButton);
+    const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
     await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
 
     await this.clickTransactionSubmittedPopUpCloseButton();
