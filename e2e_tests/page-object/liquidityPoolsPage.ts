@@ -139,30 +139,21 @@ export class LiquidityPoolsPage extends WebPage {
     return await this.secondAmountOfTokensField.getAttribute('value');
   }
 
-  async  removeCreatedLiqudityPoolIfItPresent() {
+  async  removeCreatedLiqudityPoolIfItPresent(page) {
     await expect(this.liquidityPoolLoading).not.toBeVisible();
     await this.page.waitForTimeout(1000);
     if (await this.createdIsxEthPool.isVisible()) {
-      await this.clickIsxEthPoolDetailsDropdown();
-      await this.clickRemoveLiquidityButton();
-      await this.clickMaxRemovePercentageButton();
-
-      const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
-      await approveMetamaskPopUp.click(this.metamaskPage.signButton);
-
-      await this.clickRemovePoolButton();
-
-      const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
-      await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
-
-      await this.clickTransactionSubmittedPopUpCloseButton();
+      await this.removeLiquidityPool(page)
     }
   }
 
   async removeCreatedLiqudityPool(page) {
     await this.page.reload();
-    await this.page.waitForLoadState();
 
+    await this.removeLiquidityPool(page)
+  }
+
+  async removeLiquidityPool(page) {
     await this.clickIsxEthPoolDetailsDropdown();
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();

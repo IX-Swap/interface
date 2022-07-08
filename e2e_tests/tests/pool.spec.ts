@@ -1,9 +1,9 @@
 import { test } from '../fixtures/metamaskFixture'
 import { expect } from '@playwright/test'
 
-test.beforeEach(async ({kovanNetwork, topNavigationBar, liquidityPoolsPage}) => {
+test.beforeEach(async ({page, kovanNetwork, topNavigationBar, liquidityPoolsPage}) => {
   await topNavigationBar.clickLiquidityPoolsButton();
-  await liquidityPoolsPage.removeCreatedLiqudityPoolIfItPresent();
+  await liquidityPoolsPage.removeCreatedLiqudityPoolIfItPresent(page);
 })
 
 test.describe('Check Liquidity pool functions', () => {
