@@ -17,7 +17,7 @@ import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutHistory } from './History'
 
-export default function PayoutItemForUser({
+export default function PayoutItemForManager({
   match: {
     params: { payoutId },
   },
