@@ -4,5 +4,5 @@ export const timeouts = {
   tinyTimeout: 2000,
   shortTimeout: 10000,
   mediumTimeout: 35000,
-  longTimeout: 70000
+  longTimeout: 75000
 };
