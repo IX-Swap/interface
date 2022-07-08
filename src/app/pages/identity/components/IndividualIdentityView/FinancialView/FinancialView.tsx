@@ -12,6 +12,10 @@ export const FinancialView = (props: FinancialViewProps) => {
   const { data } = props
   const { isSingPass } = useIsSingPass()
 
+  const sourceOfFund = Array.isArray(data.sourceOfFund)
+    ? undefined
+    : data.sourceOfFund
+
   return (
     <Grid
       sx={{
@@ -37,7 +41,7 @@ export const FinancialView = (props: FinancialViewProps) => {
           <Grid item>
             <LabelledValue
               isRedesigned
-              value={data.sourceOfFund}
+              value={sourceOfFund}
               label='Source of fund'
             />
           </Grid>
@@ -64,7 +68,7 @@ export const FinancialView = (props: FinancialViewProps) => {
           <Grid item>
             <LabelledValue
               isRedesigned
-              value={data.sourceOfFund}
+              value={sourceOfFund}
               label='Source of fund'
             />
           </Grid>
