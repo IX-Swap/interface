@@ -43,7 +43,7 @@ export const Menu = ({ close }: Props) => {
   const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
   
   const isAllowed = useCallback((path: string): boolean => {
-    if (!config || config.pages.length === 0) {
+    if (!config || !config.pages ||config.pages.length === 0) {
       return true
     }
 
