@@ -29,7 +29,7 @@ class UserForms {
     this.ERROR = page.locator('[class*=Mui-error]')
     this.FULL_NAME = page.locator(kyc.field.FULL_NAME)
     this.ERROR_NOTIFICATION = page.locator("[appearance='error']")
-    this.DATA_FIELD = page.locator('[name="dob"]')
+    this.DATA_FIELD = page.locator('[placeholder="mm/dd/yyyy"]')
     this.SET_DATA_BUTTON = page.locator(`text="Set Date"`)
   }
 
@@ -74,7 +74,7 @@ class UserForms {
   fillTaxDeclarationForm = async () => {
     await click(kyc.field.TAX_RESIDENT, this.page)
     await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
-    await typeText(kyc.field.TAX_RESIDENT_IDENTIFICATION, '9379992', this.page)
+    await typeText(kyc.field.TAX_RESIDENT_IDENTIFICATION, 'S4235022B', this.page)
     await click(authForms.buttons.NEXT, this.page)
   }
 
@@ -181,7 +181,7 @@ class UserForms {
     await click('[data-value="F"]', this.page)
     await typeText(kyc.field.MIDDLENAME, 'Middle', this.page)
     await this.DATA_FIELD.click()
-    await this.SET_DATA_BUTTON.click()
+    await this.DATA_FIELD.type('12121990')
     await clearAndTypeText(kyc.field.PHONE_NUMBER, '13022462220', this.page)
     await click(kyc.field.CITIZENSHIP, this.page)
     await click(kyc.field.CITIZENSHIP_VALUE, this.page)
@@ -210,15 +210,9 @@ class UserForms {
     await click(kyc.field.SET_INCOME, this.page)
     await click(kyc.listBox.SOURCE_OF_FUNDS, this.page)
     await click(kyc.listBox.SOURCE_OF_FUNDS_VALUE, this.page)
-    // await click(authForms.buttons.NEXT, this.page)
     await shouldExist(kyc.form.TAX_DECLARATION, this.page)
   }
 
-  fillTaxDeclaration = async () => {
-    // await click(kyc.checkbox.YES_SINGAPORE_RESIDENT, this.page)
-    await typeText(kyc.field.IDENTIFICATION_NUMBER, 'S4235022B', this.page)
-    await click(kyc.checkbox.NO_US_RESIDENT, this.page)
-  }
   investorStatusDeclaration = async (identities = 'default') => {
     const inputs = await uploadFiles(this.page, '[type="file"]', text.docs.pathToFile)
 
@@ -228,7 +222,8 @@ class UserForms {
       await click('[name="trustee"]', this.page)
     }
 
-    await click(kyc.checkbox.I_CONFIRM, this.page)
+    await click(kyc.checkbox.I_CONFIRM_OPT, this.page)
+    await click(kyc.checkbox.I_CONFIRM_OPT_AGREEMENTS, this.page)
     await click(authForms.buttons.NEXT, this.page)
     return inputs
   }

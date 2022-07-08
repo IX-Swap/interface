@@ -93,10 +93,10 @@ export async function getRequest(cookies, link) {
         'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip, deflate, br',
         Accept: '*/*',
-        host: baseCreds.HOST,
         Cookie: cookies
       }
-    }).then(request => request.json())
+    })
+    console.log(request)
     return request
   } catch (error) {
     console.log(error)
