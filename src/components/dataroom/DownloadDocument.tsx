@@ -1,7 +1,11 @@
 import React from 'react'
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
-import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import {
+  convertBlobToFile,
+  downloadByFile,
+  openFileInNewTab
+} from 'hooks/utils'
 import { Launch } from '@mui/icons-material'
 
 export interface DownloadDocumentRendererProps {
@@ -12,17 +16,29 @@ export interface DownloadDocumentRendererProps {
 export interface DownloadDocumentProps {
   documentId: string
   ownerId: string
+  name?: string
+  action?: 'view' | 'download'
   children?: (props: DownloadDocumentRendererProps) => JSX.Element
 }
 
 export const DownloadDocument: React.FC<DownloadDocumentProps> = props => {
-  const { documentId, ownerId, children } = props
+  const {
+    documentId,
+    action = 'download',
+    ownerId,
+    name = 'file.txt',
+    children
+  } = props
   const [downloadDocument, { isLoading }] = useDownloadRawDocument(
     { documentId, ownerId },
     {
       onSuccess: ({ data }) => {
-        const file = convertBlobToFile(data, '') // TODO: fix name
-        openFileInNewTab(file)
+        const file = convertBlobToFile(data, '')
+        if (action === 'download') {
+          downloadByFile(file, name)
+        } else {
+          openFileInNewTab(file)
+        }
       }
     }
   )
