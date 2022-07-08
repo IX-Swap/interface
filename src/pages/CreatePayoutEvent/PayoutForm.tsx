@@ -20,6 +20,7 @@ import { useUserState } from 'state/user/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useWeb3React } from '@web3-react/core'
+import { routes } from 'utils/routes'
 
 export const PayoutForm: FC = () => {
   const { account } = useWeb3React()
@@ -69,7 +70,7 @@ export const PayoutForm: FC = () => {
           summary: 'Payout was successfully created',
         },
       })
-      history.push(`/payout/${data.id}`)
+      history.push({ pathname: routes.payoutItemManager(data.id) })
     } else {
     }
   }

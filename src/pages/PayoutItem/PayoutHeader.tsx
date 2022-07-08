@@ -29,7 +29,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
   const history = useHistory()
 
   const goBack = () => {
-    history.push(routes.securityTokens('payout-events'))
+    history.push(isMyPayout ? '/token-manager/payout-events' : routes.securityTokens('payout-events'))
   }
 
   return (
