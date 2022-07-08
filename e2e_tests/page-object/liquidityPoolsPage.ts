@@ -141,7 +141,7 @@ export class LiquidityPoolsPage extends WebPage {
 
   async  removeCreatedLiqudityPoolIfItPresent() {
     await expect(this.liquidityPoolLoading).not.toBeVisible();
-    await this.page.waitForTimeout(10000);
+    await this.page.waitForTimeout(1000);
     if (await this.createdIsxEthPool.isVisible()) {
       await this.clickIsxEthPoolDetailsDropdown();
       await this.clickRemoveLiquidityButton();
