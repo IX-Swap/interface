@@ -241,8 +241,9 @@ export const MultipleFilters = ({
         label="Payment period"
         value={[values.startDate, values.endDate]}
         onChange={(value) => {
-          setFieldValue('startDate', value[0] ? dayjs(value[0]).toISOString() : value[0])
-          setFieldValue('endDate', value[1] ? dayjs(value[1]).toISOString() : value[1])
+          const format = 'YYYY-MM-DDTHH:mm:ss'
+          setFieldValue('startDate', value[0] ? dayjs(value[0]).format(format) : value[0])
+          setFieldValue('endDate', value[1] ? dayjs(value[1]).format(format) : value[1])
         }}
         // maxDate={new Date()}
       />

@@ -103,7 +103,7 @@ export const AdminKycFilters: FC<Props> = ({
             }}
           />
         </SelectFiltersContainer>
-        <ResetFilterButton onClick={handleResetFilters}>Reset Filters</ResetFilterButton>
+        <ResetFilterButton onClick={handleResetFilters}>Clear Filters</ResetFilterButton>
       </Flex>
 
       <Flex marginBottom="52px" justifyContent="space-between">

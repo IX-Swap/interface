@@ -29,4 +29,5 @@ export const routes = {
   nftItemPath: `/nft/collections/:collectionAddress/:itemId`,
   nftItem: (address: string, id: number) => `/nft/collections/${address}/${id}`,
   payoutItem: (id?: number) => `/payout/${id || ':payoutId'}`,
+  payoutItemManager: (id?: number) => `/payout/${id || ':payoutId'}/manager`,
 }

@@ -17,7 +17,7 @@ import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutHistory } from './History'
 
-export default function PayoutItemForUser({
+export default function PayoutItemForManager({
   match: {
     params: { payoutId },
   },
@@ -65,9 +65,9 @@ export default function PayoutItemForUser({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout={false} />
+            <PayoutHeader payout={payout} isMyPayout />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout={false} />
+            <PayoutActionBlock payout={payout} isMyPayout />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}

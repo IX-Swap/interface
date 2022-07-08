@@ -55,6 +55,7 @@ const UpdateCollection = lazy(() => import('./UpdateCollection'))
 const CreateCollection = lazy(() => import('./CreateCollection'))
 const NftAssetPage = lazy(() => import('./NFTAsset'))
 const PayoutItem = lazy(() => import('./PayoutItem'))
+const PayoutItemManager = lazy(() => import('./PayoutItem/PayoutItemManager'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -218,6 +219,9 @@ export default function App() {
                 )}
                 {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
                 {isWhitelisted && <Route exact strict path={routes.createPayoutEvent} component={CreatePayoutEvent} />}
+                {isWhitelisted && (
+                  <Route exact strict path={routes.payoutItemManager()} component={PayoutItemManager} />
+                )}
                 {isWhitelisted && <Route exact strict path={routes.payoutItem()} component={PayoutItem} />}
                 {isWhitelisted && canAccessKycForm('individual') && (
                   <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
