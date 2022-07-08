@@ -1,7 +1,6 @@
-import { Grid, Box } from '@mui/material'
+import { Grid, Box, Button } from '@mui/material'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { BackButton } from 'app/components/FormStepper/BackButton'
-import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
@@ -26,6 +25,7 @@ export interface FormStepProps {
   setCompleted?: () => void
   skippable?: boolean
   completed: number[]
+  createModeRedirect?: string
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -42,7 +42,8 @@ export const FormStep = (props: FormStepProps) => {
     shouldSaveOnMove,
     setCompleted,
     skippable,
-    completed
+    completed,
+    createModeRedirect
   } = props
 
   const isCurrentStep = activeStep === index
@@ -114,6 +115,8 @@ export const FormStep = (props: FormStepProps) => {
       <SaveOnNavigate
         transformData={step.getRequestPayload}
         mutation={saveMutation}
+        isCreateMode={data === undefined}
+        createModeRedirect={createModeRedirect}
       />
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='small' />
@@ -145,17 +148,15 @@ export const FormStep = (props: FormStepProps) => {
           )}
 
           {hasNextStep && (
-            <SaveButton
+            <Button
               fullWidth
-              step={index}
-              transformData={step.getRequestPayload}
-              mutation={saveMutation}
-              successCallback={nextCallback}
               variant='contained'
               color='primary'
+              onClick={nextCallback}
+              size='large'
             >
               Next
-            </SaveButton>
+            </Button>
           )}
         </Box>
       </Grid>

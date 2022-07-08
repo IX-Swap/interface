@@ -30,7 +30,9 @@ export const useUpdateCorporate = (corporateType: string) => {
       ])
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      if (params.identityId !== undefined) {
+        void snackbarService.showSnackbar(error.message, 'error')
+      }
     }
   })
 }
