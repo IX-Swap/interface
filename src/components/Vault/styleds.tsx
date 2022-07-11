@@ -128,21 +128,51 @@ export const WaitingWitdrawalFee = styled.div`
   column-gap: 8px;
 `
 
+export const StyledPassed = styled(Passed)`
+  ${({ theme }) =>
+    theme.config.elements &&
+    css`
+      path[stroke] {
+        fill: none;
+        stroke: ${theme.config.elements.main};
+      }
+    `};
+`
+
+const StyledAttention = styled(Attention)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      > circle[fill='#ED0376'] {
+        fill: ${theme.error};
+      }
+      > circle[stroke='#ED0376'] {
+        stroke: ${theme.error};
+      }
+      line {
+        stroke: ${theme.error};
+      }
+      > circle[fill='#372E5E'] {
+        fill: ${theme.config.elements?.main};
+      }
+    `}
+`
+
 export const WithdrawStatusIcons = {
-  [WithdrawStatus.APPROVED]: <Passed />,
-  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: <Passed />,
-  [WithdrawStatus.FB_TX_CANCELLED]: <Attention />,
-  [WithdrawStatus.FB_TX_BLOCKED]: <Attention />,
-  [WithdrawStatus.FB_TX_TIMEOUT]: <Attention />,
-  [WithdrawStatus.FB_TX_FAILED]: <Attention />,
-  [WithdrawStatus.CANCELLED]: <Attention />,
-  [WithdrawStatus.FAILED]: <Attention />,
+  [WithdrawStatus.APPROVED]: <StyledPassed />,
+  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: <StyledPassed />,
+  [WithdrawStatus.FB_TX_CANCELLED]: <StyledAttention />,
+  [WithdrawStatus.FB_TX_BLOCKED]: <StyledAttention />,
+  [WithdrawStatus.FB_TX_TIMEOUT]: <StyledAttention />,
+  [WithdrawStatus.FB_TX_FAILED]: <StyledAttention />,
+  [WithdrawStatus.CANCELLED]: <StyledAttention />,
+  [WithdrawStatus.FAILED]: <StyledAttention />,
 } as Record<string, JSX.Element>
 
 export const DepositStatusIcons = {
-  [DepositStatus.SETTLED]: <Passed />,
-  [DepositStatus.FAILED]: <Attention />,
-  [DepositStatus.CANCELLED]: <Attention />,
+  [DepositStatus.SETTLED]: <StyledPassed />,
+  [DepositStatus.FAILED]: <StyledAttention />,
+  [DepositStatus.CANCELLED]: <StyledAttention />,
 } as Record<string, JSX.Element>
 
 export const getStatusIcon = (action: ActionTypes, status: string) => {

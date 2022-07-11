@@ -14,6 +14,7 @@ export interface WhitelabelRaw {
   faviconUrl: string
   footerConfig: string
   defaultUrl: string
+  chartsUrl?: string
 }
 
 export interface Whitelabel {
@@ -33,6 +34,7 @@ export interface Whitelabel {
   name: string
   title: string
   faviconUrl: string
+  chartsUrl?: string
   footerConfig: {
     termsLink: string
     privacyLink: string

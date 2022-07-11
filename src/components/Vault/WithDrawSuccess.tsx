@@ -10,7 +10,7 @@ import { useIsTransactionPending } from 'state/transactions/hooks'
 import { useWithdrawState } from 'state/withdraw/hooks'
 import { ExternalLink, SvgIconWrapper, TYPE } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import Success from '../../assets/images/success.svg'
+import { ReactComponent as Success } from '../../assets/images/success.svg'
 
 export const WithdrawSuccess = ({ onClose }: { onClose: () => void }) => {
   const { tx } = useWithdrawState()
@@ -30,7 +30,7 @@ export const WithdrawSuccess = ({ onClose }: { onClose: () => void }) => {
           {isPending && <LoaderThin size={128} />}
           {!isPending && (
             <SvgIconWrapper size={128}>
-              <img src={Success} alt={'Success!'} />
+              <Success />
             </SvgIconWrapper>
           )}
         </RowCenter>
