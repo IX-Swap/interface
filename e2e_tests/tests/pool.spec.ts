@@ -22,7 +22,7 @@ test.describe('Check Liquidity pool functions', () => {
         await liquidityPoolsPage.clickAddLiquidityButton();
       });
 
-      await test.step('Fill Liquidity pool value', async () => {
+      await test.step('Fill Liquidity pool data', async () => {
         await liquidityPoolsPage.clickChooseFirstTokenDropdown();
         await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
         await liquidityPoolsPage.clickChooseSecondTokenDropdown() ;
@@ -30,31 +30,26 @@ test.describe('Check Liquidity pool functions', () => {
         await liquidityPoolsPage.fillFirstAmountOfTokensField(ethAmountForLiquidityPool);
       });
 
-      await test.step('Get field second Token value', async () => {
+      await test.step('Get second Token field value', async () => {
         secondTokenValue = await liquidityPoolsPage.getSecondTokenValueInThePool();
-
         await liquidityPoolsPage.clickSupplyButton();
       });
 
       await test.step('Confirm Liquidity pool creation', async () => {
         const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButtonSelector);
-
         await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
         await metamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
-
         await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
       });
 
       await test.step('Check that Liquidity pool created', async () => {
         await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
-
         await expect(liquidityPoolsPage.createdIsxEthPool).toBeVisible();
       });
 
       await test.step('Check that Liquidity pool value is equal to previously defined', async () => {
         await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
-
         await expect(liquidityPoolsPage.secondTokenValueInLiquidityPool).toHaveText(secondTokenValue);
       });
     })
@@ -82,11 +77,9 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.isEthAmountThatWillBeReceivedShown(ethAmountForLiquidityPool);
 
       const confirmMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmRemovePoolButton);
-
       await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
       await confirmMetamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
-
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
     })
   })
@@ -96,7 +89,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, ethAmountForLiquidityPool, ethTokenTitle, ixsTokenTitle);
     })
 
-    test.afterEach(async ({page, liquidityPoolsPage}) => {
+    test.afterEach(async ({liquidityPoolsPage}) => {
       await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
 
@@ -107,17 +100,14 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.clickSupplyButton();
 
       const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButtonSelector);
-
       await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
       await metamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
-
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
     })
   })
 
   test.describe('Check Negative pool cases', () => {
-
     test('Test the ability to create a pool (Negative TC)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickAddLiquidityButton();
       await liquidityPoolsPage.clickChooseFirstTokenDropdown();
