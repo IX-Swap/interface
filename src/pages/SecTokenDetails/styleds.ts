@@ -5,7 +5,6 @@ import { isNotSupportGradient } from 'components/Button'
 import { RowStart } from 'components/Row'
 import { TYPE, MEDIA_WIDTHS, gradientBorder } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { BodyWrapper } from 'pages/AppBody'
 import { Box } from 'rebass'
 
 export const Container = styled(Box)`
