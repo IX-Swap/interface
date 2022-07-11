@@ -77,7 +77,7 @@ export const FormStep = (props: FormStepProps) => {
     const payload = step.getRequestPayload(values)
 
     const onSubmitSuccess = (data: any) => {
-      if (isSuccessRequest(data.status) && !isLastStep) {
+      if (isSuccessRequest(data.status) && !isLastStep && isEditing) {
         //eslint-disable-line
         setCompleted?.()
       }
@@ -92,7 +92,7 @@ export const FormStep = (props: FormStepProps) => {
     }
 
     if (shouldSaveStep && (data?.step ?? 0) < activeStep + 1) {
-      payload.step = activeStep + 1
+      payload.step = activeStep
     }
 
     return await mutation(payload).then(onSubmitSuccess)
