@@ -39,8 +39,8 @@ export class LiquidityPoolsPage extends WebPage {
     this.addLiquidityButton = page.locator('[data-testid="add-liquidity"]');
     this.firstAmountOfTokensField = page.locator('[id="add-liquidity-input-tokena"] >> input');
     this.secondAmountOfTokensField = page.locator('[id="add-liquidity-input-tokenb"] >> input');
-    this.chooseFirstTokenDropdown = page.locator('#add-liquidity-input-tokena button:has-text("Choose token")');
-    this.chooseSecondTokenDropdown = page.locator('#add-liquidity-input-tokenb button:has-text("Choose token")');
+    this.chooseFirstTokenDropdown = page.locator('[id="add-liquidity-input-tokena"] >> button:has-text("Choose token")');
+    this.chooseSecondTokenDropdown = page.locator('[id="add-liquidity-input-tokenb"] >> button:has-text("Choose token")');
     this.ethTokenItem = page.locator('[title="Ether"]');
     this.ixsTokenItem = page.locator('[title="Ixs Token"]');
     this.supplyButton = page.locator('[data-testid="supply"]');
