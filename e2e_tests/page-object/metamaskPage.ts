@@ -1,5 +1,6 @@
 import {WebPage} from "./webPage";
 import {Locator, Page, BrowserContext, expect} from '@playwright/test';
+import {timeouts} from "../helpers/timeouts";
 
 export class MetamaskPage extends WebPage{
   readonly context: BrowserContext;
@@ -22,6 +23,12 @@ export class MetamaskPage extends WebPage{
   readonly optionMenuButton: Locator;
   readonly accountDetailsMenuButton: Locator;
   readonly endOfFlowEmoji: Locator;
+  readonly networksDropdown: string;
+  readonly showTestNetworksButton: string;
+  readonly showTestNetworksToggle: string;
+  readonly kovanNetworkButton: string;
+  readonly signButton: string;
+  readonly rejectButton: string;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page);
@@ -44,7 +51,21 @@ export class MetamaskPage extends WebPage{
     this.copyMetamaskAccountAddressButton = page.locator('[class="qr-code__address"]');
     this.optionMenuButton = page.locator('[data-testid="account-options-menu-button"]');
     this.accountDetailsMenuButton = page.locator('[data-testid="account-options-menu__account-details"]');
-    this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]')
+    this.endOfFlowEmoji = page.locator('[class="end-of-flow__emoji"]');
+    this.networksDropdown = ('//div[contains(@class, "network-display")]');
+    this.showTestNetworksButton = ('[class="network-dropdown-content--link"]');
+    this.showTestNetworksToggle = ('[class="settings-page__content-item-col"] >> nth=6');
+    this.kovanNetworkButton = ('//span[contains(text(), "Kovan")]');
+    this.signButton = ('button.button.btn-primary');
+    this.rejectButton = ('[data-testid="page-container-footer-cancel"]');
+  }
+
+  async makeSureMetamaskLoaded() {
+    await this.confirmButton.waitFor({timeout: timeouts.shortTimeout})
+      .catch(async () => {
+        await this.reloadPage();
+        await this.page.waitForTimeout(timeouts.tinyTimeout)
+      });
   }
 
   async enterRecoveryPhrase(recoveryPhrase: string) {
@@ -56,11 +77,24 @@ export class MetamaskPage extends WebPage{
     }
   }
 
-  async fullyLoginToMetamask(recoveryPhrase: string, password: string) {
-    // proceed to recovery phrase
+  async proceedToRecoveryPhrase() {
     await this.confirmButton.click();
     await this.iAmNewButton.click();
     await this.nextButton.click();
+
+    await expect(this.passwordField).toBeVisible()
+      .catch(async () => {
+        await this.confirmButton.click();
+        await this.iAmNewButton.click();
+        await this.nextButton.click();
+      })
+  }
+
+  async fullyLoginToMetamask(recoveryPhrase: string, password: string) {
+    if (!recoveryPhrase) throw new Error('Recovery phrase for Metamask is not set');
+    if (!password) throw new Error('Password for Metamask is not set');
+
+    await this.proceedToRecoveryPhrase();
 
     // enter recovery phrase and password
     await this.enterRecoveryPhrase(recoveryPhrase);
@@ -69,7 +103,7 @@ export class MetamaskPage extends WebPage{
     await this.createNewWalletCheckbox.click();
     await this.confirmButton.click();
     await expect(this.endOfFlowEmoji).toBeVisible();
-    await this.page.waitForTimeout(3000);
+    await this.page.waitForTimeout(timeouts.tinyTimeout);
 
     // open wallet and close info pop-up
     await this.confirmButton.click();
@@ -79,5 +113,21 @@ export class MetamaskPage extends WebPage{
   async openAccountDetails() {
     await this.optionMenuButton.click();
     await this.accountDetailsMenuButton.click();
+  }
+
+  async signMetamask(page: Page) {
+    const signButton = page.locator(this.signMetamaskRequestPopUpButton);
+
+    await page.waitForTimeout(timeouts.tinyTimeout);
+    await signButton.click();
+    await page.waitForEvent('close')
+  }
+
+  async changeNetworkToKovan() {
+    await this.page.click(this.networksDropdown);
+    await this.page.click(this.showTestNetworksButton);
+    await this.page.click(this.showTestNetworksToggle);
+    await this.page.click(this.networksDropdown);
+    await this.page.click(this.kovanNetworkButton);
   }
 }
