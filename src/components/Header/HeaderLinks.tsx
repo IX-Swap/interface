@@ -201,11 +201,11 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {account && isWhitelisted && (
+      {isAllowed('/charts') && account && isWhitelisted && (
         <MenuExternalLink
           disabled={!isKycApproved}
           target="_self"
-          href={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}
+          href={config?.chartsUrl || (isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}
         >
           <Trans>Charts</Trans>
         </MenuExternalLink>
