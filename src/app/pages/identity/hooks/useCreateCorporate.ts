@@ -22,7 +22,6 @@ export const useCreateCorporate = (corporateType: string) => {
 
   return useMutation(createCorporate, {
     onSuccess: async data => {
-      console.log(data)
       void snackbarService.showSnackbar(data.message, 'success')
       void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
     },

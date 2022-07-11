@@ -10,6 +10,7 @@ import { SkipButton } from 'app/components/FormStepper/SkipButton'
 import { isSuccessRequest } from 'helpers/strings'
 import { SaveOnNavigate } from 'app/components/FormStepper/SaveOnNavigate'
 import { useStyles } from 'app/components/FormStepper/FormStep.styles'
+import { useHistory, generatePath } from 'react-router-dom'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -48,6 +49,7 @@ export const FormStep = (props: FormStepProps) => {
 
   const isCurrentStep = activeStep === index
   const classes = useStyles()
+  const history = useHistory()
 
   if (!isCurrentStep) {
     return null
@@ -78,6 +80,14 @@ export const FormStep = (props: FormStepProps) => {
       if (isSuccessRequest(data.status) && !isLastStep) {
         //eslint-disable-line
         setCompleted?.()
+      }
+      if (!isEditing && createModeRedirect !== undefined) {
+        history.replace(
+          generatePath(createModeRedirect, {
+            identityId: data?.data._id,
+            userId: data?.data.user._id
+          })
+        )
       }
     }
 

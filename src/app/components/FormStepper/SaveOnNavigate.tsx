@@ -25,14 +25,10 @@ export const SaveOnNavigate = ({
     Location<unknown> | undefined
   >(undefined)
 
-  isCreateMode && console.log('create mode')
-
   const handleSave = async () => {
     const payload = transformData(values)
     return await save(payload, {
       onSettled: (data: any) => {
-        console.log(data)
-        console.log({ nextLocation })
         if (
           isCreateMode &&
           createModeRedirect !== undefined &&
@@ -40,7 +36,6 @@ export const SaveOnNavigate = ({
           data?.data._id !== undefined &&
           data?.data.user._id !== undefined
         ) {
-          console.log('is being redirected', createModeRedirect)
           history.replace(
             generatePath(`${createModeRedirect}${nextLocation.search}`, {
               identityId: data?.data._id,
@@ -48,7 +43,6 @@ export const SaveOnNavigate = ({
             })
           )
         }
-        console.log('settled')
       }
     })
   }
