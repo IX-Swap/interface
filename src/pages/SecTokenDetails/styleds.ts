@@ -8,7 +8,6 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { Box } from 'rebass'
 
 export const Container = styled(Box)`
-  /* background: ${({ theme }) => theme.bg1}; */
   height: fit-content;
   width: 100%;
   max-width: 920px;

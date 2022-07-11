@@ -16,6 +16,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { StyledSearchInput, StyledNonTradable, StyledTradable } from './styleds'
+import { routes } from 'utils/routes'
 
 interface Props {
   tokens: any[]
@@ -49,7 +50,7 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
   return (
     <>
       {tokens.map((token: any, index) => (
-        <NavLink style={{ textDecoration: 'none' }} key={`sec-tokens-${index}`} to={`/security-tokens/${token.id}`}>
+        <NavLink style={{ textDecoration: 'none' }} key={`sec-tokens-${index}`} to={routes.securityToken(token.id)}>
           <StyledBodyRow>
             <div>
               <Flex alignItems="center">
