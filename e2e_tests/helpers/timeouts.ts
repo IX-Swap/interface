@@ -4,6 +4,6 @@ export const timeouts = {
   tinyTimeout: 2000,
   timeoutForSignWindow: 5000,
   shortTimeout: 25000,
-  mediumTimeout: 35000,
+  mediumTimeout: 45000,
   longTimeout: 80000
 };
