@@ -78,7 +78,6 @@ export const test = base.extend<ixsFixtures>({
   kovanNetwork: async ({ connectWalletScreen, metamaskPage }, use) => {
     await connectWalletScreen.connectMetaMask();
     await metamaskPage.changeNetworkToKovan();
-    await connectWalletScreen.clickToPlaygroundWarningIUnderstandButton();
 
     await use(connectWalletScreen);
   }

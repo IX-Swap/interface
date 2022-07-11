@@ -8,7 +8,7 @@ export class TopNavigationBar extends WebPage {
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
     this.farmingButton = page.locator('#farming-nav-link')
-    this.liquidityPoolsButton = page.locator('[data-testid="liquidityPoolsButton"]')
+    this.liquidityPoolsButton = page.locator('[id="pool-nav-link"]')
   }
 
   async clickLiquidityPoolsButton() {
