@@ -25,7 +25,7 @@ export class LiquidityPoolsPage extends WebPage {
   readonly quarterRemovePercentageButton: Locator;
   readonly halfRemovePercentageButton: Locator;
   readonly halfAndQuarterRemovePercentageButton: Locator;
-  readonly addNewAmountToliqudityPoolButton: Locator;
+  readonly addNewAmountToLiqudityPoolButton: Locator;
   readonly transactionSubmittedPopUpText: Locator;
   readonly waitingForConfirmationPopUpText: Locator;
   readonly createdIsxEthPool: Locator;
@@ -56,7 +56,7 @@ export class LiquidityPoolsPage extends WebPage {
     this.approveRemovePoolButton = ('[data-testid="approve-currency-a-remove"]');
     this.removePoolButton = page.locator('[data-testid="approve-currency-b-remove"]');
     this.confirmRemovePoolButton = ('[data-testid="confirm-remove"]');
-    this.addNewAmountToliqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
+    this.addNewAmountToLiqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
     this.transactionSubmittedPopUpText = page.locator('text=Transaction Submitted');
     this.waitingForConfirmationPopUpText = page.locator('text=Waiting For Confirmation');
     this.createdIsxEthPool = page.locator('//span[text()="My Liquidity"]//following::div[text()="IXS/ETH"]');
@@ -131,8 +131,8 @@ export class LiquidityPoolsPage extends WebPage {
     await this.removePoolButton.click();
   }
 
-  async clickAddNewAmountToliqudityPoolButton() {
-    await this.addNewAmountToliqudityPoolButton.click();
+  async clickAddNewAmountToLiqudityPoolButton() {
+    await this.addNewAmountToLiqudityPoolButton.click();
   }
 
   async getSecondTokenValueInThePool() {

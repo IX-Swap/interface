@@ -102,7 +102,7 @@ test.describe('Check Liquidity pool functions', () => {
 
     test('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
-      await liquidityPoolsPage.clickAddNewAmountToliqudityPoolButton();
+      await liquidityPoolsPage.clickAddNewAmountToLiqudityPoolButton();
       await liquidityPoolsPage.fillSecondAmountOfTokensField(ethAmountForLiquidityPool);
       await liquidityPoolsPage.clickSupplyButton();
 
