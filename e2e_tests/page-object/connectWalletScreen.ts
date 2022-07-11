@@ -11,6 +11,7 @@ export class ConnectWalletScreen extends WebPage {
   readonly connectedStatusButton: Locator;
   readonly helpPopUpButton: Locator;
   readonly playgroundWarningIUnderstandButton: Locator;
+  readonly loaderIcon: Locator;
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -20,30 +21,49 @@ export class ConnectWalletScreen extends WebPage {
     this.connectedStatusButton = page.locator('[id="web3-status-connected"]');
     this.helpPopUpButton = page.locator('[data-testid="launcher"]')
     this.playgroundWarningIUnderstandButton = page.locator('[data-testid="understood-button"]');
+    this.loaderIcon = page.locator('img[alt="Loading..."]')
+  }
+
+  /*
+  Method checks if there are new sign requests and sign them
+  this is needed for correct working of tests
+  when they are running in parallel
+  */
+
+  async signMetamaskConnectionIfRequestAppeared() {
+    let triesLeft = 5;
+
+    do {
+      await this.loaderIcon.waitFor({state: "detached", timeout: timeouts.shortTimeout});
+      await this.page.waitForTimeout(timeouts.timeoutForSignWindow);
+
+      const pages = await this.context.pages().length;
+
+      if (pages > 3) {
+        const signPage = this.context.pages()[3];
+
+        await this.metamaskPage.signMetamask(signPage);
+      }
+      triesLeft--
+    } while (triesLeft);
   }
 
   async connectAndSignMetamask(openedMetamaskPage: Page) {
-    const numberOfPagesBeforeSign = await this.context.pages().length;
-
     await Promise.all([
       this.context.waitForEvent('page', {timeout: timeouts.shortTimeout})
-        .then(async (page) => {
-          await page.close();
-          await this.page.reload();
-
-          const newPage = await this.context.waitForEvent('page', {timeout: timeouts.shortTimeout});
-          await this.metamaskPage.signMetamask(newPage);
+        .then(async () => {
+          const signPage = this.context.pages()[3];
+          await this.metamaskPage.signMetamask(signPage);
         })
         .catch(async () => {
-          await openedMetamaskPage.close();
-          await this.page.reload();
-
-          const newPage = await this.context.waitForEvent('page', {timeout: timeouts.shortTimeout});
-          await this.metamaskPage.signMetamask(newPage);
+          const signPage = this.context.pages()[3];
+          await this.metamaskPage.signMetamask(signPage);
         }),
 
       openedMetamaskPage.click(this.metamaskPage.connectMetamaskPopUpButton),
     ]);
+
+    await this.signMetamaskConnectionIfRequestAppeared();
   }
 
   async connectMetaMask() {
@@ -54,6 +74,7 @@ export class ConnectWalletScreen extends WebPage {
     await this.connectAndSignMetamask(metamaskPopUpPage);
     await expect(this.connectedStatusButton).toBeVisible();
   }
+
   async clickToPlaygroundWarningIUnderstandButton() {
     await this.playgroundWarningIUnderstandButton.click();
   }
