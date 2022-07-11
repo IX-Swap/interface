@@ -5,5 +5,5 @@ export const timeouts = {
   timeoutForSignWindow: 5000,
   shortTimeout: 25000,
   mediumTimeout: 45000,
-  longTimeout: 80000
+  longTimeout: 65000
 };
