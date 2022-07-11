@@ -1,16 +1,18 @@
+import React from 'react'
+import styled, { css } from 'styled-components'
 import { Trans } from '@lingui/macro'
+
 import { ButtonGradientBorder } from 'components/Button'
 import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { RowCenter } from 'components/Row'
-import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useGeneralModalState, useModalOpen, useToggleModal } from 'state/application/hooks'
 import { ModalType } from 'state/application/reducer'
-import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, SvgIconWrapper, TYPE } from 'theme'
-import Attention from '../../assets/images/attention.svg'
-import Success from '../../assets/images/success.svg'
+
+import { ReactComponent as Attention } from '../../assets/images/attention.svg'
+import { ReactComponent as Success } from '../../assets/images/success.svg'
 
 export const ModalPadding = styled.div`
   padding: 37px 40px 19px 40px;
@@ -18,6 +20,17 @@ export const ModalPadding = styled.div`
    padding: 22px 8px 18px 8px;
   `};
 `
+export const StyledSuccess = styled(Success)`
+  ${({ theme }) =>
+    theme.config.elements &&
+    css`
+      path[stroke] {
+        fill: none;
+        stroke: ${theme.config.elements.main};
+      }
+    `};
+`
+
 export const GeneralModal = ({ scrollable = false }: { scrollable?: boolean }) => {
   const isOpen = useModalOpen(ApplicationModal.GENERAL)
   const { modalType, modalTitle, modalMessage } = useGeneralModalState()
@@ -44,8 +57,8 @@ export const GeneralModal = ({ scrollable = false }: { scrollable?: boolean }) =
                 </RowCenter>
                 <RowCenter style={{ marginTop: 61 }}>
                   <SvgIconWrapper size={128}>
-                    {modalType === ModalType.ERROR && <img src={Attention} alt={'Error'} />}
-                    {modalType === ModalType.SUCCESS && <img src={Success} alt={'Success'} />}
+                    {modalType === ModalType.ERROR && <Attention />}
+                    {modalType === ModalType.SUCCESS && <StyledSuccess />}
                   </SvgIconWrapper>
                 </RowCenter>
                 <RowCenter style={{ marginTop: 14, marginBottom: 53, textAlign: 'center' }}>

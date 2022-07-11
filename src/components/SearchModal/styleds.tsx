@@ -149,7 +149,7 @@ export const UnapprovedTokenWrapper = styled.div`
   width: 100%;
   grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
   text-decoration: none;
-  color: ${({ theme: { config } }) => config.text.main || 'white'};
+  color: ${({ theme: { config } }) => config.text?.main || 'white'};
 `
 
 export const StyledToggleWrapper = styled(ToggleWrapper)`
