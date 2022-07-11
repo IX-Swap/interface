@@ -98,10 +98,10 @@ exports[`Reports should match snapshot 1`] = `
                 class="makeStyles-filterWrapper-12 MuiBox-root css-0"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-3uu5v0-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-26lyh4-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
+                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="true"
                     for="mui-1"
                     id="mui-1-label"
@@ -141,10 +141,10 @@ exports[`Reports should match snapshot 1`] = `
                 class="makeStyles-filterWrapper-12 MuiBox-root css-0"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-3uu5v0-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-26lyh4-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
-                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
+                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
                     data-shrink="true"
                     for="mui-3"
                     id="mui-3-label"

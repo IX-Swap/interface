@@ -3,9 +3,11 @@ import {
   IdentityDocumentsFormValues,
   IndividualFinancialInfoFormValues,
   IndividualInvestorDeclarationFormValues,
+  FinancialAndTaxDeclarationFormValues,
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
@@ -20,10 +22,18 @@ export const getPersonalInfoRequestPayload = (
 }
 
 export const getFinancialInfoRequestPayload = (
-  values: IndividualFinancialInfoFormValues
+  values: IndividualFinancialInfoFormValues & IndividualTaxDeclarationFormValues
 ) => {
+  const { fatca, usTin, ...rest } = values
+
   return {
-    ...values
+    ...rest,
+    declarations: {
+      tax: {
+        fatca: fatca === 'yes',
+        usTin: usTin
+      }
+    }
   }
 }
 
@@ -58,13 +68,34 @@ export const getTaxDeclarationRequestPayload = (
   return payload
 }
 
-export const getInvestorDeclarationRequestPayload = (
-  values: IndividualInvestorDeclarationFormValues
+export const getFinancialAndTaxDeclarationRequestPayload = (
+  values: FinancialAndTaxDeclarationFormValues
 ) => {
+  const { taxResidencies, singaporeOnly, fatca, usTin, ...other } = values
+  const payload = getTaxDeclarationRequestPayload(values)
+  payload.declarations.tax.usTin = usTin
+
+  return { ...payload, ...other }
+}
+
+export const getInvestorDeclarationRequestPayload = (
+  values: IndividualInvestorDeclarationFormValues & IdentityDocumentsFormValues
+) => {
+  const { evidenceOfAccreditation, proofOfIdentity, proofOfAddress, ...rest } =
+    values
+
+  const getDocuments = (documents: Array<FormArrayElement<DataroomFile>>) =>
+    documents.map(doc => doc.value._id).filter(doc => doc !== undefined)
+
   return {
     declarations: {
-      investorsStatus: values
-    }
+      investorsStatus: rest
+    },
+    documents: [
+      ...getDocuments(evidenceOfAccreditation),
+      ...getDocuments(proofOfAddress),
+      ...getDocuments(proofOfIdentity)
+    ]
   }
 }
 

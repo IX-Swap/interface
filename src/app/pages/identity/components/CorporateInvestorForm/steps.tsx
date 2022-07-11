@@ -20,7 +20,8 @@ import {
   corporateInvestorSchema,
   corporateInvestorStatusDeclarationSchema,
   corporateTaxDeclarationSchema,
-  directorsAndBeneficialOwnersSchema
+  directorsAndBeneficialOwnersSchema,
+  initialCorporateInvestorInfoSchema
 } from 'app/pages/identity/validation/corporate'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
@@ -32,6 +33,7 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
     getFormValues: getCorporateInfoFormValues,
     getRequestPayload: getCorporateInfoRequestPayload,
     validationSchema: corporateInvestorInfoSchema,
+    initialValidationSchema: initialCorporateInvestorInfoSchema,
     component: () => <CorporateInformationForm type={type} />,
     formId: 'information'
   },
@@ -70,14 +72,16 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
       return {
         ...getCorporateInfoFormValues(data),
         ...getCorporateInvestorTaxDeclarationFormValues(data),
-        ...getDirectorsAndBeneficialOwnersFormValues(data)
+        ...getDirectorsAndBeneficialOwnersFormValues(data),
+        ...getCorporateInvestorDeclarationFormValues(data)
       }
     },
     getRequestPayload: (data: any) => {
       return {
         ...getCorporateInfoRequestPayload(data),
         ...getDirectorsAndBeneficialOwnerRequestPayload(data),
-        ...getTaxDeclarationRequestPayload(data)
+        ...getTaxDeclarationRequestPayload(data),
+        ...getCorporateInvestorDeclarationRequestPayload(data)
       }
     },
     validationSchema: corporateInvestorSchema,

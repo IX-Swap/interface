@@ -1,5 +1,5 @@
 import { Box, Button, Tooltip, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { MutationResultPair } from 'react-query'
 import { ButtonProps } from '@mui/material/Button'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
@@ -11,11 +11,14 @@ export interface SubmitButtonProps extends ButtonProps {
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { mutation, data, step, fullWidth } = props
+  const { mutation, data, step, fullWidth, size = 'large' } = props
 
   const [save, { isLoading }] = mutation
   const isSubmitted = data?.status === 'Submitted'
   const isApproved = data?.status === 'Approved'
+
+  const [validating, setValidating] = useState(false)
+  const [isValid, setIsValid] = useState(true)
 
   const getButtonText = () => {
     if (isApproved) {
@@ -29,8 +32,25 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     return 'Submit Identity'
   }
 
-  const isValid: boolean =
-    step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
+  useEffect(() => {
+    void checkValidation()
+  }, [data]) // eslint-disable-line
+
+  const checkValidation = async () => {
+    const schema =
+      typeof step.validationSchema === 'function'
+        ? step.validationSchema(data)
+        : step.validationSchema
+
+    setValidating(true)
+    try {
+      const isFormDataValid = await schema?.isValid(step.getFormValues(data))
+      setIsValid(isFormDataValid)
+    } catch (error) {
+    } finally {
+      setValidating(false)
+    }
+  }
 
   const handleSave = async () => {
     return await save(data)
@@ -39,7 +59,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   return (
     <Tooltip
       title={
-        !isValid ? (
+        !isValid && !isApproved && !isSubmitted ? (
           <Typography color='error'>
             Please fill in all the required steps
           </Typography>
@@ -54,11 +74,13 @@ export const SubmitButton = (props: SubmitButtonProps) => {
         <Button
           variant='contained'
           color='primary'
-          onClick={async () => void handleSave()}
-          disabled={isApproved || isLoading || isSubmitted || !isValid}
+          onClick={async () => await handleSave()}
+          disabled={
+            isApproved || isLoading || isSubmitted || validating || !isValid
+          }
           disableElevation
           fullWidth={fullWidth}
-          size='large'
+          size={size}
           style={{ minWidth: 'max-content' }}
         >
           {getButtonText()}

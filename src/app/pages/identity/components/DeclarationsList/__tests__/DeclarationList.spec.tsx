@@ -10,7 +10,7 @@ describe('DeclarationList', () => {
     title: 'Tax Declaration',
     data: {
       taxOne: true,
-      taxTwo: false
+      taxTwo: true
     },
     labelMap: {
       taxOne: 'Tax One',

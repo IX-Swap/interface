@@ -118,7 +118,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
                       >
                         Currency
                       </p>
@@ -127,7 +127,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         USD
                       </p>
@@ -141,7 +141,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
                       >
                         Bank:
                       </p>
@@ -150,7 +150,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         Hongkong & Shanghai Banking Corporate (HSBC CORP)
                       </p>
@@ -164,7 +164,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
                       >
                         Beneficiary Account Name / Payee:
                       </p>
@@ -173,7 +173,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         IC SG Pte Ltd
                       </p>
@@ -187,7 +187,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
                       >
                         Beneficiary Account Number:
                       </p>
@@ -196,7 +196,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         000000000121
                       </p>
@@ -210,7 +210,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
                       >
                         SWIFT Code:
                       </p>
@@ -219,7 +219,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         HSBCSGSGXXX
                       </p>
@@ -233,7 +233,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148);"
+                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
                       >
                         Time Estimation for Deposit:
                       </p>
@@ -242,7 +242,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       />
                       <p
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word;"
+                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         1 Hour
                       </p>

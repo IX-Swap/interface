@@ -15,8 +15,8 @@ export interface FileUploadProps {
   label: string | React.ReactNode
   placeHolder?: string
   value?: Maybe<DataroomFile | DataroomFile[]>
-  onChange: (files: DataroomFile | DataroomFile[]) => any
-  documentInfo: UploadDocumentInfo
+  onChange?: (files: DataroomFile | DataroomFile[]) => any
+  documentInfo?: UploadDocumentInfo
   onDelete?: () => any
   multiple?: boolean
   accept?: DataroomFileType
@@ -31,6 +31,7 @@ export interface FileUploadProps {
   remove?: () => void
   onSuccessUploadCallback?: (value: any) => void
   onRemoveCallback?: (value: any) => void
+  readonly?: boolean
 }
 
 export const FileUpload = (props: FileUploadProps) => {
@@ -48,7 +49,8 @@ export const FileUpload = (props: FileUploadProps) => {
     isValid = true,
     minSize = 0,
     maxSize = 10,
-    remove
+    remove,
+    readonly = false
   } = props
   const { watch } = useFormContext()
 
@@ -72,7 +74,7 @@ export const FileUpload = (props: FileUploadProps) => {
         if (!multiple && props.onSuccessUploadCallback !== undefined) {
           props.onSuccessUploadCallback(response.data[0])
         }
-        onChange(
+        onChange?.(
           multiple
             ? [...(Array.isArray(value) ? value : []), ...response.data]
             : response.data[0]
@@ -155,7 +157,8 @@ export const FileUpload = (props: FileUploadProps) => {
     setCompleted,
     value,
     completed,
-    remove: handleRemove
+    remove: handleRemove,
+    readonly
   }
 
   if (fullWidth) {

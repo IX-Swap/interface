@@ -29,6 +29,7 @@ export const IndividualNationalityField = ({
       name='nationality'
       label='Nationality'
       variant='outlined'
+      customRenderer
       disabled={isSingPass}
       isSingPass={isSingPass}
       singPassValue={titleCase(individualIdentity?.nationality)}

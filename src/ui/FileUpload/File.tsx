@@ -87,6 +87,7 @@ export const File = ({
           setCompleted={setCompleted}
           multiple={multiple}
           remove={remove}
+          originalName={(value as DataroomFile)?.originalFileName}
         />
       ) : (
         <Box {...rootProps}>

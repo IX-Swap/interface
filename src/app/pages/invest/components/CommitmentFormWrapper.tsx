@@ -57,6 +57,7 @@ export const CommitmentFormWrapper = () => {
                   variant='contained'
                   color='primary'
                   size='medium'
+                  name={data.subscriptionDocument?.originalFileName}
                   fullWidth
                 >
                   {downloadButton}

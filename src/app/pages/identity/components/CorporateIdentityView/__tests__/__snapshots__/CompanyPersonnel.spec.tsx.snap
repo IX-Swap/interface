@@ -35,7 +35,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
               >
                 Full Name
               </p>
@@ -44,7 +44,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
               >
                 John Doe
               </p>
@@ -58,7 +58,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
               >
                 Email Address
               </p>
@@ -67,7 +67,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
               >
                 johnsemail
               </p>
@@ -85,7 +85,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
               >
                 Designation
               </p>
@@ -94,7 +94,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
               >
                 CEO
               </p>
@@ -108,7 +108,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81);"
+                style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
               >
                 Contact Number
               </p>
@@ -117,7 +117,7 @@ exports[`CompanyPersonnel should match snapshot 1`] = `
               />
               <p
                 class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
-                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word;"
+                style="font-weight: 500; opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
               >
                 +6512345678901
               </p>

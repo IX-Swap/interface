@@ -21,7 +21,7 @@ export const CountrySelect = (props: CountrySelectProps): JSX.Element => {
 
   return (
     <>
-      <InputLabel>{props.label}</InputLabel>
+      <InputLabel disabled={props.disabled}>{props.label}</InputLabel>
       <Select
         {...props}
         label={undefined}

@@ -56,11 +56,15 @@ export const getOrderSideName = (value: OrderSide) => {
 }
 
 export const getPersonName = (data: IndividualIdentity | null | undefined) => {
+  const emptyValue = 'Your Name'
   if (data === null || data === undefined) {
-    return undefined
+    return emptyValue
   }
-
-  return `${data.firstName} ${data.middleName ?? ''} ${data.lastName}`
+  const { firstName = '', lastName = '', middleName = '' } = data
+  if (isEmptyString(firstName) && isEmptyString(lastName)) {
+    return emptyValue
+  }
+  return `${firstName} ${middleName} ${data.lastName}`
 }
 
 export const isLowerCaseLetter = (value: string) => {
