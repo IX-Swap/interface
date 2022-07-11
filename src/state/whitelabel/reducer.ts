@@ -25,7 +25,6 @@ export default createReducer<WhitelabelState>(initialState, (builder) =>
     .addCase(getWhitelabelConfig.fulfilled, (state, { payload }) => {
       state.isLoading = false
       state.error = null
-      console.log('log => payload', payload)
 
       state.config = {
         ...payload,

@@ -155,7 +155,6 @@ interface Props {
 
 export const MuiThemeProvider = ({ children }: Props) => {
   const theme = useTheme()
-  console.log('log => theme', theme)
 
   return <ThemeProvider theme={muiTheme(theme)}>{children}</ThemeProvider>
 }
