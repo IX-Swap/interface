@@ -71,14 +71,14 @@ export const SwapButtons = ({
   const showError = useShowError()
 
   const onClick = useCallback(async () => {
-    if (trade && account) {
-      try {
-        await verifySwap(trade, chainId || 137)
-      } catch (err) {
-        showError((err as Error).message)
-        return
-      }
-    }
+    // if (trade && account) {
+    //   try {
+    //     await verifySwap(trade, chainId || 137)
+    //   } catch (err) {
+    //     showError((err as Error).message)
+    //     return
+    //   }
+    // }
 
     if (expertMode) {
       handleSwap()
