@@ -94,7 +94,7 @@ export const useCurrencySearch = ({
   // manage focus on modal show
   const inputRef = useRef<HTMLInputElement>()
   const handleInput = useCallback(
-    (event) => {
+    (event: { target: { value: string } }) => {
       const input = event.target.value
       const checksummedInput = isAddress(input)
       setSearchQuery(checksummedInput || input)

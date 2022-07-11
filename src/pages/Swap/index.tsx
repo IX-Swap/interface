@@ -145,6 +145,7 @@ export default function Swap({ history }: RouteComponentProps) {
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
             {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
+
             <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
 
             {!showLoading && (

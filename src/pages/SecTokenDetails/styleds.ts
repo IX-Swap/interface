@@ -1,4 +1,3 @@
-import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { ButtonEmpty, ButtonGradient } from 'components/Button'
@@ -6,9 +5,14 @@ import { isNotSupportGradient } from 'components/Button'
 import { RowStart } from 'components/Row'
 import { TYPE, MEDIA_WIDTHS, gradientBorder } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
+import { BodyWrapper } from 'pages/AppBody'
+import { Box } from 'rebass'
 
 export const Container = styled(Box)`
+  /* background: ${({ theme }) => theme.bg1}; */
   height: fit-content;
+  width: 100%;
+  max-width: 920px;
 `
 export const InfoTitle = styled(RowStart)`
   gap: 21px;
@@ -42,7 +46,7 @@ export const Details = styled.div`
     align-items: center;
     font-size: 18px;
     * {
-      color: ${({ theme }) => theme.white};
+      color: ${({ theme }) => theme.text1};
     }
 
     ${({ theme }) => theme.mediaWidth.upToMedium`
@@ -137,11 +141,12 @@ export const AddressToMetamask = styled.div`
     ${({ theme }) =>
       !isNotSupportGradient
         ? `
-        background: ${theme.bgG3};
+        background: ${theme.config.elements?.hover || theme.bgG3};
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-      ` : `
+      `
+        : `
         color: ${theme.bg20};
       `}
   }
@@ -168,7 +173,7 @@ export const AtlasInfoContainer = styled.div`
     font-weight: 500;
     font-size: 18px;
     opacity: 0.5;
-    color: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.text1};
   }
   span {
     margin-left: 12px;

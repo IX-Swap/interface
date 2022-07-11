@@ -50,7 +50,7 @@ export const Preview = ({
   return (
     <PreviewParent width={width} height={height} isLogo={isLogo}>
       {getPreviewElement()}
-      {file && <StyledClose onClick={(e) => onDelete(e)} />}
+      {file && <StyledClose onClick={(e: any) => onDelete(e)} />}
     </PreviewParent>
   )
 }
@@ -68,7 +68,7 @@ export default function Upload({
 }: Props) {
   const [filePath, setFilePath] = useState<string>('')
   const onDropInput = useCallback(
-    (acceptedFiles) => {
+    (acceptedFiles: File[]) => {
       const file = acceptedFiles[0]
       if (filePath) {
         URL.revokeObjectURL(filePath)

@@ -8,6 +8,7 @@ import { isMobile } from 'react-device-detect'
 
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { AutoRow } from 'components/Row'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { injected } from '../../connectors'
@@ -61,7 +62,7 @@ export default function WalletModal({
 
   const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
   const toggleWalletModal = useWalletModalToggle()
-
+  const { config } = useWhitelabelState()
   const previousAccount = usePrevious(account)
 
   // close on connection, when logged out before
@@ -112,11 +113,9 @@ export default function WalletModal({
 
       // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
       if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-        console.log('resetting the connector')
         connector.walletConnectProvider = undefined
       }
       if (connector) {
-        console.log({ connector })
         try {
           await activate(connector, undefined, true)
         } catch (error) {
@@ -265,10 +264,13 @@ export default function WalletModal({
             <AutoRow style={{ flexWrap: 'nowrap' }}>
               <TYPE.main fontSize={14}>
                 <Trans>
-                  By connecting a wallet, you agree to IX Swap’s{' '}
+                  By connecting a wallet, you agree to {config?.name || 'IX Swap'}’s{' '}
                   <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
                   acknowledge that you have read and understood the{' '}
-                  <ExternalLink href="https://ixswap.io/privacy-policy/">IX Swap Privacy Policy</ExternalLink>.
+                  <ExternalLink href="https://ixswap.io/privacy-policy/">
+                    {config?.name || 'IX Swap'} Privacy Policy
+                  </ExternalLink>
+                  .
                 </Trans>
               </TYPE.main>
             </AutoRow>

@@ -12,7 +12,7 @@ export const MenuItem = styled(RowBetween)`
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};
   :hover {
-    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.bg10, 0.1)}`};
+    background: ${({ theme, disabled }) => !disabled && `${hexToRGBA(theme.text2, 0.1)}`};
     backdrop-filter: blur(4px);
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};

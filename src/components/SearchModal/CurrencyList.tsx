@@ -12,7 +12,7 @@ import { VariableSizeList as List } from 'react-window'
 import { Box, Text } from 'rebass'
 import { useSecTokens } from 'state/secTokens/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
 import { routes } from 'utils/routes'
 import TokenListLogo from '../../assets/svg/tokenlist.svg'
 import { useIsUserAddedToken } from '../../hooks/Tokens'
@@ -29,6 +29,7 @@ import Row, { RowBetween, RowFixed } from '../Row'
 import { MouseoverTooltip } from '../Tooltip'
 import ImportRow from './ImportRow'
 import { isMobile } from 'react-device-detect'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { MenuItem, UnapprovedMenuItem, UnapprovedTokenWrapper } from './styleds'
 import { formatAmount } from 'utils/formatCurrencyAmount'
@@ -39,6 +40,11 @@ function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
 }
 const StyledBalanceText = styled(Text)`
+  ${({ theme: { config } }) =>
+    config.text &&
+    css`
+      color: ${({ theme: { config } }) => config.text.main};
+    `}
   white-space: nowrap;
   overflow: hidden;
   max-width: 100%;
@@ -140,7 +146,7 @@ function CurrencyRow({
       <Row style={{ position: 'relative', height: '100%', alignItems: 'center' }}>
         <UnapprovedTokenWrapper
           as={Link}
-          to={routes.securityTokens(currency)}
+          to={routes.securityToken((currency as any).tokenInfo.catalogId)}
           data-testid="currency-search-sec-token-info"
         >
           <CurrencyLogo currency={currency} size={'24px'} />
@@ -285,6 +291,8 @@ export default function CurrencyList({
   showImportView: () => void
   setImportToken: (token: Token) => void
 }) {
+  const { config } = useWhitelabelState()
+
   const sortedBySecList = useMemo(() => {
     const { sec, rest, wixs, usdc } = currencies.reduce(
       (
@@ -296,6 +304,13 @@ export default function CurrencyList({
         },
         next: any
       ) => {
+        const token = next?.wrapped ?? next?.tokenInfo
+        const configTokens = config?.tokens || []
+
+        if (config && configTokens.length > 0 && !configTokens.includes(token.address)) {
+          return acc
+        }
+
         if (next.isSecToken) {
           acc.sec.push(next)
         } else if (next?.tokenInfo?.symbol === 'USDC') {
@@ -330,7 +345,7 @@ export default function CurrencyList({
   const { secTokens } = useSecTokens()
 
   const Row = useCallback(
-    function TokenRow({ data, index, style }) {
+    function TokenRow({ data, index, style }: any) {
       const row: Currency | BreakLine = data[index]
 
       if (isBreakLine(row)) {

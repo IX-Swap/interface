@@ -7,7 +7,6 @@ import { useHistory, useParams } from 'react-router-dom'
 
 import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { CopyAddress } from 'components/CopyAddress'
 import { KycItem } from 'state/admin/actions'
@@ -20,7 +19,7 @@ import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
 import { ButtonGradientBorder } from 'components/Button'
 import { AdminParams } from 'pages/Admin'
-import { NoData } from 'components/Whitelist/styleds'
+import { NoData } from 'components/UsersList/styleds'
 import { getStatusStats } from 'state/kyc/hooks'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
@@ -40,7 +39,6 @@ const Header = () => {
 }
 
 const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
-  const [copied, setCopied] = useCopyClipboard()
   const {
     id,
     user: { ethAddress },
@@ -57,7 +55,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   return (
     <StyledBodyRow key={id}>
       <Wallet>
-        <CopyAddress address={ethAddress} copied={copied} setCopied={setCopied} />
+        <CopyAddress address={ethAddress} />
       </Wallet>
       <div>{fullName || '-'}</div>
       <div>{t`${individualKycId ? 'Individual' : 'Corporate'}`}</div>
@@ -105,7 +103,12 @@ export const AdminKycTable = () => {
   const { id } = useParams<AdminParams>()
 
   const getKycFilters = (page: number, withStatus = true) => {
-    let kycFilter: any = { page, offset, search: searchValue, identity: identity?.label ? identity.label.toLowerCase() : 'all' }
+    let kycFilter: any = {
+      page,
+      offset,
+      search: searchValue,
+      identity: identity?.label ? identity.label.toLowerCase() : 'all',
+    }
     if (!selectedStatuses.includes('total') && withStatus && selectedStatuses.length > 0) {
       kycFilter.status = selectedStatuses.join(',')
     }

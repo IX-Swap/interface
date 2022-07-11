@@ -55,7 +55,7 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
     [onUserInput, handleHideConfirm]
   )
   const handleInputSelect = useCallback(
-    (inputCurrency) => {
+    (inputCurrency: Currency) => {
       setApprovalSubmitted(false) // reset 2 step UI for approvals
       onCurrencySelection(Field.INPUT, inputCurrency)
       handleHideConfirm()
@@ -64,7 +64,7 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
   )
 
   const handleOutputSelect = useCallback(
-    (outputCurrency) => {
+    (outputCurrency: Currency) => {
       onCurrencySelection(Field.OUTPUT, outputCurrency)
       handleHideConfirm()
     },
@@ -112,6 +112,7 @@ export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currenc
           width="16px"
           height="16px"
           color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
+          fill={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? theme.text1 : theme.text3}
         />
       </ArrowWrapper>
       <CurrencyInputPanel

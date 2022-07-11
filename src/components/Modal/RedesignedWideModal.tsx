@@ -24,8 +24,9 @@ const StyledDialogContent = styled(
       ::before {
         content: '${tip}';
         position: fixed;
-        background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgb(125 0 76 / 17%) 0%, rgb(32 11 39 / 88%) 100%),
-          #2c254ae6;
+        background: ${({ theme }) =>
+          theme.config.background?.secondary ||
+          'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgb(125 0 76 / 17%) 0%, rgb(32 11 39 / 88%) 100%),#2c254ae6'};
         border-radius: 45px;
         padding: 30px;
         z-index: 10;
@@ -67,7 +68,7 @@ const StyledDialogContent = styled(
 
   &[data-reach-dialog-content] {
     margin: ${({ isright }) => (isright ? '4rem 0 2rem 0' : '0 0 2rem 0')};
-    background-color: ${({ theme }) => theme.bg0};
+    background-color: ${({ theme }) => theme.config.background?.secondary || theme.bg0};
     box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
     padding: 0px;
     width: ${({ isLarge }) => (isLarge ? '100%' : '622px')};

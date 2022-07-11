@@ -22,6 +22,10 @@ const rowStyle = css`
     padding-left: 22px;
   }
 
+  > div:last-child {
+    padding-right: 22px;
+  }
+
   > div {
     display: flex;
     align-items: center;
@@ -47,7 +51,7 @@ export const BodyRow = styled.div`
   border: 1px solid ${({ theme: { bg11 } }) => bg11};
   border-radius: 20px;
   margin-bottom: 8px;
-  background-color: rgba(39, 31, 74, 0.3);
+  background-color: ${({ theme: { config } }) => config.background?.main || 'rgba(39, 31, 74, 0.3)'};
 `
 
 const Wrap = styled.div`

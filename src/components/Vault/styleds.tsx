@@ -128,21 +128,51 @@ export const WaitingWitdrawalFee = styled.div`
   column-gap: 8px;
 `
 
+export const StyledPassed = styled(Passed)`
+  ${({ theme }) =>
+    theme.config.elements &&
+    css`
+      path[stroke] {
+        fill: none;
+        stroke: ${theme.config.elements.main};
+      }
+    `};
+`
+
+const StyledAttention = styled(Attention)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      > circle[fill='#ED0376'] {
+        fill: ${theme.error};
+      }
+      > circle[stroke='#ED0376'] {
+        stroke: ${theme.error};
+      }
+      line {
+        stroke: ${theme.error};
+      }
+      > circle[fill='#372E5E'] {
+        fill: ${theme.config.elements?.main};
+      }
+    `}
+`
+
 export const WithdrawStatusIcons = {
-  [WithdrawStatus.APPROVED]: <Passed />,
-  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: <Passed />,
-  [WithdrawStatus.FB_TX_CANCELLED]: <Attention />,
-  [WithdrawStatus.FB_TX_BLOCKED]: <Attention />,
-  [WithdrawStatus.FB_TX_TIMEOUT]: <Attention />,
-  [WithdrawStatus.FB_TX_FAILED]: <Attention />,
-  [WithdrawStatus.CANCELLED]: <Attention />,
-  [WithdrawStatus.FAILED]: <Attention />,
+  [WithdrawStatus.APPROVED]: <StyledPassed />,
+  [WithdrawStatus.FB_TX_PARTIALLY_COMPLETED]: <StyledPassed />,
+  [WithdrawStatus.FB_TX_CANCELLED]: <StyledAttention />,
+  [WithdrawStatus.FB_TX_BLOCKED]: <StyledAttention />,
+  [WithdrawStatus.FB_TX_TIMEOUT]: <StyledAttention />,
+  [WithdrawStatus.FB_TX_FAILED]: <StyledAttention />,
+  [WithdrawStatus.CANCELLED]: <StyledAttention />,
+  [WithdrawStatus.FAILED]: <StyledAttention />,
 } as Record<string, JSX.Element>
 
 export const DepositStatusIcons = {
-  [DepositStatus.SETTLED]: <Passed />,
-  [DepositStatus.FAILED]: <Attention />,
-  [DepositStatus.CANCELLED]: <Attention />,
+  [DepositStatus.SETTLED]: <StyledPassed />,
+  [DepositStatus.FAILED]: <StyledAttention />,
+  [DepositStatus.CANCELLED]: <StyledAttention />,
 } as Record<string, JSX.Element>
 
 export const getStatusIcon = (action: ActionTypes, status: string) => {
@@ -192,7 +222,7 @@ export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
       margin: 8px 0px;
       border: none;
       height: 1px;
-      background-color: rgba(237, 206, 255, 0.5);
+      background-color: ${({ theme }) => theme.text9};
     }
     > div {
       font-weight: 600;
@@ -238,7 +268,7 @@ const progressBarAnimation = keyframes`
  100% { background-position: -200px -26px; }
 `
 
-export const LiniarProgressContainer = styled.div<{ statusColor: keyof Colors }>`
+export const LiniarProgressContainer = styled.div<{ statusColor: Exclude<keyof Colors, 'config'> }>`
   > div {
     width: 100%;
   }
@@ -270,4 +300,26 @@ export const WarningPaidFee = styled.div`
   font-weight: 500;
   color: ${({ theme }) => theme.red1};
   margin-bottom: 18px;
+`
+export const DepositWarningInfo = styled.div`
+  color: ${({ theme }) => theme.error};
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > div {
+    text-align: center;
+    font-weight: 600;
+  }
+`
+
+export const DeadlineInfo = styled.div`
+  font-weight: 500;
+  font-size: 10px;
+  /* color: ${({ theme }) => theme.text9}; */
+  color: ${({ theme }) => theme.text9};
+  line-height: 15px;
+  margin-top: 8px;
 `

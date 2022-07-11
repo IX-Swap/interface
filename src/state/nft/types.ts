@@ -1,5 +1,4 @@
 import { t } from '@lingui/macro'
-import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'react-dropzone'
 
 export interface NFTAttribute {

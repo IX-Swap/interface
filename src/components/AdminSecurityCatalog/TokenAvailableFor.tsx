@@ -53,7 +53,7 @@ const Container = styled.div`
     margin-bottom: 8px;
   }
   > div:last-child {
-    border: 1px solid rgba(237, 206, 255, 0.5);
+    border: 1px solid ${({ theme }) => theme.text9};
     border-radius: 12px;
     padding: 22px 20px;
   }

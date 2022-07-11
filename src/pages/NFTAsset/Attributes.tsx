@@ -41,9 +41,7 @@ const NftSectionContent = styled.div<{ hide?: boolean; row?: boolean }>`
     `}
 `
 
-export const NftAttributeSection: React.FC<NftAttributeSectionProps> = (
-  props: React.PropsWithChildren<NftAttributeSectionProps>
-) => {
+export const NftAttributeSection = (props: React.PropsWithChildren<NftAttributeSectionProps>) => {
   const [hide, setHide] = useState(true)
 
   const toggleSection = useCallback(() => {

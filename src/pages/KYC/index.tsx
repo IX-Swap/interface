@@ -4,14 +4,14 @@ import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
-
 import { useCookies } from 'react-cookie'
+
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
-import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
+import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Column from 'components/Column'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { usePendingSignState } from 'state/application/hooks'
@@ -19,10 +19,11 @@ import { useKYCState } from 'state/kyc/hooks'
 import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
-import { Content, getStatusDescription, StatusCard } from './styleds'
+import { Content, getStatusDescription, StatusCard, DateInfoContainer } from './styleds'
 
 interface DescriptionProps {
   description: string | null
@@ -43,7 +44,7 @@ const DateInfo: FC<DateInfoProps> = ({
   approvedDate,
   changeRequestDate,
 }: DateInfoProps) => (
-  <Flex textAlign="center" color="#EDCEFF80" flexDirection="column">
+  <DateInfoContainer>
     {info && (
       <TYPE.description3 marginTop="40px" marginBottom="16px" color="inherit">
         {info}
@@ -69,7 +70,7 @@ const DateInfo: FC<DateInfoProps> = ({
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
-  </Flex>
+  </DateInfoContainer>
 )
 
 const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) => (
@@ -83,7 +84,7 @@ export default function KYC() {
   const [loading, setLoading] = useState(false)
   const pendingSign = usePendingSignState()
   const [cookies] = useCookies(['annoucementsSeen'])
-
+  const { config } = useWhitelabelState()
   const { kyc, loadingRequest } = useKYCState()
 
   const status = useMemo(() => kyc?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
@@ -198,9 +199,9 @@ export default function KYC() {
                 marginBottom={isMobile ? '12px' : '0px'}
                 textAlign="center"
                 marginTop="24px"
-                color="white"
+                color="text1"
               >
-                You need to pass KYC to access the full IX Swap App and trade Security Tokens
+                You need to pass KYC to access the full {config?.name || 'IX Swap'} App and trade Security Tokens
               </TYPE.mediumHeader>
             )}
             <Content
@@ -209,7 +210,7 @@ export default function KYC() {
               alignItems="center"
             >
               <TYPE.title4 marginBottom="40px">
-                <Trans>IX Swap KYC</Trans>
+                <Trans>{config?.name || 'IX Swap'} KYC</Trans>
               </TYPE.title4>
 
               <KYCStatus status={kyc?.status || KYCStatuses.NOT_SUBMITTED} />

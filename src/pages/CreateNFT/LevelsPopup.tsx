@@ -121,7 +121,7 @@ export const LevelsPopup = ({
                       <CrossIcon />
                     </div>
                     <StyledInput
-                      onChange={(e) => updateLocalLevels({ index, trait_type: e?.target?.value })}
+                      onChange={(e: any) => updateLocalLevels({ index, trait_type: e?.target?.value })}
                       placeholder={t`Character`}
                       className={`type-input`}
                       type="text"
@@ -139,7 +139,7 @@ export const LevelsPopup = ({
                         className="value-input"
                         value={level.value}
                         maxLength={6}
-                        onUserInput={(e) => updateLocalLevels({ index, value: Number(e) })}
+                        onUserInput={(e: any) => updateLocalLevels({ index, value: Number(e) })}
                       />
                       <span>
                         <Trans>of</Trans>
@@ -149,7 +149,7 @@ export const LevelsPopup = ({
                         maxLength={6}
                         value={level.max_value}
                         placeholder={'5'}
-                        onUserInput={(e) => updateLocalLevels({ index, max_value: Number(e) })}
+                        onUserInput={(e: any) => updateLocalLevels({ index, max_value: Number(e) })}
                       />
                     </div>
                   </LevelInputsContainer>

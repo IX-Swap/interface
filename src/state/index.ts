@@ -28,6 +28,9 @@ import assetForm from './nft/assetForm.reducer'
 import collectionForm from './nft/collectionForm.reducer'
 import secCatalog from './secCatalog/reducer'
 import kyc from './kyc/reducer'
+import whitelabel from './whitelabel/reducer'
+import payout from './payout/reducer'
+import tokenManager from './token-manager/reducer'
 
 const PERSISTED_KEYS: string[] = ['auth', 'lists', 'swap', 'swapHelper', 'transactions', 'user']
 
@@ -47,6 +50,7 @@ const combinedReducer = combineReducers({
   mint,
   multicall,
   nft,
+  payout,
   pool,
   secCatalog,
   secTokens,
@@ -54,10 +58,12 @@ const combinedReducer = combineReducers({
   stakingPoolSize,
   swap,
   swapHelper,
+  tokenManager,
   transactions,
   unstaking,
   user,
   vesting,
+  whitelabel,
   withdraw,
 })
 

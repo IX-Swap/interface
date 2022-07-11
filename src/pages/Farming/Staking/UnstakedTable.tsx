@@ -1,4 +1,4 @@
-import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { BigintIsh, CurrencyAmount } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -50,17 +50,17 @@ const Body = () => {
   const { rewards, payouts, claims, transactionInProgress } = useStakingState()
   const currency = useIXSCurrency()
   const formatCurrency = useCallback(
-    (amount, digits = 10) =>
+    (amount: BigintIsh, digits = 10) =>
       currency ? formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, amount), digits) : '-',
     [currency]
   )
   const isAboveZero = useCallback(
-    (amount) =>
+    (amount: BigintIsh) =>
       currency &&
       JSBI.greaterThan(CurrencyAmount.fromRawAmount(currency, amount).quotient ?? BIG_INT_ZERO, BIG_INT_ZERO),
     [currency]
   )
-  const getVestingSum = useCallback(({ total, claimable, claimed }) => {
+  const getVestingSum = useCallback(({ total, claimable, claimed }: any) => {
     const deducted = JSBI.add(JSBI.BigInt(claimable), JSBI.BigInt(claimed))
     const result = JSBI.subtract(JSBI.BigInt(total), deducted)
     return result

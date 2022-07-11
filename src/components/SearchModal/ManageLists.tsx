@@ -69,7 +69,7 @@ const StyledTitleText = styled.div`
   text-overflow: ellipsis;
   font-weight: 600;
   font-size: 20px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({ theme }) => theme.white};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
       font-size: 1rem;
   `};
@@ -334,7 +334,7 @@ export function ManageLists({
     }
   }, [activeCopy, activeListUrls])
 
-  const handleInput = useCallback((e) => {
+  const handleInput = useCallback((e: { target: { value: string } }) => {
     setListUrlInput(e.target.value)
   }, [])
 

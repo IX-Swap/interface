@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
-import { getNetworkFromToken } from 'components/CurrencyLogo'
+import { getOriginalNetworkFromToken } from 'components/CurrencyLogo'
 import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import useTheme from 'hooks/useTheme'
@@ -60,7 +60,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { inputError, parsedAmount } = useDerivedWithdrawInfo()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
-  const networkName = getNetworkFromToken(tokenInfo)
+  const networkName = getOriginalNetworkFromToken(tokenInfo)
   const { address, loading } = useENS(receiver)
   const error = Boolean(receiver.length > 0 && !loading && !address && networkName === 'Ethereum')
 

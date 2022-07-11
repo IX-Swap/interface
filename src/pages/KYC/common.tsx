@@ -1,23 +1,24 @@
 import React, { CSSProperties, FC, HTMLProps, ReactChildren } from 'react'
 import { Box, Flex } from 'rebass'
-import { Trans } from '@lingui/macro'
-import { Label } from '@rebass/forms'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 
 import { Input } from 'components/Input'
 import { ButtonGradient } from 'components/Button'
 import { TYPE, EllipsisText } from 'theme'
+import { Label } from 'components/Label'
 import Upload from 'components/Upload'
 import { FilePreview } from 'components/FilePreview'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { Select as ReactSelect } from 'components/Select'
+import { AcceptFiles } from 'components/Upload/types'
 
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
+
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
-import { AcceptFiles } from 'components/Upload/types'
 
 export interface UploaderProps {
   files: FileWithPath[]
@@ -27,6 +28,7 @@ export interface UploaderProps {
   optional?: boolean
   error?: any | ReactChildren
   handleDeleteClick: (index: number) => void
+  required?: boolean
 }
 
 interface SelectProps {
@@ -40,23 +42,40 @@ interface SelectProps {
   error?: any | ReactChildren
   onBlur?: (e: any) => void
   name?: string
+  isMulti?: boolean
+  required?: boolean
+  isDisabled?: boolean
+  isClearable?: boolean
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement> & {
   error?: any | ReactChildren
+  required?: boolean
 }
 
-export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, items, error, name }: SelectProps) => {
+export const Select: FC<SelectProps> = ({
+  label,
+  onSelect,
+  selectedItem,
+  placeholder,
+  items,
+  error,
+  name,
+  required,
+  ...rest
+}: SelectProps) => {
   return (
     <Box>
-      {label && (
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>{label}</Trans>
-          </TYPE.title11>
-        </Label>
-      )}
-      <ReactSelect name={name} onSelect={onSelect} value={selectedItem} options={items} error={error} />
+      {label && <Label required={required} label={label} />}
+      <ReactSelect
+        name={name}
+        placeholder={placeholder}
+        onSelect={onSelect}
+        value={selectedItem}
+        options={items}
+        error={error}
+        {...rest}
+      />
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
@@ -75,17 +94,12 @@ export const TextInput: FC<TextInputProps> = ({
   name,
   type,
   onBlur,
+  required,
   error = false,
 }: TextInputProps) => {
   return (
     <Box>
-      {label && (
-        <Label marginBottom="11px" htmlFor={name || ''}>
-          <TYPE.title11 color="text2">
-            <Trans>{label}</Trans>
-          </TYPE.title11>
-        </Label>
-      )}
+      {label && <Label label={label} htmlFor={name || ''} required={required} />}
 
       <StyledInput
         onBlur={onBlur}
@@ -111,15 +125,16 @@ export const Uploader: FC<UploaderProps> = ({
   title,
   subtitle,
   files,
-  onDrop,
+  required,
   error,
-  optional = false,
   handleDeleteClick,
+  onDrop,
+  optional = false,
 }: UploaderProps) => {
   return (
     <Box>
-      <Flex marginBottom="10px">
-        <TYPE.body1>{title}</TYPE.body1>
+      <Flex>
+        <Label label={title} required={required} />
         {optional && (
           <>
             <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
@@ -148,7 +163,7 @@ export const Uploader: FC<UploaderProps> = ({
       <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles} file={null} onDrop={onDrop}>
         <UploaderCard>
           <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-            <UploadLogo />
+            <StyledUploadLogo />
             <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
               Drag and Drop
             </TYPE.small>
@@ -178,13 +193,7 @@ interface ChooseFileTypes {
 export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: ChooseFileTypes) => {
   return (
     <Box style={{ maxWidth: 200 }}>
-      {label && (
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>{label}</Trans>
-          </TYPE.title11>
-        </Label>
-      )}
+      {label && <Label label={label} />}
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
@@ -216,26 +225,10 @@ export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
     <BeneficialOwnersTableContainer>
       <FormGrid columns={4}>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>Full Name</Trans>
-          </TYPE.title11>
-        </Label>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>% Shareholding</Trans>
-          </TYPE.title11>
-        </Label>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>Proof of Address</Trans>
-          </TYPE.title11>
-        </Label>
-        <Label marginBottom="11px">
-          <TYPE.title11 color="text2">
-            <Trans>Proof of Identity</Trans>
-          </TYPE.title11>
-        </Label>
+        <Label label={t`Full Name`} />
+        <Label label={t`% Shareholding`} />
+        <Label label={t`Proof of Address`} />
+        <Label label={t`Proof of Identity`} />
       </FormGrid>
     </BeneficialOwnersTableContainer>
   )
@@ -257,6 +250,17 @@ export const DeleteRow = ({ children, onClick }: DeleteRowTypes) => {
   )
 }
 
+const StyledUploadLogo = styled(UploadLogo)`
+  ${({ theme }) =>
+    theme.config.elements?.main &&
+    css`
+      path {
+        stroke: ${theme.config.elements?.main};
+        fill: none;
+      }
+    `}
+`
+
 const StyledDescription = styled(TYPE.description3)`
   color: ${({ theme: { text2 } }) => `${text2}50`};
   ul {
@@ -277,9 +281,9 @@ const StyledInput = styled(Input)`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
-  background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
+  background-color: ${({ theme: { bg19 } }) => bg19};
   :focus {
-    background-color: ${({ theme: { bg7 } }) => bg7};
+    background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
   }
 `
 

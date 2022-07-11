@@ -3,14 +3,14 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-import logoImg from 'assets/svg/logo-white.svg'
 import { gradientBorder, MEDIA_WIDTHS, StyledInternalLink } from 'theme'
 import { routes } from 'utils/routes'
+import { AppLogo } from 'components/AppLogo'
 
 export const NoCollections = () => {
   return (
     <Container>
-      <img src={logoImg} alt="logoImg" />
+      <AppLogo />
       <Text>
         <Trans>Oops, you don&apos;t have any collection yet!</Trans>
       </Text>

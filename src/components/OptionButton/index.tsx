@@ -11,7 +11,7 @@ export const FancyButton = styled.button`
   min-width: 3.5rem;
   border: 1px solid ${({ theme }) => theme.bg3};
   outline: none;
-  background: ${({ theme }) => theme.bg1};
+  background: ${({ theme }) => theme.config.background?.main || theme.bg1};
   :hover {
     border: 1px solid ${({ theme }) => theme.bg4};
   }
@@ -39,7 +39,7 @@ export const Option = styled(FancyButton)<{ active: boolean }>`
     background: ${({ theme }) => theme.bgG6};
   }
   background: ${({ active, theme }) => (active ? theme.bgG6 : theme.bg12)};
-  color: ${({ active, theme }) => (active ? theme.white : theme.text1)};
+  color: ${({ theme }) => theme.text1};
   ${({ theme }) => theme.mediaWidth.upToSmall`
     width: 100%  
   `}
