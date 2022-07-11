@@ -306,7 +306,9 @@ export default function CurrencyList({
       ) => {
         const token = next?.wrapped ?? next?.tokenInfo
 
-        if (config && config.tokens.length > 0 && !config?.tokens.includes(token.address)) {
+        const configTokens = config?.tokens || []
+
+        if (config && configTokens.length > 0 && !configTokens.includes(token.address)) {
           return acc
         }
 
