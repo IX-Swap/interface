@@ -159,9 +159,9 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (window.location.host.split('.')[1] !== 'ixswap') {
-      getWitelabelConfig()
-    }
+    // if (window.location.host.split('.')[1] !== 'ixswap') {
+    getWitelabelConfig()
+    // }
   }, [])
 
   useEffect(() => {
