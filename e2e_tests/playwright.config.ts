@@ -4,7 +4,7 @@ import {timeouts} from './helpers/timeouts'
 const config: PlaywrightTestConfig = {
   globalTimeout: timeouts.globalTestsTimeout,
   timeout: timeouts.testTimeout,
-  retries: process.env.E2E_CI ? 2 : 0,
+  retries: process.env.E2E_CI ? 1 : 0,
   reporter: [['list'], ['html', { outputFolder: 'test-results/report' }] ],
   testDir: './tests',
   globalSetup: './setup/globalSetup.ts',

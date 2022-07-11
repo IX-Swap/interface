@@ -16,6 +16,7 @@ jobs:
       METAMASK_RECOVERY: ${{ secrets.METAMASK_RECOVERY }}
       METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
       METAMASK_PRIVATE_KEY: ${{ secrets.METAMASK_PRIVATE_KEY }}
+      E2E_CI: true
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
     steps:
