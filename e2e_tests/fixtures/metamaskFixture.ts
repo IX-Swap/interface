@@ -4,6 +4,7 @@ import {KycScreen} from "../page-object/kycScreen"
 import {MetamaskPage} from "../page-object/metamaskPage";
 import {WebPage} from "../page-object/webPage";
 import {TopNavigationBar} from "../page-object/topNavigationBar";
+import {LiquidityPoolsPage} from "../page-object/liquidityPoolsPage";
 
 type ixsFixtures = {
   connectWalletScreen: ConnectWalletScreen;
@@ -11,6 +12,8 @@ type ixsFixtures = {
   metamaskPage: MetamaskPage;
   topNavigationBar: TopNavigationBar;
   webPage: WebPage;
+  liquidityPoolsPage: LiquidityPoolsPage;
+  kovanNetwork: ConnectWalletScreen;
 };
 
 export const test = base.extend<ixsFixtures>({
@@ -19,7 +22,8 @@ export const test = base.extend<ixsFixtures>({
     const userDataDir = '';
 
     const browserContext = await chromium.launchPersistentContext(userDataDir,{
-      recordVideo: { dir: 'test-results/videos/' },
+      // video disabled to improve the performance, can be enabled for debugging
+      // recordVideo: { dir: 'test-results/videos/' },
       headless: false,
       args: [
         `--disable-extensions-except=${pathToExtension}`,
@@ -47,6 +51,7 @@ export const test = base.extend<ixsFixtures>({
     const pageWithMetamask = await context.pages()[1];
     const metamaskPage = new MetamaskPage(pageWithMetamask);
 
+    await metamaskPage.makeSureMetamaskLoaded();
     await metamaskPage.fullyLoginToMetamask(process.env.METAMASK_RECOVERY, process.env.METAMASK_PASSWORD);
     await use(metamaskPage);
   }, { auto: true }],
@@ -63,8 +68,18 @@ export const test = base.extend<ixsFixtures>({
     await use(new WebPage(page, context));
   },
 
-  kycScreen: async ({ connectWalletScreen, page }, use) => {
-    await connectWalletScreen.connectMetaMask();
-    await use(new KycScreen(page));
+  kycScreen: async ({ page, context }, use) => {
+    await use(new KycScreen(page,context));
   },
+
+  liquidityPoolsPage: async ({ page, context }, use) => {
+    await use(new LiquidityPoolsPage(page, context));
+  },
+
+  kovanNetwork: async ({ connectWalletScreen, metamaskPage }, use) => {
+    await connectWalletScreen.connectMetaMask();
+    await metamaskPage.changeNetworkToKovan();
+
+    await use(connectWalletScreen);
+  }
 });
