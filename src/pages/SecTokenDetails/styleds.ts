@@ -6,9 +6,10 @@ import { RowStart } from 'components/Row'
 import { TYPE, MEDIA_WIDTHS, gradientBorder } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { BodyWrapper } from 'pages/AppBody'
+import { Box } from 'rebass'
 
-export const Container = styled(BodyWrapper)`
-  background: ${({ theme }) => theme.bg1};
+export const Container = styled(Box)`
+  /* background: ${({ theme }) => theme.bg1}; */
   height: fit-content;
   width: 100%;
   max-width: 920px;

@@ -234,15 +234,21 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {!config?.id && isAllowed(routes.tokenManager()) && isWhitelisted && me?.role === ROLES.TOKEN_MANAGER && (
-              <IconWrapper>
-                <HeaderElement>
-                  <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }} to="/token-manager">
-                    <TokenManager />
-                  </NavLink>
-                </HeaderElement>
-              </IconWrapper>
-            )}
+            {!config?.id &&
+              isAllowed(routes.tokenManager('my-tokens')) &&
+              isWhitelisted &&
+              me?.role === ROLES.TOKEN_MANAGER && (
+                <IconWrapper>
+                  <HeaderElement>
+                    <NavLink
+                      style={{ textDecoration: 'none', color: 'inherit', marginRight: 8 }}
+                      to={routes.tokenManager('my-tokens', null)}
+                    >
+                      <TokenManager />
+                    </NavLink>
+                  </HeaderElement>
+                </IconWrapper>
+              )}
             {isAllowed(routes.kyc) && isWhitelisted && (
               <IconWrapper>
                 <HeaderElement>

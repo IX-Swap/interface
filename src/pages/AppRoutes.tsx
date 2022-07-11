@@ -33,6 +33,10 @@ const NFTCollections = lazy(() => import('pages/NFTCollections'))
 const UpdateCollection = lazy(() => import('pages/UpdateCollection'))
 const CreateCollection = lazy(() => import('pages/CreateCollection'))
 const NftAssetPage = lazy(() => import('pages/NFTAsset'))
+const TokenManager = lazy(() => import('pages/TokenManager'))
+const CreatePayoutEvent = lazy(() => import('pages/CreatePayoutEvent'))
+const PayoutItem = lazy(() => import('pages/PayoutItem'))
+const PayoutItemManager = lazy(() => import('pages/PayoutItem/PayoutItemManager'))
 
 export interface RouteMapEntry {
   path: string
@@ -50,7 +54,7 @@ export interface RouteMapEntry {
 }
 
 export const routeConfigs: RouteMapEntry[] = [
-  { path: '/admin', render: () => <Redirect to={routes.admin('accreditation')} /> },
+  { path: '/admin', render: () => <Redirect to={routes.admin('accreditation', null)} /> },
   { path: routes.admin(), component: Admin },
 
   {
@@ -115,6 +119,12 @@ export const routeConfigs: RouteMapEntry[] = [
 
   { path: routes.securityToken(), component: SecTokenDetails },
   { path: routes.securityTokens(), component: SecurityTokens },
+
+  { path: '/token-manager', render: () => <Redirect to={routes.tokenManager('my-tokens', null)} /> },
+  { path: routes.tokenManager(), component: TokenManager },
+  { path: routes.createPayoutEvent, component: CreatePayoutEvent },
+  { path: routes.payoutItem(), component: PayoutItem },
+  { path: routes.payoutItemManager(), component: PayoutItemManager },
 
   { path: routes.staking, component: StakingTab },
   { path: routes.vesting, component: VestingTab },
