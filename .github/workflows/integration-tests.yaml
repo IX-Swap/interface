@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - development
-      - ci-update
 
 jobs:
   integration-tests:
