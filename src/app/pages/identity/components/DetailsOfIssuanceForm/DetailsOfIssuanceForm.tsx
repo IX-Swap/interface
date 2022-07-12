@@ -36,6 +36,7 @@ export const DetailsOfIssuanceForm = memo(() => {
       steps={detailsOfIssuanceFormSteps}
       nonLinear
       skippable
+      createModeRedirect={IdentityRoute.createDetailsOfIssuance}
     />
   )
 })
