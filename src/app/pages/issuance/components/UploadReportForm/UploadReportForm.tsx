@@ -27,7 +27,7 @@ export const UploadReportForm = () => {
       validationSchema={uploadReportFormValidationSchema}
       onSubmit={handleSubmit}
       defaultValues={{
-        reportDocuments: []
+        reportDocuments: [{ value: {} }] as any
       }}
     >
       <FormPrompt />

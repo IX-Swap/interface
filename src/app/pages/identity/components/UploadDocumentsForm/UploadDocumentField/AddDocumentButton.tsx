@@ -6,12 +6,14 @@ import { ButtonProps } from '@mui/material/Button'
 export interface SpecialButtonProps extends ButtonProps {
   name: any
   isVisible: boolean
+  addEmptyValue: boolean
   onClick: () => void
 }
 
 export const AddDocumentButton = ({
   name,
   isVisible,
+  addEmptyValue,
   ...props
 }: SpecialButtonProps) => {
   const { watch } = useFormContext()
@@ -19,10 +21,10 @@ export const AddDocumentButton = ({
   const onClick = props.onClick
 
   useEffect(() => {
-    if (documentsCount < 1 && onClick !== undefined) {
+    if (documentsCount < 1 && onClick !== undefined && addEmptyValue) {
       onClick()
     }
-  }, [documentsCount, onClick])
+  }, [documentsCount, onClick, addEmptyValue])
 
   if (!isVisible) {
     return null
