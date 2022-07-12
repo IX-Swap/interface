@@ -109,6 +109,11 @@ export const whitelabel = {
   config: '/white-label/config',
 }
 
+export const pool = {
+  addLiquidity: '/liquidity-pool/create',
+  removeLiquidity: (id: number) => `/liquidity-pool/${id}`,
+}
+
 export interface PaginateWithFilter {
   tokenId?: number | null
   page?: number
