@@ -9,13 +9,15 @@ export interface SaveOnNavigateProps {
   transformData: any
   isCreateMode: boolean
   createModeRedirect?: string
+  activeStep?: number
 }
 
 export const SaveOnNavigate = ({
   mutation,
   transformData,
   isCreateMode,
-  createModeRedirect
+  createModeRedirect,
+  activeStep = 0
 }: SaveOnNavigateProps) => {
   const { watch, formState } = useFormContext()
   const values = watch()
@@ -27,24 +29,27 @@ export const SaveOnNavigate = ({
 
   const handleSave = async () => {
     const payload = transformData(values)
-    return await save(payload, {
-      onSettled: (data: any) => {
-        if (
-          isCreateMode &&
-          createModeRedirect !== undefined &&
-          nextLocation !== undefined &&
-          data?.data._id !== undefined &&
-          data?.data.user._id !== undefined
-        ) {
-          history.replace(
-            generatePath(`${createModeRedirect}${nextLocation.search}`, {
-              identityId: data?.data._id,
-              userId: data?.data.user._id
-            })
-          )
+    return await save(
+      { ...payload, step: isCreateMode ? activeStep + 1 : 0 },
+      {
+        onSettled: (data: any) => {
+          if (
+            isCreateMode &&
+            createModeRedirect !== undefined &&
+            nextLocation !== undefined &&
+            data?.data._id !== undefined &&
+            data?.data.user._id !== undefined
+          ) {
+            history.replace(
+              generatePath(`${createModeRedirect}${nextLocation.search}`, {
+                identityId: data?.data._id,
+                userId: data?.data.user._id
+              })
+            )
+          }
         }
       }
-    })
+    )
   }
 
   const [saveForm] = useMutation(handleSave)
