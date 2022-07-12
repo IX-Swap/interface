@@ -28,12 +28,15 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: create .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-      - run: yarn
-      - run: npx playwright install
-      # - run: CI=false yarn build
+      - name: Install dependencies
+        run: yarn
+      - name: Install Playwright dependencies
+        run: npx playwright install
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - run: yarn start &
-      - run: npx wait-on http://localhost:3000 && yarn integration-test
+      - name: Start application
+        run: yarn start && npx wait-on http://localhost:3000 &
+      - name: Run E2E tests
+        run: yarn integration-test
 
       - uses: actions/upload-artifact@v2
         if: always()
