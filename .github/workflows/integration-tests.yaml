@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - development
-      - e2e-parallel-running
   pull_request:
     branches:
       - development
