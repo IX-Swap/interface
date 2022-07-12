@@ -51,7 +51,7 @@ export const UploadDocumentField = ({
   }
 
   return (
-    <Grid data-testid='uploadDocumentField' container spacing={3}>
+    <Grid container spacing={3}>
       {label !== '' && (
         <Grid item xs={12}>
           <Box>
