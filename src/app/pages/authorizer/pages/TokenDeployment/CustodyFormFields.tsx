@@ -13,8 +13,8 @@ export const CustodyFormFields = ({ isLoading }: CustodyFormFieldsProps) => {
   const custody = watch('custody', undefined)
 
   return (
-    <Grid container spacing={3} alignItems='center'>
-      <Grid item xs={4}>
+    <Grid container spacing={3} alignItems='flex-end'>
+      <Grid item xs={6} sm={5} md={4}>
         <TypedField
           control={control}
           component={CustodySelect}
@@ -24,7 +24,7 @@ export const CustodyFormFields = ({ isLoading }: CustodyFormFieldsProps) => {
           inputProps={{ 'data-testid': 'capital-structure' }}
         />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={6} sm={5} md={4}>
         <Button
           type='submit'
           variant='contained'
