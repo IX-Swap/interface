@@ -35,7 +35,11 @@ describe('SaveOnNavigate', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <SaveOnNavigate mutation={mutation} transformData={transformer} />
+        <SaveOnNavigate
+          mutation={mutation}
+          transformData={transformer}
+          isCreateMode={false}
+        />
       </Form>
     )
   })
@@ -44,7 +48,11 @@ describe('SaveOnNavigate', () => {
     render(
       <Route path={pathname}>
         <Form>
-          <SaveOnNavigate mutation={mutation} transformData={transformer} />
+          <SaveOnNavigate
+            mutation={mutation}
+            transformData={transformer}
+            isCreateMode={false}
+          />
         </Form>
       </Route>
     )

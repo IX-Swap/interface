@@ -11,6 +11,7 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from '../../types/forms'
 import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 
 export type CorporateType =
   | 'investor'
@@ -37,31 +38,34 @@ export const CorporateInvestorForm = ({
   const createMutation = useCreateCorporate(type)
   const updateMutation = useUpdateCorporate(type)
   const submitMutation = useSubmitCorporate(openDialog)
-  const { isCorporateJourneyCompleted, corporateIdentities } =
-    useOnboardingJourneys()
+  const { isCorporateJourneyCompleted } = useOnboardingJourneys()
+  const { data: corporateData, isLoading } = useAllCorporates({ type })
   const { location, replace } = useHistory()
 
   useEffect(() => {
-    if (
-      corporateIdentities.length > 0 &&
-      location.pathname === IdentityRoute.createCorporate
-    ) {
-      const {
-        _id: identityId,
-        user: { _id: userId }
-      } = corporateIdentities[0]
-
-      replace(
-        generatePath(IdentityRoute.editCorporate, {
-          identityId,
-          userId
-        })
-      )
+    if (!isLoading) {
+      if (
+        corporateData !== undefined &&
+        corporateData.list.length > 0 &&
+        location.pathname === IdentityRoute.createCorporate
+      ) {
+        replace(
+          generatePath(IdentityRoute.editCorporate, {
+            identityId: corporateData.list[0]._id,
+            userId: corporateData.list[0].user._id
+          })
+        )
+      }
     }
-  }, [location, replace, corporateIdentities])
+    // eslint-disable-next-line
+  }, [isLoading])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
-    isSubmitted: data?.status === 'Submitted',
+    isSubmitted: corporateData?.list[0]?.status === 'Submitted',
     lastStepIndex: corporateInvestorFormSteps.length - 1,
     isJourneyCompleted: isCorporateJourneyCompleted
   })
@@ -70,7 +74,7 @@ export const CorporateInvestorForm = ({
     <>
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
-        data={data}
+        data={corporateData?.list[0]}
         createMutation={createMutation}
         editMutation={updateMutation}
         submitMutation={submitMutation}
@@ -78,6 +82,7 @@ export const CorporateInvestorForm = ({
         defaultActiveStep={defaultActiveStep}
         formTitle={formTitle}
         nonLinear
+        createModeRedirect={IdentityRoute.editCorporate}
       />
     </>
   )
