@@ -8,7 +8,7 @@ import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 export const GenderSelect = (props: any): JSX.Element => {
   return (
     <>
-      <InputLabel>{props.label}</InputLabel>
+      <InputLabel disabled={props.disabled}>{props.label}</InputLabel>
       <Select
         {...props}
         label={undefined}

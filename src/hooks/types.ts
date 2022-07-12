@@ -5,6 +5,11 @@ export interface QueryOrMutationCallbacks<TResponse, TError = any> {
   onError?: (error: TError) => any
 }
 
+export interface QueryOrMutationSimpleCallbacks<TResponse, TError = any> {
+  onSuccess?: (response: TResponse) => any
+  onError?: (error: TError) => any
+}
+
 export enum PairFilter {
   ALL = 'all',
   SGD = 'SGD',

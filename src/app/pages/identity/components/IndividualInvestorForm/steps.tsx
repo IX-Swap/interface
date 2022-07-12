@@ -1,24 +1,22 @@
 import React from 'react'
-import { Grid, Paper } from '@mui/material'
+import { Grid } from '@mui/material'
 import {
   getDocumentsFormValues,
-  getFinancialInfoFormValues,
   getInvestorDeclarationFormValues,
   getPersonalInfoFormValues,
-  getTaxDeclarationFormValues
+  getFinancialInfoFormValues
 } from 'app/pages/identity/utils/individual/forms'
 import {
   getDocumentsRequestPayload,
-  getFinancialInfoRequestPayload,
   getInvestorDeclarationRequestPayload,
   getPersonalInfoRequestPayload,
-  getTaxDeclarationRequestPayload
+  getFinancialAndTaxDeclarationRequestPayload
 } from 'app/pages/identity/utils/individual/requests'
 import {
   individualInvestorValidationSchema,
-  financialInfoSchema,
   individualInvestorStatusDeclarationSchema,
-  personalInfoSchema
+  personalInfoSchema,
+  financialAndTaxDeclarationSchema
 } from 'app/pages/identity/validation/individual'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { FinancialInformationForm } from 'app/pages/identity/components/FinancialInformationForm/FinancialInformationForm'
@@ -29,7 +27,8 @@ import { IndividualIdentityContainer } from 'app/pages/identity/containers/Indiv
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import { IndividualAddressFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualAddressFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
-import { VSpacer } from 'components/VSpacer'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { ValidateOnMount } from 'app/pages/identity/components/ValidateOnMount'
 
 export const individualInvestorFormSteps = [
   {
@@ -38,43 +37,59 @@ export const individualInvestorFormSteps = [
     getRequestPayload: getPersonalInfoRequestPayload,
     validationSchema: personalInfoSchema,
     component: () => (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 4 }}>
-            <FormSectionHeader title={'Personal Information'} />
-            <VSpacer size='medium' />
-            <IndividualInfoFields />
-          </Paper>
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <Grid container spacing={5} direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader title={'Personal Information'} />
+                </Grid>
+                <Grid item>
+                  <IndividualInfoFields />
+                </Grid>
+              </Grid>
+            </FieldContainer>
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <Grid container spacing={5} direction={'column'}>
+                <Grid item>
+                  <FormSectionHeader title={'Address'} />
+                </Grid>
+                <Grid item>
+                  <IndividualAddressFields />
+                </Grid>
+              </Grid>
+            </FieldContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 4 }}>
-            <FormSectionHeader title={'Address'} />
-            <VSpacer size='medium' />
-            <IndividualAddressFields />
-          </Paper>
-        </Grid>
-      </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
     label: 'Financial and Tax Information',
     getFormValues: getFinancialInfoFormValues,
-    getRequestPayload: getFinancialInfoRequestPayload,
-    validationSchema: financialInfoSchema,
+    getRequestPayload: getFinancialAndTaxDeclarationRequestPayload,
+    validationSchema: financialAndTaxDeclarationSchema,
     component: () => (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <FinancialInformationForm />
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <FinancialInformationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <TaxDeclarationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <UsCitizenshipConfirmation />
+            </FieldContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TaxDeclarationForm />
-        </Grid>
-        <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <UsCitizenshipConfirmation />
-          </Paper>
-        </Grid>
-      </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
@@ -83,16 +98,19 @@ export const individualInvestorFormSteps = [
     getRequestPayload: getInvestorDeclarationRequestPayload,
     validationSchema: individualInvestorStatusDeclarationSchema,
     component: () => (
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <InvestorDeclarationForm />
+      <>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <InvestorDeclarationForm />
+          </Grid>
+          <Grid item xs={12}>
+            <FieldContainer>
+              <IndividualUploadDocumentsForm />
+            </FieldContainer>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 2, p: 5 }}>
-            <IndividualUploadDocumentsForm />
-          </Paper>
-        </Grid>
-      </Grid>
+        <ValidateOnMount />
+      </>
     )
   },
   {
@@ -100,20 +118,18 @@ export const individualInvestorFormSteps = [
     getFormValues: (data: any) => {
       const allData = {
         ...getDocumentsFormValues(data),
-        ...getFinancialInfoFormValues(data),
         ...getInvestorDeclarationFormValues(data),
         ...getPersonalInfoFormValues(data),
-        ...getTaxDeclarationFormValues(data)
+        ...getFinancialInfoFormValues(data)
       }
       return allData
     },
     getRequestPayload: (data: any) => {
       return {
         ...getDocumentsRequestPayload(data),
-        ...getFinancialInfoRequestPayload(data),
         ...getInvestorDeclarationRequestPayload(data),
         ...getPersonalInfoRequestPayload(data),
-        ...getTaxDeclarationRequestPayload(data)
+        ...getFinancialAndTaxDeclarationRequestPayload(data)
       }
     },
     validationSchema: individualInvestorValidationSchema,

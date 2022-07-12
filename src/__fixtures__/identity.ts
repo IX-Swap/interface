@@ -72,7 +72,7 @@ export const corporate: CorporateIdentity = {
       digitalSecuritiesIssuance: false,
       allServices: false,
       primaryOfferingServices: false
-    }
+    } as any
   },
   status: 'Submitted',
   beneficialOwners: [],
@@ -164,7 +164,7 @@ export const individual: IndividualIdentity = {
       digitalSecuritiesIssuance: false,
       allServices: false,
       primaryOfferingServices: false
-    }
+    } as any
   },
   documents: [],
   address,

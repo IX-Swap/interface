@@ -16,7 +16,7 @@ describe('DownloadDSODocument', () => {
 
   beforeEach(() => {
     jest
-      .spyOn(useDownloadRawFileHook, 'useDownloadRawFile')
+      .spyOn(useDownloadRawFileHook, 'useOldDownloadRawFile')
       .mockReturnValue([mutate, { isLoading: false } as any])
   })
   afterEach(async () => {

@@ -39,11 +39,16 @@ export const getPersonalInfoFormValues = (
 export const getFinancialInfoFormValues = (
   data: IndividualIdentity
 ): Partial<IndividualFinancialInfoFormValues> => {
+  const sourceOfFund = Array.isArray(data?.sourceOfFund)
+    ? undefined
+    : data?.sourceOfFund
+
   return {
     occupation: data?.occupation,
     employer: data?.employer,
     employmentStatus: data?.employmentStatus,
-    sourceOfFund: data?.sourceOfFund,
+    sourceOfFund: sourceOfFund,
+    annualIncome: data?.annualIncome,
     ...getTaxDeclarationFormValues(data)
   }
 }
@@ -84,6 +89,9 @@ export const getTaxDeclarationFormValues = (
 
   if (declarations?.tax?.fatca !== undefined) {
     result.fatca = declarations.tax.fatca ? 'yes' : 'no'
+    if (declarations.tax.fatca) {
+      result.usTin = declarations.tax.usTin
+    }
   }
 
   return result
@@ -92,7 +100,10 @@ export const getTaxDeclarationFormValues = (
 export const getInvestorDeclarationFormValues = (
   data: IndividualIdentity
 ): IndividualInvestorDeclarationFormValues => {
-  return data?.declarations?.investorsStatus
+  return {
+    ...data?.declarations?.investorsStatus,
+    ...getDocumentsFormValues(data)
+  }
 }
 
 export const getDocumentsFormValues = (

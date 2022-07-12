@@ -6,5 +6,9 @@ export const ValidSubmit: React.FC = ({ children }) => {
   const {
     formState: { isValid }
   } = useFormContext()
-  return <Submit disabled={!isValid}>{children}</Submit>
+  return (
+    <Submit variant={'contained'} disabled={!isValid}>
+      {children}
+    </Submit>
+  )
 }

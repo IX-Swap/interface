@@ -102,6 +102,7 @@ export interface IndividualFinancialInfoFormValues {
   occupation: string
   employer: string
   employmentStatus: string
+  annualIncome?: string
 }
 
 export interface IndividualTaxDeclarationFormValues {
@@ -109,17 +110,23 @@ export interface IndividualTaxDeclarationFormValues {
   fatca: 'yes' | 'no'
   taxResidencies: TaxResidencies
   uinfin?: string
+  usTin?: string
 }
 
+export interface FinancialAndTaxDeclarationFormValues
+  extends IndividualFinancialInfoFormValues,
+    IndividualTaxDeclarationFormValues {}
+
 export interface IndividualInvestorDeclarationFormValues
-  extends IndividualInvestorStatus,
+  extends IdentityDocumentsFormValues,
+    IndividualInvestorStatus,
     OptOutRequirements,
     OptInAgreements {}
 
 export interface IdentityDocumentsFormValues {
-  evidenceOfAccreditation: DataroomFile[]
-  proofOfIdentity: DataroomFile[]
-  proofOfAddress: DataroomFile[]
+  evidenceOfAccreditation: Array<FormArrayElement<DataroomFile>>
+  proofOfIdentity: Array<FormArrayElement<DataroomFile>>
+  proofOfAddress: Array<FormArrayElement<DataroomFile>>
 }
 
 export interface IndividualAgreementsFormValues {
@@ -274,14 +281,16 @@ export interface AgreementsAndDisclosures {
 }
 
 export interface OptOutRequirements {
-  digitalSecurities?: boolean
-  primaryOfferingServices?: boolean
-  digitalSecuritiesIssuance?: boolean
-  allServices?: boolean
+  digitalSecurities: boolean
+  primaryOfferingServices: boolean
+  digitalSecuritiesIssuance: boolean
+  allServices: boolean
 }
 
 export interface OptInAgreements {
   optInAgreements: boolean
+  optInAgreementsSafeguards: boolean
+  optInAgreementsOptOut: boolean
 }
 
 export interface IndividualInvestorStatus {
@@ -301,7 +310,7 @@ export interface CorporateInvestorStatus {
 }
 
 export interface IdentityDeclarations {
-  tax: { fatca: boolean }
+  tax: { fatca: boolean; usTin?: string }
   investorsStatus: IndividualInvestorStatus &
     CorporateInvestorStatus &
     OptInAgreements &
@@ -349,7 +358,8 @@ export type IndividualIdentity = BaseIdentity &
   IdentityFinancials &
   Authorizable &
   TaxDeclaration &
-  Noa
+  Noa &
+  Partial<IdentityDeclarations>
 
 export type CorporateIdentity = BaseIdentity &
   CorporateFields &

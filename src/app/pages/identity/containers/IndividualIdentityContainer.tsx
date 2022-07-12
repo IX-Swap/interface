@@ -14,7 +14,7 @@ export interface IndividualIdentityContainerProps {
 export const IndividualIdentityContainer: FC<
   IndividualIdentityContainerProps
 > = ({ component, loadingComponent, errorComponent, fallbackComponent }) => {
-  const { userId } = useParams<{ userId: string; identityId: string }>()
+  const { userId } = useParams<{ identityId: string; userId: string }>()
   const { data, isLoading, isError } = useIndividualIdentity(userId)
 
   if (isLoading) {

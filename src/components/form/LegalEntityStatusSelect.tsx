@@ -42,7 +42,7 @@ export const LEGAL_ENTITY_STATUS_LIST = [
 export const LegalEntityStatusSelect = (props: any) => {
   return (
     <>
-      <InputLabel>{props.label}</InputLabel>
+      <InputLabel disabled={props.disabled}>{props.label}</InputLabel>
       <Select
         {...props}
         style={{ minWidth: 100 }}

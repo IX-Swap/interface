@@ -28,6 +28,7 @@ export const SubscriptionDocument = (props: SubscriptionDocumentProps) => {
           downloader={
             <DownloadDocument
               documentId={document._id}
+              name={document.originalFileName}
               ownerId={document.user}
             />
           }

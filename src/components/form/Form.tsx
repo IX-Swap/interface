@@ -1,5 +1,10 @@
 import React, { PropsWithChildren, useMemo } from 'react'
-import { SubmitHandler, useForm, FormProvider } from 'react-hook-form'
+import {
+  SubmitHandler,
+  useForm,
+  FormProvider,
+  ValidationMode
+} from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { useUnmountCallback } from 'hooks/useUnmountCallback'
@@ -13,6 +18,7 @@ export interface FormProps<T extends {}> {
   resetAfterSubmit?: boolean
   allowInvalid?: boolean
   id?: string
+  mode?: keyof ValidationMode
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -26,11 +32,12 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     resetAfterSubmit = false,
     allowInvalid = false,
     id,
+    mode = 'onBlur',
     ...rest
   } = props
 
   const form = useForm({
-    mode: 'onBlur',
+    mode: mode,
     defaultValues: useMemo(() => defaultValues as any, [defaultValues]),
     resolver: yupResolver(validationSchema),
     criteriaMode: criteriaMode,

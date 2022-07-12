@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import { PaginatedData } from 'services/api/types'
+import { BlobWithExtension, PaginatedData } from 'services/api/types'
 
 export const convertPaginatedResultToFlatArray = <DataType = any>(
   pages: Array<AxiosResponse<PaginatedData<DataType>>>
@@ -29,8 +29,42 @@ export const convertBlobToFile = (blob: Blob, filename?: string) => {
   return new File([blob], filename ?? '', { type: blob.type }) // TODO: fix file name
 }
 
+export const getBlobFromResponse = (
+  data: AxiosResponse<any>
+): BlobWithExtension => {
+  const { response } = data.request
+  const objectResponse = JSON.parse(response)
+  const blob = new Blob([new Uint8Array(objectResponse?.file?.data)], {
+    type: objectResponse?.extension
+  })
+  return {
+    blob,
+    extension: objectResponse?.extension
+  }
+}
+
+export const downloadByAnchor = (data: BlobWithExtension, name: string) => {
+  const url = URL.createObjectURL(data.blob)
+  const download = `${name}.${data?.extension ?? 'txt'}`
+  downloadObjectURL(url, download)
+}
+
+export const downloadObjectURL = (url: string, name: string) => {
+  const link = document.createElement('a')
+  link.download = name
+  link.href = url
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
 export const createObjectURLFromFile = (file: File) => {
   return window.URL.createObjectURL(file)
+}
+
+export const downloadByFile = (file: File, name: string) => {
+  const url = createObjectURLFromFile(file)
+  downloadObjectURL(url, name)
 }
 
 export const revokeObjectURL = (url: string) => {

@@ -30,8 +30,8 @@ export const input = (theme: Theme) => {
             opacity: 1
           },
           '&.Mui-disabled': {
-            color: theme.palette.select.label,
-            opacity: 1
+            color: 'rgb(119, 129, 148)',
+            opacity: 0.7
           }
         },
         '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {

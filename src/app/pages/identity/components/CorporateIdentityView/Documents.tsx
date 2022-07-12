@@ -9,13 +9,13 @@ export interface DocumentsProps {
 
 export const Documents = ({ documents }: DocumentsProps) => {
   return documents.length > 0 ? (
-    <>
+    <Grid item container direction={'column'} spacing={2}>
       {documents.map(file => (
         <Grid item>
           <File label={file.title} value={file} readonly />
         </Grid>
       ))}
-    </>
+    </Grid>
   ) : (
     <Grid item>
       <File

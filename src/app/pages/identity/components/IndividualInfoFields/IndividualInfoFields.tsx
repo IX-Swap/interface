@@ -71,7 +71,7 @@ export const IndividualInfoFields = (
             }}
           />
         </Box>
-        <Grid container spacing={6} style={{ marginTop: isMobile ? 8 : 20 }}>
+        <Grid container spacing={5} style={{ marginTop: isMobile ? 8 : 20 }}>
           {isSingPass && (
             <Grid item xs={12}>
               <TextField

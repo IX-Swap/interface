@@ -7,6 +7,7 @@ import { identityQueryKeys } from 'config/queryKeys'
 import { generatePath, useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { useSearchQuery } from 'hooks/useSearchQuery'
 
 const corporateTypeRouteMap: { [key: string]: string } = {
   investor: IdentityRoute.editCorporate,
@@ -22,6 +23,7 @@ export const useCreateCorporate = (corporateType: string) => {
   const { replace } = useHistory()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
+  const query = useSearchQuery()
 
   const createCorporate = async (values: any) => {
     const uri = identityURL.corporates.create(userId)
@@ -37,10 +39,13 @@ export const useCreateCorporate = (corporateType: string) => {
       await queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
 
       replace(
-        generatePath(corporateTypeRouteMap[corporateType], {
-          identityId: data.data._id,
-          userId: data.data.user._id
-        })
+        generatePath(
+          `${corporateTypeRouteMap[corporateType]}?${query.toString()}`,
+          {
+            identityId: data.data._id,
+            userId: data.data.user._id
+          }
+        )
       )
     },
     onError: (error: any) => {

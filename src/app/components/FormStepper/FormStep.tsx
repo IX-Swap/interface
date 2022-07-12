@@ -5,7 +5,6 @@ import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
-import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
@@ -88,27 +87,26 @@ export const FormStep = (props: FormStepProps) => {
     return await mutation(payload).then(onSubmitSuccess)
   }
 
-  const getValidationSchema = () => {
-    if (isLastStep) {
-      return step.validationSchema
-    }
-
-    if (completed.includes(index)) {
-      return step.validationSchema
-    }
-
-    return undefined
-  }
-
   const nextCallback = () => {
     setCompleted?.()
     setActiveStep(activeStep + 1)
   }
 
+  const getSchema = (schema?: any) => {
+    if (typeof schema === 'function') {
+      return schema(data)
+    }
+    return schema
+  }
+
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={getValidationSchema()}
+      validationSchema={
+        completed.includes(index)
+          ? getSchema(step.validationSchema)
+          : getSchema(step.initialValidationSchema)
+      }
       onSubmit={handleSubmit}
       allowInvalid
       id={`${step.formId ?? 'form'}-${index}`}
@@ -129,7 +127,7 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {hasPrevStep && (
+          {hasPrevStep && !isLastStep && (
             <Fragment>
               <BackButton
                 fullWidth
@@ -158,15 +156,6 @@ export const FormStep = (props: FormStepProps) => {
             >
               Next
             </SaveButton>
-          )}
-
-          {isLastStep && (
-            <SubmitButton
-              fullWidth
-              mutation={submitMutation}
-              data={data}
-              step={step}
-            />
           )}
         </Box>
       </Grid>

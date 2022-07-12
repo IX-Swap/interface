@@ -47,7 +47,7 @@ export const RetrieveButton = ({
               bgcolor: '#F0F2F7',
               color: '#A2ACBF'
             },
-            textTransform: 'capitalize'
+            textTransform: 'uppercase'
           }}
           fullWidth
           disabled={!checked && !hideCheckBox}

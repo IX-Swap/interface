@@ -30,7 +30,6 @@ export const useStyles = makeStyles(theme => {
 
       '&.Mui-disabled': {
         backgroundColor: selectPalette.bgDisabled,
-
         '& svg': {
           fill: selectPalette.colorDisabled
         }
@@ -38,7 +37,9 @@ export const useStyles = makeStyles(theme => {
     },
     select: {
       '&.Mui-disabled': {
-        '-webkit-text-fill-color': selectPalette.colorDisabled
+        '-webkit-text-fill-color': selectPalette.colorDisabled,
+        color: 'rgb(119, 129, 148)',
+        opacity: 0.7
       }
     },
     paper: {

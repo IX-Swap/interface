@@ -8,6 +8,7 @@ export interface ActionsProps {
   name: string
   document: DataroomFile
   readonly?: boolean
+  originalName?: string
   setCompleted: (completed: number) => void
   multiple?: boolean
   remove?: () => void
@@ -18,7 +19,8 @@ export const Actions = ({
   document,
   readonly = false,
   remove,
-  setCompleted
+  setCompleted,
+  originalName
 }: ActionsProps) => {
   return (
     <Box display={'flex'} ml={1}>
@@ -26,7 +28,7 @@ export const Actions = ({
         <RemoveButton name={name} setCompleted={setCompleted} remove={remove} />
       )}
 
-      <Download documentId={document._id} />
+      <Download documentId={document._id} name={originalName} />
     </Box>
   )
 }
