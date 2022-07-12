@@ -22,6 +22,7 @@ export interface FormStepperStep {
   formId?: string
 }
 
+export type CreateModeRedirect = string | ((type: string) => string) | undefined
 export interface FormStepperProps {
   steps: FormStepperStep[]
   data: any
@@ -33,7 +34,7 @@ export interface FormStepperProps {
   nonLinear?: boolean
   skippable?: boolean
   formTitle?: string
-  createModeRedirect?: string
+  createModeRedirect: CreateModeRedirect
 }
 
 export const FormStepper = (props: FormStepperProps) => {

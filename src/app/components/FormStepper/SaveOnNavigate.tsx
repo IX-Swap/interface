@@ -3,12 +3,13 @@ import { useFormContext } from 'react-hook-form'
 import { generatePath, Prompt, useHistory } from 'react-router-dom'
 import { Action, Location } from 'history'
 import { MutationResultPair, useMutation } from 'react-query'
+import { CreateModeRedirect } from 'app/components/FormStepper/FormStepper'
 
 export interface SaveOnNavigateProps {
   mutation: MutationResultPair<any, any, any, any>
   transformData: any
   isCreateMode: boolean
-  createModeRedirect?: string
+  createModeRedirect: CreateModeRedirect
   activeStep?: number
 }
 
@@ -33,15 +34,21 @@ export const SaveOnNavigate = ({
       { ...payload, step: isCreateMode ? activeStep + 1 : 0 },
       {
         onSettled: (data: any) => {
+          const redirect =
+            typeof createModeRedirect === 'function'
+              ? createModeRedirect(data?.data.type ?? 'investor')
+              : createModeRedirect
+          console.log({ redirect })
+          console.log({ data })
           if (
             isCreateMode &&
-            createModeRedirect !== undefined &&
+            redirect !== undefined &&
             nextLocation !== undefined &&
             data?.data._id !== undefined &&
             data?.data.user._id !== undefined
           ) {
             history.replace(
-              generatePath(`${createModeRedirect}${nextLocation.search}`, {
+              generatePath(`${redirect}${nextLocation.search}`, {
                 identityId: data?.data._id,
                 userId: data?.data.user._id
               })

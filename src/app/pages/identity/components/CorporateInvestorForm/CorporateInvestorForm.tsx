@@ -70,6 +70,14 @@ export const CorporateInvestorForm = ({
     isJourneyCompleted: isCorporateJourneyCompleted
   })
 
+  const getCreateModeRedirect = (type: string) => {
+    if (type === 'issuer') {
+      return IdentityRoute.editIssuer
+    }
+
+    return IdentityRoute.editCorporate
+  }
+
   return (
     <>
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
@@ -82,7 +90,7 @@ export const CorporateInvestorForm = ({
         defaultActiveStep={defaultActiveStep}
         formTitle={formTitle}
         nonLinear
-        createModeRedirect={IdentityRoute.editCorporate}
+        createModeRedirect={getCreateModeRedirect}
       />
     </>
   )
