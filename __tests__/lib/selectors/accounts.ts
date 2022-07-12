@@ -13,7 +13,7 @@ export const accountsTab = {
   DASHBOARD_PAGE: '[href="/app/accounts/dashboard"]',
   MY_REPORTS_PAGE: '[href="/app/accounts/reports"]',
   REPORTS_INFORMATION: '[role="region"]',
-  MY_EXCHANGE_HOLDINGS: '[href="/app/otc-market/holdings"]',
+  MY_EXCHANGE_HOLDINGS: '[href="/app/accounts/holdings"]',
 
   buttons: {
     VIEW_REPORT: '[data-testid="table"] >> text="View Report"',
@@ -58,7 +58,8 @@ export const accountsTab = {
     COUNTRY: '[id="address.country"]',
     COUNTRY_VALUE: '[data-value="Ukraine"]',
 
-    TO_BANK_ACCOUNT: '[id="To Bank Account-select-input"]',
+    // TO_BANK_ACCOUNT: '[id="To Bank Account-select-input"]',
+    TO_BANK_ACCOUNT: '[id="bankAccountId"]',
     BANK: '[role="option"]',
 
     TOKEN: '[id="token"]',

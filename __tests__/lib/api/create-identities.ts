@@ -1,4 +1,4 @@
-import { postRequest, userRegistration, getCookies, putRequest } from './api'
+import { postRequest, userRegistration, getCookies, putRequest, getRequest } from './api'
 import { randomString } from '../helpers/helpers'
 import { text } from '../helpers/text'
 import * as corporateBody from './corporate-identity'
@@ -21,6 +21,7 @@ export async function userRegistrationConfirmation2FA(email) {
   await postRequest({}, cookies, `auth/2fa/setup/${id}/confirm/111111`, 'POST')
   return { id, cookies, userName }
 }
+
 export async function createIdentity(email, identityType, identityForms) {
   const { id, cookies, userName } = await userRegistrationConfirmation2FA(email)
   // Fill all form by API
@@ -82,4 +83,22 @@ export async function approveIdentity(id, identityType) {
 export async function rejectIdentity(id, identityType) {
   const cookies = await getCookies(baseCreds.AUTHORIZER_USER)
   await putRequest(cookies.cookies, `identity/${identityType}/${id}/reject`)
+}
+
+export async function individualIdentity(email, identityType, identityForms) {
+  const { id, cookies, userName } = await userRegistrationConfirmation2FA(email)
+  // Fill all form by API
+  let submitId
+  console.log(email)
+  for (const [title, dict] of Object.entries(identityForms)) {
+    try {
+      submitId = (await postRequest(dict, cookies, `identity/${identityType}/${id}`, 'PUT')).data._id
+    } catch (error) {
+      console.log(error)
+      throw new Error(`Error submitting ${title} form`)
+    }
+  }
+  // Submit form
+  await postRequest({}, cookies, `identity/${identityType}/${submitId}/submit`, 'PATCH')
+  return { id, submitId, userName, email }
 }

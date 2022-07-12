@@ -1,7 +1,7 @@
-import { baseCreds } from '../lib/helpers/creds'
-import { navigate, click } from '../lib/helpers/helpers'
-import { test, expect } from '../lib/fixtures/fixtures'
-import { adminEl } from '../lib/selectors/admin'
+import { baseCreds } from '../../lib/helpers/creds'
+import { navigate, click } from '../../lib/helpers/helpers'
+import { test, expect } from '../../lib/fixtures/fixtures'
+import { adminEl } from '../../lib/selectors/admin'
 
 test.use({ storageState: './__tests__/lib/storages/accountsStorageState.json' })
 

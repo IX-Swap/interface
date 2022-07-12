@@ -1,7 +1,8 @@
+import { Download } from 'ui/FileUpload/Download'
 import fetch from 'node-fetch'
-import { expect } from '@playwright/test'
+import { expect, Page } from '@playwright/test'
 
-const LOADER = '[role="progressbar"]'
+const LOADER = '[data-testid="progress"]'
 const DEFAULT_SELECTOR_TIMEOUT = 50000
 
 const attachedState = {
@@ -13,8 +14,24 @@ const detachedState = {
   timeout: DEFAULT_SELECTOR_TIMEOUT
 }
 
+export async function downloadFile(page: Page, element, saveTo?: string) {
+  const [download] = await Promise.all([
+    // Start waiting for the download
+    page.waitForEvent('download'),
+    // Perform the action that initiates download
+    page.locator(element).click()
+  ])
+
+  // Wait for the download process to complete
+  const fileName = await download.suggestedFilename()
+  const pathToFile = await download.path()
+  if (saveTo) console.log(saveTo)
+  return [fileName, pathToFile]
+}
+
 async function waitNewPage(context, page, element) {
-  const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(element)])
+  await page.waitForTimeout(1000)
+  const [secondPage] = await Promise.all([context.waitForEvent('page'), await page.locator(element).click()])
   return secondPage
 }
 
@@ -43,7 +60,7 @@ async function uploadFiles(page, element, file, resp = 'yes') {
       await waitForResponseInclude(page, '/dataroom/')
     }
   }
-  return { inputsFile }
+  return inputsFile
 }
 
 async function click(selector, page) {
@@ -128,6 +145,7 @@ async function getMessage(email, messageTitle = 'Invitation') {
     results = await fetch(
       `https://www.1secmail.com/api/v1/?action=getMessages&login=${partsEmail[0]}&domain=${partsEmail[1]}`
     ).then(res => res.json())
+
     if (results > 0) {
       break
     } else if (i === 4 && results === null) {

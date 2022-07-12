@@ -25,6 +25,7 @@ export const kyc = {
   buttons: {
     SUBMIT: "[type='submit']",
     SUBMIT_TEXT: '//*[text()="Submit"]',
+    SUBMIT_IDENTITY: 'text="Submit Identity"',
     OKAY: 'text="Okay"',
     EDIT: 'text="Edit"',
     VIEW: 'text="View"',
@@ -32,7 +33,7 @@ export const kyc = {
     FATCA: 'span >> text=FATCA'
   },
   listBox: {
-    SOURCE_OF_FUNDS: '[id="Source of funds-select-input"]',
+    SOURCE_OF_FUNDS: '[id="sourceOfFund"]',
     SOURCE_OF_FUNDS_VALUE: '[data-value="INVESTMENT GAIN"]',
 
     NUMBER_BUSINESS_OWNERS: '[id="numberOfBusinessOwners"]',
@@ -69,21 +70,21 @@ export const kyc = {
       DOCS_ISSUER: ['[id="corporateDocuments"]', '[id="financialDocuments"]'],
 
       directors: {
-        DOCUMENTS: '[id="representatives[0].documents"]',
+        DOCUMENTS: '[id="representatives[0].documents.[0].value"]',
         DESIGNATION: '[id="directors[0].designation"]',
         OTHER: '[id="otherLegalEntityStatus"]',
-        LEGAL_ENTITY_STATUS: '[id="legalEntityStatus"]',
-        COMPANY_OF_INCORPORATION: '[id="countryOfFormation"]',
-        STATE: 'input[id="directors[0].address.state"]',
-        ADDRESS1: 'input[name="directors[0].address.line1"]',
-        ADDRESS2: 'input[name="directors[0].address.line2"]',
-        CITY: 'input[id="directors[0].address.city"]',
-        COUNTRY: '[id="directors[0].address.country"]',
-        POSTAL_CODE: '[id="directors[0].address.postalCode"]',
-        PROOF_IDENTITY: '[id="directors[0].documents.proofOfIdentity"]',
-        PROOF_ADDRESS: '[id="directors[0].documents.proofOfAddress"]',
-        BENEFICIAL_PROOF_ADDRESS: '[id="beneficialOwners[0].documents.proofOfAddress"]',
-        BENEFICIAL_PROOF_IDENTITY: '[id="beneficialOwners[0].documents.proofOfIdentity"]',
+        LEGAL_ENTITY_STATUS: '[id*="legalEntityStatus"]',
+        COMPANY_OF_INCORPORATION: '[id*="countryOfFormation"]',
+        STATE: 'input[id="directors.[0].address.state"]',
+        ADDRESS1: 'input[name="directors.[0].address.line1"]',
+        ADDRESS2: 'input[name="directors.[0].address.line2"]',
+        CITY: 'input[id="directors.[0].address.city"]',
+        COUNTRY: '[id="directors.[0].address.country"]',
+        POSTAL_CODE: '[id="directors.[0].address.postalCode"]',
+        PROOF_IDENTITY: '[id*="directors[0].proofOfIdentity"]',
+        PROOF_ADDRESS: '[id*="directors[0].proofOfAddress"]',
+        BENEFICIAL_PROOF_ADDRESS: '[id*="beneficialOwners[0].proofOfAddress"]',
+        BENEFICIAL_PROOF_IDENTITY: '[id*="beneficialOwners[0].proofOfIdentity"]',
         PERCENTAGE_SHAREHOLDING: '[id="beneficialOwners[0].percentageShareholding"]', //in percent
         ADDRESS_COUNTRY: '[id="companyAddress.country"]'
       }
@@ -134,7 +135,8 @@ export const kyc = {
     YES_SINGAPORE_RESIDENT: '[name="singaporeOnly"][value="yes"]',
     NO_US_RESIDENT: '[name="fatca"][value="no"]',
     YES_US_RESIDENT: '[name="fatca"][value="yes"]',
-    I_CONFIRM: '[name="optInAgreements"]',
+    I_CONFIRM_OPT: '[id="optInAgreementsSafeguards"]',
+    I_CONFIRM_OPT_AGREEMENTS: '[id="optInAgreementsOptOut"]',
     PERSONAL_ASSETS: '[name="personalAssets"]',
     INCOME: '[name="income"]',
     FINANCIAL_ASSET: '[name="financialAsset"]',

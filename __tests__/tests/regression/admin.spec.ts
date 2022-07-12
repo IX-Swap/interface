@@ -1,16 +1,12 @@
-import { baseCreds } from '../lib/helpers/creds'
-import { adminEl } from '../lib/selectors/admin'
-import { test, expect } from '../lib/fixtures/fixtures'
-import { navigate, click, shouldExist, shouldNotExist, uploadFiles } from '../lib/helpers/helpers'
-import { invest } from '../lib/selectors/invest'
-import { getCookies, postRequest } from '../lib/api/api'
-import { authorizerEl } from '../lib/selectors/authorizer'
-import { text } from '../lib/helpers/text'
-import { authForms } from '../lib/selectors/auth'
-
-test.afterEach(async ({ page }) => {
-  await page.close()
-})
+import { baseCreds } from '../../lib/helpers/creds'
+import { adminEl } from '../../lib/selectors/admin'
+import { test, expect } from '../../lib/fixtures/fixtures'
+import { navigate, click, shouldExist, shouldNotExist, uploadFiles } from '../../lib/helpers/helpers'
+import { invest } from '../../lib/selectors/invest'
+import { getCookies, postRequest } from '../../lib/api/api'
+import { authorizerEl } from '../../lib/selectors/authorizer'
+import { text } from '../../lib/helpers/text'
+import { authForms } from '../../lib/selectors/auth'
 
 test.describe('', () => {
   test.use({ storageState: './__tests__/lib/storages/adminStorageState.json' })
