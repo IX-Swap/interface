@@ -127,6 +127,7 @@ export const FormStep = (props: FormStepProps) => {
         mutation={saveMutation}
         isCreateMode={data === undefined}
         createModeRedirect={createModeRedirect}
+        activeStep={activeStep}
       />
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='small' />
