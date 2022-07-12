@@ -34,7 +34,7 @@ jobs:
         run: npx playwright install
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Start application
-        run: npx wait-on http://localhost:3000 && (yarn start &)
+        run: (yarn start &) && npx wait-on http://localhost:3000
       - name: Run E2E tests
         run: yarn integration-test
 
