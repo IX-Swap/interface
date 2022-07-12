@@ -8,6 +8,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { RootContainer } from 'ui/RootContainer'
+import { getCorporateTitleText } from 'app/pages/identity/utils/shared'
 
 export interface EditInvestorFormProps {
   data: CorporateIdentity
@@ -21,14 +22,14 @@ const EditInvestorForm = ({
   return (
     <Grid container style={{ display: 'table' }}>
       <Grid item xs={12} sx={{ display: { xs: 'none', md: 'initial' } }}>
-        <PageHeader title='Edit Corporate Investor Identity' />
+        <PageHeader title={getCorporateTitleText(type, 'edit')} />
       </Grid>
       <RootContainer>
         <Grid item xs={12}>
           <CorporateInvestorForm
             data={data}
             type={type}
-            formTitle='Corporate Investor Identity'
+            formTitle={getCorporateTitleText(type)}
           />
         </Grid>
       </RootContainer>

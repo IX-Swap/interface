@@ -27,6 +27,7 @@ export const SaveOnNavigate = ({
   const [nextLocation, setNextLocation] = useState<
     Location<unknown> | undefined
   >(undefined)
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   const handleSave = async () => {
     const payload = transformData(values)
@@ -34,12 +35,11 @@ export const SaveOnNavigate = ({
       { ...payload, step: isCreateMode ? activeStep + 1 : 0 },
       {
         onSettled: (data: any) => {
+          setIsRedirecting(true)
           const redirect =
             typeof createModeRedirect === 'function'
               ? createModeRedirect(data?.data.type ?? 'investor')
               : createModeRedirect
-          console.log({ redirect })
-          console.log({ data })
           if (
             isCreateMode &&
             redirect !== undefined &&
@@ -53,6 +53,7 @@ export const SaveOnNavigate = ({
                 userId: data?.data.user._id
               })
             )
+            setIsRedirecting(false)
           }
         }
       }
@@ -63,10 +64,19 @@ export const SaveOnNavigate = ({
 
   const saveOnNavigate = (location: Location<unknown>, action: Action) => {
     setNextLocation(location)
-    void saveForm()
+
+    if (isRedirecting && isCreateMode) {
+      return true
+    }
+
+    if (!isRedirecting) {
+      void saveForm()
+    }
+
     if (isCreateMode) {
       return false
     }
+
     return true
   }
 
