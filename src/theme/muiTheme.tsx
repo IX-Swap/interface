@@ -4,12 +4,48 @@ import { DefaultTheme } from 'styled-components'
 
 import useTheme from 'hooks/useTheme'
 
-export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text9, config }: DefaultTheme) =>
+export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text8, text9, config }: DefaultTheme) =>
   createTheme({
     overrides: {
       MuiPickersBasePicker: {
         pickerView: {
           backgroundColor: bg7,
+          borderRadius: '32px',
+          '&:focus-visible': {
+            outline: 'none',
+          },
+          '& *': {
+            outline: 'none !important',
+            border: 'none !important',
+          },
+        },
+      },
+      MuiPickersModalDialog: {
+        dialogRoot: {
+          '& *': {
+            outline: 'none !important',
+            border: 'none !important',
+          },
+          outline: 'none',
+          backgroundColor: bg7,
+          borderRadius: '32px',
+          color: 'white',
+          '&:focus-visible': {
+            outline: 'none',
+          },
+        },
+        dialog: {
+          outline: 'none',
+          backgroundColor: bg7,
+          borderRadius: '32px',
+          color: 'white',
+          '&:focus-visible': {
+            outline: 'none',
+          },
+          '& *': {
+            outline: 'none !important',
+            border: 'none !important',
+          },
         },
       },
       MuiToolbar: {
@@ -19,6 +55,9 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text9, config }: Defau
       },
       MuiPickersToolbar: {
         toolbar: {
+          backgroundColor: bg11,
+        },
+        root: {
           backgroundColor: bg11,
         },
       },
@@ -76,23 +115,42 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text9, config }: Defau
         },
       },
       MuiPickersYear: {
-        yearSelected: {
-          color: text1,
-          '&:focus': {
-            color: text1,
+        root: {
+          flexBasis: '100%',
+          '& button': {
+            color: text8,
+            margin: '4px 0px',
+            fontWeight: 400,
+            fontSize: '18px',
+            lineHeight: '27px',
+            '&$selected': {
+              fontSize: '24px',
+              lineHeight: '36px',
+              color: text1,
+              '&:focus': {
+                color: text1,
+              },
+            },
+            '&$disabled': {
+              color: text7,
+              opacity: '50%',
+            },
           },
         },
       },
       MuiPickersMonth: {
-        monthSelected: {
+        root: {
           color: text1,
-          '&:focus': {
+          '&$selected': {
             color: text1,
+            '&:focus': {
+              color: text1,
+            },
           },
-        },
-        monthDisabled: {
-          color: text7,
-          opacity: '50%',
+          '&$disabled': {
+            color: text7,
+            opacity: '50%',
+          },
         },
       },
       MuiPickersCalendarHeader: {
@@ -129,21 +187,54 @@ export const muiTheme = ({ bg7, bg11, bg18, text1, text7, text9, config }: Defau
         transitionContainer: {
           margin: '12px 0px',
         },
+        weekDayLabel: {
+          color: text9,
+          fontWeight: 400,
+          fontSize: '14px',
+        },
       },
-      MuiPickersDay: {
-        daySelected: {
-          backgroundColor: bg11,
-          '&:hover': {
-            backgroundColor: bg11,
+      MuiPickersArrowSwitcher: {
+        iconButton: {
+          backgroundColor: 'none',
+          '& svg': {
+            fill: text1,
           },
         },
-        dayDisabled: {
-          opacity: '50%',
-        },
-        day: {
+      },
+      MuiPickersDay: {
+        root: {
+          backgroundColor: 'none',
+          color: text1,
+          fontWeight: 400,
+          fontSize: '16px',
+          '&$selected': {
+            backgroundColor: bg11,
+            '&:hover': {
+              backgroundColor: bg11,
+            },
+          },
+          '&$disabled': {
+            opacity: '50%',
+            color: 'inherit',
+          },
+
           '&:hover': {
             background: bg18,
           },
+          '&:focus': {
+            '&$selected': {
+              backgroundColor: bg11,
+            },
+          },
+        },
+        today: {
+          border: 'none !important',
+          background: bg18,
+        },
+      },
+      MuiPickersDateRangePickerToolbarProps: {
+        penIcon: {
+          display: 'none',
         },
       },
     } as any,

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 
-import { Input } from 'components/Input'
+import { Input, Textarea } from 'components/Input'
 import { ButtonGradient } from 'components/Button'
 import { TYPE, EllipsisText } from 'theme'
 import { Label } from 'components/Label'
@@ -48,8 +48,8 @@ interface SelectProps {
   isClearable?: boolean
 }
 
-type TextInputProps = HTMLProps<HTMLInputElement> & {
-  error?: any | ReactChildren
+type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
+  error?: any | JSX.Element
   required?: boolean
 }
 
@@ -111,6 +111,31 @@ export const TextInput: FC<TextInputProps> = ({
         type={type}
         autoComplete="off"
       />
+
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
+    </Box>
+  )
+}
+
+export const TextareaInput: FC<TextInputProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  style,
+  name,
+  required,
+  error = false,
+}: TextInputProps) => {
+  return (
+    <Box>
+      {label && <Label label={label} htmlFor={name || ''} required={required} />}
+
+      <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} />
 
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>

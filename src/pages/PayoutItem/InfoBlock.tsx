@@ -7,11 +7,8 @@ import { t } from '@lingui/macro'
 import { useCurrency } from 'hooks/Tokens'
 import { Document } from 'state/admin/actions'
 
-import { ButtonGradient } from 'components/Button'
 import { Attachments } from 'components/PayoutItem/PreviewModal'
-
 import CurrencyLogo from 'components/CurrencyLogo'
-import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
 
 interface Props {
   type: string
@@ -43,9 +40,7 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
       )}
       <Item // TODO: integrate attachments after discussion
         title={t`ATTACHMENTS:`}
-        content={
-          <Attachments attachments={attachments} />
-        }
+        content={<Attachments attachments={attachments} />}
       />
     </Flex>
   )
@@ -66,17 +61,4 @@ const Content = styled(Flex)`
   line-height: 27px;
   font-weight: 600;
   align-items: center;
-`
-
-const AttachmentsButton = styled(ButtonGradient)`
-  font-size: 13px;
-  line-height: 20px;
-  border-radius: 32px;
-  padding: 4px 12px;
-`
-
-const PdfIcon = styled(PdfImage)`
-  width: 20px;
-  height: 20px;
-  margin-left: 4px;
 `
