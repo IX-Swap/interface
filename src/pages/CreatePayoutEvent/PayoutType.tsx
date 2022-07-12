@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { Box } from 'rebass'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
+import { useFormikContext } from 'formik'
 
 import { Label } from 'components/Label'
 import { TYPE } from 'theme'
@@ -10,13 +11,15 @@ import { TextInput } from 'pages/KYC/common'
 import { ExtraInfoCard } from 'pages/KYC/styleds'
 
 import { payoutTypes } from './mock'
+import { FormValues } from './utils'
 
 interface Props {
-  values: any
   onValueChange: (key: string, newValue: any) => void
 }
 
-export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
+export const PayoutType: FC<Props> = ({ onValueChange }) => {
+  const { values, errors, touched } = useFormikContext<FormValues>()
+
   const description = payoutTypes.find(({ label }) => values.type === label)?.description || null
 
   const onTypeChange = (label: string) => {
@@ -40,6 +43,11 @@ export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
           />
         ))}
       </Card>
+      {touched.type && errors.type && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {errors.type}
+        </TYPE.small>
+      )}
       {values.type && (
         <ExtraInfoCard>
           <TYPE.buttonMuted opacity="50%">{description}</TYPE.buttonMuted>
@@ -51,6 +59,8 @@ export const PayoutType: FC<Props> = ({ values, onValueChange }) => {
           placeholder="Write payout type"
           onChange={(e: any) => onValueChange('otherType', e.currentTarget.value)}
           value={values.otherType}
+          required
+          error={touched.otherType ? errors.otherType : ''}
         />
       )}
     </Box>

@@ -1,12 +1,19 @@
 import React, { FC, useEffect, useState, useMemo } from 'react'
-import { useFormik } from 'formik'
+import { useFormik, FormikProvider } from 'formik'
 import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
+import { useWeb3React } from '@web3-react/core'
+import dayjs from 'dayjs'
 
 import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
 import { getTotalAmountByRecordDate, useCreateDraftPayout, usePayoutState } from 'state/payout/hooks'
 import { TYPE } from 'theme'
+import { isBefore } from 'pages/PayoutItem/utils'
+import { useUserState } from 'state/user/hooks'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import CurrencyLogo from 'components/CurrencyLogo'
+import { routes } from 'utils/routes'
 import { FormGrid } from 'pages/KYC/styleds'
 import { useAddPopup } from 'state/application/hooks'
 
@@ -15,12 +22,7 @@ import { PayoutEventBlock } from './PayoutEventBlock'
 import { initialValues } from './mock'
 import { FormCard } from './styleds'
 import { transformPayoutDraftDTO } from './utils'
-import { isBefore } from 'pages/PayoutItem/utils'
-import { useUserState } from 'state/user/hooks'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import CurrencyLogo from 'components/CurrencyLogo'
-import { useWeb3React } from '@web3-react/core'
-import { routes } from 'utils/routes'
+import { validation } from './validation'
 
 export const PayoutForm: FC = () => {
   const { account } = useWeb3React()
@@ -75,15 +77,13 @@ export const PayoutForm: FC = () => {
     }
   }
 
-  const { values, setFieldValue, handleSubmit } = useFormik({
+  const formik = useFormik({
     initialValues,
     onSubmit: handleFormSubmit,
+    validationSchema: validation,
     enableReinitialize: true,
-    validateOnBlur: false,
-    validateOnChange: false,
-    validateOnMount: false,
-    isInitialValid: false,
   })
+  const { values, errors, touched, setFieldValue, handleSubmit } = formik
 
   useEffect(() => {
     if (account) {
@@ -95,7 +95,7 @@ export const PayoutForm: FC = () => {
   const isRecordFuture = isBefore(values.recordDate)
 
   const onValueChange = (key: string, value: any) => {
-    setFieldValue(key, value, false)
+    setFieldValue(key, value, true)
   }
 
   const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
@@ -119,53 +119,63 @@ export const PayoutForm: FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormCard marginBottom="32px">
-        <TYPE.title6 marginBottom="28px">
-          <Trans>SECURITY TOKENS</Trans>
-        </TYPE.title6>
-        <FormGrid style={{ marginBottom: 20 }}>
-          <Select
-            label="SEC Token"
-            placeholder="Choose SEC token"
-            selectedItem={values.secToken}
-            items={secTokensOptions}
-            onSelect={(newToken) => {
-              onValueChange('secToken', newToken)
-              fetchAmountByRecordDate(newToken, recordDate)
-            }}
-            required
-          />
-          <DateInput
-            label="Record Date"
-            placeholder="Choose record date"
-            maxHeight={60}
-            openTo="date"
-            value={values.recordDate}
-            onChange={(newDate) => {
-              onValueChange('recordDate', newDate)
-              fetchAmountByRecordDate(secToken, newDate)
-            }}
-            required
-            tooltipText="Record Date"
-          />
-        </FormGrid>
+    <FormikProvider value={formik}>
+      <form onSubmit={handleSubmit}>
+        <FormCard marginBottom="32px">
+          <TYPE.title6 marginBottom="28px">
+            <Trans>SECURITY TOKENS</Trans>
+          </TYPE.title6>
+          <FormGrid style={{ marginBottom: 20 }}>
+            <Select
+              label="SEC Token"
+              placeholder="Choose SEC token"
+              selectedItem={values.secToken}
+              items={secTokensOptions}
+              onSelect={(newToken) => {
+                onValueChange('secToken', newToken)
+                fetchAmountByRecordDate(newToken, recordDate)
+              }}
+              error={touched.secToken ? errors.secToken : ''}
+              required
+            />
+            <DateInput
+              label="Record Date"
+              placeholder="Choose record date"
+              maxHeight={60}
+              openTo="date"
+              value={values.recordDate}
+              maxDate={
+                values.startDate
+                  ? dayjs(values.startDate).subtract(1, 'days')
+                  : values.endDate
+                  ? dayjs(values.endDate).subtract(2, 'days')
+                  : undefined
+              }
+              onChange={(newDate) => {
+                onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))
+                fetchAmountByRecordDate(secToken, newDate)
+              }}
+              error={touched.recordDate ? errors.recordDate : ''}
+              required
+              tooltipText="Record Date"
+            />
+          </FormGrid>
 
-        <Summary
+          <Summary
+            isRecordFuture={isRecordFuture}
+            isLoading={isAmountLoading}
+            tokenAmount={tokenAmount}
+            setTokenAmount={setTokenAmount}
+            onValueChange={onValueChange}
+          />
+        </FormCard>
+
+        <PayoutEventBlock
           isRecordFuture={isRecordFuture}
-          isLoading={isAmountLoading}
-          tokenAmount={tokenAmount}
-          setTokenAmount={setTokenAmount}
           onValueChange={onValueChange}
+          totalSecTokenSum={tokenAmount.totalSum ?? 0}
         />
-      </FormCard>
-
-      <PayoutEventBlock
-        isRecordFuture={isRecordFuture}
-        values={values}
-        onValueChange={onValueChange}
-        totalSecTokenSum={tokenAmount.totalSum ?? 0}
-      />
-    </form>
+      </form>
+    </FormikProvider>
   )
 }

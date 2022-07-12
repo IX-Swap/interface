@@ -1,34 +1,38 @@
-import React, { FC, useEffect, useMemo, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import { useFormikContext } from 'formik'
 
 import { TYPE } from 'theme'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
-import { Select, TextInput, Uploader } from 'pages/KYC/common'
+import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-import { Textarea } from 'components/Input'
-import { Label } from 'components/Label'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { momentFormatDate } from 'pages/PayoutItem/utils'
 import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { useShowError } from 'state/application/hooks'
+import useTheme from 'hooks/useTheme'
 
 import { PayoutType } from './PayoutType'
 import { FormCard } from './styleds'
 import { PublishPayoutModal } from './PublishPayoutModal'
 
+import { FormValues } from './utils'
+
 interface Props {
-  values: any
   onValueChange: (key: string, value: any) => void
   isRecordFuture: boolean
   totalSecTokenSum: number
 }
 
-export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, values, onValueChange }) => {
+export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, onValueChange }) => {
+  const { values, errors, touched } = useFormikContext<FormValues>()
+
+  const { bg19 } = useTheme()
   const [openModal, setOpenModal] = useState(false)
-  const { token, tokenAmount, recordDate, startDate, secToken } = values
+  const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
 
@@ -66,23 +70,13 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
     onValueChange('files', arrayOfFiles)
   }
 
-  const isButtonDisabled = useMemo(() => {
-    if (values.files.length === 0) return true
-    if (values.type === 'Other' && !values.otherType) return true
-    for (const key in values) {
-      if (['secTokenAmount', 'id', 'otherType', 'tokenAmount', 'endDate'].includes(key)) continue
-      if (!values[key]) return true
-    }
-    return false
-  }, [values]) // temporary
-
   return (
     <FormCard>
       <TYPE.title6 marginBottom="28px">
         <Trans>PAYOUT EVENT</Trans>
       </TYPE.title6>
 
-      <PayoutType values={values} onValueChange={onValueChange} />
+      <PayoutType onValueChange={onValueChange} />
 
       <Box marginBottom="20px">
         <FormGrid style={{ marginBottom: 8 }}>
@@ -93,12 +87,14 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
             items={tokensOptions}
             onSelect={(item) => onValueChange('token', item)}
             required
+            error={touched.token ? errors.token : ''}
           />
           <TextInput
             placeholder="1000"
             label="Amount of Token"
             onChange={(e: any) => onValueChange('tokenAmount', e.currentTarget.value)}
             value={tokenAmount}
+            error={touched.tokenAmount ? errors.tokenAmount : ''}
           />
         </FormGrid>
         {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
@@ -117,20 +113,23 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
-          minDate={recordDate ? moment(new Date(recordDate)).add(1, 'days') : moment(new Date()).add(1, 'days')}
+          minDate={recordDate ? dayjs(recordDate).add(1, 'days') : dayjs(new Date()).add(1, 'days')}
+          maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
           openTo="date"
           value={startDate}
-          onChange={(newDate) => onValueChange('startDate', newDate)}
+          onChange={(newDate) => onValueChange('startDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
           required
+          error={touched.startDate ? errors.startDate : ''}
         />
         <DateInput
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
-          minDate={startDate ? moment(new Date(startDate)).add(1, 'days') : moment(new Date()).add(1, 'days')}
+          minDate={startDate ? dayjs(startDate).add(1, 'days') : dayjs(new Date()).add(1, 'days')}
           openTo="date"
           value={values.endDate}
-          onChange={(newDate) => onValueChange('endDate', newDate)}
+          onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
+          error={touched.endDate ? errors.endDate : ''}
         />
       </FormGrid>
 
@@ -141,19 +140,20 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
           value={values.title}
           required
+          error={touched.title ? errors.title : ''}
         />
       </FormGrid>
 
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
-        <Box>
-          <Label label="Payout Description" required />
-          <Textarea
-            placeholder="Give a brief description of this payout event"
-            value={values.description}
-            style={{ height: '126px', background: '#271F4A66', marginBottom: 0 }}
-            onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
-          />
-        </Box>
+        <TextareaInput
+          label="Payout Description"
+          required
+          placeholder="Give a brief description of this payout event"
+          value={values.description}
+          style={{ height: '126px', background: bg19, marginBottom: 0 }}
+          onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
+          error={touched.description ? errors.description : ''}
+        />
       </FormGrid>
 
       <Uploader
@@ -162,13 +162,14 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
         onDrop={handleDropImage}
         handleDeleteClick={handleImageDelete}
         required
+        error={touched.files ? errors.files : ''}
       />
 
       <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px" disabled={isButtonDisabled}>
+        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px">
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
-        <ButtonIXSGradient type="button" padding="16px 24px" onClick={open} disabled={isButtonDisabled}>
+        <ButtonIXSGradient type="button" padding="16px 24px" onClick={open}>
           Publish Payout Event
         </ButtonIXSGradient>
       </Flex>
