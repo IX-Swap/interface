@@ -1,18 +1,22 @@
 import React, { FC } from 'react'
 import { Flex } from 'rebass'
+import { TYPE } from 'theme'
 import styled from 'styled-components'
-import { t, Trans } from '@lingui/macro'
+import { t } from '@lingui/macro'
+
+import { useCurrency } from 'hooks/Tokens'
+import { Document } from 'state/admin/actions'
+
+import { ButtonGradient } from 'components/Button'
+import { Attachments } from 'components/PayoutItem/PreviewModal'
 
 import CurrencyLogo from 'components/CurrencyLogo'
-import { ButtonGradient } from 'components/Button'
-import { TYPE } from 'theme'
 import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
-import { useCurrency } from 'hooks/Tokens'
 
 interface Props {
   type: string
   token: string
-  attachments: any[] // temporary 'any'
+  attachments: Array<Document>
 }
 
 interface ItemProps {
@@ -20,7 +24,7 @@ interface ItemProps {
   content: string | JSX.Element
 }
 
-export const InfoBlock: FC<Props> = ({ type, token }) => {
+export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
   const currency = useCurrency(token ?? undefined)
 
   return (
@@ -40,10 +44,7 @@ export const InfoBlock: FC<Props> = ({ type, token }) => {
       <Item // TODO: integrate attachments after discussion
         title={t`ATTACHMENTS:`}
         content={
-          <AttachmentsButton>
-            <Trans>View Files</Trans>
-            <PdfIcon />
-          </AttachmentsButton>
+          <Attachments attachments={attachments} />
         }
       />
     </Flex>
