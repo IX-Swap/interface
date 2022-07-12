@@ -11,11 +11,16 @@ export const SidebarWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(5.2, 0),
     marginTop: theme.spacing(0),
     overflow: 'hidden',
+    overflowY: 'auto',
     zIndex: 10,
     width: SIDEBAR_WIDTH,
     position: 'fixed',
     top: 64,
     left: 0,
-    bottom: 0
+    bottom: 0,
+    scrollbarWidth: 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   }
 }))
