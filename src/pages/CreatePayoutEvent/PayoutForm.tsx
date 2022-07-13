@@ -9,7 +9,6 @@ import { Select } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
 import { getTotalAmountByRecordDate, useCreateDraftPayout, usePayoutState } from 'state/payout/hooks'
 import { TYPE } from 'theme'
-import { isBefore } from 'pages/PayoutItem/utils'
 import { useUserState } from 'state/user/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -92,14 +91,20 @@ export const PayoutForm: FC = () => {
   }, [setFieldValue, account])
 
   const { recordDate, secToken } = values
-  const isRecordFuture = isBefore(values.recordDate)
+
+  const isRecordFuture = dayjs(recordDate)
+    .local()
+    .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
 
   const onValueChange = (key: string, value: any) => {
     setFieldValue(key, value, true)
   }
 
   const fetchAmountByRecordDate = async (secToken: any, recordDate: any) => {
-    const isFuture = isBefore(recordDate)
+    const isFuture = dayjs(recordDate)
+      .local()
+      .isSameOrAfter(dayjs(dayjs().local().format('YYYY-MM-DD')).local())
+
     if (secToken?.value && recordDate && !isFuture) {
       setIsAmountLoading(true)
       const data = await getTotalAmountByRecordDate(secToken.value, recordDate)
@@ -154,7 +159,7 @@ export const PayoutForm: FC = () => {
               }
               onChange={(newDate) => {
                 onValueChange('recordDate', dayjs(newDate).local().format('YYYY-MM-DD'))
-                fetchAmountByRecordDate(secToken, newDate)
+                fetchAmountByRecordDate(secToken, dayjs(newDate).local().format('YYYY-MM-DD'))
               }}
               error={touched.recordDate ? errors.recordDate : ''}
               required
