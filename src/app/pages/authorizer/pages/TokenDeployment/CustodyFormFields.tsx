@@ -30,7 +30,7 @@ export const CustodyFormFields = ({ isLoading }: CustodyFormFieldsProps) => {
           variant='contained'
           color='primary'
           disableElevation
-          style={{ height: 40 }}
+          style={{ height: 50 }}
           disabled={custody === undefined || isLoading}
         >
           Apply
