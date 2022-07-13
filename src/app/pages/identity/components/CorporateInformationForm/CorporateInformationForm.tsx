@@ -12,7 +12,7 @@ export interface CorporateInformationFormProps {
 }
 
 export const CorporateInformationForm = ({
-  type = 'investor'
+  type = 'corporate'
 }: CorporateInformationFormProps) => {
   return (
     <Grid data-testid='corporateInformationForm' container spacing={2}>

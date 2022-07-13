@@ -81,7 +81,8 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
         ...getCorporateInfoRequestPayload(data),
         ...getDirectorsAndBeneficialOwnerRequestPayload(data),
         ...getTaxDeclarationRequestPayload(data),
-        ...getCorporateInvestorDeclarationRequestPayload(data)
+        ...getCorporateInvestorDeclarationRequestPayload(data),
+        type: 'investor'
       }
     },
     validationSchema: corporateInvestorSchema,

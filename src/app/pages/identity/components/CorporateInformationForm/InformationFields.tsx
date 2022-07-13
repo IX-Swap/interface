@@ -17,7 +17,7 @@ export interface InformationFieldsProps {
 }
 
 export const InformationFields = ({
-  type = 'investor'
+  type = 'corporate'
 }: InformationFieldsProps) => {
   const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
@@ -30,12 +30,12 @@ export const InformationFields = ({
   }, [legalEntityStatus]) // eslint-disable-line
 
   const corporateInformationLabelMap = {
-    investor: 'Corporate Information',
+    corporate: 'Corporate Information',
     'Fund Manager': 'Fund Manager Company Information',
     'Fund Administrator': 'Fund Admin Company Information',
     'Portfolio Manager': 'Portfolio Manager Company Information',
     issuer: 'Corporate Information'
-  }
+  } as any
 
   return (
     <>
@@ -73,10 +73,10 @@ export const InformationFields = ({
             variant='outlined'
             name='companyLegalName'
             placeholder={
-              type === 'investor' ? 'Corporate Name' : 'Company Name'
+              type === 'corporate' ? 'Corporate Name' : 'Company Name'
             }
             defaultValue=''
-            label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
+            label={type === 'corporate' ? 'Corporate Name' : 'Company Name'}
             hideIcon
           />
         </Grid>
