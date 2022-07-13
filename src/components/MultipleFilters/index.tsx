@@ -206,7 +206,7 @@ export const MultipleFilters = ({
     ),
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
-        placeholder="SEC Token"
+        placeholder="Security token"
         selectedItems={values[FILTERS.SEC_TOKENS]}
         onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
         items={forManager ? managerSecTokensOptions : secTokensOptions}

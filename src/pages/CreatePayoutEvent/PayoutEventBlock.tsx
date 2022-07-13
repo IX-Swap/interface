@@ -92,7 +92,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           />
           <TextInput
             placeholder="1000"
-            label="Amount of Token"
+            label="Token Amount"
             onChange={(e: any) => onValueChange('tokenAmount', e.currentTarget.value)}
             value={tokenAmount}
             error={touched.tokenAmount ? errors.tokenAmount : ''}
