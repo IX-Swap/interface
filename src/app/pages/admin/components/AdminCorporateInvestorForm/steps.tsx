@@ -3,7 +3,7 @@ import { AdminCorporateIdentityView } from 'app/pages/admin/components/AdminCorp
 import { getCorporateInvestorFormSteps } from 'app/pages/identity/components/CorporateInvestorForm/steps'
 
 export const adminCorporateInvestorFormSteps = [
-  ...getCorporateInvestorFormSteps('investor').slice(0, -1),
+  ...getCorporateInvestorFormSteps('corporate').slice(0, -1),
   {
     label: 'Review & Submit',
     getFormValues: () => null,

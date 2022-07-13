@@ -14,8 +14,8 @@ import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmi
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 
 export type CorporateType =
-  | 'investor'
   | 'issuer'
+  | 'corporate'
   | 'Fund Manager'
   | 'Fund Administrator'
   | 'Portfolio Manager'
@@ -28,7 +28,7 @@ export interface CorporateInvestorFormProps {
 
 export const CorporateInvestorForm = ({
   data,
-  type = 'investor',
+  type = 'corporate',
   formTitle
 }: CorporateInvestorFormProps) => {
   const corporateInvestorFormSteps = getCorporateInvestorFormSteps(type)
