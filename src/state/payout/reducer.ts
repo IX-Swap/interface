@@ -58,6 +58,9 @@ export default createReducer<PayoutState>(initialState, (builder) =>
     .addCase(postLogin.rejected, (state) => {
       state.loadingRequest = false
     })
+    .addCase(postLogin.fulfilled, (state) => {
+      state.loadingRequest = false
+    })
     .addCase(getPayoutList.pending, (state) => {
       state.loadingRequest = true
       state.error = null
