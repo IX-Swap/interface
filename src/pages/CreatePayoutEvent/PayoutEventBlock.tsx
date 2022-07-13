@@ -151,7 +151,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
 
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
         <TextareaInput
-          label="Payout Description"
+          label="Payout Memo"
           required
           placeholder="Give a brief description of this payout event"
           value={values.description}
