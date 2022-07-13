@@ -29,7 +29,7 @@ import { CorporateType } from 'app/pages/identity/components/CorporateInvestorFo
 export const getCorporateInvestorFormSteps = (type: CorporateType) => [
   {
     label:
-      type === 'investor' ? 'Corporate Information' : 'Company Information',
+      type === 'corporate' ? 'Corporate Information' : 'Company Information',
     getFormValues: getCorporateInfoFormValues,
     getRequestPayload: getCorporateInfoRequestPayload,
     validationSchema: corporateInvestorInfoSchema,
@@ -81,8 +81,7 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
         ...getCorporateInfoRequestPayload(data),
         ...getDirectorsAndBeneficialOwnerRequestPayload(data),
         ...getTaxDeclarationRequestPayload(data),
-        ...getCorporateInvestorDeclarationRequestPayload(data),
-        type: 'investor'
+        ...getCorporateInvestorDeclarationRequestPayload(data)
       }
     },
     validationSchema: corporateInvestorSchema,
