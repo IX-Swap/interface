@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 export const validation = object().shape({
   title: string().required('Field is required').max(100, 'Maximum is allowed 100 chars'),
-  description: string().required('Field is required').max(5000, 'Maximum is allowed 100 chars'),
+  description: string().required('Field is required').max(5000, 'Maximum is allowed 5000 chars'),
   type: string().required('Field is required'),
   otherType: string().when('type', {
     is: (type: string) => type === 'Other',
