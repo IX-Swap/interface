@@ -11,7 +11,7 @@ export interface Props {
   marginBottom?: string
   htmlFor?: string
   required?: boolean
-  tooltipText?: string
+  tooltipText?: string | JSX.Element
 }
 
 export const Label: FC<Props> = ({ label, marginBottom, htmlFor, tooltipText, required = false }) => (

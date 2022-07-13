@@ -1,4 +1,4 @@
-import { object, string, array, TestContext } from 'yup'
+import { object, string, TestContext } from 'yup'
 import dayjs from 'dayjs'
 
 export const validation = object().shape({
@@ -12,7 +12,7 @@ export const validation = object().shape({
   }),
   secToken: object().nullable().required('Field is required'),
   token: object().nullable().required('Field is required'),
-  files: array().nullable().min(1, 'Must be at leat 1 file'),
+  // files: array().nullable().min(1, 'Must be at leat 1 file'),
   startDate: string().required('Field is required'),
   recordDate: string()
     .required('Field is required')

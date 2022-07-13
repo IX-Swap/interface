@@ -88,6 +88,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
             onSelect={(item) => onValueChange('token', item)}
             required
             error={touched.token ? errors.token : ''}
+            tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
           />
           <TextInput
             placeholder="1000"
@@ -95,6 +96,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
             onChange={(e: any) => onValueChange('tokenAmount', e.currentTarget.value)}
             value={tokenAmount}
             error={touched.tokenAmount ? errors.tokenAmount : ''}
+            tooltipText="Indicate the total number of tokens you want to distribute for this payout event."
           />
         </FormGrid>
         {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
@@ -120,6 +122,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           onChange={(newDate) => onValueChange('startDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
           required
           error={touched.startDate ? errors.startDate : ''}
+          tooltipText="Select the date when the distribution of tokens for this payout event will start."
         />
         <DateInput
           label="Payment Deadline"
@@ -130,6 +133,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
           error={touched.endDate ? errors.endDate : ''}
+          tooltipText="Select the deadline when the distribution of tokens for this payout event will end."
         />
       </FormGrid>
 
@@ -141,6 +145,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           value={values.title}
           required
           error={touched.title ? errors.title : ''}
+          tooltipText="Select a name for this payout event. Note that this will be the title of this payout that your token holders can use as a reference."
         />
       </FormGrid>
 
@@ -161,8 +166,8 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
         files={values.files}
         onDrop={handleDropImage}
         handleDeleteClick={handleImageDelete}
-        required
         error={touched.files ? errors.files : ''}
+        tooltipText="Please attach any documentation relevant to the payout event (optional)."
       />
 
       <Flex justifyContent="center" marginTop="32px">
