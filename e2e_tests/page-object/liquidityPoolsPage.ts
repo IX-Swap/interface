@@ -29,6 +29,7 @@ export class LiquidityPoolsPage extends WebPage {
   readonly transactionSubmittedPopUpText: Locator;
   readonly waitingForConfirmationPopUpText: Locator;
   readonly createdIsxEthPool: Locator;
+  readonly firstTokenValueInLiquidityPool: Locator;
   readonly secondTokenValueInLiquidityPool: Locator;
   readonly liquidityPoolLoading: Locator;
   readonly liquidityPoolPreloader: Locator;
@@ -60,7 +61,8 @@ export class LiquidityPoolsPage extends WebPage {
     this.transactionSubmittedPopUpText = page.locator('text=Transaction Submitted');
     this.waitingForConfirmationPopUpText = page.locator('text=Waiting For Confirmation');
     this.createdIsxEthPool = page.locator('//span[text()="My Liquidity"]//following::div[text()="IXS/ETH"]');
-    this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
+    this.firstTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
+    this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=1 >> [class="css-vurnku"] >> nth=1');
     this.liquidityPoolLoading = page.locator('text=Loading');
     this.liquidityPoolPreloader = page.locator('[alt="Loading..."]')
   }
@@ -68,6 +70,12 @@ export class LiquidityPoolsPage extends WebPage {
   // Assertions
   async isEthAmountThatWillBeReceivedShown(amount) {
     await expect(this.page.locator(`text=${amount} >> nth=1`)).toBeVisible();
+  }
+
+  async checkThatDeletedLiquidityPoolIsNotVisible() {
+    await expect(this.liquidityPoolLoading).not.toBeVisible();
+    await this.page.waitForTimeout(5000);
+    await expect(this.createdIsxEthPool).not.toBeVisible();
   }
 
   // Actions
@@ -135,23 +143,37 @@ export class LiquidityPoolsPage extends WebPage {
     await this.addNewAmountToLiqudityPoolButton.click();
   }
 
-  async getSecondTokenValueInThePool() {
+  async getSecondTokenValueOfThePool() {
     await expect(this.secondAmountOfTokensField).toHaveAttribute('value', /.+/)
     return await this.secondAmountOfTokensField.getAttribute('value');
+  }
+
+  async getSecondTokenValueOfTheCreatedPool() {
+    const secondTokenValue = await this.secondTokenValueInLiquidityPool.innerText();
+    return parseFloat(secondTokenValue);
+  }
+
+  async rejectPoolCreationViaMetamaskPopUp() {
+    const metamaskPopUp = await this.openNewPageByClick(this.page, this.confirmSupplyButtonSelector);
+    await metamaskPopUp.click(this.metamaskPage.rejectButton);
+  }
+
+  async approvePoolRemovingViaMetamask() {
+    const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
+    await approveMetamaskPopUp.click(this.metamaskPage.signButton);
   }
 
   async  removeCreatedLiqudityPoolIfItPresent() {
     await expect(this.liquidityPoolLoading).not.toBeVisible();
     await this.page.waitForTimeout(5000);
     if (await this.createdIsxEthPool.isVisible()) {
-      await this.removeLiquidityPool()
+      await this.removeLiquidityPool();
     }
   }
 
   async removeCreatedLiqudityPool() {
     await this.page.goto(config.use.baseURL + '#/pool')
-
-    await this.removeLiquidityPool()
+    await this.removeLiquidityPool();
   }
 
   async removeLiquidityPool() {
