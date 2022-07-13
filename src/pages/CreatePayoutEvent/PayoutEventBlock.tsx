@@ -136,7 +136,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
         <TextInput
           placeholder="Provide a name for this payout event"
-          label="Headline"
+          label="Event name"
           onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
           value={values.title}
           required
