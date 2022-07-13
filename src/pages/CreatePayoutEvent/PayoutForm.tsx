@@ -128,7 +128,7 @@ export const PayoutForm: FC = () => {
           <FormGrid style={{ marginBottom: 20 }}>
             <Select
               tooltipText="Select the security token you want to distribute for this payout event"
-              label="SEC Token"
+              label="Security token"
               placeholder="Choose SEC token"
               selectedItem={values.secToken}
               items={secTokensOptions}
