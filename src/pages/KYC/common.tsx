@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, HTMLProps, ReactChildren } from 'react'
+import React, { CSSProperties, FC, HTMLProps } from 'react'
 import { Box, Flex } from 'rebass'
 import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
@@ -26,9 +26,10 @@ export interface UploaderProps {
   title: string
   subtitle?: string | JSX.Element
   optional?: boolean
-  error?: any | ReactChildren
+  error?: any | JSX.Element
   handleDeleteClick: (index: number) => void
   required?: boolean
+  tooltipText?: string | JSX.Element
 }
 
 interface SelectProps {
@@ -39,18 +40,20 @@ interface SelectProps {
   withScroll?: boolean
   placeholder?: string
   style?: CSSProperties
-  error?: any | ReactChildren
+  error?: any | JSX.Element
   onBlur?: (e: any) => void
   name?: string
   isMulti?: boolean
   required?: boolean
   isDisabled?: boolean
   isClearable?: boolean
+  tooltipText?: string | JSX.Element
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
   error?: any | JSX.Element
   required?: boolean
+  tooltipText?: string | JSX.Element
 }
 
 export const Select: FC<SelectProps> = ({
@@ -62,11 +65,12 @@ export const Select: FC<SelectProps> = ({
   error,
   name,
   required,
+  tooltipText,
   ...rest
 }: SelectProps) => {
   return (
     <Box>
-      {label && <Label required={required} label={label} />}
+      {label && <Label required={required} label={label} tooltipText={tooltipText} />}
       <ReactSelect
         name={name}
         placeholder={placeholder}
@@ -96,10 +100,11 @@ export const TextInput: FC<TextInputProps> = ({
   onBlur,
   required,
   error = false,
+  tooltipText,
 }: TextInputProps) => {
   return (
     <Box>
-      {label && <Label label={label} htmlFor={name || ''} required={required} />}
+      {label && <Label label={label} htmlFor={name || ''} required={required} tooltipText={tooltipText} />}
 
       <StyledInput
         onBlur={onBlur}
@@ -130,10 +135,11 @@ export const TextareaInput: FC<TextInputProps> = ({
   name,
   required,
   error = false,
+  tooltipText,
 }: TextInputProps) => {
   return (
     <Box>
-      {label && <Label label={label} htmlFor={name || ''} required={required} />}
+      {label && <Label label={label} htmlFor={name || ''} required={required} tooltipText={tooltipText} />}
 
       <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} />
 
@@ -155,11 +161,12 @@ export const Uploader: FC<UploaderProps> = ({
   handleDeleteClick,
   onDrop,
   optional = false,
+  tooltipText,
 }: UploaderProps) => {
   return (
     <Box>
       <Flex>
-        <Label label={title} required={required} />
+        <Label label={title} required={required} tooltipText={tooltipText} />
         {optional && (
           <>
             <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>

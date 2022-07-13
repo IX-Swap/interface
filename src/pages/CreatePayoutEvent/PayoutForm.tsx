@@ -127,6 +127,7 @@ export const PayoutForm: FC = () => {
           </TYPE.title6>
           <FormGrid style={{ marginBottom: 20 }}>
             <Select
+              tooltipText="Select the security token you want to distribute for this payout event"
               label="SEC Token"
               placeholder="Choose SEC token"
               selectedItem={values.secToken}
@@ -157,7 +158,7 @@ export const PayoutForm: FC = () => {
               }}
               error={touched.recordDate ? errors.recordDate : ''}
               required
-              tooltipText="Record Date"
+              tooltipText="The record date or cut-off date is selected to determine which token holders (from when) can participate in the payout event."
             />
           </FormGrid>
 
