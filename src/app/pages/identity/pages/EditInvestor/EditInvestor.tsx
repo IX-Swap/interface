@@ -43,6 +43,5 @@ export interface EditInvestorProps {
 export const EditInvestor: React.FC<EditInvestorProps> = ({
   type = 'corporate'
 }) => {
-  console.log('EditInvestor type', type)
   return <CorporateIdentityContainer component={EditInvestorForm} type={type} />
 }
