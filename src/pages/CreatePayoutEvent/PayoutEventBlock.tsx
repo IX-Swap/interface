@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Box, Flex } from 'rebass'
+import { Box } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { useFormikContext } from 'formik'
@@ -8,17 +8,19 @@ import { TYPE } from 'theme'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonError, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { momentFormatDate } from 'pages/PayoutItem/utils'
 import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { useShowError } from 'state/application/hooks'
 import useTheme from 'hooks/useTheme'
+import { PAYOUT_STATUS } from 'constants/enums'
+import { useDeletePayoutItem } from 'state/payout/hooks'
+import { AreYouSureModal } from 'components/AreYouSureModal'
 
 import { PayoutType } from './PayoutType'
-import { FormCard } from './styleds'
+import { FormCard, ButtonsContainer } from './styleds'
 import { PublishPayoutModal } from './PublishPayoutModal'
-
 import { FormValues } from './utils'
 
 interface Props {
@@ -26,6 +28,7 @@ interface Props {
   isRecordFuture: boolean
   totalSecTokenSum: number
   availableForEditing: string[]
+  status?: string
 }
 
 export const PayoutEventBlock: FC<Props> = ({
@@ -33,14 +36,19 @@ export const PayoutEventBlock: FC<Props> = ({
   totalSecTokenSum,
   onValueChange,
   availableForEditing,
+  status,
 }) => {
+  const [isWarningOpen, setIsWarningOpen] = useState(false)
   const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
+  //TO DO - replace with id from backend
+  const id = 19
 
   const { bg19 } = useTheme()
   const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
+  const deletePayout = useDeletePayoutItem()
 
   useEffect(() => {
     const { title, secToken, type } = values
@@ -48,6 +56,11 @@ export const PayoutEventBlock: FC<Props> = ({
       onValueChange('title', `${type} payout event for ${secToken.label}`)
     }
   }, [values])
+
+  const onDelete = () => {
+    toggleIsWarningOpen()
+    deletePayout(id)
+  }
 
   const open = async () => {
     setTouched({
@@ -93,8 +106,11 @@ export const PayoutEventBlock: FC<Props> = ({
     onValueChange('files', arrayOfFiles)
   }
 
+  const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
+
   return (
     <FormCard>
+      <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
       <TYPE.title6 marginBottom="28px">
         <Trans>PAYOUT EVENT</Trans>
       </TYPE.title6>
@@ -200,14 +216,19 @@ export const PayoutEventBlock: FC<Props> = ({
         isDisabled={!availableForEditing.includes('files')}
       />
 
-      <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px">
+      <ButtonsContainer>
+        {status === PAYOUT_STATUS.DRAFT && (
+          <ButtonError onClick={toggleIsWarningOpen} error type="button">
+            <Trans>Delete Draft</Trans>
+          </ButtonError>
+        )}
+        <ButtonGradientBorder type="submit">
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
-        <ButtonIXSGradient type="button" padding="16px 24px" onClick={open}>
+        <ButtonIXSGradient type="button" onClick={open}>
           Publish Payout Event
         </ButtonIXSGradient>
-      </Flex>
+      </ButtonsContainer>
 
       {openModal && <PublishPayoutModal values={values} close={close} isRecordFuture={isRecordFuture} />}
     </FormCard>

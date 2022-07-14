@@ -6,8 +6,16 @@ import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
+import { useHistory } from 'react-router-dom'
+import { routes } from 'utils/routes'
 
-import { createDraft, getPayoutList, getPayoutItem as getPayoutItemAction, getMyPayoutList } from './actions'
+import {
+  createDraft,
+  getPayoutList,
+  getPayoutItem as getPayoutItemAction,
+  getMyPayoutList,
+  deletePayoutItem,
+} from './actions'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -170,6 +178,35 @@ export const useGetMyPayoutList = () => {
         return data
       } catch (error: any) {
         dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts list' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+export const deletePayoutItemReq = async (id: number) => {
+  const result = await apiService.delete(payout.deleteDraft(id), undefined)
+  return result.data
+}
+
+export const useDeletePayoutItem = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const history = useHistory()
+
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(deletePayoutItem.pending())
+        const data = await deletePayoutItemReq(id)
+        dispatch(deletePayoutItem.fulfilled())
+        history.push({ pathname: routes.tokenManager('payout-events', null) })
+
+        return data
+      } catch (error: any) {
+        dispatch(deletePayoutItem.rejected({ errorMessage: 'Could not delete payout item' }))
         return null
       }
     },

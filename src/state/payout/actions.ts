@@ -41,3 +41,13 @@ export const getPayoutItem: Readonly<{
   fulfilled: createAction('payout/getPayoutItem/fulfilled'),
   rejected: createAction('payout/getPayoutItem/rejected'),
 }
+
+export const deletePayoutItem: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/deletePayoutItem/pending'),
+  fulfilled: createAction('payout/deletePayoutItem/fulfilled'),
+  rejected: createAction('payout/deletePayoutItem/rejected'),
+}
