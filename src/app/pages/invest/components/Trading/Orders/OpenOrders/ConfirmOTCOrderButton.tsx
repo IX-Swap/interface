@@ -3,13 +3,18 @@ import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders
 import { useConfirmMyOrder } from 'app/pages/invest/hooks/useConfirmMyOrder'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
 import { useSendToken } from 'app/pages/invest/hooks/useSendToken'
+import {
+  CONGESTION_START_TIME,
+  useTransactionTimer
+} from 'app/pages/invest/hooks/useTransactionTimer'
 import { LeavePageContext } from 'app/pages/issuance/context/LeavePageContext'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ColumnOTCMatch } from 'types/otcOrder'
 export interface ConfirmOTCOrderButtonProps extends ButtonProps {
   order: ColumnOTCMatch
 }
+
 export const ConfirmOTCOrderButton = ({
   order,
   ...rest
@@ -18,12 +23,24 @@ export const ConfirmOTCOrderButton = ({
   const [loadingTransaction, setLoadingTransaction] = useState(false)
   const context = useContext(LeavePageContext)
   const classes = useStyles()
+
   const sendCallback = async () => {
     await confirmMatch({
       orderId: order.parentOrder,
       matchedOrderId: order.matchedOrder?._id ?? ''
     })
   }
+
+  const [confirmMatch, { isLoading }] = useConfirmMyOrder()
+  const { seconds, setStartedTimer } = useTransactionTimer()
+
+  useEffect(() => {
+    if (seconds >= CONGESTION_START_TIME && context?.showCongested === false) {
+      context?.openCongested()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [seconds, context?.showCongested])
+
   const sendToken = useSendToken({
     address: address,
     tokenChainId: chainId,
@@ -31,20 +48,22 @@ export const ConfirmOTCOrderButton = ({
     recipient: order.ethAddress,
     callback: sendCallback
   })
-  const [confirmMatch, { isLoading }] = useConfirmMyOrder()
-
   const handleClick = async () => {
     setLoadingTransaction(true)
     try {
       context?.openPrompt()
+      setStartedTimer(true)
       await sendToken()
     } catch {
       console.error('error confirming')
     } finally {
+      setStartedTimer(false)
+      context?.hideCongested()
       context?.closePrompt()
       setLoadingTransaction(false)
     }
   }
+
   const { isTablet } = useAppBreakpoints()
 
   return (
