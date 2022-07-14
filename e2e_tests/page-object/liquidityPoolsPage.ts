@@ -150,6 +150,7 @@ export class LiquidityPoolsPage extends WebPage {
 
   async getSecondTokenValueOfTheCreatedPool() {
     await expect(this.liquidityPoolPreloader).not.toBeVisible();
+    await this.page.waitForTimeout(5000);
     const secondTokenValue = await this.secondTokenValueInLiquidityPool.innerText();
     return parseFloat(secondTokenValue);
   }
