@@ -184,6 +184,7 @@ export const PayoutForm: FC = () => {
         </FormCard>
 
         <PayoutEventBlock
+          status={status}
           isRecordFuture={isRecordFuture}
           onValueChange={onValueChange}
           totalSecTokenSum={tokenAmount.totalSum ?? 0}
