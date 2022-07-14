@@ -112,7 +112,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
 
       // Assertion
-      await liquidityPoolsPage.checkThatSecondTokenValueOfCreatedPoolGreaterThan(ethAmountForLiquidityPoolFloat);
+      await expect(await liquidityPoolsPage.getSecondTokenValueOfTheCreatedPool()).toBeGreaterThan(ethAmountForLiquidityPoolFloat);
     })
   })
 

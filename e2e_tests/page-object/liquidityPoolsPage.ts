@@ -72,11 +72,6 @@ export class LiquidityPoolsPage extends WebPage {
     await expect(this.page.locator(`text=${amount} >> nth=1`)).toBeVisible();
   }
 
-  async checkThatSecondTokenValueOfCreatedPoolGreaterThan(value) {
-    await expect(this.liquidityPoolPreloader).not.toBeVisible();
-    await expect(this.getSecondTokenValueOfTheCreatedPool()).toBeGreaterThan(value);
-  }
-
   async checkThatDeletedLiquidityPoolIsNotVisible() {
     await expect(this.liquidityPoolLoading).not.toBeVisible();
     await this.page.waitForTimeout(5000);
@@ -154,6 +149,7 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   async getSecondTokenValueOfTheCreatedPool() {
+    await expect(this.liquidityPoolPreloader).not.toBeVisible();
     const secondTokenValue = await this.secondTokenValueInLiquidityPool.innerText();
     return parseFloat(secondTokenValue);
   }
