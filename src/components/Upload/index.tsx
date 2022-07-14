@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback, useState, useEffect } from 'react'
 import { useDropzone, FileWithPath } from 'react-dropzone'
 
-import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
+import { ImageContainer, PreviewParent, StyledClose, StyledLogo, Container } from './styleds'
 import { getfileType } from './utils'
 import { AcceptFiles, FileTypes } from './types'
 
@@ -15,6 +15,7 @@ interface Props {
   width?: string
   height?: string
   children?: ReactNode
+  isDisabled?: boolean
 }
 export const Preview = ({
   file,
@@ -65,6 +66,7 @@ export default function Upload({
   height = '100%',
   accept = AcceptFiles.ALL,
   children,
+  isDisabled = false,
 }: Props) {
   const [filePath, setFilePath] = useState<string>('')
   const onDropInput = useCallback(
@@ -98,9 +100,10 @@ export default function Upload({
     onDrop: onDropInput,
     accept,
   })
+
   return (
-    <div {...getRootProps()}>
-      <input {...getInputProps()} multiple={false} />
+    <Container {...getRootProps()} disabled={isDisabled}>
+      <input {...getInputProps()} multiple={false} disabled={isDisabled} />
       {children || (
         <>
           {isDragActive ? (
@@ -120,6 +123,6 @@ export default function Upload({
           </ImageContainer>
         </>
       )}
-    </div>
+    </Container>
   )
 }

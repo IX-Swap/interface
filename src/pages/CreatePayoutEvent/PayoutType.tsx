@@ -15,9 +15,10 @@ import { FormValues } from './utils'
 
 interface Props {
   onValueChange: (key: string, newValue: any) => void
+  availableForEditing: string[]
 }
 
-export const PayoutType: FC<Props> = ({ onValueChange }) => {
+export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) => {
   const { values, errors, touched } = useFormikContext<FormValues>()
 
   const description = payoutTypes.find(({ label }) => values.type === label)?.description || null
@@ -45,6 +46,7 @@ export const PayoutType: FC<Props> = ({ onValueChange }) => {
             label={label}
             onClick={() => onTypeChange(label)}
             checked={values.type === label}
+            disabled={!availableForEditing.includes('type')}
           />
         ))}
       </Card>
@@ -66,6 +68,7 @@ export const PayoutType: FC<Props> = ({ onValueChange }) => {
           value={values.otherType}
           required
           error={touched.otherType ? errors.otherType : ''}
+          disabled={!availableForEditing.includes('type')}
         />
       )}
     </Box>
