@@ -60,13 +60,34 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, ethAmountForLiquidityPool, ethTokenTitle, ixsTokenTitle);
     })
 
-    test('Test the ability to "Remove Liquidity" from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+    test('Test the ability to "Remove Liquidity"(MAX) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
       await liquidityPoolsPage.clickRemoveLiquidityButton();
       await liquidityPoolsPage.clickQuarterRemovePercentageButton();
       await liquidityPoolsPage.clickHalfRemovePercentageButton();
       await liquidityPoolsPage.clickHalfAndQuarterRemovePercentageButton();
       await liquidityPoolsPage.clickMaxRemovePercentageButton();
+
+      const approveMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.approveRemovePoolButton);
+      await approveMetamaskPopUp.click(metamaskPage.signButton);
+
+      await liquidityPoolsPage.clickRemovePoolButton();
+
+      // Assertion
+      await liquidityPoolsPage.isEthAmountThatWillBeReceivedShown(ethAmountForLiquidityPool);
+
+      const confirmMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmRemovePoolButton);
+      await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
+
+      await confirmMetamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
+      await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
+    })
+
+    test('Test the ability to "Remove Liquidity"(partial) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+      await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+      await liquidityPoolsPage.clickRemoveLiquidityButton();
+      await liquidityPoolsPage.clickQuarterRemovePercentageButton();
+      await liquidityPoolsPage.clickHalfRemovePercentageButton();
 
       const approveMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.approveRemovePoolButton);
       await approveMetamaskPopUp.click(metamaskPage.signButton);
