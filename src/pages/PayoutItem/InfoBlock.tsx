@@ -38,10 +38,9 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
           }
         />
       )}
-      <Item // TODO: integrate attachments after discussion
-        title={t`ATTACHMENTS:`}
-        content={<Attachments attachments={attachments} />}
-      />
+      {Boolean(attachments.length) && (
+        <Item title={t`ATTACHMENTS:`} content={<Attachments attachments={attachments} />} />
+      )}
     </Flex>
   )
 }
