@@ -26,7 +26,7 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
 
   return (
     <Flex alignItems="start" justifyContent="space-between">
-      <Item title={t`TYPE:`} content={type} />
+      <Item title={t`TYPE:`} content={<div style={{ textTransform: 'uppercase' }}>{type}</div>} />
       {currency && (
         <Item
           title={t`PAYOUT TOKEN:`}
