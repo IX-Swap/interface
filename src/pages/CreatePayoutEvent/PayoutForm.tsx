@@ -20,7 +20,7 @@ import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
 import { initialValues } from './mock'
 import { FormCard } from './styleds'
-import { transformPayoutDraftDTO } from './utils'
+import { availableInputsForEdit, transformPayoutDraftDTO } from './utils'
 import { validation } from './validation'
 
 export const PayoutForm: FC = () => {
@@ -75,6 +75,11 @@ export const PayoutForm: FC = () => {
     } else {
     }
   }
+
+  const status = 'draft'
+  const paid = true
+
+  const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
 
   const formik = useFormik({
     initialValues,
@@ -143,6 +148,7 @@ export const PayoutForm: FC = () => {
               }}
               error={touched.secToken ? errors.secToken : ''}
               required
+              isDisabled={!availableForEditing.includes('secToken')}
             />
             <DateInput
               label="Record Date"
@@ -164,6 +170,7 @@ export const PayoutForm: FC = () => {
               error={touched.recordDate ? errors.recordDate : ''}
               required
               tooltipText="The record date or cut-off date is selected to determine which token holders (from when) can participate in the payout event."
+              isDisabled={!availableForEditing.includes('recordDate')}
             />
           </FormGrid>
 
@@ -180,6 +187,7 @@ export const PayoutForm: FC = () => {
           isRecordFuture={isRecordFuture}
           onValueChange={onValueChange}
           totalSecTokenSum={tokenAmount.totalSum ?? 0}
+          availableForEditing={availableForEditing}
         />
       </form>
     </FormikProvider>
