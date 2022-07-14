@@ -28,7 +28,7 @@ interface Props {
 }
 
 export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, onValueChange }) => {
-  const { values, errors, touched } = useFormikContext<FormValues>()
+  const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
 
   const { bg19 } = useTheme()
   const [openModal, setOpenModal] = useState(false)
@@ -43,8 +43,25 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
     }
   }, [values])
 
-  const open = () => {
-    setOpenModal(true)
+  const open = async () => {
+    setTouched({
+      title: true,
+      description: true,
+      type: true,
+      otherType: true,
+      secTokenAmount: true,
+      tokenAmount: true,
+      recordDate: true,
+      startDate: true,
+      endDate: true,
+      secToken: true,
+      token: true,
+      files: true,
+    })
+    const errors = await validateForm()
+    if (Object.keys(errors).length === 0) {
+      setOpenModal(true)
+    }
   }
 
   const close = () => {

@@ -1,28 +1,42 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 import { Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
+import { useActiveWeb3React } from 'hooks/web3'
+
+import { StyledBodyWrapper } from 'pages/SecurityTokens'
 
 import { Loadable } from 'components/LoaderHover'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useAuthState } from 'state/auth/hooks'
 import { ButtonText } from 'components/Button'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+
+import { useAuthState } from 'state/auth/hooks'
+import { useUserState } from 'state/user/hooks'
 import { usePayoutState } from 'state/payout/hooks'
-import { StyledBodyWrapper } from 'pages/SecurityTokens'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 
 import { PayoutForm } from './PayoutForm'
 import { PageTitle } from './styleds'
 
+import { ROLES } from 'constants/roles'
+import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+
 const CreatePayoutEventPage: FC = () => {
   const [cookies] = useCookies(['annoucementsSeen'])
-  const { account } = useActiveWeb3React()
   const history = useHistory()
+
+  const { account } = useActiveWeb3React()
   const { token } = useAuthState()
+  const { me } = useUserState()
+
   const { loadingRequest } = usePayoutState()
   const isLoggedIn = !!token && !!account
+
+  useEffect(() => {
+    if (me && me.role !== ROLES.TOKEN_MANAGER) {
+      history.push('/kyc')
+    }
+  }, [me, history])
 
   const onBack = () => {
     history.push('/token-manager/my-tokens')
