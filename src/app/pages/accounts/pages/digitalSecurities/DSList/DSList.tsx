@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@mui/material'
+import { Button, Grid, Link } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { DSTabs } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSTabs'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
@@ -13,7 +13,14 @@ export const DSList: React.FC = () => {
         <PageHeader title='Digital Securities' />
       </Grid>
       <RootContainer>
-        <Grid item xs={12} container spacing={1} justifyContent='flex-end'>
+        <Grid
+          item
+          xs={12}
+          container
+          spacing={1}
+          justifyContent='flex-end'
+          mb={1}
+        >
           <Grid item>
             <Button
               component={AppRouterLinkComponent}
@@ -32,6 +39,17 @@ export const DSList: React.FC = () => {
               to={DSRoute.withdraw}
             >
               Withdraw
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              component={Link}
+              href='https://swap.investax.io/'
+              target='_blank'
+              variant='outlined'
+              color='primary'
+            >
+              Swap
             </Button>
           </Grid>
         </Grid>
