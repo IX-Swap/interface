@@ -17,6 +17,7 @@ import { usePayoutState } from 'state/payout/hooks'
 
 import { PayoutForm } from './PayoutForm'
 import { PageTitle } from './styleds'
+import { Info } from './Info'
 
 import { ROLES } from 'constants/roles'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
@@ -54,7 +55,7 @@ const CreatePayoutEventPage: FC = () => {
             <Trans>Create Payout Event</Trans>
           </PageTitle>
         </Flex>
-
+        <Info />
         <PayoutForm />
       </StyledBodyWrapper>
     </Loadable>
