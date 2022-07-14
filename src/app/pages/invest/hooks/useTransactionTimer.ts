@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const CONGESTION_START_TIME = 1
+export const CONGESTION_START_TIME = 60
 
 export const useTransactionTimer = () => {
   const [startedTimer, setTimer] = useState(false)
