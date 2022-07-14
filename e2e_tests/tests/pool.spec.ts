@@ -18,7 +18,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
 
-    test('Test the ability to create a pool (Token - Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+    test.skip('Test the ability to create a pool (Token - Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await test.step('Open Liquidity pool creation page', async () => {
         await liquidityPoolsPage.clickAddLiquidityButton();
       });
@@ -61,7 +61,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, ethAmountForLiquidityPoolString, ethTokenTitle, ixsTokenTitle);
     })
 
-    test('Test the ability to "Remove Liquidity"(MAX) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+    test.skip('Test the ability to "Remove Liquidity"(MAX) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
       await liquidityPoolsPage.clickRemoveLiquidityButton();
       await liquidityPoolsPage.clickQuarterRemovePercentageButton();
@@ -89,22 +89,24 @@ test.describe('Check Liquidity pool functions', () => {
     test('Test the ability to "Remove Liquidity"(partial) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
       await liquidityPoolsPage.clickRemoveLiquidityButton();
-      await liquidityPoolsPage.clickQuarterRemovePercentageButton();
       await liquidityPoolsPage.clickHalfRemovePercentageButton();
-
-      const approveMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.approveRemovePoolButton);
-      await approveMetamaskPopUp.click(metamaskPage.signButton);
-
+      await liquidityPoolsPage.approvePoolRemovingViaMetamask();
       await liquidityPoolsPage.clickRemovePoolButton();
 
       // Assertion
-      await liquidityPoolsPage.isEthAmountThatWillBeReceivedShown(ethAmountForLiquidityPool);
+      await liquidityPoolsPage.isEthAmountThatWillBeReceivedShown(ethAmountForLiquidityPoolString);
 
       const confirmMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmRemovePoolButton);
       await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
       await confirmMetamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
+
+      await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
+      await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+
+      // Assertion
+      await expect(await liquidityPoolsPage.getSecondTokenValueOfTheCreatedPool()).toBeLessThan(ethAmountForLiquidityPoolFloat);
     })
   })
 
@@ -117,7 +119,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
 
-    test('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+    test.skip('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
       await liquidityPoolsPage.clickAddNewAmountToLiqudityPoolButton();
       await liquidityPoolsPage.fillSecondAmountOfTokensField(ethAmountForLiquidityPoolString);
@@ -138,7 +140,7 @@ test.describe('Check Liquidity pool functions', () => {
   })
 
   test.describe('Check Negative pool cases', () => {
-    test('Test the ability to create a pool (Negative TC)', async ({liquidityPoolsPage}) => {
+    test.skip('Test the ability to create a pool (Negative TC)', async ({liquidityPoolsPage}) => {
       await liquidityPoolsPage.clickAddLiquidityButton();
       await liquidityPoolsPage.clickChooseFirstTokenDropdown();
       await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
