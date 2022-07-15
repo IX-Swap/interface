@@ -1,8 +1,8 @@
-import { baseCreds } from '../lib/helpers/creds'
-import { click, navigate, typeText, waitForText } from '../lib/helpers/helpers'
-import { test, expect } from '../lib/fixtures/fixtures'
-import { accountsTab } from '../lib/selectors/accounts'
-import { text } from '../lib/helpers/text'
+import { baseCreds } from '../../lib/helpers/creds'
+import { click, navigate, typeText, waitForText } from '../../lib/helpers/helpers'
+import { test, expect } from '../../lib/fixtures/fixtures'
+import { accountsTab } from '../../lib/selectors/accounts'
+import { text } from '../../lib/helpers/text'
 
 test.use({ storageState: './__tests__/lib/storages/accountsStorageState.json' })
 
@@ -35,6 +35,7 @@ test.describe('Cash Withdrawal (IXPRIME-168 / IXPRIME-169)', () => {
     await bankAccount.createWithdrawalsRequest('0', false)
     await bankAccount.AMOUNT.type('111111111', { delay: 150 })
     await waitForText(page, 'Insufficient balance')
+
     await expect(bankAccount.CONFIRM_WITHDRAWAL_BUTTON).toBeDisabled()
   })
 

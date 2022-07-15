@@ -51,7 +51,7 @@ export const FormPrompt = () => {
   return (
     <>
       <Prompt when={formState.isDirty} message={showCustomPrompt} />
-      <UIDialog open={open}>
+      <UIDialog open={open} onClose={handleStay}>
         <Box width='100%' py={4} px={5}>
           <DialogContent>
             <Box pb={2}>

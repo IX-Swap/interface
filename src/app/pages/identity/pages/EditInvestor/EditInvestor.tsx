@@ -17,7 +17,7 @@ export interface EditInvestorFormProps {
 
 const EditInvestorForm = ({
   data,
-  type = 'investor'
+  type = 'corporate'
 }: EditInvestorFormProps) => {
   return (
     <Grid container style={{ display: 'table' }}>
@@ -42,7 +42,7 @@ export interface EditInvestorProps {
 }
 
 export const EditInvestor: React.FC<EditInvestorProps> = ({
-  type = 'investor'
+  type = 'corporate'
 }) => {
   return <CorporateIdentityContainer component={EditInvestorForm} type={type} />
 }

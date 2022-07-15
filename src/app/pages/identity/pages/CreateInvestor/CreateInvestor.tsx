@@ -14,7 +14,7 @@ export interface CreateCorporateIdentityProps {
 }
 
 export const CreateCorporateIdentity = ({
-  type = 'investor',
+  type = 'corporate',
   title
 }: CreateCorporateIdentityProps) => {
   const theme = useTheme()

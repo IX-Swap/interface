@@ -2,57 +2,79 @@ import { baseCreds, setENV } from '../helpers/creds'
 import { text } from '../helpers/text'
 
 export const personalInformation = {
-  gender: 'O',
+  photo: '62c808bf810ec02d3bc6e738',
+  firstName: 'Britanney',
+  middleName: 'Amanda bonner',
+  lastName: 'Bright',
+  dob: '1990-01-07T21:00:00.000Z',
+  gender: 'M',
+  email: 'ceha@mailinator.com',
+  contactNumber: '+1 (608) 852-2063',
+  nationality: 'Ukraine',
   address: {
-    line1: '659 South Nobel Freeway',
-    line2: 'Omnis adipisicing sa',
-    city: 'Eaque illo qui amet',
-    state: 'Nisi quisquam magnam',
-    country: 'Barbados',
-    postalCode: 'Non est consequuntur'
-  },
-  email: 'larojuz@mailinator.com',
-  contactNumber: '+1 (986) 725-6377',
-  dob: 'Sat Jan 28 1976 00:00:00 GMT+0202 (Eastern European Standard Time)',
-  nationality: 'Argentina',
-  lastName: 'Noble',
-  middleName: 'Justina',
-  firstName: 'Germaine',
-  step: 1
+    line1: '55 East Green Old Parkway',
+    line2: 'Impedit vero pariat',
+    city: 'Aliquid qui eum aut ',
+    state: 'Quidem nemo iusto au',
+    country: 'Ukraine',
+    postalCode: 'Dolorem ut sint nost'
+  }
 }
 
 export const financialInformation = {
-  occupation: 'CLEANER/HOUSEKEEPER',
-  employmentStatus: 'Freelancers',
-  employer: 'Minima quaerat aut e',
+  declarations: { tax: { fatca: false } },
+  taxResidencies: [
+    {
+      countryOfResidence: 'Anguilla',
+      taxIdentificationNumber: 'S4235022B',
+      taxIdAvailable: true,
+      residentOfSingapore: false
+    }
+  ],
+  occupation: 'BUILDING CONSTRUCTION LABOURER',
+  employmentStatus: 'Part-Time Employee',
+  employer: 'dfs',
   annualIncome: '50,000-100,000',
   sourceOfFund: 'INVESTMENT GAIN',
-  step: 2
+  step: 1
 }
 
 export const taxDeclaration = {
-  declarations: { tax: { fatca: false } },
-  taxResidencies: [{ taxIdentificationNumber: 'S5319893G', residentOfSingapore: true }],
-  step: 3
-}
-
-export const investorStatusDeclaration = {
   declarations: {
     investorsStatus: {
       personalAssets: true,
-      income: true,
-      financialAsset: true,
-      jointlyHeldAccount: true,
-      optInAgreements: true,
+      income: false,
+      financialAsset: false,
+      jointlyHeldAccount: false,
+      optInAgreementsSafeguards: true,
+      optInAgreementsOptOut: true,
       digitalSecurities: false,
       primaryOfferingServices: false,
       digitalSecuritiesIssuance: false,
       allServices: false
     }
   },
-  step: 4
+  documents: ['62c8176a810ec02d3bc6f45d', '62c81767810ec02d3bc6f448', '62c81766810ec02d3bc6f445'],
+  step: 2
 }
-export const docs = {
-  documents: text.docs.uploaded,
-  step: 5
-}
+
+// export const investorStatusDeclaration = {
+//   declarations: {
+//     investorsStatus: {
+//       personalAssets: true,
+//       income: true,
+//       financialAsset: true,
+//       jointlyHeldAccount: true,
+//       optInAgreements: true,
+//       digitalSecurities: false,
+//       primaryOfferingServices: false,
+//       digitalSecuritiesIssuance: false,
+//       allServices: false
+//     }
+//   },
+//   step: 4
+// }
+// export const docs = {
+//   documents: text.docs.uploaded,
+//   step: 5
+// }

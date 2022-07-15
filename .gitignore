@@ -13,7 +13,8 @@ coverage
 reports
 storages/
 documents/
-
+__tests__/lib/metamask/
+__tests__/lib/metamask.zip
 .history
 allure-results/
 # production

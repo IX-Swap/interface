@@ -14,7 +14,7 @@ export const getCorrectDirectionFilterValues = (
 }
 
 export const renderFromField = (from: string, item: VirtualTransaction) => {
-  const swiftCode = item.detail.debtorSwiftCode
+  const swiftCode = item.detail?.debtorSwiftCode
   if (from === '' || from === undefined) {
     return '-'
   }
@@ -26,7 +26,7 @@ export const renderFromField = (from: string, item: VirtualTransaction) => {
 }
 
 export const renderToField = (to: string, item: VirtualTransaction) => {
-  const swiftCode = item.detail.creditorSwiftCode
+  const swiftCode = item.detail?.creditorSwiftCode
   if (to === '' || to === undefined) {
     return '-'
   }
@@ -37,13 +37,13 @@ export const renderToField = (to: string, item: VirtualTransaction) => {
   return to.concat(` (${swiftCode})`)
 }
 
-export const renderDirection = (direction: string) => {
-  if (direction.includes('2')) {
+export const renderDirection = (direction?: string) => {
+  if (direction?.includes('2') === true) {
     return direction.replace('2', ' to ')
   }
   return direction
 }
 
 export const renderAmount = (amount: number, item: VirtualTransaction) => {
-  return formatMoney(amount, item.detail.currency)
+  return formatMoney(amount, item.detail?.currency ?? '')
 }

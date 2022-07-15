@@ -10,5 +10,12 @@ if (baseCreds.URL?.includes('staging')) {
   text = textDev
 }
 text['confirmEmail'] = 'auth/registrations/confirm'
+text['mumbaiSettings'] = [
+  'Mumbai Testnet',
+  'https://matic-mumbai.chainstacklabs.com/',
+  '80001',
+  'MATIC',
+  'https://mumbai.polygonscan.com/'
+]
 
 export { text }

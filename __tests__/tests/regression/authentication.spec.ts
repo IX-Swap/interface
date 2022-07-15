@@ -1,8 +1,8 @@
-import { kyc } from '../lib/selectors/kyc-form'
-import { authForms } from '../lib/selectors/auth'
-import { baseCreds } from '../lib/helpers/creds'
-import { test } from '../lib/fixtures/fixtures'
-import { click, navigate, emailCreate, shouldExist, screenshotMatching } from '../lib/helpers/helpers'
+import { kyc } from '../../lib/selectors/kyc-form'
+import { authForms } from '../../lib/selectors/auth'
+import { baseCreds } from '../../lib/helpers/creds'
+import { test } from '../../lib/fixtures/fixtures'
+import { click, navigate, emailCreate, shouldExist, screenshotMatching } from '../../lib/helpers/helpers'
 
 let forEachEmail = emailCreate()
 test.beforeEach(async ({ page }) => {
@@ -18,7 +18,7 @@ test.describe.parallel('Positive tests ', () => {
 
   test('The user should be registered', async ({ page, auth }) => {
     await auth.submitRegistrationForm(forEachEmail)
-    await auth.login(forEachEmail, baseCreds.PASSWORD)
+    await auth.loginWithout2fa(forEachEmail, baseCreds.PASSWORD)
     await shouldExist(kyc.type.INDIVIDUAL, page)
   })
 
@@ -28,8 +28,7 @@ test.describe.parallel('Positive tests ', () => {
     await shouldExist(kyc.MY_PROFILE, page)
   })
 
-  test('The user should be Sign Out', async ({ auth, page }) => {
-    await page.pause()
+  test('The user should be Sign Out (IXPRIME-746)', async ({ auth }) => {
     await auth.loginWithout2fa(baseCreds.EMAIL, baseCreds.PASSWORD)
     await auth.signOut()
   })

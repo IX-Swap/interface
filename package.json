@@ -178,7 +178,7 @@
     "start": "NODE_ENV=development webpack serve --color --progress",
     "build": "NODE_ENV=production webpack --color --progress",
     "test:e2e": "playwright test __tests__/tests --project chrome",
-    "test:smoke": "playwright test __tests__/tests/identities.spec.ts ",
+    "test:metamask": "xvfb-run playwright test __tests__/tests --project chrome-metamask --headed",
     "test": "jest --env=jest-environment-jsdom-sixteen --colors --silent",
     "test:watch": "jest --watch --env=jest-environment-jsdom-sixteen --coverage",
     "test:ci": "CI=true jest --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor=jest-sonar-reporter --maxWorkers=75%",

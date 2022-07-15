@@ -20,7 +20,8 @@ export const authorizerEl = {
     PROPOSED_FUNDRAISING_DETAILS: '[href="/app/authorizer/issuance-details"]',
     LISTINGS: '[href="/app/authorizer/listings"]',
     VIRTUAL_ACCOUNT: '[href="/app/authorizer/virtual-accounts"]',
-    TOKEN_DEPLOYMENT: '[href="/app/authorizer/token-deployment"]'
+    TOKEN_DEPLOYMENT: '[href="/app/authorizer/token-deployment"]',
+    OTC_TRADES: '[href="/app/authorizer/otc-trades"]'
   },
 
   buttons: {
@@ -28,7 +29,8 @@ export const authorizerEl = {
     REMOVE: 'span >> text="Remove"',
     MORE: '[data-testid="more-button"]',
     REJECT: 'text="Reject"',
-    VIEW: 'text="View"'
+    VIEW: 'text="View"',
+    ALL: '[role="button"] >> text="All"'
   },
   fields: {}
 }

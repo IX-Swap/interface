@@ -1,13 +1,27 @@
-import { kyc } from '../lib/selectors/kyc-form'
-import { text } from '../lib/helpers/text'
-import { test, expect } from '../lib/fixtures/fixtures'
-import { baseCreds } from '../lib/helpers/creds'
-import { createIdentity, approveIdentity, createCorporateIdentity } from '../lib/api/create-identities'
-import * as individualBody from '../lib/api/individual-identity'
-import * as corporateBody from '../lib/api/corporate-identity'
+import { kyc } from '../../lib/selectors/kyc-form'
+import { text } from '../../lib/helpers/text'
+import { test, expect } from '../../lib/fixtures/fixtures'
+import { baseCreds } from '../../lib/helpers/creds'
+import { authForms } from '../../lib/selectors/auth'
+import {
+  createIdentity,
+  approveIdentity,
+  createCorporateIdentity,
+  individualIdentity
+} from '../../lib/api/create-identities'
+import * as individualBody from '../../lib/api/individual-identity'
+import * as corporateBody from '../../lib/api/corporate-identity'
 
-import { click, waitForText, navigate, shouldExist, emailCreate, screenshotMatching } from '../lib/helpers/helpers'
-import { accountsTab } from '../lib/selectors/accounts'
+import {
+  click,
+  waitForText,
+  navigate,
+  shouldExist,
+  emailCreate,
+  screenshotMatching,
+  downloadFile
+} from '../../lib/helpers/helpers'
+import { accountsTab } from '../../lib/selectors/accounts'
 
 test.afterEach(async ({ page }) => {
   await page.close()
@@ -21,34 +35,35 @@ test.describe.parallel('Check identities form', () => {
   test('Test the ability to Create Individual Identity (IXPRIME-7)', async ({ page, kycForms }) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
-      await click(kyc.buttons.OKAY, page)
       await kycForms.fillPersonalInformationForm()
       await kycForms.fillAddressForm()
       await kycForms.fillFinancialInformation()
-      await kycForms.fillTaxDeclaration()
-      await click(kyc.buttons.SUBMIT, page)
+      await click(kyc.checkbox.NO_US_RESIDENT, page)
+      await kycForms.fillTaxDeclarationForm()
+      await click(authForms.buttons.NEXT, page)
     })
 
     await test.step('Investor Status Declaration', async () => {
       await kycForms.investorStatusDeclaration('individual')
-    })
-
-    await test.step('Upload Documents', async () => {
-      await kycForms.uploadDocument(kyc.field.corporate.DOCS_INDIVIDUAL)
       await click(kyc.buttons.SUBMIT, page)
     })
 
     await test.step('Check full profile view', async () => {
-      await click(kyc.buttons.SUBMIT_TEXT, page)
+      await click(kyc.buttons.SUBMIT_IDENTITY, page)
       await waitForText(page, text.notification.submitIdentity)
     })
   })
   test('Check the ability to Create Corporate Investor Identity (IXPRIME-336)', async ({ page, kycForms }) => {
+    //Extends time for the test running
     test.setTimeout(220000)
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.CORPORATE, page)
       await kycForms.fillCorporateInformation()
       await kycForms.fillCorporateAddressForm()
+
+      const [fileName] = await downloadFile(page, '[href*="eye"]')
+      await expect(fileName, 'File name is incorrect').toEqual(text.docs.docBenefitsIdentifyName)
+
       await kycForms.fillCompanyAuthorizedPersonnel()
       await kycForms.fillPeopleWithExecutiveAuthorityForm()
       await kycForms.fillCorporateDirectorAddressForm()
@@ -56,22 +71,19 @@ test.describe.parallel('Check identities form', () => {
     })
 
     await test.step('Investor Status Declaration', async () => {
-      await kycForms.investorStatusDeclaration()
-    })
-
-    await test.step('Upload Documents', async () => {
-      await kycForms.uploadDocument([kyc.field.EVIDENCE_ACCREDITATION, ...kyc.field.corporate.DOCS_ISSUER])
-      await click(kyc.buttons.SUBMIT, page)
+      const allInputs = await kycForms.investorStatusDeclaration()
+      await expect(allInputs.length, 'Amount of fields is incorrect').toEqual(4)
     })
 
     await test.step('Check the form submit', async () => {
+      await click(kyc.buttons.SUBMIT, page)
       await waitForText(page, text.docs.docBenefitsAddressName)
-      await click(kyc.buttons.SUBMIT_TEXT, page)
+      await click(kyc.buttons.SUBMIT_IDENTITY, page)
       await waitForText(page, text.notification.submitIdentity)
     })
   })
 
-  test('Test the ability to extend the Tax Declaration form (IXPRIME-325)', async ({ page, kycForms }) => {
+  test.skip('Test the ability to extend the Tax Declaration form (IXPRIME-325)', async ({ page, kycForms }) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.CORPORATE, page)
       await kycForms.fillCorporateInformation()
@@ -99,7 +111,7 @@ test.describe.parallel('Check identities form', () => {
     await screenshotMatching(testInfo.title, dialog, page)
   })
 
-  test('Issuer(skip step) IXPRIME-359', async ({ page, kycForms }) => {
+  test.skip('Issuer(skip step) IXPRIME-359', async ({ page, kycForms }) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.ISSUER, page)
       await kycForms.skipFirstForm()
@@ -138,17 +150,18 @@ test.describe.parallel('Check identities form', () => {
     })
   })
 
-  test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
-    await click(kyc.type.INDIVIDUAL, page)
-    await click(kyc.buttons.OKAY, page)
-    await kycForms.fillPersonalInformationForm()
-    await kycForms.fillAddressForm()
-    await kycForms.fillFinancialInformation()
-    await kycForms.fillTaxDeclaration()
-    await click(kyc.buttons.FATCA, page)
-    const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-    await screenshotMatching(testInfo.title, dialog, page)
-  })
+  // test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
+  //   await click(kyc.type.INDIVIDUAL, page)
+  //   // await click(kyc.buttons.OKAY, page)
+  //   await kycForms.fillPersonalInformationForm()
+  //   await kycForms.fillAddressForm()
+  //   await kycForms.fillFinancialInformation()
+  //   await click(kyc.checkbox.NO_US_RESIDENT, page)
+  //   await kycForms.fillTaxDeclarationForm()
+  //   // await click(kyc.buttons.FATCA, page)
+  //   // const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
+  //   // await screenshotMatching(testInfo.title, dialog, page)
+  // })
 })
 
 test.describe.parallel('Edit identities form', () => {
@@ -173,7 +186,7 @@ test.describe.parallel('Edit identities form', () => {
   const identityType = 'individuals'
 
   test(`The ${identityType} KYC should be editable (IXPRIME-385)`, async ({ kycForms, auth, page }) => {
-    const identityResponce = await createIdentity(forEachEmail, identityType, individualBody)
+    const identityResponce = await individualIdentity(forEachEmail, identityType, individualBody)
     await approveIdentity(identityResponce.submitId, identityType)
     await navigate(baseCreds.URL, page)
     await auth.loginWithout2fa(forEachEmail, baseCreds.PASSWORD)
@@ -309,7 +322,9 @@ test.describe.parallel('Test the ability to Create Individual Identity (Negative
 
     // Fill and submit form for following to the next step
     await kycForms.fillFinancialInformation()
-    await kycForms.fillTaxDeclaration()
+    await click(kyc.checkbox.NO_US_RESIDENT, page)
+
+    await kycForms.fillTaxDeclarationForm()
     await click(kyc.buttons.SUBMIT, page)
 
     //Wait new form
