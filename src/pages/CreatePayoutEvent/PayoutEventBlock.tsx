@@ -156,7 +156,7 @@ export const PayoutEventBlock: FC<Props> = ({
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
-          minDate={recordDate ? dayjs(recordDate).add(1, 'days') : dayjs(new Date()).add(1, 'days')}
+          minDate={dayjs(new Date()).add(1, 'days')}
           maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
           openTo="date"
           value={startDate}
@@ -170,7 +170,7 @@ export const PayoutEventBlock: FC<Props> = ({
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
-          minDate={startDate ? dayjs(startDate).add(1, 'days') : dayjs(new Date()).add(1, 'days')}
+          minDate={startDate ? dayjs(startDate).add(1, 'days') : dayjs(new Date()).add(2, 'days')}
           openTo="date"
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
