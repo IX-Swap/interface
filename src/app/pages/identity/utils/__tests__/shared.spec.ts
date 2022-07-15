@@ -64,26 +64,26 @@ describe('getCorporateTitleText', () => {
     expect(getCorporateTitleText('issuer')).toEqual('Corporate Issuer Identity')
   })
 
-  it('returns correct title for view investor', () => {
-    expect(getCorporateTitleText('investor', 'view')).toEqual(
+  it('returns correct title for view corporate investor', () => {
+    expect(getCorporateTitleText('corporate', 'view')).toEqual(
       'View Corporate Investor Identity'
     )
   })
 
-  it('returns correct title for edit investor', () => {
-    expect(getCorporateTitleText('investor', 'edit')).toEqual(
+  it('returns correct title for edit corporate investor', () => {
+    expect(getCorporateTitleText('corporate', 'edit')).toEqual(
       'Edit Corporate Investor Identity'
     )
   })
 
   it('returns correct title for create investor', () => {
-    expect(getCorporateTitleText('investor', 'create')).toEqual(
+    expect(getCorporateTitleText('corporate', 'create')).toEqual(
       'Create Corporate Investor Identity'
     )
   })
 
-  it('returns correct title for default investor', () => {
-    expect(getCorporateTitleText('investor')).toEqual(
+  it('returns correct title for default corporate investor', () => {
+    expect(getCorporateTitleText('corporate')).toEqual(
       'Corporate Investor Identity'
     )
   })

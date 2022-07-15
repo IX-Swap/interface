@@ -82,7 +82,8 @@ export const getCorporateTitleText = (
   type: string,
   mode?: 'view' | 'edit' | 'create'
 ) => {
-  const title = `Corporate ${capitalize(type)} Identity`
+  const typeString = type === 'corporate' ? 'investor' : type
+  const title = `Corporate ${capitalize(typeString)} Identity`
 
   if (mode !== undefined) {
     return `${capitalize(mode)} ${title}`

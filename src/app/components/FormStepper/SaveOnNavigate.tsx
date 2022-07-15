@@ -38,7 +38,7 @@ export const SaveOnNavigate = ({
           setIsRedirecting(true)
           const redirect =
             typeof createModeRedirect === 'function'
-              ? createModeRedirect(data?.data.type ?? 'investor')
+              ? createModeRedirect(data?.data.type ?? 'corporate')
               : createModeRedirect
           if (
             isCreateMode &&
