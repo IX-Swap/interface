@@ -9,6 +9,7 @@ import {
 } from 'app/pages/identity/const/declarations'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
+import { capitalize } from '@mui/material'
 
 export const getIdentityDefaultActiveStep = (args: {
   isSubmitted: boolean
@@ -75,4 +76,18 @@ export const adjustIdentityOccupation = (str?: string) => {
     }
   }
   return res.join('')
+}
+
+export const getCorporateTitleText = (
+  type: string,
+  mode?: 'view' | 'edit' | 'create'
+) => {
+  const typeString = type === 'corporate' ? 'investor' : type
+  const title = `Corporate ${capitalize(typeString)} Identity`
+
+  if (mode !== undefined) {
+    return `${capitalize(mode)} ${title}`
+  }
+
+  return title
 }

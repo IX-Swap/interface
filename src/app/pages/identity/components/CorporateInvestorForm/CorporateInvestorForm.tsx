@@ -39,7 +39,7 @@ export const CorporateInvestorForm = ({
   const updateMutation = useUpdateCorporate(type)
   const submitMutation = useSubmitCorporate(openDialog)
   const { isCorporateJourneyCompleted } = useOnboardingJourneys()
-  const { data: corporateData, isLoading } = useAllCorporates({ type })
+  const { data: corporateData, isLoading } = useAllCorporates({})
   const { location, replace } = useHistory()
 
   useEffect(() => {
@@ -50,10 +50,13 @@ export const CorporateInvestorForm = ({
         location.pathname === IdentityRoute.createCorporate
       ) {
         replace(
-          generatePath(IdentityRoute.editCorporate, {
-            identityId: corporateData.list[0]._id,
-            userId: corporateData.list[0].user._id
-          })
+          generatePath(
+            getCreateModeRedirect(corporateData.list[0].type ?? 'corporate'),
+            {
+              identityId: corporateData.list[0]._id,
+              userId: corporateData.list[0].user._id
+            }
+          )
         )
       }
     }
@@ -70,6 +73,14 @@ export const CorporateInvestorForm = ({
     isJourneyCompleted: isCorporateJourneyCompleted
   })
 
+  const getCreateModeRedirect = (type: string) => {
+    if (type === 'issuer') {
+      return IdentityRoute.editIssuer
+    }
+
+    return IdentityRoute.editCorporate
+  }
+
   return (
     <>
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
@@ -82,7 +93,7 @@ export const CorporateInvestorForm = ({
         defaultActiveStep={defaultActiveStep}
         formTitle={formTitle}
         nonLinear
-        createModeRedirect={IdentityRoute.editCorporate}
+        createModeRedirect={getCreateModeRedirect}
       />
     </>
   )

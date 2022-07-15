@@ -1,5 +1,8 @@
 import { Grid, Box, Button } from '@mui/material'
-import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
+import {
+  CreateModeRedirect,
+  FormStepperStep
+} from 'app/components/FormStepper/FormStepper'
 import { BackButton } from 'app/components/FormStepper/BackButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
@@ -26,7 +29,7 @@ export interface FormStepProps {
   setCompleted?: () => void
   skippable?: boolean
   completed: number[]
-  createModeRedirect?: string
+  createModeRedirect: CreateModeRedirect
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -82,8 +85,13 @@ export const FormStep = (props: FormStepProps) => {
         setCompleted?.()
       }
       if (!isEditing && createModeRedirect !== undefined) {
+        const redirect =
+          typeof createModeRedirect === 'function'
+            ? createModeRedirect(data?.data.type ?? 'corporate')
+            : createModeRedirect
+
         history.replace(
-          generatePath(createModeRedirect, {
+          generatePath(redirect, {
             identityId: data?.data._id,
             userId: data?.data.user._id
           })

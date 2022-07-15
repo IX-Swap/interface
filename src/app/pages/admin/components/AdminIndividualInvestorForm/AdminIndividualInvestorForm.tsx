@@ -6,6 +6,7 @@ import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { useIndividualIdentityById } from 'app/pages/admin/hooks/useIndividualIdentityById'
 import { adminIndividualInvestorFormSteps } from 'app/pages/admin/components/AdminIndividualInvestorForm/steps'
 import { useParams } from 'react-router-dom'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 export const AdminIndividualInvestorForm = memo(() => {
   const { userId } = useParams<{ userId: string }>()
@@ -36,6 +37,7 @@ export const AdminIndividualInvestorForm = memo(() => {
       defaultActiveStep={defaultActiveStep}
       steps={adminIndividualInvestorFormSteps}
       shouldSaveOnMove
+      createModeRedirect={IdentityRoute.editIndividual}
     />
   )
 })

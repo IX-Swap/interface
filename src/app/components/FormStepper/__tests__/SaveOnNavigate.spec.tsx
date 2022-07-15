@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom'
 import { history } from 'config/history'
 import { waitFor } from '@testing-library/dom'
 import { act } from 'react-dom/test-utils'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 jest.mock('react-hook-form', () => ({
   ...jest.requireActual('react-hook-form'),
@@ -39,6 +40,7 @@ describe('SaveOnNavigate', () => {
           mutation={mutation}
           transformData={transformer}
           isCreateMode={false}
+          createModeRedirect={IdentityRoute.editCorporate}
         />
       </Form>
     )
@@ -52,6 +54,7 @@ describe('SaveOnNavigate', () => {
             mutation={mutation}
             transformData={transformer}
             isCreateMode={false}
+            createModeRedirect={IdentityRoute.editCorporate}
           />
         </Form>
       </Route>
