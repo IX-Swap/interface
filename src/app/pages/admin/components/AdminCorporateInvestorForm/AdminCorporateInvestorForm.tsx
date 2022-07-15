@@ -7,6 +7,7 @@ import { useUpdateCorporateByUserId } from 'app/pages/admin/hooks/useUpdateCorpo
 import { adminCorporateInvestorFormSteps } from 'app/pages/admin/components/AdminCorporateInvestorForm/steps'
 import { useSubmitCorporateById } from 'app/pages/admin/hooks/useSubmitCorporateById'
 import { useParams } from 'react-router-dom'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 export const AdminCorporateInvestorForm = () => {
   const { userId } = useParams<{ userId: string }>()
@@ -45,6 +46,7 @@ export const AdminCorporateInvestorForm = () => {
       steps={adminCorporateInvestorFormSteps}
       defaultActiveStep={defaultActiveStep}
       shouldSaveOnMove
+      createModeRedirect={IdentityRoute.editCorporate}
     />
   )
 }

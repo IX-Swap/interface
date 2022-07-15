@@ -1,11 +1,11 @@
-import { test } from '../lib/fixtures/fixtures'
-import { navigate } from '../lib/helpers/helpers'
+import { test } from '../../lib/fixtures/fixtures'
+import { navigate } from '../../lib/helpers/helpers'
 import { expect } from '@playwright/test'
-import { text } from '../lib/helpers/text'
+import { text } from '../../lib/helpers/text'
 
-import { getCookiesForAllAccounts, postRequest } from '../lib/api/api'
-import { baseCreds } from '../lib/helpers/creds'
-import { sellOrder, buyOrder } from '../lib/api/api-body'
+import { getCookiesForAllAccounts, postRequest } from '../../lib/api/api'
+import { baseCreds } from '../../lib/helpers/creds'
+import { sellOrder, buyOrder } from '../../lib/api/api-body'
 let cookiesUser_1, cookiesUser_2, cookiesUser_3, getBalancesBefore, orderResponse
 
 if (baseCreds.URL.includes('ss')) {

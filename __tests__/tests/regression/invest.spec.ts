@@ -1,7 +1,8 @@
-import { baseCreds } from '../lib/helpers/creds'
-import { test } from '../lib/fixtures/fixtures'
+import { baseCreds } from '../../lib/helpers/creds'
+import { test } from '../../lib/fixtures/fixtures'
 import {
   click,
+  downloadFile,
   emailCreate,
   isDisabledList,
   LOADER,
@@ -12,17 +13,17 @@ import {
   waitForResponseInclude,
   waitForText,
   waitNewPage
-} from '../lib/helpers/helpers'
+} from '../../lib/helpers/helpers'
 import { expect } from '@playwright/test'
-import { text } from '../lib/helpers/text'
-import { invest } from '../lib/selectors/invest'
-import { Authorizer } from '../lib/page-objects/authorizer'
+import { text } from '../../lib/helpers/text'
+import { invest } from '../../lib/selectors/invest'
+import { Authorizer } from '../../lib/page-objects/authorizer'
 
-import { approveIdentity, createCorporateIdentity, createIdentity } from '../lib/api/create-identities'
-import * as corporateBody from '../lib/api/corporate-identity'
-import { accountsTab } from '../lib/selectors/accounts'
-import { adminEl } from '../lib/selectors/admin'
-import { kyc } from '../lib/selectors/kyc-form'
+import { approveIdentity, createCorporateIdentity, createIdentity } from '../../lib/api/create-identities'
+import * as corporateBody from '../../lib/api/corporate-identity'
+import { accountsTab } from '../../lib/selectors/accounts'
+import { adminEl } from '../../lib/selectors/admin'
+import { kyc } from '../../lib/selectors/kyc-form'
 
 test.afterEach(async ({ page }) => {
   await page.close()
@@ -35,11 +36,15 @@ test.describe('', () => {
   })
 
   test.describe('Primary', () => {
-    test('Download subscription docs', async ({ investment, context }) => {
+    test('Download subscription docs', async ({ investment, admin, page }) => {
       await investment.goToAvailableDso()
-      const pages = await investment.downloadDocument(context)
-      expect(pages).toBe(2)
+      await admin.USER_VIEW_CARD.first().click()
+      await investment.INVEST_BUTTON.click()
+      const [fileName] = await downloadFile(page, invest.buttons.DOWNLOAD_DOC)
+      //after bug fixing expected file name should be changed to the correct name
+      expect(fileName, 'File name is incorrect').toEqual(text.docs.docBenefitsIdentifyName)
     })
+
     test('Test the ability to click on "Deposit" button (IXPRIME-229)', async ({ investment, page }) => {
       await investment.goToPrimarySection()
       await click('text=DEPOSIT', page)
@@ -54,7 +59,7 @@ test.describe('', () => {
       await shouldExist(adminEl.dropDown.CURRENCY_USD, page)
     })
 
-    test('Check that the DSO landing exist', async ({ investment }) => {
+    test('Check that the DSO landing exist (IXPRIME-252)', async ({ investment, page }) => {
       await investment.goToPrimarySection()
       await investment.checkThatInvestmentLandingAvailable()
     })
@@ -68,12 +73,15 @@ test.describe('', () => {
 
     test('The investment should be created (IXPRIME-257)', async ({ investment, page }) => {
       await investment.goToAvailableDso()
+      await click(invest.buttons.INVEST, page)
       await investment.createNewInvestment()
       await click(invest.buttons.SUBMIT_INVEST, page)
     })
 
-    test("Test the ability to Cancel Invest to NFT's token (IXPRIME-397)", async ({ page, investment }) => {
-      await investment.goToAvailableDso()
+    test("Test the ability to Cancel Invest to NFT's token (IXPRIME-397)", async ({ page, investment, admin }) => {
+      await investment.goToAvailableDso(text.NFT_DSO_NAME)
+      await admin.USER_VIEW_CARD.click()
+      await click(invest.buttons.INVEST_LANDING, page)
       await investment.investToNFT()
       await click(accountsTab.buttons.CANCEL, page)
       await expect(page).toHaveURL(/app\/invest\/offerings\/\S+\/view/g)

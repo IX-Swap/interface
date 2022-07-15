@@ -18,13 +18,15 @@ export interface UploadDocumentFieldProps {
   tooltipContent?: any
   fieldId?: any
   defaultValue?: any
+  isDefaultEmpty?: boolean
 }
 
 export const UploadDocumentField = ({
   name,
   label,
   helperElement,
-  tooltipContent
+  tooltipContent,
+  isDefaultEmpty = false
 }: UploadDocumentFieldProps) => {
   const { control, watch, formState } = useFormContext()
 
@@ -109,6 +111,7 @@ export const UploadDocumentField = ({
               })}
 
               <AddDocumentButton
+                addEmptyValue={!isDefaultEmpty}
                 name={name}
                 isVisible={
                   fields.length === uploadedFiles.length || fields.length === 0

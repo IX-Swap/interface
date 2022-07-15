@@ -22,6 +22,7 @@ export interface FormStepperStep {
   formId?: string
 }
 
+export type CreateModeRedirect = string | ((type: string) => string) | undefined
 export interface FormStepperProps {
   steps: FormStepperStep[]
   data: any
@@ -33,6 +34,7 @@ export interface FormStepperProps {
   nonLinear?: boolean
   skippable?: boolean
   formTitle?: string
+  createModeRedirect: CreateModeRedirect
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -47,7 +49,8 @@ export const FormStepper = (props: FormStepperProps) => {
     defaultActiveStep,
     nonLinear = false,
     skippable = false,
-    formTitle
+    formTitle,
+    createModeRedirect
   } = props
 
   const { isMobile } = useAppBreakpoints()
@@ -163,6 +166,7 @@ export const FormStepper = (props: FormStepperProps) => {
             shouldSaveOnMove={shouldSaveOnMove}
             skippable={skippable}
             completed={completed}
+            createModeRedirect={createModeRedirect}
           />
         ))}
       </Grid>

@@ -1,7 +1,7 @@
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
 import { adminEl } from '../selectors/admin'
-import { click, navigate, typeText, waitForRequestInclude, waitForText } from '../helpers/helpers'
+import { click, navigate, typeText, waitForRequestInclude, waitForText, LOADER } from '../helpers/helpers'
 import { Locator } from '@playwright/test'
 import { invest } from '../selectors/invest'
 
@@ -19,7 +19,6 @@ class Admin {
     this.UPDATE_BUTTON = page.locator("text='Update'")
     this.CHANGE_BUTTON = page.locator("text='Change'")
   }
-  LOADER = '[role="progressbar"]'
 
   updatePassword = async (oldPassword, newPassword) => {
     await this.UPDATE_BUTTON.last().click()
@@ -34,7 +33,7 @@ class Admin {
     await click('[data-testid="LinkOffIcon"]', this.page)
   }
   getLocator = async element => {
-    await this.page.waitForSelector(this.LOADER, { state: 'detached' })
+    await this.page.waitForSelector(LOADER, { state: 'detached' })
     await this.page.waitForSelector(element, { state: 'visible' })
     const locator = await this.page.locator(element)
     return locator

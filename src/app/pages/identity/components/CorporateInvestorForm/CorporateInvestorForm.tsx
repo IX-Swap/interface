@@ -11,10 +11,11 @@ import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from '../../types/forms'
 import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
+import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 
 export type CorporateType =
-  | 'investor'
   | 'issuer'
+  | 'corporate'
   | 'Fund Manager'
   | 'Fund Administrator'
   | 'Portfolio Manager'
@@ -27,7 +28,7 @@ export interface CorporateInvestorFormProps {
 
 export const CorporateInvestorForm = ({
   data,
-  type = 'investor',
+  type = 'corporate',
   formTitle
 }: CorporateInvestorFormProps) => {
   const corporateInvestorFormSteps = getCorporateInvestorFormSteps(type)
@@ -37,40 +38,54 @@ export const CorporateInvestorForm = ({
   const createMutation = useCreateCorporate(type)
   const updateMutation = useUpdateCorporate(type)
   const submitMutation = useSubmitCorporate(openDialog)
-  const { isCorporateJourneyCompleted, corporateIdentities } =
-    useOnboardingJourneys()
+  const { isCorporateJourneyCompleted } = useOnboardingJourneys()
+  const { data: corporateData, isLoading } = useAllCorporates({})
   const { location, replace } = useHistory()
 
   useEffect(() => {
-    if (
-      corporateIdentities.length > 0 &&
-      location.pathname === IdentityRoute.createCorporate
-    ) {
-      const {
-        _id: identityId,
-        user: { _id: userId }
-      } = corporateIdentities[0]
-
-      replace(
-        generatePath(IdentityRoute.editCorporate, {
-          identityId,
-          userId
-        })
-      )
+    if (!isLoading) {
+      if (
+        corporateData !== undefined &&
+        corporateData.list.length > 0 &&
+        location.pathname === IdentityRoute.createCorporate
+      ) {
+        replace(
+          generatePath(
+            getCreateModeRedirect(corporateData.list[0].type ?? 'corporate'),
+            {
+              identityId: corporateData.list[0]._id,
+              userId: corporateData.list[0].user._id
+            }
+          )
+        )
+      }
     }
-  }, [location, replace, corporateIdentities])
+    // eslint-disable-next-line
+  }, [isLoading])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
-    isSubmitted: data?.status === 'Submitted',
+    isSubmitted: corporateData?.list[0]?.status === 'Submitted',
     lastStepIndex: corporateInvestorFormSteps.length - 1,
     isJourneyCompleted: isCorporateJourneyCompleted
   })
+
+  const getCreateModeRedirect = (type: string) => {
+    if (type === 'issuer') {
+      return IdentityRoute.editIssuer
+    }
+
+    return IdentityRoute.editCorporate
+  }
 
   return (
     <>
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
-        data={data}
+        data={corporateData?.list[0]}
         createMutation={createMutation}
         editMutation={updateMutation}
         submitMutation={submitMutation}
@@ -78,6 +93,7 @@ export const CorporateInvestorForm = ({
         defaultActiveStep={defaultActiveStep}
         formTitle={formTitle}
         nonLinear
+        createModeRedirect={getCreateModeRedirect}
       />
     </>
   )

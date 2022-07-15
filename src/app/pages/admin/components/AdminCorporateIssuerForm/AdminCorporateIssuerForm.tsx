@@ -7,6 +7,7 @@ import { useCreateCorporateByUserId } from 'app/pages/admin/hooks/useCreateCorpo
 import { useUpdateCorporateByUserId } from 'app/pages/admin/hooks/useUpdateCorporateByUserId'
 import { useSubmitCorporateById } from 'app/pages/admin/hooks/useSubmitCorporateById'
 import { useParams } from 'react-router-dom'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 export const AdminCorporateIssuerForm = () => {
   const { userId } = useParams<{ userId: string }>()
@@ -42,6 +43,7 @@ export const AdminCorporateIssuerForm = () => {
       submitMutation={submitMutation}
       defaultActiveStep={defaultActiveStep}
       steps={adminCorporateIssuerFormSteps}
+      createModeRedirect={IdentityRoute.editIssuer}
     />
   )
 }

@@ -3,7 +3,7 @@ dotenv.config()
 import { devCreds } from '../credentials/dev'
 import { stagingCreds } from '../credentials/staging'
 
-const setENV = process.env.BRANCHE_NAME || 'otc'
+const setENV = process.env.BRANCHE_NAME || 'dev'
 let baseCreds
 
 if (setENV?.includes('staging')) {
@@ -16,8 +16,12 @@ if (setENV?.includes('staging')) {
 } else {
   baseCreds = devCreds
 }
-baseCreds['httpCredentials'] = {
-  username: 'ixprime',
-  password: '!nv35taX2K2!*'
+
+const metamaskCreds = {
+  SECRET_WORDS: 'quiz misery girl ordinary shine notable crucial blame trim future luggage much',
+  PASSWORD: 'i1iarydotat!!!111',
+  contractAddresses: {
+    eth: '0x269EB66f58752c7BF0E7A7cdD4ce71bBFDb9408c'
+  }
 }
-export { baseCreds, setENV }
+export { baseCreds, setENV, metamaskCreds }

@@ -5,9 +5,6 @@ import {
   CorporateType
 } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
-import { generatePath, Redirect } from 'react-router-dom'
-import { IdentityRoute } from 'app/pages/identity/router/config'
 import { RootContainer } from 'ui/RootContainer'
 import { useTheme } from '@mui/material/styles'
 
@@ -17,25 +14,11 @@ export interface CreateCorporateIdentityProps {
 }
 
 export const CreateCorporateIdentity = ({
-  type = 'investor',
+  type = 'corporate',
   title
 }: CreateCorporateIdentityProps) => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('md'))
-  const { data, isSuccess } = useAllCorporates({ type })
-
-  if (isSuccess && data.list.length > 0) {
-    const {
-      _id: identityId,
-      user: { _id: userId }
-    } = data.list[0]
-
-    return (
-      <Redirect
-        to={generatePath(IdentityRoute.editCorporate, { identityId, userId })}
-      />
-    )
-  }
 
   return (
     <>

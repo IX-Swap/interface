@@ -73,7 +73,8 @@ export const corporateIssuerFormSteps = [
       const allData = {
         ...getCorporateInfoRequestPayload(data),
         ...getDirectorsAndBeneficialOwnerRequestPayload(data),
-        ...getTaxDeclarationRequestPayload(data)
+        ...getTaxDeclarationRequestPayload(data),
+        type: 'issuer'
       }
       return allData
     },

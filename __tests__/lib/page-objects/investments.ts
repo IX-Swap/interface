@@ -25,6 +25,7 @@ class Invest extends Admin {
   OTP_LOCATOR: Locator
   PERSONAL_INFORMATION: Locator
   ARROW_DROPDOWN_ICON: Locator
+  INVEST_BUTTON: Locator
   constructor(page) {
     super(page)
     this.page = page
@@ -32,6 +33,7 @@ class Invest extends Admin {
     this.OTP_LOCATOR = page.locator(invest.fields.OTP)
     this.PERSONAL_INFORMATION = page.locator('[data-testid="PersonIcon"]')
     this.ARROW_DROPDOWN_ICON = page.locator('[data-testid="ArrowDropDownIcon"]')
+    this.INVEST_BUTTON = page.locator('[href*="/app/invest/offerings/"]')
   }
 
   getValueFromOTP = async () => {
@@ -92,7 +94,7 @@ class Invest extends Admin {
     await click(invest.OVERVIEW_PAGE, this.page)
   }
 
-  goToAvailableDso = async (dsoName = 'fullDSOflow testing') => {
+  goToAvailableDso = async (dsoName = 'fullDSOflow') => {
     await this.goToPrimarySection()
     const searchField = await this.page.locator(invest.fields.SEARCH_DSO)
     await this.checkSearch(searchField, dsoName, 'issuance/dso/approved/list')
@@ -116,7 +118,6 @@ class Invest extends Admin {
     await typeText(invest.fields.NUMBER_UNITS, '10', this.page)
     await click(invest.listBox.DESTINATION_WALLET_ADDRESS, this.page)
     await click(issuance.dso.listBox.CORPORATE_VALUE, this.page)
-    await click(invest.checkBox.I_HAVE_READ, this.page)
     await typeText(invest.fields.OTP, '111111', this.page)
   }
 

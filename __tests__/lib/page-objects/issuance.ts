@@ -1,4 +1,5 @@
 import { issuance } from '../selectors/issuance'
+import { accountsTab } from '../selectors/accounts'
 import { text } from '../helpers/text'
 import { baseCreds, setENV } from '../helpers/creds'
 import { Page, Locator } from '@playwright/test'
@@ -22,13 +23,15 @@ class Dso {
   readonly lastDayOfMonth: Locator
   readonly ERROR: Locator
   readonly CALENDAR_RIGHT_BUTTON: Locator
+  readonly PROGRESS_SECTION: Locator
 
   constructor(page: Page) {
     this.page = page
-    this.OK_BUTTON = this.page.locator('[role="dialog"] >> text="OK"')
-    this.lastDayOfMonth = this.page.locator('[role="dialog"] [role="cell"] button')
-    this.ERROR = this.page.locator('[appearance="error"]')
-    this.CALENDAR_RIGHT_BUTTON = this.page.locator('[data-testid="ArrowRightIcon"]')
+    this.OK_BUTTON = page.locator('[role="dialog"] >> text="OK"')
+    this.lastDayOfMonth = page.locator('[role="dialog"] [role="cell"] button')
+    this.ERROR = page.locator('[appearance="error"]')
+    this.CALENDAR_RIGHT_BUTTON = page.locator('[data-testid="ArrowRightIcon"]')
+    this.PROGRESS_SECTION = page.locator('[data-testid="progress-section"]')
   }
 
   uploadDocuments = async () => {
@@ -37,10 +40,10 @@ class Dso {
   }
 
   capitalCall = async () => {
-    await click('button >> text="Capital Call"', this.page)
+    await click(issuance.dso.buttons.CAPITAL_CALL, this.page)
     await typeText('[role="dialog"] input', baseCreds.INVESTOR, this.page)
     await click('[data-placeholder="true"]', this.page)
-    await click('button >> text="Confirm"', this.page)
+    await click(accountsTab.buttons.CONFIRM, this.page)
     await waitForText(this.page, 'Email has been sent to investors')
     const response = await getMessage(baseCreds.INVESTOR, 'Capital call')
     return response
@@ -49,7 +52,7 @@ class Dso {
   editDsoInformationForm = async () => {
     const tokenName = 'TokenName' + randomString()
     const tokenSymbol = Date.now().toString().slice(-6)
-    await click(issuance.dso.buttons.EDIT_DSO, this.page)
+    // await click(issuance.dso.buttons.EDIT_DSO, this.page)
     await clearAndTypeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
     await clearAndTypeText(issuance.dso.fields.TOKEN_SYMBOL, tokenSymbol, this.page)
     await click(issuance.dso.buttons.SAVE, this.page)
@@ -62,7 +65,7 @@ class Dso {
 
   checkThatTheDsoWasCreated = async tokenName => {
     await click(issuance.dso.buttons.FINISH_LATER, this.page)
-    await click(issuance.sections.VIEW_DSO_LISTENING, this.page)
+    await click(issuance.ISSUANCE_TAB, this.page)
     const result = await waitForText(this.page, tokenName)
     return result
   }
@@ -246,7 +249,7 @@ class Listing extends Dso {
     await click(issuance.listings.buttons.IMPORT_DSO, this.page)
     await shouldNotExist(issuance.listings.listBox.DSO_STATE, this.page)
     await click(issuance.listings.listBox.MY_DSO, this.page)
-    if (baseCreds.URL.includes('otc' || 'dev')) {
+    if (baseCreds.URL.includes('dev')) {
       await click('[data-value="62694db849676f304df525ff:62318fd4f6318a11f5455d73"]', this.page)
     } else {
       await click(issuance.listings.listBox.DSO_HYBRID_TEST, this.page)

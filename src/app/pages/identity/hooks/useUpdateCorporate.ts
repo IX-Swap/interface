@@ -25,12 +25,15 @@ export const useUpdateCorporate = (corporateType: string) => {
   return useMutation(updateCorporate, {
     onSuccess: async data => {
       void snackbarService.showSnackbar(data.message, 'success')
+      void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
       await queryCache.invalidateQueries([
         identityQueryKeys.getCorporate(userId, data.data?._id)
       ])
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      if (params.identityId !== undefined) {
+        void snackbarService.showSnackbar(error.message, 'error')
+      }
     }
   })
 }

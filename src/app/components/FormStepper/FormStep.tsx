@@ -1,7 +1,9 @@
-import { Grid, Box } from '@mui/material'
-import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
+import { Grid, Box, Button } from '@mui/material'
+import {
+  CreateModeRedirect,
+  FormStepperStep
+} from 'app/components/FormStepper/FormStepper'
 import { BackButton } from 'app/components/FormStepper/BackButton'
-import { SaveButton } from 'app/components/FormStepper/SaveButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
 import { MutationResultPair } from 'react-query'
@@ -11,6 +13,7 @@ import { SkipButton } from 'app/components/FormStepper/SkipButton'
 import { isSuccessRequest } from 'helpers/strings'
 import { SaveOnNavigate } from 'app/components/FormStepper/SaveOnNavigate'
 import { useStyles } from 'app/components/FormStepper/FormStep.styles'
+import { useHistory, generatePath } from 'react-router-dom'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -26,6 +29,7 @@ export interface FormStepProps {
   setCompleted?: () => void
   skippable?: boolean
   completed: number[]
+  createModeRedirect: CreateModeRedirect
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -42,11 +46,13 @@ export const FormStep = (props: FormStepProps) => {
     shouldSaveOnMove,
     setCompleted,
     skippable,
-    completed
+    completed,
+    createModeRedirect
   } = props
 
   const isCurrentStep = activeStep === index
   const classes = useStyles()
+  const history = useHistory()
 
   if (!isCurrentStep) {
     return null
@@ -74,14 +80,27 @@ export const FormStep = (props: FormStepProps) => {
     const payload = step.getRequestPayload(values)
 
     const onSubmitSuccess = (data: any) => {
-      if (isSuccessRequest(data.status) && !isLastStep) {
+      if (isSuccessRequest(data.status) && !isLastStep && isEditing) {
         //eslint-disable-line
         setCompleted?.()
+      }
+      if (!isEditing && createModeRedirect !== undefined) {
+        const redirect =
+          typeof createModeRedirect === 'function'
+            ? createModeRedirect(data?.data.type ?? 'corporate')
+            : createModeRedirect
+
+        history.replace(
+          generatePath(redirect, {
+            identityId: data?.data._id,
+            userId: data?.data.user._id
+          })
+        )
       }
     }
 
     if (shouldSaveStep && (data?.step ?? 0) < activeStep + 1) {
-      payload.step = activeStep + 1
+      payload.step = activeStep
     }
 
     return await mutation(payload).then(onSubmitSuccess)
@@ -114,6 +133,9 @@ export const FormStep = (props: FormStepProps) => {
       <SaveOnNavigate
         transformData={step.getRequestPayload}
         mutation={saveMutation}
+        isCreateMode={data === undefined}
+        createModeRedirect={createModeRedirect}
+        activeStep={activeStep}
       />
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='small' />
@@ -145,17 +167,15 @@ export const FormStep = (props: FormStepProps) => {
           )}
 
           {hasNextStep && (
-            <SaveButton
+            <Button
               fullWidth
-              step={index}
-              transformData={step.getRequestPayload}
-              mutation={saveMutation}
-              successCallback={nextCallback}
               variant='contained'
               color='primary'
+              onClick={nextCallback}
+              size='large'
             >
               Next
-            </SaveButton>
+            </Button>
           )}
         </Box>
       </Grid>
