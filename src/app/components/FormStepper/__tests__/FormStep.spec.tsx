@@ -16,21 +16,19 @@ describe('FormStep', () => {
     jest.clearAllMocks()
   })
 
+  const createFn = jest.fn(() => Promise.resolve({ data: corporate }))
+  const editFn = jest.fn(() => Promise.resolve({ data: corporate }))
+  const submitFn = jest.fn(() => Promise.resolve({ data: corporate }))
+
   const setActiveStep = jest.fn()
   const setCompleted = jest.fn()
-  const getFormValues = jest.fn()
-  const getRequestPayload = jest.fn()
+  const getFormValues = jest.fn(() => corporate)
+  const getRequestPayload = jest.fn(() => corporate)
   const validationSchema = {}
   const component = jest.fn(() => <></>)
-  const createMutation = [
-    jest.fn(),
-    generateMutationResult({ data: corporate })
-  ]
-  const editMutation = [jest.fn(), generateMutationResult({ data: corporate })]
-  const submitMutation = [
-    jest.fn(),
-    generateMutationResult({ data: corporate })
-  ]
+  const createMutation = [createFn, generateMutationResult({ data: corporate })]
+  const editMutation = [editFn, generateMutationResult({ data: corporate })]
+  const submitMutation = [submitFn, generateMutationResult({ data: corporate })]
 
   const defaultProps = {
     step: {
@@ -50,7 +48,7 @@ describe('FormStep', () => {
     editMutation: editMutation as any,
     submitMutation: submitMutation as any,
     createMutation: createMutation as any,
-    shouldSaveOnMove: false,
+    shouldSaveOnMove: true,
     setCompleted: setCompleted,
     skippable: true,
     completed: [],
@@ -104,5 +102,76 @@ describe('FormStep', () => {
       }),
       {}
     )
+  })
+
+  it('invokes nextCallback when next button is clicked', async () => {
+    const props = { ...defaultProps, totalSteps: 5 }
+    const { getByText } = render(<FormStep {...props} />)
+
+    const nextButton = getByText('Next') as HTMLButtonElement
+
+    fireEvent.click(nextButton, { bubbles: true, cancellabled: false })
+    await waitFor(() => {
+      expect(setCompleted).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it('calls create mutation function when form is submitted and data is undefined', async () => {
+    const props = { ...defaultProps, totalSteps: 5, data: undefined }
+    const { container } = render(<FormStep {...props} />)
+    const form = container.querySelector(
+      `form#${defaultProps.step.formId}-${defaultProps.index}`
+    ) as HTMLFormElement
+
+    fireEvent.submit(form)
+
+    await waitFor(() => {
+      expect(createFn).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it('calls edit mutation function when form is submitted and data is defined', async () => {
+    const props = { ...defaultProps, totalSteps: 5 }
+    const { container } = render(<FormStep {...props} />)
+    const form = container.querySelector(
+      `form#${defaultProps.step.formId}-${defaultProps.index}`
+    ) as HTMLFormElement
+
+    fireEvent.submit(form)
+
+    await waitFor(() => {
+      expect(editFn).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it('calls submit mutation function when form is submitted and it is last step', async () => {
+    const props = { ...defaultProps }
+    const { container } = render(<FormStep {...props} />)
+    const form = container.querySelector(
+      `form#${defaultProps.step.formId}-${defaultProps.index}`
+    ) as HTMLFormElement
+
+    fireEvent.submit(form)
+
+    await waitFor(() => {
+      expect(submitFn).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  it('calls mutation with correct step payload', async () => {
+    const props = { ...defaultProps, totalSteps: 5, data: undefined }
+    const { container } = render(<FormStep {...props} />)
+    const form = container.querySelector(
+      `form#${defaultProps.step.formId}-${defaultProps.index}`
+    ) as HTMLFormElement
+
+    fireEvent.submit(form)
+
+    await waitFor(() => {
+      expect(createFn).toHaveBeenCalledTimes(1)
+      expect(createFn).toHaveBeenCalledWith(
+        expect.objectContaining({ step: 0 })
+      )
+    })
   })
 })
