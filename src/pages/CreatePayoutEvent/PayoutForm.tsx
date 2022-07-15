@@ -41,7 +41,7 @@ export const PayoutForm: FC = () => {
   const [tokenAmount, setTokenAmount] = useState<any>({
     walletsAmount: null,
     poolsAmount: null,
-    totalSum: 0,
+    totalSum: 70,
   })
   const { error } = usePayoutState()
   const [isAmountLoading, setIsAmountLoading] = useState(false)
@@ -76,7 +76,7 @@ export const PayoutForm: FC = () => {
     }
   }
 
-  const status = 'draft'
+  const status = ''
   const paid = true
 
   const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
@@ -150,6 +150,7 @@ export const PayoutForm: FC = () => {
               required
               isDisabled={!availableForEditing.includes('secToken')}
             />
+
             <DateInput
               label="Record Date"
               placeholder="Choose record date"

@@ -8,6 +8,8 @@ import { TYPE } from 'theme'
 import { Input } from 'components/Input'
 import { ReactComponent as CalendarIcon } from 'assets/images/calendar.svg'
 import { Props as LabelProps } from 'components/Label'
+import dayjs from 'dayjs'
+import Row from 'components/Row'
 
 interface Props {
   value?: string | Date | number
@@ -20,6 +22,7 @@ interface Props {
   minDate?: any
   placeholder?: string
   isDisabled?: boolean
+  format?: string
 }
 
 export const DateInput = ({
@@ -33,27 +36,38 @@ export const DateInput = ({
   required,
   placeholder,
   isDisabled = false,
+  format,
   ...props
 }: Props & Partial<LabelProps>) => {
   return (
     <Container>
-      <StyledLabel label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
-      <MobileDatePicker
-        value={value || null}
-        onChange={onChange}
-        openTo={openTo ?? 'year'}
-        views={['year', 'month', 'date']}
-        inputFormat="DD/MM/YYYY"
-        renderInput={({ inputProps }: Record<string, any>) => (
-          <TextFieldContainer>
-            <TextField {...inputProps} placeholder={placeholder} disabled={isDisabled} />
-            <StyledCalendarIcon />
-          </TextFieldContainer>
-        )}
-        disabled={isDisabled}
-        maxDate={maxDate}
-        {...props}
+      <StyledLabel
+        label={t`${label || 'Date of Birth'}`}
+        required={isDisabled ? false : required}
+        tooltipText={tooltipText}
       />
+      {isDisabled ? (
+        <Row>
+          {dayjs(value).format(format || 'MMM DD, YYYY')} <CalendarIcon style={{ marginLeft: 9 }} />
+        </Row>
+      ) : (
+        <MobileDatePicker
+          value={value || null}
+          onChange={onChange}
+          openTo={openTo ?? 'year'}
+          views={['year', 'month', 'date']}
+          inputFormat="DD/MM/YYYY"
+          renderInput={({ inputProps }: Record<string, any>) => (
+            <TextFieldContainer>
+              <TextField {...inputProps} placeholder={placeholder} disabled={isDisabled} />
+              <StyledCalendarIcon />
+            </TextFieldContainer>
+          )}
+          disabled={isDisabled}
+          maxDate={maxDate}
+          {...props}
+        />
+      )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
