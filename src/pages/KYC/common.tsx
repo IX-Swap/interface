@@ -67,20 +67,29 @@ export const Select: FC<SelectProps> = ({
   name,
   required,
   tooltipText,
+  isDisabled,
   ...rest
 }: SelectProps) => {
   return (
     <Box>
-      {label && <Label required={required} label={label} tooltipText={tooltipText} />}
-      <ReactSelect
-        name={name}
-        placeholder={placeholder}
-        onSelect={onSelect}
-        value={selectedItem}
-        options={items}
-        error={error}
-        {...rest}
-      />
+      {label && <Label required={isDisabled ? false : required} label={label} tooltipText={tooltipText} />}
+      {isDisabled ? (
+        <div>
+          {selectedItem?.icon}
+          {selectedItem?.label}
+        </div>
+      ) : (
+        <ReactSelect
+          name={name}
+          placeholder={placeholder}
+          onSelect={onSelect}
+          value={selectedItem}
+          options={items}
+          error={error}
+          isDisabled={isDisabled}
+          {...rest}
+        />
+      )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
@@ -106,19 +115,25 @@ export const TextInput: FC<TextInputProps> = ({
 }: TextInputProps) => {
   return (
     <Box>
-      {label && <Label label={label} htmlFor={name || ''} required={required} tooltipText={tooltipText} />}
+      {label && (
+        <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
+      )}
 
-      <StyledInput
-        onBlur={onBlur}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        style={style}
-        type={type}
-        autoComplete="off"
-        disabled={disabled}
-      />
+      {disabled ? (
+        <div>{value}</div>
+      ) : (
+        <StyledInput
+          onBlur={onBlur}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          style={style}
+          type={type}
+          autoComplete="off"
+          disabled={disabled}
+        />
+      )}
 
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
@@ -143,9 +158,15 @@ export const TextareaInput: FC<TextInputProps> = ({
 }: TextInputProps) => {
   return (
     <Box>
-      {label && <Label label={label} htmlFor={name || ''} required={required} tooltipText={tooltipText} />}
+      {label && (
+        <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
+      )}
 
-      <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} disabled={disabled} />
+      {disabled ? (
+        <div>{value}</div>
+      ) : (
+        <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} disabled={disabled} />
+      )}
 
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
@@ -192,29 +213,32 @@ export const Uploader: FC<UploaderProps> = ({
               handleDeleteClick={() => {
                 handleDeleteClick(index)
               }}
+              isDisabled={isDisabled}
               style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
             />
           ))}
         </Flex>
       )}
-      <Upload
-        isDisabled={isDisabled}
-        accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
-        file={null}
-        onDrop={onDrop}
-      >
-        <UploaderCard>
-          <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-            <StyledUploadLogo />
-            <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
-              Drag and Drop
-            </TYPE.small>
-            <TYPE.small display="flex" textAlign="center" color={'text9'}>
-              or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
-            </TYPE.small>
-          </Flex>
-        </UploaderCard>
-      </Upload>
+      {!isDisabled && (
+        <Upload
+          isDisabled={isDisabled}
+          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          file={null}
+          onDrop={onDrop}
+        >
+          <UploaderCard>
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <StyledUploadLogo />
+              <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
+                Drag and Drop
+              </TYPE.small>
+              <TYPE.small display="flex" textAlign="center" color={'text9'}>
+                or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
+              </TYPE.small>
+            </Flex>
+          </UploaderCard>
+        </Upload>
+      )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}

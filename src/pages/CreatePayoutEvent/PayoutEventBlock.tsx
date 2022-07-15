@@ -199,7 +199,7 @@ export const PayoutEventBlock: FC<Props> = ({
           required
           placeholder="Give a brief description of this payout event"
           value={values.description}
-          style={{ height: '126px', background: bg19, marginBottom: 0 }}
+          style={{ height: '162px', background: bg19, marginBottom: 0 }}
           onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
           error={touched.description ? errors.description : ''}
           disabled={!availableForEditing.includes('description')}

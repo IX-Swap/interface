@@ -33,43 +33,49 @@ export const PayoutType: FC<Props> = ({ onValueChange, availableForEditing }) =>
       <Label
         marginBottom="8px"
         label={t`Payout Type`}
-        required
+        required={availableForEditing.includes('type')}
         tooltipText="Select the type of payout applicable for this payout event."
       />
-      <Card style={{ marginBottom: 8 }}>
-        {payoutTypes.map(({ id, label }) => (
-          <Checkbox
-            key={`payout-type-${id}`}
-            scaleSize={1.1}
-            buttonStyles={{ marginRight: 32 }}
-            isRadio
-            label={label}
-            onClick={() => onTypeChange(label)}
-            checked={values.type === label}
-            disabled={!availableForEditing.includes('type')}
-          />
-        ))}
-      </Card>
-      {touched.type && errors.type && (
-        <TYPE.small marginTop="4px" color={'red1'}>
-          {errors.type}
-        </TYPE.small>
-      )}
-      {values.type && (
-        <ExtraInfoCard>
-          <TYPE.buttonMuted opacity="50%">{description}</TYPE.buttonMuted>
-        </ExtraInfoCard>
-      )}
-      {values.type === 'Other' && (
-        <TextInput
-          style={{ marginTop: 12 }}
-          placeholder="Write payout type"
-          onChange={(e: any) => onValueChange('otherType', e.currentTarget.value)}
-          value={values.otherType}
-          required
-          error={touched.otherType ? errors.otherType : ''}
-          disabled={!availableForEditing.includes('type')}
-        />
+      {!availableForEditing.includes('type') ? (
+        <div>{values.type || values.otherType}</div>
+      ) : (
+        <>
+          <Card style={{ marginBottom: 8 }}>
+            {payoutTypes.map(({ id, label }) => (
+              <Checkbox
+                key={`payout-type-${id}`}
+                scaleSize={1.1}
+                buttonStyles={{ marginRight: 32 }}
+                isRadio
+                label={label}
+                onClick={() => onTypeChange(label)}
+                checked={values.type === label}
+                disabled={!availableForEditing.includes('type')}
+              />
+            ))}
+          </Card>
+          {touched.type && errors.type && (
+            <TYPE.small marginTop="4px" color={'red1'}>
+              {errors.type}
+            </TYPE.small>
+          )}
+          {values.type && (
+            <ExtraInfoCard>
+              <TYPE.buttonMuted opacity="50%">{description}</TYPE.buttonMuted>
+            </ExtraInfoCard>
+          )}
+          {values.type === 'Other' && (
+            <TextInput
+              style={{ marginTop: 12 }}
+              placeholder="Write payout type"
+              onChange={(e: any) => onValueChange('otherType', e.currentTarget.value)}
+              value={values.otherType}
+              required
+              error={touched.otherType ? errors.otherType : ''}
+              disabled={!availableForEditing.includes('type')}
+            />
+          )}
+        </>
       )}
     </Box>
   )
