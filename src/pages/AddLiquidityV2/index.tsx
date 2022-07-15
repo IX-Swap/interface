@@ -350,6 +350,7 @@ export default function AddLiquidity({
                 showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
                 currency={currencies[Field.CURRENCY_A]}
                 id="add-liquidity-input-tokena"
+                data-testid="add-liquidity-input-tokena"
                 showCommonBases={false}
                 title={<Trans>Choose token to create a pool</Trans>}
               />
@@ -366,6 +367,7 @@ export default function AddLiquidity({
                 showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
                 currency={currencies[Field.CURRENCY_B]}
                 id="add-liquidity-input-tokenb"
+                data-testid="add-liquidity-input-tokenb"
                 showCommonBases={false}
                 title={<Trans>Choose token to create a pool</Trans>}
               />

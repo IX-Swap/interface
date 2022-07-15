@@ -18,7 +18,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
 
-    test.skip('Test the ability to create a pool (Token - Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+    test('Test the ability to create a pool (Token - Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await test.step('Open Liquidity pool creation page', async () => {
         await liquidityPoolsPage.clickAddLiquidityButton();
       });
@@ -61,7 +61,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.createLiqudityPoolWithDefinedAmountOfEth(page, ethAmountForLiquidityPoolString, ethTokenTitle, ixsTokenTitle);
     })
 
-    test.skip('Test the ability to "Remove Liquidity"(MAX) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+    test('Test the ability to "Remove Liquidity"(MAX) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
       await liquidityPoolsPage.clickRemoveLiquidityButton();
       await liquidityPoolsPage.clickQuarterRemovePercentageButton();
@@ -119,7 +119,7 @@ test.describe('Check Liquidity pool functions', () => {
       await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
 
-    test.skip('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+    test('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
       await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
       await liquidityPoolsPage.clickAddNewAmountToLiqudityPoolButton();
       await liquidityPoolsPage.fillSecondAmountOfTokensField(ethAmountForLiquidityPoolString);
@@ -140,7 +140,7 @@ test.describe('Check Liquidity pool functions', () => {
   })
 
   test.describe('Check Negative pool cases', () => {
-    test.skip('Test the ability to create a pool (Negative TC)', async ({liquidityPoolsPage}) => {
+    test('Test the ability to create a pool (Negative TC)', async ({liquidityPoolsPage}) => {
       await liquidityPoolsPage.clickAddLiquidityButton();
       await liquidityPoolsPage.clickChooseFirstTokenDropdown();
       await liquidityPoolsPage.clickTokenItem(ethTokenTitle);

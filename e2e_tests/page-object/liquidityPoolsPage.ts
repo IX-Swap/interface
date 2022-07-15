@@ -34,21 +34,28 @@ export class LiquidityPoolsPage extends WebPage {
   readonly liquidityPoolLoading: Locator;
   readonly liquidityPoolPreloader: Locator;
 
+  chooseTokenDropdownText = 'Choose token';
+  confirmationPopUpText = 'Waiting For Confirmation';
+  transactionSubmittedText = 'Transaction Submitted';
+  ethTokenItemText = 'Ether';
+  ixsTokenItemText = 'Ixs Token';
+  isxEthPoolDetailsDropdownText = 'IXS/ETHM';
+
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
     this.metamaskPage = new MetamaskPage(page, context);
     this.addLiquidityButton = page.locator('[data-testid="add-liquidity"]');
-    this.firstAmountOfTokensField = page.locator('[id="add-liquidity-input-tokena"] >> input');
-    this.secondAmountOfTokensField = page.locator('[id="add-liquidity-input-tokenb"] >> input');
-    this.chooseFirstTokenDropdown = page.locator('[id="add-liquidity-input-tokena"] >> button:has-text("Choose token")');
-    this.chooseSecondTokenDropdown = page.locator('[id="add-liquidity-input-tokenb"] >> button:has-text("Choose token")');
-    this.ethTokenItem = page.locator('[title="Ether"]');
-    this.ixsTokenItem = page.locator('[title="Ixs Token"]');
+    this.firstAmountOfTokensField = page.locator('[data-testid="add-liquidity-input-tokena"] >> input');
+    this.secondAmountOfTokensField = page.locator('[data-testid="add-liquidity-input-tokenb"] >> input');
+    this.chooseFirstTokenDropdown = page.locator(`[data-testid="add-liquidity-input-tokena"] >> button:has-text('${this.chooseTokenDropdownText}')`);
+    this.chooseSecondTokenDropdown = page.locator(`[data-testid="add-liquidity-input-tokenb"] >> button:has-text('${this.chooseTokenDropdownText}')`);
+    this.ethTokenItem = page.locator(`[title='${this.ethTokenItemText}']`);
+    this.ixsTokenItem = page.locator(`[title='${this.ixsTokenItemText}']`);
     this.supplyButton = page.locator('[data-testid="supply"]');
     this.confirmSupplyButtonSelector = ('[data-testid="create-or-supply"]');
     this.confirmSupplyButton = page.locator('[data-testid="create-or-supply"]');
     this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
-    this.isxEthPoolDetailsDropdown = page.locator('text=IXS/ETHM >> [data-testid="openTable"]');
+    this.isxEthPoolDetailsDropdown = page.locator(`text=${this.isxEthPoolDetailsDropdownText} >> [data-testid="openTable"]`);
     this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
     this.quarterRemovePercentageButton = page.locator('[data-testid="percentage_25"]');
     this.halfRemovePercentageButton = page.locator('[data-testid="percentage_50"]');
@@ -58,8 +65,8 @@ export class LiquidityPoolsPage extends WebPage {
     this.removePoolButton = page.locator('[data-testid="approve-currency-b-remove"]');
     this.confirmRemovePoolButton = ('[data-testid="confirm-remove"]');
     this.addNewAmountToLiqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
-    this.transactionSubmittedPopUpText = page.locator('text=Transaction Submitted');
-    this.waitingForConfirmationPopUpText = page.locator('text=Waiting For Confirmation');
+    this.transactionSubmittedPopUpText = page.locator(`text=${this.transactionSubmittedText}`);
+    this.waitingForConfirmationPopUpText = page.locator(`text=${this.confirmationPopUpText}`);
     this.createdIsxEthPool = page.locator('//span[text()="My Liquidity"]//following::div[text()="IXS/ETH"]');
     this.firstTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
     this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=1 >> [class="css-vurnku"] >> nth=1');
