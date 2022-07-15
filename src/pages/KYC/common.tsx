@@ -30,6 +30,7 @@ export interface UploaderProps {
   handleDeleteClick: (index: number) => void
   required?: boolean
   tooltipText?: string | JSX.Element
+  isDisabled?: boolean
 }
 
 interface SelectProps {
@@ -101,6 +102,7 @@ export const TextInput: FC<TextInputProps> = ({
   required,
   error = false,
   tooltipText,
+  disabled = false,
 }: TextInputProps) => {
   return (
     <Box>
@@ -115,6 +117,7 @@ export const TextInput: FC<TextInputProps> = ({
         style={style}
         type={type}
         autoComplete="off"
+        disabled={disabled}
       />
 
       {error && (
@@ -136,12 +139,13 @@ export const TextareaInput: FC<TextInputProps> = ({
   required,
   error = false,
   tooltipText,
+  disabled = false,
 }: TextInputProps) => {
   return (
     <Box>
       {label && <Label label={label} htmlFor={name || ''} required={required} tooltipText={tooltipText} />}
 
-      <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} />
+      <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} disabled={disabled} />
 
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
@@ -162,6 +166,7 @@ export const Uploader: FC<UploaderProps> = ({
   onDrop,
   optional = false,
   tooltipText,
+  isDisabled = false,
 }: UploaderProps) => {
   return (
     <Box>
@@ -192,7 +197,12 @@ export const Uploader: FC<UploaderProps> = ({
           ))}
         </Flex>
       )}
-      <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles} file={null} onDrop={onDrop}>
+      <Upload
+        isDisabled={isDisabled}
+        accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+        file={null}
+        onDrop={onDrop}
+      >
         <UploaderCard>
           <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
             <StyledUploadLogo />

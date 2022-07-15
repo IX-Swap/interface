@@ -1,4 +1,4 @@
-import React, { ReactChildren } from 'react'
+import React from 'react'
 import { MobileDatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
@@ -13,12 +13,13 @@ interface Props {
   value?: string | Date | number
   onChange: (value: any) => void
   name?: string
-  error?: any | ReactChildren
+  error?: any | JSX.Element
   openTo?: 'date' | 'year' | 'month'
   maxHeight?: number
   maxDate?: any
   minDate?: any
   placeholder?: string
+  isDisabled?: boolean
 }
 
 export const DateInput = ({
@@ -31,6 +32,7 @@ export const DateInput = ({
   tooltipText,
   required,
   placeholder,
+  isDisabled = false,
   ...props
 }: Props & Partial<LabelProps>) => {
   return (
@@ -44,10 +46,11 @@ export const DateInput = ({
         inputFormat="DD/MM/YYYY"
         renderInput={({ inputProps }: Record<string, any>) => (
           <TextFieldContainer>
-            <TextField {...inputProps} placeholder={placeholder} />
+            <TextField {...inputProps} placeholder={placeholder} disabled={isDisabled} />
             <StyledCalendarIcon />
           </TextFieldContainer>
         )}
+        disabled={isDisabled}
         maxDate={maxDate}
         {...props}
       />

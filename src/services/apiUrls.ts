@@ -47,6 +47,7 @@ export const payout = {
   payoutById: (id: number) => `/payout/${id}`,
   claims: (payoutId: number) => `payout/claims?payoutId=${payoutId}`,
   totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
+  deleteDraft: (id: number) => `payout/draft/${id}`,
 }
 
 export const kyc = {

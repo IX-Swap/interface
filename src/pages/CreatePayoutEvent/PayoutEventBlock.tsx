@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Box, Flex } from 'rebass'
+import { Box } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { useFormikContext } from 'formik'
@@ -8,33 +8,47 @@ import { TYPE } from 'theme'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 import { DateInput } from 'components/DateInput'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonError, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { momentFormatDate } from 'pages/PayoutItem/utils'
 import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { useShowError } from 'state/application/hooks'
 import useTheme from 'hooks/useTheme'
+import { PAYOUT_STATUS } from 'constants/enums'
+import { useDeletePayoutItem } from 'state/payout/hooks'
+import { AreYouSureModal } from 'components/AreYouSureModal'
 
 import { PayoutType } from './PayoutType'
-import { FormCard } from './styleds'
+import { FormCard, ButtonsContainer } from './styleds'
 import { PublishPayoutModal } from './PublishPayoutModal'
-
 import { FormValues } from './utils'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
   isRecordFuture: boolean
   totalSecTokenSum: number
+  availableForEditing: string[]
+  status?: string
 }
 
-export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, onValueChange }) => {
+export const PayoutEventBlock: FC<Props> = ({
+  isRecordFuture,
+  totalSecTokenSum,
+  onValueChange,
+  availableForEditing,
+  status,
+}) => {
+  const [isWarningOpen, setIsWarningOpen] = useState(false)
   const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
+  //TO DO - replace with id from backend
+  const id = 19
 
   const { bg19 } = useTheme()
   const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions } = useTokensList()
   const showError = useShowError()
+  const deletePayout = useDeletePayoutItem()
 
   useEffect(() => {
     const { title, secToken, type } = values
@@ -42,6 +56,11 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
       onValueChange('title', `${type} payout event for ${secToken.label}`)
     }
   }, [values])
+
+  const onDelete = () => {
+    toggleIsWarningOpen()
+    deletePayout(id)
+  }
 
   const open = async () => {
     setTouched({
@@ -87,13 +106,16 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
     onValueChange('files', arrayOfFiles)
   }
 
+  const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
+
   return (
     <FormCard>
+      <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
       <TYPE.title6 marginBottom="28px">
         <Trans>PAYOUT EVENT</Trans>
       </TYPE.title6>
 
-      <PayoutType onValueChange={onValueChange} />
+      <PayoutType onValueChange={onValueChange} availableForEditing={availableForEditing} />
 
       <Box marginBottom="20px">
         <FormGrid style={{ marginBottom: 8 }}>
@@ -106,6 +128,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
             required
             error={touched.token ? errors.token : ''}
             tooltipText="Select the token you want to distribute for this payout event. (Used if your security token has other tokens in its governance)."
+            isDisabled={!availableForEditing.includes('token')}
           />
           <TextInput
             placeholder="1000"
@@ -114,6 +137,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
             value={tokenAmount}
             error={touched.tokenAmount ? errors.tokenAmount : ''}
             tooltipText="Indicate the total number of tokens you want to distribute for this payout event."
+            disabled={!availableForEditing.includes('tokenAmount')}
           />
         </FormGrid>
         {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
@@ -132,7 +156,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
-          minDate={recordDate ? dayjs(recordDate).add(1, 'days') : dayjs(new Date()).add(1, 'days')}
+          minDate={dayjs(new Date()).add(1, 'days')}
           maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
           openTo="date"
           value={startDate}
@@ -140,17 +164,19 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           required
           error={touched.startDate ? errors.startDate : ''}
           tooltipText="Select the date when the distribution of tokens for this payout event will start."
+          isDisabled={!availableForEditing.includes('startDate')}
         />
         <DateInput
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
-          minDate={startDate ? dayjs(startDate).add(1, 'days') : dayjs(new Date()).add(1, 'days')}
+          minDate={startDate ? dayjs(startDate).add(1, 'days') : dayjs(new Date()).add(2, 'days')}
           openTo="date"
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
           error={touched.endDate ? errors.endDate : ''}
           tooltipText="Select the deadline when the distribution of tokens for this payout event will end."
+          isDisabled={!availableForEditing.includes('endDate')}
         />
       </FormGrid>
 
@@ -163,6 +189,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           required
           error={touched.title ? errors.title : ''}
           tooltipText="Select a name for this payout event. Note that this will be the title of this payout that your token holders can use as a reference."
+          disabled={!availableForEditing.includes('title')}
         />
       </FormGrid>
 
@@ -175,6 +202,7 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
           style={{ height: '126px', background: bg19, marginBottom: 0 }}
           onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
           error={touched.description ? errors.description : ''}
+          disabled={!availableForEditing.includes('description')}
         />
       </FormGrid>
 
@@ -185,16 +213,22 @@ export const PayoutEventBlock: FC<Props> = ({ isRecordFuture, totalSecTokenSum, 
         handleDeleteClick={handleImageDelete}
         error={touched.files ? errors.files : ''}
         tooltipText="Please attach any documentation relevant to the payout event (optional)."
+        isDisabled={!availableForEditing.includes('files')}
       />
 
-      <Flex justifyContent="center" marginTop="32px">
-        <ButtonGradientBorder type="submit" padding="16px 24px" marginRight="32px">
+      <ButtonsContainer>
+        {status === PAYOUT_STATUS.DRAFT && (
+          <ButtonError onClick={toggleIsWarningOpen} error type="button">
+            <Trans>Delete Draft</Trans>
+          </ButtonError>
+        )}
+        <ButtonGradientBorder type="submit">
           <Trans>Save as Draft</Trans>
         </ButtonGradientBorder>
-        <ButtonIXSGradient type="button" padding="16px 24px" onClick={open}>
+        <ButtonIXSGradient type="button" onClick={open}>
           Publish Payout Event
         </ButtonIXSGradient>
-      </Flex>
+      </ButtonsContainer>
 
       {openModal && <PublishPayoutModal values={values} close={close} isRecordFuture={isRecordFuture} />}
     </FormCard>
