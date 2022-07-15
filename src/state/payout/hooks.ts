@@ -16,6 +16,7 @@ import {
   getMyPayoutList,
   deletePayoutItem,
 } from './actions'
+import { useAddPopup } from 'state/application/hooks'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -195,6 +196,7 @@ export const deletePayoutItemReq = async (id: number) => {
 export const useDeletePayoutItem = () => {
   const dispatch = useDispatch<AppDispatch>()
   const history = useHistory()
+  const addPopup = useAddPopup()
 
   const callback = useCallback(
     async (id: number) => {
@@ -203,7 +205,12 @@ export const useDeletePayoutItem = () => {
         const data = await deletePayoutItemReq(id)
         dispatch(deletePayoutItem.fulfilled())
         history.push({ pathname: routes.tokenManager('payout-events', null) })
-
+        addPopup({
+          info: {
+            success: true,
+            summary: 'Payout event was successfully deleted.',
+          },
+        })
         return data
       } catch (error: any) {
         dispatch(deletePayoutItem.rejected({ errorMessage: 'Could not delete payout item' }))
