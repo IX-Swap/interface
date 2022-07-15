@@ -87,7 +87,7 @@ export const FormStep = (props: FormStepProps) => {
       if (!isEditing && createModeRedirect !== undefined) {
         const redirect =
           typeof createModeRedirect === 'function'
-            ? createModeRedirect(data?.data.type ?? 'investor')
+            ? createModeRedirect(data?.data.type ?? 'corporate')
             : createModeRedirect
 
         history.replace(
