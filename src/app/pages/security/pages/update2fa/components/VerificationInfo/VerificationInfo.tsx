@@ -10,7 +10,7 @@ export const VerificationInfo = () => {
     <Box className={classes.wrapper}>
       <InfoIcon />
       <Typography variant={'body1'} className={classes.text}>
-        Verification code has been sent
+        Click send to get a code on your email
       </Typography>
     </Box>
   )
