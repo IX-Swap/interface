@@ -54,7 +54,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, statu
   const [tokenAmount, setTokenAmount] = useState<any>({
     walletsAmount: null,
     poolsAmount: null,
-    totalSum: 0,
+    totalSum: 70,
   })
   const { error } = usePayoutState()
   const [isAmountLoading, setIsAmountLoading] = useState(false)
@@ -184,6 +184,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, statu
               required
               isDisabled={!availableForEditing.includes('secToken')}
             />
+
             <DateInput
               label="Record Date"
               placeholder="Choose record date"
@@ -218,11 +219,11 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, statu
         </FormCard>
 
         <PayoutEventBlock
+          status={status}
           isRecordFuture={isRecordFuture}
           onValueChange={onValueChange}
           totalSecTokenSum={tokenAmount.totalSum ?? 0}
           availableForEditing={availableForEditing}
-          status={status}
           paid={paid}
           isEdit={!!payoutData}
           payoutId={payoutData?.id ? +payoutData.id : undefined}

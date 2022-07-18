@@ -6,8 +6,18 @@ import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
+import { useHistory, useLocation } from 'react-router-dom'
+import { routes } from 'utils/routes'
 
-import { createDraft, getPayoutList, getPayoutItem as getPayoutItemAction, getMyPayoutList } from './actions'
+import {
+  createDraft,
+  getPayoutList,
+  getPayoutItem as getPayoutItemAction,
+  getMyPayoutList,
+  deletePayoutItem,
+} from './actions'
+import { useAddPopup } from 'state/application/hooks'
+import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -259,16 +269,65 @@ export const getMyPayouts = async (params: MyPayoutsParams) => {
 
 export const useGetMyPayoutList = () => {
   const dispatch = useDispatch<AppDispatch>()
-
+  const {
+    list: { page, offset },
+  } = usePayoutState()
   const callback = useCallback(
     async ({ listType, ...params }: MyPayoutsParams) => {
       try {
         dispatch(getMyPayoutList.pending())
-        const data = await getMyPayouts({ listType, ...params })
+        const data = await getMyPayouts({ page, offset, listType, ...params })
         dispatch(getMyPayoutList.fulfilled({ data, type: listType }))
         return data
       } catch (error: any) {
         dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts list' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+export const deletePayoutItemReq = async (id: number) => {
+  const result = await apiService.delete(payout.deleteDraft(id), undefined)
+  return result.data
+}
+
+export const useDeletePayoutItem = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const history = useHistory()
+  const location = useLocation()
+  const addPopup = useAddPopup()
+  const getMyPayout = useGetMyPayout()
+  const {
+    payoutList: { items, page },
+  } = useTokenManagerState()
+
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(deletePayoutItem.pending())
+        const data = await deletePayoutItemReq(id)
+        dispatch(deletePayoutItem.fulfilled())
+
+        addPopup({
+          info: {
+            success: true,
+            summary: 'Payout event was successfully deleted.',
+          },
+        })
+
+        if (location.pathname === routes.createPayoutEvent) {
+          history.push({ pathname: routes.tokenManager('payout-events', null) })
+        } else {
+          getMyPayout({ my: true, page: items.length === 1 ? page - 1 : page })
+        }
+
+        return data
+      } catch (error: any) {
+        dispatch(deletePayoutItem.rejected({ errorMessage: 'Could not delete payout item' }))
         return null
       }
     },

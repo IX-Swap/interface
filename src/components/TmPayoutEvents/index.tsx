@@ -19,9 +19,13 @@ import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
 import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
+import { useDeletePayoutItem } from 'state/payout/hooks'
+import { AreYouSureModal } from 'components/AreYouSureModal'
+import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { StatusCell } from './StatusCell'
-import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton } from './styleds'
+import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton, ActionsContainer } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
 
 const headerCells = [
@@ -114,6 +118,8 @@ interface IRow {
 }
 
 const Row = ({ item, onEdit }: IRow) => {
+  const [isWarningOpen, setIsWarningOpen] = useState(false)
+  const deletePayout = useDeletePayoutItem()
   const history = useHistory()
 
   const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken } = item
@@ -128,53 +134,63 @@ const Row = ({ item, onEdit }: IRow) => {
     history.push({ pathname: routes.payoutItemManager(id) })
   }
 
-  return (
-    <StyledBodyRow>
-      <div>#{id}</div>
-      <div>
-        <StatusCell status={status} />
-      </div>
-      <div>{PAYOUT_TYPE_LABEL[type] || type}</div>
-      <div>
-        <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
-        {secToken?.symbol || '-'}
-      </div>
-      <div>
-        {dayjs(startDate).format(dateFormat)}
-        {Boolean(endDate) && (
-          <>
-            &nbsp;-
-            <br />
-            {dayjs(endDate).format(dateFormat)}
-          </>
-        )}
-      </div>
-      <div>{dayjs(recordDate).format(dateFormat)}</div>
-      <div style={{ fontWeight: 500 }}>
-        {amountClaimed ? (
-          <>
-            <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
-            {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
-          </>
-        ) : (
-          '-'
-        )}
-      </div>
+  const onDelete = () => {
+    toggleIsWarningOpen()
+    deletePayout(id)
+  }
 
-      <div>
-        <ButtonGradientBorder
-          style={{ marginRight: 25 }}
-          onClick={(e: any) => {
-            e.preventDefault()
-            e.stopPropagation()
-            onEdit(item)
-          }}
-        >
-          <Trans>Edit</Trans>
-        </ButtonGradientBorder>
-        <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
-      </div>
-    </StyledBodyRow>
+  const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
+
+  return (
+    <>
+      <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
+      <StyledBodyRow>
+        <div>#{id}</div>
+        <div>
+          <StatusCell status={status} />
+        </div>
+        <div>{PAYOUT_TYPE_LABEL[type] || type}</div>
+        <div>
+          <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
+          {secToken?.symbol || '-'}
+        </div>
+        <div>
+          {dayjs(startDate).format(dateFormat)}
+          {Boolean(endDate) && (
+            <>
+              &nbsp;-
+              <br />
+              {dayjs(endDate).format(dateFormat)}
+            </>
+          )}
+        </div>
+        <div>{dayjs(recordDate).format(dateFormat)}</div>
+        <div style={{ fontWeight: 500 }}>
+          {amountClaimed ? (
+            <>
+              <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
+            </>
+          ) : (
+            '-'
+          )}
+        </div>
+
+        <ActionsContainer>
+          {status === PAYOUT_STATUS.DRAFT && <DeleteIcon onClick={toggleIsWarningOpen} />}
+          <ButtonGradientBorder
+            onClick={(e: any) => {
+              e.preventDefault()
+              e.stopPropagation()
+              onEdit(item)
+            }}
+          >
+            <Trans>Edit</Trans>
+          </ButtonGradientBorder>
+          <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
+        </ActionsContainer>
+      </StyledBodyRow>
+    </>
   )
 }
 

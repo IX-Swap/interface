@@ -20,3 +20,19 @@ export const FormCard = styled(Box)`
     padding: 24px;
 `};
 `
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  gap: 32px;
+  > button {
+    min-height: 40px;
+    height: 40px;
+    width: auto;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+`

@@ -14,15 +14,16 @@ import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 
 import { DateInput } from 'components/DateInput'
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 
-import { PAYOUT_STATUS } from 'constants/enums'
+import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 
-import { useTokensList } from 'hooks/useTokensList'
 import useTheme from 'hooks/useTheme'
+import { PAYOUT_STATUS } from 'constants/enums'
+import { useDeletePayoutItem } from 'state/payout/hooks'
+import { AreYouSureModal } from 'components/AreYouSureModal'
 
-import { FormCard } from './styleds'
 import { FormValues } from './utils'
 import { PayoutType } from './PayoutType'
 import { PublishPayoutModal } from './PublishPayoutModal'
@@ -32,6 +33,7 @@ import { ReactComponent as Calendar } from 'assets/images/calendar.svg'
 import { useDeleteDraftPayout } from 'state/payout/hooks'
 import { useShowError } from 'state/application/hooks'
 import { useUserState } from 'state/user/hooks'
+import { FormCard, ButtonsContainer } from './styleds'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
@@ -55,6 +57,7 @@ export const PayoutEventBlock: FC<Props> = ({
   isEdit,
   payoutId
 }) => {
+  const [isWarningOpen, setIsWarningOpen] = useState(false)
   const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
 
   const { bg19 } = useTheme()
@@ -62,9 +65,11 @@ export const PayoutEventBlock: FC<Props> = ({
   const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions, secTokensOptions } = useTokensList()
+  const deletePayout = useDeletePayoutItem()
   const showError = useShowError()
-  const deleteDraft = useDeleteDraftPayout()
   const history = useHistory()
+  
+  const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
 
   const infoIsReadonly = useMemo(() => READONLY_STATUSES.includes(status), [])
   
@@ -84,6 +89,15 @@ export const PayoutEventBlock: FC<Props> = ({
       onValueChange('title', `${type} payout event for ${secToken.label}`)
     }
   }, [values])
+
+  const onDelete = () => {
+    toggleIsWarningOpen()
+
+    if (payoutId) {
+      deletePayout(payoutId)
+      history.push('/token-manager/my-tokens')
+    }
+  }
 
   const open = async () => {
     setTouched({
@@ -110,13 +124,6 @@ export const PayoutEventBlock: FC<Props> = ({
     setOpenModal(false)
   }
 
-  const deleteDraftOnclick = async () => {
-    if (payoutId) {
-      await deleteDraft(payoutId)
-      history.push('/token-manager/my-tokens')
-    }
-  }
-
   const handleDropImage = (acceptedFile: any) => {
     const file = acceptedFile
     if (file?.size > MAX_FILE_UPLOAD_SIZE) {
@@ -139,6 +146,7 @@ export const PayoutEventBlock: FC<Props> = ({
 
   return (
     <FormCard>
+      <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
       <TYPE.title6 marginBottom="28px">
         <Trans>PAYOUT EVENT</Trans>
       </TYPE.title6>
@@ -265,7 +273,7 @@ export const PayoutEventBlock: FC<Props> = ({
           required
           placeholder="Give a brief description of this payout event"
           value={values.description}
-          style={{ height: '126px', background: bg19, marginBottom: 0 }}
+          style={{ height: '162px', background: bg19, marginBottom: 0 }}
           onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
           error={touched.description ? errors.description : ''}
           disabled={!availableForEditing.includes('description')}
@@ -290,7 +298,7 @@ export const PayoutEventBlock: FC<Props> = ({
         )}
 
         {isEdit && status === PAYOUT_STATUS.DRAFT && (
-          <ButtonDelete type="button" padding="16px 24px" marginRight="32px" onClick={deleteDraftOnclick}>
+          <ButtonDelete type="button" padding="16px 24px" marginRight="32px" onClick={toggleIsWarningOpen}>
             <Trans>Delete  Draft</Trans>
           </ButtonDelete>
         )}

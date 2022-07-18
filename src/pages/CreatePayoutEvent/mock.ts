@@ -43,7 +43,7 @@ export const initialValues: FormValues = {
   recordDate: '',
   startDate: '',
   endDate: '',
-  secToken: null as any,
-  token: null as any,
+  secToken: null,
+  token: null,
   files: [],
 }
