@@ -45,7 +45,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
           <>
             <Box marginBottom="4px">{t`The event is not paid yet.`}</Box>
             <Box marginBottom="24px">{t`Please proceed with the payment before the payment start date.`}</Box>
-            <StyledButtonIXSGradient>{t`Pay for this event`}</StyledButtonIXSGradient>
+            <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for this event`}</StyledButtonIXSGradient>
           </>
         ) : (
           <>
@@ -90,7 +90,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
           <>
             <Box marginBottom="4px">{t`The event is not paid yet.`}</Box>
             <Box marginBottom="24px">{t`Please proceed with the payment.`}</Box>
-            <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for this Event`}</StyledButtonIXSGradient>
+            <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for this event`}</StyledButtonIXSGradient>
           </>
         )
       case PAYOUT_STATUS.DRAFT:
