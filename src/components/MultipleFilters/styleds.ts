@@ -82,8 +82,9 @@ export const Icon = styled.div`
   img {
     width: 20px;
     height: 20px;
+    min-width: 20px;
+    min-height: 20px;
   }
-  margin-right: 4px;
 `
 
 export const ResetFilters = styled(ButtonText)`

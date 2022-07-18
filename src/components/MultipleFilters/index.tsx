@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useFormik } from 'formik'
 import { t, Trans } from '@lingui/macro'
 import { MobileDatePicker } from '@material-ui/pickers'
-import { capitalize } from '@material-ui/core'
+import { capitalize, useMediaQuery } from '@material-ui/core'
 import { useLocation } from 'react-router-dom'
 import dayjs from 'dayjs'
 
 import { PAYOUT_STATUS } from 'constants/enums'
 import { Search } from 'components/Search'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useSecTokenState } from 'state/secTokens/hooks'
@@ -21,6 +21,7 @@ import { SecToken } from 'types/secToken'
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
 import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
+import { MobileFilters } from './MobileFilters'
 
 interface Props {
   filters: FILTERS[]
@@ -39,6 +40,8 @@ export const MultipleFilters = ({
   onFiltersChange,
   forManager = false,
 }: Props) => {
+  const isMobile = useMediaQuery(`(max-width:${MEDIA_WIDTHS.upToLarge}px)`)
+
   const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
@@ -92,7 +95,7 @@ export const MultipleFilters = ({
     return []
   }, [me])
 
-  const statusOptionsFormatted = useMemo(() => {
+  const statusOptionsSorted = useMemo(() => {
     if (pathname === '/token-manager/payout-events') {
       return [{ label: capitalize(PAYOUT_STATUS.DRAFT), value: PAYOUT_STATUS.DRAFT }, ...statusOptions]
     }
@@ -126,36 +129,40 @@ export const MultipleFilters = ({
     },
   })
 
-  useEffect(() => {
-    clearTimeout(timer)
-    timer = setTimeout(() => {
-      const filtredValues = Object.keys(values).reduce((acc, key: string) => {
-        const value = values[key]
-        if (value) {
-          if (Array.isArray(value)) {
-            if (!value.length) return acc
+  const applyFilters = useCallback(() => {
+    const filtredValues = Object.keys(values).reduce((acc, key: string) => {
+      const value = values[key]
+      if (value) {
+        if (Array.isArray(value)) {
+          if (!value.length) return acc
 
-            return {
-              ...acc,
-              [key]: values[key].join(','),
-            }
-          }
           return {
             ...acc,
-            [key]: values[key],
+            [key]: values[key].join(','),
           }
         }
-        return acc
-      }, {})
-
-      if (onFiltersChange) {
-        onFiltersChange(filtredValues)
-      } else if (callback) {
-        callback(filtredValues)
+        return {
+          ...acc,
+          [key]: values[key],
+        }
       }
-    }, 250)
-    //eslint-disable-next-line react-hooks/exhaustive-deps
+      return acc
+    }, {})
+
+    if (onFiltersChange) {
+      onFiltersChange(filtredValues)
+    } else if (callback) {
+      callback(filtredValues)
+    }
   }, [values])
+
+  useEffect(() => {
+    clearTimeout(timer)
+
+    if (isMobile) return
+
+    timer = setTimeout(() => applyFilters(), 250)
+  }, [values, isMobile, applyFilters])
 
   const onSelectValueChange = (name: string, value: any) => {
     const data = [...values[name]]
@@ -217,7 +224,7 @@ export const MultipleFilters = ({
         placeholder="Status"
         selectedItems={values[FILTERS.STATUS]}
         onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
-        items={statusOptionsFormatted}
+        items={statusOptionsSorted}
       />
     ),
     [FILTERS.PAYOUT_TYPE]: (
@@ -299,6 +306,23 @@ export const MultipleFilters = ({
       />
     ),
   } as Record<string, JSX.Element>
+
+  if (isMobile) {
+    return (
+      <MobileFilters
+        applyFilters={applyFilters}
+        values={values}
+        setFieldValue={setFieldValue}
+        onSelectValueChange={onSelectValueChange}
+        haveValues={!isEmpty}
+        filters={filters}
+        searchPlaceholder={searchPlaceholder}
+        forManager={forManager}
+        managerSecTokensOptions={managerSecTokensOptions}
+        statusOptionsSorted={statusOptionsSorted}
+      />
+    )
+  }
 
   return (
     <Container>

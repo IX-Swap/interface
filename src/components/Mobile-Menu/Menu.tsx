@@ -133,6 +133,16 @@ export const Menu = ({ close }: Props) => {
               <Trans>KYC</Trans>
             </MenuListItem>
           )}
+          {isAllowed(routes.tokenManager()) && (
+            <MenuListItem
+              activeClassName="active-item"
+              id={`kyc-nav-link`}
+              to={routes.tokenManager('my-tokens', null)}
+              onClick={close}
+            >
+              <Trans>Token Manager</Trans>
+            </MenuListItem>
+          )}
         </MenuList>
       </Container>
     </ModalContainer>

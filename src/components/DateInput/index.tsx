@@ -29,7 +29,7 @@ export const DateInput = ({
   value,
   openTo,
   onChange,
-  label,
+  label = 'Date of Birth',
   error,
   maxDate,
   tooltipText,
@@ -41,11 +41,7 @@ export const DateInput = ({
 }: Props & Partial<LabelProps>) => {
   return (
     <Container>
-      <StyledLabel
-        label={t`${label || 'Date of Birth'}`}
-        required={isDisabled ? false : required}
-        tooltipText={tooltipText}
-      />
+      {label && <StyledLabel label={t`${label}`} required={isDisabled ? false : required} tooltipText={tooltipText} />}
       {isDisabled && value ? (
         <Row>
           {dayjs(value).format(format || 'MMM DD, YYYY')} <CalendarIcon style={{ marginLeft: 9 }} />
@@ -58,7 +54,7 @@ export const DateInput = ({
           views={['year', 'month', 'date']}
           inputFormat="DD/MM/YYYY"
           renderInput={({ inputProps }: Record<string, any>) => (
-            <TextFieldContainer>
+            <TextFieldContainer className="dateInput">
               <TextField {...inputProps} placeholder={placeholder} disabled={isDisabled} />
               <StyledCalendarIcon />
             </TextFieldContainer>
