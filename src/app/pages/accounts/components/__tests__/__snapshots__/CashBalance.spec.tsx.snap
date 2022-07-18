@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CashBalance should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-wrapper-17 css-11gelwl-MuiPaper-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-m35kij-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-auto css-y4b3lo-MuiGrid-root"
+      >
+        <label
+          class="MuiInputLabel-root MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-root MuiFormLabel-colorPrimary makeStyles-wrapper-25 css-1oqcrp7-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          style="margin-bottom: 0px;"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-3phns2-MuiTypography-root"
+          >
+            Available Balance
+          </p>
+        </label>
+        <div
+          class="MuiFilledInput-root MuiFilledInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-26 css-1k0iil1-MuiInputBase-root-MuiFilledInput-root"
+        >
+          <div
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            class="makeStyles-select-27 MuiSelect-select makeStyles-filled-21 MuiSelect-filled MuiFilledInput-input MuiInputBase-input css-a96h1p-MuiSelect-select-MuiInputBase-input-MuiFilledInput-input"
+            role="button"
+            tabindex="0"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-elf1yz-MuiTypography-root"
+            >
+              987654. 321
+               
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-yh93o2-MuiTypography-root"
+              >
+                USD
+              </p>
+            </p>
+          </div>
+          <input
+            aria-hidden="true"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+            tabindex="-1"
+            value="USD"
+          />
+          <svg
+            class="makeStyles-icon-19 MuiSelect-icon MuiSelect-iconFilled css-jukrun-MuiSelect-icon"
+            fill="#778194"
+            height="24px"
+            width="24px"
+          >
+            <use
+              href="image-mock#chevron-down"
+            />
+          </svg>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-wrap-xs-nowrap MuiGrid-grid-xs-12 MuiGrid-grid-sm-auto css-acjtoe-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-auto css-13vmsnk-MuiGrid-root"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-disableElevation MuiButton-fullWidth MuiButtonBase-root makeStyles-button-24 css-1qecibu-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+            href="/app/accounts/withdraw"
+            tabindex="0"
+          >
+            Withdraw
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </a>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-auto css-13vmsnk-MuiGrid-root"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-fullWidth MuiButtonBase-root makeStyles-button-24 css-h2h901-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+            href="/app/accounts/deposit"
+            tabindex="0"
+          >
+            Deposit
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
