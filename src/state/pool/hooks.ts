@@ -53,6 +53,7 @@ interface AddLiquidity {
   token0: string
   token1: string
   network: string
+  blockNumber: number
   decimals: number
 }
 
