@@ -227,7 +227,7 @@ export default function AddLiquidity({
           setAttemptingTxn(false)
           response.wait().then((res: any) => {
             if (isCreating && secTokenId) {
-              const last = res.events.length - 1
+              const last = res.events.length - 2
               addLiquidity({
                 address: res.events[last].address,
                 tokenId: secTokenId,
