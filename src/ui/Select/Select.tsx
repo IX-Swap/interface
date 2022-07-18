@@ -41,7 +41,7 @@ export const Select = ({
       fullWidth
       multiple={multiple}
       className={classes.wrapper}
-      classes={{ select: classes.select }}
+      classes={{ select: classes.select, ...props.classes }}
       MenuProps={{
         classes: { list: classes.list, paper: classes.paper },
         ...MenuProps

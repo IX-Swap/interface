@@ -163,3 +163,11 @@ export const renderTotal = ({
 export const getOrderCurrency = (
   row: OTCOrder | OpenOTCOrder | ColumnOTCMatch
 ) => row?.pair?.name?.split('/')[1]
+
+export const renderNewAmount = (value: number) => {
+  const stringValue = value.toString()
+  const firstPart = stringValue.slice(0, stringValue.length - 3)
+  const lastPart = stringValue.slice(stringValue.length - 3, stringValue.length)
+
+  return firstPart + ' ' + lastPart
+}
