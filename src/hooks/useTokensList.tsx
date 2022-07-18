@@ -6,12 +6,20 @@ import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 
+export interface Option {
+  label: string
+  value: string | number
+  icon?: JSX.Element
+  address?: string
+  isNative?: boolean
+}
+
 export const useTokensList = () => {
   const { tokens: secTokens } = useSecTokenState()
   const tokens = useSimpleTokens()
   const native = useNativeCurrency()
 
-  const tokensOptions = useMemo(() => {
+  const tokensOptions = useMemo((): Option[] => {
     if (Object.values(tokens)?.length) {
       const list: any = Object.values(tokens).map((token: any) => {
         return {
@@ -36,12 +44,14 @@ export const useTokensList = () => {
     return []
   }, [tokens, native])
 
-  const secTokensOptions = useMemo(() => {
+  const secTokensOptions = useMemo((): Option[] => {
     if (secTokens?.length) {
       return secTokens.map((token) => ({
         label: token.symbol,
         value: token.id,
         icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        isNative: false,
+        address: token.address,
       }))
     }
 

@@ -46,7 +46,7 @@ export const DateInput = ({
         required={isDisabled ? false : required}
         tooltipText={tooltipText}
       />
-      {isDisabled ? (
+      {isDisabled && value ? (
         <Row>
           {dayjs(value).format(format || 'MMM DD, YYYY')} <CalendarIcon style={{ marginLeft: 9 }} />
         </Row>

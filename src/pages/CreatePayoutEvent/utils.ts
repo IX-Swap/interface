@@ -1,4 +1,5 @@
 import { PAYOUT_STATUS } from 'constants/enums'
+import { Option } from 'hooks/useTokensList'
 
 export const transformPayoutDraftDTO = (values: any) => {
   const { token, secToken } = values
@@ -21,8 +22,8 @@ export interface FormValues {
   recordDate: string
   startDate: string
   endDate: string
-  secToken: { label: string; value: number } | null
-  token: { label: string; value: string } | null
+  secToken: Option | null
+  token: Option | null
   files: any[]
 }
 
@@ -51,15 +52,13 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'token',
       'files',
     ],
+    [PAYOUT_STATUS.SCHEDULED]: ['tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
+    [PAYOUT_STATUS.DELAYED]: ['tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
     [PAYOUT_STATUS.STARTED]: ['title', 'description', 'endDate', 'files'],
-    [PAYOUT_STATUS.DELAYED]: ['title', 'description', 'startDate', 'endDate', 'files'],
     [PAYOUT_STATUS.ENDED]: [],
   } as Record<string, string[]>
 
-  if (status === PAYOUT_STATUS.SCHEDULED) {
-    if (paid) return ['title', 'description', 'endDate', 'files']
-    return ['title', 'description', 'startDate', 'endDate', 'files']
-  }
+  if (paid) return ['title', 'description', 'endDate', 'files']
 
   return availableForEditing[status] || availableForEditing[PAYOUT_STATUS.DRAFT]
 }

@@ -124,7 +124,7 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: '/token-manager', render: () => <Redirect to={routes.tokenManager('my-tokens', null)} /> },
   { path: routes.tokenManager(), component: TokenManager },
   { path: routes.createPayoutEvent, component: CreatePayoutEvent },
-  { path: routes.editPayoutEvent, component: EditPayoutEvent },
+  { path: routes.editPayoutEvent(), component: EditPayoutEvent },
   { path: routes.payoutItem(), component: PayoutItem },
   { path: routes.payoutItemManager(), component: PayoutItemManager },
 
