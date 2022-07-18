@@ -205,7 +205,7 @@ export const PayoutEventBlock: FC<Props> = ({
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
         <TextInput
           placeholder="Provide a name for this payout event"
-          label="Event name"
+          label="Event Name"
           onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
           value={values.title}
           required
@@ -264,7 +264,7 @@ export const PayoutEventBlock: FC<Props> = ({
         ) : (
           !paid && (
             <ButtonIXSGradient type="button" onClick={open}>
-              <Trans>Pay</Trans>
+              <Trans>Pay for this event</Trans>
             </ButtonIXSGradient>
           )
         )}
