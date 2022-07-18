@@ -3,31 +3,27 @@ import { useCookies } from 'react-cookie'
 import { Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { useHistory, useParams } from 'react-router-dom'
+import { capitalize } from '@material-ui/core'
+
 import { useActiveWeb3React } from 'hooks/web3'
-
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
-
 import { Loadable } from 'components/LoaderHover'
 import { ButtonText } from 'components/Button'
 import { LoadingIndicator } from 'components/LoadingIndicator'
-
 import { useAuthState } from 'state/auth/hooks'
 import { useUserState } from 'state/user/hooks'
 import { useGetPayoutItem, usePayoutState } from 'state/payout/hooks'
-import { useAllTokens, useCurrency } from 'hooks/Tokens'
+import { useCurrency } from 'hooks/Tokens'
+import { ROLES } from 'constants/roles'
+import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
+import { PayoutEvent } from 'state/token-manager/types'
+import { useTokensList } from 'hooks/useTokensList'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { PayoutForm } from './PayoutForm'
 import { PageTitle } from './styleds'
 import { Info } from './Info'
-
-import { ROLES } from 'constants/roles'
-import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
-import { PayoutEvent } from 'state/token-manager/types'
-import { capitalize } from '@material-ui/core'
-import { useTokensList } from 'hooks/useTokensList'
-import { Currency } from '@ixswap1/sdk-core'
 import { FormValues } from './utils'
-import { PAYOUT_STATUS } from 'constants/enums'
 
 const EditPayoutEventPage: FC = () => {
   const { id } = useParams<{ id?: string }>()
@@ -35,11 +31,11 @@ const EditPayoutEventPage: FC = () => {
   const history = useHistory()
 
   const { account } = useActiveWeb3React()
-  const { token } = useAuthState()
+  const { token: jwtToken } = useAuthState()
   const { me } = useUserState()
 
   const { loadingRequest } = usePayoutState()
-  const isLoggedIn = !!token && !!account
+  const isLoggedIn = !!jwtToken && !!account
 
   const [payout, setPayout] = useState<PayoutEvent>()
   const [status, setStatus] = useState<PAYOUT_STATUS>()
@@ -65,6 +61,22 @@ const EditPayoutEventPage: FC = () => {
     load()
   }, [])
 
+  const secToken = useMemo(() => {
+    if (payout?.secToken) {
+      return secTokensOptions.find((el) => el.value === payout.secToken.id) || null
+    }
+
+    return null
+  }, [payout])
+
+  const token = useMemo(() => {
+    if (payout?.payoutToken) {
+      return tokensOptions.find((el) => el.value === payout.payoutToken) || null
+    }
+
+    return null
+  }, [payout])
+
   useEffect(() => {
     if (payout && payoutTokenCurrency) {
       setPayoutFormData({
@@ -74,19 +86,13 @@ const EditPayoutEventPage: FC = () => {
         startDate: payout.startDate,
         files: payout.attachments,
         recordDate: payout.recordDate,
-        secToken: {
-          label: payout.secToken.symbol,
-          value: payout.secToken.id
-        },
+        secToken,
         secTokenAmount: payout.secTokenAmount,
         title: payout.title,
-        token: {
-          label: payoutTokenCurrency.symbol!,
-          value: payoutTokenCurrency.wrapped.address
-        },
+        token,
         tokenAmount: payout.tokenAmount,
         type: capitalize(payout.type),
-        otherType: payout.otherType
+        otherType: payout.otherType,
       })
     }
   }, [payout, payoutTokenCurrency])
@@ -114,7 +120,7 @@ const EditPayoutEventPage: FC = () => {
             <ArrowLeft fill="white !important" />
           </ButtonText>
           <PageTitle textAlign="center" margin="0 auto">
-            <Trans>Create Payout Event</Trans>
+            <Trans>Edit Payout Event</Trans>
           </PageTitle>
         </Flex>
         <Info />

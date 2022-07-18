@@ -17,7 +17,13 @@ import { TYPE } from 'theme'
 import { useUserState } from 'state/user/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { getTotalAmountByRecordDate, useCreateDraftPayout, usePayoutState, useUpdateDraftPayout, useUpdatePayout } from 'state/payout/hooks'
+import {
+  getTotalAmountByRecordDate,
+  useCreateDraftPayout,
+  usePayoutState,
+  useUpdateDraftPayout,
+  useUpdatePayout,
+} from 'state/payout/hooks'
 
 import { routes } from 'utils/routes'
 import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
@@ -36,7 +42,7 @@ interface PayoutFormProps {
   paid?: boolean
 }
 
-export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, status = PAYOUT_STATUS.DRAFT }) => {
+export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, status = PAYOUT_STATUS.DRAFT }) => {
   const { account } = useWeb3React()
   const { me } = useUserState()
 
@@ -80,7 +86,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, statu
   const handleFormSubmit = async (values: any) => {
     const body = transformPayoutDraftDTO(values)
 
-    let data: any 
+    let data: any
 
     if (payoutData && status === PAYOUT_STATUS.DRAFT) {
       data = await updateDraft(+payoutData.id!, body, payoutData)
@@ -94,16 +100,13 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, statu
       addPopup({
         info: {
           success: true,
-          summary: `Payout was successfully ${payoutData ? 'updated' : 'created' }`,
+          summary: `Payout was successfully ${payoutData ? 'updated' : 'created'}`,
         },
       })
       history.push({ pathname: routes.payoutItemManager(data.id) })
     } else {
     }
   }
-
-  // const status = 'draft'
-  // const paid = true
 
   const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
 
@@ -129,7 +132,6 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, statu
       setFieldValue('secToken', payoutData?.secToken ?? initialValues.secToken, false)
     }
   }, [setFieldValue, account])
-
 
   const isRecordFuture = dayjs(recordDate)
     .local()

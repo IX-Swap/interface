@@ -19,6 +19,7 @@ import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
+import Row from 'components/Row'
 
 export interface UploaderProps {
   files: FileWithPath[]
@@ -73,11 +74,11 @@ export const Select: FC<SelectProps> = ({
   return (
     <Box>
       {label && <Label required={isDisabled ? false : required} label={label} tooltipText={tooltipText} />}
-      {isDisabled ? (
-        <div>
+      {isDisabled && selectedItem ? (
+        <Row alignItems="center" style={{ columnGap: 4 }}>
           {selectedItem?.icon}
           {selectedItem?.label}
-        </div>
+        </Row>
       ) : (
         <ReactSelect
           name={name}
@@ -119,7 +120,7 @@ export const TextInput: FC<TextInputProps> = ({
         <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
       )}
 
-      {disabled ? (
+      {disabled && value ? (
         <div>{value}</div>
       ) : (
         <StyledInput
@@ -162,7 +163,7 @@ export const TextareaInput: FC<TextInputProps> = ({
         <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
       )}
 
-      {disabled ? (
+      {disabled && value ? (
         <div>{value}</div>
       ) : (
         <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} disabled={disabled} />
