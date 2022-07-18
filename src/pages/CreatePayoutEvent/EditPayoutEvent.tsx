@@ -71,7 +71,7 @@ const EditPayoutEventPage: FC = () => {
 
   const token = useMemo(() => {
     if (payout?.payoutToken) {
-      return tokensOptions.find((el) => el.value === payout.payoutToken) || null
+      return tokensOptions.find((el) => el.value === payout.payoutToken || el.address === payout.payoutToken) || null
     }
 
     return null
