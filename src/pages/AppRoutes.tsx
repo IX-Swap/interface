@@ -35,6 +35,7 @@ const CreateCollection = lazy(() => import('pages/CreateCollection'))
 const NftAssetPage = lazy(() => import('pages/NFTAsset'))
 const TokenManager = lazy(() => import('pages/TokenManager'))
 const CreatePayoutEvent = lazy(() => import('pages/CreatePayoutEvent'))
+const EditPayoutEvent = lazy(() => import('pages/CreatePayoutEvent/EditPayoutEvent'))
 const PayoutItem = lazy(() => import('pages/PayoutItem'))
 const PayoutItemManager = lazy(() => import('pages/PayoutItem/PayoutItemManager'))
 
@@ -123,6 +124,7 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: '/token-manager', render: () => <Redirect to={routes.tokenManager('my-tokens', null)} /> },
   { path: routes.tokenManager(), component: TokenManager },
   { path: routes.createPayoutEvent, component: CreatePayoutEvent },
+  { path: routes.editPayoutEvent, component: EditPayoutEvent },
   { path: routes.payoutItem(), component: PayoutItem },
   { path: routes.payoutItemManager(), component: PayoutItemManager },
 
