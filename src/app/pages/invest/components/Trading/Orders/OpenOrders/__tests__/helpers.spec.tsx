@@ -74,7 +74,7 @@ describe('hasMatches', () => {
 
 describe('hasApprovedMatches', () => {
   it('checks if an order already has matched quantity', () => {
-    expect(hasApprovedMatches(order4Open)).toEqual(false)
+    expect(hasApprovedMatches(order4Open)).toEqual(true)
   })
 })
 
