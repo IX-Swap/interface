@@ -46,7 +46,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                 <p
                   class="MuiTypography-root MuiTypography-body1 makeStyles-text-9 css-1b4l2pg-MuiTypography-root"
                 >
-                  Verification code has been sent
+                  Click send to get a code on your email
                 </p>
               </div>
             </div>
