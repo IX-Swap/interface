@@ -11,9 +11,10 @@ test.describe('Check Liquidity pool functions', () => {
   const ethAmountForLiquidityPoolFloat = 0.0001;
   const ethTokenTitle = 'Ether';
   const ixsTokenTitle = 'Ixs Token';
+  const wsecTokenTitle = 'WSec Test (WSEC)';
   let secondTokenValue;
 
-  test.describe('Check Creating pool functions', () => {
+  test.describe('Check Creating pool functions for Tokens', () => {
     test.afterEach(async ({ liquidityPoolsPage}) => {
       await liquidityPoolsPage.removeCreatedLiqudityPool();
     })
@@ -51,6 +52,49 @@ test.describe('Check Liquidity pool functions', () => {
 
       await test.step('Check that Liquidity pool value is equal to previously defined', async () => {
         await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+        await expect(liquidityPoolsPage.firstTokenValueInLiquidityPool).toHaveText(secondTokenValue);
+      });
+    })
+  })
+
+  test.describe('Check Creating pool functions for Security Tokens', () => {
+    test.afterEach(async ({ liquidityPoolsPage}) => {
+      await liquidityPoolsPage.removeCreatedLiqudityPoolWithSecurityToken();
+    })
+
+    test('Test the ability to create a pool (Token - Security Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
+      await test.step('Open Liquidity pool creation page', async () => {
+        await liquidityPoolsPage.clickAddLiquidityButton();
+      });
+
+      await test.step('Fill Liquidity pool data', async () => {
+        await liquidityPoolsPage.clickChooseFirstTokenDropdown();
+        await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
+        await liquidityPoolsPage.clickChooseSecondTokenDropdown() ;
+        await liquidityPoolsPage.clickTokenItem(wsecTokenTitle);
+        await liquidityPoolsPage.fillFirstAmountOfTokensField(ethAmountForLiquidityPoolString);
+      });
+
+      await test.step('Get second Token field value', async () => {
+        secondTokenValue = await liquidityPoolsPage.getSecondTokenValueOfThePool();
+        await liquidityPoolsPage.clickSupplyButton();
+      });
+
+      await test.step('Confirm Liquidity pool creation', async () => {
+        const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButtonSelector);
+        await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
+
+        await metamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
+        await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
+      });
+
+      await test.step('Check that Liquidity pool created', async () => {
+        await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
+        await expect(liquidityPoolsPage.createdWsecETHPool).toBeVisible();
+      });
+
+      await test.step('Check that Liquidity pool value is equal to previously defined', async () => {
+        await liquidityPoolsPage.clickWsecEthPoolDetailsDropdown();
         await expect(liquidityPoolsPage.firstTokenValueInLiquidityPool).toHaveText(secondTokenValue);
       });
     })

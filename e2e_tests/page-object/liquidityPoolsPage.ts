@@ -17,6 +17,7 @@ export class LiquidityPoolsPage extends WebPage {
   readonly confirmSupplyButton: Locator;
   readonly transactionSubmittedPopUpCloseButton: Locator;
   readonly isxEthPoolDetailsDropdown: Locator;
+  readonly wsecETHPoolDetailsDropdown: Locator;
   readonly removeLiquidityButton: Locator;
   readonly maxRemovePercentageButton: Locator;
   readonly approveRemovePoolButton: string;
@@ -29,17 +30,23 @@ export class LiquidityPoolsPage extends WebPage {
   readonly transactionSubmittedPopUpText: Locator;
   readonly waitingForConfirmationPopUpText: Locator;
   readonly createdIsxEthPool: Locator;
+  readonly createdWsecETHPool: Locator;
   readonly firstTokenValueInLiquidityPool: Locator;
   readonly secondTokenValueInLiquidityPool: Locator;
   readonly liquidityPoolLoading: Locator;
   readonly liquidityPoolPreloader: Locator;
+  readonly wsecTokenItem: Locator;
 
   chooseTokenDropdownText = 'Choose token';
   confirmationPopUpText = 'Waiting For Confirmation';
   transactionSubmittedText = 'Transaction Submitted';
   ethTokenItemText = 'Ether';
   ixsTokenItemText = 'Ixs Token';
+  wsecTokenItemText = 'WSec Test (WSEC)';
   isxEthPoolDetailsDropdownText = 'IXS/ETHM';
+  wsecETHPoolDetailsDropdownText = 'WSEC/ETHM';
+  wsecETHCreatedPoolText = 'WSEC/ETH';
+  isxETHCreatedPoolText = 'IXS/ETH';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -51,11 +58,13 @@ export class LiquidityPoolsPage extends WebPage {
     this.chooseSecondTokenDropdown = page.locator(`[data-testid="add-liquidity-input-tokenb"] >> button:has-text('${this.chooseTokenDropdownText}')`);
     this.ethTokenItem = page.locator(`[title='${this.ethTokenItemText}']`);
     this.ixsTokenItem = page.locator(`[title='${this.ixsTokenItemText}']`);
+    this.wsecTokenItem = page.locator(`[title='${this.wsecTokenItemText}']`);
     this.supplyButton = page.locator('[data-testid="supply"]');
     this.confirmSupplyButtonSelector = ('[data-testid="create-or-supply"]');
     this.confirmSupplyButton = page.locator('[data-testid="create-or-supply"]');
     this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
     this.isxEthPoolDetailsDropdown = page.locator(`text=${this.isxEthPoolDetailsDropdownText} >> [data-testid="openTable"]`);
+    this.wsecETHPoolDetailsDropdown = page.locator(`text=${this.wsecETHPoolDetailsDropdownText} >> [data-testid="openTable"]`);
     this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
     this.quarterRemovePercentageButton = page.locator('[data-testid="percentage_25"]');
     this.halfRemovePercentageButton = page.locator('[data-testid="percentage_50"]');
@@ -67,7 +76,8 @@ export class LiquidityPoolsPage extends WebPage {
     this.addNewAmountToLiqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
     this.transactionSubmittedPopUpText = page.locator(`text=${this.transactionSubmittedText}`);
     this.waitingForConfirmationPopUpText = page.locator(`text=${this.confirmationPopUpText}`);
-    this.createdIsxEthPool = page.locator('//span[text()="My Liquidity"]//following::div[text()="IXS/ETH"]');
+    this.createdIsxEthPool = page.locator(`//span[text()="My Liquidity"]//following::div[text()="${this.isxETHCreatedPoolText}"]`);
+    this.createdWsecETHPool = page.locator(`//span[text()="My Liquidity"]//following::div[text()="${this.wsecETHCreatedPoolText}"]`);
     this.firstTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
     this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=1 >> [class="css-vurnku"] >> nth=1');
     this.liquidityPoolLoading = page.locator('text=Loading');
@@ -134,6 +144,10 @@ export class LiquidityPoolsPage extends WebPage {
     await this.isxEthPoolDetailsDropdown.click();
   }
 
+  async clickWsecEthPoolDetailsDropdown() {
+    await this.wsecETHPoolDetailsDropdown.click();
+  }
+
   async clickRemoveLiquidityButton() {
     await this.removeLiquidityButton.click();
   }
@@ -175,8 +189,12 @@ export class LiquidityPoolsPage extends WebPage {
   async  removeCreatedLiqudityPoolIfItPresent() {
     await expect(this.liquidityPoolLoading).not.toBeVisible();
     await this.page.waitForTimeout(5000);
-    if (await this.createdIsxEthPool.isVisible()) {
-      await this.removeLiquidityPool();
+    if (await this.createdIsxEthPool.isVisible() || await this.createdWsecETHPool.isVisible()) {
+      if (await this.createdIsxEthPool.isVisible()) {
+        await this.removeLiquidityPool();
+      } else if (await this.createdWsecETHPool.isVisible()) {
+        await this.removeLiquidityPoolWithSecurityToken();
+      }
     }
   }
 
@@ -185,8 +203,29 @@ export class LiquidityPoolsPage extends WebPage {
     await this.removeLiquidityPool();
   }
 
+  async removeCreatedLiqudityPoolWithSecurityToken() {
+    await this.page.goto(config.use.baseURL + '#/pool')
+    await this.removeLiquidityPoolWithSecurityToken();
+  }
+
   async removeLiquidityPool() {
     await this.clickIsxEthPoolDetailsDropdown();
+    await this.clickRemoveLiquidityButton();
+    await this.clickMaxRemovePercentageButton();
+
+    const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
+    await approveMetamaskPopUp.click(this.metamaskPage.signButton);
+
+    await this.clickRemovePoolButton();
+
+    const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
+    await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+
+    await this.clickTransactionSubmittedPopUpCloseButton();
+  }
+
+  async removeLiquidityPoolWithSecurityToken() {
+    await this.clickWsecEthPoolDetailsDropdown();
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();
 
