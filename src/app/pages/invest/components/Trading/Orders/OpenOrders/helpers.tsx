@@ -64,8 +64,12 @@ export const sortOpenOrders = (first: OpenOTCOrder, _: OpenOTCOrder) =>
 export const hasMatches = (item: OpenOTCOrder) =>
   item.matches !== undefined && item.matches.length > 0
 
-export const hasApprovedMatches = (row: OpenOTCOrder) =>
-  row.amount - row.availableAmount > 0
+export const hasApprovedMatches = (row: OpenOTCOrder) => {
+  const approvedMatches =
+    row?.matches?.filter(match => match.status === OTCOrderStatus.CONFIRMED) ??
+    []
+  return approvedMatches.length > 0
+}
 
 export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
   if (row.orderType === 'SELL') {

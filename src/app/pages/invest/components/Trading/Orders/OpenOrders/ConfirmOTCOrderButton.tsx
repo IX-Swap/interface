@@ -29,6 +29,7 @@ export const ConfirmOTCOrderButton = ({
       orderId: order.parentOrder,
       matchedOrderId: order.matchedOrder?._id ?? ''
     })
+    setStartedTimer(true)
   }
 
   const [confirmMatch, { isLoading }] = useConfirmMyOrder()
@@ -52,7 +53,6 @@ export const ConfirmOTCOrderButton = ({
     setLoadingTransaction(true)
     try {
       context?.openPrompt()
-      setStartedTimer(true)
       await sendToken()
     } catch {
       console.error('error confirming')
