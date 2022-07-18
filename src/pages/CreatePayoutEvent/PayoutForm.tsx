@@ -1,29 +1,42 @@
 import React, { FC, useEffect, useState, useMemo } from 'react'
 import { useFormik, FormikProvider } from 'formik'
-import { Trans } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
+import { Trans } from '@lingui/macro'
+
 import dayjs from 'dayjs'
 
 import { Select } from 'pages/KYC/common'
-import { DateInput } from 'components/DateInput'
-import { getTotalAmountByRecordDate, useCreateDraftPayout, usePayoutState } from 'state/payout/hooks'
-import { TYPE } from 'theme'
-import { useUserState } from 'state/user/hooks'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import CurrencyLogo from 'components/CurrencyLogo'
-import { routes } from 'utils/routes'
 import { FormGrid } from 'pages/KYC/styleds'
+
+import { DateInput } from 'components/DateInput'
+import CurrencyLogo from 'components/CurrencyLogo'
+
+import { TYPE } from 'theme'
+
+import { useUserState } from 'state/user/hooks'
 import { useAddPopup } from 'state/application/hooks'
+import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
+import { getTotalAmountByRecordDate, useCreateDraftPayout, usePayoutState, useUpdateDraftPayout, useUpdatePayout } from 'state/payout/hooks'
+
+import { routes } from 'utils/routes'
+import { availableInputsForEdit, FormValues, transformPayoutDraftDTO } from './utils'
+
+import { FormCard } from './styleds'
+import { initialValues } from './mock'
+import { validation } from './validation'
 
 import { Summary } from './Summary'
 import { PayoutEventBlock } from './PayoutEventBlock'
-import { initialValues } from './mock'
-import { FormCard } from './styleds'
-import { availableInputsForEdit, transformPayoutDraftDTO } from './utils'
-import { validation } from './validation'
+import { PAYOUT_STATUS } from 'constants/enums'
 
-export const PayoutForm: FC = () => {
+interface PayoutFormProps {
+  payoutData?: Partial<FormValues>
+  status?: PAYOUT_STATUS
+  paid?: boolean
+}
+
+export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = true, status = PAYOUT_STATUS.DRAFT }) => {
   const { account } = useWeb3React()
   const { me } = useUserState()
 
@@ -45,7 +58,11 @@ export const PayoutForm: FC = () => {
   })
   const { error } = usePayoutState()
   const [isAmountLoading, setIsAmountLoading] = useState(false)
+
   const createDraft = useCreateDraftPayout()
+  const updateDraft = useUpdateDraftPayout()
+  const updatePayout = useUpdatePayout()
+
   const addPopup = useAddPopup()
   const history = useHistory()
 
@@ -62,13 +79,22 @@ export const PayoutForm: FC = () => {
 
   const handleFormSubmit = async (values: any) => {
     const body = transformPayoutDraftDTO(values)
-    const data = await createDraft(body)
+
+    let data: any 
+
+    if (payoutData && status === PAYOUT_STATUS.DRAFT) {
+      data = await updateDraft(+payoutData.id!, body, payoutData)
+    } else if (payoutData) {
+      data = await updatePayout(+payoutData.id!, body, payoutData)
+    } else {
+      data = await createDraft(body)
+    }
 
     if (data?.id) {
       addPopup({
         info: {
           success: true,
-          summary: 'Payout was successfully created',
+          summary: `Payout was successfully ${payoutData ? 'updated' : 'created' }`,
         },
       })
       history.push({ pathname: routes.payoutItemManager(data.id) })
@@ -76,26 +102,34 @@ export const PayoutForm: FC = () => {
     }
   }
 
-  const status = 'draft'
-  const paid = true
+  // const status = 'draft'
+  // const paid = true
 
   const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
 
   const formik = useFormik({
-    initialValues,
+    initialValues: payoutData ?? initialValues,
     onSubmit: handleFormSubmit,
     validationSchema: validation,
     enableReinitialize: true,
   })
+
   const { values, errors, touched, setFieldValue, handleSubmit } = formik
+  const { recordDate, secToken } = values
+
+  useEffect(() => {
+    if (payoutData) {
+      onValueChange('secToken', payoutData.secToken)
+      fetchAmountByRecordDate(payoutData.secToken, recordDate)
+    }
+  }, [])
 
   useEffect(() => {
     if (account) {
-      setFieldValue('secToken', initialValues.secToken, false)
+      setFieldValue('secToken', payoutData?.secToken ?? initialValues.secToken, false)
     }
   }, [setFieldValue, account])
 
-  const { recordDate, secToken } = values
 
   const isRecordFuture = dayjs(recordDate)
     .local()
@@ -188,6 +222,10 @@ export const PayoutForm: FC = () => {
           onValueChange={onValueChange}
           totalSecTokenSum={tokenAmount.totalSum ?? 0}
           availableForEditing={availableForEditing}
+          status={status}
+          paid={paid}
+          isEdit={!!payoutData}
+          payoutId={payoutData?.id ? +payoutData.id : undefined}
         />
       </form>
     </FormikProvider>

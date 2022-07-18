@@ -22,7 +22,7 @@ export interface FormValues {
   startDate: string
   endDate: string
   secToken: { label: string; value: number } | null
-  token: { label: string; value: number } | null
+  token: { label: string; value: string } | null
   files: any[]
 }
 

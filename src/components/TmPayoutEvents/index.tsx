@@ -58,8 +58,8 @@ export const TmPayoutEvents = () => {
     getMyPayouts({ ...params, my: true })
   }
 
-  const onEdit = () => {
-    // TO DO - redirect to edit event
+  const onEdit = (item: PayoutEvent) => {
+    history.push(`/payout/edit/${item.id}`) 
   }
 
   const onPageChange = (page: number) => {
