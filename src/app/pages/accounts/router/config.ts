@@ -18,7 +18,7 @@ export const AccountsRoute = {
   digitalSecurities: makeURL(['app', 'account', 'digitalSecurity']),
   transactions: makeURL(['app', 'account', 'transactions']),
   depositCash: makeURL(['app', 'account', 'cashDeposit']),
-  deposit: makeURL(['app', 'account', 'deposit']),
+  deposit: '/app/accounts/deposit',
   withdraw: makeURL(['app', 'account', 'withdraw']),
   withdrawCash: makeURL(['app', 'account', 'cashWithdrawal']),
   withdrawalAddresses: makeURL(['app', 'account', 'withdrawalAddresses']),

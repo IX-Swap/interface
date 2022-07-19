@@ -1,6 +1,6 @@
-import { Box, Grid, Link, Typography, useTheme } from '@mui/material'
+import { Box, Grid, Link, Paper, Typography, useTheme } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
-import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
+import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/shared.styles'
 import { ValidCurrency } from 'helpers/types'
 import React from 'react'
 
@@ -11,7 +11,7 @@ export interface DepositInfoProps {
 
 export const Fast = ({ accountId, currency }: DepositInfoProps) => {
   const theme = useTheme()
-  const { footerInfo, infoMessage } = useStyles()
+  const { footerInfo, paper } = useStyles()
   const fastDetails = [
     {
       label: 'Currency',
@@ -46,18 +46,13 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
   return (
     <Grid direction='column'>
       <Grid item>
-        <Box px={3} pb={3}>
-          <Grid item>
-            <Typography className={infoMessage}>
-              Bank charges may apply and will be borne by the clients
-            </Typography>
-          </Grid>
+        <Box px={5} pb={5}>
           <Grid container spacing={5}>
             <CashDepositDetails data={extendedFastDetails} />
           </Grid>
         </Box>
       </Grid>
-      <Grid item>
+      <Paper className={paper}>
         <Box className={footerInfo}>
           <Typography
             color={theme.palette.text.secondary}
@@ -76,7 +71,7 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
             </Link>
           </Typography>
         </Box>
-      </Grid>
+      </Paper>
     </Grid>
   )
 }
