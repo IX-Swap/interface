@@ -10,7 +10,7 @@ export const Deposit = () => {
     undefined
   )
 
-  const { data, isLoading } = useVirtualAccount(virtualAccountId)
+  const { data, list, isLoading } = useVirtualAccount(virtualAccountId)
 
   return (
     <Grid container direction='column' spacing={3} paddingBottom={3}>
@@ -23,6 +23,7 @@ export const Deposit = () => {
             <Paper sx={{ maxWidth: 608, borderRadius: 2 }}>
               <Box sx={{ px: { xs: 3, sm: 5 }, paddingTop: 5 }}>
                 <CurrencySelect
+                  accounts={list}
                   defaultValue={data.accountNumber}
                   onButtonClick={setVirtualAccountId}
                 />
