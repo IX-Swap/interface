@@ -36,6 +36,11 @@ export class LiquidityPoolsPage extends WebPage {
   readonly liquidityPoolLoading: Locator;
   readonly liquidityPoolPreloader: Locator;
   readonly wsecTokenItem: Locator;
+  readonly topPoolsLink: Locator;
+  readonly liquidityPoolTitle: Locator;
+  readonly openSettingsGearButton: Locator;
+  readonly myLiquidityTitle: Locator;
+  readonly importPoolLink: Locator;
 
   chooseTokenDropdownText = 'Choose token';
   confirmationPopUpText = 'Waiting For Confirmation';
@@ -47,6 +52,9 @@ export class LiquidityPoolsPage extends WebPage {
   wsecETHPoolDetailsDropdownText = 'WSEC/ETHM';
   wsecETHCreatedPoolText = 'WSEC/ETH';
   isxETHCreatedPoolText = 'IXS/ETH';
+  topPoolsLinkText = 'Top PoolsExplore popular pools on IX Swap Analytics';
+  liquidityPoolTitleText = 'Liquidity Pool';
+  myLiquidityTitleText = 'My Liquidity';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -81,7 +89,12 @@ export class LiquidityPoolsPage extends WebPage {
     this.firstTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
     this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=1 >> [class="css-vurnku"] >> nth=1');
     this.liquidityPoolLoading = page.locator('text=Loading');
-    this.liquidityPoolPreloader = page.locator('[alt="Loading..."]')
+    this.liquidityPoolPreloader = page.locator('[alt="Loading..."]');
+    this.topPoolsLink = page.locator(`a:has-text("${this.topPoolsLinkText}") >> nth=0`);
+    this.liquidityPoolTitle = page.locator(`span:has-text("${this.liquidityPoolTitleText}")`);
+    this.openSettingsGearButton = page.locator(`[data-testid="open-settings-button"]`);
+    this.myLiquidityTitle = page.locator(`text=${this.myLiquidityTitleText}`);
+    this.importPoolLink = page.locator(`[data-testid="find-pool-button"]`);
   }
 
   // Assertions

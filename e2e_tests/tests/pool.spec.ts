@@ -14,6 +14,30 @@ test.describe('Check Liquidity pool functions', () => {
   const wsecTokenTitle = 'WSec Test (WSEC)';
   let secondTokenValue;
 
+  test.describe('Check UI pool cases', () => {
+    test('Test the ability to create a pool (Negative TC)', async ({liquidityPoolsPage}) => {
+      await liquidityPoolsPage.clickAddLiquidityButton();
+      await liquidityPoolsPage.clickChooseFirstTokenDropdown();
+      await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
+      await liquidityPoolsPage.fillFirstAmountOfTokensField(ethAmountForLiquidityPoolString);
+      await liquidityPoolsPage.clickChooseSecondTokenDropdown() ;
+      await liquidityPoolsPage.clickTokenItem(ixsTokenTitle);
+      await liquidityPoolsPage.clickSupplyButton();
+
+      await liquidityPoolsPage.rejectPoolCreationViaMetamaskPopUp();
+      await expect(liquidityPoolsPage.confirmSupplyButton).toBeVisible();
+    })
+
+    test('Check UI for the "Liquidity Pools" section', async ({liquidityPoolsPage}) => {
+      await expect(liquidityPoolsPage.topPoolsLink).toBeVisible();
+      await expect(liquidityPoolsPage.liquidityPoolTitle).toBeVisible();
+      await expect(liquidityPoolsPage.openSettingsGearButton).toBeVisible();
+      await expect(liquidityPoolsPage.addLiquidityButton).toBeVisible();
+      await expect(liquidityPoolsPage.myLiquidityTitle).toBeVisible();
+      await expect(liquidityPoolsPage.importPoolLink).toBeVisible();
+    })
+  })
+
   test.describe('Check Creating pool functions for Tokens', () => {
     test.afterEach(async ({ liquidityPoolsPage}) => {
       await liquidityPoolsPage.removeCreatedLiqudityPool();
@@ -180,21 +204,6 @@ test.describe('Check Liquidity pool functions', () => {
 
       // Assertion
       await expect(await liquidityPoolsPage.getSecondTokenValueOfTheCreatedPool()).toBeGreaterThan(ethAmountForLiquidityPoolFloat);
-    })
-  })
-
-  test.describe('Check Negative pool cases', () => {
-    test('Test the ability to create a pool (Negative TC)', async ({liquidityPoolsPage}) => {
-      await liquidityPoolsPage.clickAddLiquidityButton();
-      await liquidityPoolsPage.clickChooseFirstTokenDropdown();
-      await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
-      await liquidityPoolsPage.fillFirstAmountOfTokensField(ethAmountForLiquidityPoolString);
-      await liquidityPoolsPage.clickChooseSecondTokenDropdown() ;
-      await liquidityPoolsPage.clickTokenItem(ixsTokenTitle);
-      await liquidityPoolsPage.clickSupplyButton();
-
-      await liquidityPoolsPage.rejectPoolCreationViaMetamaskPopUp();
-      await expect(liquidityPoolsPage.confirmSupplyButton).toBeVisible();
     })
   })
 })
