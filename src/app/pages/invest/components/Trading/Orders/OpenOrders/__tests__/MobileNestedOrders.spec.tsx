@@ -56,6 +56,9 @@ describe('MobileNestedOrders', () => {
         value={{
           openPrompt: () => undefined,
           closePrompt: () => undefined,
+          openCongested: () => undefined,
+          showCongested: false,
+          hideCongested: () => undefined,
           showPrompt: false
         }}
       >

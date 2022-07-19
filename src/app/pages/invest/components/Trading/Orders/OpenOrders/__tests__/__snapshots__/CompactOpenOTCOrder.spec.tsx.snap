@@ -99,6 +99,19 @@ exports[`CompactOpenOTCOrder compact open otc order matches snapshot 1`] = `
           </div>
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+            style="text-align: center;"
+          >
+            <div
+              class="makeStyles-infoCell-3 MuiBox-root css-0"
+            >
+              <div
+                class="makeStyles-separator-1 MuiBox-root css-0"
+              />
+              Order expired
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
           >
             <div
               class="MuiBox-root css-1n2mv2k"

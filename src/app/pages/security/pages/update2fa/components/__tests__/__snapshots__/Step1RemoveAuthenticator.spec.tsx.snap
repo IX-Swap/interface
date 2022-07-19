@@ -40,7 +40,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
             <p
               class="MuiTypography-root MuiTypography-body1 makeStyles-text-5 css-1b4l2pg-MuiTypography-root"
             >
-              Verification code has been sent
+              Click send to get a code on your email
             </p>
           </div>
         </div>
