@@ -12,7 +12,7 @@ import { trading } from 'config/apiURL'
 import { tradingQueryKeys } from 'config/queryKeys'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
-import { OTCOrder } from 'types/otcOrder'
+import { OpenOTCOrder } from 'types/otcOrder'
 import { EmptyState } from '../EmptyState'
 
 export const PastOTCOrders = () => {
@@ -20,7 +20,7 @@ export const PastOTCOrders = () => {
   return (
     <>
       <Grid>
-        <TableView<OTCOrder>
+        <TableView<OpenOTCOrder>
           size='small'
           name={tradingQueryKeys.pastOrders}
           uri={trading.getMyPastOrders}
@@ -44,7 +44,7 @@ export const PastOTCOrders = () => {
           }
         >
           {isTablet
-            ? (args: TableViewRendererProps<OTCOrder>) => (
+            ? (args: TableViewRendererProps<OpenOTCOrder>) => (
                 <CompactBody {...args} columns={compactColumns} />
               )
             : undefined}
