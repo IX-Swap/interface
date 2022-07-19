@@ -31,7 +31,8 @@ export const AccountsRoute = {
   commitments: makeURL(['app', 'account', 'commitments']),
   dashboard: makeURL(['app', 'account', 'dashboard']),
   reports: '/app/accounts/reports',
-  myHoldings: '/app/accounts/holdings'
+  myHoldings: '/app/accounts/holdings',
+  cash: '/app/accounts/cash'
 }
 
 export const accountsLandingLinks: InternalRouteProps[] = [
@@ -99,5 +100,11 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     path: AccountsRoute.myHoldings,
     color: '#2B78FD',
     icon: HoldingsIcon
+  },
+  {
+    label: 'Cash',
+    path: AccountsRoute.cash,
+    color: '#90a30f',
+    icon: AssetBalanceIcon
   }
 ]

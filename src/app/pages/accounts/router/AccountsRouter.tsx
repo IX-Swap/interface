@@ -18,6 +18,9 @@ import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
 import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
 import { RootContainer } from 'ui/RootContainer'
 import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
+import { Cash } from 'app/pages/accounts/pages/cash/Cash'
+import { Withdraw } from 'app/pages/accounts/pages/withdraw/Withdraw'
+import { Deposit } from 'app/pages/accounts/pages/deposit/Deposit'
 
 export const AccountsRouter = () => {
   return (
@@ -37,7 +40,12 @@ export const AccountsRouter = () => {
       <AppRoute breadcrumb='Cash Withdrawals' path={AccountsRoute.withdrawCash}>
         <WithdrawCash />
       </AppRoute>
-
+      <AppRoute breadcrumb='Withdraw' path={AccountsRoute.withdraw}>
+        <Withdraw />
+      </AppRoute>
+      <AppRoute breadcrumb='Deposit' path={AccountsRoute.deposit}>
+        <Deposit />
+      </AppRoute>
       <AppRoute breadcrumb='Asset Balances' path={AccountsRoute.balances}>
         <Balances />
       </AppRoute>
@@ -76,7 +84,9 @@ export const AccountsRouter = () => {
       >
         <MyHoldings />
       </AppRoute>
-
+      <AppRoute breadcrumb='Cash' path={AccountsRoute.cash}>
+        <Cash />
+      </AppRoute>
       <AppRoute path={AccountsRoute.landing}>
         <LandingPage title='Accounts' links={accountsLandingLinks} />
       </AppRoute>
