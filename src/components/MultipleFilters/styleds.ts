@@ -12,6 +12,9 @@ export const Container = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     grid-template-columns: 1fr;
   }
+  @media (max-width: ${MEDIA_WIDTHS.upToLarge}px) {
+    display: none;
+  }
 `
 
 export const FiltersContainer = styled.div`

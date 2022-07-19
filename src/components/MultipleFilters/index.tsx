@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useFormik } from 'formik'
 import { t, Trans } from '@lingui/macro'
 import { MobileDatePicker } from '@material-ui/pickers'
@@ -122,14 +122,7 @@ export const MultipleFilters = ({
     return {}
   }, [filters])
 
-  const { setFieldValue, values, setValues } = useFormik({
-    initialValues,
-    onSubmit: () => {
-      // must have onSubmit
-    },
-  })
-
-  const applyFilters = useCallback(() => {
+  const applyFilters = (values: Record<string, any>) => {
     const filtredValues = Object.keys(values).reduce((acc, key: string) => {
       const value = values[key]
       if (value) {
@@ -154,21 +147,27 @@ export const MultipleFilters = ({
     } else if (callback) {
       callback(filtredValues)
     }
-  }, [values])
+  }
+
+  const { setFieldValue, values, setValues, submitForm } = useFormik({
+    initialValues,
+    onSubmit: applyFilters,
+  })
 
   useEffect(() => {
     clearTimeout(timer)
 
     if (isMobile) return
 
-    timer = setTimeout(() => applyFilters(), 250)
-  }, [values, isMobile, applyFilters])
+    timer = setTimeout(() => submitForm(), 250)
+  }, [values, isMobile])
 
-  const onSelectValueChange = (name: string, value: any) => {
+  const onSelectValueChange = (name: string, item: any) => {
+    const { value } = item
     const data = [...values[name]]
 
-    if (Array.isArray(value)) {
-      setFieldValue(name, value)
+    if (Array.isArray(item)) {
+      setFieldValue(name, item)
       return
     }
 
@@ -177,19 +176,19 @@ export const MultipleFilters = ({
       return
     }
 
-    const indexOf = data.findIndex((el: any) => el === value)
+    const indexOf = data.findIndex((el: any) => el.value === value)
 
     if (indexOf > -1) {
       data.splice(indexOf, 1)
     } else {
-      data.push(value)
+      data.push(item)
     }
 
     setFieldValue(name, data)
   }
 
-  const onResetFilters = () => {
-    setValues({ ...initialValues, ...(withSearch && { search: values.search }) })
+  const onResetFilters = async () => {
+    setValues({ ...initialValues, ...(withSearch && !isMobile && { search: values.search }) })
   }
 
   const isEmpty = useMemo(() => Object.values(values).every((value) => !value || value?.length === 0), [values])
@@ -207,7 +206,7 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Role"
         selectedItems={values[FILTERS.ROLES]}
-        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
         items={rolesOptions}
       />
     ),
@@ -215,7 +214,7 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Security token"
         selectedItems={values[FILTERS.SEC_TOKENS]}
-        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
         items={forManager ? managerSecTokensOptions : secTokensOptions}
       />
     ),
@@ -223,7 +222,7 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Status"
         selectedItems={values[FILTERS.STATUS]}
-        onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item)}
         items={statusOptionsSorted}
       />
     ),
@@ -231,7 +230,7 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Payout type"
         selectedItems={values[FILTERS.PAYOUT_TYPE]}
-        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item)}
         items={payoutTypeOptions}
       />
     ),
@@ -239,7 +238,7 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Payout token"
         selectedItems={values[FILTERS.PAYOUT_TOKEN]}
-        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item)}
         items={tokensOptions}
       />
     ),
@@ -248,7 +247,7 @@ export const MultipleFilters = ({
         label="Payment period"
         value={[values.startDate, values.endDate]}
         onChange={(value) => {
-          const format = 'YYYY-MM-DDTHH:mm:ss'
+          const format = 'MMM DD, YYYY'
           setFieldValue('startDate', value[0] ? dayjs(value[0]).format(format) : value[0])
           setFieldValue('endDate', value[1] ? dayjs(value[1]).format(format) : value[1])
         }}
@@ -259,7 +258,7 @@ export const MultipleFilters = ({
       <MobileDatePicker
         value={values[FILTERS.RECORD_DATE]}
         onChange={(value) => {
-          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).toISOString())
+          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).format('MMM DD, YYYY'))
         }}
         views={['year', 'month', 'date']}
         renderInput={({ inputProps, focused }) => (
@@ -284,7 +283,7 @@ export const MultipleFilters = ({
       <MobileDatePicker
         value={values[FILTERS.DATE_OF_CLAIM]}
         onChange={(value) => {
-          setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).toISOString())
+          setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).format('MMM DD, YYYY'))
         }}
         views={['year', 'month', 'date']}
         renderInput={({ inputProps, focused }) => (
@@ -310,7 +309,7 @@ export const MultipleFilters = ({
   if (isMobile) {
     return (
       <MobileFilters
-        applyFilters={applyFilters}
+        applyFilters={submitForm}
         values={values}
         setFieldValue={setFieldValue}
         onSelectValueChange={onSelectValueChange}
@@ -320,6 +319,7 @@ export const MultipleFilters = ({
         forManager={forManager}
         managerSecTokensOptions={managerSecTokensOptions}
         statusOptionsSorted={statusOptionsSorted}
+        onResetFilters={onResetFilters}
       />
     )
   }
@@ -335,7 +335,7 @@ export const MultipleFilters = ({
             )
         )}
       </FiltersContainer>
-      <ResetFilters disabled={isEmpty} onClick={onResetFilters}>
+      <ResetFilters disabled={isEmpty} onClick={() => onResetFilters}>
         Clear Filters
       </ResetFilters>
     </Container>

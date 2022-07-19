@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import { Accordion } from '@material-ui/core'
 
 import { ReactComponent as Close } from 'assets/images/cross.svg'
-import { MEDIA_WIDTHS, ModalContentWrapper } from 'theme'
+import { ellipsisText, MEDIA_WIDTHS, ModalContentWrapper } from 'theme'
 import { ReactComponent as Expand } from 'assets/images/chevron.svg'
 
 export const FiltersButton = styled.div<{ 'have-value': boolean }>`
@@ -73,15 +73,29 @@ export const Hr = styled.div`
   background-color: ${({ theme }) => theme.bg7};
 `
 
-export const StyledAccordion = styled(Accordion)`
+export const StyledAccordion = styled(Accordion)<{ withBorder: boolean }>`
   width: 100%;
   color: white !important;
   margin: 0px !important;
   border: none !important;
   background-color: transparent !important;
-  :before {
-    display: none;
-  }
+  position: relative;
+  ${({ withBorder }) =>
+    withBorder
+      ? css`
+          :before {
+            top: -12px !important;
+            left: 0px !important;
+            width: 4px !important;
+            height: calc(100% + 24px) !important;
+            background-color: ${({ theme }) => theme.bg20} !important;
+          }
+        `
+      : css`
+          :before {
+            display: none;
+          }
+        `}
   .MuiAccordionSummary-content {
     margin: 0px !important;
     font-weight: 600;
@@ -112,7 +126,6 @@ export const ExpandIcon = styled(Expand)`
 `
 
 export const ModalContent = styled(ModalContentWrapper)`
-  /* padding: 24px 0px; */
   border-radius: 20px;
   row-gap: 12px;
   display: flex;
@@ -124,9 +137,6 @@ export const ModalContent = styled(ModalContentWrapper)`
   width: 100%;
   height: 100%;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    /* border-radius: 0px; */
-    /* max-width: 100vw;
-    max-height: 100vh; */
     min-width: 100%;
     min-height: 100%;
   }
@@ -158,6 +168,18 @@ export const FiltersContainer = styled.div`
       right: 10px;
     }
   }
+  .search {
+    padding: 0px 12px;
+    input {
+      height: 40px;
+    }
+    img {
+      width: 28px;
+      height: 28px;
+      left: 24px;
+      top: 6px;
+    }
+  }
 `
 
 export const ButtonsContainer = styled.div`
@@ -171,5 +193,19 @@ export const ButtonsContainer = styled.div`
     min-height: 40px;
     height: 40px;
     width: 100%;
+  }
+`
+
+export const CollapsedValueContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 1px;
+  max-width: 90%;
+
+  > div[class='value'] {
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 18px;
+    ${ellipsisText}
   }
 `

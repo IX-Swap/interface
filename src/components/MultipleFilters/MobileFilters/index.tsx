@@ -24,6 +24,7 @@ import {
   FiltersContainer,
   ButtonsContainer,
   FiltersCounter,
+  CollapsedValueContainer,
 } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
 
@@ -38,6 +39,7 @@ interface Props {
   searchPlaceholder?: string
   managerSecTokensOptions: Option[]
   statusOptionsSorted: Option[]
+  onResetFilters: () => void
 }
 
 export const MobileFilters = ({
@@ -50,8 +52,10 @@ export const MobileFilters = ({
   searchPlaceholder = 'Search for Wallet',
   managerSecTokensOptions,
   statusOptionsSorted,
+  onResetFilters,
 }: Props) => {
   const [isOpen, handleIsOpen] = useState(false)
+  const [expanded, handleExpanded] = useState<string[]>([])
 
   const { tokensOptions, secTokensOptions } = useTokensList()
 
@@ -59,13 +63,23 @@ export const MobileFilters = ({
     const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, value]) => {
       if (!value || value?.length === 0) return acc
 
-      if (['startDate', 'endDate'].includes(key)) {
-        return { ...acc, period: acc.period || value }
+      if ('startDate' === key) {
+        acc[FILTERS.PAYOUT_PERIOD] = `${value} - `
+        return acc
+      }
+
+      if ('endDate' === key) {
+        acc[FILTERS.PAYOUT_PERIOD] = `${acc[FILTERS.PAYOUT_PERIOD] || ' - '}${value}`
+        return acc
+      }
+
+      if (Array.isArray(value)) {
+        return { ...acc, [key]: value.map(({ label }) => label).join(', ') }
       }
 
       return { ...acc, [key]: value }
     }, {})
-    return Object.keys(formattedValues)
+    return formattedValues
   }, [values])
 
   const statusOptionsFormatted = useMemo(
@@ -79,6 +93,14 @@ export const MobileFilters = ({
   const apply = () => {
     applyFilters()
     toggle()
+    handleExpanded([])
+  }
+
+  const reset = () => {
+    onResetFilters()
+    applyFilters()
+    toggle()
+    handleExpanded([])
   }
 
   const filterLabels = {
@@ -106,7 +128,7 @@ export const MobileFilters = ({
       <FilterDropdown
         placeholder="Role"
         selectedItems={values[FILTERS.ROLES]}
-        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
         items={rolesOptions}
       />
     ),
@@ -114,7 +136,7 @@ export const MobileFilters = ({
       <FilterDropdown
         placeholder="Security token"
         selectedItems={values[FILTERS.SEC_TOKENS]}
-        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
         items={forManager ? managerSecTokensOptions : secTokensOptions}
       />
     ),
@@ -122,7 +144,7 @@ export const MobileFilters = ({
       <FilterDropdown
         placeholder="Status"
         selectedItems={values[FILTERS.STATUS]}
-        onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item)}
         items={statusOptionsFormatted}
       />
     ),
@@ -130,7 +152,7 @@ export const MobileFilters = ({
       <FilterDropdown
         placeholder="Payout type"
         selectedItems={values[FILTERS.PAYOUT_TYPE]}
-        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item)}
         items={payoutTypeOptions}
       />
     ),
@@ -138,7 +160,7 @@ export const MobileFilters = ({
       <FilterDropdown
         placeholder="Payout token"
         selectedItems={values[FILTERS.PAYOUT_TOKEN]}
-        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item)}
         items={tokensOptions}
       />
     ),
@@ -148,7 +170,7 @@ export const MobileFilters = ({
         label=""
         value={[values.startDate, values.endDate]}
         onChange={(value) => {
-          const format = 'YYYY-MM-DDTHH:mm:ss'
+          const format = 'MMM DD, YYYY'
           setFieldValue('startDate', value[0] ? dayjs(value[0]).format(format) : value[0])
           setFieldValue('endDate', value[1] ? dayjs(value[1]).format(format) : value[1])
         }}
@@ -160,7 +182,7 @@ export const MobileFilters = ({
         placeholder="MMM DD, YYYY"
         value={values[FILTERS.RECORD_DATE]}
         onChange={(value) => {
-          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).toISOString())
+          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).format('MMM DD, YYYY'))
         }}
       />
     ),
@@ -170,58 +192,77 @@ export const MobileFilters = ({
         placeholder="MMM DD, YYYY"
         value={values[FILTERS.DATE_OF_CLAIM]}
         onChange={(value) => {
-          setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).toISOString())
+          setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).format('MMM DD, YYYY'))
         }}
       />
     ),
   } as Record<string, JSX.Element>
 
+  const onExpand = (filter: string) => {
+    const tempExpanded = [...expanded]
+    const index = expanded.findIndex((el) => el === filter)
+
+    if (index > -1) {
+      tempExpanded.splice(index, 1)
+    } else {
+      tempExpanded.push(filter)
+    }
+
+    handleExpanded(tempExpanded)
+  }
+
+  const filtersLength = Object.keys(selectedFilters).length
+
   return (
     <>
-      <FiltersButton have-value={Boolean(selectedFilters.length)} onClick={toggle}>
+      <FiltersButton have-value={Boolean(filtersLength)} onClick={toggle}>
         Filters
-        {Boolean(selectedFilters.length) && <FiltersCounter>{selectedFilters.length}</FiltersCounter>}
+        {Boolean(filtersLength) && <FiltersCounter>{filtersLength}</FiltersCounter>}
       </FiltersButton>
       <RedesignedWideModal isOpen={isOpen} onDismiss={toggle}>
-        <ModalBlurWrapper data-testid="filtersModal" style={{ minWidth: '320px', width: '100%' }}>
+        <ModalBlurWrapper data-testid="filtersModal" style={{ minWidth: '320px', width: '100%', maxWidth: '320px' }}>
           <ModalContent>
             <Header>
               Filters <CloseIcon onClick={toggle} />
             </Header>
             <Hr />
             <FiltersContainer>
-              {filters.map(
-                (filter, index) =>
-                  filter !== FILTERS.SEARCH && (
-                    <React.Fragment key={`${filter}-${index}`}>
-                      <StyledAccordion elevation={0}>
-                        <AccordionSummary expandIcon={<ExpandIcon />}>{filterLabels[filter]}</AccordionSummary>
-
-                        <AccordionDetails>{filterComponents[filter]}</AccordionDetails>
-                      </StyledAccordion>
-                      <Hr />
-                    </React.Fragment>
-                  )
+              {filters.map((filter, index) =>
+                filter === FILTERS.SEARCH ? (
+                  <React.Fragment key={`${filter}-${index}`}>
+                    {filterComponents[filter]}
+                    <Hr />
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment key={`${filter}-${index}`}>
+                    <StyledAccordion
+                      elevation={0}
+                      onChange={() => onExpand(filter)}
+                      withBorder={Boolean(!expanded.includes(filter) && selectedFilters[filter])}
+                    >
+                      <AccordionSummary expandIcon={<ExpandIcon />}>
+                        <CollapsedValueContainer>
+                          <div>{filterLabels[filter]}</div>
+                          {!expanded.includes(filter) && selectedFilters[filter] && (
+                            <div className="value">{selectedFilters[filter]}</div>
+                          )}
+                        </CollapsedValueContainer>
+                      </AccordionSummary>
+                      <AccordionDetails>{filterComponents[filter]}</AccordionDetails>
+                    </StyledAccordion>
+                    <Hr />
+                  </React.Fragment>
+                )
               )}
             </FiltersContainer>
             <ButtonsContainer>
-              <ButtonGradientBorder>
+              <ButtonGradientBorder onClick={reset}>
                 <Trans>Clear All</Trans>
               </ButtonGradientBorder>
               <ButtonIXSGradient onClick={apply}>
                 <Trans>Apply</Trans>
               </ButtonIXSGradient>
             </ButtonsContainer>
-            {/* <StyledAccordion elevation={0}>
-              <AccordionSummary expandIcon={<ExpandIcon />}>Status</AccordionSummary>
-              <AccordionDetails>list</AccordionDetails>
-            </StyledAccordion>
-            <Hr />
-            <StyledAccordion elevation={0}>
-              <AccordionSummary expandIcon={<ExpandIcon />}>Payout Type</AccordionSummary>
-              <AccordionDetails>TYPER</AccordionDetails>
-            </StyledAccordion>
-            <Hr /> */}
           </ModalContent>
         </ModalBlurWrapper>
       </RedesignedWideModal>
