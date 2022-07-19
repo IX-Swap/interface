@@ -275,32 +275,39 @@ export function useSubmitBrokerDealerForm() {
       const { brokerDealerId, pairAddress, amount } = dto || {}
 
       const payload = { callbackEndpoint, data, hash }
-      const bdData = await axios.post(endpoint, payload, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      })
 
-      const url: string = bdData.data.url ?? bdData.data.data?.url
-
-      const params = url
-        .split('?')
-        .pop()
-        ?.split('&')
-        .map((part) => {
-          const [key, value] = part.split('=')
-
-          return { [key]: value }
+      try {
+        const bdData = await axios.post(endpoint, payload, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
         })
-        .reduce((acc, e) => ({ ...acc, ...e }))
 
-      if (params) {
-        await fetchAuthorization({ result: params.result, hash: params.hash, brokerDealerId, pairAddress, amount })
-      }
-      if (cb) {
-        cb()
-      }
+        const url: string = bdData.data.url ?? bdData.data.data?.url
 
+        const params = url
+          .split('?')
+          .pop()
+          ?.split('&')
+          .map((part) => {
+            const [key, value] = part.split('=')
+
+            return { [key]: value }
+          })
+          .reduce((acc, e) => ({ ...acc, ...e }))
+
+        if (params) {
+          await fetchAuthorization({ result: params.result, hash: params.hash, brokerDealerId, pairAddress, amount })
+        }
+        if (cb) {
+          cb()
+        }
+      } 
+      catch (e) {
+        console.log({ e })
+        showPopup({ success: false })
+        clearState()
+      }
       // if (formRef?.current) {
       //   formRef.current.action = endpoint
       //   for (const key in formValues) {
