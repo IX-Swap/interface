@@ -12,6 +12,9 @@ export const Container = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     grid-template-columns: 1fr;
   }
+  @media (max-width: ${MEDIA_WIDTHS.upToLarge}px) {
+    display: none;
+  }
 `
 
 export const FiltersContainer = styled.div`
@@ -82,8 +85,9 @@ export const Icon = styled.div`
   img {
     width: 20px;
     height: 20px;
+    min-width: 20px;
+    min-height: 20px;
   }
-  margin-right: 4px;
 `
 
 export const ResetFilters = styled(ButtonText)`

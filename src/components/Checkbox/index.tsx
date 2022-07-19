@@ -44,15 +44,14 @@ export const Checkbox: FC<Props> = ({
       style={{ ...buttonStyles, textDecoration: 'none', textAlign: 'inherit' }}
       onClick={onClick}
       disabled={disabled}
+      className="checkbox"
     >
-      <Flex>
+      <Flex style={{ gap: 8 }}>
         {checked ? checkedImage : notCheckedImage}
         {scaleSize !== 1 ? (
-          <TYPE.title6 fontWeight={checked ? 700 : 400} marginLeft="8px">
-            {label}
-          </TYPE.title6>
+          <TYPE.title6 fontWeight={checked ? 700 : 400}>{label}</TYPE.title6>
         ) : (
-          <TYPE.body3 marginLeft="8px">{label}</TYPE.body3>
+          <TYPE.body3>{label}</TYPE.body3>
         )}
       </Flex>
     </ButtonText>

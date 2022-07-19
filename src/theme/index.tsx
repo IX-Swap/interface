@@ -79,7 +79,7 @@ export function colors(configColors?: WlColors): Colors {
     bg17: '#1C112D',
     bg18: wlColors.background?.main || '#27204666',
     bg19: wlColors.background?.secondary || '#271F4A66',
-    bg20: '#7B42A9',
+    bg20: wlColors.background?.secondary || '#7B42A9',
     bg21: wlColors.background?.secondary || '#EDCEFF80',
     bg22: wlColors.background?.secondary || '#2C254A80',
     bgG1:
@@ -133,6 +133,10 @@ export function colors(configColors?: WlColors): Colors {
       wlColors.background?.secondary ||
       'radial-gradient(39.01% 78.49% at 10.99% 63.28%, rgba(138, 54, 152, 0.18) 18.75%, rgba(0, 0, 0, 0) 100%),radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(154, 55, 114, 0.33) 0%, rgba(26, 18, 58, 0) 100%) #29113d',
     //specialty colors
+
+    bgG20:
+      wlColors.background?.main ||
+      'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A80;',
     borderG1: wlColors.background?.main || 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);',
     borderG2:
       wlColors.text?.main ||
