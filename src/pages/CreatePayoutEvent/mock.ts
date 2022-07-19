@@ -1,3 +1,5 @@
+import { FormValues } from "./utils"
+
 export const payoutTypes = [
   {
     id: 1,
@@ -30,7 +32,7 @@ export const payoutTypes = [
   },
 ]
 
-export const initialValues = {
+export const initialValues: FormValues = {
   id: '',
   title: '',
   description: '',
@@ -41,7 +43,7 @@ export const initialValues = {
   recordDate: '',
   startDate: '',
   endDate: '',
-  secToken: null as any,
-  token: null as any,
+  secToken: null,
+  token: null,
   files: [],
 }

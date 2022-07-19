@@ -227,12 +227,14 @@ export default function AddLiquidity({
           setAttemptingTxn(false)
           response.wait().then((res: any) => {
             if (isCreating && secTokenId) {
+              const last = res.events.length - 2
               addLiquidity({
-                address: res.events[6].address,
+                address: res.events[last].address,
                 tokenId: secTokenId,
                 token0: currencyA.wrapped.address,
                 token1: currencyB.wrapped.address,
                 network: NETWORK_NAMES[chainId],
+                blockNumber: res.events[last].blockNumber,
                 decimals: pair?.liquidityToken?.decimals || 18,
               })
             }

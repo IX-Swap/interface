@@ -13,6 +13,7 @@ export const routes = {
   kycIndividual: '/kyc/individual',
   kycCorporate: '/kyc/corporate',
   createPayoutEvent: '/payout/create',
+  editPayoutEvent: (id?: number) => `/payout/edit/${`${id || ':id?'}`}`,
   securityTokens: (tab?: string) => `/security-tokens/${tab || ':tab'}`,
   securityToken: (id?: number) => `/security-token/${id || ':currencyId'}`,
   staking: '/staking',

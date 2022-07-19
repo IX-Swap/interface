@@ -19,7 +19,7 @@ import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
 import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
-import { useDeletePayoutItem } from 'state/payout/hooks'
+import { useDeletePayoutItem, usePayoutState } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
@@ -47,6 +47,7 @@ export const TmPayoutEvents = () => {
   const { account } = useUserState()
   const { token } = useAuthState()
   const { payoutList, isLoading } = useTokenManagerState()
+  const { loadingRequest } = usePayoutState()
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
@@ -62,10 +63,6 @@ export const TmPayoutEvents = () => {
     getMyPayouts({ ...params, my: true })
   }
 
-  const onEdit = () => {
-    // TO DO - redirect to edit event
-  }
-
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     fetch({ ...filters, page, offset: 10 })
@@ -77,7 +74,7 @@ export const TmPayoutEvents = () => {
 
   return (
     <>
-      <LoadingIndicator isLoading={isLoading} />
+      <LoadingIndicator isLoading={isLoading || loadingRequest} />
       {payoutList.items?.length || haveFilters ? (
         <Container>
           <MultipleFilters
@@ -94,7 +91,7 @@ export const TmPayoutEvents = () => {
           />
           {payoutList.items?.length ? (
             <>
-              <Table body={<Body onEdit={onEdit} items={payoutList.items} />} header={<Header />} />
+              <Table body={<Body items={payoutList.items} />} header={<Header />} />
               <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
             </>
           ) : (
@@ -114,10 +111,9 @@ export const TmPayoutEvents = () => {
 
 interface IRow {
   item: PayoutEvent
-  onEdit: (item: PayoutEvent) => void
 }
 
-const Row = ({ item, onEdit }: IRow) => {
+const Row = ({ item }: IRow) => {
   const [isWarningOpen, setIsWarningOpen] = useState(false)
   const deletePayout = useDeletePayoutItem()
   const history = useHistory()
@@ -140,6 +136,10 @@ const Row = ({ item, onEdit }: IRow) => {
   }
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
+
+  const onEdit = () => {
+    history.push(`/payout/edit/${id}`)
+  }
 
   return (
     <>
@@ -182,7 +182,7 @@ const Row = ({ item, onEdit }: IRow) => {
             onClick={(e: any) => {
               e.preventDefault()
               e.stopPropagation()
-              onEdit(item)
+              onEdit()
             }}
           >
             <Trans>Edit</Trans>
@@ -196,14 +196,13 @@ const Row = ({ item, onEdit }: IRow) => {
 
 interface IBody {
   items: PayoutEvent[]
-  onEdit: (item: PayoutEvent) => void
 }
 
-const Body = ({ items, onEdit }: IBody) => {
+const Body = ({ items }: IBody) => {
   return (
     <BodyContainer>
       {items.map((item) => (
-        <Row onEdit={onEdit} item={item} key={`payout-${item.id}`} />
+        <Row item={item} key={`payout-${item.id}`} />
       ))}
     </BodyContainer>
   )

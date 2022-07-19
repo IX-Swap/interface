@@ -1,34 +1,45 @@
 import React, { FC, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Box } from 'rebass'
 import { t, Trans } from '@lingui/macro'
-import dayjs from 'dayjs'
 import { useFormikContext } from 'formik'
 
+import dayjs from 'dayjs'
+
 import { TYPE } from 'theme'
+
+import { momentFormatDate } from 'pages/PayoutItem/utils'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
+
 import { DateInput } from 'components/DateInput'
+
 import { ButtonError, ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-import { momentFormatDate } from 'pages/PayoutItem/utils'
 import { useTokensList } from 'hooks/useTokensList'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
-import { useShowError } from 'state/application/hooks'
+
 import useTheme from 'hooks/useTheme'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { useDeletePayoutItem } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 
-import { PayoutType } from './PayoutType'
-import { FormCard, ButtonsContainer } from './styleds'
-import { PublishPayoutModal } from './PublishPayoutModal'
+import { useShowError } from 'state/application/hooks'
+
 import { FormValues } from './utils'
+import { PayoutType } from './PayoutType'
+import { PublishPayoutModal } from './PublishPayoutModal'
+
+import { FormCard, ButtonsContainer } from './styleds'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
   isRecordFuture: boolean
+  isEdit: boolean
+  paid: boolean
   totalSecTokenSum: number
   availableForEditing: string[]
-  status?: string
+  status: PAYOUT_STATUS
+  payoutId?: number
 }
 
 export const PayoutEventBlock: FC<Props> = ({
@@ -37,18 +48,22 @@ export const PayoutEventBlock: FC<Props> = ({
   onValueChange,
   availableForEditing,
   status,
+  isEdit,
+  payoutId,
+  paid,
 }) => {
   const [isWarningOpen, setIsWarningOpen] = useState(false)
   const { values, errors, touched, validateForm, setTouched } = useFormikContext<FormValues>()
-  //TO DO - replace with id from backend
-  const id = 19
 
   const { bg19 } = useTheme()
   const [openModal, setOpenModal] = useState(false)
   const { token, tokenAmount, recordDate, startDate, secToken, endDate } = values
   const { tokensOptions } = useTokensList()
-  const showError = useShowError()
   const deletePayout = useDeletePayoutItem()
+  const showError = useShowError()
+  const history = useHistory()
+
+  const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
 
   useEffect(() => {
     const { title, secToken, type } = values
@@ -59,7 +74,11 @@ export const PayoutEventBlock: FC<Props> = ({
 
   const onDelete = () => {
     toggleIsWarningOpen()
-    deletePayout(id)
+
+    if (payoutId) {
+      deletePayout(payoutId)
+      history.push('/token-manager/my-tokens')
+    }
   }
 
   const open = async () => {
@@ -106,11 +125,14 @@ export const PayoutEventBlock: FC<Props> = ({
     onValueChange('files', arrayOfFiles)
   }
 
-  const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
-
   return (
     <FormCard>
-      <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
+      <AreYouSureModal
+        onAccept={onDelete}
+        onDecline={toggleIsWarningOpen}
+        isOpen={isWarningOpen}
+        declineText="Cancel"
+      />
       <TYPE.title6 marginBottom="28px">
         <Trans>PAYOUT EVENT</Trans>
       </TYPE.title6>
@@ -183,7 +205,7 @@ export const PayoutEventBlock: FC<Props> = ({
       <FormGrid columns={1} style={{ marginBottom: 24 }}>
         <TextInput
           placeholder="Provide a name for this payout event"
-          label="Event name"
+          label="Event Name"
           onChange={(e: any) => onValueChange('title', e.currentTarget.value)}
           value={values.title}
           required
@@ -199,7 +221,7 @@ export const PayoutEventBlock: FC<Props> = ({
           required
           placeholder="Give a brief description of this payout event"
           value={values.description}
-          style={{ height: '126px', background: bg19, marginBottom: 0 }}
+          style={{ height: '162px', background: bg19, marginBottom: 0 }}
           onChange={(e: any) => onValueChange('description', e.currentTarget.value)}
           error={touched.description ? errors.description : ''}
           disabled={!availableForEditing.includes('description')}
@@ -217,17 +239,35 @@ export const PayoutEventBlock: FC<Props> = ({
       />
 
       <ButtonsContainer>
-        {status === PAYOUT_STATUS.DRAFT && (
-          <ButtonError onClick={toggleIsWarningOpen} error type="button">
+        {!isEdit && (
+          <ButtonGradientBorder type="submit">
+            <Trans>Save as Draft</Trans>
+          </ButtonGradientBorder>
+        )}
+
+        {isEdit && status === PAYOUT_STATUS.DRAFT && (
+          <ButtonError error type="button" onClick={toggleIsWarningOpen}>
             <Trans>Delete Draft</Trans>
           </ButtonError>
         )}
-        <ButtonGradientBorder type="submit">
-          <Trans>Save as Draft</Trans>
-        </ButtonGradientBorder>
-        <ButtonIXSGradient type="button" onClick={open}>
-          Publish Payout Event
-        </ButtonIXSGradient>
+
+        {isEdit && (
+          <ButtonGradientBorder type="submit">
+            <Trans>Save Changes</Trans>
+          </ButtonGradientBorder>
+        )}
+
+        {[PAYOUT_STATUS.DRAFT].includes(status) ? (
+          <ButtonIXSGradient type="button" onClick={open}>
+            <Trans>Publish Event</Trans>
+          </ButtonIXSGradient>
+        ) : (
+          !paid && (
+            <ButtonIXSGradient type="button" onClick={open}>
+              <Trans>Pay for this event</Trans>
+            </ButtonIXSGradient>
+          )
+        )}
       </ButtonsContainer>
 
       {openModal && <PublishPayoutModal values={values} close={close} isRecordFuture={isRecordFuture} />}
