@@ -69,6 +69,19 @@ const fakeOTCMatch2: OTCMatch = {
   },
   status: OTCOrderStatus.CONFIRMED
 }
+const fakeOTCMatch3: OTCMatch = {
+  _id: '609d1d93c54af74af46c027e',
+  order: '609d1d93c54af74af46c027d',
+  user: '609d1d93c54af74af46c027d',
+  ethAddress: '0x65901b9cFb0C4fD87aD09181a23D53d1d728F1b1',
+  matchedAmount: 1,
+  matchedPrice: 10,
+  identity: {
+    individual: seller
+  },
+  status: OTCOrderStatus.SETTLED
+}
+
 export const order1: OTCOrder = {
   _id: '609d1d93c54af74af46c027c',
   createdAt: '2022-05-10T12:45:07.411Z',
@@ -154,6 +167,11 @@ export const order4: OTCOrder = {
 export const order4Open: OpenOTCOrder = {
   ...order4,
   matches: [fakeOTCMatch2]
+}
+export const orderWithSettled: OpenOTCOrder = {
+  ...order4,
+  amount: 10,
+  matches: [fakeOTCMatch3]
 }
 export const orders: OpenOTCOrder[] = [
   order1Open,
