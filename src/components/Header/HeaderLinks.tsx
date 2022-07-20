@@ -84,24 +84,24 @@ const HeaderPopover = () => {
   )
 }
 
-// const NFTPopover = () => {
-//   return (
-//     <PopOverContent
-//       onClick={(e: any) => (e ? e.stopPropagation() : null)}
-//       onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
-//     >
-//       <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections} exact>
-//         <Trans>My Collections</Trans>
-//       </SubMenuLink>
-//       <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
-//         <Trans>Create NFT</Trans>
-//       </SubMenuLink>
-//       <SubMenuLink id={`nft-create-collection-nav-link`} to={routes.nftCollectionCreate} exact>
-//         <Trans>Create Collection</Trans>
-//       </SubMenuLink>
-//     </PopOverContent>
-//   )
-// }
+const NFTPopover = () => {
+  return (
+    <PopOverContent
+      onClick={(e: any) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e: any) => (e ? e.stopPropagation() : null)}
+    >
+      <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections} exact>
+        <Trans>My Collections</Trans>
+      </SubMenuLink>
+      <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
+        <Trans>Create NFT</Trans>
+      </SubMenuLink>
+      <SubMenuLink id={`nft-create-collection-nav-link`} to={routes.nftCollectionCreate} exact>
+        <Trans>Create Collection</Trans>
+      </SubMenuLink>
+    </PopOverContent>
+  )
+}
 
 export const HeaderLinks = () => {
   const [open, toggle] = useToggle(false)
@@ -169,7 +169,7 @@ export const HeaderLinks = () => {
         </MenuExternalLink>
       )} */}
 
-      {/* {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
+      {account && chainId && isWhitelisted && isDevelopment && (
         <StyledNavLink
           ref={nftNode as any}
           id={`nft-nav-link`}
@@ -183,9 +183,9 @@ export const HeaderLinks = () => {
             </RowFixed>
           </Popover>
         </StyledNavLink>
-      )} */}
+      )}
 
-      {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && account && (
+      {isAllowed(routes.vesting) && isAllowed(routes.staking) && account && chainId && (
         <StyledNavLink
           ref={farmNode as any}
           id={`farming-nav-link`}

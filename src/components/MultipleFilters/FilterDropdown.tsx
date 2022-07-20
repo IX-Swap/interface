@@ -47,7 +47,7 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: 
     if (value === 'all') {
       return selectedItems.length === items.length
     }
-    return selectedItems.includes(value)
+    return Boolean(selectedItems.find((el) => el.value === value))
   }
 
   return (
@@ -79,7 +79,7 @@ export const FilterDropdown = ({ onSelect, selectedItems, items, placeholder }: 
                 key={item.value}
                 checked={isChecked(item.value)}
                 label={
-                  <RowCenter style={{ fontWeight: isChecked(item.value) ? 700 : 400, color: 'white' }}>
+                  <RowCenter style={{ fontWeight: isChecked(item.value) ? 700 : 400, color: 'white', gap: 4 }}>
                     {item.icon && <Icon>{item.icon}</Icon>}
                     {item.label}
                   </RowCenter>

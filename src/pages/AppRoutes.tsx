@@ -61,38 +61,38 @@ export const routeConfigs: RouteMapEntry[] = [
   {
     path: routes.nftCreate,
     component: CreateNFT,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
-  { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
+  { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true } },
   {
     path: routes.nftCollections,
     component: NFTCollections,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftCollectionCreate,
     component: CreateCollection,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftEditCollectionPath,
     component: UpdateCollection,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftCollectionImport,
     component: NftImport,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftViewCollectionPath,
     component: NFTCollection,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftItemPath,
     component: NftAssetPage,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
 
   { path: routes.kyc, component: KYC, conditions: { isWhitelisted: true } },
