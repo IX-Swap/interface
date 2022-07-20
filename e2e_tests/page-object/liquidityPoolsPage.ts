@@ -153,12 +153,8 @@ export class LiquidityPoolsPage extends WebPage {
     await this.secondAmountOfTokensField.fill(value);
   }
 
-  async clickIsxEthPoolDetailsDropdown() {
-    await this.isxEthPoolDetailsDropdown.click();
-  }
-
-  async clickWsecEthPoolDetailsDropdown() {
-    await this.wsecETHPoolDetailsDropdown.click();
+  async clickPoolDetailsDropdown(pool) {
+    await this.page.click(`text=${pool}M >> [data-testid="openTable"]`);
   }
 
   async clickRemoveLiquidityButton() {
@@ -199,46 +195,23 @@ export class LiquidityPoolsPage extends WebPage {
     await approveMetamaskPopUp.click(this.metamaskPage.signButton);
   }
 
-  async  removeCreatedLiqudityPoolIfItPresent() {
-    await expect(this.liquidityPoolLoading).not.toBeVisible();
-    await this.page.waitForTimeout(5000);
-    if (await this.createdIsxEthPool.isVisible() || await this.createdWsecETHPool.isVisible()) {
-      if (await this.createdIsxEthPool.isVisible()) {
-        await this.removeLiquidityPool();
-      } else if (await this.createdWsecETHPool.isVisible()) {
-        await this.removeLiquidityPoolWithSecurityToken();
+  async  removeCreatedLiqudityPoolIfItPresent([]) {
+    for (const pools of []) {
+      await expect(this.liquidityPoolLoading).not.toBeVisible();
+      await this.page.waitForTimeout(5000);
+      if (await this.page.isVisible(`//span[text()="My Liquidity"]//following::div[text()="${pools}"]`)) {
+        await this.removeCreatedLiqudityPool(pools);
       }
     }
   }
 
-  async removeCreatedLiqudityPool() {
+  async removeCreatedLiqudityPool(pool) {
     await this.page.goto(config.use.baseURL + '#/pool')
-    await this.removeLiquidityPool();
+    await this.removeLiquidityPool(pool);
   }
 
-  async removeCreatedLiqudityPoolWithSecurityToken() {
-    await this.page.goto(config.use.baseURL + '#/pool')
-    await this.removeLiquidityPoolWithSecurityToken();
-  }
-
-  async removeLiquidityPool() {
-    await this.clickIsxEthPoolDetailsDropdown();
-    await this.clickRemoveLiquidityButton();
-    await this.clickMaxRemovePercentageButton();
-
-    const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
-    await approveMetamaskPopUp.click(this.metamaskPage.signButton);
-
-    await this.clickRemovePoolButton();
-
-    const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
-    await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
-
-    await this.clickTransactionSubmittedPopUpCloseButton();
-  }
-
-  async removeLiquidityPoolWithSecurityToken() {
-    await this.clickWsecEthPoolDetailsDropdown();
+  async removeLiquidityPool(pool) {
+    await this.clickPoolDetailsDropdown(pool);
     await this.clickRemoveLiquidityButton();
     await this.clickMaxRemovePercentageButton();
 
@@ -258,7 +231,7 @@ export class LiquidityPoolsPage extends WebPage {
     await this.clickChooseFirstTokenDropdown();
     await this.clickTokenItem(firstToken);
     await this.fillFirstAmountOfTokensField(ethAmount);
-    await this.clickChooseSecondTokenDropdown() ;
+    await this.clickChooseSecondTokenDropdown();
     await this.clickTokenItem(secondToken);
 
     await this.clickSupplyButton();

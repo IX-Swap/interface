@@ -3,7 +3,7 @@ import { expect } from '@playwright/test'
 
 test.beforeEach(async ({ kovanNetwork, topNavigationBar, liquidityPoolsPage}) => {
   await topNavigationBar.clickLiquidityPoolsButton();
-  await liquidityPoolsPage.removeCreatedLiqudityPoolIfItPresent();
+  await liquidityPoolsPage.removeCreatedLiqudityPoolIfItPresent([liquidityPoolsPage.isxETHCreatedPoolText, liquidityPoolsPage.wsecETHCreatedPoolText]);
 })
 
 test.describe('Check Liquidity pool functions', () => {
@@ -40,7 +40,7 @@ test.describe('Check Liquidity pool functions', () => {
 
   test.describe('Check Creating pool functions for Tokens', () => {
     test.afterEach(async ({ liquidityPoolsPage}) => {
-      await liquidityPoolsPage.removeCreatedLiqudityPool();
+      await liquidityPoolsPage.removeCreatedLiqudityPool(liquidityPoolsPage.isxETHCreatedPoolText);
     })
 
     test('Test the ability to create a pool (Token - Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
@@ -75,7 +75,7 @@ test.describe('Check Liquidity pool functions', () => {
       });
 
       await test.step('Check that Liquidity pool value is equal to previously defined', async () => {
-        await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+        await liquidityPoolsPage.clickPoolDetailsDropdown(liquidityPoolsPage.isxETHCreatedPoolText);
         await expect(liquidityPoolsPage.firstTokenValueInLiquidityPool).toHaveText(secondTokenValue);
       });
     })
@@ -83,7 +83,7 @@ test.describe('Check Liquidity pool functions', () => {
 
   test.describe('Check Creating pool functions for Security Tokens', () => {
     test.afterEach(async ({ liquidityPoolsPage}) => {
-      await liquidityPoolsPage.removeCreatedLiqudityPoolWithSecurityToken();
+      await liquidityPoolsPage.removeCreatedLiqudityPool(liquidityPoolsPage.wsecETHCreatedPoolText);
     })
 
     test('Test the ability to create a pool (Token - Security Token pair)', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
@@ -118,7 +118,7 @@ test.describe('Check Liquidity pool functions', () => {
       });
 
       await test.step('Check that Liquidity pool value is equal to previously defined', async () => {
-        await liquidityPoolsPage.clickWsecEthPoolDetailsDropdown();
+        await liquidityPoolsPage.clickPoolDetailsDropdown(liquidityPoolsPage.wsecETHCreatedPoolText);
         await expect(liquidityPoolsPage.firstTokenValueInLiquidityPool).toHaveText(secondTokenValue);
       });
     })
@@ -130,7 +130,7 @@ test.describe('Check Liquidity pool functions', () => {
     })
 
     test('Test the ability to "Remove Liquidity"(MAX) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
-      await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+      await liquidityPoolsPage.clickPoolDetailsDropdown(liquidityPoolsPage.isxETHCreatedPoolText);
       await liquidityPoolsPage.clickRemoveLiquidityButton();
       await liquidityPoolsPage.clickQuarterRemovePercentageButton();
       await liquidityPoolsPage.clickHalfRemovePercentageButton();
@@ -155,7 +155,7 @@ test.describe('Check Liquidity pool functions', () => {
     })
 
     test('Test the ability to "Remove Liquidity"(partial) from a pool that is already been created', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
-      await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+      await liquidityPoolsPage.clickPoolDetailsDropdown(liquidityPoolsPage.isxETHCreatedPoolText);
       await liquidityPoolsPage.clickRemoveLiquidityButton();
       await liquidityPoolsPage.clickHalfRemovePercentageButton();
       await liquidityPoolsPage.approvePoolRemovingViaMetamask();
@@ -171,7 +171,7 @@ test.describe('Check Liquidity pool functions', () => {
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
 
       await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
-      await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+      await liquidityPoolsPage.clickPoolDetailsDropdown(liquidityPoolsPage.isxETHCreatedPoolText);
 
       // Assertion
       await expect(await liquidityPoolsPage.getSecondTokenValueOfTheCreatedPool()).toBeLessThan(ethAmountForLiquidityPoolFloat);
@@ -184,11 +184,11 @@ test.describe('Check Liquidity pool functions', () => {
     })
 
     test.afterEach(async ({liquidityPoolsPage}) => {
-      await liquidityPoolsPage.removeCreatedLiqudityPool();
+      await liquidityPoolsPage.removeCreatedLiqudityPool(liquidityPoolsPage.isxETHCreatedPoolText);
     })
 
     test('Test the ability to "Add" a new amount in a pool that is already been created.', async ({page, liquidityPoolsPage, webPage, metamaskPage}) => {
-      await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+      await liquidityPoolsPage.clickPoolDetailsDropdown(liquidityPoolsPage.isxETHCreatedPoolText);
       await liquidityPoolsPage.clickAddNewAmountToLiqudityPoolButton();
       await liquidityPoolsPage.fillSecondAmountOfTokensField(ethAmountForLiquidityPoolString);
       await liquidityPoolsPage.clickSupplyButton();
@@ -200,7 +200,7 @@ test.describe('Check Liquidity pool functions', () => {
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
 
       await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
-      await liquidityPoolsPage.clickIsxEthPoolDetailsDropdown();
+      await liquidityPoolsPage.clickPoolDetailsDropdown(liquidityPoolsPage.isxETHCreatedPoolText);
 
       // Assertion
       await expect(await liquidityPoolsPage.getSecondTokenValueOfTheCreatedPool()).toBeGreaterThan(ethAmountForLiquidityPoolFloat);
