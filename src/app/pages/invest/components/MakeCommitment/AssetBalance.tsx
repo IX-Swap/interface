@@ -1,7 +1,7 @@
 import React from 'react'
 import { useBalancesByAssetId } from 'hooks/balance/useBalancesByAssetId'
-import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
+import { OverviewValue } from 'app/pages/invest/components/MakeCommitment/OverviewValue'
 
 export interface AssetBalanceProps {
   assetId: string
@@ -17,7 +17,7 @@ export const AssetBalance = (props: AssetBalanceProps) => {
   }
 
   return (
-    <LabelledValue
+    <OverviewValue
       label='Available Balance'
       value={formatMoney(
         data.map[assetId]?.available ?? 0,

@@ -3,16 +3,16 @@ import { render } from 'test-utils'
 import {
   AssetBalance,
   AssetBalanceProps
-} from 'app/pages/invest/components/AssetBalance'
+} from 'app/pages/invest/components/MakeCommitment/AssetBalance'
 import * as useBalancesByAssetIdHook from 'hooks/balance/useBalancesByAssetId'
 import { balance } from '__fixtures__/balance'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { asset } from '__fixtures__/authorizer'
-import { LabelledValue } from 'components/LabelledValue'
+import { OverviewValue } from 'app/pages/invest/components/MakeCommitment/OverviewValue'
 import { formatMoney } from 'helpers/numbers'
 
 jest.mock('components/LabelledValue', () => ({
-  LabelledValue: jest.fn(() => null)
+  OverviewValue: jest.fn(() => null)
 }))
 
 describe('AssetBalance', () => {
@@ -42,8 +42,8 @@ describe('AssetBalance', () => {
       )
     render(<AssetBalance {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(1)
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(OverviewValue).toHaveBeenCalledTimes(1)
+    expect(OverviewValue).toHaveBeenCalledWith(
       {
         label: 'Available Balance',
         value: formatMoney(balance.available, balance.symbol)
@@ -62,8 +62,8 @@ describe('AssetBalance', () => {
       )
     render(<AssetBalance {...props} />)
 
-    expect(LabelledValue).toHaveBeenCalledTimes(1)
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(OverviewValue).toHaveBeenCalledTimes(1)
+    expect(OverviewValue).toHaveBeenCalledWith(
       {
         label: 'Available Balance',
         value: formatMoney(0, balance.symbol)
