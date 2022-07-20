@@ -38,7 +38,9 @@ const renderTab = (selectedTab: SecurityTab | string) => {
     case 'tokens':
       return <CustodianV2 />
     case 'payout-events':
-      return <UserPayoutEvents />
+      return <CustodianV2 />
+    // case 'payout-events':
+    //   return <UserPayoutEvents />
 
     default:
       return null
@@ -80,7 +82,7 @@ const SecurityTokens = () => {
     </AppBody>
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
-      {!config?.id && (
+      {/* {!config?.id && (
         <TabsContainer>
           {tabs.map(({ value, label }, index) => (
             <>
@@ -91,7 +93,7 @@ const SecurityTokens = () => {
             </>
           ))}
         </TabsContainer>
-      )}
+      )} */}
 
       {renderTab(selectedTab)}
     </StyledBodyWrapper>
