@@ -10,9 +10,10 @@ import {
   getFilledRoundedPercentage,
   getRoundedPercentage,
   renderTotal,
-  getOrderCurrency
+  getOrderCurrency,
+  getFilledPercentageFromMatches
 } from 'helpers/numbers'
-import { order1 } from '__fixtures__/otcOrders'
+import { order1, orderWithSettled } from '__fixtures__/otcOrders'
 
 describe('addSymbol', () => {
   it('returns value with symbol', () => {
@@ -131,5 +132,13 @@ describe('renderTotal', () => {
 describe('getOrderCurrency', () => {
   it('get correct currency', () => {
     expect(getOrderCurrency(order1)).toEqual('USD')
+  })
+})
+
+describe('getFilledPercentageFromMatches', () => {
+  it('calculate match percentage', () => {
+    expect(getFilledPercentageFromMatches({ row: orderWithSettled })).toEqual(
+      '10%'
+    )
   })
 })
