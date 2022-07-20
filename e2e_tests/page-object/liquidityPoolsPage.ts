@@ -10,14 +10,10 @@ export class LiquidityPoolsPage extends WebPage {
   readonly secondAmountOfTokensField: Locator;
   readonly chooseFirstTokenDropdown: Locator;
   readonly chooseSecondTokenDropdown: Locator;
-  readonly ethTokenItem: Locator;
-  readonly ixsTokenItem: Locator;
   readonly supplyButton: Locator;
   readonly confirmSupplyButtonSelector: string;
   readonly confirmSupplyButton: Locator;
   readonly transactionSubmittedPopUpCloseButton: Locator;
-  readonly isxEthPoolDetailsDropdown: Locator;
-  readonly wsecETHPoolDetailsDropdown: Locator;
   readonly removeLiquidityButton: Locator;
   readonly maxRemovePercentageButton: Locator;
   readonly approveRemovePoolButton: string;
@@ -29,13 +25,10 @@ export class LiquidityPoolsPage extends WebPage {
   readonly addNewAmountToLiqudityPoolButton: Locator;
   readonly transactionSubmittedPopUpText: Locator;
   readonly waitingForConfirmationPopUpText: Locator;
-  readonly createdIsxEthPool: Locator;
-  readonly createdWsecETHPool: Locator;
   readonly firstTokenValueInLiquidityPool: Locator;
   readonly secondTokenValueInLiquidityPool: Locator;
   readonly liquidityPoolLoading: Locator;
   readonly liquidityPoolPreloader: Locator;
-  readonly wsecTokenItem: Locator;
   readonly topPoolsLink: Locator;
   readonly liquidityPoolTitle: Locator;
   readonly openSettingsGearButton: Locator;
@@ -45,11 +38,6 @@ export class LiquidityPoolsPage extends WebPage {
   chooseTokenDropdownText = 'Choose token';
   confirmationPopUpText = 'Waiting For Confirmation';
   transactionSubmittedText = 'Transaction Submitted';
-  ethTokenItemText = 'Ether';
-  ixsTokenItemText = 'Ixs Token';
-  wsecTokenItemText = 'WSec Test (WSEC)';
-  isxEthPoolDetailsDropdownText = 'IXS/ETHM';
-  wsecETHPoolDetailsDropdownText = 'WSEC/ETHM';
   wsecETHCreatedPoolText = 'WSEC/ETH';
   isxETHCreatedPoolText = 'IXS/ETH';
   topPoolsLinkText = 'Top PoolsExplore popular pools on IX Swap Analytics';
@@ -64,15 +52,10 @@ export class LiquidityPoolsPage extends WebPage {
     this.secondAmountOfTokensField = page.locator('[data-testid="add-liquidity-input-tokenb"] >> input');
     this.chooseFirstTokenDropdown = page.locator(`[data-testid="add-liquidity-input-tokena"] >> button:has-text('${this.chooseTokenDropdownText}')`);
     this.chooseSecondTokenDropdown = page.locator(`[data-testid="add-liquidity-input-tokenb"] >> button:has-text('${this.chooseTokenDropdownText}')`);
-    this.ethTokenItem = page.locator(`[title='${this.ethTokenItemText}']`);
-    this.ixsTokenItem = page.locator(`[title='${this.ixsTokenItemText}']`);
-    this.wsecTokenItem = page.locator(`[title='${this.wsecTokenItemText}']`);
     this.supplyButton = page.locator('[data-testid="supply"]');
     this.confirmSupplyButtonSelector = ('[data-testid="create-or-supply"]');
     this.confirmSupplyButton = page.locator('[data-testid="create-or-supply"]');
     this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
-    this.isxEthPoolDetailsDropdown = page.locator(`text=${this.isxEthPoolDetailsDropdownText} >> [data-testid="openTable"]`);
-    this.wsecETHPoolDetailsDropdown = page.locator(`text=${this.wsecETHPoolDetailsDropdownText} >> [data-testid="openTable"]`);
     this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
     this.quarterRemovePercentageButton = page.locator('[data-testid="percentage_25"]');
     this.halfRemovePercentageButton = page.locator('[data-testid="percentage_50"]');
@@ -84,8 +67,6 @@ export class LiquidityPoolsPage extends WebPage {
     this.addNewAmountToLiqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
     this.transactionSubmittedPopUpText = page.locator(`text=${this.transactionSubmittedText}`);
     this.waitingForConfirmationPopUpText = page.locator(`text=${this.confirmationPopUpText}`);
-    this.createdIsxEthPool = page.locator(`//span[text()="My Liquidity"]//following::div[text()="${this.isxETHCreatedPoolText}"]`);
-    this.createdWsecETHPool = page.locator(`//span[text()="My Liquidity"]//following::div[text()="${this.wsecETHCreatedPoolText}"]`);
     this.firstTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
     this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=1 >> [class="css-vurnku"] >> nth=1');
     this.liquidityPoolLoading = page.locator('text=Loading');
@@ -102,10 +83,14 @@ export class LiquidityPoolsPage extends WebPage {
     await expect(this.page.locator(`text=${amount} >> nth=1`)).toBeVisible();
   }
 
-  async checkThatDeletedLiquidityPoolIsNotVisible() {
+  async checkThatDeletedLiquidityPoolIsNotVisible(pool) {
     await expect(this.liquidityPoolLoading).not.toBeVisible();
     await this.page.waitForTimeout(5000);
-    await expect(this.createdIsxEthPool).not.toBeVisible();
+    await expect(this.page.locator(`//span[text()="My Liquidity"]//following::div[text()="${pool}"]`)).not.toBeVisible();
+  }
+
+  async checkThatCreatedPoolIsVisible(pool) {
+    await expect(this.page.locator(`//span[text()="My Liquidity"]//following::div[text()="${pool}"]`)).toBeVisible()
   }
 
   // Actions
@@ -195,8 +180,8 @@ export class LiquidityPoolsPage extends WebPage {
     await approveMetamaskPopUp.click(this.metamaskPage.signButton);
   }
 
-  async  removeCreatedLiqudityPoolIfItPresent([]) {
-    for (const pools of []) {
+  async  removeCreatedLiqudityPoolIfItPresent(poolsArray) {
+    for (const pools of poolsArray) {
       await expect(this.liquidityPoolLoading).not.toBeVisible();
       await this.page.waitForTimeout(5000);
       if (await this.page.isVisible(`//span[text()="My Liquidity"]//following::div[text()="${pools}"]`)) {
