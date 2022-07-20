@@ -69,11 +69,7 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-  background: radial-gradient(39.01% 78.49% at 10.99% 63.28%, rgba(138, 54, 152, 0.18) 18.75%, rgba(0, 0, 0, 0) 100%)
-      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
-    radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(154, 55, 114, 0.33) 0%, rgba(26, 18, 58, 0) 100%)
-      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
-    #36194d;
+  background: ${({ theme }) => theme.bgG19};
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -96,10 +92,10 @@ const Info = styled.div`
   font-size: 11px;
   line-height: 160%;
   text-align: center;
-  color: #ffffff;
+  color: ${({ theme }) => theme.text1};
   margin-bottom: 12px;
   > a {
-    color: #ffffff;
+    color: ${({ theme }) => theme.text1};
     text-decoration: underline;
   }
 `
@@ -140,6 +136,6 @@ const Tooltip = styled.div`
   font-size: 9px;
   line-height: 160%;
   text-align: center;
-  color: rgba(237, 206, 255, 0.5);
+  color: ${({ theme }) => theme.text9};
   max-width: 319px;
 `

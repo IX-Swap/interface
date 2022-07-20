@@ -108,7 +108,7 @@ export default function Faucet() {
         <NftLinkInput
           value={nftId}
           placeholder="Enter your ERC721 contract address"
-          onChange={(e) => setNftId(e.target.value)}
+          onChange={(e: any) => setNftId(e.target.value)}
         />
 
         {showExtraInput && (
@@ -122,7 +122,7 @@ export default function Faucet() {
             <NftLinkInput
               value={nftLink}
               placeholder="https://opensea.io/assets/0x495f947276749ce646f68ac8c248420045cb7b5e/93544478796600828149244254075023360567625733299218796914312466979142108184577"
-              onChange={(e) => setNftLink(e.target.value)}
+              onChange={(e: any) => setNftLink(e.target.value)}
             />
           </Column>
         )}

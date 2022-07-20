@@ -11,14 +11,14 @@ import { TraitsShow } from '../CreateNFT/TraitsShow'
 import { SwitchRow } from './SwitchRow'
 
 const Divider = styled.div`
-  background-color: rgba(237, 206, 255, 0.5);
+  background-color: ${({ theme }) => theme.text9};
   height: 1px;
   margin: 28px 0;
 `
 
 const NftAttributesContainer = styled.div`
   padding: 24px 18px;
-  background: rgba(39, 32, 70, 0.4);
+  background: ${({ theme }) => theme.bg18};
   border-radius: 12px;
   margin-top: 32px;
 `

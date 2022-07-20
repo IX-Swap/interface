@@ -33,7 +33,7 @@ interface LoadableProps {
   loading: boolean
 }
 
-export const Loadable: React.FC<LoadableProps> = (props: React.PropsWithChildren<LoadableProps>) => {
+export const Loadable = (props: React.PropsWithChildren<LoadableProps>) => {
   return (
     <>
       {props.loading && (

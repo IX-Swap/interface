@@ -54,7 +54,8 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
       }
     }
-    if (error?.response?.status === 403) {
+
+    if (error?.response) {
       const message = error?.response?.data?.message
       throw new Error(message)
     }
@@ -155,7 +156,10 @@ const apiService = {
   },
 
   _prepareHeaders(data: any) {
-    const headers: KeyValueMap = {}
+    const headers: KeyValueMap = {
+      'custom-origin': window.location.host.split('.')[1],
+      // 'custom-origin': 'investax',
+    }
     const { auth, user } = store.getState()
 
     const token = auth.token[user.account ?? '']

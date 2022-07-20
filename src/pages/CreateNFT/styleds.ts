@@ -14,7 +14,7 @@ import { Input as NumericalInput } from 'components/NumericalInput'
 
 export const Container = styled(Box)`
   height: fit-content;
-  background: rgba(39, 32, 70, 0.4);
+  background: ${({ theme }) => theme.bg19};
   border-radius: 36px;
   padding: 40px 60px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
@@ -61,7 +61,7 @@ const inputStyles = css`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
-  background-color: rgba(39, 31, 74, 0.4);
+  background-color: ${({ theme }) => theme.bg19};
   :focus {
     background-color: ${({ theme: { bg7 } }) => bg7};
   }
@@ -69,7 +69,7 @@ const inputStyles = css`
     font-weight: normal;
     font-size: 16px;
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
     opacity: 1; /* Firefox */
   }
 
@@ -77,14 +77,14 @@ const inputStyles = css`
     font-weight: normal;
     font-size: 16px;
     /* Internet Explorer 10-11 */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
   }
 
   ::-ms-input-placeholder {
     font-weight: normal;
     font-size: 16px;
     /* Microsoft Edge */
-    color: ${({ theme }) => `${theme.text2}50`};
+    color: ${({ theme }) => theme.text9};
   }
 `
 
@@ -127,7 +127,7 @@ export const PlusButton = styled(ButtonGradientBorder)`
 
 export const HrLine = styled.div`
   margin-top: 24px;
-  border: 1px solid rgba(237, 206, 255, 0.5);
+  border: 1px solid ${({ theme }) => theme.text9};
 `
 
 export const StyledModalContentWrapper = styled(ModalContentWrapper)`
@@ -285,7 +285,7 @@ export const LevelCard = styled.div`
     }
     > div:last-child {
       font-size: 12px;
-      color: rgba(237, 206, 255, 0.5);
+      color: ${({ theme }) => theme.text9};
     }
   }
 
@@ -328,7 +328,7 @@ export const UploaderCard = styled.div<{ isLogo?: boolean; isAudio?: boolean }>`
     `};
   width: 100%;
   background: rgba(15, 5, 24, 0.7);
-  border: 1px dashed rgba(237, 206, 255, 0.5);
+  border: 1px dashed ${({ theme }) => theme.text9};
   border-radius: 12px;
   cursor: pointer;
   ${({ isLogo }) =>

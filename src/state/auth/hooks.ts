@@ -8,7 +8,6 @@ import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
-import { useUserState } from 'state/user/hooks'
 import { postLogin } from './actions'
 
 export enum LOGIN_STATUS {
@@ -53,12 +52,6 @@ export function useUserisLoggedIn() {
   }, [token])
 }
 
-const awaitDispatch = (dispatch: any, action: any) =>
-  new Promise((resolve, reject) => {
-    dispatch(action())
-    resolve(null)
-  })
-
 export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(async () => {
@@ -74,7 +67,6 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
   const getHasLogin = useHasLogin()
   const isLoggedIn = useUserisLoggedIn()
   const { account } = useActiveWeb3React()
-  const { account: userAccount } = useUserState()
   const checkLogin = useCallback(
     async (expireLogin = false) => {
       if (loginLoading && !account) {

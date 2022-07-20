@@ -30,13 +30,19 @@ export const getTokenLogoURL = (address: string, chainId = SupportedChainId.MAIN
   return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/${network}/assets/${address}/logo.png`
 }
 
-export const getNetworkFromToken = (tokenInfo: any) => {
+export const getOriginalNetworkFromToken = (tokenInfo: any) => {
   return tokenInfo?.originalNetwork?.charAt(0)?.toUpperCase() + tokenInfo?.originalNetwork?.slice(1) || ''
+}
+
+export const getNetworkFromToken = (tokenInfo: any) => {
+  return tokenInfo?.network?.charAt(0)?.toUpperCase() + tokenInfo?.network?.slice(1) || ''
 }
 
 const StyledEthereumLogo = styled.img<{ size: string }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
+  min-width: ${({ size }) => size};
+  min-height: ${({ size }) => size};
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
   border-radius: 24px;
 `
@@ -44,6 +50,8 @@ const StyledEthereumLogo = styled.img<{ size: string }>`
 const StyledLogo = styled(Logo)<{ size: string }>`
   width: ${({ size }) => size};
   height: ${({ size }) => size};
+  min-width: ${({ size }) => size};
+  min-height: ${({ size }) => size};
   border-radius: ${({ size }) => size};
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.075);
   background-color: ${({ theme }) => theme.white};
@@ -55,7 +63,7 @@ export default function CurrencyLogo({
   style,
   ...rest
 }: {
-  currency?: Currency
+  currency?: Currency | null
   size?: string
   style?: React.CSSProperties
 }) {
@@ -64,15 +72,15 @@ export default function CurrencyLogo({
 
   const uri =
     currency instanceof WrappedTokenInfo
-      ? currency.logoURI || (tokens[currency.address] as any)?.tokenInfo?.logoURI
+      ? currency?.logoURI || (tokens[currency?.address] as any)?.tokenInfo?.logoURI
       : undefined
   const uriLocations = useHttpLocations(uri)
   const { chainId } = useActiveWeb3React()
   const srcs: string[] = useMemo(() => {
-    if (!currency || currency.isNative) return []
+    if (!currency || currency?.isNative) return []
 
-    if (currency.isToken) {
-      const defaultUrls = currency.chainId === 1 ? [getTokenLogoURL(currency.address, chainId)] : []
+    if (currency?.isToken) {
+      const defaultUrls = currency?.chainId === 1 ? [getTokenLogoURL(currency?.address, chainId)] : []
       if (currency instanceof WrappedTokenInfo) {
         return [...uriLocations, ...defaultUrls]
       }

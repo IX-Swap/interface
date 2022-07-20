@@ -18,12 +18,8 @@ const Wrapper = styled.div`
   flex-direction: row;
 `
 
-interface ThemePaletteProps {
-  isDarkMode: boolean
-}
-
-export default function ThemePalette({ isDarkMode }: ThemePaletteProps) {
-  const data = colors(isDarkMode)
+export default function ThemePalette() {
+  const data = colors()
   return (
     <Wrapper>
       {Object.entries(data).map(([key, value]) => (

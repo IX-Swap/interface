@@ -6,7 +6,7 @@ import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useAuthorizationsState, useSetSwapState } from 'state/swapHelper/hooks'
+import { useSetSwapState } from 'state/swapHelper/hooks'
 import { useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
@@ -185,8 +185,6 @@ export function useDerivedSwapInfo(): {
 
   const toggledTrade = v2Trade ?? undefined
 
-  const isWithSecToken = inputCurrency?.isSecToken || outputCurrency?.isSecToken
-
   const allowedSlippage = useSwapSlippageTolerance(toggledTrade)
   // const zeroAllowedSlippage = new Percent(0, 10_000)
 
@@ -229,8 +227,6 @@ export function useDefaultsFromURLSearch():
   const { chainId } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
-  const authorizations = useAuthorizationsState()
-  const noAuthorizations = !authorizations || Object.keys(authorizations).length === 0
   const [result, setResult] = useState<
     { inputCurrencyId: string | undefined; outputCurrencyId: string | undefined } | undefined
   >()

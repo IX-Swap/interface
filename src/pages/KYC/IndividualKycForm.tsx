@@ -11,9 +11,9 @@ import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
-import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
+import { GradientText } from 'pages/CustodianV2/styleds'
+import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Row, { RowBetween } from 'components/Row'
-import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
@@ -26,9 +26,9 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { countriesList } from 'constants/countriesList'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
-import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
+import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
@@ -39,7 +39,7 @@ import {
   promptValue,
   occupationList,
 } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
+import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox, StyledBigPassed } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses, IdentityDocumentType } from './enum'
@@ -162,6 +162,7 @@ export default function IndividualKycForm() {
 
     setFieldValue('sourceOfFunds', newSources, false)
     validationSeen('sourceOfFunds')
+    validationSeen('otherFunds')
   }
 
   const goBack = (e?: any) => {
@@ -292,6 +293,7 @@ export default function IndividualKycForm() {
               const personalFilled =
                 shouldValidate &&
                 !errors.firstName &&
+                !errors.middleName &&
                 !errors.lastName &&
                 !errors.dateOfBirth &&
                 !errors.gender &&
@@ -317,25 +319,30 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Personal Information</Trans>
                           </TYPE.title6>
-                          {personalFilled && <BigPassed />}
+                          {personalFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
-                              onChange={(e) => onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.firstName}
                               label="First Name:"
                               error={errors.firstName && errors.firstName}
                             />
                             <TextInput
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.middleName}
                               label="Middle Name:"
+                              error={errors.middleName && errors.middleName}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.lastName}
                               label="Last Name:"
                               error={errors.lastName && errors.lastName}
@@ -390,7 +397,9 @@ export default function IndividualKycForm() {
                               }}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('email', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.email}
                               label="Email address:"
                               error={errors.email && errors.email}
@@ -403,7 +412,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Identity Document</Trans>
                           </TYPE.title6>
-                          {identityDocumentFilled && <BigPassed />}
+                          {identityDocumentFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
@@ -416,7 +425,9 @@ export default function IndividualKycForm() {
                               onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('idNumber', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('idNumber', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.idNumber}
                               label="Document Number"
                               error={errors.idNumber}
@@ -453,19 +464,21 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Address</Trans>
                           </TYPE.title6>
-                          {addressFilled && <BigPassed />}
+                          {addressFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
-                              onChange={(e) => onChangeInput('address', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) =>
+                                onChangeInput('address', e.currentTarget.value, values, setFieldValue)
+                              }
                               value={values.address}
                               label="Address"
                               error={errors.address && errors.address}
                             />
                             <TextInput
-                              onChange={(e) =>
+                              onChange={(e: any) =>
                                 onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.postalCode}
@@ -487,7 +500,7 @@ export default function IndividualKycForm() {
                               error={errors.country && errors.country}
                             />
                             <TextInput
-                              onChange={(e) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
+                              onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
                               value={values.city}
                               label="City"
                               error={errors.city && errors.city}
@@ -501,7 +514,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Source of Funds</Trans>
                           </TYPE.title6>
-                          {fundsFilled && <BigPassed />}
+                          {fundsFilled && <StyledBigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
                           {sourceOfFunds.map(({ value, label }: any) => (
@@ -517,7 +530,9 @@ export default function IndividualKycForm() {
                           <TextInput
                             style={{ marginTop: 20 }}
                             placeholder="Other Source of Funds...."
-                            onChange={(e) => onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)}
+                            onChange={(e: any) =>
+                              onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)
+                            }
                             value={values.otherFunds}
                             error={errors.otherFunds && errors.otherFunds}
                           />
@@ -534,7 +549,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Investor Status Declaration</Trans>
                           </TYPE.title6>
-                          {investorFilled && <BigPassed />}
+                          {investorFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '34px' }}>
@@ -567,7 +582,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>FATCA</Trans>
                           </TYPE.title6>
-                          {fatcaFilled && <BigPassed />}
+                          {fatcaFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <ExtraInfoCard>
@@ -587,7 +602,9 @@ export default function IndividualKycForm() {
                                 style={{ width: 284 }}
                                 placeholder="ID Number.."
                                 value={values.usTin}
-                                onChange={(e) => onChangeInput('usTin', e.currentTarget.value, values, setFieldValue)}
+                                onChange={(e: any) =>
+                                  onChangeInput('usTin', e.currentTarget.value, values, setFieldValue)
+                                }
                                 error={errors.usTin && errors.usTin}
                               />
                             )}
@@ -611,7 +628,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Employment Information</Trans>
                           </TYPE.title6>
-                          {employmentInfoFilled && <BigPassed />}
+                          {employmentInfoFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <Select
@@ -629,7 +646,9 @@ export default function IndividualKycForm() {
                             error={errors.employmentStatus && errors.employmentStatus}
                           />
                           <TextInput
-                            onChange={(e) => onChangeInput('employer', e.currentTarget.value, values, setFieldValue)}
+                            onChange={(e: any) =>
+                              onChangeInput('employer', e.currentTarget.value, values, setFieldValue)
+                            }
                             value={values.employer}
                             label="Employer"
                             error={errors.employer && errors.employer}
@@ -649,7 +668,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Upload Documents</Trans>
                           </TYPE.title6>
-                          {filesFilled && <BigPassed />}
+                          {filesFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '40px' }}>

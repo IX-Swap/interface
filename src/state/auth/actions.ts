@@ -1,4 +1,4 @@
-import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
+import { ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 export interface AuthPayload {
   token: string
   refreshToken: string

@@ -25,6 +25,6 @@ export const BackArrowButton = ({ onBack }: Props) => {
 const StyledArrowBack = styled(ArrowBack)`
   cursor: pointer;
   path {
-    fill: ${({ theme: { white } }) => white};
+    fill: ${({ theme: { text1 } }) => text1};
   }
 `

@@ -1,13 +1,15 @@
+import React, { ReactNode } from 'react'
+import styled, { css } from 'styled-components'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useExplorerName } from 'hooks/useExplorerName'
-import React, { ReactNode } from 'react'
-import styled from 'styled-components'
+
 import Attention from '../../assets/images/attention.svg'
-import Success from '../../assets/images/success.svg'
+import { ReactComponent as Success } from '../../assets/images/success.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { ExternalLink, TYPE, ModalContentWrapper } from '../../theme'
 import { CloseIcon, ModalBlurWrapper, SvgIconWrapper } from '../../theme/components'
@@ -15,6 +17,17 @@ import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { ButtonGradient, ButtonGradientBorder } from '../Button'
 import Column, { AutoColumn } from '../Column'
 import { RowBetween, RowCenter, RowFixed } from '../Row'
+
+export const StyledSuccess = styled(Success)`
+  ${({ theme }) =>
+    theme.config.elements &&
+    css`
+      path[stroke] {
+        fill: none;
+        stroke: ${theme.config.elements.main};
+      }
+    `};
+`
 
 export const StyledModalContentWrapper = styled(ModalContentWrapper)`
   padding: 37px 40px 19px 40px;
@@ -121,7 +134,7 @@ export function TransactionSubmittedContent({
           )}
           <RowCenter style={{ marginTop: '61px', marginBottom: '53px' }}>
             <SvgIconWrapper size={128}>
-              <img src={Success} alt={'Success!'} />
+              <StyledSuccess />
             </SvgIconWrapper>
           </RowCenter>
           <AutoColumn gap="12px" justify={'center'}>

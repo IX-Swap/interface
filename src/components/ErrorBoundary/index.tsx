@@ -17,7 +17,6 @@ const FallbackWrapper = styled.div`
 const BodyWrapper = styled.div<{ margin?: string }>`
   padding: 1rem;
   width: 100%;
-  white-space: ;
 `
 
 const CodeBlockWrapper = styled.div`
@@ -101,6 +100,6 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
         </FallbackWrapper>
       )
     }
-    return this.props.children
+    return (this.props as any).children
   }
 }

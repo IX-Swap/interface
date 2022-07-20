@@ -1,4 +1,5 @@
 export interface PaginationDetails {
+  page: number
   offset: number
   totalItems: number
   totalPages: number

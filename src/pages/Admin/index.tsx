@@ -2,21 +2,22 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
+import { useWeb3React } from '@web3-react/core'
 
+import { NotAvailablePage } from 'components/NotAvailablePage'
 import { MEDIA_WIDTHS } from 'theme'
 import { useUserState, useGetMe } from 'state/user/hooks'
 import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
 import { Border, ToggleOption } from 'components/Tabs'
-import { AdminList } from 'components/AdminList'
+import { UsersList } from 'components/UsersList'
 import { AdminKycTable } from 'components/AdminKyc'
-import { Whitelist } from 'components/Whitelist'
 
 import { Navbar } from './Navbar'
 import { SUPPORTED_ADMIN_ROLES } from './mock'
 
-type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'admin-list' | 'whitelist'
+type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'users-list'
 
 interface Tab {
   label: string
@@ -33,8 +34,7 @@ const tabs: Tab[] = [
   { label: 'KYC', value: 'kyc' },
   { label: 'Broker-dealer Transactions', value: 'transactions' },
   { label: 'Security catalog', value: 'security-catalog' },
-  { label: `Admin's`, value: 'admin-list' },
-  { label: 'Whitelist', value: 'whitelist' },
+  { label: 'Users', value: 'users-list' },
 ]
 
 const renderTab = (selectedTab: AdminTab | string) => {
@@ -47,16 +47,16 @@ const renderTab = (selectedTab: AdminTab | string) => {
       return <AdminTransactionsTable />
     case 'security-catalog':
       return <AdminSecurityCatalog />
-    case 'admin-list':
-      return <AdminList />
-    case 'whitelist':
-      return <Whitelist />
+    case 'users-list':
+      return <UsersList />
     default:
       return null
   }
 }
 
-const AdminKyc = () => {
+const Admin = () => {
+  const { account } = useWeb3React()
+
   const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
 
   const history = useHistory()
@@ -64,6 +64,8 @@ const AdminKyc = () => {
 
   const { me } = useUserState()
   const getMe = useGetMe()
+
+  const isLogged = account && me?.role
 
   const fetchMe = useCallback(async () => {
     const result = await getMe()
@@ -103,6 +105,10 @@ const AdminKyc = () => {
 
     history.push('/')
   }, [me, fetchMe, history])
+
+  if (!isLogged) {
+    return <NotAvailablePage />
+  }
 
   return (
     <Container>
@@ -149,10 +155,11 @@ const TabsContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 60px;
+  column-gap: 32px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     flex-direction: column;
     row-gap: 4px;
   }
 `
 
-export default AdminKyc
+export default Admin

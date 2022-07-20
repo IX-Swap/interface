@@ -1,5 +1,7 @@
+import React, { FC, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
+
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { ButtonGradient, ButtonIXSWide } from 'components/Button'
 import { TipCard } from 'components/Card'
@@ -12,10 +14,11 @@ import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { Dots } from 'pages/Pool/styleds'
-import React, { FC, useState } from 'react'
 import { useDistributeToken, useFaucetState } from 'state/faucet/hooks'
 import { ExternalLink, StyledPageHeader, TYPE } from 'theme'
 import { shortAddress } from 'utils'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+
 import { FaucetTokenDropdown } from './FaucetTokenDropdown'
 
 export interface IFaucetToken {
@@ -65,6 +68,8 @@ export default function Faucet() {
   const isStableCoin = testStableCoinsTokens.filter((token) => token.address === selectedToken.address).length > 0
   const [success, setSuccess] = useState(FaucetStates.INITAL)
   const { loadingFaucet } = useFaucetState()
+  const { config } = useWhitelabelState()
+
   const handleSubmitClicked = async () => {
     const result = await distributeToken()
     if (result?.transaction) {
@@ -88,13 +93,15 @@ export default function Faucet() {
         <StyledPageHeader>
           <RowFixed>
             <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
-              <Trans>Get IX Swap Playground Test Tokens</Trans>
+              <Trans>Get {config?.name || 'IX Swap'} Playground Test Tokens</Trans>
             </TYPE.black>
           </RowFixed>
         </StyledPageHeader>
         <WarningCard
           style={{ padding: '15px 10px', marginBottom: '10px' }}
-          message={t`These tokens are fake, they were made only for testing IX Swap Playground on Kovan`}
+          message={t`These tokens are fake, they were made only for testing ${
+            config?.name || 'IX Swap'
+          } Playground on Kovan`}
         />
         <TYPE.body3>
           <Trans>This faucet transfers test tokens on Kovan testnet. Confirm details before submitting.</Trans>

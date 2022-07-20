@@ -13,10 +13,10 @@ import { ButtonGradientBorder } from 'components/Button'
 import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
+import { useAppLogoSrc } from 'components/AppLogo'
 import { routes } from 'utils/routes'
 
 import { NftFilePreview } from '../NFTCollection/NFTPreview'
-import LogoWhite from '../../assets/svg/logo-white.svg'
 import { Info } from './Info'
 import { Details } from './Details'
 
@@ -122,6 +122,8 @@ const NftAssetPage = ({
 
   const h = useHistory()
 
+  const appLogoSrc = useAppLogoSrc()
+
   const goToCollection = useCallback(() => {
     if (collectionAddress) {
       h.push(routes.nftViewCollection(collectionAddress))
@@ -166,7 +168,7 @@ const NftAssetPage = ({
         <ImageWitButton>
           <StyledBackButton onClick={goToCollection}>Back</StyledBackButton>
           <ImageContainer>
-            <NftFilePreview type={type} path={item?.file ?? LogoWhite} />
+            <NftFilePreview type={type} path={item?.file ?? appLogoSrc} />
           </ImageContainer>
         </ImageWitButton>
 

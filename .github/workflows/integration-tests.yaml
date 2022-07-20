@@ -3,19 +3,20 @@ name: Integration Tests
 on:
   push:
     branches:
-      - main
       - development
-      - staging
   pull_request:
     branches:
-      - main
       - development
-      - staging
       - ci-update
 
 jobs:
   integration-tests:
     name: Integration Tests
+    env:
+      METAMASK_RECOVERY: ${{ secrets.METAMASK_RECOVERY }}
+      METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
+      METAMASK_PRIVATE_KEY: ${{ secrets.METAMASK_PRIVATE_KEY }}
+      E2E_CI: true
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
     steps:
@@ -27,15 +28,14 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: create .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-      - run: npx playwright install-deps
-      - run: npx playwright install
       - run: yarn
+      - run: npx playwright install
       # - run: CI=false yarn build
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - run: yarn integration-test
 
       - uses: actions/upload-artifact@v2
-        if: always()
+        if: failure()
         with:
           name: my-artifact
-          path: ./__tests__
+          path: ./e2e_tests/test-results

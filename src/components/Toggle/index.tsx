@@ -1,13 +1,14 @@
 import React from 'react'
 import { Trans } from '@lingui/macro'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components/macro'
 
 const ToggleElement = styled.span<{ isActive?: boolean; isOnSwitch?: boolean }>`
   padding: 11px;
   border-radius: 100%;
   opacity: ${({ isActive, isOnSwitch }) => (isActive ? (isOnSwitch ? 1 : 0.3) : 0)};
   background: ${({ theme, isActive, isOnSwitch }) =>
-    isActive ? (isOnSwitch ? theme.bgG6 : theme.bg10) : 'transparent'};
+    isActive ? (isOnSwitch ? theme.bgG6 : theme.text2) : 'transparent'};
+
   :hover {
     user-select: ${({ isOnSwitch }) => (isOnSwitch ? 'none' : 'initial')};
   }
@@ -16,8 +17,14 @@ const ToggleElement = styled.span<{ isActive?: boolean; isOnSwitch?: boolean }>`
 const StyledToggle = styled.button<{ isActive?: boolean; activeElement?: boolean; disabled?: boolean }>`
   border-radius: 36px;
   box-shadow: 0px 0px 4px rgba(182, 111, 242, 0.25);
-  border: 1px solid ${({ theme }) => theme.popUpInputBorder};
-  background: ${({ theme }) => theme.bg7};
+  border: 1px solid ${({ theme }) => theme.config.elements?.hover || theme.popUpInputBorder};
+  background: ${({ theme }) => theme.config.elements?.hover || theme.bg7};
+  ${({ theme, isActive }) =>
+    theme.config.elements?.hover &&
+    css`
+      border: 1px solid ${({ theme }) => (isActive ? theme.config.elements?.hover : theme.config.elements?.disabled)};
+      background: ${({ theme }) => (isActive ? theme.config.elements?.hover : theme.config.elements?.disabled)};
+    `};
   padding: 2px;
   display: flex;
   width: fit-content;

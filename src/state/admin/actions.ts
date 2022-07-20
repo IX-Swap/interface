@@ -1,6 +1,8 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
-import { AccreditationStatusEnum } from 'components/Vault/enum'
+
+import { ManagerOfToken } from 'state/user/actions'
 import { timePeriods } from 'utils/time'
+import { PaginationDetails } from 'types/pagination'
 
 export const postLogin: Readonly<{
   pending: ActionCreatorWithoutPayload
@@ -88,14 +90,34 @@ export const getKycList: Readonly<{
   rejected: createAction('admin/getKycList/rejected'),
 }
 
-export const getAdminList: Readonly<{
+export const getUsersList: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: AdminList }>
+  fulfilled: ActionCreatorWithPayload<{ data: UsersList }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
-  pending: createAction('admin/getAdminList/pending'),
-  fulfilled: createAction('admin/getAdminList/fulfilled'),
-  rejected: createAction('admin/getAdminList/rejected'),
+  pending: createAction('admin/getUsersList/pending'),
+  fulfilled: createAction('admin/getUsersList/fulfilled'),
+  rejected: createAction('admin/getUsersList/rejected'),
+}
+
+export const postUser: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: User }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/postUser/pending'),
+  fulfilled: createAction('admin/postUser/fulfilled'),
+  rejected: createAction('admin/postUser/rejected'),
+}
+
+export const updateUser: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: User }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/updateUser/pending'),
+  fulfilled: createAction('admin/updateUser/fulfilled'),
+  rejected: createAction('admin/updateUser/rejected'),
 }
 
 export const postApproveKyc: Readonly<{
@@ -178,18 +200,47 @@ export interface AccreditationList {
   prevPage: number
 }
 
-export interface AdminRole {
+export interface User {
   active: boolean
+  createdAt: string
+  deletedAt: null | string
+  email: null | string
   ethAddress: string
   id: number
+  username: string | null
+  isWhitelisted: boolean
+  language: string
+  photo: any
+  photoId: null | string
+  principal: string
   role: string
   tenant: string
+  updatedAt: string
+  managerOf: ManagerOfToken[]
 }
 
-export interface AdminList {
-  page: number
-  totalPages: number
-  items: AdminRole[]
+export interface TokenManagerEntry {
+  token: Token
+}
+
+export interface Token {
+  id: number
+
+  name: string
+  address: string
+
+  payoutEvents: PayoutEvent[]
+}
+
+export interface PayoutEvent {
+  id: number
+
+  type: string
+  status: string
+}
+
+export interface UsersList extends PaginationDetails {
+  items: User[]
 }
 
 export interface Whitelisted {

@@ -1,12 +1,15 @@
+import React from 'react'
 import { Trans } from '@lingui/macro'
+import { CheckCircle, HelpCircle } from 'react-feather'
+
 import { MouseoverTooltip } from 'components/Tooltip'
 import useIsArgentWallet from 'hooks/useIsArgentWallet'
 import useTheme from 'hooks/useTheme'
-import React from 'react'
-import { CheckCircle, HelpCircle } from 'react-feather'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { ParsedAmounts } from 'state/swap/typings'
 import { useExpertModeManager } from 'state/user/hooks'
+import { useWhitelabelState } from 'state/whitelabel/hooks'
+
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
 import CurrencyLogo from '../../components/CurrencyLogo'
@@ -23,7 +26,7 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
   const { approvalSubmitted } = useSwapState()
   const theme = useTheme()
   const isArgentWallet = useIsArgentWallet()
-
+  const { config } = useWhitelabelState()
   const { currencies, inputError: swapInputError, shouldGetAuthorization } = useDerivedSwapInfo()
   const { expertMode } = useExpertModeManager()
   const { priceImpactSeverity } = usePriceImpact({ parsedAmounts })
@@ -63,7 +66,9 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
               {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
                 <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
               ) : (
-                <Trans>Allow IX Swap to use your {currencies[Field.INPUT]?.symbol}</Trans>
+                <Trans>
+                  Allow {config?.name || 'IX Swap'} to use your {currencies[Field.INPUT]?.symbol}
+                </Trans>
               )}
             </span>
             {approvalState === ApprovalState.PENDING ? (

@@ -312,7 +312,7 @@ export const usePayFee = () => {
   const getEvents = useGetEventCallback()
 
   return useCallback(
-    async ({ feeContractAddress, feeAmount, tokenId, id }) => {
+    async ({ feeContractAddress, feeAmount, tokenId, id }: any) => {
       try {
         dispatch(payFee.pending())
 
@@ -395,21 +395,6 @@ export const usePaidWithdrawFee = () => {
         dispatch(postPaidFee.pending())
         const response = await postPaidFeeReq(data)
         dispatch(postPaidFee.fulfilled(response))
-      } catch (error: any) {
-        dispatch(postPaidFee.rejected({ errorMessage: error.message }))
-      }
-    },
-    [dispatch]
-  )
-}
-
-export const usePrepareWithdrawFee = () => {
-  const dispatch = useDispatch<AppDispatch>()
-
-  return useCallback(
-    async (data: PaidFee) => {
-      try {
-        const response = await postPaidFeeReq(data)
       } catch (error: any) {
         dispatch(postPaidFee.rejected({ errorMessage: error.message }))
       }

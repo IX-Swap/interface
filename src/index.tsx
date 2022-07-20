@@ -6,11 +6,13 @@ import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
-import { MuiThemeProvider } from '@material-ui/core'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DayJsUtils from '@date-io/dayjs'
+import { LocalizationProvider } from '@material-ui/pickers'
+import DayJsUtils from '@material-ui/pickers/adapter/dayjs'
 import 'react-phone-input-2/lib/bootstrap.css'
 
+import getLibrary from './utils/getLibrary'
+import { MuiThemeProvider } from './theme/muiTheme'
+import { CustomHeaders } from './components/CustomHeaders'
 import Blocklist from './components/Blocklist'
 import { NetworkContextName } from './constants/misc'
 import { LanguageProvider } from './i18n'
@@ -25,8 +27,6 @@ import SecTokenListUpdater from './state/secTokens/updater'
 import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
-import { muiTheme } from 'theme/muiTheme'
-import getLibrary from './utils/getLibrary'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -78,12 +78,14 @@ ReactDOM.render(
                 <Updaters />
                 <ThemeProvider>
                   <ThemedGlobalStyle />
-                  <MuiThemeProvider theme={muiTheme}>
-                    <MuiPickersUtilsProvider utils={DayJsUtils}>
+                  <MuiThemeProvider>
+                    <LocalizationProvider dateAdapter={DayJsUtils}>
                       <CookiesProvider>
+                        <CustomHeaders />
+
                         <App />
                       </CookiesProvider>
-                    </MuiPickersUtilsProvider>
+                    </LocalizationProvider>
                   </MuiThemeProvider>
                 </ThemeProvider>
               </Blocklist>

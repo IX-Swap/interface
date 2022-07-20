@@ -118,7 +118,7 @@ export const PropertiesPopup = ({
                       <CrossIcon />
                     </div>
                     <StyledInput
-                      onChange={(e) => updateLocalProperties({ index, trait_type: e?.target?.value })}
+                      onChange={(e: any) => updateLocalProperties({ index, trait_type: e?.target?.value })}
                       placeholder={t`Character`}
                       className={`type-input`}
                       type="text"
@@ -132,7 +132,7 @@ export const PropertiesPopup = ({
                       disabled={false}
                     />
                     <StyledInput
-                      onChange={(e) => updateLocalProperties({ index, value: e?.target?.value })}
+                      onChange={(e: any) => updateLocalProperties({ index, value: e?.target?.value })}
                       placeholder={t`Name`}
                       className={`name-input`}
                       type="text"

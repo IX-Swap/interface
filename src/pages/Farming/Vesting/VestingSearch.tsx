@@ -99,7 +99,7 @@ const Input = styled.input<{ addressChecked: boolean }>`
     -webkit-appearance: none;
   }
   ::placeholder {
-    color: #edceff50;
+    color: #${({ theme }) => theme.text9};
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
   padding: 10px 22px;

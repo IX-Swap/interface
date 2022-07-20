@@ -1,6 +1,6 @@
 import { ReactComponent as Lights } from 'assets/images/bg-lights.svg'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import useLightBackground from './useLightBackground'
 
 const Background = styled.div<{ lightBackground: boolean }>`
@@ -19,6 +19,11 @@ const LightWrapper = styled(Lights)`
   position: absolute;
   top: 0;
   filter: blur(120px);
+  ${({ theme }) =>
+    theme.config.background &&
+    css`
+      display: none;
+    `}
 `
 export const AppBackground = () => {
   const { hasLightBackground } = useLightBackground()
