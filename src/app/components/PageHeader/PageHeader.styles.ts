@@ -19,10 +19,12 @@ export const useStyles = makeStyles(theme => ({
     position: `relative`,
     background: theme.palette.header.bg,
     border: 'none',
-    maxHeight: 120,
     paddingTop: 30,
-    paddingBottom: 33,
-    width: '100%'
+    paddingBottom: 30,
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      maxHeight: 120
+    }
   },
   title: {
     fontSize: 24,
