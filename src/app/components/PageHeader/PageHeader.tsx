@@ -3,9 +3,8 @@ import { Grid, Typography, Box, Container } from '@mui/material'
 import { Breadcrumbs } from 'app/components/Breadcrumbs/Breadcrumbs'
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import { useStyles } from 'app/components/PageHeader/PageHeader.styles'
-import { BackButton } from 'components/BackButton'
-import classnames from 'classnames'
 import { Variant } from '@mui/material/styles/createTypography'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface PageHeaderProps {
   title?: string
@@ -17,21 +16,22 @@ export interface PageHeaderProps {
   styled?: boolean
   startComponent?: React.ReactNode
   endComponent?: React.ReactNode
+  titleComponent?: React.ReactNode
 }
 
 export const PageHeader = (props: PageHeaderProps) => {
   const {
     title,
     alignment = 'flex-start',
-    hasBackButton = false,
     showBreadcrumbs = true,
     variant = 'h2',
-    noMargin = false,
     styled = true,
     startComponent,
-    endComponent
+    endComponent,
+    titleComponent
   } = props
   const { crumbs } = useBreadcrumbs()
+  const { isTablet } = useAppBreakpoints()
   const justify = alignment ?? (crumbs.length === 1 ? 'center' : 'flex-start')
   const classes = useStyles()
   const Wrapper = styled ? Box : Fragment
@@ -62,61 +62,70 @@ export const PageHeader = (props: PageHeaderProps) => {
       <Container>
         <Grid
           container
-          flexWrap='nowrap'
+          flexWrap={isTablet ? undefined : 'nowrap'}
           justifyContent={hasCustomComponent ? 'space-between' : 'flex-start'}
           spacing={3}
         >
           {hasStartComponent && (
             <Grid item>
-              <Box ref={startComponentRef}>{startComponent}</Box>
+              <Box ref={startComponentRef} height='100%' width='100%'>
+                {startComponent}
+              </Box>
             </Grid>
           )}
-          <Grid
-            item
-            container
-            direction='column'
-            className={classnames(classes.container, {
-              [classes.noMargin]: noMargin
-            })}
-          >
-            <Grid
-              container
-              className={classnames(classes.header, {
-                [classes.noMargin]: noMargin
-              })}
+
+          <Grid item flexGrow={1}>
+            <Box
               sx={{
+                height: '100%',
                 pr,
                 pl
               }}
             >
-              <Grid item container alignItems='center' justifyContent={justify}>
-                {hasBackButton && <BackButton className={classes.backButton} />}
-                <Typography
-                  className={styled ? classes.title : ''}
-                  variant={variant}
+              {titleComponent !== undefined ? (
+                <>{titleComponent}</>
+              ) : (
+                <Grid
+                  container
+                  height='100%'
+                  direction='column'
+                  justifyContent='center'
                 >
-                  {title}
-                </Typography>
-              </Grid>
-            </Grid>
-            {showBreadcrumbs && (
-              <Grid
-                item
-                container
-                alignItems='center'
-                sx={{
-                  pr,
-                  pl
-                }}
-                justifyContent={justify}
-              >
-                <Breadcrumbs />
-              </Grid>
-            )}
+                  <Grid item>
+                    <Box
+                      display='flex'
+                      alignItems='center'
+                      justifyContent={justify}
+                    >
+                      <Typography
+                        className={styled ? classes.title : ''}
+                        variant={variant}
+                      >
+                        {title}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  {showBreadcrumbs && (
+                    <Grid item>
+                      <Box
+                        display='flex'
+                        alignItems='center'
+                        justifyContent={justify}
+                      >
+                        <Breadcrumbs />
+                      </Box>
+                    </Grid>
+                  )}
+                </Grid>
+              )}
+            </Box>
           </Grid>
+
           {hasEndComponent && (
             <Grid item>
-              <Box ref={endComponentRef}>{endComponent}</Box>
+              <Box ref={endComponentRef} width='100%' height='100%'>
+                {endComponent}
+              </Box>
             </Grid>
           )}
         </Grid>
