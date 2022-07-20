@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import { AccordionDetails, AccordionSummary } from '@material-ui/core'
+import { AccordionDetails, AccordionSummary, capitalize } from '@material-ui/core'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 
@@ -63,14 +63,18 @@ export const MobileFilters = ({
     const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, value]) => {
       if (!value || value?.length === 0) return acc
 
-      if ('startDate' === key) {
+      if (key === ' startDate') {
         acc[FILTERS.PAYOUT_PERIOD] = `${value} - `
         return acc
       }
 
-      if ('endDate' === key) {
+      if (key === 'endDate') {
         acc[FILTERS.PAYOUT_PERIOD] = `${acc[FILTERS.PAYOUT_PERIOD] || ' - '}${value}`
         return acc
+      }
+
+      if (key === 'status') {
+        return { ...acc, [key]: value.map((el: Option) => capitalize(`${el.value}`)).join(', ') }
       }
 
       if (Array.isArray(value)) {

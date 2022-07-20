@@ -22,6 +22,7 @@ import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions 
 import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
 import { MobileFilters } from './MobileFilters'
+import { Option } from 'hooks/useTokensList'
 
 interface Props {
   filters: FILTERS[]
@@ -131,7 +132,7 @@ export const MultipleFilters = ({
 
           return {
             ...acc,
-            [key]: values[key].join(','),
+            [key]: values[key].map(({ value }: Option) => value).join(','),
           }
         }
         return {
