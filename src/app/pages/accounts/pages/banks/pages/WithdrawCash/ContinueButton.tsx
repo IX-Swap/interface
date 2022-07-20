@@ -11,9 +11,10 @@ export const ContinueButton = (props: ButtonProps) => {
       disabled={!canSubmit}
       color='primary'
       variant='contained'
+      fullWidth
       disableElevation
     >
-      Confirm Withdrawal
+      Withdraw
     </Button>
   )
 }

@@ -3,16 +3,16 @@ import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React from 'react'
 
-interface AddBankAccountButtonProps extends ButtonProps {
+interface ManageBankAccountsButtonProps extends ButtonProps {
   variant: 'outlined' | 'contained'
   title?: string
 }
 
-export const AddBankAccountButton = ({
+export const ManageBankAccountsButton = ({
   variant,
-  title = 'Add Bank Account',
+  title = 'Manage bank account',
   ...rest
-}: AddBankAccountButtonProps) => {
+}: ManageBankAccountsButtonProps) => {
   return (
     <Button
       data-testid={'button'}
@@ -20,10 +20,10 @@ export const AddBankAccountButton = ({
       variant={variant}
       color='primary'
       disableElevation
-      to={BanksRoute.create}
+      to={BanksRoute.list}
       {...rest}
     >
-      Add Bank Account
+      {title}
     </Button>
   )
 }

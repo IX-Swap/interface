@@ -34,7 +34,7 @@ export const useWithdrawCash = () => {
   return useMutation(withdrawCash, {
     onSuccess: data => {
       void snackbarService.showSnackbar(
-        'Cash withdrawal successfull',
+        'Withdrawal sent to authorizer, wait for approval',
         'success'
       )
       void queryCache.invalidateQueries(
