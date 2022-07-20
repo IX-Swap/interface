@@ -13,7 +13,7 @@ export interface CommitmentFormProps {
   isCampaign?: boolean
 }
 
-export const CommitmentForm = (
+export const CommitmentFormWrapper = (
   props: PropsWithChildren<
     CommitmentFormProps & FormProps<CommitmentFormValues>
   >

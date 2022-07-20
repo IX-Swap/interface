@@ -6,6 +6,7 @@ import {
   Box
 } from '@mui/material'
 import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
+import { AddMetamaskWallet } from 'app/pages/invest/components/AddMetamaskWallet'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSignedSubscriptionDocument'
 import { Checkbox } from 'components/form/Checkbox'
@@ -23,7 +24,6 @@ import {
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { CommitmentFormValues } from 'types/commitment'
-import { AddMetamaskWallet } from './AddMetamaskWallet'
 
 export interface CommitmentFormFieldsProps {
   symbol: string

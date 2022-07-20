@@ -3,11 +3,11 @@ import { render } from 'test-utils'
 import {
   CommitmentHeader,
   CommitmentHeaderProps
-} from 'app/pages/invest/components/CommitmentHeader'
+} from 'app/pages/invest/components/MakeCommitment/CommitmentHeader'
 import { dso } from '__fixtures__/authorizer'
 import { DSOTitle } from 'app/components/DSO/components/DSOTitle'
 import { Form } from 'components/form/Form'
-import { EstimatedValue } from 'app/pages/invest/components/EstimatedValue'
+import { EstimatedValue } from 'app/pages/invest/components/MakeCommitment/EstimatedValue'
 import { AssetBalance } from 'app/pages/invest/components/AssetBalance'
 
 jest.mock('app/components/DSO/components/DSOTitle', () => ({

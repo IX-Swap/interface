@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import {
   EstimatedValue,
   EstimatedValueProps
-} from 'app/pages/invest/components/EstimatedValue'
+} from 'app/pages/invest/components/MakeCommitment/EstimatedValue'
 import { asset } from '__fixtures__/authorizer'
 import { Form } from 'components/form/Form'
 import { LabelledValue } from 'components/LabelledValue'
