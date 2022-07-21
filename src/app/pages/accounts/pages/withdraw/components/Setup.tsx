@@ -72,66 +72,67 @@ export const Setup: React.FC = () => {
   }
 
   return (
-    <Paper className={container}>
-      <Box sx={{ px: { xs: 3, sm: 5 }, paddingTop: 5 }}>
-        <CurrencySelect
-          accounts={list}
-          defaultValue={virtualAccountData.accountNumber}
-          onButtonClick={value => setValue('virtualAccount', value)}
-        />
-      </Box>
-      <div className={separator} />
-      <Grid container direction='column'>
-        <Grid item>
-          <Box
-            sx={{
-              mt: { xs: 3, sm: 5 },
-              mb: { xs: 3, sm: 5 },
-              px: { xs: 3, sm: 5 }
-            }}
-          >
-            <Box mt={2} className={selectRow}>
-              <TypedField
-                control={control}
-                variant='outlined'
-                component={BankSelect}
-                currency={virtualAccountData?.currency}
-                name='bankAccountId'
-                displayEmpty
-                label='To bank account'
-                placeholder='Select item'
-              />
+    <Box className={container}>
+      <Paper sx={{ width: '100%' }}>
+        <Box sx={{ px: { xs: 3, sm: 5 }, paddingTop: 5 }}>
+          <CurrencySelect
+            accounts={list}
+            onButtonClick={value => setValue('virtualAccount', value)}
+          />
+        </Box>
+        <div className={separator} />
+        <Grid container direction='column'>
+          <Grid item>
+            <Box
+              sx={{
+                mt: { xs: 0, sm: 5 },
+                mb: { xs: 3, sm: 5 },
+                px: { xs: 3, sm: 5 }
+              }}
+            >
+              <Box mt={{ xs: 0, sm: 2 }} className={selectRow}>
+                <TypedField
+                  control={control}
+                  variant='outlined'
+                  component={BankSelect}
+                  currency={virtualAccountData?.currency}
+                  name='bankAccountId'
+                  displayEmpty
+                  label='To bank account'
+                  placeholder='Select item'
+                />
 
-              <ManageBankAccountsButton
-                variant='outlined'
-                sx={{ height: '50px', marginTop: '26px' }}
-              />
+                <ManageBankAccountsButton
+                  variant='outlined'
+                  sx={{ height: '50px', marginTop: '26px' }}
+                />
+              </Box>
+              <Grid item>
+                {virtualAccountId !== undefined ? (
+                  <>
+                    <Grid item mt={5}>
+                      <TypedField
+                        control={control}
+                        variant='outlined'
+                        component={NumericInput}
+                        name='amount'
+                        label='Amount'
+                        disabled={isEmptyString(bankAccountId)}
+                        valueExtractor={numericValueExtractor}
+                        numberFormat={moneyNumberFormat}
+                      />
+                    </Grid>
+                  </>
+                ) : null}
+              </Grid>
+              <OTPWithdraw disabled={isEmptyString(bankAccountId)} />
+              <Grid item mt={5}>
+                <ContinueButton type='submit' />
+              </Grid>
             </Box>
-            <Grid item>
-              {virtualAccountId !== undefined ? (
-                <>
-                  <Grid item mt={5}>
-                    <TypedField
-                      control={control}
-                      variant='outlined'
-                      component={NumericInput}
-                      name='amount'
-                      label='Amount'
-                      disabled={isEmptyString(bankAccountId)}
-                      valueExtractor={numericValueExtractor}
-                      numberFormat={moneyNumberFormat}
-                    />
-                  </Grid>
-                </>
-              ) : null}
-            </Grid>
-            <OTPWithdraw disabled={isEmptyString(bankAccountId)} />
-            <Grid item mt={5}>
-              <ContinueButton type='submit' />
-            </Grid>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </Paper>
+      </Paper>
+    </Box>
   )
 }

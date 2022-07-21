@@ -5,11 +5,11 @@ import { plainValueExtractor } from 'helpers/forms'
 import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-
+import { useStyles } from 'app/components/OTP.styles'
 export const OTPWithdraw = ({ disabled }: { disabled: boolean }) => {
   const { control } = useFormContext()
   const { theme } = useAppTheme()
-
+  const { otp } = useStyles()
   return (
     <Grid item mt={5}>
       <TypedField
@@ -17,7 +17,9 @@ export const OTPWithdraw = ({ disabled }: { disabled: boolean }) => {
         customRenderer
         component={OTPField}
         name='otp'
+        isInputNum={true}
         containerStyle={{ alignItems: 'flex-start' }}
+        inputStyle={otp}
         label={
           <Box
             sx={{

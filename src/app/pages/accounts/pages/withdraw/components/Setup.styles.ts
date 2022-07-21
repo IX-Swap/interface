@@ -5,12 +5,18 @@ export const useStyles = makeStyles(theme => ({
     minWidth: 608,
     borderRadius: 2,
     [theme.breakpoints.down('sm')]: {
-      minWidth: '100%'
+      width: '100%',
+      minWidth: '100%',
+      display: 'flex',
+      padding: theme.spacing(0, 2),
+      justifyContent: 'center',
+      background: 'transparent',
+      alignItems: 'center'
     }
   },
   separator: {
     height: 1,
-    background: '#DDDDDD',
+    background: '#DBE2EC',
     margin: theme.spacing(4, 3),
     display: 'none',
     [theme.breakpoints.down('sm')]: {

@@ -10,7 +10,7 @@ interface ManageBankAccountsButtonProps extends ButtonProps {
 
 export const ManageBankAccountsButton = ({
   variant,
-  title = 'Manage bank account',
+  title = 'Manage bank accounts',
   ...rest
 }: ManageBankAccountsButtonProps) => {
   return (
