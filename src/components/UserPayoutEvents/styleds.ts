@@ -32,6 +32,11 @@ export const Tab = styled.div<{ active: boolean }>`
             padding: 1px;
           }
         `}
+  @media(max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    font-size: 13px;
+    width: 50%;
+    text-align: center;
+  }
 `
 
 export const Body = styled.div`
@@ -41,6 +46,12 @@ export const Body = styled.div`
   ::before {
     border-radius: 0px 32px 32px 32px;
     padding: 1px;
+    @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+      border-radius: 0px 0px 32px 32px;
+    }
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    padding: 24px 12px;
   }
 `
 
@@ -93,6 +104,9 @@ export const AllPayoutContainer = styled.div`
   position: relative;
   > :first-child {
     margin-bottom: 32px;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      margin-bottom: 12px;
+    }
   }
 `
 
@@ -111,7 +125,7 @@ export const AllPayoutListContainer = styled.div`
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     row-gap: 12px;
-    grid-template-columns: minmax(0px, 1fr);
+    column-gap: 8px;
   }
 `
 
@@ -120,6 +134,10 @@ export const CardContainer = styled.div`
   padding: 20px;
   background-color: ${({ theme }) => theme.bg22};
   cursor: pointer;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    border-radius: 12px;
+    padding: 12px 8px;
+  }
 `
 
 export const PayoutTitle = styled.div`
@@ -132,6 +150,28 @@ export const PayoutTitle = styled.div`
     font-size: 22px;
     line-height: 33px;
     ${ellipsisText}
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      font-size: 14px;
+      line-height: 21px;
+      white-space: pre-wrap;
+      overflow: auto;
+      text-overflow: none;
+    }
+  }
+  > img,
+  svg {
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+  }
+`
+
+export const PaymentPeriod = styled.div`
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: none !important;
   }
 `
 
@@ -145,6 +185,7 @@ export const PayoutInfoContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-self: flex-start;
+    width: 100%;
   }
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
@@ -187,6 +228,10 @@ export const MyListTitle = styled.div`
   font-weight: 600;
   font-size: 24px;
   line-height: 24px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 20px;
+    line-height: 30px;
+  }
 `
 
 export const MyListContainer = styled.div`
@@ -203,7 +248,7 @@ export const MyListContainer = styled.div`
   }
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     row-gap: 12px;
-    grid-template-columns: minmax(0px, 1fr);
+    column-gap: 8px;
   }
 `
 
@@ -222,6 +267,12 @@ export const ViewMoreBtnContainer = styled.div`
     font-weight: 600;
     font-size: 14px;
     line-height: 16px;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      min-height: 40px;
+      height: 40px;
+      width: 100%;
+      max-width: 312px;
+    }
   }
 `
 

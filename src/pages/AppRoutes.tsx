@@ -1,7 +1,7 @@
 import React, { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 
-import { SupportedChainId } from 'constants/chains'
+// import { SupportedChainId } from 'constants/chains'
 import { routes } from 'utils/routes'
 
 import Faucet from 'pages/Faucet'
