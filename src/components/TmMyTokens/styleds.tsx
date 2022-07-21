@@ -15,6 +15,9 @@ export const TokensList = styled.div`
   gap: 30px;
   border-radius: 30px;
   background: ${({ theme }) => theme.bgG4};
+  :before {
+    border-radius: 30px;
+  }
   @media (max-width: ${MEDIA_WIDTHS.upToLarge}px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;

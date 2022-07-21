@@ -2,13 +2,13 @@ import React, { useEffect, useMemo } from 'react'
 import { useFormik } from 'formik'
 import { t, Trans } from '@lingui/macro'
 import { MobileDatePicker } from '@material-ui/pickers'
-import { capitalize } from '@material-ui/core'
+import { capitalize, useMediaQuery } from '@material-ui/core'
 import { useLocation } from 'react-router-dom'
 import dayjs from 'dayjs'
 
 import { PAYOUT_STATUS } from 'constants/enums'
 import { Search } from 'components/Search'
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useSecTokenState } from 'state/secTokens/hooks'
@@ -21,6 +21,8 @@ import { SecToken } from 'types/secToken'
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
 import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
+import { MobileFilters } from './MobileFilters'
+import { Option } from 'hooks/useTokensList'
 
 interface Props {
   filters: FILTERS[]
@@ -39,6 +41,8 @@ export const MultipleFilters = ({
   onFiltersChange,
   forManager = false,
 }: Props) => {
+  const isMobile = useMediaQuery(`(max-width:${MEDIA_WIDTHS.upToLarge}px)`)
+
   const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
   const { tokens: secTokens } = useSecTokenState()
@@ -92,7 +96,7 @@ export const MultipleFilters = ({
     return []
   }, [me])
 
-  const statusOptionsFormatted = useMemo(() => {
+  const statusOptionsSorted = useMemo(() => {
     if (pathname === '/token-manager/payout-events') {
       return [{ label: capitalize(PAYOUT_STATUS.DRAFT), value: PAYOUT_STATUS.DRAFT }, ...statusOptions]
     }
@@ -119,49 +123,52 @@ export const MultipleFilters = ({
     return {}
   }, [filters])
 
-  const { setFieldValue, values, setValues } = useFormik({
+  const applyFilters = (values: Record<string, any>) => {
+    const filtredValues = Object.keys(values).reduce((acc, key: string) => {
+      const value = values[key]
+      if (value) {
+        if (Array.isArray(value)) {
+          if (!value.length) return acc
+
+          return {
+            ...acc,
+            [key]: values[key].map(({ value }: Option) => value).join(','),
+          }
+        }
+        return {
+          ...acc,
+          [key]: values[key],
+        }
+      }
+      return acc
+    }, {})
+
+    if (onFiltersChange) {
+      onFiltersChange(filtredValues)
+    } else if (callback) {
+      callback(filtredValues)
+    }
+  }
+
+  const { setFieldValue, values, setValues, submitForm } = useFormik({
     initialValues,
-    onSubmit: () => {
-      // must have onSubmit
-    },
+    onSubmit: applyFilters,
   })
 
   useEffect(() => {
     clearTimeout(timer)
-    timer = setTimeout(() => {
-      const filtredValues = Object.keys(values).reduce((acc, key: string) => {
-        const value = values[key]
-        if (value) {
-          if (Array.isArray(value)) {
-            if (!value.length) return acc
 
-            return {
-              ...acc,
-              [key]: values[key].join(','),
-            }
-          }
-          return {
-            ...acc,
-            [key]: values[key],
-          }
-        }
-        return acc
-      }, {})
+    if (isMobile) return
 
-      if (onFiltersChange) {
-        onFiltersChange(filtredValues)
-      } else if (callback) {
-        callback(filtredValues)
-      }
-    }, 250)
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values])
+    timer = setTimeout(() => submitForm(), 250)
+  }, [values, isMobile])
 
-  const onSelectValueChange = (name: string, value: any) => {
+  const onSelectValueChange = (name: string, item: any) => {
+    const { value } = item
     const data = [...values[name]]
 
-    if (Array.isArray(value)) {
-      setFieldValue(name, value)
+    if (Array.isArray(item)) {
+      setFieldValue(name, item)
       return
     }
 
@@ -170,19 +177,19 @@ export const MultipleFilters = ({
       return
     }
 
-    const indexOf = data.findIndex((el: any) => el === value)
+    const indexOf = data.findIndex((el: any) => el.value === value)
 
     if (indexOf > -1) {
       data.splice(indexOf, 1)
     } else {
-      data.push(value)
+      data.push(item)
     }
 
     setFieldValue(name, data)
   }
 
   const onResetFilters = () => {
-    setValues({ ...initialValues, ...(withSearch && { search: values.search }) })
+    setValues({ ...initialValues, ...(withSearch && !isMobile && { search: values.search }) })
   }
 
   const isEmpty = useMemo(() => Object.values(values).every((value) => !value || value?.length === 0), [values])
@@ -200,15 +207,15 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Role"
         selectedItems={values[FILTERS.ROLES]}
-        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.ROLES, item)}
         items={rolesOptions}
       />
     ),
     [FILTERS.SEC_TOKENS]: (
       <FilterDropdown
-        placeholder="SEC Token"
+        placeholder="Security token"
         selectedItems={values[FILTERS.SEC_TOKENS]}
-        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.SEC_TOKENS, item)}
         items={forManager ? managerSecTokensOptions : secTokensOptions}
       />
     ),
@@ -216,15 +223,15 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Status"
         selectedItems={values[FILTERS.STATUS]}
-        onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item.value)}
-        items={statusOptionsFormatted}
+        onSelect={(item) => onSelectValueChange(FILTERS.STATUS, item)}
+        items={statusOptionsSorted}
       />
     ),
     [FILTERS.PAYOUT_TYPE]: (
       <FilterDropdown
         placeholder="Payout type"
         selectedItems={values[FILTERS.PAYOUT_TYPE]}
-        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TYPE, item)}
         items={payoutTypeOptions}
       />
     ),
@@ -232,7 +239,7 @@ export const MultipleFilters = ({
       <FilterDropdown
         placeholder="Payout token"
         selectedItems={values[FILTERS.PAYOUT_TOKEN]}
-        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item.value)}
+        onSelect={(item) => onSelectValueChange(FILTERS.PAYOUT_TOKEN, item)}
         items={tokensOptions}
       />
     ),
@@ -241,7 +248,7 @@ export const MultipleFilters = ({
         label="Payment period"
         value={[values.startDate, values.endDate]}
         onChange={(value) => {
-          const format = 'YYYY-MM-DDTHH:mm:ss'
+          const format = 'MMM DD, YYYY'
           setFieldValue('startDate', value[0] ? dayjs(value[0]).format(format) : value[0])
           setFieldValue('endDate', value[1] ? dayjs(value[1]).format(format) : value[1])
         }}
@@ -252,7 +259,7 @@ export const MultipleFilters = ({
       <MobileDatePicker
         value={values[FILTERS.RECORD_DATE]}
         onChange={(value) => {
-          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).toISOString())
+          setFieldValue(FILTERS.RECORD_DATE, dayjs(value).format('MMM DD, YYYY'))
         }}
         views={['year', 'month', 'date']}
         renderInput={({ inputProps, focused }) => (
@@ -277,7 +284,7 @@ export const MultipleFilters = ({
       <MobileDatePicker
         value={values[FILTERS.DATE_OF_CLAIM]}
         onChange={(value) => {
-          setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).toISOString())
+          setFieldValue(FILTERS.DATE_OF_CLAIM, dayjs(value).format('MMM DD, YYYY'))
         }}
         views={['year', 'month', 'date']}
         renderInput={({ inputProps, focused }) => (
@@ -299,6 +306,24 @@ export const MultipleFilters = ({
       />
     ),
   } as Record<string, JSX.Element>
+
+  if (isMobile) {
+    return (
+      <MobileFilters
+        applyFilters={submitForm}
+        values={values}
+        setFieldValue={setFieldValue}
+        onSelectValueChange={onSelectValueChange}
+        haveValues={!isEmpty}
+        filters={filters}
+        searchPlaceholder={searchPlaceholder}
+        forManager={forManager}
+        managerSecTokensOptions={managerSecTokensOptions}
+        statusOptionsSorted={statusOptionsSorted}
+        onResetFilters={onResetFilters}
+      />
+    )
+  }
 
   return (
     <Container>

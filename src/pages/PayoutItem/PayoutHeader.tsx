@@ -32,6 +32,10 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
     history.push(isMyPayout ? '/token-manager/payout-events' : routes.securityTokens('payout-events'))
   }
 
+  const edit = () => {
+    history.push(`/payout/edit/${payout.id}`)
+  }
+
   return (
     <Column style={{ gap: '32px' }}>
       <Flex justifyContent="space-between">
@@ -51,7 +55,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
         </Flex>
 
         <Flex marginTop="16px">
-          {isMyPayout && <EditButton>Edit</EditButton>}
+          {isMyPayout && status !== PAYOUT_STATUS.ENDED && <EditButton onClick={edit}>Edit</EditButton>}
           <PayoutStatus status={status} />
         </Flex>
       </Flex>
@@ -85,7 +89,7 @@ const SecTokenLink = styled(NavLink)`
   font-size: 18px;
   line-height: 27px;
   text-decoration: underline;
-  color: #fff;
+  color: ${({ theme }) => theme.text1};
 `
 
 const EditButton = styled(ButtonGradientBorder)`

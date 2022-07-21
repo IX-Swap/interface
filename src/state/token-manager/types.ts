@@ -1,5 +1,6 @@
 import { PAYOUT_STATUS } from 'constants/enums'
 import { SecToken } from 'types/secToken'
+import { Document } from 'state/admin/actions'
 
 export interface PayoutEvent {
   id: number
@@ -21,7 +22,7 @@ export interface PayoutEvent {
   updatedAt: string | null
   deletedAt: null | null
   secToken: SecToken
-  attachments: any[]
+  attachments: Array<Document>
 }
 
 export interface PayoutList {

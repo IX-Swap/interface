@@ -23,9 +23,18 @@ const headerCells = [
   t`Token`,
   t`Date of request`,
   t`KYC source`,
+  t`Country`,
+  t`Investor Status`,
   t`Broker-Dealer status`,
   t`Custodian status`,
 ]
+
+const statusLegend = {
+  individualAccredited: 'AI',
+  individualNotAccredited: 'Non-AI',
+  corporateAccredited: 'AI/C',
+  corporateNotAccredited: 'Non-AI/C',
+} as Record<string, string>
 
 interface RowProps {
   item: AccreditationItem
@@ -63,6 +72,10 @@ const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => 
     openReviewModal({ ...((userKyc || {}) as KycItem), user })
   }
 
+  const investorType = `${userKyc?.individualKycId ? 'individual' : 'corporate'}${
+    userKyc?.individual?.accredited || userKyc?.corporate?.accredited ? '' : 'Not'
+  }Accredited`
+
   return (
     <StyledBodyRow key={id}>
       <Wallet>
@@ -73,6 +86,8 @@ const Row: FC<RowProps> = ({ item, searchValue, openReviewModal }: RowProps) => 
       <div>
         <KycSource onKycClick={onKycClick} kyc={kyc} userKyc={userKyc} status={status} />
       </div>
+      <div>{userKyc?.individual?.address?.country || userKyc?.corporate?.countryOfIncorporation || '-'}</div>
+      <div>{statusLegend[investorType] || '-'}</div>
       <div>
         <BrokerDealerStatus status={brokerDealerStatus} kyc={kyc} broker={broker} />
       </div>
@@ -179,11 +194,11 @@ export const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 1fr 100px repeat(3, 1fr) minmax(250px, 1fr);
+  grid-template-columns: 1fr 100px repeat(5, 1fr) minmax(250px, 1fr);
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 1fr 100px repeat(3, 1fr) minmax(250px, 1fr);
+  grid-template-columns: 1fr 100px repeat(5, 1fr) minmax(250px, 1fr);
   min-width: 1270px;
 `

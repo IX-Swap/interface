@@ -6,9 +6,11 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
+import { useHistory } from 'react-router-dom'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { momentFormatDate } from '../utils'
+import { routes } from 'utils/routes'
 
 interface Props {
   payout: PayoutEvent
@@ -16,7 +18,13 @@ interface Props {
 }
 
 export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
-  const { status, isPaid, tokenAmount, recordDate } = payout
+  const history = useHistory()
+
+  const { status, isPaid, tokenAmount, recordDate, id } = payout
+
+  const goToEdit = () => {
+    history.push(routes.editPayoutEvent(id))
+  }
 
   const getContentByStatus = () => {
     switch (status) {
@@ -37,7 +45,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
           <>
             <Box marginBottom="4px">{t`The event is not paid yet.`}</Box>
             <Box marginBottom="24px">{t`Please proceed with the payment before the payment start date.`}</Box>
-            <StyledButtonIXSGradient>{t`Pay for this event`}</StyledButtonIXSGradient>
+            <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for this event`}</StyledButtonIXSGradient>
           </>
         ) : (
           <>
@@ -82,14 +90,14 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
           <>
             <Box marginBottom="4px">{t`The event is not paid yet.`}</Box>
             <Box marginBottom="24px">{t`Please proceed with the payment.`}</Box>
-            <StyledButtonIXSGradient>{t`Pay for this Event`}</StyledButtonIXSGradient>
+            <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for this event`}</StyledButtonIXSGradient>
           </>
         )
       case PAYOUT_STATUS.DRAFT:
         return (
           <>
             <Box marginBottom="24px">{t`This event is not published and is not displayed in Payout Events list.`}</Box>
-            <StyledButtonIXSGradient>{t`Publish Event`}</StyledButtonIXSGradient>
+            <StyledButtonIXSGradient onClick={goToEdit}>{t`Publish Event`}</StyledButtonIXSGradient>
           </>
         )
       case PAYOUT_STATUS.ANNOUNCED:

@@ -1,10 +1,10 @@
-import React, { CSSProperties, FC, HTMLProps, ReactChildren } from 'react'
+import React, { CSSProperties, FC, HTMLProps } from 'react'
 import { Box, Flex } from 'rebass'
 import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 
-import { Input } from 'components/Input'
+import { Input, Textarea } from 'components/Input'
 import { ButtonGradient } from 'components/Button'
 import { TYPE, EllipsisText } from 'theme'
 import { Label } from 'components/Label'
@@ -19,6 +19,7 @@ import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
+import Row from 'components/Row'
 
 export interface UploaderProps {
   files: FileWithPath[]
@@ -26,9 +27,11 @@ export interface UploaderProps {
   title: string
   subtitle?: string | JSX.Element
   optional?: boolean
-  error?: any | ReactChildren
+  error?: any | JSX.Element
   handleDeleteClick: (index: number) => void
   required?: boolean
+  tooltipText?: string | JSX.Element
+  isDisabled?: boolean
 }
 
 interface SelectProps {
@@ -39,18 +42,20 @@ interface SelectProps {
   withScroll?: boolean
   placeholder?: string
   style?: CSSProperties
-  error?: any | ReactChildren
+  error?: any | JSX.Element
   onBlur?: (e: any) => void
   name?: string
   isMulti?: boolean
   required?: boolean
   isDisabled?: boolean
   isClearable?: boolean
+  tooltipText?: string | JSX.Element
 }
 
-type TextInputProps = HTMLProps<HTMLInputElement> & {
-  error?: any | ReactChildren
+type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
+  error?: any | JSX.Element
   required?: boolean
+  tooltipText?: string | JSX.Element
 }
 
 export const Select: FC<SelectProps> = ({
@@ -62,20 +67,30 @@ export const Select: FC<SelectProps> = ({
   error,
   name,
   required,
+  tooltipText,
+  isDisabled,
   ...rest
 }: SelectProps) => {
   return (
     <Box>
-      {label && <Label required={required} label={label} />}
-      <ReactSelect
-        name={name}
-        placeholder={placeholder}
-        onSelect={onSelect}
-        value={selectedItem}
-        options={items}
-        error={error}
-        {...rest}
-      />
+      {label && <Label required={isDisabled ? false : required} label={label} tooltipText={tooltipText} />}
+      {isDisabled && selectedItem ? (
+        <Row alignItems="center" style={{ columnGap: 4 }}>
+          {selectedItem?.icon}
+          {selectedItem?.label}
+        </Row>
+      ) : (
+        <ReactSelect
+          name={name}
+          placeholder={placeholder}
+          onSelect={onSelect}
+          value={selectedItem}
+          options={items}
+          error={error}
+          isDisabled={isDisabled}
+          {...rest}
+        />
+      )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
@@ -96,21 +111,63 @@ export const TextInput: FC<TextInputProps> = ({
   onBlur,
   required,
   error = false,
+  tooltipText,
+  disabled = false,
 }: TextInputProps) => {
   return (
     <Box>
-      {label && <Label label={label} htmlFor={name || ''} required={required} />}
+      {label && (
+        <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
+      )}
 
-      <StyledInput
-        onBlur={onBlur}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        style={style}
-        type={type}
-        autoComplete="off"
-      />
+      {disabled && value ? (
+        <div>{value}</div>
+      ) : (
+        <StyledInput
+          onBlur={onBlur}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          style={style}
+          type={type}
+          autoComplete="off"
+          disabled={disabled}
+        />
+      )}
+
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
+    </Box>
+  )
+}
+
+export const TextareaInput: FC<TextInputProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  style,
+  name,
+  required,
+  error = false,
+  tooltipText,
+  disabled = false,
+}: TextInputProps) => {
+  return (
+    <Box>
+      {label && (
+        <Label label={label} htmlFor={name || ''} required={disabled ? false : required} tooltipText={tooltipText} />
+      )}
+
+      {disabled && value ? (
+        <div>{value}</div>
+      ) : (
+        <Textarea placeholder={placeholder} value={value} style={style} onChange={onChange} disabled={disabled} />
+      )}
 
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
@@ -130,11 +187,13 @@ export const Uploader: FC<UploaderProps> = ({
   handleDeleteClick,
   onDrop,
   optional = false,
+  tooltipText,
+  isDisabled = false,
 }: UploaderProps) => {
   return (
     <Box>
       <Flex>
-        <Label label={title} required={required} />
+        <Label label={title} required={required} tooltipText={tooltipText} />
         {optional && (
           <>
             <TYPE.body1 marginLeft="4px" marginRight="8px" color={`text9`}>
@@ -155,24 +214,32 @@ export const Uploader: FC<UploaderProps> = ({
               handleDeleteClick={() => {
                 handleDeleteClick(index)
               }}
+              isDisabled={isDisabled}
               style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
             />
           ))}
         </Flex>
       )}
-      <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles} file={null} onDrop={onDrop}>
-        <UploaderCard>
-          <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-            <StyledUploadLogo />
-            <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
-              Drag and Drop
-            </TYPE.small>
-            <TYPE.small display="flex" textAlign="center" color={'text9'}>
-              or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
-            </TYPE.small>
-          </Flex>
-        </UploaderCard>
-      </Upload>
+      {!isDisabled && (
+        <Upload
+          isDisabled={isDisabled}
+          accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          file={null}
+          onDrop={onDrop}
+        >
+          <UploaderCard>
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <StyledUploadLogo />
+              <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
+                Drag and Drop
+              </TYPE.small>
+              <TYPE.small display="flex" textAlign="center" color={'text9'}>
+                or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
+              </TYPE.small>
+            </Flex>
+          </UploaderCard>
+        </Upload>
+      )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}

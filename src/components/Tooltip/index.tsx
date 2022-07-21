@@ -1,6 +1,24 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
+
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+
 import Popover, { PopoverProps } from '../Popover'
+
+export const IconWrapper = styled.div<{ size?: number }>`
+  ${({ theme }) => theme.flexColumnNoWrap};
+  align-items: center;
+  justify-content: center;
+  margin-right: 4px;
+  & > img,
+  span {
+    height: ${({ size }) => (size ? size + 'px' : '32px')};
+    width: ${({ size }) => (size ? size + 'px' : '32px')};
+  }
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    align-items: flex-end;
+  `};
+`
 
 const TooltipContainer = styled.div<{ width?: number }>`
   width: ${({ width }) => (width ? width : 256)}px;
@@ -95,5 +113,15 @@ export function MouseoverTooltipContent({ content, children, ...rest }: Omit<Too
         {children}
       </div>
     </TooltipContent>
+  )
+}
+
+export const InfoMouseoverTooltip = ({ text, ...rest }: Omit<TooltipProps, 'show'>) => {
+  return (
+    <MouseoverTooltip text={text} placement={'top-end'} {...rest}>
+      <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '7px' }}>
+        <InfoIcon />
+      </IconWrapper>
+    </MouseoverTooltip>
   )
 }

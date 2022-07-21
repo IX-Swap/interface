@@ -30,7 +30,7 @@ export const Search = ({ setSearchValue, placeholder, style, value }: Props) => 
   }
 
   return (
-    <Container>
+    <Container className="search">
       <SearchIcon src={searchImg} alt="searchImg" />
       <Input
         style={style}

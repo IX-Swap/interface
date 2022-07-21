@@ -1,4 +1,4 @@
-import React, { ReactChildren } from 'react'
+import React from 'react'
 import { MobileDatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
@@ -8,49 +8,62 @@ import { TYPE } from 'theme'
 import { Input } from 'components/Input'
 import { ReactComponent as CalendarIcon } from 'assets/images/calendar.svg'
 import { Props as LabelProps } from 'components/Label'
+import dayjs from 'dayjs'
+import Row from 'components/Row'
 
 interface Props {
   value?: string | Date | number
   onChange: (value: any) => void
   name?: string
-  error?: any | ReactChildren
+  error?: any | JSX.Element
   openTo?: 'date' | 'year' | 'month'
   maxHeight?: number
   maxDate?: any
   minDate?: any
   placeholder?: string
+  isDisabled?: boolean
+  format?: string
 }
 
 export const DateInput = ({
   value,
   openTo,
   onChange,
-  label,
+  label = 'Date of Birth',
   error,
   maxDate,
   tooltipText,
   required,
   placeholder,
+  isDisabled = false,
+  format,
   ...props
 }: Props & Partial<LabelProps>) => {
   return (
     <Container>
-      <StyledLabel label={t`${label || 'Date of Birth'}`} required={required} tooltipText={tooltipText} />
-      <MobileDatePicker
-        value={value || null}
-        onChange={onChange}
-        openTo={openTo ?? 'year'}
-        views={['year', 'month', 'date']}
-        inputFormat="DD/MM/YYYY"
-        renderInput={({ inputProps }: Record<string, any>) => (
-          <TextFieldContainer>
-            <TextField {...inputProps} placeholder={placeholder} />
-            <StyledCalendarIcon />
-          </TextFieldContainer>
-        )}
-        maxDate={maxDate}
-        {...props}
-      />
+      {label && <StyledLabel label={t`${label}`} required={isDisabled ? false : required} tooltipText={tooltipText} />}
+      {isDisabled && value ? (
+        <Row>
+          {dayjs(value).format(format || 'MMM DD, YYYY')} <CalendarIcon style={{ marginLeft: 9 }} />
+        </Row>
+      ) : (
+        <MobileDatePicker
+          value={value || null}
+          onChange={onChange}
+          openTo={openTo ?? 'year'}
+          views={['year', 'month', 'date']}
+          inputFormat="DD/MM/YYYY"
+          renderInput={({ inputProps }: Record<string, any>) => (
+            <TextFieldContainer className="dateInput">
+              <TextField {...inputProps} placeholder={placeholder} disabled={isDisabled} />
+              <StyledCalendarIcon />
+            </TextFieldContainer>
+          )}
+          disabled={isDisabled}
+          maxDate={maxDate}
+          {...props}
+        />
+      )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}

@@ -15,6 +15,7 @@ import { NotAvailablePage } from 'components/NotAvailablePage'
 import { useAuthState } from 'state/auth/hooks'
 import { routes } from 'utils/routes'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { MEDIA_WIDTHS } from 'theme'
 
 type SecurityTab = 'tokens' | 'payout-events'
 
@@ -87,7 +88,9 @@ const SecurityTokens = () => {
           {tabs.map(({ value, label }, index) => (
             <>
               <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-                <Trans>{label}</Trans>
+                <TabLabel>
+                  <Trans>{label}</Trans>
+                </TabLabel>
                 <Border active={selectedTab === value} />
               </ToggleOption>
             </>
@@ -113,11 +116,20 @@ const TabsContainer = styled.div`
   column-gap: 32px;
 `
 
+const TabLabel = styled.div`
+  @media (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    font-size: 20px;
+  }
+`
+
 export const StyledBodyWrapper = styled(BodyWrapper)`
   background: ${({ theme }) => theme.config.background?.secondary || 'transparent'};
   width: 100%;
   max-width: 1358px;
   padding-top: 0px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 0px;
+  }
 `
 
 export default SecurityTokens

@@ -1,8 +1,18 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { AppLogo } from 'components/AppLogo'
 
 import { ReactComponent as Close } from '../../assets/images/delete-basket.svg'
+
+export const Container = styled.div<{ disabled?: boolean }>`
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      * {
+        cursor: initial !important;
+      }
+    `}
+`
 
 export const PreviewParent = styled.div<{ isLogo: boolean; width: string; height: string }>`
   cursor: pointer;

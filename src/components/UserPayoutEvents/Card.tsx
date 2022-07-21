@@ -11,7 +11,7 @@ import { useCurrency } from 'hooks/Tokens'
 import { routes } from 'utils/routes'
 import { StatusCell } from 'components/TmPayoutEvents/StatusCell'
 
-import { CardContainer, PayoutTitle, PayoutInfoContainer, PayoutLabel, PayoutValue } from './styleds'
+import { CardContainer, PayoutTitle, PayoutInfoContainer, PayoutLabel, PayoutValue,PaymentPeriod } from './styleds'
 
 interface Props {
   data: PayoutEvent
@@ -51,7 +51,7 @@ export const Card = ({ data: { secToken, type, recordDate, payoutToken, startDat
             {token?.symbol || '-'}
           </PayoutValue>
         </div>
-        <div>
+        <PaymentPeriod>
           <PayoutLabel>
             <Trans>{endDate ? 'Payment Period:' : 'Payment Start Date:'}</Trans>
           </PayoutLabel>
@@ -65,7 +65,7 @@ export const Card = ({ data: { secToken, type, recordDate, payoutToken, startDat
               </>
             )}
           </PayoutValue>
-        </div>
+        </PaymentPeriod>
         <div>
           <StatusCell status={status} />
         </div>

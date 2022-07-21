@@ -16,7 +16,7 @@ export const BodyContainer = styled.div`
 `
 
 export const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 75px 125px repeat(6, 1fr);
+  grid-template-columns: 75px 125px repeat(5, 1fr) minmax(200px, 1fr);
   height: 80px;
   min-width: 1150px;
   width: 100%;
@@ -36,7 +36,7 @@ export const StyledBodyRow = styled(BodyRow)`
 `
 
 export const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 75px 125px repeat(6, 1fr);
+  grid-template-columns: 75px 125px repeat(5, 1fr) minmax(200px, 1fr);
   min-width: 1150px;
   width: 100%;
   margin-top: 22px;
@@ -77,4 +77,15 @@ export const CreateButton = styled(ButtonIXSGradient)`
   font-weight: 600;
   font-size: 18px;
   line-height: 20px;
+`
+
+export const ActionsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  justify-content: flex-end;
+  > svg {
+    cursor: pointer;
+    width: 22px;
+  }
 `

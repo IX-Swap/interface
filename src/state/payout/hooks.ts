@@ -6,8 +6,18 @@ import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
+import { useHistory, useLocation } from 'react-router-dom'
+import { routes } from 'utils/routes'
 
-import { createDraft, getPayoutList, getPayoutItem as getPayoutItemAction, getMyPayoutList } from './actions'
+import {
+  createDraft,
+  getPayoutList,
+  getPayoutItem as getPayoutItemAction,
+  getMyPayoutList,
+  deletePayoutItem,
+} from './actions'
+import { useAddPopup } from 'state/application/hooks'
+import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -35,21 +45,20 @@ const publishPayout = async (newPayoutDraft: any) => {
   return result.data
 }
 
-const createDraftPayout = async (newPayoutDraft: any) => {
-  const formData = new FormData()
 
-  for (const key in newPayoutDraft) {
-    if (key === 'files') {
-      newPayoutDraft[key].forEach((item: any) => {
-        formData.append(`${key}`, item)
-      })
-    } else {
-      formData.append(key, newPayoutDraft[key])
+export function useDeleteDraftPayout() {
+  const dispatch = useDispatch<AppDispatch>()
+  
+  return useCallback(async (id: number) => {
+    try {
+      dispatch(createDraft.pending())
+      const data = await apiService.delete(`${payout.createDraft}/${id}`, null)
+      dispatch(createDraft.fulfilled(data))
+    } catch (error: any) {
+      dispatch(createDraft.rejected({ errorMessage: error }))
+      return BROKER_DEALERS_STATUS.FAILED
     }
-  }
-
-  const result = await apiService.post(payout.createDraft, formData)
-  return result.data
+  }, [dispatch])
 }
 
 export function usePublishPayout() {
@@ -71,6 +80,68 @@ export function usePublishPayout() {
   return callback
 }
 
+const getPayoutPayload = async (payoutData: any) => {
+  const formData = new FormData()
+
+  for (const key in payoutData) {
+    if (key === 'files') {
+      for (const item of payoutData[key]) {
+        if (item.id) {
+          formData.append(`${key}`, JSON.stringify(item))
+        } else {
+          formData.append(`${key}`, item)
+        }
+      }
+    } else {
+
+      if (['secToken', 'token'].includes(key) && payoutData[key].value) {
+        formData.append(key, payoutData[key].value)
+      } else {
+        formData.append(key, payoutData[key])
+      }
+    }
+  }
+
+  return formData
+}
+
+const createDraftPayout = async (newPayoutDraft: any) => {
+  const result = await apiService.post(payout.createDraft, await getPayoutPayload(newPayoutDraft))
+  return result.data
+}
+
+const updateDraftPayout = async (id: number, newPayoutDraft: any, oldPayout: any) => {
+  const removed = oldPayout['files']
+    .filter((f: any) => !f.id || !newPayoutDraft['files'].find((ff: any) => ff.id === f.id))
+    .map((f: any) => f.id)
+    
+  newPayoutDraft['files'] = newPayoutDraft['files']
+    .filter((f: any) => f.id || !removed.find((ff: any) => ff.id === f.id))
+
+  const payload = await getPayoutPayload(newPayoutDraft)
+  payload.append('removedAttachments', JSON.stringify(removed))
+
+  const result = await apiService.put(`${payout.createDraft}/${id}`, payload)
+  return result.data
+}
+
+const updatePayout = async (id: number, newPayoutDraft: any, oldPayout: any) => {
+  const removed = oldPayout['files']
+    .filter((f: any) => !newPayoutDraft['files'].find((ff: any) => ff.id === f.id))
+    .map((f: any) => f.id)
+    
+  newPayoutDraft['files'] = newPayoutDraft['files']
+    .filter((f: any) => !f.id || !removed.find((ff: any) => ff.id === f.id))
+
+  const payload = await getPayoutPayload(newPayoutDraft)
+
+  payload.append('removedAttachments', JSON.stringify(removed))
+
+  const result = await apiService.post(`${payout.publish}`, payload)
+  return result.data
+}
+
+
 export function useCreateDraftPayout() {
   const dispatch = useDispatch<AppDispatch>()
   const callback = useCallback(
@@ -78,6 +149,44 @@ export function useCreateDraftPayout() {
       try {
         dispatch(createDraft.pending())
         const data = await createDraftPayout(newPayoutDraft)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: error }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useUpdateDraftPayout() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number, newPayoutDraft: any, old: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await updateDraftPayout(id, newPayoutDraft, old)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: error }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useUpdatePayout() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number, newPayoutDraft: any, old: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await updatePayout(id, newPayoutDraft, old)
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
@@ -160,16 +269,65 @@ export const getMyPayouts = async (params: MyPayoutsParams) => {
 
 export const useGetMyPayoutList = () => {
   const dispatch = useDispatch<AppDispatch>()
-
+  const {
+    list: { page, offset },
+  } = usePayoutState()
   const callback = useCallback(
     async ({ listType, ...params }: MyPayoutsParams) => {
       try {
         dispatch(getMyPayoutList.pending())
-        const data = await getMyPayouts({ listType, ...params })
+        const data = await getMyPayouts({ page, offset, listType, ...params })
         dispatch(getMyPayoutList.fulfilled({ data, type: listType }))
         return data
       } catch (error: any) {
         dispatch(getMyPayoutList.rejected({ errorMessage: 'Could not get payouts list' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+export const deletePayoutItemReq = async (id: number) => {
+  const result = await apiService.delete(payout.deleteDraft(id), undefined)
+  return result.data
+}
+
+export const useDeletePayoutItem = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const history = useHistory()
+  const location = useLocation()
+  const addPopup = useAddPopup()
+  const getMyPayout = useGetMyPayout()
+  const {
+    payoutList: { items, page },
+  } = useTokenManagerState()
+
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(deletePayoutItem.pending())
+        const data = await deletePayoutItemReq(id)
+        dispatch(deletePayoutItem.fulfilled())
+
+        addPopup({
+          info: {
+            success: true,
+            summary: 'Payout event was successfully deleted.',
+          },
+        })
+
+        if (location.pathname === routes.createPayoutEvent) {
+          history.push({ pathname: routes.tokenManager('payout-events', null) })
+        } else {
+          getMyPayout({ my: true, page: items.length === 1 ? page - 1 : page })
+        }
+
+        return data
+      } catch (error: any) {
+        dispatch(deletePayoutItem.rejected({ errorMessage: 'Could not delete payout item' }))
         return null
       }
     },
