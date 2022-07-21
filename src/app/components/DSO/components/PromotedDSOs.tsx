@@ -3,8 +3,8 @@ import { Slide } from 'pure-react-carousel'
 import { DSOCarousel } from 'app/components/DSO/components/DSOCarousel/DSOCarousel'
 import { usePromotedDSOs } from 'app/pages/invest/hooks/usePromotedDSOs'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
 import Box from '@mui/material/Box'
+import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 
 export const PromotedDSOs = () => {
   const { data, status } = usePromotedDSOs()
@@ -20,11 +20,7 @@ export const PromotedDSOs = () => {
       {promotedDSOs.map((dso, i) => (
         <Slide index={i} key={dso._id} className='custom'>
           <Box px={2} height='100%'>
-            <OTCMarketCard
-              type={'TopOffers'}
-              data={dso}
-              viewURL={InvestRoute.view}
-            />
+            <DSOCard type={'TopOffers'} data={dso} viewURL={InvestRoute.view} />
           </Box>
         </Slide>
       ))}

@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
   container: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr',
-    gap: theme.spacing(7),
+    gap: theme.spacing(2),
     [theme.breakpoints.down('lg')]: {
       gridTemplateColumns: '1fr 1fr'
     },

@@ -1,13 +1,13 @@
 import React from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { Grid, TablePagination } from '@mui/material'
-import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
 import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { issuanceURL } from 'config/apiURL'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 
 export const PrimaryOfferings = () => {
   const classes = useStyles()
@@ -25,6 +25,8 @@ export const PrimaryOfferings = () => {
       disabledUseEffect: true
     })
 
+  console.log('items', items)
+
   if (status === 'loading' || items.length === undefined) {
     return null
   }
@@ -34,11 +36,7 @@ export const PrimaryOfferings = () => {
       <Grid container item wrap={'wrap'} className={classes.container}>
         {(items as DigitalSecurityOffering[]).map((dso, i) => (
           <Grid item key={dso._id}>
-            <OTCMarketCard
-              type={'Primary'}
-              data={dso}
-              viewURL={InvestRoute.view}
-            />
+            <DSOCard type={'Primary'} data={dso} viewURL={InvestRoute.view} />
           </Grid>
         ))}
       </Grid>
