@@ -188,7 +188,7 @@ export const MultipleFilters = ({
     setFieldValue(name, data)
   }
 
-  const onResetFilters = async () => {
+  const onResetFilters = () => {
     setValues({ ...initialValues, ...(withSearch && !isMobile && { search: values.search }) })
   }
 
@@ -336,7 +336,7 @@ export const MultipleFilters = ({
             )
         )}
       </FiltersContainer>
-      <ResetFilters disabled={isEmpty} onClick={() => onResetFilters}>
+      <ResetFilters disabled={isEmpty} onClick={onResetFilters}>
         Clear Filters
       </ResetFilters>
     </Container>
