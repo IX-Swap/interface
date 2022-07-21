@@ -5,6 +5,7 @@ import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import { useStyles } from 'app/components/PageHeader/PageHeader.styles'
 import { Variant } from '@mui/material/styles/createTypography'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { getPadding } from 'app/components/PageHeader/utils'
 
 export interface PageHeaderProps {
   title?: string
@@ -35,27 +36,31 @@ export const PageHeader = (props: PageHeaderProps) => {
   const justify = alignment ?? (crumbs.length === 1 ? 'center' : 'flex-start')
   const classes = useStyles()
   const Wrapper = styled ? Box : Fragment
-  const hasCustomComponent =
-    startComponent !== undefined || endComponent !== undefined
 
   const hasStartComponent = startComponent !== undefined
   const hasEndComponent = endComponent !== undefined
 
+  const hasCustomComponent = hasStartComponent || hasEndComponent
+
   const startComponentRef = useRef<any>()
   const startComponentWidth: number | undefined =
     startComponentRef.current?.clientWidth
-  const pr =
-    justify === 'center' && hasStartComponent && !hasEndComponent
-      ? `${(startComponentWidth ?? 0) + 24}px`
-      : 0
+  const pr = getPadding(
+    justify,
+    hasStartComponent,
+    hasEndComponent,
+    startComponentWidth
+  )
 
   const endComponentRef = useRef<any>()
   const endComponentWidth: number | undefined =
     endComponentRef.current?.clientWidth
-  const pl =
-    justify === 'center' && hasEndComponent && !hasStartComponent
-      ? `${(endComponentWidth ?? 0) + 24}px`
-      : 0
+  const pl = getPadding(
+    justify,
+    hasEndComponent,
+    hasStartComponent,
+    endComponentWidth
+  )
 
   return (
     <Wrapper className={styled ? classes.wrapper : ''}>
