@@ -63,7 +63,7 @@ export default function AppBody({
 
   return (
     <React.Fragment>
-      <BodyWrapper {...rest} hasAnnouncement={!cookies.annoucementsSeen} blurred={blurred}>
+      <BodyWrapper {...rest} hasAnnouncement={!cookies.annoucementsSeen} blurred={blurred} paddingXS="12px">
         {blurred && (
           <BlurredOverlay>
             <NotAvailablePage />
