@@ -11,7 +11,7 @@ import { asset } from '__fixtures__/authorizer'
 import { OverviewValue } from 'app/pages/invest/components/MakeCommitment/OverviewValue'
 import { formatMoney } from 'helpers/numbers'
 
-jest.mock('components/LabelledValue', () => ({
+jest.mock('app/pages/invest/components/MakeCommitment/OverviewValue', () => ({
   OverviewValue: jest.fn(() => null)
 }))
 
@@ -34,7 +34,7 @@ describe('AssetBalance', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders LabelledValue with correct props', () => {
+  it('renders OverviewValue with correct props', () => {
     jest
       .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
       .mockReturnValue(

@@ -29,7 +29,7 @@ describe('EstimatedValue', () => {
 
     expect(LabelledValue).toHaveBeenCalledTimes(1)
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Estimated Value', value: formatMoney(123, asset.symbol) },
+      { label: 'Investment amount:', value: formatMoney(123, asset.symbol) },
       {}
     )
   })
