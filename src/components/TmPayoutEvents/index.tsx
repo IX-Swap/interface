@@ -178,15 +178,17 @@ const Row = ({ item }: IRow) => {
 
         <ActionsContainer>
           {status === PAYOUT_STATUS.DRAFT && <DeleteIcon onClick={toggleIsWarningOpen} />}
-          <ButtonGradientBorder
-            onClick={(e: any) => {
-              e.preventDefault()
-              e.stopPropagation()
-              onEdit()
-            }}
-          >
-            <Trans>Edit</Trans>
-          </ButtonGradientBorder>
+          {status !== PAYOUT_STATUS.ENDED && (
+            <ButtonGradientBorder
+              onClick={(e: any) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onEdit()
+              }}
+            >
+              <Trans>Edit</Trans>
+            </ButtonGradientBorder>
+          )}
           <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
         </ActionsContainer>
       </StyledBodyRow>
