@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import { Flex } from 'rebass'
 import { t } from '@lingui/macro'
 
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 
 import { TodayIndicator } from './TodayIndicator'
@@ -51,6 +51,9 @@ const buttonCommonStyles = css`
   padding: 5px 10px;
   position: relative;
   margin-top: 20px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-top: 0px;
+  }
 `
 
 const StyledButtonIXSGradient = styled(ButtonIXSGradient)`

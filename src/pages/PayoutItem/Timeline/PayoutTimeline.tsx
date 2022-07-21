@@ -7,6 +7,7 @@ import { PayoutEvent } from 'state/token-manager/types'
 import { TodayIndicator } from './TodayIndicator'
 import { TimelineDate } from './TimelineDate'
 import { isSameDay, isBefore, isAfter } from '../utils'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   payout: PayoutEvent
@@ -47,6 +48,10 @@ const LineContainer = styled.div`
   position: relative;
   height: 34px;
   pointer-events: none;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: column;
+    height: 320px;
+  }
 `
 
 const Line = styled.div`
@@ -54,6 +59,11 @@ const Line = styled.div`
   height: 2px;
   width: calc(100% - 12px);
   background-color: ${({ theme }) => theme.text2};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: column;
+    height: 320px;
+    width: 2px;
+  }
 `
 
 const FakeFirstButton = styled.div`

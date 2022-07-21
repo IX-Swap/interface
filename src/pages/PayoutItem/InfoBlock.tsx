@@ -25,7 +25,7 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
   const currency = useCurrency(token ?? undefined)
 
   return (
-    <Flex alignItems="start" justifyContent="space-between">
+    <Container>
       <Item title={t`TYPE:`} content={<div style={{ textTransform: 'uppercase' }}>{type}</div>} />
       {currency && (
         <Item
@@ -41,7 +41,7 @@ export const InfoBlock: FC<Props> = ({ type, token, attachments }) => {
       {Boolean(attachments.length) && (
         <Item title={t`ATTACHMENTS:`} content={<Attachments attachments={attachments} />} />
       )}
-    </Flex>
+    </Container>
   )
 }
 
@@ -53,6 +53,14 @@ const Item: FC<ItemProps> = ({ title, content }) => {
     </Flex>
   )
 }
+
+const Container = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+`
 
 const Content = styled(Flex)`
   color: ${({ theme }) => theme.text2};
