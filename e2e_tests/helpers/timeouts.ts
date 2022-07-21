@@ -1,5 +1,5 @@
 export const timeouts = {
-  globalTestsTimeout: 1000000,
+  globalTestsTimeout: 1500000,
   testTimeout: 300000,
   tinyTimeout: 2000,
   timeoutForSignWindow: 5000,
