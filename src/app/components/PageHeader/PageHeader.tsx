@@ -64,7 +64,7 @@ export const PageHeader = (props: PageHeaderProps) => {
           container
           flexWrap={isTablet ? undefined : 'nowrap'}
           justifyContent={hasCustomComponent ? 'space-between' : 'flex-start'}
-          spacing={3}
+          spacing={isTablet ? 1 : 3}
         >
           {hasStartComponent && (
             <Grid item>
@@ -111,6 +111,7 @@ export const PageHeader = (props: PageHeaderProps) => {
                         display='flex'
                         alignItems='center'
                         justifyContent={justify}
+                        mt={1}
                       >
                         <Breadcrumbs />
                       </Box>
