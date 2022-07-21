@@ -79,29 +79,45 @@ Object {
               class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-13 css-1vpwcmr-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container makeStyles-header-12 css-11lq3yg-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
+                    class="MuiBox-root css-mkpo7v"
                   >
-                    <h2
-                      class="MuiTypography-root MuiTypography-h2 makeStyles-title-16 css-rldqdm-MuiTypography-root"
-                    />
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      >
+                        <div
+                          class="MuiBox-root css-geek62"
+                        >
+                          <h2
+                            class="MuiTypography-root MuiTypography-h2 makeStyles-title-16 css-rldqdm-MuiTypography-root"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      >
+                        <div
+                          class="MuiBox-root css-geek62"
+                        >
+                          <nav
+                            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                          >
+                            <ol
+                              class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                            />
+                          </nav>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div
-                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                >
-                  <nav
-                    class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
-                  >
-                    <ol
-                      class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-                    />
-                  </nav>
                 </div>
               </div>
             </div>
@@ -170,29 +186,45 @@ Object {
             class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-13 css-1vpwcmr-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container makeStyles-header-12 css-11lq3yg-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
+                  class="MuiBox-root css-mkpo7v"
                 >
-                  <h2
-                    class="MuiTypography-root MuiTypography-h2 makeStyles-title-16 css-rldqdm-MuiTypography-root"
-                  />
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiBox-root css-geek62"
+                      >
+                        <h2
+                          class="MuiTypography-root MuiTypography-h2 makeStyles-title-16 css-rldqdm-MuiTypography-root"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiBox-root css-geek62"
+                      >
+                        <nav
+                          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                        >
+                          <ol
+                            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                          />
+                        </nav>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-              >
-                <nav
-                  class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
-                >
-                  <ol
-                    class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-                  />
-                </nav>
               </div>
             </div>
           </div>
