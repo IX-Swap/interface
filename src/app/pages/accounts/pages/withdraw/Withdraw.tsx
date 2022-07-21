@@ -1,12 +1,12 @@
-import { Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { WithdrawForm } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawForm'
 import { Setup } from 'app/pages/accounts/pages/withdraw/components/Setup'
+import { useStyles } from 'app/pages/accounts/pages/withdraw/components/Withdraw.styles'
 import React from 'react'
 import { BackToCash } from './components/BackToCash'
-import { useStyles } from 'app/pages/accounts/pages/withdraw/components/Withdraw.styles'
 export const Withdraw = () => {
-  const { container, formWrapper } = useStyles()
+  const { container, formWrapper, headerContainer } = useStyles()
   return (
     <Grid
       container
@@ -16,15 +16,16 @@ export const Withdraw = () => {
       paddingBottom={3}
     >
       <Grid item>
-        <PageHeader
-          title='Cash Withdrawal'
-          styled={false}
-          padded={true}
-          variant='h1'
-          alignment='center'
-          showBreadcrumbs={false}
-          startComponent={<BackToCash />}
-        />
+        <Box className={headerContainer}>
+          <PageHeader
+            title='Cash Withdrawal'
+            styled={false}
+            variant='h1'
+            alignment='center'
+            showBreadcrumbs={false}
+            startComponent={<BackToCash />}
+          />
+        </Box>
       </Grid>
       <Grid item container justifyContent={'center'}>
         <Grid item className={formWrapper}>

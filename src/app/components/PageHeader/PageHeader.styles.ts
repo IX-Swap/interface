@@ -15,20 +15,16 @@ export const useStyles = makeStyles(theme => ({
   noMargin: {
     margin: 0
   },
-  padded: {
+  wrapper: {
     position: `relative`,
+    background: theme.palette.header.bg,
     border: 'none',
-    paddingTop: 24,
-    paddingBottom: 24,
+    paddingTop: 30,
+    paddingBottom: 30,
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      maxHeight: 120,
-      paddingTop: 30,
-      paddingBottom: 30
+      maxHeight: 120
     }
-  },
-  wrapper: {
-    background: theme.palette.header.bg
   },
   title: {
     fontSize: 24,

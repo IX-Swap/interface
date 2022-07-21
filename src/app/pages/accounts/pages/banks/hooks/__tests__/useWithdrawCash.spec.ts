@@ -52,7 +52,7 @@ describe('useWithdrawCash', () => {
           )
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
-            'Cash withdrawal successfull',
+            'Withdrawal sent to authorizer, wait for approval',
             'success'
           )
         },
