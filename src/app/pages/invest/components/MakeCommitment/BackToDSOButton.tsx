@@ -4,9 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { Icon } from 'ui/Icons/Icon'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
-export interface BackToDSOButtonProps extends ButtonProps {}
-
-export const BackToDSOButton = (props: BackToDSOButtonProps) => {
+export const BackToDSOButton = (props: ButtonProps) => {
   const history = useHistory()
   const { isMobile } = useAppBreakpoints()
 
