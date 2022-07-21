@@ -101,7 +101,7 @@ const StyledInput = styled(Input)`
 const Container = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 48px;
+  /* margin-top: 48px; */
   gap: 16px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;

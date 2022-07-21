@@ -55,7 +55,7 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
         </Flex>
 
         <Flex marginTop="16px">
-          {isMyPayout && <EditButton onClick={edit}>Edit</EditButton>}
+          {isMyPayout && status !== PAYOUT_STATUS.ENDED && <EditButton onClick={edit}>Edit</EditButton>}
           <PayoutStatus status={status} />
         </Flex>
       </Flex>
@@ -89,7 +89,7 @@ const SecTokenLink = styled(NavLink)`
   font-size: 18px;
   line-height: 27px;
   text-decoration: underline;
-  color: #fff;
+  color: ${({ theme }) => theme.text1};
 `
 
 const EditButton = styled(ButtonGradientBorder)`
