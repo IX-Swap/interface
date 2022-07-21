@@ -4,7 +4,11 @@ export const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gap: theme.spacing(1.25)
+    gap: theme.spacing(1.25),
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: '1fr',
+      rowGap: theme.spacing(1)
+    }
   },
   button: {
     paddingTop: theme.spacing(1.25),
