@@ -12,7 +12,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useUserState } from 'state/user/hooks'
 
-import { momentFormatDate } from '../utils'
+import { formatDate } from '../utils'
 
 const headerCells = [t`Recipient’s wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Transaction`]
 
@@ -86,7 +86,7 @@ const Row: FC<RowProps> = ({ item }) => {
         <Box marginX="4px">{secToken.originalSymbol ?? secToken.symbol}</Box>
         <Box>{sum}</Box>
       </Flex>
-      <div>{`${momentFormatDate(createdAt)} - ${new Date(createdAt).getUTCHours()}:${new Date(
+      <div>{`${formatDate(createdAt)} - ${new Date(createdAt).getUTCHours()}:${new Date(
         createdAt
       ).getUTCMinutes()}`}</div>
       <div style={{ textDecoration: 'underline' }}>

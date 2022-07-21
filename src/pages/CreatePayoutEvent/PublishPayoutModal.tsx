@@ -9,7 +9,7 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonIXSGradient } from 'components/Button'
 import { Checkbox } from 'components/Checkbox'
 import Column from 'components/Column'
-import { momentFormatDate } from 'pages/PayoutItem/utils'
+import { formatDate } from 'pages/PayoutItem/utils'
 import { useAddPopup } from 'state/application/hooks'
 import { usePublishPayout } from 'state/payout/hooks'
 
@@ -75,9 +75,9 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
               }
             />
             <Data label={t`Payout Type:`} value={type} />
-            <Data label={t`Record Date:`} value={momentFormatDate(recordDate)} />
-            <Data label={t`Payment Start Date:`} value={momentFormatDate(startDate)} />
-            {endDate && <Data label={t`Payment Deadline:`} value={momentFormatDate(endDate)} />}
+            <Data label={t`Record Date:`} value={formatDate(recordDate)} />
+            <Data label={t`Payment Start Date:`} value={formatDate(startDate)} />
+            {endDate && <Data label={t`Payment Deadline:`} value={formatDate(endDate)} />}
           </Card>
           <Card marginBottom="24px">
             <span>{t`Payment Details:`}</span>

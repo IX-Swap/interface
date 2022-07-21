@@ -6,7 +6,7 @@ import { PayoutEvent } from 'state/token-manager/types'
 
 import { TodayIndicator } from './TodayIndicator'
 import { TimelineDate } from './TimelineDate'
-import { isSameDay, isBefore, isAfter } from '../utils'
+import { isSameDay, isSameOrBefore, isSameOrAfter, isBefore } from '../utils'
 import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
@@ -14,28 +14,42 @@ interface Props {
 }
 
 export const PayoutTimeline: FC<Props> = ({ payout }) => {
-  const { recordDate, startDate, endDate } = payout
-
+  const { recordDate, endDate } = payout
+  const startDate = '2022-07-21T00:00:00.000Z'
   const todayActionDate = useMemo(
     () => isSameDay(recordDate) || isSameDay(startDate) || isSameDay(endDate),
     [recordDate, startDate, endDate]
   )
 
+  const needFake = useMemo(() => {
+    return isBefore(recordDate)
+  }, [recordDate])
+
   const todayPosition = useMemo(() => {
-    if (isBefore(recordDate)) return '0px'
-    if (!endDate && recordDate && startDate) return '50%'
-    if (isAfter(recordDate) && isBefore(startDate)) return '26%'
-    if (isAfter(startDate) && isBefore(endDate)) return '75%'
-  }, [recordDate, startDate, endDate])
+    if (needFake) return '0%'
+    if (isSameDay(recordDate)) {
+      return '0%'
+    }
+    if (isSameDay(startDate)) {
+      return '50%'
+    }
+    if (isSameDay(endDate)) {
+      return '100%'
+    }
+    if (isSameOrAfter(recordDate) && isSameOrBefore(startDate)) return '25%'
+    if (isSameOrAfter(startDate) && isSameOrBefore(endDate)) return `75%`
+  }, [recordDate, startDate, endDate, needFake])
 
   return (
     <Box style={{ marginTop: 24, padding: '0px 36px' }}>
       <LineContainer>
-        {todayPosition === '0px' && <FakeFirstButton />}
+        {needFake && <FakeFirstButton />}
         {recordDate && <TimelineDate date={recordDate} label="Record Date" />}
         {startDate && <TimelineDate date={startDate} label="Payment Start Date" />}
         {endDate && <TimelineDate withBackground={false} date={endDate} label="Payment Deadline" />}
-        <Line>{!todayActionDate && <TodayIndicator left={todayPosition} />}</Line>
+        <Line>
+          <TodayIndicator offset={todayPosition} overlay={todayActionDate} />
+        </Line>
       </LineContainer>
     </Box>
   )
@@ -57,7 +71,7 @@ const LineContainer = styled.div`
 const Line = styled.div`
   position: absolute;
   height: 2px;
-  width: calc(100% - 12px);
+  width: 100%;
   background-color: ${({ theme }) => theme.text2};
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;

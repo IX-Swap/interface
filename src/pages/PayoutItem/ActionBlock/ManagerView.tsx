@@ -9,7 +9,7 @@ import { PayoutEvent } from 'state/token-manager/types'
 import { useHistory } from 'react-router-dom'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
-import { momentFormatDate } from '../utils'
+import { formatDate } from '../utils'
 import { routes } from 'utils/routes'
 
 interface Props {
@@ -58,7 +58,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
             </Flex>
             <Flex>
               <Box marginRight="4px">{t`Users will be able to start claiming on`}</Box>
-              <Box fontWeight={600}>{momentFormatDate(new Date())}</Box>
+              <Box fontWeight={600}>{formatDate(new Date())}</Box>
             </Flex>
           </>
         )
@@ -101,7 +101,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
           </>
         )
       case PAYOUT_STATUS.ANNOUNCED:
-        return t`Your record date has not come yet, tokens will be counted on ${momentFormatDate(recordDate)}`
+        return t`Your record date has not come yet, tokens will be counted on ${formatDate(recordDate)}`
       default:
         return null
     }
