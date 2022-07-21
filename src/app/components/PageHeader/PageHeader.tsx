@@ -5,9 +5,11 @@ import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import { useStyles } from 'app/components/PageHeader/PageHeader.styles'
 import { Variant } from '@mui/material/styles/createTypography'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import classNames from 'classnames'
 
 export interface PageHeaderProps {
   title?: string
+  padded?: boolean
   alignment?: string
   showBreadcrumbs?: boolean
   hasBackButton?: boolean
@@ -24,6 +26,7 @@ export const PageHeader = (props: PageHeaderProps) => {
     title,
     alignment = 'flex-start',
     showBreadcrumbs = true,
+    padded = false,
     variant = 'h2',
     styled = true,
     startComponent,
@@ -34,7 +37,7 @@ export const PageHeader = (props: PageHeaderProps) => {
   const { isTablet } = useAppBreakpoints()
   const justify = alignment ?? (crumbs.length === 1 ? 'center' : 'flex-start')
   const classes = useStyles()
-  const Wrapper = styled ? Box : Fragment
+  const Wrapper = styled || padded ? Box : Fragment
   const hasCustomComponent =
     startComponent !== undefined || endComponent !== undefined
 
@@ -56,15 +59,19 @@ export const PageHeader = (props: PageHeaderProps) => {
     justify === 'center' && hasEndComponent && !hasStartComponent
       ? `${(endComponentWidth ?? 0) + 24}px`
       : 0
-
+  const className = styled
+    ? classNames(classes.wrapper, classes.padded)
+    : padded
+    ? classNames(classes.padded)
+    : ''
   return (
-    <Wrapper className={styled ? classes.wrapper : ''}>
+    <Wrapper className={className}>
       <Container>
         <Grid
           container
           flexWrap={isTablet ? undefined : 'nowrap'}
           justifyContent={hasCustomComponent ? 'space-between' : 'flex-start'}
-          spacing={3}
+          spacing={{ xs: 2, sm: 3 }}
         >
           {hasStartComponent && (
             <Grid item>
