@@ -9,12 +9,14 @@ export interface OTPInputFieldProps extends OtpInputProps {
   fullwidth?: boolean
   name?: string
   control?: Control
+  size?: 'small' | 'medium'
 }
 
 export const OTPInputField = ({
   variant = 'standard',
   fullwidth = false,
   shouldAutoFocus = false,
+  size = 'medium',
   ...rest
 }: OTPInputFieldProps) => {
   const classes = useStyles()
@@ -26,7 +28,9 @@ export const OTPInputField = ({
       containerStyle={classnames(classes.container, {
         [classes.fullwidth]: fullwidth
       })}
-      inputStyle={classes.input}
+      inputStyle={classnames(classes.input, {
+        [classes.small]: size === 'small'
+      })}
       shouldAutoFocus={shouldAutoFocus}
       placeholder={placeholder}
       {...rest}
