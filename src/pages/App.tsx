@@ -41,7 +41,7 @@ const AppWrapper = styled.div`
   flex-flow: column;
   align-items: flex-start;
   position: relative;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 `
 
 const BodyWrapper = styled.div`
