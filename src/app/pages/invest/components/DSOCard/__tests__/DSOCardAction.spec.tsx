@@ -2,33 +2,34 @@ import React from 'react'
 import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import {
-  PrimaryInvestLink,
-  PrimaryInvestLinkProps
-} from 'app/pages/invest/components/OTCMarketCard/PrimaryInvestLink'
+  DSOCardAction,
+  DSOCardActionProps
+} from 'app/pages/invest/components/DSOCard/DSOCardAction'
 import * as Button from '@mui/material/Button'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
-describe('PrimaryInvestLink', () => {
+describe('DSOCardAction', () => {
   const defaultPrimaryInvestProps = {
-    style: { fontSize: 16, marginTop: 16 },
+    fullWidth: true,
+    style: { fontSize: 16, marginTop: 24 },
     variant: 'contained',
     color: 'primary',
     component: AppRouterLinkComponent
   }
 
-  const primaryProps: PrimaryInvestLinkProps = {
+  const primaryProps: DSOCardActionProps = {
     type: 'Primary',
     data: dso
   }
 
-  const OTCProps: PrimaryInvestLinkProps = {
+  const OTCProps: DSOCardActionProps = {
     type: 'OTC',
     data: dso
   }
-  const TopOffersProps: PrimaryInvestLinkProps = {
+  const TopOffersProps: DSOCardActionProps = {
     type: 'Primary',
     data: dso
   }
@@ -38,7 +39,7 @@ describe('PrimaryInvestLink', () => {
   })
 
   it('renders Button with correct props when type is Primary', () => {
-    render(<PrimaryInvestLink {...primaryProps} />)
+    render(<DSOCardAction {...primaryProps} />)
 
     expect(Button).toHaveBeenCalledTimes(1)
     expect(Button).toHaveBeenCalledWith(
@@ -57,7 +58,7 @@ describe('PrimaryInvestLink', () => {
   })
 
   it('renders Button with correct props when type is Primary', () => {
-    render(<PrimaryInvestLink {...TopOffersProps} />)
+    render(<DSOCardAction {...TopOffersProps} />)
 
     expect(Button).toHaveBeenCalledTimes(1)
     expect(Button).toHaveBeenCalledWith(
@@ -76,7 +77,7 @@ describe('PrimaryInvestLink', () => {
   })
 
   it('renders Button with correct props when type is OTC', () => {
-    render(<PrimaryInvestLink {...OTCProps} />)
+    render(<DSOCardAction {...OTCProps} />)
 
     expect(Button).toHaveBeenCalledTimes(1)
     expect(Button).toHaveBeenCalledWith(

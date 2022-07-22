@@ -22,7 +22,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
             >
               Company Name
             </p>
@@ -45,7 +45,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
             >
               Country of Incorporation
             </p>
@@ -68,7 +68,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
             >
               Source of Funds
             </p>
@@ -98,7 +98,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
             >
               Registration Number/UEN
             </p>
@@ -121,7 +121,7 @@ exports[`CorporateInfo should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+              style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
             >
               Legal Entity
             </p>
