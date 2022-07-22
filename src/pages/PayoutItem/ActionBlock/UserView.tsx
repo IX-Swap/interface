@@ -23,10 +23,11 @@ interface Props {
 
 export const UserView: FC<Props> = ({ payout, payoutToken }) => {
   const { account } = useActiveWeb3React()
-  const { secToken, status } = payout
+  const { secToken, status, secTokenAmount, tokenAmount } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
   const statuses = [custodianStatus, brokerDealerStatus]
-  const balance = useCurrencyBalance(account ?? undefined, (secToken as any) ?? undefined)
+
+  const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
 
   const secPayoutToken = new WrappedTokenInfo(secToken)
@@ -42,9 +43,9 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
   const getContentByStatus = () => {
     const recordDateText = (
       <Flex style={{ color: '#edceff80' }} marginBottom="24px" alignItems="center">
-        <Box marginRight="4px">{t`based on your SEC token balance of`}</Box>
+        <Box marginRight="4px">{t`based on your Security token balance of`}</Box>
         <CurrencyLogo currency={secPayoutToken} size="20px" />
-        <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} 30`}</Box>
+        <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} ${secTokenAmount}`}</Box>
         <Box>{t`as of record date.`}</Box>
       </Flex>
     )
@@ -58,12 +59,9 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
             </Box>
             <Flex alignItems="center">
               <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box
-                marginLeft="4px"
-                fontSize="24px"
-                lineHeight="36px"
-                fontWeight={600}
-              >{`${payoutToken.symbol} 0.002`}</Box>
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>{`${payoutToken.symbol} ${Number(
+                tokenAmount || '0'
+              ).toFixed(4)}`}</Box>
             </Flex>
           </>
         ) : (
@@ -71,7 +69,9 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
             <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
               <Box fontSize="20px" lineHeight="30px" marginRight="4px">{t`You can now claim your payout of`}</Box>
               <CurrencyLogo size="24px" currency={payoutToken} />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} 0.002`}</Box>
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
+                tokenAmount || '0'
+              ).toFixed(4)}`}</Box>
             </Flex>
             {recordDateText}
           </>
@@ -82,7 +82,9 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
             <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
               <Box fontSize="20px" lineHeight="30px" marginRight="4px">{t`You have a payout of`}</Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} 0.002 available`}</Box>
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
+                tokenAmount || '0'
+              ).toFixed(4)} available`}</Box>
             </Flex>
             {recordDateText}
           </>
@@ -98,7 +100,9 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
             <Flex fontSize="20px" lineHeight="30px" alignItems="center" marginBottom="12px" fontWeight={600}>
               <Box marginRight="4px">{t`Your payout of`}</Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginX="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} 0.002`}</Box>
+              <Box marginX="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
+                tokenAmount || '0'
+              ).toFixed(4)}`}</Box>
               <Box>{t`will became available once payout starts`}</Box>
             </Flex>
           </>
@@ -121,7 +125,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
           )}
         </Container>
       )}
-      <FuturePayout payoutToken={payoutToken} />
+      <FuturePayout secToken={secToken} />
     </Column>
   )
 }
@@ -195,7 +199,7 @@ const PayoutEnded: FC = () => (
   </Container>
 )
 
-const FuturePayout: FC<{ payoutToken: any }> = ({ payoutToken }) => {
+const FuturePayout: FC<{ secToken: any }> = ({ secToken }) => {
   const history = useHistory()
 
   const onBuyClick = () => {
@@ -206,9 +210,9 @@ const FuturePayout: FC<{ payoutToken: any }> = ({ payoutToken }) => {
     <FuturePayoutContainer>
       <Flex marginBottom="12px" alignItems="center">
         <Box marginRight="4px">{t`Add`}</Box>
-        <CurrencyLogo currency={payoutToken} size="20px" />
+        <CurrencyLogo currency={secToken} size="20px" />
         <Box marginX="4px" fontWeight={600}>
-          {payoutToken.symbol}
+          {secToken.symbol}
         </Box>
         <Box marginRight="4px">{t`to increase possible profits in future payout.`}</Box>
       </Flex>
