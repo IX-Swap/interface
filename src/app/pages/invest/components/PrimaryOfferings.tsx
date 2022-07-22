@@ -25,8 +25,6 @@ export const PrimaryOfferings = () => {
       disabledUseEffect: true
     })
 
-  console.log('items', items)
-
   if (status === 'loading' || items.length === undefined) {
     return null
   }
