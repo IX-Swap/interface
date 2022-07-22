@@ -6,12 +6,12 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
-export interface PrimaryInvestLinkProps {
+export interface DSOCardActionProps {
   type: 'Primary' | 'OTC' | 'TopOffers'
   data: DigitalSecurityOffering
 }
 
-export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
+export const DSOCardAction = ({ data, type }: DSOCardActionProps) => {
   const { user } = useAuth()
 
   const isDisabled = data.createdBy === user?._id
@@ -31,6 +31,7 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
   return (
     <TwoFADialogWrapper>
       <Button
+        fullWidth
         component={AppRouterLinkComponent}
         color='primary'
         variant={'contained'}
@@ -38,7 +39,7 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
         params={params}
         data-testid='otc-card-link'
         disabled={isDisabled || data?.disableInvestInCampaign === true}
-        style={{ fontSize: 16, marginTop: 16 }}
+        style={{ fontSize: 16, marginTop: 24 }}
       >
         {type !== 'OTC' ? 'Invest' : 'Trade'}
       </Button>
