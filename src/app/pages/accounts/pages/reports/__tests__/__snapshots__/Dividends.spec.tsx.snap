@@ -44,7 +44,7 @@ exports[`Dividends should match snapshot when data is loaded successfully 1`] = 
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <div
-                      class="MuiBox-root css-geek62"
+                      class="MuiBox-root css-ftbd7"
                     >
                       <nav
                         class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
@@ -261,7 +261,7 @@ exports[`Dividends should match snapshot when data is undefined 1`] = `
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <div
-                      class="MuiBox-root css-geek62"
+                      class="MuiBox-root css-ftbd7"
                     >
                       <nav
                         class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
@@ -405,7 +405,7 @@ exports[`Dividends should match snapshot when data length is 0 1`] = `
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <div
-                      class="MuiBox-root css-geek62"
+                      class="MuiBox-root css-ftbd7"
                     >
                       <nav
                         class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"

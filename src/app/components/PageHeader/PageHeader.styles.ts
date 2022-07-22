@@ -17,13 +17,14 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     position: `relative`,
-    background: theme.palette.header.bg,
+    background: 'transparent',
     border: 'none',
     paddingTop: 30,
     paddingBottom: 30,
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      maxHeight: 120
+      maxHeight: 120,
+      background: theme.palette.header.bg
     }
   },
   title: {
