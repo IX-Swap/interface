@@ -34,6 +34,8 @@ export class LiquidityPoolsPage extends WebPage {
   readonly openSettingsGearButton: Locator;
   readonly myLiquidityTitle: Locator;
   readonly importPoolLink: Locator;
+  readonly liquidytyPoolItem: string;
+  readonly expandDataArrow: string;
 
   chooseTokenDropdownText = 'Choose token';
   confirmationPopUpText = 'Waiting For Confirmation';
@@ -76,6 +78,13 @@ export class LiquidityPoolsPage extends WebPage {
     this.openSettingsGearButton = page.locator(`[data-testid="open-settings-button"]`);
     this.myLiquidityTitle = page.locator(`text=${this.myLiquidityTitleText}`);
     this.importPoolLink = page.locator(`[data-testid="find-pool-button"]`);
+    this.liquidytyPoolItem = '[data-testid="liquidityPoolItem"]';
+    this.expandDataArrow = '[data-testid="openTable"]';
+  }
+
+  // Selectors fetching
+  async getPoolLocator(poolName: string) {
+    return this.page.locator(`${this.liquidytyPoolItem}:has-text("${poolName}")`);
   }
 
   // Assertions
@@ -84,13 +93,17 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   async checkThatDeletedLiquidityPoolIsNotVisible(pool) {
+    const poolLocator = await this.getPoolLocator(pool)
+
     await expect(this.liquidityPoolLoading).not.toBeVisible();
     await this.page.waitForTimeout(5000);
-    await expect(this.page.locator(`//span[text()="My Liquidity"]//following::div[text()="${pool}"]`)).not.toBeVisible();
+    await expect(poolLocator).not.toBeVisible();
   }
 
   async checkThatCreatedPoolIsVisible(pool) {
-    await expect(this.page.locator(`//span[text()="My Liquidity"]//following::div[text()="${pool}"]`)).toBeVisible()
+    const poolLocator = await this.getPoolLocator(pool)
+
+    await expect(poolLocator).toBeVisible()
   }
 
   // Actions
@@ -139,7 +152,7 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   async clickPoolDetailsDropdown(pool) {
-    await this.page.click(`text=${pool}M >> [data-testid="openTable"]`);
+    await this.page.click(`text=${pool}M >> ${this.expandDataArrow}`);
   }
 
   async clickRemoveLiquidityButton() {
@@ -180,12 +193,14 @@ export class LiquidityPoolsPage extends WebPage {
     await approveMetamaskPopUp.click(this.metamaskPage.signButton);
   }
 
-  async  removeCreatedLiqudityPoolIfItPresent(poolsArray) {
-    for (const pools of poolsArray) {
+  async removeCreatedLiqudityPoolIfItPresent(poolsArray) {
+    for (const pool of poolsArray) {
+      const poolLocator = await this.getPoolLocator(pool)
+
       await expect(this.liquidityPoolLoading).not.toBeVisible();
       await this.page.waitForTimeout(5000);
-      if (await this.page.isVisible(`//span[text()="My Liquidity"]//following::div[text()="${pools}"]`)) {
-        await this.removeCreatedLiqudityPool(pools);
+      if (await poolLocator.isVisible()) {
+        await this.removeCreatedLiqudityPool(pool);
       }
     }
   }
