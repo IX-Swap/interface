@@ -3,8 +3,9 @@ import { Typography, Grid, FormHelperText } from '@mui/material'
 import { OTPInputField } from 'components/form/OTPInputField'
 import { ErrorMessage } from '@hookform/error-message'
 import { hasValue } from 'helpers/forms'
-
-export interface OTPFieldProps {
+import { OtpInputProps } from 'react-otp-input'
+export interface OTPFieldProps
+  extends Omit<OtpInputProps, 'numInputs' | 'onChange'> {
   value?: any
   error?: boolean
   label?: string | ReactNode
@@ -33,7 +34,8 @@ export const OTPField = ({
   numInputs = 6,
   shouldAutoFocus = false,
   isInputNum = false,
-  placeholder
+  placeholder,
+  ...rest
 }: OTPFieldProps) => {
   const renderLabel = () =>
     typeof label === 'string' ? (
@@ -65,6 +67,7 @@ export const OTPField = ({
           variant={variant}
           shouldAutoFocus={shouldAutoFocus}
           placeholder={placeholder}
+          {...rest}
         />
       </Grid>
       {!error && hasHelperText && (

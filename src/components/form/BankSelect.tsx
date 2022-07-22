@@ -35,7 +35,7 @@ export const BankSelect = (props: BankSelectProps) => {
   return (
     <>
       <InputLabel>{props.label}</InputLabel>
-      <Select {...rest} label={undefined} renderValue={renderName}>
+      <Select {...rest} renderValue={renderName} label={undefined}>
         <SelectItem disabled value={undefined}>
           {filteredBanks.length > 0 ? 'Bank' : 'No available banks'}
         </SelectItem>

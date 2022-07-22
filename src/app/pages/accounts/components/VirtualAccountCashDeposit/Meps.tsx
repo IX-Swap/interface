@@ -1,11 +1,9 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
-import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
 
 export const Meps = ({ accountId, currency }: DepositInfoProps) => {
-  const { infoMessage } = useStyles()
   const mepsDetails = [
     {
       label: 'Currency',
@@ -32,12 +30,7 @@ export const Meps = ({ accountId, currency }: DepositInfoProps) => {
   return (
     <Grid direction='column'>
       <Grid item>
-        <Box px={3} pb={3}>
-          <Grid item>
-            <Typography className={infoMessage}>
-              Bank charges may apply and will be borne by the clients
-            </Typography>
-          </Grid>
+        <Box px={5} pb={5}>
           <Grid container spacing={5}>
             <CashDepositDetails data={mepsDetails} />
           </Grid>
