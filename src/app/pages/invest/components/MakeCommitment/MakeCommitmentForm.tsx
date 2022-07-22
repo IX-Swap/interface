@@ -48,11 +48,7 @@ export const MakeCommitmentForm = (
   return (
     <Form {...rest} onSubmit={handleSubmit} validationSchema={validationSchema}>
       <Paper sx={{ p: { xs: 2, md: 3 } }}>
-        <MakeCommitmentFormFields
-          isCampaign={dso.isCampaign}
-          decimalScale={dso.deploymentInfo?.decimals}
-          dsoCurrency={dso.currency}
-        />
+        <MakeCommitmentFormFields dso={dso} />
       </Paper>
     </Form>
   )

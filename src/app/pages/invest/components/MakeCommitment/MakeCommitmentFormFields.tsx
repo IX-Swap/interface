@@ -1,24 +1,23 @@
-import { Button, Grid } from '@mui/material'
+import { Box, Button, Grid } from '@mui/material'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { AddressSelect } from 'app/pages/invest/components/MakeCommitment/AddressSelect'
+import { DownloadDocumentButton } from 'app/pages/invest/components/MakeCommitment/DownloadDocumentButton'
 import { EstimatedValue } from 'app/pages/invest/components/MakeCommitment/EstimatedValue'
 import { NumberOfUnits } from 'app/pages/invest/components/MakeCommitment/NumberOfUnits'
 import { OTPFIeld } from 'app/pages/invest/components/MakeCommitment/OTPField'
+import { ToC } from 'app/pages/invest/components/MakeCommitment/ToC'
 import { UnitPrice } from 'app/pages/invest/components/MakeCommitment/UnitPrice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
-import { Asset } from 'types/asset'
+import { DigitalSecurityOffering } from 'types/dso'
+import { Divider } from 'ui/Divider'
 
 export interface MakeCommitmentFormFieldsProps {
-  dsoCurrency: Asset
-  isCampaign?: boolean
-  decimalScale?: number
+  dso: DigitalSecurityOffering
 }
 
 export const MakeCommitmentFormFields = ({
-  isCampaign,
-  decimalScale,
-  dsoCurrency
+  dso
 }: MakeCommitmentFormFieldsProps) => {
   const { isTablet } = useAppBreakpoints()
 
@@ -43,9 +42,9 @@ export const MakeCommitmentFormFields = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <NumberOfUnits
-          isCampaign={isCampaign}
-          dsoDecimalScale={decimalScale}
-          dsoCurrencyId={dsoCurrency._id}
+          isCampaign={dso.isCampaign}
+          dsoDecimalScale={dso.deploymentInfo?.decimals}
+          dsoCurrencyId={dso.currency._id}
         />
       </Grid>
       <Grid item xs={12} md={6}>
@@ -56,9 +55,26 @@ export const MakeCommitmentFormFields = ({
       </Grid>
       <Grid item xs={12} md={4} alignSelf='center'>
         <EstimatedValue
-          symbol={dsoCurrency.symbol}
-          dsoCurrencyId={dsoCurrency._id}
+          symbol={dso.currency.symbol}
+          dsoCurrencyId={dso.currency._id}
         />
+      </Grid>
+      <Grid item xs={12}>
+        <Box
+          width='100%'
+          pt={{
+            xs: 0,
+            md: 2
+          }}
+        >
+          <Divider />
+        </Box>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <ToC isCampaign={dso.isCampaign} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <DownloadDocumentButton dso={dso} />
       </Grid>
     </Grid>
   )
