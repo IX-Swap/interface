@@ -24,10 +24,7 @@ export const DSOOverview = ({ dso }: DSOOverviewProps) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <AssetBalance
-            assetId={dso.currency._id}
-            symbol={dso.currency.symbol}
-          />
+          <AssetBalance symbol={dso.currency.symbol} />
         </Grid>
         <Grid item xs={12}>
           <DSOBlockchainDetails dso={dso} />

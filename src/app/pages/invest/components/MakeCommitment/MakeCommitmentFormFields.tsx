@@ -54,10 +54,7 @@ export const MakeCommitmentFormFields = ({
         <OTPFIeld />
       </Grid>
       <Grid item xs={12} md={4} alignSelf='center'>
-        <EstimatedValue
-          symbol={dso.currency.symbol}
-          dsoCurrencyId={dso.currency._id}
-        />
+        <EstimatedValue symbol={dso.currency.symbol} />
       </Grid>
       <Grid item xs={12}>
         <Box

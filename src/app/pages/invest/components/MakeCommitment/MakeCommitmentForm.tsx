@@ -6,9 +6,10 @@ import {
   commitmentCampaignValidationSchema,
   commitmentNonCampaignValidationSchema
 } from 'app/pages/invest/validation'
-import { Paper } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { MakeCommitmentFormFields } from 'app/pages/invest/components/MakeCommitment/MakeCommitmentFormFields'
 import { DigitalSecurityOffering } from 'types/dso'
+import { FormActions } from 'app/pages/invest/components/MakeCommitment/FormActions'
 
 export interface MakeCommitmentFormProps {
   dso: DigitalSecurityOffering
@@ -47,9 +48,16 @@ export const MakeCommitmentForm = (
 
   return (
     <Form {...rest} onSubmit={handleSubmit} validationSchema={validationSchema}>
-      <Paper sx={{ p: { xs: 2, md: 3 } }}>
-        <MakeCommitmentFormFields dso={dso} />
-      </Paper>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper sx={{ p: { xs: 2, md: 3 } }}>
+            <MakeCommitmentFormFields dso={dso} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <FormActions dso={dso} />
+        </Grid>
+      </Grid>
     </Form>
   )
 }
