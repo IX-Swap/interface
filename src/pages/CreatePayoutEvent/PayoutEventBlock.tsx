@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 
 import { TYPE } from 'theme'
 
-import { momentFormatDate } from 'pages/PayoutItem/utils'
+import { isBefore, momentFormatDate } from 'pages/PayoutItem/utils'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 
@@ -178,7 +178,7 @@ export const PayoutEventBlock: FC<Props> = ({
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
-          minDate={dayjs(new Date()).add(1, 'days')}
+          minDate={recordDate && isBefore(recordDate) ? dayjs(recordDate).add(1, 'days') : dayjs().add(1, 'days')}
           maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
           openTo="date"
           value={startDate}
