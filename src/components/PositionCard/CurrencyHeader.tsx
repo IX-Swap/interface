@@ -25,7 +25,7 @@ const StyledText = styled(Text)`
 
 export const CurrencyHeader = ({ currency0, currency1 }: { currency0: Currency; currency1: Currency }) => {
   return (
-    <AutoRow style={{ flexWrap: 'nowrap' }} gap="13px">
+    <AutoRow style={{ flexWrap: 'nowrap' }} gap="13px" data-testid="liquidityPoolItem">
       <DesktopAndTablet>
         <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={33} />
       </DesktopAndTablet>
