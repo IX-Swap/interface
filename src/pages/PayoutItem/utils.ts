@@ -3,10 +3,10 @@ import moment from 'moment'
 
 import { PAYOUT_STATUS } from 'constants/enums'
 
-export const useStatusButtonInfo = (title: PAYOUT_STATUS) => {
+export const useStatusButtonInfo = (status: PAYOUT_STATUS) => {
   const theme = useTheme()
 
-  switch (title) {
+  switch (status) {
     case PAYOUT_STATUS.ANNOUNCED:
       return { title: 'Announced', backgroundColor: theme.orange, color: theme.text1, borderColor: null }
     case PAYOUT_STATUS.DRAFT:
