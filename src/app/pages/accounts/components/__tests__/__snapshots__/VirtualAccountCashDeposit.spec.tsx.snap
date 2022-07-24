@@ -3,13 +3,13 @@
 exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-direction-xs-column css-1gkl4f1-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
   >
     <div
       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <div
-        class="MuiBox-root css-4ecbw1"
+        class="MuiBox-root css-e0l76l"
       >
         <p
           class="MuiTypography-root MuiTypography-body1 css-u7els9-MuiTypography-root"
@@ -22,10 +22,10 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
         </p>
       </div>
       <div
-        class="MuiBox-root css-xpvo6d"
+        class="MuiBox-root css-1nhy5da"
       >
         <div
-          class="MuiTabs-root makeStyles-tabStyle-2 css-1ujnqem-MuiTabs-root"
+          class="MuiTabs-root makeStyles-tabStyle-3 css-1ujnqem-MuiTabs-root"
         >
           <div
             class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
@@ -37,7 +37,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
             >
               <button
                 aria-selected="true"
-                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth ForwardRef(Tab)-selected-6 Mui-selected css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-5 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth ForwardRef(Tab)-selected-7 Mui-selected css-p3mh0u-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="0"
                 type="button"
@@ -46,7 +46,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
               </button>
               <button
                 aria-selected="false"
-                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-5 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="-1"
                 type="button"
@@ -55,7 +55,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
               </button>
               <button
                 aria-selected="false"
-                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-5 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="-1"
                 type="button"
@@ -64,7 +64,7 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
               </button>
               <button
                 aria-selected="false"
-                class="MuiButtonBase-root ForwardRef(Tab)-root-4 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
+                class="MuiButtonBase-root ForwardRef(Tab)-root-5 MuiTab-root MuiTab-textColorPrimary MuiTab-fullWidth css-p3mh0u-MuiButtonBase-root-MuiTab-root"
                 role="tab"
                 tabindex="-1"
                 type="button"
@@ -96,17 +96,8 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
               class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiBox-root css-11jsv8j"
+                class="MuiBox-root css-1prvlvg"
               >
-                <div
-                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-                >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-infoMessage-3 css-1b4l2pg-MuiTypography-root"
-                  >
-                    Bank charges may apply and will be borne by the clients
-                  </p>
-                </div>
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-5 css-1ld3b9g-MuiGrid-root"
                 >
@@ -117,17 +108,17 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                        style="font-weight: 500; width: 100%; color: rgb(119, 129, 148); line-height: 17px; text-align: left;"
                       >
                         Currency
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                        style="font-weight: 500; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         USD
                       </p>
@@ -140,17 +131,17 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                        style="font-weight: 500; width: 100%; color: rgb(119, 129, 148); line-height: 17px; text-align: left;"
                       >
                         Bank:
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                        style="font-weight: 500; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         Hongkong & Shanghai Banking Corporate (HSBC CORP)
                       </p>
@@ -163,17 +154,17 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                        style="font-weight: 500; width: 100%; color: rgb(119, 129, 148); line-height: 17px; text-align: left;"
                       >
                         Beneficiary Account Name / Payee:
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                        style="font-weight: 500; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         IC SG Pte Ltd
                       </p>
@@ -186,17 +177,17 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                        style="font-weight: 500; width: 100%; color: rgb(119, 129, 148); line-height: 17px; text-align: left;"
                       >
                         Beneficiary Account Number:
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                        style="font-weight: 500; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         000000000121
                       </p>
@@ -209,17 +200,17 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                        style="font-weight: 500; width: 100%; color: rgb(119, 129, 148); line-height: 17px; text-align: left;"
                       >
                         SWIFT Code:
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                        style="font-weight: 500; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         HSBCSGSGXXX
                       </p>
@@ -232,17 +223,17 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
-                        style="font-weight: 700; width: 100%; color: rgb(119, 129, 148); line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
+                        style="font-weight: 500; width: 100%; color: rgb(119, 129, 148); line-height: 17px; text-align: left;"
                       >
                         Time Estimation for Deposit:
                       </p>
                       <div
-                        class="MuiBox-root css-1gbh5gc"
+                        class="MuiBox-root css-1jhs511"
                       />
                       <p
-                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1ctkodk-MuiTypography-root"
-                        style="font-weight: 400; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1j7034c-MuiTypography-root"
+                        style="font-weight: 500; color: rgb(52, 58, 71); opacity: 1; width: 100%; word-break: break-word; line-height: 17px;"
                       >
                         1 Hour
                       </p>
@@ -252,10 +243,10 @@ exports[`VirtualAccountCashDeposit should match snapshot 1`] = `
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-paper-1 css-11gelwl-MuiPaper-root"
             >
               <div
-                class="makeStyles-footerInfo-1 MuiBox-root css-0"
+                class="makeStyles-footerInfo-2 MuiBox-root css-0"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-14r80mg-MuiTypography-root"

@@ -45,6 +45,7 @@ export interface QueryFilters {
   step: string | undefined
   errorType: 'email' | 'connection' | undefined
   code: string | undefined
+  account: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters
