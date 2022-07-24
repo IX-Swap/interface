@@ -1,15 +1,12 @@
-import { InternalRouteProps } from 'types/util'
-import {
-  ReactComponent as HoldingsIcon,
-  ReactComponent as AccountIcon
-} from 'assets/icons/navigation/account.svg'
+import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
+import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
-import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
-import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
+import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 import { makeURL } from 'config/appURL'
+import { InternalRouteProps } from 'types/util'
 
 export const AccountsRoute = {
   landing: makeURL(['app', 'account']),
@@ -36,12 +33,6 @@ export const AccountsRoute = {
 }
 
 export const accountsLandingLinks: InternalRouteProps[] = [
-  {
-    label: 'Bank Accounts',
-    path: AccountsRoute.banks,
-    color: '#2b78fd',
-    icon: AccountIcon
-  },
   {
     color: '#43b526',
     icon: CashDepositIcon,
