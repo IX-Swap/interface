@@ -138,6 +138,11 @@ export const lightTheme: DeprecatedThemeOptions = {
       rowColor: '#778194',
       boxShadow: `0px 32px 64px ${tinycolor('#3b4251')
         .setAlpha(0.08)
+        .toRgbString()}`,
+      border: '#DBE2EC',
+      headerColor: '#343A47',
+      headerShadow: `0px -4px 4px ${tinycolor('#a2acbf')
+        .setAlpha(0.08)
         .toRgbString()}`
     },
     paginationItem: {

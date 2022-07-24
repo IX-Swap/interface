@@ -158,6 +158,11 @@ export const darkTheme: DeprecatedThemeOptions = {
       rowColor: '#89A1CE',
       boxShadow: `0px 80px 80px ${tinycolor('#0e1f3f')
         .setAlpha(0.3)
+        .toRgbString()}`,
+      border: '#23407A',
+      headerColor: '#FFFFFF',
+      headerShadow: `0px -4px 4px ${tinycolor('#0e1f3f')
+        .setAlpha(0.08)
         .toRgbString()}`
     },
     skeleton: {
