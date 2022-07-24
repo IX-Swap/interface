@@ -1,7 +1,10 @@
+import { renderCurrencyLabel } from 'helpers/tables'
+
 export const columns = [
   {
     key: 'currency.symbol',
-    label: 'Currency'
+    label: 'Currency',
+    render: renderCurrencyLabel
   },
   {
     key: 'bankName',

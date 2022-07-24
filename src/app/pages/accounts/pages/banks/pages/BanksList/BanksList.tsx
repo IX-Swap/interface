@@ -10,12 +10,9 @@ export const BanksList: React.FC = () => {
   return (
     <Grid container direction='column' spacing={2} style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Bank Accounts' />
+        <PageHeader title='Bank Accounts' endComponent={<Header />} />
       </Grid>
       <RootContainer>
-        <Grid item>
-          <Header />
-        </Grid>
         <VSpacer size='small' />
         <Grid item ml='10px'>
           <Table />

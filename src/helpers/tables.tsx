@@ -1,4 +1,4 @@
-import { Theme, Typography } from '@mui/material'
+import { Box, Theme, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ThemeVariant } from '@mui/material/styles/overrides'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
@@ -11,6 +11,8 @@ import {
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
 import React from 'react'
+import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
+import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { Asset } from 'types/asset'
 import { AssetBalance } from 'types/balance'
 import { CashDeposit } from 'types/cashDeposit'
@@ -19,7 +21,11 @@ import { Commitment } from 'types/commitment'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { Status } from 'ui/Status/Status'
+import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
+import { useStyles } from './tables.styles'
 import { PersonName } from './types'
+
 export const renderMinimumInvestment = (
   amount: number,
   row: DigitalSecurityOffering
@@ -224,3 +230,50 @@ export const renderRowAmount = (value: any, row: any) =>
 export const renderTicker = (value: string, row: any) => (
   <Typography variant='subtitle1'>{value}</Typography>
 )
+
+export const renderBalance = (price: string, item: FirstTableItem) => {
+  return (
+    <>
+      {RenderBolderText(price)}&ensp;
+      {item.currency}
+    </>
+  )
+}
+
+export const renderSGDPrice = (price: string) => {
+  return <>{RenderBolderText(price)}&ensp; SGD</>
+}
+
+export const renderUSDPrice = (price: string) => {
+  return <>{RenderBolderText(price)}&ensp; USD</>
+}
+
+export const renderCurrencyLabel = (currency: string) => {
+  const Icon = currency === 'USD' ? USDIcon : SGDIcon
+  return (
+    <Box display={'flex'} alignItems={'center'}>
+      <Icon style={{ marginRight: 16 }} />
+      {RenderBolderText(currency)}
+    </Box>
+  )
+}
+
+export const RenderBolderText = (text: string) => {
+  const classes = useStyles()
+  return <b className={classes.bolder}>{text}</b>
+}
+
+export const renderStatus = (status: string) => {
+  const getType = () => {
+    switch (status) {
+      case 'Connected':
+        return 'approved'
+      case 'In progress':
+        return 'submitted'
+      default:
+        return 'rejected'
+    }
+  }
+
+  return <Status type={getType()} label={status} />
+}
