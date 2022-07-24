@@ -16,7 +16,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
@@ -245,7 +245,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
@@ -359,7 +359,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
@@ -473,7 +473,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"

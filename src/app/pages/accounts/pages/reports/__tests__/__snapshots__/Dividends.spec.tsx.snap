@@ -16,7 +16,7 @@ exports[`Dividends should match snapshot when data is loaded successfully 1`] = 
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
@@ -233,7 +233,7 @@ exports[`Dividends should match snapshot when data is undefined 1`] = `
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
@@ -377,7 +377,7 @@ exports[`Dividends should match snapshot when data length is 0 1`] = `
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-guj2ta-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
