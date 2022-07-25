@@ -22,9 +22,6 @@ export const DownloadDocumentButton = ({
       fullWidth
       variant='outlined'
       startIcon={<Icon name='download' />}
-      sx={{
-        borderStyle: 'dashed'
-      }}
     >
       {downloadButton}
     </DownloadDSOSubscriptionDocument>
