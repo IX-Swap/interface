@@ -61,9 +61,7 @@ describe('Actions', () => {
 
     fireEvent.click(removeButton, { bubbles: true })
 
-    expect(
-      getByText(/Are You Sure You Want To Remove Bank Account?/i)
-    ).toBeTruthy()
+    expect(getByText(/Are you sure you want to delete account?/i)).toBeTruthy()
   })
 
   it('handles edit action correctly', async () => {

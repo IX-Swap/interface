@@ -6,12 +6,13 @@ import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useStyles } from 'app/components/OTP.styles'
-export const OTPWithdraw = ({ disabled }: { disabled: boolean }) => {
+
+export const OTPInputField = ({ disabled }: { disabled: boolean }) => {
   const { control } = useFormContext()
   const { theme } = useAppTheme()
   const { otp } = useStyles()
   return (
-    <Grid item mt={5}>
+    <Grid item>
       <TypedField
         control={control}
         customRenderer
@@ -32,7 +33,7 @@ export const OTPWithdraw = ({ disabled }: { disabled: boolean }) => {
           >
             <Typography color={theme.palette.dialog.color}>OTP </Typography>
             <Typography color={theme.palette.text.secondary}>
-              &nbsp;(code from your authenticator)
+              &nbsp;(code from authenticator)
             </Typography>
           </Box>
         }

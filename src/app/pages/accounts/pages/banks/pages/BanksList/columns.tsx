@@ -12,17 +12,16 @@ export const columns = [
   },
   {
     key: 'bankAccountNumber',
-    label: 'Account Number',
-    secret: true
+    label: 'Account Number'
   },
   {
     key: 'accountHolderName',
-    label: 'Account Name',
-    secret: true
+    label: 'Account Name'
   },
   {
     key: 'swiftCode',
-    label: 'Swift Code',
-    secret: true
+    label: 'Swift Code'
   }
 ]
+
+export const compactColumns = [...columns]

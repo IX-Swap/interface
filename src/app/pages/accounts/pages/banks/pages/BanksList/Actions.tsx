@@ -1,17 +1,19 @@
-import { Bank } from 'types/bank'
-import React, { useState } from 'react'
-import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
-import { Dropdown } from 'app/components/Dropdown/Dropdown'
-import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
-import { ActionContent } from 'app/pages/accounts/pages/banks/pages/BanksList/ActionContent'
-import { history } from 'config/history'
-import { generatePath } from 'react-router-dom'
-import { useRemoveBank } from 'app/pages/accounts/pages/banks/hooks/useRemoveBank'
-import { BankDetailsDialog } from 'app/pages/accounts/pages/banks/pages/BanksList/BankDetailsDialog'
-import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
-import { Form } from 'components/form/Form'
 import { Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
+import { Dropdown } from 'app/components/Dropdown/Dropdown'
+import { OTPDialog } from 'app/pages/accounts/components/OTPDialog/OTPDialog'
+import { useRemoveBank } from 'app/pages/accounts/pages/banks/hooks/useRemoveBank'
+import { ActionContent } from 'app/pages/accounts/pages/banks/pages/BanksList/ActionContent'
+import { BankDetailsDialog } from 'app/pages/accounts/pages/banks/pages/BanksList/BankDetailsDialog'
+import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
+import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
+import { Form } from 'components/form/Form'
+import { history } from 'config/history'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React, { useState } from 'react'
+import { generatePath } from 'react-router-dom'
+import { Bank } from 'types/bank'
+import { MobileActions } from './MobileActions'
 
 export interface ActionsProps {
   item: Bank
@@ -22,7 +24,7 @@ export const Actions = ({ item }: ActionsProps) => {
   const [showBankDetails, setShowBankDetails] = useState(false)
   const [showOtpDialog, setShowOtpDialog] = useState(false)
   const theme = useTheme()
-
+  const { isTablet } = useAppBreakpoints()
   const view = () => {
     setShowBankDetails(true)
   }
@@ -49,28 +51,33 @@ export const Actions = ({ item }: ActionsProps) => {
 
   return (
     <>
-      <Dropdown
-        arrow
-        contentTheme='dark'
-        trigger={props => (
-          <ActionsDropdownTrigger {...props} isLoading={isLoading} />
-        )}
-        content={props => (
-          <ActionContent
-            {...props}
-            edit={edit}
-            remove={openOtpDialog}
-            view={view}
-          />
-        )}
-      />
+      {!isTablet && (
+        <Dropdown
+          arrow
+          contentTheme='dark'
+          trigger={props => (
+            <ActionsDropdownTrigger {...props} isLoading={isLoading} />
+          )}
+          content={props => (
+            <ActionContent
+              {...props}
+              edit={edit}
+              remove={openOtpDialog}
+              view={view}
+            />
+          )}
+        />
+      )}
+      {isTablet && (
+        <MobileActions edit={edit} remove={openOtpDialog} view={view} />
+      )}
       <BankDetailsDialog bank={item} open={showBankDetails} close={close} />
       <Form onSubmit={remove}>
         <OTPDialog
           open={showOtpDialog}
           close={closeOtpDialog}
-          title='Are you sure you want to remove Bank Account?'
-          actionLabel='Confirm'
+          title='Are you sure you want to delete account?'
+          actionLabel='Delete'
           content={
             <Typography
               variant='body1'
@@ -79,9 +86,7 @@ export const Actions = ({ item }: ActionsProps) => {
               color={theme.palette.text.secondary}
               fontWeight={500}
             >
-              You will no longer be able to do transactions from this bank{' '}
-              <br />
-              account
+              To confirm fill in the code from your authenticator app
             </Typography>
           }
         />
