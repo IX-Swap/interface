@@ -20,6 +20,8 @@ export interface PageHeaderProps {
   endComponent?: React.ReactNode
   titleComponent?: React.ReactNode
   wrapperStyle?: React.CSSProperties
+  mainWrapperStyle?: React.CSSProperties
+  titleWrapperStyle?: React.CSSProperties
   titleStyle?: React.CSSProperties
 }
 
@@ -35,6 +37,8 @@ export const PageHeader = (props: PageHeaderProps) => {
     endComponent,
     titleComponent,
     wrapperStyle,
+    mainWrapperStyle,
+    titleWrapperStyle,
     titleStyle
   } = props
   const { crumbs } = useBreadcrumbs()
@@ -74,6 +78,7 @@ export const PageHeader = (props: PageHeaderProps) => {
         <Grid
           container
           flexWrap={isTablet ? undefined : 'nowrap'}
+          style={mainWrapperStyle}
           justifyContent={hasCustomComponent ? 'space-between' : 'flex-start'}
           alignItems={'center'}
           spacing={isTablet ? 1 : 3}
@@ -88,6 +93,7 @@ export const PageHeader = (props: PageHeaderProps) => {
 
           <Grid item flexGrow={1}>
             <Box
+              style={titleWrapperStyle}
               sx={{
                 height: '100%',
                 pr,

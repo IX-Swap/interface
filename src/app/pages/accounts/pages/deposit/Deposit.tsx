@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from '@mui/material'
+import { Box, Grid, Paper, Typography } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React, { useState } from 'react'
 import { VirtualAccountCashDeposit } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountCashDeposit'
@@ -6,9 +6,12 @@ import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { BackToCash } from 'app/pages/accounts/pages/withdraw/components/BackToCash'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Deposit = () => {
   const { getFilterValue } = useQueryFilter()
+  const { isMiniLaptop, isTablet } = useAppBreakpoints()
+  const subtitle = 'Bank charges may apply and will be borne by the clients'
   const accountFromFilter = getFilterValue('account')
   const [virtualAccountId, setVirtualAccountId] = useState<string | undefined>(
     accountFromFilter
@@ -21,10 +24,16 @@ export const Deposit = () => {
       <Grid item>
         <PageHeader
           title={'Deposit to Virtual Account'}
-          subtitle={'Bank charges may apply and will be borne by the clients'}
+          subtitle={!isMiniLaptop ? subtitle : undefined}
           wrapperStyle={{ backgroundColor: 'inherit' }}
+          titleWrapperStyle={isTablet ? { paddingRight: 0 } : undefined}
+          mainWrapperStyle={
+            isTablet
+              ? { flexDirection: 'column-reverse', alignItems: 'flex-start' }
+              : undefined
+          }
           variant='h1'
-          titleStyle={{ fontSize: 32, height: 'initial' }}
+          titleStyle={{ fontSize: isTablet ? 24 : 32, height: 'initial' }}
           alignment='center'
           showBreadcrumbs={false}
           startComponent={<BackToCash />}
@@ -44,9 +53,18 @@ export const Deposit = () => {
               <Box
                 sx={{
                   px: { xs: 3, sm: 5 },
-                  paddingTop: 5
+                  paddingTop: { xs: 3, sm: 5 }
                 }}
               >
+                {isMiniLaptop && (
+                  <Typography
+                    color={'text.secondary'}
+                    textAlign={'center'}
+                    marginBottom={4}
+                  >
+                    {subtitle}
+                  </Typography>
+                )}
                 <CurrencySelect
                   accounts={list}
                   defaultValue={accountFromFilter}
