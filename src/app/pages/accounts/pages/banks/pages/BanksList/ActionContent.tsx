@@ -1,14 +1,8 @@
-import React from 'react'
-import { List } from '@mui/material'
-import { Action } from 'app/pages/authorizer/components/Action'
+import { List, Box } from '@mui/material'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
-
-import {
-  Launch as LaunchIcon,
-  Edit as EditIcon,
-  Delete as RemoveIcon
-} from '@mui/icons-material'
-
+import React from 'react'
+import { useStyles } from 'app/pages/accounts/pages/banks/pages/BanksList/ActionContent.styles'
+import { NewAction } from 'app/pages/authorizer/components/NewAction'
 export interface ActionContentProps extends DropdownContentProps {
   edit: () => void
   remove: () => void
@@ -21,11 +15,16 @@ export const ActionContent = ({
   view,
   injectedProps
 }: ActionContentProps) => {
+  const classes = useStyles()
   return (
-    <List data-testid='dropdown' onClick={injectedProps.close}>
-      <Action label='View' icon={LaunchIcon} onClick={view} />
-      <Action label='Edit' icon={EditIcon} onClick={edit} />
-      <Action label='Remove' icon={RemoveIcon} onClick={remove} />
-    </List>
+    <Box className={classes.wrapper}>
+      <List data-testid='dropdown' onClick={injectedProps.close}>
+        <NewAction label='View Details' onClick={view} />
+        <div className={classes.separator} />
+        <NewAction label='Edit' onClick={edit} />
+        <div className={classes.separator} />
+        <NewAction label='Delete' onClick={remove} />
+      </List>
+    </Box>
   )
 }

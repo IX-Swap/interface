@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Typography, useTheme } from '@mui/material'
 import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { OTPDialog } from 'app/pages/accounts/components/OTPDialog/OTPDialog'
 import { useRemoveBank } from 'app/pages/accounts/pages/banks/hooks/useRemoveBank'
@@ -53,8 +52,6 @@ export const Actions = ({ item }: ActionsProps) => {
     <>
       {!isTablet && (
         <Dropdown
-          arrow
-          contentTheme='dark'
           trigger={props => (
             <ActionsDropdownTrigger {...props} isLoading={isLoading} />
           )}
