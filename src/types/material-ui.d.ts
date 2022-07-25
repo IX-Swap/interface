@@ -56,6 +56,7 @@ export interface ButtonPaletteOptions {
   colorAlternate: CSSProperties['color']
   colorAlternateHover: CSSProperties['color']
   borderAlternateHover: string
+  bgLight: string
 }
 
 export interface ButtonGroupPalette {

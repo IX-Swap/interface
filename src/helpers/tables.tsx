@@ -23,7 +23,6 @@ import { DSWithdrawal } from 'types/dsWithdrawal'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { Status } from 'ui/Status/Status'
 import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
-import { useStyles } from './tables.styles'
 import { PersonName } from './types'
 
 export const renderMinimumInvestment = (
@@ -259,8 +258,7 @@ export const renderCurrencyLabel = (currency: string) => {
 }
 
 export const RenderBolderText = (text: string) => {
-  const classes = useStyles()
-  return <b className={classes.bolder}>{text}</b>
+  return <Typography fontWeight={500}>{text}</Typography>
 }
 
 export const renderStatus = (status: string) => {

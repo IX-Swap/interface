@@ -90,7 +90,8 @@ export const darkTheme: DeprecatedThemeOptions = {
       bgAlternateHover: '#132A57',
       colorAlternate: '#FFFFFF',
       colorAlternateHover: '#4C88FF',
-      borderAlternateHover: '#4C88FF'
+      borderAlternateHover: '#4C88FF',
+      bgLight: tinycolor('#4c88ff').setAlpha(0.16).toRgbString()
     },
     buttonGroup: {
       bg: '#132A57',

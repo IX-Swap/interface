@@ -86,7 +86,8 @@ export const lightTheme: DeprecatedThemeOptions = {
       bgAlternateHover: '#78A5FF',
       colorAlternate: '#778194',
       colorAlternateHover: '#FFFFFF',
-      borderAlternateHover: tinycolor('#4c88ff').setAlpha(0.3).toRgbString()
+      borderAlternateHover: tinycolor('#4c88ff').setAlpha(0.3).toRgbString(),
+      bgLight: tinycolor('#4c88ff').setAlpha(0.16).toRgbString()
     },
     buttonGroup: {
       bg: '#FFFFFF',
