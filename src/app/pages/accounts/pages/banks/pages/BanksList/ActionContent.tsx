@@ -19,7 +19,7 @@ export const ActionContent = ({
   return (
     <Box className={classes.wrapper}>
       <List data-testid='dropdown' onClick={injectedProps.close}>
-        <NewAction label='View Details' onClick={view} />
+        <NewAction label='View details' onClick={view} />
         <div className={classes.separator} />
         <NewAction label='Edit' onClick={edit} />
         <div className={classes.separator} />

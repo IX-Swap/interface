@@ -32,12 +32,12 @@ describe('Actions', () => {
 
     fireEvent.click(moreButton, { bubbles: true })
 
-    expect(getByText('View')).toBeTruthy()
+    expect(getByText('View details')).toBeTruthy()
     expect(getByText('Edit')).toBeTruthy()
-    expect(getByText('Remove')).toBeTruthy()
+    expect(getByText('Delete')).toBeTruthy()
 
     const viewButton = getByRole('button', {
-      name: /view/i
+      name: /view details/i
     }) as HTMLButtonElement
 
     fireEvent.click(viewButton, { bubbles: true })
@@ -51,12 +51,12 @@ describe('Actions', () => {
 
     fireEvent.click(moreButton, { bubbles: true })
 
-    expect(getByText('View')).toBeTruthy()
+    expect(getByText('View details')).toBeTruthy()
     expect(getByText('Edit')).toBeTruthy()
-    expect(getByText('Remove')).toBeTruthy()
+    expect(getByText('Delete')).toBeTruthy()
 
     const removeButton = getByRole('button', {
-      name: /remove/i
+      name: /delete/i
     }) as HTMLButtonElement
 
     fireEvent.click(removeButton, { bubbles: true })
@@ -70,9 +70,9 @@ describe('Actions', () => {
 
     fireEvent.click(moreButton, { bubbles: true })
 
-    expect(getByText('View')).toBeTruthy()
+    expect(getByText('View details')).toBeTruthy()
     expect(getByText('Edit')).toBeTruthy()
-    expect(getByText('Remove')).toBeTruthy()
+    expect(getByText('Delete')).toBeTruthy()
 
     const editButton = getByRole('button', {
       name: /Edit/i
