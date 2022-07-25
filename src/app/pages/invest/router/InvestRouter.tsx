@@ -42,10 +42,8 @@ export const InvestRouter = () => {
           <InvestLanding />
         </RootContainer>
       </AppRoute>
-      <AppRoute path={InvestRoute.overview}>
-        <RootContainer>
-          <InvestOverview />
-        </RootContainer>
+      <AppRoute path={InvestRoute.overview} breadcrumb='Overview'>
+        <InvestOverview />
       </AppRoute>
       <AppRoute exact path={InvestRoute.trading}>
         <Trading />

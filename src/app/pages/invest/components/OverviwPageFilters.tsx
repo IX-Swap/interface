@@ -7,7 +7,7 @@ import { Select } from 'ui/Select/Select'
 
 export const OverviewPageFilters = () => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
-  const selectOptions = ['All', 'Primary', 'OTC', 'Secondary']
+  const selectOptions = ['Select Market', 'Primary', 'OTC', 'Secondary']
   const searchFilterValue = getFilterValue('search')
   const primaryOfferingFilterValue = getFilterValue('primaryOfferingSearch')
   const otcMarketFilterValue = getFilterValue('otcMarketSearch')
@@ -20,7 +20,7 @@ export const OverviewPageFilters = () => {
 
   const defaultSelectValue = () => {
     if (searchFilterValue !== undefined) {
-      return 'All'
+      return 'Select Market'
     }
     if (primaryOfferingFilterValue !== undefined) {
       return 'Primary'
@@ -32,7 +32,7 @@ export const OverviewPageFilters = () => {
       return 'Secondary'
     }
 
-    return 'All'
+    return 'Select Market'
   }
 
   const defaultCurrentFilter = () => {
@@ -90,32 +90,39 @@ export const OverviewPageFilters = () => {
   }
 
   return (
-    <Grid container spacing={2} direction='column'>
-      <Grid item container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <Select
-            fullWidth
-            variant='outlined'
-            style={{ marginTop: 0, height: 53 }}
-            defaultValue={defaultSelectValue()}
-            onChange={handleChange as any}
-          >
-            {renderSelectItems(
-              selectOptions.map(option => ({
-                label: option,
-                value: option
-              }))
-            )}
-          </Select>
-        </Grid>
+    <Grid container sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
+      <Grid item>
+        <Select
+          fullWidth
+          variant='outlined'
+          sx={{ marginTop: 0, height: 50, width: { xs: '100%', md: 150 } }}
+          defaultValue={defaultSelectValue()}
+          onChange={handleChange as any}
+        >
+          {renderSelectItems(
+            selectOptions.map(option => ({
+              label: option,
+              value: option
+            }))
+          )}
+        </Select>
+      </Grid>
 
-        <Grid data-testid='primarySearch' item xs={12} sm={8}>
-          <SearchFilter
-            fullWidth
-            placeholder='Search'
-            filterValue={currentFilter as QueryFilter}
-          />
-        </Grid>
+      <Grid
+        data-testid='primarySearch'
+        item
+        sx={{ ml: { md: 2 }, mt: { xs: 2, md: 0 } }}
+      >
+        <SearchFilter
+          fullWidth
+          inputSX={{
+            borderRadius: 2,
+            height: 50,
+            width: { xs: '100%', md: 320 }
+          }}
+          placeholder='Search'
+          filterValue={currentFilter as QueryFilter}
+        />
       </Grid>
     </Grid>
   )

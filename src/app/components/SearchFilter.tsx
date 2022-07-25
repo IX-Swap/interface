@@ -1,18 +1,22 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import {
   InputAdornment,
   OutlinedInput,
-  OutlinedInputProps
+  OutlinedInputProps,
+  Theme
 } from '@mui/material'
 import { Search } from '@mui/icons-material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import debounce from 'lodash/debounce'
 import { QueryFilter } from 'hooks/filters/useQueryFilter'
+import { SxProps } from '@mui/system'
 
 interface SearchFilterProps extends OutlinedInputProps {
   inputAdornmentPosition?: 'start' | 'end'
   filterValue?: QueryFilter
   onInputCb?: (value: string) => void
+  inputStyle?: CSSProperties
+  inputSX?: SxProps<Theme>
 }
 
 export const SearchFilter = (props: SearchFilterProps) => {
@@ -20,6 +24,8 @@ export const SearchFilter = (props: SearchFilterProps) => {
     inputAdornmentPosition = 'start',
     filterValue = 'search',
     onInputCb,
+    inputStyle,
+    inputSX,
     ...rest
   } = props
 
@@ -27,11 +33,13 @@ export const SearchFilter = (props: SearchFilterProps) => {
     <SearchQueryFilter name={filterValue}>
       {({ value, onChange, onClear }) => (
         <OutlinedInput
+          style={inputStyle}
           {...rest}
           margin='dense'
           defaultValue={value}
           sx={{
-            height: 49
+            height: 49,
+            ...inputSX
           }}
           startAdornment={
             inputAdornmentPosition === 'start' ? (

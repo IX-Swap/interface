@@ -1,28 +1,55 @@
 import React from 'react'
-import { Grid, Button, Typography, useTheme, Box } from '@mui/material'
+import { Grid, Button, Typography } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { VSpacer } from 'components/VSpacer'
-import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
 import { OverviewPageFilters } from 'app/pages/invest/components/OverviwPageFilters'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
 import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { RootContainer } from 'ui/RootContainer'
+import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
+import { investQueryKeys } from 'config/queryKeys'
+import { useAuth } from 'hooks/auth/useAuth'
+import { getIdFromObj } from 'helpers/strings'
 
 export const InvestOverview = () => {
-  const theme = useTheme()
-  const { isMobile } = useAppBreakpoints()
+  const { user } = useAuth()
+  const userId = getIdFromObj(user)
+
+  const { total } = useTableWithPagination({
+    queryKey: investQueryKeys.getCommitmentsByUserId(userId),
+    uri: `/issuance/commitments/list/${userId}`,
+    queryEnabled: true,
+    defaultFilter: {},
+    defaultRowsPerPage: 5
+  })
 
   return (
     <>
-      <Grid container justifyContent='space-between'>
-        <Grid item container justifyContent={'flex-end'}>
-          <Grid item xs={12} sm={'auto'}>
-            <OverviewPageFilters />
-          </Grid>
-          <Grid item xs={12} sm={'auto'} order={isMobile ? -1 : 'initial'}>
-            <Box pl={{ sm: 2 }} pb={2}>
+      <PageHeader
+        title={'Overview'}
+        mainWrapperSX={{
+          flexDirection: { xs: 'column', md: 'row' },
+          alignItems: { xs: 'initial', md: 'center' }
+        }}
+        endComponent={
+          <Grid
+            container
+            sx={theme => ({
+              flexDirection: { xs: 'column', md: 'row' },
+              justifyContent: { xs: 'initial', md: 'flex-end' },
+              px: { xs: 2, md: 0 },
+              py: { xs: 2, md: 0 },
+              borderRadius: { xs: 2, md: 0 },
+              backgroundColor: { xs: '#ffffff', md: 'inherit' }
+            })}
+          >
+            <Grid item>
+              <OverviewPageFilters />
+            </Grid>
+
+            <Grid item sx={{ ml: { md: 2 }, mt: { xs: 2, md: 0 } }}>
               <Button
                 component={AppRouterLinkComponent}
                 to={InvestRoute.commitments}
@@ -30,40 +57,43 @@ export const InvestOverview = () => {
                 variant='outlined'
                 size='large'
                 disableElevation
-                style={{ color: theme.palette.primary.main }}
+                style={{ paddingRight: 0, paddingLeft: 0 }}
+                sx={{
+                  display: 'inline-block',
+                  width: { xs: '100%', md: 214 },
+                  height: 50,
+                  textAlign: 'center'
+                }}
               >
-                My investments
+                My Commitments{' '}
+                <Typography display={'inline'} color={'text.secondary'}>
+                  {total}
+                </Typography>
               </Button>
-            </Box>
+            </Grid>
+          </Grid>
+        }
+      />
+      <RootContainer>
+        <Grid container direction={'column'} spacing={6}>
+          <Grid item sx={{ mt: { md: 3 } }}>
+            <PrimaryOfferings />
+          </Grid>
+
+          <Grid item>
+            <OTCMarket />
+          </Grid>
+
+          <Grid item container direction='column' spacing={4}>
+            <Grid item>
+              <Typography variant='h4'>Secondary Market</Typography>
+            </Grid>
+            <Grid item style={{ maxWidth: '100%' }}>
+              <SecondaryMarketTable />
+            </Grid>
           </Grid>
         </Grid>
-        <PromoBanner />
-        <VSpacer size='medium' />
-      </Grid>
-
-      <VSpacer size='medium' />
-
-      <Grid container direction='column' spacing={4}>
-        <Grid item>
-          <Typography variant='h4'>Primary Offerings</Typography>
-        </Grid>
-        <Grid item>
-          <PrimaryOfferings />
-        </Grid>
-      </Grid>
-
-      <VSpacer size='large' />
-      <OTCMarket />
-      <VSpacer size='large' />
-
-      <Grid container direction='column' spacing={4}>
-        <Grid item>
-          <Typography variant='h4'>Secondary Market</Typography>
-        </Grid>
-        <Grid item style={{ maxWidth: '100%' }}>
-          <SecondaryMarketTable />
-        </Grid>
-      </Grid>
+      </RootContainer>
     </>
   )
 }
