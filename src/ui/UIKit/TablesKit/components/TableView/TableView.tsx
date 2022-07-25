@@ -53,6 +53,7 @@ export interface TableViewProps<T> {
   noDataComponent?: JSX.Element
   actionHeader?: string
   noHeader?: boolean
+  method?: 'POST' | 'GET'
 }
 
 export const TableView = <T,>({
@@ -73,7 +74,8 @@ export const TableView = <T,>({
   size = 'medium',
   noDataComponent = <NoData title='No Data' />,
   actionHeader = '',
-  noHeader = false
+  noHeader = false,
+  method = 'POST'
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -90,7 +92,8 @@ export const TableView = <T,>({
     queryKey: name,
     defaultFilter: filter,
     queryEnabled: queryEnabled,
-    defaultRowsPerPage: defaultRowsPerPage
+    defaultRowsPerPage: defaultRowsPerPage,
+    method
   })
 
   const classes = useStyles()

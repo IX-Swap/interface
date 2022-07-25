@@ -1,13 +1,13 @@
 import React from 'react'
 import { renderWithUserStore } from 'test-utils'
-import { Balances } from 'app/pages/accounts/pages/balances/Balances'
-import { TableView } from 'components/TableWithPagination/TableView'
+import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { user } from '__fixtures__/user'
-import { columns } from 'app/pages/accounts/pages/balances/columns'
+import { columns } from 'app/pages/accounts/pages/cash/components/columns'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { balanceQueryKeys } from 'config/queryKeys'
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('ui/UIKit/TablesKit/components/TableView/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
@@ -18,7 +18,7 @@ describe('Balances', () => {
       user
     })
 
-    renderWithUserStore(<Balances />)
+    renderWithUserStore(<CashTable />)
 
     expect(TableView).toHaveBeenCalledWith(
       {

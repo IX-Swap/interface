@@ -11,7 +11,6 @@ import { InternalRouteProps } from 'types/util'
 export const AccountsRoute = {
   landing: makeURL(['app', 'account']),
   banks: makeURL(['app', 'account', 'bankAccount']),
-  balances: makeURL(['app', 'account', 'balances']),
   digitalSecurities: makeURL(['app', 'account', 'digitalSecurity']),
   transactions: makeURL(['app', 'account', 'transactions']),
   depositCash: makeURL(['app', 'account', 'cashDeposit']),
@@ -50,12 +49,6 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     icon: CashWithdrawalIcon,
     path: AccountsRoute.withdrawCash,
     label: 'Cash Withdrawals'
-  },
-  {
-    label: 'Asset Balances',
-    path: AccountsRoute.balances,
-    color: '#e65133',
-    icon: AssetBalanceIcon
   },
   {
     label: 'Digital Securities',

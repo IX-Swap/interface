@@ -14,7 +14,7 @@ import React from 'react'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { Asset } from 'types/asset'
-import { AssetBalance } from 'types/balance'
+import { AssetBalance, ConvertedAssetBalance } from 'types/balance'
 import { CashDeposit } from 'types/cashDeposit'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { Commitment } from 'types/commitment'
@@ -146,6 +146,7 @@ type RenderAmountRow =
   | DSWithdrawal
   | DigitalSecurityOffering
   | AssetBalance
+  | ConvertedAssetBalance
 
 export const renderAmount = (val: string, row: RenderAmountRow): string => {
   const amount = Number.isNaN(val) ? 0 : parseFloat(val)
