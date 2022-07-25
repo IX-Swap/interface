@@ -4,7 +4,7 @@ import {
   AssetBalance,
   AssetBalanceProps
 } from 'app/pages/invest/components/MakeCommitment/AssetBalance'
-import * as useBalancesByAssetIdHook from 'hooks/balance/useBalancesByAssetId'
+import * as useCurrencyBalanceHook from 'app/pages/invest/hooks/useCurrencyBalance'
 import { balance } from '__fixtures__/balance'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { asset } from '__fixtures__/authorizer'
@@ -16,57 +16,30 @@ jest.mock('app/pages/invest/components/MakeCommitment/OverviewValue', () => ({
 }))
 
 describe('AssetBalance', () => {
-  const props: AssetBalanceProps = { assetId: asset._id, symbol: 'SGD' }
+  const props: AssetBalanceProps = { symbol: 'SGD' }
 
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it('renders nothing if loading', () => {
-    jest
-      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
-      .mockReturnValue({
-        ...generateInfiniteQueryResult({ map: { [asset._id]: balance } }),
-        isLoading: true
-      })
-    const { container } = render(<AssetBalance {...props} />)
+  it('renders no balance component when balance is 0', () => {
+    jest.spyOn(useCurrencyBalanceHook, 'useCurrencyBalance').mockReturnValue(0)
+    const { getByText } = render(<AssetBalance {...props} />)
 
-    expect(container).toBeEmptyDOMElement()
+    expect(getByText("You don't have enough money")).toBeTruthy()
   })
 
   it('renders OverviewValue with correct props', () => {
     jest
-      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
-      .mockReturnValue(
-        generateInfiniteQueryResult({ map: { [asset._id]: balance } })
-      )
+      .spyOn(useCurrencyBalanceHook, 'useCurrencyBalance')
+      .mockReturnValue(100)
     render(<AssetBalance {...props} />)
 
     expect(OverviewValue).toHaveBeenCalledTimes(1)
     expect(OverviewValue).toHaveBeenCalledWith(
       {
         label: 'Available Balance',
-        value: formatMoney(balance.available, balance.symbol)
-      },
-      {}
-    )
-  })
-
-  it('renders LabelledValue with correct props if balance.available is undefined', () => {
-    jest
-      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
-      .mockReturnValue(
-        generateInfiniteQueryResult({
-          map: { [asset._id]: { ...balance, available: undefined } }
-        })
-      )
-    render(<AssetBalance {...props} />)
-
-    expect(OverviewValue).toHaveBeenCalledTimes(1)
-    expect(OverviewValue).toHaveBeenCalledWith(
-      {
-        label: 'Available Balance',
-        value: formatMoney(0, balance.symbol)
+        value: formatMoney(100, 'SGD')
       },
       {}
     )
