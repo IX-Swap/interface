@@ -9,6 +9,7 @@ import { getPadding } from 'app/components/PageHeader/utils'
 
 export interface PageHeaderProps {
   title?: string
+  subtitle?: string
   alignment?: string
   showBreadcrumbs?: boolean
   hasBackButton?: boolean
@@ -18,18 +19,27 @@ export interface PageHeaderProps {
   startComponent?: React.ReactNode
   endComponent?: React.ReactNode
   titleComponent?: React.ReactNode
+  wrapperStyle?: React.CSSProperties
+  mainWrapperStyle?: React.CSSProperties
+  titleWrapperStyle?: React.CSSProperties
+  titleStyle?: React.CSSProperties
 }
 
 export const PageHeader = (props: PageHeaderProps) => {
   const {
     title,
+    subtitle,
     alignment = 'flex-start',
     showBreadcrumbs = true,
     variant = 'h2',
     styled = true,
     startComponent,
     endComponent,
-    titleComponent
+    titleComponent,
+    wrapperStyle,
+    mainWrapperStyle,
+    titleWrapperStyle,
+    titleStyle
   } = props
   const { crumbs } = useBreadcrumbs()
   const { isTablet } = useAppBreakpoints()
@@ -63,12 +73,14 @@ export const PageHeader = (props: PageHeaderProps) => {
   )
 
   return (
-    <Wrapper className={styled ? classes.wrapper : ''}>
+    <Wrapper style={wrapperStyle} className={styled ? classes.wrapper : ''}>
       <Container>
         <Grid
           container
           flexWrap={isTablet ? undefined : 'nowrap'}
+          style={mainWrapperStyle}
           justifyContent={hasCustomComponent ? 'space-between' : 'flex-start'}
+          alignItems={'center'}
           spacing={isTablet ? 1 : 3}
         >
           {hasStartComponent && (
@@ -81,6 +93,7 @@ export const PageHeader = (props: PageHeaderProps) => {
 
           <Grid item flexGrow={1}>
             <Box
+              style={titleWrapperStyle}
               sx={{
                 height: '100%',
                 pr,
@@ -105,10 +118,23 @@ export const PageHeader = (props: PageHeaderProps) => {
                       <Typography
                         className={styled ? classes.title : ''}
                         variant={variant}
+                        style={titleStyle}
                       >
                         {title}
                       </Typography>
                     </Box>
+                    {subtitle !== undefined && (
+                      <Box
+                        display='flex'
+                        alignItems='center'
+                        justifyContent={justify}
+                        paddingTop={1}
+                      >
+                        <Typography color={'text.secondary'}>
+                          {subtitle}
+                        </Typography>
+                      </Box>
+                    )}
                   </Grid>
                   {showBreadcrumbs && !isTablet && (
                     <Grid item>
