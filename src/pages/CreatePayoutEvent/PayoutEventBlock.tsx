@@ -155,6 +155,7 @@ export const PayoutEventBlock: FC<Props> = ({
           <TextInput
             placeholder="1000"
             label="Token Amount"
+            type="number"
             onChange={(e: any) => onValueChange('tokenAmount', e.currentTarget.value)}
             value={tokenAmount}
             error={touched.tokenAmount ? errors.tokenAmount : ''}
