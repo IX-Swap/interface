@@ -13,7 +13,7 @@ export const BankFields = () => {
   return (
     <>
       <Grid item container spacing={3}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <TypedField
             control={control}
             component={TextInput}
@@ -23,6 +23,8 @@ export const BankFields = () => {
             hideIcon
           />
         </Grid>
+      </Grid>
+      <Grid item container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TypedField
             control={control}
@@ -33,19 +35,7 @@ export const BankFields = () => {
             hideIcon
           />
         </Grid>
-      </Grid>
-
-      <Grid item container spacing={3}>
-        <Grid item xs={12} sm={6} md={4}>
-          <TypedField
-            control={control}
-            component={AssetSelect}
-            name='asset'
-            label='Currency'
-            assetType='Currency'
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item xs={12} sm={6}>
           <TypedField
             className={privateClassNames()}
             control={control}
@@ -56,7 +46,20 @@ export const BankFields = () => {
             hideIcon
           />
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
+      </Grid>
+
+      <Grid item container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <TypedField
+            control={control}
+            component={AssetSelect}
+            name='asset'
+            label='Currency'
+            assetType='Currency'
+          />
+        </Grid>
+
+        <Grid item xs={12} sm={6}>
           <TypedField
             className={privateClassNames()}
             control={control}
