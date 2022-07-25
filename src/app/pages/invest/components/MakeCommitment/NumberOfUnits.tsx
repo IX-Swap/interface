@@ -5,24 +5,24 @@ import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
-import { useBalancesByAssetId } from 'hooks/balance/useBalancesByAssetId'
+import { useCurrencyBalance } from 'app/pages/invest/hooks/useCurrencyBalance'
 
 export interface NumberOfUnitsProps {
-  dsoCurrencyId: string
+  symbol: string
   isCampaign?: boolean
   dsoDecimalScale?: number
 }
 
 export const NumberOfUnits = ({
-  dsoCurrencyId,
+  symbol,
   isCampaign = false,
   dsoDecimalScale
 }: NumberOfUnitsProps) => {
   const decimalScale = dsoDecimalScale ?? ETHEREUM_DECIMAL_PLACES
   const { control, setValue } = useFormContext()
 
-  const { data } = useBalancesByAssetId(dsoCurrencyId)
-  const noBalance = (data.map[dsoCurrencyId]?.available ?? 0) <= 0
+  const currencyBalance = useCurrencyBalance(symbol)
+  const noBalance = currencyBalance <= 0
 
   useEffect(() => {
     if (isCampaign) {

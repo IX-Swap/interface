@@ -44,7 +44,7 @@ export const MakeCommitmentFormFields = ({
         <NumberOfUnits
           isCampaign={dso.isCampaign}
           dsoDecimalScale={dso.deploymentInfo?.decimals}
-          dsoCurrencyId={dso.currency._id}
+          symbol={dso.currency.symbol}
         />
       </Grid>
       <Grid item xs={12} md={6}>

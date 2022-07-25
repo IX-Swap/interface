@@ -4,13 +4,8 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
-import { DigitalSecurityOffering } from 'types/dso'
 
-export interface FormActionsProps {
-  dso: DigitalSecurityOffering
-}
-
-export const FormActions = ({ dso }: FormActionsProps) => {
+export const FormActions = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
   const { formState } = useFormContext()
 

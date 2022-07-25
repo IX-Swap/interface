@@ -55,7 +55,7 @@ export const MakeCommitmentForm = (
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <FormActions dso={dso} />
+          <FormActions />
         </Grid>
       </Grid>
     </Form>
