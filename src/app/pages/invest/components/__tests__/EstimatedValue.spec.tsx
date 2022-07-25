@@ -6,11 +6,10 @@ import {
 } from 'app/pages/invest/components/MakeCommitment/EstimatedValue'
 import { asset } from '__fixtures__/authorizer'
 import { Form } from 'components/form/Form'
-import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
 
-jest.mock('components/LabelledValue', () => ({
-  LabelledValue: jest.fn(() => null)
+jest.mock('app/pages/invest/components/MakeCommitment/OverviewValue', () => ({
+  OverviewValue: jest.fn(() => null)
 }))
 
 describe('EstimatedValue', () => {
@@ -20,17 +19,14 @@ describe('EstimatedValue', () => {
     jest.clearAllMocks()
   })
 
-  it('renders LabelledValue with correct props', () => {
-    render(
-      <Form defaultValues={{ totalAmount: 123 }}>
+  it('renders  with correct props', () => {
+    const { getByText } = render(
+      <Form defaultValues={{ numberOfUnits: 100, pricePerUnit: 12 }}>
         <EstimatedValue {...props} />
       </Form>
     )
 
-    expect(LabelledValue).toHaveBeenCalledTimes(1)
-    expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Investment amount:', value: formatMoney(123, asset.symbol) },
-      {}
-    )
+    expect(getByText('Investment amount:')).toBeTruthy()
+    expect(getByText('SGD 1,200.00')).toBeTruthy()
   })
 })
