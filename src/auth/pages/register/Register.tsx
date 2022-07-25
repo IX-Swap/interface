@@ -55,8 +55,8 @@ export const Register: React.FC = observer(() => {
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
-        email: '',
-        phoneNumber: '',
+        email: data?.email,
+        phoneNumber: data?.mobileno,
         password: '',
         agree: true
       }
