@@ -1,12 +1,13 @@
 import React from 'react'
 import { Button, ButtonProps, Box } from '@mui/material'
-import { useHistory } from 'react-router-dom'
+import { generatePath, useParams } from 'react-router-dom'
 import { Icon } from 'ui/Icons/Icon'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export const BackToDSOButton = (props: ButtonProps) => {
-  const history = useHistory()
   const { isMobile } = useAppBreakpoints()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
 
   return (
     <Box height='100%' display='flex' alignItems='center'>
@@ -14,7 +15,7 @@ export const BackToDSOButton = (props: ButtonProps) => {
         {...props}
         endIcon={isMobile ? undefined : <Icon name='arrow-right' />}
         startIcon={isMobile ? <Icon name='arrow-left' /> : undefined}
-        onClick={history.goBack}
+        href={generatePath(InvestRoute.view, { dsoId, issuerId })}
         sx={{
           pl: {
             xs: 0,

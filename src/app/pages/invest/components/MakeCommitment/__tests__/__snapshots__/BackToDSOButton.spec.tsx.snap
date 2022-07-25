@@ -5,10 +5,10 @@ exports[`BackToDSOButton should match snapshot 1`] = `
   <div
     class="MuiBox-root css-15c13yl"
   >
-    <button
+    <a
       class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1m833rv-MuiButtonBase-root-MuiButton-root"
+      href="/app/invest/offerings/1231/1231/view"
       tabindex="0"
-      type="button"
     >
       Back to DSO page
       <span
@@ -28,7 +28,7 @@ exports[`BackToDSOButton should match snapshot 1`] = `
       <span
         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
       />
-    </button>
+    </a>
   </div>
 </div>
 `;
