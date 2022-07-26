@@ -102,6 +102,7 @@ export const input = (theme: Theme) => {
           backgroundColor: theme.palette.background.paper,
           paddingRight: 0,
           borderWidth: 1,
+
           '&.MuiInputBase-root': {
             borderRadius: 8,
             '&:hover .MuiOutlinedInput-notchedOutline': {

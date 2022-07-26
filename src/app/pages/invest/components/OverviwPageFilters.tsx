@@ -4,8 +4,20 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { renderSelectItems } from 'helpers/rendering'
 import { Select } from 'ui/Select/Select'
+import { makeStyles } from '@mui/styles'
+
+const useOutlinedInputStyles = makeStyles(theme => ({
+  root: {
+    '& $notchedOutline': {
+      borderColor: theme.palette.select.border
+    }
+  },
+  focused: {},
+  notchedOutline: {}
+}))
 
 export const OverviewPageFilters = () => {
+  const outlinedInputClasses = useOutlinedInputStyles()
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
   const selectOptions = ['All Markets', 'Primary', 'OTC', 'Secondary']
   const searchFilterValue = getFilterValue('search')
@@ -115,6 +127,7 @@ export const OverviewPageFilters = () => {
       >
         <SearchFilter
           fullWidth
+          classes={outlinedInputClasses}
           inputSX={{
             borderRadius: 2,
             height: 50,
