@@ -7,7 +7,7 @@ import { Select } from 'ui/Select/Select'
 
 export const OverviewPageFilters = () => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
-  const selectOptions = ['Select Market', 'Primary', 'OTC', 'Secondary']
+  const selectOptions = ['All Markets', 'Primary', 'OTC', 'Secondary']
   const searchFilterValue = getFilterValue('search')
   const primaryOfferingFilterValue = getFilterValue('primaryOfferingSearch')
   const otcMarketFilterValue = getFilterValue('otcMarketSearch')
@@ -20,7 +20,7 @@ export const OverviewPageFilters = () => {
 
   const defaultSelectValue = () => {
     if (searchFilterValue !== undefined) {
-      return 'Select Market'
+      return 'All Markets'
     }
     if (primaryOfferingFilterValue !== undefined) {
       return 'Primary'
@@ -32,7 +32,7 @@ export const OverviewPageFilters = () => {
       return 'Secondary'
     }
 
-    return 'Select Market'
+    return 'All Markets'
   }
 
   const defaultCurrentFilter = () => {

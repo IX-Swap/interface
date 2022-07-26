@@ -79,13 +79,13 @@ exports[`InvestOverview should match snapshot 1`] = `
                         role="button"
                         tabindex="0"
                       >
-                        Select Market
+                        All Markets
                       </div>
                       <input
                         aria-hidden="true"
                         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                         tabindex="-1"
-                        value="Select Market"
+                        value="All Markets"
                       />
                       <svg
                         aria-hidden="true"
