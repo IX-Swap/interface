@@ -3,7 +3,7 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
   formatRoundedAmount,
-  getFilledRoundedPercentage,
+  getFilledPercentageFromMatches,
   getOrderCurrency,
   renderTotal
 } from 'helpers/numbers'
@@ -11,7 +11,7 @@ import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderTicker } from 'helpers/tables'
 import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
-import { OTCOrder, OTCOrderStatus } from 'types/otcOrder'
+import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
 
 const SimpleStatus = ({ status }: { status: string }) => {
@@ -28,7 +28,7 @@ const SimpleStatus = ({ status }: { status: string }) => {
     </Typography>
   )
 }
-export const columns: Array<TableColumn<OTCOrder>> = [
+export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'createdAt',
     label: 'Date',
@@ -63,14 +63,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) =>
-      getFilledRoundedPercentage({
-        amount: row.amount,
-        availableAmount:
-          row.status === OTCOrderStatus.CANCELLED
-            ? row.amount
-            : row.availableAmount ?? 0
-      })
+    render: (_, row) => getFilledPercentageFromMatches({ row })
   },
   {
     key: 'status',
@@ -79,7 +72,7 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   }
 ]
 
-export const compactColumns: Array<TableColumn<OTCOrder>> = [
+export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     label: 'Pair',
     key: 'pair.name',
@@ -115,14 +108,7 @@ export const compactColumns: Array<TableColumn<OTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) =>
-      getFilledRoundedPercentage({
-        amount: row.amount,
-        availableAmount:
-          row.status === OTCOrderStatus.CANCELLED
-            ? row.amount
-            : row.availableAmount ?? 0
-      })
+    render: (_, row) => getFilledPercentageFromMatches({ row })
   },
   {
     key: 'createdAt',

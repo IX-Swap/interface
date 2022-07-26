@@ -197,25 +197,26 @@ export const IndividualInfoFields = (
               label='Nationality'
             />
           </Grid>
-
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              rootName={rootName}
-              component={TextInput}
-              control={control}
-              name='nric'
-              label='NRIC/FIN'
-              variant='outlined'
-              hideIcon
-              placeholder={
-                nationality !== 'Singapore' ? 'Not Required' : 'NRIC/FIN'
-              }
-              disabled={
-                (isSingPass && hasValue(singPassData?.uinfin)) ||
-                nationality !== 'Singapore'
-              }
-            />
-          </Grid>
+          {(nationality === 'Singapore' || isSingPass) && (
+            <Grid item xs={12} sm={6} md={6}>
+              <TypedField
+                rootName={rootName}
+                component={TextInput}
+                control={control}
+                name='nric'
+                label='NRIC/FIN'
+                variant='outlined'
+                hideIcon
+                placeholder={
+                  nationality !== 'Singapore' ? 'Not Required' : 'NRIC/FIN'
+                }
+                disabled={
+                  (isSingPass && hasValue(singPassData?.uinfin)) ||
+                  nationality !== 'Singapore'
+                }
+              />
+            </Grid>
+          )}
         </Grid>
       </Box>
     </Grid>

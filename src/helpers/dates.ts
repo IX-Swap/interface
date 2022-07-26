@@ -40,12 +40,18 @@ export const formatDateToMMDDYY = (s?: string): string => {
   return s.length > 0 ? format(new Date(s), 'MM/dd/yyyy') : s
 }
 
-export const formatDateToDDMonYYYY = (s?: string): string => {
+export const formatDateToDDMonYYYY = (
+  s?: string,
+  withoutDot?: boolean
+): string => {
   if (s === undefined) {
     return ''
   }
 
-  return s.length > 0 ? format(new Date(s), 'dd MMM. yyyy') : s
+  const formatTemplate =
+    withoutDot !== undefined && withoutDot ? 'dd MMM yyyy' : 'dd MMM. yyyy'
+
+  return s.length > 0 ? format(new Date(s), formatTemplate) : s
 }
 
 export const formatDate = (s?: string): string => {

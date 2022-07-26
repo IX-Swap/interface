@@ -7,7 +7,7 @@ import { Tt } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Tt'
 import { AchCredits } from 'app/pages/accounts/components/VirtualAccountCashDeposit/AchCredit'
 import { TabPanel } from 'components/TabPanel'
 import { VirtualAccount } from 'types/virtualAccount'
-import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
+import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/shared.styles'
 
 export interface VirtualAccountCashDepositProps {
   virtualAccountDetails: VirtualAccount
@@ -22,16 +22,16 @@ export const VirtualAccountCashDeposit = ({
     setActiveTab(newValue)
   }
   return (
-    <Grid direction='column'>
+    <Grid container direction='column'>
       <Grid item>
-        <Box mt={3} px={3}>
+        <Box sx={{ mt: { xs: 3, sm: 5 }, px: { xs: 3, sm: 5 } }}>
           <Typography color='gray'>
             <Box component='span' fontSize={14} fontWeight={500}>
               Choose your cash deposit method:
             </Box>
           </Typography>
         </Box>
-        <Box mt={4} px={3} mb={4}>
+        <Box sx={{ px: { xs: 3, sm: 5 }, mt: 4, mb: 4 }}>
           <Tabs
             value={activeTab}
             onChange={handleChange}

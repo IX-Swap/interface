@@ -6,10 +6,10 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { dso } from '__fixtures__/authorizer'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
+import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 
-jest.mock('app/pages/invest/components/OTCMarketCard/OTCMarketCard', () => ({
-  OTCMarketCard: jest.fn(() => null)
+jest.mock('app/pages/invest/components/DSOCard/DSOCard', () => ({
+  DSOCard: jest.fn(() => null)
 }))
 
 describe('PromotedDSOs', () => {
@@ -38,8 +38,8 @@ describe('PromotedDSOs', () => {
 
     render(<PromotedDSOs />)
 
-    expect(OTCMarketCard).toHaveBeenCalledTimes(1)
-    expect(OTCMarketCard).toHaveBeenCalledWith(
+    expect(DSOCard).toHaveBeenCalledTimes(1)
+    expect(DSOCard).toHaveBeenCalledWith(
       {
         data: dso,
         viewURL: InvestRoute.view,
