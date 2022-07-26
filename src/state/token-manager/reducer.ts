@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { getMyPayoutList, getPayoutHistoryList } from './actions'
+import { getMyPayoutList, getPayoutHistoryList, getPayoutAuthorization } from './actions'
 import { PayoutList, PayoutHistoryList } from './types'
 
 export interface TokenManagerState {
@@ -51,6 +51,18 @@ export default createReducer(initialState, (builder) =>
       state.payoutHistory = payload
     })
     .addCase(getPayoutHistoryList.rejected, (state, { payload: { errorMessage } }) => {
+      state.isLoading = false
+      state.error = errorMessage
+    })
+    .addCase(getPayoutAuthorization.pending, (state) => {
+      state.isLoading = true
+      state.error = null
+    })
+    .addCase(getPayoutAuthorization.fulfilled, (state) => {
+      state.isLoading = false
+      state.error = null
+    })
+    .addCase(getPayoutAuthorization.rejected, (state, { payload: { errorMessage } }) => {
       state.isLoading = false
       state.error = errorMessage
     })

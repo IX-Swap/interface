@@ -155,8 +155,9 @@ export const PayoutEventBlock: FC<Props> = ({
           <TextInput
             placeholder="1000"
             label="Token Amount"
-            type="number"
-            onChange={(e: any) => onValueChange('tokenAmount', e.currentTarget.value)}
+            onChange={(e: any) =>
+              e.currentTarget.value.match(/^[\.0-9]*$/g) && onValueChange('tokenAmount', e.currentTarget.value)
+            }
             value={tokenAmount}
             error={touched.tokenAmount ? errors.tokenAmount : ''}
             tooltipText="Indicate the total number of tokens you want to distribute for this payout event."
@@ -258,7 +259,7 @@ export const PayoutEventBlock: FC<Props> = ({
           </ButtonGradientBorder>
         )}
 
-        {[PAYOUT_STATUS.DRAFT].includes(status) ? (
+        {status === PAYOUT_STATUS.DRAFT ? (
           <ButtonIXSGradient type="button" onClick={open}>
             <Trans>Publish Event</Trans>
           </ButtonIXSGradient>
@@ -271,7 +272,15 @@ export const PayoutEventBlock: FC<Props> = ({
         )}
       </ButtonsContainer>
 
-      {openModal && <PublishPayoutModal values={values} close={close} isRecordFuture={isRecordFuture} />}
+      {openModal && (
+        <PublishPayoutModal
+          values={values}
+          close={close}
+          isRecordFuture={isRecordFuture}
+          onlyPay={status !== PAYOUT_STATUS.DRAFT && !paid}
+          payoutId={payoutId}
+        />
+      )}
     </FormCard>
   )
 }

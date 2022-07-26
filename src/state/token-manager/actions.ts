@@ -1,6 +1,6 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 
-import { PayoutList, PayoutHistoryList } from './types'
+import { PayoutList, PayoutHistoryList, PayoutAuthorization } from './types'
 
 export const getMyPayoutList: Readonly<{
   pending: ActionCreatorWithoutPayload
@@ -20,4 +20,14 @@ export const getPayoutHistoryList: Readonly<{
   pending: createAction('tm/getPayoutHistoryList/pending'),
   fulfilled: createAction('tm/getPayoutHistoryList/fulfilled'),
   rejected: createAction('tm/getPayoutHistoryList/rejected'),
+}
+
+export const getPayoutAuthorization: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<PayoutAuthorization>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('tm/getPayoutAuthorization/pending'),
+  fulfilled: createAction('tm/getPayoutAuthorization/fulfilled'),
+  rejected: createAction('tm/getPayPayoutSignature/rejected'),
 }
