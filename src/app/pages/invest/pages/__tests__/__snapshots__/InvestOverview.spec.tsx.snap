@@ -70,12 +70,12 @@ exports[`InvestOverview should match snapshot 1`] = `
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <div
-                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-9 css-111g48h-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-12 css-111g48h-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <div
                         aria-expanded="false"
                         aria-haspopup="listbox"
-                        class="makeStyles-select-10 MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-1ub9as-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                        class="makeStyles-select-13 MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-1ub9as-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                         role="button"
                         tabindex="0"
                       >
@@ -119,7 +119,7 @@ exports[`InvestOverview should match snapshot 1`] = `
                     data-testid="primarySearch"
                   >
                     <div
-                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-adornedStart css-mhayhs-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="makeStyles-root-9 MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-adornedStart css-mhayhs-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <div
                         class="MuiInputAdornment-root MuiInputAdornment-positionStart css-ittuaa-MuiInputAdornment-root"
@@ -149,7 +149,7 @@ exports[`InvestOverview should match snapshot 1`] = `
                       />
                       <fieldset
                         aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                        class="makeStyles-notchedOutline-11 MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
                           class="css-nnbavb"
