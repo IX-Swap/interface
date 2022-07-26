@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Grid, Paper, Typography } from '@mui/material'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { Grid, Paper, Typography } from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
@@ -8,7 +7,6 @@ import { Select } from 'ui/Select/Select'
 import { Icon } from 'ui/Icons/Icon'
 import { renderNewAmount } from 'helpers/numbers'
 import { useStyles } from './CashBalance.styles'
-import { AccountsRoute } from 'app/pages/accounts/router/config'
 
 export const CashBalance = () => {
   const classes = useStyles()
@@ -21,6 +19,19 @@ export const CashBalance = () => {
     return null
   }
 
+  const getSumBalanceOfAllAccounts = () => {
+    const sumOfSGDValues = list.reduce(
+      (acc, item) => acc + item.balance.sgdValue,
+      0
+    )
+    const sumOfUSDValues = list.reduce(
+      (acc, item) => acc + item.balance.usdValue,
+      0
+    )
+
+    return data.currency === 'SGD' ? sumOfSGDValues : sumOfUSDValues
+  }
+
   return (
     <Paper className={classes.wrapper}>
       <Grid
@@ -28,11 +39,13 @@ export const CashBalance = () => {
         spacing={3}
         wrap={'wrap'}
         alignItems={'center'}
-        justifyContent={'space-between'}
+        justifyContent={'center'}
       >
         <Grid item xs={12} sm={'auto'}>
           <InputLabel style={{ marginBottom: 0 }}>
-            <Typography color={'text.secondary'}>Available Balance</Typography>
+            <Typography color={'text.secondary'} textAlign={'center'}>
+              Available Balance
+            </Typography>
           </InputLabel>
           <Select
             variant='filled'
@@ -47,7 +60,7 @@ export const CashBalance = () => {
             }}
             renderValue={() => (
               <Typography fontSize={24} fontWeight={600} display={'inline'}>
-                {renderNewAmount(data.balance.outstanding)}{' '}
+                {renderNewAmount(getSumBalanceOfAllAccounts())}{' '}
                 <Typography
                   fontSize={'inherit'}
                   fontWeight={'inherit'}
@@ -70,42 +83,6 @@ export const CashBalance = () => {
               </SelectItem>
             ))}
           </Select>
-        </Grid>
-
-        <Grid
-          item
-          container
-          xs={12}
-          sm={'auto'}
-          spacing={2}
-          justifyContent={'center'}
-          wrap={'nowrap'}
-        >
-          <Grid item xs={6} sm={'auto'}>
-            <Button
-              fullWidth
-              variant='outlined'
-              disableElevation
-              component={AppRouterLinkComponent}
-              to={AccountsRoute.withdraw}
-              className={classes.button}
-            >
-              Withdraw
-            </Button>
-          </Grid>
-
-          <Grid item xs={6} sm={'auto'}>
-            <Button
-              fullWidth
-              variant='contained'
-              disableElevation
-              component={AppRouterLinkComponent}
-              to={AccountsRoute.deposit}
-              className={classes.button}
-            >
-              Deposit
-            </Button>
-          </Grid>
         </Grid>
       </Grid>
     </Paper>

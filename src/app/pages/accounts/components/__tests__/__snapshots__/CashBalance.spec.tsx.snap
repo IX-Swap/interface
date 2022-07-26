@@ -6,7 +6,7 @@ exports[`CashBalance should match snapshot 1`] = `
     class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-wrapper-17 css-11gelwl-MuiPaper-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-m35kij-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1402ce4-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-auto css-y4b3lo-MuiGrid-root"
@@ -17,7 +17,7 @@ exports[`CashBalance should match snapshot 1`] = `
           style="margin-bottom: 0px;"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-3phns2-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-z3lpfj-MuiTypography-root"
           >
             Available Balance
           </p>
@@ -35,7 +35,7 @@ exports[`CashBalance should match snapshot 1`] = `
             <p
               class="MuiTypography-root MuiTypography-body1 css-elf1yz-MuiTypography-root"
             >
-              987654. 321
+               NaN
                
               <p
                 class="MuiTypography-root MuiTypography-body1 css-yh93o2-MuiTypography-root"
@@ -60,38 +60,6 @@ exports[`CashBalance should match snapshot 1`] = `
               href="image-mock#chevron-down"
             />
           </svg>
-        </div>
-      </div>
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-wrap-xs-nowrap MuiGrid-grid-xs-12 MuiGrid-grid-sm-auto css-acjtoe-MuiGrid-root"
-      >
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-auto css-13vmsnk-MuiGrid-root"
-        >
-          <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-disableElevation MuiButton-fullWidth MuiButtonBase-root makeStyles-button-24 css-1qecibu-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
-            href="/app/accounts/withdraw"
-            tabindex="0"
-          >
-            Withdraw
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </a>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-auto css-13vmsnk-MuiGrid-root"
-        >
-          <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButton-fullWidth MuiButtonBase-root makeStyles-button-24 css-h2h901-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
-            href="/app/accounts/deposit"
-            tabindex="0"
-          >
-            Deposit
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </a>
         </div>
       </div>
     </div>
