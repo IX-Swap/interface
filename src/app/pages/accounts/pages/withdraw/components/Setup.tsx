@@ -77,7 +77,9 @@ export const Setup: React.FC = () => {
         <Box sx={{ px: { xs: 3, sm: 5 }, paddingTop: 5 }}>
           <CurrencySelect
             accounts={list}
-            onButtonClick={value => setValue('virtualAccount', value)}
+            onButtonClick={value => {
+              setValue('virtualAccount', value)
+            }}
           />
         </Box>
         <div className={separator} />
@@ -108,7 +110,7 @@ export const Setup: React.FC = () => {
                 />
               </Box>
               <Grid item>
-                {virtualAccountId !== undefined ? (
+                {!isEmptyString(virtualAccountId) ? (
                   <>
                     <Grid item mt={5}>
                       <TypedField
@@ -129,7 +131,7 @@ export const Setup: React.FC = () => {
                 <OTPInputField disabled={isEmptyString(bankAccountId)} />
               </Box>
               <Grid item mt={5}>
-                <ContinueButton type='submit' />
+                <ContinueButton type='submit' disabled={!formState.isValid} />
               </Grid>
             </Box>
           </Grid>

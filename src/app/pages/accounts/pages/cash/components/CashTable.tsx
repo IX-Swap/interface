@@ -5,7 +5,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import React from 'react'
 import { ConvertedAssetBalance } from 'types/balance'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-
+import { Actions } from 'app/pages/accounts/pages/cash/components/Actions'
 export const CashTable: React.FC = () => {
   const { user } = useAuth()
 
@@ -15,7 +15,9 @@ export const CashTable: React.FC = () => {
       name={balanceQueryKeys.getByUserId(getIdFromObj(user))}
       filter={{ type: 'Currency' }}
       columns={columns}
+      actions={Actions}
       method='GET'
+      actionHeader='Actions'
     />
   )
 }

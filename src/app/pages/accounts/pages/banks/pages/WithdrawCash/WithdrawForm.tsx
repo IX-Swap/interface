@@ -28,7 +28,7 @@ export const WithdrawForm: React.FC = props => {
         paymentMethodName: null
       }}
       validationSchema={withdrawCashFormValidationSchema}
-      shouldUnregister={true}
+      shouldUnregister={false}
     >
       {children}
     </Form>
