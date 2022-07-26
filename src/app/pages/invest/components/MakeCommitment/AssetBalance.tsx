@@ -10,7 +10,7 @@ export interface AssetBalanceProps {
 }
 
 export const AssetBalance = ({ symbol }: AssetBalanceProps) => {
-  const currencyBalance: number = useCurrencyBalance(symbol)
+  const { currencyBalance, isLoading } = useCurrencyBalance(symbol)
 
   return (
     <Grid container spacing={3}>
@@ -20,7 +20,7 @@ export const AssetBalance = ({ symbol }: AssetBalanceProps) => {
           value={formatMoney(currencyBalance, symbol)}
         />
       </Grid>
-      {currencyBalance <= 0 && (
+      {!isLoading && currencyBalance <= 0 && (
         <Grid item xs={12}>
           <NoBalance />
         </Grid>
