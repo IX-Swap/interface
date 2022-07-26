@@ -31,7 +31,6 @@ interface Props {
   values: any
   isRecordFuture: boolean
   onlyPay: boolean
-  payoutId?: number
 }
 
 interface DataProps {
@@ -39,7 +38,7 @@ interface DataProps {
   value: any
 }
 
-export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, onlyPay, payoutId }) => {
+export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, onlyPay }) => {
   const [payNow, handlePayNow] = useState(onlyPay)
   const [isLoading, handleIsLoading] = useState(false)
 
@@ -66,6 +65,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       handleIsLoading(true)
       if (approvalState === 'NOT_APPROVED') {
         await approve()
+        handleIsLoading(false)
       } else {
         const payoutNonce = await payoutContract?.numberPayouts()
         const authorization = await getAuthorization({
@@ -87,7 +87,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
         handleFormSubmit(res.hash)
       }
-      handleIsLoading(false)
     } catch (e: any) {
       handleIsLoading(false)
     }
@@ -107,6 +106,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       })
       history.push({ pathname: routes.payoutItemManager(data.id) })
     }
+    handleIsLoading(false)
   }
 
   const buttonText = useMemo(() => {
