@@ -10,7 +10,7 @@ export interface EstimatedValueProps {
 }
 
 export const EstimatedValue = ({ symbol }: EstimatedValueProps) => {
-  const currencyBalance = useCurrencyBalance(symbol)
+  const { currencyBalance } = useCurrencyBalance(symbol)
   const noBalance = currencyBalance <= 0
 
   const { watch } = useFormContext<CommitmentFormValues>()
