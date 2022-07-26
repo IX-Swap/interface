@@ -20,7 +20,9 @@ export const virtualAccountsSample: VirtualAccount[] = [
     balance: {
       available: 987654.321,
       onHold: 0,
-      outstanding: 987654.321
+      outstanding: 987654.321,
+      sgdValue: 123,
+      usdValue: 123
     },
     createdBy: '234',
     createdAt: '123',
@@ -47,7 +49,9 @@ export const virtualAccountsSample: VirtualAccount[] = [
     balance: {
       available: 0,
       onHold: 0,
-      outstanding: 0
+      outstanding: 0,
+      sgdValue: 123,
+      usdValue: 123
     },
     createdBy: '234',
     createdAt: '123',
