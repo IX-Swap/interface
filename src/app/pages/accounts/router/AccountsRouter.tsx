@@ -79,10 +79,10 @@ export const AccountsRouter = () => {
       >
         <MyHoldings />
       </AppRoute>
-      <AppRoute breadcrumb='Cash' path={AccountsRoute.cash}>
+      <AppRoute breadcrumb='Cash' path={AccountsRoute.cash} exact>
         <Cash />
       </AppRoute>
-      <AppRoute path={AccountsRoute.landing}>
+      <AppRoute path={AccountsRoute.landing} exact>
         <LandingPage title='Accounts' links={accountsLandingLinks} />
       </AppRoute>
     </Switch>

@@ -53,7 +53,6 @@ export const withdrawCashFormValidationSchema = yup
       .required(validationMessages.required),
     otp: yup.string().nullable().required(validationMessages.required),
     memo: yup.string(),
-    virtualAccount: yup.string().required(validationMessages.required),
     paymentMethodName: yup.string()
   })
 

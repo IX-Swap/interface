@@ -16,14 +16,15 @@ import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { ManageBankAccountsButton } from './ManageBankAccountsButton'
 import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const Setup: React.FC = () => {
   const { container, selectRow, separator } = useStyles()
-  const { watch, control, formState, reset, getValues, setValue } =
+  const { watch, control, formState, reset } =
     useFormContext<WithdrawCashFormValues>()
   const bankAccountId = watch('bankAccountId')
-  const virtualAccountId = watch('virtualAccount')
-
+  const { getFilterValue } = useQueryFilter()
+  const virtualAccountId = getFilterValue('account')
   const {
     data: virtualAccountData,
     list,
@@ -42,7 +43,6 @@ export const Setup: React.FC = () => {
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
       reset({
-        virtualAccount: getValues('virtualAccount'),
         bankAccountId: null,
         amount: null,
         otp: null
@@ -75,12 +75,7 @@ export const Setup: React.FC = () => {
     <Box className={container}>
       <Paper sx={{ width: '100%' }}>
         <Box sx={{ px: { xs: 3, sm: 5 }, paddingTop: 5 }}>
-          <CurrencySelect
-            accounts={list}
-            onButtonClick={value => {
-              setValue('virtualAccount', value)
-            }}
-          />
+          <CurrencySelect accounts={list} />
         </Box>
         <div className={separator} />
         <Grid container direction='column'>
@@ -131,7 +126,7 @@ export const Setup: React.FC = () => {
                 <OTPInputField disabled={isEmptyString(bankAccountId)} />
               </Box>
               <Grid item mt={5}>
-                <ContinueButton type='submit' disabled={!formState.isValid} />
+                <ContinueButton type='submit' />
               </Grid>
             </Box>
           </Grid>
