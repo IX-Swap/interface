@@ -37,7 +37,7 @@ export const MakeCommitmentFormFields = ({
             marginTop: isTablet ? 0 : '26px'
           }}
         >
-          Add Your Metamask Wallet
+          Manage Wallets
         </Button>
       </Grid>
       <Grid item xs={12} md={6}>
@@ -68,7 +68,7 @@ export const MakeCommitmentFormFields = ({
         </Box>
       </Grid>
       <Grid item xs={12} md={6}>
-        <ToC isCampaign={dso.isCampaign} />
+        <ToC />
       </Grid>
       <Grid item xs={12} md={6}>
         <DownloadDocumentButton dso={dso} />

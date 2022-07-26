@@ -21,7 +21,7 @@ export const AddressSelect = () => {
       placeholder={
         !hasFilteredAddresses && status !== 'loading'
           ? 'You do not have wallet addresses'
-          : 'Select walet'
+          : 'Select wallet'
       }
       disabled={!hasFilteredAddresses}
       displayEmpty

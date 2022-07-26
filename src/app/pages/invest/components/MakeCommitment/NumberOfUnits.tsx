@@ -21,7 +21,7 @@ export const NumberOfUnits = ({
   const decimalScale = dsoDecimalScale ?? ETHEREUM_DECIMAL_PLACES
   const { control, setValue } = useFormContext()
 
-  const currencyBalance = useCurrencyBalance(symbol)
+  const { currencyBalance } = useCurrencyBalance(symbol)
   const noBalance = currencyBalance <= 0
 
   useEffect(() => {

@@ -2,10 +2,7 @@ import React, { PropsWithChildren } from 'react'
 import { CommitmentFormValues } from 'types/commitment'
 import { FormProps, Form } from 'components/form/Form'
 import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
-import {
-  commitmentCampaignValidationSchema,
-  commitmentNonCampaignValidationSchema
-} from 'app/pages/invest/validation'
+import { commitmentCampaignValidationSchema } from 'app/pages/invest/validation'
 import { Grid, Paper } from '@mui/material'
 import { MakeCommitmentFormFields } from 'app/pages/invest/components/MakeCommitment/MakeCommitmentFormFields'
 import { DigitalSecurityOffering } from 'types/dso'
@@ -21,11 +18,6 @@ export const MakeCommitmentForm = (
   >
 ) => {
   const { dso, ...rest } = props
-
-  const validationSchema =
-    dso.isCampaign === true
-      ? commitmentCampaignValidationSchema
-      : commitmentNonCampaignValidationSchema
 
   const {
     invest: [makeInvestment]
@@ -47,7 +39,11 @@ export const MakeCommitmentForm = (
   }
 
   return (
-    <Form {...rest} onSubmit={handleSubmit} validationSchema={validationSchema}>
+    <Form
+      {...rest}
+      onSubmit={handleSubmit}
+      validationSchema={commitmentCampaignValidationSchema}
+    >
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper sx={{ p: { xs: 2, md: 3 } }}>
