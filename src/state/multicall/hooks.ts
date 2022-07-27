@@ -22,7 +22,7 @@ export interface Result extends ReadonlyArray<any> {
 type MethodArg = string | number | BigNumber
 type MethodArgs = Array<MethodArg | MethodArg[]>
 
-export type OptionalMethodInputs = Array<MethodArg | MethodArg[] | undefined> | undefined
+export type OptionalMethodInputs = Array<MethodArg | MethodArg[] | undefined | null> | undefined
 
 function isMethodArg(x: unknown): x is MethodArg {
   return BigNumber.isBigNumber(x) || ['string', 'number'].indexOf(typeof x) !== -1

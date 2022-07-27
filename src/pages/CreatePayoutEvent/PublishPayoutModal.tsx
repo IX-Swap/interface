@@ -1,8 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
+import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { utils } from 'ethers'
 
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -12,14 +14,23 @@ import Column from 'components/Column'
 import { momentFormatDate } from 'pages/PayoutItem/utils'
 import { useAddPopup } from 'state/application/hooks'
 import { usePublishPayout } from 'state/payout/hooks'
+import { usePayoutContract } from 'hooks/useContract'
+import { routes } from 'utils/routes'
 
 import { transformPayoutDraftDTO } from './utils'
-import { routes } from 'utils/routes'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import { PAYOUT_ADDRESS } from 'constants/addresses'
+import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 interface Props {
   close: () => void
   values: any
   isRecordFuture: boolean
+  onlyPay: boolean
 }
 
 interface DataProps {
@@ -27,31 +38,97 @@ interface DataProps {
   value: any
 }
 
-export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close }) => {
+export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, onlyPay }) => {
+  const [payNow, handlePayNow] = useState(onlyPay)
+  const [isLoading, handleIsLoading] = useState(false)
+
   const { token, secToken, tokenAmount, recordDate, startDate, endDate, type } = values
   const publishPayout = usePublishPayout()
   const addPopup = useAddPopup()
+  const { chainId = 0 } = useActiveWeb3React()
   const history = useHistory()
+  const getAuthorization = useGetPayoutAuthorization()
+  const addTransaction = useTransactionAdder()
 
-  const handleFormSubmit = async () => {
+  const tokenCurrency = useCurrency(token.value)
+
+  const [approvalState, approve] = useApproveCallback(
+    tokenCurrency ? CurrencyAmount.fromRawAmount(tokenCurrency, utils.parseUnits(tokenAmount, '18') as any) : undefined,
+    PAYOUT_ADDRESS[chainId]
+  )
+
+  const payoutContract = usePayoutContract()
+  // console.log('log => payoutContract', payoutContract)
+
+  const pay = async () => {
+    try {
+      handleIsLoading(true)
+      if (approvalState === 'NOT_APPROVED') {
+        await approve()
+        handleIsLoading(false)
+      } else {
+        const payoutNonce = await payoutContract?.numberPayouts()
+        const authorization = await getAuthorization({
+          secTokenId: secToken.value,
+          tokenAddress: token.value,
+          payoutNonce,
+          fund: utils.parseUnits(tokenAmount, '18'),
+          startDate,
+          ...(endDate && {
+            endDate,
+          }),
+        })
+        const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
+
+        const res = await payoutContract?.initPayout(authorization, { gasLimit })
+        addTransaction(res, {
+          summary: `Payout was successfully payed`,
+        })
+
+        handleFormSubmit(res.hash)
+      }
+    } catch (e: any) {
+      handleIsLoading(false)
+    }
+  }
+
+  const handleFormSubmit = async (paidTxHash?: string) => {
     const body = transformPayoutDraftDTO(values)
-    const data = await publishPayout(body)
+    const data = await publishPayout({ ...body, ...(paidTxHash && { paidTxHash }) })
 
     if (data?.id) {
       close()
       addPopup({
         info: {
           success: true,
-          summary: 'Payout was successfully published',
+          summary: `Payout was successfully ${paidTxHash ? 'edited' : 'published'}`,
         },
       })
       history.push({ pathname: routes.payoutItemManager(data.id) })
     }
+    handleIsLoading(false)
   }
+
+  const buttonText = useMemo(() => {
+    if (approvalState === ApprovalState.NOT_APPROVED) {
+      return `Approve ${token.label}`
+    }
+
+    if (approvalState === ApprovalState.PENDING) {
+      return `Approving ${token.label} ...`
+    }
+
+    if (onlyPay) {
+      return 'Confirm Payment'
+    }
+
+    return 'Publish Payout Event'
+  }, [onlyPay, approvalState])
 
   return (
     <RedesignedWideModal scrollable isOpen onDismiss={close}>
       <ModalBlurWrapper data-testid="user-modal" style={{ maxWidth: '569px', width: '100%', position: 'relative' }}>
+        <LoadingIndicator isRelative isLoading={isLoading || approvalState === ApprovalState.PENDING} />
         <ModalHeader>
           <Title>
             <Trans>Payout Event Summary</Trans>
@@ -99,13 +176,12 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
             )}
           </Card>
 
-          <Column style={{ gap: '16px', marginBottom: 32 }}>
+          <Column style={{ gap: '16px', marginBottom: tokenAmount ? 32 : 24 }}>
             <Checkbox
-              name="accredited"
+              name="payNow"
               isRadio
-              disabled
-              checked={false}
-              onClick={() => null}
+              checked={payNow}
+              onClick={() => handlePayNow(true)}
               label={
                 <Box>
                   <TYPE.body3 fontWeight={700}>{t`Pay Now for This Event`}</TYPE.body3>
@@ -116,10 +192,11 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
               }
             />
             <Checkbox
-              name="accredited"
+              name="payLater"
               isRadio
-              checked={true}
-              onClick={() => null}
+              disabled={onlyPay}
+              checked={!payNow}
+              onClick={() => handlePayNow(false)}
               label={
                 <Box>
                   <TYPE.body3 fontWeight={700}>{t`Pay Later for This Event`}</TYPE.body3>
@@ -130,11 +207,18 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close })
               }
             />
           </Column>
-
+          {!tokenAmount && (
+            <Card marginBottom="32px">
+              <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
+                {t`Please indicate the Payout Amount.`}
+              </TYPE.title10>
+            </Card>
+          )}
           <StyledButtonIXSGradient
             type="button"
-            onClick={handleFormSubmit}
-          >{t`Publish Payout Event`}</StyledButtonIXSGradient>
+            onClick={() => (onlyPay || payNow ? pay() : handleFormSubmit())}
+            disabled={!tokenAmount}
+          >{t`${buttonText}`}</StyledButtonIXSGradient>
         </ModalBody>
       </ModalBlurWrapper>
     </RedesignedWideModal>
