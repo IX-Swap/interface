@@ -2,13 +2,13 @@ import { Button, Grid, TableBody, TableCell, TableRow } from '@mui/material'
 import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
 import { useStyles } from 'app/pages/accounts/pages/banks/pages/BanksList/CompactBankList.styles'
 import { CompactRowProps } from 'components/TableWithPagination/CompactRow'
-import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
 import get from 'lodash/get'
 import React, { useContext } from 'react'
 import { Bank } from 'types/bank'
 import { TableColumn } from 'types/util'
 import { Icon } from 'ui/Icons/Icon'
-import { MobileMenu } from './MobileMenu'
+import { TableViewRendererProps } from 'ui/UIKit/TablesKit/components/TableView/TableView'
+import { MobileMenu } from 'app/pages/accounts/pages/banks/pages/BanksList/MobileMenu'
 
 export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
