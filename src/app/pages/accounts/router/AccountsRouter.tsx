@@ -1,34 +1,27 @@
-import React from 'react'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { Balances } from 'app/pages/accounts/pages/balances/Balances'
 import { DepositCash } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositCash'
 import { WithdrawCash } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawCash'
+import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
+import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
+import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
+import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
+import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
 import { Transactions } from 'app/pages/accounts/pages/transactions/Transactions'
+import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
 import {
   accountsLandingLinks,
   AccountsRoute
 } from 'app/pages/accounts/router/config'
-import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
-import { BanksRouter } from 'app/pages/accounts/pages/banks/router/BanksRouter'
-import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
-import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
-import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
-import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
-import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
+import React from 'react'
+import { Switch } from 'react-router-dom'
 import { RootContainer } from 'ui/RootContainer'
-import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
-import { Cash } from 'app/pages/accounts/pages/cash/Cash'
-import { Withdraw } from 'app/pages/accounts/pages/withdraw/Withdraw'
-import { Deposit } from 'app/pages/accounts/pages/deposit/Deposit'
+import { CashRouter } from '../pages/cash/router/CashRouter'
 
 export const AccountsRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='Bank Accounts' path={AccountsRoute.banks}>
-        <BanksRouter />
-      </AppRoute>
-
       <AppRoute breadcrumb='Cash Deposits' path={AccountsRoute.depositCash}>
         <DepositCash />
       </AppRoute>
@@ -39,12 +32,6 @@ export const AccountsRouter = () => {
 
       <AppRoute breadcrumb='Cash Withdrawals' path={AccountsRoute.withdrawCash}>
         <WithdrawCash />
-      </AppRoute>
-      <AppRoute breadcrumb='Withdraw' path={AccountsRoute.withdraw}>
-        <Withdraw />
-      </AppRoute>
-      <AppRoute breadcrumb='Deposit' path={AccountsRoute.deposit}>
-        <Deposit />
       </AppRoute>
       <AppRoute breadcrumb='Asset Balances' path={AccountsRoute.balances}>
         <Balances />
@@ -85,7 +72,7 @@ export const AccountsRouter = () => {
         <MyHoldings />
       </AppRoute>
       <AppRoute breadcrumb='Cash' path={AccountsRoute.cash}>
-        <Cash />
+        <CashRouter />
       </AppRoute>
       <AppRoute path={AccountsRoute.landing}>
         <LandingPage title='Accounts' links={accountsLandingLinks} />
