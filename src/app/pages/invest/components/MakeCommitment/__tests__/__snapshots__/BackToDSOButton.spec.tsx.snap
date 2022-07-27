@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackToDSOButton should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-15c13yl"
+  >
+    <a
+      class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1m833rv-MuiButtonBase-root-MuiButton-root"
+      href="/app/invest/offerings/1231/1231/view"
+      tabindex="0"
+    >
+      Back to DSO page
+      <span
+        class="MuiButton-endIcon MuiButton-iconSizeMedium css-1gnd1fd-MuiButton-endIcon"
+      >
+        <svg
+          class="css-1s8o7ec"
+          fill="#778194"
+          height="24px"
+          width="24px"
+        >
+          <use
+            href="image-mock#arrow-right"
+          />
+        </svg>
+      </span>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </a>
+  </div>
+</div>
+`;
