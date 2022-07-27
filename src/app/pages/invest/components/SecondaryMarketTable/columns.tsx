@@ -1,6 +1,8 @@
 import { formatMoney } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 import { getUserNameById } from 'helpers/tables'
+import React from 'react'
+import { Box } from '@mui/material'
 
 export interface Order {
   createdAt: string
@@ -14,12 +16,8 @@ export interface Order {
 
 export const columns: Array<TableColumn<any>> = [
   {
-    key: '',
-    label: ''
-  },
-  {
     key: 'name',
-    label: 'Pair'
+    label: <Box paddingLeft={3}>Pair</Box>
   },
   {
     label: 'Symbol',
@@ -40,13 +38,9 @@ export const columns: Array<TableColumn<any>> = [
   {
     key: 'listing.minimumTradeUnits',
     label: 'Price',
-    align: 'right',
-    headAlign: 'right',
+    align: 'left',
+    headAlign: 'left',
     render: (_, value) => formatMoney(value.listing.minimumTradeUnits, '')
-  },
-  {
-    key: '',
-    label: ''
   },
   {
     key: 'listing.marketType',
