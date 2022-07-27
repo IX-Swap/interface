@@ -189,8 +189,18 @@ export const getOrderCurrency = (
 
 export const renderNewAmount = (value: number) => {
   const stringValue = value.toString()
-  const firstPart = stringValue.slice(0, stringValue.length - 3)
-  const lastPart = stringValue.slice(stringValue.length - 3, stringValue.length)
+  const integerPart = Number.isInteger(value)
+    ? stringValue
+    : stringValue.split('.')[0]
+  const fractionalPart = stringValue.split('.')[1]
+  const firstIntegerPart = integerPart.slice(0, integerPart.length - 3)
+  const lastIntegerPart = integerPart.slice(
+    integerPart.length - 3,
+    integerPart.length
+  )
+  const integerResult = firstIntegerPart + ' ' + lastIntegerPart
 
-  return firstPart + ' ' + lastPart
+  return Number.isInteger(value)
+    ? integerResult
+    : integerResult + '.' + fractionalPart
 }
