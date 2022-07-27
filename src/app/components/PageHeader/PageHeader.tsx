@@ -1,11 +1,12 @@
 import React, { Fragment, useRef } from 'react'
-import { Grid, Typography, Box, Container } from '@mui/material'
+import { Grid, Typography, Box, Container, Theme } from '@mui/material'
 import { Breadcrumbs } from 'app/components/Breadcrumbs/Breadcrumbs'
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import { useStyles } from 'app/components/PageHeader/PageHeader.styles'
 import { Variant } from '@mui/material/styles/createTypography'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { getPadding } from 'app/components/PageHeader/utils'
+import { SxProps } from '@mui/system'
 
 export interface PageHeaderProps {
   title?: string
@@ -21,6 +22,7 @@ export interface PageHeaderProps {
   titleComponent?: React.ReactNode
   wrapperStyle?: React.CSSProperties
   mainWrapperStyle?: React.CSSProperties
+  mainWrapperSX?: SxProps<Theme>
   titleWrapperStyle?: React.CSSProperties
   titleStyle?: React.CSSProperties
 }
@@ -38,6 +40,7 @@ export const PageHeader = (props: PageHeaderProps) => {
     titleComponent,
     wrapperStyle,
     mainWrapperStyle,
+    mainWrapperSX,
     titleWrapperStyle,
     titleStyle
   } = props
@@ -79,6 +82,7 @@ export const PageHeader = (props: PageHeaderProps) => {
           container
           flexWrap={isTablet ? undefined : 'nowrap'}
           style={mainWrapperStyle}
+          sx={mainWrapperSX}
           justifyContent={hasCustomComponent ? 'space-between' : 'flex-start'}
           alignItems={'center'}
           spacing={isTablet ? 1 : 3}

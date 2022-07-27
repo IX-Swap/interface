@@ -4,6 +4,7 @@ export default makeStyles(theme => ({
   container: {
     width: '100%',
     maxWidth: 400,
+    minWidth: 320,
     borderRadius: 8,
     padding: theme.spacing(5),
     boxShadow: 'none'
