@@ -2,6 +2,7 @@ import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
+import { CashBalance } from 'app/pages/accounts/components/CashBalance'
 
 export const Cash = () => {
   return (
@@ -9,7 +10,9 @@ export const Cash = () => {
       <Grid item>
         <PageHeader title='Cash' />
       </Grid>
-      <RootContainer></RootContainer>
+      <RootContainer>
+        <CashBalance />
+      </RootContainer>
     </Grid>
   )
 }
