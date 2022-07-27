@@ -2,7 +2,13 @@ import {
   getIndividualLastName,
   getCorporateLegalName,
   getCorporateRepresentativeName,
-  renderIndividualOrCompanyName
+  renderIndividualOrCompanyName,
+  renderBalance,
+  renderUSDPrice,
+  renderSGDPrice,
+  renderCurrencyLabel,
+  RenderBolderText,
+  renderStatus
 } from '../tables'
 import { individual, corporate } from '__fixtures__/identity'
 import { commitment, cashDeposit } from '__fixtures__/authorizer'
@@ -12,6 +18,9 @@ import {
   CorporateIdentity,
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
+import { render } from 'test-utils'
+import { firstTableItems } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
+import React from 'react'
 
 describe('renderIndividualOrCompanyName', () => {
   it('returns individual name for IndividualIdentity', () => {
@@ -117,5 +126,49 @@ describe('getCorporateRepresentativeName', () => {
 
   it("returns first representative's lastName", () => {
     expect(getCorporateRepresentativeName(corporate)).toBe('')
+  })
+})
+
+describe('renderBalance', () => {
+  it('renders balance in correct way', () => {
+    const { container } = render(<>{renderBalance('30', firstTableItems[0])}</>)
+
+    expect(container).toMatchSnapshot()
+  })
+})
+describe('renderSGDPrice', () => {
+  it('renders SGD price in correct way', () => {
+    const { container } = render(<>{renderSGDPrice('30')}</>)
+
+    expect(container).toMatchSnapshot()
+  })
+})
+describe('renderUSDPrice', () => {
+  it('renders USD price in correct way', () => {
+    const { container } = render(<>{renderUSDPrice('30')}</>)
+
+    expect(container).toMatchSnapshot()
+  })
+})
+describe('renderCurrencyLabel', () => {
+  it('renders currency label', () => {
+    const { container } = render(<>{renderCurrencyLabel('SGD')}</>)
+
+    expect(container).toMatchSnapshot()
+  })
+})
+describe('RenderBolderText', () => {
+  it('renders bolder text', () => {
+    const { container } = render(<>{RenderBolderText('test')}</>)
+
+    expect(container).toMatchSnapshot()
+  })
+})
+
+describe('renderStatus', () => {
+  it('renders status with type', () => {
+    const { container } = render(<>{renderStatus('Connected')}</>)
+
+    expect(container).toMatchSnapshot()
   })
 })
