@@ -1,16 +1,12 @@
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { DepositCash } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositCash'
 import { WithdrawCash } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawCash'
-import { BanksRouter } from 'app/pages/accounts/pages/banks/router/BanksRouter'
-import { Cash } from 'app/pages/accounts/pages/cash/Cash'
 import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
 import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
-import { Deposit } from 'app/pages/accounts/pages/deposit/Deposit'
 import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
 import { MyHoldings } from 'app/pages/accounts/pages/holdings/MyHoldings'
 import { ReportsRouter } from 'app/pages/accounts/pages/reports/router/ReportsRouter'
 import { Transactions } from 'app/pages/accounts/pages/transactions/Transactions'
-import { Withdraw } from 'app/pages/accounts/pages/withdraw/Withdraw'
 import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
 import {
   accountsLandingLinks,
@@ -20,14 +16,11 @@ import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Switch } from 'react-router-dom'
 import { RootContainer } from 'ui/RootContainer'
+import { CashRouter } from '../pages/cash/router/CashRouter'
 
 export const AccountsRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='Bank Accounts' path={AccountsRoute.banks}>
-        <BanksRouter />
-      </AppRoute>
-
       <AppRoute breadcrumb='Cash Deposits' path={AccountsRoute.depositCash}>
         <DepositCash />
       </AppRoute>
@@ -38,12 +31,6 @@ export const AccountsRouter = () => {
 
       <AppRoute breadcrumb='Cash Withdrawals' path={AccountsRoute.withdrawCash}>
         <WithdrawCash />
-      </AppRoute>
-      <AppRoute breadcrumb='Withdraw' path={AccountsRoute.withdraw}>
-        <Withdraw />
-      </AppRoute>
-      <AppRoute breadcrumb='Deposit' path={AccountsRoute.deposit}>
-        <Deposit />
       </AppRoute>
       <AppRoute
         breadcrumb='Digital Securities'
@@ -79,8 +66,8 @@ export const AccountsRouter = () => {
       >
         <MyHoldings />
       </AppRoute>
-      <AppRoute breadcrumb='Cash' path={AccountsRoute.cash} exact>
-        <Cash />
+      <AppRoute breadcrumb='Cash' path={AccountsRoute.cash}>
+        <CashRouter />
       </AppRoute>
       <AppRoute path={AccountsRoute.landing} exact>
         <LandingPage title='Accounts' links={accountsLandingLinks} />

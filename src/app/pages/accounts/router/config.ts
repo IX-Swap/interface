@@ -9,23 +9,24 @@ import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
 
 export const AccountsRoute = {
-  landing: makeURL(['app', 'account']),
-  banks: makeURL(['app', 'account', 'bankAccount']),
-  digitalSecurities: makeURL(['app', 'account', 'digitalSecurity']),
-  transactions: makeURL(['app', 'account', 'transactions']),
-  depositCash: makeURL(['app', 'account', 'cashDeposit']),
-  deposit: '/app/accounts/deposit',
+  landing: makeURL(['app', 'accounts']),
+  banks: '/app/accounts/cash/bank-accounts',
+  balances: makeURL(['app', 'accounts', 'balances']),
+  digitalSecurities: makeURL(['app', 'accounts', 'digitalSecurity']),
+  transactions: makeURL(['app', 'accounts', 'transactions']),
+  depositCash: makeURL(['app', 'accounts', 'cashDeposit']),
+  deposit: '/app/accounts/cash/deposit',
   withdraw: '/app/accounts/cash/withdraw',
-  withdrawCash: makeURL(['app', 'account', 'cashWithdrawal']),
-  withdrawalAddresses: makeURL(['app', 'account', 'withdrawalAddresses']),
+  withdrawCash: makeURL(['app', 'accounts', 'cashWithdrawal']),
+  withdrawalAddresses: makeURL(['app', 'accounts', 'withdrawalAddresses']),
   withdrawalAddressesCreate: makeURL([
     'app',
-    'account',
+    'accounts',
     'withdrawalAddresses',
     'create'
   ]),
-  commitments: makeURL(['app', 'account', 'commitments']),
-  dashboard: makeURL(['app', 'account', 'dashboard']),
+  commitments: makeURL(['app', 'accounts', 'commitments']),
+  dashboard: makeURL(['app', 'accounts', 'dashboard']),
   reports: '/app/accounts/reports',
   myHoldings: '/app/accounts/holdings',
   cash: '/app/accounts/cash'

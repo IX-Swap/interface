@@ -6,10 +6,14 @@ import { EditBank } from 'app/pages/accounts/pages/banks/pages/EditBank/EditBank
 import { CreateBank } from 'app/pages/accounts/pages/banks/pages/CreateBank/CreateBank'
 import { BanksRoute } from 'app/pages/accounts/pages/banks/router/config'
 import { AppRoute } from 'components/AppRoute'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
 
 export const BanksRouter = () => {
   return (
     <Switch>
+      <AppRoute path={AccountsRoute.banks} exact>
+        <BanksList />
+      </AppRoute>
       <AppRoute breadcrumb='View Bank' exact path={BanksRoute.view}>
         <ViewBank />
       </AppRoute>
@@ -20,10 +24,6 @@ export const BanksRouter = () => {
 
       <AppRoute breadcrumb='Add Bank Account' exact path={BanksRoute.create}>
         <CreateBank />
-      </AppRoute>
-
-      <AppRoute path={BanksRoute.list}>
-        <BanksList />
       </AppRoute>
     </Switch>
   )

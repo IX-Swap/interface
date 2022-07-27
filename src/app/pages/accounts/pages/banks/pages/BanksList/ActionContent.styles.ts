@@ -2,7 +2,7 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
-    padding: theme.spacing(2.5),
+    padding: theme.spacing(1.5, 2.5),
     background: theme.palette.background.paper,
     borderRadius: 8,
     width: 174,
@@ -13,6 +13,6 @@ export const useStyles = makeStyles(theme => ({
   separator: {
     background: theme.palette.select.itemBorder,
     height: 1,
-    margin: theme.spacing(1, 0)
+    margin: theme.spacing(1, 0, 1.5, 0)
   }
 }))
