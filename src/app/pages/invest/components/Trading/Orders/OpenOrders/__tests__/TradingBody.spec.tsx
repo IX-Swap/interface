@@ -62,7 +62,7 @@ describe('TradingBody', () => {
     jest.spyOn(useCryptoBalance, 'useCryptoBalance').mockReturnValueOnce(1000)
     jest
       .spyOn(useCurrencyBalance, 'useCurrencyBalance')
-      .mockReturnValueOnce(500)
+      .mockReturnValueOnce({ currencyBalance: 500, isLoading: false })
   })
 
   afterEach(async () => {
