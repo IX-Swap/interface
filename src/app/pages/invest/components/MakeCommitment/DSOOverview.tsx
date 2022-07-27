@@ -12,7 +12,7 @@ export interface DSOOverviewProps {
 
 export const DSOOverview = ({ dso }: DSOOverviewProps) => {
   return (
-    <Paper sx={{ p: { xs: 1, md: 3 } }}>
+    <Paper sx={{ p: { xs: 2, md: 3 } }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <DSOTitle dso={dso} />

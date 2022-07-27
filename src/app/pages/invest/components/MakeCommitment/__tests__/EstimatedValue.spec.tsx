@@ -6,7 +6,6 @@ import {
 } from 'app/pages/invest/components/MakeCommitment/EstimatedValue'
 import { asset } from '__fixtures__/authorizer'
 import { Form } from 'components/form/Form'
-import { formatMoney } from 'helpers/numbers'
 
 jest.mock('app/pages/invest/components/MakeCommitment/OverviewValue', () => ({
   OverviewValue: jest.fn(() => null)

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useCommitmentActivity } from 'app/pages/invest/hooks/useCommitmentActivity'
 import { DSOOverview } from 'app/pages/invest/components/MakeCommitment/DSOOverview'
 import { RootContainer } from 'ui/RootContainer'
+import { MakeCommitmentForm } from 'app/pages/invest/components/MakeCommitment/MakeCommitmentForm'
 
 export const MakeCommitment = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
@@ -22,7 +23,16 @@ export const MakeCommitment = () => {
         <Grid item xs={12} md={4}>
           <DSOOverview dso={data} />
         </Grid>
-        <Grid item xs={12} md={8}></Grid>
+        <Grid item xs={12} md={8}>
+          <MakeCommitmentForm
+            dso={data}
+            defaultValues={{
+              pricePerUnit: data.pricePerUnit,
+              tnc: false,
+              totalAmount: 0
+            }}
+          />
+        </Grid>
       </Grid>
     </RootContainer>
   )
