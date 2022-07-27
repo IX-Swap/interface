@@ -11,16 +11,19 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { Bank } from 'types/bank'
 import { CompactTable } from 'ui/CompactTable/CompactTable'
+import { MobileMenu } from 'ui/CompactTable/MobileMenu'
 import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { MobileMenu } from './MobileMenu'
 
 export const Table: React.FC = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { isTablet } = useAppBreakpoints()
+  const titleExtractor = (selectedItem: Bank) => {
+    return selectedItem.currency.symbol
+  }
   return (
     <ActiveElementContextWrapper>
       <TableView<Bank>
@@ -35,7 +38,13 @@ export const Table: React.FC = () => {
               <CompactTable
                 {...props}
                 columns={compactColumns}
-                menu={<MobileMenu items={props.items} />}
+                menu={
+                  <MobileMenu
+                    items={props.items}
+                    titleExtractor={titleExtractor}
+                    actions={(item: Bank) => <Actions item={item} />}
+                  />
+                }
               />
             )
           : undefined}

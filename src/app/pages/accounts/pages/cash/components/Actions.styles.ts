@@ -5,6 +5,9 @@ export const useStyles = makeStyles(theme => ({
     height: 33,
     margin: 0,
     marginRight: 5,
-    padding: 0
+    padding: 0,
+    '&:hover': {
+      background: 'transparent'
+    }
   }
 }))

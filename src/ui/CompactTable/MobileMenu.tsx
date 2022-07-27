@@ -1,13 +1,20 @@
 import { Box, Drawer, Grid, IconButton, Typography } from '@mui/material'
-import { useStyles } from 'app/pages/accounts/pages/banks/pages/BanksList/MobileMenu.styles'
+import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
+import { useStyles } from 'ui/CompactTable/MobileMenu.styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useContext, useMemo } from 'react'
-import { Bank } from 'types/bank'
+import { Serialized } from 'types/base'
 import { Icon } from 'ui/Icons/Icon'
-import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
-import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
 
-export const MobileMenu = ({ items }: { items: Bank[] }) => {
+export const MobileMenu = <T extends Serialized>({
+  items,
+  titleExtractor,
+  actions
+}: {
+  items: T[]
+  titleExtractor: (item: T) => string
+  actions: (item: T) => React.ReactElement
+}) => {
   const context = useContext(ActiveElementContext)
   const open = context?.hasOpenIndices
   const classes = useStyles()
@@ -18,6 +25,7 @@ export const MobileMenu = ({ items }: { items: Bank[] }) => {
     () => items.filter(item => item._id === openIndex)?.[0],
     [openIndex, items]
   )
+  console.log({ items, openIndex })
   if (selectedItem === undefined) {
     return null
   }
@@ -43,7 +51,7 @@ export const MobileMenu = ({ items }: { items: Bank[] }) => {
                 fontWeight={600}
                 className={classes.header}
               >
-                {selectedItem.currency.symbol}
+                {titleExtractor(selectedItem)}
               </Typography>
               <IconButton onClick={onClose} size='medium'>
                 <Icon name='close' />
@@ -51,7 +59,7 @@ export const MobileMenu = ({ items }: { items: Bank[] }) => {
             </Box>
             <Grid flexDirection='column'>
               <Grid display='flex' flexDirection={'column'} gap={2}>
-                <Actions item={selectedItem} />
+                {actions(selectedItem)}
               </Grid>
               <Box mb={2} />
             </Grid>

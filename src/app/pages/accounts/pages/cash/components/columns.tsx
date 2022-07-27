@@ -29,3 +29,5 @@ export const columns: Array<TableColumn<ConvertedAssetBalance>> = [
     label: 'Account Number'
   }
 ]
+
+export const compactColumns = [...columns]

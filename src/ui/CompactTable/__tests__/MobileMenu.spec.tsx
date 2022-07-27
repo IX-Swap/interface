@@ -1,14 +1,9 @@
 import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
-import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
-import { MobileMenu } from 'app/pages/accounts/pages/banks/pages/BanksList/MobileMenu'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { render } from 'test-utils'
+import { MobileMenu } from 'ui/CompactTable/MobileMenu'
 import { bank } from '__fixtures__/authorizer'
-
-jest.mock('app/pages/accounts/pages/banks/pages/BanksList/Actions', () => ({
-  Actions: jest.fn(() => null)
-}))
 
 describe('MobileMenu', () => {
   afterEach(async () => {
@@ -19,6 +14,7 @@ describe('MobileMenu', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isTablet: true
     } as any)
+    const actions = jest.fn(() => <></>)
     render(
       <ActiveElementContext.Provider
         value={{
@@ -28,14 +24,13 @@ describe('MobileMenu', () => {
           openIndex: bank._id
         }}
       >
-        <MobileMenu items={[bank]} />
+        <MobileMenu
+          items={[bank]}
+          actions={actions}
+          titleExtractor={jest.fn(() => 'test')}
+        />
       </ActiveElementContext.Provider>
     )
-    expect(Actions).toHaveBeenCalledWith(
-      expect.objectContaining({
-        item: bank
-      }),
-      {}
-    )
+    expect(actions).toHaveBeenCalledWith(bank)
   })
 })
