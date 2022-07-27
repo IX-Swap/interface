@@ -34,14 +34,8 @@ export const CashBalance = () => {
 
   return (
     <Paper className={classes.wrapper}>
-      <Grid
-        container
-        spacing={3}
-        wrap={'wrap'}
-        alignItems={'center'}
-        justifyContent={'center'}
-      >
-        <Grid item xs={12} sm={'auto'}>
+      <Grid container alignItems={'center'} justifyContent={'center'}>
+        <Grid item flexBasis={'auto'}>
           <InputLabel style={{ marginBottom: 0 }}>
             <Typography color={'text.secondary'} textAlign={'center'}>
               Available Balance

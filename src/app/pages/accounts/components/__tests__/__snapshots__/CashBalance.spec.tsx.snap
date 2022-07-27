@@ -6,10 +6,10 @@ exports[`CashBalance should match snapshot 1`] = `
     class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-wrapper-17 css-11gelwl-MuiPaper-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1402ce4-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container css-go2vvz-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-auto css-y4b3lo-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-item css-15ssp1u-MuiGrid-root"
       >
         <label
           class="MuiInputLabel-root MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-root MuiFormLabel-colorPrimary makeStyles-wrapper-25 css-1oqcrp7-MuiFormLabel-root-MuiInputLabel-root"
