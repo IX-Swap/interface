@@ -6,33 +6,26 @@ export const columns: Array<TableColumn<ConvertedAssetBalance>> = [
   {
     key: 'currency',
     label: 'Currency',
+    align: 'left',
     render: renderCurrencyLabel
   },
   {
     key: 'balance.outstanding',
     label: 'Balance',
-    headAlign: 'right',
-    align: 'right',
     render: renderAmount
   },
   {
     key: 'balance.available',
     label: 'Available Balance',
-    headAlign: 'right',
-    align: 'right',
     render: renderAmount
   },
   {
     key: 'balance.usdValue',
     label: 'USD Value',
-    headAlign: 'right',
-    align: 'right',
     render: renderAmount
   },
   {
     key: 'accountNumber',
-    label: 'Account Number',
-    headAlign: 'right',
-    align: 'right'
+    label: 'Account Number'
   }
 ]

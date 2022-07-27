@@ -3,13 +3,13 @@ import { AccountsRoute } from 'app/pages/accounts/router/config'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { ConvertedAssetBalance } from 'types/balance'
-
+import { useStyles } from 'app/pages/accounts/pages/cash/components/Actions.styles'
 export interface ActionsProps {
   item: ConvertedAssetBalance
 }
 
 export const Actions = ({ item }: ActionsProps) => {
-  const styles = { height: 33, marginRight: 8 }
+  const styles = useStyles()
   const account = item.accountNumber
   const { push } = useHistory()
   const params = new URLSearchParams()
@@ -18,7 +18,7 @@ export const Actions = ({ item }: ActionsProps) => {
   return (
     <Box display={'flex'} alignItems={'center'} justifyContent={'flex-start'}>
       <Button
-        style={styles}
+        className={styles.button}
         variant={'text'}
         onClick={() =>
           push({ pathname: AccountsRoute.deposit, search: params.toString() })
@@ -27,7 +27,7 @@ export const Actions = ({ item }: ActionsProps) => {
         Deposit
       </Button>
       <Button
-        style={styles}
+        className={styles.button}
         variant={'text'}
         onClick={() =>
           push({ pathname: AccountsRoute.withdraw, search: params.toString() })
