@@ -19,10 +19,20 @@ export const BanksList: React.FC = () => {
     >
       <Grid item>
         {!isTablet && (
-          <PageHeader title='Bank Accounts' endComponent={<Header />} />
+          <PageHeader
+            data-testid='desktop-header'
+            title='Bank Accounts'
+            endComponent={<Header />}
+          />
         )}
         {isTablet && (
-          <Grid item container flexDirection={'row'} mt={3}>
+          <Grid
+            item
+            container
+            flexDirection={'row'}
+            mt={3}
+            data-testid='mobile-header'
+          >
             <Grid item xs={12}>
               <PageHeader
                 title='Bank accounts'

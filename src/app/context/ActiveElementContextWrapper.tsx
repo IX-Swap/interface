@@ -1,13 +1,13 @@
 import React, { createContext, useState } from 'react'
 
-export const OpenOrdersContext = createContext<{
+export const ActiveElementContext = createContext<{
   isIndexOpen: (index: string) => boolean
   toggleRow: (index: string) => void
   hasOpenIndices: boolean
   openIndex?: string
 } | null>(null)
 
-export const OpenOrdersContextWrapper: React.FC = ({ children }) => {
+export const ActiveElementContextWrapper: React.FC = ({ children }) => {
   const [openOrdersIndices, setOpenOrdersIndices] = useState<{
     [key: string]: boolean
   }>({})
@@ -30,10 +30,10 @@ export const OpenOrdersContextWrapper: React.FC = ({ children }) => {
     }
   }
   return (
-    <OpenOrdersContext.Provider
+    <ActiveElementContext.Provider
       value={{ isIndexOpen, toggleRow, hasOpenIndices, openIndex }}
     >
       {children}
-    </OpenOrdersContext.Provider>
+    </ActiveElementContext.Provider>
   )
 }
