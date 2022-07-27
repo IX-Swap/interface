@@ -21,7 +21,7 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('EditBank', () => {
   beforeEach(() => {
-    history.push(`/app/accounts/bank-accounts/${bank._id}/edit`, {
+    history.push(`/app/accounts/cash/bank-accounts/${bank._id}/edit`, {
       bankId: bank._id
     })
   })

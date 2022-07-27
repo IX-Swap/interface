@@ -83,7 +83,7 @@ describe('Actions', () => {
     await waitFor(
       () => {
         expect(history.location.pathname).toBe(
-          '/app/accounts/bank-accounts/1/edit'
+          '/app/accounts/cash/bank-accounts/1/edit'
         )
       },
       { timeout: 1000 }
