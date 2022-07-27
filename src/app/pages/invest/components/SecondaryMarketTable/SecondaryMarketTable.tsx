@@ -11,17 +11,25 @@ import { useTheme } from '@mui/material/styles'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { useOutlinedInputStyles } from 'app/pages/invest/components/OverviwPageFilters'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const SecondaryMarketTable = () => {
   const outlinedInputClasses = useOutlinedInputStyles()
   const theme = useTheme()
+  const { isMobile } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const secondaryMarketSearch = getFilterValue('secondaryMarketSearch')
 
   return (
     <Grid container direction='column' spacing={3}>
-      <Grid item container wrap={'nowrap'} spacing={2}>
+      <Grid
+        item
+        container
+        sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+        wrap={'nowrap'}
+        spacing={2}
+      >
         <Grid item width={'100%'}>
           <SearchFilter
             inputSX={{
@@ -46,7 +54,7 @@ export const SecondaryMarketTable = () => {
             disableElevation
             style={{
               color: theme.palette.primary.main,
-              width: 192,
+              width: isMobile ? '100%' : 192,
               height: 50
             }}
           >
