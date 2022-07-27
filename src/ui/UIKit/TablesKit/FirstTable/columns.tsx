@@ -1,8 +1,3 @@
-// import {
-//   renderBalance,
-//   renderUSDPrice,
-//   renderCurrencyLabel
-// } from 'ui/UIKit/TablesKit/utils/utils'
 import { TableColumn } from 'types/util'
 import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
 import {
