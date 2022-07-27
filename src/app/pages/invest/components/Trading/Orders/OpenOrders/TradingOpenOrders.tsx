@@ -17,11 +17,11 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { OpenOTCOrder } from 'types/otcOrder'
-import { OpenOrdersContextWrapper } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 import { CompactOpenOTCOrder } from './CompactOpenOTCOrder'
 import { OpenOrdersEmptyState } from './OpenOrdersEmptyState'
 import { OpenOTCTableBody } from './OpenOTCTableBody'
 import { LeavePageContextWrapper } from 'app/pages/issuance/context/LeavePageContext'
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
 
 export const TradingOpenOrders = () => {
   const { user } = useAuth()
@@ -31,7 +31,7 @@ export const TradingOpenOrders = () => {
   const { account } = useActiveWeb3React()
   return (
     <LeavePageContextWrapper>
-      <OpenOrdersContextWrapper>
+      <ActiveElementContextWrapper>
         <Grid>
           <TableView<OpenOTCOrder>
             name={tradingQueryKeys.getMyOpenOrdersList(userId, pairId, account)}
@@ -62,7 +62,7 @@ export const TradingOpenOrders = () => {
                 )}
           </TableView>
         </Grid>
-      </OpenOrdersContextWrapper>
+      </ActiveElementContextWrapper>
     </LeavePageContextWrapper>
   )
 }

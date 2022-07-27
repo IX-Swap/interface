@@ -14,14 +14,14 @@ import {
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { CompactBankList } from './CompactBankList'
-import { ActiveBankContextWrapper } from './context/ActiveBankContextWrapper'
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
 
 export const Table: React.FC = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { isTablet } = useAppBreakpoints()
   return (
-    <ActiveBankContextWrapper>
+    <ActiveElementContextWrapper>
       <TableView<Bank>
         uri={`/accounts/banks/list/${userId}`}
         name={banksQueryKeys.getListByUserId(userId)}
@@ -35,6 +35,6 @@ export const Table: React.FC = () => {
             )
           : undefined}
       </TableView>
-    </ActiveBankContextWrapper>
+    </ActiveElementContextWrapper>
   )
 }

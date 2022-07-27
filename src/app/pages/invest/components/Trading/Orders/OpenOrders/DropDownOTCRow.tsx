@@ -1,5 +1,5 @@
 import { Box, IconButton } from '@mui/material'
-import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
+import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
 import React, { useContext } from 'react'
 import { OpenOTCOrder } from 'types/otcOrder'
 import { Icon } from 'ui/Icons/Icon'
@@ -8,7 +8,7 @@ export interface DropDownOTCRowProps {
 }
 
 export const DropDownOTCRow = ({ order }: DropDownOTCRowProps) => {
-  const context = useContext(OpenOrdersContext)
+  const context = useContext(ActiveElementContext)
   const isOpen = context?.isIndexOpen?.(order._id)
   const handleClick = () => {
     context?.toggleRow(order._id)

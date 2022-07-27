@@ -4,10 +4,11 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useContext, useMemo } from 'react'
 import { Bank } from 'types/bank'
 import { Icon } from 'ui/Icons/Icon'
-import { ActiveBankContext } from './context/ActiveBankContextWrapper'
 import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
+import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
+
 export const MobileMenu = ({ items }: { items: Bank[] }) => {
-  const context = useContext(ActiveBankContext)
+  const context = useContext(ActiveElementContext)
   const open = context?.hasOpenIndices
   const classes = useStyles()
   const openIndex = context?.openIndex
