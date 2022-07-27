@@ -31,10 +31,6 @@ export default makeStyles(theme => {
           }
         }
       },
-      '&:hover': {
-        boxShadow: tablePalette.boxShadow
-      },
-
       '& td': {
         borderBottom: 'none',
         backgroundColor: tablePalette.rowBg,
