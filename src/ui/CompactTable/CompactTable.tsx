@@ -1,23 +1,29 @@
 import { Button, Grid, TableBody, TableCell, TableRow } from '@mui/material'
 import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
-import { useStyles } from 'app/pages/accounts/pages/banks/pages/BanksList/CompactBankList.styles'
+import { useStyles } from 'ui/CompactTable/CompactTable.styles'
 import { CompactRowProps } from 'components/TableWithPagination/CompactRow'
 import get from 'lodash/get'
 import React, { useContext } from 'react'
-import { Bank } from 'types/bank'
+import { Serialized } from 'types/base'
 import { TableColumn } from 'types/util'
 import { Icon } from 'ui/Icons/Icon'
 import { TableViewRendererProps } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { MobileMenu } from 'app/pages/accounts/pages/banks/pages/BanksList/MobileMenu'
 
-export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
+export interface CompactBodyProps<T extends Serialized>
+  extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
+  menu: React.ReactElement
 }
 
-export interface RenderCellProps extends TableColumn<Bank, string> {
-  item: Bank
+export interface RenderCellProps<T extends Serialized>
+  extends TableColumn<T, string> {
+  item: T
 }
-export const renderCell = ({ render, key, item }: RenderCellProps) => {
+export const renderCell = <T extends Serialized>({
+  render,
+  key,
+  item
+}: RenderCellProps<T>) => {
   return (
     key.length > 0 &&
     (typeof render === 'function'
@@ -26,11 +32,13 @@ export const renderCell = ({ render, key, item }: RenderCellProps) => {
   )
 }
 
-export const CompactBankList = (props: CompactBodyProps<Bank>) => {
-  const { columns, items } = props
+export const CompactTable = <T extends Serialized>(
+  props: CompactBodyProps<T>
+) => {
+  const { columns, items, menu } = props
   const classes = useStyles()
   const context = useContext(ActiveElementContext)
-  const handleClick = (item: Bank) => {
+  const handleClick = (item: T) => {
     context?.toggleRow(item._id)
   }
 
@@ -84,7 +92,7 @@ export const CompactBankList = (props: CompactBodyProps<Bank>) => {
           </TableRow>
         ))}
       </TableBody>
-      <MobileMenu items={items} />
+      {menu}
     </>
   )
 }

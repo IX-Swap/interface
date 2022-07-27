@@ -1,20 +1,21 @@
-import React from 'react'
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
 import {
   columns,
   compactColumns
 } from 'app/pages/accounts/pages/banks/pages/BanksList/columns'
-import { Bank } from 'types/bank'
-import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
-import { useAuth } from 'hooks/auth/useAuth'
-import { getIdFromObj } from 'helpers/strings'
 import { banksQueryKeys } from 'config/queryKeys'
+import { getIdFromObj } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
+import { Bank } from 'types/bank'
+import { CompactTable } from 'ui/CompactTable/CompactTable'
 import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { CompactBankList } from './CompactBankList'
-import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { MobileMenu } from './MobileMenu'
 
 export const Table: React.FC = () => {
   const { user } = useAuth()
@@ -31,7 +32,11 @@ export const Table: React.FC = () => {
       >
         {isTablet
           ? (props: TableViewRendererProps<Bank>) => (
-              <CompactBankList {...props} columns={compactColumns} />
+              <CompactTable
+                {...props}
+                columns={compactColumns}
+                menu={<MobileMenu items={props.items} />}
+              />
             )
           : undefined}
       </TableView>

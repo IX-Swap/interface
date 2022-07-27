@@ -21,7 +21,7 @@ export interface AssetBalance extends Balance {
   numberFormat: NumberFormat
 }
 export interface ConvertedAssetBalance {
-  _id?: string
+  _id: string
   status: string
   accountNumber: string
   currency: 'USD' | 'SGD'

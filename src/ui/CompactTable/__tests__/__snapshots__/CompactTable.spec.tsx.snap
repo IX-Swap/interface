@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CompactBankList compact bank list matches snapshot 1`] = `
+exports[`CompactTable compact table matches snapshot 1`] = `
 <div>
   <tbody
     class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
