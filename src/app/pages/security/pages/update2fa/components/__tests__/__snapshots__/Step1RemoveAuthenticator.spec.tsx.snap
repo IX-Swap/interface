@@ -147,7 +147,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Please enter verification code. Digit 1"
                             autocomplete="off"
-                            class="makeStyles-input-16  "
+                            class="makeStyles-input-17  "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -161,7 +161,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 2"
                             autocomplete="off"
-                            class="makeStyles-input-16 "
+                            class="makeStyles-input-17 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -175,7 +175,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 3"
                             autocomplete="off"
-                            class="makeStyles-input-16 "
+                            class="makeStyles-input-17 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -189,7 +189,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 4"
                             autocomplete="off"
-                            class="makeStyles-input-16 "
+                            class="makeStyles-input-17 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -203,7 +203,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 5"
                             autocomplete="off"
-                            class="makeStyles-input-16 "
+                            class="makeStyles-input-17 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"
@@ -217,7 +217,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                           <input
                             aria-label="Digit 6"
                             autocomplete="off"
-                            class="makeStyles-input-16 "
+                            class="makeStyles-input-17 "
                             maxlength="1"
                             placeholder="_"
                             style="width: 1em; text-align: center;"

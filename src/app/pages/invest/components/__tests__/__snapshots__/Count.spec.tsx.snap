@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Count renders correct string value, should match snapshot 1`] = `
+<div>
+  <p
+    class="MuiTypography-root MuiTypography-body1 css-1vpnri2-MuiTypography-root"
+  >
+    32
+  </p>
+</div>
+`;

@@ -9,6 +9,7 @@ export const useStyles = makeStyles(theme => ({
       width: 'calc(100% - 8px)'
     }
   },
+  hasError: { marginBottom: 8 },
   input: {
     display: 'block',
     outline: 'none',
@@ -53,6 +54,17 @@ export const useStyles = makeStyles(theme => ({
 
     '&::placeholder': {
       color: theme.palette.otpInput.placeholderError
+    }
+  },
+  small: {
+    width: '42px!important',
+    height: 70,
+    borderRadius: 8,
+    fontSize: 24,
+    margin: theme.spacing(0, 2, 1, 0),
+    '&::placeholder': {
+      fontSize: 24,
+      fontWeight: 100
     }
   }
 }))
