@@ -5,7 +5,12 @@ import useStyles from 'app/pages/invest/components/DSOCardsCarousel/DSOCardsCaro
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
-export const DSOCardsCarousel = (props: any) => {
+export interface DSOCardsCarouselProps {
+  totalSlides: number
+  children: any
+}
+
+export const DSOCardsCarousel = (props: DSOCardsCarouselProps) => {
   const classes = useStyles()
   const { isMobile, isTablet } = useAppBreakpoints()
   const { children, totalSlides, ...rest } = props
