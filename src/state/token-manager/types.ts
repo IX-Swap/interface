@@ -48,6 +48,7 @@ export interface PayoutHistory {
   payoutEventId: number
   userId: number
   payoutEvent: PayoutEvent
+  txHash: string
   user: {
     id: number
     username: string

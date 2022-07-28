@@ -61,7 +61,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const secPayoutToken = new WrappedTokenInfo(secToken)
   const tokenInfo = secPayoutToken?.tokenInfo
   const isNotAccredited = statuses.some((status) => !status)
-  const isNotTokenHolder = '0' === secTokenBalance
+  const isNotTokenHolder = '0' === secTokenBalance || !myAmount
 
   useEffect(() => {
     const fetch = async () => {
