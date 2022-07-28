@@ -11,12 +11,12 @@ import useIsArgentWallet from 'hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from 'hooks/useIsSwapUnsupported'
 import { useSwapCallbackError } from 'hooks/useSwapCallback'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useWalletModalToggle } from 'state/application/hooks'
+import { useShowError, useWalletModalToggle } from 'state/application/hooks'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { ParsedAmounts } from 'state/swap/typings'
 import { useSetSwapState } from 'state/swapHelper/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
-// import { verifySwap } from 'utils/verifySwap'
+import { verifySwap } from 'utils/verifySwap'
 
 import { ButtonIXSWide } from '../../components/Button'
 import { BottomGrouping, SwapCallbackError } from '../../components/swap/styleds'
@@ -37,7 +37,7 @@ export const SwapButtons = ({
   parsedAmounts: ParsedAmounts | undefined
   allowSwap: boolean
 }) => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { recipient, typedValue, independentField, approvalSubmitted } = useSwapState()
 
   const {
@@ -68,17 +68,17 @@ export const SwapButtons = ({
   const [singleHopOnly] = useUserSingleHopOnly()
 
   //const isSecToken = Boolean(secTokens[token.address])
-  // const showError = useShowError()
+  const showError = useShowError()
 
   const onClick = useCallback(async () => {
-    // if (trade && account) {
-    //   try {
-    //     await verifySwap(trade, chainId || 137)
-    //   } catch (err) {
-    //     showError((err as Error).message)
-    //     return
-    //   }
-    // }
+    if (trade && account) {
+      try {
+        await verifySwap(trade, chainId || 137)
+      } catch (err) {
+        showError((err as Error).message)
+        return
+      }
+    }
 
     if (expertMode) {
       handleSwap()
