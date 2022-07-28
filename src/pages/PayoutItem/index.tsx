@@ -22,12 +22,18 @@ import {
   usePayoutState,
   getPayoutClaims as getPayoutClaimsAsync,
   getPayouts,
+  getMyPayoutAmount,
 } from 'state/payout/hooks'
 
 import { PayoutHistory } from './History'
 import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
+
+export interface MyAmounts {
+  poolTokens: number
+  walletTokens: number
+}
 
 export default function PayoutItemForUser({
   match: {
@@ -46,6 +52,8 @@ export default function PayoutItemForUser({
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
 
+  const [myAmount, handleMyAmount] = useState(0)
+
   useEffect(() => {
     const getPayoutItem = async () => {
       const data = await getPayoutItemById(+payoutId)
@@ -53,8 +61,15 @@ export default function PayoutItemForUser({
         setPayout(data)
       }
     }
+    const getMyAmount = async () => {
+      const data = await getMyPayoutAmount(+payoutId)
+      if (data) {
+        handleMyAmount(data.poolTokens + data.walletTokens)
+      }
+    }
 
     getPayoutItem()
+    getMyAmount()
   }, [payoutId, account])
 
   useEffect(() => {
@@ -79,7 +94,7 @@ export default function PayoutItemForUser({
           <Column style={{ gap: '40px' }}>
             <PayoutHeader payout={payout} isMyPayout={false} />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout={false} />
+            <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount}/>
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
@@ -148,6 +163,17 @@ const MorePayoutEvents = ({ payoutId }: { payoutId: number }) => {
       }
     })
   }, [ref])
+
+  useEffect(() => {
+    async function load() {
+      const data = await getPayouts({ page, offset: 30 })
+
+      setPayouts((data.items as PayoutEvent[]).filter((item) => item.id !== payoutId))
+      setPage(data.page)
+    }
+
+    load()
+  }, [])
 
   useEffect(() => {
     async function load() {

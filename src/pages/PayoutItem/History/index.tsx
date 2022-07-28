@@ -13,8 +13,10 @@ import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useUserState } from 'state/user/hooks'
 
 import { momentFormatDate } from '../utils'
+import dayjs from 'dayjs'
+import { capitalize } from '@material-ui/core'
 
-const headerCells = [t`Recipient’s wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Transaction`]
+const headerCells = [t`Recipient's wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Status`, t`Transaction`]
 
 interface Props {
   claimHistory: any
@@ -71,7 +73,7 @@ const Body: FC<{ claimHistory: any }> = ({ claimHistory }) => {
 }
 
 const Row: FC<RowProps> = ({ item }) => {
-  const { createdAt, payoutEvent, sum, userId, user } = item
+  const { createdAt, payoutEvent, sum, userId, user, status } = item
   const { me } = useUserState()
   const { secToken } = payoutEvent
   const currency = new WrappedTokenInfo(secToken)
@@ -86,9 +88,8 @@ const Row: FC<RowProps> = ({ item }) => {
         <Box marginX="4px">{secToken.originalSymbol ?? secToken.symbol}</Box>
         <Box>{sum}</Box>
       </Flex>
-      <div>{`${momentFormatDate(createdAt)} - ${new Date(createdAt).getUTCHours()}:${new Date(
-        createdAt
-      ).getUTCMinutes()}`}</div>
+      <div>{`${momentFormatDate(createdAt)} - ${dayjs(createdAt).format('HH')}:${dayjs(createdAt).format('mm')}`}</div>
+      <div>{capitalize(status || '-')}</div>
       <div style={{ textDecoration: 'underline' }}>
         <ExternalLink href={`https://dev.ixswap.io`}>View</ExternalLink>
       </div>
@@ -97,7 +98,7 @@ const Row: FC<RowProps> = ({ item }) => {
 }
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(3, 1fr) 200px;
+  grid-template-columns: repeat(4, 1fr) 200px;
 
   > div:first-child {
     padding-left: 32px;
@@ -105,7 +106,7 @@ const StyledHeaderRow = styled(HeaderRow)`
 `
 
 const StyledBodyRow = styled(BodyRow)<{ isMyClaim?: boolean }>`
-  grid-template-columns: repeat(3, 1fr) 200px;
+  grid-template-columns: repeat(4, 1fr) 200px;
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;

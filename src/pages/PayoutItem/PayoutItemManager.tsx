@@ -67,7 +67,7 @@ export default function PayoutItemForManager({
           <Column style={{ gap: '40px' }}>
             <PayoutHeader payout={payout} isMyPayout />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout />
+            <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}

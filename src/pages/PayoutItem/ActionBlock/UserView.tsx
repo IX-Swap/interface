@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Flex, Box } from 'rebass'
 import { Trans, t } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
@@ -15,63 +15,130 @@ import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 
 import { Container, FuturePayoutContainer, StyledButtonIXSGradient } from './styleds'
+import { getClaimAuthorization, useGetUserClaim, useSaveUserClaim } from 'state/payout/hooks'
+import dayjs from 'dayjs'
+import { usePayoutContract } from 'hooks/useContract'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { FetchingBalance } from './FetchingBalance'
+import { Claimed } from './Claimed'
 
 interface Props {
   payout: PayoutEvent
   payoutToken: any
+  myAmount: number
 }
 
-export const UserView: FC<Props> = ({ payout, payoutToken }) => {
+interface UserClaim {
+  createdAt: string
+  deletedAt: string | null
+  id: number
+  payoutEventId: number
+  sum: string
+  txHash: string
+  updatedAt: string
+  userId: number
+  status: string
+}
+
+export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   const { account } = useActiveWeb3React()
-  const { secToken, status, secTokenAmount, tokenAmount } = payout
+  const { secToken, status, secTokenAmount, tokenAmount, id, contractPayoutId } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
   const statuses = [custodianStatus, brokerDealerStatus]
+  const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
+  const [isLoading, handleIsLoading] = useState(false)
+
+  const getUserClaim = useGetUserClaim()
+  const saveUserClaim = useSaveUserClaim()
 
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
+  const payoutContract = usePayoutContract()
+
+  const addTransaction = useTransactionAdder()
 
   const secPayoutToken = new WrappedTokenInfo(secToken)
   const tokenInfo = secPayoutToken?.tokenInfo
   const isNotAccredited = statuses.some((status) => !status)
-  const isNotTokenHolder = ['-', '0'].includes(secTokenBalance)
-  const isClaimed = false
+  const isNotTokenHolder = '0' === secTokenBalance
 
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await getUserClaim(id)
+      handleClaimStatus(res)
+    }
+    if (id) {
+      fetch()
+    }
+  }, [id])
+
+  if (secTokenBalance === '-') return <FetchingBalance />
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
   if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
   if (isNotTokenHolder) return <NotTokenHoldersView status={status} />
+
+  const amountToClaim = +tokenAmount * (myAmount / +secTokenAmount)
+
+  const decimals = tokenInfo?.decimals < 7 ? tokenInfo.decimals : 6
+
+  const claim = async () => {
+    try {
+      handleIsLoading(true)
+      const nonce = await payoutContract?.nonce(contractPayoutId, account)
+
+      const authorization = await getClaimAuthorization({
+        id,
+        token: payoutToken.address,
+        deadline: dayjs().add(1, 'hour').toISOString(),
+        nonce,
+      })
+
+      const tx = await payoutContract?.claim(authorization)
+      handleIsLoading(false)
+
+      await saveUserClaim({ payoutEventId: id, secToken: secToken.id, sum: `${amountToClaim}`, txHash: tx.hash })
+      const res = await getUserClaim(id)
+      handleClaimStatus(res)
+
+      if (tx.hash) {
+        addTransaction(tx, {
+          summary: `Claim was successful. Waiting for system confirmation.`,
+        })
+      }
+    } catch (e: any) {
+      handleIsLoading(false)
+    }
+  }
 
   const getContentByStatus = () => {
     const recordDateText = (
       <Flex style={{ color: '#edceff80' }} marginBottom="24px" alignItems="center">
         <Box marginRight="4px">{t`based on your Security token balance of`}</Box>
         <CurrencyLogo currency={secPayoutToken} size="20px" />
-        <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} ${secTokenAmount}`}</Box>
+        <Box marginX="4px">{`${(tokenInfo as any).originalSymbol ?? tokenInfo.symbol} ${myAmount.toFixed(
+          decimals
+        )}`}</Box>
         <Box>{t`as of record date.`}</Box>
       </Flex>
     )
 
     switch (status) {
       case PAYOUT_STATUS.STARTED:
-        return isClaimed ? (
-          <>
-            <Box marginBottom="4px" fontSize="20px" lineHeight="30px" fontWeight={600}>
-              {t`You have already claimed:`}
-            </Box>
-            <Flex alignItems="center">
-              <CurrencyLogo currency={payoutToken} size="24px" />
-              <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>{`${payoutToken.symbol} ${Number(
-                tokenAmount || '0'
-              ).toFixed(4)}`}</Box>
-            </Flex>
-          </>
+        return claimStatus?.status ? (
+          <Claimed
+            claimStatus={claimStatus.status}
+            payoutToken={payoutToken}
+            amountToClaim={Number(amountToClaim || '0').toFixed(decimals)}
+          />
         ) : (
           <>
             <Flex alignItems="center" marginBottom="4px" fontWeight={600}>
               <Box fontSize="20px" lineHeight="30px" marginRight="4px">{t`You can now claim your payout of`}</Box>
               <CurrencyLogo size="24px" currency={payoutToken} />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
-                tokenAmount || '0'
-              ).toFixed(4)}`}</Box>
+                amountToClaim || '0'
+              ).toFixed(decimals)}`}</Box>
             </Flex>
             {recordDateText}
           </>
@@ -83,8 +150,8 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
               <Box fontSize="20px" lineHeight="30px" marginRight="4px">{t`You have a payout of`}</Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
-                tokenAmount || '0'
-              ).toFixed(4)} available`}</Box>
+                amountToClaim || '0'
+              ).toFixed(decimals)} available`}</Box>
             </Flex>
             {recordDateText}
           </>
@@ -101,8 +168,8 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
               <Box marginRight="4px">{t`Your payout of`}</Box>
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Box marginX="4px" fontSize="24px" lineHeight="36px">{`${payoutToken.symbol} ${Number(
-                tokenAmount || '0'
-              ).toFixed(4)}`}</Box>
+                amountToClaim || '0'
+              ).toFixed(decimals)}`}</Box>
               <Box>{t`will became available once payout starts`}</Box>
             </Flex>
           </>
@@ -114,13 +181,14 @@ export const UserView: FC<Props> = ({ payout, payoutToken }) => {
 
   return (
     <Column style={{ gap: '32px' }}>
+      <LoadingIndicator isLoading={isLoading} />
       {status !== PAYOUT_STATUS.ANNOUNCED && (
         <Container>
           {getContentByStatus()}
-          {!isClaimed && (
+          {!claimStatus?.status && (
             <StyledButtonIXSGradient
-              // disabled={status !== PAYOUT_STATUS.STARTED}
-              disabled={true}
+              disabled={status !== PAYOUT_STATUS.STARTED}
+              onClick={claim}
             >{t`Claim Now`}</StyledButtonIXSGradient>
           )}
         </Container>

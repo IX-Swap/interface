@@ -25,6 +25,7 @@ export interface PayoutEvent {
   deletedAt: null | null
   secToken: SecToken
   attachments: Array<Document>
+  contractPayoutId?: string
 }
 
 export interface PayoutList {
