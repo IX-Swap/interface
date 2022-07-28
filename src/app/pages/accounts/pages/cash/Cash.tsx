@@ -13,7 +13,7 @@ export const Cash = () => {
         <PageHeader title='Cash' />
       </Grid>
       <RootContainer>
-        <Grid container spacing={6}>
+        <Grid container spacing={{ xs: 2, md: 6 }}>
           <Grid item xs={12}>
             <CashBalance />
           </Grid>

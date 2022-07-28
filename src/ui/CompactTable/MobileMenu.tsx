@@ -25,7 +25,6 @@ export const MobileMenu = <T extends Serialized>({
     () => items.filter(item => item._id === openIndex)?.[0],
     [openIndex, items]
   )
-  console.log({ items, openIndex })
   if (selectedItem === undefined) {
     return null
   }
