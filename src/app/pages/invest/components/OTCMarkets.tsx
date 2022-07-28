@@ -70,7 +70,7 @@ export const OTCMarket = () => {
     return (
       <Grid container justifyContent={'flex-end'}>
         <Grid container item wrap={'wrap'} className={classes.container}>
-          {renderItems.map((otc, i) => (
+          {renderItems.map(otc => (
             <DSOCard
               type={'OTC'}
               data={otc}

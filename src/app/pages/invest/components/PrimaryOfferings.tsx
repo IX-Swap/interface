@@ -64,7 +64,7 @@ export const PrimaryOfferings = () => {
 
     return (
       <Grid container wrap={'wrap'} className={classes.container}>
-        {(items as DigitalSecurityOffering[]).slice(0, 3).map((dso, i) => (
+        {(items as DigitalSecurityOffering[]).slice(0, 3).map(dso => (
           <DSOCard
             type={'Primary'}
             data={dso}
