@@ -240,7 +240,7 @@ export default function CurrencyInputPanel({
         <InputRow style={hideInput ? { padding: '0', borderRadius: '8px' } : {}} selected={!onCurrencySelect}>
           {!hideInput && (
             <>
-              <NumericalInput className="token-amount-input" value={value} onUserInput={onChangeInput} />
+              <NumericalInput className="token-amount-input" data-testid="token-amount-input" value={value} onUserInput={onChangeInput} />
             </>
           )}
           {showMaxButton && selectedCurrencyBalance ? (
@@ -252,6 +252,7 @@ export default function CurrencyInputPanel({
             selected={!!currency}
             hideInput={hideInput}
             className="open-currency-select-button"
+            data-testid="chooseTokenDropdown"
             onClick={() => {
               if (onCurrencySelect) {
                 setModalOpen(true)
