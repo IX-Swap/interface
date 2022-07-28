@@ -15,10 +15,7 @@ export const CreateBank: React.FC = () => {
       </Grid>
       <RootContainer>
         <Grid item>
-          <BankForm
-            submitButtonLabel='Add Bank Account'
-            onSubmit={createBank}
-          />
+          <BankForm submitButtonLabel='Add account' onSubmit={createBank} />
         </Grid>
       </RootContainer>
     </Grid>

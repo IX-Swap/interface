@@ -32,12 +32,12 @@ describe('Actions', () => {
 
     fireEvent.click(moreButton, { bubbles: true })
 
-    expect(getByText('View')).toBeTruthy()
+    expect(getByText('View details')).toBeTruthy()
     expect(getByText('Edit')).toBeTruthy()
-    expect(getByText('Remove')).toBeTruthy()
+    expect(getByText('Delete')).toBeTruthy()
 
     const viewButton = getByRole('button', {
-      name: /view/i
+      name: /view details/i
     }) as HTMLButtonElement
 
     fireEvent.click(viewButton, { bubbles: true })
@@ -51,19 +51,17 @@ describe('Actions', () => {
 
     fireEvent.click(moreButton, { bubbles: true })
 
-    expect(getByText('View')).toBeTruthy()
+    expect(getByText('View details')).toBeTruthy()
     expect(getByText('Edit')).toBeTruthy()
-    expect(getByText('Remove')).toBeTruthy()
+    expect(getByText('Delete')).toBeTruthy()
 
     const removeButton = getByRole('button', {
-      name: /remove/i
+      name: /delete/i
     }) as HTMLButtonElement
 
     fireEvent.click(removeButton, { bubbles: true })
 
-    expect(
-      getByText(/Are You Sure You Want To Remove Bank Account?/i)
-    ).toBeTruthy()
+    expect(getByText(/Are you sure you want to delete account?/i)).toBeTruthy()
   })
 
   it('handles edit action correctly', async () => {
@@ -72,9 +70,9 @@ describe('Actions', () => {
 
     fireEvent.click(moreButton, { bubbles: true })
 
-    expect(getByText('View')).toBeTruthy()
+    expect(getByText('View details')).toBeTruthy()
     expect(getByText('Edit')).toBeTruthy()
-    expect(getByText('Remove')).toBeTruthy()
+    expect(getByText('Delete')).toBeTruthy()
 
     const editButton = getByRole('button', {
       name: /Edit/i
@@ -85,7 +83,7 @@ describe('Actions', () => {
     await waitFor(
       () => {
         expect(history.location.pathname).toBe(
-          '/app/accounts/bank-accounts/1/edit'
+          '/app/accounts/cash/bank-accounts/1/edit'
         )
       },
       { timeout: 1000 }

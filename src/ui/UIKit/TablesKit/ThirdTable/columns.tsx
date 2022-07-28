@@ -1,6 +1,6 @@
 import { TableColumn } from 'types/util'
 import { ThirdTableItem } from 'ui/UIKit/TablesKit/ThirdTable/ThirdTable'
-import { RenderBolderText, renderStatus } from 'ui/UIKit/TablesKit/utils/utils'
+import { RenderBolderText, renderStatus } from 'helpers/tables'
 
 export const columns: Array<TableColumn<ThirdTableItem>> = [
   {

@@ -90,7 +90,8 @@ export const darkTheme: DeprecatedThemeOptions = {
       bgAlternateHover: '#132A57',
       colorAlternate: '#FFFFFF',
       colorAlternateHover: '#4C88FF',
-      borderAlternateHover: '#4C88FF'
+      borderAlternateHover: '#4C88FF',
+      bgLight: tinycolor('#4c88ff').setAlpha(0.16).toRgbString()
     },
     buttonGroup: {
       bg: '#132A57',
@@ -158,6 +159,11 @@ export const darkTheme: DeprecatedThemeOptions = {
       rowColor: '#89A1CE',
       boxShadow: `0px 80px 80px ${tinycolor('#0e1f3f')
         .setAlpha(0.3)
+        .toRgbString()}`,
+      border: '#23407A',
+      headerColor: '#FFFFFF',
+      headerShadow: `0px -4px 4px ${tinycolor('#0e1f3f')
+        .setAlpha(0.08)
         .toRgbString()}`
     },
     skeleton: {

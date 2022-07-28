@@ -13,11 +13,24 @@ export default makeStyles(theme => {
       maxHeight: 80,
       boxSizing: 'border-box',
       height: 80,
-
-      '&:hover': {
-        boxShadow: tablePalette.boxShadow
+      borderBottom: `1px solid ${tablePalette.border}`,
+      '&:first-of-type': {
+        boxShadow: tablePalette.headerShadow,
+        transform: `scale(1)`
       },
-
+      '&:last-of-type': {
+        borderBottom: 'none',
+        borderBottomLeftRadius: 8,
+        borderBottomRightRadius: 8,
+        '& td': {
+          '&:first-of-type': {
+            borderBottomLeftRadius: 8
+          },
+          '&:last-of-type': {
+            borderBottomRightRadius: 8
+          }
+        }
+      },
       '& td': {
         borderBottom: 'none',
         backgroundColor: tablePalette.rowBg,
@@ -26,13 +39,7 @@ export default makeStyles(theme => {
         whiteSpace: 'nowrap',
 
         '&:first-of-type': {
-          borderTopLeftRadius: 8,
-          borderBottomLeftRadius: 8,
           paddingLeft: ({ size }: Props) => (size === 'small' ? 16 : 30)
-        },
-        '&:last-of-type': {
-          borderTopRightRadius: 8,
-          borderBottomRightRadius: 8
         }
       }
     }

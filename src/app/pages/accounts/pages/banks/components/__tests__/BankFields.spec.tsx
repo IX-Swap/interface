@@ -42,18 +42,19 @@ describe('BankForm', () => {
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       3,
+
       expect.objectContaining({
-        name: 'asset',
-        label: 'Currency',
-        assetType: 'Currency'
+        name: 'bankAccountNumber',
+        label: 'Bank Account Number'
       }),
       {}
     )
     expect(TypedField).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        name: 'bankAccountNumber',
-        label: 'Bank Account Number'
+        name: 'asset',
+        label: 'Currency',
+        assetType: 'Currency'
       }),
       {}
     )

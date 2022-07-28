@@ -52,6 +52,7 @@ export interface TableViewProps<T> {
   size?: 'small' | 'medium'
   noDataComponent?: JSX.Element
   actionHeader?: string
+  noHeader?: boolean
 }
 
 export const TableView = <T,>({
@@ -71,7 +72,8 @@ export const TableView = <T,>({
   defaultRowsPerPage,
   size = 'medium',
   noDataComponent = <NoData title='No Data' />,
-  actionHeader = ''
+  actionHeader = '',
+  noHeader = false
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -99,7 +101,7 @@ export const TableView = <T,>({
   if (innerRef !== undefined) {
     innerRef.current = { refresh: () => setPage(page) }
   }
-
+  const headDisplay = noHeader ? 'none' : 'table-header-group'
   let columns = hasStatus ? [...columnsProp, statusColumn] : columnsProp
 
   if (selectionHelper !== undefined) {
@@ -180,7 +182,11 @@ export const TableView = <T,>({
           <TableContainer style={{ overflow: 'visible' }}>
             <Table aria-label='table' data-testid='table' size={size}>
               {columns.length > 0 ? (
-                <TableHead>
+                <TableHead
+                  style={{
+                    display: headDisplay
+                  }}
+                >
                   <TableRow>
                     {columns.map(e => renderHeadCell({ item: e }))}
                     {hasActions && renderHeadCell({ content: actionHeader })}

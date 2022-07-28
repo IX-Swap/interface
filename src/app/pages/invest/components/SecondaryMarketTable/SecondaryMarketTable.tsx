@@ -12,6 +12,8 @@ import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { useOutlinedInputStyles } from 'app/pages/invest/components/OverviwPageFilters'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
 
 export const SecondaryMarketTable = () => {
   const outlinedInputClasses = useOutlinedInputStyles()
@@ -20,6 +22,18 @@ export const SecondaryMarketTable = () => {
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const secondaryMarketSearch = getFilterValue('secondaryMarketSearch')
+
+  const { items, isLoading } = useTableWithPagination({
+    queryKey: exchangeQueryKeys.marketList,
+    uri: exchangeURL.marketList,
+    defaultFilter: { listingKeyword: search ?? secondaryMarketSearch } as any,
+    queryEnabled: true,
+    defaultRowsPerPage: undefined
+  })
+
+  if (!isLoading && items.length < 1) {
+    return <NoOffers />
+  }
 
   return (
     <Grid container direction='column' spacing={3}>

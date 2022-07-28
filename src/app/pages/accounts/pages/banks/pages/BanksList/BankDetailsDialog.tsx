@@ -19,11 +19,19 @@ export const BankDetailsDialog = ({
 }: BankDetailsDialogProps) => {
   const theme = useTheme()
   return (
-    <UIDialog open={open} maxWidth='xs' fullWidth onClose={close}>
+    <UIDialog open={open} maxWidth='md' fullWidth onClose={close}>
       <DialogTitle>Bank Account Information</DialogTitle>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Grid container spacing={3} style={{ padding: '20px 40px 40px' }}>
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              px: { xs: 2, md: 5 },
+              pt: { xs: 2, md: 2.5 },
+              pb: { xs: 2, md: 5 }
+            }}
+          >
             <Grid item xs={12} md={6}>
               <LabelledValue
                 labelColor='gray'

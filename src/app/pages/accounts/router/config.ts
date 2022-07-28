@@ -1,47 +1,38 @@
-import { InternalRouteProps } from 'types/util'
-import {
-  ReactComponent as HoldingsIcon,
-  ReactComponent as AccountIcon
-} from 'assets/icons/navigation/account.svg'
+import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
+import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
-import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
-import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
+import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
 import { makeURL } from 'config/appURL'
+import { InternalRouteProps } from 'types/util'
 
 export const AccountsRoute = {
-  landing: makeURL(['app', 'account']),
-  banks: makeURL(['app', 'account', 'bankAccount']),
-  balances: makeURL(['app', 'account', 'balances']),
-  digitalSecurities: makeURL(['app', 'account', 'digitalSecurity']),
-  transactions: makeURL(['app', 'account', 'transactions']),
-  depositCash: makeURL(['app', 'account', 'cashDeposit']),
-  deposit: '/app/accounts/deposit',
-  withdraw: makeURL(['app', 'account', 'withdraw']),
-  withdrawCash: makeURL(['app', 'account', 'cashWithdrawal']),
-  withdrawalAddresses: makeURL(['app', 'account', 'withdrawalAddresses']),
+  landing: makeURL(['app', 'accounts']),
+  banks: '/app/accounts/cash/bank-accounts',
+  balances: makeURL(['app', 'accounts', 'balances']),
+  digitalSecurities: makeURL(['app', 'accounts', 'digitalSecurity']),
+  transactions: makeURL(['app', 'accounts', 'transactions']),
+  depositCash: makeURL(['app', 'accounts', 'cashDeposit']),
+  deposit: '/app/accounts/cash/deposit',
+  withdraw: '/app/accounts/cash/withdraw',
+  withdrawCash: makeURL(['app', 'accounts', 'cashWithdrawal']),
+  withdrawalAddresses: makeURL(['app', 'accounts', 'withdrawalAddresses']),
   withdrawalAddressesCreate: makeURL([
     'app',
-    'account',
+    'accounts',
     'withdrawalAddresses',
     'create'
   ]),
-  commitments: makeURL(['app', 'account', 'commitments']),
-  dashboard: makeURL(['app', 'account', 'dashboard']),
+  commitments: makeURL(['app', 'accounts', 'commitments']),
+  dashboard: makeURL(['app', 'accounts', 'dashboard']),
   reports: '/app/accounts/reports',
   myHoldings: '/app/accounts/holdings',
   cash: '/app/accounts/cash'
 }
 
 export const accountsLandingLinks: InternalRouteProps[] = [
-  {
-    label: 'Bank Accounts',
-    path: AccountsRoute.banks,
-    color: '#2b78fd',
-    icon: AccountIcon
-  },
   {
     color: '#43b526',
     icon: CashDepositIcon,

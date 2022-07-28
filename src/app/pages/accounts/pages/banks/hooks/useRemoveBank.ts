@@ -26,7 +26,10 @@ export const useRemoveBank = () => {
   return useMutation(removeBank, {
     onSuccess: data => {
       void queryCache.invalidateQueries(banksQueryKeys.getListByUserId(userId))
-      void snackbarService.showSnackbar(data.message, 'success')
+      void snackbarService.showSnackbar(
+        'Account successfully deleted',
+        'success'
+      )
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

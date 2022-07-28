@@ -86,7 +86,8 @@ export const lightTheme: DeprecatedThemeOptions = {
       bgAlternateHover: '#78A5FF',
       colorAlternate: '#778194',
       colorAlternateHover: '#FFFFFF',
-      borderAlternateHover: tinycolor('#4c88ff').setAlpha(0.3).toRgbString()
+      borderAlternateHover: tinycolor('#4c88ff').setAlpha(0.3).toRgbString(),
+      bgLight: tinycolor('#4c88ff').setAlpha(0.16).toRgbString()
     },
     buttonGroup: {
       bg: '#FFFFFF',
@@ -137,6 +138,11 @@ export const lightTheme: DeprecatedThemeOptions = {
       rowBg: '#FFFFFF',
       rowColor: '#778194',
       boxShadow: `0px 32px 64px ${tinycolor('#3b4251')
+        .setAlpha(0.08)
+        .toRgbString()}`,
+      border: '#DBE2EC',
+      headerColor: '#343A47',
+      headerShadow: `0px -4px 4px ${tinycolor('#a2acbf')
         .setAlpha(0.08)
         .toRgbString()}`
     },

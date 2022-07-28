@@ -1,13 +1,13 @@
 import { makeURL } from 'config/appURL'
 
 export const WithdrawalAddressesRoute = {
-  list: makeURL(['app', 'account', 'withdrawalAddresses']),
+  list: makeURL(['app', 'accounts', 'withdrawalAddresses']),
   view: makeURL([
     'app',
-    'account',
+    'accounts',
     'withdrawalAddresses',
     'withdrawalAddressId',
     'view'
   ]),
-  create: makeURL(['app', 'account', 'withdrawalAddresses', 'create'])
+  create: makeURL(['app', 'accounts', 'withdrawalAddresses', 'create'])
 }
