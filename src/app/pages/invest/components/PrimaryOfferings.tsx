@@ -10,6 +10,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { Count } from 'app/pages/invest/components/Count'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
 
 export const PrimaryOfferings = () => {
   const classes = useStyles()
@@ -26,8 +27,29 @@ export const PrimaryOfferings = () => {
     disabledUseEffect: true
   })
 
-  if (status === 'loading' || items.length < 1) {
+  if (status === 'loading') {
     return null
+  }
+
+  const renderContent = () => {
+    const renderItems = (items as DigitalSecurityOffering[]).slice(0, 3)
+
+    if (renderItems.length < 1) {
+      return <NoOffers />
+    }
+
+    return (
+      <Grid container wrap={'wrap'} className={classes.container}>
+        {(items as DigitalSecurityOffering[]).slice(0, 3).map((dso, i) => (
+          <DSOCard
+            type={'Primary'}
+            data={dso}
+            viewURL={InvestRoute.view}
+            key={dso._id}
+          />
+        ))}
+      </Grid>
+    )
   }
 
   return (
@@ -61,16 +83,7 @@ export const PrimaryOfferings = () => {
         </Grid>
       </Grid>
 
-      <Grid container item wrap={'wrap'} className={classes.container}>
-        {(items as DigitalSecurityOffering[]).slice(0, 3).map((dso, i) => (
-          <DSOCard
-            type={'Primary'}
-            data={dso}
-            viewURL={InvestRoute.view}
-            key={dso._id}
-          />
-        ))}
-      </Grid>
+      <Grid item>{renderContent()}</Grid>
     </Grid>
   )
 }

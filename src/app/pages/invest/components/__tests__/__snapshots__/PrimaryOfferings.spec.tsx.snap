@@ -16,8 +16,12 @@ exports[`PrimaryOfferings renders DSOCard component with correct props, should m
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item abc css-1f064cs-MuiGrid-root"
-    />
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container abc css-11lq3yg-MuiGrid-root"
+      />
+    </div>
   </div>
 </div>
 `;
