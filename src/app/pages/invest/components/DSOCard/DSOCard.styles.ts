@@ -3,11 +3,15 @@ import makeStyles from '@mui/styles/makeStyles'
 export default makeStyles(theme => ({
   container: {
     width: '100%',
-    maxWidth: 400,
-    minWidth: 320,
     borderRadius: 8,
-    padding: theme.spacing(5),
-    boxShadow: 'none'
+    padding: theme.spacing(3),
+    boxShadow: 'none',
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(5)
+    },
+    [theme.breakpoints.up('lg')]: {
+      maxWidth: 400
+    }
   },
   logoWrapper: {
     marginBottom: theme.spacing(2)
