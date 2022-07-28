@@ -208,7 +208,7 @@ export async function verifySwap(trade: V2Trade<Currency, Currency, TradeType>, 
   }
   
   const amountsOut:Array<BigNumber> = (await routerContract.methods.getAmountsOut(
-    utils.parseEther(trade.inputAmount.toExact()), 
+    utils.parseUnits(trade.inputAmount.toExact(), trade.inputAmount.currency.decimals),
     path
   ).call()).map((x: string) => BigNumber.from(x))
 
