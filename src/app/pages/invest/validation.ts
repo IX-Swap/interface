@@ -9,7 +9,7 @@ import { CreateOTCOrderArgs } from 'types/otcOrder'
 
 export const commitmentFormValidationSchema = {
   pricePerUnit: yup.number().required(validationMessages.required),
-  totalAmount: yup.number().required(validationMessages.required),
+  totalAmount: yup.number(),
   numberOfUnits: yup.number().required(validationMessages.required),
   otp: yup.string().required(validationMessages.required),
   withdrawalAddress: yup.string().required('Withdrawal address is required')
@@ -25,9 +25,7 @@ export const commitmentCampaignValidationSchema = yup
 export const commitmentNonCampaignValidationSchema = yup
   .object()
   .shape<CommitmentFormValues>({
-    signedSubscriptionDocument: yup
-      .object<DataroomFile>()
-      .required(validationMessages.required),
+    signedSubscriptionDocument: yup.object<DataroomFile>(),
     ...commitmentFormValidationSchema
   })
 

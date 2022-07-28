@@ -7,7 +7,9 @@ export const fakeVirtualAccount: VirtualAccount = {
   balance: {
     available: 5000,
     onHold: 500,
-    outstanding: 4500
+    outstanding: 4500,
+    sgdValue: 123,
+    usdValue: 123
   },
   createdBy: '605ccb9c8e092311818e5ae0',
   user: {

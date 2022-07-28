@@ -13,6 +13,8 @@ export interface VirtualAccount {
     available: number
     onHold: number
     outstanding: number
+    sgdValue: number
+    usdValue: number
   }
   createdBy: string
   user: {

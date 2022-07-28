@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CashBalance should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 makeStyles-wrapper-17 css-11gelwl-MuiPaper-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-go2vvz-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item css-15ssp1u-MuiGrid-root"
+      >
+        <label
+          class="MuiInputLabel-root MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-root MuiFormLabel-colorPrimary makeStyles-wrapper-25 css-1oqcrp7-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          style="margin-bottom: 0px;"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-z3lpfj-MuiTypography-root"
+          >
+            Available Balance
+          </p>
+        </label>
+        <div
+          class="MuiFilledInput-root MuiFilledInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-26 css-1k0iil1-MuiInputBase-root-MuiFilledInput-root"
+        >
+          <div
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            class="makeStyles-select-27 MuiSelect-select makeStyles-filled-21 MuiSelect-filled MuiFilledInput-input MuiInputBase-input css-a96h1p-MuiSelect-select-MuiInputBase-input-MuiFilledInput-input"
+            role="button"
+            tabindex="0"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-elf1yz-MuiTypography-root"
+            >
+               246
+               
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-yh93o2-MuiTypography-root"
+              >
+                USD
+              </p>
+            </p>
+          </div>
+          <input
+            aria-hidden="true"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+            tabindex="-1"
+            value="USD"
+          />
+          <svg
+            class="makeStyles-icon-19 MuiSelect-icon MuiSelect-iconFilled css-jukrun-MuiSelect-icon"
+            fill="#778194"
+            height="24px"
+            width="24px"
+          >
+            <use
+              href="image-mock#chevron-down"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

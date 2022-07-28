@@ -10,6 +10,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 // TODO: When we will have multiple OTC pairs adjust this
 import { useFeaturedPair } from 'app/pages/invest/hooks/useFeaturedPair'
 import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
+import { Count } from 'app/pages/invest/components/Count'
 
 export const OTCMarket = () => {
   const { getFilterValue } = useQueryFilter()
@@ -40,19 +41,20 @@ export const OTCMarket = () => {
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
-        <Typography variant='h4'>OTC Market</Typography>
+        <Typography variant='h4' display={'inline-flex'} alignItems={'center'}>
+          OTC Market <Count value={activeDSOs.length} />
+        </Typography>
       </Grid>
       <Grid item>
         <Grid container justifyContent={'flex-end'}>
           <Grid container item wrap={'wrap'} className={classes.container}>
             {(activeDSOs as DigitalSecurityOffering[]).map((otc, i) => (
-              <Grid item key={otc._id}>
-                <DSOCard
-                  type={'OTC'}
-                  data={otc}
-                  viewURL={InvestRoute.trading}
-                />
-              </Grid>
+              <DSOCard
+                type={'OTC'}
+                data={otc}
+                viewURL={InvestRoute.trading}
+                key={otc._id}
+              />
             ))}
           </Grid>
           {/* Put table pagination here when we will have multiple featured pairs. Take

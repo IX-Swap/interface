@@ -4,6 +4,7 @@ import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
 import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
 import { NoCashButtons } from './components/NoCashButtons'
+import { CashBalance } from 'app/pages/accounts/components/CashBalance'
 
 export const Cash = () => {
   return (
@@ -12,6 +13,7 @@ export const Cash = () => {
         <PageHeader title='Cash' />
       </Grid>
       <RootContainer>
+        <CashBalance />
         <CashTable />
         <NoCashButtons />
       </RootContainer>

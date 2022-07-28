@@ -64,18 +64,16 @@ export const DSOCard = (props: DSOCardProps) => {
 
       <Grid container item justifyContent='space-between' alignItems={'center'}>
         <DSOCardAction type={type} data={data} />
-        {type !== 'OTC' ? (
-          <Button
-            className={classes.link}
-            component={AppRouterLinkComponent}
-            to={viewURL}
-            params={{ dsoId: data._id, issuerId: data.createdBy }}
-            variant='text'
-            color='primary'
-          >
-            Learn More
-          </Button>
-        ) : null}
+        <Button
+          className={classes.link}
+          component={AppRouterLinkComponent}
+          to={viewURL}
+          params={{ dsoId: data._id, issuerId: data.createdBy }}
+          variant='text'
+          color='primary'
+        >
+          Learn More
+        </Button>
       </Grid>
     </Card>
   )

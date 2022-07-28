@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OverviewValue should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+      >
+        Item Label
+      </h6>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+      >
+        123
+      </h6>
+    </div>
+  </div>
+</div>
+`;

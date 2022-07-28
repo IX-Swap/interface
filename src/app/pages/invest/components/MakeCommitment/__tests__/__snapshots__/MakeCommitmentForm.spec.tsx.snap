@@ -1,0 +1,456 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MakeCommitmentForm should match snapshot 1`] = `
+<div>
+  <form
+    style="width: 100%;"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-q29v6p-MuiPaper-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-7 css-wpnykt-MuiGrid-root"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
+              >
+                <label
+                  class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary makeStyles-wrapper-13 css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
+                  data-shrink="true"
+                >
+                  Destination Wallet Address
+                </label>
+                <div
+                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl makeStyles-wrapper-14 css-1e6o172-MuiInputBase-root-MuiOutlinedInput-root"
+                >
+                  <div
+                    aria-disabled="true"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    aria-labelledby="withdrawalAddress"
+                    class="makeStyles-select-15 MuiSelect-select MuiSelect-outlined Mui-disabled MuiOutlinedInput-input MuiInputBase-input Mui-disabled css-1ub9as-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                    id="withdrawalAddress"
+                    role="button"
+                  >
+                    <div
+                      class="makeStyles-placeholder-18 MuiBox-root css-0"
+                    >
+                      You do not have wallet addresses
+                    </div>
+                  </div>
+                  <input
+                    aria-hidden="true"
+                    class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    disabled=""
+                    name="withdrawalAddress"
+                    placeholder="You do not have wallet addresses"
+                    tabindex="-1"
+                    value=""
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined Mui-disabled css-7glybp-MuiSvgIcon-root-MuiSelect-icon"
+                    data-testid="ArrowDropDownIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M7 10l5 5 5-5z"
+                    />
+                  </svg>
+                  <fieldset
+                    aria-hidden="true"
+                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="css-nnbavb"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 css-9871mr-MuiGrid-root"
+            >
+              <a
+                class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButton-fullWidth MuiButtonBase-root  css-d146vg-MuiButtonBase-root-MuiButton-root"
+                href="/app/accounts/withdrawal-addresses/create"
+                tabindex="0"
+                target="_blank"
+              >
+                Manage Wallets
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </a>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
+              >
+                <div
+                  class="MuiFormControl-root MuiTextField-root makeStyles-root-19 makeStyles-disabled-21 css-1mij8nx-MuiFormControl-root-MuiTextField-root"
+                  inputmode="numeric"
+                >
+                  <label
+                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary Mui-disabled css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="true"
+                    for="numberOfUnits"
+                    id="numberOfUnits-label"
+                  >
+                    Number of Units
+                  </label>
+                  <div
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiOutlinedInput-input MuiInputBase-input Mui-disabled MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
+                      disabled=""
+                      id="numberOfUnits"
+                      name="numberOfUnits"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-173wfxe"
+                      >
+                        <span>
+                          Number of Units
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
+              >
+                <div
+                  class="MuiFormControl-root MuiTextField-root makeStyles-root-19 makeStyles-disabled-21 css-1mij8nx-MuiFormControl-root-MuiTextField-root"
+                  inputmode="numeric"
+                >
+                  <label
+                    class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary Mui-disabled css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
+                    data-shrink="true"
+                    for="pricePerUnit"
+                    id="pricePerUnit-label"
+                  >
+                    Unit Price
+                  </label>
+                  <div
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+                  >
+                    <input
+                      aria-invalid="false"
+                      class="MuiOutlinedInput-input MuiInputBase-input Mui-disabled MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
+                      disabled=""
+                      id="pricePerUnit"
+                      name="pricePerUnit"
+                      type="text"
+                      value=""
+                    />
+                    <div
+                      class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                    />
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-173wfxe"
+                      >
+                        <span>
+                          Unit Price
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 css-1n41tvp-MuiGrid-root"
+            >
+              <label
+                class="MuiInputLabel-root MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-root MuiFormLabel-colorPrimary makeStyles-wrapper-13 css-1oqcrp7-MuiFormLabel-root-MuiInputLabel-root"
+                data-shrink="true"
+              >
+                OTP
+                <span
+                  class="MuiTypography-root MuiTypography-caption css-yzg0ou-MuiTypography-root"
+                >
+                  (code from your authenticator)
+                </span>
+              </label>
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
+              >
+                <div
+                  class="makeStyles-container-22"
+                  style="display: flex;"
+                >
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Please enter verification code. Digit 1"
+                      autocomplete="off"
+                      class="makeStyles-input-25 makeStyles-small-27  "
+                      maxlength="1"
+                      placeholder="_"
+                      style="width: 1em; text-align: center;"
+                      type="tel"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Digit 2"
+                      autocomplete="off"
+                      class="makeStyles-input-25 makeStyles-small-27 "
+                      maxlength="1"
+                      placeholder="_"
+                      style="width: 1em; text-align: center;"
+                      type="tel"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Digit 3"
+                      autocomplete="off"
+                      class="makeStyles-input-25 makeStyles-small-27 "
+                      maxlength="1"
+                      placeholder="_"
+                      style="width: 1em; text-align: center;"
+                      type="tel"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Digit 4"
+                      autocomplete="off"
+                      class="makeStyles-input-25 makeStyles-small-27 "
+                      maxlength="1"
+                      placeholder="_"
+                      style="width: 1em; text-align: center;"
+                      type="tel"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Digit 5"
+                      autocomplete="off"
+                      class="makeStyles-input-25 makeStyles-small-27 "
+                      maxlength="1"
+                      placeholder="_"
+                      style="width: 1em; text-align: center;"
+                      type="tel"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Digit 6"
+                      autocomplete="off"
+                      class="makeStyles-input-25 makeStyles-small-27 "
+                      maxlength="1"
+                      placeholder="_"
+                      style="width: 1em; text-align: center;"
+                      type="tel"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4 css-s40gpr-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1m38jqy-MuiTypography-root"
+                  >
+                    Investment amount:
+                  </p>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                >
+                  <h5
+                    class="MuiTypography-root MuiTypography-h5 css-1dhn0dw-MuiTypography-root"
+                  >
+                    SGD 0.00
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+            >
+              <div
+                class="MuiBox-root css-mqusb5"
+              >
+                <div
+                  class="ForwardRef(Box)-root-28 ForwardRef(Box)-root-29 MuiBox-root css-0"
+                />
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+            >
+              <label
+                class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                id="tnc"
+                path="tnc"
+                style="align-items: flex-start; margin-right: 0px;"
+              >
+                <span
+                  class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-o5n8uc-MuiButtonBase-root-MuiCheckbox-root"
+                >
+                  <input
+                    class="PrivateSwitchBase-input css-1m9pwf3"
+                    data-indeterminate="false"
+                    name="tnc"
+                    type="checkbox"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1oaawcc-MuiSvgIcon-root"
+                    data-testid="CheckBoxOutlineBlankIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </span>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-govr2p-MuiTypography-root"
+                  style="margin-top: 8px; font-size: 14px; line-height: 1.5;"
+                >
+                  I have read, fully understand the contents and agree to be bound by the Terms of Investment Agreement.
+                </p>
+              </label>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+            >
+              <button
+                class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-fullWidth MuiButtonBase-root  css-1a7ydny-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                <span
+                  class="MuiButton-startIcon MuiButton-iconSizeMedium css-gcc2o7-MuiButton-startIcon"
+                >
+                  <svg
+                    class="css-1s8o7ec"
+                    fill="#778194"
+                    height="24px"
+                    width="24px"
+                  >
+                    <use
+                      href="image-mock#download"
+                    />
+                  </svg>
+                </span>
+                Download Subscription Document
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-3tbyo6-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-2 css-jyppyh-MuiGrid-root"
+          >
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButton-disableElevation MuiButton-fullWidth MuiButtonBase-root  css-lh449b-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+              href="/app/invest/offerings/:issuerId/:dsoId/view"
+              tabindex="0"
+            >
+              Cancel
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </a>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-2 css-jyppyh-MuiGrid-root"
+          >
+            <button
+              class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButton-fullWidth MuiButtonBase-root  css-gi1y9o-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="submit"
+            >
+              Invest
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

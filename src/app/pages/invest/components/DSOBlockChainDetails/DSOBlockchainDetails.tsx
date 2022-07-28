@@ -64,20 +64,22 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
   )
   return (
     <Box className={classes.root}>
-      <Tooltip
-        title={`Switch to ${info.chainName}`}
-        aria-label={`switch-chain`}
-        arrow
-      >
-        {chainButton}
-      </Tooltip>
-      <Typography className={classes.address}>
-        {shortenAddress(address)}
-      </Typography>
+      <Box className={classes.addressBox}>
+        <Tooltip
+          title={`Switch to ${info.chainName}`}
+          aria-label={`switch-chain`}
+          arrow
+        >
+          {chainButton}
+        </Tooltip>
+        <Typography className={classes.address}>
+          {shortenAddress(address, 8)}
+        </Typography>
 
-      <IconButton size='small' onClick={() => copyToClipboard(address ?? '')}>
-        <FileCopyOutlined color='action' />
-      </IconButton>
+        <IconButton size='small' onClick={() => copyToClipboard(address ?? '')}>
+          <FileCopyOutlined color='action' />
+        </IconButton>
+      </Box>
       <Tooltip
         title={metamaskMessageMap[accountState]}
         aria-label={`add-to-metamask`}
