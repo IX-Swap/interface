@@ -58,7 +58,6 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   )
 
   const payoutContract = usePayoutContract()
-  // console.log('log => payoutContract', payoutContract)
 
   const pay = async () => {
     try {
@@ -82,19 +81,23 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
         const res = await payoutContract?.initPayout(authorization, { gasLimit })
         addTransaction(res, {
-          summary: `Payout was successfully payed`,
+          summary: `The transaction was successful. Waiting for system confirmation.`,
         })
 
-        handleFormSubmit(res.hash)
+        handleFormSubmit(res.hash, authorization.payoutId)
       }
     } catch (e: any) {
       handleIsLoading(false)
     }
   }
 
-  const handleFormSubmit = async (paidTxHash?: string) => {
+  const handleFormSubmit = async (paidTxHash?: string, contractPayoutId?: string) => {
     const body = transformPayoutDraftDTO(values)
-    const data = await publishPayout({ ...body, ...(paidTxHash && { paidTxHash }) })
+    const data = await publishPayout({
+      ...body,
+      ...(paidTxHash && { paidTxHash }),
+      ...(contractPayoutId && { contractPayoutId }),
+    })
 
     if (data?.id) {
       close()

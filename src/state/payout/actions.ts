@@ -51,3 +51,33 @@ export const deletePayoutItem: Readonly<{
   fulfilled: createAction('payout/deletePayoutItem/fulfilled'),
   rejected: createAction('payout/deletePayoutItem/rejected'),
 }
+
+export const saveUserClaim: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/saveUserClaim/pending'),
+  fulfilled: createAction('payout/saveUserClaim/fulfilled'),
+  rejected: createAction('payout/saveUserClaim/rejected'),
+}
+
+export const getUserClaim: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/getUserClaim/pending'),
+  fulfilled: createAction('payout/getUserClaim/fulfilled'),
+  rejected: createAction('payout/getUserClaim/rejected'),
+}
+
+export const getClaimAuthorization: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/getClaimAuthorization/pending'),
+  fulfilled: createAction('payout/getClaimAuthorization/fulfilled'),
+  rejected: createAction('payout/getClaimAuthorization/rejected'),
+}

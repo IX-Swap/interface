@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import { t } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
+import { useHistory } from 'react-router-dom'
 
 import CurrencyLogo from 'components/CurrencyLogo'
 import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
-import { useHistory } from 'react-router-dom'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { momentFormatDate } from '../utils'
