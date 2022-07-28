@@ -1,12 +1,13 @@
 import { Box, Grid, Paper, Typography } from '@mui/material'
+import { BackLink } from 'app/components/BackLink/BackLink'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import React, { useState } from 'react'
+import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
 import { VirtualAccountCashDeposit } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountCashDeposit'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
-import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { BackToCash } from 'app/pages/accounts/pages/withdraw/components/BackToCash'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React, { useState } from 'react'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
 
 export const Deposit = () => {
   const { getFilterValue } = useQueryFilter()
@@ -36,7 +37,9 @@ export const Deposit = () => {
           titleStyle={{ fontSize: isTablet ? 24 : 32, height: 'initial' }}
           alignment='center'
           showBreadcrumbs={false}
-          startComponent={<BackToCash />}
+          startComponent={
+            <BackLink to={AccountsRoute.cash} title='Back to Cash page' />
+          }
         />
       </Grid>
       {isLoading ? null : (

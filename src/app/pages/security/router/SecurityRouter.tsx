@@ -27,9 +27,9 @@ export const SecurityRouter = () => {
       </AppRoute>
 
       <Route path={SecurityRoute.changePassword}>
-        <AppContentWrapper container>
+        <RootContainer className={privateClassNames()}>
           <ChangePassword />
-        </AppContentWrapper>
+        </RootContainer>
       </Route>
 
       <AppRoute path={SecurityRoute.change2fa}>
