@@ -4,7 +4,7 @@ export const useStyles = makeStyles(theme => ({
   container: {
     minWidth: 608,
     borderRadius: 2,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       minWidth: '100%',
       display: 'flex',
@@ -19,7 +19,7 @@ export const useStyles = makeStyles(theme => ({
     background: '#DBE2EC',
     margin: theme.spacing(4, 3),
     display: 'none',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'block'
     }
   },
@@ -28,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
     gridTemplateColumns: '2fr 1fr',
     gap: theme.spacing(1.25),
     alignItems: 'start',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       gridTemplateColumns: '1fr',
       rowGap: theme.spacing(0.5)
     }

@@ -24,6 +24,10 @@ export const Withdraw = () => {
             alignment='center'
             showBreadcrumbs={false}
             startComponent={<BackToCash />}
+            mainWrapperSX={{
+              flexDirection: { xs: 'column-reverse', md: 'row' },
+              alignItems: { xs: 'initial', md: 'center' }
+            }}
           />
         </Box>
       </Grid>

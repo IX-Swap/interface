@@ -74,7 +74,7 @@ export const Setup: React.FC = () => {
   return (
     <Box className={container}>
       <Paper sx={{ width: '100%' }}>
-        <Box sx={{ px: { xs: 3, sm: 5 }, paddingTop: 5 }}>
+        <Box sx={{ px: { xs: 3, md: 5 }, paddingTop: 5 }}>
           <CurrencySelect accounts={list} />
         </Box>
         <div className={separator} />
@@ -82,9 +82,9 @@ export const Setup: React.FC = () => {
           <Grid item>
             <Box
               sx={{
-                mt: { xs: 0, sm: 5 },
-                mb: { xs: 3, sm: 5 },
-                px: { xs: 3, sm: 5 }
+                mt: { xs: 0, md: 5 },
+                mb: { xs: 3, md: 5 },
+                px: { xs: 3, md: 5 }
               }}
             >
               <Box mt={{ xs: 0, sm: 2 }} className={selectRow}>
