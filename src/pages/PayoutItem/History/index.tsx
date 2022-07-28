@@ -15,6 +15,8 @@ import { useUserState } from 'state/user/hooks'
 import { momentFormatDate } from '../utils'
 import dayjs from 'dayjs'
 import { capitalize } from '@material-ui/core'
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { useActiveWeb3React } from 'hooks/web3'
 
 const headerCells = [t`Recipient's wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Status`, t`Transaction`]
 
@@ -73,10 +75,11 @@ const Body: FC<{ claimHistory: any }> = ({ claimHistory }) => {
 }
 
 const Row: FC<RowProps> = ({ item }) => {
-  const { createdAt, payoutEvent, sum, userId, user, status } = item
+  const { createdAt, payoutEvent, sum, userId, user, status, txHash } = item
   const { me } = useUserState()
   const { secToken } = payoutEvent
   const currency = new WrappedTokenInfo(secToken)
+  const { chainId } = useActiveWeb3React()
 
   return (
     <StyledBodyRow isMyClaim={me.id === userId}>
@@ -91,7 +94,7 @@ const Row: FC<RowProps> = ({ item }) => {
       <div>{`${momentFormatDate(createdAt)} - ${dayjs(createdAt).format('HH')}:${dayjs(createdAt).format('mm')}`}</div>
       <div>{capitalize(status || '-')}</div>
       <div style={{ textDecoration: 'underline' }}>
-        <ExternalLink href={`https://dev.ixswap.io`}>View</ExternalLink>
+        <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>View</ExternalLink>
       </div>
     </StyledBodyRow>
   )

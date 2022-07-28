@@ -64,7 +64,7 @@ export default function PayoutItemForUser({
     const getMyAmount = async () => {
       const data = await getMyPayoutAmount(+payoutId)
       if (data) {
-        handleMyAmount(data.poolTokens + data.walletTokens)
+        handleMyAmount(+data.poolTokens + +data.walletTokens)
       }
     }
 
@@ -94,7 +94,7 @@ export default function PayoutItemForUser({
           <Column style={{ gap: '40px' }}>
             <PayoutHeader payout={payout} isMyPayout={false} />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount}/>
+            <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount} />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}

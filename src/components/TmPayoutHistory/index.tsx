@@ -19,6 +19,8 @@ import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
 
 import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
+import { useActiveWeb3React } from 'hooks/web3'
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
 const headerCells = [
   t`Recipient's wallet`,
@@ -94,8 +96,10 @@ const Row = ({ item }: IRow) => {
     payoutEvent: { payoutToken, secToken, type },
     createdAt,
     sum,
+    txHash,
   } = item
   const token = useToken(payoutToken)
+  const { chainId } = useActiveWeb3React()
 
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
 
@@ -117,7 +121,11 @@ const Row = ({ item }: IRow) => {
 
       <div>
         {/* TO DO - replace with txHash */}
-        <ViewBtn href={'#'} target="_blank" rel="noopener">
+        <ViewBtn
+          href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}
+          target="_blank"
+          rel="noopener"
+        >
           View
         </ViewBtn>
         {/* <ViewBtn href={`https://polygonscan.com/tx/${txHash}`} target="_blank" rel="noopener">
