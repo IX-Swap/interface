@@ -1,10 +1,8 @@
-import React from 'react'
-import { Grid } from '@mui/material'
+import React, { useState } from 'react'
+import { Box, Grid, Paper, Typography } from '@mui/material'
 import { DSOTeamMemberPhoto } from 'app/components/DSO/components/DSOTeamMemberPhoto'
 import { renderStringToHTML } from 'app/components/DSO/utils'
-import { LabelledValue } from 'components/LabelledValue'
 import { DsoTeamMember } from 'types/dso'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface DSOTeamMemberViewProps {
   dsoId: string
@@ -13,46 +11,45 @@ export interface DSOTeamMemberViewProps {
 
 export const DSOTeamMemberView = (props: DSOTeamMemberViewProps) => {
   const { member, dsoId } = props
-  const { isTablet } = useAppBreakpoints()
+  const [expanded, setExpanded] = useState(false)
+
+  const toggleExpanded = () => {
+    setExpanded(!expanded)
+  }
 
   return (
-    <Grid
-      container
-      alignItems='flex-start'
-      wrap={isTablet ? 'wrap' : 'nowrap'}
-      spacing={3}
-      direction='column'
+    <Paper
+      elevation={0}
+      sx={{
+        border: 1,
+        borderColor: 'divider',
+        borderRadius: 2,
+        p: 2
+      }}
+      onClick={toggleExpanded}
     >
-      <Grid item>
-        <Grid container spacing={3}>
-          <Grid item>
-            <DSOTeamMemberPhoto
-              dsoId={dsoId}
-              photoId={member.photo}
-              variant='square'
-              size={128}
-            />
-          </Grid>
-          <Grid item>
-            <Grid container spacing={3} direction='column'>
-              <Grid item>
-                <LabelledValue label='Name' value={member.name} />
-              </Grid>
-              <Grid item>
-                <LabelledValue label='Position' value={member.position} />
-              </Grid>
+      <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Grid container direction='row' alignItems='center' spacing={2}>
+            <Grid item>
+              <DSOTeamMemberPhoto
+                dsoId={dsoId}
+                photoId={member.photo}
+                size={48}
+              />
+            </Grid>
+            <Grid item>
+              <Typography variant='h4'>{member.name}</Typography>
+              <Typography>{member.position}</Typography>
             </Grid>
           </Grid>
         </Grid>
+        {expanded && (
+          <Grid item xs={12}>
+            <Box>{renderStringToHTML(member.about)}</Box>
+          </Grid>
+        )}
       </Grid>
-
-      <Grid item>
-        <LabelledValue
-          label='About'
-          value={renderStringToHTML(member.about)}
-          align='justify'
-        />
-      </Grid>
-    </Grid>
+    </Paper>
   )
 }
