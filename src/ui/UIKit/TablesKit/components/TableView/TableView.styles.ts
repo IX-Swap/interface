@@ -9,18 +9,21 @@ export default makeStyles(theme => {
       backgroundColor: theme.palette.background.paper
     },
     headCell: {
-      borderBottom: 'none',
       height: 70,
       boxSizing: 'border-box',
       fontSize: 13,
       whiteSpace: 'nowrap',
-
+      backgroundColor: tablePalette.rowBg,
+      borderBottom: `1px solid ${tablePalette.border}`,
       '&:first-of-type': {
-        paddingLeft: 0
+        borderTopLeftRadius: 8
+      },
+      '&:last-of-type': {
+        borderTopRightRadius: 8
       }
     },
     headText: {
-      color: tablePalette.color
+      color: tablePalette.headerColor
     },
     checkbox: {
       color: '#ffffff'

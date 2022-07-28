@@ -9,7 +9,7 @@ import {
   TableRow,
   Typography
 } from '@mui/material'
-import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
+import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
 import { getColumnMatchedOrder } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import { MobileConfirmationMessage } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileConfirmationMessage'
 import { useStyles } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders.styles'
@@ -23,7 +23,7 @@ import { OpenOTCOrder, OTCMatch } from 'types/otcOrder'
 import { Icon } from 'ui/Icons/Icon'
 
 export const MobileNestedOrders = ({ items }: { items: OpenOTCOrder[] }) => {
-  const context = useContext(OpenOrdersContext)
+  const context = useContext(ActiveElementContext)
   const leavePageContext = useContext(LeavePageContext)
   const open = context?.hasOpenIndices
   const classes = useStyles()

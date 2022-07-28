@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RenderBolderText renders bolder text 1`] = `
+<div>
+  <p
+    class="MuiTypography-root MuiTypography-body1 css-1zdpvo-MuiTypography-root"
+  >
+    test
+  </p>
+</div>
+`;
+
+exports[`renderBalance renders balance in correct way 1`] = `
+<div>
+  <p
+    class="MuiTypography-root MuiTypography-body1 css-1zdpvo-MuiTypography-root"
+  >
+    30
+  </p>
+   
+  USD
+</div>
+`;
+
+exports[`renderCurrencyLabel renders currency label 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-70qvj9"
+  >
+    <p
+      class="MuiTypography-root MuiTypography-body1 css-1zdpvo-MuiTypography-root"
+    >
+      SGD
+    </p>
+  </div>
+</div>
+`;
+
+exports[`renderSGDPrice renders SGD price in correct way 1`] = `
+<div>
+  <p
+    class="MuiTypography-root MuiTypography-body1 css-1zdpvo-MuiTypography-root"
+  >
+    30
+  </p>
+    SGD
+</div>
+`;
+
+exports[`renderStatus renders status with type 1`] = `
+<div>
+  <div
+    class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-filledSuccess makeStyles-wrapper-1 makeStyles-wrapper-2 css-bpa8yc-MuiChip-root"
+  >
+    <span
+      class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
+    >
+      Connected
+    </span>
+  </div>
+</div>
+`;
+
+exports[`renderUSDPrice renders USD price in correct way 1`] = `
+<div>
+  <p
+    class="MuiTypography-root MuiTypography-body1 css-1zdpvo-MuiTypography-root"
+  >
+    30
+  </p>
+    USD
+</div>
+`;

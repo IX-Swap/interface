@@ -1,8 +1,5 @@
 import { TableColumn } from 'types/util'
-import {
-  RenderBolderText,
-  renderSGDPrice
-} from 'ui/UIKit/TablesKit/utils/utils'
+import { RenderBolderText, renderSGDPrice } from 'helpers/tables'
 import { SecondTableItem } from 'ui/UIKit/TablesKit/SecondTable/SecondTable'
 
 export const columns: Array<TableColumn<SecondTableItem>> = [

@@ -1,10 +1,9 @@
-import React from 'react'
-import { TableViewProps } from 'components/TableWithPagination/TableView'
 import { TableBody, TableCell, TableRow } from '@mui/material'
-import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
+import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
+import { TableViewProps } from 'components/TableWithPagination/TableView'
+import React from 'react'
 import useStyles from 'ui/UIKit/TablesKit/components/TableRows/TableRows.styles'
-import { VSpacer } from 'components/VSpacer'
 
 export interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
@@ -52,7 +51,6 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
                 />
               )}
             </TableRow>
-            <VSpacer size={'extraSmall'} />
           </>
         ))}
       {!isLoading && !hasItems && (

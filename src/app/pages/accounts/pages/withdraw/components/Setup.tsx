@@ -15,7 +15,7 @@ import { isEmptyString } from 'helpers/strings'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { ManageBankAccountsButton } from './ManageBankAccountsButton'
-import { OTPWithdraw } from './OTPWithdraw'
+import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
 
 export const Setup: React.FC = () => {
   const { container, selectRow, separator } = useStyles()
@@ -125,7 +125,9 @@ export const Setup: React.FC = () => {
                   </>
                 ) : null}
               </Grid>
-              <OTPWithdraw disabled={isEmptyString(bankAccountId)} />
+              <Box mt={5}>
+                <OTPInputField disabled={isEmptyString(bankAccountId)} />
+              </Box>
               <Grid item mt={5}>
                 <ContinueButton type='submit' />
               </Grid>

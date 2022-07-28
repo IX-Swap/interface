@@ -78,7 +78,6 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
         <Grid item style={{ minWidth: 26 }}>
           {(isUnauthorized || isCommitment) && (
             <Dropdown
-              arrow
               contentTheme='dark'
               trigger={props => (
                 <ActionsDropdownTrigger {...props} isLoading={isLoading} />

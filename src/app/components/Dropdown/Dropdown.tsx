@@ -37,7 +37,9 @@ export const Dropdown = (props: DropdownProps) => {
   } = props
   const { theme: defaultTheme } = useAppTheme()
   const theme =
-    contentTheme === undefined ? defaultTheme : getAppTheme(AppTheme.Dark, true)
+    contentTheme === undefined
+      ? defaultTheme
+      : getAppTheme(contentTheme as AppTheme, true)
   const refDropdown = React.useRef<any>()
 
   return (
