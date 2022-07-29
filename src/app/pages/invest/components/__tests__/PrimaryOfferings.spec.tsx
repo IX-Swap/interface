@@ -99,7 +99,7 @@ describe('PrimaryOfferings', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('renders DSOCardsCarousel component with correct props, should match snapshot when isMiniLaptop is true', () => {
+  it('renders DSOCardsCarousel component with correct props when isMiniLaptop is true', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isMiniLaptop: true
     } as any)
@@ -116,6 +116,5 @@ describe('PrimaryOfferings', () => {
       }),
       {}
     )
-    expect(container).toMatchSnapshot('isMiniLaptop')
   })
 })
