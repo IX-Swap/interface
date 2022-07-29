@@ -2,6 +2,8 @@ import React, { FC } from 'react'
 import { Box, Flex } from 'rebass'
 import { t } from '@lingui/macro'
 import styled, { css } from 'styled-components'
+import dayjs from 'dayjs'
+import { capitalize } from '@material-ui/core'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { CopyAddress } from 'components/CopyAddress'
@@ -9,14 +11,12 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { ExternalLink, TYPE } from 'theme'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useUserState } from 'state/user/hooks'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
 import { momentFormatDate } from '../utils'
-import dayjs from 'dayjs'
-import { capitalize } from '@material-ui/core'
-import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { useActiveWeb3React } from 'hooks/web3'
 
 const headerCells = [t`Recipient's wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Status`, t`Transaction`]
 
@@ -77,8 +77,8 @@ const Body: FC<{ claimHistory: any }> = ({ claimHistory }) => {
 const Row: FC<RowProps> = ({ item }) => {
   const { createdAt, payoutEvent, sum, userId, user, status, txHash } = item
   const { me } = useUserState()
-  const { secToken } = payoutEvent
-  const currency = new WrappedTokenInfo(secToken)
+  const { payoutToken } = payoutEvent
+  const currency = useCurrency(payoutToken)
   const { chainId } = useActiveWeb3React()
 
   return (
@@ -88,8 +88,8 @@ const Row: FC<RowProps> = ({ item }) => {
       </div>
       <Flex alignItems="center">
         <CurrencyLogo currency={currency} size="20px" />
-        <Box marginX="4px">{secToken.originalSymbol ?? secToken.symbol}</Box>
-        <Box>{sum}</Box>
+        <Box marginX="4px">{currency?.symbol ?? '-'}</Box>
+        <Box>{Number(sum).toFixed(4)}</Box>
       </Flex>
       <div>{`${momentFormatDate(createdAt)} - ${dayjs(createdAt).format('HH')}:${dayjs(createdAt).format('mm')}`}</div>
       <div>{capitalize(status || '-')}</div>

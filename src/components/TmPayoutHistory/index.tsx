@@ -117,7 +117,7 @@ const Row = ({ item }: IRow) => {
       <div>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</div>
       <div style={{ fontWeight: 500 }}>
         <CurrencyLogo currency={token} style={{ marginRight: 4 }} size="24px" />
-        {token?.symbol || '-'}&nbsp;{sum}
+        {token?.symbol || '-'}&nbsp;{Number(sum).toFixed(4)}
       </div>
 
       <div>
