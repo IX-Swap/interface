@@ -269,7 +269,7 @@ export const PayoutEventBlock: FC<Props> = ({
             <MouseoverTooltip
               text={
                 isRecordFuture
-                  ? t`It will be possible to pay for this event after the wrapped token amount will become available on the record date you selected`
+                  ? t`Pay for this event after the wrapped token amount will become available on the selected record date.`
                   : ''
               }
               placement="top"
