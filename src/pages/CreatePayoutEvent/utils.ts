@@ -1,13 +1,11 @@
 import { PAYOUT_STATUS } from 'constants/enums'
 import { Option } from 'hooks/useTokensList'
 
-export const transformPayoutDraftDTO = (values: any) => {
-  const { token, secToken } = values
-
+export const transformPayoutDraftDTO = ({ token, secToken, ...values }: any) => {
   return {
     ...values,
-    payoutToken: token.isNative ? token.address : token.value,
-    secTokenId: secToken.value,
+    ...(token && { payoutToken: token.isNative ? token.address : token.value }),
+    ...(secToken && { secTokenId: secToken.value }),
   }
 }
 
@@ -43,6 +41,7 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'files',
     ],
     [PAYOUT_STATUS.ANNOUNCED]: [
+      'id',
       'title',
       'description',
       'tokenAmount',
@@ -52,9 +51,9 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'token',
       'files',
     ],
-    [PAYOUT_STATUS.SCHEDULED]: ['tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
-    [PAYOUT_STATUS.DELAYED]: ['tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
-    [PAYOUT_STATUS.STARTED]: ['title', 'description', 'endDate', 'files'],
+    [PAYOUT_STATUS.SCHEDULED]: ['id', 'tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
+    [PAYOUT_STATUS.DELAYED]: ['id', 'tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
+    [PAYOUT_STATUS.STARTED]: ['id', 'title', 'description', 'endDate', 'files'],
     [PAYOUT_STATUS.ENDED]: [],
   } as Record<string, string[]>
 
