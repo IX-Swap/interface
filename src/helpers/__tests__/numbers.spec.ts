@@ -12,7 +12,8 @@ import {
   renderTotal,
   getOrderCurrency,
   renderNewAmount,
-  getFilledPercentageFromMatches
+  getFilledPercentageFromMatches,
+  isNullish
 } from 'helpers/numbers'
 import { order1, orderWithSettled } from '__fixtures__/otcOrders'
 
@@ -149,5 +150,13 @@ describe('getFilledPercentageFromMatches', () => {
     expect(getFilledPercentageFromMatches({ row: orderWithSettled })).toEqual(
       '10%'
     )
+  })
+})
+
+describe('isNullish', () => {
+  it('check if number is nullish', () => {
+    expect(isNullish(null)).toEqual(true)
+    expect(isNullish(1)).toEqual(false)
+    expect(isNullish(0)).toEqual(true)
   })
 })

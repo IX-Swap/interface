@@ -4,6 +4,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { ConvertedAssetBalance } from 'types/balance'
 import { useStyles } from 'app/pages/accounts/pages/cash/components/Actions.styles'
+import { isNullish } from 'helpers/numbers'
 export interface ActionsProps {
   item: ConvertedAssetBalance
 }
@@ -29,6 +30,7 @@ export const Actions = ({ item }: ActionsProps) => {
       <Button
         className={styles.button}
         variant={'text'}
+        disabled={isNullish(item.balance.available)}
         onClick={() =>
           push({ pathname: AccountsRoute.withdraw, search: params.toString() })
         }

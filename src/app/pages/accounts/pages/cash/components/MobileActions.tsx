@@ -2,6 +2,7 @@ import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { NewAction } from 'app/pages/authorizer/components/NewAction'
 import { ReactComponent as DepositIcon } from 'assets/icons/deposit.svg'
 import { ReactComponent as WithdrawIcon } from 'assets/icons/withdraw.svg'
+import { isNullish } from 'helpers/numbers'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { ConvertedAssetBalance } from 'types/balance'
@@ -27,6 +28,7 @@ export const MobileActions = ({ item }: ActionsProps) => {
       />
       <NewAction
         label='Withdraw'
+        disabled={isNullish(item.balance.available)}
         icon={<WithdrawIcon />}
         onClick={() =>
           push({
