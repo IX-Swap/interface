@@ -26,6 +26,7 @@ import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
 
 import { transformPayoutDraftDTO } from './utils'
+import { useCurrencyBalance, useETHBalances } from 'state/wallet/hooks'
 
 interface Props {
   close: () => void
@@ -46,12 +47,18 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const { token, secToken, tokenAmount, recordDate, startDate, endDate, type } = values
   const publishPayout = usePublishPayout()
   const addPopup = useAddPopup()
-  const { chainId = 0 } = useActiveWeb3React()
+  const { chainId = 0, account } = useActiveWeb3React()
   const history = useHistory()
   const getAuthorization = useGetPayoutAuthorization()
   const addTransaction = useTransactionAdder()
 
   const tokenCurrency = useCurrency(token.value)
+
+  const nativeBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
+
+  const currencyBalance = useCurrencyBalance(account ?? undefined, tokenCurrency ?? undefined)
+
+  const tokenBalance = (tokenCurrency?.isNative ? nativeBalance?.toFixed(4) : currencyBalance?.toFixed(4)) || 0
 
   const [approvalState, approve] = useApproveCallback(
     tokenCurrency ? CurrencyAmount.fromRawAmount(tokenCurrency, utils.parseUnits(tokenAmount, '18') as any) : undefined,
@@ -219,10 +226,17 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               </TYPE.title10>
             </Card>
           )}
+          {+tokenBalance < +tokenAmount && (
+            <Card marginBottom="32px">
+              <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
+                {t`Insuficient token amount.`}
+              </TYPE.title10>
+            </Card>
+          )}
           <StyledButtonIXSGradient
             type="button"
             onClick={() => (onlyPay || payNow ? pay() : handleFormSubmit())}
-            disabled={!tokenAmount}
+            disabled={!tokenAmount || +tokenBalance < +tokenAmount}
           >{t`${buttonText}`}</StyledButtonIXSGradient>
         </ModalBody>
       </ModalBlurWrapper>
