@@ -17,7 +17,6 @@ import { usePublishPayout } from 'state/payout/hooks'
 import { usePayoutContract } from 'hooks/useContract'
 import { routes } from 'utils/routes'
 
-import { transformPayoutDraftDTO } from './utils'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
 import { PAYOUT_ADDRESS } from 'constants/addresses'
@@ -25,6 +24,8 @@ import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
+
+import { transformPayoutDraftDTO } from './utils'
 
 interface Props {
   close: () => void
@@ -184,6 +185,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
               name="payNow"
               isRadio
               checked={payNow}
+              disabled={isRecordFuture}
               onClick={() => handlePayNow(true)}
               label={
                 <Box>

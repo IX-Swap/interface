@@ -2,6 +2,7 @@ import useTheme from 'hooks/useTheme'
 import moment from 'moment'
 
 import { PAYOUT_STATUS } from 'constants/enums'
+import dayjs from 'dayjs'
 
 export const useStatusButtonInfo = (status: PAYOUT_STATUS) => {
   const theme = useTheme()
@@ -26,5 +27,8 @@ export const isSameDay = (date: any) => moment(new Date()).isSame(new Date(date)
 export const isBefore = (date: any) => moment(new Date()).isBefore(new Date(date), 'day')
 export const isAfter = (date: any) => moment(new Date()).isAfter(new Date(date), 'day')
 export const momentFormatDate = (date: any, format: DateFormats = 'll') => moment(new Date(date)).format(format)
+
+export const isSameOrBefore = (date: any) => dayjs().isBefore(dayjs(date), 'day') || isSameDay(date)
+export const isSameOrAfter = (date: any) => dayjs().isAfter(dayjs(date), 'day') || isSameDay(date)
 
 type DateFormats = 'll' | 'LL'
