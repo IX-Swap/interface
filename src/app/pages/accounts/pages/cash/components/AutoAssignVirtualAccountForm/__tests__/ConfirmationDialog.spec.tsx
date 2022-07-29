@@ -5,26 +5,30 @@ import { render } from 'test-utils'
 
 describe('ConfirmationDialog', () => {
   const onCloseMock = jest.fn()
-  const handleSubmit = jest.fn()
+
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
   it('calls onClose function when close button is called', () => {
+    const button = jest.fn(() => <></>)
+    const bodyText = 'Test'
+    const title = 'Test title'
     const { getByText } = render(
       <ConfirmationDialog
         onClose={onCloseMock}
         open
-        currency='SGD'
         assigning={false}
-        handleSubmit={handleSubmit}
+        title={title}
+        bodyText={bodyText}
+        confirmButton={new button()}
       />
     )
     const closeButton = getByText('Cancel')
-    const assignButton = getByText('Assign')
+
+    const titleElement = getByText(title)
     fireEvent.click(closeButton)
     expect(onCloseMock).toHaveBeenCalled()
-    fireEvent.click(assignButton)
-    expect(handleSubmit).toHaveBeenCalled()
+    expect(titleElement).toBeDefined()
   })
 })

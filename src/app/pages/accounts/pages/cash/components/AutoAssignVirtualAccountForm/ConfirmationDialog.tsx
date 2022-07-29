@@ -13,24 +13,22 @@ import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ConfirmationDialogProps {
   onClose: () => void
-  handleSubmit: () => Promise<void>
   open: boolean
   assigning: boolean
-  currency: string
+  title: string
+  bodyText: string
+  confirmButton: React.ReactElement
 }
 
 export const ConfirmationDialog = ({
   onClose,
-  handleSubmit,
   open,
   assigning,
-  currency = 'SGD'
+  title,
+  bodyText,
+  confirmButton
 }: ConfirmationDialogProps) => {
   const theme = useTheme()
-  const title = `Add ${currency} account`
-  const bodyText = `Do you want to assign a ${currency} account?`
-  const confirmLabel = 'Assign'
-
   return (
     <UIDialog maxWidth='sm' open={open} disablePortal onClose={onClose}>
       <DialogTitle>
@@ -69,17 +67,7 @@ export const ConfirmationDialog = ({
             </Button>
           </Grid>
           <Grid item xs={5}>
-            <Button
-              size='large'
-              fullWidth
-              onClick={handleSubmit}
-              variant='contained'
-              color='primary'
-              disableElevation
-              disabled={assigning}
-            >
-              {confirmLabel}
-            </Button>
+            {confirmButton}
           </Grid>
         </Grid>
       </DialogActions>
