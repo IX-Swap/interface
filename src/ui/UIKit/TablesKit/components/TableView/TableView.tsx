@@ -53,6 +53,8 @@ export interface TableViewProps<T> {
   noDataComponent?: JSX.Element
   actionHeader?: string
   noHeader?: boolean
+  paginationPlacement?: 'top' | 'bottom'
+  labelRowsPerPage?: React.ReactNode
 }
 
 export const TableView = <T,>({
@@ -73,7 +75,9 @@ export const TableView = <T,>({
   size = 'medium',
   noDataComponent = <NoData title='No Data' />,
   actionHeader = '',
-  noHeader = false
+  noHeader = false,
+  paginationPlacement = 'bottom',
+  labelRowsPerPage
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -161,6 +165,38 @@ export const TableView = <T,>({
     </TableCell>
   )
 
+  const renderPagination = () => {
+    if (total > 0) {
+      return (
+        <Grid
+          item
+          container
+          justifyContent={'flex-end'}
+          className={classes.paginationContainer}
+        >
+          <Grid item>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              colSpan={columns.length + +hasActions}
+              count={total}
+              rowsPerPage={rowsPerPage}
+              labelRowsPerPage={labelRowsPerPage}
+              page={page}
+              classes={{ toolbar: classes.toolbar }}
+              onRowsPerPageChange={evt => {
+                setPage(0)
+                setRowsPerPage(parseInt(evt.target.value))
+              }}
+              onPageChange={(evt, newPage: number) => {
+                setPage(newPage)
+              }}
+            />
+          </Grid>
+        </Grid>
+      )
+    }
+  }
+
   const renderTableLoading = () => {
     if (status === 'loading' || fakeLoading) {
       return (
@@ -176,6 +212,7 @@ export const TableView = <T,>({
 
   return (
     <Grid container direction='column'>
+      {paginationPlacement === 'top' && renderPagination()}
       <Grid item>
         {renderTableLoading()}
         <Paper style={{ backgroundColor: 'inherit' }}>
@@ -219,32 +256,7 @@ export const TableView = <T,>({
           </TableContainer>
         </Paper>
       </Grid>
-      {total > 0 && (
-        <Grid
-          item
-          container
-          justifyContent={'flex-end'}
-          className={classes.paginationContainer}
-        >
-          <Grid item>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50]}
-              colSpan={columns.length + +hasActions}
-              count={total}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              classes={{ toolbar: classes.toolbar }}
-              onRowsPerPageChange={evt => {
-                setPage(0)
-                setRowsPerPage(parseInt(evt.target.value))
-              }}
-              onPageChange={(evt, newPage: number) => {
-                setPage(newPage)
-              }}
-            />
-          </Grid>
-        </Grid>
-      )}
+      {paginationPlacement === 'bottom' && renderPagination()}
     </Grid>
   )
 }

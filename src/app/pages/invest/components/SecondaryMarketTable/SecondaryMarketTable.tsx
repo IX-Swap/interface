@@ -9,16 +9,21 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useTheme } from '@mui/material/styles'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
-import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
+import {
+  TableView,
+  TableViewRendererProps
+} from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { useOutlinedInputStyles } from 'app/pages/invest/components/OverviwPageFilters'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { SecondaryMarketList } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketList'
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
 
 export const SecondaryMarketTable = () => {
   const outlinedInputClasses = useOutlinedInputStyles()
   const theme = useTheme()
-  const { isMobile } = useAppBreakpoints()
+  const { isMobile, isMiniLaptop } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const secondaryMarketSearch = getFilterValue('secondaryMarketSearch')
@@ -76,15 +81,33 @@ export const SecondaryMarketTable = () => {
           </Button>
         </Grid>
       </Grid>
-      <Grid item xs={12} style={{ overflowX: 'scroll', maxWidth: '100%' }}>
-        <TableView
-          uri={exchangeURL.marketList}
-          name={exchangeQueryKeys.marketList}
-          columns={columns}
-          actions={Actions}
-          filter={{ listingKeyword: search ?? secondaryMarketSearch } as any}
-          actionHeader={'Actions'}
-        />
+      <Grid
+        item
+        xs={12}
+        sx={{
+          overflowX: { xs: 'initial', lg: 'scroll' },
+          // overflowX: 'scroll',
+          maxWidth: '100%'
+        }}
+      >
+        <ActiveElementContextWrapper>
+          <TableView
+            uri={exchangeURL.marketList}
+            name={exchangeQueryKeys.marketList}
+            columns={columns}
+            actions={Actions}
+            filter={{ listingKeyword: search ?? secondaryMarketSearch } as any}
+            actionHeader={'Actions'}
+            noHeader={isMiniLaptop}
+            paginationPlacement={isMiniLaptop ? 'top' : 'bottom'}
+          >
+            {isMiniLaptop
+              ? (props: TableViewRendererProps<any>) => (
+                  <SecondaryMarketList {...props} columns={columns} />
+                )
+              : undefined}
+          </TableView>
+        </ActiveElementContextWrapper>
       </Grid>
     </Grid>
   )

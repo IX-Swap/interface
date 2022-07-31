@@ -1,6 +1,6 @@
 import { formatMoney } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
-import { getUserNameById } from 'helpers/tables'
+// import { getUserNameById } from 'helpers/tables'
 import React from 'react'
 import { Box } from '@mui/material'
 
@@ -17,7 +17,7 @@ export interface Order {
 export const columns: Array<TableColumn<any>> = [
   {
     key: 'name',
-    label: <Box paddingLeft={3}>Pair</Box>
+    label: <Box sx={{ paddingLeft: { xs: 0, lg: 2 } }}>Pair</Box>
   },
   {
     label: 'Symbol',
@@ -30,9 +30,11 @@ export const columns: Array<TableColumn<any>> = [
   {
     key: 'listing.createdBy',
     label: 'Issued By',
-    align: 'center',
-    headAlign: 'center',
-    render: (_, value) => getUserNameById(value.listing.createdBy)
+    align: 'left',
+    headAlign: 'left',
+    // TODO Should add real createdBy name value from backend api
+    // render: (_, value) => getUserNameById(value.listing.createdBy)
+    render: (_, value) => 'Alexandr Polchevsky'
   },
 
   {
@@ -40,7 +42,9 @@ export const columns: Array<TableColumn<any>> = [
     label: 'Price',
     align: 'left',
     headAlign: 'left',
-    render: (_, value) => formatMoney(value.listing.minimumTradeUnits, '')
+    // TODO Should add real currency value from backend api
+    render: (_, value) =>
+      formatMoney(value.listing.minimumTradeUnits, 'SGD', true)
   },
   {
     key: 'listing.marketType',
