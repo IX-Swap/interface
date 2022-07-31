@@ -1,17 +1,17 @@
-import { Button, Grid, TableBody, TableCell, TableRow } from '@mui/material'
-import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
-import { useStyles } from 'ui/CompactTable/CompactTable.styles'
+import { Grid, TableBody, TableCell, TableRow } from '@mui/material'
 import { CompactRowProps } from 'components/TableWithPagination/CompactRow'
 import get from 'lodash/get'
-import React, { useContext } from 'react'
+import React from 'react'
 import { Serialized } from 'types/base'
 import { TableColumn } from 'types/util'
-import { Icon } from 'ui/Icons/Icon'
+import { useStyles } from 'ui/CompactTable/CompactTable.styles'
 import { TableViewRendererProps } from 'ui/UIKit/TablesKit/components/TableView/TableView'
+import { ExpandButton } from './ExpandButton'
 
 export interface CompactBodyProps<T extends Serialized>
   extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
+  renderActionButton?: (item: T) => JSX.Element
   menu: React.ReactElement
 }
 
@@ -35,12 +35,8 @@ export const renderCell = <T extends Serialized>({
 export const CompactTable = <T extends Serialized>(
   props: CompactBodyProps<T>
 ) => {
-  const { columns, items, menu } = props
+  const { columns, items, menu, renderActionButton } = props
   const classes = useStyles()
-  const context = useContext(ActiveElementContext)
-  const handleClick = (item: T) => {
-    context?.toggleRow(item._id)
-  }
 
   return (
     <>
@@ -61,7 +57,7 @@ export const CompactTable = <T extends Serialized>(
                   className={classes.columns}
                   xs={12}
                 >
-                  {columns.map(({ label, key, render }, index) => (
+                  {columns.map(({ label, key, render }, _index) => (
                     <Grid
                       item
                       container
@@ -78,15 +74,11 @@ export const CompactTable = <T extends Serialized>(
                     </Grid>
                   ))}
                 </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    onClick={() => handleClick(item)}
-                    fullWidth
-                    className={classes.iconButton}
-                  >
-                    <Icon name='more-horizontal' />
-                  </Button>
-                </Grid>
+                {renderActionButton !== undefined ? (
+                  renderActionButton(item)
+                ) : (
+                  <ExpandButton item={item} />
+                )}
               </Grid>
             </TableCell>
           </TableRow>

@@ -28,7 +28,7 @@ export const CashBalance = () => {
       (acc, item) => acc + (item.balance.usdValue ?? 0),
       0
     )
-    console.log({ sumOfSGDValues, sumOfUSDValues, list })
+
     return data.currency === 'SGD' ? sumOfSGDValues : sumOfUSDValues
   }
 

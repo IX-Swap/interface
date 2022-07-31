@@ -6,8 +6,11 @@ export const useStyles = makeStyles(theme => ({
     margin: 0,
     marginRight: 5,
     padding: 0,
-    '&:hover': {
+    '&:hover, &.Mui-disabled': {
       background: 'transparent'
+    },
+    '&.Mui-disabled': {
+      color: theme.palette.iconButton.fillDisabled
     }
   }
 }))

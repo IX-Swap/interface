@@ -1,22 +1,23 @@
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { Actions } from 'app/pages/accounts/pages/cash/components/Actions'
 import {
   columns,
   compactColumns
 } from 'app/pages/accounts/pages/cash/components/columns'
+import { MobileActions } from 'app/pages/accounts/pages/cash/components/MobileActions'
 import { balanceQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { ConvertedAssetBalance } from 'types/balance'
+import { CompactTable } from 'ui/CompactTable/CompactTable'
+import { MobileMenu } from 'ui/CompactTable/MobileMenu'
 import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { Actions } from 'app/pages/accounts/pages/cash/components/Actions'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { CompactTable } from 'ui/CompactTable/CompactTable'
-import { MobileMenu } from 'ui/CompactTable/MobileMenu'
-import { MobileActions } from 'app/pages/accounts/pages/cash/components/MobileActions'
-import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { renderActionButton } from './CashStatus'
 
 export const CashTable: React.FC = () => {
   const { user } = useAuth()
@@ -41,6 +42,7 @@ export const CashTable: React.FC = () => {
               <CompactTable
                 {...props}
                 columns={compactColumns}
+                renderActionButton={renderActionButton}
                 menu={
                   <MobileMenu
                     items={props.items}

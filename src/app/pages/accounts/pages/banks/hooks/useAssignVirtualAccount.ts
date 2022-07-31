@@ -1,10 +1,10 @@
+import { virtualAccounts } from 'config/apiURL'
+import { balanceQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { ValidCurrency } from 'helpers/types'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
-import { virtualAccounts } from 'config/apiURL'
-import { virtualAccountQueryKeys } from 'config/queryKeys'
 
 export const useAssignVirtualAccount = (
   callback?: () => void,
@@ -27,12 +27,13 @@ export const useAssignVirtualAccount = (
     onSuccess: async () => {
       callback?.()
       void snackbarService.showSnackbar(
-        isAdditional
-          ? 'Request to add new account sent'
-          : 'Account has been assigned successfully!',
+        'Request to add a new account sent',
         'success'
       )
-      await queryCache.invalidateQueries(virtualAccountQueryKeys.getByUserId)
+
+      await queryCache.invalidateQueries(
+        balanceQueryKeys.getByUserId(authUserId)
+      )
     },
     onError: async (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
