@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from '@mui/material'
+import { useStyles } from 'app/components/DSO/components/TextContent/TextContent.styles'
 import React, { useEffect, useRef, useState } from 'react'
 
 export interface TextContentProps {
@@ -11,6 +12,7 @@ export const TextContent = ({ content, title }: TextContentProps) => {
   const [maxHeight, setMaxHeight] = useState<number | string>(max)
   const [scrollHeight, setScrollHeight] = useState<number | undefined>()
   const contentRef = useRef<HTMLDivElement>(null)
+  const { overlay } = useStyles()
 
   useEffect(() => {
     setScrollHeight(contentRef?.current?.scrollHeight)
@@ -35,18 +37,7 @@ export const TextContent = ({ content, title }: TextContentProps) => {
         scrollHeight !== undefined &&
         scrollHeight > max && (
           <Box width='100%' pt={2}>
-            <Box
-              sx={{
-                width: '100%',
-                height: 80,
-                marginTop: -10,
-                zIndex: 100,
-                position: 'relative',
-                pointerEvents: 'none',
-                background:
-                  'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)'
-              }}
-            />
+            <Box className={overlay} />
             <Button
               variant='contained'
               fullWidth
