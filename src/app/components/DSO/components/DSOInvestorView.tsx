@@ -54,9 +54,7 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
             </TabPanel>
 
             <TabPanel value={selectedIdx} index={3} pt={0}>
-              <Box pl={3}>
-                <DSOFAQsView dso={dso} isTitleVisible isNewThemeOn />
-              </Box>
+              <DSOFAQsView dso={dso} />
             </TabPanel>
           </Box>
         </Paper>
