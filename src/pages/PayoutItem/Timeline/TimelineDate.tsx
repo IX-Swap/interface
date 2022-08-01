@@ -13,9 +13,10 @@ interface Props {
   withBackground?: boolean
   label: string
   date: any
+  hideTodayIndicator: boolean
 }
 
-export const TimelineDate: FC<Props> = ({ date, label, withBackground = true }) => {
+export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, hideTodayIndicator }) => {
   const isSameDay = useMemo(() => sameDay(date), [date])
 
   return (
@@ -24,7 +25,7 @@ export const TimelineDate: FC<Props> = ({ date, label, withBackground = true }) 
         <>
           <StyledButtonIXSGradient>
             {momentFormatDate(date)}
-            {isSameDay && <TodayIndicator top />}
+            {isSameDay && !hideTodayIndicator && <TodayIndicator top />}
           </StyledButtonIXSGradient>
           <TYPE.buttonMuted>{t`${label}`}</TYPE.buttonMuted>
         </>
@@ -32,7 +33,7 @@ export const TimelineDate: FC<Props> = ({ date, label, withBackground = true }) 
         <>
           <StyledButtonGradientBorder>
             {momentFormatDate(date)}
-            {isSameDay && <TodayIndicator top />}
+            {isSameDay && !hideTodayIndicator && <TodayIndicator top />}
           </StyledButtonGradientBorder>
           <TYPE.body3 color={'text1'}>{t`${label}`}</TYPE.body3>
         </>

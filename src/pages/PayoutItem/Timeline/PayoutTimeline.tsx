@@ -3,6 +3,7 @@ import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { PayoutEvent } from 'state/token-manager/types'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { TodayIndicator } from './TodayIndicator'
 import { TimelineDate } from './TimelineDate'
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export const PayoutTimeline: FC<Props> = ({ payout }) => {
-  const { recordDate, startDate, endDate } = payout
+  const { recordDate, startDate, endDate, status } = payout
 
   const todayActionDate = useMemo(
     () => isSameDay(recordDate) || isSameDay(startDate) || isSameDay(endDate),
@@ -27,14 +28,25 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
     if (isAfter(startDate) && isBefore(endDate)) return '75%'
   }, [recordDate, startDate, endDate])
 
+  const hideTodayIndicator = [PAYOUT_STATUS.DELAYED, PAYOUT_STATUS.ENDED].includes(status)
+
   return (
     <Box style={{ marginTop: 24, padding: '0px 36px' }}>
       <LineContainer>
         {todayPosition === '0px' && <FakeFirstButton />}
-        {recordDate && <TimelineDate date={recordDate} label="Record Date" />}
-        {startDate && <TimelineDate date={startDate} label="Payment Start Date" />}
-        {endDate && <TimelineDate withBackground={false} date={endDate} label="Payment Deadline" />}
-        <Line>{!todayActionDate && <TodayIndicator left={todayPosition} />}</Line>
+        {recordDate && <TimelineDate date={recordDate} label="Record Date" hideTodayIndicator={hideTodayIndicator} />}
+        {startDate && (
+          <TimelineDate date={startDate} label="Payment Start Date" hideTodayIndicator={hideTodayIndicator} />
+        )}
+        {endDate && (
+          <TimelineDate
+            withBackground={false}
+            date={endDate}
+            label="Payment Deadline"
+            hideTodayIndicator={hideTodayIndicator}
+          />
+        )}
+        <Line>{!todayActionDate && !hideTodayIndicator && <TodayIndicator left={todayPosition} />}</Line>
       </LineContainer>
     </Box>
   )
