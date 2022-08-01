@@ -4,13 +4,7 @@ import { useAssignVirtualAccount } from 'app/pages/accounts/pages/banks/hooks/us
 import { Form } from 'components/form/Form'
 import React, { useState } from 'react'
 
-interface AutoAssignVirtualAccountFormProps {
-  isAdditional?: boolean
-}
-
-export const AutoAssignVirtualAccountForm = ({
-  isAdditional = false
-}: AutoAssignVirtualAccountFormProps) => {
+export const AutoAssignVirtualAccountForm = () => {
   const [open, setOpen] = useState<boolean>(false)
   const handleClose = () => {
     setOpen(false)
@@ -19,7 +13,7 @@ export const AutoAssignVirtualAccountForm = ({
     setOpen(true)
   }
   const [assignVirtualAccount, { isLoading, isSuccess }] =
-    useAssignVirtualAccount(handleClose, isAdditional)
+    useAssignVirtualAccount(handleClose)
   const handleSubmit = async (args: any) => {
     await assignVirtualAccount(args)
   }
@@ -31,7 +25,6 @@ export const AutoAssignVirtualAccountForm = ({
         onClose={handleClose}
         open={open}
         assigning={isLoading || isSuccess}
-        isAdditional={isAdditional}
       />
     </Form>
   )

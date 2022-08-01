@@ -3,12 +3,12 @@ import { useVirtualAccounts } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useStyles } from 'app/pages/accounts/pages/cash/components/NoCashButtons.styles'
 import { useAuth } from 'hooks/auth/useAuth'
 import React, { useState } from 'react'
-import { useAssignVirtualAccount } from '../../banks/hooks/useAssignVirtualAccount'
+import { useAssignVirtualAccount } from 'app/pages/accounts/pages/banks/hooks/useAssignVirtualAccount'
 import { AssignConfirmDialog } from './AutoAssignVirtualAccountForm/AssignConfirmDialog'
 
 export const NoCashButtons = () => {
   const classes = useStyles()
-  const { list: items, isLoading } = useVirtualAccounts()
+  const { data: items, isLoading } = useVirtualAccounts()
   const [selectedCurrency, setSelectedCurrency] = useState<'SGD' | 'USD'>('SGD')
   const [open, setOpen] = useState(false)
   const handleClose = () => setOpen(false)
@@ -39,15 +39,14 @@ export const NoCashButtons = () => {
     <>
       {missingAccounts.map(account => {
         return (
-          <>
-            <Button
-              className={classes.button}
-              fullWidth
-              onClick={() => onClick(account)}
-            >
-              Add {account} account
-            </Button>
-          </>
+          <Button
+            className={classes.button}
+            fullWidth
+            key={account}
+            onClick={() => onClick(account)}
+          >
+            Add {account} account
+          </Button>
         )
       })}
       <AssignConfirmDialog
