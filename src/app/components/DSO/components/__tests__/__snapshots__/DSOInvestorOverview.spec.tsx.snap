@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DSOInvestorOverview should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-3 css-144uxk9-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+          >
+            Total Units
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+          >
+            100000
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-3 css-144uxk9-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+          >
+            Total Fundraising Amount
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+          >
+            100000 token symbol
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-3 css-144uxk9-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+          >
+            Minimum Investment
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+          >
+            100.00 SGD
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-md-3 css-144uxk9-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+          >
+            Minimum Investment
+          </h6>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+        >
+          <h6
+            class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
+          >
+            100.00 token symbol
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

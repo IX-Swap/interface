@@ -1,8 +1,8 @@
 import React from 'react'
-import { Grid, Hidden, Typography } from '@mui/material'
-import { LabelledValue } from 'components/LabelledValue'
+import { Grid } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
-import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'
+import { OverviewValue } from 'app/pages/invest/components/MakeCommitment/OverviewValue'
+import { formatMoney } from 'helpers/numbers'
 
 export interface DSOInvestorOverviewProps {
   dso: DigitalSecurityOffering
@@ -10,74 +10,32 @@ export interface DSOInvestorOverviewProps {
 
 export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
   const { dso } = props
+  const totalUnits = (dso.totalFundraisingAmount ?? 0) / dso.pricePerUnit
+  const minimumTokenInvestment = (dso.minimumInvestment ?? 0) / dso.pricePerUnit
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={6} md={3}>
-        <LabelledValue
-          label='Network'
-          value={dso.network?.name}
-          labelColor='bright'
-          valueColor='#FFFFFF'
+        <OverviewValue label='Total Units' value={totalUnits ?? ''} />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <OverviewValue
+          label='Total Fundraising Amount'
+          value={`${dso.totalFundraisingAmount ?? ''} ${dso.tokenSymbol}` ?? ''}
         />
       </Grid>
       <Grid item xs={6} md={3}>
-        <LabelledValue
-          label='Decimal'
-          value={dso.decimals}
-          labelColor='bright'
-          valueColor='#FFFFFF'
+        <OverviewValue
+          label='Minimum Investment'
+          value={formatMoney(dso.minimumInvestment, dso.currency.symbol, true)}
         />
       </Grid>
       <Grid item xs={6} md={3}>
-        <LabelledValue
-          label='Capital Structure'
-          value={dso.capitalStructure}
-          labelColor='bright'
-          valueColor='#FFFFFF'
+        <OverviewValue
+          label='Minimum Investment'
+          value={formatMoney(minimumTokenInvestment, dso.tokenSymbol, true)}
         />
       </Grid>
-      <Grid item xs={6} md={3}>
-        <LabelledValue
-          label='Token Address'
-          labelColor='bright'
-          valueColor='#FFFFFF'
-          value={
-            <Typography
-              component='span'
-              noWrap
-              style={{ display: 'block', width: '100%' }}
-            >
-              {dso.deploymentInfo?.token ?? ''}
-            </Typography>
-          }
-        />
-      </Grid>
-      <Grid item xs={6} md={3}>
-        <LabelledValue
-          label='Launch Date'
-          value={dso.launchDate}
-          labelColor='bright'
-          valueColor='#FFFFFF'
-        />
-      </Grid>
-      <Grid item xs={6} md={3}>
-        <LabelledValue
-          label='Completion Date'
-          value={dso.completionDate}
-          labelColor='bright'
-          valueColor='#FFFFFF'
-        />
-      </Grid>
-      <Hidden lgUp>
-        <Grid item xs={12} container justifyContent='flex-end'>
-          <Grid item>
-            <Grid item>
-              <DSOInvestButton dso={dso} />
-            </Grid>
-          </Grid>
-        </Grid>
-      </Hidden>
     </Grid>
   )
 }

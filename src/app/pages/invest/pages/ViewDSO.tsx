@@ -3,7 +3,7 @@ import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useParams } from 'react-router-dom'
 import { DSOInvestorView } from 'app/components/DSO/components/DSOInvestorView'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Grid } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 import { RootContainer } from 'ui/RootContainer'
 
 export const ViewDSO = () => {
@@ -15,15 +15,17 @@ export const ViewDSO = () => {
   }
 
   return (
-    <Grid container spacing={3} style={{ display: 'table' }}>
-      <Grid item xs={12}>
-        <PageHeader title={data.tokenName} />
+    <Box width='100%'>
+      <Grid container spacing={0}>
+        <Grid item xs={12}>
+          <PageHeader title='Digital Security Offering' />
+        </Grid>
+        <Grid item xs={12}>
+          <RootContainer>
+            <DSOInvestorView dso={data} />
+          </RootContainer>
+        </Grid>
       </Grid>
-      <Grid item xs={12} pl={3}>
-        <RootContainer>
-          <DSOInvestorView dso={data} />
-        </RootContainer>
-      </Grid>
-    </Grid>
+    </Box>
   )
 }

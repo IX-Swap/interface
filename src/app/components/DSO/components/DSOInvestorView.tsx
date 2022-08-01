@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import { DSOInvestorViewHeader } from 'app/components/DSO/components/DSOInvestorViewHeader'
 import { DigitalSecurityOffering } from 'types/dso'
 import { Tabs, Tab, Grid, Box } from '@mui/material'
@@ -21,63 +21,67 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
   const isDSOFAQsVisible = dso.faqs !== undefined && dso.faqs.length > 0
 
   return (
-    <Fragment>
-      <DSOInvestorViewHeader dso={dso} />
-
-      <Tabs
-        value={selectedIdx}
-        onChange={(_, index) => setSelectedIdx(index)}
-        indicatorColor='primary'
-        textColor='primary'
-      >
-        <Tab label='Overview' />
-        <Tab label='Information' />
-        <Tab label='Documents' />
-        {isDSOVideosVisible ? <Tab label='Videos' /> : null}
-        {isDSOFAQsVisible ? <Tab label='FAQs' /> : null}
-      </Tabs>
-
-      <TabPanel value={selectedIdx} index={0}>
-        <Grid container spacing={9} pl={3}>
-          <Grid item xs={12}>
-            <DSOPricingViewCompact dso={dso} />
-          </Grid>
-
-          {dso.isCampaign !== true && (
-            <Grid item xs={12} pl={3}>
-              <DSOTermsViewCompact dso={dso} />
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <DSOInvestorViewHeader dso={dso} />
+      </Grid>
+      <Grid item xs={12}>
+        <Tabs
+          value={selectedIdx}
+          onChange={(_, index) => setSelectedIdx(index)}
+          indicatorColor='primary'
+          textColor='primary'
+        >
+          <Tab label='Overview' />
+          <Tab label='Information' />
+          <Tab label='Documents' />
+          {isDSOVideosVisible ? <Tab label='Videos' /> : null}
+          {isDSOFAQsVisible ? <Tab label='FAQs' /> : null}
+        </Tabs>
+      </Grid>
+      <Grid item xs={12}>
+        <TabPanel value={selectedIdx} index={0}>
+          <Grid container spacing={9} pl={3}>
+            <Grid item xs={12}>
+              <DSOPricingViewCompact dso={dso} />
             </Grid>
-          )}
-        </Grid>
-      </TabPanel>
 
-      <TabPanel value={selectedIdx} index={1}>
-        <Box pl={3}>
-          <DSOInvestorInformationView dso={dso} />
-        </Box>
-      </TabPanel>
+            {dso.isCampaign !== true && (
+              <Grid item xs={12} pl={3}>
+                <DSOTermsViewCompact dso={dso} />
+              </Grid>
+            )}
+          </Grid>
+        </TabPanel>
 
-      <TabPanel value={selectedIdx} index={2}>
-        <Box pl={3}>
-          <DSODataroomView dso={dso} showTitle={false} />
-        </Box>
-      </TabPanel>
-
-      {isDSOVideosVisible ? (
-        <TabPanel value={selectedIdx} index={3}>
+        <TabPanel value={selectedIdx} index={1}>
           <Box pl={3}>
-            <DSOVideoLinksView dso={dso} />
+            <DSOInvestorInformationView dso={dso} />
           </Box>
         </TabPanel>
-      ) : null}
 
-      {isDSOFAQsVisible ? (
-        <TabPanel value={selectedIdx} index={4}>
+        <TabPanel value={selectedIdx} index={2}>
           <Box pl={3}>
-            <DSOFAQsView dso={dso} isTitleVisible isNewThemeOn />
+            <DSODataroomView dso={dso} showTitle={false} />
           </Box>
         </TabPanel>
-      ) : null}
-    </Fragment>
+
+        {isDSOVideosVisible ? (
+          <TabPanel value={selectedIdx} index={3}>
+            <Box pl={3}>
+              <DSOVideoLinksView dso={dso} />
+            </Box>
+          </TabPanel>
+        ) : null}
+
+        {isDSOFAQsVisible ? (
+          <TabPanel value={selectedIdx} index={4}>
+            <Box pl={3}>
+              <DSOFAQsView dso={dso} isTitleVisible isNewThemeOn />
+            </Box>
+          </TabPanel>
+        ) : null}
+      </Grid>
+    </Grid>
   )
 }
