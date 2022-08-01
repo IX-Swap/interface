@@ -2,16 +2,26 @@ import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { ReactComponent as MoonIcon } from './image/moon.svg'
 
-export const NoOffers = () => (
+export interface NoOffersProps {
+  forTable?: boolean
+}
+
+export const NoOffers = ({ forTable = false }: NoOffersProps) => (
   <Grid
     container
     justifyContent={'center'}
     alignItems={'center'}
     direction={'column'}
     sx={theme => ({
-      border: `1px dashed ${theme.palette.button.borderOutlined}`,
+      border: forTable
+        ? 'none'
+        : `1px dashed ${theme.palette.button.borderOutlined}`,
       py: theme.spacing(3),
-      borderRadius: 2
+      borderTopRightRadius: forTable ? 0 : 8,
+      borderTopLeftRadius: forTable ? 0 : 8,
+      borderBottomRightRadius: 8,
+      borderBottomLeftRadius: 8,
+      backgroundColor: forTable ? theme.palette.background.paper : 'transparent'
     })}
   >
     <Grid item>

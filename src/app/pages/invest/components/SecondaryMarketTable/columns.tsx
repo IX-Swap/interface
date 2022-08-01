@@ -1,8 +1,11 @@
-import { formatMoney } from 'helpers/numbers'
-import { TableColumn } from 'types/util'
-// import { getUserNameById } from 'helpers/tables'
 import React from 'react'
 import { Box } from '@mui/material'
+import { TableColumn } from 'types/util'
+import { formatMoney } from 'helpers/numbers'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { ReactComponent as SortActiveIcon } from './icons/sort_active.svg'
+import { ReactComponent as SortDefaultIcon } from './icons/sort_default.svg'
 
 export interface Order {
   createdAt: string
@@ -12,6 +15,49 @@ export interface Order {
   amount: number
   total: number
   filled: number
+}
+
+const PriceLabelWithSort = () => {
+  const { isTablet } = useAppBreakpoints()
+  const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
+  const sortValue = getFilterValue('sortBy')
+  const onClick = () => {
+    switch (sortValue) {
+      case undefined:
+        updateFilter('sortBy', 'DESC')
+        break
+      case 'DESC':
+        updateFilter('sortBy', 'ASC')
+        break
+      default:
+        removeFilter('sortBy')
+        break
+    }
+  }
+
+  if (isTablet) {
+    return <>Price</>
+  }
+
+  return (
+    <Box
+      onClick={onClick}
+      display={'flex'}
+      alignItems={'center'}
+      style={{ cursor: 'pointer', userSelect: 'none' }}
+    >
+      Price
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        style={{
+          transform: `rotate(${sortValue === 'ASC' ? 0 : '180deg'})`
+        }}
+      >
+        {sortValue === undefined ? <SortDefaultIcon /> : <SortActiveIcon />}
+      </Box>
+    </Box>
+  )
 }
 
 export const columns: Array<TableColumn<any>> = [
@@ -32,19 +78,19 @@ export const columns: Array<TableColumn<any>> = [
     label: 'Issued By',
     align: 'left',
     headAlign: 'left',
-    // TODO Should add real createdBy name value from backend api
-    // render: (_, value) => getUserNameById(value.listing.createdBy)
-    render: (_, value) => 'Alexandr Polchevsky'
+    render: (_, value) => value.listing.user.name
   },
 
   {
-    key: 'listing.minimumTradeUnits',
-    label: 'Price',
+    key: 'latestPrice',
+    label: <PriceLabelWithSort />,
     align: 'left',
     headAlign: 'left',
-    // TODO Should add real currency value from backend api
-    render: (_, value) =>
-      formatMoney(value.listing.minimumTradeUnits, 'SGD', true)
+    render: (value, item) => (
+      <Box width={'100%'} height={'100%'}>
+        {formatMoney(value, item.name.split('/')[1], true)}
+      </Box>
+    )
   },
   {
     key: 'listing.marketType',

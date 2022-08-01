@@ -8,7 +8,7 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { Launch as LaunchIcon } from '@mui/icons-material'
 import { history } from 'config/history'
 import { generatePath } from 'react-router-dom'
-import { ReactComponent as TradeIcon } from './trade-icon.svg'
+import { ReactComponent as TradeIcon } from 'app/pages/invest/components/SecondaryMarketTable/icons/trade-icon.svg'
 
 export interface MobileMenuProps {
   items: any[]

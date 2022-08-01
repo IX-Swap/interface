@@ -36,7 +36,6 @@ export default makeStyles(theme => {
         backgroundColor: tablePalette.rowBg,
         color: tablePalette.color,
         fontSize: 14,
-        whiteSpace: 'nowrap',
 
         '&:first-of-type': {
           paddingLeft: ({ size }: Props) => (size === 'small' ? 16 : 30)

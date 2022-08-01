@@ -55,6 +55,7 @@ export interface TableViewProps<T> {
   noHeader?: boolean
   paginationPlacement?: 'top' | 'bottom'
   labelRowsPerPage?: React.ReactNode
+  activeSortLabel?: string
 }
 
 export const TableView = <T,>({
@@ -77,7 +78,8 @@ export const TableView = <T,>({
   actionHeader = '',
   noHeader = false,
   paginationPlacement = 'bottom',
-  labelRowsPerPage
+  labelRowsPerPage,
+  activeSortLabel
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -249,6 +251,7 @@ export const TableView = <T,>({
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
                   isLoading={isLoading}
+                  activeSortLabel={activeSortLabel}
                   noDataComponent={noDataComponent}
                 />
               )}

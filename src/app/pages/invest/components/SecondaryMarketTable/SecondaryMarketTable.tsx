@@ -15,7 +15,6 @@ import {
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { useOutlinedInputStyles } from 'app/pages/invest/components/OverviwPageFilters'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
 import { SecondaryMarketList } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketList'
 import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
@@ -23,22 +22,11 @@ import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWra
 export const SecondaryMarketTable = () => {
   const outlinedInputClasses = useOutlinedInputStyles()
   const theme = useTheme()
-  const { isMobile, isMiniLaptop } = useAppBreakpoints()
+  const { isMobile, isTablet } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
+  const sortBy = getFilterValue('sortBy')
   const secondaryMarketSearch = getFilterValue('secondaryMarketSearch')
-
-  const { items, isLoading } = useTableWithPagination({
-    queryKey: exchangeQueryKeys.marketList,
-    uri: exchangeURL.marketList,
-    defaultFilter: { listingKeyword: search ?? secondaryMarketSearch } as any,
-    queryEnabled: true,
-    defaultRowsPerPage: undefined
-  })
-
-  if (!isLoading && items.length < 1) {
-    return <NoOffers />
-  }
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -81,27 +69,31 @@ export const SecondaryMarketTable = () => {
           </Button>
         </Grid>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          overflowX: { xs: 'initial', lg: 'scroll' },
-          // overflowX: 'scroll',
-          maxWidth: '100%'
-        }}
-      >
+      <Grid item xs={12}>
         <ActiveElementContextWrapper>
           <TableView
+            noDataComponent={<NoOffers forTable />}
             uri={exchangeURL.marketList}
             name={exchangeQueryKeys.marketList}
             columns={columns}
             actions={Actions}
-            filter={{ listingKeyword: search ?? secondaryMarketSearch } as any}
+            filter={
+              sortBy !== undefined
+                ? ({
+                    listingKeyword: search ?? secondaryMarketSearch,
+                    sortField: 'lastPrice',
+                    sortBy: sortBy
+                  } as any)
+                : {
+                    listingKeyword: search ?? secondaryMarketSearch
+                  }
+            }
             actionHeader={'Actions'}
-            noHeader={isMiniLaptop}
-            paginationPlacement={isMiniLaptop ? 'top' : 'bottom'}
+            noHeader={isTablet}
+            activeSortLabel={sortBy !== undefined ? 'latestPrice' : undefined}
+            paginationPlacement={isTablet ? 'top' : 'bottom'}
           >
-            {isMiniLaptop
+            {isTablet
               ? (props: TableViewRendererProps<any>) => (
                   <SecondaryMarketList {...props} columns={columns} />
                 )

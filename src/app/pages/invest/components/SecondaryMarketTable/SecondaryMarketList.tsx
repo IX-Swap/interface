@@ -8,6 +8,8 @@ import { TableColumn } from 'types/util'
 import { Icon } from 'ui/Icons/Icon'
 import { TableViewRendererProps } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { MobileMenu } from 'app/pages/invest/components/SecondaryMarketTable/MobileMenu'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { useQueryCache } from 'react-query'
 
 export interface CompactBodyProps<T> extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
@@ -27,7 +29,8 @@ export const renderCell = ({ render, key, item }: RenderCellProps) => {
 }
 
 export const SecondaryMarketList = (props: CompactBodyProps<any>) => {
-  const { columns, items } = props
+  const queryCache = useQueryCache()
+  const { columns, items, cacheQueryKey } = props
 
   const classes = useStyles()
   const context = useContext(ActiveElementContext)
@@ -36,20 +39,17 @@ export const SecondaryMarketList = (props: CompactBodyProps<any>) => {
     context?.toggleRow(item._id)
   }
 
+  if (
+    queryCache.watchQuery(cacheQueryKey).getCurrentResult().status === 'loading'
+  ) {
+    return null
+  }
+
+  if (items.length < 1) {
+    return <NoOffers />
+  }
+
   return (
-    // <Grid
-    //   container
-    //   sx={{
-    //     gridTemplateColumns: {
-    //       sx: '1fr',
-    //       sm: '1fr 1fr',
-    //       md: '1fr 1fr 1fr'
-    //     }
-    //     // width: 'calc(100vw - 32px)'
-    //   }}
-    //   display={'grid'}
-    //   gap={2}
-    // >
     <>
       <TableBody>
         {items.map((item, i) => (
@@ -150,7 +150,6 @@ export const SecondaryMarketList = (props: CompactBodyProps<any>) => {
         ))}
       </TableBody>
       <MobileMenu items={items} />
-      {/* // </Grid> */}
     </>
   )
 }
