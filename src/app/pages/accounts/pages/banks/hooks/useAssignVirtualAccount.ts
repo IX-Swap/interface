@@ -6,10 +6,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 
-export const useAssignVirtualAccount = (
-  callback?: () => void,
-  isAdditional: boolean | undefined = false
-) => {
+export const useAssignVirtualAccount = (callback?: () => void) => {
   const queryCache = useQueryCache()
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
@@ -26,7 +23,7 @@ export const useAssignVirtualAccount = (
   return useMutation(assignVirtualAccount, {
     onSuccess: async () => {
       callback?.()
-      void snackbarService.showSnackbar(
+      snackbarService.showSnackbar(
         'Request to add a new account sent',
         'success'
       )
@@ -36,7 +33,7 @@ export const useAssignVirtualAccount = (
       )
     },
     onError: async (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
       callback?.()
     }
   })

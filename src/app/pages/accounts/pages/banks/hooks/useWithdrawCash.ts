@@ -32,8 +32,8 @@ export const useWithdrawCash = () => {
   }
 
   return useMutation(withdrawCash, {
-    onSuccess: data => {
-      void snackbarService.showSnackbar(
+    onSuccess: () => {
+      snackbarService.showSnackbar(
         'Withdrawal sent to authorizer, wait for approval',
         'success'
       )
@@ -46,7 +46,7 @@ export const useWithdrawCash = () => {
       ])
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }
