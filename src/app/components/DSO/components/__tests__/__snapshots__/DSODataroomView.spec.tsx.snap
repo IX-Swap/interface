@@ -3,78 +3,82 @@
 exports[`DSODataroomView matches snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-5 css-1ld3b9g-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-    >
-      <h5
-        class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
-      >
-        Subscription Document
-      </h5>
-    </div>
-    <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 css-9llw25-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-grid-xs-12 css-1xu5l1n-MuiGrid-root"
     >
       <div
         class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
       >
+        <h5
+          class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+        >
+          Subscription Document
+        </h5>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1 MuiGrid-grid-xs-12 css-9llw25-MuiGrid-root"
+      >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-10h8c1q-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-10h8c1q-MuiGrid-root"
           >
             <div
-              class=" MuiBox-root css-1r25d6u"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiBox-root css-70qvj9"
+                class=" MuiBox-root css-1r25d6u"
               >
-                <button
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-1ncx06u-MuiButtonBase-root-MuiIconButton-root"
-                  tabindex="0"
-                  type="button"
+                <div
+                  class="MuiBox-root css-70qvj9"
                 >
-                  <svg
-                    class="css-1s8o7ec"
-                    fill="#778194"
-                    height="24px"
-                    width="24px"
+                  <button
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeLarge css-1ncx06u-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
                   >
-                    <use
-                      href="image-mock#eye"
+                    <svg
+                      class="css-1s8o7ec"
+                      fill="#778194"
+                      height="24px"
+                      width="24px"
+                    >
+                      <use
+                        href="image-mock#eye"
+                      />
+                    </svg>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                     />
-                  </svg>
-                  <span
-                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
-                </button>
-                <p
-                  class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
-                >
-                  File name
-                </p>
-              </div>
-              <div
-                class="MuiBox-root css-15aqakd"
-              />
-              <div
-                class="MuiBox-root css-16mkun2"
-              >
-                <span
-                  aria-valuemax="100"
-                  aria-valuemin="0"
-                  aria-valuenow="0"
-                  class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
-                  role="progressbar"
+                  </button>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                  >
+                    File name
+                  </p>
+                </div>
+                <div
+                  class="MuiBox-root css-15aqakd"
+                />
+                <div
+                  class="MuiBox-root css-16mkun2"
                 >
                   <span
-                    class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
-                    style="transform: translateX(-100%);"
-                  />
-                </span>
+                    aria-valuemax="100"
+                    aria-valuemin="0"
+                    aria-valuenow="0"
+                    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                    role="progressbar"
+                  >
+                    <span
+                      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                      style="transform: translateX(-100%);"
+                    />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
