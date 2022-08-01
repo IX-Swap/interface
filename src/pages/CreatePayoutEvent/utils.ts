@@ -28,6 +28,7 @@ export interface FormValues {
 export const availableInputsForEdit = (status = '', paid = false) => {
   const availableForEditing = {
     [PAYOUT_STATUS.DRAFT]: [
+      'id',
       'title',
       'description',
       'type',
@@ -57,7 +58,7 @@ export const availableInputsForEdit = (status = '', paid = false) => {
     [PAYOUT_STATUS.ENDED]: [],
   } as Record<string, string[]>
 
-  if (paid) return ['title', 'description', 'endDate', 'files']
+  if (paid) return ['id', 'title', 'description', 'endDate', 'files']
 
   return availableForEditing[status] || availableForEditing[PAYOUT_STATUS.DRAFT]
 }

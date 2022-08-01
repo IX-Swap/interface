@@ -87,7 +87,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
 
   const handleFormSubmit = async (values: any) => {
     const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
-      if (availableForEditing.includes(key) || key === 'secToken') {
+      if (availableForEditing.includes(key)) {
         acc[key] = next
       }
       return acc
