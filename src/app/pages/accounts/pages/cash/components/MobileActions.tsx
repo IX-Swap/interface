@@ -5,11 +5,7 @@ import { ReactComponent as WithdrawIcon } from 'assets/icons/withdraw.svg'
 import { isNullish } from 'helpers/numbers'
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-import { ConvertedAssetBalance } from 'types/balance'
-
-export interface ActionsProps {
-  item: ConvertedAssetBalance
-}
+import { ActionsProps } from './Actions'
 
 export const MobileActions = ({ item }: ActionsProps) => {
   const account = item.accountNumber
