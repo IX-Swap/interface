@@ -100,7 +100,7 @@ exports[`CompactTable compact table matches snapshot 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
           >
             <button
-              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-fullWidth MuiButtonBase-root makeStyles-iconButton-6 css-ns7bdg-MuiButtonBase-root-MuiButton-root"
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-fullWidth MuiButtonBase-root makeStyles-iconButton-7 css-ns7bdg-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
