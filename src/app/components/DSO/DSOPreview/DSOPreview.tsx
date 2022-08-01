@@ -100,7 +100,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
             <Element name={DSOFormSection.Documents}>
               <VSpacer size='large' />
-              <DSODataroomView dso={data} isNewThemeOn />
+              <DSODataroomView dso={data} />
             </Element>
 
             {renderVideosFormSection()}

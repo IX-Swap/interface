@@ -26,13 +26,13 @@ describe('DSODataroomView', () => {
   })
 
   it('renders title when showTitle is false', () => {
-    render(<DSODataroomView dso={dso} showTitle={false} />)
+    render(<DSODataroomView dso={dso} />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(0)
   })
 
   it('renders title when showTitle is true', () => {
-    render(<DSODataroomView dso={dso} showTitle />)
+    render(<DSODataroomView dso={dso} />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(1)
   })
