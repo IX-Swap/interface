@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { t } from '@lingui/macro'
 import dayjs from 'dayjs'
+import { Flex } from 'rebass'
 
 import { MultipleFilters } from 'components/MultipleFilters'
 import { FILTERS } from 'components/MultipleFilters/constants'
@@ -17,10 +18,10 @@ import { PayoutHistory } from 'state/token-manager/types'
 import { PAYOUT_TYPE_LABEL } from 'components/TmPayoutEvents/constants'
 import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
-
-import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+
+import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, ViewBtn } from './styleds'
 
 const headerCells = [
   t`Recipient's wallet`,
@@ -67,14 +68,14 @@ export const TmPayoutHistory = () => {
             forManager
           />
           {payoutHistory.items?.length ? (
-            <>
+            <Flex flexDirection="column" style={{ gap: 32 }}>
               <Table body={<Body items={payoutHistory.items} />} header={<Header />} />
               <Pagination
                 totalPages={payoutHistory.totalPages}
                 page={payoutHistory.page || 1}
                 onPageChange={onPageChange}
               />
-            </>
+            </Flex>
           ) : (
             <TmEmptyPage tab="payout-history" filtred />
           )}
@@ -116,7 +117,7 @@ const Row = ({ item }: IRow) => {
       <div>{dayjs(createdAt).format('MMM DD, YYYY - HH:mm')}</div>
       <div style={{ fontWeight: 500 }}>
         <CurrencyLogo currency={token} style={{ marginRight: 4 }} size="24px" />
-        {token?.symbol || '-'}&nbsp;{sum}
+        {token?.symbol || '-'}&nbsp;{Number(sum).toFixed(4)}
       </div>
 
       <div>

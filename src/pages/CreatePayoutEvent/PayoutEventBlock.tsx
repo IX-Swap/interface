@@ -30,6 +30,7 @@ import { PayoutType } from './PayoutType'
 import { PublishPayoutModal } from './PublishPayoutModal'
 
 import { FormCard, ButtonsContainer } from './styleds'
+import { MouseoverTooltip } from 'components/Tooltip'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
@@ -265,9 +266,18 @@ export const PayoutEventBlock: FC<Props> = ({
           </ButtonIXSGradient>
         ) : (
           !paid && (
-            <ButtonIXSGradient type="button" onClick={open}>
-              <Trans>Pay for this event</Trans>
-            </ButtonIXSGradient>
+            <MouseoverTooltip
+              text={
+                isRecordFuture
+                  ? t`Pay for this event after the wrapped token amount will become available on the selected record date.`
+                  : ''
+              }
+              placement="top"
+            >
+              <ButtonIXSGradient type="button" onClick={open} disabled={isRecordFuture}>
+                <Trans>Pay for this event</Trans>
+              </ButtonIXSGradient>
+            </MouseoverTooltip>
           )
         )}
       </ButtonsContainer>
