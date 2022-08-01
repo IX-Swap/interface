@@ -1,7 +1,6 @@
 import { Box } from '@mui/material'
 import React from 'react'
 import { DataroomFile } from 'types/dataroomFile'
-import { Download } from 'ui/FileUpload/Download'
 import { RemoveButton } from 'ui/FileUpload/RemoveButton'
 
 export interface ActionsProps {
@@ -27,8 +26,6 @@ export const Actions = ({
       {!readonly && (
         <RemoveButton name={name} setCompleted={setCompleted} remove={remove} />
       )}
-
-      <Download documentId={document._id} name={originalName} />
     </Box>
   )
 }

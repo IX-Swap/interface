@@ -1,158 +1,61 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
-import { DataroomHeader } from 'components/dataroom/DataroomHeader'
-import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { DigitalSecurityOffering } from 'types/dso'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { VSpacer } from 'components/VSpacer'
-import useStyles from 'app/components/DSO/components/styles'
+import { Documents } from 'app/pages/identity/components/CorporateIdentityView/Documents'
 
 export interface DSODataroomViewProps {
   dso: DigitalSecurityOffering
-  showTitle?: boolean
-  isNewThemeOn?: boolean
 }
 
-export const DSODataroomView = (props: DSODataroomViewProps) => {
-  const classes = useStyles()
-  const { dso, showTitle = true, isNewThemeOn = false } = props
+export const DSODataroomView = ({ dso }: DSODataroomViewProps) => {
+  const supportingDocuments = dso.documents.filter(
+    doc => Object.values(doc).length > 0 && doc.type === 'Supporting Document'
+  )
 
-  const renderSubscriptionDocumentTitle = () => {
-    return (
-      <Grid item>
-        <Typography variant='h5'>Subscription Document</Typography>
-      </Grid>
-    )
-  }
-
-  const renderSubscriptionDocument = () => {
-    return (
-      <Grid item>
-        {dso.subscriptionDocument !== undefined ? (
-          <Fragment>
-            <DataroomHeader />
-            <DataroomViewRow
-              key={dso.subscriptionDocument?._id}
-              title='Subscription Document'
-              document={dso.subscriptionDocument}
-              showDivider={showTitle}
-              downloader={
-                <DownloadDSODocument
-                  dsoId={dso._id}
-                  type={'subscriptionDocument'}
-                  documentId={dso.subscriptionDocument?._id}
-                  name={dso.subscriptionDocument?.originalFileName}
-                />
-              }
-            />
-          </Fragment>
-        ) : (
-          <Typography>No subscription document provided</Typography>
-        )}
-      </Grid>
-    )
-  }
-
-  const renderDataroomTitle = () => {
-    return (
-      <Grid item>
-        <Typography variant='h5'>Dataroom</Typography>
-      </Grid>
-    )
-  }
-
-  const renderDataroom = () => {
-    return (
-      <Grid item>
-        {dso.documents.length > 0 ? (
-          <Fragment>
-            <DataroomHeader />
-            {dso.documents?.map(document => (
-              <DataroomViewRow
-                key={document._id}
-                title={document.type}
-                document={document}
-                showDivider={showTitle}
-                downloader={
-                  <DownloadDSODocument
-                    dsoId={dso._id}
-                    documentId={document._id}
-                    name={document.originalFileName}
-                  />
-                }
-              />
-            ))}
-          </Fragment>
-        ) : (
-          <Typography>No documents uploaded</Typography>
-        )}
-      </Grid>
-    )
-  }
+  const otherDocuments = dso.documents.filter(
+    doc => Object.values(doc).length > 0 && doc.type === 'Other'
+  )
 
   return (
-    <Grid
-      container
-      direction='column'
-      spacing={3}
-      className={isNewThemeOn ? classes.newDSOViewItemStyles : ''}
-    >
-      {showTitle && (
-        <Grid item>
-          <FormSectionHeader title='Documents' />
-        </Grid>
+    <Grid container spacing={3}>
+      {dso.subscriptionDocument !== undefined && (
+        <>
+          <Grid item xs={12}>
+            <Typography variant='h5'>Subscription Document</Typography>
+          </Grid>
+          <Grid item xs={12} container spacing={1}>
+            <Grid item xs={12}>
+              <Documents documents={[dso.subscriptionDocument]} />
+            </Grid>
+          </Grid>
+        </>
       )}
 
-      {showTitle ? renderSubscriptionDocumentTitle() : null}
-      {showTitle ? renderSubscriptionDocument() : null}
-
-      {!showTitle ? (
-        <Grid
-          item
-          container
-          direction={'column'}
-          className={classes.newDSOViewItemStyles}
-        >
-          <Grid item>
-            <Typography
-              variant={'h4'}
-              color={'primary'}
-              style={{ fontWeight: 700 }}
-            >
-              Subscription Document
-            </Typography>
-            <VSpacer size={'small'} />
+      {supportingDocuments.length > 0 && (
+        <>
+          <Grid item xs={12}>
+            <Typography variant='h5'>Supporting Documents</Typography>
           </Grid>
-          {renderSubscriptionDocument()}
-        </Grid>
-      ) : null}
-
-      {!showTitle ? <VSpacer size={'medium'} /> : null}
-
-      {showTitle ? renderDataroomTitle() : null}
-      {showTitle ? renderDataroom() : null}
-
-      {!showTitle ? (
-        <Grid
-          item
-          container
-          direction={'column'}
-          className={classes.newDSOViewItemStyles}
-        >
-          <Grid item>
-            <Typography
-              variant={'h4'}
-              color={'primary'}
-              style={{ fontWeight: 700 }}
-            >
-              Dataroom
-            </Typography>
-            <VSpacer size={'small'} />
+          <Grid item xs={12} container spacing={1}>
+            <Grid item xs={12}>
+              <Documents documents={supportingDocuments} />
+            </Grid>
           </Grid>
-          {renderDataroom()}
-        </Grid>
-      ) : null}
+        </>
+      )}
+
+      {otherDocuments.length > 0 && (
+        <>
+          <Grid item xs={12}>
+            <Typography variant='h5'>Other Documents</Typography>
+          </Grid>
+          <Grid item xs={12} container spacing={1}>
+            <Grid item xs={12}>
+              <Documents documents={otherDocuments} />
+            </Grid>
+          </Grid>
+        </>
+      )}
     </Grid>
   )
 }
