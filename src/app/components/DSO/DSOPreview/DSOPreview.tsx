@@ -53,7 +53,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
     return (
       <Element name={DSOFormSection.Videos}>
         <VSpacer size='large' />
-        <DSOVideoLinksView dso={data} isTitleVisible />
+        <DSOVideoLinksView dso={data} />
       </Element>
     )
   }
