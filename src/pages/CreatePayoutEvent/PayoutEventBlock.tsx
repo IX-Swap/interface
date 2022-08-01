@@ -143,8 +143,9 @@ export const PayoutEventBlock: FC<Props> = ({
       <Box marginBottom="20px">
         <FormGrid style={{ marginBottom: 8 }}>
           <Select
+            addCustom
             label="Payout Token"
-            placeholder="Select token"
+            placeholder="Select token or paste address"
             selectedItem={token}
             items={tokensOptions}
             onSelect={(item) => onValueChange('token', item)}
