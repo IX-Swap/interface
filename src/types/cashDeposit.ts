@@ -18,5 +18,7 @@ export interface CashDeposit extends AuthorizableWithIdentity {
   updatedAt: string
   individual: IndividualIdentity
   corporates: CorporateIdentity[]
+  type: string
+  currency?: string
   bankAccount?: Bank
 }
