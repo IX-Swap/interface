@@ -7,7 +7,8 @@ import { PAYOUT_STATUS } from 'constants/enums'
 
 import { TodayIndicator } from './TodayIndicator'
 import { TimelineDate } from './TimelineDate'
-import { isSameDay, isBefore, isAfter } from '../utils'
+import { isSameDay, isSameOrBefore, isSameOrAfter, isBefore } from '../utils'
+import { MEDIA_WIDTHS } from 'theme'
 
 interface Props {
   payout: PayoutEvent
@@ -21,32 +22,52 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
     [recordDate, startDate, endDate]
   )
 
+  const isTodayStartDate = useMemo(() => isSameDay(startDate), [startDate])
+
+  const needFake = useMemo(() => {
+    return isBefore(recordDate)
+  }, [recordDate])
+
   const todayPosition = useMemo(() => {
-    if (isBefore(recordDate)) return '0px'
-    if (!endDate && recordDate && startDate) return '50%'
-    if (isAfter(recordDate) && isBefore(startDate)) return '26%'
-    if (isAfter(startDate) && isBefore(endDate)) return '75%'
-  }, [recordDate, startDate, endDate])
+    if (needFake) return '0%'
+    if (isSameDay(recordDate)) {
+      return '0%'
+    }
+    if (isSameDay(startDate)) {
+      return '50%'
+    }
+    if (isSameDay(endDate)) {
+      return '100%'
+    }
+    if (isSameOrAfter(recordDate) && isSameOrBefore(startDate)) return '25%'
+    if (isSameOrAfter(startDate) && isSameOrBefore(endDate)) return `75%`
+  }, [recordDate, startDate, endDate, needFake])
 
   const hideTodayIndicator = [PAYOUT_STATUS.DELAYED, PAYOUT_STATUS.ENDED].includes(status)
 
   return (
     <Box style={{ marginTop: 24, padding: '0px 36px' }}>
       <LineContainer>
-        {todayPosition === '0px' && <FakeFirstButton />}
-        {recordDate && <TimelineDate date={recordDate} label="Record Date" hideTodayIndicator={hideTodayIndicator} />}
+        {needFake && <FakeFirstButton />}
+        {recordDate && (
+          <TimelineDate withBackground={isSameOrAfter(recordDate)} date={recordDate} label="Record Date" />
+        )}
         {startDate && (
-          <TimelineDate date={startDate} label="Payment Start Date" hideTodayIndicator={hideTodayIndicator} />
+          <TimelineDate withBackground={isSameOrAfter(startDate)} date={startDate} label="Payment Start Date" />
         )}
         {endDate && (
           <TimelineDate
-            withBackground={false}
+            withBackground={isSameOrAfter(endDate)}
+            ended={status === PAYOUT_STATUS.ENDED}
             date={endDate}
             label="Payment Deadline"
-            hideTodayIndicator={hideTodayIndicator}
           />
         )}
-        <Line>{!todayActionDate && !hideTodayIndicator && <TodayIndicator left={todayPosition} />}</Line>
+        <Line>
+          {!hideTodayIndicator && (
+            <TodayIndicator offset={todayPosition} overlay={todayActionDate} isTodayStartDate={isTodayStartDate} />
+          )}
+        </Line>
       </LineContainer>
     </Box>
   )
@@ -59,13 +80,22 @@ const LineContainer = styled.div`
   position: relative;
   height: 34px;
   pointer-events: none;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: column;
+    height: 320px;
+  }
 `
 
 const Line = styled.div`
   position: absolute;
   height: 2px;
-  width: calc(100% - 12px);
+  width: 100%;
   background-color: ${({ theme }) => theme.text2};
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: column;
+    height: 320px;
+    width: 2px;
+  }
 `
 
 const FakeFirstButton = styled.div`

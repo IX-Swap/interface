@@ -8,7 +8,7 @@ import { capitalize } from '@material-ui/core'
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { CopyAddress } from 'components/CopyAddress'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { ExternalLink, TYPE } from 'theme'
+import { ExternalLink, MEDIA_WIDTHS, TYPE } from 'theme'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useUserState } from 'state/user/hooks'
@@ -16,7 +16,7 @@ import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
-import { momentFormatDate } from '../utils'
+import { formatDate } from '../utils'
 
 const headerCells = [t`Recipient's wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Status`, t`Transaction`]
 
@@ -91,7 +91,7 @@ const Row: FC<RowProps> = ({ item }) => {
         <Box marginX="4px">{currency?.symbol ?? '-'}</Box>
         <Box>{Number(sum).toFixed(4)}</Box>
       </Flex>
-      <div>{`${momentFormatDate(createdAt)} - ${dayjs(createdAt).format('HH')}:${dayjs(createdAt).format('mm')}`}</div>
+      <div>{`${formatDate(createdAt)} - ${dayjs(createdAt).format('HH:mm')}`}</div>
       <div>{capitalize(status || '-')}</div>
       <div style={{ textDecoration: 'underline' }}>
         <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>View</ExternalLink>
@@ -101,15 +101,22 @@ const Row: FC<RowProps> = ({ item }) => {
 }
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(4, 1fr) 200px;
-
+  min-width: 800px;
+  grid-template-columns: repeat(3, 1fr) 200px 200px;
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    grid-template-columns: repeat(3, 1fr) 100px 150px;
+  }
   > div:first-child {
     padding-left: 32px;
   }
 `
 
 const StyledBodyRow = styled(BodyRow)<{ isMyClaim?: boolean }>`
-  grid-template-columns: repeat(4, 1fr) 200px;
+  min-width: 800px;
+  grid-template-columns: repeat(3, 1fr) 200px 200px;
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    grid-template-columns: repeat(3, 1fr) 100px 150px;
+  }
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;

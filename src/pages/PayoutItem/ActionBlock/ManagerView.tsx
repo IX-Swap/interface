@@ -11,7 +11,7 @@ import { PayoutEvent } from 'state/token-manager/types'
 import { routes } from 'utils/routes'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
-import { momentFormatDate } from '../utils'
+import { formatDate } from '../utils'
 
 interface Props {
   payout: PayoutEvent
@@ -59,7 +59,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
             </Flex>
             <Flex>
               <Box marginRight="4px">{t`Users will be able to start claiming on`}</Box>
-              <Box fontWeight={600}>{momentFormatDate(dayjs(startDate))}</Box>
+              <Box fontWeight={600}>{formatDate(dayjs(startDate))}</Box>
             </Flex>
           </>
         )
@@ -102,7 +102,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
           </>
         )
       case PAYOUT_STATUS.ANNOUNCED:
-        return t`Your record date has not come yet, tokens will be counted on ${momentFormatDate(recordDate)}`
+        return t`Your record date has not come yet, tokens will be counted on ${formatDate(recordDate)}`
       default:
         return null
     }

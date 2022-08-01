@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 
 import { TYPE } from 'theme'
 
-import { isBefore, momentFormatDate } from 'pages/PayoutItem/utils'
+import { formatDate, isBefore } from 'pages/PayoutItem/utils'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 
@@ -169,7 +169,7 @@ export const PayoutEventBlock: FC<Props> = ({
         {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
-              {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${(
+              {t`Payout token computed as of ${formatDate(recordDate, 'LL')} at ${(
                 +tokenAmount / totalSecTokenSum
               ).toFixed(2)} ${token.label} per SEC token`}
             </TYPE.description2>
