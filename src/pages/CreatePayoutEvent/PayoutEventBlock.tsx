@@ -126,6 +126,8 @@ export const PayoutEventBlock: FC<Props> = ({
     onValueChange('files', arrayOfFiles)
   }
 
+  console.log('log => ', startDate ? (isBefore(dayjs(startDate)) ? 'start + 1' : 'today') : 'start + 2')
+
   return (
     <FormCard>
       <AreYouSureModal
@@ -195,7 +197,13 @@ export const PayoutEventBlock: FC<Props> = ({
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
-          minDate={startDate ? dayjs(startDate).add(1, 'days') : dayjs(new Date()).add(2, 'days')}
+          minDate={
+            startDate
+              ? isBefore(dayjs(startDate))
+                ? dayjs(startDate).add(1, 'days')
+                : dayjs()
+              : dayjs().add(2, 'days')
+          }
           openTo="date"
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
