@@ -14,6 +14,30 @@ export interface MobileMenuProps {
   items: any[]
 }
 
+export const getActionsPropsList = (selectedItem: any) => [
+  {
+    label: 'Learn More',
+    icon: <LaunchIcon color='disabled' />,
+    onClick: () =>
+      history.push(
+        generatePath(InvestRoute.viewListing, {
+          userId: selectedItem.listing.createdBy,
+          listingId: selectedItem.listing._id
+        })
+      )
+  },
+  {
+    label: 'Trade',
+    icon: <TradeIcon />,
+    onClick: () =>
+      history.push(
+        generatePath(InvestRoute.exchange, {
+          pairId: selectedItem._id
+        })
+      )
+  }
+]
+
 export const MobileMenu = (props: MobileMenuProps) => {
   const context = useContext(ActiveElementContext)
   const open = context?.hasOpenIndices
@@ -29,30 +53,6 @@ export const MobileMenu = (props: MobileMenuProps) => {
   if (selectedItem === undefined) {
     return null
   }
-
-  const actionsPropsList = [
-    {
-      label: 'Learn More',
-      icon: <LaunchIcon color='disabled' />,
-      onClick: () =>
-        history.push(
-          generatePath(InvestRoute.viewListing, {
-            userId: selectedItem.listing.createdBy,
-            listingId: selectedItem.listing._id
-          })
-        )
-    },
-    {
-      label: 'Trade',
-      icon: <TradeIcon />,
-      onClick: () =>
-        history.push(
-          generatePath(InvestRoute.exchange, {
-            pairId: selectedItem._id
-          })
-        )
-    }
-  ]
 
   const onClose = () => {
     if (openIndex !== undefined) {
@@ -83,8 +83,8 @@ export const MobileMenu = (props: MobileMenuProps) => {
           </Box>
           <Grid flexDirection='column'>
             <Grid display='flex' flexDirection={'column'} gap={2}>
-              {actionsPropsList.map(actionProps => (
-                <NewAction {...actionProps} />
+              {getActionsPropsList(selectedItem).map(actionProps => (
+                <NewAction {...actionProps} key={actionProps.label} />
               ))}
             </Grid>
             <Box mb={2} />
