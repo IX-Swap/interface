@@ -50,9 +50,7 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
             </TabPanel>
 
             <TabPanel value={selectedIdx} index={2} pt={0}>
-              <Box pl={3}>
-                <DSOVideoLinksView dso={dso} />
-              </Box>
+              <DSOVideoLinksView dso={dso} />
             </TabPanel>
 
             <TabPanel value={selectedIdx} index={3} pt={0}>
