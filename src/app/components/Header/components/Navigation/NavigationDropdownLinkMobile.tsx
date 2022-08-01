@@ -45,7 +45,6 @@ export const NavigationDropdownLinkMobile = (
                 link={item.path}
                 label={item.label}
                 key={item.label}
-                // onClick={item.onClick}
               />
             ) : (
               <TopbarLinkContainer
