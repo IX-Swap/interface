@@ -81,6 +81,7 @@ export interface InternalRouteProps extends InternalRouteBase {
   color?: string
   root?: boolean
   generic?: boolean
+  external?: boolean
   authorizations?: AppRole[]
   backgroundColor?: keyof Theme['palette']['backgrounds']
 }

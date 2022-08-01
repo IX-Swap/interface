@@ -49,5 +49,10 @@ export const investLandingLinks: InternalRouteProps[] = [
   {
     label: 'Exchange',
     path: InvestRoute.exchange
+  },
+  {
+    label: 'Swap',
+    path: 'https://swap.investax.io/',
+    external: true
   }
 ]
