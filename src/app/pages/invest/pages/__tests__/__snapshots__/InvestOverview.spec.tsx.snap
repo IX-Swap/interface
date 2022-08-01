@@ -293,7 +293,6 @@ exports[`InvestOverview should match snapshot 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-              style="overflow-x: scroll; max-width: 100%;"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
@@ -339,6 +338,7 @@ exports[`InvestOverview should match snapshot 1`] = `
                       >
                         <thead
                           class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+                          style="display: table-header-group;"
                         >
                           <tr
                             class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
@@ -351,7 +351,7 @@ exports[`InvestOverview should match snapshot 1`] = `
                                 class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
                                 <div
-                                  class="MuiBox-root css-1ns5f5t"
+                                  class="MuiBox-root css-9uc25b"
                                 >
                                   Pair
                                 </div>
@@ -378,7 +378,7 @@ exports[`InvestOverview should match snapshot 1`] = `
                               </p>
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter MuiTableCell-sizeMedium makeStyles-headCell-19 css-hm466y-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
                               <p
@@ -394,7 +394,16 @@ exports[`InvestOverview should match snapshot 1`] = `
                               <p
                                 class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
-                                Price
+                                <div
+                                  class="MuiBox-root css-70qvj9"
+                                  style="cursor: pointer; user-select: none;"
+                                >
+                                  Price
+                                  <div
+                                    class="MuiBox-root css-j7qwjs"
+                                    style="transform: rotate(180deg);"
+                                  />
+                                </div>
                               </p>
                             </th>
                             <th
