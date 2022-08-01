@@ -11,9 +11,14 @@ import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { Count } from 'app/pages/invest/components/Count'
 import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { Slide } from 'pure-react-carousel'
+import Box from '@mui/material/Box'
+import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/DSOCardsCarousel'
 
 export const PrimaryOfferings = () => {
   const classes = useStyles()
+  const { isMiniLaptop } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const primaryOfferingSearch = getFilterValue('primaryOfferingSearch')
@@ -38,9 +43,28 @@ export const PrimaryOfferings = () => {
       return <NoOffers />
     }
 
+    if (isMiniLaptop) {
+      return (
+        <DSOCardsCarousel totalSlides={renderItems.length}>
+          {renderItems.map((dso, i) => (
+            <Slide index={i} key={dso._id} className='custom'>
+              <Box paddingRight={1.5} height='100%'>
+                <DSOCard
+                  type={'Primary'}
+                  data={dso}
+                  viewURL={InvestRoute.view}
+                  key={dso._id}
+                />
+              </Box>
+            </Slide>
+          ))}
+        </DSOCardsCarousel>
+      )
+    }
+
     return (
       <Grid container wrap={'wrap'} className={classes.container}>
-        {(items as DigitalSecurityOffering[]).slice(0, 3).map((dso, i) => (
+        {(items as DigitalSecurityOffering[]).slice(0, 3).map(dso => (
           <DSOCard
             type={'Primary'}
             data={dso}
