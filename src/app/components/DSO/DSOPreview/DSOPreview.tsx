@@ -41,7 +41,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
     return (
       <Element name={DSOFormSection.FAQs}>
         <VSpacer size='large' />
-        <DSOFAQsView dso={data} isTitleVisible />
+        <DSOFAQsView dso={data} />
       </Element>
     )
   }
