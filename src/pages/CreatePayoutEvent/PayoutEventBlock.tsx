@@ -126,8 +126,6 @@ export const PayoutEventBlock: FC<Props> = ({
     onValueChange('files', arrayOfFiles)
   }
 
-  console.log('log => ', startDate ? (isBefore(dayjs(startDate)) ? 'start + 1' : 'today') : 'start + 2')
-
   return (
     <FormCard>
       <AreYouSureModal
