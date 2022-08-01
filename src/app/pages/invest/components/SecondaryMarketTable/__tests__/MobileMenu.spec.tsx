@@ -10,7 +10,7 @@ describe('MobileMenu', () => {
     jest.clearAllMocks()
   })
 
-  it('Renders Actions with selected item', async () => {
+  it('should match snapshot', async () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isTablet: true
     } as any)

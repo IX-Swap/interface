@@ -17,7 +17,7 @@ export interface Order {
   filled: number
 }
 
-const PriceLabelWithSort = () => {
+export const PriceLabelWithSort = () => {
   const { isTablet } = useAppBreakpoints()
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
   const sortValue = getFilterValue('sortBy')
@@ -60,6 +60,16 @@ const PriceLabelWithSort = () => {
   )
 }
 
+export const renderLatestPrice = (val: number, row: any) => {
+  return (
+    <Box width={'100%'} height={'100%'}>
+      {formatMoney(val, row.name.split('/')[1], true)}
+    </Box>
+  )
+}
+
+export const renderCreatedBy = (_: string, row: any) => row.listing.user.name
+
 export const columns: Array<TableColumn<any>> = [
   {
     key: 'name',
@@ -78,7 +88,7 @@ export const columns: Array<TableColumn<any>> = [
     label: 'Issued By',
     align: 'left',
     headAlign: 'left',
-    render: (_, value) => value.listing.user.name
+    render: renderCreatedBy
   },
 
   {
@@ -86,11 +96,7 @@ export const columns: Array<TableColumn<any>> = [
     label: <PriceLabelWithSort />,
     align: 'left',
     headAlign: 'left',
-    render: (value, item) => (
-      <Box width={'100%'} height={'100%'}>
-        {formatMoney(value, item.name.split('/')[1], true)}
-      </Box>
-    )
+    render: renderLatestPrice
   },
   {
     key: 'listing.marketType',
