@@ -44,7 +44,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const [payNow, handlePayNow] = useState(onlyPay)
   const [isLoading, handleIsLoading] = useState(false)
 
-  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type } = values
+  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
   const publishPayout = usePublishPayout()
   const addPopup = useAddPopup()
   const { chainId = 0, account } = useActiveWeb3React()
@@ -112,7 +112,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       addPopup({
         info: {
           success: true,
-          summary: `Payout was successfully ${paidTxHash ? 'edited' : 'published'}`,
+          summary: `Payout was successfully ${!id ? 'created' : paidTxHash ? 'edited' : 'published'}`,
         },
       })
       history.push({ pathname: routes.payoutItemManager(data.id) })
