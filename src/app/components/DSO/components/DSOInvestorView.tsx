@@ -8,6 +8,8 @@ import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
 import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 import { Divider } from 'ui/Divider'
 import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
+import { MainInfo } from 'app/components/DSO/MainInfo/MainInfo'
+import { OfferingTerms } from 'app/components/DSO/MainInfo/OfferingTerms'
 
 export interface DSOInvestorViewProps {
   dso: DigitalSecurityOffering
@@ -24,7 +26,7 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
       <Grid item xs={12}>
         <DSOInvestorViewHeader dso={dso} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} md={8} order={{ xs: 3, md: 2 }}>
         <Paper sx={{ borderRadius: 2 }}>
           <Box width='100%'>
             <Tabs
@@ -58,6 +60,22 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
             </TabPanel>
           </Box>
         </Paper>
+      </Grid>
+      <Grid
+        item
+        container
+        xs={12}
+        md={4}
+        spacing={3}
+        alignContent='flex-start'
+        order={{ xs: 2, md: 3 }}
+      >
+        <Grid item xs={12}>
+          <MainInfo dso={dso} />
+        </Grid>
+        <Grid item xs={12}>
+          <OfferingTerms dso={dso} />
+        </Grid>
       </Grid>
     </Grid>
   )

@@ -9,6 +9,7 @@ export interface ExpandableProps {
   px?: number
   py?: number
   showArrow?: boolean
+  noBorders?: boolean
 }
 
 export const Expandable = ({
@@ -17,7 +18,8 @@ export const Expandable = ({
   spacing = 1,
   px = 1,
   py = 1,
-  showArrow = false
+  showArrow = false,
+  noBorders = false
 }: ExpandableProps) => {
   const [expanded, setExpanded] = useState(false)
 
@@ -30,7 +32,7 @@ export const Expandable = ({
       elevation={0}
       sx={{
         border: 1,
-        borderColor: 'divider',
+        borderColor: !noBorders ? 'divider' : 'transparent',
         borderRadius: 2,
         px,
         py
