@@ -1,16 +1,17 @@
 import React, { FC } from 'react'
 import { t } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
+import { useHistory } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 import CurrencyLogo from 'components/CurrencyLogo'
 import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
-import { useHistory } from 'react-router-dom'
+import { routes } from 'utils/routes'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { formatDate } from '../utils'
-import { routes } from 'utils/routes'
 
 interface Props {
   payout: PayoutEvent
@@ -20,7 +21,7 @@ interface Props {
 export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
   const history = useHistory()
 
-  const { status, isPaid, tokenAmount, recordDate, id } = payout
+  const { status, isPaid, tokenAmount, recordDate, id, startDate } = payout
 
   const goToEdit = () => {
     history.push(routes.editPayoutEvent(id))
@@ -58,7 +59,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
             </Flex>
             <Flex>
               <Box marginRight="4px">{t`Users will be able to start claiming on`}</Box>
-              <Box fontWeight={600}>{formatDate(new Date())}</Box>
+              <Box fontWeight={600}>{formatDate(dayjs(startDate))}</Box>
             </Flex>
           </>
         )

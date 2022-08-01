@@ -1,4 +1,4 @@
-import React, { useMemo, ReactChildren } from 'react'
+import React, { useMemo } from 'react'
 import { MobileDateRangePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'

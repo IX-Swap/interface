@@ -10,6 +10,7 @@ import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedD
 import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2LiquidityRouter.json'
 
 import { abi as IIxsV2SwapRouter } from 'abis/IxsV2SwapRouter.json'
+import PAYOUT_ABI from 'abis/payout.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import EIP_2612 from 'abis/eip_2612.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
@@ -32,6 +33,7 @@ import {
   IXS_VESTING_ADDRESS,
   LIQUIDITY_ROUTER_ADDRESS,
   MULTICALL2_ADDRESSES,
+  PAYOUT_ADDRESS,
   SWAP_ROUTER_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
@@ -170,4 +172,8 @@ export function useStableFaucetContract(tokenAddress: string) {
 }
 export function useIXSFaucetContract(tokenAddress: string) {
   return useContract(tokenAddress, IXS_FAUCET_ABI, true)
+}
+
+export function usePayoutContract(): Contract | null {
+  return useContract(PAYOUT_ADDRESS, PAYOUT_ABI, true)
 }

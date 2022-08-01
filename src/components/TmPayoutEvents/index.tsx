@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { useHistory } from 'react-router-dom'
+import { Flex } from 'rebass'
 
 import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
@@ -90,10 +91,10 @@ export const TmPayoutEvents = () => {
             forManager
           />
           {payoutList.items?.length ? (
-            <>
+            <Flex flexDirection="column" style={{ gap: 32 }}>
               <Table body={<Body items={payoutList.items} />} header={<Header />} />
               <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
-            </>
+            </Flex>
           ) : (
             <TmEmptyPage tab="payout-events" filtred />
           )}
@@ -178,15 +179,17 @@ const Row = ({ item }: IRow) => {
 
         <ActionsContainer>
           {status === PAYOUT_STATUS.DRAFT && <DeleteIcon onClick={toggleIsWarningOpen} />}
-          <ButtonGradientBorder
-            onClick={(e: any) => {
-              e.preventDefault()
-              e.stopPropagation()
-              onEdit()
-            }}
-          >
-            <Trans>Edit</Trans>
-          </ButtonGradientBorder>
+          {status !== PAYOUT_STATUS.ENDED && (
+            <ButtonGradientBorder
+              onClick={(e: any) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onEdit()
+              }}
+            >
+              <Trans>Edit</Trans>
+            </ButtonGradientBorder>
+          )}
           <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
         </ActionsContainer>
       </StyledBodyRow>

@@ -13,16 +13,19 @@ interface Props {
   withBackground?: boolean
   label: string
   date: any
+  hideTodayIndicator: boolean
 }
 
-export const TimelineDate: FC<Props> = ({ date, label, withBackground = true }) => {
-  const isSameDay = useMemo(() => sameDay(date), [date])
+export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, hideTodayIndicator }) => {
   const isStartDate = label === 'Payment Start Date'
   return (
     <Container isStartDate={isStartDate}>
       {withBackground ? (
         <>
-          <StyledButtonIXSGradient>{formatDate(date)}</StyledButtonIXSGradient>
+          <StyledButtonIXSGradient>
+            {formatDate(date)}
+            {/* {isSameDay && <TodayIndicator overlay />} */}
+          </StyledButtonIXSGradient>
           <TYPE.buttonMuted>{t`${label}`}</TYPE.buttonMuted>
         </>
       ) : (

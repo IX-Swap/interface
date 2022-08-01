@@ -21,7 +21,7 @@ export const FilterDropdown = ({ onSelect, selectedItems, items }: Props) => {
   const selectItem = useCallback(
     (item: any) => {
       if (item.value === 'all' && selectedItems.length !== items.length) {
-        onSelect({ value: items.map(({ value }) => value) })
+        onSelect(items)
       } else {
         onSelect(item)
       }

@@ -2,6 +2,8 @@ import React, { FC } from 'react'
 import { Box, Flex } from 'rebass'
 import { t } from '@lingui/macro'
 import styled, { css } from 'styled-components'
+import dayjs from 'dayjs'
+import { capitalize } from '@material-ui/core'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { CopyAddress } from 'components/CopyAddress'
@@ -9,12 +11,14 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { ExternalLink, TYPE } from 'theme'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { useUserState } from 'state/user/hooks'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 
 import { formatDate } from '../utils'
 
-const headerCells = [t`Recipient’s wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Transaction`]
+const headerCells = [t`Recipient's wallet`, t`Amount claimed`, t`Date/Time of claim`, t`Status`, t`Transaction`]
 
 interface Props {
   claimHistory: any
@@ -71,10 +75,11 @@ const Body: FC<{ claimHistory: any }> = ({ claimHistory }) => {
 }
 
 const Row: FC<RowProps> = ({ item }) => {
-  const { createdAt, payoutEvent, sum, userId, user } = item
+  const { createdAt, payoutEvent, sum, userId, user, status, txHash } = item
   const { me } = useUserState()
-  const { secToken } = payoutEvent
-  const currency = new WrappedTokenInfo(secToken)
+  const { payoutToken } = payoutEvent
+  const currency = useCurrency(payoutToken)
+  const { chainId } = useActiveWeb3React()
 
   return (
     <StyledBodyRow isMyClaim={me.id === userId}>
@@ -83,21 +88,20 @@ const Row: FC<RowProps> = ({ item }) => {
       </div>
       <Flex alignItems="center">
         <CurrencyLogo currency={currency} size="20px" />
-        <Box marginX="4px">{secToken.originalSymbol ?? secToken.symbol}</Box>
-        <Box>{sum}</Box>
+        <Box marginX="4px">{currency?.symbol ?? '-'}</Box>
+        <Box>{Number(sum).toFixed(4)}</Box>
       </Flex>
-      <div>{`${formatDate(createdAt)} - ${new Date(createdAt).getUTCHours()}:${new Date(
-        createdAt
-      ).getUTCMinutes()}`}</div>
+      <div>{`${formatDate(createdAt)} - ${dayjs(createdAt).format('HH:mm')}}`}</div>
+      <div>{capitalize(status || '-')}</div>
       <div style={{ textDecoration: 'underline' }}>
-        <ExternalLink href={`https://dev.ixswap.io`}>View</ExternalLink>
+        <ExternalLink href={getExplorerLink(chainId || 137, txHash, ExplorerDataType.TRANSACTION)}>View</ExternalLink>
       </div>
     </StyledBodyRow>
   )
 }
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(3, 1fr) 200px;
+  grid-template-columns: repeat(4, 1fr) 200px;
 
   > div:first-child {
     padding-left: 32px;
@@ -105,7 +109,7 @@ const StyledHeaderRow = styled(HeaderRow)`
 `
 
 const StyledBodyRow = styled(BodyRow)<{ isMyClaim?: boolean }>`
-  grid-template-columns: repeat(3, 1fr) 200px;
+  grid-template-columns: repeat(4, 1fr) 200px;
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;

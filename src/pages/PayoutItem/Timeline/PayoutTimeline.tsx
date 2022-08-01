@@ -3,6 +3,7 @@ import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { PayoutEvent } from 'state/token-manager/types'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { TodayIndicator } from './TodayIndicator'
 import { TimelineDate } from './TimelineDate'
@@ -14,8 +15,8 @@ interface Props {
 }
 
 export const PayoutTimeline: FC<Props> = ({ payout }) => {
-  const { recordDate, endDate } = payout
-  const startDate = '2022-07-21T00:00:00.000Z'
+  const { recordDate, startDate, endDate, status } = payout
+
   const todayActionDate = useMemo(
     () => isSameDay(recordDate) || isSameDay(startDate) || isSameDay(endDate),
     [recordDate, startDate, endDate]
@@ -40,16 +41,25 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
     if (isSameOrAfter(startDate) && isSameOrBefore(endDate)) return `75%`
   }, [recordDate, startDate, endDate, needFake])
 
+  const hideTodayIndicator = [PAYOUT_STATUS.DELAYED, PAYOUT_STATUS.ENDED].includes(status)
+
   return (
     <Box style={{ marginTop: 24, padding: '0px 36px' }}>
       <LineContainer>
         {needFake && <FakeFirstButton />}
-        {recordDate && <TimelineDate date={recordDate} label="Record Date" />}
-        {startDate && <TimelineDate date={startDate} label="Payment Start Date" />}
-        {endDate && <TimelineDate withBackground={false} date={endDate} label="Payment Deadline" />}
-        <Line>
-          <TodayIndicator offset={todayPosition} overlay={todayActionDate} />
-        </Line>
+        {recordDate && <TimelineDate date={recordDate} label="Record Date" hideTodayIndicator={hideTodayIndicator} />}
+        {startDate && (
+          <TimelineDate date={startDate} label="Payment Start Date" hideTodayIndicator={hideTodayIndicator} />
+        )}
+        {endDate && (
+          <TimelineDate
+            withBackground={false}
+            date={endDate}
+            label="Payment Deadline"
+            hideTodayIndicator={hideTodayIndicator}
+          />
+        )}
+        <Line>{!todayActionDate && !hideTodayIndicator && <TodayIndicator offset={todayPosition} />}</Line>
       </LineContainer>
     </Box>
   )

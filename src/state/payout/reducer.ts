@@ -3,7 +3,16 @@ import { createReducer } from '@reduxjs/toolkit'
 import { postLogin } from 'state/auth/actions'
 import { PayoutList } from 'state/token-manager/types'
 
-import { createDraft, getPayoutItem, getPayoutList, getMyPayoutList, deletePayoutItem } from './actions'
+import {
+  createDraft,
+  getPayoutItem,
+  getPayoutList,
+  getMyPayoutList,
+  deletePayoutItem,
+  saveUserClaim,
+  getUserClaim,
+  getClaimAuthorization,
+} from './actions'
 
 export interface PayoutState {
   loadingRequest: boolean
@@ -123,6 +132,42 @@ export default createReducer<PayoutState>(initialState, (builder) =>
       state.error = null
     })
     .addCase(deletePayoutItem.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingRequest = false
+      state.error = errorMessage
+    })
+    .addCase(saveUserClaim.pending, (state) => {
+      state.loadingRequest = true
+      state.error = null
+    })
+    .addCase(saveUserClaim.fulfilled, (state) => {
+      state.loadingRequest = false
+      state.error = null
+    })
+    .addCase(saveUserClaim.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingRequest = false
+      state.error = errorMessage
+    })
+    .addCase(getUserClaim.pending, (state) => {
+      state.loadingRequest = true
+      state.error = null
+    })
+    .addCase(getUserClaim.fulfilled, (state) => {
+      state.loadingRequest = false
+      state.error = null
+    })
+    .addCase(getUserClaim.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingRequest = false
+      state.error = errorMessage
+    })
+    .addCase(getClaimAuthorization.pending, (state) => {
+      state.loadingRequest = true
+      state.error = null
+    })
+    .addCase(getClaimAuthorization.fulfilled, (state) => {
+      state.loadingRequest = false
+      state.error = null
+    })
+    .addCase(getClaimAuthorization.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
     })

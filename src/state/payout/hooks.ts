@@ -15,9 +15,12 @@ import {
   getPayoutItem as getPayoutItemAction,
   getMyPayoutList,
   deletePayoutItem,
+  saveUserClaim,
+  getUserClaim,
 } from './actions'
 import { useAddPopup } from 'state/application/hooks'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
+import { BigNumber } from 'ethers'
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -45,20 +48,22 @@ const publishPayout = async (newPayoutDraft: any) => {
   return result.data
 }
 
-
 export function useDeleteDraftPayout() {
   const dispatch = useDispatch<AppDispatch>()
-  
-  return useCallback(async (id: number) => {
-    try {
-      dispatch(createDraft.pending())
-      const data = await apiService.delete(`${payout.createDraft}/${id}`, null)
-      dispatch(createDraft.fulfilled(data))
-    } catch (error: any) {
-      dispatch(createDraft.rejected({ errorMessage: error }))
-      return BROKER_DEALERS_STATUS.FAILED
-    }
-  }, [dispatch])
+
+  return useCallback(
+    async (id: number) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await apiService.delete(`${payout.createDraft}/${id}`, null)
+        dispatch(createDraft.fulfilled(data))
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: error }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
 }
 
 export function usePublishPayout() {
@@ -93,7 +98,6 @@ const getPayoutPayload = async (payoutData: any) => {
         }
       }
     } else {
-
       if (['secToken', 'token'].includes(key) && payoutData[key].value) {
         formData.append(key, payoutData[key].value)
       } else {
@@ -114,9 +118,10 @@ const updateDraftPayout = async (id: number, newPayoutDraft: any, oldPayout: any
   const removed = oldPayout['files']
     .filter((f: any) => !f.id || !newPayoutDraft['files'].find((ff: any) => ff.id === f.id))
     .map((f: any) => f.id)
-    
-  newPayoutDraft['files'] = newPayoutDraft['files']
-    .filter((f: any) => f.id || !removed.find((ff: any) => ff.id === f.id))
+
+  newPayoutDraft['files'] = newPayoutDraft['files'].filter(
+    (f: any) => f.id || !removed.find((ff: any) => ff.id === f.id)
+  )
 
   const payload = await getPayoutPayload(newPayoutDraft)
   payload.append('removedAttachments', JSON.stringify(removed))
@@ -129,9 +134,10 @@ const updatePayout = async (id: number, newPayoutDraft: any, oldPayout: any) => 
   const removed = oldPayout['files']
     .filter((f: any) => !newPayoutDraft['files'].find((ff: any) => ff.id === f.id))
     .map((f: any) => f.id)
-    
-  newPayoutDraft['files'] = newPayoutDraft['files']
-    .filter((f: any) => !f.id || !removed.find((ff: any) => ff.id === f.id))
+
+  newPayoutDraft['files'] = newPayoutDraft['files'].filter(
+    (f: any) => !f.id || !removed.find((ff: any) => ff.id === f.id)
+  )
 
   const payload = await getPayoutPayload(newPayoutDraft)
 
@@ -140,7 +146,6 @@ const updatePayout = async (id: number, newPayoutDraft: any, oldPayout: any) => 
   const result = await apiService.post(`${payout.publish}`, payload)
   return result.data
 }
-
 
 export function useCreateDraftPayout() {
   const dispatch = useDispatch<AppDispatch>()
@@ -328,6 +333,92 @@ export const useDeletePayoutItem = () => {
         return data
       } catch (error: any) {
         dispatch(deletePayoutItem.rejected({ errorMessage: 'Could not delete payout item' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+export const getMyPayoutAmount = async (id: number) => {
+  const result = await apiService.get(payout.getMyPayoutAmount(id))
+  return result.data
+}
+
+interface GetClaimAuthorization {
+  token: string
+  nonce: number
+  deadline: string
+  id: number
+}
+
+export const getClaimAuthorization = async ({ id, ...params }: GetClaimAuthorization) => {
+  const result = await apiService.post(payout.claimAuthorization(id), params)
+  return result.data
+}
+
+interface SaveUserClaim {
+  payoutEventId: number
+  secToken: number
+  sum: string
+  txHash: string
+}
+
+export const saveUserClaimReq = async (params: SaveUserClaim) => {
+  const result = await apiService.post(payout.saveUserClaim, params)
+  return result.data
+}
+
+export const useSaveUserClaim = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const addPopup = useAddPopup()
+
+  const callback = useCallback(
+    async (params: SaveUserClaim) => {
+      try {
+        dispatch(saveUserClaim.pending())
+        const data = await saveUserClaimReq(params)
+        dispatch(saveUserClaim.fulfilled())
+
+        addPopup({
+          info: {
+            success: true,
+            summary: 'Successfully claimed.',
+          },
+        })
+
+        return data
+      } catch (error: any) {
+        dispatch(saveUserClaim.rejected({ errorMessage: 'Could not claim' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+export const getUserClaimReq = async (id: number) => {
+  const result = await apiService.get(payout.getUserClaim(id))
+  return result.data
+}
+
+export const useGetUserClaim = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(getUserClaim.pending())
+        const data = await getUserClaimReq(id)
+        dispatch(getUserClaim.fulfilled())
+
+        return data
+      } catch (error: any) {
+        dispatch(getUserClaim.rejected({ errorMessage: 'Could not get claim' }))
         return null
       }
     },

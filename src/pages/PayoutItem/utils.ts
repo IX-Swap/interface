@@ -3,11 +3,12 @@ import dayjs from 'dayjs'
 
 import useTheme from 'hooks/useTheme'
 import { PAYOUT_STATUS } from 'constants/enums'
+import dayjs from 'dayjs'
 
-export const useStatusButtonInfo = (title: PAYOUT_STATUS) => {
+export const useStatusButtonInfo = (status: PAYOUT_STATUS) => {
   const theme = useTheme()
 
-  switch (title) {
+  switch (status) {
     case PAYOUT_STATUS.ANNOUNCED:
       return { title: 'Announced', backgroundColor: theme.orange, color: theme.text1, borderColor: null }
     case PAYOUT_STATUS.DRAFT:
@@ -30,5 +31,8 @@ export const isSameOrBefore = (date: any) => dayjs().isBefore(dayjs(date), 'day'
 export const isSameOrAfter = (date: any) => dayjs().isAfter(dayjs(date), 'day') || isSameDay(date)
 
 export const formatDate = (date: any, format: DateFormats = 'll') => dayjs(date).format(format)
+
+export const isSameOrBefore = (date: any) => dayjs().isBefore(dayjs(date), 'day') || isSameDay(date)
+export const isSameOrAfter = (date: any) => dayjs().isAfter(dayjs(date), 'day') || isSameDay(date)
 
 type DateFormats = 'll' | 'LL'

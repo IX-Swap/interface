@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
+
 import { PAYOUT_STATUS } from 'constants/enums'
 import { SecToken } from 'types/secToken'
 import { Document } from 'state/admin/actions'
@@ -23,6 +25,7 @@ export interface PayoutEvent {
   deletedAt: null | null
   secToken: SecToken
   attachments: Array<Document>
+  contractPayoutId?: string
 }
 
 export interface PayoutList {
@@ -45,6 +48,7 @@ export interface PayoutHistory {
   payoutEventId: number
   userId: number
   payoutEvent: PayoutEvent
+  txHash: string
   user: {
     id: number
     username: string
@@ -62,4 +66,18 @@ export interface PayoutHistoryList {
   items: PayoutHistory[]
   nextPage: number
   prevPage: number
+}
+
+export interface PayoutAuthorization {
+  operator: string
+  manager: string
+  token: string
+  payoutId: string
+  payoutNonce: number
+  fund: number
+  startDate: Date
+  endDate: Date
+  v: string | BigNumber | number
+  r: string
+  s: string
 }

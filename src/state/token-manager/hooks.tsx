@@ -5,7 +5,7 @@ import apiService from 'services/apiService'
 import { payout } from 'services/apiUrls'
 
 import { AppDispatch, AppState } from '../index'
-import { getMyPayoutList, getPayoutHistoryList } from './actions'
+import { getMyPayoutList, getPayoutHistoryList, getPayoutAuthorization } from './actions'
 
 export const useTokenManagerState = () => {
   return useSelector<AppState, AppState['tokenManager']>((state) => state.tokenManager)
@@ -60,6 +60,41 @@ export const useGetPayoutHistory = () => {
         return data
       } catch (error: any) {
         dispatch(getPayoutHistoryList.rejected({ errorMessage: 'Could not get payout history' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+interface GetPayoutAuthorization {
+  secTokenId: number
+  tokenAddress: string
+  payoutNonce: number
+  fund: number
+  startDate: string
+  endDate?: string
+}
+
+export const getPayoutAuthorizationReq = async (params: GetPayoutAuthorization) => {
+  const result = await apiService.post(payout.payoutAuthorization, params)
+  return result.data
+}
+
+export const useGetPayoutAuthorization = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const callback = useCallback(
+    async (params: GetPayoutAuthorization) => {
+      try {
+        dispatch(getPayoutAuthorization.pending())
+        const data = await getPayoutAuthorizationReq(params)
+        dispatch(getPayoutAuthorization.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(getPayoutAuthorization.rejected({ errorMessage: 'Could not get payout authorization' }))
         return null
       }
     },
