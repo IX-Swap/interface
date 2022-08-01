@@ -22,6 +22,8 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
     [recordDate, startDate, endDate]
   )
 
+  const isTodayStartDate = useMemo(() => isSameDay(startDate), [startDate])
+
   const needFake = useMemo(() => {
     return isBefore(recordDate)
   }, [recordDate])
@@ -47,19 +49,25 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
     <Box style={{ marginTop: 24, padding: '0px 36px' }}>
       <LineContainer>
         {needFake && <FakeFirstButton />}
-        {recordDate && <TimelineDate date={recordDate} label="Record Date" hideTodayIndicator={hideTodayIndicator} />}
+        {recordDate && (
+          <TimelineDate withBackground={isSameOrAfter(recordDate)} date={recordDate} label="Record Date" />
+        )}
         {startDate && (
-          <TimelineDate date={startDate} label="Payment Start Date" hideTodayIndicator={hideTodayIndicator} />
+          <TimelineDate withBackground={isSameOrAfter(startDate)} date={startDate} label="Payment Start Date" />
         )}
         {endDate && (
           <TimelineDate
-            withBackground={false}
+            withBackground={isSameOrAfter(endDate)}
+            ended={status === PAYOUT_STATUS.ENDED}
             date={endDate}
             label="Payment Deadline"
-            hideTodayIndicator={hideTodayIndicator}
           />
         )}
-        <Line>{!todayActionDate && !hideTodayIndicator && <TodayIndicator offset={todayPosition} />}</Line>
+        <Line>
+          {!hideTodayIndicator && (
+            <TodayIndicator offset={todayPosition} overlay={todayActionDate} isTodayStartDate={isTodayStartDate} />
+          )}
+        </Line>
       </LineContainer>
     </Box>
   )

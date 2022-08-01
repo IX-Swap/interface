@@ -1,28 +1,26 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
-import { Flex } from 'rebass'
 import { t } from '@lingui/macro'
 
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 
-import { TodayIndicator } from './TodayIndicator'
-import { formatDate, isSameDay as sameDay } from '../utils'
+import { formatDate } from '../utils'
 
 interface Props {
   withBackground?: boolean
   label: string
   date: any
-  hideTodayIndicator: boolean
+  ended?: boolean
 }
 
-export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, hideTodayIndicator }) => {
+export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, ended = false }) => {
   const isStartDate = label === 'Payment Start Date'
   return (
     <Container isStartDate={isStartDate}>
       {withBackground ? (
         <>
-          <StyledButtonIXSGradient>
+          <StyledButtonIXSGradient ended={ended}>
             {formatDate(date)}
             {/* {isSameDay && <TodayIndicator overlay />} */}
           </StyledButtonIXSGradient>
@@ -79,9 +77,14 @@ const buttonCommonStyles = css`
   }
 `
 
-const StyledButtonIXSGradient = styled(ButtonIXSGradient)`
+const StyledButtonIXSGradient = styled(ButtonIXSGradient)<{ ended: boolean }>`
   ${buttonCommonStyles}
   font-weight: 600;
+  ${({ ended }) =>
+    ended &&
+    css`
+      background: ${({ theme }) => theme.blue3};
+    `}
 `
 
 const StyledButtonGradientBorder = styled(ButtonGradientBorder)`

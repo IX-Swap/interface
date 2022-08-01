@@ -6,15 +6,16 @@ import { MEDIA_WIDTHS } from 'theme'
 interface Props {
   offset?: string
   overlay: boolean
+  isTodayStartDate: boolean
 }
 
-export const TodayIndicator: FC<Props> = ({ offset, overlay }) => {
+export const TodayIndicator: FC<Props> = ({ offset, overlay, isTodayStartDate }) => {
   return (
-    <Container offset={offset} overlay={overlay}>
+    <Container offset={offset} overlay={overlay} isTodayStartDate={isTodayStartDate}>
       <Label overlay={overlay}>{t`Today`}</Label>
-      <Indicator overlay={overlay}>
+      <Indicator overlay={overlay} isTodayStartDate={isTodayStartDate}>
         <Line />
-        <Bullet overlay={overlay} />
+        <Bullet overlay={overlay} isTodayStartDate={isTodayStartDate} />
       </Indicator>
     </Container>
   )
@@ -31,28 +32,27 @@ const Label = styled.div<{ overlay?: boolean }>`
     `}
 `
 
-const Indicator = styled.div<{ overlay?: boolean }>`
+const Indicator = styled.div<{ overlay?: boolean; isTodayStartDate: boolean }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ overlay }) => (overlay ? 'column-reverse' : 'column')};
   align-items: center;
   transform: translateY(5.5px);
 
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    transform: translateY(0px);
-    transform: translateX(2px);
-    flex-direction: row-reverse;
+    transform: translate(2px, 0px);
+    flex-direction: ${({ isTodayStartDate }) => (isTodayStartDate ? 'row-reverse' : 'row')};
   }
-  ${({ overlay }) =>
+  ${({ overlay, isTodayStartDate }) =>
     overlay &&
     css`
       flex-direction: column-reverse;
       @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-        flex-direction: row;
+        flex-direction: ${isTodayStartDate ? 'row-reverse' : 'row'};
       }
     `};
 `
 
-const Container = styled.div<{ offset?: string; overlay?: boolean }>`
+const Container = styled.div<{ offset?: string; overlay?: boolean; isTodayStartDate: boolean }>`
   position: absolute;
   left: ${({ offset }) => offset};
   display: flex;
@@ -66,12 +66,12 @@ const Container = styled.div<{ offset?: string; overlay?: boolean }>`
   width: 140px;
   transform: translateX(-50%);
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    top: ${({ offset }) => `calc(${offset} - 11px)`};
+    height: 52px;
+    top: ${({ offset }) => `calc(${offset} - ${offset === '100%' ? '58px' : '34px'})`};
     left: 0px;
-    right: ${({ overlay }) => (overlay ? '0px' : '-100%')};
-    transform: translateX(0%);
-    flex-direction: ${({ overlay }) => (overlay ? 'row' : 'row-reverse')};
-    height: 21px;
+    width: auto;
+    transform: ${({ isTodayStartDate }) => `translateX(${isTodayStartDate ? '-100%' : '0px'})`};
+    flex-direction: ${({ isTodayStartDate }) => (isTodayStartDate ? 'row' : 'row-reverse')};
   }
 `
 
@@ -88,13 +88,13 @@ const Line = styled.div`
   }
 `
 
-const Bullet = styled.div<{ overlay?: boolean }>`
+const Bullet = styled.div<{ overlay?: boolean; isTodayStartDate: boolean }>`
   width: 13px;
   height: 13px;
   background: ${({ theme }) => theme.borderG1};
   border-radius: 100%;
-  transform: ${({ overlay }) => (overlay ? 'translateY(50%)' : 'translateY(-50%)')};
+  transform: ${({ overlay }) => (overlay ? 'translate(0px,50%)' : 'translate(0px,-50%)')};
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    transform: translate(50%, 0px);
+    transform: ${({ isTodayStartDate }) => (isTodayStartDate ? 'translate(50%,0px)' : 'translate(-50%,0px)')};
   }
 `

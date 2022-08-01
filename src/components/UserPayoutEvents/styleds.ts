@@ -138,6 +138,7 @@ export const CardContainer = styled.div`
     min-width: 152px;
     border-radius: 12px;
     padding: 12px 8px;
+    min-width: 150px;
   }
 `
 

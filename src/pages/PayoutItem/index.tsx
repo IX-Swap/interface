@@ -29,6 +29,7 @@ import { PayoutHistory } from './History'
 import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
+import dayjs from 'dayjs'
 
 export interface MyAmounts {
   poolTokens: number
@@ -58,7 +59,7 @@ export default function PayoutItemForUser({
     const getPayoutItem = async () => {
       const data = await getPayoutItemById(+payoutId)
       if (data?.id) {
-        setPayout(data)
+        setPayout({ ...data, status: 'delayed' })
       }
     }
     const getMyAmount = async () => {
@@ -163,17 +164,6 @@ const MorePayoutEvents = ({ payoutId }: { payoutId: number }) => {
       }
     })
   }, [ref])
-
-  useEffect(() => {
-    async function load() {
-      const data = await getPayouts({ page, offset: 30 })
-
-      setPayouts((data.items as PayoutEvent[]).filter((item) => item.id !== payoutId))
-      setPage(data.page)
-    }
-
-    load()
-  }, [])
 
   useEffect(() => {
     async function load() {
