@@ -1,5 +1,6 @@
-import { AssetBalance } from 'types/balance'
+import { AssetBalance, ConvertedAssetBalance } from 'types/balance'
 import { asset } from '__fixtures__/authorizer'
+import { user } from './user'
 
 export const balance: AssetBalance = {
   debitTotal: 123,
@@ -13,4 +14,24 @@ export const balance: AssetBalance = {
   onHold: 1,
   available: 99999,
   numberFormat: asset.numberFormat
+}
+
+export const cashBalance: ConvertedAssetBalance = {
+  _id: '12345',
+  status: 'Approved',
+  accountNumber: '1234567',
+  currency: 'SGD',
+  user: user,
+  balance: {
+    available: 1,
+    onHold: 3,
+    outstanding: 5,
+    usdValue: 3,
+    sgdValue: 6
+  }
+}
+
+export const cashBalanceSubmitted: ConvertedAssetBalance = {
+  ...cashBalance,
+  status: 'Submitted'
 }

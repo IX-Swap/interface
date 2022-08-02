@@ -7,7 +7,11 @@ import {
 } from 'types/otcOrder'
 
 export const isNotNullish = (value?: number | null) => {
-  return value !== undefined && value !== null && value > 0
+  return !isNullish(value)
+}
+
+export const isNullish = (value?: number | null) => {
+  return value === undefined || value === null || value <= 0
 }
 
 export const addSymbol = (

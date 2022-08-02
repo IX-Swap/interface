@@ -29,7 +29,7 @@ export const CurrencySelect = ({
   const accountFromFilter = getFilterValue('account')
   const initialValue = props.defaultValue ?? accountFromFilter
   const onChangeValue = (value: string) => {
-    onButtonClick(value)
+    onButtonClick?.(value)
     updateFilter('account', value)
   }
 

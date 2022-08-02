@@ -52,12 +52,6 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     label: 'Cash Withdrawals'
   },
   {
-    label: 'Asset Balances',
-    path: AccountsRoute.balances,
-    color: '#e65133',
-    icon: AssetBalanceIcon
-  },
-  {
     label: 'Digital Securities',
     path: AccountsRoute.digitalSecurities,
     color: '#8b3dff',

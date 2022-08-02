@@ -21,11 +21,11 @@ export const CashBalance = () => {
 
   const getSumBalanceOfAllAccounts = () => {
     const sumOfSGDValues = list.reduce(
-      (acc, item) => acc + item.balance.sgdValue,
+      (acc, item) => acc + (item.balance.sgdValue ?? 0),
       0
     )
     const sumOfUSDValues = list.reduce(
-      (acc, item) => acc + item.balance.usdValue,
+      (acc, item) => acc + (item.balance.usdValue ?? 0),
       0
     )
 

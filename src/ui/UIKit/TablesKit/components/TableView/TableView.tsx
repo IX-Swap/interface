@@ -53,6 +53,7 @@ export interface TableViewProps<T> {
   noDataComponent?: JSX.Element
   actionHeader?: string
   noHeader?: boolean
+  method?: 'POST' | 'GET'
   paginationPlacement?: 'top' | 'bottom'
   labelRowsPerPage?: React.ReactNode
   activeSortLabel?: string
@@ -77,6 +78,7 @@ export const TableView = <T,>({
   noDataComponent = <NoData title='No Data' />,
   actionHeader = '',
   noHeader = false,
+  method = 'POST',
   paginationPlacement = 'bottom',
   labelRowsPerPage,
   activeSortLabel
@@ -96,7 +98,8 @@ export const TableView = <T,>({
     queryKey: name,
     defaultFilter: filter,
     queryEnabled: queryEnabled,
-    defaultRowsPerPage: defaultRowsPerPage
+    defaultRowsPerPage: defaultRowsPerPage,
+    method
   })
 
   const classes = useStyles()

@@ -1,24 +1,20 @@
-import React from 'react'
-import { TableView } from 'components/TableWithPagination/TableView'
-import { CashWithdrawal } from 'types/cashWithdrawal'
-import columns from 'app/pages/accounts/pages/banks/pages/WithdrawCash/columns'
-import { useAuth } from 'hooks/auth/useAuth'
-import { getIdFromObj } from 'helpers/strings'
-import { cashWithdrawalsQueryKeys } from 'config/queryKeys'
-import { accountsURL } from 'config/apiURL'
-import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
-import { useFormContext } from 'react-hook-form'
 import { Typography } from '@mui/material'
+import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
+import columns from 'app/pages/accounts/pages/banks/pages/WithdrawCash/columns'
+import { TableView } from 'components/TableWithPagination/TableView'
 import { VSpacer } from 'components/VSpacer'
+import { accountsURL } from 'config/apiURL'
+import { cashWithdrawalsQueryKeys } from 'config/queryKeys'
+import { getIdFromObj } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import React from 'react'
+import { CashWithdrawal } from 'types/cashWithdrawal'
 
 export const RecentWithdrawals: React.FC = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  const { watch } = useFormContext()
-  const virtualAccountNumber = watch('virtualAccount')
-  const { data, isLoading } = useVirtualAccount(virtualAccountNumber)
-
-  if (isLoading || data === undefined || virtualAccountNumber === undefined) {
+  const { data, isLoading } = useVirtualAccount()
+  if (isLoading || data === undefined) {
     return null
   }
 
@@ -28,9 +24,7 @@ export const RecentWithdrawals: React.FC = () => {
       <VSpacer size='small' />
       <TableView<CashWithdrawal>
         uri={accountsURL.virtualAccounts.getAllTransactions(userId, data._id)}
-        name={cashWithdrawalsQueryKeys.getByVirtualAccount(
-          virtualAccountNumber
-        )}
+        name={cashWithdrawalsQueryKeys.getByVirtualAccount(data.accountNumber)}
         columns={columns}
         filter={{ sourceType: 'Withdrawal' }}
       />

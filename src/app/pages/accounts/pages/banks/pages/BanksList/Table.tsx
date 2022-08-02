@@ -1,25 +1,29 @@
-import React from 'react'
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
 import {
   columns,
   compactColumns
 } from 'app/pages/accounts/pages/banks/pages/BanksList/columns'
-import { Bank } from 'types/bank'
-import { Actions } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
-import { useAuth } from 'hooks/auth/useAuth'
-import { getIdFromObj } from 'helpers/strings'
 import { banksQueryKeys } from 'config/queryKeys'
+import { getIdFromObj } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
+import { Bank } from 'types/bank'
+import { CompactTable } from 'ui/CompactTable/CompactTable'
+import { MobileMenu } from 'ui/CompactTable/MobileMenu'
 import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { CompactBankList } from './CompactBankList'
-import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
 
 export const Table: React.FC = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { isTablet } = useAppBreakpoints()
+  const titleExtractor = (selectedItem: Bank) => {
+    return selectedItem.currency.symbol
+  }
   return (
     <ActiveElementContextWrapper>
       <TableView<Bank>
@@ -31,7 +35,17 @@ export const Table: React.FC = () => {
       >
         {isTablet
           ? (props: TableViewRendererProps<Bank>) => (
-              <CompactBankList {...props} columns={compactColumns} />
+              <CompactTable
+                {...props}
+                columns={compactColumns}
+                menu={
+                  <MobileMenu
+                    items={props.items}
+                    titleExtractor={titleExtractor}
+                    actions={(item: Bank) => <Actions item={item} />}
+                  />
+                }
+              />
             )
           : undefined}
       </TableView>

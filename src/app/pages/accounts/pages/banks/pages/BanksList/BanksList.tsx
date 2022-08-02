@@ -11,12 +11,7 @@ export const BanksList: React.FC = () => {
   const classes = useStyles()
   const { isTablet } = useAppBreakpoints()
   return (
-    <Grid
-      container
-      direction='column'
-      spacing={2}
-      className={classes.pageParent}
-    >
+    <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
         {!isTablet && (
           <PageHeader
@@ -50,8 +45,10 @@ export const BanksList: React.FC = () => {
         )}
       </Grid>
       <RootContainer>
-        <Grid item>
-          <Table />
+        <Grid container spacing={{ xs: 2, md: 6 }}>
+          <Grid item xs={12}>
+            <Table />
+          </Grid>
         </Grid>
       </RootContainer>
     </Grid>

@@ -6,9 +6,12 @@ import { SecondaryMarketList } from 'app/pages/invest/components/SecondaryMarket
 import { listing } from '__fixtures__/listings'
 import { columns } from '../columns'
 
-jest.mock('app/pages/accounts/pages/banks/pages/BanksList/MobileMenu', () => ({
-  MobileMenu: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/invest/components/SecondaryMarketTable/MobileMenu',
+  () => ({
+    MobileMenu: jest.fn(() => null)
+  })
+)
 
 describe('SecondaryMarketList', () => {
   const props = {

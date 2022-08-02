@@ -13,7 +13,7 @@ import React from 'react'
 import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
 import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { Asset } from 'types/asset'
-import { AssetBalance } from 'types/balance'
+import { AssetBalance, ConvertedAssetBalance } from 'types/balance'
 import { CashDeposit } from 'types/cashDeposit'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { Commitment } from 'types/commitment'
@@ -145,9 +145,13 @@ type RenderAmountRow =
   | DSWithdrawal
   | DigitalSecurityOffering
   | AssetBalance
+  | ConvertedAssetBalance
 
-export const renderAmount = (val: string, row: RenderAmountRow): string => {
-  const amount = Number.isNaN(val) ? 0 : parseFloat(val)
+export const renderAmount = (
+  val: string | undefined,
+  row: RenderAmountRow
+): string => {
+  const amount = Number.isNaN(val) || val === undefined ? 0 : parseFloat(val)
   let symbol
 
   if ('currency' in row) {
@@ -211,10 +215,10 @@ export const getRowColor = ({ theme, themeVariant, count }: RowColorArgs) => {
   return theme.palette.mode === 'light' ? '#F8F8FD' : theme.palette.grey[900]
 }
 
-export const renderRowAmount = (value: any, row: any) =>
+export const renderRowAmount = (value: any, _row: any) =>
   Number.isInteger(value) ? formatMoney(value, '') : value
 
-export const renderTicker = (value: string, row: any) => (
+export const renderTicker = (value: string, _row: any) => (
   <Typography variant='subtitle1'>{value}</Typography>
 )
 

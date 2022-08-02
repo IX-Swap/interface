@@ -28,6 +28,10 @@ export const Withdraw = () => {
             startComponent={
               <BackLink to={AccountsRoute.cash} title='Back to Cash page' />
             }
+            mainWrapperSX={{
+              flexDirection: { xs: 'column-reverse', md: 'row' },
+              alignItems: { xs: 'initial', md: 'center' }
+            }}
           />
         </Box>
       </Grid>

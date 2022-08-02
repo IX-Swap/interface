@@ -1,6 +1,7 @@
 import { NumberFormat } from './util'
 import { PaginationArgs } from 'services/api/types'
 import { AssetType } from 'types/asset'
+import User from './user'
 
 export interface Balance {
   debitTotal: number
@@ -19,7 +20,20 @@ export interface AssetBalance extends Balance {
   available: number
   numberFormat: NumberFormat
 }
-
+export interface ConvertedAssetBalance {
+  _id: string
+  status: string
+  accountNumber: string
+  currency: 'USD' | 'SGD'
+  user: User
+  balance: {
+    available: number
+    onHold: number
+    outstanding: number
+    usdValue: number
+    sgdValue: number
+  }
+}
 export interface GetBalanceByAssetIdArgs extends PaginationArgs {
   assetId: string
   userId: string

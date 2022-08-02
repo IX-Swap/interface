@@ -31,10 +31,11 @@ export interface WithdrawCashFormValues {
   otp?: string | null
   bankAccountId?: string | null
   memo?: string
-  virtualAccount: string
   paymentMethodName: string | null
 }
-
+export interface WithdrawCashParams extends WithdrawCashFormValues {
+  virtualAccount: string
+}
 export interface DepositDSFormValues {
   balanceId: string
 }

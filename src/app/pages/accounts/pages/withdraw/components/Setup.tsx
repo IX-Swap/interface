@@ -16,14 +16,15 @@ import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { ManageBankAccountsButton } from './ManageBankAccountsButton'
 import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const Setup: React.FC = () => {
   const { container, selectRow, separator } = useStyles()
-  const { watch, control, formState, reset, getValues, setValue } =
+  const { watch, control, formState, reset } =
     useFormContext<WithdrawCashFormValues>()
   const bankAccountId = watch('bankAccountId')
-  const virtualAccountId = watch('virtualAccount')
-
+  const { getFilterValue } = useQueryFilter()
+  const virtualAccountId = getFilterValue('account')
   const {
     data: virtualAccountData,
     list,
@@ -42,7 +43,6 @@ export const Setup: React.FC = () => {
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
       reset({
-        virtualAccount: getValues('virtualAccount'),
         bankAccountId: null,
         amount: null,
         otp: null
@@ -74,20 +74,17 @@ export const Setup: React.FC = () => {
   return (
     <Box className={container}>
       <Paper sx={{ width: '100%' }}>
-        <Box sx={{ px: { xs: 3, sm: 5 }, paddingTop: 5 }}>
-          <CurrencySelect
-            accounts={list}
-            onButtonClick={value => setValue('virtualAccount', value)}
-          />
+        <Box sx={{ px: { xs: 3, md: 5 }, paddingTop: 5 }}>
+          <CurrencySelect accounts={list} />
         </Box>
         <div className={separator} />
         <Grid container direction='column'>
           <Grid item>
             <Box
               sx={{
-                mt: { xs: 0, sm: 5 },
-                mb: { xs: 3, sm: 5 },
-                px: { xs: 3, sm: 5 }
+                mt: { xs: 0, md: 5 },
+                mb: { xs: 3, md: 5 },
+                px: { xs: 3, md: 5 }
               }}
             >
               <Box mt={{ xs: 0, sm: 2 }} className={selectRow}>
@@ -108,7 +105,7 @@ export const Setup: React.FC = () => {
                 />
               </Box>
               <Grid item>
-                {virtualAccountId !== undefined ? (
+                {!isEmptyString(virtualAccountId) ? (
                   <>
                     <Grid item mt={5}>
                       <TypedField
