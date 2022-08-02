@@ -10,9 +10,15 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { Count } from 'app/pages/invest/components/Count'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { Slide } from 'pure-react-carousel'
+import Box from '@mui/material/Box'
+import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/DSOCardsCarousel'
 
 export const PrimaryOfferings = () => {
   const classes = useStyles()
+  const { isMiniLaptop } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const primaryOfferingSearch = getFilterValue('primaryOfferingSearch')
@@ -26,8 +32,48 @@ export const PrimaryOfferings = () => {
     disabledUseEffect: true
   })
 
-  if (status === 'loading' || items.length < 1) {
+  if (status === 'loading') {
     return null
+  }
+
+  const renderContent = () => {
+    const renderItems = (items as DigitalSecurityOffering[]).slice(0, 3)
+
+    if (renderItems.length < 1) {
+      return <NoOffers />
+    }
+
+    if (isMiniLaptop) {
+      return (
+        <DSOCardsCarousel totalSlides={renderItems.length}>
+          {renderItems.map((dso, i) => (
+            <Slide index={i} key={dso._id} className='custom'>
+              <Box paddingRight={1.5} height='100%'>
+                <DSOCard
+                  type={'Primary'}
+                  data={dso}
+                  viewURL={InvestRoute.view}
+                  key={dso._id}
+                />
+              </Box>
+            </Slide>
+          ))}
+        </DSOCardsCarousel>
+      )
+    }
+
+    return (
+      <Grid container wrap={'wrap'} className={classes.container}>
+        {(items as DigitalSecurityOffering[]).slice(0, 3).map(dso => (
+          <DSOCard
+            type={'Primary'}
+            data={dso}
+            viewURL={InvestRoute.view}
+            key={dso._id}
+          />
+        ))}
+      </Grid>
+    )
   }
 
   return (
@@ -61,16 +107,7 @@ export const PrimaryOfferings = () => {
         </Grid>
       </Grid>
 
-      <Grid container item wrap={'wrap'} className={classes.container}>
-        {(items as DigitalSecurityOffering[]).slice(0, 3).map((dso, i) => (
-          <DSOCard
-            type={'Primary'}
-            data={dso}
-            viewURL={InvestRoute.view}
-            key={dso._id}
-          />
-        ))}
-      </Grid>
+      <Grid item>{renderContent()}</Grid>
     </Grid>
   )
 }

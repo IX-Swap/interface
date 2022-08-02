@@ -3,6 +3,7 @@ import { Box, Menu, MenuItem } from '@mui/material'
 import { InternalRouteProps } from 'types/util'
 import { TopbarLinkContainer } from 'app/components/Header/components/Navigation/TopbarLinkContainer/TopbarLinkContainer'
 import { useStyles } from 'app/components/Header/components/Navigation/TopbarLinkDropdown/TopbarLinkDropdown.styles'
+import { ExternalNavigationLink } from 'app/components/Header/components/Navigation/TopbarLinkContainer/ExternalNavigationLink'
 
 export interface TopbarLinkDropdownProps {
   link: string
@@ -57,11 +58,21 @@ export const TopbarLinkDropdown = ({
               className={classes.navItem}
               disableTouchRipple
             >
-              <TopbarLinkContainer
-                label={accountLink.label}
-                link={accountLink.path}
-                key={accountLink.label}
-              />
+              {accountLink.external === true ? (
+                <ExternalNavigationLink
+                  label={accountLink.label}
+                  link={accountLink.path}
+                  key={accountLink.label}
+                  placement='dropdown'
+                />
+              ) : (
+                <TopbarLinkContainer
+                  label={accountLink.label}
+                  link={accountLink.path}
+                  key={accountLink.label}
+                />
+              )}
+
               {i < linkItems.length - 1 && <Box className={classes.line} />}
             </MenuItem>
           )

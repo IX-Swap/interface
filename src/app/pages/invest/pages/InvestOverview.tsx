@@ -12,10 +12,14 @@ import { useTableWithPagination } from 'components/TableWithPagination/hooks/use
 import { investQueryKeys } from 'config/queryKeys'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
+import BannerDesktop from '../../../../assets/images/ixape.png'
+import BannerMobile from '../../../../assets/images/ixape_mobile.png'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const InvestOverview = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
+  const { isMobile } = useAppBreakpoints()
 
   const { total } = useTableWithPagination({
     queryKey: investQueryKeys.getCommitmentsByUserId(userId),
@@ -91,6 +95,14 @@ export const InvestOverview = () => {
             <Grid item style={{ maxWidth: '100%' }}>
               <SecondaryMarketTable />
             </Grid>
+          </Grid>
+
+          <Grid item>
+            <img
+              width={'100%'}
+              src={isMobile ? BannerMobile : BannerDesktop}
+              alt={'Banner'}
+            />
           </Grid>
         </Grid>
       </RootContainer>

@@ -424,6 +424,15 @@ exports[`InvestOverview should match snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <img
+          alt="Banner"
+          src="image-mock"
+          width="100%"
+        />
+      </div>
     </div>
   </div>
 </div>
