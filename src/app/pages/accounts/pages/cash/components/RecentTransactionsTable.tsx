@@ -15,23 +15,29 @@ import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
+import { useTransactionFilters } from '../hooks/useTransactionFilters'
 
 export const RecentTransactionsTable: React.FC = () => {
   const { user } = useAuth()
   const { isTablet } = useAppBreakpoints()
   const { data, isLoading } = useVirtualAccount()
   const userId = user?._id
+  const { filter, sortBy, orderBy } = useTransactionFilters()
   if (userId === undefined || isLoading) {
     return null
   }
+
   return (
     <TableView<CashWithdrawal | CashDeposit>
       uri={accountsURL.virtualAccounts.getAllTransactions(userId, data._id)}
       name={cashVirtualTransactionsQueryKeys.getByVirtualAccount(
-        data.accountNumber
+        data.accountNumber,
+        sortBy,
+        orderBy
       )}
       columns={columns}
       noHeader={isTablet}
+      filter={filter}
       paginationPlacement={isTablet ? 'both' : 'bottom'}
     >
       {isTablet

@@ -4,6 +4,7 @@ import React from 'react'
 import { CashDeposit } from 'types/cashDeposit'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { TableColumn } from 'types/util'
+import { HeadCellWithSort } from 'ui/UIKit/TablesKit/components/HeadCellWithSort/HeadCellWithSort'
 import { TransactionStatus } from './TransactionStatus'
 
 export const renderDate = (date: string) => formatDateToMMDDYY(date)
@@ -19,7 +20,7 @@ export const columns: Array<TableColumn<CashWithdrawal | CashDeposit>> = [
   },
   {
     key: 'createdAt',
-    label: 'Date',
+    label: <HeadCellWithSort label={'Date'} field={'createdAt'} />,
     render: renderDate
   },
   {
@@ -31,14 +32,14 @@ export const columns: Array<TableColumn<CashWithdrawal | CashDeposit>> = [
   },
   {
     key: 'amount',
-    label: 'Amount',
+    label: <HeadCellWithSort label={'Amount'} field={'amount'} />,
     secret: true,
     render: (val: number, row: CashWithdrawal | CashDeposit) =>
       formatMoney(val, row?.currency ?? row?.asset?.symbol)
   },
   {
     key: 'status',
-    label: 'Status',
+    label: <HeadCellWithSort label={'Status'} field={'status'} />,
     render: renderStatus
   }
 ]
