@@ -13,6 +13,29 @@ export interface MainInfoProps {
 export const MainInfo = ({ dso }: MainInfoProps) => {
   const { isTablet } = useAppBreakpoints()
 
+  const expandedComponent = () => (
+    <>
+      <Grid item xs={12}>
+        <Info label='Network' value={dso.network?.name} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Decimal' value={dso.decimals} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Capital Structure' value={dso.capitalStructure} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Launch Date' value={formatDateToMMDDYY(dso.launchDate)} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info
+          label='Completion Date'
+          value={formatDateToMMDDYY(dso.completionDate)}
+        />
+      </Grid>
+    </>
+  )
+
   return (
     <Paper sx={{ p: { xs: 3, md: 5 }, borderRadius: 2 }}>
       {isTablet ? (
@@ -23,27 +46,7 @@ export const MainInfo = ({ dso }: MainInfoProps) => {
           mainComponent={<Typography variant='h4'>Main Info</Typography>}
           expandedComponent={
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Info label='Network' value={dso.network?.name} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info label='Decimal' value={dso.decimals} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info label='Capital Structure' value={dso.capitalStructure} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info
-                  label='Launch Date'
-                  value={formatDateToMMDDYY(dso.launchDate)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Info
-                  label='Completion Date'
-                  value={formatDateToMMDDYY(dso.completionDate)}
-                />
-              </Grid>
+              {expandedComponent()}
             </Grid>
           }
         />
@@ -52,27 +55,7 @@ export const MainInfo = ({ dso }: MainInfoProps) => {
           <Grid item xs={12}>
             <Typography variant='h4'>Main Info</Typography>
           </Grid>
-          <Grid item xs={12}>
-            <Info label='Network' value={dso.network?.name} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info label='Decimal' value={dso.decimals} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info label='Capital Structure' value={dso.capitalStructure} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info
-              label='Launch Date'
-              value={formatDateToMMDDYY(dso.launchDate)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Info
-              label='Completion Date'
-              value={formatDateToMMDDYY(dso.completionDate)}
-            />
-          </Grid>
+          {expandedComponent()}
         </Grid>
       )}
     </Paper>

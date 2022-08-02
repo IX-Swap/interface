@@ -30,6 +30,37 @@ export const OfferingTerms = ({ dso }: OfferingTermsProps) => {
       ? `${getPercentageValue(dso.equityMultiple)}%`
       : undefined
 
+  const expandedComponent = () => (
+    <>
+      <Grid item xs={12}>
+        <Info label='Investment Period' value={dso.investmentPeriod} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Dividend Yield' value={dividendYield} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Interest Rate' value={interestRate} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Investment Structure' value={dso.investmentStructure} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Gross IRR' value={grossIRR} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Leverage' value={dso.leverage} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info label='Equity Multiple' value={equityMultiple} />
+      </Grid>
+      <Grid item xs={12}>
+        <Info
+          label='Distribution Frequency'
+          value={dso.distributionFrequency}
+        />
+      </Grid>
+    </>
+  )
   return (
     <Paper sx={{ p: { xs: 3, md: 5 }, borderRadius: 2 }}>
       {isTablet ? (
@@ -40,36 +71,7 @@ export const OfferingTerms = ({ dso }: OfferingTermsProps) => {
           mainComponent={<Typography variant='h4'>Offering Terms</Typography>}
           expandedComponent={
             <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Info label='Investment Period' value={dso.investmentPeriod} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info label='Dividend Yield' value={dividendYield} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info label='Interest Rate' value={interestRate} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info
-                  label='Investment Structure'
-                  value={dso.investmentStructure}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Info label='Gross IRR' value={grossIRR} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info label='Leverage' value={dso.leverage} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info label='Equity Multiple' value={equityMultiple} />
-              </Grid>
-              <Grid item xs={12}>
-                <Info
-                  label='Distribution Frequency'
-                  value={dso.distributionFrequency}
-                />
-              </Grid>
+              {expandedComponent()}
             </Grid>
           }
         />
@@ -78,36 +80,7 @@ export const OfferingTerms = ({ dso }: OfferingTermsProps) => {
           <Grid item xs={12}>
             <Typography variant='h4'>Offering Terms</Typography>
           </Grid>
-          <Grid item xs={12}>
-            <Info label='Investment Period' value={dso.investmentPeriod} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info label='Dividend Yield' value={dividendYield} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info label='Interest Rate' value={interestRate} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info
-              label='Investment Structure'
-              value={dso.investmentStructure}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Info label='Gross IRR' value={grossIRR} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info label='Leverage' value={dso.leverage} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info label='Equity Multiple' value={equityMultiple} />
-          </Grid>
-          <Grid item xs={12}>
-            <Info
-              label='Distribution Frequency'
-              value={dso.distributionFrequency}
-            />
-          </Grid>
+          {expandedComponent()}
         </Grid>
       )}
     </Paper>
