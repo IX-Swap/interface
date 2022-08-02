@@ -4,7 +4,6 @@ export default makeStyles(theme => ({
   container: {
     position: 'relative',
     maxWidth: '100vw',
-    margin: '0 -12px',
 
     '& .carousel__slider': {
       paddingBottom: theme.spacing(2)
@@ -13,6 +12,7 @@ export default makeStyles(theme => ({
   wrapper: {
     position: 'relative',
     marginBottom: theme.spacing(4),
-    paddingLeft: 16
+    marginLeft: theme.spacing(-2),
+    paddingLeft: theme.spacing(2)
   }
 }))
