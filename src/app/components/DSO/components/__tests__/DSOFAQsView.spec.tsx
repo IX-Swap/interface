@@ -25,7 +25,7 @@ describe('DSOFAQsView', () => {
   })
 
   it('renders title with correct props when isTitleVisible is true', () => {
-    render(<DSOFAQsView dso={faq} isTitleVisible />)
+    render(<DSOFAQsView dso={faq} />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(1)
     expect(FormSectionHeader).toHaveBeenCalledWith(

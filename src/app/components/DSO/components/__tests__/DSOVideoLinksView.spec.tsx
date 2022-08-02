@@ -27,7 +27,7 @@ describe('DSOVideoLinksView', () => {
   })
 
   it('renders FormSectionHeader when isTitleVisible is true', () => {
-    render(<DSOVideoLinksView dso={dsoVideo} isTitleVisible />)
+    render(<DSOVideoLinksView dso={dsoVideo} />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(1)
     expect(FormSectionHeader).toHaveBeenCalledWith(
