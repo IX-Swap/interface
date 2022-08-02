@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Info matches snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root css-vj1n65-MuiGrid-root"
+      itemscope=""
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+      >
+        My Info
+      </h6>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+      >
+        123456
+      </h6>
+    </div>
+  </div>
+</div>
+`;
