@@ -68,7 +68,11 @@ export const DSOCard = (props: DSOCardProps) => {
           className={classes.link}
           component={AppRouterLinkComponent}
           to={viewURL}
-          params={{ dsoId: data._id, issuerId: data.createdBy }}
+          params={
+            type === 'OTC'
+              ? { dsoId: data.dso, issuerId: data.user }
+              : { dsoId: data._id, issuerId: data.createdBy }
+          }
           variant='text'
           color='primary'
         >

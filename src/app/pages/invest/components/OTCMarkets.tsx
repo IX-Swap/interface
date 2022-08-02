@@ -74,7 +74,7 @@ export const OTCMarket = () => {
             <DSOCard
               type={'OTC'}
               data={otc}
-              viewURL={InvestRoute.trading}
+              viewURL={InvestRoute.view}
               key={otc._id}
             />
           ))}
