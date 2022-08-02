@@ -35,7 +35,7 @@ export const SecondaryMarketList = (props: CompactBodyProps<any>) => {
   const classes = useStyles()
   const context = useContext(ActiveElementContext)
 
-  const handleClick = (item: any) => {
+  const onButtonClick = (item: any) => {
     context?.toggleRow(item._id)
   }
 
@@ -47,6 +47,33 @@ export const SecondaryMarketList = (props: CompactBodyProps<any>) => {
 
   if (items.length < 1) {
     return <NoOffers />
+  }
+
+  const renderColumnsBlock = (
+    columns: any[],
+    item: any,
+    fullWidth: boolean = false
+  ) => {
+    return (
+      <Grid
+        item
+        container
+        rowGap={1}
+        className={fullWidth ? classes.additionalColumns : classes.columns}
+        xs={12}
+      >
+        {columns.map(({ label, key, render }) => (
+          <Grid item container key={key} flexDirection='row' rowGap={1}>
+            <Grid item xs={12} className={classes.label}>
+              {label}
+            </Grid>
+            <Grid item xs={12} className={classes.value}>
+              {renderCell({ render, key, item, label })}
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
+    )
   }
 
   return (
@@ -61,83 +88,12 @@ export const SecondaryMarketList = (props: CompactBodyProps<any>) => {
                 rowGap={3}
                 className={classes.card}
               >
-                <Grid
-                  item
-                  container
-                  rowGap={1}
-                  className={classes.columns}
-                  xs={12}
-                >
-                  {columns.slice(0, 2).map(({ label, key, render }) => (
-                    <Grid
-                      item
-                      container
-                      key={key}
-                      flexDirection='row'
-                      rowGap={1}
-                    >
-                      <Grid item xs={12} className={classes.label}>
-                        {label}
-                      </Grid>
-                      <Grid item xs={12} className={classes.value}>
-                        {renderCell({ render, key, item, label })}
-                      </Grid>
-                    </Grid>
-                  ))}
-                </Grid>
-                <Grid
-                  item
-                  container
-                  rowGap={1}
-                  className={classes.additionalColumns}
-                  xs={12}
-                >
-                  {columns.slice(2, 4).map(({ label, key, render }) => (
-                    <Grid
-                      item
-                      container
-                      key={key}
-                      flexDirection='row'
-                      rowGap={1}
-                    >
-                      <Grid item xs={12} className={classes.label}>
-                        {label}
-                      </Grid>
-                      <Grid item xs={12} className={classes.value}>
-                        {renderCell({ render, key, item, label })}
-                      </Grid>
-                    </Grid>
-                  ))}
-                </Grid>
-                <Grid
-                  item
-                  container
-                  rowGap={1}
-                  className={classes.columns}
-                  xs={12}
-                >
-                  {columns
-                    .slice(4, columns.length)
-                    .map(({ label, key, render }) => (
-                      <Grid
-                        item
-                        container
-                        key={key}
-                        flexDirection='row'
-                        rowGap={1}
-                      >
-                        <Grid item xs={12} className={classes.label}>
-                          {label}
-                        </Grid>
-                        <Grid item xs={12} className={classes.value}>
-                          {renderCell({ render, key, item, label })}
-                        </Grid>
-                      </Grid>
-                    ))}
-                </Grid>
+                {renderColumnsBlock(columns.slice(0, 2), item)}
+                {renderColumnsBlock(columns.slice(2, 4), item, true)}
+                {renderColumnsBlock(columns.slice(4, columns.length), item)}
                 <Grid item xs={12}>
                   <Button
-                    onClick={() => handleClick(item)}
+                    onClick={() => onButtonClick(item)}
                     fullWidth
                     className={classes.iconButton}
                   >
