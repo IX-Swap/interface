@@ -17,7 +17,7 @@ export const NoticeOfAssessmentView = () => {
   }
 
   return (
-    <Grid item>
+    <Grid item xs={12}>
       <FieldContainer>
         <Grid item container direction={'column'} spacing={5}>
           <Grid item>

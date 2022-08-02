@@ -959,16 +959,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >
@@ -1044,16 +1034,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >
@@ -1117,16 +1097,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >
@@ -1190,16 +1160,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >
