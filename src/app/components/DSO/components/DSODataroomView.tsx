@@ -47,7 +47,7 @@ export const DSODataroomView = ({ dso }: DSODataroomViewProps) => {
       {otherDocuments.length > 0 && (
         <Grid item xs={12} container spacing={2}>
           <Grid item xs={12}>
-            <Typography variant='h5'>Other Documents</Typography>
+            <Typography variant='h5'>Dataroom</Typography>
           </Grid>
           <Grid item xs={12} container spacing={1}>
             <Grid item xs={12}>
