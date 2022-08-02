@@ -10,6 +10,7 @@ export interface TableRowsProps<T> extends TableViewProps<T> {
   cacheQueryKey: any
   bordered: boolean
   isLoading: boolean
+  activeSortLabel?: string
 }
 
 export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
@@ -22,7 +23,8 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     cacheQueryKey,
     noDataComponent,
     size,
-    isLoading
+    isLoading,
+    activeSortLabel
   } = props
 
   const classes = useStyles({ size })
@@ -37,6 +39,7 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
             <TableRow key={i} className={classes.wrapper}>
               {columns.map(column => (
                 <TableCellWrapper
+                  isAllocated={activeSortLabel === column.key}
                   bordered={bordered}
                   key={column.key}
                   column={column}
@@ -55,7 +58,11 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
         ))}
       {!isLoading && !hasItems && (
         <TableRow>
-          <TableCell align='center' colSpan={columns.length + +!!hasActions}>
+          <TableCell
+            sx={{ padding: 0 }}
+            align='center'
+            colSpan={columns.length + +!!hasActions}
+          >
             {noDataComponent}
           </TableCell>
         </TableRow>

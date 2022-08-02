@@ -1,17 +1,33 @@
-import { Button, IconButton } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
-import { Launch as LaunchIcon } from '@mui/icons-material'
+import { Box, Button, IconButton } from '@mui/material'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React from 'react'
+import { makeStyles } from '@mui/styles'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+
 export interface ActionsProps {
   item: any
 }
 
+const useStyles = makeStyles(theme => ({
+  button: {
+    display: 'flex',
+    fontSize: 14,
+    maxWidth: 90,
+    height: 40,
+    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.button.bgLight,
+    boxShadow: 'none',
+    '&:hover': {
+      boxShadow: 'none'
+    }
+  }
+}))
+
 export const Actions = ({ item }: ActionsProps) => {
-  const theme = useTheme()
+  const classes = useStyles()
   return (
-    <>
+    <Box display={'flex'} alignItems={'center'}>
       <IconButton
         component={AppRouterLinkComponent}
         to={InvestRoute.viewListing}
@@ -20,25 +36,22 @@ export const Actions = ({ item }: ActionsProps) => {
           listingId: item.listing._id
         }}
         size='small'
+        sx={{ marginRight: 6 }}
       >
         <LaunchIcon color='disabled' />
       </IconButton>
       <Button
-        style={{
-          marginLeft: theme.spacing(4.5),
-          marginRight: theme.spacing(4),
-          fontSize: 14,
-          color: theme.palette.slider.activeBackground
-        }}
+        className={classes.button}
         component={AppRouterLinkComponent}
+        variant={'contained'}
         to={InvestRoute.exchange}
         params={{
           pairId: item._id
         }}
         size='small'
       >
-        TRADE
+        Trade
       </Button>
-    </>
+    </Box>
   )
 }

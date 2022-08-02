@@ -16,6 +16,7 @@ export const NoData = (props: NoDataProps & GridProps) => {
       direction='column'
       alignItems='center'
       justifyContent='center'
+      padding={2}
     >
       <Grid item>
         <Typography>{title}</Typography>

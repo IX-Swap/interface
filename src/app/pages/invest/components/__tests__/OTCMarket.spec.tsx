@@ -48,7 +48,7 @@ describe('OTCMarket', () => {
       expect.objectContaining({
         type: 'OTC',
         data: dso,
-        viewURL: InvestRoute.trading
+        viewURL: InvestRoute.view
       }),
       {}
     )

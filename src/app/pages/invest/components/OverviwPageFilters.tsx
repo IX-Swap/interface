@@ -6,7 +6,7 @@ import { renderSelectItems } from 'helpers/rendering'
 import { Select } from 'ui/Select/Select'
 import { makeStyles } from '@mui/styles'
 
-const useOutlinedInputStyles = makeStyles(theme => ({
+export const useOutlinedInputStyles = makeStyles(theme => ({
   root: {
     '& $notchedOutline': {
       borderColor: theme.palette.select.border
