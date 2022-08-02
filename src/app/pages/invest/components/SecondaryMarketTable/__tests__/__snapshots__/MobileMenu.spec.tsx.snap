@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MobileMenu Renders Actions with selected item 1`] = `
+exports[`MobileMenu should match snapshot 1`] = `
 <div
   aria-hidden="true"
 />
