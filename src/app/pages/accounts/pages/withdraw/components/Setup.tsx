@@ -1,5 +1,6 @@
 import { Box, Grid, Paper } from '@mui/material'
 import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
+import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { usePaymentMethod } from 'app/pages/accounts/pages/banks/hooks/usePaymentMethods'
@@ -11,12 +12,13 @@ import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
+import { formatMoney } from 'helpers/numbers'
 import { isEmptyString } from 'helpers/strings'
+import { useAssetsData } from 'hooks/asset/useAssetsData'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { ManageBankAccountsButton } from './ManageBankAccountsButton'
-import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const Setup: React.FC = () => {
   const { container, selectRow, separator } = useStyles()
@@ -32,9 +34,12 @@ export const Setup: React.FC = () => {
   } = useVirtualAccount(virtualAccountId)
 
   const { data: bankData, isLoading: bankLoading } = useBanksData()
-
   const bank = bankData.map[bankAccountId ?? '']
-
+  const { data: assets } = useAssetsData('Currency')
+  const selectedAsset = assets.list.find(
+    a => a.symbol === virtualAccountData.currency
+  )
+  const minWithdraw = selectedAsset?.amounts?.minimumWithdrawal
   const { data: paymentMethodData } = usePaymentMethod(
     bank?.address.country ?? '',
     bank?.swiftCode ?? ''
@@ -114,6 +119,11 @@ export const Setup: React.FC = () => {
                         component={NumericInput}
                         name='amount'
                         label='Amount'
+                        placeholder={
+                          minWithdraw !== undefined
+                            ? `Minimum ${formatMoney(minWithdraw, '')}`
+                            : ''
+                        }
                         disabled={isEmptyString(bankAccountId)}
                         valueExtractor={numericValueExtractor}
                         numberFormat={moneyNumberFormat}
