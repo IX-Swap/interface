@@ -1,0 +1,239 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OfferingsTerms renders without errors 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-7ncgri-MuiPaper-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-vxrdkt-MuiTypography-root"
+        >
+          Offering Terms
+        </h4>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Investment Period
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              1
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Dividend Yield
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              100%
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Interest Rate
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              100%
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Investment Structure
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              investment structure
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Gross IRR
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              0%
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Leverage
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              0
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Equity Multiple
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              0%
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1xzqqmo-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
+            itemscope=""
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
+            >
+              Distribution Frequency
+            </h6>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <h6
+              class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
+            >
+              distribution frequency
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
