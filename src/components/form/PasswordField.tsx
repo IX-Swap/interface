@@ -12,6 +12,7 @@ export interface PasswordFieldProps {
   name?: string
   label?: string
   isMyInfo?: boolean
+  placeholder?: string
   hideShowPassword?: boolean
 }
 
@@ -21,6 +22,7 @@ export const PasswordField = ({
   name = 'password',
   label = 'Password',
   isMyInfo = false,
+  placeholder,
   hideShowPassword = false
 }: PasswordFieldProps) => {
   const { control, errors } = useFormContext()
@@ -37,7 +39,9 @@ export const PasswordField = ({
           label={label}
           type={inputType}
           className={passwordField}
-          placeholder={isMyInfo ? 'Create Password' : 'Password'}
+          placeholder={
+            placeholder ?? (isMyInfo ? 'Create Password' : 'Password')
+          }
           isErrorMessageEnabled={showErrorMessages}
           InputLabelProps={{
             shrink: true

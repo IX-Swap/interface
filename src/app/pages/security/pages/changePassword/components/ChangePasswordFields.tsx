@@ -15,7 +15,8 @@ export const ChangePasswordFields = () => {
           control={control}
           component={PasswordField}
           name='oldPassword'
-          label='Old Password'
+          label='Current Password'
+          placeholder='Enter your current password'
           showErrorMessages={false}
         />
       </Grid>
@@ -25,7 +26,8 @@ export const ChangePasswordFields = () => {
           control={control}
           component={PasswordField}
           name='newPassword'
-          label='New Password'
+          label='New password'
+          placeholder='Enter your new password'
           showErrorMessages={false}
         />
       </Grid>
@@ -34,7 +36,8 @@ export const ChangePasswordFields = () => {
           control={control}
           component={PasswordField}
           name='confirmPassword'
-          label='Confirm New Password'
+          label='Confirm new password'
+          placeholder='Repeat your new password'
           showErrorMessages={false}
         />
       </Grid>
