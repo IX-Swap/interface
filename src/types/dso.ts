@@ -92,6 +92,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   uniqueIdentifierCode?: string
   dealStatus?: string
   marketType?: string
+  dso?: string
 }
 
 export interface DSOInsight {
