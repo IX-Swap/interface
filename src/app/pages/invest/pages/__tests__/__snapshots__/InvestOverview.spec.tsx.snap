@@ -224,24 +224,23 @@ exports[`InvestOverview should match snapshot 1`] = `
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-wrap-xs-nowrap css-1h4vq28-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-md-4 MuiGrid-grid-lg-3 css-b7hlqe-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item css-1mum6ye-MuiGrid-root"
               >
                 <div
-                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-adornedEnd css-zb37ev-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="makeStyles-root-9 MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-adornedStart css-9a9t7i-MuiInputBase-root-MuiOutlinedInput-root"
                   data-testid="secondaryMarketSearch"
                 >
-                  <input
-                    class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input"
-                    placeholder="Search"
-                    type="text"
-                    value=""
-                  />
                   <div
-                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd css-1laqsz7-MuiInputAdornment-root"
+                    class="MuiInputAdornment-root MuiInputAdornment-positionStart css-ittuaa-MuiInputAdornment-root"
                   >
+                    <span
+                      class="notranslate"
+                    >
+                      ​
+                    </span>
                     <svg
                       aria-hidden="true"
                       class="MuiSvgIcon-root MuiSvgIcon-colorDisabled MuiSvgIcon-fontSizeMedium css-fuvw14-MuiSvgIcon-root"
@@ -254,9 +253,15 @@ exports[`InvestOverview should match snapshot 1`] = `
                       />
                     </svg>
                   </div>
+                  <input
+                    class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedStart css-mmb06o-MuiInputBase-input-MuiOutlinedInput-input"
+                    placeholder="Search"
+                    type="text"
+                    value=""
+                  />
                   <fieldset
                     aria-hidden="true"
-                    class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    class="makeStyles-notchedOutline-11 MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                   >
                     <legend
                       class="css-nnbavb"
@@ -271,12 +276,12 @@ exports[`InvestOverview should match snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-auto css-1hsbqbm-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButton-disableElevation MuiButtonBase-root  css-1dz9je6-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
                   href="/app/accounts/holdings"
-                  style="color: rgb(76, 136, 255);"
+                  style="color: rgb(76, 136, 255); width: 192px; height: 50px;"
                   tabindex="0"
                 >
                   My Holdings
@@ -288,7 +293,6 @@ exports[`InvestOverview should match snapshot 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
-              style="overflow-x: scroll; max-width: 100%;"
             >
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
@@ -296,23 +300,36 @@ exports[`InvestOverview should match snapshot 1`] = `
                 <div
                   class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
-                  <span
-                    class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate css-6gra9t-MuiLinearProgress-root"
-                    role="progressbar"
+                  <div
+                    class="makeStyles-loading-23 MuiBox-root css-0"
                   >
                     <span
-                      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate css-1y2arm0-MuiLinearProgress-bar1"
-                    />
-                    <span
-                      class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate css-fng5ps-MuiLinearProgress-bar2"
-                    />
-                  </span>
+                      class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-q79gi7-MuiCircularProgress-root"
+                      role="progressbar"
+                      style="width: 40px; height: 40px;"
+                    >
+                      <svg
+                        class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                        viewBox="22 22 44 44"
+                      >
+                        <circle
+                          class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                          cx="44"
+                          cy="44"
+                          fill="none"
+                          r="20.2"
+                          stroke-width="3.6"
+                        />
+                      </svg>
+                    </span>
+                  </div>
                   <div
-                    class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-1nt1r1b-MuiPaper-root"
+                    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-11gelwl-MuiPaper-root"
                     style="background-color: inherit;"
                   >
                     <div
                       class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
+                      style="overflow: visible;"
                     >
                       <table
                         aria-label="table"
@@ -321,94 +338,93 @@ exports[`InvestOverview should match snapshot 1`] = `
                       >
                         <thead
                           class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
-                          style="background-color: rgb(20, 18, 114); height: 50px; display: table-header-group;"
+                          style="display: table-header-group;"
                         >
                           <tr
                             class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
                           >
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
-                              <b
-                                style="color: rgb(255, 255, 255);"
-                              />
-                            </th>
-                            <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
-                              scope="col"
-                            >
-                              <b
-                                style="color: rgb(255, 255, 255);"
+                              <p
+                                class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
-                                Pair
-                              </b>
+                                <div
+                                  class="MuiBox-root css-9uc25b"
+                                >
+                                  Pair
+                                </div>
+                              </p>
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
-                              <b
-                                style="color: rgb(255, 255, 255);"
+                              <p
+                                class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
                                 Symbol
-                              </b>
+                              </p>
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
-                              <b
-                                style="color: rgb(255, 255, 255);"
+                              <p
+                                class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
                                 Name
-                              </b>
+                              </p>
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter MuiTableCell-sizeMedium css-hm466y-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
-                              <b
-                                style="color: rgb(255, 255, 255);"
+                              <p
+                                class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
                                 Issued By
-                              </b>
+                              </p>
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1v6mra9-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
-                              <b
-                                style="color: rgb(255, 255, 255);"
+                              <p
+                                class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
-                                Price
-                              </b>
+                                <div
+                                  class="MuiBox-root css-70qvj9"
+                                  style="cursor: pointer; user-select: none;"
+                                >
+                                  Price
+                                  <div
+                                    class="MuiBox-root css-j7qwjs"
+                                    style="transform: rotate(180deg);"
+                                  />
+                                </div>
+                              </p>
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
-                              <b
-                                style="color: rgb(255, 255, 255);"
-                              />
-                            </th>
-                            <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
-                              scope="col"
-                            >
-                              <b
-                                style="color: rgb(255, 255, 255);"
+                              <p
+                                class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
                               >
                                 Type
-                              </b>
+                              </p>
                             </th>
                             <th
-                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1efwvfh-MuiTableCell-root"
+                              class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-19 css-1efwvfh-MuiTableCell-root"
                               scope="col"
                             >
-                              <b
-                                style="color: rgb(255, 255, 255);"
-                              />
+                              <p
+                                class="MuiTypography-root MuiTypography-body2 makeStyles-headText-20 css-1w73bwm-MuiTypography-root"
+                              >
+                                Actions
+                              </p>
                             </th>
                           </tr>
                         </thead>

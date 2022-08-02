@@ -1,7 +1,6 @@
 import { Box, Theme, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { ThemeVariant } from '@mui/material/styles/overrides'
-import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
 import {
   CorporateIdentity,
@@ -178,17 +177,6 @@ export const renderLatestDate = (val: string, row: any): string => {
   const latest = row.lastTransaction ?? row.updatedAt ?? row.createdAt ?? val
 
   return typeof latest === 'string' ? formatDateToMMDDYY(latest) : ''
-}
-
-export const getUserNameById = (userId: string) => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { data, isLoading } = useUserById(userId)
-
-  if (isLoading) {
-    return ''
-  }
-
-  return data?.name
 }
 
 export const useHeaderColor = (themeVariant?: ThemeVariant) => {
