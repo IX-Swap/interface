@@ -43,6 +43,10 @@ export const TextContent = ({ content, title }: TextContentProps) => {
               fullWidth
               onClick={setMaxToAuto}
               disableElevation
+              sx={{
+                backgroundColor: 'rgba(76, 136, 255, 0.16)',
+                color: '#4C88FF'
+              }}
             >
               Read More
             </Button>
