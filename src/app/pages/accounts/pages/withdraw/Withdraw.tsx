@@ -1,10 +1,12 @@
 import { Box, Grid } from '@mui/material'
+import { BackLink } from 'app/components/BackLink/BackLink'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { WithdrawForm } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawForm'
 import { Setup } from 'app/pages/accounts/pages/withdraw/components/Setup'
 import { useStyles } from 'app/pages/accounts/pages/withdraw/components/Withdraw.styles'
 import React from 'react'
-import { BackToCash } from './components/BackToCash'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
+
 export const Withdraw = () => {
   const { container, formWrapper, headerContainer } = useStyles()
   return (
@@ -23,7 +25,9 @@ export const Withdraw = () => {
             variant='h1'
             alignment='center'
             showBreadcrumbs={false}
-            startComponent={<BackToCash />}
+            startComponent={
+              <BackLink to={AccountsRoute.cash} title='Back to Cash page' />
+            }
             mainWrapperSX={{
               flexDirection: { xs: 'column-reverse', md: 'row' },
               alignItems: { xs: 'initial', md: 'center' }

@@ -20,33 +20,6 @@ describe('DSOTeamView', () => {
     jest.clearAllMocks()
   })
 
-  it('renders title', () => {
-    render(<DSOTeamView dso={dso} />)
-
-    expect(FormSectionHeader).toHaveBeenCalledWith(
-      expect.objectContaining({
-        title: 'Team Members'
-      }),
-      {}
-    )
-  })
-
-  // it('renders title when isNewThemeOn is true', () => {
-  //   render(<DSOTeamView dso={dso} isNewThemeOn />)
-
-  //   expect(FormSectionHeader).toHaveBeenCalledTimes(0)
-  //   expect(Typography).toHaveBeenCalledTimes(1)
-  //   expect(Typography).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       variant: 'h4',
-  //       color: 'primary',
-  //       style: { fontWeight: 700 },
-  //       children: 'Team Members'
-  //     }),
-  //     {}
-  //   )
-  // })
-
   it('renders data correctly when there is team data', () => {
     const editedDSO = {
       ...dso,

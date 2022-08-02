@@ -2,7 +2,7 @@ import * as useStyles from 'app/pages/invest/components/styles/OTCMarket.style'
 import * as useTableWithPagination from 'components/TableWithPagination/hooks/useTableWithPagination'
 import * as useQueryFilter from 'hooks/filters/useQueryFilter'
 import { render } from '@testing-library/react'
-import { OTCMarket as OTCMarketSection } from 'app/pages/invest/components/OTCMarkets'
+import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
 import * as useFeaturedPair from 'app/pages/invest/hooks/useFeaturedPair'
 import React from 'react'
 import { dso } from '__fixtures__/issuance'
@@ -42,13 +42,13 @@ describe('OTCMarket', () => {
       .spyOn(useStyles, 'useStyles')
       .mockReturnValueOnce({ container: 'abc' } as any)
 
-    render(<OTCMarketSection />)
+    render(<OTCMarket />)
 
     expect(DSOCard).toHaveBeenCalledWith(
       expect.objectContaining({
         type: 'OTC',
         data: dso,
-        viewURL: InvestRoute.trading
+        viewURL: InvestRoute.view
       }),
       {}
     )

@@ -17,7 +17,7 @@ import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { renderActionButton } from './CashStatus'
+import { renderActionButton } from './renderActionbutton'
 
 export const CashTable: React.FC = () => {
   const { user } = useAuth()

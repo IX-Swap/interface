@@ -3,7 +3,7 @@ import React from 'react'
 
 export interface OverviewValueProps {
   label: string
-  value: string
+  value?: string | number
 }
 
 export const OverviewValue = ({ label, value }: OverviewValueProps) => {

@@ -7,12 +7,27 @@ import { dso } from '__fixtures__/issuance'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/DSOCardsCarousel'
+import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 
 jest.mock('app/pages/invest/components/DSOCard/DSOCard', () => ({
   DSOCard: jest.fn(() => null)
 }))
 
+jest.mock('app/pages/invest/components/NoOffers/NoOffers', () => ({
+  NoOffers: jest.fn(() => null)
+}))
+
+jest.mock(
+  'app/pages/invest/components/DSOCardsCarousel/DSOCardsCarousel',
+  () => ({
+    DSOCardsCarousel: jest.fn(() => null)
+  })
+)
+
 jest.mock('@mui/material/Typography', () => jest.fn(() => null))
+
 describe('PrimaryOfferings', () => {
   const getFilterValueFn = jest.fn(() => 'search')
   const objSuccessfulResponse = {
@@ -56,14 +71,14 @@ describe('PrimaryOfferings', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders empty component when data is empty array', () => {
+  it('renders NoOffers component when data is empty array', () => {
     jest
       .spyOn(useTableWithPagination, 'useTableWithPagination')
       .mockImplementation(() => objEmptyResponse as any)
 
-    const { container } = render(<PrimaryOfferings />)
+    render(<PrimaryOfferings />)
 
-    expect(container).toBeEmptyDOMElement()
+    expect(NoOffers).toHaveBeenCalledTimes(1)
   })
 
   it('renders DSOCard component with correct props, should match snapshot', () => {
@@ -82,5 +97,24 @@ describe('PrimaryOfferings', () => {
       {}
     )
     expect(container).toMatchSnapshot()
+  })
+
+  it('renders DSOCardsCarousel component with correct props when isMiniLaptop is true', () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isMiniLaptop: true
+    } as any)
+
+    jest
+      .spyOn(useTableWithPagination, 'useTableWithPagination')
+      .mockImplementation(() => objSuccessfulResponse as any)
+
+    const { container } = render(<PrimaryOfferings />)
+
+    expect(DSOCardsCarousel).toHaveBeenCalledWith(
+      expect.objectContaining({
+        totalSlides: objSuccessfulResponse.items.length
+      }),
+      {}
+    )
   })
 })

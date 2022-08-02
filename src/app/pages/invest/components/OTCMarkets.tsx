@@ -11,8 +11,15 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useFeaturedPair } from 'app/pages/invest/hooks/useFeaturedPair'
 import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 import { Count } from 'app/pages/invest/components/Count'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/DSOCardsCarousel'
+import { Slide } from 'pure-react-carousel'
+import Box from '@mui/material/Box'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const OTCMarket = () => {
+  const classes = useStyles()
+  const { isMiniLaptop } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const otcMarketSearch = getFilterValue('otcMarketSearch')
@@ -26,18 +33,58 @@ export const OTCMarket = () => {
   })
   const { data, isLoading } = useFeaturedPair()
 
-  const classes = useStyles()
-
-  if (status === 'loading' || items.length === undefined) {
-    return null
-  }
-
   const activeDSOs = items.filter(
     item => (item as any)?.dso === data?.listing?.dso?._id
   )
-  if (isLoading || activeDSOs.length === 0) {
+
+  if (status === 'loading' || isLoading) {
     return null
   }
+
+  const renderItems = activeDSOs as DigitalSecurityOffering[]
+
+  const renderContent = () => {
+    if (activeDSOs.length === 0) {
+      return <NoOffers />
+    }
+
+    if (isMiniLaptop) {
+      return (
+        <DSOCardsCarousel totalSlides={renderItems.length}>
+          {renderItems.map((otc, i) => (
+            <Slide index={i} key={otc._id} className='custom'>
+              <Box paddingRight={1.5} height='100%'>
+                <DSOCard
+                  type={'OTC'}
+                  data={otc}
+                  viewURL={InvestRoute.trading}
+                  key={otc._id}
+                />
+              </Box>
+            </Slide>
+          ))}
+        </DSOCardsCarousel>
+      )
+    }
+
+    return (
+      <Grid container justifyContent={'flex-end'}>
+        <Grid container item wrap={'wrap'} className={classes.container}>
+          {renderItems.map(otc => (
+            <DSOCard
+              type={'OTC'}
+              data={otc}
+              viewURL={InvestRoute.view}
+              key={otc._id}
+            />
+          ))}
+        </Grid>
+        {/* Put table pagination here when we will have multiple featured pairs. Take
+      it from Primary Offerings, it's identical */}
+      </Grid>
+    )
+  }
+
   return (
     <Grid container direction='column' spacing={4}>
       <Grid item>
@@ -45,22 +92,7 @@ export const OTCMarket = () => {
           OTC Market <Count value={activeDSOs.length} />
         </Typography>
       </Grid>
-      <Grid item>
-        <Grid container justifyContent={'flex-end'}>
-          <Grid container item wrap={'wrap'} className={classes.container}>
-            {(activeDSOs as DigitalSecurityOffering[]).map((otc, i) => (
-              <DSOCard
-                type={'OTC'}
-                data={otc}
-                viewURL={InvestRoute.trading}
-                key={otc._id}
-              />
-            ))}
-          </Grid>
-          {/* Put table pagination here when we will have multiple featured pairs. Take
-      it from Primary Offerings, it's identical */}
-        </Grid>
-      </Grid>
+      <Grid item>{renderContent()}</Grid>
     </Grid>
   )
 }
