@@ -149,7 +149,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                     <h6
                       class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
                     >
-                      100000
+                      100000 token symbol
                     </h6>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                     <h6
                       class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
                     >
-                      100000 token symbol
+                      100000 SGD
                     </h6>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                     <h6
                       class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
                     >
-                      Minimum Investment
+                      Minimum Amount
                     </h6>
                   </div>
                   <div
@@ -218,7 +218,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                     <h6
                       class="MuiTypography-root MuiTypography-subtitle1 css-3phns2-MuiTypography-root"
                     >
-                      Minimum Investment
+                      Minimum Units
                     </h6>
                   </div>
                   <div

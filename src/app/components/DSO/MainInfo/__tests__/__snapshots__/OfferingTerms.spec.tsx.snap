@@ -39,7 +39,7 @@ exports[`OfferingsTerms renders without errors 1`] = `
             <h6
               class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
             >
-              1
+              1 Month
             </h6>
           </div>
         </div>
