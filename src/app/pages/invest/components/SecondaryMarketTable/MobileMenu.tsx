@@ -1,5 +1,5 @@
 import { Box, Drawer, Grid, IconButton, Typography } from '@mui/material'
-import { useStyles } from 'app/pages/accounts/pages/banks/pages/BanksList/MobileMenu.styles'
+import { useStyles } from 'ui/CompactTable/MobileMenu.styles'
 import React, { useContext, useMemo } from 'react'
 import { Icon } from 'ui/Icons/Icon'
 import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
