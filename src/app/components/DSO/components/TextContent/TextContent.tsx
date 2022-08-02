@@ -12,7 +12,7 @@ export const TextContent = ({ content, title }: TextContentProps) => {
   const [maxHeight, setMaxHeight] = useState<number | string>(max)
   const [scrollHeight, setScrollHeight] = useState<number | undefined>()
   const contentRef = useRef<HTMLDivElement>(null)
-  const { overlay } = useStyles()
+  const { overlay, button } = useStyles()
 
   useEffect(() => {
     setScrollHeight(contentRef?.current?.scrollHeight)
@@ -43,10 +43,7 @@ export const TextContent = ({ content, title }: TextContentProps) => {
               fullWidth
               onClick={setMaxToAuto}
               disableElevation
-              sx={{
-                backgroundColor: 'rgba(76, 136, 255, 0.16)',
-                color: '#4C88FF'
-              }}
+              className={button}
             >
               Read More
             </Button>
