@@ -48,7 +48,7 @@ export const compactColumns = [
     key: '_id',
     label: 'Transaction ID',
     render: (val: string, _row: CashWithdrawal | CashDeposit) =>
-      `${val.substring(0, 5)}...`
+      `${val.substring(0, 15)}...`
   },
   ...columns.slice(1)
 ]

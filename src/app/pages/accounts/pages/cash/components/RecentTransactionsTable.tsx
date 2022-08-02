@@ -32,6 +32,7 @@ export const RecentTransactionsTable: React.FC = () => {
       )}
       columns={columns}
       noHeader={isTablet}
+      paginationPlacement={isTablet ? 'both' : 'bottom'}
     >
       {isTablet
         ? (props: TableViewRendererProps<CashWithdrawal | CashDeposit>) => (

@@ -35,6 +35,7 @@ export const CashTable: React.FC = () => {
         actions={Actions}
         method='GET'
         actionHeader='Actions'
+        paginationPlacement='none'
         noHeader={isTablet}
       >
         {isTablet
