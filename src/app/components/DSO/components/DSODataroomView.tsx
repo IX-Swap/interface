@@ -17,9 +17,9 @@ export const DSODataroomView = ({ dso }: DSODataroomViewProps) => {
   )
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={5}>
       {dso.subscriptionDocument !== undefined && (
-        <>
+        <Grid item xs={12} container spacing={3}>
           <Grid item xs={12}>
             <Typography variant='h5'>Subscription Document</Typography>
           </Grid>
@@ -28,11 +28,11 @@ export const DSODataroomView = ({ dso }: DSODataroomViewProps) => {
               <Documents documents={[dso.subscriptionDocument]} />
             </Grid>
           </Grid>
-        </>
+        </Grid>
       )}
 
       {supportingDocuments.length > 0 && (
-        <>
+        <Grid item xs={12} container spacing={2}>
           <Grid item xs={12}>
             <Typography variant='h5'>Supporting Documents</Typography>
           </Grid>
@@ -41,11 +41,11 @@ export const DSODataroomView = ({ dso }: DSODataroomViewProps) => {
               <Documents documents={supportingDocuments} />
             </Grid>
           </Grid>
-        </>
+        </Grid>
       )}
 
       {otherDocuments.length > 0 && (
-        <>
+        <Grid item xs={12} container spacing={2}>
           <Grid item xs={12}>
             <Typography variant='h5'>Other Documents</Typography>
           </Grid>
@@ -54,7 +54,7 @@ export const DSODataroomView = ({ dso }: DSODataroomViewProps) => {
               <Documents documents={otherDocuments} />
             </Grid>
           </Grid>
-        </>
+        </Grid>
       )}
     </Grid>
   )

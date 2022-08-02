@@ -102,7 +102,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                   class="MuiBox-root css-10zunq2"
                 >
                   <a
-                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButtonBase-root makeStyles-button-13 css-1b0mpvw-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButtonBase-root makeStyles-button-14 css-1b0mpvw-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
                     href="/app/invest/offerings/5f3152ef2d2dfb4291fccce2/1/view/make-investment"
                     tabindex="0"
                   >
@@ -119,7 +119,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
           >
             <div
-              class="ForwardRef(Box)-root-20 ForwardRef(Box)-root-21 MuiBox-root css-0"
+              class="ForwardRef(Box)-root-21 ForwardRef(Box)-root-22 MuiBox-root css-0"
             />
           </div>
           <div
@@ -314,7 +314,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="ForwardRef(Box)-root-20 ForwardRef(Box)-root-22 MuiBox-root css-0"
+          class="ForwardRef(Box)-root-21 ForwardRef(Box)-root-23 MuiBox-root css-0"
         />
         <div
           class="MuiBox-root css-12oxtbe"
