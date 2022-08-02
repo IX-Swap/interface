@@ -16,23 +16,28 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={6} md={3}>
-        <OverviewValue label='Total Units' value={totalUnits ?? ''} />
-      </Grid>
-      <Grid item xs={6} md={3}>
         <OverviewValue
-          label='Total Fundraising Amount'
-          value={`${dso.totalFundraisingAmount ?? ''} ${dso.tokenSymbol}` ?? ''}
+          label='Total Units'
+          value={`${totalUnits} ${dso.tokenSymbol}` ?? ''}
         />
       </Grid>
       <Grid item xs={6} md={3}>
         <OverviewValue
-          label='Minimum Investment'
+          label='Total Fundraising Amount'
+          value={
+            `${dso.totalFundraisingAmount ?? ''} ${dso.currency.symbol}` ?? ''
+          }
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <OverviewValue
+          label='Minimum Amount'
           value={formatMoney(dso.minimumInvestment, dso.currency.symbol, true)}
         />
       </Grid>
       <Grid item xs={6} md={3}>
         <OverviewValue
-          label='Minimum Investment'
+          label='Minimum Units'
           value={formatMoney(minimumTokenInvestment, dso.tokenSymbol, true)}
         />
       </Grid>
