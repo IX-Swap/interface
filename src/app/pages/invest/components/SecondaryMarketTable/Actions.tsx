@@ -15,8 +15,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: 14,
     maxWidth: 90,
     height: 40,
-    color: '#4C88FF',
-    backgroundColor: 'rgba(76, 136, 255, 0.16)',
+    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.button.bgLight,
     boxShadow: 'none',
     '&:hover': {
       boxShadow: 'none'
