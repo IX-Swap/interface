@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid, Button, Typography } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { InvestRoute } from 'app/pages/invest/router/config'
 import { SecondaryMarketTable } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketTable'
 import { OverviewPageFilters } from 'app/pages/invest/components/OverviwPageFilters'
 import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
@@ -15,6 +14,8 @@ import { getIdFromObj } from 'helpers/strings'
 import BannerDesktop from '../../../../assets/images/ixape.png'
 import BannerMobile from '../../../../assets/images/ixape_mobile.png'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { accountsURL } from 'config/apiURL'
 
 export const InvestOverview = () => {
   const { user } = useAuth()
@@ -23,9 +24,9 @@ export const InvestOverview = () => {
 
   const { total } = useTableWithPagination({
     queryKey: investQueryKeys.getCommitmentsByUserId(userId),
-    uri: `/issuance/commitments/list/${userId}`,
+    uri: accountsURL.commitments.getAllByUserId(userId),
     queryEnabled: true,
-    defaultFilter: {},
+    defaultFilter: { fundStatus: 'Not funded' },
     defaultRowsPerPage: 5
   })
 
@@ -56,7 +57,7 @@ export const InvestOverview = () => {
             <Grid item sx={{ ml: { md: 2 }, mt: { xs: 2, md: 0 } }}>
               <Button
                 component={AppRouterLinkComponent}
-                to={InvestRoute.commitments}
+                to={AccountsRoute.commitments}
                 color='primary'
                 variant='outlined'
                 size='large'

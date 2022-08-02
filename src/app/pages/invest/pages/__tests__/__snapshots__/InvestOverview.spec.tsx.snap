@@ -170,7 +170,7 @@ exports[`InvestOverview should match snapshot 1`] = `
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeLarge MuiButton-outlinedSizeLarge MuiButton-disableElevation MuiButtonBase-root  css-pkrwml-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
-                  href="/app/invest/commitments"
+                  href="/app/accounts/commitments"
                   style="padding-right: 0px; padding-left: 0px;"
                   tabindex="0"
                 >
