@@ -59,7 +59,7 @@ export default function PayoutItemForUser({
     const getPayoutItem = async () => {
       const data = await getPayoutItemById(+payoutId)
       if (data?.id) {
-        setPayout({ ...data, status: 'delayed' })
+        setPayout(data)
       }
     }
     const getMyAmount = async () => {
