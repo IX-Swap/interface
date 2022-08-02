@@ -8,11 +8,11 @@ import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
-import { OTPWithdraw } from 'app/pages/accounts/pages/withdraw/components/OTPWithdraw'
+import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
 
 jest.mock('app/pages/accounts/pages/banks/hooks/useBanksData')
-jest.mock('app/pages/accounts/pages/withdraw/components/OTPWithdraw', () => ({
-  OTPWithdraw: jest.fn(() => null)
+jest.mock('app/pages/accounts/components/OTPDialog/OTPInputField', () => ({
+  OTPInputField: jest.fn(() => null)
 }))
 const useBanksDataMock = useBanksData as jest.Mock<
   Partial<ReturnType<typeof useBanksData>>
@@ -43,7 +43,7 @@ describe('Setup', () => {
         <Setup />
       </Form>
     )
-    expect(OTPWithdraw).toBeCalledWith(
+    expect(OTPInputField).toBeCalledWith(
       expect.objectContaining({
         disabled: true
       }),

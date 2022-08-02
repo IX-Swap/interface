@@ -5,7 +5,7 @@ import {
   useTheme,
   useMediaQuery
 } from '@mui/material'
-import { OTPDialogContent } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
+import { OTPDialogContent } from 'app/pages/accounts/components/OTPDialog/OTPDialog'
 import React from 'react'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 
@@ -38,7 +38,7 @@ export const CommitmentInvestOTPDialog = ({
         }
       }}
     >
-      <Box py={{ xs: 1, md: 4 }} px={{ xs: 1, md: 10 }}>
+      <Box py={{ xs: 1, md: 2 }} px={{ xs: 1, md: 10 }}>
         <DialogTitle sx={{ p: isMobile ? 3 : undefined }}>
           <Typography
             variant='h5'
@@ -48,7 +48,7 @@ export const CommitmentInvestOTPDialog = ({
             Are you sure you want to invest in this deal?
           </Typography>
         </DialogTitle>
-        <Box py={2}>
+        <Box>
           <Typography component='p' variant='body1' align='center'>
             The required balance will be deducted from your account
           </Typography>

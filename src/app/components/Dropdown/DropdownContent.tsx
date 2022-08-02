@@ -1,8 +1,8 @@
-import React, { createElement, useState } from 'react'
 import { ClickAwayListener, Paper, Popper } from '@mui/material'
-import { bindPopper, InjectedProps } from 'material-ui-popup-state'
-import { useStyles } from 'app/components/Dropdown/DropdownContent.styles'
 import { DropdownProps } from 'app/components/Dropdown/Dropdown'
+import { useStyles } from 'app/components/Dropdown/DropdownContent.styles'
+import { bindPopper, InjectedProps } from 'material-ui-popup-state'
+import React, { createElement } from 'react'
 
 export interface DropdownContentProps {
   popupState: InjectedProps
@@ -13,8 +13,7 @@ export interface DropdownContentProps {
 }
 
 export const DropdownContent = (props: DropdownContentProps) => {
-  const { popupState, arrow, placement, children, anchorEl } = props
-  const [arrowRef, setArrowRef] = useState<any>(null)
+  const { popupState, placement, children, anchorEl } = props
   const classes = useStyles()
   const popperProps = bindPopper(popupState)
   const handleClickAway = () => {
@@ -30,19 +29,9 @@ export const DropdownContent = (props: DropdownContentProps) => {
       className={classes.popper}
       disablePortal
       anchorEl={anchorEl.current}
-      modifiers={[
-        {
-          name: 'arrow',
-          enabled: true,
-          options: {
-            element: arrowRef
-          }
-        }
-      ]}
     >
       <ClickAwayListener onClickAway={handleClickAway}>
         <Paper>
-          {arrow && <span className={classes.arrow} ref={setArrowRef} />}
           {createElement(children, {
             injectedProps: popupState,
             popperProps
