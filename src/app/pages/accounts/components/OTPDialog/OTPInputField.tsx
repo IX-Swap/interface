@@ -33,7 +33,7 @@ export const OTPInputField = ({ disabled }: { disabled: boolean }) => {
           >
             <Typography color={theme.palette.dialog.color}>OTP </Typography>
             <Typography color={theme.palette.text.secondary}>
-              &nbsp;(code from authenticator)
+              &nbsp;(code from your authenticator)
             </Typography>
           </Box>
         }
