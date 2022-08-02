@@ -2,9 +2,7 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   cell: {
-    paddingBottom: theme.spacing(1.5),
-    paddingRight: 0,
-    paddingTop: 8
+    padding: theme.spacing(1, 0, 1.5, 0)
   },
   card: {
     backgroundColor: theme.palette.background.paper,
