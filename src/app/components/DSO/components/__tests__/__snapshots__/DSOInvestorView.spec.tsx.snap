@@ -513,7 +513,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                   <h6
                     class="MuiTypography-root MuiTypography-subtitle1 css-1fjywxu-MuiTypography-root"
                   >
-                    -
+                    0
                   </h6>
                 </div>
               </div>
