@@ -25,7 +25,7 @@ export const Withdraw = () => {
             title='Cash Withdrawal'
             styled={false}
             variant='h1'
-            alignment='center'
+            alignment={isTablet ? 'flex-start' : 'center'}
             showBreadcrumbs={false}
             startComponent={
               <BackLink to={AccountsRoute.cash} title='Back to Cash page' />

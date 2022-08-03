@@ -1,19 +1,18 @@
 import {
-  formatMoney,
-  toPercentage,
-  generateRandom,
-  formatAmount,
   addSymbol,
-  formatTokenBalance,
-  isNotNullish,
+  formatAmount,
   formatAmountValue,
-  getFilledRoundedPercentage,
-  getRoundedPercentage,
-  renderTotal,
-  getOrderCurrency,
-  renderNewAmount,
+  formatMoney,
+  formatTokenBalance,
+  generateRandom,
   getFilledPercentageFromMatches,
-  isNullish
+  getFilledRoundedPercentage,
+  getOrderCurrency,
+  getRoundedPercentage,
+  isNotNullish,
+  isNullish,
+  renderTotal,
+  toPercentage
 } from 'helpers/numbers'
 import { order1, orderWithSettled } from '__fixtures__/otcOrders'
 
@@ -134,14 +133,6 @@ describe('renderTotal', () => {
 describe('getOrderCurrency', () => {
   it('get correct currency', () => {
     expect(getOrderCurrency(order1)).toEqual('USD')
-  })
-})
-
-describe('renderNewAmount', () => {
-  it('get correct amount format', () => {
-    expect(renderNewAmount(90586)).toEqual('90 586')
-    expect(renderNewAmount(900586)).toEqual('900 586')
-    expect(renderNewAmount(900586.45)).toEqual('900 586.45')
   })
 })
 

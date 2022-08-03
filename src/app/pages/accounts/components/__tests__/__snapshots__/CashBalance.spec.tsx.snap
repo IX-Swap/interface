@@ -35,7 +35,7 @@ exports[`CashBalance should match snapshot 1`] = `
             <p
               class="MuiTypography-root MuiTypography-body1 css-elf1yz-MuiTypography-root"
             >
-               246
+               246.00
                
               <p
                 class="MuiTypography-root MuiTypography-body1 css-yh93o2-MuiTypography-root"
