@@ -1,19 +1,18 @@
 import {
-  formatMoney,
-  toPercentage,
-  generateRandom,
-  formatAmount,
   addSymbol,
-  formatTokenBalance,
-  isNotNullish,
+  formatAmount,
   formatAmountValue,
-  getFilledRoundedPercentage,
-  getRoundedPercentage,
-  renderTotal,
-  getOrderCurrency,
-  renderNewAmount,
+  formatMoney,
+  formatTokenBalance,
+  generateRandom,
   getFilledPercentageFromMatches,
-  isNullish
+  getFilledRoundedPercentage,
+  getOrderCurrency,
+  getRoundedPercentage,
+  isNotNullish,
+  isNullish,
+  renderTotal,
+  toPercentage
 } from 'helpers/numbers'
 import { order1, orderWithSettled } from '__fixtures__/otcOrders'
 
