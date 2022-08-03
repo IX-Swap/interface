@@ -91,7 +91,7 @@ export const VirtualAccountBalance = () => {
             <Grid item>
               <Button
                 component={Link}
-                to={AccountsRoute.depositCash}
+                to={AccountsRoute.deposit}
                 variant='outlined'
                 size='large'
                 className={classes.depositLink}

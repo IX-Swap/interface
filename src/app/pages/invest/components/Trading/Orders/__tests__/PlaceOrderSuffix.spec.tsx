@@ -85,7 +85,7 @@ describe('PlaceOrderSuffix', () => {
 
     expect(AppRouterLink).toHaveBeenCalledWith(
       expect.objectContaining({
-        to: AccountsRoute.depositCash
+        to: AccountsRoute.deposit
       }),
       {}
     )
