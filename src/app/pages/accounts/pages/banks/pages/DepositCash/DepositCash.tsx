@@ -1,6 +1,5 @@
 import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { CashDepositButton } from 'app/pages/accounts/components/CashDepositButton/CashDepositButton'
 import { CashDepositVirtualAccountDetails } from 'app/pages/accounts/components/CashDepositVirtualAccountDetails/CashDepositVirtualAccountDetails'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { AutoAssignVirtualAccountForm } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/AutoAssignVirtualAccountForm'
@@ -43,11 +42,6 @@ export const DepositCash: React.FC = () => {
                 handleChange={handleChange}
                 defaultValue={data.accountNumber}
               />
-            </RootContainer>
-          </Grid>
-          <Grid item className={styles.wrapper}>
-            <RootContainer>
-              <CashDepositButton virtualAccountId={selectedAccount} />
             </RootContainer>
           </Grid>
         </>
