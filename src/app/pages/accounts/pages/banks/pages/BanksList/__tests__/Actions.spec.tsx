@@ -13,21 +13,17 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('Actions', () => {
   const props: ActionsProps = {
-    item: bank
+    item: bank,
+    isLoading: false,
+    removeBankHandler: jest.fn()
   }
 
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', async () => {
-    render(<Actions {...props} />)
-  })
-
   it('displays bank details dialog box correctly', async () => {
-    const { getByTestId, getByText, getByRole, queryByText } = render(
-      <Actions {...props} />
-    )
+    const { getByTestId, getByText, getByRole } = render(<Actions {...props} />)
     const moreButton = getByTestId('more-button') as HTMLButtonElement
 
     fireEvent.click(moreButton, { bubbles: true })
@@ -45,7 +41,7 @@ describe('Actions', () => {
     expect(getByText(/Bank Account Information/i)).toBeTruthy()
   })
 
-  it('displays otp dialog box correctly', () => {
+  it('invokes removeBankHandler on delete button click ', () => {
     const { getByTestId, getByText, getByRole } = render(<Actions {...props} />)
     const moreButton = getByTestId('more-button') as HTMLButtonElement
 
@@ -61,7 +57,7 @@ describe('Actions', () => {
 
     fireEvent.click(removeButton, { bubbles: true })
 
-    expect(getByText(/Are you sure you want to delete account?/i)).toBeTruthy()
+    expect(props.removeBankHandler).toBeCalled()
   })
 
   it('handles edit action correctly', async () => {
