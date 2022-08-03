@@ -11,8 +11,8 @@ import { ExpandButton } from './ExpandButton'
 export interface CompactBodyProps<T extends Serialized>
   extends TableViewRendererProps<T> {
   renderRow?: (props: CompactRowProps<T>) => JSX.Element
-  renderActionButton?: (item: T) => JSX.Element
-  menu: React.ReactElement
+  renderActionButton?: (item: T) => JSX.Element | null
+  menu?: React.ReactElement
 }
 
 export interface RenderCellProps<T extends Serialized>
@@ -84,7 +84,7 @@ export const CompactTable = <T extends Serialized>(
           </TableRow>
         ))}
       </TableBody>
-      {menu}
+      {menu !== undefined ? menu : null}
     </>
   )
 }

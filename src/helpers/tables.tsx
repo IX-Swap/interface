@@ -7,11 +7,11 @@ import {
   IndividualIdentity,
   Personnel
 } from 'app/pages/identity/types/forms'
+import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
+import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
 import React from 'react'
-import { ReactComponent as SGDIcon } from 'assets/icons/flags/sgd.svg'
-import { ReactComponent as USDIcon } from 'assets/icons/flags/usd.svg'
 import { Asset } from 'types/asset'
 import { AssetBalance, ConvertedAssetBalance } from 'types/balance'
 import { CashDeposit } from 'types/cashDeposit'

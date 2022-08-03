@@ -320,6 +320,7 @@ export const cashDeposit: CashDeposit = {
   user: '???',
   bankAccount: bank,
   individual,
+  type: 'Credit',
   corporates: [corporate],
   asset,
   identity: {
@@ -336,6 +337,7 @@ export const cashWithdrawal: CashWithdrawal = {
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   user: 'user',
+  type: 'Debit',
   amount: 100000,
   corporates: [],
   hold: 'hold',

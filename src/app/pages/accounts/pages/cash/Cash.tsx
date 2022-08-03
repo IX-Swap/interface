@@ -5,6 +5,7 @@ import { RootContainer } from 'ui/RootContainer'
 import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
 import { NoCashButtons } from './components/NoCashButtons'
 import { CashBalance } from 'app/pages/accounts/components/CashBalance'
+import { RecentTransactionsTable } from './components/RecentTransactionsTable'
 
 export const Cash = () => {
   return (
@@ -27,6 +28,18 @@ export const Cash = () => {
               Cash
             </Typography>
             <CashTable />
+            <NoCashButtons />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              variant='h4'
+              display={'inline-flex'}
+              alignItems={'center'}
+              mb={3}
+            >
+              Recent Transactions
+            </Typography>
+            <RecentTransactionsTable />
             <NoCashButtons />
           </Grid>
         </Grid>

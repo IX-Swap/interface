@@ -54,7 +54,7 @@ export interface TableViewProps<T> {
   actionHeader?: string
   noHeader?: boolean
   method?: 'POST' | 'GET'
-  paginationPlacement?: 'top' | 'bottom'
+  paginationPlacement?: 'top' | 'bottom' | 'both' | 'none'
   labelRowsPerPage?: React.ReactNode
   activeSortLabel?: string
 }
@@ -217,7 +217,7 @@ export const TableView = <T,>({
 
   return (
     <Grid container direction='column'>
-      {paginationPlacement === 'top' && renderPagination()}
+      {['top', 'both'].includes(paginationPlacement) && renderPagination()}
       <Grid item>
         {renderTableLoading()}
         <Paper style={{ backgroundColor: 'inherit' }}>
@@ -262,7 +262,7 @@ export const TableView = <T,>({
           </TableContainer>
         </Paper>
       </Grid>
-      {paginationPlacement === 'bottom' && renderPagination()}
+      {['bottom', 'both'].includes(paginationPlacement) && renderPagination()}
     </Grid>
   )
 }

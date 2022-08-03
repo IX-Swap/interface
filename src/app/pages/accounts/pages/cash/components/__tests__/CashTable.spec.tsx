@@ -1,15 +1,12 @@
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
+import { columns } from 'app/pages/accounts/pages/cash/components/columns'
+import { balanceQueryKeys } from 'config/queryKeys'
+import * as useAuthHook from 'hooks/auth/useAuth'
 import React from 'react'
 import { renderWithUserStore } from 'test-utils'
-import { CashTable } from 'app/pages/accounts/pages/cash/components/CashTable'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { user } from '__fixtures__/user'
-import { columns } from 'app/pages/accounts/pages/cash/components/columns'
-import * as useAuthHook from 'hooks/auth/useAuth'
-import { balanceQueryKeys } from 'config/queryKeys'
-import {
-  ActiveElementContext,
-  ActiveElementContextWrapper
-} from 'app/context/ActiveElementContextWrapper'
 
 jest.mock('ui/UIKit/TablesKit/components/TableView/TableView', () => ({
   TableView: jest.fn(() => null)

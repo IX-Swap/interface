@@ -56,6 +56,9 @@ export interface BaseFilter {
   asset?: string
   type?: string
   search?: string
+  sortBy?: string
+  orderBy?: string | number
+  sortIndex?: string | number
   searchInvestorName?: string
   listingKeyword?: string
   from?: string
