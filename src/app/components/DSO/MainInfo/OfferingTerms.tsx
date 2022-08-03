@@ -30,10 +30,17 @@ export const OfferingTerms = ({ dso }: OfferingTermsProps) => {
       ? `${getPercentageValue(dso.equityMultiple)}%`
       : undefined
 
+  const investmentPeriod =
+    dso.investmentPeriod !== undefined
+      ? `${dso.investmentPeriod} ${
+          dso.investmentPeriod === 1 ? 'Month' : 'Months'
+        }`
+      : undefined
+
   const expandedComponent = () => (
     <>
       <Grid item xs={12}>
-        <Info label='Investment Period' value={dso.investmentPeriod} />
+        <Info label='Investment Period' value={investmentPeriod} />
       </Grid>
       <Grid item xs={12}>
         <Info label='Dividend Yield' value={dividendYield} />
