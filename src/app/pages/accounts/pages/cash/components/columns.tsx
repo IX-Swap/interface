@@ -1,3 +1,4 @@
+import { renderMoney } from 'helpers/numbers'
 import { renderAmount, renderCurrencyLabel } from 'helpers/tables'
 import { ConvertedAssetBalance } from 'types/balance'
 import { TableColumn } from 'types/util'
@@ -22,7 +23,7 @@ export const columns: Array<TableColumn<ConvertedAssetBalance>> = [
   {
     key: 'balance.usdValue',
     label: 'USD Value',
-    render: renderAmount
+    render: (value?: string) => renderMoney(value, 'USD')
   },
   {
     key: 'accountNumber',
