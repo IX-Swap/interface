@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
 import { Grid, Paper, Typography } from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
-import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
-import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
-import { Select } from 'ui/Select/Select'
+import { renderMoney } from 'helpers/numbers'
+import React, { useState } from 'react'
 import { Icon } from 'ui/Icons/Icon'
-import { renderNewAmount } from 'helpers/numbers'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { useStyles } from './CashBalance.styles'
 
 export const CashBalance = () => {
@@ -54,7 +54,7 @@ export const CashBalance = () => {
             }}
             renderValue={() => (
               <Typography fontSize={24} fontWeight={600} display={'inline'}>
-                {renderNewAmount(getSumBalanceOfAllAccounts())}{' '}
+                {renderMoney(getSumBalanceOfAllAccounts(), '')}{' '}
                 <Typography
                   fontSize={'inherit'}
                   fontWeight={'inherit'}

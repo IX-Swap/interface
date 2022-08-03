@@ -137,14 +137,6 @@ describe('getOrderCurrency', () => {
   })
 })
 
-describe('renderNewAmount', () => {
-  it('get correct amount format', () => {
-    expect(renderNewAmount(90586)).toEqual('90 586')
-    expect(renderNewAmount(900586)).toEqual('900 586')
-    expect(renderNewAmount(900586.45)).toEqual('900 586.45')
-  })
-})
-
 describe('getFilledPercentageFromMatches', () => {
   it('calculate match percentage', () => {
     expect(getFilledPercentageFromMatches({ row: orderWithSettled })).toEqual(
