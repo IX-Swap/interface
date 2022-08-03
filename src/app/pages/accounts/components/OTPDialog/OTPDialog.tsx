@@ -79,7 +79,7 @@ export const OTPDialog = (props: OTPDialogProps) => {
   const { close, open, title } = props
 
   return (
-    <UIDialog open={open} maxWidth='sm' onClose={close}>
+    <UIDialog open={open} maxWidth='sm' disablePortal onClose={close}>
       <DialogTitle>
         <Box textAlign='center' mt={3}>
           <Typography variant='h3'>{title ?? 'Cash Withdrawal'}</Typography>
