@@ -6,9 +6,11 @@ import { Setup } from 'app/pages/accounts/pages/withdraw/components/Setup'
 import { useStyles } from 'app/pages/accounts/pages/withdraw/components/Withdraw.styles'
 import React from 'react'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Withdraw = () => {
   const { container, formWrapper, headerContainer } = useStyles()
+  const { isTablet } = useAppBreakpoints()
   return (
     <Grid
       container
@@ -28,6 +30,7 @@ export const Withdraw = () => {
             startComponent={
               <BackLink to={AccountsRoute.cash} title='Back to Cash page' />
             }
+            titleStyle={{ fontSize: isTablet ? 24 : 32, height: 'initial' }}
             mainWrapperSX={{
               flexDirection: { xs: 'column-reverse', md: 'row' },
               alignItems: { xs: 'initial', md: 'center' }
