@@ -1,6 +1,5 @@
 import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as AssetBalanceIcon } from 'assets/icons/navigation/asset-balance.svg'
-import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as TransactionIcon } from 'assets/icons/navigation/transaction.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
@@ -15,7 +14,6 @@ export const AccountsRoute = {
   transactions: makeURL(['app', 'accounts', 'transactions']),
   deposit: '/app/accounts/cash/deposit',
   withdraw: '/app/accounts/cash/withdraw',
-  withdrawCash: makeURL(['app', 'accounts', 'cashWithdrawal']),
   withdrawalAddresses: makeURL(['app', 'accounts', 'withdrawalAddresses']),
   withdrawalAddressesCreate: makeURL([
     'app',
@@ -36,12 +34,6 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     path: AccountsRoute.commitments,
     color: '#e6d200',
     icon: DSWithdrawalIcon
-  },
-  {
-    color: '#e6d200',
-    icon: CashWithdrawalIcon,
-    path: AccountsRoute.withdrawCash,
-    label: 'Cash Withdrawals'
   },
   {
     label: 'Digital Securities',
