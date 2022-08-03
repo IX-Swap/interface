@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
 import { Grid } from '@mui/material'
-import { RecentDeposits } from 'app/pages/accounts/pages/banks/pages/DepositCash/RecentDeposits'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CashDepositButton } from 'app/pages/accounts/components/CashDepositButton/CashDepositButton'
 import { CashDepositVirtualAccountDetails } from 'app/pages/accounts/components/CashDepositVirtualAccountDetails/CashDepositVirtualAccountDetails'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { AutoAssignVirtualAccountForm } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/AutoAssignVirtualAccountForm'
-import { VSpacer } from 'components/VSpacer'
-import { RootContainer } from 'ui/RootContainer'
 import { useStyles } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositCash.styles'
+import React, { useState } from 'react'
+import { RootContainer } from 'ui/RootContainer'
 
 export const DepositCash: React.FC = () => {
   const { data, isLoading } = useVirtualAccount()
@@ -54,12 +52,6 @@ export const DepositCash: React.FC = () => {
           </Grid>
         </>
       )}
-      <Grid item className={styles.wrapper}>
-        <RootContainer>
-          <VSpacer size='medium' />
-          <RecentDeposits virtualAccountNumber={selectedAccount} />
-        </RootContainer>
-      </Grid>
     </Grid>
   )
 }
