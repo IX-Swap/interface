@@ -31,18 +31,22 @@ describe('useAppNavigation', () => {
       result: { current }
     } = renderHook(() => useAppNavigation())
 
-    expect(current.links.length).toEqual(3)
+    expect(current.links.length).toEqual(4)
     expect(current.links[0]).toEqual({
+      label: 'Home',
+      link: AppRoute.home
+    })
+    expect(current.links[1]).toEqual({
       label: 'Accounts',
       link: AccountsRoute.landing,
       icon: AccountsIcon
     })
-    expect(current.links[1]).toEqual({
+    expect(current.links[2]).toEqual({
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
     })
-    expect(current.links[2]).toEqual({
+    expect(current.links[3]).toEqual({
       label: 'Education Centre',
       link: AppRoute.educationCentre
     })
@@ -57,22 +61,26 @@ describe('useAppNavigation', () => {
       result: { current }
     } = renderHook(() => useAppNavigation())
 
-    expect(current.links.length).toEqual(4)
+    expect(current.links.length).toEqual(5)
     expect(current.links[0]).toEqual({
+      label: 'Home',
+      link: AppRoute.home
+    })
+    expect(current.links[1]).toEqual({
       label: 'Accounts',
       link: AccountsRoute.landing,
       icon: AccountsIcon
     })
-    expect(current.links[1]).toEqual({
+    expect(current.links[2]).toEqual({
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
     })
-    expect(current.links[2]).toEqual({
+    expect(current.links[3]).toEqual({
       label: 'Funds Management',
       link: FundsManagementRoute.dashboard
     })
-    expect(current.links[3]).toEqual({
+    expect(current.links[4]).toEqual({
       label: 'Education Centre',
       link: AppRoute.educationCentre
     })
@@ -85,27 +93,31 @@ describe('useAppNavigation', () => {
       result: { current }
     } = renderHook(() => useAppNavigation())
 
-    expect(current.links.length).toEqual(5)
+    expect(current.links.length).toEqual(6)
     expect(current.links[0]).toEqual({
+      label: 'Home',
+      link: AppRoute.home
+    })
+    expect(current.links[1]).toEqual({
       label: 'Accounts',
       link: AccountsRoute.landing,
       icon: AccountsIcon
     })
-    expect(current.links[1]).toEqual({
+    expect(current.links[2]).toEqual({
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
     })
-    expect(current.links[2]).toEqual({
+    expect(current.links[3]).toEqual({
       label: 'Funds Management',
       link: FundsManagementRoute.dashboard
     })
-    expect(current.links[3]).toEqual({
+    expect(current.links[4]).toEqual({
       label: 'Issuance',
       link: IssuanceRoute.dashboard,
       icon: IssuanceIcon
     })
-    expect(current.links[4]).toEqual({
+    expect(current.links[5]).toEqual({
       label: 'Education Centre',
       link: AppRoute.educationCentre
     })
@@ -120,31 +132,35 @@ describe('useAppNavigation', () => {
       result: { current }
     } = renderHook(() => useAppNavigation())
 
-    expect(current.links.length).toEqual(6)
+    expect(current.links.length).toEqual(7)
     expect(current.links[0]).toEqual({
+      label: 'Home',
+      link: AppRoute.home
+    })
+    expect(current.links[1]).toEqual({
       label: 'Accounts',
       link: AccountsRoute.landing,
       icon: AccountsIcon
     })
-    expect(current.links[1]).toEqual({
+    expect(current.links[2]).toEqual({
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
     })
-    expect(current.links[2]).toEqual({
+    expect(current.links[3]).toEqual({
       label: 'Funds Management',
       link: FundsManagementRoute.dashboard
     })
-    expect(current.links[3]).toEqual({
+    expect(current.links[4]).toEqual({
       label: 'Issuance',
       link: IssuanceRoute.dashboard,
       icon: IssuanceIcon
     })
-    expect(current.links[4]).toEqual({
+    expect(current.links[5]).toEqual({
       label: 'Education Centre',
       link: AppRoute.educationCentre
     })
-    expect(current.links[5]).toEqual({
+    expect(current.links[6]).toEqual({
       label: 'Authorizer',
       link: AuthorizerRoute.landing,
       icon: AuthorizerIcon
