@@ -53,6 +53,7 @@ export const payout = {
   claimAuthorization: (id: number) => `/payout/init/claim/${id}`,
   saveUserClaim: 'payout/claim',
   getUserClaim: (id: number) => `payout/claim/${id}`,
+  getTotalClaims: (id: number) => `payout/claims/total/${id}`,
 }
 
 export const kyc = {

@@ -11,6 +11,7 @@ import {
   deletePayoutItem,
   saveUserClaim,
   getUserClaim,
+  getTotalClaims,
   getClaimAuthorization,
 } from './actions'
 
@@ -156,6 +157,18 @@ export default createReducer<PayoutState>(initialState, (builder) =>
       state.error = null
     })
     .addCase(getUserClaim.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingRequest = false
+      state.error = errorMessage
+    })
+    .addCase(getTotalClaims.pending, (state) => {
+      state.loadingRequest = true
+      state.error = null
+    })
+    .addCase(getTotalClaims.fulfilled, (state) => {
+      state.loadingRequest = false
+      state.error = null
+    })
+    .addCase(getTotalClaims.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
     })
