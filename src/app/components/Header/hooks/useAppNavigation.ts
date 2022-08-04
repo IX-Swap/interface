@@ -43,6 +43,10 @@ export const useAppNavigation = () => {
 
   const links = [
     {
+      label: 'Home',
+      link: AppRoute.home
+    },
+    {
       label: 'Accounts',
       link: AccountsRoute.landing,
       icon: AccountsIcon
@@ -131,7 +135,8 @@ export const useAppNavigation = () => {
       !link.startsWith(AppPath.educationCentre) &&
       !link.startsWith(AppPath.identity) &&
       !link.startsWith(AppPath.security) &&
-      !link.startsWith(AppPath.notifications)
+      !link.startsWith(AppPath.notifications) &&
+      !link.startsWith(AppPath.home)
     )
   }
 
