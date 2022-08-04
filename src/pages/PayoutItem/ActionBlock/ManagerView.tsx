@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { t } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { useHistory } from 'react-router-dom'
@@ -9,6 +9,7 @@ import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
 import { routes } from 'utils/routes'
+import { useGetTotalClaims } from 'state/payout/hooks'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { formatDate } from '../utils'
@@ -20,8 +21,21 @@ interface Props {
 
 export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
   const history = useHistory()
+  const getTotalClaims = useGetTotalClaims()
 
   const { status, isPaid, tokenAmount, recordDate, id, startDate } = payout
+
+  const [totalClaims, handleTotalClaims] = useState(0)
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await getTotalClaims(id)
+      handleTotalClaims(res)
+    }
+    if (id) {
+      fetch()
+    }
+  }, [id])
 
   const goToEdit = () => {
     history.push(routes.editPayoutEvent(id))
@@ -37,7 +51,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken }) => {
               <CurrencyLogo currency={payoutToken} size="24px" />
               <Flex marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
                 payoutToken?.symbol ?? 'Payout Token'
-              } 345/1000`}</Flex>
+              } ${totalClaims}/${tokenAmount}`}</Flex>
             </Flex>
           </>
         )

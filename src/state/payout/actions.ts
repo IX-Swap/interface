@@ -72,6 +72,16 @@ export const getUserClaim: Readonly<{
   rejected: createAction('payout/getUserClaim/rejected'),
 }
 
+export const getTotalClaims: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/getTotalClaims/pending'),
+  fulfilled: createAction('payout/getTotalClaims/fulfilled'),
+  rejected: createAction('payout/getTotalClaims/rejected'),
+}
+
 export const getClaimAuthorization: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithoutPayload

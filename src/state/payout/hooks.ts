@@ -17,6 +17,7 @@ import {
   deletePayoutItem,
   saveUserClaim,
   getUserClaim,
+  getTotalClaims,
 } from './actions'
 import { useAddPopup } from 'state/application/hooks'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
@@ -406,6 +407,11 @@ export const getUserClaimReq = async (id: number) => {
   return result.data
 }
 
+export const getTotalClaimsReq = async (id: number) => {
+  const result = await apiService.get(payout.getTotalClaims(id))
+  return result.data
+}
+
 export const useGetUserClaim = () => {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -419,6 +425,28 @@ export const useGetUserClaim = () => {
         return data
       } catch (error: any) {
         dispatch(getUserClaim.rejected({ errorMessage: 'Could not get claim' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+
+  return callback
+}
+
+export const useGetTotalClaims = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(getTotalClaims.pending())
+        const data = await getTotalClaimsReq(id)
+        dispatch(getTotalClaims.fulfilled())
+
+        return data
+      } catch (error: any) {
+        dispatch(getTotalClaims.rejected({ errorMessage: 'Could not get claim' }))
         return null
       }
     },
