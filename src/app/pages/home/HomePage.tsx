@@ -3,6 +3,8 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
 import { CashBalance } from 'app/pages/accounts/components/CashBalance'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { PrimaryOfferings } from 'app/pages/invest/components/PrimaryOfferings'
+import { RootContainer } from 'ui/RootContainer'
 
 export const HomePage = () => {
   const { isTablet } = useAppBreakpoints()
@@ -21,6 +23,13 @@ export const HomePage = () => {
           }
         />
       </Grid>
+      <RootContainer>
+        <Grid container direction='column' spacing={6}>
+          <Grid item>
+            <PrimaryOfferings />
+          </Grid>
+        </Grid>
+      </RootContainer>
     </Grid>
   )
 }
