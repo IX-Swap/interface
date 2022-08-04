@@ -50,7 +50,7 @@ describe('Actions', () => {
     expect(getByText(/Bank Account Information/i)).toBeTruthy()
   })
 
-  it('invokes removeBankHandler on delete button click ', () => {
+  it('renders content correctly, invokes removeBankHandler on delete button click ', () => {
     const { getByTestId, getByText, getByRole } = render(<Actions {...props} />)
     const moreButton = getByTestId('more-button') as HTMLButtonElement
 
