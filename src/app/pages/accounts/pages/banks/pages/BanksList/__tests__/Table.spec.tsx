@@ -40,10 +40,5 @@ describe('Bank Table', () => {
       expect.objectContaining({ children: undefined }),
       {}
     )
-    expect(TableView).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({ children: () => {} }),
-      {}
-    )
   })
 })
