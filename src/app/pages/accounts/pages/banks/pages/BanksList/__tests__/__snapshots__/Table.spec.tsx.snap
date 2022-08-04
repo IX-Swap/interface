@@ -1,3 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Bank Table renders TableView with correct props 1`] = `<div />`;
+exports[`Bank Table renders TableView with correct props 1`] = `
+<div>
+  <form
+    style="width: 100%;"
+  />
+</div>
+`;

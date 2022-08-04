@@ -6,28 +6,33 @@ import {
 } from 'app/pages/accounts/pages/banks/pages/BanksList/Actions'
 import { bank } from '__fixtures__/authorizer'
 import { history } from 'config/history'
+import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
+import { MobileActions } from 'app/pages/accounts/pages/banks/pages/BanksList/MobileActions'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLinkComponent: jest.fn(() => null)
 }))
 
+jest.mock(
+  'app/pages/accounts/pages/banks/pages/BanksList/MobileActions',
+  () => ({
+    MobileActions: jest.fn(() => null)
+  })
+)
+
 describe('Actions', () => {
   const props: ActionsProps = {
-    item: bank
+    item: bank,
+    isLoading: false,
+    removeBankHandler: jest.fn()
   }
 
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', async () => {
-    render(<Actions {...props} />)
-  })
-
   it('displays bank details dialog box correctly', async () => {
-    const { getByTestId, getByText, getByRole, queryByText } = render(
-      <Actions {...props} />
-    )
+    const { getByTestId, getByText, getByRole } = render(<Actions {...props} />)
     const moreButton = getByTestId('more-button') as HTMLButtonElement
 
     fireEvent.click(moreButton, { bubbles: true })
@@ -45,7 +50,7 @@ describe('Actions', () => {
     expect(getByText(/Bank Account Information/i)).toBeTruthy()
   })
 
-  it('displays otp dialog box correctly', () => {
+  it('renders content correctly, invokes removeBankHandler on delete button click ', () => {
     const { getByTestId, getByText, getByRole } = render(<Actions {...props} />)
     const moreButton = getByTestId('more-button') as HTMLButtonElement
 
@@ -61,7 +66,17 @@ describe('Actions', () => {
 
     fireEvent.click(removeButton, { bubbles: true })
 
-    expect(getByText(/Are you sure you want to delete account?/i)).toBeTruthy()
+    expect(props.removeBankHandler).toBeCalled()
+  })
+
+  it('renders MobileActions when isTablet is true', () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isTablet: true
+    } as any)
+
+    render(<Actions {...props} />)
+
+    expect(MobileActions).toHaveBeenCalled()
   })
 
   it('handles edit action correctly', async () => {
