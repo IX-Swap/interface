@@ -159,7 +159,7 @@ exports[`DSOOverview should match snapshot 1`] = `
                 >
                   <a
                     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-fullWidth MuiButtonBase-root  css-xpk4k5-MuiButtonBase-root-MuiButton-root"
-                    href="/app/accounts/cash-deposits"
+                    href="/app/accounts/cash/deposit"
                     tabindex="0"
                   >
                     Top-up my account

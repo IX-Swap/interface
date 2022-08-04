@@ -116,7 +116,7 @@ export const PlaceOrderSuffix = ({
           Insufficient balance, please top-up your account
           <AppRouterLink
             target='_blank'
-            to={AccountsRoute.depositCash}
+            to={AccountsRoute.deposit}
             underline='always'
             color='primary'
             className={classes.connectLink}

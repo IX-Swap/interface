@@ -1,6 +1,4 @@
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
-import { DepositCash } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositCash'
-import { WithdrawCash } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawCash'
 import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
 import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
 import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
@@ -21,16 +19,8 @@ import { CashRouter } from '../pages/cash/router/CashRouter'
 export const AccountsRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='Cash Deposits' path={AccountsRoute.depositCash}>
-        <DepositCash />
-      </AppRoute>
-
       <AppRoute breadcrumb='Commitments' path={AccountsRoute.commitments}>
         <CommitmentsRouter />
-      </AppRoute>
-
-      <AppRoute breadcrumb='Cash Withdrawals' path={AccountsRoute.withdrawCash}>
-        <WithdrawCash />
       </AppRoute>
       <AppRoute
         breadcrumb='Digital Securities'

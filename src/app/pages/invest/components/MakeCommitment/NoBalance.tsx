@@ -37,11 +37,7 @@ export const NoBalance = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Button
-            variant='contained'
-            href={AccountsRoute.depositCash}
-            fullWidth
-          >
+          <Button variant='contained' href={AccountsRoute.deposit} fullWidth>
             Top-up my account
           </Button>
         </Grid>
