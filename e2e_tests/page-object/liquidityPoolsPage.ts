@@ -1,6 +1,6 @@
 import { WebPage } from './webPage'
 import { BrowserContext, expect, Locator, Page } from '@playwright/test'
-import { MetamaskPage } from '../page-object/metamaskPage'
+import { MetamaskPage } from './metamaskPage'
 import config from '../playwright.config'
 
 export class LiquidityPoolsPage extends WebPage {
@@ -13,7 +13,6 @@ export class LiquidityPoolsPage extends WebPage {
   readonly supplyButton: Locator;
   readonly confirmSupplyButtonSelector: string;
   readonly confirmSupplyButton: Locator;
-  readonly transactionSubmittedPopUpCloseButton: Locator;
   readonly removeLiquidityButton: Locator;
   readonly maxRemovePercentageButton: Locator;
   readonly approveRemovePoolButton: string;
@@ -55,7 +54,6 @@ export class LiquidityPoolsPage extends WebPage {
     this.supplyButton = page.locator('[data-testid="supply"]');
     this.confirmSupplyButtonSelector = ('[data-testid="create-or-supply"]');
     this.confirmSupplyButton = page.locator('[data-testid="create-or-supply"]');
-    this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
     this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
     this.quarterRemovePercentageButton = page.locator('[data-testid="percentage_25"]');
     this.halfRemovePercentageButton = page.locator('[data-testid="percentage_50"]');
@@ -94,10 +92,6 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   // Actions
-  async clickTokenItem(token) {
-    await this.page.locator(`//div[text()='${token}']`).click();
-  }
-
   async clickQuarterRemovePercentageButton() {
     await this.quarterRemovePercentageButton.click();
   }
@@ -124,10 +118,6 @@ export class LiquidityPoolsPage extends WebPage {
 
   async clickSupplyButton() {
     await this.supplyButton.click();
-  }
-
-  async clickTransactionSubmittedPopUpCloseButton() {
-    await this.transactionSubmittedPopUpCloseButton.click();
   }
 
   async fillFirstAmountOfTokensField(value) {
@@ -206,7 +196,7 @@ export class LiquidityPoolsPage extends WebPage {
     await this.clickRemovePoolButton();
 
     const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
-    await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+    await confirmMetamaskPopUp.click(this.metamaskPage.confirmMetamaskPopUpButton);
 
     await this.clickTransactionSubmittedPopUpCloseButton();
   }
@@ -222,7 +212,7 @@ export class LiquidityPoolsPage extends WebPage {
     await this.clickSupplyButton();
 
     const metamaskPopUp = await this.openNewPageByClick(this.page, this.confirmSupplyButtonSelector);
-    await metamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+    await metamaskPopUp.click(this.metamaskPage.confirmMetamaskPopUpButton);
 
     await this.clickTransactionSubmittedPopUpCloseButton();
   }

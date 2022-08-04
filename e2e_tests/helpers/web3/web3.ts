@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import { Abi } from './web3Data'
 
 export class Web3Helpers {
   web3;
@@ -7,9 +8,18 @@ export class Web3Helpers {
     this.web3 = new Web3(new Web3.providers.HttpProvider(`https://kovan.infura.io/v3/${process.env.INFURA_KEY}`))
   }
 
+  async getTokenBalance(tokenAddress, walletAddress) {
+    const contract = new this.web3.eth.Contract(Abi, tokenAddress, {from: walletAddress});
+    const balance = await contract.methods.balanceOf(walletAddress).call()
+      .then(function(result) {
+        return result
+      });
+    return balance
+  }
+
   async getEthBalance(address) {
     try {
-      let balance = await this.web3.eth.getBalance(address);
+      const balance = await this.web3.eth.getBalance(address);
 
       return await this.web3.utils.fromWei(balance, 'ether')
     } catch (e) {

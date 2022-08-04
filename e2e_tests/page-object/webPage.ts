@@ -1,16 +1,26 @@
 import {BrowserContext, expect, Locator, Page} from '@playwright/test';
 import config from "../playwright.config";
-import {timeouts} from "../helpers/timeouts";
+import { timeouts } from "../helpers/timeouts";
 
 export class WebPage {
   readonly page: Page;
   readonly context: BrowserContext;
   readonly loader: Locator;
+  readonly transactionSubmittedPopUpCloseButton: Locator;
 
   constructor(page: Page, context?: BrowserContext) {
     this.page = page;
     this.context = context;
     this.loader = page.locator('[img[alt="Loading..."]');
+    this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
+  }
+
+  async clickTransactionSubmittedPopUpCloseButton() {
+    await this.transactionSubmittedPopUpCloseButton.click();
+  }
+
+  async clickTokenItem(token) {
+    await this.page.locator(`//div[text()='${token}']`).click();
   }
 
   async click(locator: Locator) {
