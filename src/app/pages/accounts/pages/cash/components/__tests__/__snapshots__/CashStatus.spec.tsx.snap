@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CashStatus matches snapshot 1`] = `
+<div>
+  <div
+    class="MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorSuccess MuiChip-outlinedSuccess makeStyles-wrapper-1 makeStyles-wrapper-2 css-1kw6arz-MuiChip-root"
+  >
+    <span
+      class="MuiChip-label MuiChip-labelMedium css-1dybbl5-MuiChip-label"
+    >
+      Submitted
+    </span>
+  </div>
+</div>
+`;

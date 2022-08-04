@@ -16,31 +16,47 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-18 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-17 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
+                class="MuiBox-root css-mkpo7v"
               >
-                <h2
-                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-21 css-rldqdm-MuiTypography-root"
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
                 >
-                  Activity Summary
-                </h2>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-geek62"
+                    >
+                      <h2
+                        class="MuiTypography-root MuiTypography-h2 makeStyles-title-21 css-rldqdm-MuiTypography-root"
+                      >
+                        Activity Summary
+                      </h2>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-ftbd7"
+                    >
+                      <nav
+                        class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                      >
+                        <ol
+                          class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                        />
+                      </nav>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <nav
-                class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
-              >
-                <ol
-                  class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-                />
-              </nav>
             </div>
           </div>
         </div>
@@ -467,31 +483,47 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-75 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-74 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
+                class="MuiBox-root css-mkpo7v"
               >
-                <h2
-                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-78 css-rldqdm-MuiTypography-root"
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
                 >
-                  Activity Summary
-                </h2>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-geek62"
+                    >
+                      <h2
+                        class="MuiTypography-root MuiTypography-h2 makeStyles-title-78 css-rldqdm-MuiTypography-root"
+                      >
+                        Activity Summary
+                      </h2>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-ftbd7"
+                    >
+                      <nav
+                        class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                      >
+                        <ol
+                          class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                        />
+                      </nav>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <nav
-                class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
-              >
-                <ol
-                  class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-                />
-              </nav>
             </div>
           </div>
         </div>
@@ -599,31 +631,47 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-60 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-59 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
+                class="MuiBox-root css-mkpo7v"
               >
-                <h2
-                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-63 css-rldqdm-MuiTypography-root"
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
                 >
-                  Activity Summary
-                </h2>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-geek62"
+                    >
+                      <h2
+                        class="MuiTypography-root MuiTypography-h2 makeStyles-title-63 css-rldqdm-MuiTypography-root"
+                      >
+                        Activity Summary
+                      </h2>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-ftbd7"
+                    >
+                      <nav
+                        class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                      >
+                        <ol
+                          class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                        />
+                      </nav>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <nav
-                class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
-              >
-                <ol
-                  class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-                />
-              </nav>
             </div>
           </div>
         </div>
@@ -697,31 +745,47 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
           class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-3 css-1vpwcmr-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18crdnn-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container makeStyles-header-2 css-11lq3yg-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
+                class="MuiBox-root css-mkpo7v"
               >
-                <h2
-                  class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
                 >
-                  Activity Summary
-                </h2>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-geek62"
+                    >
+                      <h2
+                        class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
+                      >
+                        Activity Summary
+                      </h2>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-ftbd7"
+                    >
+                      <nav
+                        class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                      >
+                        <ol
+                          class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                        />
+                      </nav>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
-            >
-              <nav
-                class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
-              >
-                <ol
-                  class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
-                />
-              </nav>
             </div>
           </div>
         </div>

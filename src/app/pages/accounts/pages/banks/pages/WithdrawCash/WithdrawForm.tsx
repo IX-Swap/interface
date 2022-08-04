@@ -4,12 +4,18 @@ import { withdrawCashFormValidationSchema } from 'app/pages/accounts/validation'
 import { useWithdrawCash } from 'app/pages/accounts/pages/banks/hooks/useWithdrawCash'
 import { Form } from 'components/form/Form'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const WithdrawForm: React.FC = props => {
   const { children } = props
   const [withdrawCash] = useWithdrawCash()
+  const { getFilterValue } = useQueryFilter()
+  const virtualAccount = getFilterValue('account')
   const handleSubmit = async (values: WithdrawCashFormValues) => {
-    return await withdrawCash(values)
+    return await withdrawCash({
+      ...values,
+      virtualAccount: virtualAccount ?? ''
+    })
   }
   const { list, isLoading } = useVirtualAccount()
 
@@ -21,7 +27,6 @@ export const WithdrawForm: React.FC = props => {
     <Form
       onSubmit={handleSubmit}
       defaultValues={{
-        virtualAccount: list[0].accountNumber,
         bankAccountId: null,
         amount: null,
         otp: null,
@@ -29,6 +34,8 @@ export const WithdrawForm: React.FC = props => {
       }}
       validationSchema={withdrawCashFormValidationSchema}
       shouldUnregister={false}
+      mode='onSubmit'
+      reValidateMode='onSubmit'
     >
       {children}
     </Form>

@@ -14,7 +14,7 @@ export const VirtualAccountDetails = ({
   virtualAccountId,
   showAddForm = false
 }: VirtualAccountDetailsProps) => {
-  const { data, list, isLoading } = useVirtualAccount(virtualAccountId)
+  const { data, isLoading } = useVirtualAccount(virtualAccountId)
 
   if (isLoading || data === undefined) {
     return null
@@ -37,7 +37,7 @@ export const VirtualAccountDetails = ({
       </Grid>
       {showAddForm ? (
         <Grid item>
-          <AutoAssignVirtualAccountForm isAdditional={list?.length === 1} />
+          <AutoAssignVirtualAccountForm />
         </Grid>
       ) : null}
     </Grid>

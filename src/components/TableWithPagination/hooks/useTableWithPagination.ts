@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useEffect, useMemo, useState } from 'react'
 import { QueryStatus, useInfiniteQuery, useQueryCache } from 'react-query'
 import { useAPIService } from 'hooks/useAPIService'
@@ -23,6 +24,7 @@ interface UseTableWithPaginationParams {
   queryEnabled: boolean
   defaultRowsPerPage?: number
   disabledUseEffect?: boolean
+  method?: 'POST' | 'GET'
 }
 
 export const useTableWithPagination = <TData>({
@@ -31,7 +33,8 @@ export const useTableWithPagination = <TData>({
   defaultFilter,
   queryEnabled,
   defaultRowsPerPage,
-  disabledUseEffect = false
+  disabledUseEffect = false,
+  method = 'POST'
 }: UseTableWithPaginationParams): UseTableWithPaginationReturnType<TData> => {
   const queryCache = useQueryCache()
   const apiService = useAPIService()
@@ -56,9 +59,10 @@ export const useTableWithPagination = <TData>({
       limit: r,
       ...(filter ?? {})
     }
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const result = await apiService.post<PaginatedData<TData>>(uri!, payload)
+    const result =
+      method === 'POST'
+        ? await apiService.post<PaginatedData<TData>>(uri!, payload)
+        : await apiService.get<PaginatedData<TData>>(uri!, payload)
 
     return result
   }

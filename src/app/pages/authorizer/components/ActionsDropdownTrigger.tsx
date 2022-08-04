@@ -1,7 +1,7 @@
-import React from 'react'
+import { Box, CircularProgress } from '@mui/material'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
-import { Box, CircularProgress, IconButton } from '@mui/material'
-import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material'
+import React from 'react'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface ActionsDropdownTriggerProps extends DropdownTriggerProps {
   isLoading: boolean
@@ -24,8 +24,12 @@ export const ActionsDropdownTrigger = (props: ActionsDropdownTriggerProps) => {
   }
 
   return (
-    <IconButton {...triggerProps} data-testid='more-button' size='small'>
-      <MoreHorizIcon color='disabled' />
-    </IconButton>
+    <Box
+      {...triggerProps}
+      data-testid='more-button'
+      style={{ cursor: 'pointer', padding: 5 }}
+    >
+      <Icon name='more-vertical' size={24} />
+    </Box>
   )
 }

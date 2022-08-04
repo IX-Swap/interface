@@ -1,16 +1,16 @@
-import React from 'react'
-import { TableViewProps } from 'components/TableWithPagination/TableView'
 import { TableBody, TableCell, TableRow } from '@mui/material'
-import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
 import { ActionTableCell } from 'components/TableWithPagination/ActionTableCell'
+import { TableCellWrapper } from 'components/TableWithPagination/TableCellWrapper'
+import { TableViewProps } from 'components/TableWithPagination/TableView'
+import React from 'react'
 import useStyles from 'ui/UIKit/TablesKit/components/TableRows/TableRows.styles'
-import { VSpacer } from 'components/VSpacer'
 
 export interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
   cacheQueryKey: any
   bordered: boolean
   isLoading: boolean
+  activeSortLabel?: string
 }
 
 export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
@@ -23,7 +23,8 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     cacheQueryKey,
     noDataComponent,
     size,
-    isLoading
+    isLoading,
+    activeSortLabel
   } = props
 
   const classes = useStyles({ size })
@@ -38,6 +39,7 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
             <TableRow key={i} className={classes.wrapper}>
               {columns.map(column => (
                 <TableCellWrapper
+                  isAllocated={activeSortLabel === column.key}
                   bordered={bordered}
                   key={column.key}
                   column={column}
@@ -52,12 +54,15 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
                 />
               )}
             </TableRow>
-            <VSpacer size={'extraSmall'} />
           </>
         ))}
       {!isLoading && !hasItems && (
         <TableRow>
-          <TableCell align='center' colSpan={columns.length + +!!hasActions}>
+          <TableCell
+            sx={{ padding: 0 }}
+            align='center'
+            colSpan={columns.length + +!!hasActions}
+          >
             {noDataComponent}
           </TableCell>
         </TableRow>

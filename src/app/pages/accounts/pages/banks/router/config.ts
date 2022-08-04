@@ -1,8 +1,5 @@
-import { makeURL } from 'config/appURL'
-
 export const BanksRoute = {
-  list: makeURL(['app', 'account', 'bankAccount']),
-  view: makeURL(['app', 'account', 'bankAccount', 'bankId', 'view']),
-  edit: makeURL(['app', 'account', 'bankAccount', 'bankId', 'edit']),
-  create: makeURL(['app', 'account', 'bankAccount', 'create'])
+  list: '/app/accounts/cash/bank-accounts',
+  edit: '/app/accounts/cash/bank-accounts/:bankId/edit',
+  create: '/app/accounts/cash/bank-accounts/create'
 }

@@ -12,7 +12,9 @@ export const virtualAccount: VirtualAccount = {
   balance: {
     available: 123,
     onHold: 235,
-    outstanding: 123
+    outstanding: 123,
+    sgdValue: 123,
+    usdValue: 123
   },
   user: managedUser,
   status: 'Submitted',
@@ -26,7 +28,9 @@ export const assignedVirtualAccount: VirtualAccount = {
   balance: {
     available: 10000,
     onHold: 1000,
-    outstanding: 1000
+    outstanding: 1000,
+    sgdValue: 123,
+    usdValue: 123
   },
   createdAt: '2021-04-22T05:25:12.647Z',
   updatedAt: '2021-04-27T04:21:39.140Z',

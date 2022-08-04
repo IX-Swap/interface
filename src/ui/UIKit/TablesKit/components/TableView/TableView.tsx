@@ -52,6 +52,11 @@ export interface TableViewProps<T> {
   size?: 'small' | 'medium'
   noDataComponent?: JSX.Element
   actionHeader?: string
+  noHeader?: boolean
+  method?: 'POST' | 'GET'
+  paginationPlacement?: 'top' | 'bottom' | 'both' | 'none'
+  labelRowsPerPage?: React.ReactNode
+  activeSortLabel?: string
 }
 
 export const TableView = <T,>({
@@ -71,7 +76,12 @@ export const TableView = <T,>({
   defaultRowsPerPage,
   size = 'medium',
   noDataComponent = <NoData title='No Data' />,
-  actionHeader = ''
+  actionHeader = '',
+  noHeader = false,
+  method = 'POST',
+  paginationPlacement = 'bottom',
+  labelRowsPerPage,
+  activeSortLabel
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -88,7 +98,8 @@ export const TableView = <T,>({
     queryKey: name,
     defaultFilter: filter,
     queryEnabled: queryEnabled,
-    defaultRowsPerPage: defaultRowsPerPage
+    defaultRowsPerPage: defaultRowsPerPage,
+    method
   })
 
   const classes = useStyles()
@@ -99,7 +110,7 @@ export const TableView = <T,>({
   if (innerRef !== undefined) {
     innerRef.current = { refresh: () => setPage(page) }
   }
-
+  const headDisplay = noHeader ? 'none' : 'table-header-group'
   let columns = hasStatus ? [...columnsProp, statusColumn] : columnsProp
 
   if (selectionHelper !== undefined) {
@@ -159,6 +170,38 @@ export const TableView = <T,>({
     </TableCell>
   )
 
+  const renderPagination = () => {
+    if (total > 0) {
+      return (
+        <Grid
+          item
+          container
+          justifyContent={'flex-end'}
+          className={classes.paginationContainer}
+        >
+          <Grid item>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              colSpan={columns.length + +hasActions}
+              count={total}
+              rowsPerPage={rowsPerPage}
+              labelRowsPerPage={labelRowsPerPage}
+              page={page}
+              classes={{ toolbar: classes.toolbar }}
+              onRowsPerPageChange={evt => {
+                setPage(0)
+                setRowsPerPage(parseInt(evt.target.value))
+              }}
+              onPageChange={(evt, newPage: number) => {
+                setPage(newPage)
+              }}
+            />
+          </Grid>
+        </Grid>
+      )
+    }
+  }
+
   const renderTableLoading = () => {
     if (status === 'loading' || fakeLoading) {
       return (
@@ -174,13 +217,18 @@ export const TableView = <T,>({
 
   return (
     <Grid container direction='column'>
+      {['top', 'both'].includes(paginationPlacement) && renderPagination()}
       <Grid item>
         {renderTableLoading()}
         <Paper style={{ backgroundColor: 'inherit' }}>
           <TableContainer style={{ overflow: 'visible' }}>
             <Table aria-label='table' data-testid='table' size={size}>
               {columns.length > 0 ? (
-                <TableHead>
+                <TableHead
+                  style={{
+                    display: headDisplay
+                  }}
+                >
                   <TableRow>
                     {columns.map(e => renderHeadCell({ item: e }))}
                     {hasActions && renderHeadCell({ content: actionHeader })}
@@ -206,6 +254,7 @@ export const TableView = <T,>({
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
                   isLoading={isLoading}
+                  activeSortLabel={activeSortLabel}
                   noDataComponent={noDataComponent}
                 />
               )}
@@ -213,32 +262,7 @@ export const TableView = <T,>({
           </TableContainer>
         </Paper>
       </Grid>
-      {total > 0 && (
-        <Grid
-          item
-          container
-          justifyContent={'flex-end'}
-          className={classes.paginationContainer}
-        >
-          <Grid item>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50]}
-              colSpan={columns.length + +hasActions}
-              count={total}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              classes={{ toolbar: classes.toolbar }}
-              onRowsPerPageChange={evt => {
-                setPage(0)
-                setRowsPerPage(parseInt(evt.target.value))
-              }}
-              onPageChange={(evt, newPage: number) => {
-                setPage(newPage)
-              }}
-            />
-          </Grid>
-        </Grid>
-      )}
+      {['bottom', 'both'].includes(paginationPlacement) && renderPagination()}
     </Grid>
   )
 }

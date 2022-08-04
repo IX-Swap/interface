@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoOffers should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-unxylg-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    />
+    <div
+      class="MuiGrid-root MuiGrid-item css-1okckwh-MuiGrid-root"
+    >
+      <h5
+        class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+      >
+        No offers yet
+      </h5>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-1gwbbpj-MuiGrid-root"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-ngvfsw-MuiTypography-root"
+      >
+        No offers yet, please check back later
+      </p>
+    </div>
+  </div>
+</div>
+`;

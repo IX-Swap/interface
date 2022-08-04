@@ -13,6 +13,7 @@ export const CashDepositDetails = ({ data }: CashDepositDetailsProps) => {
       {data.map(item => (
         <Grid item xs={12} sm={6}>
           <LabelledValue
+            isRedesigned
             valueColor={theme.palette.dialog.color}
             labelColor='gray'
             {...item}

@@ -12,12 +12,39 @@ import {
 import { QueryStatus } from 'react-query'
 import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
+import * as useFormContext from 'react-hook-form'
 
 describe('useValidateWithdrawCash', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
-
+  const useFormContextResponse = {
+    watch: () => {
+      return '123456'
+    },
+    setError: jest.fn(),
+    clearErrors: jest.fn(),
+    errors: {
+      amount: undefined
+    },
+    formState: {
+      dirtyFields: {
+        amount: true
+      },
+      touched: {
+        amount: true
+      }
+    }
+  }
+  const useFormContextResponseAmountUndefined = {
+    ...useFormContextResponse,
+    watch: (arg: string) => {
+      if (arg === 'amount') {
+        return undefined
+      }
+      return '123456'
+    }
+  }
   it('returns canSubmit as true if amount is valid and less than available balance', async () => {
     jest
       .spyOn(banksHook, 'useBankById')
@@ -25,7 +52,9 @@ describe('useValidateWithdrawCash', () => {
     jest
       .spyOn(assetHook, 'useAssetById')
       .mockReturnValue(generateQueryResult({ data: asset }))
-
+    jest
+      .spyOn(useFormContext, 'useFormContext')
+      .mockImplementation(() => useFormContextResponse as any)
     const useVirtualAccountResponse = generateQueryResult({
       data: virtualAccountsSample[0]
     })
@@ -60,6 +89,9 @@ describe('useValidateWithdrawCash', () => {
       .mockReturnValue(
         generateInfiniteQueryResult({ map: { [bank.currency._id]: balance } })
       )
+    jest
+      .spyOn(useFormContext, 'useFormContext')
+      .mockImplementation(() => useFormContextResponseAmountUndefined as any)
     await act(async () => {
       const { result } = renderHookWithForm(() => useValidateWithdrawCash())
 

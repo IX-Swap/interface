@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompactTable compact table matches snapshot 1`] = `
+<div>
+  <tbody
+    class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+  >
+    <tr
+      class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
+    >
+      <td
+        class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-cell-1 css-17e0zod-MuiTableCell-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container makeStyles-card-2 css-1mjjv40-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 makeStyles-columns-3 css-1nk7a39-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item css-az2snp-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-label-4 css-ewf807-MuiGrid-root"
+              >
+                Currency
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-value-5 css-ewf807-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-70qvj9"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1zdpvo-MuiTypography-root"
+                  >
+                    SGD
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item css-az2snp-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-label-4 css-ewf807-MuiGrid-root"
+              >
+                Bank Name
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-value-5 css-ewf807-MuiGrid-root"
+              >
+                Rocketbank
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item css-az2snp-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-label-4 css-ewf807-MuiGrid-root"
+              >
+                Account Number
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-value-5 css-ewf807-MuiGrid-root"
+              >
+                1234567890
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item css-az2snp-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-label-4 css-ewf807-MuiGrid-root"
+              >
+                Account Name
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-value-5 css-ewf807-MuiGrid-root"
+              >
+                Oleg Tinkoff
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item css-az2snp-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-label-4 css-ewf807-MuiGrid-root"
+              >
+                Swift Code
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-value-5 css-ewf807-MuiGrid-root"
+              >
+                SWIFTCODE
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+          >
+            <button
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-fullWidth MuiButtonBase-root makeStyles-iconButton-7 css-ns7bdg-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                class="css-1s8o7ec"
+                fill="#778194"
+                height="24px"
+                width="24px"
+              >
+                <use
+                  href="image-mock#more-horizontal"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</div>
+`;

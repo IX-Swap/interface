@@ -47,7 +47,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                     >
                       Company Name
                     </p>
@@ -70,7 +70,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                     >
                       Country of Incorporation
                     </p>
@@ -93,7 +93,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                     >
                       Source of Funds
                     </p>
@@ -123,7 +123,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                     >
                       Registration Number/UEN
                     </p>
@@ -146,7 +146,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   >
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                      style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                     >
                       Legal Entity
                     </p>
@@ -200,7 +200,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                 >
                   Number of Business Owners
                 </p>
@@ -223,7 +223,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                  style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                 >
                   Business Activity
                 </p>
@@ -278,7 +278,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Line 1
                   </p>
@@ -301,7 +301,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     City
                   </p>
@@ -324,7 +324,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Country
                   </p>
@@ -351,7 +351,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Line 2
                   </p>
@@ -374,7 +374,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     State
                   </p>
@@ -397,7 +397,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Postal Code
                   </p>
@@ -441,7 +441,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Line 1
                   </p>
@@ -464,7 +464,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     City
                   </p>
@@ -487,7 +487,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Country
                   </p>
@@ -514,7 +514,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Line 2
                   </p>
@@ -537,7 +537,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     State
                   </p>
@@ -560,7 +560,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-19iufmc-MuiTypography-root"
-                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px;"
+                    style="font-weight: 500; width: 100%; color: rgb(59, 66, 81); line-height: 17px; text-align: left;"
                   >
                     Postal Code
                   </p>
@@ -959,16 +959,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >
@@ -1044,16 +1034,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >
@@ -1117,16 +1097,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >
@@ -1190,16 +1160,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   <div
                     class="MuiBox-root css-70qvj9"
                   >
-                    <svg
-                      class="css-1s8o7ec"
-                      fill="#778194"
-                      height="24px"
-                      width="24px"
-                    >
-                      <use
-                        href="image-mock#file"
-                      />
-                    </svg>
                     <p
                       class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                     >

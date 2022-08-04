@@ -1,8 +1,17 @@
 import getSymbolFromCurrency from 'currency-symbol-map'
-import { ColumnOTCMatch, OpenOTCOrder, OTCOrder } from 'types/otcOrder'
+import {
+  ColumnOTCMatch,
+  OpenOTCOrder,
+  OTCOrder,
+  OTCOrderStatus
+} from 'types/otcOrder'
 
 export const isNotNullish = (value?: number | null) => {
-  return value !== undefined && value !== null && value > 0
+  return !isNullish(value)
+}
+
+export const isNullish = (value?: number | null) => {
+  return value === undefined || value === null || value <= 0
 }
 
 export const addSymbol = (
@@ -134,6 +143,24 @@ export const getFilledRoundedPercentage = ({
 }) => {
   const percentAmount = ((amount - (availableAmount ?? amount)) / amount) * 100
   return `${Math.round(Number(percentAmount.toFixed(2)))}%`
+}
+
+export const getFilledPercentageFromMatches = ({
+  row
+}: {
+  row: OpenOTCOrder
+}) => {
+  const settledOrders = row.matches?.filter(
+    match => match.status === OTCOrderStatus.SETTLED
+  )
+  const settledAmount = settledOrders?.reduce(
+    (acc, current) => acc + current.matchedAmount,
+    0
+  )
+  return getRoundedPercentage({
+    amount: row.amount,
+    matchedAmount: settledAmount ?? 0
+  })
 }
 
 export const getRoundedPercentage = ({

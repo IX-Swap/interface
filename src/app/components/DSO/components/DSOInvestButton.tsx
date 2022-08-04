@@ -7,12 +7,14 @@ import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
 import { useStyles } from 'app/components/DSO/components/DSOContainer.styles'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 export interface DSOInvestButtonProps extends ButtonProps {
   dso: DigitalSecurityOffering
 }
 
 export const DSOInvestButton = ({ dso }: DSOInvestButtonProps) => {
   const { user } = useAuth()
+  const { isTablet } = useAppBreakpoints()
   const params = { dsoId: dso._id, issuerId: dso.user }
   const isInvestButtonDisabled =
     dso.createdBy === user?._id || dso?.disableInvestInCampaign === true
@@ -27,6 +29,8 @@ export const DSOInvestButton = ({ dso }: DSOInvestButtonProps) => {
         component={AppRouterLinkComponent}
         to={InvestRoute.makeInvestment}
         params={params}
+        size='large'
+        fullWidth={isTablet}
       >
         Invest
       </Button>

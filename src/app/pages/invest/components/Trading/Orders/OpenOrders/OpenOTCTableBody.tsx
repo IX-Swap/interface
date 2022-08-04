@@ -8,7 +8,6 @@ import { TableViewRendererProps } from 'components/TableWithPagination/TableView
 import { getExpiresOrderMessage } from 'helpers/dates'
 import React, { useContext } from 'react'
 import { OpenOTCOrder, OTCMatch } from 'types/otcOrder'
-import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
 import { nestedcolumns } from './columns'
 import {
   getColumnMatchedOrder,
@@ -18,6 +17,7 @@ import {
   useOpenOrderState
 } from 'app/pages/invest/components/Trading/Orders/OpenOrders/helpers'
 import { ConfirmOTCOrderActions } from './OTCOrderActions'
+import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
 
 export const OpenOTCTableBody = (
   props: TableViewRendererProps<OpenOTCOrder>
@@ -26,7 +26,7 @@ export const OpenOTCTableBody = (
   const theme = useTheme()
   const { columns, items, actions, hasActions, cacheQueryKey } = props
   const { showEmptyState, columnCount, rowColor } = useOpenOrderState(props)
-  const context = useContext(OpenOrdersContext)
+  const context = useContext(ActiveElementContext)
 
   if (showEmptyState) {
     return <OpenOrdersEmptyState />

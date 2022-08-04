@@ -5,7 +5,7 @@ import { DataroomFile } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { Actions } from 'ui/FileUpload/Actions'
 import { FileUploadBox } from 'ui/FileUpload/FileUploadBox'
-import { Icon } from 'ui/Icons/Icon'
+import { Download } from 'ui/FileUpload/Download'
 
 export interface FileProps {
   hasError?: boolean
@@ -72,7 +72,15 @@ export const File = ({
       })}
     >
       <Box display='flex' alignItems='center'>
-        <Icon name='file' />
+        {value !== undefined &&
+          value !== null &&
+          (value as DataroomFile)._id !== undefined && (
+            <Download
+              documentId={(value as DataroomFile)?._id}
+              name={(value as DataroomFile)?.originalFileName}
+            />
+          )}
+
         <Typography className='label' sx={{ ml: 1, lineHeight: '24px' }}>
           {renderLabel()}
         </Typography>

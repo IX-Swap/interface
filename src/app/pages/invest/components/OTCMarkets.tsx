@@ -1,7 +1,6 @@
 import React from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { Grid, Typography } from '@mui/material'
-import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
 import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { OTCUrl } from 'config/apiURL'
@@ -10,8 +9,17 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 // TODO: When we will have multiple OTC pairs adjust this
 import { useFeaturedPair } from 'app/pages/invest/hooks/useFeaturedPair'
+import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
+import { Count } from 'app/pages/invest/components/Count'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/DSOCardsCarousel'
+import { Slide } from 'pure-react-carousel'
+import Box from '@mui/material/Box'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const OTCMarket = () => {
+  const classes = useStyles()
+  const { isMiniLaptop } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const otcMarketSearch = getFilterValue('otcMarketSearch')
@@ -25,40 +33,66 @@ export const OTCMarket = () => {
   })
   const { data, isLoading } = useFeaturedPair()
 
-  const classes = useStyles()
-
-  if (status === 'loading' || items.length === undefined) {
-    return null
-  }
-
   const activeDSOs = items.filter(
     item => (item as any)?.dso === data?.listing?.dso?._id
   )
-  if (isLoading || activeDSOs.length === 0) {
+
+  if (status === 'loading' || isLoading) {
     return null
   }
-  return (
-    <Grid container direction='column' spacing={4}>
-      <Grid item>
-        <Typography variant='h4'>OTC Market</Typography>
-      </Grid>
-      <Grid item>
-        <Grid container justifyContent={'flex-end'}>
-          <Grid container item wrap={'wrap'} className={classes.container}>
-            {(activeDSOs as DigitalSecurityOffering[]).map((otc, i) => (
-              <Grid item key={otc._id}>
-                <OTCMarketCard
+
+  const renderItems = activeDSOs as DigitalSecurityOffering[]
+
+  const renderContent = () => {
+    if (activeDSOs.length === 0) {
+      return <NoOffers />
+    }
+
+    if (isMiniLaptop) {
+      return (
+        <DSOCardsCarousel totalSlides={renderItems.length}>
+          {renderItems.map((otc, i) => (
+            <Slide index={i} key={otc._id} className='custom'>
+              <Box paddingRight={1.5} height='100%'>
+                <DSOCard
                   type={'OTC'}
                   data={otc}
                   viewURL={InvestRoute.trading}
+                  key={otc._id}
                 />
-              </Grid>
-            ))}
-          </Grid>
-          {/* Put table pagination here when we will have multiple featured pairs. Take
-      it from Primary Offerings, it's identical */}
+              </Box>
+            </Slide>
+          ))}
+        </DSOCardsCarousel>
+      )
+    }
+
+    return (
+      <Grid container justifyContent={'flex-end'}>
+        <Grid container item wrap={'wrap'} className={classes.container}>
+          {renderItems.map(otc => (
+            <DSOCard
+              type={'OTC'}
+              data={otc}
+              viewURL={InvestRoute.view}
+              key={otc._id}
+            />
+          ))}
         </Grid>
+        {/* Put table pagination here when we will have multiple featured pairs. Take
+      it from Primary Offerings, it's identical */}
       </Grid>
+    )
+  }
+
+  return (
+    <Grid container direction='column' spacing={4}>
+      <Grid item>
+        <Typography variant='h4' display={'inline-flex'} alignItems={'center'}>
+          OTC Market <Count value={activeDSOs.length} />
+        </Typography>
+      </Grid>
+      <Grid item>{renderContent()}</Grid>
     </Grid>
   )
 }

@@ -27,7 +27,7 @@ export const TradingBody = () => {
     isWhitelisted: { found }
   } = useMetamaskConnectionManager()
   const { currencyName, tokenName } = useFeaturedPairNames()
-  const currencyBalance = useCurrencyBalance(currencyName)
+  const { currencyBalance } = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
     return await create({ args: values, account })

@@ -56,6 +56,7 @@ export interface ButtonPaletteOptions {
   colorAlternate: CSSProperties['color']
   colorAlternateHover: CSSProperties['color']
   borderAlternateHover: string
+  bgLight: string
 }
 
 export interface ButtonGroupPalette {
@@ -107,6 +108,9 @@ export interface TablePalette {
   rowColor: CSSProperties['color']
   color: CSSProperties['color']
   boxShadow: string
+  border: string
+  headerColor: string
+  headerShadow: string
 }
 
 export interface ChipPalette {

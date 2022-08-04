@@ -1,18 +1,19 @@
-import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
 import * as useStyles from 'app/pages/invest/components/styles/OTCMarket.style'
 import * as useTableWithPagination from 'components/TableWithPagination/hooks/useTableWithPagination'
 import * as useQueryFilter from 'hooks/filters/useQueryFilter'
 import { render } from '@testing-library/react'
-import { OTCMarket as OTCMarketSection } from 'app/pages/invest/components/OTCMarkets'
+import { OTCMarket } from 'app/pages/invest/components/OTCMarkets'
 import * as useFeaturedPair from 'app/pages/invest/hooks/useFeaturedPair'
 import React from 'react'
 import { dso } from '__fixtures__/issuance'
 import { fakeOTCMarket } from '__fixtures__/otcOrders'
 import { InvestRoute } from 'app/pages/invest/router/config'
+import { DSOCard } from 'app/pages/invest/components/DSOCard/DSOCard'
 
-jest.mock('app/pages/invest/components/OTCMarketCard/OTCMarketCard', () => ({
-  OTCMarketCard: jest.fn(() => null)
+jest.mock('app/pages/invest/components/DSOCard/DSOCard', () => ({
+  DSOCard: jest.fn(() => null)
 }))
+
 jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 describe('OTCMarket', () => {
   afterEach(async () => {
@@ -41,13 +42,13 @@ describe('OTCMarket', () => {
       .spyOn(useStyles, 'useStyles')
       .mockReturnValueOnce({ container: 'abc' } as any)
 
-    render(<OTCMarketSection />)
+    render(<OTCMarket />)
 
-    expect(OTCMarketCard).toHaveBeenCalledWith(
+    expect(DSOCard).toHaveBeenCalledWith(
       expect.objectContaining({
         type: 'OTC',
         data: dso,
-        viewURL: InvestRoute.trading
+        viewURL: InvestRoute.view
       }),
       {}
     )

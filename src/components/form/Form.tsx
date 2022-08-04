@@ -19,6 +19,7 @@ export interface FormProps<T extends {}> {
   allowInvalid?: boolean
   id?: string
   mode?: keyof ValidationMode
+  reValidateMode?: keyof Omit<ValidationMode, 'all' | 'onTouched'>
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -33,6 +34,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     allowInvalid = false,
     id,
     mode = 'onBlur',
+    reValidateMode = 'onChange',
     ...rest
   } = props
 
@@ -41,7 +43,8 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     defaultValues: useMemo(() => defaultValues as any, [defaultValues]),
     resolver: yupResolver(validationSchema),
     criteriaMode: criteriaMode,
-    shouldUnregister: shouldUnregister
+    shouldUnregister: shouldUnregister,
+    reValidateMode: reValidateMode
   })
 
   useUnmountCallback(() => {

@@ -52,7 +52,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Please enter verification code. Digit 1"
                       autocomplete="off"
-                      class="makeStyles-input-7 "
+                      class="makeStyles-input-8 "
                       maxlength="1"
                       placeholder="_"
                       style="width: 1em; text-align: center;"
@@ -66,7 +66,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Digit 2"
                       autocomplete="off"
-                      class="makeStyles-input-7"
+                      class="makeStyles-input-8"
                       maxlength="1"
                       placeholder="_"
                       style="width: 1em; text-align: center;"
@@ -80,7 +80,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Digit 3"
                       autocomplete="off"
-                      class="makeStyles-input-7"
+                      class="makeStyles-input-8"
                       maxlength="1"
                       placeholder="_"
                       style="width: 1em; text-align: center;"
@@ -94,7 +94,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Digit 4"
                       autocomplete="off"
-                      class="makeStyles-input-7"
+                      class="makeStyles-input-8"
                       maxlength="1"
                       placeholder="_"
                       style="width: 1em; text-align: center;"
@@ -108,7 +108,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Digit 5"
                       autocomplete="off"
-                      class="makeStyles-input-7"
+                      class="makeStyles-input-8"
                       maxlength="1"
                       placeholder="_"
                       style="width: 1em; text-align: center;"
@@ -122,7 +122,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Digit 6"
                       autocomplete="off"
-                      class="makeStyles-input-7"
+                      class="makeStyles-input-8"
                       maxlength="1"
                       placeholder="_"
                       style="width: 1em; text-align: center;"

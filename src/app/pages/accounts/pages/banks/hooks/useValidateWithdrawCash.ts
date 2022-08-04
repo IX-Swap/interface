@@ -3,8 +3,9 @@ import { useFormContext } from 'react-hook-form'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import { useBankById } from 'app/pages/accounts/pages/banks/hooks/useBankById'
-import { getIdFromObj } from 'helpers/strings'
+import { getIdFromObj, isEmptyString } from 'helpers/strings'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 interface BalancesByBankIdReturnObj {
   canSubmit: boolean
@@ -14,9 +15,10 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
   const { watch, setError, clearErrors, errors, formState } =
     useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
+  const otp = watch('otp')
   const amount = watch('amount', 0)
-  const virtualAccountId = watch('virtualAccount')
-
+  const { getFilterValue } = useQueryFilter()
+  const virtualAccountId = getFilterValue('account')
   const { data: bank, isSuccess: bankSuccess } = useBankById({
     bankId: bankId ?? ''
   })
@@ -53,7 +55,7 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
       if (isValid && errors.amount !== undefined) {
         clearErrors('amount')
       }
-      return { canSubmit: isValid }
+      return { canSubmit: isValid && !isEmptyString(otp) }
     }
   }
   return { canSubmit: false }

@@ -56,6 +56,9 @@ export interface BaseFilter {
   asset?: string
   type?: string
   search?: string
+  sortBy?: string
+  orderBy?: string | number
+  sortIndex?: string | number
   searchInvestorName?: string
   listingKeyword?: string
   from?: string
@@ -81,6 +84,7 @@ export interface InternalRouteProps extends InternalRouteBase {
   color?: string
   root?: boolean
   generic?: boolean
+  external?: boolean
   authorizations?: AppRole[]
   backgroundColor?: keyof Theme['palette']['backgrounds']
 }

@@ -102,7 +102,19 @@ export const cashWithdrawalsQueryKeys = {
   getByVirtualAccount: (virtualAccountNumber?: string) =>
     generateQueryKey('cash-withdrawal', virtualAccountNumber)
 }
-
+export const cashVirtualTransactionsQueryKeys = {
+  getByVirtualAccount: (
+    virtualAccountNumber?: string,
+    sortBy?: string,
+    orderBy?: string
+  ) =>
+    generateQueryKey(
+      'virtual-transactions',
+      virtualAccountNumber,
+      sortBy,
+      orderBy
+    )
+}
 export const digitalSecuritiesQueryKeys = {
   getDepositByUserId: (id?: string) => generateQueryKey('ds-deposits', id),
   getWithdrawalsByUserId: (id?: string) =>

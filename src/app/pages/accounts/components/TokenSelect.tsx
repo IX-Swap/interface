@@ -24,9 +24,6 @@ export const TokenSelect = React.forwardRef((props: SelectProps, ref) => {
         <SelectItem disabled value={undefined}>
           {label}
         </SelectItem>
-        <SelectItem disabled value={undefined}>
-          {label}
-        </SelectItem>
         {data?.map((token: AssetBalance) => (
           <SelectItem key={token.symbol} value={token.symbol}>
             {token.symbol} {!isEmptyString(token.name) && `(${token.name})`}

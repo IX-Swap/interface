@@ -1,11 +1,12 @@
+import { render } from '@testing-library/react'
+import { ActiveElementContext } from 'app/context/ActiveElementContextWrapper'
 import * as useStyles from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders.styles'
 import React from 'react'
-import { render } from '@testing-library/react'
-import { OpenOrdersContext } from 'app/pages/invest/components/Trading/context/OpenOrdersContextWrapper'
-import { orders } from '__fixtures__/otcOrders'
-import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
+
 import { MobileNestedOrders } from 'app/pages/invest/components/Trading/Orders/OpenOrders/MobileNestedOrders'
 import { LeavePageContext } from 'app/pages/issuance/context/LeavePageContext'
+import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
+import { orders } from '__fixtures__/otcOrders'
 
 jest.mock(
   'app/pages/invest/components/Trading/Orders/OpenOrders/MobileConfirmationMessage',
@@ -62,7 +63,7 @@ describe('MobileNestedOrders', () => {
           showPrompt: false
         }}
       >
-        <OpenOrdersContext.Provider
+        <ActiveElementContext.Provider
           value={{
             isIndexOpen: () => true,
             toggleRow: () => undefined,
@@ -71,7 +72,7 @@ describe('MobileNestedOrders', () => {
           }}
         >
           <MobileNestedOrders items={orders} />
-        </OpenOrdersContext.Provider>
+        </ActiveElementContext.Provider>
       </LeavePageContext.Provider>
     )
     expect(getByTestId('matches-nested-mobile')).toBeDefined()

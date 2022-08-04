@@ -2,7 +2,7 @@ import {
   BankFormValues,
   DepositCashArgs,
   UpdateBankArgs,
-  WithdrawCashArgs,
+  WithdrawCashParams,
   WithdrawDSArgs
 } from 'app/pages/accounts/types'
 import { virtualAccount } from '__fixtures__/virtualAccount'
@@ -35,7 +35,7 @@ export const depositCashArgs: DepositCashArgs = {
   memo: '123'
 }
 
-export const withdrawCashArgs: WithdrawCashArgs = {
+export const withdrawCashArgs: WithdrawCashParams = {
   amount: 123,
   otp: '123145',
   memo: '123',

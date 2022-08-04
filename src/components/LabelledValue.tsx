@@ -129,7 +129,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
   return (
     <Grid {...rest} item container direction={direction}>
       <Typography
-        style={first.styles}
+        style={{ ...first.styles, textAlign: align }}
         color={isRedesigned ? 'text.primary' : undefined}
       >
         {first.text}

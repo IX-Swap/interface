@@ -1,16 +1,10 @@
 import { AutoAssignVirtualAccountFormFields } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/AutoAssignVirtualAccountFormFields'
-import { ConfirmationDialog } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/ConfirmationDialog'
+import { VirtualAssignConfirmationDialog } from 'app/pages/accounts/pages/banks/components/AutoAssignVirtualAccountForm/VirtualAssignConfirmationDialog'
 import { useAssignVirtualAccount } from 'app/pages/accounts/pages/banks/hooks/useAssignVirtualAccount'
 import { Form } from 'components/form/Form'
 import React, { useState } from 'react'
 
-interface AutoAssignVirtualAccountFormProps {
-  isAdditional?: boolean
-}
-
-export const AutoAssignVirtualAccountForm = ({
-  isAdditional = false
-}: AutoAssignVirtualAccountFormProps) => {
+export const AutoAssignVirtualAccountForm = () => {
   const [open, setOpen] = useState<boolean>(false)
   const handleClose = () => {
     setOpen(false)
@@ -19,7 +13,7 @@ export const AutoAssignVirtualAccountForm = ({
     setOpen(true)
   }
   const [assignVirtualAccount, { isLoading, isSuccess }] =
-    useAssignVirtualAccount(handleClose, isAdditional)
+    useAssignVirtualAccount(handleClose)
   const handleSubmit = async (args: any) => {
     await assignVirtualAccount(args)
   }
@@ -27,11 +21,10 @@ export const AutoAssignVirtualAccountForm = ({
   return (
     <Form onSubmit={handleSubmit}>
       <AutoAssignVirtualAccountFormFields handleOpen={handleOpen} />
-      <ConfirmationDialog
+      <VirtualAssignConfirmationDialog
         onClose={handleClose}
         open={open}
         assigning={isLoading || isSuccess}
-        isAdditional={isAdditional}
       />
     </Form>
   )

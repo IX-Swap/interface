@@ -7,6 +7,19 @@ import { useQuery } from 'react-query'
 import { VirtualAccount } from 'types/virtualAccount'
 
 export const useVirtualAccount = (virtualAccountNumber?: string) => {
+  const { data: list, ...rest } = useVirtualAccounts()
+
+  const virtualAccount: VirtualAccount =
+    list?.find(item => item.accountNumber === virtualAccountNumber) ?? list?.[0]
+
+  return {
+    ...rest,
+    list,
+    data: virtualAccount
+  }
+}
+
+export const useVirtualAccounts = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { apiService } = useServices()
@@ -22,13 +35,5 @@ export const useVirtualAccount = (virtualAccountNumber?: string) => {
   )
 
   const list: VirtualAccount[] = data?.data[0]?.documents
-
-  const virtualAccount: VirtualAccount =
-    list?.find(item => item.accountNumber === virtualAccountNumber) ?? list?.[0]
-
-  return {
-    ...rest,
-    list,
-    data: virtualAccount
-  }
+  return { ...rest, data: list }
 }

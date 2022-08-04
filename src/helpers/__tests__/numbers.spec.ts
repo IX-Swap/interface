@@ -1,18 +1,20 @@
 import {
-  formatMoney,
-  toPercentage,
-  generateRandom,
-  formatAmount,
   addSymbol,
-  formatTokenBalance,
-  isNotNullish,
+  formatAmount,
   formatAmountValue,
+  formatMoney,
+  formatTokenBalance,
+  generateRandom,
+  getFilledPercentageFromMatches,
   getFilledRoundedPercentage,
+  getOrderCurrency,
   getRoundedPercentage,
+  isNotNullish,
+  isNullish,
   renderTotal,
-  getOrderCurrency
+  toPercentage
 } from 'helpers/numbers'
-import { order1 } from '__fixtures__/otcOrders'
+import { order1, orderWithSettled } from '__fixtures__/otcOrders'
 
 describe('addSymbol', () => {
   it('returns value with symbol', () => {
@@ -131,5 +133,21 @@ describe('renderTotal', () => {
 describe('getOrderCurrency', () => {
   it('get correct currency', () => {
     expect(getOrderCurrency(order1)).toEqual('USD')
+  })
+})
+
+describe('getFilledPercentageFromMatches', () => {
+  it('calculate match percentage', () => {
+    expect(getFilledPercentageFromMatches({ row: orderWithSettled })).toEqual(
+      '10%'
+    )
+  })
+})
+
+describe('isNullish', () => {
+  it('check if number is nullish', () => {
+    expect(isNullish(null)).toEqual(true)
+    expect(isNullish(1)).toEqual(false)
+    expect(isNullish(0)).toEqual(true)
   })
 })

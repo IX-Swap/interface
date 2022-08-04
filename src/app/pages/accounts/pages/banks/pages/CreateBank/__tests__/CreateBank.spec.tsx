@@ -34,7 +34,7 @@ describe('CreateBank', () => {
 
     expect(BankForm).toHaveBeenCalledWith(
       {
-        submitButtonLabel: 'Add Bank Account',
+        submitButtonLabel: 'Add account',
         onSubmit: createBank
       },
       {}

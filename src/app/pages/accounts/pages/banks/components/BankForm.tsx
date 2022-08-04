@@ -34,11 +34,11 @@ export const BankForm: React.FC<BankFormProps> = props => {
       onSubmit={handleSubmit}
     >
       <Grid container direction='column'>
-        <Card variant='outlined'>
+        <Card variant='outlined' sx={{ padding: { xs: 3, md: 5 } }}>
           <CardContent>
             <Grid item container direction='column' spacing={3}>
               <Grid item xs={12}>
-                <Typography variant='h5'>Account Info</Typography>
+                <Typography variant='h5'>Account Information</Typography>
               </Grid>
               <Grid container item direction='column' spacing={3}>
                 <BankFields />
@@ -51,7 +51,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
           <VSpacer size='small' />
         </Grid>
 
-        <Card variant='outlined'>
+        <Card variant='outlined' sx={{ padding: { xs: 3, md: 5 } }}>
           <CardContent>
             <Grid item container direction='column' spacing={3}>
               <Grid item xs={12}>
@@ -68,7 +68,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
           <VSpacer size='small' />
         </Grid>
 
-        <Grid container item xs={12} justifyContent='center'>
+        <Grid container item xs={12} justifyContent='flex-end'>
           <Button
             variant={'outlined'}
             component={AppRouterLinkComponent}
