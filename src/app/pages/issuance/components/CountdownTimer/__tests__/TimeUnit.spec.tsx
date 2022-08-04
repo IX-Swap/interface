@@ -11,10 +11,6 @@ describe('TimeUnit', () => {
     label: 'years'
   }
 
-  it.skip('renders without any errors', () => {
-    render(<TimeUnit {...timeUnitProps} />)
-  })
-
   it('renders correct time and label value', () => {
     const { getByText } = render(<TimeUnit {...timeUnitProps} />)
     expect(getByText('02')).toBeInTheDocument()
