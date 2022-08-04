@@ -11,7 +11,8 @@ export interface DSOBaseFieldsViewProps {
 }
 
 export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
-  const { isMiniLaptop } = useAppBreakpoints()
+  const { isMiniLaptop, theme } = useAppBreakpoints()
+  const isLightThemeActive = theme.palette.mode === 'light'
   const { container, logoContainer, tokenName, corporateName, boxContainer } =
     useStyles()
   return (
@@ -59,103 +60,112 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Grid item>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Token Name'
-                  value={dso?.tokenName}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Symbol'
-                  value={dso?.tokenSymbol}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Corporate'
-                  value={dso?.corporate?.companyLegalName}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
+        <Grid
+          item
+          container
+          flexDirection={'column'}
+          xs={12}
+          spacing={{ xs: 2, sm: 0 }}
+        >
+          <Grid item container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Token Name'
+                value={dso?.tokenName}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Symbol'
+                value={dso?.tokenSymbol}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Corporate'
+                value={dso?.corporate?.companyLegalName}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
             </Grid>
           </Grid>
 
-          <Grid item>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Network'
-                  value={dso?.network?.name}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Capital Structure'
-                  value={dso?.capitalStructure}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Decimal'
-                  value={dso?.decimals}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
+          <Grid item container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Network'
+                value={dso?.network?.name}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Capital Structure'
+                value={dso?.capitalStructure}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Decimal'
+                value={dso?.decimals}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
             </Grid>
           </Grid>
 
-          <Grid item>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Currency'
-                  value={dso?.currency?.symbol}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Launch Date'
-                  value={dso?.launchDate}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
-              <Grid item xs={12} md={4}>
-                <LabelledValue
-                  label='Completion Date'
-                  value={dso?.completionDate}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
+          <Grid item container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Currency'
+                value={dso?.currency?.symbol}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Launch Date'
+                value={dso?.launchDate}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Completion Date'
+                value={dso?.completionDate}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
             </Grid>
           </Grid>
-          <Grid item>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <LabelledValue
-                  label='Unique Identifier Code'
-                  value={dso?.uniqueIdentifierCode}
-                  isNewThemeOn
-                  valueColor='rgb(255,255,255)'
-                />
-              </Grid>
+
+          <Grid item container spacing={3}>
+            <Grid item xs={12}>
+              <LabelledValue
+                label='Unique Identifier Code'
+                value={dso?.uniqueIdentifierCode}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
             </Grid>
           </Grid>
         </Grid>

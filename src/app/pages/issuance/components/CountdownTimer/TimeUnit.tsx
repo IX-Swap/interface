@@ -42,7 +42,7 @@ export const TimeUnit: React.FC<TimeUnitProps> = ({
         {addLeadingZeros(time, 2) ?? '00'}
       </Typography>
       <VSpacer size={isNewThemeOn ? 'extraSmall' : 'small'} />
-      <Box width={isNewThemeOn ? 'initial' : 60}>
+      <Box width={'initial'}>
         <Typography
           align='center'
           style={{

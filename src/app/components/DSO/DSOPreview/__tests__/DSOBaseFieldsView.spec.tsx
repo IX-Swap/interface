@@ -32,82 +32,100 @@ describe('DSOBaseFieldsView', () => {
   it('renders data correctly', () => {
     render(<DSOBaseFieldsView dso={dso} />)
 
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      1,
       {
         label: 'Token Name',
         value: dso?.tokenName,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      2,
       {
         label: 'Symbol',
         value: dso.tokenSymbol,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      3,
       {
         label: 'Corporate',
         value: dso.corporate.companyLegalName,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      4,
       {
         label: 'Network',
         value: dso.network?.name,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      5,
       {
         label: 'Capital Structure',
         value: dso.capitalStructure,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      6,
       {
         label: 'Decimal',
         value: dso.decimals,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      7,
       {
         label: 'Currency',
         value: dso.currency.symbol,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      8,
       {
         label: 'Launch Date',
         value: dso.launchDate,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
       {}
     )
-    expect(LabelledValue).toHaveBeenCalledWith(
+    expect(LabelledValue).toHaveBeenNthCalledWith(
+      9,
       {
         label: 'Completion Date',
         value: dso.completionDate,
+        labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'
       },
