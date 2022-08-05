@@ -5,6 +5,7 @@ import {
   compactColumns
 } from 'app/pages/accounts/pages/cash/components/columns'
 import { MobileActions } from 'app/pages/accounts/pages/cash/components/MobileActions'
+import { virtualAccounts } from 'config/apiURL'
 import { balanceQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -28,7 +29,7 @@ export const CashTable: React.FC = () => {
   return (
     <ActiveElementContextWrapper>
       <TableView<ConvertedAssetBalance>
-        uri={`/virtual-accounts/${getIdFromObj(user)}`}
+        uri={virtualAccounts.getByUserId(getIdFromObj(user))}
         name={balanceQueryKeys.getByUserId(getIdFromObj(user))}
         filter={{ type: 'Currency' }}
         columns={columns}

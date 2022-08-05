@@ -91,17 +91,6 @@ export const banksQueryKeys = {
   getListByUserId: (id?: string) => generateQueryKey('banks', id)
 }
 
-export const cashDepositsQueryKeys = {
-  getByUserId: (id?: string) => generateQueryKey('cash-deposit', id),
-  getByVirtualAccount: (virtualAccountNumber?: string) =>
-    generateQueryKey('cash-deposit', virtualAccountNumber)
-}
-
-export const cashWithdrawalsQueryKeys = {
-  getByUserId: (id?: string) => generateQueryKey('cash-withdrawal', id),
-  getByVirtualAccount: (virtualAccountNumber?: string) =>
-    generateQueryKey('cash-withdrawal', virtualAccountNumber)
-}
 export const cashVirtualTransactionsQueryKeys = {
   getByVirtualAccount: (userId: string, sortBy?: string, orderBy?: string) =>
     generateQueryKey('virtual-transactions', userId, sortBy, orderBy)
@@ -195,7 +184,6 @@ export const issuanceQueryKeys = {
 export const virtualAccountQueryKeys = {
   listAssigned: 'assigned-virtual-accounts',
   listUnassigned: 'unassigned-virtual-accounts',
-  getByUserId: 'virtual-account',
   paymentMethod: 'payment-method',
   getBalances: 'get-balances',
   getPortfolios: 'get-portfolios'
