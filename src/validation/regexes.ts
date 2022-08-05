@@ -1,7 +1,7 @@
 export const lettersAndNumbers = /^[a-zA-Z0-9]*$/
 
-// letters and -' characters
-export const name = /^[a-zA-Z-']*$/
+// letters and -' characters and a single space in between words
+export const name = /^([A-Za-z-']+ )+[A-Za-z-']+$|^[A-Za-z-']+$/
 
 // letters spaces - ' characters
 export const fullName = /^[a-zA-Z-'\s]*$/
