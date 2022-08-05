@@ -22,6 +22,7 @@ export const ViewInvestor = () => {
   const classes = useStyles()
   const editLinkMap = {
     investor: IdentityRoute.editCorporate,
+    corporate: IdentityRoute.editCorporate,
     'Fund Manager': IdentityRoute.editFundManager,
     'Fund Administrator': IdentityRoute.editFundAdmin,
     'Portfolio Manager': IdentityRoute.editPortfolioManager,
