@@ -1,4 +1,3 @@
-import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import {
   columns,
   compactColumns
@@ -20,18 +19,17 @@ import { useTransactionFilters } from '../hooks/useTransactionFilters'
 export const RecentTransactionsTable: React.FC = () => {
   const { user } = useAuth()
   const { isTablet } = useAppBreakpoints()
-  const { data, isLoading } = useVirtualAccount()
   const userId = user?._id
   const { filter, sortBy, orderBy } = useTransactionFilters()
-  if (userId === undefined || isLoading) {
+  if (userId === undefined) {
     return null
   }
 
   return (
     <TableView<CashWithdrawal | CashDeposit>
-      uri={accountsURL.virtualAccounts.getAllTransactions(userId, data._id)}
+      uri={accountsURL.virtualAccounts.getUserTransactions(userId)}
       name={cashVirtualTransactionsQueryKeys.getByVirtualAccount(
-        data.accountNumber,
+        userId,
         sortBy,
         orderBy
       )}

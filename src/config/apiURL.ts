@@ -111,6 +111,8 @@ export const accountsURL = {
       `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
     getAllTransactions: (userId?: string, virtualAccountId?: string) =>
       `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`,
+    getUserTransactions: (userId?: string) =>
+      `/virtual-accounts/transactions/list/${userId}`,
     getPaymentMethods: (country?: string, swiftCode?: string) =>
       `/accounts/banks/payment-method?country=${country}&swiftCode=${swiftCode}`
   },
