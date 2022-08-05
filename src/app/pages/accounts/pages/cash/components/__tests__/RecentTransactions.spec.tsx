@@ -41,13 +41,8 @@ describe('RecentTransactions', () => {
 
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
-        uri: accountsURL.virtualAccounts.getAllTransactions(
-          user._id,
-          virtualAccountsSample[0]._id
-        ),
-        name: cashVirtualTransactionsQueryKeys.getByVirtualAccount(
-          virtualAccountsSample[0].accountNumber
-        ),
+        uri: accountsURL.virtualAccounts.getUserTransactions(user._id),
+        name: cashVirtualTransactionsQueryKeys.getByVirtualAccount(user._id),
         columns: columns,
         noHeader: false
       }),
