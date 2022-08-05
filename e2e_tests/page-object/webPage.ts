@@ -20,6 +20,7 @@ export class WebPage {
   }
 
   async clickTokenItem(token) {
+    await this.page.waitForLoadState();
     await this.page.locator(`//div[text()='${token}']`).click();
   }
 

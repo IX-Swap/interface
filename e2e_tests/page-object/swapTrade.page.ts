@@ -93,6 +93,7 @@ export class SwapTradePage extends WebPage {
   async confirmSwapViaMetamask() {
     const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmSwapButton);
     await confirmMetamaskPopUp.click(this.metamaskPage.confirmMetamaskPopUpButton);
+    await this.page.waitForTimeout(10000);
   }
 
   async rejectSwapViaMetamask() {
@@ -101,9 +102,7 @@ export class SwapTradePage extends WebPage {
   }
 
   async getRandomTokenId(array) {
-    const randomId = Math.floor(Math.random() * array.length);
-
-    return randomId
+    return Math.floor(Math.random() * array.length)
   }
 
   async getRandomTokenIdWithExclusion(array, indexToExclude) {

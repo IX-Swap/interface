@@ -11,7 +11,6 @@ test.describe('Check Swap section functions', () => {
   const web3Helper = new Web3Helpers;
 
   const amountForSwapString = '0.0001';
-  const listOfSecurityTokens = [secTokenData, wsecTokenData];
 
   test.describe('Check UI swap section cases', () => {
     test('Check UI for the "Swap" section', async ({ swapTradePage }) => {
@@ -36,11 +35,9 @@ test.describe('Check Swap section functions', () => {
       await swapTradePage.confirmSwapViaMetamask();
 
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
-      await page.waitForTimeout(7000);
 
       const ixsTokenBalanceAfter = await web3Helper.getTokenBalance(ixsTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
-
-      await expect(ixsTokenBalanceBefore).not.toEqual(ixsTokenBalanceAfter);
+      await expect(parseFloat(ixsTokenBalanceBefore)).toBeLessThan(parseFloat(ixsTokenBalanceAfter));
     })
 
     test('Test the ability to "Swap" (Token - Security Token pair)', async ({ swapTradePage, page }) => {
@@ -56,41 +53,32 @@ test.describe('Check Swap section functions', () => {
       await swapTradePage.confirmSwapViaMetamask();
 
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
-      await page.waitForTimeout(7000);
 
       const wsecTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
-
-      await expect(wsecTokenBalanceBefore).not.toEqual(wsecTokenBalanceAfter);
+      await expect(parseFloat(wsecTokenBalanceBefore)).toBeLessThan(parseFloat(wsecTokenBalanceAfter));
     })
 
     test('Test the ability to "Swap" (Security Token - Security Token pair)', async ({ swapTradePage, page }) => {
-      const firstTokenId = await swapTradePage.getRandomTokenId(listOfSecurityTokens);
-      const firstTokenData = listOfSecurityTokens[firstTokenId];
-
-      const secondTokenId = await swapTradePage.getRandomTokenIdWithExclusion(listOfSecurityTokens, firstTokenData);
-      const secondTokenData = listOfSecurityTokens[secondTokenId];
-
-      const firstTokenBalanceBefore = await web3Helper.getTokenBalance(firstTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
-      const secondTokenBalanceBefore = await web3Helper.getTokenBalance(secondTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
+      const firstTokenBalanceBefore = await web3Helper.getTokenBalance(secTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
+      const secondTokenBalanceBefore = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
 
       await swapTradePage.clickFirstTokenDropdown();
-      await swapTradePage.clickTokenItem(firstTokenData.title);
+      await swapTradePage.clickTokenItem(secTokenData.title);
       await swapTradePage.clickSecondTokenDropdown();
-      await swapTradePage.clickTokenItem(secondTokenData.title);
+      await swapTradePage.clickTokenItem(wsecTokenData.title);
       await swapTradePage.fillFirstTokenAmountInput(amountForSwapString);
-      await swapTradePage.clickAuthorizeSecurityToken(wsecTokenData.name);
       await swapTradePage.clickAuthorizeSecurityToken(secTokenData.name);
+      await swapTradePage.clickAuthorizeSecurityToken(wsecTokenData.name);
       await swapTradePage.clickSwapButton();
       await swapTradePage.confirmSwapViaMetamask();
 
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
-      await page.waitForTimeout(7000);
 
-      const firstTokenBalanceAfter = await web3Helper.getTokenBalance(firstTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
-      const secondTokenBalanceAfter = await web3Helper.getTokenBalance(secondTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
+      const firstTokenBalanceAfter = await web3Helper.getTokenBalance(secTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
+      const secondTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, '0x586Fd788b37FE3847bCf940562297b19c2Cc6CE0');
 
-      await expect(firstTokenBalanceBefore).not.toEqual(firstTokenBalanceAfter);
-      await expect(secondTokenBalanceBefore).not.toEqual(secondTokenBalanceAfter);
+      await expect(parseFloat(firstTokenBalanceBefore)).toBeGreaterThan(parseFloat(firstTokenBalanceAfter));
+      await expect(parseFloat(secondTokenBalanceBefore)).toBeLessThan(parseFloat(secondTokenBalanceAfter));
     })
 
     test('Test the ability to "Swap" (Negative TC)', async ({ swapTradePage }) => {
