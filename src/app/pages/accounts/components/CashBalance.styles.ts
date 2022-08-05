@@ -44,7 +44,7 @@ export const useStyles = makeStyles(theme => {
     },
     withoutBackground: {
       padding: 0,
-      backgroundColor: 'none'
+      backgroundColor: 'transparent'
     },
     icon: {
       top: 12.5
