@@ -4,8 +4,8 @@ import { SentryRoute } from 'components/SentryRoute'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import React, { memo } from 'react'
 import { RouteProps, Redirect } from 'react-router-dom'
-import { useIsAccredited } from 'helpers/acl'
 import { AppRoute as AppPath } from 'app/router/config'
+import { useAppNavigation } from 'app/components/Header/hooks/useAppNavigation'
 
 export interface AppRouteProps extends RouteProps {
   path: string
@@ -14,22 +14,16 @@ export interface AppRouteProps extends RouteProps {
 }
 
 export const AppRoute = memo((props: AppRouteProps) => {
+  const { isNavigationImpossibleWithoutCompletedIdentity } = useAppNavigation()
   const { breadcrumb, path, children, ...rest } = props
   const user = useCachedUser()
-  const isAccredited = useIsAccredited()
 
   if (user === undefined) {
     if (!path.startsWith('/auth')) {
       return <Redirect to='/auth' />
     }
   } else {
-    if (
-      !isAccredited &&
-      !path.startsWith(AppPath.educationCentre) &&
-      !path.startsWith(AppPath.identity) &&
-      !path.startsWith(AppPath.security) &&
-      !path.startsWith(AppPath.notifications)
-    ) {
+    if (isNavigationImpossibleWithoutCompletedIdentity(path)) {
       return <Redirect to={AppPath.identity} />
     }
   }

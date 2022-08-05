@@ -26,8 +26,25 @@ export const useStyles = makeStyles(theme => {
         }
       }
     },
-    inputLabel: {
-      marginBottom: 0
+    valueBlock: {
+      fontSize: 24,
+      fontWeight: 600,
+      display: 'block',
+      margin: '0 auto',
+      textAlign: 'center'
+    },
+    valueNoSelect: {
+      margin: '8px auto 0'
+    },
+    currency: {
+      fontSize: 'inherit',
+      fontWeight: 'inherit',
+      display: 'inline',
+      color: theme.palette.text.secondary
+    },
+    withoutBackground: {
+      padding: 0,
+      backgroundColor: 'transparent'
     },
     icon: {
       top: 12.5

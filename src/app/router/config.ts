@@ -1,15 +1,14 @@
-import { makeURL } from 'config/appURL'
-
 export const AppRoute = {
-  authorizer: makeURL(['app', 'authorizer']),
-  identity: makeURL(['app', 'identity']),
-  accounts: makeURL(['app', 'accounts']),
-  issuance: makeURL(['app', 'issuance']),
-  invest: makeURL(['app', 'invest']),
-  admin: makeURL(['app', 'admin']),
-  OTCMarket: makeURL(['app', 'OTCMarket']),
+  home: '/app/home',
+  authorizer: '/app/authorizer',
+  identity: '/app/identity',
+  accounts: '/app/accounts',
+  issuance: '/app/issuance',
+  invest: '/app/invest',
+  admin: '/app/admin',
+  OTCMarket: '/app/OTCMarket',
   security: '/app/settings',
-  notifications: makeURL(['app', 'notifications']),
+  notifications: '/app/notifications',
   educationCentre: '/app/education-centre',
   fundsManagement: '/app/funds-management'
 }

@@ -14,5 +14,5 @@ export const RedirectToDefaultPage = () => {
     showUncompletedIdentityDialog()
   }
 
-  return <Redirect to={AppRoute.identity} />
+  return <Redirect to={isAccredited ? AppRoute.home : AppRoute.identity} />
 }

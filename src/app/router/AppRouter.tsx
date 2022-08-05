@@ -19,6 +19,7 @@ import {
   useIsFundManager,
   useIsIssuer
 } from 'helpers/acl'
+import { HomeRoot } from 'app/pages/home/HomeRoot'
 
 export const AppRouter = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -28,6 +29,10 @@ export const AppRouter = () => {
 
   return (
     <Switch>
+      <AppRoute path={AppPath.home}>
+        <HomeRoot />
+      </AppRoute>
+
       <AppRoute breadcrumb='Accounts' path={AppPath.accounts}>
         <AccountsRoot />
       </AppRoute>
