@@ -12,7 +12,7 @@ describe('FormActions', () => {
   it('renders without errors', () => {
     render(
       <Form>
-        <FormActions />
+        <FormActions showCommit={true} onSubmit={jest.fn()} />
       </Form>
     )
   })
@@ -20,7 +20,7 @@ describe('FormActions', () => {
   it('should match snapshot', () => {
     const { container } = render(
       <Form>
-        <FormActions />
+        <FormActions showCommit={true} onSubmit={jest.fn()} />
       </Form>
     )
 

@@ -43,6 +43,10 @@ export interface CommitmentFormValues {
   tnc?: boolean
 }
 
+export interface SubmitCommitmentFormValues extends CommitmentFormValues {
+  action: 'commit' | 'invest'
+}
+
 export interface CommitmentIssuanceFormValues {
   releaseDate?: Date | null
   withdrawalAddress: string
