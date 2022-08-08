@@ -1,5 +1,5 @@
 import { virtualAccounts } from 'config/apiURL'
-import { virtualAccountQueryKeys } from 'config/queryKeys'
+import { balanceQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
@@ -30,7 +30,7 @@ export const useVirtualAccounts = () => {
   }
 
   const { data, ...rest } = useQuery(
-    [virtualAccountQueryKeys.getByUserId, { userId }],
+    [balanceQueryKeys.getByUserId(userId)],
     getVirtualAccount
   )
 

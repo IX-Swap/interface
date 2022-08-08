@@ -1,13 +1,10 @@
-import { useMutation, useQueryCache } from 'react-query'
-import { useServices } from 'hooks/useServices'
-import { placeOrderURL } from 'config/apiURL'
 import { PlaceOrderArgs } from 'app/pages/invest/types/form'
-import {
-  exchangeMarketQueryKeys,
-  virtualAccountQueryKeys
-} from 'config/queryKeys'
-import { useAuth } from 'hooks/auth/useAuth'
+import { placeOrderURL } from 'config/apiURL'
+import { balanceQueryKeys, exchangeMarketQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useServices } from 'hooks/useServices'
+import { useMutation, useQueryCache } from 'react-query'
 import { useParams } from 'react-router-dom'
 
 export const useCreateOrder = () => {
@@ -24,10 +21,7 @@ export const useCreateOrder = () => {
 
   return useMutation(createOrder, {
     onSuccess: data => {
-      void queryCache.invalidateQueries([
-        virtualAccountQueryKeys.getByUserId,
-        { userId }
-      ])
+      void queryCache.invalidateQueries([balanceQueryKeys.getByUserId(userId)])
       void queryCache.invalidateQueries(
         exchangeMarketQueryKeys.getOrdersList(userId, pairId)
       )
