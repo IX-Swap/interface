@@ -116,6 +116,7 @@ export class SwapTradePage extends WebPage {
   }
 
   async clickAuthorizeSecurityToken(token) {
+    await this.page.waitForTimeout(1000);
     await this.page.click(`button >> text=Authorize ${token}`);
   }
 }
