@@ -40,7 +40,6 @@ export const Cash = () => {
               Recent Transactions
             </Typography>
             <RecentTransactionsTable />
-            <NoCashButtons />
           </Grid>
         </Grid>
       </RootContainer>

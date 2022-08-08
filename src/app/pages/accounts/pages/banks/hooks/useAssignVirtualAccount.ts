@@ -27,7 +27,6 @@ export const useAssignVirtualAccount = (callback?: () => void) => {
         'Request to add a new account sent',
         'success'
       )
-
       await queryCache.invalidateQueries(
         balanceQueryKeys.getByUserId(authUserId)
       )
