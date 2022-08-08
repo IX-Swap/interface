@@ -3,7 +3,6 @@ import { expect } from '@playwright/test'
 import { Web3Helpers } from '../helpers/web3/web3'
 import { ixsTokenData, secTokenData, wsecTokenData, ethTokenData } from '../helpers/web3/web3Data'
 import { metamaskWallet } from '../helpers/web3/metamaskData'
-import {getRandomTokenId, getRandomTokenIdWithExclusion} from '../helpers/utils'
 
 test.beforeEach(async ({ kovanNetwork, topNavigationBar }) => {
   await topNavigationBar.clickSwapTradeButton();

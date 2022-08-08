@@ -1,4 +1,4 @@
-import moment = require("moment");
+import moment = require('moment')
 
 export const getRandomString = (text: string) => {
   const number = Math.round(Math.random() * 10000);

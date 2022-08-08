@@ -5,7 +5,7 @@ import { MetamaskPage } from '../page-object/metamaskPage'
 import { WebPage } from '../page-object/webPage'
 import { TopNavigationBar } from '../page-object/topNavigationBar'
 import { LiquidityPoolsPage } from '../page-object/liquidityPoolsPage'
-import { SwapTradePage } from '../page-object/swapTrade.page'
+import { SwapTradePage } from '../page-object/swapTradePage'
 
 type ixsFixtures = {
   connectWalletScreen: ConnectWalletScreen;
