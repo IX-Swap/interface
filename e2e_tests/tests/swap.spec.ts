@@ -3,6 +3,7 @@ import { expect } from '@playwright/test'
 import { Web3Helpers } from '../helpers/web3/web3'
 import { ixsTokenData, secTokenData, wsecTokenData, ethTokenData } from '../helpers/web3/web3Data'
 import { metamaskWallet } from '../helpers/web3/metamaskData'
+import {getRandomTokenId, getRandomTokenIdWithExclusion} from '../helpers/utils'
 
 test.beforeEach(async ({ kovanNetwork, topNavigationBar }) => {
   await topNavigationBar.clickSwapTradeButton();
@@ -38,7 +39,7 @@ test.describe('Check Swap section functions', () => {
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
 
       const ixsTokenBalanceAfter = await web3Helper.getTokenBalance(ixsTokenData.contractAddress, metamaskWallet.ethAddress);
-      await expect(parseFloat(ixsTokenBalanceBefore)).toBeLessThan(parseFloat(ixsTokenBalanceAfter));
+      await expect(ixsTokenBalanceBefore).toBeLessThan(ixsTokenBalanceAfter);
     })
 
     test('Test the ability to "Swap" (Token - Security Token pair)', async ({ swapTradePage, page }) => {
@@ -56,7 +57,7 @@ test.describe('Check Swap section functions', () => {
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
 
       const wsecTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, metamaskWallet.ethAddress);
-      await expect(parseFloat(wsecTokenBalanceBefore)).toBeLessThan(parseFloat(wsecTokenBalanceAfter));
+      await expect(wsecTokenBalanceBefore).toBeLessThan(wsecTokenBalanceAfter);
     })
 
     test('Test the ability to "Swap" (Security Token - Security Token pair)', async ({ swapTradePage, page }) => {
@@ -78,8 +79,8 @@ test.describe('Check Swap section functions', () => {
       const firstTokenBalanceAfter = await web3Helper.getTokenBalance(secTokenData.contractAddress, metamaskWallet.ethAddress);
       const secondTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, metamaskWallet.ethAddress);
 
-      await expect(parseFloat(firstTokenBalanceBefore)).toBeGreaterThan(parseFloat(firstTokenBalanceAfter));
-      await expect(parseFloat(secondTokenBalanceBefore)).toBeLessThan(parseFloat(secondTokenBalanceAfter));
+      await expect(firstTokenBalanceBefore).toBeGreaterThan(firstTokenBalanceAfter);
+      await expect(secondTokenBalanceBefore).toBeLessThan(secondTokenBalanceAfter);
     })
 
     test('Test the ability to "Swap" (Negative TC)', async ({ swapTradePage }) => {

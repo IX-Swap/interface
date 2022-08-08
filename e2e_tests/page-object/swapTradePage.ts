@@ -18,6 +18,9 @@ export class SwapTradePage extends WebPage {
   readonly rejectTransactionPopUp: Locator;
   readonly transactionSubmittedPopUpText: Locator;
 
+  transactionSubmittedText = 'Transaction Submitted';
+  rejectTransactionPopUpText = 'Error Occurred';
+  enterAnAmountButtonText = 'Enter an amount';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -30,14 +33,12 @@ export class SwapTradePage extends WebPage {
     this.gearButton = page.locator(`[data-testid="open-settings-button"]`);
     this.currencyReplaceArrow = page.locator(`[data-testid="currencyReplace"]`);
     this.currentRateField = page.locator(`[data-testid="currentRate"]`);
-    this.enterAnAmountButton = page.locator(`[data-testid="swap-button"] >> text='Enter an amount'`);
+    this.enterAnAmountButton = page.locator(`[data-testid="swap-button"] >> text=${this.enterAnAmountButtonText}`);
     this.swapButton = page.locator(`[data-testid="swap-button"]`);
     this.confirmSwapButton = (`[data-testid="confirm-swap"]`);
-    this.rejectTransactionPopUp = page.locator(`[data-testid="TransactionPopup"] >> text='Error Occurred'`);
+    this.rejectTransactionPopUp = page.locator(`[data-testid="TransactionPopup"] >> text=${this.rejectTransactionPopUpText}`);
     this.transactionSubmittedPopUpText = page.locator(`text=${this.transactionSubmittedText}`);
   }
-
-  transactionSubmittedText = 'Transaction Submitted';
 
   //Assertions
   async checkSwapTittleIsVisible() {
@@ -101,19 +102,7 @@ export class SwapTradePage extends WebPage {
     await confirmMetamaskPopUp.click(this.metamaskPage.rejectButton);
   }
 
-  async getRandomTokenId(array) {
-    return Math.floor(Math.random() * array.length)
-  }
 
-  async getRandomTokenIdWithExclusion(array, indexToExclude) {
-      let rand = null;
-
-      while(rand === null || rand === indexToExclude){
-        rand = Math.round(Math.random() * (array.length - 1));
-      }
-
-      return rand
-  }
 
   async clickAuthorizeSecurityToken(token) {
     await this.page.waitForTimeout(2000);

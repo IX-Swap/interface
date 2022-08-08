@@ -61,6 +61,20 @@ export const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+export const getRandomTokenId = (array) => {
+  return Math.floor(Math.random() * array.length)
+}
+
+export const getRandomTokenIdWithExclusion = (array, indexToExclude) => {
+  let rand = null;
+
+  while(rand === null || rand === indexToExclude){
+    rand = Math.round(Math.random() * (array.length - 1));
+  }
+
+  return rand
+}
+
 export const getRandomNumberWithDecimal = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);

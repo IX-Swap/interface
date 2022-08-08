@@ -14,7 +14,10 @@ export class Web3Helpers {
       .then(function(result) {
         return result
       });
-    return balance
+    const decimals = await contract.methods.decimals().call(function(error, d) {
+      return d
+    })
+    return balance * (10 ** decimals)
   }
 
   async getEthBalance(address) {
