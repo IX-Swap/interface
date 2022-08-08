@@ -54,6 +54,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 component={CapitalStructureSelect}
                 label='Capital Structure'
                 name='capitalStructure'
+                displayEmpty
                 helperText='Offering terms will be changed based on your capital structure'
                 variant='outlined'
                 inputProps={{ 'data-testid': 'capital-structure' }}
