@@ -1,15 +1,11 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { VAAuditFilters } from 'app/pages/admin/components/VAAuditFilters'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import Typography from '@mui/material/Typography'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
-
-jest.mock('app/components/SearchFilter', () => ({
-  SearchFilter: jest.fn(() => null)
-}))
 
 jest.mock(
   'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter',
@@ -18,8 +14,8 @@ jest.mock(
   })
 )
 
-jest.mock('app/components/SearchFilter', () => ({
-  SearchFilter: jest.fn(() => null)
+jest.mock('app/components/TextInputSearchFilter', () => ({
+  TextInputSearchFilter: jest.fn(() => null)
 }))
 
 jest.mock('components/VSpacer', () => ({
@@ -35,8 +31,8 @@ describe('VAAuditFilters', () => {
 
   it('renders SearchFilter with correct props', () => {
     render(<VAAuditFilters />)
-    expect(SearchFilter).toHaveBeenCalledTimes(1)
-    expect(SearchFilter).toHaveBeenCalledWith(
+    expect(TextInputSearchFilter).toHaveBeenCalledTimes(1)
+    expect(TextInputSearchFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         fullWidth: true,
         placeholder: 'Search',

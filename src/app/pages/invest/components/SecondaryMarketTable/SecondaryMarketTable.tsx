@@ -1,26 +1,24 @@
-import React from 'react'
 import { Button, Grid } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
+import { Actions } from 'app/pages/invest/components/SecondaryMarketTable/Actions'
+import { columns } from 'app/pages/invest/components/SecondaryMarketTable/columns'
+import { SecondaryMarketList } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketList'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { exchange as exchangeURL } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { Actions } from 'app/pages/invest/components/SecondaryMarketTable/Actions'
-import { exchange as exchangeURL } from 'config/apiURL'
-import { columns } from 'app/pages/invest/components/SecondaryMarketTable/columns'
-import { SearchFilter } from 'app/components/SearchFilter'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useTheme } from '@mui/material/styles'
-import { AccountsRoute } from 'app/pages/accounts/router/config'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
 import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { useOutlinedInputStyles } from 'app/pages/invest/components/OverviwPageFilters'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { NoOffers } from 'app/pages/invest/components/NoOffers/NoOffers'
-import { SecondaryMarketList } from 'app/pages/invest/components/SecondaryMarketTable/SecondaryMarketList'
-import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
 
 export const SecondaryMarketTable = () => {
-  const outlinedInputClasses = useOutlinedInputStyles()
   const theme = useTheme()
   const { isMobile, isTablet } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
@@ -38,13 +36,7 @@ export const SecondaryMarketTable = () => {
         spacing={2}
       >
         <Grid item width={'100%'}>
-          <SearchFilter
-            inputSX={{
-              borderRadius: 2,
-              height: 50,
-              width: { xs: '100%' }
-            }}
-            classes={outlinedInputClasses}
+          <TextInputSearchFilter
             data-testid='secondaryMarketSearch'
             fullWidth
             filterValue={'secondaryMarketSearch'}

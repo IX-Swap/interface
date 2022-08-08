@@ -1,14 +1,14 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { CommitmentTableFilter } from 'app/pages/issuance/components/Commitments/CommitmentTableFilters'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
 import { VSpacer } from 'components/VSpacer'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import Button from '@mui/material/Button'
 
-jest.mock('app/components/SearchFilter', () => ({
-  SearchFilter: jest.fn(() => null)
+jest.mock('app/components/TextInputSearchFilter', () => ({
+  TextInputSearchFilter: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/issuance/components/Commitments/FundStatusFilter', () => ({
@@ -28,8 +28,8 @@ describe('CommitmentTableFilter', () => {
 
   it('renders SearchFilter with correct props', () => {
     render(<CommitmentTableFilter />)
-    expect(SearchFilter).toHaveBeenCalledTimes(1)
-    expect(SearchFilter).toHaveBeenCalledWith(
+    expect(TextInputSearchFilter).toHaveBeenCalledTimes(1)
+    expect(TextInputSearchFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         fullWidth: true,
         placeholder: 'Search Name'

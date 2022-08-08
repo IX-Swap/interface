@@ -1,13 +1,13 @@
+import AppsIcon from '@mui/icons-material/Apps'
+import ViewListIcon from '@mui/icons-material/ViewList'
 import { Grid, IconButton } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { CountryFilter } from 'app/pages/educationCentre/components/Securities/CountryFilter'
 import { IndustryFilter } from 'app/pages/educationCentre/components/Securities/IndustryFilter'
 import { ProtocolFilter } from 'app/pages/educationCentre/components/Securities/ProtocolFilter'
 import { SecurityTypeFilter } from 'app/pages/educationCentre/components/Securities/SecurityTypeFilter'
-import AppsIcon from '@mui/icons-material/Apps'
-import ViewListIcon from '@mui/icons-material/ViewList'
-import React from 'react'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
 
 export interface FiltersProps {
   view: 'grid' | 'list'
@@ -29,7 +29,7 @@ export const Filters = ({
       alignItems={'center'}
     >
       <Grid item xs={12} lg={4} mt={3}>
-        <SearchFilter
+        <TextInputSearchFilter
           inputAdornmentPosition='end'
           placeholder='Search'
           fullWidth

@@ -1,13 +1,13 @@
-import React, { useRef } from 'react'
+import { Grid } from '@mui/material'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { columns } from 'app/pages/admin/components/columns'
 import { TableView } from 'components/TableWithPagination/TableView'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { authURL } from 'config/apiURL'
 import { authQueryKeys } from 'config/queryKeys'
-import { columns } from 'app/pages/admin/components/columns'
-import { LoginHistory } from 'types/user'
-import { Grid } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React, { useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { LoginHistory } from 'types/user'
 
 export const AccountLoginHistory = () => {
   const { userId } = useParams<{ userId: string }>()
@@ -21,7 +21,7 @@ export const AccountLoginHistory = () => {
   return (
     <Grid container spacing={3} direction='column'>
       <Grid item xs={12} md={4}>
-        <SearchFilter
+        <TextInputSearchFilter
           fullWidth
           inputAdornmentPosition='end'
           placeholder='Search'

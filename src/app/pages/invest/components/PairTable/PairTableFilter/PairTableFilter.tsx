@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { FilterToggles } from 'app/pages/invest/components/PairTable/PairTableFilter/FilterToggles'
 import { useStyles } from 'app/pages/invest/components/PairTable/PairTableFilter/PairTableFilter.styles'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
@@ -22,7 +22,7 @@ export const PairTableFilter = () => {
         <FilterToggles />
       </Grid>
       <Grid item>
-        <SearchFilter
+        <TextInputSearchFilter
           fullWidth
           className={searchFilter}
           inputAdornmentPosition='end'

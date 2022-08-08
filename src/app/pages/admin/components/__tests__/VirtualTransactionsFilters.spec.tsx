@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { VTTransferTypesFilter } from 'app/pages/admin/components/VTTransferTypesFilter'
 import { VirtualTransactionsFilters } from 'app/pages/admin/components/VirtualTransactionsFilters'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { VTDateFilter } from 'app/pages/admin/components/VTDateFilter'
 import { VTCurrencyFilter } from 'app/pages/admin/components/VTCurrencyFilter'
 import { VTDirectionFilter } from 'app/pages/admin/components/VTDirectionFilter'
@@ -16,8 +16,8 @@ jest.mock('components/VSpacer', () => ({
   VSpacer: jest.fn(() => null)
 }))
 
-jest.mock('app/components/SearchFilter', () => ({
-  SearchFilter: jest.fn(() => null)
+jest.mock('app/components/TextInputSearchFilter', () => ({
+  TextInputSearchFilter: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/admin/components/VTDateFilter', () => ({
@@ -59,8 +59,8 @@ describe('VirtualTransactionsFilters', () => {
 
   it('renders search filter with correct props', () => {
     render(<VirtualTransactionsFilters />)
-    expect(SearchFilter).toHaveBeenCalledTimes(1)
-    expect(SearchFilter).toHaveBeenCalledWith(
+    expect(TextInputSearchFilter).toHaveBeenCalledTimes(1)
+    expect(TextInputSearchFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         fullWidth: true,
         placeholder: 'Search virtual account/ SWIFT',

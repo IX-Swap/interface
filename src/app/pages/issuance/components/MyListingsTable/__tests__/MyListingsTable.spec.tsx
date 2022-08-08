@@ -7,15 +7,15 @@ import { listingsQueryKeys } from 'config/queryKeys'
 import { columns } from 'app/pages/issuance/components/MyListingsTable/columns'
 import { listings } from 'config/apiURL'
 import { MyListingsTable } from 'app/pages/issuance/components/MyListingsTable/MyListingsTable'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { Actions } from 'app/pages/issuance/components/MyListingsTable/Actions'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
-jest.mock('app/components/SearchFilter', () => ({
-  SearchFilter: jest.fn(() => null)
+jest.mock('app/components/TextInputSearchFilter', () => ({
+  TextInputSearchFilter: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/issuance/components/MyListingsTable/Actions', () => ({
@@ -35,7 +35,7 @@ describe('MyListingsTable', () => {
   it('renders PastOrderFilter without error', () => {
     renderWithUserStore(<MyListingsTable />)
 
-    expect(SearchFilter).toHaveBeenCalled()
+    expect(TextInputSearchFilter).toHaveBeenCalled()
   })
 
   it('renders TableView with correct props if user exists', () => {

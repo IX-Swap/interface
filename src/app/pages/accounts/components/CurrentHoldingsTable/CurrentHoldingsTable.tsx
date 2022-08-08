@@ -1,13 +1,13 @@
-import React from 'react'
-import { TableView } from 'components/TableWithPagination/TableView'
 import { Box, Grid } from '@mui/material'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { useAuth } from 'hooks/auth/useAuth'
-import { getIdFromObj } from 'helpers/strings'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { columns } from 'app/pages/accounts/components/CurrentHoldingsTable/columns'
+import { TableView } from 'components/TableWithPagination/TableView'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
-import { columns } from 'app/pages/accounts/components/CurrentHoldingsTable/columns'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { getIdFromObj } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React from 'react'
 
 export interface Holding {
   _id: string
@@ -37,7 +37,7 @@ export const CurrentHoldingsTable = () => {
         >
           <Grid item xs={12} md={6}>
             <Box width={350}>
-              <SearchFilter
+              <TextInputSearchFilter
                 fullWidth
                 placeholder='Search'
                 inputAdornmentPosition='end'

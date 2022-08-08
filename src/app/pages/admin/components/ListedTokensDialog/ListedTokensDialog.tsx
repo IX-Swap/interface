@@ -1,18 +1,18 @@
-import React from 'react'
 import {
-  Typography,
-  DialogTitle,
+  Button,
+  DialogActions,
   DialogContent,
   DialogProps,
-  DialogActions,
+  DialogTitle,
+  Grid,
+  Typography,
   useMediaQuery,
-  useTheme,
-  Button,
-  Grid
+  useTheme
 } from '@mui/material'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import useStyles from 'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog.styles'
 import { VSpacer } from 'components/VSpacer'
-import { SearchFilter } from 'app/components/SearchFilter'
+import React from 'react'
 import { UIDialog } from 'ui/UIDialog/UIDialog'
 
 export interface ModalProps extends Partial<DialogProps> {
@@ -53,7 +53,7 @@ export const ListedTokensDialog = (props: ModalProps) => {
       </DialogTitle>
       <DialogContent className={classes.content}>
         <VSpacer size={'small'} />
-        <SearchFilter
+        <TextInputSearchFilter
           fullWidth
           placeholder='Search token'
           inputAdornmentPosition='start'

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { Button, Grid, Box } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { Box, Button, Grid } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { CapitalCallDialog } from 'app/pages/issuance/components/Commitments/CapitalCallDialog/CapitalCallDialog'
+import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React, { useState } from 'react'
 
 export const CommitmentTableFilter = () => {
   const theme = useTheme()
@@ -16,7 +16,7 @@ export const CommitmentTableFilter = () => {
     <Grid container direction='column' spacing={3}>
       <Grid item container justifyContent={'space-between'}>
         <Grid item xs={12} md={4}>
-          <SearchFilter fullWidth placeholder='Search Name' />
+          <TextInputSearchFilter fullWidth placeholder='Search Name' />
         </Grid>
 
         <Grid

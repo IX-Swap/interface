@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { Button, Grid, Hidden } from '@mui/material'
-import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
-import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
-import { SearchFilter } from 'app/components/SearchFilter'
-import { ColumnsEditorToggle } from 'app/pages/invest/components/DSOTable/ColumnsEditorToggle'
-import { ColumnsEditor } from 'app/pages/invest/components/DSOTable/ColumnsEditor'
-import { LabelledValue } from 'components/LabelledValue'
-import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
-import { NetworkFilter } from 'app/pages/invest/components/DSOTable/NetworkFilter'
-import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
-import { useTheme } from '@mui/material/styles'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import FilterListIcon from '@mui/icons-material/FilterList'
+import { Button, Grid, Hidden } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
+import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
+import { ColumnsEditor } from 'app/pages/invest/components/DSOTable/ColumnsEditor'
+import { ColumnsEditorToggle } from 'app/pages/invest/components/DSOTable/ColumnsEditorToggle'
+import { NetworkFilter } from 'app/pages/invest/components/DSOTable/NetworkFilter'
+import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
+import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
+import { LabelledValue } from 'components/LabelledValue'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React, { useState } from 'react'
 
 export const DSOTableFilters = () => {
   const { deselectColumn, selectColumn, columns } = useDSOTableColumns()
@@ -22,25 +22,18 @@ export const DSOTableFilters = () => {
 
   const theme = useTheme()
 
-  const { isMobile, isMiniLaptop } = useAppBreakpoints()
+  const { isMiniLaptop } = useAppBreakpoints()
 
   return (
     <Grid container direction='column' spacing={3}>
-      <Grid item container spacing={isMiniLaptop ? 2 : 0}>
-        <Grid item xs={12} md={10}>
-          <SearchFilter
-            style={{
-              borderTopRightRadius: isMobile ? theme.spacing(0.5) : 0,
-              borderBottomRightRadius: isMobile ? theme.spacing(0.5) : 0
-            }}
-            fullWidth
-            placeholder='Search Offers'
-          />
-        </Grid>
-
-        <Grid item xs={6} md={2}>
+      <Grid item container spacing={isMiniLaptop ? 2 : 1}>
+        <Grid item xs={12} md={2}>
           <CapitalStructureFilter />
         </Grid>
+        <Grid item xs={12} md={9}>
+          <TextInputSearchFilter fullWidth placeholder='Search' />
+        </Grid>
+
         <Hidden mdUp>
           <Grid item xs={6}>
             <Button

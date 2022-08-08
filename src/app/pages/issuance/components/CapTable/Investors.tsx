@@ -1,18 +1,18 @@
 import { Button, Grid } from '@mui/material'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { useStyles } from 'app/pages/issuance/components/CapTable/Investors.styles'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { issuanceURL } from 'config/apiURL'
 import { investQueryKeys } from 'config/queryKeys'
+import { formatDateToMMDDYY } from 'helpers/dates'
+import { formatAmount } from 'helpers/numbers'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
 import { generatePath, useParams } from 'react-router-dom'
 import { Commitment } from 'types/commitment'
-import { formatDateToMMDDYY } from 'helpers/dates'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { formatAmount } from 'helpers/numbers'
-import { SearchFilter } from 'app/components/SearchFilter'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { useStyles } from 'app/pages/issuance/components/CapTable/Investors.styles'
 
 export const Investors = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
@@ -52,7 +52,7 @@ export const Investors = () => {
       <Grid item xs={12}>
         <Grid container justifyContent='space-between' alignItems='center'>
           <Grid item xs={12} md={4}>
-            <SearchFilter fullWidth placeholder='Search Name' />
+            <TextInputSearchFilter fullWidth placeholder='Search Name' />
           </Grid>
           <Grid item className={styles.wrapper}>
             <Button

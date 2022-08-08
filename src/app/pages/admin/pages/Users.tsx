@@ -1,15 +1,15 @@
-import React, { useRef } from 'react'
-import { TableView } from 'components/TableWithPagination/TableView'
-import columns from 'app/pages/admin/columns'
-import User from 'types/user'
-import { Actions } from 'app/pages/admin/components/Actions'
-import { usersQueryKeys } from 'config/queryKeys'
-import { userURL } from 'config/apiURL'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { Grid } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
+import columns from 'app/pages/admin/columns'
+import { Actions } from 'app/pages/admin/components/Actions'
+import { TableView } from 'components/TableWithPagination/TableView'
+import { userURL } from 'config/apiURL'
+import { usersQueryKeys } from 'config/queryKeys'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React, { useRef } from 'react'
+import User from 'types/user'
 import { RootContainer } from 'ui/RootContainer'
 
 export const Users = () => {
@@ -29,7 +29,7 @@ export const Users = () => {
       <RootContainer>
         <Grid container direction='column' spacing={3}>
           <Grid item xs={12} md={6} lg={4}>
-            <SearchFilter
+            <TextInputSearchFilter
               fullWidth
               placeholder='Search'
               inputAdornmentPosition='end'
