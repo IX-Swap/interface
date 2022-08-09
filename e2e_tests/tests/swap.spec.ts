@@ -14,7 +14,7 @@ test.describe('Check Swap section functions', () => {
   const amountForSwapString = '0.0001';
 
   test.describe('Check UI swap section cases', () => {
-    test('Check UI for the "Swap" section', async ({ swapTradePage }) => {
+    test(`Check UI for the "Swap" section ${process.env.METAMASK_ETH_ADDRESS}`, async ({ swapTradePage }) => {
       await swapTradePage.checkSwapTittleIsVisible();
       await swapTradePage.checkGearButtonIsVisible();
       await swapTradePage.checkFirstTokenAmountInputIsVisible();
@@ -26,7 +26,6 @@ test.describe('Check Swap section functions', () => {
 
     test('Test the ability to "Swap" (Token - Token pair)', async ({ swapTradePage, page }) => {
       const ixsTokenBalanceBefore = await web3Helper.getTokenBalance(ixsTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
-      await console.log(process.env.METAMASK_ETH_ADDRESS);
 
       await swapTradePage.clickFirstTokenDropdown();
       await swapTradePage.clickTokenItem(ethTokenData.title);
@@ -44,7 +43,6 @@ test.describe('Check Swap section functions', () => {
 
     test('Test the ability to "Swap" (Token - Security Token pair)', async ({ swapTradePage, page }) => {
       const wsecTokenBalanceBefore = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
-      await console.log(process.env.METAMASK_ETH_ADDRESS);
 
       await swapTradePage.clickFirstTokenDropdown();
       await swapTradePage.clickTokenItem(ethTokenData.title);
@@ -64,7 +62,6 @@ test.describe('Check Swap section functions', () => {
     test('Test the ability to "Swap" (Security Token - Security Token pair)', async ({ swapTradePage, page }) => {
       const firstTokenBalanceBefore = await web3Helper.getTokenBalance(secTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
       const secondTokenBalanceBefore = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
-      await console.log(process.env.METAMASK_ETH_ADDRESS);
 
       await swapTradePage.clickFirstTokenDropdown();
       await swapTradePage.clickTokenItem(secTokenData.title);
