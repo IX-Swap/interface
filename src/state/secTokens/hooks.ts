@@ -72,6 +72,7 @@ export const useSecTokens = () => {
   const { tokens } = useSecTokenState()
   const secMap = listToSecTokenMap(listCache, tokens)
   const secTokens = useSecTokensFromMap(secMap)
+
   return { secTokens }
 }
 
