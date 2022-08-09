@@ -25,7 +25,7 @@ test.describe('Check Swap section functions', () => {
     })
 
     test('Test the ability to "Swap" (Token - Token pair)', async ({ swapTradePage, page }) => {
-      const ixsTokenBalanceBefore = await web3Helper.getTokenBalance(ixsTokenData.contractAddress, metamaskWallet.ethAddress);
+      const ixsTokenBalanceBefore = await web3Helper.getTokenBalance(ixsTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
 
       await swapTradePage.clickFirstTokenDropdown();
       await swapTradePage.clickTokenItem(ethTokenData.title);
@@ -37,12 +37,12 @@ test.describe('Check Swap section functions', () => {
 
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
 
-      const ixsTokenBalanceAfter = await web3Helper.getTokenBalance(ixsTokenData.contractAddress, metamaskWallet.ethAddress);
+      const ixsTokenBalanceAfter = await web3Helper.getTokenBalance(ixsTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
       await expect(ixsTokenBalanceBefore).toBeLessThan(ixsTokenBalanceAfter);
     })
 
     test('Test the ability to "Swap" (Token - Security Token pair)', async ({ swapTradePage, page }) => {
-      const wsecTokenBalanceBefore = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, metamaskWallet.ethAddress);
+      const wsecTokenBalanceBefore = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
 
       await swapTradePage.clickFirstTokenDropdown();
       await swapTradePage.clickTokenItem(ethTokenData.title);
@@ -55,13 +55,13 @@ test.describe('Check Swap section functions', () => {
 
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
 
-      const wsecTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, metamaskWallet.ethAddress);
+      const wsecTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
       await expect(wsecTokenBalanceBefore).toBeLessThan(wsecTokenBalanceAfter);
     })
 
     test('Test the ability to "Swap" (Security Token - Security Token pair)', async ({ swapTradePage, page }) => {
-      const firstTokenBalanceBefore = await web3Helper.getTokenBalance(secTokenData.contractAddress, metamaskWallet.ethAddress);
-      const secondTokenBalanceBefore = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, metamaskWallet.ethAddress);
+      const firstTokenBalanceBefore = await web3Helper.getTokenBalance(secTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
+      const secondTokenBalanceBefore = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
 
       await swapTradePage.clickFirstTokenDropdown();
       await swapTradePage.clickTokenItem(secTokenData.title);
@@ -75,8 +75,8 @@ test.describe('Check Swap section functions', () => {
 
       await expect(swapTradePage.transactionSubmittedPopUpText).toBeVisible();
 
-      const firstTokenBalanceAfter = await web3Helper.getTokenBalance(secTokenData.contractAddress, metamaskWallet.ethAddress);
-      const secondTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, metamaskWallet.ethAddress);
+      const firstTokenBalanceAfter = await web3Helper.getTokenBalance(secTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
+      const secondTokenBalanceAfter = await web3Helper.getTokenBalance(wsecTokenData.contractAddress, process.env.METAMASK_ETH_ADDRESS);
 
       await expect(firstTokenBalanceBefore).toBeGreaterThan(firstTokenBalanceAfter);
       await expect(secondTokenBalanceBefore).toBeLessThan(secondTokenBalanceAfter);
