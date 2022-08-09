@@ -23,7 +23,7 @@ export const RecentTransactionsTable: React.FC = () => {
   const { data, isLoading } = useVirtualAccount()
   const userId = user?._id
   const { filter, sortBy, orderBy } = useTransactionFilters()
-  if (userId === undefined || isLoading) {
+  if (userId === undefined || isLoading || data === undefined) {
     return null
   }
 
