@@ -11,10 +11,11 @@ test.beforeEach(async ({ kovanNetwork, topNavigationBar }) => {
 test.describe('Check Swap section functions', () => {
   const web3Helper = new Web3Helpers;
 
+  const ethAddress = process.env.METAMASK_ETH_ADDRESS;
   const amountForSwapString = '0.0001';
 
   test.describe('Check UI swap section cases', () => {
-    test(`Check UI for the "Swap" section ${process.env.METAMASK_ETH_ADDRESS}`, async ({ swapTradePage }) => {
+    test(`Check UI for the "Swap" section ${ethAddress}`, async ({ swapTradePage }) => {
       await swapTradePage.checkSwapTittleIsVisible();
       await swapTradePage.checkGearButtonIsVisible();
       await swapTradePage.checkFirstTokenAmountInputIsVisible();
