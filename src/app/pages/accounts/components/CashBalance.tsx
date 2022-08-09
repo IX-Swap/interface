@@ -15,7 +15,7 @@ export const CashBalance = () => {
   )
   const { data, list, isLoading } = useVirtualAccount(virtualAccountId)
 
-  if (isLoading || data === undefined) {
+  if (isLoading || data === undefined || list === undefined) {
     return null
   }
 
