@@ -2,7 +2,8 @@ import { test } from '../fixtures/metamaskFixture'
 import { expect } from '@playwright/test'
 import { Web3Helpers } from '../helpers/web3/web3'
 import { ixsTokenData, secTokenData, wsecTokenData, ethTokenData } from '../helpers/web3/web3Data'
-import { metamaskWallet } from '../helpers/web3/metamaskData'
+
+const metamaskWallet = require('../helpers/web3/metamaskData')
 
 test.beforeEach(async ({ kovanNetwork, topNavigationBar }) => {
   await topNavigationBar.clickSwapTradeButton();
