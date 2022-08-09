@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 
-import { useSecTokenState } from 'state/secTokens/hooks'
+import { useSecTokens } from 'state/secTokens/hooks'
 import { useSimpleTokens } from 'hooks/Tokens'
 import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import CurrencyLogo from 'components/CurrencyLogo'
@@ -15,13 +15,21 @@ export interface Option {
 }
 
 export const useTokensList = () => {
-  const { tokens: secTokens } = useSecTokenState()
+  const { secTokens } = useSecTokens()
   const tokens = useSimpleTokens()
   const native = useNativeCurrency()
 
+  const sortedTokens = Object.entries(tokens || {}).reduce((acc, [key, value]) => {
+    if (secTokens[key]) {
+      return acc
+    }
+
+    return { ...acc, [key]: value }
+  }, {})
+
   const tokensOptions = useMemo((): Option[] => {
-    if (Object.values(tokens)?.length) {
-      const list: any = Object.values(tokens).map((token: any) => {
+    if (Object.values(sortedTokens)?.length) {
+      const list: any = Object.values(sortedTokens).map((token: any) => {
         return {
           label: token.tokenInfo?.symbol || token.symbol,
           value: token.address,
@@ -42,14 +50,16 @@ export const useTokensList = () => {
     }
 
     return []
-  }, [tokens, native])
+  }, [sortedTokens, native])
+
+  console.log('log => secTokens', secTokens)
 
   const secTokensOptions = useMemo((): Option[] => {
     if (secTokens?.length) {
-      return secTokens.map((token) => ({
+      return Object.values(secTokens).map((token) => ({
         label: token.symbol,
-        value: token.id,
-        icon: <CurrencyLogo currency={new WrappedTokenInfo(token)} />,
+        value: (token.tokenInfo as any).id,
+        icon: <CurrencyLogo currency={new WrappedTokenInfo(token.tokenInfo)} />,
         isNative: false,
         address: token.address,
       }))

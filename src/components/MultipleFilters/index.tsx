@@ -11,18 +11,14 @@ import { Search } from 'components/Search'
 import { MEDIA_WIDTHS, TYPE } from 'theme'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { useSecTokenState } from 'state/secTokens/hooks'
 import { DateRangePickerFilter } from 'components/DateRangePicker'
-import { useSimpleTokens } from 'hooks/Tokens'
-import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { useUserState } from 'state/user/hooks'
-import { SecToken } from 'types/secToken'
 
 import { FILTERS, defaultValues, rolesOptions, statusOptions, payoutTypeOptions } from './constants'
 import { Container, DarkBlueCard, FiltersContainer, ResetFilters } from './styleds'
 import { FilterDropdown } from './FilterDropdown'
 import { MobileFilters } from './MobileFilters'
-import { Option } from 'hooks/useTokensList'
+import { Option, useTokensList } from 'hooks/useTokensList'
 
 interface Props {
   filters: FILTERS[]
@@ -45,45 +41,8 @@ export const MultipleFilters = ({
 
   const { pathname } = useLocation()
   const withSearch = useMemo(() => filters.includes(FILTERS.SEARCH), [filters])
-  const { tokens: secTokens } = useSecTokenState()
   const { me } = useUserState()
-  const tokens = useSimpleTokens()
-  const native = useNativeCurrency()
-
-  const tokensOptions = useMemo(() => {
-    if (Object.values(tokens)?.length) {
-      const list = Object.values(tokens).map((token: any) => {
-        return {
-          label: token.tokenInfo?.symbol || token.symbol,
-          value: token.address,
-          icon: <CurrencyLogo size="20px" currency={new WrappedTokenInfo(token)} />,
-        }
-      })
-
-      if (native) {
-        list.unshift({
-          label: native.symbol,
-          value: native.symbol,
-          icon: <CurrencyLogo size="20px" currency={native} />,
-        })
-      }
-      return list
-    }
-
-    return []
-  }, [tokens, native])
-
-  const secTokensOptions = useMemo(() => {
-    if (secTokens?.length) {
-      return secTokens.map((token: SecToken) => ({
-        label: token.symbol,
-        value: token.id,
-        icon: <CurrencyLogo size="20px" currency={new WrappedTokenInfo(token)} />,
-      }))
-    }
-
-    return []
-  }, [secTokens])
+  const { tokensOptions, secTokensOptions } = useTokensList()
 
   const managerSecTokensOptions = useMemo(() => {
     if (me?.managerOf?.length) {
