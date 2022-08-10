@@ -16,6 +16,7 @@ import { PayoutTimeline } from './Timeline/PayoutTimeline'
 import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutHistory } from './History'
+import { useUserState } from 'state/user/hooks'
 
 export default function PayoutItemForManager({
   match: {
@@ -27,9 +28,11 @@ export default function PayoutItemForManager({
   const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
   const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
+  const [isMyPayout, setIsMyPayout] = useState(false)
   const { loadingRequest } = usePayoutState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
+  const { me } = useUserState()
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
@@ -47,6 +50,10 @@ export default function PayoutItemForManager({
   useEffect(() => {
     getPayoutItem()
   }, [payoutId, account])
+
+  useEffect(() => {
+    setIsMyPayout(payout?.userId === me.id)
+  }, [payout, me])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
@@ -68,11 +75,11 @@ export default function PayoutItemForManager({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout />
+            <PayoutHeader payout={payout} isMyPayout={isMyPayout} />
             <PayoutTimeline payout={payout} />
             <PayoutActionBlock 
               payout={payout} 
-              isMyPayout
+              isMyPayout={isMyPayout}
               myAmount={1} 
               onUpdate={getPayoutItem} 
             />
