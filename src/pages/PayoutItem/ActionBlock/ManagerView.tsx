@@ -21,7 +21,7 @@ import { UserClaim } from './dto'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { FetchingBalance } from './FetchingBalance'
-import { BigNumber } from 'ethers'
+import { utils } from 'ethers'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 
 interface Props {
@@ -83,12 +83,12 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
           nonce,
         })
 
+        const amount = utils.formatEther(authorization.amount)
         const tx = await payoutContract?.claim(authorization)
-        const amount = BigNumber.from(authorization.amount)
 
         handleIsLoading(false)
 
-        await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, sum: `${amount.toString()}`, txHash: tx.hash })
+        await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, sum: `${amount}`, txHash: tx.hash })
         const res = await getUserClaim(id)
         handleClaimStatus(res)
 
