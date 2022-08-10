@@ -1,5 +1,4 @@
-import { Box, Grid } from '@mui/material'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { Box, Grid, Typography } from '@mui/material'
 import { WideContainer } from 'app/components/WideContainer/WideContainer'
 import { ShortFinancialSummary } from 'app/pages/invest/components/FinancialSummary/ShortFinancialSummary'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
@@ -12,12 +11,10 @@ export const TradingContainer = () => {
   return (
     <WalletModalContextWrapper>
       <WideContainer>
-        <Grid item>
-          <PageHeader
-            title={'OTC Trading Market'}
-            styled={false}
-            showBreadcrumbs={false}
-          />
+        <Grid item xs={12}>
+          <Typography variant='h2' sx={{ mb: 3 }}>
+            OTC Trading Market
+          </Typography>
         </Grid>
         <Box>
           <Box className={classes.contentWrapper}>

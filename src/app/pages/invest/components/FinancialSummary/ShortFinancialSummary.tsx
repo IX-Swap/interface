@@ -18,8 +18,8 @@ export const ShortFinancialSummary = () => {
         <Box
           display='flex'
           justifyContent={{ xs: 'space-between', md: 'flex-start' }}
-          alignItems='flex-start'
-          padding={1}
+          alignItems='center'
+          padding={[1, 2]}
         >
           <Box flexGrow={1} width={{ xs: '50%', md: '100%' }}>
             <PairListDropdown
