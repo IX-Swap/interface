@@ -51,7 +51,9 @@ export const payout = {
   payoutAuthorization: '/payout/init',
   getMyPayoutAmount: (id: number) => `/payout/my-amount/${id}`,
   claimAuthorization: (id: number) => `/payout/init/claim/${id}`,
+  claimBackAuthorization: (id: number) => `/payout/init/claim-back/${id}`,
   saveUserClaim: 'payout/claim',
+  saveManagerClaimBack: 'payout/claim-back',
   getUserClaim: (id: number) => `payout/claim/${id}`,
   getTotalClaims: (id: number) => `payout/claims/total/${id}`,
 }

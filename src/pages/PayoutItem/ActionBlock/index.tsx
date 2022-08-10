@@ -11,16 +11,17 @@ interface Props {
   payout: PayoutEvent
   isMyPayout: boolean
   myAmount: number
+  onUpdate?: () => void
 }
 
-export const PayoutActionBlock: FC<Props> = ({ payout, isMyPayout, myAmount }) => {
+export const PayoutActionBlock: FC<Props> = ({ payout, isMyPayout, myAmount, onUpdate }) => {
   const payoutToken = useCurrency(payout.payoutToken ?? undefined)
   return (
     <Box marginTop="16px">
       {isMyPayout ? (
-        <ManagerView payout={payout} payoutToken={payoutToken} />
+        <ManagerView payout={payout} payoutToken={payoutToken} onUpdate={onUpdate} />
       ) : (
-        <UserView payout={payout} payoutToken={payoutToken} myAmount={myAmount} />
+        <UserView payout={payout} payoutToken={payoutToken} myAmount={myAmount}  />
       )}
     </Box>
   )

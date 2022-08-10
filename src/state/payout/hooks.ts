@@ -360,6 +360,11 @@ export const getClaimAuthorization = async ({ id, ...params }: GetClaimAuthoriza
   return result.data
 }
 
+export const getClaimBackAuthorization = async ({ id, ...params }: GetClaimAuthorization) => {
+  const result = await apiService.post(payout.claimBackAuthorization(id), params)
+  return result.data
+}
+
 interface SaveUserClaim {
   payoutEventId: number
   secToken: number
@@ -400,6 +405,39 @@ export const useSaveUserClaim = () => {
   )
 
   return callback
+}
+
+export const saveManagerClaimBackReq = async (params: SaveUserClaim) => {
+  const result = await apiService.post(payout.saveManagerClaimBack, params)
+  return result.data
+}
+
+export const useSaveManagerClaimBack = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const addPopup = useAddPopup()
+
+  return useCallback(
+    async (params: SaveUserClaim) => {
+      try {
+        dispatch(saveUserClaim.pending())
+        const data = await saveManagerClaimBackReq(params)
+        dispatch(saveUserClaim.fulfilled())
+
+        addPopup({
+          info: {
+            success: true,
+            summary: 'Successfully claimed.',
+          },
+        })
+
+        return data
+      } catch (error: any) {
+        dispatch(saveUserClaim.rejected({ errorMessage: 'Could not claim' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
 }
 
 export const getUserClaimReq = async (id: number) => {
