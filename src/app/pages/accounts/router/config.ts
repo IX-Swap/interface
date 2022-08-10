@@ -30,6 +30,12 @@ export const AccountsRoute = {
 
 export const accountsLandingLinks: InternalRouteProps[] = [
   {
+    label: 'Cash',
+    path: AccountsRoute.cash,
+    color: '#90a30f',
+    icon: AssetBalanceIcon
+  },
+  {
     label: 'Commitments',
     path: AccountsRoute.commitments,
     color: '#e6d200',
@@ -69,11 +75,5 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     path: AccountsRoute.myHoldings,
     color: '#2B78FD',
     icon: HoldingsIcon
-  },
-  {
-    label: 'Cash',
-    path: AccountsRoute.cash,
-    color: '#90a30f',
-    icon: AssetBalanceIcon
   }
 ]
