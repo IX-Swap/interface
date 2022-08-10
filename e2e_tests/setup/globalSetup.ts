@@ -6,8 +6,6 @@ const pathToDownloadMetamask = './extensions/metamask.zip';
 const pathToExtractedMetamask = './extensions/metamask';
 
 async function globalSetup() {
-  console.log(process.env);
-
   const metamaskExists = await fs.existsSync(pathToExtractedMetamask);
 
   if (!metamaskExists) {

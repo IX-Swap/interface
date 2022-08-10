@@ -14,7 +14,7 @@ test.describe('Check Swap section functions', () => {
   const amountForSwapString = '0.0001';
 
   test.describe('Check UI swap section cases', () => {
-    test.only('Check UI for the "Swap" section', async ({ swapTradePage }) => {
+    test('Check UI for the "Swap" section', async ({ swapTradePage }) => {
       await swapTradePage.checkSwapTittleIsVisible();
       await swapTradePage.checkGearButtonIsVisible();
       await swapTradePage.checkFirstTokenAmountInputIsVisible();
