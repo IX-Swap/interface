@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
@@ -33,15 +33,18 @@ export default function PayoutItemForManager({
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
-
-  useEffect(() => {
-    const getPayoutItem = async () => {
+  
+  const getPayoutItem = useCallback(
+    async () => {
       const data = await getPayoutItemById(+payoutId)
       if (data?.id) {
         setPayout(data)
       }
-    }
+    },
+    [payoutId]
+  )
 
+  useEffect(() => {
     getPayoutItem()
   }, [payoutId, account])
 
@@ -67,7 +70,12 @@ export default function PayoutItemForManager({
           <Column style={{ gap: '40px' }}>
             <PayoutHeader payout={payout} isMyPayout />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
+            <PayoutActionBlock 
+              payout={payout} 
+              isMyPayout
+              myAmount={1} 
+              onUpdate={getPayoutItem} 
+            />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}

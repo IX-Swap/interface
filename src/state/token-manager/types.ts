@@ -26,6 +26,7 @@ export interface PayoutEvent {
   secToken: SecToken
   attachments: Array<Document>
   contractPayoutId?: string
+  isReturned?: boolean
 }
 
 export interface PayoutList {
