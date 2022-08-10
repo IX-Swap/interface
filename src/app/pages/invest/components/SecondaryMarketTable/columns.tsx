@@ -68,7 +68,7 @@ export const renderLatestPrice = (val: number, row: any) => {
   )
 }
 
-export const renderCreatedBy = (_: string, row: any) => row.listing.user.name
+export const renderCreatedBy = (_: string, row: any) => row.listing.user?.name
 
 export const columns: Array<TableColumn<any>> = [
   {
