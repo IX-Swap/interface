@@ -17,7 +17,7 @@ test.describe('Check Liquidity pool functions', () => {
   let secondTokenValue;
 
   test.describe('Check UI pool cases', () => {
-    test.only('Test the ability to create a pool (Negative TC)', async ({ liquidityPoolsPage }) => {
+    test('Test the ability to create a pool (Negative TC)', async ({ liquidityPoolsPage }) => {
       await liquidityPoolsPage.clickAddLiquidityButton();
       await liquidityPoolsPage.clickChooseFirstTokenDropdown();
       await liquidityPoolsPage.clickTokenItem(ethTokenTitle);
