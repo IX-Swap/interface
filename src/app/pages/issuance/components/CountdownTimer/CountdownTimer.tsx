@@ -22,11 +22,7 @@ export const CountdownTimer = ({
   const { data } = useDSOById(dsoId, issuerId)
   const { units } = useCountdown(getEndDate(data))
 
-  const unitsToDisplay = getTimeUnitsToDisplay(
-    !isNewThemeOn
-      ? units
-      : { years: 0, months: 0, days: 1, hours: 1, minutes: 1, seconds: 0 }
-  )
+  const unitsToDisplay = getTimeUnitsToDisplay(units)
 
   if (data === undefined) {
     return null
