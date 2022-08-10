@@ -41,12 +41,4 @@ describe('TimeDisplay', () => {
     expect(queryByText(/years/i)).not.toBeInTheDocument()
     expect(queryByText(/months/i)).not.toBeInTheDocument()
   })
-
-  it('renders spacers between TimeUnit components when isNewThemeOn is true', () => {
-    const { getAllByTestId } = render(
-      <TimeDisplay {...timeDisplayProps} isNewThemeOn={true} />
-    )
-    const spacers = getAllByTestId('spacer')
-    expect(spacers.length).toEqual(timeDisplayProps.unitsToDisplay.length - 1)
-  })
 })

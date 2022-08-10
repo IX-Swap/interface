@@ -98,32 +98,4 @@ describe('CountdownTimer', () => {
       {}
     )
   })
-
-  it('renders TimeDisplay with correct props when isNewThemeOn is true', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    jest.spyOn(useCountdown, 'useCountdown').mockReturnValue({
-      units: mockUnits
-    } as any)
-
-    render(<CountdownTimer isNewThemeOn />)
-
-    expect(TimeDisplay).toHaveBeenCalledWith(
-      expect.objectContaining({
-        unitsToDisplay: getTimeUnitsToDisplay({
-          years: 0,
-          months: 0,
-          days: 1,
-          hours: 1,
-          minutes: 1,
-          seconds: 0
-        }),
-        units: mockUnits,
-        isNewThemeOn: true
-      }),
-      {}
-    )
-  })
 })
