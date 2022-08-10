@@ -27,7 +27,7 @@ export const columns: Array<TableColumn<CashWithdrawal | CashDeposit>> = [
     key: 'type',
     label: 'Type',
     render: (val: string, _row: CashWithdrawal | CashDeposit) => {
-      return val === 'Credit' ? 'Deposit' : 'Withraw'
+      return val === 'Credit' ? 'Deposit' : 'Withdraw'
     }
   },
   {
