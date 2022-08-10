@@ -98,7 +98,7 @@ export const PrimaryOfferings = () => {
             component={AppRouterLinkComponent}
             color='primary'
             variant='text'
-            to={InvestRoute.landing}
+            to={InvestRoute.primaryOfferings}
             data-testid='invest-link'
             sx={{ px: 0 }}
           >
