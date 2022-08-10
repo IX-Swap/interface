@@ -22,23 +22,12 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { FetchingBalance } from './FetchingBalance'
 import { Claimed } from './Claimed'
+import { UserClaim } from './dto'
 
 interface Props {
   payout: PayoutEvent
   payoutToken: any
   myAmount: number
-}
-
-interface UserClaim {
-  createdAt: string
-  deletedAt: string | null
-  id: number
-  payoutEventId: number
-  sum: string
-  txHash: string
-  updatedAt: string
-  userId: number
-  status: string
 }
 
 export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {

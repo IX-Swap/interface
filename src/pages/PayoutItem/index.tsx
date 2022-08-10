@@ -55,20 +55,27 @@ export default function PayoutItemForUser({
 
   const [myAmount, handleMyAmount] = useState(0)
 
-  useEffect(() => {
-    const getPayoutItem = async () => {
+  const getPayoutItem = useCallback(
+    async () => {
       const data = await getPayoutItemById(+payoutId)
       if (data?.id) {
         setPayout(data)
       }
-    }
-    const getMyAmount = async () => {
+    },
+    [payoutId]
+  )
+
+  const getMyAmount = useCallback(
+    async () => {
       const data = await getMyPayoutAmount(+payoutId)
       if (data) {
         handleMyAmount(+data.poolTokens + +data.walletTokens)
       }
-    }
+    },
+    [payoutId]
+  )
 
+  useEffect(() => {
     getPayoutItem()
     getMyAmount()
   }, [payoutId, account])
@@ -95,7 +102,7 @@ export default function PayoutItemForUser({
           <Column style={{ gap: '40px' }}>
             <PayoutHeader payout={payout} isMyPayout={false} />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount} />
+            <PayoutActionBlock payout={payout} isMyPayout={false} myAmount={myAmount} onUpdate={getPayoutItem} />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
