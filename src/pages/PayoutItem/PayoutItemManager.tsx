@@ -25,7 +25,6 @@ export default function PayoutItemForManager({
   const [cookies] = useCookies(['annoucementsSeen'])
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
   const [page, setPage] = useState(1)
-  const [isMyPayout, setIsMyPayout] = useState(false)
   const [claimHistory, setClaimHistory] = useState([])
   const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
   const { loadingRequest } = usePayoutState()
@@ -48,9 +47,6 @@ export default function PayoutItemForManager({
   useEffect(() => {
     getPayoutItem()
   }, [payoutId, account])
-
-  useEffect(() => {
-  }, [me, payout])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
