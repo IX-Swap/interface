@@ -1,45 +1,66 @@
-import React, { FC, useMemo } from 'react'
+import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
-import { Flex } from 'rebass'
 import { t } from '@lingui/macro'
 
-import { TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 
-import { TodayIndicator } from './TodayIndicator'
-import { momentFormatDate, isSameDay as sameDay } from '../utils'
+import { formatDate } from '../utils'
 
 interface Props {
   withBackground?: boolean
   label: string
   date: any
+  ended?: boolean
 }
 
-export const TimelineDate: FC<Props> = ({ date, label, withBackground = true }) => {
-  const isSameDay = useMemo(() => sameDay(date), [date])
-
+export const TimelineDate: FC<Props> = ({ date, label, withBackground = true, ended = false }) => {
+  const isStartDate = label === 'Payment Start Date'
   return (
-    <Flex style={{ position: 'relative' }} flexDirection="column" alignItems="center" justifyContent="center">
+    <Container isStartDate={isStartDate}>
       {withBackground ? (
         <>
-          <StyledButtonIXSGradient>
-            {momentFormatDate(date)}
-            {isSameDay && <TodayIndicator top />}
+          <StyledButtonIXSGradient ended={ended}>
+            {formatDate(date)}
+            {/* {isSameDay && <TodayIndicator overlay />} */}
           </StyledButtonIXSGradient>
           <TYPE.buttonMuted>{t`${label}`}</TYPE.buttonMuted>
         </>
       ) : (
         <>
           <StyledButtonGradientBorder>
-            {momentFormatDate(date)}
-            {isSameDay && <TodayIndicator top />}
+            {formatDate(date)}
+            {/* {isSameDay && <TodayIndicator overlay />} */}
           </StyledButtonGradientBorder>
           <TYPE.body3 color={'text1'}>{t`${label}`}</TYPE.body3>
         </>
       )}
-    </Flex>
+    </Container>
   )
 }
+
+const Container = styled.div<{ isStartDate: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 140px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    margin-top: 0px;
+    transform: ${({ isStartDate }) => `translateX(${isStartDate ? '' : '-'}50%)`};
+    > div:last-child {
+      font-size: 12px !important;
+      line-height: 18px !important;
+    }
+    > button {
+      border-radius: ${({ isStartDate }) => (isStartDate ? '0px 32px 32px 0px' : '32px 0px 0px 32px')};
+      :before {
+        border-radius: ${({ isStartDate }) => (isStartDate ? '0px 32px 32px 0px' : '32px 0px 0px 32px')};
+      }
+    }
+  }
+`
 
 const buttonCommonStyles = css`
   font-size: 16px;
@@ -50,12 +71,20 @@ const buttonCommonStyles = css`
   border-radius: 32px;
   padding: 5px 10px;
   position: relative;
-  margin-top: 20px;
+  width: 100%;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 140px;
+  }
 `
 
-const StyledButtonIXSGradient = styled(ButtonIXSGradient)`
+const StyledButtonIXSGradient = styled(ButtonIXSGradient)<{ ended: boolean }>`
   ${buttonCommonStyles}
   font-weight: 600;
+  ${({ ended }) =>
+    ended &&
+    css`
+      background: ${({ theme }) => theme.blue3};
+    `}
 `
 
 const StyledButtonGradientBorder = styled(ButtonGradientBorder)`

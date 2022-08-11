@@ -40,7 +40,6 @@ const renderTab = (selectedTab: SecurityTab | string) => {
       return <CustodianV2 />
     case 'payout-events':
       return <UserPayoutEvents />
-
     default:
       return null
   }

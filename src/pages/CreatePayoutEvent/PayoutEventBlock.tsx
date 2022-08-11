@@ -8,7 +8,7 @@ import dayjs from 'dayjs'
 
 import { TYPE } from 'theme'
 
-import { momentFormatDate } from 'pages/PayoutItem/utils'
+import { formatDate, isBefore } from 'pages/PayoutItem/utils'
 import { ExtraInfoCard, FormGrid } from 'pages/KYC/styleds'
 import { Select, TextareaInput, TextInput, Uploader } from 'pages/KYC/common'
 
@@ -30,6 +30,7 @@ import { PayoutType } from './PayoutType'
 import { PublishPayoutModal } from './PublishPayoutModal'
 
 import { FormCard, ButtonsContainer } from './styleds'
+import { MouseoverTooltip } from 'components/Tooltip'
 
 interface Props {
   onValueChange: (key: string, value: any) => void
@@ -142,8 +143,9 @@ export const PayoutEventBlock: FC<Props> = ({
       <Box marginBottom="20px">
         <FormGrid style={{ marginBottom: 8 }}>
           <Select
+            addCustom
             label="Payout Token"
-            placeholder="Select token"
+            placeholder="Select token or paste address"
             selectedItem={token}
             items={tokensOptions}
             onSelect={(item) => onValueChange('token', item)}
@@ -155,7 +157,9 @@ export const PayoutEventBlock: FC<Props> = ({
           <TextInput
             placeholder="1000"
             label="Token Amount"
-            onChange={(e: any) => onValueChange('tokenAmount', e.currentTarget.value)}
+            onChange={(e: any) =>
+              e.currentTarget.value.match(/^[\.0-9]*$/g) && onValueChange('tokenAmount', e.currentTarget.value)
+            }
             value={tokenAmount}
             error={touched.tokenAmount ? errors.tokenAmount : ''}
             tooltipText="Indicate the total number of tokens you want to distribute for this payout event."
@@ -165,7 +169,7 @@ export const PayoutEventBlock: FC<Props> = ({
         {!isRecordFuture && recordDate && tokenAmount && token && secToken && (
           <ExtraInfoCard>
             <TYPE.description2 fontWeight={400}>
-              {t`Payout token computed as of ${momentFormatDate(recordDate, 'LL')} at ${(
+              {t`Payout token computed as of ${formatDate(recordDate, 'LL')} at ${(
                 +tokenAmount / totalSecTokenSum
               ).toFixed(2)} ${token.label} per SEC token`}
             </TYPE.description2>
@@ -178,7 +182,7 @@ export const PayoutEventBlock: FC<Props> = ({
           label="Payment Start Date"
           placeholder="Choose start date"
           maxHeight={60}
-          minDate={dayjs(new Date()).add(1, 'days')}
+          minDate={recordDate && isBefore(recordDate) ? dayjs(recordDate).add(1, 'days') : dayjs().add(1, 'days')}
           maxDate={endDate ? dayjs(endDate).subtract(1, 'days') : undefined}
           openTo="date"
           value={startDate}
@@ -192,7 +196,13 @@ export const PayoutEventBlock: FC<Props> = ({
           label="Payment Deadline"
           placeholder="Choose deadline"
           maxHeight={60}
-          minDate={startDate ? dayjs(startDate).add(1, 'days') : dayjs(new Date()).add(2, 'days')}
+          minDate={
+            startDate
+              ? isBefore(dayjs(startDate))
+                ? dayjs(startDate).add(1, 'days')
+                : dayjs()
+              : dayjs().add(2, 'days')
+          }
           openTo="date"
           value={values.endDate}
           onChange={(newDate) => onValueChange('endDate', dayjs(newDate).local().format('YYYY-MM-DD'))}
@@ -257,20 +267,36 @@ export const PayoutEventBlock: FC<Props> = ({
           </ButtonGradientBorder>
         )}
 
-        {[PAYOUT_STATUS.DRAFT].includes(status) ? (
+        {status === PAYOUT_STATUS.DRAFT ? (
           <ButtonIXSGradient type="button" onClick={open}>
             <Trans>Publish Event</Trans>
           </ButtonIXSGradient>
         ) : (
           !paid && (
-            <ButtonIXSGradient type="button" onClick={open}>
-              <Trans>Pay for this event</Trans>
-            </ButtonIXSGradient>
+            <MouseoverTooltip
+              text={
+                isRecordFuture
+                  ? t`Pay for this event after the wrapped token amount will become available on the selected record date.`
+                  : ''
+              }
+              placement="top"
+            >
+              <ButtonIXSGradient type="button" onClick={open} disabled={isRecordFuture}>
+                <Trans>Pay for this event</Trans>
+              </ButtonIXSGradient>
+            </MouseoverTooltip>
           )
         )}
       </ButtonsContainer>
 
-      {openModal && <PublishPayoutModal values={values} close={close} isRecordFuture={isRecordFuture} />}
+      {openModal && (
+        <PublishPayoutModal
+          values={values}
+          close={close}
+          isRecordFuture={isRecordFuture}
+          onlyPay={status !== PAYOUT_STATUS.DRAFT && !paid}
+        />
+      )}
     </FormCard>
   )
 }

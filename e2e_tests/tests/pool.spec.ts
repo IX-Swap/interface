@@ -8,7 +8,7 @@ test.beforeEach(async ({ kovanNetwork, topNavigationBar, liquidityPoolsPage }) =
 
 test.describe('Check Liquidity pool functions', () => {
   const ethAmountForLiquidityPoolString = '0.0001';
-  const ethAmountForLiquidityPoolFloat = 0.0001;
+  const ethAmountForLiquidityPoolFloat = parseFloat(ethAmountForLiquidityPoolString);
   const ethTokenTitle = 'Ether';
   const ixsTokenTitle = 'Ixs Token';
   const wsecTokenTitle = 'WSec Test (WSEC)';

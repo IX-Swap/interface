@@ -41,7 +41,7 @@ const AppWrapper = styled.div`
   flex-flow: column;
   align-items: flex-start;
   position: relative;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 `
 
 const BodyWrapper = styled.div`
@@ -160,9 +160,9 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    // if (window.location.host.split('.')[1] !== 'ixswap') {
-    getWitelabelConfig()
-    // }
+    if (window.location.host.split('.')[1] !== 'ixswap') {
+      getWitelabelConfig()
+    }
   }, [])
 
   useEffect(() => {

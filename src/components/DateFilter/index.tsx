@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { DatePicker } from '@material-ui/pickers'
+import { MobileDatePicker } from '@material-ui/pickers'
 import { Select } from 'components/Select'
 
 export type Props = {
@@ -20,7 +20,7 @@ export const DateFilter: FC<Props> = ({ value, selectBorderRadius, onChange }) =
   }
 
   return (
-    <DatePicker
+    <MobileDatePicker
       open={open}
       onClose={onClose}
       value={value}

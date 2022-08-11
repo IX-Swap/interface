@@ -83,8 +83,16 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     }
   }, [error])
 
+  const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
+
   const handleFormSubmit = async (values: any) => {
-    const body = transformPayoutDraftDTO(values)
+    const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
+      if (availableForEditing.includes(key)) {
+        acc[key] = next
+      }
+      return acc
+    }, {})
+    const body = transformPayoutDraftDTO(formattedValues)
 
     let data: any
 
@@ -107,8 +115,6 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
     } else {
     }
   }
-
-  const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
 
   const formik = useFormik({
     initialValues: payoutData ?? initialValues,

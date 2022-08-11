@@ -48,6 +48,15 @@ export const payout = {
   claims: (payoutId: number) => `payout/claims?payoutId=${payoutId}`,
   totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
   deleteDraft: (id: number) => `payout/draft/${id}`,
+  payoutAuthorization: '/payout/init',
+  getMyPayoutAmount: (id: number) => `/payout/my-amount/${id}`,
+  claimAuthorization: (id: number) => `/payout/init/claim/${id}`,
+  claimBackAuthorization: (id: number) => `/payout/init/claim-back/${id}`,
+  saveUserClaim: 'payout/claim',
+  saveManagerClaimBack: 'payout/claim-back',
+  getUserClaim: (id: number) => `payout/claim/${id}`,
+  getTotalClaims: (id: number) => `payout/claims/total/${id}`,
+  getRemainingTokens: (id: number) => `payout/remain/${id}`
 }
 
 export const kyc = {
