@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 import { Loadable } from 'components/LoaderHover'
@@ -17,18 +17,20 @@ import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutHistory } from './History'
 import { useUserState } from 'state/user/hooks'
+import { routes } from 'utils/routes'
 
 export default function PayoutItemForManager({
   match: {
     params: { payoutId },
   },
 }: RouteComponentProps<{ payoutId: string }>) {
+  const history = useHistory()
   const [cookies] = useCookies(['annoucementsSeen'])
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
   const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
   const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
-  const [isMyPayout, setIsMyPayout] = useState(false)
+  const [isMyPayout, setIsMyPayout] = useState<boolean | undefined>(undefined)
   const { loadingRequest } = usePayoutState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
@@ -52,8 +54,16 @@ export default function PayoutItemForManager({
   }, [payoutId, account])
 
   useEffect(() => {
-    setIsMyPayout(payout?.userId === me.id)
+    if (payout) {
+      setIsMyPayout(payout.userId === me.id)
+    }
   }, [payout, me])
+
+  useEffect(() => {
+    if (isMyPayout === false) {
+      history.replace(routes.tokenManager('payout-events', null))
+    }
+  }, [isMyPayout])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
@@ -75,11 +85,11 @@ export default function PayoutItemForManager({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout={isMyPayout} />
+            <PayoutHeader payout={payout} isMyPayout={isMyPayout ?? false} />
             <PayoutTimeline payout={payout} />
             <PayoutActionBlock 
               payout={payout} 
-              isMyPayout={isMyPayout}
+              isMyPayout={isMyPayout ?? false}
               myAmount={1} 
               onUpdate={getPayoutItem} 
             />
