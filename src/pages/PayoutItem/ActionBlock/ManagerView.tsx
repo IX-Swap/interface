@@ -9,7 +9,7 @@ import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
 import { routes } from 'utils/routes'
-import { getClaimBackAuthorization, useGetTotalClaims, useGetUserClaim, useSaveManagerClaimBack, useSaveUserClaim } from 'state/payout/hooks'
+import { getClaimBackAuthorization, useGetRemainingTokens, useGetTotalClaims, useGetUserClaim, useSaveManagerClaimBack, useSaveUserClaim } from 'state/payout/hooks'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { formatDate } from '../utils'
@@ -33,12 +33,16 @@ interface Props {
 export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const history = useHistory()
   const getTotalClaims = useGetTotalClaims()
+  const getRemainingTokens = useGetRemainingTokens()
 
   const { account } = useActiveWeb3React()
   const { status, isPaid, secToken, tokenAmount, recordDate, id, startDate, contractPayoutId } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
 
   const [totalClaims, handleTotalClaims] = useState(0)
+  const [remaining, setRemaining] = useState<string | undefined>(undefined)
+  const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
+  const [isLoading, handleIsLoading] = useState(false)
   
   const getUserClaim = useGetUserClaim()
   const saveManagerClaimBack = useSaveManagerClaimBack()
@@ -46,9 +50,15 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await getTotalClaims(id)
+      const [res, remainingTokens] = await Promise.all([
+        getTotalClaims(id),
+        getRemainingTokens(id)
+      ])
+
+      setRemaining(remainingTokens)
       handleTotalClaims(res)
     }
+
     if (id) {
       fetch()
     }
@@ -61,8 +71,6 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   
   const statuses = [custodianStatus, brokerDealerStatus]
   
-  const [claimStatus, handleClaimStatus] = useState<UserClaim>({} as UserClaim)
-  const [isLoading, handleIsLoading] = useState(false)
   
   const balance = useCurrencyBalance(account ?? undefined, ({ ...secToken, isToken: true } as any) ?? undefined)
   const secTokenBalance = formatCurrencyAmount(balance, secToken?.decimals ?? 18)
@@ -170,9 +178,8 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
               </Flex>
               <Flex alignItems="center">
                 <CurrencyLogo currency={payoutToken} size="24px" />
-                <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>{`${
-                  payoutToken?.symbol ?? 'Payout Token'
-                } 12.432`}</Box>
+                <Box marginLeft="4px" fontSize="24px" lineHeight="36px" fontWeight={600}>
+                  {`${payoutToken?.symbol ?? 'Payout Token'} ${remaining}`}</Box>
               </Flex>
             </Column>
             <LoadingIndicator isLoading={isLoading} />

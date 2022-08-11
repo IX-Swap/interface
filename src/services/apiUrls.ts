@@ -56,6 +56,7 @@ export const payout = {
   saveManagerClaimBack: 'payout/claim-back',
   getUserClaim: (id: number) => `payout/claim/${id}`,
   getTotalClaims: (id: number) => `payout/claims/total/${id}`,
+  getRemainingTokens: (id: number) => `payout/remain/${id}`
 }
 
 export const kyc = {

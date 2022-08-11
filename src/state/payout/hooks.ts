@@ -493,3 +493,28 @@ export const useGetTotalClaims = () => {
 
   return callback
 }
+
+const getRemainingTokens = async (id: number) => {
+  const result = await apiService.get(payout.getRemainingTokens(id))
+  return result.data
+}
+
+export const useGetRemainingTokens = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async (id: number) => {
+      try {
+        dispatch(getTotalClaims.pending())
+        const data = await getRemainingTokens(id)
+        dispatch(getTotalClaims.fulfilled())
+
+        return data
+      } catch (error: any) {
+        dispatch(getTotalClaims.rejected({ errorMessage: 'Could not get claim' }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+}
