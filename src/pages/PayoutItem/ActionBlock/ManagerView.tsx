@@ -184,7 +184,15 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
             </Column>
             <LoadingIndicator isLoading={isLoading} />
             {!isLoading && (
-              <StyledButtonIXSGradient onClick={claimBack}>{t`Claim Back COIN`}</StyledButtonIXSGradient>
+              <StyledButtonIXSGradient onClick={claimBack}>
+                <Box marginX="8px">
+                  {t`Claim Back `}
+                </Box>
+                <CurrencyLogo currency={payoutToken} size="24px" />
+                <Box marginX="2px">
+                  {payoutToken?.symbol}
+                </Box>
+              </StyledButtonIXSGradient>
             )}
           </>
         )
