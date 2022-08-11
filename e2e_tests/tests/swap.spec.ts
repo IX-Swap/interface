@@ -49,7 +49,7 @@ test.describe('Check Swap section functions', () => {
       await swapTradePage.clickSecondTokenDropdown();
       await swapTradePage.clickTokenItem(wsecTokenData.title);
       await swapTradePage.fillFirstTokenAmountInput(amountForSwapString);
-      await swapTradePage.clickAuthorizeSecurityToken(wsecTokenData.name);
+      await swapTradePage.clickAuthorizeSecurityTokenWhileSwapButtonIsNotVisible(wsecTokenData.name);
       await swapTradePage.clickSwapButton();
       await swapTradePage.confirmSwapViaMetamask();
 
@@ -68,8 +68,7 @@ test.describe('Check Swap section functions', () => {
       await swapTradePage.clickSecondTokenDropdown();
       await swapTradePage.clickTokenItem(wsecTokenData.title);
       await swapTradePage.fillFirstTokenAmountInput(amountForSwapString);
-      await swapTradePage.clickAuthorizeSecurityToken(secTokenData.name);
-      await swapTradePage.clickAuthorizeSecurityToken(wsecTokenData.name);
+      await swapTradePage.clickBothAuthorizeSecurityTokensWhileSwapButtonIsNotVisible(secTokenData.name, wsecTokenData.name);
       await swapTradePage.clickSwapButton();
       await swapTradePage.confirmSwapViaMetamask();
 

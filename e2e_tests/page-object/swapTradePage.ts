@@ -13,7 +13,7 @@ export class SwapTradePage extends WebPage {
   readonly currencyReplaceArrow: Locator;
   readonly currentRateField: Locator;
   readonly enterAnAmountButton: Locator;
-  readonly swapButton: Locator;
+  readonly swapButton: string;
   readonly confirmSwapButton: string;
   readonly rejectTransactionPopUp: Locator;
   readonly transactionSubmittedPopUpText: Locator;
@@ -21,6 +21,7 @@ export class SwapTradePage extends WebPage {
   transactionSubmittedText = 'Transaction Submitted';
   rejectTransactionPopUpText = 'Error Occurred';
   enterAnAmountButtonText = 'Enter an amount';
+  swapButtonText = 'Swap';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -34,7 +35,7 @@ export class SwapTradePage extends WebPage {
     this.currencyReplaceArrow = page.locator(`[data-testid="currencyReplace"]`);
     this.currentRateField = page.locator(`[data-testid="currentRate"]`);
     this.enterAnAmountButton = page.locator(`[data-testid="swap-button"] >> text=${this.enterAnAmountButtonText}`);
-    this.swapButton = page.locator(`[data-testid="swap-button"]`);
+    this.swapButton = (`[data-testid="swap-button"] >> text=${this.swapButtonText}`);
     this.confirmSwapButton = (`[data-testid="confirm-swap"]`);
     this.rejectTransactionPopUp = page.locator(`[data-testid="TransactionPopup"] >> text=${this.rejectTransactionPopUpText}`);
     this.transactionSubmittedPopUpText = page.locator(`text=${this.transactionSubmittedText}`);
@@ -88,7 +89,7 @@ export class SwapTradePage extends WebPage {
   }
 
   async clickSwapButton() {
-    await this.swapButton.click();
+    await this.page.click(this.swapButton);
   }
 
   async confirmSwapViaMetamask() {
@@ -103,7 +104,26 @@ export class SwapTradePage extends WebPage {
   }
 
   async clickAuthorizeSecurityToken(token) {
-    await this.page.waitForTimeout(2000);
-    await this.page.click(`button >> text=Authorize ${token}`);
+      await this.page.waitForTimeout(5000);
+      await this.page.click(`button >> text=Authorize ${token}`);
+  }
+
+  async clickAuthorizeSecurityTokenWhileSwapButtonIsNotVisible(token) {
+    while (await this.page.isVisible(`button >> text=Authorize ${token}`) == false && await this.page.isVisible(this.swapButton) == false) {
+      await this.page.click(`button >> text=Authorize ${token}`);
+      await this.page.waitForTimeout(10000);
+    }
+  }
+
+  async clickBothAuthorizeSecurityTokensWhileSwapButtonIsNotVisible(firstToken, secondToken) {
+    await this.page.waitForTimeout(5000);
+    while (await this.page.isVisible(`button >> text=Authorize ${firstToken}`) && await this.page.isVisible(`button >> text=Authorize ${secondToken}`)) {
+      await this.page.click(`button >> text=Authorize ${firstToken}`);
+      await this.page.waitForTimeout(12000);
+    }
+    while (await this.page.isVisible(`button >> text=Authorize ${secondToken}`) && await this.page.isVisible(this.swapButton) == false) {
+      await this.page.click(`button >> text=Authorize ${secondToken}`);
+      await this.page.waitForTimeout(12000);
+    }
   }
 }
