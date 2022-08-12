@@ -67,7 +67,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
   if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} />
 
-  const amountToClaim = +tokenAmount * (myAmount / +secTokenAmount)
+  const amountToClaim = +tokenAmount * (+secTokenAmount > 0 ? (myAmount / +secTokenAmount) : myAmount)
 
   const decimals = tokenInfo?.decimals < 7 ? tokenInfo.decimals : 6
 
@@ -157,7 +157,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
               <Box>{t`Your payout of`}</Box>
               <Flex fontSize={24} fontWeight={600} style={{ gap: 4 }} alignItems="center">
                 <CurrencyLogo currency={payoutToken} />
-                <Box>{`${payoutToken.symbol} ${amountToClaim || '0'}`}</Box>
+                <Box>{`${payoutToken.symbol} ${Number(amountToClaim || '0')}`}</Box>
               </Flex>
               <Box>{t`based on your Security token balance of`}</Box>
             </div>
@@ -205,11 +205,12 @@ const NotTokenHoldersView: FC<{ payoutToken: any, status: PAYOUT_STATUS }> = ({ 
     switch (status) {
       case PAYOUT_STATUS.ANNOUNCED:
         return (
-          <>
-            <Box marginBottom="4px">{t`Add`}</Box>
+          <Flex marginBottom="24px">
+            <Box marginX="4px">{t`Add`}</Box>
             <CurrencyLogo currency={payoutToken} size="24px" />
-            <Box marginBottom="24px">{t`${payoutToken.symbol} to increase possible payout.`}</Box>
-          </>
+            <Box marginX="4px" fontWeight="bold">{payoutToken.symbol} </Box>
+            <Box>{t`to increase possible payout.`}</Box>
+          </Flex>
         )
       case PAYOUT_STATUS.DELAYED:
         return (
