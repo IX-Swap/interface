@@ -111,7 +111,7 @@ export class SwapTradePage extends WebPage {
   async clickAuthorizeSecurityTokenWhileSwapButtonIsNotVisible(token) {
     while (await this.page.isVisible(`button >> text=Authorize ${token}`) == false && await this.page.isVisible(this.swapButton) == false) {
       await this.page.click(`button >> text=Authorize ${token}`);
-      await this.page.waitForTimeout(10000);
+      await this.page.waitForTimeout(12000);
     }
   }
 
