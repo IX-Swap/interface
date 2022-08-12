@@ -65,7 +65,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   if (secTokenBalance === '-') return <FetchingBalance />
   if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
   if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
-  if (isNotTokenHolder) return <NotTokenHoldersView status={status} />
+  if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} />
 
   const amountToClaim = +tokenAmount * (myAmount / +secTokenAmount)
 
@@ -157,7 +157,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
               <Box>{t`Your payout of`}</Box>
               <Flex fontSize={24} fontWeight={600} style={{ gap: 4 }} alignItems="center">
                 <CurrencyLogo currency={payoutToken} />
-                <Box>{`${payoutToken.symbol} ${Number(amountToClaim || '0').toFixed(decimals)}`}</Box>
+                <Box>{`${payoutToken.symbol} ${amountToClaim || '0'}`}</Box>
               </Flex>
               <Box>{t`based on your Security token balance of`}</Box>
             </div>
@@ -194,7 +194,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
   )
 }
 
-const NotTokenHoldersView: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
+const NotTokenHoldersView: FC<{ payoutToken: any, status: PAYOUT_STATUS }> = ({ payoutToken, status }) => {
   const history = useHistory()
 
   const onBuyClick = () => {
@@ -206,8 +206,9 @@ const NotTokenHoldersView: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
       case PAYOUT_STATUS.ANNOUNCED:
         return (
           <>
-            <Box marginBottom="4px">{t`No SEC tokens detected.`}</Box>
-            <Box marginBottom="24px">{t`You need SEC tokens to be eligible for this payout.`}</Box>
+            <Box marginBottom="4px">{t`Add`}</Box>
+            <CurrencyLogo currency={payoutToken} size="24px" />
+            <Box marginBottom="24px">{t`${payoutToken.symbol} to increase possible payout.`}</Box>
           </>
         )
       case PAYOUT_STATUS.DELAYED:
