@@ -18,6 +18,7 @@ export class SwapTradePage extends WebPage {
   readonly rejectTransactionPopUp: Locator;
   readonly transactionSubmittedPopUpText: Locator;
 
+  transactionSubmittedText = 'Transaction Submitted';
   rejectTransactionPopUpText = 'Error Occurred';
   enterAnAmountButtonText = 'Enter an amount';
   swapButtonText = 'Swap';
@@ -37,7 +38,7 @@ export class SwapTradePage extends WebPage {
     this.swapButton = (`[data-testid="swap-button"] >> text=${this.swapButtonText}`);
     this.confirmSwapButton = (`[data-testid="confirm-swap"]`);
     this.rejectTransactionPopUp = page.locator(`[data-testid="TransactionPopup"] >> text=${this.rejectTransactionPopUpText}`);
-    this.transactionSubmittedPopUpText = page.locator(`[data-testid="return-close"]`);
+    this.transactionSubmittedPopUpText = page.locator(`[data-testid="submittedDialog"] >> text=${this.transactionSubmittedText}`);
   }
 
   //Assertions
