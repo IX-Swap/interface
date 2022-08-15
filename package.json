@@ -87,7 +87,6 @@
     "lodash.omit": "^4.5.0",
     "luxon": "^1.25.0",
     "md5": "^2.3.0",
-    "dotenv": "^16.0.1",
     "multicodec": "^3.0.1",
     "multicoin-address-validator": "^0.5.2",
     "multihashes": "^4.0.2",
