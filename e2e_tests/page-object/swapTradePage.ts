@@ -103,11 +103,6 @@ export class SwapTradePage extends WebPage {
     await confirmMetamaskPopUp.click(this.metamaskPage.rejectButton);
   }
 
-  async clickAuthorizeSecurityToken(token) {
-      await this.page.waitForTimeout(5000);
-      await this.page.click(`button >> text=Authorize ${token}`);
-  }
-
   async getAuthButtonForToken(tokenName: string) {
     return this.page.locator(`[data-testid="authorize${tokenName}button"]`);
   }
