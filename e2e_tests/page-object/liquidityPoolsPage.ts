@@ -66,7 +66,7 @@ export class LiquidityPoolsPage extends WebPage {
     this.removePoolButton = page.locator('[data-testid="approve-currency-b-remove"]');
     this.confirmRemovePoolButton = ('[data-testid="confirm-remove"]');
     this.addNewAmountToLiqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
-    this.transactionSubmittedPopUpText = page.locator(`text=${this.transactionSubmittedText}`);
+    this.transactionSubmittedPopUpText = page.locator(`[data-testid="submittedDialog"] >> text=${this.transactionSubmittedText}`);
     this.waitingForConfirmationPopUpText = page.locator(`text=${this.confirmationPopUpText}`);
     this.firstTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
     this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=1 >> [class="css-vurnku"] >> nth=1');
