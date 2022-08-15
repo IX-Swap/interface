@@ -25,7 +25,7 @@ export const test = base.extend<ixsFixtures>({
 
     const browserContext = await chromium.launchPersistentContext(userDataDir, {
       // video disabled to improve the performance, can be enabled for debugging
-      recordVideo: { dir: 'test-results/videos/' },
+      // recordVideo: { dir: 'test-results/videos/' },
       headless: false,
       args: [
         `--disable-extensions-except=${pathToExtension}`,
