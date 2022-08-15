@@ -35,6 +35,7 @@ export class LiquidityPoolsPage extends WebPage {
   readonly importPoolLink: Locator;
   readonly liquidytyPoolItem: string;
   readonly expandDataArrow: string;
+  readonly transactionSubmittedPopUpCloseButton: Locator;
 
   chooseTokenDropdownText = 'Choose token';
   confirmationPopUpText = 'Waiting For Confirmation';
@@ -78,6 +79,7 @@ export class LiquidityPoolsPage extends WebPage {
     this.importPoolLink = page.locator(`[data-testid="find-pool-button"]`);
     this.liquidytyPoolItem = '[data-testid="liquidityPoolItem"]';
     this.expandDataArrow = '[data-testid="openTable"]';
+    this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
   }
 
   // Selectors fetching
@@ -181,6 +183,10 @@ export class LiquidityPoolsPage extends WebPage {
   async approvePoolRemovingViaMetamask() {
     const approveMetamaskPopUp = await this.openNewPageByClick(this.page, this.approveRemovePoolButton);
     await approveMetamaskPopUp.click(this.metamaskPage.signButton);
+  }
+
+  async clickTransactionSubmittedPopUpCloseButton() {
+    await this.transactionSubmittedPopUpCloseButton.click();
   }
 
   async removeCreatedLiqudityPoolIfItPresent(poolsArray) {
