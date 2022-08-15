@@ -52,10 +52,8 @@ export const useTokensList = () => {
     return []
   }, [sortedTokens, native])
 
-  console.log('log => secTokens', secTokens)
-
   const secTokensOptions = useMemo((): Option[] => {
-    if (secTokens?.length) {
+    if (secTokens) {
       return Object.values(secTokens).map((token) => ({
         label: token.symbol,
         value: (token.tokenInfo as any).id,
