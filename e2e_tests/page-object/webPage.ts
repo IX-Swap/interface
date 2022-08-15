@@ -51,34 +51,6 @@ export class WebPage {
     expect(await page.screenshot()).toMatchSnapshot();
   }
 
-  async newPageHandle(page: Page, element: string, replacingPage: boolean = false) {
-    let indexOfPageToBeReturned;
-    const numberOfPagesBeforeNewPage = await this.context.pages().length;
-
-    await page.click(element);
-
-    if (replacingPage) {
-      indexOfPageToBeReturned = numberOfPagesBeforeNewPage - 1; // array of pages returned starting from 0
-
-      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage - 1);
-      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage);
-    } else {
-      indexOfPageToBeReturned = numberOfPagesBeforeNewPage;
-
-      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage + 1);
-    }
-
-    const newPage = this.context.pages()[indexOfPageToBeReturned];
-
-    if(!newPage) throw new Error('New page was not opened');
-    await newPage.waitForLoadState();
-    return newPage;
-  }
-
-  async openAndReplacePageByClick(page: Page, element: string) {
-    return await this.newPageHandle(page, element, true)
-  }
-
   async openNewPageByClick(page: Page, element: string) {
     const [newPage] = await Promise.all([
       this.context.waitForEvent('page'),
@@ -148,5 +120,26 @@ export class WebPage {
         }, config.use.actionTimeout);
       })
     }, [elementForClick, elementToBePresent]);
+  }
+
+  async clickElementWhileItVisible (elementForClick: Locator){
+    let intervalId;
+
+    await elementForClick.waitFor({state: 'visible'});
+    await new Promise(function(resolve, reject){
+      intervalId = setInterval(async () => {
+
+        if (await elementForClick.isVisible()) {
+          await elementForClick.click({ force: true });
+        } else {
+          clearInterval(intervalId);
+          return resolve(true);
+        }
+      }, 300);
+      setTimeout(() => {
+        clearInterval(intervalId);
+        return reject(`${elementForClick} is still visible after clicking it for ${timeouts.mediumTimeout} seconds`);
+      }, timeouts.mediumTimeout);
+    })
   }
 }

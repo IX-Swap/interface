@@ -115,15 +115,15 @@ export class SwapTradePage extends WebPage {
     }
   }
 
+  getAuthButtonForToken(tokenName: string) {
+    return this.page.locator(`[data-testid="authorize${tokenName}button"]`);
+  }
+
   async clickBothAuthorizeSecurityTokensWhileSwapButtonIsNotVisible(firstToken, secondToken) {
-    await this.page.waitForTimeout(5000);
-    while (await this.page.isVisible(`button >> text=Authorize ${firstToken}`) && await this.page.isVisible(`button >> text=Authorize ${secondToken}`)) {
-      await this.page.click(`button >> text=Authorize ${firstToken}`);
-      await this.page.waitForTimeout(12000);
-    }
-    while (await this.page.isVisible(`button >> text=Authorize ${secondToken}`) && await this.page.isVisible(this.swapButton) == false) {
-      await this.page.click(`button >> text=Authorize ${secondToken}`);
-      await this.page.waitForTimeout(12000);
-    }
+    const authorizeTokenButton = this.getAuthButtonForToken(firstToken)
+    const authorizeTokenButtonSecond = this.getAuthButtonForToken(secondToken)
+
+    await this.clickElementWhileItVisible(authorizeTokenButton);
+    await this.clickElementWhileItVisible(authorizeTokenButtonSecond);
   }
 }
