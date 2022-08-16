@@ -27,6 +27,11 @@ export interface PayoutEvent {
   attachments: Array<Document>
   contractPayoutId?: string
   isReturned?: boolean
+  claimed?: number
+}
+
+export interface ClaimInfo {
+  claimed: number
 }
 
 export interface PayoutList {

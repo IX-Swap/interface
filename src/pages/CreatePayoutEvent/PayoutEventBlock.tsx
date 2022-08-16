@@ -283,7 +283,7 @@ export const PayoutEventBlock: FC<Props> = ({
               placement="top"
             >
               <ButtonIXSGradient type="button" onClick={open} disabled={isRecordFuture}>
-                <Trans>Pay for this event</Trans>
+                <Trans>Pay for This Event</Trans>
               </ButtonIXSGradient>
             </MouseoverTooltip>
           )
