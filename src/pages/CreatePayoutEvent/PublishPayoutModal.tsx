@@ -24,9 +24,9 @@ import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
-
-import { transformPayoutDraftDTO } from './utils'
 import { useCurrencyBalance, useETHBalances } from 'state/wallet/hooks'
+
+import { availableInputsForEdit, transformPayoutDraftDTO } from './utils'
 
 interface Props {
   close: () => void
@@ -44,7 +44,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const [payNow, handlePayNow] = useState(onlyPay)
   const [isLoading, handleIsLoading] = useState(false)
 
-  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
+  const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id, status, paid } = values
   const publishPayout = usePublishPayout()
   const addPopup = useAddPopup()
   const { chainId = 0, account } = useActiveWeb3React()
@@ -99,8 +99,17 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
     }
   }
 
+  const availableForEditing = useMemo(() => availableInputsForEdit(status, paid), [status, paid])
+
   const handleFormSubmit = async (paidTxHash?: string, contractPayoutId?: string) => {
-    const body = transformPayoutDraftDTO(values)
+    const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
+      if (availableForEditing.includes(key)) {
+        acc[key] = next
+      }
+      return acc
+    }, {})
+
+    const body = transformPayoutDraftDTO(formattedValues)
     const data = await publishPayout({
       ...body,
       ...(paidTxHash && { paidTxHash }),
