@@ -24,7 +24,7 @@ export const EmptyState = ({ filtred, my }: Props) => {
       return (
         <NothingFound>
           <EmptyText>
-            <Trans>{`Oops, you don't have any Security tokens!`}</Trans>
+            <Trans>{`Oops, you do not have any upcoming payout events!`}</Trans>
           </EmptyText>
           <ButtonIXSGradient onClick={redirectToSwap}>
             <Trans>Buy Now</Trans>
