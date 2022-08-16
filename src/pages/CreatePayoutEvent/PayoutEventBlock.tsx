@@ -295,6 +295,7 @@ export const PayoutEventBlock: FC<Props> = ({
           close={close}
           isRecordFuture={isRecordFuture}
           onlyPay={status !== PAYOUT_STATUS.DRAFT && !paid}
+          availableForEditing={availableForEditing}
         />
       )}
     </FormCard>

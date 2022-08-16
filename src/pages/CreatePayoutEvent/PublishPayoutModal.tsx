@@ -24,15 +24,16 @@ import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useGetPayoutAuthorization } from 'state/token-manager/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import { useCurrencyBalance, useETHBalances } from 'state/wallet/hooks'
 
 import { transformPayoutDraftDTO } from './utils'
-import { useCurrencyBalance, useETHBalances } from 'state/wallet/hooks'
 
 interface Props {
   close: () => void
   values: any
   isRecordFuture: boolean
   onlyPay: boolean
+  availableForEditing: string[]
 }
 
 interface DataProps {
@@ -40,7 +41,7 @@ interface DataProps {
   value: any
 }
 
-export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, onlyPay }) => {
+export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, onlyPay, availableForEditing }) => {
   const [payNow, handlePayNow] = useState(onlyPay)
   const [isLoading, handleIsLoading] = useState(false)
 
@@ -100,7 +101,14 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   }
 
   const handleFormSubmit = async (paidTxHash?: string, contractPayoutId?: string) => {
-    const body = transformPayoutDraftDTO(values)
+    const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
+      if (availableForEditing.includes(key)) {
+        acc[key] = next
+      }
+      return acc
+    }, {})
+
+    const body = transformPayoutDraftDTO(formattedValues)
     const data = await publishPayout({
       ...body,
       ...(paidTxHash && { paidTxHash }),

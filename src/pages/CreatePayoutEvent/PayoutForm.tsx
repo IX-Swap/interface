@@ -92,6 +92,7 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
       }
       return acc
     }, {})
+    
     const body = transformPayoutDraftDTO(formattedValues)
 
     let data: any
