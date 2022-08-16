@@ -60,7 +60,7 @@ export const Menu = ({ close }: Props) => {
         </CloseContainer>
         <MenuList>
           {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close}>
+            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
               <Trans>Swap/Trade</Trans>
             </MenuListItem>
           )}

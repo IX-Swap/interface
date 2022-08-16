@@ -135,7 +135,7 @@ export const HeaderLinks = () => {
   return (
     <HeaderLinksWrap links={7}>
       {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+        <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}

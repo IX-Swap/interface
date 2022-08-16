@@ -1,6 +1,6 @@
 import { WebPage } from './webPage'
 import { BrowserContext, expect, Locator, Page } from '@playwright/test'
-import { MetamaskPage } from '../page-object/metamaskPage'
+import { MetamaskPage } from './metamaskPage'
 import config from '../playwright.config'
 
 export class LiquidityPoolsPage extends WebPage {
@@ -13,7 +13,6 @@ export class LiquidityPoolsPage extends WebPage {
   readonly supplyButton: Locator;
   readonly confirmSupplyButtonSelector: string;
   readonly confirmSupplyButton: Locator;
-  readonly transactionSubmittedPopUpCloseButton: Locator;
   readonly removeLiquidityButton: Locator;
   readonly maxRemovePercentageButton: Locator;
   readonly approveRemovePoolButton: string;
@@ -36,6 +35,7 @@ export class LiquidityPoolsPage extends WebPage {
   readonly importPoolLink: Locator;
   readonly liquidytyPoolItem: string;
   readonly expandDataArrow: string;
+  readonly transactionSubmittedPopUpCloseButton: Locator;
 
   chooseTokenDropdownText = 'Choose token';
   confirmationPopUpText = 'Waiting For Confirmation';
@@ -57,7 +57,6 @@ export class LiquidityPoolsPage extends WebPage {
     this.supplyButton = page.locator('[data-testid="supply"]');
     this.confirmSupplyButtonSelector = ('[data-testid="create-or-supply"]');
     this.confirmSupplyButton = page.locator('[data-testid="create-or-supply"]');
-    this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
     this.removeLiquidityButton = page.locator('[data-testid="remove-liquidity"]');
     this.quarterRemovePercentageButton = page.locator('[data-testid="percentage_25"]');
     this.halfRemovePercentageButton = page.locator('[data-testid="percentage_50"]');
@@ -67,7 +66,7 @@ export class LiquidityPoolsPage extends WebPage {
     this.removePoolButton = page.locator('[data-testid="approve-currency-b-remove"]');
     this.confirmRemovePoolButton = ('[data-testid="confirm-remove"]');
     this.addNewAmountToLiqudityPoolButton = page.locator('[data-testid="add-to-liquidity"]');
-    this.transactionSubmittedPopUpText = page.locator(`text=${this.transactionSubmittedText}`);
+    this.transactionSubmittedPopUpText = page.locator(`[data-testid="submittedDialog"] >> text=${this.transactionSubmittedText}`);
     this.waitingForConfirmationPopUpText = page.locator(`text=${this.confirmationPopUpText}`);
     this.firstTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=0 >> [class="css-vurnku"] >> nth=1');
     this.secondTokenValueInLiquidityPool = page.locator('[data-testid="tableRow"] >> nth=1 >> [class="css-vurnku"] >> nth=1');
@@ -80,6 +79,7 @@ export class LiquidityPoolsPage extends WebPage {
     this.importPoolLink = page.locator(`[data-testid="find-pool-button"]`);
     this.liquidytyPoolItem = '[data-testid="liquidityPoolItem"]';
     this.expandDataArrow = '[data-testid="openTable"]';
+    this.transactionSubmittedPopUpCloseButton = page.locator('[data-testid="return-close"]');
   }
 
   // Selectors fetching
@@ -107,10 +107,6 @@ export class LiquidityPoolsPage extends WebPage {
   }
 
   // Actions
-  async clickTokenItem(token) {
-    await this.page.locator(`//div[text()='${token}']`).click();
-  }
-
   async clickQuarterRemovePercentageButton() {
     await this.quarterRemovePercentageButton.click();
   }
@@ -137,10 +133,6 @@ export class LiquidityPoolsPage extends WebPage {
 
   async clickSupplyButton() {
     await this.supplyButton.click();
-  }
-
-  async clickTransactionSubmittedPopUpCloseButton() {
-    await this.transactionSubmittedPopUpCloseButton.click();
   }
 
   async fillFirstAmountOfTokensField(value) {
@@ -193,6 +185,10 @@ export class LiquidityPoolsPage extends WebPage {
     await approveMetamaskPopUp.click(this.metamaskPage.signButton);
   }
 
+  async clickTransactionSubmittedPopUpCloseButton() {
+    await this.transactionSubmittedPopUpCloseButton.click();
+  }
+
   async removeCreatedLiqudityPoolIfItPresent(poolsArray) {
     for (const pool of poolsArray) {
       const poolLocator = await this.getPoolLocator(pool)
@@ -221,7 +217,7 @@ export class LiquidityPoolsPage extends WebPage {
     await this.clickRemovePoolButton();
 
     const confirmMetamaskPopUp = await this.openNewPageByClick(this.page, this.confirmRemovePoolButton);
-    await confirmMetamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+    await confirmMetamaskPopUp.click(this.metamaskPage.confirmMetamaskPopUpButton);
 
     await this.clickTransactionSubmittedPopUpCloseButton();
   }
@@ -237,7 +233,7 @@ export class LiquidityPoolsPage extends WebPage {
     await this.clickSupplyButton();
 
     const metamaskPopUp = await this.openNewPageByClick(this.page, this.confirmSupplyButtonSelector);
-    await metamaskPopUp.click(this.metamaskPage.connectMetamaskPopUpButton);
+    await metamaskPopUp.click(this.metamaskPage.confirmMetamaskPopUpButton);
 
     await this.clickTransactionSubmittedPopUpCloseButton();
   }
