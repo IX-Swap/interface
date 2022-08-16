@@ -119,16 +119,19 @@ const Row = ({ item }: IRow) => {
   const deletePayout = useDeletePayoutItem()
   const history = useHistory()
 
-  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken } = item
-  const amountClaimed = 0
+  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed } = item
 
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
   const currency = useCurrency(payoutToken)
-
   const dateFormat = 'MMM DD, YYYY'
 
   const clickView = () => {
     history.push({ pathname: routes.payoutItemManager(id) })
+  }
+
+  const splitClaimedAmount = (amount: string) => {
+    const result = amount.substring(amount.indexOf('.') + 1)
+    return result.length > 0 ? Number(amount).toFixed(2) : result
   }
 
   const onDelete = () => {
@@ -137,6 +140,10 @@ const Row = ({ item }: IRow) => {
   }
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
+
+  const amountClaimed = claimed
+    ? splitClaimedAmount(claimed.toString())
+    : '0'
 
   const onEdit = () => {
     history.push(`/payout/edit/${id}`)
