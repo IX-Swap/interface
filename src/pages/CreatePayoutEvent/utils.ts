@@ -52,8 +52,8 @@ export const availableInputsForEdit = (status = '', paid = false) => {
       'token',
       'files',
     ],
-    [PAYOUT_STATUS.SCHEDULED]: ['id', 'tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
-    [PAYOUT_STATUS.DELAYED]: ['id', 'tokenAmount', 'title', 'description', 'startDate', 'endDate', 'files'],
+    [PAYOUT_STATUS.SCHEDULED]: ['id', 'title', 'description', 'startDate', 'endDate', 'files'],
+    [PAYOUT_STATUS.DELAYED]: ['id', 'title', 'description', 'startDate', 'endDate', 'files'],
     [PAYOUT_STATUS.STARTED]: ['id', 'title', 'description', 'endDate', 'files'],
     [PAYOUT_STATUS.ENDED]: [],
   } as Record<string, string[]>
