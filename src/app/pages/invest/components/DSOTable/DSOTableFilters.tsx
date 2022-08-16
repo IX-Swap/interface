@@ -1,28 +1,28 @@
-import FilterListIcon from '@mui/icons-material/FilterList'
-import { Button, Grid, Hidden } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Button, Grid, Paper, Typography } from '@mui/material'
 import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
-import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
 import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
-import { ColumnsEditor } from 'app/pages/invest/components/DSOTable/ColumnsEditor'
-import { ColumnsEditorToggle } from 'app/pages/invest/components/DSOTable/ColumnsEditorToggle'
 import { NetworkFilter } from 'app/pages/invest/components/DSOTable/NetworkFilter'
 import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
-import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
-import { LabelledValue } from 'components/LabelledValue'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import React, { useState } from 'react'
+import React from 'react'
+import { FavoriteFilter } from 'app/pages/invest/components/DSOTable/FavoriteFilter'
+import { CurrencyFilter } from 'app/pages/invest/components/DSOTable/CurrencyFilter'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const DSOTableFilters = () => {
-  const { deselectColumn, selectColumn, columns } = useDSOTableColumns()
-  const [showColumns, setShowColumns] = useState(false)
-  const [showFilters, setShowFilters] = useState(false)
-  const toggleColumns = () => setShowColumns(!showColumns)
-  const toggleFilters = () => setShowFilters(!showFilters)
+  const { isMiniLaptop, isTablet } = useAppBreakpoints()
+  const { removeFilters } = useQueryFilter()
 
-  const theme = useTheme()
-
-  const { isMiniLaptop } = useAppBreakpoints()
+  const clearAll = () => {
+    removeFilters([
+      'isFavorite',
+      'isPriceAscending',
+      'search',
+      'capitalStructure',
+      'currency',
+      'network'
+    ])
+  }
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -30,87 +30,60 @@ export const DSOTableFilters = () => {
         <Grid item xs={12} md={2}>
           <CapitalStructureFilter />
         </Grid>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={10}>
           <TextInputSearchFilter fullWidth placeholder='Search' />
         </Grid>
 
-        <Hidden mdUp>
-          <Grid item xs={6}>
-            <Button
-              variant='contained'
-              color='primary'
-              disableElevation
-              fullWidth
-              onClick={toggleFilters}
-              style={{
-                color: theme.palette.primary.main,
-                backgroundColor: '#E4EDFF',
-                height: 40,
-                borderRadius: 20,
-                borderWidth: 1,
-                borderStyle: 'solid',
-                borderColor: showFilters
-                  ? theme.palette.primary.main
-                  : 'transparent'
-              }}
-              endIcon={<FilterListIcon />}
-            >
-              More Filters
-            </Button>
-          </Grid>
-        </Hidden>
-      </Grid>
-      {(!isMiniLaptop || showFilters) && (
-        <Grid item container spacing={isMiniLaptop ? 1 : 4}>
-          <Grid item xs={6} md={'auto'}>
-            <LabelledValue
-              row
-              alignItems={'center'}
-              label={'Price'}
-              value={<PriceFilter />}
-            />
-          </Grid>
-          <Grid item xs={6} md={'auto'}>
-            <LabelledValue
-              row
-              alignItems={'center'}
-              label={'Currency'}
-              value={
-                <Grid container spacing={1}>
-                  <Grid item>
-                    <CurrencyFilter defaultValue={null} currency={'SGD'} />
+        <Grid item xs={12}>
+          <Paper sx={{ borderRadius: 1, p: 3 }}>
+            <Grid container spacing={1}>
+              <Grid
+                item
+                container
+                justifyContent='space-between'
+                alignItems='center'
+                xs={12}
+              >
+                <Grid item>
+                  <Typography variant='h4'>Filters</Typography>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant='text'
+                    onClick={clearAll}
+                    sx={{ pr: 0, backgroundColor: 'transparent !important' }}
+                  >
+                    Clear all
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                container
+                wrap='nowrap'
+                spacing={1}
+                direction={isTablet ? 'column' : 'row'}
+              >
+                <Grid item sx={{ width: '100%' }} container spacing={1}>
+                  <Grid item xs={12} md={4}>
+                    <PriceFilter />
                   </Grid>
-                  <Grid item>
-                    <CurrencyFilter defaultValue={null} currency={'USD'} />
+                  <Grid item xs={12} md={4}>
+                    <CurrencyFilter />
+                  </Grid>
+                  <Grid item xs={12} md={4}>
+                    <NetworkFilter />
                   </Grid>
                 </Grid>
-              }
-            />
-          </Grid>
-          <Grid item xs={6} md={2}>
-            <NetworkFilter />
-          </Grid>
-          <Hidden lgDown>
-            <Grid item xs={6} md={3}>
-              <ColumnsEditorToggle
-                value='columns'
-                onClick={toggleColumns}
-                selected={showColumns}
-              />
+                <Grid item>
+                  <FavoriteFilter />
+                </Grid>
+              </Grid>
             </Grid>
-          </Hidden>
+          </Paper>
         </Grid>
-      )}
-
-      {showColumns && (
-        <Grid item>
-          <ColumnsEditor
-            selected={columns}
-            onSelect={selectColumn}
-            onDeselect={deselectColumn}
-          />
-        </Grid>
-      )}
+      </Grid>
     </Grid>
   )
 }

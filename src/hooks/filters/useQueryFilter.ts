@@ -46,6 +46,7 @@ export interface QueryFilters {
   errorType: 'email' | 'connection' | undefined
   code: string | undefined
   account: string | undefined
+  isFavorite: 'yes' | 'no' | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

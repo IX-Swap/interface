@@ -1,38 +1,22 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import React, { ChangeEvent } from 'react'
-import { FormControlLabel, Grid, RadioGroup } from '@mui/material'
-import { UIRadio } from 'components/UIRadio/UIRadio'
+import React from 'react'
+import { SelectChangeEvent } from '@mui/material'
+import { PriceSelect } from 'app/pages/invest/components/DSOTable/PriceSelect'
 
 export const PriceFilter = () => {
   const { getFilterValue, updateFilter } = useQueryFilter()
   const value = getFilterValue('isPriceAscending')
 
-  const handleChange = (event: ChangeEvent<{ value: string }>) => {
+  const handleChange = (event: SelectChangeEvent<any>) => {
     updateFilter('isPriceAscending', event.target.value)
   }
 
   return (
-    <RadioGroup
-      name={'currency'}
+    <PriceSelect
+      displayEmpty
+      placeholder='Price'
       value={value}
       onChange={event => handleChange(event)}
-    >
-      <Grid container alignItems={'center'} direction={'row'}>
-        <Grid item>
-          <FormControlLabel
-            label='Low - High'
-            value='yes'
-            control={<UIRadio />}
-          />
-        </Grid>
-        <Grid item>
-          <FormControlLabel
-            label='High - Low'
-            value='no'
-            control={<UIRadio />}
-          />
-        </Grid>
-      </Grid>
-    </RadioGroup>
+    />
   )
 }
