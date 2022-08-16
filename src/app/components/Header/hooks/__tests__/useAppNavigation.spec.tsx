@@ -43,7 +43,7 @@ describe('useAppNavigation', () => {
     })
     expect(current.links[2]).toEqual({
       label: 'Invest',
-      link: InvestRoute.landing,
+      link: InvestRoute.overview,
       icon: InvestIcon
     })
     expect(current.links[3]).toEqual({
@@ -73,7 +73,7 @@ describe('useAppNavigation', () => {
     })
     expect(current.links[2]).toEqual({
       label: 'Invest',
-      link: InvestRoute.landing,
+      link: InvestRoute.overview,
       icon: InvestIcon
     })
     expect(current.links[3]).toEqual({
@@ -105,7 +105,7 @@ describe('useAppNavigation', () => {
     })
     expect(current.links[2]).toEqual({
       label: 'Invest',
-      link: InvestRoute.landing,
+      link: InvestRoute.overview,
       icon: InvestIcon
     })
     expect(current.links[3]).toEqual({
@@ -144,7 +144,7 @@ describe('useAppNavigation', () => {
     })
     expect(current.links[2]).toEqual({
       label: 'Invest',
-      link: InvestRoute.landing,
+      link: InvestRoute.overview,
       icon: InvestIcon
     })
     expect(current.links[3]).toEqual({
