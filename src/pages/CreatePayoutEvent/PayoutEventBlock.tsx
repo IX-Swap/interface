@@ -157,6 +157,7 @@ export const PayoutEventBlock: FC<Props> = ({
           <TextInput
             placeholder="1000"
             label="Token Amount"
+            required
             onChange={(e: any) =>
               e.currentTarget.value.match(/^[\.0-9]*$/g) && onValueChange('tokenAmount', e.currentTarget.value)
             }
