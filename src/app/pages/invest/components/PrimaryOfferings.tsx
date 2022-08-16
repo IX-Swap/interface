@@ -15,28 +15,70 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { Slide } from 'pure-react-carousel'
 import Box from '@mui/material/Box'
 import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/DSOCardsCarousel'
+import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
+import { TablePagination } from 'ui/Pagination/TablePagination'
+import { Pagination } from 'ui/Pagination/Pagination'
 
-export const PrimaryOfferings = () => {
+export interface PrimaryOfferingsProps {
+  fullview?: boolean
+}
+
+export const PrimaryOfferings = ({
+  fullview = false
+}: PrimaryOfferingsProps) => {
   const classes = useStyles()
-  const { isMiniLaptop } = useAppBreakpoints()
+  const { isMiniLaptop, isTablet } = useAppBreakpoints()
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const primaryOfferingSearch = getFilterValue('primaryOfferingSearch')
+  const capitalStructure = getFilterValue('capitalStructure')
+  const currency = getFilterValue('currency')
+  const isPriceAscending = getFilterValue('isPriceAscending')
+  const isFavorite = getFilterValue('isFavorite')
+  const network = getFilterValue('network')
 
-  const { items, status, total } = useTableWithPagination({
-    queryKey: dsoQueryKeys.getPromoted,
-    uri: issuanceURL.dso.getAllPromoted,
-    defaultFilter: { search: search ?? primaryOfferingSearch },
+  const {
+    items,
+    status,
+    total,
+    isLoading,
+    setPage,
+    setRowsPerPage,
+    page,
+    rowsPerPage
+  } = useTableWithPagination({
+    queryKey: fullview ? dsoQueryKeys.getList : dsoQueryKeys.getPromoted,
+    uri: fullview ? issuanceURL.dso.getDSOList : issuanceURL.dso.getAllPromoted,
+    defaultFilter: {
+      search: search ?? primaryOfferingSearch,
+      capitalStructure,
+      currency,
+      isPriceAscending:
+        isPriceAscending !== undefined ? isPriceAscending === 'yes' : undefined,
+      isFavorite,
+      network
+    },
     queryEnabled: true,
-    defaultRowsPerPage: 5,
+    defaultRowsPerPage: 6,
     disabledUseEffect: true
   })
 
-  if (status === 'loading') {
-    return null
+  const handleChangePage = (_: any, newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
   }
 
   const renderContent = () => {
+    if (status === 'loading') {
+      return null
+    }
+
     const renderItems = (items as DigitalSecurityOffering[]).slice(0, 3)
 
     if (renderItems.length < 1) {
@@ -63,10 +105,10 @@ export const PrimaryOfferings = () => {
     }
 
     return (
-      <Grid container wrap={'wrap'} className={classes.container}>
+      <Grid container wrap='wrap' className={classes.container}>
         {(items as DigitalSecurityOffering[]).slice(0, 3).map(dso => (
           <DSOCard
-            type={'Primary'}
+            type='Primary'
             data={dso}
             viewURL={InvestRoute.view}
             key={dso._id}
@@ -76,38 +118,88 @@ export const PrimaryOfferings = () => {
     )
   }
 
-  return (
-    <Grid container direction={'column'} spacing={3}>
-      <Grid
-        item
-        container
-        alignItems={'center'}
-        justifyContent={'space-between'}
-      >
-        <Grid item>
-          <Typography
-            variant='h4'
-            display={'inline-flex'}
-            alignItems={'center'}
-          >
-            Primary Offerings <Count value={total} />
-          </Typography>
+  const renderFullviewContent = () => {
+    if (isLoading) {
+      return <>Loading...</>
+    }
+
+    if (items.length < 1) {
+      return <NoOffers />
+    }
+
+    return (
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Grid container wrap='wrap' className={classes.container}>
+            {(items as DigitalSecurityOffering[]).map(dso => (
+              <DSOCard
+                type='Primary'
+                data={dso}
+                viewURL={InvestRoute.view}
+                key={dso._id}
+              />
+            ))}
+          </Grid>
         </Grid>
-        <Grid item>
-          <Button
-            component={AppRouterLinkComponent}
-            color='primary'
-            variant='text'
-            to={InvestRoute.primaryOfferings}
-            data-testid='invest-link'
-            sx={{ px: 0 }}
-          >
-            View all
-          </Button>
+        <Grid item xs={12}>
+          {isTablet ? (
+            <TablePagination
+              count={total}
+              rowsPerPage={rowsPerPage}
+              labelRowsPerPage='Rows'
+              page={page}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+            />
+          ) : (
+            <Pagination
+              count={Math.floor(total / 6)}
+              page={page < 1 ? 1 : page}
+              onChange={handleChangePage}
+            />
+          )}
         </Grid>
       </Grid>
+    )
+  }
 
-      <Grid item>{renderContent()}</Grid>
+  return (
+    <Grid container spacing={3}>
+      {fullview ? (
+        <Grid item xs={12}>
+          <DSOTableFilters />
+        </Grid>
+      ) : (
+        <Grid
+          item
+          xs={12}
+          container
+          alignItems='center'
+          justifyContent='space-between'
+        >
+          <Grid item>
+            <Typography variant='h4' display='inline-flex' alignItems='center'>
+              Primary Offerings <Count value={total} />
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Button
+              component={AppRouterLinkComponent}
+              color='primary'
+              variant='text'
+              to={InvestRoute.primaryOfferings}
+              data-testid='invest-link'
+              sx={{ px: 0 }}
+            >
+              View all
+            </Button>
+          </Grid>
+        </Grid>
+      )}
+
+      <Grid item xs={12}>
+        {fullview ? renderFullviewContent() : renderContent()}
+      </Grid>
     </Grid>
   )
 }
