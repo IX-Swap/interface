@@ -30,6 +30,7 @@ import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
 import dayjs from 'dayjs'
+import { useAccount } from 'state/user/hooks'
 
 export interface MyAmounts {
   poolTokens: number
@@ -41,6 +42,7 @@ export default function PayoutItemForUser({
     params: { payoutId },
   },
 }: RouteComponentProps<{ payoutId: string }>) {
+  useAccount()
   const [cookies] = useCookies(['annoucementsSeen'])
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
   const [page, setPage] = useState(1)

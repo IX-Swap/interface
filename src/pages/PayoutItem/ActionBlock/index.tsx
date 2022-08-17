@@ -6,6 +6,7 @@ import { PayoutEvent } from 'state/token-manager/types'
 
 import { ManagerView } from './ManagerView'
 import { UserView } from './UserView'
+import { useAccount } from 'state/user/hooks'
 
 interface Props {
   payout: PayoutEvent
@@ -16,6 +17,9 @@ interface Props {
 
 export const PayoutActionBlock: FC<Props> = ({ payout, isMyPayout, myAmount, onUpdate }) => {
   const payoutToken = useCurrency(payout.payoutToken ?? undefined)
+
+  useAccount()
+  
   return (
     <Box marginTop="16px">
       {isMyPayout ? (

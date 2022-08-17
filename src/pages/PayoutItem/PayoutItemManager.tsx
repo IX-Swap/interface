@@ -17,6 +17,7 @@ import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutHistory } from './History'
 import { useUserState } from 'state/user/hooks'
+import { ROLES } from 'constants/roles'
 import { routes } from 'utils/routes'
 
 export default function PayoutItemForManager({
@@ -24,7 +25,6 @@ export default function PayoutItemForManager({
     params: { payoutId },
   },
 }: RouteComponentProps<{ payoutId: string }>) {
-  const history = useHistory()
   const [cookies] = useCookies(['annoucementsSeen'])
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
   const [page, setPage] = useState(1)
@@ -35,10 +35,17 @@ export default function PayoutItemForManager({
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
   const { me } = useUserState()
+  const history = useHistory()
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
   
+  useEffect(() => {
+    if (me && me.role !== ROLES.TOKEN_MANAGER) {
+      history.push(routes.payoutItem(+payoutId))
+    }
+  }, [me, history])
+
   const getPayoutItem = useCallback(
     async () => {
       const data = await getPayoutItemById(+payoutId)
@@ -85,14 +92,9 @@ export default function PayoutItemForManager({
       <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         {payout && (
           <Column style={{ gap: '40px' }}>
-            <PayoutHeader payout={payout} isMyPayout={isMyPayout ?? false} />
+            <PayoutHeader payout={payout} isMyPayout />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock 
-              payout={payout} 
-              isMyPayout={isMyPayout ?? false}
-              myAmount={1} 
-              onUpdate={getPayoutItem} 
-            />
+            <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}
