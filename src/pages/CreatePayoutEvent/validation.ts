@@ -6,10 +6,10 @@ export const validation = object().shape({
   description: string().required('Field is required').max(5000, 'Maximum is allowed 5000 chars'),
   tokenAmount: string().required('Field is required'),
   type: string().required('Field is required'),
-  otherType: string().when('type', {
+  otherType: string().nullable().when('type', {
     is: (type: string) => type === 'Other',
     then: string().required('Field is required').max(50, 'Maximum is allowed 50 chars'),
-    otherwise: string(),
+    otherwise: string().nullable(),
   }),
   secToken: object().nullable().required('Field is required'),
   token: object().nullable().required('Field is required'),

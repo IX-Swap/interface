@@ -36,7 +36,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
   const getRemainingTokens = useGetRemainingTokens()
 
   const { account } = useActiveWeb3React()
-  const { status, isPaid, secToken, tokenAmount, recordDate, id, startDate, contractPayoutId } = payout
+  const { status, isPaid, secToken, tokenAmount, recordDate, id, startDate, contractPayoutId, paidTxHash } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
 
   const [totalClaims, handleTotalClaims] = useState(0)
@@ -133,11 +133,25 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
           </>
         )
       case PAYOUT_STATUS.SCHEDULED:
-        return !isPaid ? (
+        return !isPaid && !paidTxHash ? (
           <>
             <Box marginBottom="4px">{t`The event is not paid yet.`}</Box>
             <Box marginBottom="24px">{t`Please proceed with the payment before the payment start date.`}</Box>
             <StyledButtonIXSGradient onClick={goToEdit}>{t`Pay for This Event`}</StyledButtonIXSGradient>
+          </>
+        ) : !isPaid && paidTxHash ? (
+          <>
+            <Flex marginBottom="4px" alignItems="center" fontWeight={600}>
+              <Box
+                marginRight="4px"
+                fontSize="20px"
+                lineHeight="30px">{t`Paid was successful. Waiting for system confirmation.`}
+              </Box>
+              <CurrencyLogo currency={payoutToken} size="24px" />
+              <Box marginLeft="4px" fontSize="24px" lineHeight="36px">{`${
+                payoutToken?.symbol ?? 'Payout Token'
+              } ${tokenAmount}`}</Box>
+            </Flex>
           </>
         ) : (
           <>
