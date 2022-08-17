@@ -18,6 +18,7 @@ export interface PayoutEvent {
   payoutToken: string
   tokenAmount: string
   isPaid: boolean
+  paidTxHash: string
   startDate: string
   endDate: string | null
   createdAt: string
