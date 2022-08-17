@@ -1,14 +1,14 @@
-import React from 'react'
 import { Box, Grid, Typography } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { useStyles } from './News.style'
 import { useTheme } from '@mui/material/styles'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { NewsList } from 'app/pages/educationCentre/components/News/NewsList'
+import AtlasLogoDark from 'assets/icons/atlas_logo.png'
+import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
 import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
-import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
-import AtlasLogoDark from 'assets/icons/atlas_logo.png'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React from 'react'
+import { useStyles } from './News.style'
 
 export const News = () => {
   const classes = useStyles()
@@ -34,7 +34,7 @@ export const News = () => {
           alt={'Atlas One Logo'}
         />
         <Grid item xs={12} md={6} lg={3} className={classes.input}>
-          <SearchFilter
+          <TextInputSearchFilter
             fullWidth
             placeholder='Search'
             inputAdornmentPosition='end'

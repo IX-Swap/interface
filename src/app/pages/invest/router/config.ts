@@ -4,7 +4,8 @@ import { InternalRouteProps } from 'types/util'
 export const InvestRoute = {
   landing: makeURL(['app', 'invest']),
   exchange: '/app/invest/exchange/:pairId',
-  overview: makeURL(['app', 'invest', 'overview']),
+  overview: '/app/invest/overview',
+  primaryOfferings: '/app/invest/overview/primary-offerings',
   view: makeURL(['app', 'invest', 'offerings', 'issuerId', 'dsoId', 'view']),
   viewListing: makeURL([
     'app',
@@ -40,7 +41,7 @@ export const investLandingLinks: InternalRouteProps[] = [
   },
   {
     label: 'Primary',
-    path: InvestRoute.landing
+    path: InvestRoute.primaryOfferings
   },
   {
     label: 'Trading',

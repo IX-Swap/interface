@@ -1,6 +1,6 @@
-import React from 'react'
 import { Grid } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import React from 'react'
 import { useStyles } from './CustodySearchFilter.styles'
 
 export const CustodySearchFilter = () => {
@@ -8,7 +8,7 @@ export const CustodySearchFilter = () => {
 
   return (
     <Grid item md={5} xs={12} className={classes.wrapper}>
-      <SearchFilter
+      <TextInputSearchFilter
         fullWidth
         placeholder='Search'
         inputAdornmentPosition='start'

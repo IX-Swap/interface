@@ -10,28 +10,7 @@ describe('Price Filter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without any error', () => {
+  it('renders without any error', () => {
     render(<PriceFilter />)
-  })
-
-  it('renders FormControlLabel with correct props', async () => {
-    render(<PriceFilter />)
-    expect(FormControlLabel).toHaveBeenCalledTimes(2)
-    expect(FormControlLabel).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({
-        label: 'Low - High',
-        value: 'yes'
-      }),
-      {}
-    )
-    expect(FormControlLabel).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
-        label: 'High - Low',
-        value: 'no'
-      }),
-      {}
-    )
   })
 })

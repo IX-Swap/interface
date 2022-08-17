@@ -1,9 +1,9 @@
 import { Box, Grid, Typography } from '@mui/material'
-import React from 'react'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
 
 export const VAAuditFilters = () => {
   const { isMobile, isTablet } = useAppBreakpoints()
@@ -17,7 +17,7 @@ export const VAAuditFilters = () => {
       justifyContent={'space-between'}
     >
       <Grid item md={7} xs={12}>
-        <SearchFilter
+        <TextInputSearchFilter
           fullWidth
           placeholder='Search'
           inputAdornmentPosition='start'

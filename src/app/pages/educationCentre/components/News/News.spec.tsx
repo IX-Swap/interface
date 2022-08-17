@@ -4,14 +4,14 @@ import { News } from 'app/pages/educationCentre/components/News/News'
 import { NewsList } from 'app/pages/educationCentre/components/News/NewsList'
 import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 
 jest.mock('app/pages/educationCentre/components/News/NewsList', () => ({
   NewsList: jest.fn(() => null)
 }))
 
-jest.mock('app/components/SearchFilter', () => ({
-  SearchFilter: jest.fn(() => null)
+jest.mock('app/components/TextInputSearchFilter', () => ({
+  TextInputSearchFilter: jest.fn(() => null)
 }))
 
 describe('News', () => {
@@ -33,9 +33,9 @@ describe('News', () => {
     )
   })
 
-  it.skip('renders with SearchFilter', () => {
+  it.skip('renders with TextInputSearchFilter', () => {
     render(<News />)
-    expect(SearchFilter).toBeCalled()
+    expect(TextInputSearchFilter).toBeCalled()
   })
 
   it('render correct title and description', () => {

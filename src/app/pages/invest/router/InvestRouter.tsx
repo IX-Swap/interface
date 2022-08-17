@@ -1,15 +1,15 @@
-import { ViewListing } from 'app/pages/invest/pages/ViewListing'
-import { InvestOverview } from 'app/pages/invest/pages/InvestOverview'
+import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 import { Market } from 'app/pages/invest/pages/market/Market'
+import { ViewListing } from 'app/pages/invest/pages/ViewListing'
 import { CommitmentsRouter } from 'app/pages/invest/router/CommitmentsRouter'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
-import { InvestLanding } from 'app/pages/invest/pages/InvestLanding'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
 import { Redirect, Switch } from 'react-router-dom'
 import { RootContainer } from 'ui/RootContainer'
 import { Trading } from '../pages/Trading'
+import { OverviewRouter } from './OverviewRouter'
 
 export const InvestRouter = () => {
   return (
@@ -39,7 +39,7 @@ export const InvestRouter = () => {
         </RootContainer>
       </AppRoute>
       <AppRoute path={InvestRoute.overview} breadcrumb='Overview'>
-        <InvestOverview />
+        <OverviewRouter />
       </AppRoute>
       <AppRoute exact path={InvestRoute.trading}>
         <Trading />

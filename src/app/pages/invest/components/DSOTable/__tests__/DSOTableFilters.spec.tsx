@@ -37,18 +37,6 @@ describe('DSOTableFilters', () => {
     jest.clearAllMocks()
   })
 
-  it('renders SearchFilter correctly', async () => {
-    const { getByRole, getByPlaceholderText } = render(<DSOTableFilters />)
-    const searchBar = getByRole('textbox')
-    expect(searchBar).toBeInTheDocument()
-    expect(getByPlaceholderText('Search Offers')).toBeInTheDocument()
-
-    fireEvent.change(searchBar, { target: { value: 'beep' } })
-    await waitFor(() => {
-      expect(history.location.search).toBe('?search=beep')
-    })
-  })
-
   it.skip('renders ColumnEditor correctly', async () => {
     const { getByText, queryByText, getAllByRole } = renderWithInitialWidth(
       <DSOTableFilters />,

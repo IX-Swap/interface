@@ -51,6 +51,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 control={control}
                 component={CapitalStructureSelect}
                 label='Capital Structure'
+                displayEmpty
                 name='capitalStructure'
                 helperText='Offering terms will be changed based on your capital structure'
                 variant='outlined'

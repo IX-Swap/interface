@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHistory'
 import { managedUser } from '__fixtures__/user'
 import * as useQueryFilter from 'hooks/filters/useQueryFilter'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { authURL } from 'config/apiURL'
 import { authQueryKeys } from 'config/queryKeys'
@@ -11,8 +11,8 @@ import { AdminRoute } from 'app/pages/admin/router/config'
 import { generatePath, Route } from 'react-router-dom'
 import { history } from 'config/history'
 
-jest.mock('app/components/SearchFilter', () => ({
-  SearchFilter: jest.fn(() => null)
+jest.mock('app/components/TextInputSearchFilter', () => ({
+  TextInputSearchFilter: jest.fn(() => null)
 }))
 
 jest.mock('components/TableWithPagination/TableView', () => ({
@@ -44,7 +44,7 @@ describe('AccountLoginHitory', () => {
       </Route>
     )
 
-    expect(SearchFilter).toHaveBeenCalled()
+    expect(TextInputSearchFilter).toHaveBeenCalled()
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
         uri: authURL.getLoginHistory(managedUser._id),

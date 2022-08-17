@@ -1,32 +1,39 @@
-import React from 'react'
 import { SelectProps } from '@mui/material'
-import { renderSelectItems } from 'helpers/rendering'
-import { TypedSelectProps } from 'types/util'
 import { capitalStructures } from 'config/defaults'
+import { renderSelectItems } from 'helpers/rendering'
+import React from 'react'
+import { TypedSelectProps } from 'types/util'
+import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
-import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export interface CapitalStructureSelectProps extends TypedSelectProps {
   includeAll?: boolean
   labelBetweenAll?: string
+  showLabel?: boolean
 }
 
 export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
-  const { includeAll = false, label, labelBetweenAll, ...rest } = props
+  const {
+    includeAll = false,
+    showLabel = true,
+    label,
+    labelBetweenAll,
+    ...rest
+  } = props
 
   return (
     <>
-      <InputLabel>{label}</InputLabel>
-      <Select
-        {...(rest as SelectProps)}
-        label={undefined}
-        placeholder={String(label)}
-        displayEmpty
-      >
+      {showLabel && <InputLabel>{label}</InputLabel>}
+      <Select {...(rest as SelectProps)} label={undefined} displayEmpty>
         {includeAll && (
           <SelectItem value='All'>
             {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
+          </SelectItem>
+        )}
+        {!includeAll && (
+          <SelectItem disabled value={undefined}>
+            Capital Structure
           </SelectItem>
         )}
         {renderSelectItems(

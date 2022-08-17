@@ -1,10 +1,10 @@
-import React, { ChangeEvent, useState } from 'react'
 import { Grid } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
-import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { renderSelectItems } from 'helpers/rendering'
-import { Select } from 'ui/Select/Select'
 import { makeStyles } from '@mui/styles'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { renderSelectItems } from 'helpers/rendering'
+import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React, { ChangeEvent, useState } from 'react'
+import { Select } from 'ui/Select/Select'
 
 export const useOutlinedInputStyles = makeStyles(theme => ({
   root: {
@@ -17,7 +17,6 @@ export const useOutlinedInputStyles = makeStyles(theme => ({
 }))
 
 export const OverviewPageFilters = () => {
-  const outlinedInputClasses = useOutlinedInputStyles()
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
   const selectOptions = ['All Markets', 'Primary', 'OTC', 'Secondary']
   const searchFilterValue = getFilterValue('search')
@@ -125,14 +124,8 @@ export const OverviewPageFilters = () => {
         item
         sx={{ ml: { md: 2 }, mt: { xs: 2, md: 0 } }}
       >
-        <SearchFilter
+        <TextInputSearchFilter
           fullWidth
-          classes={outlinedInputClasses}
-          inputSX={{
-            borderRadius: 2,
-            height: 50,
-            width: { xs: '100%', md: 320 }
-          }}
           placeholder='Search'
           filterValue={currentFilter as QueryFilter}
         />

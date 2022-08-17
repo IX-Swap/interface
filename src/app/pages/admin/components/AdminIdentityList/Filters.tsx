@@ -1,5 +1,5 @@
-import { Grid, Box } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
+import { Box, Grid } from '@mui/material'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { CreatedByAdminFilter } from 'app/pages/admin/components/AdminIdentityList/CreatedByAdminFilter/CreatedByAdminFilter'
 import { IdentityTypeFilter } from 'app/pages/admin/components/AdminIdentityList/IdentityTypeFilter/IdentityTypeFilter'
 import React from 'react'
@@ -9,7 +9,7 @@ export const Filters = () => {
     <Grid container justifyContent='space-between'>
       <Grid item xs={12} md={4}>
         <Box width={316}>
-          <SearchFilter
+          <TextInputSearchFilter
             fullWidth
             placeholder='Search'
             inputAdornmentPosition='end'

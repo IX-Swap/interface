@@ -25,6 +25,8 @@ export const DSOTable = () => {
   const currency = getFilterValue('currency', undefined)
   const network = getFilterValue('network', undefined)
   const isPriceAscending = getFilterValue('isPriceAscending', undefined)
+  const isFavorite = getFilterValue('isFavorite', undefined)
+
   const { isMiniLaptop } = useAppBreakpoints()
   return (
     <Grid container direction='column' spacing={3}>
@@ -58,7 +60,8 @@ export const DSOTable = () => {
               isPriceAscending:
                 isPriceAscending !== undefined
                   ? isPriceAscending === 'yes'
-                  : undefined
+                  : undefined,
+              isFavorite
             }}
             noHeader={isMiniLaptop}
             themeVariant={'primary'}

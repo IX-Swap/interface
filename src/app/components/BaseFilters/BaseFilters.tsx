@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
-import { SearchFilter } from 'app/components/SearchFilter'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import React, { PropsWithChildren } from 'react'
+import { TextInputSearchFilter } from '../TextInputSearchFilter'
 import { useStyles } from './BaseFilters.styles'
 
 export const BaseFilters = ({
@@ -13,7 +13,7 @@ export const BaseFilters = ({
     <Grid container justifyContent='space-between' className={classes.wrapper}>
       <Grid item xs={12} lg={2}>
         <Box className={classes.searchWrapper}>
-          <SearchFilter
+          <TextInputSearchFilter
             fullWidth
             placeholder={searchLabel}
             inputAdornmentPosition='end'

@@ -1,17 +1,17 @@
-import React from 'react'
+import { Box, Grid } from '@mui/material'
+import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { Actions } from 'app/pages/issuance/components/MyListingsTable/Actions'
+import { AddListingButton } from 'app/pages/issuance/components/MyListingsTable/AddListingButton'
+import { columns } from 'app/pages/issuance/components/MyListingsTable/columns'
+import { TableView } from 'components/TableWithPagination/TableView'
+import { VSpacer } from 'components/VSpacer'
+import { listings } from 'config/apiURL'
+import { listingsQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
-import { VSpacer } from 'components/VSpacer'
-import { TableView } from 'components/TableWithPagination/TableView'
-import { columns } from 'app/pages/issuance/components/MyListingsTable/columns'
-import { listings } from 'config/apiURL'
-import { Listing } from 'types/listing'
-import { Actions } from 'app/pages/issuance/components/MyListingsTable/Actions'
-import { Box, Grid } from '@mui/material'
-import { AddListingButton } from 'app/pages/issuance/components/MyListingsTable/AddListingButton'
-import { SearchFilter } from 'app/components/SearchFilter'
 import { useSearchFilter } from 'hooks/filters/useSearchFilter'
-import { listingsQueryKeys } from 'config/queryKeys'
+import React from 'react'
+import { Listing } from 'types/listing'
 
 export const MyListingsTable = () => {
   const { user } = useAuth()
@@ -23,7 +23,7 @@ export const MyListingsTable = () => {
       <Grid container justifyContent='space-between' alignItems='center'>
         <Grid item xs={12} md={4}>
           <Box width={256} pt={2}>
-            <SearchFilter
+            <TextInputSearchFilter
               fullWidth
               placeholder='Search'
               inputAdornmentPosition='start'

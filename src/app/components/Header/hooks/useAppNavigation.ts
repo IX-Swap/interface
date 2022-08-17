@@ -53,7 +53,7 @@ export const useAppNavigation = () => {
     },
     {
       label: 'Invest',
-      link: InvestRoute.landing,
+      link: InvestRoute.overview,
       icon: InvestIcon
     }
   ]
