@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { Flex, Box } from 'rebass'
 import { Trans, t } from '@lingui/macro'
 import { useHistory } from 'react-router-dom'
@@ -23,6 +23,7 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { FetchingBalance } from './FetchingBalance'
 import { Claimed } from './Claimed'
 import { UserClaim } from './dto'
+import { useAccount } from 'state/user/hooks'
 
 interface Props {
   payout: PayoutEvent
@@ -31,6 +32,7 @@ interface Props {
 }
 
 export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
+  useAccount()
   const { account } = useActiveWeb3React()
   const { secToken, status, secTokenAmount, tokenAmount, id, contractPayoutId } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)
@@ -60,18 +62,14 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
     if (id) {
       fetch()
     }
-  }, [id])
+  }, [id, account])
 
-  if (secTokenBalance === '-') return <FetchingBalance />
-  if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
-  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
-  if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} />
 
   const amountToClaim = +tokenAmount * (+secTokenAmount > 0 ? (myAmount / +secTokenAmount) : myAmount)
 
   const decimals = tokenInfo?.decimals < 7 ? tokenInfo.decimals : 6
 
-  const claim = async () => {
+  const claim = useCallback(async () => {
     try {
       handleIsLoading(true)
       const nonce = await payoutContract?.nonce(contractPayoutId, account)
@@ -98,9 +96,9 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
     } catch (e: any) {
       handleIsLoading(false)
     }
-  }
+  }, [contractPayoutId, account, id, secToken, getUserClaim, saveUserClaim])
 
-  const getContentByStatus = () => {
+  const getContentByStatus = useCallback(() => {
     const recordDateText = (
       <Flex style={{ color: '#edceff80' }} marginBottom="24px" alignItems="center">
         <Box marginRight="4px">{t`based on your Security token balance of`}</Box>
@@ -173,7 +171,12 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
       default:
         return null
     }
-  }
+  }, [status, payoutToken, claimStatus, secPayoutToken])
+  
+  if (secTokenBalance === '-') return <FetchingBalance />
+  if (status === PAYOUT_STATUS.ENDED) return <PayoutEnded />
+  if (isNotAccredited) return <NotAccreditedView secTokenId={secToken.catalogId} />
+  if (isNotTokenHolder) return <NotTokenHoldersView status={status} payoutToken={payoutToken} />
 
   return (
     <Column style={{ gap: '32px' }}>
