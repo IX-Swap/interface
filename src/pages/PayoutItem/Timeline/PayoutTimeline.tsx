@@ -31,7 +31,7 @@ export const PayoutTimeline: FC<Props> = ({ payout }) => {
   const todayPosition = useMemo(() => {
     if (needFake) return '0%'
     if (isSameDay(recordDate)) {
-      return '0%'
+      return '6%'
     }
     if (isSameDay(startDate)) {
       return '50%'
