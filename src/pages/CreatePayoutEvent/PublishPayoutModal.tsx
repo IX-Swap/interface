@@ -237,14 +237,14 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           {+tokenBalance < +tokenAmount && (
             <Card marginBottom="32px">
               <TYPE.title10 padding="0px 32px" color={'error'} textAlign="center">
-                {t`Insuficient token amount.`}
+                {t`Insufficient token amount.`}
               </TYPE.title10>
             </Card>
           )}
           <StyledButtonIXSGradient
             type="button"
             onClick={() => (onlyPay || payNow ? pay() : handleFormSubmit())}
-            disabled={!tokenAmount || +tokenBalance < +tokenAmount}
+            disabled={!tokenAmount || (payNow && +tokenBalance < +tokenAmount)}
           >{t`${buttonText}`}</StyledButtonIXSGradient>
         </ModalBody>
       </ModalBlurWrapper>
