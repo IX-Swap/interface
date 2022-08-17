@@ -206,7 +206,48 @@ exports[`InvestOverview should match snapshot 1`] = `
     >
       <div
         class="MuiGrid-root MuiGrid-item css-11wtnxd-MuiGrid-root"
-      />
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-g22vds-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-1ehoyyv-MuiTypography-root"
+              >
+                Primary Offerings 
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1vpnri2-MuiTypography-root"
+                >
+                  0
+                </p>
+              </h4>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-f8pp6w-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+                data-testid="invest-link"
+                href="/app/invest/overview/primary-offerings"
+                tabindex="0"
+              >
+                View all
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </a>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+          />
+        </div>
+      </div>
       <div
         class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
       />
