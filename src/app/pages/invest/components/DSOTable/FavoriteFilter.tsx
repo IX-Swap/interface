@@ -24,7 +24,10 @@ export const FavoriteFilter = () => {
       data-testid='icon-button'
       className={classes.iconButton}
       size='medium'
-      style={{ height: 48, width: isTablet ? '100%' : 48 }}
+      style={{
+        height: 48,
+        width: isTablet ? 'calc(100% - 8px)' : 48
+      }}
     >
       <>
         {value === 'yes' ? (

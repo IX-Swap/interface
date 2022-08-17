@@ -47,8 +47,12 @@ export const PrimaryOfferings = ({
     page,
     rowsPerPage
   } = useTableWithPagination({
-    queryKey: fullview ? dsoQueryKeys.getList : dsoQueryKeys.getPromoted,
-    uri: fullview ? issuanceURL.dso.getDSOList : issuanceURL.dso.getAllPromoted,
+    queryKey: fullview
+      ? dsoQueryKeys.getApprovedList
+      : dsoQueryKeys.getPromoted,
+    uri: fullview
+      ? issuanceURL.dso.getAllApproved
+      : issuanceURL.dso.getAllPromoted,
     defaultFilter: {
       search: search ?? primaryOfferingSearch,
       capitalStructure,
@@ -64,6 +68,10 @@ export const PrimaryOfferings = ({
   })
 
   const handleChangePage = (_: any, newPage: number) => {
+    setPage(newPage - 1)
+  }
+
+  const handleChangePageZeroBased = (_: any, newPage: number) => {
     setPage(newPage)
   }
 
@@ -141,23 +149,31 @@ export const PrimaryOfferings = ({
             ))}
           </Grid>
         </Grid>
-        <Grid item xs={12}>
-          {isTablet ? (
-            <TablePagination
-              count={total}
-              rowsPerPage={rowsPerPage}
-              labelRowsPerPage='Rows'
-              page={page}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              onPageChange={handleChangePage}
-            />
-          ) : (
-            <Pagination
-              count={Math.floor(total / 6)}
-              page={page < 1 ? 1 : page}
-              onChange={handleChangePage}
-            />
-          )}
+        <Grid
+          item
+          container
+          xs={12}
+          justifyContent={isTablet ? 'flex-end' : 'center'}
+        >
+          <Grid item>
+            {isTablet ? (
+              <TablePagination
+                count={total}
+                rowsPerPage={rowsPerPage}
+                labelRowsPerPage='Cards'
+                page={page}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                onPageChange={handleChangePageZeroBased}
+                rowsPerPageOptions={[6, 10, 25, 50]}
+              />
+            ) : (
+              <Pagination
+                count={Math.floor(total / 6)}
+                page={page + 1}
+                onChange={handleChangePage}
+              />
+            )}
+          </Grid>
         </Grid>
       </Grid>
     )
