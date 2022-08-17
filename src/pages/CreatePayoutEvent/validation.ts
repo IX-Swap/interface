@@ -38,7 +38,7 @@ export const validation = object().shape({
         return true
       }
     ),
-  endDate: string().test(
+  endDate: string().nullable().test(
     'isAfter',
     'End date must be after start date plus 1 day',
     (value = '', context: TestContext<{ startDate?: string }>) => {
