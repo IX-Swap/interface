@@ -22,6 +22,7 @@ import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { useDeletePayoutItem, usePayoutState } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
+import { MouseoverTooltip } from 'components/Tooltip'
 import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
 
@@ -131,7 +132,7 @@ const Row = ({ item }: IRow) => {
 
   const splitClaimedAmount = (amount: string) => {
     const result = amount.substring(amount.indexOf('.') + 1)
-    return result.length > 0 ? Number(amount).toFixed(2) : result
+    return result.length > 0 ? Number(amount).toFixed(4) : result
   }
 
   const onDelete = () => {
@@ -143,11 +144,15 @@ const Row = ({ item }: IRow) => {
 
   const amountClaimed = claimed
     ? splitClaimedAmount(claimed.toString())
-    : '0'
+    : null
 
   const onEdit = () => {
     history.push(`/payout/edit/${id}`)
   }
+
+  const tooltipText = `Token: ${currency?.symbol || '-'} 
+  Token amount: ${tokenAmount}
+  Claimed: ${amountClaimed}`
 
   return (
     <>
@@ -176,7 +181,12 @@ const Row = ({ item }: IRow) => {
         <div style={{ fontWeight: 500 }}>
           {amountClaimed ? (
             <>
-              <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              <MouseoverTooltip
+                style={{ height: '24px' }}
+                text={tooltipText}
+                textStyle={{ whiteSpace: 'pre-line' }}>
+                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              </MouseoverTooltip>
               {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
             </>
           ) : (
