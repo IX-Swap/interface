@@ -43,6 +43,7 @@ const TooltipContainerFit = styled(TooltipContainer)`
 interface TooltipProps extends Omit<PopoverProps, 'content'> {
   text: ReactNode
   width?: number
+  textStyle?: any
 }
 
 interface TooltipContentProps extends Omit<PopoverProps, 'content'> {
@@ -77,7 +78,7 @@ export function MouseoverTooltip({ children, style, ...rest }: Omit<TooltipProps
   }, [])
 
   return (
-    <Tooltip {...rest} show={show}>
+    <Tooltip {...rest} style={ rest?.textStyle || {}} show={show}>
       <div onMouseEnter={open} onMouseLeave={close} onClick={toggle} style={style}>
         {children}
       </div>
