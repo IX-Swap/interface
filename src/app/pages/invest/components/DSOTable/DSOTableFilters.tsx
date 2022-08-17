@@ -25,64 +25,62 @@ export const DSOTableFilters = () => {
   }
 
   return (
-    <Grid container direction='column' spacing={3}>
-      <Grid item container spacing={isMiniLaptop ? 2 : 1}>
-        <Grid item xs={12} md={2}>
-          <CapitalStructureFilter />
-        </Grid>
-        <Grid item xs={12} md={10}>
-          <TextInputSearchFilter fullWidth placeholder='Search' />
-        </Grid>
+    <Grid container spacing={isMiniLaptop ? 2 : 1}>
+      <Grid item xs={12} md={2}>
+        <CapitalStructureFilter />
+      </Grid>
+      <Grid item xs={12} md={10}>
+        <TextInputSearchFilter fullWidth placeholder='Search' />
+      </Grid>
 
-        <Grid item xs={12}>
-          <Paper sx={{ borderRadius: 1, p: 3 }}>
-            <Grid container spacing={1}>
-              <Grid
-                item
-                container
-                justifyContent='space-between'
-                alignItems='center'
-                xs={12}
-              >
-                <Grid item>
-                  <Typography variant='h4'>Filters</Typography>
-                </Grid>
-                <Grid item>
-                  <Button
-                    variant='text'
-                    onClick={clearAll}
-                    sx={{ pr: 0, backgroundColor: 'transparent !important' }}
-                  >
-                    Clear all
-                  </Button>
-                </Grid>
+      <Grid item xs={12}>
+        <Paper sx={{ borderRadius: 1, p: 3 }}>
+          <Grid container spacing={1}>
+            <Grid
+              item
+              container
+              justifyContent='space-between'
+              alignItems='center'
+              xs={12}
+            >
+              <Grid item>
+                <Typography variant='h4'>Filters</Typography>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                container
-                wrap='nowrap'
-                spacing={1}
-                direction={isTablet ? 'column' : 'row'}
-              >
-                <Grid item sx={{ width: '100%' }} container spacing={1}>
-                  <Grid item xs={12} md={4}>
-                    <PriceFilter />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <CurrencyFilter />
-                  </Grid>
-                  <Grid item xs={12} md={4}>
-                    <NetworkFilter />
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <FavoriteFilter />
-                </Grid>
+              <Grid item>
+                <Button
+                  variant='text'
+                  onClick={clearAll}
+                  sx={{ pr: 0, backgroundColor: 'transparent !important' }}
+                >
+                  Clear all
+                </Button>
               </Grid>
             </Grid>
-          </Paper>
-        </Grid>
+            <Grid
+              item
+              xs={12}
+              container
+              wrap='nowrap'
+              spacing={1}
+              direction={isTablet ? 'column' : 'row'}
+            >
+              <Grid item sx={{ width: '100%' }} container spacing={1}>
+                <Grid item xs={12} md={4}>
+                  <PriceFilter />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <CurrencyFilter />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <NetworkFilter />
+                </Grid>
+              </Grid>
+              <Grid item>
+                <FavoriteFilter />
+              </Grid>
+            </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Grid>
   )
