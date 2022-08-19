@@ -32,7 +32,6 @@ interface Props {
 }
 
 export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
-  useAccount()
   const { account } = useActiveWeb3React()
   const { secToken, status, secTokenAmount, tokenAmount, id, contractPayoutId } = payout
   const { custodianStatus, brokerDealerStatus } = useAccreditationStatus((secToken as any)?.address || 0)

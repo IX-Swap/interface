@@ -18,8 +18,6 @@ interface Props {
 export const PayoutActionBlock: FC<Props> = ({ payout, isMyPayout, myAmount, onUpdate }) => {
   const payoutToken = useCurrency(payout.payoutToken ?? undefined)
 
-  useAccount()
-  
   return (
     <Box marginTop="16px">
       {isMyPayout ? (
