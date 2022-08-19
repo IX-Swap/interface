@@ -49,6 +49,7 @@ export const payout = {
   totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
   deleteDraft: (id: number) => `payout/draft/${id}`,
   payoutAuthorization: '/payout/init',
+  paidPayout:(id: number) => `/payout/pay/${id}`,
   getMyPayoutAmount: (id: number) => `/payout/my-amount/${id}`,
   claimAuthorization: (id: number) => `/payout/init/claim/${id}`,
   claimBackAuthorization: (id: number) => `/payout/init/claim-back/${id}`,

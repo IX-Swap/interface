@@ -23,6 +23,11 @@ import { useAddPopup } from 'state/application/hooks'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { BigNumber } from 'ethers'
 
+interface PayPayoutDto {
+  contractPayoutId: string
+  paidTxHash: string
+}
+
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
 }
@@ -46,6 +51,11 @@ const publishPayout = async (newPayoutDraft: any) => {
   }
 
   const result = await apiService.post(payout.publish, formData)
+  return result.data
+}
+
+export const paidPayoutReq = async (id: number, params: PayPayoutDto) => {
+  const result = await apiService.put(payout.paidPayout(id), params)
   return result.data
 }
 
@@ -74,6 +84,25 @@ export function usePublishPayout() {
       try {
         dispatch(createDraft.pending())
         const data = await publishPayout(newPayoutDraft)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: error }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function usePaidPayout() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number, paidPayoutData: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await paidPayoutReq(id, paidPayoutData)
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
