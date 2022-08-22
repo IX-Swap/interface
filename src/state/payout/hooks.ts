@@ -397,7 +397,6 @@ export const getClaimBackAuthorization = async ({ id, ...params }: GetClaimAutho
 interface SaveUserClaim {
   payoutEventId: number
   secToken: number
-  sum: string
   txHash: string
 }
 

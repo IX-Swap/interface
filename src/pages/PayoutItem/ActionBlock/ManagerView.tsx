@@ -9,7 +9,7 @@ import Column from 'components/Column'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { PayoutEvent } from 'state/token-manager/types'
 import { routes } from 'utils/routes'
-import { getClaimBackAuthorization, useGetRemainingTokens, useGetTotalClaims, useGetUserClaim, useSaveManagerClaimBack, useSaveUserClaim } from 'state/payout/hooks'
+import { getClaimBackAuthorization, useGetRemainingTokens, useGetTotalClaims, useGetUserClaim, useSaveManagerClaimBack } from 'state/payout/hooks'
 
 import { Container, StyledButtonIXSGradient } from './styleds'
 import { formatDate } from '../utils'
@@ -96,7 +96,7 @@ export const ManagerView: FC<Props> = ({ payout, payoutToken, onUpdate }) => {
 
         handleIsLoading(false)
 
-        await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, sum: `${amount}`, txHash: tx.hash })
+        await saveManagerClaimBack({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
         const res = await getUserClaim(id)
         handleClaimStatus(res)
 
