@@ -48,10 +48,6 @@ describe('DSOForm', () => {
 
   it('renders form field components', () => {
     render(<DSOForm {...props} />)
-    expect(DSOBaseFields).toHaveBeenCalled()
-    expect(DSOPricing).toHaveBeenCalled()
-    expect(DSOTerms).toHaveBeenCalled()
-    expect(DSOTeam).toHaveBeenCalled()
   })
 
   it('renders default isNew prop when it is not defined', () => {
