@@ -75,7 +75,8 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
       const payoutId = await handleFormSubmit()
       if (!payoutId) {
-        handleIsLoading(false)          
+        handleIsLoading(false)
+        return
       }
 
       await pay(payoutId)
