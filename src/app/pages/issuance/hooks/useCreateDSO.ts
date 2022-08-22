@@ -21,7 +21,7 @@ export const useCreateDSO = () => {
       void snackbarService.showSnackbar('Success', 'success')
 
       replace(
-        generatePath(IssuanceRoute.view, {
+        generatePath(IssuanceRoute.edit, {
           dsoId: data.data._id,
           issuerId:
             typeof data.data.user === 'string'
