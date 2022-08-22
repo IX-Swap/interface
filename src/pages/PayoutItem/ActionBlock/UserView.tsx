@@ -81,7 +81,6 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
       })
 
       const tx = await payoutContract?.claim(authorization)
-      handleIsLoading(false)
 
       await saveUserClaim({ payoutEventId: id, secToken: secToken.id, txHash: tx.hash })
       const res = await getUserClaim(id)
@@ -92,6 +91,8 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
           summary: `Claim was successful. Waiting for system confirmation.`,
         })
       }
+
+      handleIsLoading(false)
     } catch (e: any) {
       handleIsLoading(false)
     }
@@ -185,7 +186,7 @@ export const UserView: FC<Props> = ({ payout, payoutToken, myAmount }) => {
           {getContentByStatus()}
           {!claimStatus?.status && (
             <StyledButtonIXSGradient
-              disabled={status !== PAYOUT_STATUS.STARTED}
+              disabled={status !== PAYOUT_STATUS.STARTED || isLoading}
               onClick={claim}
             >{t`Claim Now`}</StyledButtonIXSGradient>
           )}
