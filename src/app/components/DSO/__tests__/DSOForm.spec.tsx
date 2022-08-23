@@ -1,7 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { DSOForm, DSOFormProps } from 'app/components/DSO/DSOForm'
-import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
@@ -45,16 +44,5 @@ describe('DSOForm', () => {
 
   it('renders form field components', () => {
     render(<DSOForm {...props} />)
-  })
-
-  it('renders default isNew prop when it is not defined', () => {
-    render(<DSOForm {...props} isNew={undefined} />)
-    expect(DSOBaseFields).toHaveBeenCalledWith(
-      {
-        isNew: false,
-        isLive: true
-      },
-      {}
-    )
   })
 })
