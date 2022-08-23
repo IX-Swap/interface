@@ -15,6 +15,7 @@ import {
   getPayoutItem as getPayoutItemAction,
   getMyPayoutList,
   deletePayoutItem,
+  setPayoutValidation,
   saveUserClaim,
   getUserClaim,
   getTotalClaims,
@@ -387,6 +388,42 @@ interface GetClaimAuthorization {
 export const getClaimAuthorization = async ({ id, ...params }: GetClaimAuthorization) => {
   const result = await apiService.post(payout.claimAuthorization(id), params)
   return result.data
+}
+
+export const getEventValidation = async (id: number, payoutData: any) => {
+  const formData = new FormData()
+
+  for (const key in payoutData) {
+    if (key === 'files') {
+      payoutData[key].forEach((item: any) => {
+        formData.append(`${key}`, item)
+      })
+    } else {
+      formData.append(key, payoutData[key])
+    }
+  }
+
+  const result = await apiService.post(payout.validateEvent(id), formData)
+  return result.data
+}
+
+export function usePayoutValidation() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number, payoutData: any) => {
+      try {
+        dispatch(setPayoutValidation.pending())
+        const data = await getEventValidation(id, payoutData)
+        dispatch(setPayoutValidation.fulfilled())
+        return data
+      } catch (error: any) {
+        dispatch(setPayoutValidation.rejected({ errorMessage: error }))
+        return false
+      }
+    },
+    [dispatch]
+  )
+  return callback
 }
 
 export const getClaimBackAuthorization = async ({ id, ...params }: GetClaimAuthorization) => {

@@ -52,6 +52,16 @@ export const deletePayoutItem: Readonly<{
   rejected: createAction('payout/deletePayoutItem/rejected'),
 }
 
+export const setPayoutValidation: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('payout/setPayoutValidation/pending'),
+  fulfilled: createAction('payout/setPayoutValidation/fulfilled'),
+  rejected: createAction('payout/setPayoutValidation/rejected'),
+}
+
 export const saveUserClaim: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithoutPayload
