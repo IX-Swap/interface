@@ -41,6 +41,7 @@ export const auth = {
 export const payout = {
   createDraft: `payout/draft`,
   publish: `payout/publish`,
+  validateEvent: (id: number) => `payout/validate/${id}`,
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',
   myPayoutsList: 'payout/list/my',
