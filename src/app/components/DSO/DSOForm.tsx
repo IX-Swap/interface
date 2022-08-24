@@ -25,17 +25,15 @@ export const DSOForm = (props: DSOFormProps) => {
   useSetPageTitle(getOfferingName(data))
 
   return (
-    <>
-      <FormStepper
-        data={data}
-        createMutation={createMutation}
-        editMutation={editMutation}
-        submitMutation={submitMutation}
-        steps={dsoFormSteps}
-        nonLinear
-        formTitle='Create DSO'
-        createModeRedirect={undefined}
-      />
-    </>
+    <FormStepper
+      data={data}
+      createMutation={createMutation}
+      editMutation={editMutation}
+      submitMutation={submitMutation}
+      steps={dsoFormSteps}
+      nonLinear
+      formTitle='Create DSO'
+      createModeRedirect={undefined}
+    />
   )
 }
