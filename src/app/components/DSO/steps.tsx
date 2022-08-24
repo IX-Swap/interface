@@ -1,12 +1,11 @@
 import React from 'react'
-import { getDSOValidationSchema } from 'validation/dso'
 
 export const dsoFormSteps = [
   {
     label: 'DSO Information',
-    getFormValues: () => ({}),
-    getRequestPayload: () => ({}),
-    validationSchema: getDSOValidationSchema,
+    getFormValues: () => null,
+    getRequestPayload: {},
+    validationSchema: {},
     component: () => (
       <>
         <p>Step 1</p>
@@ -15,9 +14,9 @@ export const dsoFormSteps = [
   },
   {
     label: 'Company Information',
-    getFormValues: () => ({}),
-    getRequestPayload: () => ({}),
-    validationSchema: getDSOValidationSchema,
+    getFormValues: () => null,
+    getRequestPayload: {},
+    validationSchema: {},
     component: () => (
       <>
         <p>Step 2</p>
@@ -26,9 +25,9 @@ export const dsoFormSteps = [
   },
   {
     label: 'Documents',
-    getFormValues: () => ({}),
-    getRequestPayload: () => ({}),
-    validationSchema: getDSOValidationSchema,
+    getFormValues: () => null,
+    getRequestPayload: {},
+    validationSchema: {},
     component: () => (
       <>
         <p>Step 3</p>

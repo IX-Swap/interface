@@ -5,6 +5,7 @@ import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import * as useParsedDataHook from 'hooks/useParsedData'
+import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 
 jest.mock('app/components/DSO/components/DSOBaseFields', () => ({
   DSOBaseFields: jest.fn(() => <div />)
@@ -48,5 +49,12 @@ describe('DSOForm', () => {
 
   it('renders form field components', () => {
     render(<DSOForm {...props} />)
+    expect(DSOBaseFields).toHaveBeenCalledWith(
+      {
+        isNew: false,
+        isLive: true
+      },
+      {}
+    )
   })
 })
