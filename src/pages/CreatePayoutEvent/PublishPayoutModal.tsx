@@ -108,6 +108,10 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   }
 
   const validatePayoutEvent = async () => {
+    if (!id) {
+      return true
+    }
+
     const body = setBody()
     const data = await validatePayout(id, { ...body })
 
