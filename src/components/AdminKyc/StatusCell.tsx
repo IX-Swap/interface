@@ -71,7 +71,7 @@ export const StatusCell = ({ status }: Props) => {
   return (
     <Container>
       <img src={getIcon()} alt="icon" width="20px" height="20px" />
-      <StatusText color={statusColors[status] || theme.text2}>{getText()}</StatusText>
+      <StatusText color={statusColors[status] || theme.text2} data-testid={getText()} >{getText()}</StatusText>
     </Container>
   )
 }

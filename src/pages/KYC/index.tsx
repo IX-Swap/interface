@@ -113,7 +113,7 @@ export default function KYC() {
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
                 <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
-                  <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                  <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px" data-testid="passKycAsIndividualButton">
                     <Trans>Pass KYC as Individual</Trans>
                   </ButtonIXSGradient>
                 </Link>
@@ -121,7 +121,7 @@ export default function KYC() {
               <Flex flexDirection="column" alignItems="center">
                 <CorporateKYC />
                 <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
-                  <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
+                  <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px" data-testid="passKycAsCorporateButton">
                     <Trans>Pass KYC as Corporate</Trans>
                   </ButtonGradientBorder>
                 </Link>

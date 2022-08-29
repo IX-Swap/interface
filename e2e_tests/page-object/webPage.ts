@@ -1,6 +1,7 @@
-import {BrowserContext, expect, Locator, Page} from '@playwright/test';
-import config from "../playwright.config";
-import { timeouts } from "../helpers/timeouts";
+import { BrowserContext, expect, Locator, Page } from '@playwright/test'
+import config from '../playwright.config'
+import { timeouts } from '../helpers/timeouts'
+import { network } from '../../src/connectors'
 
 export class WebPage {
   readonly page: Page;
@@ -86,6 +87,13 @@ export class WebPage {
 
   async getCountOf (selector: string)  {
     return await this.page.$$eval(selector, selector => selector.length);
+  }
+
+  async getAuthToken() {
+    return await this.page.evaluate(() => {
+      return network.getAccount()
+      // return localStorage.getItem(`redux_localstorage_simple_auth`)
+    })
   }
 
   async clickWhileElementNotVisibleByCss (elementForClick, elementToBePresent){

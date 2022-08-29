@@ -20,7 +20,7 @@ export const KYCStatus: FC<Props> = ({ status }: Props) => {
     <KYCStatusCard>
       <TYPE.main1 marginRight="16px">{shortAddress(account ?? '')}</TYPE.main1>
       <Flex style={{ whiteSpace: 'nowrap' }} alignItems="center">
-        <TYPE.main1 fontWeight={400} marginRight="10px" color={color}>
+        <TYPE.main1 fontWeight={400} marginRight="10px" color={color} data-testid="kycStatus">
           {text}
         </TYPE.main1>
         {icon()}

@@ -23,9 +23,11 @@ interface Props {
   placeholder?: string
   isDisabled?: boolean
   format?: string
+  id?: any
 }
 
 export const DateInput = ({
+  id,
   value,
   openTo,
   onChange,
@@ -55,7 +57,7 @@ export const DateInput = ({
           inputFormat="DD/MM/YYYY"
           renderInput={({ inputProps }: Record<string, any>) => (
             <TextFieldContainer className="dateInput">
-              <TextField {...inputProps} placeholder={placeholder} disabled={isDisabled} />
+              <TextField {...inputProps} data-testid={id} placeholder={placeholder} disabled={isDisabled} />
               <StyledCalendarIcon />
             </TextFieldContainer>
           )}

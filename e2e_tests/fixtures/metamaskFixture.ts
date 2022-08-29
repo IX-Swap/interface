@@ -6,6 +6,7 @@ import { WebPage } from '../page-object/webPage'
 import { TopNavigationBar } from '../page-object/topNavigationBar'
 import { LiquidityPoolsPage } from '../page-object/liquidityPoolsPage'
 import { SwapTradePage } from '../page-object/swapTradePage'
+import { KycPage } from '../page-object/kycPage'
 
 type ixsFixtures = {
   connectWalletScreen: ConnectWalletScreen;
@@ -16,9 +17,13 @@ type ixsFixtures = {
   liquidityPoolsPage: LiquidityPoolsPage;
   kovanNetwork: ConnectWalletScreen;
   swapTradePage: SwapTradePage;
+  kycPage: KycPage;
+  recoveryPhrase: string;
 };
 
 export const test = base.extend<ixsFixtures>({
+  recoveryPhrase: process.env.METAMASK_RECOVERY,
+
   context: async ({ browser }, use) => {
     const pathToExtension = require('path').join(__dirname, '..', 'extensions/metamask')
     const userDataDir = ''
@@ -49,12 +54,12 @@ export const test = base.extend<ixsFixtures>({
     await use(metamaskContextPage)
   },
 
-  metamaskPage: [async ({ context }, use) => {
+  metamaskPage: [async ({ context, recoveryPhrase }, use) => {
     const pageWithMetamask = await context.pages()[1]
     const metamaskPage = new MetamaskPage(pageWithMetamask)
 
     await metamaskPage.makeSureMetamaskLoaded()
-    await metamaskPage.fullyLoginToMetamask(process.env.METAMASK_RECOVERY, process.env.METAMASK_PASSWORD)
+    await metamaskPage.fullyLoginToMetamask(recoveryPhrase, process.env.METAMASK_PASSWORD)
     await use(metamaskPage)
   }, { auto: true }],
 
@@ -80,6 +85,10 @@ export const test = base.extend<ixsFixtures>({
 
   swapTradePage: async ({ page, context }, use) => {
     await use(new SwapTradePage(page, context))
+  },
+
+  kycPage: async ({ page, context }, use) => {
+    await use(new KycPage(page, context))
   },
 
   kovanNetwork: async ({ connectWalletScreen, metamaskPage }, use) => {

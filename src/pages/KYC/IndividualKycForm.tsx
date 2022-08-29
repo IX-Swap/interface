@@ -328,6 +328,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.firstName}
+                              id="firstNameInput"
                               label="First Name:"
                               error={errors.firstName && errors.firstName}
                             />
@@ -336,6 +337,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.middleName}
+                              id="middleNameInput"
                               label="Middle Name:"
                               error={errors.middleName && errors.middleName}
                             />
@@ -344,6 +346,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.lastName}
+                              id="lastNameInput"
                               label="Last Name:"
                               error={errors.lastName && errors.lastName}
                             />
@@ -354,6 +357,7 @@ export default function IndividualKycForm() {
                               maxHeight={60}
                               error={errors.dateOfBirth && errors.dateOfBirth}
                               value={values.dateOfBirth}
+                              id="dateOfBirthButton"
                               onChange={(value) => {
                                 setFieldValue('dateOfBirth', value, false)
                                 validationSeen('dateOfBirth')
@@ -362,6 +366,7 @@ export default function IndividualKycForm() {
                             />
                             <Select
                               error={errors.gender && errors.gender}
+                              id="genderDropdown"
                               label="Gender"
                               selectedItem={values.gender}
                               items={genders}
@@ -373,6 +378,7 @@ export default function IndividualKycForm() {
                             <Select
                               error={errors.nationality && errors.nationality}
                               withScroll
+                              id="nationalityDropdown"
                               label="Nationality"
                               selectedItem={values.nationality}
                               items={countries}
@@ -381,6 +387,7 @@ export default function IndividualKycForm() {
                             <Select
                               error={errors.citizenship && errors.citizenship}
                               withScroll
+                              id="citizenshipDropdown"
                               label="Citizenship"
                               selectedItem={values.citizenship}
                               items={countries}
@@ -401,6 +408,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('email', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.email}
+                              id="emailAddressField"
                               label="Email address:"
                               error={errors.email && errors.email}
                             />
@@ -420,6 +428,7 @@ export default function IndividualKycForm() {
                               error={errors.idType}
                               withScroll
                               label="Document Type"
+                              id="documentTypeDropdown"
                               selectedItem={values.idType}
                               items={idTypes}
                               onSelect={(idType) => onSelectChange('idType', idType, setFieldValue)}
@@ -430,12 +439,14 @@ export default function IndividualKycForm() {
                               }
                               value={values.idNumber}
                               label="Document Number"
+                              id="documentNumberField"
                               error={errors.idNumber}
                             />
                           </FormGrid>
                           <FormGrid>
                             <DateInput
                               label="Document Issue Date"
+                              id="documentIssueDateButton"
                               maxHeight={60}
                               error={errors.idIssueDate}
                               value={values.idIssueDate}
@@ -447,6 +458,7 @@ export default function IndividualKycForm() {
                             />
                             <DateInput
                               label="Document Expiry Date"
+                              id="documentExpiryDateButton"
                               maxHeight={60}
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
@@ -474,6 +486,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('address', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.address}
+                              id="addressField"
                               label="Address"
                               error={errors.address && errors.address}
                             />
@@ -482,6 +495,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.postalCode}
+                              id="postalCodeField"
                               label="Postal Code"
                               error={errors.postalCode && errors.postalCode}
                             />
@@ -490,6 +504,7 @@ export default function IndividualKycForm() {
                           <FormGrid>
                             <Select
                               withScroll
+                              id="countryDropdown"
                               label="Country"
                               selectedItem={values.country}
                               items={countries.filter(
@@ -502,6 +517,7 @@ export default function IndividualKycForm() {
                             <TextInput
                               onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
                               value={values.city}
+                              id="cityField"
                               label="City"
                               error={errors.city && errors.city}
                             />
@@ -521,6 +537,7 @@ export default function IndividualKycForm() {
                             <Checkbox
                               checked={values.sourceOfFunds.includes(label)}
                               onClick={() => onSourceOfFundsChange(label, values.sourceOfFunds, setFieldValue)}
+                              id={label}
                               key={`funds-${value}`}
                               label={label}
                             />
@@ -557,6 +574,7 @@ export default function IndividualKycForm() {
                             <Checkbox
                               name="accredited"
                               isRadio
+                              id="notAccredited"
                               checked={values.accredited === 0}
                               onClick={() => onRadioChange('accredited', 0, setFieldValue)}
                               label="I am not an accredited investor"
@@ -564,6 +582,7 @@ export default function IndividualKycForm() {
                             <Checkbox
                               name="accredited"
                               isRadio
+                              id="accredited"
                               checked={values.accredited === 1}
                               onClick={() => onRadioChange('accredited', 1, setFieldValue)}
                               label={`I declare that I am “individual accredited Investor"`}
@@ -593,6 +612,7 @@ export default function IndividualKycForm() {
                           <Column style={{ gap: '8px' }}>
                             <Checkbox
                               isRadio
+                              id="citizenOfUS"
                               checked={values.isUSTaxPayer === 1}
                               onClick={() => onRadioChange('isUSTaxPayer', 1, setFieldValue)}
                               label={`I confirm that I am a US citizen and/or resident in the US for tax purposes and my US federal taxpayer ID number (US TIN) is as follows: `}
@@ -611,6 +631,7 @@ export default function IndividualKycForm() {
                           </Column>
                           <Checkbox
                             isRadio
+                            id="notCitizenOfUS"
                             checked={values.isUSTaxPayer === 0}
                             onClick={() => onRadioChange('isUSTaxPayer', 0, setFieldValue)}
                             label="I confirm that I am not a US citizen or resident in the US for tax purposes. "
@@ -633,6 +654,7 @@ export default function IndividualKycForm() {
                         <Column style={{ gap: '20px' }}>
                           <Select
                             label="Occupation"
+                            id="occupationDropdown"
                             selectedItem={values.occupation}
                             items={occupationList}
                             onSelect={(status) => onSelectChange('occupation', status, setFieldValue)}
@@ -640,6 +662,7 @@ export default function IndividualKycForm() {
                           />
                           <Select
                             label="Employment Status"
+                            id="employmentStatusDropdown"
                             selectedItem={values.employmentStatus}
                             items={empleymentStatuses}
                             onSelect={(status) => onSelectChange('employmentStatus', status, setFieldValue)}
@@ -651,10 +674,12 @@ export default function IndividualKycForm() {
                             }
                             value={values.employer}
                             label="Employer"
+                            id="employerField"
                             error={errors.employer && errors.employer}
                           />
                           <Select
                             label="Income in USD in preceding 12 months"
+                            id="incomeUsdDropdown"
                             selectedItem={values.income}
                             items={incomes}
                             onSelect={(income) => onSelectChange('income', income, setFieldValue)}
@@ -676,6 +701,7 @@ export default function IndividualKycForm() {
                             subtitle="Proof of ID - Passport, Singapore NRIC, International Passport, National ID, Driving License or Others."
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
+                            id="proofOfIdentityFile"
                             files={values.proofOfIdentity}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfIdentity', setFieldValue)
@@ -692,6 +718,7 @@ export default function IndividualKycForm() {
                             subtitle="Bank statement, utility bills, driving license (no expiry) within 3 month of issuance."
                             error={errors.proofOfAddress && errors.proofOfAddress}
                             title="Proof of Address"
+                            id="proofOfAddressFile"
                             files={values.proofOfAddress}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfAddress', setFieldValue)
