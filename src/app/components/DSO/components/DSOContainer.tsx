@@ -1,39 +1,41 @@
 import React from 'react'
-import {
-  Grid,
-  CardContent,
-  Card,
-  GridProps,
-  Typography,
-  Box
-} from '@mui/material'
-import { VSpacer } from 'components/VSpacer'
-import { useStyles } from 'app/components/DSO/components/DSOContainer.styles'
+import { Grid, CardContent, Card, GridProps, Typography } from '@mui/material'
 
 export interface DSOContainerProps extends GridProps {
   children: React.ReactNode
-  title?: string
+  title: string
   subtitle?: string
 }
 
 export const DSOContainer = (props: DSOContainerProps) => {
   const { title, children, subtitle, ...rest } = props
-  const classes = useStyles()
 
   return (
     <Grid {...rest}>
-      {title !== undefined && (
-        <Grid item>
-          <Typography variant='h5'>{title}</Typography>
-          <Box component='span' mt={1}>
-            <Typography className={classes.subtitle} variant='caption'>
-              {subtitle}
-            </Typography>
-          </Box>
-          <VSpacer size='small' />
-        </Grid>
-      )}
-      <Card variant='outlined' style={{ height: '100%' }}>
+      <Grid item>
+        <Typography
+          sx={{ opacity: 0.7 }}
+          variant='h6'
+          mb={1.5}
+          color={'dialog.color'}
+          fontSize={14}
+        >
+          {title}
+        </Typography>
+        <Typography color={'text.secondary'} fontWeight={400}>
+          {subtitle}
+        </Typography>
+      </Grid>
+
+      <Card
+        variant='outlined'
+        style={{
+          height: '100%',
+          borderRadius: 8,
+          marginTop: 8,
+          boxShadow: 'none'
+        }}
+      >
         <CardContent>
           <Grid container direction='column' spacing={2}>
             <Grid item>{children}</Grid>

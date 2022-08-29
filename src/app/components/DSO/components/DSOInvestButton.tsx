@@ -5,8 +5,7 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { useAuth } from 'hooks/auth/useAuth'
 import { TwoFADialogWrapper } from 'app/components/TwoFADialogWrapper'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-
-import { useStyles } from 'app/components/DSO/components/DSOContainer.styles'
+import { useStyles } from 'app/components/DSO/components/DSOInvestButton.styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 export interface DSOInvestButtonProps extends ButtonProps {
   dso: DigitalSecurityOffering

@@ -12,7 +12,7 @@ export interface FileProps {
   isFileTooLarge?: boolean
   hasValue?: boolean
   label?: string | React.ReactNode
-  placeHolder?: string
+  placeHolder?: string | React.ReactNode
   name?: string
   multiple?: boolean
   rootProps?: any

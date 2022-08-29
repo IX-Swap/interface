@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from '@mui/material'
+import { Icon } from 'ui/Icons/Icon'
 
 export interface DSOTeamAddButtonProps {
   append: Function
@@ -14,7 +15,7 @@ export const DSOChapterAddButton: React.FC<DSOTeamAddButtonProps> = props => {
 
   return (
     <Button color='primary' variant='outlined' onClick={handleClick}>
-      {text}
+      <Icon name={'plus'} style={{ marginRight: 8 }} /> {text}
     </Button>
   )
 }

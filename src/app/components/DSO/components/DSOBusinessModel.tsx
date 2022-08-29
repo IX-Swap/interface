@@ -12,7 +12,7 @@ export const DSOBusinessModel = () => {
   return (
     <DSOContainer
       title='Business Model'
-      subtitle='A short description on how your business functions.'
+      subtitle='A short description on how your business functions'
       item
       xs={12}
     >
