@@ -1,7 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
-import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
 import {
   DSOTeamMember,
@@ -30,22 +29,6 @@ describe('DSOTeamMember', () => {
     jest.clearAllMocks()
   })
 
-  it('renders DSOTeamRemoveButton', () => {
-    render(
-      <Form defaultValues={{ team: [teamMember] }}>
-        <DSOTeamMember {...props} />
-      </Form>
-    )
-
-    expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
-      {
-        remove: props.remove,
-        index: props.index
-      },
-      {}
-    )
-  })
-
   it('renders photo, name, position and about fields', () => {
     render(
       <Form defaultValues={{ team: [teamMember] }}>
@@ -56,7 +39,6 @@ describe('DSOTeamMember', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Upload photo',
         name: ['team', props.index, 'photo']
       }),
       {}
