@@ -5,29 +5,26 @@ import { deleteUser } from '../helpers/api/kycApiHelper'
 
 test.use({ recoveryPhrase: process.env.KYC_METAMASK_RECOVERY });
 
-test.beforeEach(async ({ kovanNetwork, page, kycPage}) => {
-  const authToken = await kycPage.getAuthToken();
-  await console.log(authToken);
-  // const res = await deleteUser(individualKycFormData.id, authToken);
-  // await console.log(res);
-  // await page.pause();
+test.beforeEach(async ({ kovanNetwork, kycPage}) => {
+  await kycPage.clickPassKycAsIndividualButton();
+})
+
+test.afterEach(async ({kycPage}) => {
+  await deleteUser(individualKycFormData.id, await kycPage.getAuthToken());
 })
 
 test.describe('Check KYC section functions', () => {
-    test.skip('Test the ability to "Submit KYC" as "Individual"', async ({ kycPage, page }) => {
-      await kycPage.clickPassKycAsIndividualButton();
+    test('Test the ability to "Submit KYC" as "Individual"', async ({ kycPage, page }) => {
       await kycPage.fillKycForm();
       await kycPage.clickSubmitButton();
 
       await expect(kycPage.pendingApprovalStatus).toBeVisible();
     })
 
-    test('Test the ability to "Submit KYC" as "Corporate"', async ({ kycPage, page }) => {
-
+    test.skip('Test the ability to "Submit KYC" as "Corporate"', async ({ kycPage, page }) => {
     })
 
-    test.skip('Check the KYC section for the "Approved" user', async ({ kycPage, page }) => {
-      await kycPage.clickPassKycAsIndividualButton();
+    test('Check the KYC section for the "Approved" user', async ({ kycPage, page }) => {
       await kycPage.fillKycForm();
       await kycPage.clickSubmitButton();
 
@@ -40,11 +37,10 @@ test.describe('Check KYC section functions', () => {
       await kycPage.clickKycApproveButton();
 
       await kycPage.openKycPage();
-      await kycPage.checkPendingApprovalStatusIsVisible();
+      await kycPage.checkApprovedStatusIsVisible();
     })
 
-    test.skip('Check the KYC section for the "Rejected" user', async ({ kycPage, page }) => {
-      await kycPage.clickPassKycAsIndividualButton();
+    test('Check the KYC section for the "Rejected" user', async ({ kycPage, page }) => {
       await kycPage.fillKycForm();
       await kycPage.clickSubmitButton();
 
@@ -63,8 +59,7 @@ test.describe('Check KYC section functions', () => {
       await kycPage.checkRejectAnnotationTextIsVisible(individualKycFormData.rejectAnnotation);
     })
 
-    test.skip('Check the KYC section for the "Changes requested" user', async ({ kycPage, page }) => {
-      await kycPage.clickPassKycAsIndividualButton();
+    test('Check the KYC section for the "Changes requested" user', async ({ kycPage, page }) => {
       await kycPage.fillKycForm();
       await kycPage.clickSubmitButton();
 

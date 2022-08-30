@@ -2,15 +2,11 @@ const { request } = require('@playwright/test');
 
 const apiUrl = `https://api.dev.ixswap.io`;
 
-export const deleteUser = async (userId, authToken) => {
+export const deleteUser = async (userId: string, authToken: string) => {
   const requestContext = await request.newContext();
   const deleteUser = await requestContext.delete(`${apiUrl}/v1/users/${userId}?jwt=${authToken}`);
-  const responseBody = await deleteUser.json();
-
   if (!deleteUser.ok()) {
-    throw new Error(`Delete user is failed - ${responseBody.error}`);
+    throw new Error(`Deleting user is failed`);
   }
-
   await requestContext.dispose();
-  return responseBody;
 };

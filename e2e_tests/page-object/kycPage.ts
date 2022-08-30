@@ -49,6 +49,7 @@ export class KycPage extends WebPage {
   pendingApprovalText = 'Pending approval';
   changesRequestedText = 'Changes Requested';
   rejectedText = 'Rejected';
+  approvedText = 'Approved';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -96,11 +97,15 @@ export class KycPage extends WebPage {
   }
   //Assertions
   async checkPendingApprovalStatusIsVisible() {
-    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=Pending approval`)).toBeVisible();
+    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.pendingApprovalText}`)).toBeVisible();
+  }
+
+  async checkApprovedStatusIsVisible() {
+    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.approvedText}`)).toBeVisible();
   }
 
   async checkChangesRequestStatusIsVisible() {
-    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=Changes Requested`)).toBeVisible();
+    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.changesRequestedText}`)).toBeVisible();
   }
 
   async checkRejectAnnotationTextIsVisible(rejectAnnotation) {
@@ -108,7 +113,7 @@ export class KycPage extends WebPage {
   }
 
   async checkRejectedStatusIsVisible() {
-    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=Rejected`)).toBeVisible();
+    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.rejectedText}`)).toBeVisible();
   }
 
   async checkChangeRequestTextIsVisible(changeRequest) {

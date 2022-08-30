@@ -1,7 +1,6 @@
 import { BrowserContext, expect, Locator, Page } from '@playwright/test'
 import config from '../playwright.config'
 import { timeouts } from '../helpers/timeouts'
-import { network } from '../../src/connectors'
 
 export class WebPage {
   readonly page: Page;
@@ -90,10 +89,13 @@ export class WebPage {
   }
 
   async getAuthToken() {
-    return await this.page.evaluate(() => {
-      return network.getAccount()
-      // return localStorage.getItem(`redux_localstorage_simple_auth`)
+    const localData = await this.page.evaluate(() => {
+      const res = (localStorage.getItem(`redux_localstorage_simple_auth`));
+      const token = JSON.parse(res);
+      return JSON.stringify(token.token);
     })
+    const parsedData = localData.replace(`${process.env.KYC_METAMASK_ADDRESS}`, ``);
+    return parsedData.replace(/[^a-zA-Z0-9_.-]/g, ``);
   }
 
   async clickWhileElementNotVisibleByCss (elementForClick, elementToBePresent){

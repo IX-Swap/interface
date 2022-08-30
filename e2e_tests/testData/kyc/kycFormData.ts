@@ -1,5 +1,5 @@
 export const individualKycFormData  = {
-  id: 190,
+  id: '190',
   rejectAnnotation: 'When and where is it decided who will be able to control what annotations are rejected.',
   changeRequest: 'A change request is a formal proposal for an alteration to some product or system.',
   firstName: 'Jack',
