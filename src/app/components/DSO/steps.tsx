@@ -1,5 +1,6 @@
 import React from 'react'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
+import { DSOFormValues } from 'types/dso'
 
 export const dsoFormSteps = [
   {
@@ -15,9 +16,17 @@ export const dsoFormSteps = [
   },
   {
     label: 'Company Information',
-    getFormValues: () => {},
+    getFormValues: (data: DSOFormValues) => {
+      return {
+        team: data.team ?? [{}],
+        introduction: data.introduction,
+        businessModel: data.businessModel,
+        useOfProceeds: data.useOfProceeds,
+        fundraisingMilestone: data.fundraisingMilestone
+      }
+    },
     getRequestPayload: (values: any) => {
-      console.log('values', values)
+      return values
     },
     validationSchema: {},
     component: () => <DSOCompanyInformationFields />

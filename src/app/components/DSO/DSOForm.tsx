@@ -8,6 +8,7 @@ import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
 import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
 import { dsoFormSteps } from './steps'
+import { transformDSOToFormValues } from 'app/components/DSO/utils'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering
@@ -26,7 +27,7 @@ export const DSOForm = (props: DSOFormProps) => {
 
   return (
     <FormStepper
-      data={data}
+      data={transformDSOToFormValues(data)}
       createMutation={createMutation}
       editMutation={editMutation}
       submitMutation={submitMutation}

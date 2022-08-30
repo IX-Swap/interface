@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid } from '@mui/material'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
@@ -11,13 +11,7 @@ import { TextError } from 'components/TextError'
 const fieldName = 'team'
 
 export const DSOTeam = () => {
-  const { control, getValues, setValue } = useFormContext<DSOFormValues>()
-
-  useEffect(() => {
-    if (getValues(fieldName) === undefined) {
-      setValue(fieldName, [{}])
-    }
-  }, []) //eslint-disable-line
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid item>
