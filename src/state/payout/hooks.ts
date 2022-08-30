@@ -15,6 +15,7 @@ import {
   getPayoutItem as getPayoutItemAction,
   getMyPayoutList,
   deletePayoutItem,
+  setPayoutValidation,
   saveUserClaim,
   getUserClaim,
   getTotalClaims,
@@ -22,6 +23,11 @@ import {
 import { useAddPopup } from 'state/application/hooks'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
 import { BigNumber } from 'ethers'
+
+interface PayPayoutDto {
+  contractPayoutId: string
+  paidTxHash: string
+}
 
 export function usePayoutState() {
   return useSelector<AppState, AppState['payout']>((state) => state.payout)
@@ -46,6 +52,11 @@ const publishPayout = async (newPayoutDraft: any) => {
   }
 
   const result = await apiService.post(payout.publish, formData)
+  return result.data
+}
+
+export const paidPayoutReq = async (id: number, params: PayPayoutDto) => {
+  const result = await apiService.put(payout.paidPayout(id), params)
   return result.data
 }
 
@@ -74,6 +85,25 @@ export function usePublishPayout() {
       try {
         dispatch(createDraft.pending())
         const data = await publishPayout(newPayoutDraft)
+        dispatch(createDraft.fulfilled(data))
+        return data
+      } catch (error: any) {
+        dispatch(createDraft.rejected({ errorMessage: error }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function usePaidPayout() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number, paidPayoutData: any) => {
+      try {
+        dispatch(createDraft.pending())
+        const data = await paidPayoutReq(id, paidPayoutData)
         dispatch(createDraft.fulfilled(data))
         return data
       } catch (error: any) {
@@ -360,6 +390,42 @@ export const getClaimAuthorization = async ({ id, ...params }: GetClaimAuthoriza
   return result.data
 }
 
+export const getEventValidation = async (id: number, payoutData: any) => {
+  const formData = new FormData()
+
+  for (const key in payoutData) {
+    if (key === 'files') {
+      payoutData[key].forEach((item: any) => {
+        formData.append(`${key}`, item)
+      })
+    } else {
+      formData.append(key, payoutData[key])
+    }
+  }
+
+  const result = await apiService.post(payout.validateEvent(id), formData)
+  return result.data
+}
+
+export function usePayoutValidation() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (id: number, payoutData: any) => {
+      try {
+        dispatch(setPayoutValidation.pending())
+        const data = await getEventValidation(id, payoutData)
+        dispatch(setPayoutValidation.fulfilled())
+        return data
+      } catch (error: any) {
+        dispatch(setPayoutValidation.rejected({ errorMessage: error }))
+        return false
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
 export const getClaimBackAuthorization = async ({ id, ...params }: GetClaimAuthorization) => {
   const result = await apiService.post(payout.claimBackAuthorization(id), params)
   return result.data
@@ -368,7 +434,6 @@ export const getClaimBackAuthorization = async ({ id, ...params }: GetClaimAutho
 interface SaveUserClaim {
   payoutEventId: number
   secToken: number
-  sum: string
   txHash: string
 }
 

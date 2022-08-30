@@ -42,15 +42,14 @@ export default function PayoutItemForUser({
     params: { payoutId },
   },
 }: RouteComponentProps<{ payoutId: string }>) {
-  useAccount()
   const [cookies] = useCookies(['annoucementsSeen'])
   const [payout, setPayout] = useState<null | PayoutEvent>(null)
   const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
   const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
   const { loadingRequest } = usePayoutState()
-  const { account } = useActiveWeb3React()
   const { token } = useAuthState()
+  const { account } = useActiveWeb3React()
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED

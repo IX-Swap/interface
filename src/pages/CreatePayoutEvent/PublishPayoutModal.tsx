@@ -13,7 +13,7 @@ import { Checkbox } from 'components/Checkbox'
 import Column from 'components/Column'
 import { formatDate } from 'pages/PayoutItem/utils'
 import { useAddPopup } from 'state/application/hooks'
-import { usePublishPayout } from 'state/payout/hooks'
+import { usePublishPayout, usePayoutValidation } from 'state/payout/hooks'
 import { usePayoutContract } from 'hooks/useContract'
 import { routes } from 'utils/routes'
 
@@ -46,6 +46,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
   const [isLoading, handleIsLoading] = useState(false)
 
   const { token, secToken, tokenAmount, recordDate, startDate, endDate, type, id } = values
+  const validatePayout = usePayoutValidation()
   const publishPayout = usePublishPayout()
   const addPopup = useAddPopup()
   const { chainId = 0, account } = useActiveWeb3React()
@@ -68,14 +69,64 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
 
   const payoutContract = usePayoutContract()
 
-  const pay = async () => {
+  const publishAndPaid = async () => {
     try {
       handleIsLoading(true)
+
+      const isValid = await validatePayoutEvent()
+      if (!isValid) {
+        handleIsLoading(false)
+        return
+      }
+
+      await pay()
+    } catch (e: any) {
+      handleIsLoading(false)
+    }
+  }
+
+  const onlyPublish = async () => {
+    const body = setBody()
+    const data = await publishPayout({ ...body })
+
+    if (data?.id) {
+      closeForm(data.id)
+    }
+
+    handleIsLoading(false)
+  }
+
+  const handleFormSubmit = async (paidTxHash?: string, contractPayoutId?: string) => {
+    const body = setBody()
+    const data = await publishPayout({
+      ...body,
+      ...(paidTxHash && { paidTxHash }),
+      ...(contractPayoutId && { contractPayoutId })
+    })
+
+    return data
+  }
+
+  const validatePayoutEvent = async () => {
+    if (!id) {
+      return true
+    }
+
+    const body = setBody()
+    const data = await validatePayout(id, { ...body })
+
+    return data
+  }
+
+  const pay = async () => {
+    try {
       if (approvalState === 'NOT_APPROVED') {
         await approve()
         handleIsLoading(false)
+
       } else {
         const payoutNonce = await payoutContract?.numberPayouts()
+
         const authorization = await getAuthorization({
           secTokenId: secToken.value,
           tokenAddress: token.value,
@@ -86,6 +137,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
             endDate,
           }),
         })
+
         const gasLimit = await payoutContract?.estimateGas.initPayout(authorization)
 
         const res = await payoutContract?.initPayout(authorization, { gasLimit })
@@ -93,14 +145,50 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           summary: `The transaction was successful. Waiting for system confirmation.`,
         })
 
-        handleFormSubmit(res.hash, authorization.payoutId)
+        const data = await handleFormSubmit(res.hash, authorization.payoutId)
+        if (data?.id) {
+          closeForm(data.id, res.hash)
+        }
+  
+        handleIsLoading(false)
+
+        //confirmPaidInfo(payoutId, )
       }
     } catch (e: any) {
       handleIsLoading(false)
     }
   }
 
-  const handleFormSubmit = async (paidTxHash?: string, contractPayoutId?: string) => {
+  /*const confirmPaidInfo = async (id: number, paidTxHash?: string, contractPayoutId?: string) => {
+    try {
+      const data = await paidPayout(id, {
+        ...(paidTxHash && { paidTxHash }),
+        ...(contractPayoutId && { contractPayoutId }),
+      })
+
+      if (data?.id) {
+        closeForm(data.id, paidTxHash)
+      }
+
+      handleIsLoading(false)
+    } catch (e: any) {
+      handleIsLoading(false)
+    }
+  }*/
+
+  const closeForm = async (id: number, paidTxHash?: string) => {
+    close()
+    addPopup({
+      info: {
+        success: true,
+        summary: `Payout was successfully ${!id ? 'created' : paidTxHash ? 'paid' : 'published'}`,
+      },
+    })
+
+    history.push({ pathname: routes.payoutItemManager(id) })
+  }
+
+  const setBody = () => {
     const formattedValues = Object.entries(values).reduce((acc: Record<string, any>, [key, next]) => {
       if (availableForEditing.includes(key)) {
         acc[key] = next
@@ -108,24 +196,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
       return acc
     }, {})
 
-    const body = transformPayoutDraftDTO(formattedValues)
-    const data = await publishPayout({
-      ...body,
-      ...(paidTxHash && { paidTxHash }),
-      ...(contractPayoutId && { contractPayoutId }),
-    })
-
-    if (data?.id) {
-      close()
-      addPopup({
-        info: {
-          success: true,
-          summary: `Payout was successfully ${!id ? 'created' : paidTxHash ? 'edited' : 'published'}`,
-        },
-      })
-      history.push({ pathname: routes.payoutItemManager(data.id) })
-    }
-    handleIsLoading(false)
+    return transformPayoutDraftDTO(formattedValues)
   }
 
   const buttonText = useMemo(() => {
@@ -243,7 +314,7 @@ export const PublishPayoutModal: FC<Props> = ({ values, isRecordFuture, close, o
           )}
           <StyledButtonIXSGradient
             type="button"
-            onClick={() => (onlyPay || payNow ? pay() : handleFormSubmit())}
+            onClick={() => (onlyPay || payNow ? publishAndPaid() : onlyPublish())}
             disabled={!tokenAmount || (payNow && +tokenBalance < +tokenAmount)}
           >{t`${buttonText}`}</StyledButtonIXSGradient>
         </ModalBody>
