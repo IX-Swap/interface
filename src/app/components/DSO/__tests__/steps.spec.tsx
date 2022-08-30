@@ -12,8 +12,8 @@ describe('steps', () => {
   })
 
   it('steps have the form value getters', () => {
-    expect(typeof dsoFormSteps[0].getFormValues).toBe('function')
-    expect(typeof dsoFormSteps[1].getFormValues).toBe('function')
-    expect(typeof dsoFormSteps[2].getFormValues).toBe('function')
+    expect(dsoFormSteps[0].getFormValues()).toBe(null)
+    expect(dsoFormSteps[1].getFormValues()).toBe(null)
+    expect(dsoFormSteps[2].getFormValues()).toBe(null)
   })
 })
