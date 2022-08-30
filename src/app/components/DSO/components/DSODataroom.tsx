@@ -12,9 +12,9 @@ import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroom
 import { DataroomDeleteSelected } from 'components/dataroom/DataroomDeleteSelected'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DSOSubscriptionDocument } from 'app/components/DSO/components/DSOSubscriptionDocument'
 import { itemComparator, SelectedDocument } from 'helpers/dataroom'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
