@@ -34,10 +34,12 @@ export const dsoFormSteps = [
   },
   {
     label: 'Documents',
-    getFormValues: () => {
+    getFormValues: (data: DSOFormValues) => {
       return {
-        videos: [{}],
-        faqs: [{}]
+        subscriptionDocument: data.subscriptionDocument,
+        documents: data.documents,
+        videos: data.videos ?? [{}],
+        faqs: data.faqs ?? [{}]
       }
     },
     getRequestPayload: {},
