@@ -47,6 +47,8 @@ export interface QueryFilters {
   code: string | undefined
   account: string | undefined
   isFavorite: 'yes' | 'no' | undefined
+  sortField: 'price' | 'minimumInvestment' | undefined
+  sortOrder: '1' | '-1' | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

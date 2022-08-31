@@ -36,6 +36,8 @@ export const PrimaryOfferings = ({
   const isPriceAscending = getFilterValue('isPriceAscending')
   const isFavorite = getFilterValue('isFavorite')
   const network = getFilterValue('network')
+  const sortField = getFilterValue('sortField')
+  const sortOrder = getFilterValue('sortOrder')
 
   const {
     items,
@@ -60,7 +62,9 @@ export const PrimaryOfferings = ({
       isPriceAscending:
         isPriceAscending !== undefined ? isPriceAscending === 'yes' : undefined,
       isFavorite,
-      network
+      network,
+      sortField,
+      sortOrder
     },
     queryEnabled: true,
     defaultRowsPerPage: 6,
