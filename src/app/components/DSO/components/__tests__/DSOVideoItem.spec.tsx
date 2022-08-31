@@ -27,7 +27,6 @@ describe('DSOVideoItem', () => {
       <Form>
         <DSOVideoItem
           defaultValue={videoLink}
-          isNew={true}
           index={1}
           fieldId={'213'}
           remove={removeFn}
@@ -70,7 +69,6 @@ describe('DSOVideoItem', () => {
       <Form>
         <DSOVideoItem
           defaultValue={videoLink}
-          isNew={true}
           index={1}
           fieldId={'213'}
           remove={removeFn}
@@ -86,7 +84,6 @@ describe('DSOVideoItem', () => {
       <Form>
         <DSOVideoItem
           defaultValue={videoLink}
-          isNew={true}
           index={3}
           fieldId={'213'}
           remove={removeFn}
@@ -109,7 +106,6 @@ describe('DSOVideoItem', () => {
       <Form>
         <DSOVideoItem
           defaultValue={videoLink}
-          isNew={false}
           index={1}
           fieldId={'213'}
           remove={removeFn}

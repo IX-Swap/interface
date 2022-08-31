@@ -1,69 +1,61 @@
 import React, { Fragment } from 'react'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { Grid, Typography } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { plainValueExtractor } from 'helpers/forms'
-import { DataroomUploaderWithFileTypeSelector } from 'components/dataroom/DataroomUploaderWithFileTypeSelector'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { SelectionHelper } from 'components/SelectionHelper'
-import { SelectableDataroomUploader } from 'components/dataroom/SelectableDataroomUploader'
-import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroomHeader'
-import { DataroomDeleteSelected } from 'components/dataroom/DataroomDeleteSelected'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { DSOSubscriptionDocument } from 'app/components/DSO/components/DSOSubscriptionDocument'
 import { itemComparator, SelectedDocument } from 'helpers/dataroom'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { DSODataroomUploader } from 'app/components/DSO/components/DSODataroomUploader'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
 
   return (
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
-      <FormSectionHeader title='Upload Documents' />
-
-      <Grid container direction='column' spacing={3}>
+      <Grid container direction={'column'} spacing={{ xs: 4, md: 5 }}>
         <Grid item>
-          <Typography variant='h5'>Subscription Document</Typography>
-          <DSOSubscriptionDocument />
+          <FormSectionHeader title='Upload Documents' />
         </Grid>
 
-        <Grid item>
-          <Typography variant='h5'>Dataroom</Typography>
-        </Grid>
+        <Grid item container direction='column' spacing={{ xs: 4, md: 5 }}>
+          <Grid item>
+            <DSOSubscriptionDocument />
+          </Grid>
 
-        <Grid item>
-          <FieldsArray name='documents' control={control}>
-            {({ fields, append, remove }) => (
-              <Fragment>
-                {fields.length > 0 && <SelectableDataroomHeader />}
-                {fields.map((field, index) => (
-                  // @ts-expect-error
-                  <TypedField
-                    customRenderer
-                    variant='row'
-                    key={field.id}
-                    control={control}
-                    component={SelectableDataroomUploader}
-                    label='Document'
-                    name={['documents', index, 'value']}
-                    defaultValue={fields[index].value}
-                    valueExtractor={plainValueExtractor}
-                    onDelete={() => remove(index)}
-                  />
-                ))}
-                <DataroomUploaderWithFileTypeSelector append={append} />
+          <Grid item container direction={'column'} spacing={3}>
+            <Grid item container direction={'column'} spacing={1.5}>
+              <Grid item>
+                <Typography variant='h5' fontSize={14} fontWeight={500}>
+                  Dataroom
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography color={'text.secondary'}>
+                  Please select document type and upload it
+                </Typography>
+              </Grid>
+            </Grid>
 
-                <DataroomDeleteSelected
-                  name='documents'
-                  style={{ marginTop: 20 }}
-                />
+            <Grid item>
+              <FieldsArray name='documents' control={control}>
+                {({ fields, append, remove }) => (
+                  <Fragment>
+                    <DSODataroomUploader
+                      fields={fields}
+                      append={append}
+                      remove={remove}
+                    />
 
-                <FormError name='documents' render={TextError} />
-              </Fragment>
-            )}
-          </FieldsArray>
+                    <FormError name='documents' render={TextError} />
+                  </Fragment>
+                )}
+              </FieldsArray>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </SelectionHelper>

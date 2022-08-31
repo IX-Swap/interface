@@ -27,7 +27,6 @@ describe('DSOFAQItem', () => {
       <Form>
         <DSOFAQItem
           defaultValue={faqItem}
-          isNew={true}
           index={1}
           fieldId={'213'}
           remove={removeFn}
@@ -71,7 +70,6 @@ describe('DSOFAQItem', () => {
       <Form>
         <DSOFAQItem
           defaultValue={faqItem}
-          isNew={true}
           index={1}
           fieldId={'213'}
           remove={removeFn}
@@ -87,7 +85,6 @@ describe('DSOFAQItem', () => {
       <Form>
         <DSOFAQItem
           defaultValue={faqItem}
-          isNew={true}
           index={3}
           fieldId={'213'}
           remove={removeFn}
@@ -110,7 +107,6 @@ describe('DSOFAQItem', () => {
       <Form>
         <DSOFAQItem
           defaultValue={faqItem}
-          isNew={false}
           index={1}
           fieldId={'213'}
           remove={removeFn}
