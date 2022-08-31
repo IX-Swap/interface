@@ -20,7 +20,9 @@ export const DSOTableFilters = () => {
       'search',
       'capitalStructure',
       'currency',
-      'network'
+      'network',
+      'sortField',
+      'sortOrder'
     ])
   }
 

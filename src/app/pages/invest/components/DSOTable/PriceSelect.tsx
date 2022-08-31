@@ -5,11 +5,11 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const PriceSelect = (props: SelectProps) => {
   const render = (value: any) => {
-    if (value === 'yes') {
+    if (value === '1') {
       return 'Low - High'
     }
 
-    if (value === 'no') {
+    if (value === '-1') {
       return 'High - Low'
     }
 
@@ -21,10 +21,10 @@ export const PriceSelect = (props: SelectProps) => {
         <SelectItem disabled value={undefined}>
           Default
         </SelectItem>
-        <SelectItem value='yes'>
+        <SelectItem value={'1'}>
           <ListItemText primary='Low - High' />
         </SelectItem>
-        <SelectItem value='no'>
+        <SelectItem value={'-1'}>
           <ListItemText primary='High - Low' />
         </SelectItem>
       </Select>

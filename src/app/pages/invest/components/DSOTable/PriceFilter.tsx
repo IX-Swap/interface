@@ -4,11 +4,22 @@ import { SelectChangeEvent } from '@mui/material'
 import { PriceSelect } from 'app/pages/invest/components/DSOTable/PriceSelect'
 
 export const PriceFilter = () => {
-  const { getFilterValue, updateFilter } = useQueryFilter()
-  const value = getFilterValue('isPriceAscending')
+  const { getFilterValue, removeFilters, updateFilters } = useQueryFilter()
+  const value = getFilterValue('sortOrder')
 
   const handleChange = (event: SelectChangeEvent<any>) => {
-    updateFilter('isPriceAscending', event.target.value)
+    if (value === 'price') {
+      removeFilters(['sortField', 'sortOrder'])
+      // removeFilters({
+      //   'sortField': 'price',
+      //   'sortOrder': event.target.value
+      // })
+    } else {
+      updateFilters({
+        sortField: 'price',
+        sortOrder: event.target.value
+      })
+    }
   }
 
   return (
