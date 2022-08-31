@@ -216,7 +216,7 @@ export const KYCStatusIcons = {
   [KYCStatuses.NOT_SUBMITTED]: () => null,
   [KYCStatuses.CHANGES_REQUESTED]: () => <AttentionIcon />,
   [KYCStatuses.REJECTED]: () => <RejectedIcon />,
-  [KYCStatuses.DRAFT]: () => <LoaderThin size={20} />,
+  [KYCStatuses.DRAFT]: () => null,
   [KYCStatuses.IN_PROGRESS]: () => <LoaderThin size={20} />,
   [KYCStatuses.FAILED]: () => <RejectedIcon />,
 }
@@ -227,7 +227,7 @@ const KYCStatusText = {
   [KYCStatuses.NOT_SUBMITTED]: t`Not submitted`,
   [KYCStatuses.CHANGES_REQUESTED]: t`Changes Requested`,
   [KYCStatuses.REJECTED]: t`Rejected`,
-  [KYCStatuses.DRAFT]: t`Pending approval`,
+  [KYCStatuses.DRAFT]: t`Draft Saved`,
   [KYCStatuses.IN_PROGRESS]: t`Pending approval`,
   [KYCStatuses.FAILED]: t`FAILED`,
 }
@@ -254,7 +254,7 @@ const KYCStatusDescription = {
   [KYCStatuses.REJECTED]:
     'Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.',
   [KYCStatuses.DRAFT]:
-    'Your KYC application has been received and will be processed by the team. Thank you for your patience.',
+    'Your KYC application draft has been saved',
   [KYCStatuses.FAILED]: 'FAILED to submit kyc. Please contact support.',
   [KYCStatuses.IN_PROGRESS]:
     'Your KYC application has been received and will be processed by the team. Thank you for your patience.',

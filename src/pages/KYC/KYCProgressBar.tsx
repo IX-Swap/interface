@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import React, { FC, useState, useCallback } from 'react'
 
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { TYPE } from 'theme'
 
@@ -13,9 +13,10 @@ interface Props {
   description: string | null
   disabled?: boolean
   handleSubmit?: (e: any) => void
+  handleSaveProgress?: (e: any) => void
 }
 
-export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handleSubmit }: Props) => {
+export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handleSubmit, handleSaveProgress }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
 
   const handleScrollToDiv = useCallback(
@@ -85,9 +86,9 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
       >
         Submit form
       </ButtonIXSGradient>
-      {/* <ButtonGradientBorder disabled style={{ width: '100%' }}>
+      <ButtonGradientBorder style={{ width: '100%' }} onClick={handleSaveProgress}>
         Save Progress
-      </ButtonGradientBorder> */}
+      </ButtonGradientBorder>
     </div>
   )
 }

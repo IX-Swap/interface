@@ -219,12 +219,12 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     padding: 0px 16px;
     background: ${({ theme }) => theme.bg19};
     border: none;
-    /* ${({ error }) =>
+    ${({ error }) =>
       error &&
       css`
         border: 1px solid;
         border-color: #ed0376 !important;
-      `} */
+      `}
   }
   *[class*='indicatorSeparator'] {
     display: none;

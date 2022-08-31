@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect, useRef } from 'react'
+import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
@@ -28,7 +28,7 @@ import { countriesList } from 'constants/countriesList'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import { Select, TextInput, Uploader } from './common'
+import { KycInputLabel, KycSelect as Select, KycTextInput as TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
@@ -43,6 +43,12 @@ import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox, Styled
 import { individualErrorsSchema } from './schema'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses, IdentityDocumentType } from './enum'
+
+type FormSubmitHanderArgs = { 
+  createFn: (body: any) => any,
+  updateFn: (id: number, body: any) => any, 
+  validate: boolean
+}
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -75,6 +81,8 @@ export default function IndividualKycForm() {
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
 
+  const form = useRef<any>(null)
+
   const isLoggedIn = !!token && !!account
 
   const prevAccount = usePrevious(account)
@@ -96,9 +104,9 @@ export default function IndividualKycForm() {
       }
     }
 
-    if (kyc?.status === KYCStatuses.CHANGES_REQUESTED) {
+    if ([KYCStatuses.CHANGES_REQUESTED, KYCStatuses.DRAFT].some(s => s === kyc?.status)) {
       getProgress()
-      setUpdateKycId(kyc.id)
+      setUpdateKycId(kyc!.id)
     } else {
       setFormData(individualFormInitialValues)
     }
@@ -207,6 +215,61 @@ export default function IndividualKycForm() {
     return Object.values(IdentityDocumentType).map((value, index) => ({ value: ++index, label: value }))
   }, [])
 
+  const formSubmitHandler = useCallback(
+    async (values: any, { createFn, updateFn, validate = true }: FormSubmitHanderArgs) => {
+      try {
+        if (validate) {
+          await individualErrorsSchema.validate(values, { abortEarly: false })
+        }
+        
+        canLeavePage.current = true
+        setCanSubmit(false)
+        const body = individualTransformKycDto(values)
+        let data: any = null
+
+        if (updateKycId) {
+          data = await updateFn(updateKycId, body)
+        } else {
+          data = await createFn(body)
+        }
+
+        if (data?.id) {
+          history.push('/kyc')
+          addPopup({ info: { success: true, summary: 'KYC was successfully submitted' } })
+        } else {
+          setCanSubmit(true)
+          addPopup({ info: { success: false, summary: 'Something went wrong' } })
+        }
+      } catch (error: any) {
+        const newErrors: any = {}
+
+        error.inner.forEach((e: any) => {
+          newErrors[e.path] = e.message
+        })
+
+        addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+
+        setIsSubmittedOnce(true)
+        setErrors(newErrors)
+        setCanSubmit(false)
+
+        canLeavePage.current = false
+      }
+    },
+    []
+  )
+
+  const saveProgress = useCallback(
+    async (values: any) => {
+      await formSubmitHandler(values, { 
+        createFn: (body) => createIndividualKYC(body, true),
+        updateFn: (id, body) => updateIndividualKYC(id, body, true), 
+        validate: false 
+      });
+    },
+    [formSubmitHandler]
+  )
+
   return (
     <Loadable loading={!isLoggedIn}>
       <Prompt when={!canLeavePage.current} message={promptValue} />
@@ -229,6 +292,7 @@ export default function IndividualKycForm() {
 
         {!waitingForInitialValues && formData && (
           <Formik
+            innerRef={form}
             initialValues={formData}
             validateOnBlur={false}
             validateOnChange={false}
@@ -642,7 +706,7 @@ export default function IndividualKycForm() {
                             label="Employment Status"
                             selectedItem={values.employmentStatus}
                             items={empleymentStatuses}
-                            onSelect={(status) => onSelectChange('employmentStatus', status, setFieldValue)}
+                            onSelect={(status: any) => onSelectChange('employmentStatus', status, setFieldValue)}
                             error={errors.employmentStatus && errors.employmentStatus}
                           />
                           <TextInput
@@ -718,6 +782,7 @@ export default function IndividualKycForm() {
                   <StyledStickyBox>
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
+                      handleSaveProgress={() => saveProgress(form?.current?.values)}
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
                       disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
                       topics={Object.values({

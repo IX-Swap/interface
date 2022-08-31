@@ -113,19 +113,19 @@ export const individualTransformApiData = (data: any) => {
   } = data
   const [funds, otherFunds = ''] = sourceOfFunds.split(', Others, ')
 
-  const idTypeKey = idType.replaceAll(' ', '_') as keyof typeof IdentityDocumentType
+  const idTypeKey = idType?.replaceAll(' ', '_') as keyof typeof IdentityDocumentType
 
   return {
     ...data,
-    sourceOfFunds: otherFunds.length ? [...funds.split(', '), 'Others'] : funds.split(', '),
+    sourceOfFunds: otherFunds?.length ? [...funds.split(', '), 'Others'] : funds.split(', '),
     isUSTaxPayer: usTin ? 1 : 0,
     otherFunds,
-    address: address.address,
-    postalCode: address.postalCode,
-    country: { value: 0, label: address.country },
-    city: address.city,
-    proofOfAddress: documents.filter(({ type }: any) => type === 'address'),
-    proofOfIdentity: documents.filter(({ type }: any) => type === 'identity'),
+    address: address?.address,
+    postalCode: address?.postalCode,
+    country: { value: 0, label: address?.country },
+    city: address?.city,
+    proofOfAddress: documents?.filter(({ type }: any) => type === 'address'),
+    proofOfIdentity: documents?.filter(({ type }: any) => type === 'identity'),
     idType: { value: 0, label: IdentityDocumentType[idTypeKey] },
     citizenship: { value: 0, label: citizenship },
     employmentStatus: { value: 0, label: employmentStatus },
@@ -155,21 +155,25 @@ export const individualTransformKycDto = (values: any) => {
     idType,
   } = values
 
-  return {
+  const result = {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
-    idIssueDate: typeof idIssueDate === 'string' ? idIssueDate : idIssueDate.format('MM/DD/YYYY'),
-    idExpiryDate: typeof idExpiryDate === 'string' ? idExpiryDate : idExpiryDate.format('MM/DD/YYYY'),
-    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth.format('MM/DD/YYYY'),
+    idIssueDate: typeof idIssueDate === 'string' ? idIssueDate : idIssueDate?.format('MM/DD/YYYY'),
+    idExpiryDate: typeof idExpiryDate === 'string' ? idExpiryDate : idExpiryDate?.format('MM/DD/YYYY'),
+    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth?.format('MM/DD/YYYY'),
     sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
-    idType: idType.label.toUpperCase(),
-    citizenship: citizenship.label,
-    nationality: nationality.label,
-    country: country.label,
-    employmentStatus: employmentStatus.label,
-    occupation: occupation.label,
-    gender: gender.label,
-    income: income.label,
+    idType: idType?.label?.toUpperCase(),
+    citizenship: citizenship?.label,
+    nationality: nationality?.label,
+    country: country?.label,
+    employmentStatus: employmentStatus?.label,
+    occupation: occupation?.label,
+    gender: gender?.label,
+    income: income?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
   }
+
+  return Object.entries(result)
+    .filter(([key, value]) => !!value)
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {} as Record<string, any>)
 }
