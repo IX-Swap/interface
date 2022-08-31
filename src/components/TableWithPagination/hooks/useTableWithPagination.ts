@@ -56,7 +56,7 @@ export const useTableWithPagination = <TData>({
     const updatedIsFavorite =
       defaultFilter?.isFavorite === 'yes' ? 'true' : 'false'
     // @ts-expect-error: Object is possible 'undefined'
-    defaultFilter.isFavorite = updatedIsFavorite
+    defaultFilter?.isFavorite = updatedIsFavorite
   }, [defaultFilter])
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
