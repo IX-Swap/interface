@@ -49,7 +49,8 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
             />
             {!isTablet && (
               <DSOTeamRemoveButton
-                sx={{ width: 50, height: 50, marginLeft: 1.5 }}
+                disabled={index === 0}
+                sx={{ width: 50, height: 50, marginLeft: 2 }}
                 remove={remove}
                 index={index}
               />
@@ -73,6 +74,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
         {isTablet && (
           <Grid item xs={12}>
             <DSOTeamRemoveButton
+              disabled={index === 0}
               sx={{ width: '100%', height: 50 }}
               remove={remove}
               index={index}

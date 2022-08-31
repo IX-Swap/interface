@@ -15,7 +15,7 @@ export const DSODocumentsFields = () => {
       </Grid>
       <Grid item xs={12}>
         <FieldContainer>
-          <DSOVideoLinks isNew />
+          <DSOVideoLinks />
         </FieldContainer>
       </Grid>
       <Grid item xs={12}>
