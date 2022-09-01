@@ -22,7 +22,16 @@ export const individualKycFormData  = {
   employmentStatus: 'Full-Time Employee',
   employer: 'Testers & Co',
   incomeUsd: '50,000-100,000',
-  documentFilePath: 'testData/kycDocument.jpg'
+  documentFilePath: 'testData/kycDocument.jpg',
+  documentIssueYear: 2021,
+  documentIssueMonth: 'Oct',
+  documentIssueDay: 25,
+  documentExpiryYear: 2024,
+  documentExpiryMonth: 'Nov',
+  documentExpiryDay: 18,
+  dateOfBirthYear: 1992,
+  dateOfBirthMonth: 'Oct',
+  dateOfBirthDay: 13
 };
 
 export const corporateKycForm = {

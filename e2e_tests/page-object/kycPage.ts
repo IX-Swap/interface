@@ -38,6 +38,7 @@ export class KycPage extends WebPage {
   readonly kycStatusBlock: string;
   readonly makeChangesAndResendKycButton: Locator;
   readonly personalInformationKycForm: Locator;
+  readonly dropdownListBlock: string;
 
   kycAdminURL = config.use.baseURL + '#/admin/kyc';
   kycURL = config.use.baseURL + '#/kyc';
@@ -56,6 +57,7 @@ export class KycPage extends WebPage {
     this.kycStatusBlock = (`[data-testid="kycStatus"]`);
     this.makeChangesAndResendKycButton = page.locator('[data-testid="makeChangesAndResendKycButton"]');
     this.personalInformationKycForm = page.locator('[id="personal"]');
+    this.dropdownListBlock = ('[id*=react-select]');
     //PERSONAL INFORMATION
     this.firstNameField = page.locator(`[data-testid="firstNameInput"]`);
     this.middleNameField = page.locator(`[data-testid="middleNameInput"]`);
@@ -172,17 +174,17 @@ export class KycPage extends WebPage {
 
   async pickGender(gender) {
     await this.genderDropdown.click();
-    await this.page.click(`[id*=react-select]  >> text=${gender}`);
+    await this.page.click(`${this.dropdownListBlock}  >> text=${gender}`);
   }
 
   async pickNationality(nationality) {
     await this.nationalityDropdown.click();
-    await this.page.click(`[id*=react-select] >> text=${nationality}`);
+    await this.page.click(`${this.dropdownListBlock} >> text=${nationality}`);
   }
 
   async pickCitizenship(citizenship) {
     await this.citizenshipDropdown.click();
-    await this.page.click(`[id*=react-select] >> text=${citizenship}`);
+    await this.page.click(`${this.dropdownListBlock} >> text=${citizenship}`);
   }
 
   async fillPhoneNumberField(phoneNumber) {
@@ -197,7 +199,7 @@ export class KycPage extends WebPage {
     await this.fillFirstNameField(userData.firstName);
     await this.fillMiddleNameField(userData.middleName);
     await this.fillLastNameField(userData.lastName);
-    await this.pickDateOfBirth(1992, 'Oct', 13);
+    await this.pickDateOfBirth(userData.dateOfBirthYear, userData.dateOfBirthMonth, userData.dateOfBirthDay);
     await this.pickGender(userData.gender);
     await this.pickNationality(userData.nationality);
     await this.pickCitizenship(userData.citizenship);
@@ -208,7 +210,7 @@ export class KycPage extends WebPage {
   //IDENTITY DOCUMENT
   async pickDocumentType(docType) {
     await this.documentTypeDropdown.click();
-    await this.page.click(`[id*=react-select] >> text=${docType}`);
+    await this.page.click(`${this.dropdownListBlock} >> text=${docType}`);
   }
 
   async fillDocumentNumberField(documentNumber) {
@@ -228,8 +230,8 @@ export class KycPage extends WebPage {
   async fillIdentityDocument(userData) {
     await this.pickDocumentType(userData.documentType);
     await this.fillDocumentNumberField(userData.documentNumber);
-    await this.pickDocumentIssueDate(2021, 'Oct', 25);
-    await this.pickDocumentExpiryDate(2024, 'Oct', 25);
+    await this.pickDocumentIssueDate(userData.documentIssueYear, userData.documentIssueMonth, userData.documentIssueDay);
+    await this.pickDocumentExpiryDate(userData.documentExpiryYear, userData.documentExpiryMonth, userData.documentExpiryDay);
   }
 
   //ADDRESS
@@ -243,7 +245,7 @@ export class KycPage extends WebPage {
 
   async pickCountry(country) {
     await this.countryDropdown.click();
-    await this.page.click(`[id*=react-select] >> text=${country}`);
+    await this.page.click(`${this.dropdownListBlock} >> text=${country}`);
   }
 
   async fillCityField(city) {
@@ -275,12 +277,12 @@ export class KycPage extends WebPage {
   //EMPLOYMENT INFORMATION
   async pickOccupationDropdown(occupation) {
     await this.occupationDropdown.click();
-    await this.page.click(`[id*=react-select] >> text=${occupation}`);
+    await this.page.click(`${this.dropdownListBlock} >> text=${occupation}`);
   }
 
   async pickEmploymentStatusDropdown(employmentStatus) {
     await this.employmentStatusDropdown.click();
-    await this.page.click(`[id*=react-select] >> text=${employmentStatus}`);
+    await this.page.click(`${this.dropdownListBlock} >> text=${employmentStatus}`);
   }
 
   async fillEmployerField(employer) {
@@ -289,7 +291,7 @@ export class KycPage extends WebPage {
 
   async pickIncomeUsdDropdown(incomeUsd) {
     await this.incomeUsdDropdown.click();
-    await this.page.click(`[id*=react-select] >> text=${incomeUsd}`);
+    await this.page.click(`${this.dropdownListBlock} >> text=${incomeUsd}`);
   }
 
   async fillEmploymentInformation(userData) {
