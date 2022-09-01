@@ -38,7 +38,7 @@ export interface FormStepProps {
     setIsRedirecting: any
   ) => void
   redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
-  isRequiredOnLastStep: boolean
+  isRequiredOnLastStep?: boolean
 }
 
 export const FormStep = (props: FormStepProps) => {
