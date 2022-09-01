@@ -2,7 +2,6 @@ import { WebPage } from './webPage'
 import { BrowserContext, expect, Locator, Page } from '@playwright/test'
 import { MetamaskPage } from './metamaskPage'
 import config from '../playwright.config'
-import { individualKycFormData } from '../testData/kyc/kycFormData'
 
 export class KycPage extends WebPage {
   readonly metamaskPage: MetamaskPage;
@@ -36,13 +35,9 @@ export class KycPage extends WebPage {
   readonly proofOfAddressFile: Locator;
   readonly submitButton: Locator;
   readonly pendingApprovalStatus: Locator;
-  readonly reviewButton: Locator;
-  readonly kycApproveButton: Locator;
-  readonly kycRejectButton: Locator;
-  readonly kycRequestAChangeButton: Locator;
-  readonly rejectAnnotationTextField: Locator;
-  readonly submitRejectAnnotationButton: Locator;
-  readonly pendingStatus: Locator;
+  readonly kycStatusBlock: string;
+  readonly makeChangesAndResendKycButton: Locator;
+  readonly personalInformationKycForm: Locator;
 
   kycAdminURL = config.use.baseURL + '#/admin/kyc';
   kycURL = config.use.baseURL + '#/kyc';
@@ -58,6 +53,9 @@ export class KycPage extends WebPage {
     this.passKycAsCorporateButton = page.locator('[data-testid="passKycAsCorporateButton"]');
     this.submitButton = page.locator('[data-testid="submitButton"]');
     this.pendingApprovalStatus = page.locator(`text=${this.pendingApprovalText}`);
+    this.kycStatusBlock = (`[data-testid="kycStatus"]`);
+    this.makeChangesAndResendKycButton = page.locator('[data-testid="makeChangesAndResendKycButton"]');
+    this.personalInformationKycForm = page.locator('[id="personal"]');
     //PERSONAL INFORMATION
     this.firstNameField = page.locator(`[data-testid="firstNameInput"]`);
     this.middleNameField = page.locator(`[data-testid="middleNameInput"]`);
@@ -86,26 +84,21 @@ export class KycPage extends WebPage {
     //UPLOAD DOCUMENTS
     this.proofOfIdentityFile = page.locator(`[type=file] >> nth=0`);
     this.proofOfAddressFile = page.locator(`[type=file] >> nth=1`);
-    //Admin Section
-    this.reviewButton = page.locator(`text=${individualKycFormData.firstName} ${individualKycFormData.lastName}I >> [data-testid="reviewButton"]`);
-    this.kycApproveButton = page.locator('[data-testid="approveButton"]');
-    this.kycRejectButton = page.locator('[data-testid="rejectButton"]');
-    this.kycRequestAChangeButton = page.locator('[data-testid="changeRequestButton"]');
-    this.rejectAnnotationTextField = page.locator('[data-testid="depositPopup"] >> textarea');
-    this.submitRejectAnnotationButton = page.locator('[data-testid="depositPopup"] >> text=Submit')
-    this.pendingStatus = page.locator(`text=${individualKycFormData.firstName} ${individualKycFormData.lastName}I >> [data-testid="Pending"]`)
+
   }
   //Assertions
   async checkPendingApprovalStatusIsVisible() {
-    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.pendingApprovalText}`)).toBeVisible();
+    await expect(this.page.locator(`${this.kycStatusBlock} >> text=${this.pendingApprovalText}`)).toBeVisible();
   }
 
   async checkApprovedStatusIsVisible() {
-    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.approvedText}`)).toBeVisible();
+    const approvedStatusLocator = this.page.locator(`${this.kycStatusBlock} >> text=${this.approvedText}`);
+    await this.checkElementIsVisibleAfterReloadingPage(approvedStatusLocator);
   }
 
   async checkChangesRequestStatusIsVisible() {
-    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.changesRequestedText}`)).toBeVisible();
+    const changesRequestStatusLocator = this.page.locator(`${this.kycStatusBlock} >> text=${this.changesRequestedText}`);
+    await this.checkElementIsVisibleAfterReloadingPage(changesRequestStatusLocator);
   }
 
   async checkRejectAnnotationTextIsVisible(rejectAnnotation) {
@@ -113,7 +106,8 @@ export class KycPage extends WebPage {
   }
 
   async checkRejectedStatusIsVisible() {
-    await expect(this.page.locator(`[data-testid="kycStatus"] >> text=${this.rejectedText}`)).toBeVisible();
+    const rejectedStatusLocator = this.page.locator(`${this.kycStatusBlock} >> text=${this.rejectedText}`);
+    await this.checkElementIsVisibleAfterReloadingPage(rejectedStatusLocator);
   }
 
   async checkChangeRequestTextIsVisible(changeRequest) {
@@ -135,16 +129,20 @@ export class KycPage extends WebPage {
     await this.submitButton.click();
   }
 
-  async fillKycForm() {
-    await this.fillPersonalInformation();
-    await this.fillIdentityDocument();
-    await this.fillAddress();
-    await this.pickSourceOfFunds(individualKycFormData.sourceOfFunds);
-    await this.pickInvestorStatusDeclaration(individualKycFormData.investorStatusDeclaration);
-    await this.pickUSCitizenship(individualKycFormData.FATCHA);
-    await this.fillEmploymentInformation();
-    await this.uploadProofOfIdentityFile();
-    await this.uploadProofOfAddressFile();
+  async clickMakeChangesAndResendKycButton() {
+    await this.makeChangesAndResendKycButton.click();
+  }
+
+  async fillKycForm(userData) {
+    await this.fillPersonalInformation(userData);
+    await this.fillIdentityDocument(userData);
+    await this.fillAddress(userData);
+    await this.pickSourceOfFunds(userData.sourceOfFunds);
+    await this.pickInvestorStatusDeclaration(userData.investorStatusDeclaration);
+    await this.pickUSCitizenship(userData.FATCHA);
+    await this.fillEmploymentInformation(userData);
+    await this.uploadProofOfIdentityFile(userData);
+    await this.uploadProofOfAddressFile(userData);
   }
 
   //PERSONAL INFORMATION
@@ -164,27 +162,27 @@ export class KycPage extends WebPage {
     await this.page.click(`[data-mui-test="year-${year}"]`);
     await this.page.click(`[data-mui-test="month"] >> text=${month}`);
     await this.page.click(`[class="MuiPickersDay-dayLabel"] >> text=${day}`);
+    await this.page.mouse.click(10, 10);
   }
 
   async pickDateOfBirth(year, month, day) {
     await this.dateOfBirthButton.click();
     await this.pickDate(year, month, day);
-    await this.page.mouse.click(10, 10);
   }
 
   async pickGender(gender) {
     await this.genderDropdown.click();
-    await this.page.click(`#react-select-3-listbox  >> text=${gender}`);
+    await this.page.click(`[id*=react-select]  >> text=${gender}`);
   }
 
   async pickNationality(nationality) {
     await this.nationalityDropdown.click();
-    await this.page.click(`#react-select-5-listbox >> text=${nationality}`);
+    await this.page.click(`[id*=react-select] >> text=${nationality}`);
   }
 
   async pickCitizenship(citizenship) {
     await this.citizenshipDropdown.click();
-    await this.page.click(`#react-select-7-listbox >> text=${citizenship}`);
+    await this.page.click(`[id*=react-select] >> text=${citizenship}`);
   }
 
   async fillPhoneNumberField(phoneNumber) {
@@ -195,22 +193,22 @@ export class KycPage extends WebPage {
     await this.emailAddressField.fill(emailAddress);
   }
 
-  async fillPersonalInformation() {
-    await this.fillFirstNameField(individualKycFormData.firstName);
-    await this.fillMiddleNameField(individualKycFormData.middleName);
-    await this.fillLastNameField(individualKycFormData.lastName);
+  async fillPersonalInformation(userData) {
+    await this.fillFirstNameField(userData.firstName);
+    await this.fillMiddleNameField(userData.middleName);
+    await this.fillLastNameField(userData.lastName);
     await this.pickDateOfBirth(1992, 'Oct', 13);
-    await this.pickGender(individualKycFormData.gender);
-    await this.pickNationality(individualKycFormData.nationality);
-    await this.pickCitizenship(individualKycFormData.citizenship);
-    await this.fillPhoneNumberField(individualKycFormData.phoneNumber);
-    await this.fillEmailAddressField(individualKycFormData.emailAddress);
+    await this.pickGender(userData.gender);
+    await this.pickNationality(userData.nationality);
+    await this.pickCitizenship(userData.citizenship);
+    await this.fillPhoneNumberField(userData.phoneNumber);
+    await this.fillEmailAddressField(userData.emailAddress);
   }
 
   //IDENTITY DOCUMENT
   async pickDocumentType(docType) {
     await this.documentTypeDropdown.click();
-    await this.page.click(`#react-select-9-listbox >> text=${docType}`);
+    await this.page.click(`[id*=react-select] >> text=${docType}`);
   }
 
   async fillDocumentNumberField(documentNumber) {
@@ -220,18 +218,16 @@ export class KycPage extends WebPage {
   async pickDocumentIssueDate(year, month, day) {
     await this.documentIssueDateButton.click();
     await this.pickDate(year, month, day);
-    await this.page.mouse.click(10, 10);
   }
 
   async pickDocumentExpiryDate(year, month, day) {
     await this.documentExpiryDateButton.click();
     await this.pickDate(year, month, day);
-    await this.page.mouse.click(10, 10);
   }
 
-  async fillIdentityDocument() {
-    await this.pickDocumentType(individualKycFormData.documentType);
-    await this.fillDocumentNumberField(individualKycFormData.documentNumber);
+  async fillIdentityDocument(userData) {
+    await this.pickDocumentType(userData.documentType);
+    await this.fillDocumentNumberField(userData.documentNumber);
     await this.pickDocumentIssueDate(2021, 'Oct', 25);
     await this.pickDocumentExpiryDate(2024, 'Oct', 25);
   }
@@ -247,18 +243,18 @@ export class KycPage extends WebPage {
 
   async pickCountry(country) {
     await this.countryDropdown.click();
-    await this.page.click(`#react-select-11-listbox >> text=${country}`);
+    await this.page.click(`[id*=react-select] >> text=${country}`);
   }
 
   async fillCityField(city) {
     await this.cityField.fill(city);
   }
 
-  async fillAddress() {
-    await this.fillAddressField(individualKycFormData.address);
-    await this.fillPostalCodeField(individualKycFormData.postalCode);
-    await this.pickCountry(individualKycFormData.country);
-    await this.fillCityField(individualKycFormData.city);
+  async fillAddress(userData) {
+    await this.fillAddressField(userData.address);
+    await this.fillPostalCodeField(userData.postalCode);
+    await this.pickCountry(userData.country);
+    await this.fillCityField(userData.city);
   }
 
   //SOURCE OF FUNDS
@@ -279,12 +275,12 @@ export class KycPage extends WebPage {
   //EMPLOYMENT INFORMATION
   async pickOccupationDropdown(occupation) {
     await this.occupationDropdown.click();
-    await this.page.click(`#react-select-13-listbox >> text=${occupation}`);
+    await this.page.click(`[id*=react-select] >> text=${occupation}`);
   }
 
   async pickEmploymentStatusDropdown(employmentStatus) {
     await this.employmentStatusDropdown.click();
-    await this.page.click(`#react-select-15-listbox >> text=${employmentStatus}`);
+    await this.page.click(`[id*=react-select] >> text=${employmentStatus}`);
   }
 
   async fillEmployerField(employer) {
@@ -293,58 +289,26 @@ export class KycPage extends WebPage {
 
   async pickIncomeUsdDropdown(incomeUsd) {
     await this.incomeUsdDropdown.click();
-    await this.page.click(`#react-select-17-listbox >> text=${incomeUsd}`);
+    await this.page.click(`[id*=react-select] >> text=${incomeUsd}`);
   }
 
-  async fillEmploymentInformation() {
-    await this.pickOccupationDropdown(individualKycFormData.occupation);
-    await this.pickEmploymentStatusDropdown(individualKycFormData.employmentStatus);
-    await this.fillEmployerField(individualKycFormData.employer);
-    await this.pickIncomeUsdDropdown(individualKycFormData.incomeUsd);
+  async fillEmploymentInformation(userData) {
+    await this.pickOccupationDropdown(userData.occupation);
+    await this.pickEmploymentStatusDropdown(userData.employmentStatus);
+    await this.fillEmployerField(userData.employer);
+    await this.pickIncomeUsdDropdown(userData.incomeUsd);
   }
 
   //UPLOAD DOCUMENTS
-  async uploadProofOfIdentityFile() {
-    await this.proofOfIdentityFile.setInputFiles('testData/kycDocument.jpg');
+  async uploadProofOfIdentityFile(userData) {
+    await this.proofOfIdentityFile.setInputFiles(userData.documentFilePath);
   }
 
-  async uploadProofOfAddressFile() {
-    await this.proofOfAddressFile.setInputFiles('testData/kycDocument.jpg');
+  async uploadProofOfAddressFile(userData) {
+    await this.proofOfAddressFile.setInputFiles(userData.documentFilePath);
   }
 
-  //Admin section
   async openKycAdminPage() {
     await this.page.goto(this.kycAdminURL);
-    await this.page.waitForTimeout(35000);
-    await this.page.reload();
-  }
-
-  async clickReviewButton() {
-    await this.reviewButton.click();
-  }
-
-  async clickKycApproveButton() {
-    await this.kycApproveButton.click();
-  }
-
-  async clickKycRejectButton() {
-    await this.kycRejectButton.click();
-  }
-
-  async clickKycRequestAChangeButton() {
-    await this.kycRequestAChangeButton.click();
-  }
-
-  async fillRejectAnnotationTextField(rejectAnnotation) {
-    await this.rejectAnnotationTextField.fill(rejectAnnotation);
-  }
-
-  async fillChangeRequestTextField(changeRequest) {
-    await this.rejectAnnotationTextField.fill(changeRequest);
-  }
-
-  async clickSubmitPopUpButton() {
-    await this.submitRejectAnnotationButton.click();
-    await this.page.waitForTimeout(15000);
   }
 }

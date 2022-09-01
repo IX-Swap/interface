@@ -10,71 +10,68 @@ test.beforeEach(async ({ kovanNetwork, kycPage}) => {
 })
 
 test.afterEach(async ({kycPage}) => {
-  await deleteUser(individualKycFormData.id, await kycPage.getAuthToken());
+  await deleteUser(await kycPage.getUserId(), await kycPage.getAuthToken());
 })
 
 test.describe('Check KYC section functions', () => {
-    test('Test the ability to "Submit KYC" as "Individual"', async ({ kycPage, page }) => {
-      await kycPage.fillKycForm();
+  test.describe('Check KYC section functions', () => {
+    test('Test the ability to "Submit KYC" as "Individual"', async ({ kycPage, topNavigationBar, page }) => {
+      await kycPage.fillKycForm(individualKycFormData);
       await kycPage.clickSubmitButton();
 
       await expect(kycPage.pendingApprovalStatus).toBeVisible();
+      await expect(topNavigationBar.securityTokensButton).toHaveAttribute('disabled', '');
     })
 
     test.skip('Test the ability to "Submit KYC" as "Corporate"', async ({ kycPage, page }) => {
     })
+  })
 
-    test('Check the KYC section for the "Approved" user', async ({ kycPage, page }) => {
-      await kycPage.fillKycForm();
+  test.describe('Check KYC section functions', () => {
+    test.beforeEach(async ({ kycPage, adminPage,}) => {
+      await kycPage.fillKycForm(individualKycFormData);
       await kycPage.clickSubmitButton();
-
       await expect(kycPage.pendingApprovalStatus).toBeVisible();
-
       await kycPage.openKycAdminPage();
-      await expect(kycPage.pendingStatus).toBeVisible();
+      await adminPage.checkPendingStatusForCurrentUserIsVisible(individualKycFormData);
+    })
 
-      await kycPage.clickReviewButton();
-      await kycPage.clickKycApproveButton();
+    test('Check the KYC section for the "Approved" user', async ({ kycPage, adminPage, securityTokensPage, topNavigationBar, page }) => {
+      await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
+      await adminPage.clickKycApproveButton();
 
       await kycPage.openKycPage();
       await kycPage.checkApprovedStatusIsVisible();
+
+      await topNavigationBar.securityTokensButton.click();
+      await expect(securityTokensPage.securityTokensTitle).toBeVisible();
     })
 
-    test('Check the KYC section for the "Rejected" user', async ({ kycPage, page }) => {
-      await kycPage.fillKycForm();
-      await kycPage.clickSubmitButton();
-
-      await expect(kycPage.pendingApprovalStatus).toBeVisible();
-
-      await kycPage.openKycAdminPage();
-      await expect(kycPage.pendingStatus).toBeVisible();
-
-      await kycPage.clickReviewButton();
-      await kycPage.clickKycRejectButton();
-      await kycPage.fillRejectAnnotationTextField(individualKycFormData.rejectAnnotation);
-      await kycPage.clickSubmitPopUpButton();
+    test('Check the KYC section for the "Rejected" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
+      await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
+      await adminPage.clickKycRejectButton();
+      await adminPage.fillRejectAnnotationTextField(individualKycFormData.rejectAnnotation);
+      await adminPage.clickSubmitPopUpButton();
 
       await kycPage.openKycPage();
       await kycPage.checkRejectedStatusIsVisible();
       await kycPage.checkRejectAnnotationTextIsVisible(individualKycFormData.rejectAnnotation);
+      await expect(topNavigationBar.securityTokensButton).toHaveAttribute('disabled', '');
     })
 
-    test('Check the KYC section for the "Changes requested" user', async ({ kycPage, page }) => {
-      await kycPage.fillKycForm();
-      await kycPage.clickSubmitButton();
-
-      await expect(kycPage.pendingApprovalStatus).toBeVisible();
-
-      await kycPage.openKycAdminPage();
-      await expect(kycPage.pendingStatus).toBeVisible();
-
-      await kycPage.clickReviewButton();
-      await kycPage.clickKycRequestAChangeButton();
-      await kycPage.fillChangeRequestTextField(individualKycFormData.changeRequest);
-      await kycPage.clickSubmitPopUpButton();
+    test('Check the KYC section for the "Changes requested" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
+      await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
+      await adminPage.clickKycRequestAChangeButton();
+      await adminPage.fillChangeRequestTextField(individualKycFormData.changeRequest);
+      await adminPage.clickSubmitPopUpButton();
 
       await kycPage.openKycPage();
       await kycPage.checkChangesRequestStatusIsVisible();
       await kycPage.checkChangeRequestTextIsVisible(individualKycFormData.changeRequest);
+      await expect(topNavigationBar.securityTokensButton).toHaveAttribute('disabled', '');
+
+      await kycPage.clickMakeChangesAndResendKycButton();
+      await expect(kycPage.personalInformationKycForm).toBeVisible();
     })
+  })
 })

@@ -98,7 +98,16 @@ export class WebPage {
     return parsedData.replace(/[^a-zA-Z0-9_.-]/g, ``);
   }
 
-  async clickWhileElementNotVisibleByCss (elementForClick, elementToBePresent){
+  async getUserId() {
+    return await this.page.evaluate(() => {
+      const res = (localStorage.getItem(`redux_localstorage_simple_user`));
+      const parsedRes = JSON.parse(res);
+      const userInfo = parsedRes.me
+      return userInfo.id;
+    })
+  }
+
+  async clickWhileElementNotVisibleByCss (elementForClick, elementToBePresent) {
     await this.page.click(elementForClick);
     await this.page.evaluate(async ([elementForClick, elementToBePresent]) => {
       let intervalId;
@@ -144,6 +153,26 @@ export class WebPage {
         clearInterval(intervalId);
         return reject(`${elementForClick} is still visible after clicking it for ${timeouts.mediumTimeout} seconds`);
       }, timeouts.mediumTimeout);
+    })
+  }
+
+  async checkElementIsVisibleAfterReloadingPage(element: Locator) {
+    let intervalId;
+    const page = await this.page;
+    await new Promise(function(resolve, reject){
+      intervalId = setInterval(async () => {
+        if (await element.isVisible() === false) {
+          await page.reload();
+          await page.waitForLoadState();
+        } else {
+          clearInterval(intervalId);
+          return resolve(true);
+        }
+      }, 5000);
+      setTimeout(() => {
+        clearInterval(intervalId);
+        return reject(`${element} is not visible after reloading page for ${timeouts.longTimeout} seconds`);
+      }, timeouts.longTimeout);
     })
   }
 }

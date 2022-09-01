@@ -1,16 +1,16 @@
 import { chromium, test as base } from '@playwright/test'
 import { ConnectWalletScreen } from '../page-object/connectWalletScreen'
-import { KycScreen } from '../page-object/kycScreen'
 import { MetamaskPage } from '../page-object/metamaskPage'
 import { WebPage } from '../page-object/webPage'
 import { TopNavigationBar } from '../page-object/topNavigationBar'
 import { LiquidityPoolsPage } from '../page-object/liquidityPoolsPage'
 import { SwapTradePage } from '../page-object/swapTradePage'
 import { KycPage } from '../page-object/kycPage'
+import { AdminPage } from '../page-object/adminPage'
+import { SecurityTokensPage } from '../page-object/securityTokensPage'
 
 type ixsFixtures = {
   connectWalletScreen: ConnectWalletScreen;
-  kycScreen: KycScreen;
   metamaskPage: MetamaskPage;
   topNavigationBar: TopNavigationBar;
   webPage: WebPage;
@@ -18,7 +18,9 @@ type ixsFixtures = {
   kovanNetwork: ConnectWalletScreen;
   swapTradePage: SwapTradePage;
   kycPage: KycPage;
+  adminPage: AdminPage;
   recoveryPhrase: string;
+  securityTokensPage: SecurityTokensPage;
 };
 
 export const test = base.extend<ixsFixtures>({
@@ -75,10 +77,6 @@ export const test = base.extend<ixsFixtures>({
     await use(new WebPage(page, context))
   },
 
-  kycScreen: async ({ page, context }, use) => {
-    await use(new KycScreen(page, context))
-  },
-
   liquidityPoolsPage: async ({ page, context }, use) => {
     await use(new LiquidityPoolsPage(page, context))
   },
@@ -89,6 +87,14 @@ export const test = base.extend<ixsFixtures>({
 
   kycPage: async ({ page, context }, use) => {
     await use(new KycPage(page, context))
+  },
+
+  adminPage: async ({ page, context }, use) => {
+    await use(new AdminPage(page, context))
+  },
+
+  securityTokensPage: async ({ page, context }, use) => {
+    await use(new SecurityTokensPage(page, context))
   },
 
   kovanNetwork: async ({ connectWalletScreen, metamaskPage }, use) => {

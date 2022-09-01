@@ -76,7 +76,7 @@ const SecurityTokens = () => {
 
   return blurred ? (
     <AppBody blurred>
-      <Trans>Security Tokens</Trans>
+      <Trans>Security Tokens </Trans>
     </AppBody>
   ) : (
     <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
