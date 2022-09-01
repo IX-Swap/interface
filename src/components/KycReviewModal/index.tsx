@@ -119,13 +119,13 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
               )}
             </Body>
             <ActionsContainer buttons={needResubmit ? 4 : 3}>
-              <ButtonIXSWide onClick={approve} disabled={needResubmit}>
+              <ButtonIXSWide onClick={approve} data-testid="approveButton" disabled={needResubmit}>
                 <Trans>Approve</Trans>
               </ButtonIXSWide>
-              <ButtonPinkBorder onClick={reject} disabled={needResubmit}>
+              <ButtonPinkBorder onClick={reject} data-testid="rejectButton" disabled={needResubmit}>
                 <Trans>Reject</Trans>
               </ButtonPinkBorder>
-              <ButtonGradientBorder onClick={changeRequest} disabled={needResubmit}>
+              <ButtonGradientBorder onClick={changeRequest} data-testid="changeRequestButton" disabled={needResubmit}>
                 <Trans>Request a change</Trans>
               </ButtonGradientBorder>
               {needResubmit && (

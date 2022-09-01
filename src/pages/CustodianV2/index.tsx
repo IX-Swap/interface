@@ -68,7 +68,7 @@ export default function CustodianV2() {
 
   return (
     <>
-      <TYPE.title4 marginBottom="16px">
+      <TYPE.title4 marginBottom="16px" data-testid="securityTokensTitle">
         <Trans>Security tokens</Trans>
       </TYPE.title4>
       <Info />

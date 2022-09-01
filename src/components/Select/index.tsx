@@ -22,6 +22,7 @@ interface Props {
   isDisabled?: boolean
   isClearable?: boolean
   addCustom?: boolean
+  id?: any
 }
 
 const colourStyles = {
@@ -150,6 +151,7 @@ export const Select = ({
   options,
   placeholder = '',
   name,
+  id,
   isDisabled = false,
   isSearchable = true,
   isMulti = false,
@@ -193,6 +195,7 @@ export const Select = ({
       isSearchable={isSearchable}
       isClearable={isClearable}
       isMulti={isMulti}
+      inputId={id}
       onChange={(option: unknown) => {
         onSelect(option as Option)
       }}

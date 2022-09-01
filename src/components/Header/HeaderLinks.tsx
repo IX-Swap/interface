@@ -143,6 +143,7 @@ export const HeaderLinks = () => {
       {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
           disabled={!isKycApproved}
+          data-testid="securityTokensButton"
           id={`stake-nav-link`}
           to={routes.securityTokens('tokens')}
           isActive={(match, { pathname }) => {

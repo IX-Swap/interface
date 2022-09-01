@@ -32,6 +32,7 @@ export interface UploaderProps {
   required?: boolean
   tooltipText?: string | JSX.Element
   isDisabled?: boolean
+  id?: any
 }
 
 interface SelectProps {
@@ -51,6 +52,7 @@ interface SelectProps {
   isClearable?: boolean
   tooltipText?: string | JSX.Element
   addCustom?: boolean
+  id?: any
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
@@ -60,6 +62,7 @@ type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
 }
 
 export const Select: FC<SelectProps> = ({
+  id,
   label,
   onSelect,
   selectedItem,
@@ -85,6 +88,7 @@ export const Select: FC<SelectProps> = ({
           name={name}
           placeholder={placeholder}
           onSelect={onSelect}
+          id={id}
           value={selectedItem}
           options={items}
           error={error}
@@ -102,6 +106,7 @@ export const Select: FC<SelectProps> = ({
 }
 
 export const TextInput: FC<TextInputProps> = ({
+  id,
   label,
   value,
   onChange,
@@ -125,6 +130,7 @@ export const TextInput: FC<TextInputProps> = ({
         <div>{value}</div>
       ) : (
         <StyledInput
+          data-testid={id}
           onBlur={onBlur}
           name={name}
           placeholder={placeholder}
@@ -180,6 +186,7 @@ export const TextareaInput: FC<TextInputProps> = ({
 }
 
 export const Uploader: FC<UploaderProps> = ({
+  id,
   title,
   subtitle,
   files,
@@ -225,6 +232,7 @@ export const Uploader: FC<UploaderProps> = ({
         <Upload
           isDisabled={isDisabled}
           accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          data-testid={id}
           file={null}
           onDrop={onDrop}
         >
@@ -256,16 +264,17 @@ interface ChooseFileTypes {
   onDrop: (file: FileWithPath) => void
   error?: any
   handleDeleteClick: () => void
+  id?: any
 }
 
-export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: ChooseFileTypes) => {
+export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }: ChooseFileTypes) => {
   return (
     <Box style={{ maxWidth: 200 }}>
       {label && <Label label={label} />}
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
-        <Upload file={file} onDrop={onDrop}>
+        <Upload file={file} onDrop={onDrop} data-testid={id}>
           <ButtonGradient type="button" style={{ height: 52, padding: '7px 16px' }}>
             <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
           </ButtonGradient>
