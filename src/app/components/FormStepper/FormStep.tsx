@@ -30,6 +30,15 @@ export interface FormStepProps {
   skippable?: boolean
   completed: number[]
   createModeRedirect: CreateModeRedirect
+  redirectOnSave?: (
+    createModeRedirect: CreateModeRedirect,
+    data: any,
+    isCreateMode: any,
+    nextLocation: any,
+    setIsRedirecting: any
+  ) => void
+  redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
+  isRequiredOnLastStep: boolean
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -47,7 +56,10 @@ export const FormStep = (props: FormStepProps) => {
     setCompleted,
     skippable,
     completed,
-    createModeRedirect
+    createModeRedirect,
+    redirectCallback,
+    redirectOnSave,
+    isRequiredOnLastStep = false
   } = props
 
   const isCurrentStep = activeStep === index
@@ -84,7 +96,9 @@ export const FormStep = (props: FormStepProps) => {
         //eslint-disable-line
         setCompleted?.()
       }
-      if (!isEditing && createModeRedirect !== undefined) {
+      if (redirectCallback !== undefined) {
+        redirectCallback(createModeRedirect, data)
+      } else if (!isEditing && createModeRedirect !== undefined) {
         const redirect =
           typeof createModeRedirect === 'function'
             ? createModeRedirect(data?.data.type ?? 'corporate')
@@ -136,6 +150,8 @@ export const FormStep = (props: FormStepProps) => {
         isCreateMode={data === undefined}
         createModeRedirect={createModeRedirect}
         activeStep={activeStep}
+        redirectOnSave={redirectOnSave}
+        // redirectOnSave for DSO
       />
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='small' />
@@ -149,22 +165,23 @@ export const FormStep = (props: FormStepProps) => {
             </Fragment>
           )}
 
-          {hasPrevStep && !isLastStep && (
-            <Fragment>
-              <BackButton
-                fullWidth
-                mutation={editMutation}
-                getRequestPayload={step.getRequestPayload}
-                shouldSaveStep={shouldSaveOnMove}
-                nextStep={activeStep - 1}
-                setActiveStep={setActiveStep}
-                isLastStep={isLastStep}
-              >
-                Back
-              </BackButton>
-              <Box mx={1} />
-            </Fragment>
-          )}
+          {hasPrevStep &&
+            (!isRequiredOnLastStep ? !isLastStep : isRequiredOnLastStep) && (
+              <Fragment>
+                <BackButton
+                  fullWidth
+                  mutation={editMutation}
+                  getRequestPayload={step.getRequestPayload}
+                  shouldSaveStep={shouldSaveOnMove}
+                  nextStep={activeStep - 1}
+                  setActiveStep={setActiveStep}
+                  isLastStep={isLastStep}
+                >
+                  Back
+                </BackButton>
+                <Box mx={1} />
+              </Fragment>
+            )}
 
           {hasNextStep && (
             <Button

@@ -11,6 +11,13 @@ export interface SaveOnNavigateProps {
   isCreateMode: boolean
   createModeRedirect: CreateModeRedirect
   activeStep?: number
+  redirectOnSave?: (
+    createModeRedirect: CreateModeRedirect,
+    data: any,
+    isCreateMode: any,
+    nextLocation: any,
+    setIsRedirecting: any
+  ) => void
 }
 
 export const SaveOnNavigate = ({
@@ -18,7 +25,8 @@ export const SaveOnNavigate = ({
   transformData,
   isCreateMode,
   createModeRedirect,
-  activeStep = 0
+  activeStep = 0,
+  redirectOnSave
 }: SaveOnNavigateProps) => {
   const { watch, formState } = useFormContext()
   const values = watch()
@@ -36,24 +44,34 @@ export const SaveOnNavigate = ({
       {
         onSettled: (data: any) => {
           setIsRedirecting(true)
-          const redirect =
-            typeof createModeRedirect === 'function'
-              ? createModeRedirect(data?.data.type ?? 'corporate')
-              : createModeRedirect
-          if (
-            isCreateMode &&
-            redirect !== undefined &&
-            nextLocation !== undefined &&
-            data?.data._id !== undefined &&
-            data?.data.user._id !== undefined
-          ) {
-            history.replace(
-              generatePath(`${redirect}${nextLocation.search}`, {
-                identityId: data?.data._id,
-                userId: data?.data.user._id
-              })
+          if (redirectOnSave !== undefined) {
+            redirectOnSave(
+              createModeRedirect,
+              data,
+              isCreateMode,
+              nextLocation,
+              setIsRedirecting
             )
-            setIsRedirecting(false)
+          } else {
+            const redirect =
+              typeof createModeRedirect === 'function'
+                ? createModeRedirect(data?.data.type ?? 'corporate')
+                : createModeRedirect
+            if (
+              isCreateMode &&
+              redirect !== undefined &&
+              nextLocation !== undefined &&
+              data?.data._id !== undefined &&
+              data?.data.user._id !== undefined
+            ) {
+              history.replace(
+                generatePath(`${redirect}${nextLocation.search}`, {
+                  identityId: data?.data._id,
+                  userId: data?.data.user._id
+                })
+              )
+              setIsRedirecting(false)
+            }
           }
         }
       }
