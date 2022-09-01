@@ -34,27 +34,33 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
         />
       </Grid>
 
-      {files.map((item, i) => (
-        <Grid item>
-          <FileUpload
-            key={item.id ?? i}
-            value={fields[i]?.value ?? {}}
-            fullWidth
-            label={
-              <Box display={'flex'} alignItems={'center'}>
-                <Icon name={'file'} />
-                <Box ml={2}>Upload file</Box>
-              </Box>
-            }
-            name={'file'}
-            documentInfo={{ type: fileType, title: fileType, ...documentInfo }}
-            onSuccessUploadCallback={file => append({ value: file })}
-            onRemoveCallback={() => {
-              remove(i)
-            }}
-          />
-        </Grid>
-      ))}
+      <Grid item container direction={'column'} spacing={2}>
+        {files.map((item, i) => (
+          <Grid item>
+            <FileUpload
+              key={item.id ?? i}
+              value={fields[i]?.value ?? {}}
+              fullWidth
+              label={
+                <Box display={'flex'} alignItems={'center'}>
+                  <Icon name={'file'} />
+                  <Box ml={2}>Upload file</Box>
+                </Box>
+              }
+              name={'file'}
+              documentInfo={{
+                type: fileType,
+                title: fileType,
+                ...documentInfo
+              }}
+              onSuccessUploadCallback={file => append({ value: file })}
+              onRemoveCallback={() => {
+                remove(i)
+              }}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Grid>
   )
 }
