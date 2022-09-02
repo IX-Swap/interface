@@ -52,6 +52,13 @@ export const useTableWithPagination = <TData>({
     }
   }, [filter, disabledUseEffect])
 
+  useEffect(() => {
+    if (defaultFilter !== undefined) {
+      defaultFilter.isFavorite =
+        defaultFilter.isFavorite === 'yes' ? 'true' : 'false'
+    }
+  }, [defaultFilter])
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
     const payload: KeyValueMap<any> = {

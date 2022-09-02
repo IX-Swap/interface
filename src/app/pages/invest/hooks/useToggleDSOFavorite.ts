@@ -25,28 +25,31 @@ export const useToggleDSOFavorite = (
     onMutate: async () => {
       // TODO: logic needs to be revisited
       dependentQueryKeys.forEach(currentQueryKey => {
-        const queryKey = queryCache.getQueries(currentQueryKey)[0].queryKey
-        queryCache.setQueryData(queryKey, (old: any) => {
-          const list = old[0].data[0].documents
+        const currentCache = queryCache.getQueries(currentQueryKey)
+        if (currentCache.length > 0) {
+          const queryKey = currentCache[0].queryKey
+          queryCache.setQueryData(queryKey, (old: any) => {
+            const list = old[0].data[0].documents
 
-          return [
-            {
-              data: [
-                {
-                  documents: list.map((dso: DigitalSecurityOffering) => {
-                    if (getIdFromObj(dso) === dsoId) {
-                      return {
-                        ...dso,
-                        isStarred: !dso.isStarred
+            return [
+              {
+                data: [
+                  {
+                    documents: list.map((dso: DigitalSecurityOffering) => {
+                      if (getIdFromObj(dso) === dsoId) {
+                        return {
+                          ...dso,
+                          isStarred: !dso.isStarred
+                        }
                       }
-                    }
-                    return dso
-                  })
-                }
-              ]
-            }
-          ]
-        })
+                      return dso
+                    })
+                  }
+                ]
+              }
+            ]
+          })
+        }
       })
     },
     onSuccess: async () => {

@@ -13,18 +13,9 @@ export interface DSOCardCoverProps {
 }
 
 export const DSOCardCover = (props: DSOCardCoverProps) => {
-  const { data, type } = props
+  const { data } = props
   const classes = useStyles()
-  const queryKeys = []
-
-  if (type === 'Primary') {
-    queryKeys.push(dsoQueryKeys.getPromoted)
-  }
-
-  if (type === 'TopOffers') {
-    queryKeys.push(dsoQueryKeys.getPromoted)
-    queryKeys.push(dsoQueryKeys.getApprovedList)
-  }
+  const queryKeys = [dsoQueryKeys.getPromoted, dsoQueryKeys.getApprovedList]
 
   return (
     <Grid
