@@ -15,6 +15,13 @@ export interface DSOVideoItemProps {
   defaultValue: DsoVideo
 }
 
+export const getWrapValue = (isTablet: boolean) =>
+  isTablet ? 'wrap' : 'nowrap'
+export const getRemoveButtonWidth = (isTablet: boolean) =>
+  isTablet ? '100%' : 50
+export const getRemoveButtonWrapperWidth = (isTablet: boolean) =>
+  isTablet ? '100%' : 'initial'
+
 export const DSOVideoItem = (props: DSOVideoItemProps) => {
   const { defaultValue, fieldId, index, remove } = props
   const { control } = useFormContext<{
@@ -27,14 +34,14 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
       item
       container
       alignItems='flex-start'
-      wrap={isTablet ? 'wrap' : 'nowrap'}
+      wrap={getWrapValue(isTablet)}
       direction='column'
     >
       <Grid
         item
         container
         xs={12}
-        wrap={isTablet ? 'wrap' : 'nowrap'}
+        wrap={getWrapValue(isTablet)}
         alignItems={'flex-end'}
         spacing={{ xs: 5, md: 2 }}
       >
@@ -73,9 +80,9 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
           />
         </Grid>
 
-        <Grid item width={isTablet ? '100%' : 'initial'}>
+        <Grid item width={getRemoveButtonWrapperWidth(isTablet)}>
           <DSOTeamRemoveButton
-            sx={{ width: isTablet ? '100%' : 50, height: 50 }}
+            sx={{ width: getRemoveButtonWidth(isTablet), height: 50 }}
             disabled={index === 0}
             remove={remove}
             index={index}

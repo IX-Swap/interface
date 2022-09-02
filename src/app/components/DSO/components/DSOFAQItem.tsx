@@ -14,14 +14,15 @@ export interface DSOFAQItemProps {
   defaultValue: DsoFAQItem
 }
 
+export const getMarginTopValue = (index: number, isTablet: boolean) => {
+  if (isTablet) return 4
+  return index === 0 ? 5 : 8
+}
+
 export const DSOFAQItem = (props: DSOFAQItemProps) => {
   const { defaultValue, fieldId, index, remove } = props
   const { control } = useFormContext<{ faqs: DSOFormValues['faqs'] }>()
   const { isTablet } = useAppBreakpoints()
-  const getMarginTopValue = () => {
-    if (isTablet) return 4
-    return index === 0 ? 5 : 8
-  }
 
   return (
     <Grid
@@ -31,7 +32,13 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
       wrap={isTablet ? 'wrap' : 'nowrap'}
       direction='column'
     >
-      <Grid item sx={{ marginBottom: 1.5, marginTop: getMarginTopValue() }}>
+      <Grid
+        item
+        sx={{
+          marginBottom: 1.5,
+          marginTop: getMarginTopValue(index, isTablet)
+        }}
+      >
         <Typography>FAQ {index + 1}</Typography>
       </Grid>
       <Grid item container xs={12} direction={'column'} spacing={5}>
