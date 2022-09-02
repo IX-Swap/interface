@@ -41,7 +41,10 @@ describe('DSOCardCover', () => {
     expect(DSOCardFavorite).toHaveBeenCalledWith(
       {
         dso: dso,
-        dependentQueryKeys: [dsoQueryKeys.getPromoted]
+        dependentQueryKeys: [
+          dsoQueryKeys.getPromoted,
+          dsoQueryKeys.getApprovedList
+        ]
       },
       {}
     )

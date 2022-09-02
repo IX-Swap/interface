@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material'
 import { BackLink } from 'app/components/BackLink/BackLink'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { DSOTable } from 'app/pages/invest/components/DSOTable/DSOTable'
+import { PrimaryOfferings as PrimaryOfferingsList } from 'app/pages/invest/components/PrimaryOfferings'
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
 import { InvestRoute } from '../router/config'
@@ -20,7 +20,7 @@ export const PrimaryOfferings = () => {
         </Grid>
         <Grid item xs={12}>
           <RootContainer>
-            <DSOTable />
+            <PrimaryOfferingsList fullview />
           </RootContainer>
         </Grid>
       </Grid>

@@ -72,6 +72,8 @@ export interface BaseFilter {
   fundStatus?: string
   reportType?: string
   isFavorite?: string
+  sortField?: string
+  sortOrder?: string
 }
 
 export interface InternalRouteBase {

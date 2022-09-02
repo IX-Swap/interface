@@ -24,7 +24,7 @@ export const DSOTable = () => {
   const capitalStructure = getFilterValue('capitalStructure', undefined)
   const currency = getFilterValue('currency', undefined)
   const network = getFilterValue('network', undefined)
-  const isPriceAscending = getFilterValue('isPriceAscending', undefined)
+  const isPriceAscending = getFilterValue('sortField', undefined)
   const isFavorite = getFilterValue('isFavorite', undefined)
 
   const { isMiniLaptop } = useAppBreakpoints()

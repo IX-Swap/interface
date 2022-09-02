@@ -61,16 +61,6 @@ describe('PrimaryOfferings', () => {
     jest.clearAllMocks()
   })
 
-  it('renders empty component when status is loading', () => {
-    jest
-      .spyOn(useTableWithPagination, 'useTableWithPagination')
-      .mockImplementation(() => objLoadingResponse as any)
-
-    const { container } = render(<PrimaryOfferings />)
-
-    expect(container).toBeEmptyDOMElement()
-  })
-
   it('renders NoOffers component when data is empty array', () => {
     jest
       .spyOn(useTableWithPagination, 'useTableWithPagination')
