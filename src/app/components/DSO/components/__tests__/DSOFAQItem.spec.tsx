@@ -41,10 +41,8 @@ describe('DSOFAQItem', () => {
         fullWidth: true,
         component: TextInput,
         defaultValue: faqItem.question,
-        label: 'FAQ #2',
         name: ['faqs', 1, 'question'],
-        variant: 'outlined',
-        helperText: 'Input FAQ Question'
+        variant: 'outlined'
       }),
       {}
     )
@@ -55,7 +53,6 @@ describe('DSOFAQItem', () => {
         fullWidth: true,
         component: TextInput,
         defaultValue: faqItem.answer,
-        label: 'Input answer here',
         name: ['faqs', 1, 'answer'],
         variant: 'outlined',
         multiline: true,
@@ -63,21 +60,6 @@ describe('DSOFAQItem', () => {
       }),
       {}
     )
-  })
-
-  it('renders remove button component', () => {
-    render(
-      <Form>
-        <DSOFAQItem
-          defaultValue={faqItem}
-          index={1}
-          fieldId={'213'}
-          remove={removeFn}
-        />
-      </Form>
-    )
-
-    expect(DSOTeamRemoveButton).toHaveBeenCalledTimes(0)
   })
 
   it('renders remove button component if index equal or more than 3', () => {
