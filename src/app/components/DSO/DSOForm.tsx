@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
-import { Grid } from '@mui/material'
-import { Form } from 'components/form/Form'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { getOfferingName } from 'helpers/strings'
-import { getDSOValidationSchema } from 'validation/dso'
-import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
-import { DSOFormActions } from 'app/components/DSO/components/DSOFormActions'
-import { DSOFormFields } from 'app/components/DSO/components/DSOFormFields'
+import { getOfferingName, getIdFromObj } from 'helpers/strings'
+import { FormStepper } from 'app/components/FormStepper/FormStepper'
+import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
+
+import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
+import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
+import { dsoFormSteps } from './steps'
+import { transformDSOToFormValues } from 'app/components/DSO/utils'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering
@@ -16,32 +16,25 @@ export interface DSOFormProps {
 }
 
 export const DSOForm = (props: DSOFormProps) => {
-  const { data, isNew = false } = props
-  const isLive = isDSOLive(data)
-  const validationSchema = useMemo(() => {
-    return getDSOValidationSchema(isNew, isLive)
-  }, [isNew, isLive])
+  const { data } = props
+
+  const dsoId = getIdFromObj(data)
+  const createMutation = useCreateDSO()
+  const editMutation = useUpdateDSO(dsoId, data?.user ?? '')
+  const submitMutation = useSubmitDSO(dsoId)
+
   useSetPageTitle(getOfferingName(data))
 
   return (
-    <Form
-      validationSchema={validationSchema}
-      defaultValues={transformDSOToFormValues(data)}
-      data-testid='dso-form'
-    >
-      <Grid container>
-        <Grid item lg={9} container direction='column'>
-          <DSOFormFields isNew={isNew} isLive={isLive} />
-        </Grid>
-
-        <Grid item lg={3}>
-          <DSOSidebar
-            isNew
-            dso={data}
-            footer={<DSOFormActions dso={data} schema={validationSchema} />}
-          />
-        </Grid>
-      </Grid>
-    </Form>
+    <FormStepper
+      data={transformDSOToFormValues(data)}
+      createMutation={createMutation}
+      editMutation={editMutation}
+      submitMutation={submitMutation}
+      steps={dsoFormSteps}
+      nonLinear
+      formTitle='Create DSO'
+      createModeRedirect={undefined}
+    />
   )
 }

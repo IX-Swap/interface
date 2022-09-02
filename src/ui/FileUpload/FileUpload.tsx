@@ -12,8 +12,9 @@ import { Avatar } from 'ui/FileUpload/Avatar'
 
 export interface FileUploadProps {
   name: string
+  defaultLabel?: string | React.ReactNode
   label: string | React.ReactNode
-  placeHolder?: string
+  placeHolder?: string | React.ReactNode
   value?: Maybe<DataroomFile | DataroomFile[]>
   onChange?: (files: DataroomFile | DataroomFile[]) => any
   documentInfo?: UploadDocumentInfo

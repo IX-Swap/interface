@@ -12,7 +12,7 @@ export const DSOFundRaisingMilestone = () => {
   return (
     <DSOContainer
       title='Fund Raising Milestone'
-      subtitle='A short description of fundraising milestones.'
+      subtitle='A short description of fundraising milestones'
       item
       xs={12}
     >

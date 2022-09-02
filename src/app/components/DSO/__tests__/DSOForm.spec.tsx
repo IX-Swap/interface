@@ -1,29 +1,17 @@
+import { DSOForm, DSOFormProps } from 'app/components/DSO/DSOForm'
+import { FormStepper } from 'app/components/FormStepper/FormStepper'
 import React from 'react'
 import { render } from 'test-utils'
-import { DSOForm, DSOFormProps } from 'app/components/DSO/DSOForm'
-import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
-import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
-import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
-import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 import { dso } from '__fixtures__/authorizer'
-import { history } from 'config/history'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import * as useParsedDataHook from 'hooks/useParsedData'
+import * as useSetPageTitle from 'app/hooks/useSetPageTitle'
+import * as useCreateDSO from 'app/pages/issuance/hooks/useCreateDSO'
+import * as useSubmitDSO from 'app/pages/issuance/hooks/useSubmitDSO'
+import * as useUpdateDSO from 'app/pages/issuance/hooks/useUpdateDSO'
+import { dsoFormSteps } from 'app/components/DSO/steps'
+import { transformDSOToFormValues } from 'app/components/DSO/utils'
 
-jest.mock('app/components/DSO/components/DSOBaseFields', () => ({
-  DSOBaseFields: jest.fn(() => <div />)
-}))
-
-jest.mock('app/components/DSO/components/DSOPricing', () => ({
-  DSOPricing: jest.fn(() => <div />)
-}))
-
-jest.mock('app/components/DSO/components/DSOTerms', () => ({
-  DSOTerms: jest.fn(() => <div />)
-}))
-
-jest.mock('app/components/DSO/components/DSOTeam', () => ({
-  DSOTeam: jest.fn(() => <div />)
+jest.mock('app/components/FormStepper/FormStepper', () => ({
+  FormStepper: jest.fn(() => null)
 }))
 
 describe('DSOForm', () => {
@@ -32,14 +20,26 @@ describe('DSOForm', () => {
     data: dso
   }
 
-  const parsedDataFn = jest.fn()
+  const createDSO = jest.fn()
+  const updateDSO = jest.fn()
+  const submitDSO = jest.fn()
 
   beforeEach(() => {
-    history.push(IssuanceRoute.view, { dsoId: dso._id })
+    jest
+      .spyOn(useCreateDSO, 'useCreateDSO')
+      .mockImplementation(() => [createDSO, { isLoading: false } as any])
 
     jest
-      .spyOn(useParsedDataHook, 'useParsedData')
-      .mockImplementation(parsedDataFn)
+      .spyOn(useUpdateDSO, 'useUpdateDSO')
+      .mockImplementation(() => [updateDSO, { isLoading: false } as any])
+
+    jest
+      .spyOn(useSubmitDSO, 'useSubmitDSO')
+      .mockImplementation(() => [submitDSO, { isLoading: false } as any])
+
+    jest
+      .spyOn(useSetPageTitle, 'useSetPageTitle')
+      .mockImplementation(() => undefined)
   })
 
   afterEach(async () => {
@@ -48,19 +48,15 @@ describe('DSOForm', () => {
 
   it('renders form field components', () => {
     render(<DSOForm {...props} />)
-    expect(DSOBaseFields).toHaveBeenCalled()
-    expect(DSOPricing).toHaveBeenCalled()
-    expect(DSOTerms).toHaveBeenCalled()
-    expect(DSOTeam).toHaveBeenCalled()
-  })
-
-  it('renders default isNew prop when it is not defined', () => {
-    render(<DSOForm {...props} isNew={undefined} />)
-    expect(DSOBaseFields).toHaveBeenCalledWith(
-      {
-        isNew: false,
-        isLive: true
-      },
+    expect(FormStepper).toHaveBeenCalledWith(
+      expect.objectContaining({
+        formTitle: 'Create DSO',
+        data: transformDSOToFormValues(props.data),
+        steps: dsoFormSteps,
+        createMutation: [createDSO, { isLoading: false }],
+        editMutation: [updateDSO, { isLoading: false }],
+        submitMutation: [submitDSO, { isLoading: false }]
+      }),
       {}
     )
   })
