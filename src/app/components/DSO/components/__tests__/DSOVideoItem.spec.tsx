@@ -43,8 +43,7 @@ describe('DSOVideoItem', () => {
         defaultValue: videoLink.title,
         label: 'Video Title',
         name: ['videos', 1, 'title'],
-        variant: 'outlined',
-        helperText: 'Title of the link'
+        variant: 'outlined'
       }),
       {}
     )
@@ -55,28 +54,11 @@ describe('DSOVideoItem', () => {
         fullWidth: true,
         component: TextInput,
         defaultValue: videoLink.link,
-        label: 'Link Source URL',
         name: ['videos', 1, 'link'],
-        variant: 'outlined',
-        helperText: 'URL source where the investors will be redirected to'
+        variant: 'outlined'
       }),
       {}
     )
-  })
-
-  it('renders remove button component', () => {
-    render(
-      <Form>
-        <DSOVideoItem
-          defaultValue={videoLink}
-          index={1}
-          fieldId={'213'}
-          remove={removeFn}
-        />
-      </Form>
-    )
-
-    expect(DSOTeamRemoveButton).toHaveBeenCalledTimes(0)
   })
 
   it('renders remove button component if index equal or more than 3', () => {
