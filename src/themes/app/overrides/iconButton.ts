@@ -14,7 +14,7 @@ export const iconButton = (theme: Theme) => {
         },
         ':disabled': {
           svg: {
-            fill: iconButtonPalette.fillDisabled
+            fill: iconButtonPalette.fill
           }
         },
         '&.MuiIconButton-sizeLarge': {

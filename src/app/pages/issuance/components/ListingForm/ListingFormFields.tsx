@@ -9,6 +9,7 @@ import { ListingPricing } from 'app/pages/issuance/components/ListingForm/Listin
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { ListingMarketInfo } from 'app/pages/issuance/components/ListingForm/ListingMarketInfo'
 import { ListingBaseFields } from 'app/pages/issuance/components/ListingForm/ListingBaseFields'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 
 export interface ListingFormFieldsProps {
   isNew: boolean
@@ -25,11 +26,13 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
         name={ListingFormSection['General Information']}
         style={{ maxWidth: '100%' }}
       >
-        <ListingBaseFields
-          isNew={isNew}
-          isLive={isLive}
-          isDataFromDSO={isDataFromDSO}
-        />
+        <FieldContainer>
+          <ListingBaseFields
+            isNew={isNew}
+            isLive={isLive}
+            isDataFromDSO={isDataFromDSO}
+          />
+        </FieldContainer>
       </Element>
 
       <Element name={ListingFormSection.Market} style={{ maxWidth: '100%' }}>
