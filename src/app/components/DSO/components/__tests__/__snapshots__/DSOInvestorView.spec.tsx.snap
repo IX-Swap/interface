@@ -175,7 +175,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                     <h6
                       class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
                     >
-                      100000 SGD
+                      100,000.00 SGD
                     </h6>
                   </div>
                 </div>
@@ -227,7 +227,7 @@ exports[`DSOInvestorView matches snapshot 1`] = `
                     <h6
                       class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
                     >
-                      100.00 token symbol
+                      100 token symbol
                     </h6>
                   </div>
                 </div>
