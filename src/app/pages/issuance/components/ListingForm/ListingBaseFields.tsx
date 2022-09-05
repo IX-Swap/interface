@@ -76,7 +76,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               }
               valueExtractor={dateTimeValueExtractor}
               defaultValue={null}
-              helperText='Offering launch date'
             />
           </Grid>
         </Grid>
