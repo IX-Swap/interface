@@ -11,6 +11,7 @@ import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { useStyles } from './FormStepper.styles'
+import { RedirectOnSaveArgs } from 'types/dso'
 
 export interface FormStepperStep {
   label: string
@@ -37,13 +38,7 @@ export interface FormStepperProps {
   formTitle?: string
   createModeRedirect: CreateModeRedirect
   submitText?: string
-  redirectOnSave?: (
-    createModeRedirect: CreateModeRedirect,
-    data: any,
-    isCreateMode: any,
-    nextLocation: any,
-    setIsRedirecting: any
-  ) => void
+  redirectOnSave?: (args: RedirectOnSaveArgs) => void
   redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
   isRequiredOnLastStep?: boolean
 }

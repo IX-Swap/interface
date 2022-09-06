@@ -7,6 +7,8 @@ import {
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
 import { ObjectSchema, Shape } from 'yup'
+import { CreateModeRedirect } from 'app/components/FormStepper/FormStepper'
+import * as H from 'history'
 
 export interface DsoTeamMember {
   _id?: string
@@ -205,4 +207,27 @@ export interface DepositAddress {
 export interface DSOFormActionsProps {
   dso: DigitalSecurityOffering | undefined
   schema: ObjectSchema<Shape<object | undefined, DSOFormValues>, object>
+}
+export interface RedirectArgs {
+  createModeRedirect: CreateModeRedirect
+  data: any
+  dsoId: string
+  history: H.History
+}
+export interface RedirectOnSaveArgs {
+  createModeRedirect: CreateModeRedirect
+  data: any
+  isCreateMode: boolean
+  nextLocation: H.Location<unknown> | undefined
+  setIsRedirecting: any
+}
+
+export interface RedirectSaveArgs {
+  createModeRedirect: CreateModeRedirect
+  data: any
+  isCreateMode: boolean
+  nextLocation: H.Location<unknown> | undefined
+  setIsRedirecting: any
+  dsoId: string
+  history: H.History
 }

@@ -2,7 +2,9 @@ import React from 'react'
 import {
   DigitalSecurityOffering,
   DSOFormValues,
-  DSOLaunchStatus
+  DSOLaunchStatus,
+  RedirectArgs,
+  RedirectSaveArgs
 } from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
 import { percentageToNumber } from 'app/pages/issuance/utils/utils'
@@ -11,6 +13,53 @@ import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'
 import { Network, Urls } from 'types/networks'
 import { sanitize } from 'dompurify'
+import { generatePath } from 'react-router-dom'
+
+export const redirect = ({
+  data,
+  createModeRedirect,
+  dsoId,
+  history
+}: RedirectArgs) => {
+  if (
+    createModeRedirect !== undefined &&
+    data?.user !== undefined &&
+    dsoId !== ''
+  ) {
+    history.replace(
+      generatePath(createModeRedirect as string, {
+        issuerId: data?.user,
+        dsoId: dsoId
+      })
+    )
+  }
+}
+
+export const redirectSave = ({
+  createModeRedirect,
+  isCreateMode,
+  nextLocation,
+  data,
+  dsoId,
+  history,
+  setIsRedirecting
+}: RedirectSaveArgs) => {
+  if (
+    createModeRedirect !== undefined &&
+    isCreateMode &&
+    nextLocation !== undefined &&
+    data?.user !== undefined &&
+    dsoId !== ''
+  ) {
+    history.replace(
+      generatePath(`${createModeRedirect as string}${nextLocation.search}`, {
+        issuerId: data?.user,
+        dsoId: dsoId
+      })
+    )
+    setIsRedirecting(false)
+  }
+}
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined

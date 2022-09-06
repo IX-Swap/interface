@@ -1,5 +1,5 @@
 import React from 'react'
-import { DigitalSecurityOffering } from 'types/dso'
+import { DigitalSecurityOffering, RedirectOnSaveArgs } from 'types/dso'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getOfferingName, getIdFromObj } from 'helpers/strings'
 import {
@@ -7,13 +7,15 @@ import {
   FormStepper
 } from 'app/components/FormStepper/FormStepper'
 import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
-
 import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
 import { dsoFormSteps } from './steps'
-import { generatePath, useHistory } from 'react-router-dom'
-import { Location } from 'history'
-import { transformDSOToFormValues } from 'app/components/DSO/utils'
+import { useHistory } from 'react-router-dom'
+import {
+  redirect,
+  redirectSave,
+  transformDSOToFormValues
+} from 'app/components/DSO/utils'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering
@@ -33,42 +35,25 @@ export const DSOForm = (props: DSOFormProps) => {
     createModeRedirect: CreateModeRedirect,
     data: any
   ) => {
-    if (
-      createModeRedirect !== undefined &&
-      data?.user !== undefined &&
-      dsoId !== ''
-    ) {
-      history.replace(
-        generatePath(createModeRedirect as string, {
-          issuerId: data?.user,
-          dsoId: dsoId
-        })
-      )
-    }
+    redirect({ createModeRedirect, data, history, dsoId })
   }
 
-  const redirectOnSave = (
-    createModeRedirect: CreateModeRedirect,
-    data: any,
-    isCreateMode: boolean,
-    nextLocation: Location<unknown> | undefined,
-    setIsRedirecting: any
-  ) => {
-    if (
-      createModeRedirect !== undefined &&
-      isCreateMode &&
-      nextLocation !== undefined &&
-      data?.user !== undefined &&
-      dsoId !== ''
-    ) {
-      history.replace(
-        generatePath(`${createModeRedirect as string}${nextLocation.search}`, {
-          issuerId: data?.user,
-          dsoId: dsoId
-        })
-      )
-      setIsRedirecting(false)
-    }
+  const redirectOnSave = ({
+    createModeRedirect,
+    isCreateMode,
+    nextLocation,
+    data,
+    setIsRedirecting
+  }: RedirectOnSaveArgs) => {
+    redirectSave({
+      createModeRedirect,
+      isCreateMode,
+      nextLocation,
+      data,
+      dsoId,
+      history,
+      setIsRedirecting
+    })
   }
 
   useSetPageTitle(getOfferingName(data))
