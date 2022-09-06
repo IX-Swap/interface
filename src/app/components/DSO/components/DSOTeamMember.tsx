@@ -68,7 +68,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             placeHolder={<Box mt={1}>Upload File</Box>}
             label={
               <Typography>
-                Upload photo{' '}
+                Upload Photo{' '}
                 <Typography display={'inline'} color={'text.secondary'}>
                   (Optional)
                 </Typography>
@@ -89,7 +89,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
               fullWidth
               key={fieldId}
               component={TextInput}
-              placeholder={'Team member Name'}
+              placeholder={"Team Member's Name"}
               control={control}
               defaultValue={defaultValue?.name ?? ''}
               label='Name'
@@ -103,7 +103,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
               fullWidth
               key={fieldId}
               control={control}
-              placeholder={'Team member position'}
+              placeholder={"Team Member's Position"}
               component={TextInput}
               defaultValue={defaultValue?.position ?? ''}
               label='Position'
