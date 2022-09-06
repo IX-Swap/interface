@@ -16,6 +16,8 @@ export const ListingMarketInfo = () => {
   const currency = watch('currency')
   const { data, isLoading } = useAssetsData('Currency')
 
+  const currencyList = data.list.reverse()
+
   if (isLoading) {
     return <LoadingIndicator />
   }
@@ -48,11 +50,12 @@ export const ListingMarketInfo = () => {
               gap={{ xs: 1.5, md: 3 }}
               gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }}
             >
-              {data.list.reverse().map(item => {
+              {currencyList.map(item => {
                 return (
                   <Grid
                     item
                     key={item._id}
+                    data-testid='radioWrapper'
                     className={classnames(classes.button, {
                       [classes.active]: currency === item._id
                     })}
