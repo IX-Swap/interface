@@ -16,9 +16,9 @@ export const DSOPricing = () => {
 
   return (
     <Grid item>
-      <Grid container spacing={2} direction='column'>
+      <Grid container spacing={2} py={2} direction='column'>
         <Grid item>
-          <FormSectionHeader title='Pricing' />
+          <FormSectionHeader hasBorderBottom={false} title='Pricing' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -30,7 +30,7 @@ export const DSOPricing = () => {
                 name='pricePerUnit'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Base price you want to sell your offering'
+                helperText='Offering base price'
                 variant='outlined'
               />
             </Grid>
@@ -42,14 +42,14 @@ export const DSOPricing = () => {
                 name='totalFundraisingAmount'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Amount you want to raise'
+                helperText='Amount to raise'
               />
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TypedField
                 control={control}
                 component={MinimumInvesmentField}
@@ -57,7 +57,7 @@ export const DSOPricing = () => {
                 name='minimumInvestment'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Minimum units investor should invest'
+                helperText='Number of tokens'
                 variant='outlined'
               />
             </Grid>

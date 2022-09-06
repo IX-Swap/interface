@@ -24,11 +24,12 @@ export interface DSOBaseFieldsProps {
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
   const { control } = useFormContext<DSOFormValues>()
+
   return (
     <Grid item>
-      <Grid container direction='column' spacing={2}>
+      <Grid container direction='column' spacing={2} py={2}>
         <Grid item>
-          <FormSectionHeader title='DSO Information' />
+          <FormSectionHeader hasBorderBottom={false} title='DSO Information' />
         </Grid>
         <Grid item>
           <TypedField
@@ -46,27 +47,16 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <TypedField
                 control={control}
                 component={CapitalStructureSelect}
                 label='Capital Structure'
                 displayEmpty
                 name='capitalStructure'
-                helperText='Offering terms will be changed based on your capital structure'
+                helperText='Select Capital Structure'
                 variant='outlined'
                 inputProps={{ 'data-testid': 'capital-structure' }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TypedField
-                component={NetworkSelect}
-                label='Network'
-                name='network'
-                disabled={!isNew}
-                control={control}
-                helperText='Select your blockchain network from the list'
-                variant='outlined'
               />
             </Grid>
           </Grid>
@@ -80,7 +70,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='tokenName'
                 disabled={isLive}
                 control={control}
-                helperText='Name of the token that describes your offering the best'
+                helperText='Name of the token that offering'
                 variant='outlined'
               />
             </Grid>
@@ -92,6 +82,21 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 disabled={isLive}
                 control={control}
                 helperText='Token symbol'
+                variant='outlined'
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={NetworkSelect}
+                label='Network'
+                name='network'
+                disabled={!isNew}
+                control={control}
+                helperText='Select blockchain network'
                 variant='outlined'
               />
             </Grid>
@@ -116,7 +121,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Corporate'
                 name='corporate'
                 control={control}
-                helperText='Select your corporate from the list'
+                helperText='Select corporate'
                 variant='outlined'
               />
             </Grid>
@@ -130,7 +135,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Issuer Name'
                 name='issuerName'
                 control={control}
-                helperText='Issuer name'
+                helperText='Issuer'
                 variant='outlined'
               />
             </Grid>
@@ -141,7 +146,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Currency'
                 name='currency'
                 control={control}
-                helperText='Your preferred currency'
+                helperText='Preferred currency'
                 variant='outlined'
               />
             </Grid>
@@ -160,7 +165,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 valueExtractor={dateTimeValueExtractor}
                 // @ts-expect-error
                 defaultValue={null}
-                helperText='Offering launch date'
+                helperText='mm/dd/yyyy'
                 inputVariant='outlined'
               />
             </Grid>
@@ -169,12 +174,13 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 component={DateTimePicker}
                 customRenderer
                 label='Completion Date'
+                isOptional
                 name='completionDate'
                 control={control}
                 valueExtractor={dateTimeValueExtractor}
                 // @ts-expect-error
                 defaultValue={null}
-                helperText='Offering completion date'
+                helperText='mm/dd/yyyy'
                 inputVariant='outlined'
               />
             </Grid>

@@ -16,6 +16,7 @@ import {
 } from 'helpers/forms'
 import { FormControl, InputLabel, FormHelperText } from '@mui/material'
 import { ErrorMessage } from '@hookform/error-message'
+import { useTheme } from '@mui/material/styles'
 
 export interface TypedFieldProps<
   TFieldValues extends Record<string, any>,
@@ -29,6 +30,7 @@ export interface TypedFieldProps<
   defaultValue?: DeepPathValue<TFieldValues, TFieldName>
   valueExtractor?: (...args: any[]) => any
   customRenderer?: boolean
+  isOptional?: boolean
   helperText?: string
   isErrorMessageEnabled?: boolean
   onChange?: (
@@ -71,6 +73,7 @@ export const TypedField = <
     isErrorMessageEnabled = true,
     rootName,
     helperText,
+    isOptional = false,
     onChange,
     ...rest
   } = props
@@ -98,6 +101,8 @@ export const TypedField = <
   const hasHelperText = helperText !== undefined
   const [isFocused, setIsFocused] = useState(false)
   const hasStartAdornment = props.startAdornment !== undefined
+  const theme = useTheme()
+  const greyText = theme.palette.mode === 'dark' ? 500 : 600
 
   return (
     <TypedController
@@ -119,7 +124,21 @@ export const TypedField = <
           return createElement(component, {
             ...rest,
             control,
-            label,
+            label: isOptional ? (
+              <div>
+                {label}
+                <span
+                  style={{
+                    color: theme.palette.grey[greyText],
+                    marginLeft: '0.5rem'
+                  }}
+                >
+                  (Optional)
+                </span>
+              </div>
+            ) : (
+              label
+            ),
             helperText,
             value: controllerProps.value,
             id: path,
@@ -137,7 +156,7 @@ export const TypedField = <
         // TODO: When all inputs are replaced, use new input label
         return (
           <FormControl fullWidth variant={rest?.variant}>
-            {showInputLabel(component) && label !== undefined && (
+            {showInputLabel(component) && label !== undefined && !isOptional && (
               <InputLabel
                 htmlFor={path}
                 variant={rest?.variant}
@@ -157,14 +176,25 @@ export const TypedField = <
               ...rest,
               ...controllerProps,
               ...elementProps,
+              placeholder: hasHelperText ? helperText : '',
               id: path,
-              label,
+              label: isOptional ? (
+                <div>
+                  {label}
+                  <span
+                    style={{
+                      color: theme.palette.grey[greyText],
+                      marginLeft: '0.5rem'
+                    }}
+                  >
+                    (Optional)
+                  </span>
+                </div>
+              ) : (
+                label
+              ),
               onChange: handleChange
             })}
-
-            {!hasError && hasHelperText && (
-              <FormHelperText>{helperText}</FormHelperText>
-            )}
 
             {hasError && isErrorMessageEnabled && (
               <ErrorMessage

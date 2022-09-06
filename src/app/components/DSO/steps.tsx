@@ -1,23 +1,26 @@
 import React from 'react'
+import { DSOStep1 } from 'app/components/DSO/components/DSOStep1'
+import { getDSOValidationSchemaStep1 } from 'validation/dso'
+import { transformDSOToFormValuesStep1 } from './utils'
 
 export const dsoFormSteps = [
   {
     label: 'DSO Information',
-    getFormValues: () => null,
+    getFormValues: transformDSOToFormValuesStep1,
     getRequestPayload: {},
-    validationSchema: {},
-    component: () => <p>Step 1</p>
+    validationSchema: getDSOValidationSchemaStep1,
+    component: () => <DSOStep1 />
   },
   {
     label: 'Company Information',
-    getFormValues: () => null,
+    getFormValues: () => {},
     getRequestPayload: {},
     validationSchema: {},
     component: () => <p>Step 2</p>
   },
   {
     label: 'Documents',
-    getFormValues: () => null,
+    getFormValues: () => {},
     getRequestPayload: {},
     validationSchema: {},
     component: () => <p>Step 3</p>

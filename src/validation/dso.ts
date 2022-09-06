@@ -1,5 +1,11 @@
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
+import {
+  DsoFAQItem,
+  DSOFormValues,
+  DSOFormValuesStep1,
+  DsoTeamMember,
+  DsoVideo
+} from 'types/dso'
 import { array, number, object, string } from 'yup'
 import { corporateName, lettersOrSpaces } from 'validation/regexes'
 import { dateSchema, validationMessages } from './shared'
@@ -184,6 +190,115 @@ export const dsoFormBaseValidationSchema = {
   )
 }
 
+export const dsoFormBaseValidationSchemaStep1 = {
+  capitalStructure: string().required('Capital Structure is required'),
+  corporate: string()
+    .max(50, 'Maximum of 50 characters')
+    .required('Corporate is required')
+    .matches(
+      corporateName,
+      "Corporate must include only letters, numbers and these special characters . , - ; & '"
+    ),
+  currency: string().required('Currency is required'),
+  distributionFrequency: string().when('capitalStructure', {
+    is: capitalStructure =>
+      capitalStructure === 'Equity' || capitalStructure === 'Debt',
+    then: string().required('Distribution Frequency is required')
+  }),
+  dividendYield: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Equity',
+      then: number()
+        .transform(numberTransformer)
+        .required('Dividend Yield is required')
+    }),
+  equityMultiple: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Equity',
+      then: number()
+        .transform(numberTransformer)
+        .required('Equity Multiple is required')
+    }),
+  grossIRR: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Equity',
+      then: number()
+        .transform(numberTransformer)
+        .required('Gross IRR is required')
+    }),
+  interestRate: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Debt',
+      then: number()
+        .transform(numberTransformer)
+        .required('Interest Rate is required')
+    }),
+  investmentPeriod: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: capitalStructure =>
+        capitalStructure === 'Equity' || capitalStructure === 'Debt',
+      then: number()
+        .transform(numberTransformer)
+        .required('Investment Period is required')
+    }),
+  investmentStructure: string().when('capitalStructure', {
+    is: capitalStructure =>
+      capitalStructure === 'Equity' || capitalStructure === 'Debt',
+    then: string().required('Investment Structure is required')
+  }),
+  issuerName: string().required('Issuer Name is required'),
+  launchDate: dateSchema
+    .required('Launch Date is is required')
+    .test(
+      'before-completionDate',
+      'Launch date cannot be later than completion date',
+      function (launch) {
+        const { completionDate } = this.parent
+        return isBeforeDate(launch, completionDate)
+      }
+    )
+    .test('pastDate', 'Launch Date must be future date', pastDateValidator),
+  completionDate: dateSchema
+    .required('Completion Date is required')
+    .test('futureDate', 'Launch Date must be future date', pastDateValidator),
+  leverage: number()
+    .transform(numberTransformer)
+    .when('capitalStructure', {
+      is: 'Debt',
+      then: number()
+        .transform(numberTransformer)
+        .required('Leverage is required')
+    }),
+  minimumInvestment: number()
+    .typeError('Minimum Investment must be a number')
+    .nullable()
+    .required('Minimum Investment is required'),
+  pricePerUnit: number()
+    .typeError('Unit Price must be a number')
+    .nullable()
+    .required('Unit Price is required'),
+  tokenName: string()
+    .required('Token Name is required')
+    .matches(lettersOrSpaces, 'Token Name must not have special characters'),
+  tokenSymbol: string().required('Token Symbol is required'),
+  totalFundraisingAmount: number()
+    .required('Total Fundraising Amount is required')
+    .typeError('Total Fundraising Amount must be a number')
+    .nullable(),
+  logo: string().required('Logo is required'),
+  status: string(),
+  uniqueIdentifierCode: string().test(
+    'length',
+    'Unique identifier code is required',
+    uniqueIdentifierCodeValidator
+  )
+}
+
 export const createDSOValidationSchema = object()
   .shape<DSOFormValues>({
     network: string().required('Network is required'),
@@ -191,8 +306,22 @@ export const createDSOValidationSchema = object()
   })
   .notRequired()
 
+export const createDSOValidationSchemaStep1 = object()
+  .shape<DSOFormValuesStep1>({
+    network: string().required('Network is required'),
+    ...dsoFormBaseValidationSchemaStep1
+  })
+  .notRequired()
+
 export const editDSOValidationSchema = object()
   .shape<DSOFormValues>({
+    network: string(),
+    ...dsoFormBaseValidationSchema
+  })
+  .notRequired()
+
+export const editDSOValidationSchemaStep1 = object()
+  .shape<DSOFormValuesStep1>({
     network: string(),
     ...dsoFormBaseValidationSchema
   })
@@ -206,6 +335,31 @@ export const editLiveDSOValidationSchema = object()
     completionDate: string().required(validationMessages.required)
   })
   .notRequired()
+
+export const editLiveDSOValidationSchemaStep1 = object()
+  .shape<DSOFormValuesStep1>({
+    ...dsoFormBaseValidationSchema,
+    network: string(),
+    launchDate: string().required(validationMessages.required),
+    completionDate: string().required(validationMessages.required)
+  })
+  .notRequired()
+
+export const getDSOValidationSchemaStep1 = (
+  dsoId: string,
+  issuerId: string,
+  isLive: boolean
+) => {
+  const isNew = dsoId !== ''
+
+  if (isNew) {
+    return createDSOValidationSchemaStep1
+  }
+
+  return isLive
+    ? editLiveDSOValidationSchemaStep1
+    : editDSOValidationSchemaStep1
+}
 
 export const getDSOValidationSchema = (isNew: boolean, isLive: boolean) => {
   if (isNew) {
