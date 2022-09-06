@@ -13,6 +13,7 @@ import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
 import { dsoFormSteps } from './steps'
 import { generatePath, useHistory } from 'react-router-dom'
 import { Location } from 'history'
+import { transformDSOToFormValues } from 'app/components/DSO/utils'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering
@@ -74,7 +75,7 @@ export const DSOForm = (props: DSOFormProps) => {
 
   return (
     <FormStepper
-      data={data}
+      data={transformDSOToFormValues(data)}
       createMutation={createMutation}
       editMutation={editMutation}
       submitMutation={submitMutation}

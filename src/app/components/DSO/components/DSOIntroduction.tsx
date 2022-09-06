@@ -12,7 +12,7 @@ export const DSOIntroduction = () => {
   return (
     <DSOContainer
       title='Company Information'
-      subtitle='A short description of the company helps investors know more about your company.'
+      subtitle='A short description of the company helps investors know more about your company'
       item
       xs={12}
       md={12}

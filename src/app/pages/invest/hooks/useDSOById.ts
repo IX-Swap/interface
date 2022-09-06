@@ -19,8 +19,7 @@ export const useDSOById = (dsoId?: string, issuerId?: string) => {
     investQueryKeys.getDSOById(dsoId, userId),
     fetchDSO,
     {
-      enabled: isValidDSOId(dsoId) && !isEmptyString(userId),
-      cacheTime: 0
+      enabled: isValidDSOId(dsoId) && !isEmptyString(userId)
     }
   )
 
