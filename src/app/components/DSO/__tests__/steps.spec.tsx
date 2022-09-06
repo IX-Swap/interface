@@ -16,4 +16,10 @@ describe('steps', () => {
     expect(dsoFormSteps[1].getFormValues()).toBe(null)
     expect(dsoFormSteps[2].getFormValues()).toBe(null)
   })
+
+  it('returns form step component', () => {
+    expect(dsoFormSteps[0].component()).not.toBe(null)
+    expect(dsoFormSteps[1].component()).not.toBe(null)
+    expect(dsoFormSteps[2].component()).not.toBe(null)
+  })
 })
