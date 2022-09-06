@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { FormControlLabel, Grid, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
@@ -16,7 +16,7 @@ export const ListingMarketInfo = () => {
   const currency = watch('currency')
   const { data, isLoading } = useAssetsData('Currency')
 
-  const currencyList = data.list.reverse()
+  const currencyList = useMemo(() => data.list.reverse(), [data])
 
   if (isLoading) {
     return <LoadingIndicator />
