@@ -2,10 +2,21 @@ import React from 'react'
 import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { videoLink } from '__fixtures__/issuance'
-import { DSOVideoItem } from 'app/components/DSO/components/DSOVideoItem'
+import {
+  DSOVideoItem,
+  getRemoveButtonWidth,
+  getRemoveButtonWrapperWidth,
+  getWrapValue
+} from 'app/components/DSO/components/DSOVideoItem'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { Divider } from 'ui/Divider'
+import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
+
+jest.mock('ui/Divider', () => ({
+  Divider: jest.fn(() => null)
+}))
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -27,7 +38,6 @@ describe('DSOVideoItem', () => {
       <Form>
         <DSOVideoItem
           defaultValue={videoLink}
-          isNew={true}
           index={1}
           fieldId={'213'}
           remove={removeFn}
@@ -44,8 +54,7 @@ describe('DSOVideoItem', () => {
         defaultValue: videoLink.title,
         label: 'Video Title',
         name: ['videos', 1, 'title'],
-        variant: 'outlined',
-        helperText: 'Title of the link'
+        variant: 'outlined'
       }),
       {}
     )
@@ -56,21 +65,18 @@ describe('DSOVideoItem', () => {
         fullWidth: true,
         component: TextInput,
         defaultValue: videoLink.link,
-        label: 'Link Source URL',
         name: ['videos', 1, 'link'],
-        variant: 'outlined',
-        helperText: 'URL source where the investors will be redirected to'
+        variant: 'outlined'
       }),
       {}
     )
   })
 
-  it('renders remove button component', () => {
+  it('renders inputs with correct props when defaultValue is undefined ', () => {
     render(
       <Form>
         <DSOVideoItem
-          defaultValue={videoLink}
-          isNew={true}
+          defaultValue={undefined as any}
           index={1}
           fieldId={'213'}
           remove={removeFn}
@@ -78,38 +84,38 @@ describe('DSOVideoItem', () => {
       </Form>
     )
 
-    expect(DSOTeamRemoveButton).toHaveBeenCalledTimes(0)
-  })
-
-  it('renders remove button component if index equal or more than 3', () => {
-    render(
-      <Form>
-        <DSOVideoItem
-          defaultValue={videoLink}
-          isNew={true}
-          index={3}
-          fieldId={'213'}
-          remove={removeFn}
-        />
-      </Form>
+    expect(TypedField).toHaveBeenCalledTimes(2)
+    expect(TypedField).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        fullWidth: true,
+        component: TextInput,
+        defaultValue: '',
+        label: 'Video Title',
+        name: ['videos', 1, 'title'],
+        variant: 'outlined'
+      }),
+      {}
     )
 
-    expect(DSOTeamRemoveButton).toHaveBeenCalledTimes(1)
-    expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
+    expect(TypedField).toHaveBeenNthCalledWith(
+      2,
       expect.objectContaining({
-        remove: removeFn,
-        index: 3
+        fullWidth: true,
+        component: TextInput,
+        defaultValue: '',
+        name: ['videos', 1, 'link'],
+        variant: 'outlined'
       }),
       {}
     )
   })
 
-  it('renders remove button component if isNew is false', () => {
+  it('renders remove button and Divider components', () => {
     render(
       <Form>
         <DSOVideoItem
           defaultValue={videoLink}
-          isNew={false}
           index={1}
           fieldId={'213'}
           remove={removeFn}
@@ -117,13 +123,53 @@ describe('DSOVideoItem', () => {
       </Form>
     )
 
-    expect(DSOTeamRemoveButton).toHaveBeenCalledTimes(1)
     expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
-      expect.objectContaining({
+      {
+        disabled: false,
+        sx: { width: 50, height: 50 },
         remove: removeFn,
         index: 1
-      }),
+      },
       {}
     )
+    expect(Divider).toHaveBeenCalledTimes(0)
+  })
+
+  it('renders remove button and Divider components when isTablet is true', () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isTablet: true
+    } as any)
+
+    render(
+      <Form>
+        <DSOVideoItem
+          defaultValue={videoLink}
+          index={1}
+          fieldId={'213'}
+          remove={removeFn}
+        />
+      </Form>
+    )
+
+    expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
+      {
+        disabled: false,
+        sx: { width: '100%', height: 50 },
+        remove: removeFn,
+        index: 1
+      },
+      {}
+    )
+
+    expect(Divider).toHaveBeenCalledTimes(1)
+  })
+
+  it('returns correct style values for nested components', () => {
+    expect(getWrapValue(true)).toBe('wrap')
+    expect(getWrapValue(false)).toBe('nowrap')
+    expect(getRemoveButtonWidth(true)).toBe('100%')
+    expect(getRemoveButtonWidth(false)).toBe(50)
+    expect(getRemoveButtonWrapperWidth(true)).toBe('100%')
+    expect(getRemoveButtonWrapperWidth(false)).toBe('initial')
   })
 })

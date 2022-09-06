@@ -52,12 +52,12 @@ export const DSOFormFields = (props: DSOFormFieldsProps) => {
 
       <Element name={DSOFormSection.Videos}>
         <VSpacer size='large' />
-        <DSOVideoLinks isNew={isNew} />
+        <DSOVideoLinks />
       </Element>
 
       <Element name={DSOFormSection.FAQs}>
         <VSpacer size='large' />
-        <DSOFAQs isNew={isNew} />
+        <DSOFAQs />
       </Element>
     </Fragment>
   )
