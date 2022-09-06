@@ -1,4 +1,22 @@
+import React from 'react'
 import { dsoFormSteps } from 'app/components/DSO/steps'
+import { formValues } from '__fixtures__/issuance'
+import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
+import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
+import { DSOStep1 } from 'app/components/DSO/components/DSOStep1'
+import { render } from 'test-utils'
+
+jest.mock('app/components/DSO/components/DSOStep1', () => ({
+  DSOStep1: jest.fn(() => null)
+}))
+
+jest.mock('app/components/DSO/components/DSOCompanyInformationFields', () => ({
+  DSOCompanyInformationFields: jest.fn(() => null)
+}))
+
+jest.mock('app/components/DSO/components/DSODocumentsFields', () => ({
+  DSODocumentsFields: jest.fn(() => null)
+}))
 
 describe('steps', () => {
   afterEach(async () => {
@@ -12,14 +30,32 @@ describe('steps', () => {
   })
 
   it('steps have the form value getters', () => {
-    expect(dsoFormSteps[0].getFormValues()).toBe(null)
-    expect(dsoFormSteps[1].getFormValues()).toBe(null)
-    expect(dsoFormSteps[2].getFormValues()).toBe(null)
+    expect(dsoFormSteps[0].getFormValues(formValues)).toStrictEqual({
+      tokenName: formValues.tokenName
+    })
+    expect(dsoFormSteps[1].getFormValues(formValues)).toStrictEqual({
+      team: formValues.team ?? [{}],
+      introduction: formValues.introduction,
+      businessModel: formValues.businessModel,
+      useOfProceeds: formValues.useOfProceeds,
+      fundraisingMilestone: formValues.fundraisingMilestone
+    })
+    expect(dsoFormSteps[2].getFormValues(formValues)).toStrictEqual({
+      subscriptionDocument: formValues.subscriptionDocument,
+      documents: formValues.documents,
+      videos: formValues.videos ?? [{}],
+      faqs: formValues.faqs ?? [{}]
+    })
   })
 
   it('returns form step component', () => {
-    expect(dsoFormSteps[0].component()).not.toBe(null)
-    expect(dsoFormSteps[1].component()).not.toBe(null)
-    expect(dsoFormSteps[2].component()).not.toBe(null)
+    render(dsoFormSteps[0].component())
+    expect(DSOStep1).toHaveBeenCalled()
+
+    render(dsoFormSteps[1].component())
+    expect(DSOCompanyInformationFields).toHaveBeenCalled()
+
+    render(dsoFormSteps[2].component())
+    expect(DSODocumentsFields).toHaveBeenCalled()
   })
 })
