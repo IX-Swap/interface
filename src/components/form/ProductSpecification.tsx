@@ -41,4 +41,5 @@ export const ProductSpecification = (props: SelectProps): JSX.Element => {
     </>
   )
 }
+
 ProductSpecification.displayName = 'Select_ProductSpecification'
