@@ -25,7 +25,7 @@ export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
             position='absolute'
             right={20}
             top={'50%'}
-            style={{ pointerEvents: 'none', background: 'red' }}
+            style={{ pointerEvents: 'none' }}
           >
             <CalendarIcon />
           </Box>
