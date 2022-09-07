@@ -26,11 +26,13 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
         name={ListingFormSection['General Information']}
         style={{ maxWidth: '100%' }}
       >
-        <ListingBaseFields
-          isNew={isNew}
-          isLive={isLive}
-          isDataFromDSO={isDataFromDSO}
-        />
+        <FieldContainer>
+          <ListingBaseFields
+            isNew={isNew}
+            isLive={isLive}
+            isDataFromDSO={isDataFromDSO}
+          />
+        </FieldContainer>
       </Element>
 
       <Element name={ListingFormSection.Market} style={{ maxWidth: '100%' }}>

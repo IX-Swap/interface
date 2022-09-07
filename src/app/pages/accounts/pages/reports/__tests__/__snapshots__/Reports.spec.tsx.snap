@@ -114,7 +114,7 @@ exports[`Reports should match snapshot 1`] = `
                 class="makeStyles-filterWrapper-12 MuiBox-root css-0"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-26lyh4-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-octvoh-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
                     class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
@@ -125,7 +125,7 @@ exports[`Reports should match snapshot 1`] = `
                     From
                   </label>
                   <div
-                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-x6bec6-MuiInputBase-root-MuiOutlinedInput-root"
                     style="width: 150px;"
                   >
                     <input
@@ -157,7 +157,7 @@ exports[`Reports should match snapshot 1`] = `
                 class="makeStyles-filterWrapper-12 MuiBox-root css-0"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-26lyh4-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root makeStyles-root-13 css-octvoh-MuiFormControl-root-MuiTextField-root"
                 >
                   <label
                     class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-hlid6-MuiFormLabel-root-MuiInputLabel-root"
@@ -168,7 +168,7 @@ exports[`Reports should match snapshot 1`] = `
                     To
                   </label>
                   <div
-                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-x6bec6-MuiInputBase-root-MuiOutlinedInput-root"
                     style="width: 150px;"
                   >
                     <input

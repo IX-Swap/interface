@@ -23,7 +23,7 @@ exports[`CashBalance should match snapshot 1`] = `
           </p>
         </label>
         <div
-          class="MuiFilledInput-root MuiFilledInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-35 css-1k0iil1-MuiInputBase-root-MuiFilledInput-root"
+          class="MuiFilledInput-root MuiFilledInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-35 css-1bmt54d-MuiInputBase-root-MuiFilledInput-root"
         >
           <div
             aria-expanded="false"
