@@ -70,7 +70,7 @@ exports[`InvestOverview should match snapshot 1`] = `
                     class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                   >
                     <div
-                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-9 css-111g48h-MuiInputBase-root-MuiOutlinedInput-root"
+                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-9 css-m5bds9-MuiInputBase-root-MuiOutlinedInput-root"
                     >
                       <div
                         aria-expanded="false"
@@ -119,10 +119,10 @@ exports[`InvestOverview should match snapshot 1`] = `
                     data-testid="primarySearch"
                   >
                     <div
-                      class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root makeStyles-root-14 css-hnjmwy-MuiFormControl-root-MuiTextField-root"
+                      class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root makeStyles-root-14 css-1f0ts9k-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-rddkvu-MuiInputBase-root-MuiOutlinedInput-root"
+                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-1ln009z-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <div
                           class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
@@ -277,11 +277,11 @@ exports[`InvestOverview should match snapshot 1`] = `
                 class="MuiGrid-root MuiGrid-item css-1mum6ye-MuiGrid-root"
               >
                 <div
-                  class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root makeStyles-root-14 css-hnjmwy-MuiFormControl-root-MuiTextField-root"
+                  class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root makeStyles-root-14 css-1f0ts9k-MuiFormControl-root-MuiTextField-root"
                   data-testid="secondaryMarketSearch"
                 >
                   <div
-                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-rddkvu-MuiInputBase-root-MuiOutlinedInput-root"
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-1ln009z-MuiInputBase-root-MuiOutlinedInput-root"
                   >
                     <div
                       class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"

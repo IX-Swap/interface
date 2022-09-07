@@ -35,8 +35,7 @@ export const input = (theme: Theme) => {
           }
         },
         '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
-          marginRight: 10,
-          backgroundColor: theme.palette.background.paper
+          marginRight: 10
         },
         '& .MuiInputBase-root.Mui-error.MuiInputBase-formControl input': {
           color: `${theme.palette.error.main}`

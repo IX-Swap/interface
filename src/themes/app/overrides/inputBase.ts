@@ -11,6 +11,10 @@ export const inputBase = (theme: Theme) => {
             backgroundColor: 'transparent',
             borderRadius: 8
           }
+        },
+        '&.Mui-disabled': {
+          '-webkit-text-fill-color': theme.palette.select.colorDisabled,
+          color: 'rgb(119, 129, 148)'
         }
       }
     }
