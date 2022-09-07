@@ -47,7 +47,6 @@ interface OnSubmitSuccessArgs {
   history: H.History
 }
 
-// separate file
 const onSubmitSuccess = ({
   data,
   isLastStep,
