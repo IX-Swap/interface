@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { documentValueExtractor } from 'app/components/DSO/utils'
@@ -12,6 +12,8 @@ import { useFormContext } from 'react-hook-form'
 import { DSOFormValues, DsoTeamMember } from 'types/dso'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { Divider } from 'ui/Divider'
 
 export interface DSOTeamMemberProps {
   fieldId: string
@@ -24,6 +26,8 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
   const { defaultValue, fieldId, index, remove } = props
   const { control } = useFormContext<{ team: DSOFormValues['team'] }>()
   const { isTablet } = useAppBreakpoints()
+  const renderTitle = (index: number) =>
+    index === 0 ? 'Team Member' : `(${index + 1}) Team Member`
 
   return (
     <Grid
@@ -33,14 +37,43 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
       wrap={isTablet ? 'wrap' : 'nowrap'}
       direction='column'
     >
-      <Grid item container xs={12}>
+      <Grid item container direction={'column'} xs={12} spacing={5}>
+        {index !== 0 && (
+          <Grid item>
+            <Divider />
+          </Grid>
+        )}
+        <Grid
+          item
+          container
+          justifyContent={'space-between'}
+          alignItems={'center'}
+        >
+          <Grid item>
+            <FormSectionHeader title={renderTitle(index)} />
+          </Grid>
+          {index > 0 && (
+            <Grid item>
+              <DSOTeamRemoveButton remove={remove} index={index} />
+            </Grid>
+          )}
+        </Grid>
+
         <Grid item xs={12} md={2}>
           <TypedField
             customRenderer
             key={fieldId}
             control={control}
             component={FileUpload}
-            label='Upload photo'
+            placeHolder={<Box mt={1}>Upload File</Box>}
+            label={
+              <Typography>
+                Upload Photo{' '}
+                <Typography display={'inline'} color={'text.secondary'}>
+                  (Optional)
+                </Typography>
+              </Typography>
+            }
             defaultValue={defaultValue?.photo}
             valueExtractor={documentValueExtractor}
             documentInfo={{
@@ -50,12 +83,13 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             name={['team', index, 'photo']}
           />
         </Grid>
-        <Grid container item direction='column' xs={12} md={10}>
-          <Grid item>
+        <Grid container item xs={12} md={10} spacing={2}>
+          <Grid item xs={12} md={6}>
             <TypedField
               fullWidth
               key={fieldId}
               component={TextInput}
+              placeholder={"Team Member's Name"}
               control={control}
               defaultValue={defaultValue?.name ?? ''}
               label='Name'
@@ -63,14 +97,13 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
               variant='outlined'
             />
           </Grid>
-          <Grid item>
-            <Box pt={3} />
-          </Grid>
-          <Grid item>
+
+          <Grid item xs={12} md={6}>
             <TypedField
               fullWidth
               key={fieldId}
               control={control}
+              placeholder={"Team Member's Position"}
               component={TextInput}
               defaultValue={defaultValue?.position ?? ''}
               label='Position'
@@ -100,18 +133,6 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
               valueExtractor={wysiwygValueExtractor}
             />
           </DSOContainer>
-        </Grid>
-        <Grid
-          item
-          container
-          justifyContent='flex-end'
-          alignItems='flex-end'
-          direction='column'
-        >
-          <Grid item>
-            <VSpacer size='small' />
-            <DSOTeamRemoveButton remove={remove} index={index} />
-          </Grid>
         </Grid>
       </Grid>
     </Grid>

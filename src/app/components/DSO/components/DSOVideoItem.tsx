@@ -1,23 +1,29 @@
 import React from 'react'
-import { Box, Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues, DsoVideo } from 'types/dso'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { VSpacer } from 'components/VSpacer'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { Divider } from 'ui/Divider'
 
 export interface DSOVideoItemProps {
-  isNew: boolean
   fieldId: string
   index: number
   remove: (field: any) => void
   defaultValue: DsoVideo
 }
 
+export const getWrapValue = (isTablet: boolean) =>
+  isTablet ? 'wrap' : 'nowrap'
+export const getRemoveButtonWidth = (isTablet: boolean) =>
+  isTablet ? '100%' : 50
+export const getRemoveButtonWrapperWidth = (isTablet: boolean) =>
+  isTablet ? '100%' : 'initial'
+
 export const DSOVideoItem = (props: DSOVideoItemProps) => {
-  const { defaultValue, fieldId, index, remove, isNew } = props
+  const { defaultValue, fieldId, index, remove } = props
   const { control } = useFormContext<{
     videos: DSOFormValues['videos']
   }>()
@@ -28,11 +34,18 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
       item
       container
       alignItems='flex-start'
-      wrap={isTablet ? 'wrap' : 'nowrap'}
+      wrap={getWrapValue(isTablet)}
       direction='column'
     >
-      <Grid item container xs={12} wrap={isTablet ? 'wrap' : 'nowrap'}>
-        <Grid item xs={12} md={6}>
+      <Grid
+        item
+        container
+        xs={12}
+        wrap={getWrapValue(isTablet)}
+        alignItems={'flex-end'}
+        spacing={{ xs: 5, md: 2 }}
+      >
+        <Grid item width={'100%'}>
           <TypedField
             fullWidth
             key={fieldId}
@@ -40,42 +53,47 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
             control={control}
             defaultValue={defaultValue?.title ?? ''}
             label='Video Title'
+            placeholder='Title'
             name={['videos', index, 'title']}
             variant='outlined'
-            helperText={'Title of the link'}
           />
         </Grid>
-        <Box pl={3} />
-        <Grid item xs={12} md={6}>
+
+        <Grid item width={'100%'}>
           <TypedField
             fullWidth
             key={fieldId}
             control={control}
             component={TextInput}
             defaultValue={defaultValue?.link ?? ''}
-            label='Link Source URL'
+            label={
+              <Typography>
+                Link Source{' '}
+                <Typography color={'text.secondary'} display={'inline'}>
+                  (URL)
+                </Typography>
+              </Typography>
+            }
             name={['videos', index, 'link']}
             variant='outlined'
-            helperText={'URL source where the investors will be redirected to'}
+            placeholder='Source'
           />
         </Grid>
-      </Grid>
-      <VSpacer size={'small'} />
-      <Grid item container xs={12} direction='column'>
-        <Grid
-          item
-          container
-          justifyContent='flex-end'
-          alignItems='flex-end'
-          direction='column'
-        >
-          <Grid item>
-            <VSpacer size='small' />
-            {(index >= 3 || !isNew) && (
-              <DSOTeamRemoveButton remove={remove} index={index} />
-            )}
-          </Grid>
+
+        <Grid item width={getRemoveButtonWrapperWidth(isTablet)}>
+          <DSOTeamRemoveButton
+            sx={{ width: getRemoveButtonWidth(isTablet), height: 50 }}
+            disabled={index === 0}
+            remove={remove}
+            index={index}
+          />
         </Grid>
+
+        {isTablet && (
+          <Grid item width={'100%'}>
+            <Divider />
+          </Grid>
+        )}
       </Grid>
     </Grid>
   )

@@ -12,7 +12,7 @@ export const DSOUseOfProceeds = () => {
   return (
     <DSOContainer
       title='Use of Proceeds'
-      subtitle='A short description that summarizes how a company that aims to secure additional capital is going to spend the funds.'
+      subtitle='A short description that summarizes how a company that aims to secure additional capital is going to spend the funds'
       item
       xs={12}
     >

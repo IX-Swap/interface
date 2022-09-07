@@ -21,7 +21,7 @@ exports[`MakeCommitmentFormFields should match snapshot 1`] = `
             Destination Wallet Address
           </label>
           <div
-            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl makeStyles-wrapper-14 css-1e6o172-MuiInputBase-root-MuiOutlinedInput-root"
+            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-fullWidth MuiInputBase-formControl makeStyles-wrapper-14 css-sr8rm-MuiInputBase-root-MuiOutlinedInput-root"
           >
             <div
               aria-disabled="true"
@@ -97,7 +97,7 @@ exports[`MakeCommitmentFormFields should match snapshot 1`] = `
           class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
         >
           <div
-            class="MuiFormControl-root MuiTextField-root makeStyles-root-19 makeStyles-disabled-21 css-1mij8nx-MuiFormControl-root-MuiTextField-root"
+            class="MuiFormControl-root MuiTextField-root makeStyles-root-19 makeStyles-disabled-21 css-1cppi7u-MuiFormControl-root-MuiTextField-root"
             inputmode="numeric"
           >
             <label
@@ -109,7 +109,7 @@ exports[`MakeCommitmentFormFields should match snapshot 1`] = `
               Number of Units
             </label>
             <div
-              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd css-13l25t1-MuiInputBase-root-MuiOutlinedInput-root"
             >
               <input
                 aria-invalid="false"
@@ -146,7 +146,7 @@ exports[`MakeCommitmentFormFields should match snapshot 1`] = `
           class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
         >
           <div
-            class="MuiFormControl-root MuiTextField-root makeStyles-root-19 makeStyles-disabled-21 css-1mij8nx-MuiFormControl-root-MuiTextField-root"
+            class="MuiFormControl-root MuiTextField-root makeStyles-root-19 makeStyles-disabled-21 css-1cppi7u-MuiFormControl-root-MuiTextField-root"
             inputmode="numeric"
           >
             <label
@@ -158,7 +158,7 @@ exports[`MakeCommitmentFormFields should match snapshot 1`] = `
               Unit Price
             </label>
             <div
-              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd css-1rbyzgb-MuiInputBase-root-MuiOutlinedInput-root"
+              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-disabled MuiInputBase-formControl MuiInputBase-adornedEnd css-13l25t1-MuiInputBase-root-MuiOutlinedInput-root"
             >
               <input
                 aria-invalid="false"

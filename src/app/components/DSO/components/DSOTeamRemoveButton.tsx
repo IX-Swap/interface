@@ -1,14 +1,26 @@
 import React from 'react'
-import { Button } from '@mui/material'
+import { IconButton, IconButtonProps } from '@mui/material'
+import { Icon } from 'ui/Icons/Icon'
+import useStyles from './DSOTeamRemoveButton.styles'
 
-export interface DSOTeamRemoveButtonProps {
+export interface DSOTeamRemoveButtonProps extends IconButtonProps {
   remove: Function
   index: number
 }
 
 export const DSOTeamRemoveButton: React.FC<DSOTeamRemoveButtonProps> = ({
   remove,
-  index
+  index,
+  ...props
 }) => {
-  return <Button onClick={() => remove(index)}>Remove</Button>
+  const classes = useStyles()
+  return (
+    <IconButton
+      {...props}
+      onClick={() => remove(index)}
+      className={classes.button}
+    >
+      <Icon name={'trash'} />
+    </IconButton>
+  )
 }

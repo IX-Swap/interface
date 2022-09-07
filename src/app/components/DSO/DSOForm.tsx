@@ -1,18 +1,18 @@
-import React from 'react'
-import { DigitalSecurityOffering } from 'types/dso'
-import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { getOfferingName, getIdFromObj } from 'helpers/strings'
+import { transformDSOToFormValues } from 'app/components/DSO/utils'
 import {
   CreateModeRedirect,
   FormStepper
 } from 'app/components/FormStepper/FormStepper'
-import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
-
+import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
+import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
-import { dsoFormSteps } from './steps'
-import { generatePath, useHistory } from 'react-router-dom'
+import { getIdFromObj, getOfferingName } from 'helpers/strings'
 import { Location } from 'history'
+import React from 'react'
+import { generatePath, useHistory } from 'react-router-dom'
+import { DigitalSecurityOffering } from 'types/dso'
+import { dsoFormSteps } from './steps'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering
@@ -74,7 +74,7 @@ export const DSOForm = (props: DSOFormProps) => {
 
   return (
     <FormStepper
-      data={data}
+      data={transformDSOToFormValues(data)}
       createMutation={createMutation}
       editMutation={editMutation}
       submitMutation={submitMutation}

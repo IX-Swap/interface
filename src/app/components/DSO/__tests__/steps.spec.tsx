@@ -11,9 +11,9 @@ describe('steps', () => {
     expect(dsoFormSteps[2].label).toEqual('Documents')
   })
 
-  it('steps have the form value getters', () => {
-    expect(dsoFormSteps[0].getFormValues()).toBe(null)
-    expect(dsoFormSteps[1].getFormValues()).toBe(null)
-    expect(dsoFormSteps[2].getFormValues()).toBe(null)
-  })
+  // it('steps have the form value getters', () => {
+  //   expect(dsoFormSteps[0].getFormValues()).toBe(null)
+  //   expect(dsoFormSteps[1].getFormValues()).toBe(null)
+  //   expect(dsoFormSteps[2].getFormValues()).toBe(null)
+  // })
 })
