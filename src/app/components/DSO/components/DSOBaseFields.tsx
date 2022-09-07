@@ -6,8 +6,10 @@ import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { Checkbox } from 'components/form/Checkbox'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
+import { ProductSpecification } from 'components/form/productSpecification'
 import { TypedField } from 'components/form/TypedField'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
+import { VSpacer } from 'components/VSpacer'
 import { DataroomFileType } from 'config/dataroom'
 import { booleanValueExtractor, dateTimeValueExtractor } from 'helpers/forms'
 import React from 'react'
@@ -43,7 +45,10 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             documentInfo={{
               type: 'DSO Logo'
             }}
+            isOptional
+            helperText='Number of tokens'
           />
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -60,6 +65,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -86,6 +92,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -100,7 +107,19 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={ProductSpecification}
+                label='Product Specification'
+                name='productSpecification'
+                disabled={!isNew}
+                control={control}
+                helperText='Select item'
+                variant='outlined'
+              />
+            </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -126,6 +145,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -151,6 +171,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -167,6 +188,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='mm/dd/yyyy'
                 inputVariant='outlined'
+                showCalendarIcon={true}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -184,6 +206,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 inputVariant='outlined'
               />
             </Grid>
+            <VSpacer size='small' />
           </Grid>
           <Grid container spacing={3} mt={1}>
             <Grid item xs={12}>

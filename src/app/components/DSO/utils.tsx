@@ -38,7 +38,8 @@ export const transformDSOToFormValuesStep1 = (
       grossIRR: '',
       interestRate: '',
       dividendYield: '',
-      investmentPeriod: ''
+      investmentPeriod: '',
+      productSpecification: ''
     } as any
   }
 

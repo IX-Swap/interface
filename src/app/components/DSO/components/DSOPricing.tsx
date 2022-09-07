@@ -1,15 +1,16 @@
-import React from 'react'
-import { moneyNumberFormat } from 'config/numberFormat'
-import { numericValueExtractor } from 'helpers/forms'
 import { Grid } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { NumericInput } from 'components/form/NumericInput'
-import { useFormContext } from 'react-hook-form'
-import { DSOFormValues } from 'types/dso'
-import { MinimumInvesmentField } from 'components/form/MinimumInvestmentField'
 import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
 import { DSOTotalUnits } from 'app/components/DSO/components/DSOTotalUnits'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { MinimumInvesmentField } from 'components/form/MinimumInvestmentField'
+import { NumericInput } from 'components/form/NumericInput'
+import { TypedField } from 'components/form/TypedField'
+import { VSpacer } from 'components/VSpacer'
+import { moneyNumberFormat } from 'config/numberFormat'
+import { numericValueExtractor } from 'helpers/forms'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { DSOFormValues } from 'types/dso'
 
 export const DSOPricing = () => {
   const { control } = useFormContext<DSOFormValues>()
@@ -46,6 +47,7 @@ export const DSOPricing = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>

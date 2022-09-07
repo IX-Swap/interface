@@ -1,15 +1,16 @@
 import { Grid } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DistributionFrequencySelect } from 'components/form/DistributionFrequencySelect'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
+import { VSpacer } from 'components/VSpacer'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { TextInput } from 'ui/TextInput/TextInput'
-import { useTheme } from '@mui/material/styles'
 
 export const DSOTerms = () => {
   const { control, watch, setValue } = useFormContext<DSOFormValues>()
@@ -76,6 +77,7 @@ export const DSOTerms = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -108,6 +110,7 @@ export const DSOTerms = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -133,6 +136,7 @@ export const DSOTerms = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
@@ -164,6 +168,7 @@ export const DSOTerms = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
       </Grid>
     </Grid>

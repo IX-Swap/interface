@@ -93,6 +93,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   dealStatus?: string
   marketType?: string
   dso?: string
+  productSpecification?: string
 }
 
 export interface NewBaseDigitalSecurityOffering
@@ -120,6 +121,7 @@ export interface NewBaseDigitalSecurityOffering
   distributionFrequency?: string
   interestRate?: number
   leverage?: number
+  productSpecification?: string
 }
 
 export interface DSOInsight {

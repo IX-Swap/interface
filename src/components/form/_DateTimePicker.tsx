@@ -1,9 +1,10 @@
-import React from 'react'
 import MobileDateTimePicker, {
   MobileDateTimePickerProps
 } from '@mui/lab/MobileDateTimePicker'
-import { FormHelperText } from '@mui/material'
+import { Box, FormHelperText } from '@mui/material'
+import { ReactComponent as CalendarIcon } from 'assets/icons/calendar.svg'
 import { useFormError } from 'hooks/useFormError'
+import React from 'react'
 import { TextInput } from 'ui/TextInput/TextInput'
 
 export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
@@ -12,13 +13,23 @@ export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
       inputFormat='MM/dd/yy hh:mm'
       {...props}
       renderInput={inputProps => (
-        <TextInput
-          variant='outlined'
-          fullWidth
-          placeholder='mm/dd/yyyy'
-          label='Date'
-          {...inputProps}
-        />
+        <Box position='relative'>
+          <TextInput
+            variant='outlined'
+            fullWidth
+            placeholder='mm/dd/yyyy'
+            label='Date'
+            {...inputProps}
+          />
+          <Box
+            position='absolute'
+            right={20}
+            top={'50%'}
+            style={{ pointerEvents: 'none', background: 'red' }}
+          >
+            <CalendarIcon />
+          </Box>
+        </Box>
       )}
     />
   )
