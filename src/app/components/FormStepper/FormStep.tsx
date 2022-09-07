@@ -57,7 +57,7 @@ const onSubmitSuccess = ({
   createModeRedirect,
   history
 }: OnSubmitSuccessArgs) => {
-  if (isSuccessRequest(data.status) && !isLastStep && isEditing) {
+  if (isSuccessRequest(data?.status) && !isLastStep && isEditing) {
     //eslint-disable-line
     setCompleted?.()
   }
