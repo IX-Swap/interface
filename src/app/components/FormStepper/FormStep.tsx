@@ -127,21 +127,23 @@ export const FormStep = (props: FormStepProps) => {
     const shouldSaveStep = shouldSaveOnMove && !isLastStep
     const payload = step.getRequestPayload(values)
 
-    onSubmitSuccess({
-      data,
-      isLastStep,
-      isEditing,
-      setCompleted,
-      redirectCallback,
-      createModeRedirect,
-      history
-    })
+    const onSuccessfulSubmit = (data: any) => {
+      onSubmitSuccess({
+        data,
+        isLastStep,
+        isEditing,
+        setCompleted,
+        redirectCallback,
+        createModeRedirect,
+        history
+      })
+    }
 
     if (shouldSaveStep && (data?.step ?? 0) < activeStep + 1) {
       payload.step = activeStep
     }
 
-    return await mutation(payload).then(onSubmitSuccess)
+    return await mutation(payload).then(onSuccessfulSubmit)
   }
 
   const nextCallback = () => {
