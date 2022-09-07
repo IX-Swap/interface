@@ -20,6 +20,21 @@ export interface NewListingRadioButtonsProps {
   onImportClick: (value: string) => void
 }
 
+export const radioButtonsList = [
+  {
+    label: 'Exchange',
+    value: 'exchange'
+  },
+  {
+    label: 'OTC',
+    value: 'otc'
+  },
+  {
+    label: 'Both',
+    value: 'both'
+  }
+]
+
 export const ListingRadioButtons = ({
   listPlace,
   setListPlace,
@@ -29,21 +44,6 @@ export const ListingRadioButtons = ({
 
   const { data, isLoading } = useDSOsByUserId('Approved')
   const [selectedDSOValue, setSelectedDSOValue] = useState<string>('')
-
-  const radioButtonsList = [
-    {
-      label: 'Exchange',
-      value: 'exchange'
-    },
-    {
-      label: 'OTC',
-      value: 'otc'
-    },
-    {
-      label: 'Both',
-      value: 'both'
-    }
-  ]
 
   return (
     <Grid item container direction={'column'} spacing={{ xs: 4, md: 5 }}>
@@ -68,6 +68,7 @@ export const ListingRadioButtons = ({
                 return (
                   <Grid
                     item
+                    data-testid={'buttonWrapper'}
                     className={classnames(classes.button, {
                       [classes.active]: listPlace === value
                     })}
