@@ -28,9 +28,10 @@ export const ListingForm = (props: ListingFormProps) => {
       data-testid='listing-form'
       defaultValues={
         data !== undefined && 'maximumTradeUnits' in data
-          ? // TODO Needs to do refactoring for next two functions after completed backend api
+          ? // TODO Needs to refactor this function for edit listing page
             transformListingToListingFormValue(data)
-          : transformDataFromDSOToListingFormValue(data)
+          : // TODO Needs to refactor this function after completed backend api endpoint for create listing
+            transformDataFromDSOToListingFormValue(data)
       }
     >
       <Grid container direction={'column'} spacing={2}>

@@ -18,7 +18,7 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
   const { listing, isDataFromDSO, listingType } = props
   const { push } = useHistory()
 
-  // TODO Needs to do refactoring this component for edit listing page in future
+  // TODO Needs to do refactoring this component for edit listing page
   return (
     <>
       {!(listing === undefined || isDataFromDSO) && (

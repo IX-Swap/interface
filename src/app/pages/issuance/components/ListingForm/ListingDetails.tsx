@@ -17,7 +17,7 @@ import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHead
 export type ListingType = 'Secondary' | 'Otc' | 'Both'
 
 export interface ListingDetailsProps {
-  listingType: null | ListingType
+  listingType: ListingType
   setListingType: (value: ListingType) => void
   onImportClick: (value: string) => void
 }

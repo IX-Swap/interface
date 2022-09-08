@@ -21,7 +21,7 @@ export interface ListingFormWrapperProps {
 
 export const ListingFormWrapper = (props: ListingFormWrapperProps) => {
   const { data: initialListingData, isNew = false } = props
-  const [listingType, setListingType] = useState<ListingType | null>(null)
+  const [listingType, setListingType] = useState<ListingType>('Secondary')
   const [dsoId, setDsoId] = useState<string | undefined>(undefined)
   const [issuerId, setIssuerId] = useState<string | undefined>(undefined)
 
