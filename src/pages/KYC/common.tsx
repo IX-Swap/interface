@@ -52,6 +52,8 @@ interface SelectProps {
   isClearable?: boolean
   tooltipText?: string | JSX.Element
   addCustom?: boolean
+  id?: any
+  value?: any
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {

@@ -194,6 +194,9 @@ export const individualFormInitialValues: IFormInitial = {
   income: null,
   proofOfIdentity: [],
   proofOfAddress: [],
+  taxDeclarations: [],
+  taxCountry: '',
+  taxIdentification: ''
 }
 
 export const corporateFormInitialValues: IFormInitial = {
