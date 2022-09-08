@@ -10,14 +10,14 @@ import { useUpdateListing } from 'app/pages/issuance/hooks/useUpdateListing'
 import { useAuth } from 'hooks/auth/useAuth'
 import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
-export interface ListingFinishLaterButtonProps {
+export interface CreateOrSaveListingButtonProps {
   listing: DigitalSecurityOffering | Listing | undefined
   listingType: null | ListingType
   isDataFromDSO: boolean
 }
 
-export const ListingFinishLaterButton = (
-  props: ListingFinishLaterButtonProps
+export const CreateOrSaveListingButton = (
+  props: CreateOrSaveListingButtonProps
 ) => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
