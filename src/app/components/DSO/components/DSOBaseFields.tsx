@@ -38,7 +38,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             customRenderer
             component={FileUpload}
             name='logo'
-            label='Upload Logo'
+            label='Upload File'
             control={control}
             valueExtractor={documentValueExtractor}
             accept={DataroomFileType.image}
@@ -51,7 +51,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12}>
               <TypedField
                 control={control}
@@ -68,7 +68,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={TextInput}
@@ -95,7 +95,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={NetworkSelect}
@@ -122,7 +122,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={TextInput}
@@ -148,7 +148,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={TextInput}
@@ -174,7 +174,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={DateTimePicker}

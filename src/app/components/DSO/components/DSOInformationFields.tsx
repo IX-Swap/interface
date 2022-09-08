@@ -8,7 +8,7 @@ import { VSpacer } from 'components/VSpacer'
 import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 
-export const DSOStep1 = () => {
+export const DSOInformationFields = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
 
   const { data } = useDSOById(dsoId, issuerId)
