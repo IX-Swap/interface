@@ -9,7 +9,7 @@ export const CreateListing = () => {
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
         <PageHeader
-          title={'Create New Listing'}
+          title={'Create Secondary Listing'}
           alignment='flex-start'
           showBreadcrumbs={true}
         />
