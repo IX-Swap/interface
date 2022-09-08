@@ -89,6 +89,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   policyBuilder?: {}
   user: string
   decimals?: number
+  decimalPlaces?: number
   uniqueIdentifierCode?: string
   dealStatus?: string
   marketType?: string

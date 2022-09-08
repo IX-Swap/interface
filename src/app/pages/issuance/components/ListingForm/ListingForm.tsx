@@ -1,62 +1,57 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { DigitalSecurityOffering } from 'types/dso'
+import { isDSOLive } from 'app/components/DSO/utils'
 import { Grid } from '@mui/material'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { ListingRadioButtons } from 'app/pages/issuance/components/ListingForm/ListingRadioButtons'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { ListingFormContent } from 'app/pages/issuance/components/ListingForm/ListingFormContent'
-import {
-  getIdFromDSOSelectValue,
-  getIssuerIdFromDSOSelectValue
-} from 'app/pages/issuance/utils/utils'
+import { Form } from 'components/form/Form'
+import { ListingFormFields } from 'app/pages/issuance/components/ListingForm/ListingFormFields'
+import { ListingFormActions } from 'app/pages/issuance/components/ListingForm/ListingFormActions'
 import { Listing } from 'app/pages/issuance/types/listings'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import {
+  transformDataFromDSOToListingFormValue,
+  transformListingToListingFormValue
+} from 'app/pages/issuance/utils/listing'
+import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
 export interface ListingFormProps {
-  data?: Listing
+  data?: DigitalSecurityOffering | Listing
   isNew?: boolean
+  listingType: null | ListingType
 }
 
 export const ListingForm = (props: ListingFormProps) => {
-  const { data: initialData, isNew = false } = props
-  const [dsoId, setDsoId] = useState<string | undefined>(undefined)
-  const [issuerId, setIssuerId] = useState<string | undefined>(undefined)
-  const { data: dsoData, isLoading } = useDSOById(dsoId, issuerId)
-  const data = initialData ?? dsoData
-  const [listPlace, setListPlace] = useState<string | null>(null)
-
-  const renderForm = () => {
-    if (dsoId === undefined && issuerId === undefined) {
-      return null
-    }
-    if (isLoading) {
-      return <LoadingIndicator />
-    }
-
-    return (
-      <Grid item>
-        <ListingFormContent data={data} isNew={isNew} />
-      </Grid>
-    )
-  }
+  const { data, isNew = false, listingType } = props
+  const isLive = isDSOLive(data as any)
+  const isDataFromDSO = data !== undefined && !('maximumTradeUnits' in data)
 
   return (
-    <Grid item container direction={'column'} spacing={2}>
-      {!isNew ? null : (
+    <Form
+      data-testid='listing-form'
+      defaultValues={
+        data !== undefined && 'maximumTradeUnits' in data
+          ? // TODO Needs to do refactoring for next two functions after completed backend api
+            transformListingToListingFormValue(data)
+          : transformDataFromDSOToListingFormValue(data)
+      }
+    >
+      <Grid container direction={'column'} spacing={2}>
         <Grid item>
-          <FieldContainer>
-            <ListingRadioButtons
-              listPlace={listPlace}
-              setListPlace={setListPlace}
-              onImportClick={value => {
-                setDsoId(getIdFromDSOSelectValue(value))
-                setIssuerId(getIssuerIdFromDSOSelectValue(value))
-              }}
-            />
-          </FieldContainer>
+          <ListingFormFields
+            isNew={isNew}
+            isLive={isLive}
+            isDataFromDSO={isDataFromDSO}
+          />
         </Grid>
-      )}
 
-      {renderForm()}
-    </Grid>
+        <Grid item container justifyContent={'flex-end'}>
+          <Grid item>
+            <ListingFormActions
+              isDataFromDSO={isDataFromDSO}
+              listing={data}
+              listingType={listingType}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Form>
   )
 }

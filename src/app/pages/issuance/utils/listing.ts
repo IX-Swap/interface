@@ -21,7 +21,7 @@ export const transformDataFromDSOToListingFormValue = (
     network: data.network?._id ?? '',
     tokenName: data.tokenName,
     tokenSymbol: data.tokenSymbol,
-    decimals: data.decimals,
+    decimals: data.decimals ?? data.decimalPlaces,
     minimumTradeUnits: data.pricePerUnit,
     maximumTradeUnits: null,
     raisedAmount: data.totalFundraisingAmount,

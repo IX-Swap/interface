@@ -2,7 +2,7 @@ import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Grid } from '@mui/material'
-import { ListingForm } from 'app/pages/issuance/components/ListingForm/ListingForm'
+import { ListingFormWrapper } from 'app/pages/issuance/components/ListingForm/ListingFormWrapper'
 
 export const CreateListing = () => {
   return (
@@ -16,7 +16,7 @@ export const CreateListing = () => {
       </Grid>
       <RootContainer>
         <Grid item>
-          <ListingForm isNew />
+          <ListingFormWrapper isNew />
         </Grid>
       </RootContainer>
     </Grid>

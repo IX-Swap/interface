@@ -6,16 +6,19 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { ListingFinishLaterButton } from 'app/pages/issuance/components/ListingForm/ListingFInishLaterButton'
 import { getIdFromObj } from 'helpers/strings'
 import { Listing } from 'app/pages/issuance/types/listings'
+import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
 export interface ListingFormActionsProps {
   listing: DigitalSecurityOffering | Listing | undefined
   isDataFromDSO: boolean
+  listingType: null | ListingType
 }
 
 export const ListingFormActions = (props: ListingFormActionsProps) => {
-  const { listing, isDataFromDSO } = props
+  const { listing, isDataFromDSO, listingType } = props
   const { push } = useHistory()
 
+  // TODO Needs to do refactoring this component for edit listing page in future
   return (
     <>
       {!(listing === undefined || isDataFromDSO) && (
@@ -42,6 +45,7 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
       <ListingFinishLaterButton
         isDataFromDSO={isDataFromDSO}
         listing={listing}
+        listingType={listingType}
       />
     </>
   )

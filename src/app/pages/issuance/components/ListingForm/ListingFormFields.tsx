@@ -1,15 +1,8 @@
-import React, { Fragment } from 'react'
-import { VSpacer } from 'components/VSpacer'
-import { Element } from 'react-scroll'
-import { ListingFormSection } from 'app/pages/issuance/components/ListingForm/ListingScrollGuide'
-import { ListingDataroom } from 'app/pages/issuance/components/ListingForm/ListingDataroom'
-import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
-import { ListingInformationProfile } from 'app/pages/issuance/components/ListingForm/ListingInformationProfile'
-import { ListingPricing } from 'app/pages/issuance/components/ListingForm/ListingPricing'
-import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
+import React from 'react'
 import { ListingMarketInfo } from 'app/pages/issuance/components/ListingForm/ListingMarketInfo'
 import { ListingBaseFields } from 'app/pages/issuance/components/ListingForm/ListingBaseFields'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
+import { Grid } from '@mui/material'
 
 export interface ListingFormFieldsProps {
   isNew: boolean
@@ -21,11 +14,8 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
   const { isNew, isLive, isDataFromDSO } = props
 
   return (
-    <Fragment>
-      <Element
-        name={ListingFormSection['General Information']}
-        style={{ maxWidth: '100%' }}
-      >
+    <Grid container direction={'column'} spacing={2}>
+      <Grid item>
         <FieldContainer>
           <ListingBaseFields
             isNew={isNew}
@@ -33,51 +23,12 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
             isDataFromDSO={isDataFromDSO}
           />
         </FieldContainer>
-      </Element>
-
-      <Element name={ListingFormSection.Market} style={{ maxWidth: '100%' }}>
-        <VSpacer size='large' />
+      </Grid>
+      <Grid item>
         <FieldContainer>
           <ListingMarketInfo />
         </FieldContainer>
-      </Element>
-
-      <Element name={ListingFormSection.Pricing} style={{ maxWidth: '100%' }}>
-        <VSpacer size='large' />
-        <ListingPricing />
-      </Element>
-
-      <Element
-        name={ListingFormSection['Offering Terms']}
-        style={{ maxWidth: '100%' }}
-      >
-        <VSpacer size='large' />
-        <DSOTerms />
-      </Element>
-
-      <Element
-        name={ListingFormSection['Upload Documents']}
-        style={{ maxWidth: '100%' }}
-      >
-        <VSpacer size='large' />
-        <ListingDataroom />
-      </Element>
-
-      <Element
-        name={ListingFormSection['Information Profile']}
-        style={{ maxWidth: '100%' }}
-      >
-        <VSpacer size='large' />
-        <ListingInformationProfile />
-      </Element>
-
-      <Element
-        name={ListingFormSection['Team Members']}
-        style={{ maxWidth: '100%' }}
-      >
-        <VSpacer size='large' />
-        <DSOTeam />
-      </Element>
-    </Fragment>
+      </Grid>
+    </Grid>
   )
 }

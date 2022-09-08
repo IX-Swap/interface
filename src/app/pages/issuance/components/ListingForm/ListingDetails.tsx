@@ -14,32 +14,34 @@ import { useStyles } from 'app/pages/accounts/components/CurrencySelect/Currency
 import classnames from 'classnames'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 
-export interface NewListingRadioButtonsProps {
-  listPlace: null | string
-  setListPlace: (value: string) => void
+export type ListingType = 'Secondary' | 'Otc' | 'Both'
+
+export interface ListingDetailsProps {
+  listingType: null | ListingType
+  setListingType: (value: ListingType) => void
   onImportClick: (value: string) => void
 }
 
 export const radioButtonsList = [
   {
     label: 'Exchange',
-    value: 'exchange'
+    value: 'Secondary'
   },
   {
     label: 'OTC',
-    value: 'otc'
+    value: 'Otc'
   },
   {
     label: 'Both',
-    value: 'both'
+    value: 'Both'
   }
 ]
 
-export const ListingRadioButtons = ({
-  listPlace,
-  setListPlace,
+export const ListingDetails = ({
+  listingType,
+  setListingType,
   onImportClick
-}: NewListingRadioButtonsProps) => {
+}: ListingDetailsProps) => {
   const classes = useStyles()
 
   const { data, isLoading } = useDSOsByUserId('Approved')
@@ -57,7 +59,7 @@ export const ListingRadioButtons = ({
         </Grid>
 
         <Grid item>
-          <RadioGroup name={'listPlace'} value={listPlace}>
+          <RadioGroup name={'listPlace'} value={listingType}>
             <Grid
               container
               display={'grid'}
@@ -70,10 +72,10 @@ export const ListingRadioButtons = ({
                     item
                     data-testid={'buttonWrapper'}
                     className={classnames(classes.button, {
-                      [classes.active]: listPlace === value
+                      [classes.active]: listingType === value
                     })}
                     onClick={() => {
-                      setListPlace(value)
+                      setListingType(value as ListingType)
                     }}
                   >
                     <FormControlLabel
