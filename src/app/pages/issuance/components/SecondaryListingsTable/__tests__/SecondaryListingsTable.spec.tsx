@@ -4,11 +4,11 @@ import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { listingsQueryKeys } from 'config/queryKeys'
-import { columns } from 'app/pages/issuance/components/MyListingsTable/columns'
+import { columns } from 'app/pages/issuance/components/SecondaryListingsTable/columns'
 import { listings } from 'config/apiURL'
-import { MyListingsTable } from 'app/pages/issuance/components/MyListingsTable/MyListingsTable'
+import { SecondaryListingsTable } from 'app/pages/issuance/components/SecondaryListingsTable/SecondaryListingsTable'
 import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
-import { Actions } from 'app/pages/issuance/components/MyListingsTable/Actions'
+import { Actions } from 'app/pages/issuance/components/SecondaryListingsTable/Actions'
 
 jest.mock('ui/UIKit/TablesKit/components/TableView/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -22,7 +22,7 @@ jest.mock('app/pages/issuance/components/MyListingsTable/Actions', () => ({
   Actions: jest.fn(() => null)
 }))
 
-describe('MyListingsTable', () => {
+describe('SecondaryListingsTable', () => {
   const initialFilterValues = {
     search: undefined,
     status: 'Draft,Submitted,Approved,Rejected'
@@ -33,7 +33,7 @@ describe('MyListingsTable', () => {
   })
 
   it('renders PastOrderFilter without error', () => {
-    renderWithUserStore(<MyListingsTable />)
+    renderWithUserStore(<SecondaryListingsTable />)
 
     expect(TextInputSearchFilter).toHaveBeenCalled()
   })
@@ -44,7 +44,7 @@ describe('MyListingsTable', () => {
       user
     })
 
-    renderWithUserStore(<MyListingsTable />)
+    renderWithUserStore(<SecondaryListingsTable />)
 
     expect(TableView).toHaveBeenCalledWith(
       {

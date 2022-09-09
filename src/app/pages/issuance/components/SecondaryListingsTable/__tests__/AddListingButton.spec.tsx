@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { Button } from '@mui/material'
 import { IssuanceRoute as paths } from 'app/pages/issuance/router/config'
-import { AddListingButton } from 'app/pages/issuance/components/MyListingsTable/AddListingButton'
+import { AddListingButton } from 'app/pages/issuance/components/SecondaryListingsTable/AddListingButton'
 
 jest.mock('@mui/material/Button', () => jest.fn(() => null))
 

@@ -14,6 +14,7 @@ export const columns = [
     label: 'Name',
     key: 'tokenName'
   },
+  // TODO What's date? CreatedAt? LaunchDate? UpdatedAt?
   {
     label: <HeadCellWithSort label={'Date'} field={'launchDate'} />,
     key: 'launchDate',
