@@ -428,13 +428,13 @@ export default function IndividualKycForm() {
                           {personalFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
-
                           <FormGrid columns={3}>
                             <TextInput
                               onChange={(e: any) =>
                                 onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.firstName}
+                              id="firstNameInput"
                               label="First Name:"
                               error={errors.firstName && errors.firstName}
                             />
@@ -443,6 +443,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.middleName}
+                              id="middleNameInput"
                               label="Middle Name:"
                               error={errors.middleName && errors.middleName}
                             />
@@ -451,6 +452,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.lastName}
+                              id="lastNameInput"
                               label="Last Name:"
                               error={errors.lastName && errors.lastName}
                             />
@@ -461,6 +463,7 @@ export default function IndividualKycForm() {
                               maxHeight={60}
                               error={errors.dateOfBirth && errors.dateOfBirth}
                               value={values.dateOfBirth}
+                              id="dateOfBirthButton"
                               onChange={(value) => {
                                 setFieldValue('dateOfBirth', value, false)
                                 validationSeen('dateOfBirth')
@@ -469,6 +472,7 @@ export default function IndividualKycForm() {
                             />
                             <Select
                               error={errors.gender && errors.gender}
+                              id="genderDropdown"
                               label="Gender"
                               selectedItem={values.gender}
                               items={genders}
@@ -480,6 +484,7 @@ export default function IndividualKycForm() {
                             <Select
                               error={errors.nationality && errors.nationality}
                               withScroll
+                              id="nationalityDropdown"
                               label="Nationality"
                               selectedItem={values.nationality}
                               items={countries}
@@ -488,6 +493,7 @@ export default function IndividualKycForm() {
                             <Select
                               error={errors.citizenship && errors.citizenship}
                               withScroll
+                              id="citizenshipDropdown"
                               label="Citizenship"
                               selectedItem={values.citizenship}
                               items={countries}
@@ -508,6 +514,7 @@ export default function IndividualKycForm() {
                                 onChangeInput('email', e.currentTarget.value, values, setFieldValue)
                               }
                               value={values.email}
+                              id="emailAddressField"
                               label="Email address:"
                               error={errors.email && errors.email}
                             />
@@ -605,6 +612,7 @@ export default function IndividualKycForm() {
                           <FormGrid>
                             <DateInput
                               label="ID Issueance Date"
+                              id="documentIssueDateButton"
                               maxHeight={60}
                               error={errors.idIssueDate}
                               value={values.idIssueDate}
@@ -616,6 +624,7 @@ export default function IndividualKycForm() {
                             />
                             <DateInput
                               label="ID Expiration Date"
+                              id="documentExpiryDateButton"
                               maxHeight={60}
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
@@ -910,6 +919,7 @@ export default function IndividualKycForm() {
                           <Column style={{ gap: '8px' }}>
                             <Checkbox
                               isRadio
+                              id="citizenOfUS"
                               checked={values.isUSTaxPayer === 1}
                               onClick={() => onRadioChange('isUSTaxPayer', 1, setFieldValue)}
                               label={`I confirm that I am a US citizen and/or resident in the US for tax purposes and my US federal taxpayer ID number (US TIN) is as follows: `}
@@ -928,6 +938,7 @@ export default function IndividualKycForm() {
                           </Column>
                           <Checkbox
                             isRadio
+                            id="notCitizenOfUS"
                             checked={values.isUSTaxPayer === 0}
                             onClick={() => onRadioChange('isUSTaxPayer', 0, setFieldValue)}
                             label="I confirm that I am not a US citizen or resident in the US for tax purposes. "

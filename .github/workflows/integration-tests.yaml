@@ -17,6 +17,9 @@ jobs:
       METAMASK_PRIVATE_KEY: ${{ secrets.METAMASK_PRIVATE_KEY }}
       INFURA_KEY: ${{ secrets.INFURA_KEY }}
       METAMASK_ADDRESS: ${{ secrets.METAMASK_ADDRESS }}
+      KYC_METAMASK_RECOVERY: ${{ secrets.KYC_METAMASK_RECOVERY }}
+      KYC_METAMASK_PRIVATE_KEY: ${{ secrets.KYC_METAMASK_PRIVATE_KEY }}
+      KYC_METAMASK_ADDRESS: ${{ secrets.KYC_METAMASK_ADDRESS }}
       E2E_CI: true
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 

@@ -81,6 +81,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
         onClick={handleSubmit}
         disabled={disabled}
         type="submit"
+        data-testid="submitButton"
         style={{ width: '100%' }}
         marginY="24px"
       >

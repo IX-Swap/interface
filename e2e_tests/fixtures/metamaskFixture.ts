@@ -1,24 +1,31 @@
 import { chromium, test as base } from '@playwright/test'
 import { ConnectWalletScreen } from '../page-object/connectWalletScreen'
-import { KycScreen } from '../page-object/kycScreen'
 import { MetamaskPage } from '../page-object/metamaskPage'
 import { WebPage } from '../page-object/webPage'
 import { TopNavigationBar } from '../page-object/topNavigationBar'
 import { LiquidityPoolsPage } from '../page-object/liquidityPoolsPage'
 import { SwapTradePage } from '../page-object/swapTradePage'
+import { KycPage } from '../page-object/kycPage'
+import { AdminPage } from '../page-object/adminPage'
+import { SecurityTokensPage } from '../page-object/securityTokensPage'
 
 type ixsFixtures = {
   connectWalletScreen: ConnectWalletScreen;
-  kycScreen: KycScreen;
   metamaskPage: MetamaskPage;
   topNavigationBar: TopNavigationBar;
   webPage: WebPage;
   liquidityPoolsPage: LiquidityPoolsPage;
   kovanNetwork: ConnectWalletScreen;
   swapTradePage: SwapTradePage;
+  kycPage: KycPage;
+  adminPage: AdminPage;
+  recoveryPhrase: string;
+  securityTokensPage: SecurityTokensPage;
 };
 
 export const test = base.extend<ixsFixtures>({
+  recoveryPhrase: process.env.METAMASK_RECOVERY,
+
   context: async ({ browser }, use) => {
     const pathToExtension = require('path').join(__dirname, '..', 'extensions/metamask')
     const userDataDir = ''
@@ -49,12 +56,12 @@ export const test = base.extend<ixsFixtures>({
     await use(metamaskContextPage)
   },
 
-  metamaskPage: [async ({ context }, use) => {
+  metamaskPage: [async ({ context, recoveryPhrase }, use) => {
     const pageWithMetamask = await context.pages()[1]
     const metamaskPage = new MetamaskPage(pageWithMetamask)
 
     await metamaskPage.makeSureMetamaskLoaded()
-    await metamaskPage.fullyLoginToMetamask(process.env.METAMASK_RECOVERY, process.env.METAMASK_PASSWORD)
+    await metamaskPage.fullyLoginToMetamask(recoveryPhrase, process.env.METAMASK_PASSWORD)
     await use(metamaskPage)
   }, { auto: true }],
 
@@ -70,16 +77,24 @@ export const test = base.extend<ixsFixtures>({
     await use(new WebPage(page, context))
   },
 
-  kycScreen: async ({ page, context }, use) => {
-    await use(new KycScreen(page, context))
-  },
-
   liquidityPoolsPage: async ({ page, context }, use) => {
     await use(new LiquidityPoolsPage(page, context))
   },
 
   swapTradePage: async ({ page, context }, use) => {
     await use(new SwapTradePage(page, context))
+  },
+
+  kycPage: async ({ page, context }, use) => {
+    await use(new KycPage(page, context))
+  },
+
+  adminPage: async ({ page, context }, use) => {
+    await use(new AdminPage(page, context))
+  },
+
+  securityTokensPage: async ({ page, context }, use) => {
+    await use(new SecurityTokensPage(page, context))
   },
 
   kovanNetwork: async ({ connectWalletScreen, metamaskPage }, use) => {
