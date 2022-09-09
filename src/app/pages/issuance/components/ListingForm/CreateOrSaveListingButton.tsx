@@ -32,14 +32,12 @@ export const CreateOrSaveListingButton = (
       ? listing?.user
       : getIdFromObj(listing?.user) ?? listing?.createdBy ?? ''
   )
-  // TODO Needs to do refactoring for this payload after completed backend api
-  const { dso, corporate, launchDate, asset, ...defaultFormValues } = watch()
+  const { dso, ...defaultFormValues } = watch()
   const formValues = getUpdateListingPayload({
     ...defaultFormValues,
     type: listingType,
     dsoId: dso,
-    userId: userId,
-    status: 'Draft'
+    userId: userId
   } as any)
 
   const handleClick =
