@@ -4,6 +4,7 @@ import { generatePath, Prompt, useHistory } from 'react-router-dom'
 import { Action, Location } from 'history'
 import { MutationResultPair, useMutation } from 'react-query'
 import { CreateModeRedirect } from 'app/components/FormStepper/FormStepper'
+import { RedirectOnSaveArgs } from 'types/dso'
 
 export interface SaveOnNavigateProps {
   mutation: MutationResultPair<any, any, any, any>
@@ -11,13 +12,7 @@ export interface SaveOnNavigateProps {
   isCreateMode: boolean
   createModeRedirect: CreateModeRedirect
   activeStep?: number
-  redirectOnSave?: (
-    createModeRedirect: CreateModeRedirect,
-    data: any,
-    isCreateMode: any,
-    nextLocation: any,
-    setIsRedirecting: any
-  ) => void
+  redirectOnSave?: (args: RedirectOnSaveArgs) => void
 }
 
 export const SaveOnNavigate = ({
@@ -45,13 +40,13 @@ export const SaveOnNavigate = ({
         onSettled: (data: any) => {
           setIsRedirecting(true)
           if (redirectOnSave !== undefined) {
-            redirectOnSave(
+            redirectOnSave({
               createModeRedirect,
               data,
               isCreateMode,
               nextLocation,
               setIsRedirecting
-            )
+            })
           } else {
             const redirect =
               typeof createModeRedirect === 'function'
