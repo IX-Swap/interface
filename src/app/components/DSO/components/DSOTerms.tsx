@@ -34,15 +34,19 @@ export const DSOTerms = () => {
 
   return (
     <Grid item>
-      <Grid container spacing={2} py={2} direction='column'>
+      <Grid container spacing={2} direction='column'>
         <Grid item>
           <Grid container>
-            <FormSectionHeader hasBorderBottom={false} title='Offering Terms' />
+            <FormSectionHeader
+              hasBorderBottom={false}
+              title='Offering Terms'
+              variant='h5'
+            />
             <Typography
               style={{
                 color: theme.palette.grey[greyText],
                 marginLeft: '0.5rem',
-                marginTop: '0.5rem'
+                marginTop: '0.1rem'
               }}
               variant='body1'
             >
@@ -51,7 +55,7 @@ export const DSOTerms = () => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container spacing={3} py={2}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -82,7 +86,7 @@ export const DSOTerms = () => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3} py={2}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -115,7 +119,7 @@ export const DSOTerms = () => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3} py={2}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -141,7 +145,7 @@ export const DSOTerms = () => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3} py={2}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
