@@ -46,7 +46,7 @@ export interface QueryFilters {
   errorType: 'email' | 'connection' | undefined
   code: string | undefined
   account: string | undefined
-  isFavorite: 'yes' | 'no' | undefined
+  isFavorite: string | undefined
   sortField: 'price' | 'minimumInvestment' | undefined
   sortOrder: '1' | '-1' | undefined
 }
