@@ -7,6 +7,11 @@ export const outlined = (theme: Theme) => {
         backgroundColor: theme.palette.background.paper,
         '&.Mui-focused': {
           backgroundColor: theme.palette.background.paper
+        },
+        '&.Mui-disabled': {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.input.border
+          }
         }
       }
     }
