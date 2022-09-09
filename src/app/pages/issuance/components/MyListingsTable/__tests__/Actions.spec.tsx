@@ -25,8 +25,7 @@ describe('Actions', () => {
       expect.objectContaining({
         component: AppRouterLinkComponent,
         to: paths.viewListing,
-        params: { listingId: item._id },
-        size: 'small'
+        params: { listingId: item._id }
       }),
       {}
     )

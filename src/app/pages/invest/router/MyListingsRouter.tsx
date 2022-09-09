@@ -9,7 +9,7 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 export const MyListingsRouter = () => {
   return (
     <Switch>
-      <AppRoute exact path={IssuanceRoute.myListings}>
+      <AppRoute exact path={IssuanceRoute.secondaryListings}>
         <MyListings />
       </AppRoute>
 

@@ -1,0 +1,437 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DSODocumentsFields should match snapshot 1`] = `
+<div>
+  <form
+    style="width: 100%;"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-spacing-md-5 MuiGrid-direction-xs-column css-1tbgh1m-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+                >
+                  Upload Documents
+                </h5>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-4 MuiGrid-spacing-md-5 MuiGrid-direction-xs-column css-1b9jecq-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <h5
+                        class="MuiTypography-root MuiTypography-h5 css-1d2h0km-MuiTypography-root"
+                      >
+                        Subscription Document
+                      </h5>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-3phns2-MuiTypography-root"
+                      >
+                        Please upload your subscription document
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+                  >
+                    <div
+                      class=" MuiBox-root css-1r25d6u"
+                    >
+                      <div
+                        class="MuiBox-root css-70qvj9"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                        >
+                          <div
+                            class="MuiBox-root css-70qvj9"
+                          >
+                            <svg
+                              class="css-1s8o7ec"
+                              fill="#778194"
+                              height="24px"
+                              width="24px"
+                            >
+                              <use
+                                href="image-mock#file"
+                              />
+                            </svg>
+                            <div
+                              class="MuiBox-root css-d0uhtl"
+                            >
+                              Upload file
+                            </div>
+                          </div>
+                        </p>
+                      </div>
+                      <div
+                        class="MuiBox-root css-0"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
+                        >
+                          Browse
+                        </p>
+                        <input
+                          accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
+                          autocomplete="off"
+                          hidden=""
+                          id="subscriptionDocument"
+                          name="subscriptionDocument"
+                          style="display: none;"
+                          tabindex="-1"
+                          type="file"
+                        />
+                      </div>
+                      <div
+                        class="MuiBox-root css-16mkun2"
+                      >
+                        <span
+                          aria-valuemax="100"
+                          aria-valuemin="0"
+                          aria-valuenow="0"
+                          class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                          role="progressbar"
+                        >
+                          <span
+                            class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                            style="transform: translateX(-100%);"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-hoc6b0-MuiGrid-root"
+                  />
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-ttp6t5-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <h5
+                      class="MuiTypography-root MuiTypography-h5 css-1d2h0km-MuiTypography-root"
+                    >
+                      Dataroom
+                    </h5>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-3phns2-MuiTypography-root"
+                    >
+                      Please select document type and upload it
+                    </p>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-vacfyj-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-1 css-sr8rm-MuiInputBase-root-MuiOutlinedInput-root"
+                        style="min-width: 200px;"
+                      >
+                        <div
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          class="makeStyles-select-2 MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-1ub9as-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                          role="button"
+                          tabindex="0"
+                        >
+                          Other
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
+                          value="Other"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-7glybp-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                        <fieldset
+                          aria-hidden="true"
+                          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                        >
+                          <legend
+                            class="css-nnbavb"
+                          >
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-10h8c1q-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                      >
+                        <div
+                          class=" MuiBox-root css-1r25d6u"
+                        >
+                          <div
+                            class="MuiBox-root css-70qvj9"
+                          >
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                            >
+                              <div
+                                class="MuiBox-root css-70qvj9"
+                              >
+                                <svg
+                                  class="css-1s8o7ec"
+                                  fill="#778194"
+                                  height="24px"
+                                  width="24px"
+                                >
+                                  <use
+                                    href="image-mock#file"
+                                  />
+                                </svg>
+                                <div
+                                  class="MuiBox-root css-d0uhtl"
+                                >
+                                  Upload file
+                                </div>
+                              </div>
+                            </p>
+                          </div>
+                          <div
+                            class="MuiBox-root css-0"
+                            role="button"
+                            tabindex="0"
+                          >
+                            <p
+                              class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
+                            >
+                              Browse
+                            </p>
+                            <input
+                              accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
+                              autocomplete="off"
+                              hidden=""
+                              id="file"
+                              name="file"
+                              style="display: none;"
+                              tabindex="-1"
+                              type="file"
+                            />
+                          </div>
+                          <div
+                            class="MuiBox-root css-16mkun2"
+                          >
+                            <span
+                              aria-valuemax="100"
+                              aria-valuemin="0"
+                              aria-valuenow="0"
+                              class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                              role="progressbar"
+                            >
+                              <span
+                                class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                                style="transform: translateX(-100%);"
+                              />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-spacing-md-5 MuiGrid-direction-xs-column css-1tbgh1m-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+                >
+                  Video Links
+                </h5>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-4 MuiGrid-spacing-md-5 MuiGrid-direction-xs-column css-1b9jecq-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-5 MuiGrid-direction-xs-column css-8ffqm3-MuiGrid-root"
+              />
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <div
+                  class="ForwardRef(Box)-root-6 ForwardRef(Box)-root-7 MuiBox-root css-0"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item css-1phknox-MuiGrid-root"
+              >
+                <button
+                  class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-1t4zbrn-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    class="css-1s8o7ec"
+                    fill="#778194"
+                    height="24px"
+                    style="margin-right: 8px;"
+                    width="24px"
+                  >
+                    <use
+                      href="image-mock#plus"
+                    />
+                  </svg>
+                   
+                  Add video
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+      >
+        <div
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="MuiBox-root css-0"
+              >
+                <h5
+                  class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+                >
+                  FAQs
+                </h5>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-spacing-md-5 MuiGrid-direction-xs-column css-1tbgh1m-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
+              />
+              <div
+                class="MuiGrid-root MuiGrid-item css-wea51-MuiGrid-root"
+              >
+                <div
+                  class="ForwardRef(Box)-root-6 ForwardRef(Box)-root-8 MuiBox-root css-0"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item css-1phknox-MuiGrid-root"
+              >
+                <button
+                  class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-1t4zbrn-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    class="css-1s8o7ec"
+                    fill="#778194"
+                    height="24px"
+                    style="margin-right: 8px;"
+                    width="24px"
+                  >
+                    <use
+                      href="image-mock#plus"
+                    />
+                  </svg>
+                   
+                  Add FAQ
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

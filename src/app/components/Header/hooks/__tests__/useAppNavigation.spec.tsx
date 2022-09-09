@@ -204,7 +204,10 @@ describe('useAppNavigation', () => {
       { label: 'Create New DSO', path: IssuanceRoute.create },
       { label: 'View DSO Listings', path: IssuanceRoute.list },
       { label: 'Create Exchange Listings', path: IssuanceRoute.createListing },
-      { label: 'View Exchange Listings', path: IssuanceRoute.myListings },
+      {
+        label: 'View Exchange Listings',
+        path: IssuanceRoute.secondaryListings
+      },
       { label: 'Financial Reports', path: IssuanceRoute.financialReports }
     ])
     expect(current.dropdownLinksItems('Invest')).toEqual(investLandingLinks)

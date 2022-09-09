@@ -7,7 +7,7 @@ import { Grid } from '@mui/material'
 export const MyListings = () => {
   return (
     <Grid container style={{ display: 'table' }}>
-      <PageHeader title={'My Listings'} showBreadcrumbs={true} />
+      <PageHeader title={'Secondary Listings'} showBreadcrumbs={true} />
       <RootContainer>
         <MyListingsTable />
       </RootContainer>

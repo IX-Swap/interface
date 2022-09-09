@@ -1,6 +1,6 @@
 import React from 'react'
 import { renderWithUserStore } from 'test-utils'
-import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { listingsQueryKeys } from 'config/queryKeys'
@@ -10,7 +10,7 @@ import { MyListingsTable } from 'app/pages/issuance/components/MyListingsTable/M
 import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { Actions } from 'app/pages/issuance/components/MyListingsTable/Actions'
 
-jest.mock('components/TableWithPagination/TableView', () => ({
+jest.mock('ui/UIKit/TablesKit/components/TableView/TableView', () => ({
   TableView: jest.fn(() => null)
 }))
 
@@ -28,8 +28,8 @@ describe('MyListingsTable', () => {
     status: 'Draft,Submitted,Approved,Rejected'
   }
 
-  it.skip('renders without error', async () => {
-    renderWithUserStore(<MyListingsTable />)
+  afterEach(async () => {
+    jest.clearAllMocks()
   })
 
   it('renders PastOrderFilter without error', () => {
@@ -53,8 +53,8 @@ describe('MyListingsTable', () => {
         columns,
         filter: initialFilterValues,
         defaultRowsPerPage: 5,
-        hasActions: true,
-        actions: Actions
+        actions: Actions,
+        actionHeader: 'Actions'
       },
       {}
     )

@@ -27,7 +27,6 @@ export enum AppFeature {
   IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Market = 'market',
-  MyListings = 'my-listings',
   Offerings = 'offerings',
   Deployments = 'deployments',
   Issuance = 'issuance',

@@ -60,7 +60,6 @@ export const urlFeature = {
   accessReports: 'access-reports',
   holdings: `${AppFeature.Holdings}`,
   market: `${AppFeature.Market}`,
-  myListings: `${AppFeature.MyListings}`,
   listings: `${AppFeature.Listings}`,
   buyerList: `${AppFeature.BuyerList}`,
   captable: AppFeature.CapTable,

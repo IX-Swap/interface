@@ -44,9 +44,10 @@ export const IssuanceRoute = {
   financialReports: '/app/issuance/financial-reports',
   uploadReport: '/app/issuance/financial-reports/upload',
   viewReport: '/app/issuance/financial-reports/:reportId',
-  myListings: '/app/issuance/my-listings',
+  secondaryListings: '/app/issuance/secondary-listings',
   createListing: '/app/issuance/create',
-  editListing: '/app/issuance/my-listings/:listingId/edit',
-  viewListing: '/app/issuance/my-listings/:listingId/view',
-  previewListing: '/app/issuance/my-listings/:issuerId/:listingId/preview'
+  editListing: '/app/issuance/secondary-listings/:listingId/edit',
+  viewListing: '/app/issuance/secondary-listings/:listingId/view',
+  previewListing:
+    '/app/issuance/secondary-listings/:issuerId/:listingId/preview'
 }
