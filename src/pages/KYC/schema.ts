@@ -41,6 +41,8 @@ export const individualErrorsSchema = yup.object().shape({
   income: yup.object().nullable().required('Required'),
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
   proofOfAddress: yup.array().min(1, 'Required').nullable(),
+
+  confirmStatusDeclaration: yup.boolean().isTrue('Required')
 })
 
 export const corporateErrorsSchema = yup.object().shape({

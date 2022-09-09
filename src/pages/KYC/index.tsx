@@ -129,6 +129,42 @@ export default function KYC() {
             </Flex>
           </>
         )
+        
+      case KYCStatuses.DRAFT:
+        return (
+          <>
+            <Description description={description} />
+            <Flex
+              width="100%"
+              flexDirection={isMobile ? 'column' : 'row'}
+              justifyContent="center"
+              alignItems={isMobile ? 'center' : 'flex-start'}
+            >
+              {kyc?.individual && (
+                <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
+                  <IndividualKYC />
+                  <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
+                    <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                      <Trans>Continue Pass KYC as Individual</Trans>
+                    </ButtonIXSGradient>
+                  </Link>
+                </Flex>
+              )}
+
+              {kyc?.corporate && (
+                <Flex flexDirection="column" alignItems="center">
+                  <CorporateKYC />
+                  <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
+                    <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
+                      <Trans>Continue Pass KYC as Corporate</Trans>
+                    </ButtonGradientBorder>
+                  </Link>
+                </Flex>
+              )}
+            </Flex>
+          </>
+        )
+
       case KYCStatuses.REJECTED:
         return (
           <>

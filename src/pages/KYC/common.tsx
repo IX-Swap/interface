@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, HTMLProps } from 'react'
+import React, { CSSProperties, FC, HTMLProps, useMemo } from 'react'
 import { Box, Flex } from 'rebass'
 import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
@@ -17,6 +17,7 @@ import { AcceptFiles } from 'components/Upload/types'
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
+import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import Row from 'components/Row'
@@ -53,12 +54,40 @@ interface SelectProps {
   tooltipText?: string | JSX.Element
   addCustom?: boolean
   id?: any
+  value?: any
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
   error?: any | JSX.Element
   required?: boolean
   tooltipText?: string | JSX.Element
+}
+
+interface KycInputLabelProps {
+  name?: string
+  error?: any
+  label?: string
+  tooltipText?: string | JSX.Element
+  style?: string
+}
+
+export const KycInputLabel: FC<KycInputLabelProps> = ({label, error, name, tooltipText}) => {
+  if (!label) {
+    return null
+  }
+
+  return (
+    <Row alignItems='center'>
+      {error && (
+        <div>
+          <InvalidFormInputIcon style={{ margin: '0 0.5rem'}} />
+        </div>
+      )}
+      <div>
+        <Label label={label} htmlFor={name || ''}  tooltipText={tooltipText} color={error && "#FF007F"}  />
+      </div>
+    </Row>
+  )
 }
 
 export const Select: FC<SelectProps> = ({
@@ -100,6 +129,43 @@ export const Select: FC<SelectProps> = ({
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
         </TYPE.small>
+      )}
+    </Box>
+  )
+}
+
+export const KycSelect: FC<SelectProps> = ({
+  label,
+  onSelect,
+  selectedItem,
+  placeholder,
+  items,
+  error,
+  name,
+  required,
+  tooltipText,
+  isDisabled,
+  ...rest
+}: SelectProps) => {
+  return (
+    <Box>
+      <KycInputLabel label={label} tooltipText={tooltipText} error={error} />
+      {isDisabled && selectedItem ? (
+        <Row alignItems="center" style={{ columnGap: 4 }}>
+          {selectedItem?.icon}
+          {selectedItem?.label}
+        </Row>
+      ) : (
+        <ReactSelect
+          name={name}
+          placeholder={placeholder}
+          onSelect={onSelect}
+          value={selectedItem}
+          options={items}
+          error={error}
+          isDisabled={isDisabled}
+          {...rest}
+        />
       )}
     </Box>
   )
@@ -147,6 +213,44 @@ export const TextInput: FC<TextInputProps> = ({
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
         </TYPE.small>
+      )}
+    </Box>
+  )
+}
+
+export const KycTextInput: FC<TextInputProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  style,
+  name,
+  type,
+  onBlur,
+  required,
+  error = false,
+  tooltipText,
+  disabled = false,
+}: TextInputProps) => {
+  return (
+    <Box>
+      <KycInputLabel name={name} label={label} error={error} tooltipText={tooltipText} />
+
+      {disabled && value ? (
+        <div>{value}</div>
+      ) : (
+        <StyledInput
+          onBlur={onBlur}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          style={style}
+          type={type}
+          autoComplete="off"
+          disabled={disabled}
+          error={error}
+        />
       )}
     </Box>
   )
@@ -358,6 +462,7 @@ const StyledInput = styled(Input)`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
+  border: ${({ error, theme }) => error ? 'solid 1px' + theme.error : 'none'};
   background-color: ${({ theme: { bg19 } }) => bg19};
   :focus {
     background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};
