@@ -3,7 +3,7 @@ import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { Actions } from 'app/pages/issuance/components/MyListingsTable/Actions'
 import { AddListingButton } from 'app/pages/issuance/components/MyListingsTable/AddListingButton'
 import { columns } from 'app/pages/issuance/components/MyListingsTable/columns'
-import { TableView } from 'components/TableWithPagination/TableView'
+import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { VSpacer } from 'components/VSpacer'
 import { listings } from 'config/apiURL'
 import { listingsQueryKeys } from 'config/queryKeys'
@@ -17,6 +17,7 @@ export const MyListingsTable = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { filter } = useSearchFilter()
+
   return (
     <>
       <VSpacer size={'small'} />
@@ -41,12 +42,12 @@ export const MyListingsTable = () => {
         name={listingsQueryKeys.getListingsList}
         uri={listings.getListByUser(userId)}
         columns={columns}
+        actionHeader={'Actions'}
         filter={{
           ...filter,
           status: 'Draft,Submitted,Approved,Rejected' as any
         }}
         defaultRowsPerPage={5}
-        hasActions
         actions={Actions}
       />
     </>
