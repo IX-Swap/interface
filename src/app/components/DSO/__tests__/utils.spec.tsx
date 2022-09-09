@@ -3,9 +3,12 @@ import { render } from 'test-utils'
 import {
   documentValueExtractor,
   transformDSOToFormValues,
-  renderStringToHTML
+  renderStringToHTML,
+  isDSOLive,
+  isDSOCompleted
 } from 'app/components/DSO/utils'
 import { document } from '__fixtures__/identity'
+import { dso } from '__fixtures__/issuance'
 
 describe('documentValueExtractor', () => {
   afterEach(async () => {
@@ -53,6 +56,24 @@ describe('transformDSOToFormValues', () => {
       issuerName: '',
       uniqueIdentifierCode: ''
     })
+  })
+})
+
+describe('isDSOLive when dso is undefined', () => {
+  it('isDSOLive returns false when dso is undefined', () => {
+    expect(isDSOLive(undefined)).toBe(false)
+  })
+})
+describe('isDSOCompleted  when dso is undefined', () => {
+  it('isDSOCompleted returns false when dso is undefined', () => {
+    expect(isDSOCompleted(undefined)).toBe(false)
+  })
+})
+
+describe('isDSOLive when dso has data', () => {
+  it('isDSOLive returns false when dso status is Approved but is not past launch date', () => {
+    expect(dso).toHaveProperty('authorizations', [])
+    expect(isDSOLive(dso)).toBe(false)
   })
 })
 

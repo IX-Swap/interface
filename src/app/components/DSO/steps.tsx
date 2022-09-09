@@ -2,7 +2,7 @@ import React from 'react'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
 import { DSOFormValues } from 'types/dso'
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
-import { DSOStep1 } from './components/DSOStep1'
+import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
 
 export const dsoFormSteps = [
   {
@@ -14,7 +14,7 @@ export const dsoFormSteps = [
     },
     getRequestPayload: {},
     validationSchema: {},
-    component: () => <DSOStep1 />
+    component: () => <DSOInformationFields />
   },
   {
     label: 'Company Information',

@@ -3,11 +3,11 @@ import { dsoFormSteps } from 'app/components/DSO/steps'
 import { formValues } from '__fixtures__/issuance'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
-import { DSOStep1 } from 'app/components/DSO/components/DSOStep1'
+import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
 import { render } from 'test-utils'
 
-jest.mock('app/components/DSO/components/DSOStep1', () => ({
-  DSOStep1: jest.fn(() => null)
+jest.mock('app/components/DSO/components/DSOInformationFields', () => ({
+  DSOInformationFields: jest.fn(() => null)
 }))
 
 jest.mock('app/components/DSO/components/DSOCompanyInformationFields', () => ({
@@ -50,7 +50,7 @@ describe('steps', () => {
 
   it('returns form step component', () => {
     render(dsoFormSteps[0].component())
-    expect(DSOStep1).toHaveBeenCalled()
+    expect(DSOInformationFields).toHaveBeenCalled()
 
     render(dsoFormSteps[1].component())
     expect(DSOCompanyInformationFields).toHaveBeenCalled()

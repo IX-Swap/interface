@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import React from 'react'
 
-export const DSOStep1 = () => {
+export const DSOInformationFields = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
