@@ -16,22 +16,17 @@ describe('AddListingButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', async () => {
-    render(<AddListingButton />)
-  })
-
   it('renders Button with correct props', () => {
     render(<AddListingButton />)
 
     expect(Button).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         component: AppRouterLinkComponent,
         to: paths.createListing,
-        size: 'small',
         color: 'primary',
-        variant: 'outlined',
-        children: 'Create a new listing'
-      },
+        variant: 'contained',
+        children: 'Create a New Listing'
+      }),
       {}
     )
   })

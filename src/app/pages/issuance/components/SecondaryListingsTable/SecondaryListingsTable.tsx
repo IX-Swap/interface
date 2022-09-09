@@ -6,7 +6,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { listingsQueryKeys } from 'config/queryKeys'
 import { useSearchFilter } from 'hooks/filters/useSearchFilter'
 import { TableView } from 'ui/UIKit/TablesKit/components/TableView/TableView'
-import { Actions } from 'app/pages/issuance/components/SecondaryListingsTable/Actions'
+import { Actions } from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions'
 import { columns } from 'app/pages/issuance/components/SecondaryListingsTable/columns'
 
 export const SecondaryListingsTable = () => {

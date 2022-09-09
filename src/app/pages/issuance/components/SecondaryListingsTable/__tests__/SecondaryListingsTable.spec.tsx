@@ -8,7 +8,7 @@ import { columns } from 'app/pages/issuance/components/SecondaryListingsTable/co
 import { listings } from 'config/apiURL'
 import { SecondaryListingsTable } from 'app/pages/issuance/components/SecondaryListingsTable/SecondaryListingsTable'
 import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
-import { Actions } from 'app/pages/issuance/components/SecondaryListingsTable/Actions'
+import { Actions } from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions'
 
 jest.mock('ui/UIKit/TablesKit/components/TableView/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -18,9 +18,12 @@ jest.mock('app/components/TextInputSearchFilter', () => ({
   TextInputSearchFilter: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/issuance/components/MyListingsTable/Actions', () => ({
-  Actions: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions',
+  () => ({
+    Actions: jest.fn(() => null)
+  })
+)
 
 describe('SecondaryListingsTable', () => {
   const initialFilterValues = {
@@ -30,12 +33,6 @@ describe('SecondaryListingsTable', () => {
 
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it('renders PastOrderFilter without error', () => {
-    renderWithUserStore(<SecondaryListingsTable />)
-
-    expect(TextInputSearchFilter).toHaveBeenCalled()
   })
 
   it('renders TableView with correct props if user exists', () => {
