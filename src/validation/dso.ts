@@ -345,11 +345,7 @@ export const editLiveDSOValidationSchemaStep1 = object()
   })
   .notRequired()
 
-export const getDSOValidationSchemaStep1 = (
-  dsoId: string,
-  issuerId: string,
-  isLive: boolean
-) => {
+export const getDSOValidationSchemaStep1 = (dsoId: string, isLive: boolean) => {
   const isNew = dsoId !== ''
 
   if (isNew) {

@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DistributionFrequencySelect } from 'components/form/DistributionFrequencySelect'
@@ -34,22 +34,28 @@ export const DSOTerms = () => {
 
   return (
     <Grid item>
-      <Grid container spacing={2} py={2} direction='column'>
+      <Grid container spacing={2} direction='column'>
         <Grid item>
           <Grid container>
-            <FormSectionHeader hasBorderBottom={false} title='Offering Terms' />
-            <p
+            <FormSectionHeader
+              hasBorderBottom={false}
+              title='Offering Terms'
+              variant='h5'
+            />
+            <Typography
               style={{
                 color: theme.palette.grey[greyText],
-                marginLeft: '0.5rem'
+                marginLeft: '0.5rem',
+                marginTop: '0.1rem'
               }}
+              variant='body1'
             >
               (Optional)
-            </p>
+            </Typography>
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -80,7 +86,7 @@ export const DSOTerms = () => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -113,7 +119,7 @@ export const DSOTerms = () => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -139,7 +145,7 @@ export const DSOTerms = () => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}

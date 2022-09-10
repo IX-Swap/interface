@@ -17,12 +17,16 @@ export const DSOPricing = () => {
 
   return (
     <Grid item>
-      <Grid container spacing={2} py={2} direction='column'>
+      <Grid container spacing={2} direction='column'>
         <Grid item>
-          <FormSectionHeader hasBorderBottom={false} title='Pricing' />
+          <FormSectionHeader
+            hasBorderBottom={false}
+            title='Pricing'
+            variant='h5'
+          />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -50,7 +54,7 @@ export const DSOPricing = () => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={12}>
               <TypedField
                 control={control}
@@ -69,7 +73,7 @@ export const DSOPricing = () => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <DSOTotalUnits />
             </Grid>

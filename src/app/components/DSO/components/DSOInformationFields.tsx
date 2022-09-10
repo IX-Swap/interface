@@ -3,12 +3,13 @@ import { useParams } from 'react-router-dom'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { isDSOLive } from 'app/components/DSO/utils'
-import { Box, Paper } from '@mui/material'
+import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
+import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 
-export const DSOStep1 = () => {
+export const DSOInformationFields = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
 
   const { data } = useDSOById(dsoId, issuerId)
@@ -17,23 +18,29 @@ export const DSOStep1 = () => {
 
   return (
     <Fragment>
-      <Paper>
-        <Box px={4} py={2}>
-          <DSOBaseFields isNew={isNew} isLive={isLive} />
-        </Box>
-      </Paper>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FieldContainer>
+            <DSOBaseFields isNew={isNew} isLive={isLive} />
+          </FieldContainer>
+        </Grid>
+      </Grid>
       <VSpacer size='small' />
-      <Paper>
-        <Box px={4} py={2}>
-          <DSOPricing />
-        </Box>
-      </Paper>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FieldContainer>
+            <DSOPricing />
+          </FieldContainer>
+        </Grid>
+      </Grid>
       <VSpacer size='small' />
-      <Paper>
-        <Box px={4} py={2}>
-          <DSOTerms />
-        </Box>
-      </Paper>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <FieldContainer>
+            <DSOTerms />
+          </FieldContainer>
+        </Grid>
+      </Grid>
     </Fragment>
   )
 }

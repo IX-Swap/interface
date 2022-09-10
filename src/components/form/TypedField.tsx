@@ -31,6 +31,7 @@ export interface TypedFieldProps<
   valueExtractor?: (...args: any[]) => any
   customRenderer?: boolean
   isOptional?: boolean
+  optionalText?: string
   helperText?: string
   isErrorMessageEnabled?: boolean
   onChange?: (
@@ -74,6 +75,7 @@ export const TypedField = <
     rootName,
     helperText,
     isOptional = false,
+    optionalText = '',
     onChange,
     ...rest
   } = props
@@ -133,7 +135,7 @@ export const TypedField = <
                     marginLeft: '0.5rem'
                   }}
                 >
-                  (Optional)
+                  {optionalText !== '' ? optionalText : '(Optional)'}
                 </span>
               </div>
             ) : (
@@ -187,7 +189,7 @@ export const TypedField = <
                       marginLeft: '0.5rem'
                     }}
                   >
-                    (Optional)
+                    {optionalText !== '' ? optionalText : '(Optional)'}
                   </span>
                 </div>
               ) : (

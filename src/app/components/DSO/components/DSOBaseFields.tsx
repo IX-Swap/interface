@@ -6,7 +6,6 @@ import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { Checkbox } from 'components/form/Checkbox'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
-import { ProductSpecification } from 'components/form/ProductSpecification'
 import { TypedField } from 'components/form/TypedField'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { VSpacer } from 'components/VSpacer'
@@ -29,16 +28,21 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
 
   return (
     <Grid item>
-      <Grid container direction='column' spacing={2} py={2}>
+      <Grid container direction='column' spacing={2}>
         <Grid item>
-          <FormSectionHeader hasBorderBottom={false} title='DSO Information' />
+          <FormSectionHeader
+            hasBorderBottom={false}
+            title='DSO Information'
+            variant='h5'
+          />
         </Grid>
         <Grid item>
           <TypedField
             customRenderer
             component={FileUpload}
             name='logo'
-            label='Upload Logo'
+            label='Upload Photo'
+            placeHolder='Upload File'
             control={control}
             valueExtractor={documentValueExtractor}
             accept={DataroomFileType.image}
@@ -46,12 +50,12 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               type: 'DSO Logo'
             }}
             isOptional
-            helperText='Number of tokens'
+            helperText='Upload Photo'
           />
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12}>
               <TypedField
                 control={control}
@@ -68,7 +72,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={TextInput}
@@ -89,13 +93,15 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 control={control}
                 helperText='Token symbol'
                 variant='outlined'
+                isOptional
+                optionalText='(2-6 alphanumeric characters)'
               />
             </Grid>
           </Grid>
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={NetworkSelect}
@@ -107,22 +113,11 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TypedField
-                component={ProductSpecification}
-                label='Product Specification'
-                name='productSpecification'
-                disabled={!isNew}
-                control={control}
-                helperText='Select item'
-                variant='outlined'
-              />
-            </Grid>
           </Grid>
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={TextInput}
@@ -148,7 +143,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={TextInput}
@@ -174,7 +169,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} md={6}>
               <TypedField
                 component={DateTimePicker}
