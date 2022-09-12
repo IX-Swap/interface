@@ -31,7 +31,8 @@ describe('DSOBaseFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Upload Logo',
+        label: 'Upload Photo',
+        placeHolder: 'Upload File',
         name: 'logo'
       }),
       {}
@@ -49,15 +50,6 @@ describe('DSOBaseFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        label: 'Network',
-        name: 'network'
-      }),
-      {}
-    )
-
-    expect(TypedField).toHaveBeenNthCalledWith(
-      4,
-      expect.objectContaining({
         label: 'Token Name',
         name: 'tokenName'
       }),
@@ -65,10 +57,19 @@ describe('DSOBaseFields', () => {
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
-      5,
+      4,
       expect.objectContaining({
         label: 'Symbol',
         name: 'tokenSymbol'
+      }),
+      {}
+    )
+
+    expect(TypedField).toHaveBeenNthCalledWith(
+      5,
+      expect.objectContaining({
+        label: 'Network',
+        name: 'network'
       }),
       {}
     )

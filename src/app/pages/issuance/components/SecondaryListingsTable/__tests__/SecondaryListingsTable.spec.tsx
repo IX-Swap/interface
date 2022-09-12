@@ -7,7 +7,6 @@ import { listingsQueryKeys } from 'config/queryKeys'
 import { columns } from 'app/pages/issuance/components/SecondaryListingsTable/columns'
 import { listings } from 'config/apiURL'
 import { SecondaryListingsTable } from 'app/pages/issuance/components/SecondaryListingsTable/SecondaryListingsTable'
-import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
 import { Actions } from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions'
 
 jest.mock('ui/UIKit/TablesKit/components/TableView/TableView', () => ({
@@ -44,7 +43,7 @@ describe('SecondaryListingsTable', () => {
     renderWithUserStore(<SecondaryListingsTable />)
 
     expect(TableView).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         name: listingsQueryKeys.getListingsList,
         uri: listings.getListByUser(user._id),
         columns,
@@ -52,7 +51,7 @@ describe('SecondaryListingsTable', () => {
         defaultRowsPerPage: 5,
         actions: Actions,
         actionHeader: 'Actions'
-      },
+      }),
       {}
     )
   })

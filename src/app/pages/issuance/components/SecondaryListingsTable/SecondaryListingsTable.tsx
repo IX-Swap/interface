@@ -29,7 +29,6 @@ export const SecondaryListingsTable = () => {
     return item.tokenSymbol
   }
 
-  // TODO Make changes for mobile and tablet version after completed design for that
   return (
     <ActiveElementContextWrapper>
       <TableView<Listing>
