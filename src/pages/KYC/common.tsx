@@ -316,7 +316,7 @@ export const Uploader: FC<UploaderProps> = ({
         )}
       </Flex>
       {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
-      {files.length > 0 && (
+      {files && files.length > 0 && (
         <Flex flexWrap="wrap">
           {files.map((file: any, index) => (
             <FilePreview

@@ -7,8 +7,14 @@ import { TYPE } from 'theme'
 
 import { FormCard, PageLink, KYCStatusIcons } from './styleds'
 
+interface KYCProgressTopic {
+  title: string
+  href: string
+  passed: boolean
+}
+
 interface Props {
-  topics: any[]
+  topics: KYCProgressTopic[]
   reasons: string[]
   description: string | null
   disabled?: boolean

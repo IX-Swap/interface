@@ -4,45 +4,61 @@ export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
   lastName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
+
   dateOfBirth: yup.mixed().nullable().required('Required'),
   gender: yup.object().nullable().required('Required'),
+
   nationality: yup.object().nullable().required('Required'),
   citizenship: yup.object().nullable().required('Required'),
-  idType: yup.object().nullable().required('Required'),
-  idNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
-  idIssueDate: yup.mixed().nullable().required('Required'),
-  idExpiryDate: yup.mixed().nullable().required('Required'),
+  email: yup.string().email('Invalid email').required('Required'),
   phoneNumber: yup
     .string()
     .required('Required')
     .min(10, 'Must be valid phone number')
     .max(15, 'Must be valid phone number'),
-  email: yup.string().email('Invalid email').required('Required'),
+    
   address: yup.string().required('Required'),
   postalCode: yup.string().required('Required'),
   country: yup.object().nullable().required('Required'),
   city: yup.string().required('Required'),
+
+  idType: yup.object().nullable().required('Required'),
+  idNumber: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
+  idIssueDate: yup.mixed().nullable().required('Required'),
+  idExpiryDate: yup.mixed().nullable().required('Required'),
+  
+  proofOfIdentity: yup.array().min(1, 'Required').nullable(),
+  proofOfAddress: yup.array().min(1, 'Required').nullable(),
+
+  occupation: yup.object().nullable().required('Required'),
+  employmentStatus: yup.object().nullable().required('Required'),
+  employer: yup.string().required('Required'),
+  income: yup.object().nullable().required('Required'),
+
+  taxDeclarations: yup.array().min(1, 'Add at least 1 tax declaration').required('Required'),
+  taxIdentification: yup.string().when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
+  taxIdentificationReason: yup.string().when('taxTinUnavailable', { is: true, then: yup.string().required('Required') }),
+
   sourceOfFunds: yup.array().min(1, 'Choose one').required('Required'),
   otherFunds: yup.string().when('sourceOfFunds', {
     is: (sourceOfFunds: string[]) => sourceOfFunds.includes('Others'),
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  accredited: yup.number().min(0).max(1),
+  
   isUSTaxPayer: yup.number().min(0).max(1),
   usTin: yup.string().when('isUSTaxPayer', {
     is: 1,
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  occupation: yup.object().nullable().required('Required'),
-  employmentStatus: yup.object().nullable().required('Required'),
-  employer: yup.string().required('Required'),
-  income: yup.object().nullable().required('Required'),
-  proofOfIdentity: yup.array().min(1, 'Required').nullable(),
-  proofOfAddress: yup.array().min(1, 'Required').nullable(),
 
-  confirmStatusDeclaration: yup.boolean().isTrue('Required')
+  accredited: yup.number().min(0).max(1),
+  investorDeclaration: yup.number().when('accredited', { is: 1, then: yup.number().required('Required') }),
+  confirmSafeguards: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
+  confirmOptout: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
+  evidenceOfAccreditation: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
+  confirmStatusDeclaration: yup.boolean().isTrue('Required').required('Required')
 })
 
 export const corporateErrorsSchema = yup.object().shape({
