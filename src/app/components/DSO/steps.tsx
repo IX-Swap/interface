@@ -1,19 +1,18 @@
 import React from 'react'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
-import { DSOFormValues } from 'types/dso'
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
+import { DSOFormValues } from 'types/dso'
+import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
+import { getDSOValidationSchemaStep1 } from 'validation/dso'
+import { transformDSOToFormValuesStep1 } from './utils'
 
 export const dsoFormSteps = [
   {
     label: 'DSO Information',
-    getFormValues: () => {},
+    getFormValues: transformDSOToFormValuesStep1,
     getRequestPayload: {},
-    validationSchema: {},
-    component: () => (
-      <>
-        <p>Step 1</p>
-      </>
-    )
+    validationSchema: getDSOValidationSchemaStep1,
+    component: () => <DSOInformationFields />
   },
   {
     label: 'Company Information',

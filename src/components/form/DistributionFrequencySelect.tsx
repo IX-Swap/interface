@@ -8,9 +8,14 @@ export const DistributionFrequencySelect = (props: any) => {
     <>
       <InputLabel>{props.label}</InputLabel>
 
-      <Select {...props} label={undefined}>
+      <Select
+        {...props}
+        label={undefined}
+        placeholder={'Frequency on return distribution'}
+        displayEmpty
+      >
         <SelectItem disabled value={undefined}>
-          Distribution Frequency
+          Frequency on return distribution
         </SelectItem>
         <SelectItem value='Not Applicable'>Not Applicable</SelectItem>
         <SelectItem value='Monthly'>Monthly</SelectItem>

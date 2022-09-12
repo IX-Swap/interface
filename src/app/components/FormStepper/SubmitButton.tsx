@@ -8,10 +8,18 @@ export interface SubmitButtonProps extends ButtonProps {
   mutation: MutationResultPair<any, any, any, any>
   data: any
   step: FormStepperStep
+  submitText?: string
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
-  const { mutation, data, step, fullWidth, size = 'large' } = props
+  const {
+    mutation,
+    data,
+    step,
+    fullWidth,
+    size = 'large',
+    submitText = 'Identity'
+  } = props
 
   const [save, { isLoading }] = mutation
   const isSubmitted = data?.status === 'Submitted'
@@ -29,7 +37,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
       return 'Submitted'
     }
 
-    return 'Submit Identity'
+    return `Submit ${submitText}`
   }
 
   useEffect(() => {

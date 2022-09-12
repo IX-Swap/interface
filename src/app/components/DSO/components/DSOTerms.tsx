@@ -1,8 +1,10 @@
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DistributionFrequencySelect } from 'components/form/DistributionFrequencySelect'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
+import { VSpacer } from 'components/VSpacer'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import React, { useEffect } from 'react'
@@ -16,6 +18,8 @@ export const DSOTerms = () => {
   const capitalStructure = watch('capitalStructure')
   const isEquity = capitalStructure === 'Equity'
   const isDebt = capitalStructure === 'Debt'
+  const theme = useTheme()
+  const greyText = theme.palette.mode === 'dark' ? 500 : 600
 
   useEffect(() => {
     if (isEquity) {
@@ -32,11 +36,27 @@ export const DSOTerms = () => {
     <Grid item>
       <Grid container spacing={2} direction='column'>
         <Grid item>
-          <FormSectionHeader title='Offering Terms' />
+          <Grid container>
+            <FormSectionHeader
+              hasBorderBottom={false}
+              title='Offering Terms'
+              variant='h5'
+            />
+            <Typography
+              style={{
+                color: theme.palette.grey[greyText],
+                marginLeft: '0.5rem',
+                marginTop: '0.1rem'
+              }}
+              variant='body1'
+            >
+              (Optional)
+            </Typography>
+          </Grid>
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={3}>
+          <Grid container spacing={3} pt={2}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={NumericInput}
@@ -48,36 +68,14 @@ export const DSOTerms = () => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={NumericInput}
                 name='dividendYield'
                 label='Dividend Yield'
-                numberFormat={percentageNumberFormat}
-                valueExtractor={numericValueExtractor}
-                variant='outlined'
-                disabled={isDebt}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <TypedField
-                control={control}
-                component={NumericInput}
-                label='Interest Rate'
-                name='interestRate'
-                numberFormat={percentageNumberFormat}
-                valueExtractor={numericValueExtractor}
-                variant='outlined'
-                disabled={isEquity}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <TypedField
-                control={control}
-                component={NumericInput}
-                name='grossIRR'
-                label='Gross IRR'
+                isOptional
+                helperText='In percent'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
@@ -85,20 +83,55 @@ export const DSOTerms = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={6}>
+          <Grid container spacing={3} pt={2}>
+            <Grid item xs={12} sm={6}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                label='Interest Rate'
+                helperText='In percent'
+                name='interestRate'
+                isOptional
+                numberFormat={percentageNumberFormat}
+                valueExtractor={numericValueExtractor}
+                variant='outlined'
+                disabled={isEquity}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TypedField
+                control={control}
+                component={NumericInput}
+                name='grossIRR'
+                label='Gross IRR'
+                isOptional
+                helperText='In percent'
+                numberFormat={percentageNumberFormat}
+                valueExtractor={numericValueExtractor}
+                variant='outlined'
+                disabled={isDebt}
+              />
+            </Grid>
+          </Grid>
+          <VSpacer size='small' />
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3} pt={2}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={TextInput}
                 label='Investment Structure'
+                isOptional
                 name='investmentStructure'
                 variant='outlined'
-                helperText='Holding structure of the investment'
+                helperText='Holding structure'
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={6}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={DistributionFrequencySelect}
@@ -109,15 +142,17 @@ export const DSOTerms = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={3}>
+          <Grid container spacing={3} pt={2}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={NumericInput}
                 name='leverage'
                 label='Leverage'
+                isOptional
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
@@ -125,7 +160,7 @@ export const DSOTerms = () => {
                 disabled={isEquity}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
+            <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
                 component={NumericInput}
@@ -139,6 +174,7 @@ export const DSOTerms = () => {
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
       </Grid>
     </Grid>

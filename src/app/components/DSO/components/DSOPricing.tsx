@@ -1,15 +1,16 @@
-import React from 'react'
-import { moneyNumberFormat } from 'config/numberFormat'
-import { numericValueExtractor } from 'helpers/forms'
 import { Grid } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { NumericInput } from 'components/form/NumericInput'
-import { useFormContext } from 'react-hook-form'
-import { DSOFormValues } from 'types/dso'
-import { MinimumInvesmentField } from 'components/form/MinimumInvestmentField'
 import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
 import { DSOTotalUnits } from 'app/components/DSO/components/DSOTotalUnits'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { MinimumInvesmentField } from 'components/form/MinimumInvestmentField'
+import { NumericInput } from 'components/form/NumericInput'
+import { TypedField } from 'components/form/TypedField'
+import { VSpacer } from 'components/VSpacer'
+import { moneyNumberFormat } from 'config/numberFormat'
+import { numericValueExtractor } from 'helpers/forms'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { DSOFormValues } from 'types/dso'
 
 export const DSOPricing = () => {
   const { control } = useFormContext<DSOFormValues>()
@@ -18,10 +19,14 @@ export const DSOPricing = () => {
     <Grid item>
       <Grid container spacing={2} direction='column'>
         <Grid item>
-          <FormSectionHeader title='Pricing' />
+          <FormSectionHeader
+            hasBorderBottom={false}
+            title='Pricing'
+            variant='h5'
+          />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <TypedField
                 control={control}
@@ -30,7 +35,7 @@ export const DSOPricing = () => {
                 name='pricePerUnit'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Base price you want to sell your offering'
+                helperText='Offering base price'
                 variant='outlined'
               />
             </Grid>
@@ -42,14 +47,15 @@ export const DSOPricing = () => {
                 name='totalFundraisingAmount'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Amount you want to raise'
+                helperText='Amount to raise'
               />
             </Grid>
           </Grid>
+          <VSpacer size='small' />
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+          <Grid container spacing={3} pt={2}>
+            <Grid item xs={12} sm={12}>
               <TypedField
                 control={control}
                 component={MinimumInvesmentField}
@@ -57,7 +63,7 @@ export const DSOPricing = () => {
                 name='minimumInvestment'
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
-                helperText='Minimum units investor should invest'
+                helperText='Number of tokens'
                 variant='outlined'
               />
             </Grid>
@@ -67,7 +73,7 @@ export const DSOPricing = () => {
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} pt={2}>
             <Grid item xs={12} sm={6}>
               <DSOTotalUnits />
             </Grid>
