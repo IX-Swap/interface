@@ -43,16 +43,14 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                   >
                     <div
                       class="makeStyles-placeholder-18 MuiBox-root css-0"
-                    >
-                      You do not have wallet addresses
-                    </div>
+                    />
                   </div>
                   <input
                     aria-hidden="true"
                     class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                     disabled=""
                     name="withdrawalAddress"
-                    placeholder="You do not have wallet addresses"
+                    placeholder=""
                     tabindex="-1"
                     value=""
                   />
@@ -126,6 +124,7 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       disabled=""
                       id="numberOfUnits"
                       name="numberOfUnits"
+                      placeholder=""
                       type="text"
                       value=""
                     />
@@ -175,6 +174,7 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       disabled=""
                       id="pricePerUnit"
                       name="pricePerUnit"
+                      placeholder=""
                       type="text"
                       value=""
                     />
@@ -226,7 +226,6 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       autocomplete="off"
                       class="makeStyles-input-25 makeStyles-small-27  "
                       maxlength="1"
-                      placeholder="_"
                       style="width: 1em; text-align: center;"
                       type="tel"
                       value=""
@@ -240,7 +239,6 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       autocomplete="off"
                       class="makeStyles-input-25 makeStyles-small-27 "
                       maxlength="1"
-                      placeholder="_"
                       style="width: 1em; text-align: center;"
                       type="tel"
                       value=""
@@ -254,7 +252,6 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       autocomplete="off"
                       class="makeStyles-input-25 makeStyles-small-27 "
                       maxlength="1"
-                      placeholder="_"
                       style="width: 1em; text-align: center;"
                       type="tel"
                       value=""
@@ -268,7 +265,6 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       autocomplete="off"
                       class="makeStyles-input-25 makeStyles-small-27 "
                       maxlength="1"
-                      placeholder="_"
                       style="width: 1em; text-align: center;"
                       type="tel"
                       value=""
@@ -282,7 +278,6 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       autocomplete="off"
                       class="makeStyles-input-25 makeStyles-small-27 "
                       maxlength="1"
-                      placeholder="_"
                       style="width: 1em; text-align: center;"
                       type="tel"
                       value=""
@@ -296,7 +291,6 @@ exports[`MakeCommitmentForm should match snapshot 1`] = `
                       autocomplete="off"
                       class="makeStyles-input-25 makeStyles-small-27 "
                       maxlength="1"
-                      placeholder="_"
                       style="width: 1em; text-align: center;"
                       type="tel"
                       value=""

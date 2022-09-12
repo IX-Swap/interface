@@ -173,7 +173,7 @@ exports[`DSODocumentsFields renders nothing if data is null 1`] = `
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <div
-                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-1 css-1e6o172-MuiInputBase-root-MuiOutlinedInput-root"
+                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-1 css-sr8rm-MuiInputBase-root-MuiOutlinedInput-root"
                         style="min-width: 200px;"
                       >
                         <div

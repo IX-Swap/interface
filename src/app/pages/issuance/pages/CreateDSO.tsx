@@ -8,7 +8,7 @@ export const CreateDSO = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Create DSO' />
+        <PageHeader title='Create Digital Security Offering' />
       </Grid>
       <RootContainer>
         <Grid item>

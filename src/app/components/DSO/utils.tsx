@@ -3,6 +3,8 @@ import {
   DigitalSecurityOffering,
   DSOFormValues,
   DSOLaunchStatus,
+  DSOFormValuesStep1,
+  NewBaseDigitalSecurityOffering,
   RedirectArgs,
   RedirectSaveArgs
 } from 'types/dso'
@@ -58,6 +60,61 @@ export const redirectSave = ({
       })
     )
     setIsRedirecting(false)
+  }
+}
+
+export const transformDSOToFormValuesStep1 = (
+  dso: NewBaseDigitalSecurityOffering | undefined
+): DSOFormValuesStep1 => {
+  if (dso === undefined) {
+    return {
+      capitalStructure: '',
+      currency: '',
+      tokenSymbol: '',
+      tokenName: '',
+      network: '',
+      corporate: '',
+      logo: undefined,
+      issuerName: '',
+      uniqueIdentifierCode: '',
+      minimumInvestment: '',
+      totalFundraisingAmount: '',
+      pricePerUnit: '',
+      equityMultiple: '',
+      leverage: '',
+      distributionFrequency: '',
+      investmentStructure: '',
+      grossIRR: '',
+      interestRate: '',
+      dividendYield: '',
+      investmentPeriod: '',
+      productSpecification: ''
+    } as any
+  }
+
+  return {
+    capitalStructure: dso.capitalStructure,
+    logo: dso.logo,
+    tokenName: dso.tokenName,
+    tokenSymbol: dso.tokenSymbol,
+    issuerName: dso.issuerName,
+    corporate: dso.corporate,
+    currency: getIdFromObj({ _id: dso.currency }),
+    uniqueIdentifierCode: dso.uniqueIdentifierCode,
+    network: dso.network,
+    dividendYield: percentageToNumber(dso.dividendYield),
+    grossIRR: percentageToNumber(dso.grossIRR),
+    investmentStructure: dso.investmentStructure,
+    equityMultiple: percentageToNumber(dso.equityMultiple),
+    interestRate: percentageToNumber(dso.interestRate),
+    leverage: percentageToNumber(dso.leverage),
+    totalFundraisingAmount: dso.totalFundraisingAmount,
+    pricePerUnit: dso.pricePerUnit,
+    distributionFrequency: dso.distributionFrequency,
+    investmentPeriod: dso.investmentPeriod,
+    minimumInvestment: dso.minimumInvestment,
+    launchDate: dso.launchDate ?? null,
+    completionDate: dso.completionDate ?? null
   }
 }
 

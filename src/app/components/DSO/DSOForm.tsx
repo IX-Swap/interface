@@ -1,4 +1,3 @@
-import React from 'react'
 import { DigitalSecurityOffering, RedirectOnSaveArgs } from 'types/dso'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getOfferingName, getIdFromObj } from 'helpers/strings'
@@ -6,11 +5,12 @@ import {
   CreateModeRedirect,
   FormStepper
 } from 'app/components/FormStepper/FormStepper'
-import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
 import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
+import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
-import { dsoFormSteps } from './steps'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
+import { dsoFormSteps } from './steps'
 import {
   redirect,
   redirectSave,

@@ -95,6 +95,35 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   dealStatus?: string
   marketType?: string
   dso?: string
+  productSpecification?: string
+}
+
+export interface NewBaseDigitalSecurityOffering
+  extends AuthorizableWithIdentity {
+  _id: string
+  issuerName: string
+  capitalStructure: string
+  tokenName: string
+  tokenSymbol: string
+  uniqueIdentifierCode?: string
+  currency: string
+  network: string
+  logo: string
+  minimumInvestment: number | null
+  launchDate: string
+  completionDate: string
+  pricePerUnit: number
+  totalFundraisingAmount: number | null
+  corporate: CorporateIdentity | string
+  investmentPeriod?: number
+  dividendYield?: number
+  grossIRR?: number
+  investmentStructure?: string
+  equityMultiple?: number
+  distributionFrequency?: string
+  interestRate?: number
+  leverage?: number
+  productSpecification?: string
 }
 
 export interface DSOInsight {
@@ -120,6 +149,21 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   isCampaign?: boolean
   disableInvestInCampaign?: boolean
 }
+
+export interface NewDigitalSecurityOffering
+  extends BaseDigitalSecurityOffering {
+  promoted: boolean
+  disabled: boolean
+  isStarred: boolean
+  documents: DataroomFile[]
+  currency: Asset
+  insight: DSOInsight
+  network?: Network
+  isCampaign?: boolean
+  disableInvestInCampaign?: boolean
+}
+
+export type DSOStepperFormValues = DSOFormValuesStep1
 
 export type DSOFormValues = Omit<
   DigitalSecurityOffering,
@@ -159,6 +203,60 @@ export type DSOFormValues = Omit<
   videos: DsoVideo[]
   uidCode?: string
 }
+
+export type DSOFormValuesStep1 = Omit<
+  NewBaseDigitalSecurityOffering,
+  | '_id'
+  | 'deleted'
+  | 'createdBy'
+  | 'createdAt'
+  | 'user'
+  | 'deploymentInfo'
+  | 'documents'
+  | 'asset'
+  | 'status'
+  | 'team'
+  | 'updatedAt'
+  | 'identity'
+  | 'insight'
+  | 'isStarred'
+  | 'promoted'
+  | 'authorizations'
+  | 'authorization'
+  | 'authorizationDocuments'
+  | 'subscriptionDocument'
+  | 'insight'
+  | 'disabled'
+  | 'corp'
+>
+
+export type DSORequestArgsStep1 = Partial<
+  Omit<
+    DSOFormValuesStep1,
+    | '_id'
+    | 'deleted'
+    | 'createdBy'
+    | 'createdAt'
+    | 'user'
+    | 'deploymentInfo'
+    | 'documents'
+    | 'asset'
+    | 'status'
+    | 'team'
+    | 'updatedAt'
+    | 'identity'
+    | 'insight'
+    | 'isStarred'
+    | 'promoted'
+    | 'authorizations'
+    | 'authorization'
+    | 'authorizationDocuments'
+    | 'subscriptionDocument'
+    | 'insight'
+    | 'disabled'
+    | 'corp'
+  >
+>
 
 export type DSORequestArgs = Partial<
   Omit<DSOFormValues, 'documents' | 'subscriptionDocument'> & {
