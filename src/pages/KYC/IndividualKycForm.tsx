@@ -9,8 +9,9 @@ import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
 import Column, { AutoColumn } from 'components/Column'
-import { ButtonGradient, ButtonGradientBorder, ButtonText } from 'components/Button'
-import { LinkStyledButton, TrashIcon, TYPE } from 'theme'
+import { ButtonGradient, ButtonGradientBorder, ButtonIXSGradient, ButtonText } from 'components/Button'
+import { LinkStyledButton, TYPE } from 'theme'
+import { ReactComponent as TrashIcon } from 'assets/svg/trash-icon.svg'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { StyledBodyWrapper } from 'pages/SecurityTokens'
 import Row, { RowBetween } from 'components/Row'
@@ -46,7 +47,7 @@ import { KYCStatuses, IdentityDocumentType } from './enum'
 import { Box } from 'rebass'
 import Modal from 'components/Modal'
 import { IconButton } from '@material-ui/core'
-import { HrLine, PlusButton } from 'pages/CreateNFT/styleds'
+import { HrLine } from 'pages/CreateNFT/styleds'
 import { Plus } from 'react-feather'
 
 type FormSubmitHanderArgs = { 
@@ -392,8 +393,8 @@ export default function IndividualKycForm() {
           >
             {({ values, handleSubmit, setFieldValue, dirty }) => {
               const shouldValidate = dirty && isSubmittedOnce
-              const employmentInfoFilled =
-                shouldValidate && !errors.occupation && !errors.employmentStatus && !errors.employer && !errors.income
+
+
               const personalFilled =
                 shouldValidate &&
                 !errors.firstName &&
@@ -405,11 +406,44 @@ export default function IndividualKycForm() {
                 !errors.citizenship &&
                 !errors.phoneNumber &&
                 !errors.email
+
+              const referralFilled = !!values.referral
+
+              const financialFilled =
+                shouldValidate &&
+                !errors.occupation &&
+                !errors.employmentStatus &&
+                !errors.employer &&
+                !errors.income &&
+                !errors.sourceOfFunds
+                
+              const employmentInfoFilled =
+                shouldValidate &&
+                !errors.occupation &&
+                !errors.employmentStatus &&
+                !errors.employer &&
+                !errors.income
+
+              const statusDeclarationFilled =
+                shouldValidate
+                !errors.accredited
+
               const identityDocumentFilled =
-                shouldValidate && !errors.idType && !errors.idNumber && !errors.idIssueDate && !errors.idExpiryDate
+                shouldValidate &&
+                !errors.idType &&
+                !errors.idNumber &&
+                !errors.idIssueDate &&
+                !errors.idExpiryDate
+
               const investorFilled = shouldValidate && !errors.accredited
+
               const addressFilled =
-                shouldValidate && !errors.address && !errors.postalCode && !errors.country && !errors.city
+                shouldValidate &&
+                !errors.address &&
+                !errors.postalCode &&
+                !errors.country &&
+                !errors.city
+
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               const filesFilled = shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress
@@ -430,38 +464,32 @@ export default function IndividualKycForm() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
                             <TextInput
-                              onChange={(e: any) =>
-                                onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)
-                              }
-                              value={values.firstName}
                               id="firstNameInput"
                               label="First Name:"
-                              error={errors.firstName && errors.firstName}
+                              value={values.firstName}
+                              error={errors.firstName}
+                              onChange={(e: any) => onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)}
                             />
                             <TextInput
-                              onChange={(e: any) =>
-                                onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)
-                              }
-                              value={values.middleName}
                               id="middleNameInput"
                               label="Middle Name:"
-                              error={errors.middleName && errors.middleName}
+                              value={values.middleName}
+                              error={errors.middleName}
+                              onChange={(e: any) => onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)}
                             />
                             <TextInput
-                              onChange={(e: any) =>
-                                onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)
-                              }
-                              value={values.lastName}
                               id="lastNameInput"
                               label="Last Name:"
-                              error={errors.lastName && errors.lastName}
+                              value={values.lastName}
+                              error={errors.lastName}
+                              onChange={(e: any) => onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)}
                             />
                           </FormGrid>
 
                           <FormGrid>
                             <DateInput
                               maxHeight={60}
-                              error={errors.dateOfBirth && errors.dateOfBirth}
+                              error={errors.dateOfBirth}
                               value={values.dateOfBirth}
                               id="dateOfBirthButton"
                               onChange={(value) => {
@@ -471,7 +499,7 @@ export default function IndividualKycForm() {
                               maxDate={moment().subtract(18, 'years')}
                             />
                             <Select
-                              error={errors.gender && errors.gender}
+                              error={errors.gender}
                               id="genderDropdown"
                               label="Gender"
                               selectedItem={values.gender}
@@ -482,7 +510,7 @@ export default function IndividualKycForm() {
 
                           <FormGrid>
                             <Select
-                              error={errors.nationality && errors.nationality}
+                              error={errors.nationality}
                               withScroll
                               id="nationalityDropdown"
                               label="Nationality"
@@ -491,7 +519,7 @@ export default function IndividualKycForm() {
                               onSelect={(nationality) => onSelectChange('nationality', nationality, setFieldValue)}
                             />
                             <Select
-                              error={errors.citizenship && errors.citizenship}
+                              error={errors.citizenship}
                               withScroll
                               id="citizenshipDropdown"
                               label="Citizenship"
@@ -502,7 +530,7 @@ export default function IndividualKycForm() {
                           </FormGrid>
                           <FormGrid>
                             <PhoneInput
-                              error={errors.phoneNumber && errors.phoneNumber}
+                              error={errors.phoneNumber}
                               value={values.phoneNumber}
                               onChange={(value) => {
                                 setFieldValue('phoneNumber', value, false)
@@ -510,16 +538,15 @@ export default function IndividualKycForm() {
                               }}
                             />
                             <TextInput
-                              onChange={(e: any) =>
-                                onChangeInput('email', e.currentTarget.value, values, setFieldValue)
-                              }
-                              value={values.email}
                               id="emailAddressField"
                               label="Email address:"
-                              error={errors.email && errors.email}
+                              value={values.email}
+                              error={errors.email}
+                              onChange={(e: any) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                             />
                           </FormGrid>
                         </Column>
+
                         <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Address</Trans>
@@ -530,20 +557,16 @@ export default function IndividualKycForm() {
                         <Column style={{ gap: '20px' }}>
                           <FormGrid>
                             <TextInput
-                              onChange={(e: any) =>
-                                onChangeInput('address', e.currentTarget.value, values, setFieldValue)
-                              }
-                              value={values.address}
                               label="Address"
-                              error={errors.address && errors.address}
+                              value={values.address}
+                              error={errors.address}
+                              onChange={(e: any) => onChangeInput('address', e.currentTarget.value, values, setFieldValue)}
                             />
                             <TextInput
-                              onChange={(e: any) =>
-                                onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)
-                              }
-                              value={values.postalCode}
                               label="Postal Code"
-                              error={errors.postalCode && errors.postalCode}
+                              value={values.postalCode}
+                              error={errors.postalCode}
+                              onChange={(e: any) => onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)}
                             />
                           </FormGrid>
 
@@ -557,13 +580,13 @@ export default function IndividualKycForm() {
                                   !['United States of America', 'United States Minor Outlying Islands'].includes(label)
                               )}
                               onSelect={(country) => onSelectChange('country', country, setFieldValue)}
-                              error={errors.country && errors.country}
+                              error={errors.country}
                             />
                             <TextInput
-                              onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
-                              value={values.city}
                               label="City"
-                              error={errors.city && errors.city}
+                              value={values.city}
+                              error={errors.city}
+                              onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
                             />
                           </FormGrid>
                         </Column>
@@ -652,7 +675,7 @@ export default function IndividualKycForm() {
                         <Column style={{ gap: '40px', marginTop: '32px' }}>
                           <Uploader
                             subtitle="Proof of ID - Passport, Singapore NRIC, International Passport, National ID, Driving License or Others."
-                            error={errors.proofOfIdentity && errors.proofOfIdentity}
+                            error={errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
                             onDrop={(file) => {
@@ -667,29 +690,22 @@ export default function IndividualKycForm() {
                           />
 
                           <Uploader
-                            subtitle="Bank statement, utility bills, driving license (no expiry) within 3 month of issuance."
-                            error={errors.proofOfAddress && errors.proofOfAddress}
                             title="Proof of Address"
+                            subtitle="Bank statement, utility bills, driving license (no expiry) within 3 month of issuance."
+                            error={errors.proofOfAddress}
                             files={values.proofOfAddress}
-                            onDrop={(file) => {
-                              handleDropImage(file, values, 'proofOfAddress', setFieldValue)
-                            }}
-                            handleDeleteClick={handleImageDelete(
-                              values,
-                              'proofOfAddress',
-                              values.removedDocuments,
-                              setFieldValue
-                            )}
+                            onDrop={(file) => handleDropImage(file, values, 'proofOfAddress', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(values, 'proofOfAddress', values.removedDocuments, setFieldValue)}
                           />
                         </Column>
                       </FormCard>
 
-                      <FormCard id="employment-info">
+                      <FormCard id="financial">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Financial Information</Trans>
                           </TYPE.title6>
-                          {employmentInfoFilled && <StyledBigPassed />}
+                          {financialFilled && <StyledBigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
@@ -698,32 +714,30 @@ export default function IndividualKycForm() {
                               selectedItem={values.occupation}
                               items={occupationList}
                               onSelect={(status) => onSelectChange('occupation', status, setFieldValue)}
-                              error={errors.occupation && errors.occupation}
+                              error={errors.occupation}
                             />
                             <Select
                               label="Employment Status"
                               selectedItem={values.employmentStatus}
                               items={empleymentStatuses}
                               onSelect={(status: any) => onSelectChange('employmentStatus', status, setFieldValue)}
-                              error={errors.employmentStatus && errors.employmentStatus}
+                              error={errors.employmentStatus}
                             />
                           </FormGrid>
 
                           <FormGrid columns={2}>
                             <TextInput
-                              onChange={(e: any) =>
-                                onChangeInput('employer', e.currentTarget.value, values, setFieldValue)
-                              }
-                              value={values.employer}
                               label="Employer"
-                              error={errors.employer && errors.employer}
+                              value={values.employer}
+                              error={errors.employer}
+                              onChange={(e: any) => onChangeInput('employer', e.currentTarget.value, values, setFieldValue)}
                             />
                             <Select
                               label="Total Income in USD in preceding 12 months"
-                              selectedItem={values.income}
                               items={incomes}
+                              selectedItem={values.income}
                               onSelect={(income) => onSelectChange('income', income, setFieldValue)}
-                              error={errors.income && errors.income}
+                              error={errors.income}
                             />
                           </FormGrid>
 
@@ -734,6 +748,7 @@ export default function IndividualKycForm() {
                             selectedItem={values.sourceOfFunds}
                             items={sourceOfFunds}
                             value={values.sourceOfFunds}
+                            error={errors.sourceOfFunds}
                             onSelect={item => onSourceOfFundsChange(item, values.sourceOfFunds, setFieldValue)}
                           />
                           
@@ -741,11 +756,9 @@ export default function IndividualKycForm() {
                             <TextInput
                               style={{ marginTop: 20 }}
                               placeholder="Other Source of Funds...."
-                              onChange={(e: any) =>
-                                onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)
-                              }
                               value={values.otherFunds}
-                              error={errors.otherFunds && errors.otherFunds}
+                              error={errors.otherFunds}
+                              onChange={(e: any) => onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)}
                             />
                           )}
                           {errors.sourceOfFunds && (
@@ -787,9 +800,9 @@ export default function IndividualKycForm() {
                                     (Common Reporting Standard) Regulations 2016.
                                   </TYPE.description2>
 
-                                  <ButtonGradient onClick={() => setShowTaxModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                  <ButtonIXSGradient onClick={() => setShowTaxModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                     OK
-                                  </ButtonGradient>
+                                  </ButtonIXSGradient>
                                 </Column>
                               </FormCard>
                             </Modal>
@@ -837,6 +850,7 @@ export default function IndividualKycForm() {
                           <TextInput 
                             label="Tax Identification Number (TIN)"
                             value={values.taxIdentification} 
+                            error={errors.taxIdentification}
                             disabled={values.taxTinUnavailable}
                             onChange={e => onChangeInput('taxIdentification', e.currentTarget.value, values, setFieldValue)} 
                           />
@@ -857,8 +871,8 @@ export default function IndividualKycForm() {
                         {values.taxTinUnavailable && (
                           <TextInput 
                             label="Reason"
-                            value={values.taxTinReason}
-                            onChange={e => onChangeInput('taxTinReason', e.currentTarget.value, values, setFieldValue)} 
+                            value={values.taxIdentificationReason}
+                            onChange={e => onChangeInput('taxIdentificationReason', e.currentTarget.value, values, setFieldValue)} 
                           />
                         )}
 
@@ -906,9 +920,9 @@ export default function IndividualKycForm() {
                                     </ol>
                                   </TYPE.description2>
 
-                                  <ButtonGradient onClick={() => setShowFATCAModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                  <ButtonIXSGradient onClick={() => setShowFATCAModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                     OK
-                                  </ButtonGradient>
+                                  </ButtonIXSGradient>
                                 </Column>
                               </FormCard>
                             </Modal>
@@ -951,12 +965,12 @@ export default function IndividualKycForm() {
                         </Column>
                       </FormCard>
 
-                      <FormCard id="investor">
+                      <FormCard id="status-declaration">
                         <RowBetween marginBottom="32px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Investor Status Declaration</Trans>
                           </TYPE.title6>
-                          {investorFilled && <StyledBigPassed />}
+                          {statusDeclarationFilled && <StyledBigPassed />}
                         </RowBetween>
 
                         <Column style={{ gap: '34px' }}>
@@ -980,18 +994,19 @@ export default function IndividualKycForm() {
                                 label="I declare I am a Retail Investor"
                               />
                             </BorderBox>
-                            {errors.accredited && (
-                              <TYPE.small marginTop="-4px" color={'red1'}>
-                                <Trans>Choose one</Trans>
-                              </TYPE.small>
-                            )}
                           </Row>
+                          
+                          {errors.accredited && (
+                            <TYPE.small marginTop="-4px" color={'red1'}>
+                              <Trans>Choose one</Trans>
+                            </TYPE.small>
+                          )}
                         </Column>
                       </FormCard>
 
                       {values.accredited === 1 && (
                         <>
-                          <FormCard>
+                          <FormCard id="investor-declaration">
                             <RowBetween marginBottom="32px">
                               <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                                 <Trans>Investor Declaration</Trans>
@@ -1032,6 +1047,12 @@ export default function IndividualKycForm() {
                                 onClick={() => onRadioChange('investorDeclaration', 3, setFieldValue)}
                               />
                             </Column>
+
+                            {errors.investorDeclaration && (
+                              <TYPE.small marginTop="-4px" color={'red1'}>
+                                <Trans>Choose one</Trans>
+                              </TYPE.small>
+                            )}
                             
                             <RowBetween marginTop="64px">
                               <TYPE.title7 style={{ textTransform: 'uppercase' }}>
@@ -1135,13 +1156,20 @@ export default function IndividualKycForm() {
                                         retail clients (reg. 3A(5)(c)-(e) and (7) SF(LCB)R; reg. 4A(6) FAR.
                                       </TYPE.description2>
 
-                                      <ButtonGradient onClick={() => setShowSafeguardModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                      <ButtonIXSGradient onClick={() => setShowSafeguardModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                         OK
-                                      </ButtonGradient>
+                                      </ButtonIXSGradient>
                                     </Column>
                                   </FormCard>
                                 </Modal>
                               </LabeledCheckBox>
+
+                              {errors.confirmSafeguards && (
+                                <TYPE.small marginTop="-4px" color={'red1'}>
+                                  <Trans>{errors.confirmSafeguards}</Trans>
+                                </TYPE.small>
+                              )}
+                              
                               
                               <LabeledCheckBox>
                                 <Checkbox 
@@ -1190,9 +1218,9 @@ export default function IndividualKycForm() {
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonGradient onClick={openConfirmationModal} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonIXSGradient onClick={openConfirmationModal} style={{ 'width': '100%', marginTop: '32px' }}>
                                           Opt Out
-                                        </ButtonGradient>
+                                        </ButtonIXSGradient>
                                         
                                       </FormGrid>
                                     </Column>
@@ -1213,15 +1241,21 @@ export default function IndividualKycForm() {
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonGradient onClick={() => confirmOptOut(setFieldValue)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonIXSGradient onClick={() => confirmOptOut(setFieldValue)} style={{ 'width': '100%', marginTop: '32px' }}>
                                           Ok
-                                        </ButtonGradient>
+                                        </ButtonIXSGradient>
                                         
                                       </FormGrid>
                                     </Column>
                                   </FormCard>
                                 </Modal>
                               </LabeledCheckBox>
+                              
+                              {errors.confirmOptout && (
+                                <TYPE.small marginTop="-4px" color={'red1'}>
+                                  <Trans>{errors.confirmOptout}</Trans>
+                                </TYPE.small>
+                              )}
                             </Column>
 
                             
@@ -1239,22 +1273,15 @@ export default function IndividualKycForm() {
 
                               <Uploader
                                 title={''}
-                                error={errors.proofOfIdentity && errors.proofOfIdentity}
-                                files={values.proofOfIdentity}
-                                onDrop={(file) => {
-                                  handleDropImage(file, values, 'proofOfIdentity', setFieldValue)
-                                } }
-                                handleDeleteClick={handleImageDelete(
-                                  values,
-                                  'proofOfIdentity',
-                                  values.removedDocuments,
-                                  setFieldValue
-                                )}
+                                error={errors.evidenceOfAccreditation}
+                                files={values.evidenceOfAccreditation}
+                                onDrop={(file) => handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)}
+                                handleDeleteClick={handleImageDelete(values, 'evidenceOfAccreditation', values.removedDocuments, setFieldValue)}
                               />
                             </Column>
                           </FormCard>
                           
-                          <FormCard id="investor">
+                          <FormCard id="acknowledgement">
                             <RowBetween marginBottom="32px">
                               <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                                 <Trans>Investor Status Declaration Acknowledgement</Trans>
@@ -1277,6 +1304,12 @@ export default function IndividualKycForm() {
                                 I am interested in receiving and participating in such personal offers.
                               </TYPE.description3>
                             </LabeledCheckBox>
+
+                            {errors.confirmStatusDeclaration && (
+                              <TYPE.small marginTop="8px" color={'red1'}>
+                                {errors.confirmStatusDeclaration}
+                              </TYPE.small>
+                            )}
                           </FormCard>
                         </>
                       )}
@@ -1289,48 +1322,13 @@ export default function IndividualKycForm() {
                       handleSaveProgress={() => saveProgress(form?.current?.values)}
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
                       disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
-                      topics={Object.values({
-                        info: {
-                          title: 'Personal Information',
-                          href: 'personal',
-                          passed: personalFilled,
-                        },
-                        identityDocument: {
-                          title: 'Identity Document',
-                          href: 'identity-document',
-                          passed: identityDocumentFilled,
-                        },
-                        address: {
-                          title: 'Address',
-                          href: 'address',
-                          passed: addressFilled,
-                        },
-                        funds: {
-                          title: 'Source of Funds',
-                          href: 'funds',
-                          passed: fundsFilled,
-                        },
-                        investor: {
-                          title: 'Investor Status Declaration',
-                          href: 'investor',
-                          passed: investorFilled,
-                        },
-                        fatca: {
-                          title: 'FATCA',
-                          href: 'fatca',
-                          passed: fatcaFilled,
-                        },
-                        employmentInformation: {
-                          title: 'Employment Information',
-                          href: 'employment-info',
-                          passed: employmentInfoFilled,
-                        },
-                        upload: {
-                          title: 'Upload Documents',
-                          href: 'upload',
-                          passed: filesFilled,
-                        },
-                      })}
+                      topics={[
+                        { title: 'Personal Information', href: 'personal', passed: personalFilled },
+                        { title: 'Financial Information', href: 'financial', passed: financialFilled },
+                        { title: 'Investor Status Declaration', href: 'status-declaration', passed: statusDeclarationFilled },
+                        { title: 'Investor Declaration', href: 'investor-declaration', passed: investorFilled },
+                        { title: 'Acknowledgement', href: 'acknowledgement', passed: investorStatusAcknowledgementFilled },
+                      ]}
                       description={kyc?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
