@@ -8,7 +8,8 @@ import {
   DsoFAQItem,
   DsoVideo,
   DepositAddress,
-  DigitalSecurityOffering
+  DigitalSecurityOffering,
+  DSOFormValuesStep1
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -143,6 +144,30 @@ export const videoLink: DsoVideo = {
   _id: '0',
   title: 'Title',
   link: 'Link'
+}
+
+export const baseDSOFormValues: DSOFormValuesStep1 = {
+  logo: '5f898b69aa141c6d0d358ce6',
+  totalFundraisingAmount: 100000,
+  tokenSymbol: '$#',
+  tokenName: 'IXWTKN',
+  pricePerUnit: 10,
+  minimumInvestment: 200,
+  leverage: 1,
+  launchDate: '2020-10-16T18:30:00.000Z',
+  completionDate: '2220-10-16T18:30:00.000Z',
+  issuerName: 'IXIssuer',
+  investmentStructure: '1',
+  investmentPeriod: 2,
+  interestRate: 1,
+  grossIRR: 1,
+  network: network._id,
+  equityMultiple: 1,
+  dividendYield: 1,
+  distributionFrequency: 'Monthly',
+  currency: '5f732c5b8a568b50914d8373',
+  corporate: '5f898a64aa141c6d0d358ce1',
+  capitalStructure: 'Good'
 }
 
 export const formValues: DSOFormValues = {

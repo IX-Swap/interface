@@ -11,6 +11,7 @@ import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { useStyles } from './FormStepper.styles'
+import { RedirectOnSaveArgs } from 'types/dso'
 
 export interface FormStepperStep {
   label: string
@@ -23,6 +24,7 @@ export interface FormStepperStep {
 }
 
 export type CreateModeRedirect = string | ((type: string) => string) | undefined
+
 export interface FormStepperProps {
   steps: FormStepperStep[]
   data: any
@@ -35,6 +37,10 @@ export interface FormStepperProps {
   skippable?: boolean
   formTitle?: string
   createModeRedirect: CreateModeRedirect
+  submitText?: string
+  redirectOnSave?: (args: RedirectOnSaveArgs) => void
+  redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
+  isRequiredOnLastStep?: boolean
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -50,7 +56,11 @@ export const FormStepper = (props: FormStepperProps) => {
     nonLinear = false,
     skippable = false,
     formTitle,
-    createModeRedirect
+    createModeRedirect,
+    submitText,
+    redirectOnSave,
+    redirectCallback,
+    isRequiredOnLastStep
   } = props
 
   const { isMobile } = useAppBreakpoints()
@@ -167,6 +177,9 @@ export const FormStepper = (props: FormStepperProps) => {
             skippable={skippable}
             completed={completed}
             createModeRedirect={createModeRedirect}
+            redirectOnSave={redirectOnSave}
+            redirectCallback={redirectCallback}
+            isRequiredOnLastStep={isRequiredOnLastStep}
           />
         ))}
       </Grid>
@@ -193,6 +206,7 @@ export const FormStepper = (props: FormStepperProps) => {
                         step={steps[steps.length - 1]}
                         fullWidth
                         size='medium'
+                        submitText={submitText}
                       />
                     </Grid>
                   )}

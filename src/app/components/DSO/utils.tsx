@@ -2,7 +2,11 @@ import React from 'react'
 import {
   DigitalSecurityOffering,
   DSOFormValues,
-  DSOLaunchStatus
+  DSOLaunchStatus,
+  DSOFormValuesStep1,
+  NewBaseDigitalSecurityOffering,
+  RedirectArgs,
+  RedirectSaveArgs
 } from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
 import { percentageToNumber } from 'app/pages/issuance/utils/utils'
@@ -11,6 +15,108 @@ import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'
 import { Network, Urls } from 'types/networks'
 import { sanitize } from 'dompurify'
+import { generatePath } from 'react-router-dom'
+
+export const redirect = ({
+  data,
+  createModeRedirect,
+  dsoId,
+  history
+}: RedirectArgs) => {
+  if (
+    createModeRedirect !== undefined &&
+    data?.user !== undefined &&
+    dsoId !== ''
+  ) {
+    history.replace(
+      generatePath(createModeRedirect as string, {
+        issuerId: data?.user,
+        dsoId: dsoId
+      })
+    )
+  }
+}
+
+export const redirectSave = ({
+  createModeRedirect,
+  isCreateMode,
+  nextLocation,
+  data,
+  dsoId,
+  history,
+  setIsRedirecting
+}: RedirectSaveArgs) => {
+  if (
+    createModeRedirect !== undefined &&
+    isCreateMode &&
+    nextLocation !== undefined &&
+    data?.user !== undefined &&
+    dsoId !== ''
+  ) {
+    history.replace(
+      generatePath(`${createModeRedirect as string}${nextLocation.search}`, {
+        issuerId: data?.user,
+        dsoId: dsoId
+      })
+    )
+    setIsRedirecting(false)
+  }
+}
+
+export const transformDSOToFormValuesStep1 = (
+  dso: NewBaseDigitalSecurityOffering | undefined
+): DSOFormValuesStep1 => {
+  if (dso === undefined) {
+    return {
+      capitalStructure: '',
+      currency: '',
+      tokenSymbol: '',
+      tokenName: '',
+      network: '',
+      corporate: '',
+      logo: undefined,
+      issuerName: '',
+      uniqueIdentifierCode: '',
+      minimumInvestment: '',
+      totalFundraisingAmount: '',
+      pricePerUnit: '',
+      equityMultiple: '',
+      leverage: '',
+      distributionFrequency: '',
+      investmentStructure: '',
+      grossIRR: '',
+      interestRate: '',
+      dividendYield: '',
+      investmentPeriod: '',
+      productSpecification: ''
+    } as any
+  }
+
+  return {
+    capitalStructure: dso.capitalStructure,
+    logo: dso.logo,
+    tokenName: dso.tokenName,
+    tokenSymbol: dso.tokenSymbol,
+    issuerName: dso.issuerName,
+    corporate: dso.corporate,
+    currency: getIdFromObj({ _id: dso.currency }),
+    uniqueIdentifierCode: dso.uniqueIdentifierCode,
+    network: dso.network,
+    dividendYield: percentageToNumber(dso.dividendYield),
+    grossIRR: percentageToNumber(dso.grossIRR),
+    investmentStructure: dso.investmentStructure,
+    equityMultiple: percentageToNumber(dso.equityMultiple),
+    interestRate: percentageToNumber(dso.interestRate),
+    leverage: percentageToNumber(dso.leverage),
+    totalFundraisingAmount: dso.totalFundraisingAmount,
+    pricePerUnit: dso.pricePerUnit,
+    distributionFrequency: dso.distributionFrequency,
+    investmentPeriod: dso.investmentPeriod,
+    minimumInvestment: dso.minimumInvestment,
+    launchDate: dso.launchDate ?? null,
+    completionDate: dso.completionDate ?? null
+  }
+}
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined
