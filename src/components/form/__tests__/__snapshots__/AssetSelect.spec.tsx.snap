@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DSOIntroduction matches snapshot 1`] = `
+<div>
+  <label
+    class="MuiInputLabel-root MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-root MuiFormLabel-colorPrimary makeStyles-wrapper-1 css-1oqcrp7-MuiFormLabel-root-MuiInputLabel-root"
+    data-shrink="true"
+  />
+  <div
+    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth makeStyles-wrapper-2 css-sr8rm-MuiInputBase-root-MuiOutlinedInput-root"
+    style="min-width: 80px;"
+  >
+    <div
+      aria-expanded="false"
+      aria-haspopup="listbox"
+      class="makeStyles-select-3 MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-1ub9as-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="makeStyles-placeholder-6 MuiBox-root css-0"
+      >
+        undefined
+      </div>
+    </div>
+    <input
+      aria-hidden="true"
+      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+      placeholder="undefined"
+      tabindex="-1"
+      value=""
+    />
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-7glybp-MuiSvgIcon-root-MuiSelect-icon"
+      data-testid="ArrowDropDownIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M7 10l5 5 5-5z"
+      />
+    </svg>
+    <fieldset
+      aria-hidden="true"
+      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+    >
+      <legend
+        class="css-nnbavb"
+      >
+        <span
+          class="notranslate"
+        >
+          ​
+        </span>
+      </legend>
+    </fieldset>
+  </div>
+</div>
+`;

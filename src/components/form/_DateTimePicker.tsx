@@ -5,8 +5,7 @@ import DesktopDateTimePicker, {
 import MobileDateTimePicker, {
   MobileDateTimePickerProps
 } from '@mui/lab/MobileDateTimePicker'
-import { Box, FormHelperText } from '@mui/material'
-import { ReactComponent as CalendarIcon } from 'assets/icons/calendar.svg'
+import { FormHelperText } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
 import React from 'react'
 import { TextInput } from 'ui/TextInput/TextInput'
@@ -17,23 +16,13 @@ export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
       inputFormat='MM/dd/yy hh:mm'
       {...props}
       renderInput={inputProps => (
-        <Box position='relative'>
-          <TextInput
-            variant='outlined'
-            fullWidth
-            placeholder='mm/dd/yyyy'
-            label='Date'
-            {...inputProps}
-          />
-          <Box
-            position='absolute'
-            right={20}
-            top={'50%'}
-            style={{ pointerEvents: 'none' }}
-          >
-            <CalendarIcon />
-          </Box>
-        </Box>
+        <TextInput
+          variant='outlined'
+          fullWidth
+          placeholder='mm/dd/yyyy'
+          label='Date'
+          {...inputProps}
+        />
       )}
     />
   )
@@ -48,22 +37,7 @@ export const DesktopDateTimePickerComponent = (
       InputAdornmentProps={{ style: { paddingRight: 8.5 } }}
       {...props}
       renderInput={inputProps => (
-        <Box position='relative'>
-          <TextInput
-            variant='outlined'
-            fullWidth
-            label='Date'
-            {...inputProps}
-          />
-          <Box
-            position='absolute'
-            right={20}
-            top={'50%'}
-            style={{ pointerEvents: 'none' }}
-          >
-            <CalendarIcon />
-          </Box>
-        </Box>
+        <TextInput variant='outlined' fullWidth label='Date' {...inputProps} />
       )}
     />
   )
