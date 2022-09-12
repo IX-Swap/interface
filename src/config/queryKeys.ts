@@ -231,7 +231,8 @@ export const tradingQueryKeys = {
 }
 
 export const listingsQueryKeys = {
-  getListingsList: 'listings-list'
+  getListingsList: 'listings-list',
+  getCombinedList: 'listings-combined-list'
 }
 
 export const exchangeListingsQueryKeys = {

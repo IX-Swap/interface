@@ -4,7 +4,6 @@ import { listings } from 'config/apiURL'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { listingsQueryKeys } from 'config/queryKeys'
-import { useSearchFilter } from 'hooks/filters/useSearchFilter'
 import {
   TableView,
   TableViewRendererProps
@@ -19,11 +18,19 @@ import { MobileMenu } from 'ui/CompactTable/MobileMenu'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { MobileActions } from 'app/pages/issuance/components/SecondaryListingsTable/MobileActions'
 import { ActiveElementContextWrapper } from 'app/context/ActiveElementContextWrapper'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const SecondaryListingsTable = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
-  const { filter } = useSearchFilter()
+
+  const { getFilterValue } = useQueryFilter()
+  const filter = {
+    searchKeyword: getFilterValue('search'),
+    sortField: getFilterValue('sortBy'),
+    sortOrder: getFilterValue('orderBy') === 'ASC' ? 1 : -1
+  }
+
   const { isTablet } = useAppBreakpoints()
   const titleExtractor = (item: Listing) => {
     return item.tokenSymbol
@@ -32,15 +39,16 @@ export const SecondaryListingsTable = () => {
   return (
     <ActiveElementContextWrapper>
       <TableView<Listing>
-        name={listingsQueryKeys.getListingsList}
-        uri={listings.getListByUser(userId)}
+        name={listingsQueryKeys.getCombinedList}
+        uri={listings.getCombinedList(userId)}
         columns={columns}
         actionHeader={'Actions'}
-        // TODO Add date filter after completed backend api endpoint
-        filter={{
-          ...filter,
-          status: 'Draft,Submitted,Approved,Rejected' as any
-        }}
+        filter={
+          {
+            ...filter,
+            status: 'Draft,Submitted,Approved,Rejected' as any
+          } as any
+        }
         defaultRowsPerPage={5}
         actions={Actions}
         noHeader={isTablet}

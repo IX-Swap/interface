@@ -26,7 +26,9 @@ jest.mock(
 
 describe('SecondaryListingsTable', () => {
   const initialFilterValues = {
-    search: undefined,
+    searchKeyword: undefined,
+    sortField: undefined,
+    sortOrder: -1,
     status: 'Draft,Submitted,Approved,Rejected'
   }
 
@@ -44,8 +46,8 @@ describe('SecondaryListingsTable', () => {
 
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: listingsQueryKeys.getListingsList,
-        uri: listings.getListByUser(user._id),
+        name: listingsQueryKeys.getCombinedList,
+        uri: listings.getCombinedList(user._id),
         columns,
         filter: initialFilterValues,
         defaultRowsPerPage: 5,

@@ -14,15 +14,14 @@ export const columns = [
     label: 'Name',
     key: 'tokenName'
   },
-  // TODO What's date? CreatedAt? LaunchDate? UpdatedAt?
   {
-    label: <HeadCellWithSort label={'Date'} field={'launchDate'} />,
-    key: 'launchDate',
+    label: <HeadCellWithSort label={'Date'} field={'createdAt'} />,
+    key: 'createdAt',
     render: formatDateToMMDDYY
   },
   {
     label: 'Available Market',
-    key: 'marketType',
+    key: 'listingType',
     render: renderMarketType
   },
   {
@@ -41,15 +40,14 @@ export const compactColumns = [
     label: 'Name',
     key: 'tokenName'
   },
-  // TODO What's date? CreatedAt? LaunchDate? UpdatedAt?
   {
     label: 'Date',
-    key: 'launchDate',
+    key: 'createdAt',
     render: formatDateToMMDDYY
   },
   {
     label: 'Available Market',
-    key: 'marketType',
+    key: 'listingType',
     render: renderMarketType
   },
   {
