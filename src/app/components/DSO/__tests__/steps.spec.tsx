@@ -32,7 +32,7 @@ describe('steps', () => {
   })
 
   it('steps have the form value getters', () => {
-    expect(dsoFormSteps[0].getFormValues(formValues)).toEqual({
+    expect(dsoFormSteps[0].getFormValues(formValues as any)).toEqual({
       capitalStructure: formValues.capitalStructure,
       logo: formValues.logo,
       tokenName: formValues.tokenName,
@@ -56,14 +56,14 @@ describe('steps', () => {
       launchDate: formValues.launchDate ?? null,
       completionDate: formValues.completionDate ?? null
     })
-    expect(dsoFormSteps[1].getFormValues(formValues)).toEqual({
+    expect(dsoFormSteps[1].getFormValues(formValues as any)).toEqual({
       team: formValues.team ?? [{}],
       introduction: formValues.introduction,
       businessModel: formValues.businessModel,
       useOfProceeds: formValues.useOfProceeds,
       fundraisingMilestone: formValues.fundraisingMilestone
     })
-    expect(dsoFormSteps[2].getFormValues(formValues)).toEqual({
+    expect(dsoFormSteps[2].getFormValues(formValues as any)).toEqual({
       subscriptionDocument: formValues.subscriptionDocument,
       documents: formValues.documents,
       videos: formValues.videos ?? [{}],
