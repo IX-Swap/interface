@@ -31,3 +31,30 @@ export const columns = [
     render: renderListingStatus
   }
 ]
+
+export const compactColumns = [
+  {
+    label: 'Pair',
+    key: 'tokenSymbol'
+  },
+  {
+    label: 'Name',
+    key: 'tokenName'
+  },
+  // TODO What's date? CreatedAt? LaunchDate? UpdatedAt?
+  {
+    label: 'Date',
+    key: 'launchDate',
+    render: formatDateToMMDDYY
+  },
+  {
+    label: 'Available Market',
+    key: 'marketType',
+    render: renderMarketType
+  },
+  {
+    label: 'Status',
+    key: 'status',
+    render: renderListingStatus
+  }
+]
