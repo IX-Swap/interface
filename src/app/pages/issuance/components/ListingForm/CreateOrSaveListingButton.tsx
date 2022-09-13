@@ -36,7 +36,7 @@ export const CreateOrSaveListingButton = (
   const formValues = getUpdateListingPayload({
     ...defaultFormValues,
     type: listingType,
-    dsoId: dso,
+    dso: dso,
     userId: userId
   } as any)
 
