@@ -1,31 +1,13 @@
-import { ListingFormValues } from 'app/pages/issuance/types/listings'
+import { SecondaryListingFormValues } from 'app/pages/issuance/types/listings'
 
-export const initialListingFormValues: ListingFormValues = {
-  logo: '',
+export const initialListingFormValues: SecondaryListingFormValues = {
   corporate: '',
   network: '',
   tokenName: '',
+  launchDate: undefined as any,
   tokenSymbol: '',
   decimals: null,
-  minimumTradeUnits: null,
-  maximumTradeUnits: null,
-  raisedAmount: null,
   capitalStructure: '',
-  investmentPeriod: null,
-  dividendYield: null,
-  interestRate: null,
-  grossIRR: null,
-  investmentStructure: '',
-  distributionFrequency: '',
-  leverage: null,
-  equityMultiple: null,
   currency: '',
-  marketType: 'Exchange',
-  team: [],
-  incomeStatement: [],
-  cashFlow: [],
-  balanceSheet: [],
-  introduction: '',
-  asset: '',
   dso: ''
 }

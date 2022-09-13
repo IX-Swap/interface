@@ -10,6 +10,18 @@ import {
 import { Asset } from 'types/asset'
 import { Market } from 'types/market'
 
+export interface SecondaryListingFormValues {
+  corporate: string
+  network: string
+  tokenName: string
+  tokenSymbol: string
+  decimals: number | null | undefined
+  capitalStructure: string
+  currency: string
+  launchDate: Date | string
+  dso: string
+}
+
 export interface ListingFormValues {
   logo: string
   corporate: string

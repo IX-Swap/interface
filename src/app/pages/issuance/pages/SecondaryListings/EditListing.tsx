@@ -2,7 +2,7 @@ import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Grid } from '@mui/material'
-import { ListingForm } from 'app/pages/issuance/components/ListingForm/ListingForm'
+import { ListingFormWrapper } from 'app/pages/issuance/components/ListingForm/ListingFormWrapper'
 import { useParams } from 'react-router-dom'
 import { useListingById } from 'app/pages/issuance/hooks/useListingById'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
@@ -26,7 +26,11 @@ export const EditListing = () => {
       </Grid>
       <RootContainer>
         <Grid item>
-          {isLoading ? <LoadingIndicator /> : <ListingForm data={data} />}
+          {isLoading ? (
+            <LoadingIndicator />
+          ) : (
+            <ListingFormWrapper data={data} />
+          )}
         </Grid>
       </RootContainer>
     </Grid>

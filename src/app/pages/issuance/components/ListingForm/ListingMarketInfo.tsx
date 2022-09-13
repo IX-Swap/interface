@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { FormControlLabel, Grid, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
@@ -14,9 +14,15 @@ export const ListingMarketInfo = () => {
   const classes = useStyles()
   const { control, watch, setValue } = useFormContext()
   const currency = watch('currency')
-  const { data, isLoading } = useAssetsData('Currency')
 
+  const { data, isLoading } = useAssetsData('Currency')
   const currencyList = useMemo(() => data.list.reverse(), [data])
+
+  useEffect(() => {
+    if (!isLoading && data !== undefined && data.list.length > 0) {
+      setValue('currency', currencyList[0]._id)
+    }
+  }, [data, currencyList, isLoading, setValue])
 
   if (isLoading) {
     return <LoadingIndicator />
