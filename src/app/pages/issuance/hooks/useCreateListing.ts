@@ -14,7 +14,7 @@ export const useCreateListing = () => {
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
   const { replace } = useHistory()
-  const url = listingsURL.create(getIdFromObj(user))
+  const url = listingsURL.createOrUpdate(getIdFromObj(user))
   const createListing = async (args: ListingRequestArgs) => {
     return await apiService.post<ListingFormValuesForSubmit>(url, {
       ...args

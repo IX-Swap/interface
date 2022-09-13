@@ -11,14 +11,6 @@ export const ListingHiddenFields = () => {
       <TypedField
         component={Input}
         label=''
-        name='asset'
-        control={control}
-        defaultValue={null}
-        hidden
-      />
-      <TypedField
-        component={Input}
-        label=''
         name='dso'
         control={control}
         defaultValue={null}

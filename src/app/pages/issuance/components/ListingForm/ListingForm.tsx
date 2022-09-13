@@ -1,48 +1,56 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { DigitalSecurityOffering } from 'types/dso'
+import { isDSOLive } from 'app/components/DSO/utils'
 import { Grid } from '@mui/material'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { ListingRadioButtons } from 'app/pages/issuance/components/ListingForm/ListingRadioButtons'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { ListingFormContent } from 'app/pages/issuance/components/ListingForm/ListingFormContent'
-import { VSpacer } from 'components/VSpacer'
-import {
-  getIdFromDSOSelectValue,
-  getIssuerIdFromDSOSelectValue
-} from 'app/pages/issuance/utils/utils'
+import { Form } from 'components/form/Form'
+import { ListingFormFields } from 'app/pages/issuance/components/ListingForm/ListingFormFields'
+import { ListingFormActions } from 'app/pages/issuance/components/ListingForm/ListingFormActions'
 import { Listing } from 'app/pages/issuance/types/listings'
+import {
+  transformDataFromDSOToListingFormValue,
+  transformListingToListingFormValue
+} from 'app/pages/issuance/utils/listing'
+import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
 export interface ListingFormProps {
-  data?: Listing
+  data?: DigitalSecurityOffering | Listing
   isNew?: boolean
+  listingType: null | ListingType
 }
 
 export const ListingForm = (props: ListingFormProps) => {
-  const { data: initialData, isNew = false } = props
-  const [dsoId, setDsoId] = useState('')
-  const [issuerId, setIssuerId] = useState('')
-  const { data: dsoData, isLoading } = useDSOById(dsoId, issuerId)
-  const data = initialData ?? dsoData
+  const { data, isNew = false, listingType } = props
+  const isLive = isDSOLive(data as any)
+  const isDataFromDSO = data !== undefined && !('maximumTradeUnits' in data)
 
   return (
-    <>
-      {!isNew ? null : (
-        <Grid item lg={9} container direction='column'>
-          <VSpacer size='medium' />
-          <ListingRadioButtons
-            onImportClick={value => {
-              setDsoId(getIdFromDSOSelectValue(value))
-              setIssuerId(getIssuerIdFromDSOSelectValue(value))
-            }}
+    <Form
+      data-testid='listing-form'
+      defaultValues={
+        data !== undefined && 'maximumTradeUnits' in data
+          ? transformListingToListingFormValue(data)
+          : transformDataFromDSOToListingFormValue(data)
+      }
+    >
+      <Grid container direction={'column'} spacing={2}>
+        <Grid item>
+          <ListingFormFields
+            isNew={isNew}
+            isLive={isLive}
+            isDataFromDSO={isDataFromDSO}
           />
-          <VSpacer size='large' />
         </Grid>
-      )}
 
-      {isLoading ? (
-        <LoadingIndicator />
-      ) : (
-        <ListingFormContent data={data} isNew={isNew} />
-      )}
-    </>
+        <Grid item container justifyContent={'flex-end'}>
+          <Grid item>
+            <ListingFormActions
+              isDataFromDSO={isDataFromDSO}
+              listing={data}
+              listingType={listingType}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+    </Form>
   )
 }

@@ -7,16 +7,21 @@ import { Listing, ListingFormValues } from 'app/pages/issuance/types/listings'
 import { getUpdateListingPayload } from 'app/pages/issuance/utils/listing'
 import { useCreateListing } from 'app/pages/issuance/hooks/useCreateListing'
 import { useUpdateListing } from 'app/pages/issuance/hooks/useUpdateListing'
+import { useAuth } from 'hooks/auth/useAuth'
+import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
-export interface ListingFinishLaterButtonProps {
+export interface CreateOrSaveListingButtonProps {
   listing: DigitalSecurityOffering | Listing | undefined
+  listingType: null | ListingType
   isDataFromDSO: boolean
 }
 
-export const ListingFinishLaterButton = (
-  props: ListingFinishLaterButtonProps
+export const CreateOrSaveListingButton = (
+  props: CreateOrSaveListingButtonProps
 ) => {
-  const { listing, isDataFromDSO } = props
+  const { user } = useAuth()
+  const userId = getIdFromObj(user)
+  const { listing, isDataFromDSO, listingType } = props
   const listingId = getIdFromObj(listing)
 
   const { watch } = useFormContext<ListingFormValues>()
@@ -27,9 +32,12 @@ export const ListingFinishLaterButton = (
       ? listing?.user
       : getIdFromObj(listing?.user) ?? listing?.createdBy ?? ''
   )
+  const { dso, ...defaultFormValues } = watch()
   const formValues = getUpdateListingPayload({
-    ...watch(),
-    status: 'Draft'
+    ...defaultFormValues,
+    type: listingType,
+    dsoId: dso,
+    userId: userId
   } as any)
 
   const handleClick =
@@ -39,12 +47,12 @@ export const ListingFinishLaterButton = (
 
   return (
     <Button
-      variant='outlined'
+      variant='contained'
       color='primary'
       onClick={handleClick}
       disabled={isCreating || isUpdating}
     >
-      {listing === undefined || isDataFromDSO ? 'Save Draft' : 'Save'}
+      {listing === undefined || isDataFromDSO ? 'Create Listing' : 'Save'}
     </Button>
   )
 }
