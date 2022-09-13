@@ -44,8 +44,10 @@ describe('DSOBaseFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
+        name: 'logo',
         label: 'Upload Photo',
-        name: 'logo'
+        placeHolder: 'Upload File',
+        helperText: 'Upload Photo'
       }),
       {}
     )

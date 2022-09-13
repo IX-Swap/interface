@@ -2,11 +2,11 @@ import React from 'react'
 import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { Meta, Story } from '@storybook/react/types-6-0'
-import { MyListingsTable } from 'app/pages/issuance/components/MyListingsTable/MyListingsTable'
+import { SecondaryListingsTable } from 'app/pages/issuance/components/SecondaryListingsTable/SecondaryListingsTable'
 
 const meta: Meta = {
-  title: 'Pages/Market/MyListingsTable',
-  component: MyListingsTable
+  title: 'Pages/Market/SecondaryListingsTable',
+  component: SecondaryListingsTable
 }
 
 export default meta
@@ -16,7 +16,7 @@ const Template: Story = () => {
     <Form>
       <Grid container spacing={6}>
         <Grid item xs={12}>
-          <MyListingsTable />
+          <SecondaryListingsTable />
         </Grid>
       </Grid>
     </Form>

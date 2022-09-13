@@ -7,7 +7,7 @@ export interface Props {
 
 export const useStyles = makeStyles(theme => {
   const getColor = (type: StatusType) => {
-    switch (type) {
+    switch (type.toLowerCase()) {
       case 'submitted':
         return theme.palette.warning.dark
       case 'rejected':
@@ -21,7 +21,7 @@ export const useStyles = makeStyles(theme => {
   }
 
   const getBg = (type: StatusType) => {
-    switch (type) {
+    switch (type.toLowerCase()) {
       case 'approved':
         return theme.palette.success.main
       case 'submitted':
@@ -52,6 +52,8 @@ export const useStyles = makeStyles(theme => {
         padding: 0
       },
       '& .MuiChip-label': {
+        display: 'block',
+        width: 'auto',
         color: ({ type }: Props) => getColor(type),
         opacity: 1
       }

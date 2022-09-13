@@ -267,3 +267,7 @@ export const renderStatus = (status: string) => {
 
   return <Status type={getType()} label={status} />
 }
+
+export const renderListingStatus = (status: string) => {
+  return <Status type={status} label={status} />
+}

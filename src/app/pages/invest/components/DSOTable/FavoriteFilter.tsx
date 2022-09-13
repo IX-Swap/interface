@@ -9,13 +9,10 @@ export const FavoriteFilter = () => {
   const { getFilterValue, updateFilter } = useQueryFilter()
   const { isTablet } = useAppBreakpoints()
   const value = getFilterValue('isFavorite')
-  const classes = useStyles({ isFav: value === 'yes' })
+  const classes = useStyles({ isFav: value === 'true' })
 
   const handleChange = () => {
-    updateFilter(
-      'isFavorite',
-      value === 'no' || value === undefined ? 'yes' : 'no'
-    )
+    updateFilter('isFavorite', value === 'true' ? 'false' : 'true')
   }
 
   return (
@@ -30,7 +27,7 @@ export const FavoriteFilter = () => {
       }}
     >
       <>
-        {value === 'yes' ? (
+        {value === 'true' ? (
           <Icon
             name='star-filled'
             className={classes.icon}
