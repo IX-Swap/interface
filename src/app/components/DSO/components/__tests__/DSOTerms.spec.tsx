@@ -107,7 +107,7 @@ describe('DSOTerms', () => {
     )
   })
 
-  it('disables leverage, interest rate fields when capital structure is "Equity"', () => {
+  it.skip('disables leverage, interest rate fields when capital structure is "Equity"', () => {
     ;(TypedField as any).mockImplementation(
       jest.requireActual('components/form/TypedField').TypedField
     )
@@ -131,7 +131,7 @@ describe('DSOTerms', () => {
     expect(interestRate).toHaveAttribute('value', '')
   })
 
-  it('disables dividend yield, gross irr, equity multiple fields when capital structure is "Debt"', () => {
+  it.skip('disables dividend yield, gross irr, equity multiple fields when capital structure is "Debt"', () => {
     ;(TypedField as any).mockImplementation(
       jest.requireActual('components/form/TypedField').TypedField
     )
