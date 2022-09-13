@@ -41,7 +41,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             customRenderer
             component={FileUpload}
             name='logo'
-            label='Upload Logo'
+            label='Upload Photo'
             placeHolder='Upload File'
             control={control}
             valueExtractor={documentValueExtractor}
@@ -91,7 +91,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='tokenSymbol'
                 disabled={isLive}
                 control={control}
-                helperText='Token symbol'
+                helperText='Token Symbol'
                 variant='outlined'
                 isOptional
                 optionalText='(2-6 alphanumeric characters)'
@@ -199,6 +199,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 helperText='mm/dd/yyyy'
                 inputVariant='outlined'
                 withIcon
+                isOptional
               />
             </Grid>
             <VSpacer size='small' />
