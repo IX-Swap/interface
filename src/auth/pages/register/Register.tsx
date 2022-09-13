@@ -65,7 +65,7 @@ export const Register: React.FC = observer(() => {
   const handleSubmit = async (values: SignupArgs) => {
     await signup(
       {
-        name: values.name ?? 'singpassuser',
+        name: values.name ?? 'Singpass User',
         email: values.email,
         singPassLogin: isMyInfo,
         mobileNo: values.phoneNumber,
