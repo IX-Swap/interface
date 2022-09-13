@@ -3,19 +3,22 @@ import { Box, Button } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useHistory, generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { ListingFinishLaterButton } from 'app/pages/issuance/components/ListingForm/ListingFInishLaterButton'
+import { CreateOrSaveListingButton } from 'app/pages/issuance/components/ListingForm/CreateOrSaveListingButton'
 import { getIdFromObj } from 'helpers/strings'
 import { Listing } from 'app/pages/issuance/types/listings'
+import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
 export interface ListingFormActionsProps {
   listing: DigitalSecurityOffering | Listing | undefined
   isDataFromDSO: boolean
+  listingType: null | ListingType
 }
 
 export const ListingFormActions = (props: ListingFormActionsProps) => {
-  const { listing, isDataFromDSO } = props
+  const { listing, isDataFromDSO, listingType } = props
   const { push } = useHistory()
 
+  // TODO Needs to do refactoring this component for edit listing page
   return (
     <>
       {!(listing === undefined || isDataFromDSO) && (
@@ -39,9 +42,10 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
         </Button>
       )}
       <Box mx={1} component='span' />
-      <ListingFinishLaterButton
+      <CreateOrSaveListingButton
         isDataFromDSO={isDataFromDSO}
         listing={listing}
+        listingType={listingType}
       />
     </>
   )

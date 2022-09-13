@@ -1,20 +1,20 @@
 import * as React from 'react'
 import { render } from 'test-utils'
 import {
-  ListingRadioButtons,
+  ListingDetails,
   radioButtonsList
-} from 'app/pages/issuance/components/ListingForm/ListingRadioButtons'
+} from 'app/pages/issuance/components/ListingForm/ListingDetails'
 import { fireEvent, waitFor } from '@testing-library/dom'
 
-describe('ListingRadioButtons', () => {
+describe('ListingDetails', () => {
   const setListPlace = jest.fn()
   const onImportClick = jest.fn()
 
   it('invokes setListPlace on radio button wrapper click', async () => {
     const { getAllByTestId } = render(
-      <ListingRadioButtons
-        listPlace={'otc'}
-        setListPlace={setListPlace}
+      <ListingDetails
+        listingType={'Otc'}
+        setListingType={setListPlace}
         onImportClick={onImportClick}
       />
     )

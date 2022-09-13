@@ -139,6 +139,10 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               customRenderer
               numberFormat={positiveNumberFormat}
               label='Decimal Places'
+              disabled={
+                isDataFromDSO &&
+                watch('decimals') !== initialListingFormValues.decimals
+              }
               name='decimals'
               control={control}
               valueExtractor={numericValueExtractor}
