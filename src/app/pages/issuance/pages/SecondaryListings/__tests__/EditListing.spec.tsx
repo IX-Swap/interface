@@ -3,10 +3,10 @@ import { render } from 'test-utils'
 import { listing } from '__fixtures__/listings'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useListingById from 'app/pages/issuance/hooks/useListingById'
-import { ListingForm } from 'app/pages/issuance/components/ListingForm/ListingForm'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { EditListing } from 'app/pages/issuance/pages/SecondaryListings/EditListing'
+import { ListingFormWrapper } from 'app/pages/issuance/components/ListingForm/ListingFormWrapper'
 
 jest.mock('app/components/PageHeader/PageHeader', () => ({
   PageHeader: jest.fn(() => null)
@@ -16,9 +16,12 @@ jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
   LoadingIndicator: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/issuance/components/ListingForm/ListingForm', () => ({
-  ListingForm: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/issuance/components/ListingForm/ListingFormWrapper',
+  () => ({
+    ListingFormWrapper: jest.fn(() => null)
+  })
+)
 
 describe('EditListing', () => {
   afterEach(async () => {
@@ -35,7 +38,6 @@ describe('EditListing', () => {
 
     render(<EditListing />)
 
-    expect(ListingForm).toHaveBeenCalledTimes(0)
     expect(LoadingIndicator).toHaveBeenCalled()
     expect(PageHeader).toHaveBeenCalledWith(
       {
@@ -66,7 +68,7 @@ describe('EditListing', () => {
       {}
     )
     expect(LoadingIndicator).toHaveBeenCalledTimes(0)
-    expect(ListingForm).toHaveBeenCalledWith(
+    expect(ListingFormWrapper).toHaveBeenCalledWith(
       {
         data: listing
       },
