@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DSODocumentsFields renders nothing if data is null 1`] = `
+exports[`DSODocumentsFields should match snapshot 1`] = `
 <div>
   <form
     style="width: 100%;"
