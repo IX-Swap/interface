@@ -8,7 +8,11 @@ import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
-export const NetworkSelect = (props: SelectProps): JSX.Element => {
+interface NetworkSelectProps extends SelectProps {
+  placeHolder?: string | undefined
+}
+
+export const NetworkSelect = (props: NetworkSelectProps): JSX.Element => {
   const { data } = useAllNetworks()
   const renderName = (value: any) => {
     return renderValue({
@@ -23,7 +27,7 @@ export const NetworkSelect = (props: SelectProps): JSX.Element => {
       <Select
         {...props}
         label={undefined}
-        placeholder={String(props.label)}
+        placeholder={String(props.placeHolder)}
         displayEmpty
         renderValue={renderName}
         style={{ minWidth: 70 }}
@@ -31,7 +35,7 @@ export const NetworkSelect = (props: SelectProps): JSX.Element => {
         defaultValue={undefined}
       >
         <SelectItem disabled value={undefined}>
-          Blockchain Network
+          Select blockchain network
         </SelectItem>
         {data?.map(({ name, _id }) => (
           <SelectItem key={_id} value={_id} className={privateClassNames()}>
