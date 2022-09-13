@@ -1,0 +1,308 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListingForm should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-10h8c1q-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-1r7sl14-MuiPaper-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-4 MuiGrid-spacing-md-5 MuiGrid-direction-xs-column css-1b9jecq-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-0"
+            >
+              <h5
+                class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+              >
+                Listing details
+              </h5>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+              >
+                Where do you want to list this offering?
+              </p>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="MuiFormGroup-root css-dmmspl-MuiFormGroup-root"
+                role="radiogroup"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container css-h1rrzm-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item makeStyles-button-2 css-13i4rnv-MuiGrid-root"
+                    data-testid="buttonWrapper"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                    >
+                      <span
+                        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-pvro6c-MuiButtonBase-root-MuiRadio-root"
+                      >
+                        <input
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          name="listPlace"
+                          type="radio"
+                          value="exchange"
+                        />
+                        <span
+                          class="css-hyxlzm"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1vkanhx-MuiSvgIcon-root"
+                            data-testid="RadioButtonUncheckedIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                            />
+                          </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-ekoonk-MuiSvgIcon-root"
+                            data-testid="RadioButtonCheckedIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </span>
+                      <span
+                        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1b4l2pg-MuiTypography-root"
+                      >
+                        Exchange
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item makeStyles-button-2 css-13i4rnv-MuiGrid-root"
+                    data-testid="buttonWrapper"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                    >
+                      <span
+                        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-pvro6c-MuiButtonBase-root-MuiRadio-root"
+                      >
+                        <input
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          name="listPlace"
+                          type="radio"
+                          value="otc"
+                        />
+                        <span
+                          class="css-hyxlzm"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1vkanhx-MuiSvgIcon-root"
+                            data-testid="RadioButtonUncheckedIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                            />
+                          </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-ekoonk-MuiSvgIcon-root"
+                            data-testid="RadioButtonCheckedIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </span>
+                      <span
+                        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1b4l2pg-MuiTypography-root"
+                      >
+                        OTC
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item makeStyles-button-2 css-13i4rnv-MuiGrid-root"
+                    data-testid="buttonWrapper"
+                  >
+                    <label
+                      class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                    >
+                      <span
+                        class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root css-pvro6c-MuiButtonBase-root-MuiRadio-root"
+                      >
+                        <input
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          name="listPlace"
+                          type="radio"
+                          value="both"
+                        />
+                        <span
+                          class="css-hyxlzm"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1vkanhx-MuiSvgIcon-root"
+                            data-testid="RadioButtonUncheckedIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                            />
+                          </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-ekoonk-MuiSvgIcon-root"
+                            data-testid="RadioButtonCheckedIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
+                            />
+                          </svg>
+                        </span>
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </span>
+                      <span
+                        class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-1b4l2pg-MuiTypography-root"
+                      >
+                        Both
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-1.5 MuiGrid-direction-xs-column css-13om8kr-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+              >
+                Import data from issuance
+              </p>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-[object Object] css-1o6rls1-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item css-1mygp55-MuiGrid-root"
+              >
+                <div
+                  class="MuiFormControl-root MuiFormControl-fullWidth css-q8hpuo-MuiFormControl-root"
+                >
+                  <div
+                    class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl makeStyles-wrapper-4 css-sr8rm-MuiInputBase-root-MuiOutlinedInput-root"
+                    style="height: 50px;"
+                  >
+                    <div
+                      aria-expanded="false"
+                      aria-haspopup="listbox"
+                      class="makeStyles-select-5 MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-1ub9as-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                      role="button"
+                      tabindex="0"
+                    >
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
+                    </div>
+                    <input
+                      aria-hidden="true"
+                      class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      tabindex="-1"
+                      value=""
+                    />
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-7glybp-MuiSvgIcon-root-MuiSelect-icon"
+                      data-testid="ArrowDropDownIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M7 10l5 5 5-5z"
+                      />
+                    </svg>
+                    <fieldset
+                      aria-hidden="true"
+                      class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                    >
+                      <legend
+                        class="css-nnbavb"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </legend>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <button
+                  class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-hv1m69-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  Import
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
