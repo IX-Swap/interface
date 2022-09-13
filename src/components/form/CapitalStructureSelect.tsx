@@ -33,7 +33,7 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
         )}
         {!includeAll && (
           <SelectItem disabled value={undefined}>
-            Capital Structure
+            Select capital structure
           </SelectItem>
         )}
         {renderSelectItems(

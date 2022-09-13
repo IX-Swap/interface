@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DSOBaseFields matches snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-1rl1og4-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiBox-root css-1xn0qx2"
+        >
+          <h5
+            class="MuiTypography-root MuiTypography-h5 css-14eqi03-MuiTypography-root"
+          >
+            DSO Information
+          </h5>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <input />
+        <div
+          class="MuiBox-root css-1jpm9pd"
+        />
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1802dvj-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+          >
+            <input />
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1jpm9pd"
+        />
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1802dvj-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1jpm9pd"
+        />
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1802dvj-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1jpm9pd"
+        />
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1802dvj-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1jpm9pd"
+        />
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1802dvj-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-1jpm9pd"
+        />
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1802dvj-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
+          <div
+            class="MuiBox-root css-1jpm9pd"
+          />
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-18eutzv-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ewf807-MuiGrid-root"
+          >
+            <input />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

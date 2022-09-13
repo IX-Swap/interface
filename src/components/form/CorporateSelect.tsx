@@ -1,3 +1,4 @@
+import { SelectProps } from '@mui/material'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 import { renderValue } from 'helpers/forms'
@@ -7,7 +8,11 @@ import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { queryStatusRenderer } from './renderUtils'
 
-export const CorporateSelect = (props: any) => {
+interface CorporateSelectProps extends SelectProps {
+  placeHolder?: string | undefined
+}
+
+export const CorporateSelect = (props: CorporateSelectProps) => {
   const { data, status } = useAllCorporates({ all: true, status: 'Approved' })
 
   const queryStatus = queryStatusRenderer(status)
@@ -26,12 +31,12 @@ export const CorporateSelect = (props: any) => {
         {...props}
         style={{ minWidth: 100 }}
         label={undefined}
-        placeholder={String(props.label)}
+        placeholder={String(props.placeHolder)}
         renderValue={renderName}
         displayEmpty
       >
         <SelectItem disabled value={undefined}>
-          Corporate
+          Select corporate
         </SelectItem>
         {data.list.map(({ _id, companyLegalName }) => (
           <SelectItem value={_id} key={_id}>

@@ -1,11 +1,12 @@
-import React from 'react'
-import { render } from 'test-utils'
 import {
   DSOBaseFields,
   DSOBaseFieldsProps
 } from 'app/components/DSO/components/DSOBaseFields'
-import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
+import { TypedField } from 'components/form/TypedField'
+import React from 'react'
+import * as useFormContext from 'react-hook-form'
+import { render } from 'test-utils'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
@@ -16,9 +17,21 @@ describe('DSOBaseFields', () => {
     isNew: false,
     isLive: false
   }
+  const control = jest.fn()
+  const watch = jest.fn().mockImplementation(() => 'test')
 
   afterEach(async () => {
     jest.clearAllMocks()
+  })
+
+  jest
+    .spyOn(useFormContext, 'useFormContext')
+    .mockImplementation(() => ({ control, watch } as any))
+
+  it('matches snapshot', () => {
+    const { container } = render(<DSOBaseFields {...props} />)
+
+    expect(container).toMatchSnapshot()
   })
 
   it('renders EditableField with correct props', () => {
@@ -49,15 +62,6 @@ describe('DSOBaseFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        label: 'Network',
-        name: 'network'
-      }),
-      {}
-    )
-
-    expect(TypedField).toHaveBeenNthCalledWith(
-      4,
-      expect.objectContaining({
         label: 'Token Name',
         name: 'tokenName'
       }),
@@ -65,10 +69,19 @@ describe('DSOBaseFields', () => {
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
-      5,
+      4,
       expect.objectContaining({
         label: 'Symbol',
         name: 'tokenSymbol'
+      }),
+      {}
+    )
+
+    expect(TypedField).toHaveBeenNthCalledWith(
+      5,
+      expect.objectContaining({
+        label: 'Network',
+        name: 'network'
       }),
       {}
     )

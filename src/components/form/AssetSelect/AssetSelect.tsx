@@ -11,6 +11,7 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 export interface AssetSelectProps {
   assetType?: AssetType
   limit?: number
+  placeHolder?: string | undefined
 }
 
 export const AssetSelect = (
@@ -33,7 +34,7 @@ export const AssetSelect = (
       <Select
         {...rest}
         style={{ minWidth: 80 }}
-        placeholder={String(props.label)}
+        placeholder={String(props.placeHolder)}
         displayEmpty
         renderValue={renderName}
         label={undefined}
