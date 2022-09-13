@@ -45,7 +45,7 @@ describe('DSOBaseFields', () => {
       1,
       expect.objectContaining({
         name: 'logo',
-        label: 'Upload Logo',
+        label: 'Upload Photo',
         placeHolder: 'Upload File',
         helperText: 'Upload Photo'
       }),
