@@ -26,7 +26,7 @@ export const redirect = ({
   if (createModeRedirect !== undefined && issuerId !== '' && dsoId !== '') {
     const redirect =
       typeof createModeRedirect === 'function'
-        ? createModeRedirect()
+        ? createModeRedirect('dso')
         : createModeRedirect
 
     history.replace(
@@ -54,7 +54,7 @@ export const redirectSave = ({
   ) {
     const redirect =
       typeof createModeRedirect === 'function'
-        ? createModeRedirect()
+        ? createModeRedirect('dso')
         : createModeRedirect
     history.replace(
       generatePath(`${redirect}${nextLocation.search}`, {
