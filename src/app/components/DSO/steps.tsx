@@ -3,15 +3,16 @@ import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCo
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
 import { DSOFormValues } from 'types/dso'
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
-import { getDSOValidationSchemaStep1 } from 'validation/dso'
-import { transformDSOToFormValuesStep1 } from './utils'
+import { getDSOInformationSchema } from 'validation/dso'
+import { getDSOInformationFormValues } from './utils'
+import { getDSOInformationRequestPayload } from './requests'
 
 export const dsoFormSteps = [
   {
     label: 'DSO Information',
-    getFormValues: transformDSOToFormValuesStep1,
-    getRequestPayload: {},
-    validationSchema: getDSOValidationSchemaStep1,
+    getFormValues: getDSOInformationFormValues,
+    getRequestPayload: getDSOInformationRequestPayload,
+    validationSchema: getDSOInformationSchema,
     component: () => <DSOInformationFields />
   },
   {

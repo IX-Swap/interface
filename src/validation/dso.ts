@@ -2,7 +2,7 @@ import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
   DsoFAQItem,
   DSOFormValues,
-  DSOFormValuesStep1,
+  DSOBaseFormValues,
   DsoTeamMember,
   DsoVideo
 } from 'types/dso'
@@ -14,6 +14,7 @@ import {
   pastDateValidator,
   uniqueIdentifierCodeValidator
 } from './validators'
+import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -190,7 +191,7 @@ export const dsoFormBaseValidationSchema = {
   )
 }
 
-export const dsoFormBaseValidationSchemaStep1 = {
+export const dsoInformationValidationSchemaStep1 = {
   capitalStructure: string().required('Capital Structure is required'),
   corporate: string()
     .max(50, 'Maximum of 50 characters')
@@ -205,38 +206,30 @@ export const dsoFormBaseValidationSchemaStep1 = {
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
     then: string().required('Distribution Frequency is required')
   }),
-  dividendYield: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Equity',
-      then: number()
-        .transform(numberTransformer)
-        .required('Dividend Yield is required')
-    }),
-  equityMultiple: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Equity',
-      then: number()
-        .transform(numberTransformer)
-        .required('Equity Multiple is required')
-    }),
-  grossIRR: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Equity',
-      then: number()
-        .transform(numberTransformer)
-        .required('Gross IRR is required')
-    }),
-  interestRate: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Debt',
-      then: number()
-        .transform(numberTransformer)
-        .required('Interest Rate is required')
-    }),
+  dividendYield: number().when('capitalStructure', {
+    is: 'Equity',
+    then: number()
+      .transform(numberTransformer)
+      .required('Dividend Yield is required')
+  }),
+  equityMultiple: number().when('capitalStructure', {
+    is: 'Equity',
+    then: number()
+      .transform(numberTransformer)
+      .required('Equity Multiple is required')
+  }),
+  grossIRR: number().when('capitalStructure', {
+    is: 'Equity',
+    then: number()
+      .transform(numberTransformer)
+      .required('Gross IRR is required')
+  }),
+  interestRate: number().when('capitalStructure', {
+    is: 'Debt',
+    then: number()
+      .transform(numberTransformer)
+      .required('Interest Rate is required')
+  }),
   investmentPeriod: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
@@ -253,7 +246,7 @@ export const dsoFormBaseValidationSchemaStep1 = {
   }),
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
-    .required('Launch Date is is required')
+    .required('Launch Date is required')
     .test(
       'before-completionDate',
       'Launch date cannot be later than completion date',
@@ -266,14 +259,10 @@ export const dsoFormBaseValidationSchemaStep1 = {
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
-  leverage: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Debt',
-      then: number()
-        .transform(numberTransformer)
-        .required('Leverage is required')
-    }),
+  leverage: number().when('capitalStructure', {
+    is: 'Debt',
+    then: number().transform(numberTransformer).required('Leverage is required')
+  }),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
     .nullable()
@@ -306,10 +295,10 @@ export const createDSOValidationSchema = object()
   })
   .notRequired()
 
-export const createDSOValidationSchemaStep1 = object()
-  .shape<DSOFormValuesStep1>({
+export const createDSOInformationSchema = object()
+  .shape<DSOBaseFormValues>({
     network: string().required('Network is required'),
-    ...dsoFormBaseValidationSchemaStep1
+    ...dsoInformationValidationSchemaStep1
   })
   .notRequired()
 
@@ -321,9 +310,9 @@ export const editDSOValidationSchema = object()
   .notRequired()
 
 export const editDSOValidationSchemaStep1 = object()
-  .shape<DSOFormValuesStep1>({
+  .shape<DSOBaseFormValues>({
     network: string(),
-    ...dsoFormBaseValidationSchema
+    ...dsoInformationValidationSchemaStep1
   })
   .notRequired()
 
@@ -337,7 +326,7 @@ export const editLiveDSOValidationSchema = object()
   .notRequired()
 
 export const editLiveDSOValidationSchemaStep1 = object()
-  .shape<DSOFormValuesStep1>({
+  .shape<DSOBaseFormValues>({
     ...dsoFormBaseValidationSchema,
     network: string(),
     launchDate: string().required(validationMessages.required),
@@ -345,11 +334,12 @@ export const editLiveDSOValidationSchemaStep1 = object()
   })
   .notRequired()
 
-export const getDSOValidationSchemaStep1 = (dsoId: string, isLive: boolean) => {
-  const isNew = dsoId !== ''
+export const getDSOInformationSchema = (data: any) => {
+  const isNew = data === transformDSOToFormValues(undefined)
+  const isLive = isDSOLive(data)
 
   if (isNew) {
-    return createDSOValidationSchemaStep1
+    return createDSOInformationSchema
   }
 
   return isLive

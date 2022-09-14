@@ -9,65 +9,77 @@ import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
 import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { dsoFormSteps } from './steps'
 import {
   redirect,
   redirectSave,
   transformDSOToFormValues
 } from 'app/components/DSO/utils'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { useAuth } from 'hooks/auth/useAuth'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering
   isNew?: boolean
 }
 
-export const DSOForm = (props: DSOFormProps) => {
-  const { data } = props
+export const DSOForm = () => {
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data } = useDSOById(dsoId, issuerId)
+  const { user } = useAuth()
 
-  const dsoId = getIdFromObj(data)
   const createMutation = useCreateDSO()
-  const editMutation = useUpdateDSO(dsoId, data?.user ?? '')
+  const editMutation = useUpdateDSO(dsoId, getIdFromObj(user) ?? issuerId)
   const submitMutation = useSubmitDSO(dsoId)
   const history = useHistory()
+  useSetPageTitle(getOfferingName(data))
 
   const redirectCallback = (
     createModeRedirect: CreateModeRedirect,
     data: any
   ) => {
-    redirect({ createModeRedirect, data, history, dsoId })
+    redirect({ createModeRedirect, data, history, dsoId, issuerId })
   }
 
   const redirectOnSave = ({
     createModeRedirect,
-    isCreateMode,
     nextLocation,
     data,
     setIsRedirecting
   }: RedirectOnSaveArgs) => {
     redirectSave({
       createModeRedirect,
-      isCreateMode,
       nextLocation,
       data,
       dsoId,
       history,
-      setIsRedirecting
+      setIsRedirecting,
+      issuerId
     })
   }
 
-  useSetPageTitle(getOfferingName(data))
+  const getCreateModeRedirect = () => {
+    if (dsoId !== undefined) {
+      return IssuanceRoute.edit
+    }
+
+    return IssuanceRoute.create
+  }
 
   return (
     <FormStepper
       data={transformDSOToFormValues(data)}
+      dataToCheck={transformDSOToFormValues(data)}
+      followDefaultMode={data !== undefined}
       createMutation={createMutation}
       editMutation={editMutation}
       submitMutation={submitMutation}
       steps={dsoFormSteps}
       nonLinear
       formTitle='Create DSO'
-      createModeRedirect={undefined}
+      createModeRedirect={getCreateModeRedirect}
       submitText='DSO'
       redirectOnSave={redirectOnSave}
       redirectCallback={redirectCallback}

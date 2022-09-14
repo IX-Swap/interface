@@ -1,6 +1,6 @@
 import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
-import { NewDigitalSecurityOffering, DSORequestArgsStep1 } from 'types/dso'
+import { DSORequestArgsStep1 } from 'types/dso'
 import { useMutation } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
@@ -13,7 +13,7 @@ export const useCreateDSO = () => {
   const { replace } = useHistory()
   const url = issuanceURL.dso.create(getIdFromObj(user))
   const createDSO = async (args: DSORequestArgsStep1) => {
-    return await apiService.post<NewDigitalSecurityOffering>(url, args)
+    return await apiService.post(url, args)
   }
 
   return useMutation(createDSO, {
