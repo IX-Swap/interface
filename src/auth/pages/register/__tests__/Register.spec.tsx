@@ -9,7 +9,6 @@ import { history } from 'config/history'
 import * as useSignupHook from 'auth/hooks/useSignup'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { Form } from 'components/form/Form'
-import { AuthRoute } from 'auth/router/config'
 
 describe('Register', () => {
   beforeEach(() => {
@@ -34,7 +33,7 @@ describe('Register', () => {
     expect(form).toHaveFormValues(registerFormInitialValues)
   })
 
-  it('handles user input', () => {
+  it('handles user input', async () => {
     const { getByLabelText, getByTestId } = render(<Register />)
     const form = getByTestId('register-form')
     const name = getByLabelText(/name/i)
@@ -47,7 +46,9 @@ describe('Register', () => {
     fireEvent.change(password, { target: { value: signupArgs.password } })
     fireEvent.click(agree, { cancellable: true, bubbles: true })
 
-    expect(form).toHaveFormValues(signupArgs)
+    await waitFor(() => {
+      expect(form).toHaveFormValues(signupArgs)
+    })
   })
 
   it('handles submit', async () => {
