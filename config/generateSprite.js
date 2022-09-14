@@ -4,8 +4,6 @@ const mkdirp = require('mkdirp')
 const path = require('path')
 
 const generateSprite = () => {
-  console.log('Generating sprites...')
-
   const config = {
     dest: './src/assets/icons/sprite',
     shape: {

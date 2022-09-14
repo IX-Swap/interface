@@ -1,4 +1,3 @@
-import React from 'react'
 import { dsoFormSteps } from 'app/components/DSO/steps'
 import { formValues } from '__fixtures__/issuance'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
@@ -25,13 +24,13 @@ describe('steps', () => {
     jest.clearAllMocks()
   })
 
-  it('steps have the correct labels', () => {
+  it('has the correct labels', () => {
     expect(dsoFormSteps[0].label).toEqual('DSO Information')
     expect(dsoFormSteps[1].label).toEqual('Company Information')
     expect(dsoFormSteps[2].label).toEqual('Documents')
   })
 
-  it('steps have the form value getters', () => {
+  it('has the form value getters', () => {
     expect(dsoFormSteps[0].getFormValues(formValues)).toEqual({
       capitalStructure: formValues.capitalStructure,
       logo: formValues.logo,

@@ -30,7 +30,7 @@ export const useUpdateDSO = (
   return useMutation(updateDSO, {
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
-      replace(generatePath(IssuanceRoute.view, params))
+      replace(generatePath(IssuanceRoute.edit, params))
 
       void snackbarService.showSnackbar('Success', 'success')
       void queryCache.invalidateQueries(

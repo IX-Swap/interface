@@ -34,16 +34,17 @@ export const SaveOnNavigate = ({
 
   const handleSave = async () => {
     const payload = transformData(values)
+
     return await save(
-      { ...payload, step: isCreateMode ? activeStep + 1 : 0 },
+      { ...payload, step: isCreateMode ? activeStep + 1 : activeStep },
       {
         onSettled: (data: any) => {
           setIsRedirecting(true)
-          if (redirectOnSave !== undefined) {
+
+          if (redirectOnSave !== undefined && data !== undefined) {
             redirectOnSave({
               createModeRedirect,
               data,
-              isCreateMode,
               nextLocation,
               setIsRedirecting
             })

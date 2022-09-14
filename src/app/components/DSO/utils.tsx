@@ -3,7 +3,7 @@ import {
   DigitalSecurityOffering,
   DSOFormValues,
   DSOLaunchStatus,
-  DSOFormValuesStep1,
+  DSOBaseFormValues,
   NewBaseDigitalSecurityOffering,
   RedirectArgs,
   RedirectSaveArgs
@@ -18,20 +18,21 @@ import { sanitize } from 'dompurify'
 import { generatePath } from 'react-router-dom'
 
 export const redirect = ({
-  data,
   createModeRedirect,
   dsoId,
-  history
+  history,
+  issuerId
 }: RedirectArgs) => {
-  if (
-    createModeRedirect !== undefined &&
-    data?.user !== undefined &&
-    dsoId !== ''
-  ) {
+  if (createModeRedirect !== undefined && issuerId !== '' && dsoId !== '') {
+    const redirect =
+      typeof createModeRedirect === 'function'
+        ? createModeRedirect()
+        : createModeRedirect
+
     history.replace(
-      generatePath(createModeRedirect as string, {
-        issuerId: data?.user,
-        dsoId: dsoId
+      generatePath(redirect, {
+        issuerId,
+        dsoId
       })
     )
   }
@@ -39,24 +40,26 @@ export const redirect = ({
 
 export const redirectSave = ({
   createModeRedirect,
-  isCreateMode,
   nextLocation,
-  data,
   dsoId,
+  issuerId,
   history,
   setIsRedirecting
 }: RedirectSaveArgs) => {
   if (
     createModeRedirect !== undefined &&
-    isCreateMode &&
     nextLocation !== undefined &&
-    data?.user !== undefined &&
+    issuerId !== '' &&
     dsoId !== ''
   ) {
+    const redirect =
+      typeof createModeRedirect === 'function'
+        ? createModeRedirect()
+        : createModeRedirect
     history.replace(
-      generatePath(`${createModeRedirect as string}${nextLocation.search}`, {
-        issuerId: data?.user,
-        dsoId: dsoId
+      generatePath(`${redirect}${nextLocation.search}`, {
+        issuerId,
+        dsoId
       })
     )
     setIsRedirecting(false)
@@ -65,7 +68,7 @@ export const redirectSave = ({
 
 export const transformDSOToFormValuesStep1 = (
   dso: NewBaseDigitalSecurityOffering | undefined
-): DSOFormValuesStep1 => {
+): DSOBaseFormValues => {
   if (dso === undefined) {
     return {
       capitalStructure: '',
@@ -102,12 +105,12 @@ export const transformDSOToFormValuesStep1 = (
     currency: getIdFromObj({ _id: dso.currency }),
     uniqueIdentifierCode: dso.uniqueIdentifierCode,
     network: dso.network,
-    dividendYield: percentageToNumber(dso.dividendYield),
-    grossIRR: percentageToNumber(dso.grossIRR),
+    dividendYield: dso.dividendYield,
+    grossIRR: dso.grossIRR,
     investmentStructure: dso.investmentStructure,
-    equityMultiple: percentageToNumber(dso.equityMultiple),
-    interestRate: percentageToNumber(dso.interestRate),
-    leverage: percentageToNumber(dso.leverage),
+    equityMultiple: dso.equityMultiple,
+    interestRate: dso.interestRate,
+    leverage: dso.leverage,
     totalFundraisingAmount: dso.totalFundraisingAmount,
     pricePerUnit: dso.pricePerUnit,
     distributionFrequency: dso.distributionFrequency,
@@ -192,6 +195,34 @@ export const transformDSOToFormValues = (
         ? dso.videos.map(({ _id, ...video }) => video)
         : [{}],
     uniqueIdentifierCode: dso.uniqueIdentifierCode
+  }
+}
+
+export const getDSOInformationFormValues = (data: DSOFormValues) => {
+  return {
+    capitalStructure: data.capitalStructure,
+    logo: data.logo,
+    tokenName: data.tokenName,
+    tokenSymbol: data.tokenSymbol,
+    issuerName: data.issuerName,
+    corporate: data.corporate,
+    currency: getIdFromObj({ _id: data.currency }),
+    uniqueIdentifierCode: data.uniqueIdentifierCode,
+    network: data.network,
+    dividendYield: data.dividendYield,
+    grossIRR: data.grossIRR,
+    investmentStructure: data.investmentStructure,
+    equityMultiple: data.equityMultiple,
+    interestRate: data.interestRate,
+    leverage: data.leverage,
+    totalFundraisingAmount: data.totalFundraisingAmount,
+    pricePerUnit: data.pricePerUnit,
+    distributionFrequency: data.distributionFrequency,
+    investmentPeriod: data.investmentPeriod,
+    minimumInvestment: data.minimumInvestment,
+    launchDate: data.launchDate ?? null,
+    completionDate: data.completionDate ?? null,
+    step: 0
   }
 }
 

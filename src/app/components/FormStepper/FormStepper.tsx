@@ -23,7 +23,10 @@ export interface FormStepperStep {
   formId?: string
 }
 
-export type CreateModeRedirect = string | ((type: string) => string) | undefined
+export type CreateModeRedirect =
+  | string
+  | ((type?: string) => string)
+  | undefined
 
 export interface FormStepperProps {
   steps: FormStepperStep[]
@@ -41,6 +44,8 @@ export interface FormStepperProps {
   redirectOnSave?: (args: RedirectOnSaveArgs) => void
   redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
   isRequiredOnLastStep?: boolean
+  followDefaultMode?: boolean
+  dataToCheck?: any
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -60,7 +65,9 @@ export const FormStepper = (props: FormStepperProps) => {
     submitText,
     redirectOnSave,
     redirectCallback,
-    isRequiredOnLastStep
+    isRequiredOnLastStep,
+    followDefaultMode = true,
+    dataToCheck = undefined
   } = props
 
   const { isMobile } = useAppBreakpoints()
@@ -180,6 +187,8 @@ export const FormStepper = (props: FormStepperProps) => {
             redirectOnSave={redirectOnSave}
             redirectCallback={redirectCallback}
             isRequiredOnLastStep={isRequiredOnLastStep}
+            followDefaultMode={followDefaultMode}
+            dataToCheck={dataToCheck}
           />
         ))}
       </Grid>

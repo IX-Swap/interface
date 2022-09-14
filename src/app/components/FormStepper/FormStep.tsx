@@ -35,6 +35,8 @@ export interface FormStepProps {
   redirectOnSave?: (args: RedirectOnSaveArgs) => void
   redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
   isRequiredOnLastStep?: boolean
+  followDefaultMode?: boolean
+  dataToCheck?: any
 }
 
 interface OnSubmitSuccessArgs {
@@ -95,9 +97,10 @@ export const FormStep = (props: FormStepProps) => {
     createModeRedirect,
     redirectCallback,
     redirectOnSave,
-    isRequiredOnLastStep = false
+    isRequiredOnLastStep = false,
+    followDefaultMode = true,
+    dataToCheck = undefined
   } = props
-
   const isCurrentStep = activeStep === index
   const classes = useStyles()
   const history = useHistory()
@@ -108,7 +111,9 @@ export const FormStep = (props: FormStepProps) => {
 
   const hasNextStep = activeStep < totalSteps - 1
   const hasPrevStep = activeStep !== 0
-  const isEditing = data !== undefined
+  const isEditing = followDefaultMode
+    ? data !== undefined
+    : Object.is(data, dataToCheck)
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
 
@@ -138,7 +143,6 @@ export const FormStep = (props: FormStepProps) => {
         history
       })
     }
-
     if (shouldSaveStep && (data?.step ?? 0) < activeStep + 1) {
       payload.step = activeStep
     }
