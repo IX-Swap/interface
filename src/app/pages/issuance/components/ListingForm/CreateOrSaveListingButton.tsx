@@ -1,13 +1,14 @@
-import { Button } from '@mui/material'
-import { getIdFromObj } from 'helpers/strings'
 import React from 'react'
+import { Button } from '@mui/material'
+import { useAuth } from 'hooks/auth/useAuth'
+import { getIdFromObj } from 'helpers/strings'
 import { useFormContext } from 'react-hook-form'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Listing, ListingFormValues } from 'app/pages/issuance/types/listings'
 import { getUpdateListingPayload } from 'app/pages/issuance/utils/listing'
 import { useCreateListing } from 'app/pages/issuance/hooks/useCreateListing'
 import { useUpdateListing } from 'app/pages/issuance/hooks/useUpdateListing'
-import { useAuth } from 'hooks/auth/useAuth'
+import { Listing, ListingFormValues } from 'app/pages/issuance/types/listings'
+
 import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
 export interface CreateOrSaveListingButtonProps {
@@ -36,7 +37,7 @@ export const CreateOrSaveListingButton = (
   const formValues = getUpdateListingPayload({
     ...defaultFormValues,
     type: listingType,
-    dsoId: dso,
+    dso: dso,
     userId: userId
   } as any)
 

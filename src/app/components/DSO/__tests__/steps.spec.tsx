@@ -1,12 +1,12 @@
 import React from 'react'
-import { dsoFormSteps } from 'app/components/DSO/steps'
+import { render } from 'test-utils'
+import { getIdFromObj } from 'helpers/strings'
 import { formValues } from '__fixtures__/issuance'
-import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
+import { dsoFormSteps } from 'app/components/DSO/steps'
+import { percentageToNumber } from 'app/pages/issuance/utils/utils'
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
-import { render } from 'test-utils'
-import { percentageToNumber } from 'app/pages/issuance/utils/utils'
-import { getIdFromObj } from 'helpers/strings'
+import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
 
 jest.mock('app/components/DSO/components/DSOInformationFields', () => ({
   DSOInformationFields: jest.fn(() => null)
