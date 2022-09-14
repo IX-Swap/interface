@@ -138,7 +138,7 @@ export const DSOTerms = () => {
                 name='distributionFrequency'
                 label='Distribution Frequency'
                 variant='outlined'
-                helperText='Frequency on return distribution'
+                helperText='Frequency of return distribution'
               />
             </Grid>
           </Grid>
