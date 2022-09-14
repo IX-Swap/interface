@@ -26,6 +26,7 @@ export interface FormStepperStep {
 export type CreateModeRedirect =
   | string
   | ((type?: string) => string)
+  | ((type: string) => string)
   | undefined
 
 export interface FormStepperProps {

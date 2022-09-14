@@ -326,7 +326,6 @@ export interface RedirectOnSaveArgs {
 export interface RedirectSaveArgs {
   createModeRedirect: CreateModeRedirect
   data?: any
-  isCreateMode: boolean
   nextLocation: H.Location<unknown> | undefined
   setIsRedirecting: any
   dsoId: string

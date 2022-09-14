@@ -12,7 +12,7 @@ export const CreateDSO = () => {
       </Grid>
       <RootContainer>
         <Grid item>
-          <DSOForm isNew />
+          <DSOForm />
         </Grid>
       </RootContainer>
     </Grid>

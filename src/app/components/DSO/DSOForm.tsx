@@ -45,14 +45,12 @@ export const DSOForm = () => {
 
   const redirectOnSave = ({
     createModeRedirect,
-    isCreateMode,
     nextLocation,
     data,
     setIsRedirecting
   }: RedirectOnSaveArgs) => {
     redirectSave({
       createModeRedirect,
-      isCreateMode,
       nextLocation,
       data,
       dsoId,
@@ -74,7 +72,6 @@ export const DSOForm = () => {
     <FormStepper
       data={transformDSOToFormValues(data)}
       dataToCheck={transformDSOToFormValues(data)}
-      rawData={data}
       followDefaultMode={data !== undefined}
       createMutation={createMutation}
       editMutation={editMutation}
