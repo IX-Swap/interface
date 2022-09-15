@@ -153,24 +153,45 @@ export const individualTransformKycDto = (values: any) => {
     idIssueDate,
     idExpiryDate,
     idType,
+    taxDeclarations
   } = values
 
   const result = {
     ...values,
-    ...(!isUSTaxPayer && { usTin: '' }),
+
+    gender: gender?.label,
+    dateOfBirth: typeof dateOfBirth === 'string'
+      ? dateOfBirth
+      : dateOfBirth?.format('MM/DD/YYYY'),
+
+    nationality: nationality?.label,
+    citizenship: citizenship?.label,
+    
+    declarationAcknowledgement: 'offers-acknowledgement',
+    
+    idType: idType?.label?.toUpperCase(),
     idIssueDate: typeof idIssueDate === 'string' ? idIssueDate : idIssueDate?.format('MM/DD/YYYY'),
     idExpiryDate: typeof idExpiryDate === 'string' ? idExpiryDate : idExpiryDate?.format('MM/DD/YYYY'),
-    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth?.format('MM/DD/YYYY'),
-    sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
-    idType: idType?.label?.toUpperCase(),
-    citizenship: citizenship?.label,
-    nationality: nationality?.label,
-    country: country?.label,
-    employmentStatus: employmentStatus?.label,
+
+    sourceOfFunds: [...sourceOfFunds.map((x: any) => x.label), ...(sourceOfFunds.some((x: any) => x.label === 'Others') ? [otherFunds] : [])].join(', '),
+
     occupation: occupation?.label,
-    gender: gender?.label,
+    employmentStatus: employmentStatus?.label,
     income: income?.label,
+    
+    ...(!isUSTaxPayer && { usTin: '' }),
+    country: country?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
+
+    investorDeclaration: {
+      status: values.investorDeclaration,
+      acceptOfQualification: values.acceptOfQualification,
+      acceptRefusalRight: values.acceptOfRefusalRight,
+    },
+
+    taxDeclarations: [
+      ...(taxDeclarations?.map((t: any, idx: number) => ({ ...t, country: t.country.label, isAdditional: idx > 0 })) ?? [])
+    ],
   }
 
   return Object.entries(result)

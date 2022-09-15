@@ -49,6 +49,8 @@ import Modal from 'components/Modal'
 import { IconButton } from '@material-ui/core'
 import { HrLine } from 'pages/CreateNFT/styleds'
 import { Plus } from 'react-feather'
+import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
+
 
 type FormSubmitHanderArgs = { 
   createFn: (body: any) => any,
@@ -176,8 +178,8 @@ export default function IndividualKycForm() {
     validationSeen(key)
   }
 
-  const onTaxDeclarationAdd = (value: { country: string; id?: string, reason?: string }, fields: any[], setFieldValue: any) => {
-    if (!value.country && (!value.id && !value.reason)) {
+  const onTaxDeclarationAdd = (value: { country: string; idNumber?: string, reason?: string }, fields: any[], setFieldValue: any) => {
+    if (!value.country && (!value.idNumber && !value.reason)) {
       validationSeen('taxCountry')
       validationSeen('taxDeclarations')
 
@@ -224,7 +226,7 @@ export default function IndividualKycForm() {
     if (file?.size > MAX_FILE_UPLOAD_SIZE) {
       showError(MAX_FILE_UPLOAD_SIZE_ERROR)
     } else {
-      const arrayOfFiles = [...values[key]]
+      const arrayOfFiles = [...(values[key] ?? [])]
       arrayOfFiles.push(file)
 
       setFieldValue(key, arrayOfFiles, false)
@@ -386,7 +388,7 @@ export default function IndividualKycForm() {
                   })
                   setIsSubmittedOnce(true)
                   setErrors(newErrors)
-                  setCanSubmit(false)
+                  setCanSubmit(true)
                   canLeavePage.current = false
                 })
             }}
@@ -407,7 +409,7 @@ export default function IndividualKycForm() {
                 !errors.phoneNumber &&
                 !errors.email
 
-              const referralFilled = !!values.referral
+              const referralFilled = !!values.referralCode
 
               const financialFilled =
                 shouldValidate &&
@@ -425,7 +427,7 @@ export default function IndividualKycForm() {
                 !errors.income
 
               const statusDeclarationFilled =
-                shouldValidate
+                shouldValidate &&
                 !errors.accredited
 
               const identityDocumentFilled =
@@ -450,6 +452,10 @@ export default function IndividualKycForm() {
 
               const investorStatusAcknowledgementFilled = shouldValidate && !errors.confirmStatusDeclaration
 
+              const personalFailed = shouldValidate && (!personalFilled || !addressFilled || !filesFilled)
+              const financialFailed = shouldValidate && !financialFilled
+              const statusDeclarationFailed = shouldValidate && !statusDeclarationFilled
+
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
@@ -460,6 +466,7 @@ export default function IndividualKycForm() {
                             <Trans>Personal Information</Trans>
                           </TYPE.title6>
                           {personalFilled && <StyledBigPassed />}
+                          {personalFailed && <InvalidFormInputIcon /> }
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={3}>
@@ -706,6 +713,7 @@ export default function IndividualKycForm() {
                             <Trans>Financial Information</Trans>
                           </TYPE.title6>
                           {financialFilled && <StyledBigPassed />}
+                          {financialFailed && <InvalidFormInputIcon /> }
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
                           <FormGrid columns={2}>
@@ -778,7 +786,7 @@ export default function IndividualKycForm() {
                         <ExtraInfoCard>
                           <RowBetween>
                             <TYPE.buttonMuted>Why We Need Your Tax Declaration?</TYPE.buttonMuted>
-                            <LinkStyledButton type="button" onClick={() => setShowTaxModal(true)}>Learn More</LinkStyledButton>
+                            <LinkButton type="button" onClick={() => setShowTaxModal(true)}>Learn More</LinkButton>
 
                             <Modal isOpen={showTaxModal} onDismiss={() => setShowTaxModal(false)}>
                               <FormCard>
@@ -825,7 +833,7 @@ export default function IndividualKycForm() {
                                 onSelect={(country) => onSelectChange('taxCountry', country, setFieldValue)}
                                 error={errors.taxCountry && errors.taxCountry}
                               />
-                              <TextInput disabled label="Tax Identification Number (TIN)" value={tax.id} />
+                              <TextInput disabled label="Tax Identification Number (TIN)" value={tax.idNumber} />
                             </FormGrid>
                             
                             <IconButton onClick={() => onTaxDeclarationRemove(tax, values.taxDeclarations, setFieldValue)}>
@@ -833,6 +841,7 @@ export default function IndividualKycForm() {
                             </IconButton>
                           </RowBetween>
                         ))}
+                        
                         
                         <FormGrid columns={2} style={{ marginTop: "32px" }}>
                           <Select
@@ -878,9 +887,9 @@ export default function IndividualKycForm() {
 
                         <HrLine />
 
-                        <LinkStyledButton 
+                        <LinkButton 
                           type="button"
-                          onClick={() => onTaxDeclarationAdd({ country: values.taxCountry, id: values.taxIdentification }, values.taxDeclarations, setFieldValue)} 
+                          onClick={() => onTaxDeclarationAdd({ country: values.taxCountry, idNumber: values.taxIdentification }, values.taxDeclarations, setFieldValue)} 
                           style={{ marginTop: "32px", width: "100%" }}
                         >
                           <ExtraInfoCard>
@@ -889,7 +898,13 @@ export default function IndividualKycForm() {
                               <Plus />
                             </RowBetween>
                           </ExtraInfoCard>
-                        </LinkStyledButton>
+                        </LinkButton>
+                        
+                        {errors.taxDeclarations && (
+                          <TYPE.small marginTop="8px" color={'red1'}>
+                            {errors.taxDeclarations}
+                          </TYPE.small>
+                        )}
                           
                         
                         <RowBetween marginBottom="32px" marginTop="64px">
@@ -902,7 +917,7 @@ export default function IndividualKycForm() {
                         <ExtraInfoCard>
                           <RowBetween>
                             <TYPE.buttonMuted>Declaration of US Citizenship or US residence for FATCA</TYPE.buttonMuted>
-                            <LinkStyledButton type="button" onClick={() => setShowFATCAModal(true)}>Learn More</LinkStyledButton>
+                            <LinkButton type="button" onClick={() => setShowFATCAModal(true)}>Learn More</LinkButton>
 
                             <Modal isOpen={showFATCAModal} onDismiss={() => setShowFATCAModal(false)}>
                               <FormCard>
@@ -971,6 +986,7 @@ export default function IndividualKycForm() {
                             <Trans>Investor Status Declaration</Trans>
                           </TYPE.title6>
                           {statusDeclarationFilled && <StyledBigPassed />}
+                          {statusDeclarationFailed && <InvalidFormInputIcon /> }
                         </RowBetween>
 
                         <Column style={{ gap: '34px' }}>
@@ -1011,40 +1027,39 @@ export default function IndividualKycForm() {
                               <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                                 <Trans>Investor Declaration</Trans>
                               </TYPE.title6>
-                              {investorFilled && <StyledBigPassed />}
                             </RowBetween>
 
                             <Column style={{ margin: '1rem', gap: "1rem" }}>
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 0}
+                                checked={values.investorDeclaration === 'total-assets'}
                                 label="My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million"
-                                onClick={() => onRadioChange('investorDeclaration', 0, setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclaration', 'total-assets', setFieldValue)}
                               />
                               
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 1}
+                                checked={values.investorDeclaration === 'annual-income'}
                                 label="My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)"
-                                onClick={() => onRadioChange('investorDeclaration', 1, setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclaration', 'annual-income', setFieldValue)}
                               />
                               
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 2}
+                                checked={values.investorDeclaration === 'financial-assets'}
                                 label="My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or its equivalent (or its equivalent in foreign currency)"
-                                onClick={() => onRadioChange('investorDeclaration', 2, setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclaration', 'financial-assets', setFieldValue)}
                               />
                               
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 3}
+                                checked={values.investorDeclaration === 'joint-income'}
                                 label="My jointly held account with my spouse/any individual meets any of the above"
-                                onClick={() => onRadioChange('investorDeclaration', 3, setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclaration', 'joint-income', setFieldValue)}
                               />
                             </Column>
 
@@ -1068,14 +1083,14 @@ export default function IndividualKycForm() {
                               <LabeledCheckBox>
                                 <Checkbox 
                                   label={''} 
-                                  checked={values.confirmSafeguards} 
-                                  onClick={() => setFieldValue('confirmSafeguards', !values.confirmSafeguards, false)}
+                                  checked={values.acceptOfQualification} 
+                                  onClick={() => setFieldValue('acceptOfQualification', !values.acceptOfQualification, false)}
                                 />
 
                                 <TYPE.description3>
                                   I have been informed of and understand the consequences of my qualification as an Accredited Investor, 
                                   in particular the reduced regulatory investor 
-                                  <LinkStyledButton onClick={() => setShowSafeguardModal(true)}>safeguards</LinkStyledButton> 
+                                  <InlineLinkButton onClick={() => setShowSafeguardModal(true)}>safeguards</InlineLinkButton> 
                                   for Accredited Investors.
                                 </TYPE.description3>
 
@@ -1174,13 +1189,13 @@ export default function IndividualKycForm() {
                               <LabeledCheckBox>
                                 <Checkbox 
                                   label={''} 
-                                  checked={values.confirmOptout}
-                                  onClick={() => setFieldValue('confirmOptout', !values.confirmOptout, false)}
+                                  checked={values.acceptOfRefusalRight}
+                                  onClick={() => setFieldValue('acceptOfRefusalRight', !values.acceptOfRefusalRight, false)}
                                 />
 
                                 <TYPE.description3>
                                   I have been informed of and understand my right to 
-                                  <LinkStyledButton onClick={() => setShowOptoutModal(true)}>opt out</LinkStyledButton> 
+                                  <InlineLinkButton onClick={() => setShowOptoutModal(true)}>opt out</InlineLinkButton> 
                                   of the Accredited Investors status
                                 </TYPE.description3>
 
@@ -1323,11 +1338,11 @@ export default function IndividualKycForm() {
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
                       disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
                       topics={[
-                        { title: 'Personal Information', href: 'personal', passed: personalFilled },
-                        { title: 'Financial Information', href: 'financial', passed: financialFilled },
-                        { title: 'Investor Status Declaration', href: 'status-declaration', passed: statusDeclarationFilled },
-                        { title: 'Investor Declaration', href: 'investor-declaration', passed: investorFilled },
-                        { title: 'Acknowledgement', href: 'acknowledgement', passed: investorStatusAcknowledgementFilled },
+                        { title: 'Personal Information', href: 'personal', passed: personalFilled && addressFilled && filesFilled, failed: personalFailed },
+                        { title: 'Financial Information', href: 'financial', passed: financialFilled, failed: financialFailed },
+                        { title: 'Investor Status Declaration', href: 'status-declaration', passed: statusDeclarationFilled, failed: statusDeclarationFailed },
+                        // { title: 'Investor Declaration', href: 'investor-declaration', passed: investorFilled },
+                        // { title: 'Acknowledgement', href: 'acknowledgement', passed: investorStatusAcknowledgementFilled },
                       ]}
                       description={kyc?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
@@ -1372,4 +1387,12 @@ const LabeledCheckBox = styled.div`
   grid-template-rows: auto;
 
   place-items: start;
+`
+
+const LinkButton = styled(LinkStyledButton)`
+  color: #4C88FF;
+`
+
+const InlineLinkButton = styled(LinkStyledButton)`
+  color: #AC83FF;
 `
