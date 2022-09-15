@@ -11,7 +11,7 @@ export const DistributionFrequencySelect = (props: any) => {
       <Select
         {...props}
         label={undefined}
-        placeholder={'Frequency on return distribution'}
+        placeholder={'Frequency of return distribution'}
         displayEmpty
       >
         <SelectItem disabled value={undefined}>
