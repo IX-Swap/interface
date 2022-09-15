@@ -6,14 +6,12 @@ import { PriceSelect } from 'app/pages/invest/components/DSOTable/PriceSelect'
 export const PriceFilter = () => {
   const { getFilterValue, removeFilters, updateFilters } = useQueryFilter()
   const value = getFilterValue('sortOrder')
+  const sortField = getFilterValue('sortField')
 
   const handleChange = (event: SelectChangeEvent<any>) => {
-    if (value === 'price') {
+    console.log({ sortField })
+    if (value === '1' || value === '-1') {
       removeFilters(['sortField', 'sortOrder'])
-      // removeFilters({
-      //   'sortField': 'price',
-      //   'sortOrder': event.target.value
-      // })
     } else {
       updateFilters({
         sortField: 'price',
