@@ -24,10 +24,10 @@ export const CapitalStructureFilter = () => {
       inputProps={{ 'data-testid': 'select' }}
       variant='outlined'
       showLabel={false}
-      value={value ?? 'Select capital structure'}
+      value={value ?? 'Capital structure'}
       onChange={handleChange}
       label='Capital Structure'
-      placeholder='Select capital structure'
+      placeholder='Capital structure'
     />
   )
 }
