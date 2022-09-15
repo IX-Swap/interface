@@ -63,7 +63,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Capital Structure'
                 displayEmpty
                 name='capitalStructure'
-                helperText='Select Capital Structure'
+                helperText='Select capital structure'
                 variant='outlined'
                 inputProps={{ 'data-testid': 'capital-structure' }}
               />
@@ -80,7 +80,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='tokenName'
                 disabled={isLive}
                 control={control}
-                helperText='Name of the token that offering'
+                helperText='Name of the token offering'
                 variant='outlined'
               />
             </Grid>
@@ -91,7 +91,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='tokenSymbol'
                 disabled={isLive}
                 control={control}
-                helperText='Token symbol'
+                helperText='Token Symbol'
                 variant='outlined'
                 isOptional
                 optionalText='(2-6 alphanumeric characters)'
@@ -109,7 +109,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='network'
                 disabled={!isNew}
                 control={control}
-                helperText='Select blockchain network'
+                placeHolder='Select blockchain network'
                 variant='outlined'
               />
             </Grid>
@@ -125,7 +125,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='uniqueIdentifierCode'
                 disabled={isLive}
                 control={control}
-                helperText='ISIN or CUSIP Number'
+                helperText='ISIN or CUSIP number'
                 variant='outlined'
               />
             </Grid>
@@ -135,7 +135,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Corporate'
                 name='corporate'
                 control={control}
-                helperText='Select corporate'
+                placeHolder='Select corporate'
                 variant='outlined'
               />
             </Grid>
@@ -161,7 +161,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Currency'
                 name='currency'
                 control={control}
-                helperText='Preferred currency'
+                placeHolder='Preferred currency'
                 variant='outlined'
               />
             </Grid>
@@ -183,7 +183,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='mm/dd/yyyy'
                 inputVariant='outlined'
-                showCalendarIcon={true}
+                withIcon
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -191,7 +191,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 component={DateTimePicker}
                 customRenderer
                 label='Completion Date'
-                isOptional
                 name='completionDate'
                 control={control}
                 valueExtractor={dateTimeValueExtractor}
@@ -199,6 +198,8 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='mm/dd/yyyy'
                 inputVariant='outlined'
+                withIcon
+                isOptional
               />
             </Grid>
             <VSpacer size='small' />

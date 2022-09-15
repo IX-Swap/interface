@@ -1,11 +1,11 @@
-import { dsoFormSteps } from 'app/components/DSO/steps'
+import { render } from 'test-utils'
+import { getIdFromObj } from 'helpers/strings'
 import { formValues } from '__fixtures__/issuance'
-import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
+import { dsoFormSteps } from 'app/components/DSO/steps'
+import { percentageToNumber } from 'app/pages/issuance/utils/utils'
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
-import { render } from 'test-utils'
-import { percentageToNumber } from 'app/pages/issuance/utils/utils'
-import { getIdFromObj } from 'helpers/strings'
+import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
 
 jest.mock('app/components/DSO/components/DSOInformationFields', () => ({
   DSOInformationFields: jest.fn(() => null)
@@ -30,8 +30,8 @@ describe('steps', () => {
     expect(dsoFormSteps[2].label).toEqual('Documents')
   })
 
-  it('has the form value getters', () => {
-    expect(dsoFormSteps[0].getFormValues(formValues)).toEqual({
+  it('steps have the form value getters', () => {
+    expect(dsoFormSteps[0].getFormValues(formValues as any)).toEqual({
       capitalStructure: formValues.capitalStructure,
       logo: formValues.logo,
       tokenName: formValues.tokenName,
@@ -55,14 +55,14 @@ describe('steps', () => {
       launchDate: formValues.launchDate ?? null,
       completionDate: formValues.completionDate ?? null
     })
-    expect(dsoFormSteps[1].getFormValues(formValues)).toEqual({
+    expect(dsoFormSteps[1].getFormValues(formValues as any)).toEqual({
       team: formValues.team ?? [{}],
       introduction: formValues.introduction,
       businessModel: formValues.businessModel,
       useOfProceeds: formValues.useOfProceeds,
       fundraisingMilestone: formValues.fundraisingMilestone
     })
-    expect(dsoFormSteps[2].getFormValues(formValues)).toEqual({
+    expect(dsoFormSteps[2].getFormValues(formValues as any)).toEqual({
       subscriptionDocument: formValues.subscriptionDocument,
       documents: formValues.documents,
       videos: formValues.videos ?? [{}],

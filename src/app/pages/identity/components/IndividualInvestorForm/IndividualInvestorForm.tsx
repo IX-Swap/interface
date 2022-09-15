@@ -15,6 +15,10 @@ export const IndividualInvestorForm = memo(() => {
   const { open, closeDialog, openDialog } = useConfirmSubmitDialog()
 
   const { data, isLoading } = useIndividualIdentity()
+  const newData = { ...data }
+  if (data?.photo === null) {
+    newData.photo = undefined
+  }
   const mutation = useCreateIndividual()
   const submitMutation = useSubmitIndividual(openDialog)
   const { isIndividualJourneyCompleted } = useOnboardingJourneys()
@@ -51,7 +55,7 @@ export const IndividualInvestorForm = memo(() => {
     <>
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
-        data={data}
+        data={newData}
         shouldSaveOnMove={!isIndividualJourneyCompleted}
         createMutation={mutation}
         editMutation={mutation}

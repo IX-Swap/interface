@@ -8,7 +8,7 @@ describe('DSODocumentsFields', () => {
     jest.clearAllMocks()
   })
 
-  it('renders nothing if data is null', () => {
+  it('should match snapshot', () => {
     const { container } = render(
       <Form>
         <DSODocumentsFields />

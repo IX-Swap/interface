@@ -22,9 +22,12 @@ export const useUpdateListing = (
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 
-  const url = listingsURL.update(issuerId ?? userId, listingId)
+  const url = listingsURL.createOrUpdate(issuerId ?? userId)
   const updateDSO = async (args: ListingRequestArgs) => {
-    return await apiService.put<ListingFormValuesForSubmit>(url, args)
+    return await apiService.post<ListingFormValuesForSubmit>(url, {
+      ...args,
+      listingId: listingId
+    })
   }
 
   return useMutation(updateDSO, {

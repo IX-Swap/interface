@@ -32,18 +32,9 @@ describe('RemoveAuthenticatorFields', () => {
       </Form>
     )
 
-    const otpFields = getAllByPlaceholderText('_')
     const emailCodeField = container.querySelector(
       'input[name="emailCode"]'
     ) as HTMLInputElement
-
-    otpFields.forEach(otpField => {
-      fireEvent.change(otpField, {
-        target: {
-          value: '1'
-        }
-      })
-    })
 
     fireEvent.change(emailCodeField, {
       target: {
@@ -57,13 +48,20 @@ describe('RemoveAuthenticatorFields', () => {
   })
 
   it('enables submit button if all fields gave 6 digits and isLoading is false', async () => {
-    const { getByText, container, getAllByPlaceholderText } = render(
+    const { getByText, container, getByDisplayValue } = render(
       <Form defaultValues={{ otp: '123456', emailCode: '123456' }}>
         <RemoveAuthenticatorFields isRemove2FALoading={false} />
       </Form>
     )
 
-    const otpFields = getAllByPlaceholderText('_')
+    const otpFields = [
+      getByDisplayValue('1'),
+      getByDisplayValue('2'),
+      getByDisplayValue('3'),
+      getByDisplayValue('4'),
+      getByDisplayValue('5'),
+      getByDisplayValue('6')
+    ]
     const emailCodeField = container.querySelector('input[name="emailCode"]')
 
     fireEvent.change(emailCodeField as HTMLInputElement, {

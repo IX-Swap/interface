@@ -1,0 +1,610 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SecondaryListings should match snapshot 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+        style="display: table;"
+      >
+        <div
+          class="makeStyles-wrapper-5 MuiBox-root css-0"
+        >
+          <div
+            class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-i9lcxu-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-mkpo7v"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiBox-root css-geek62"
+                      >
+                        <h2
+                          class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
+                        >
+                          Secondary Listings
+                        </h2>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiBox-root css-ftbd7"
+                      >
+                        <nav
+                          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                        >
+                          <ol
+                            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                          />
+                        </nav>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+              >
+                <div
+                  class="MuiBox-root css-uwwqev"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-wrap-xs-nowrap css-1cfjp91-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-1tii8sk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root makeStyles-root-9 css-1f0ts9k-MuiFormControl-root-MuiTextField-root"
+                      >
+                        <div
+                          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-1ln009z-MuiInputBase-root-MuiOutlinedInput-root"
+                        >
+                          <div
+                            class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                          >
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root MuiSvgIcon-colorDisabled MuiSvgIcon-fontSizeMedium css-fuvw14-MuiSvgIcon-root"
+                              data-testid="SearchIcon"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                              />
+                            </svg>
+                          </div>
+                          <input
+                            aria-invalid="false"
+                            class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedStart css-mmb06o-MuiInputBase-input-MuiOutlinedInput-input"
+                            id="mui-1"
+                            placeholder="Search"
+                            type="text"
+                            value=""
+                          />
+                          <fieldset
+                            aria-hidden="true"
+                            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                          >
+                            <legend
+                              class="css-nnbavb"
+                            >
+                              <span
+                                class="notranslate"
+                              >
+                                ​
+                              </span>
+                            </legend>
+                          </fieldset>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item css-1mum6ye-MuiGrid-root"
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-17s1bz2-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+                        href="/app/issuance/create"
+                        tabindex="0"
+                      >
+                        Create a New Listing
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="makeStyles-loading-17 MuiBox-root css-0"
+              >
+                <span
+                  class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-q79gi7-MuiCircularProgress-root"
+                  role="progressbar"
+                  style="width: 40px; height: 40px;"
+                >
+                  <svg
+                    class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                      cx="44"
+                      cy="44"
+                      fill="none"
+                      r="20.2"
+                      stroke-width="3.6"
+                    />
+                  </svg>
+                </span>
+              </div>
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-11gelwl-MuiPaper-root"
+                style="background-color: inherit;"
+              >
+                <div
+                  class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
+                  style="overflow: visible;"
+                >
+                  <table
+                    aria-label="table"
+                    class="MuiTable-root css-7mlt34-MuiTable-root"
+                    data-testid="table"
+                  >
+                    <thead
+                      class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+                      style="display: table-header-group;"
+                    >
+                      <tr
+                        class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
+                      >
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                          scope="col"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                          >
+                            <div
+                              class="MuiBox-root css-d0uhtl"
+                            >
+                              Pair
+                            </div>
+                          </p>
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                          scope="col"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                          >
+                            Name
+                          </p>
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                          scope="col"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                          >
+                            <div
+                              class="MuiBox-root css-70qvj9"
+                              style="cursor: pointer; user-select: none;"
+                            >
+                              Date
+                              <div
+                                class="MuiBox-root css-j7qwjs"
+                                style="transform: rotate(180deg);"
+                              />
+                            </div>
+                          </p>
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                          scope="col"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                          >
+                            Available Market
+                          </p>
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                          scope="col"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                          >
+                            Status
+                          </p>
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                          scope="col"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                          >
+                            Actions
+                          </p>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+                    />
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+      style="display: table;"
+    >
+      <div
+        class="makeStyles-wrapper-5 MuiBox-root css-0"
+      >
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthLg css-127nfur-MuiContainer-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-i9lcxu-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item css-4pkl32-MuiGrid-root"
+            >
+              <div
+                class="MuiBox-root css-mkpo7v"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1o4kjq1-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-geek62"
+                    >
+                      <h2
+                        class="MuiTypography-root MuiTypography-h2 makeStyles-title-6 css-rldqdm-MuiTypography-root"
+                      >
+                        Secondary Listings
+                      </h2>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiBox-root css-ftbd7"
+                    >
+                      <nav
+                        class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
+                      >
+                        <ol
+                          class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+                        />
+                      </nav>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+            >
+              <div
+                class="MuiBox-root css-uwwqev"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-wrap-xs-nowrap css-1cfjp91-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-1tii8sk-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiFormControl-root MuiFormControl-marginDense MuiFormControl-fullWidth MuiTextField-root makeStyles-root-9 css-1f0ts9k-MuiFormControl-root-MuiTextField-root"
+                    >
+                      <div
+                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-1ln009z-MuiInputBase-root-MuiOutlinedInput-root"
+                      >
+                        <div
+                          class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-ittuaa-MuiInputAdornment-root"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-colorDisabled MuiSvgIcon-fontSizeMedium css-fuvw14-MuiSvgIcon-root"
+                            data-testid="SearchIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                            />
+                          </svg>
+                        </div>
+                        <input
+                          aria-invalid="false"
+                          class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedStart css-mmb06o-MuiInputBase-input-MuiOutlinedInput-input"
+                          id="mui-1"
+                          placeholder="Search"
+                          type="text"
+                          value=""
+                        />
+                        <fieldset
+                          aria-hidden="true"
+                          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                        >
+                          <legend
+                            class="css-nnbavb"
+                          >
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item css-1mum6ye-MuiGrid-root"
+                  >
+                    <a
+                      class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-17s1bz2-MuiTypography-root-MuiLink-root-MuiButtonBase-root-MuiButton-root"
+                      href="/app/issuance/create"
+                      tabindex="0"
+                    >
+                      Create a New Listing
+                      <span
+                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-p03apy-MuiContainer-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1vpwcmr-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          >
+            <div
+              class="makeStyles-loading-17 MuiBox-root css-0"
+            >
+              <span
+                class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-q79gi7-MuiCircularProgress-root"
+                role="progressbar"
+                style="width: 40px; height: 40px;"
+              >
+                <svg
+                  class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                    cx="44"
+                    cy="44"
+                    fill="none"
+                    r="20.2"
+                    stroke-width="3.6"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-11gelwl-MuiPaper-root"
+              style="background-color: inherit;"
+            >
+              <div
+                class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
+                style="overflow: visible;"
+              >
+                <table
+                  aria-label="table"
+                  class="MuiTable-root css-7mlt34-MuiTable-root"
+                  data-testid="table"
+                >
+                  <thead
+                    class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
+                    style="display: table-header-group;"
+                  >
+                    <tr
+                      class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
+                    >
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                        scope="col"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                        >
+                          <div
+                            class="MuiBox-root css-d0uhtl"
+                          >
+                            Pair
+                          </div>
+                        </p>
+                      </th>
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                        scope="col"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                        >
+                          Name
+                        </p>
+                      </th>
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                        scope="col"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                        >
+                          <div
+                            class="MuiBox-root css-70qvj9"
+                            style="cursor: pointer; user-select: none;"
+                          >
+                            Date
+                            <div
+                              class="MuiBox-root css-j7qwjs"
+                              style="transform: rotate(180deg);"
+                            />
+                          </div>
+                        </p>
+                      </th>
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                        scope="col"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                        >
+                          Available Market
+                        </p>
+                      </th>
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                        scope="col"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                        >
+                          Status
+                        </p>
+                      </th>
+                      <th
+                        class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headCell-13 css-1efwvfh-MuiTableCell-root"
+                        scope="col"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 makeStyles-headText-14 css-1w73bwm-MuiTypography-root"
+                        >
+                          Actions
+                        </p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
+                  />
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

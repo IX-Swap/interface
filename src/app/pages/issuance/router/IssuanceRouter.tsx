@@ -80,11 +80,17 @@ export const IssuanceRouter = () => {
         <IssuanceLanding />
       </AppRoute>
 
-      <AppRoute breadcrumb='My Listings' path={IssuanceRoute.myListings}>
+      <AppRoute
+        breadcrumb='Secondary Listings'
+        path={IssuanceRoute.secondaryListings}
+      >
         <MyListingsRouter />
       </AppRoute>
 
-      <AppRoute breadcrumb='Create Listing' path={IssuanceRoute.createListing}>
+      <AppRoute
+        breadcrumb='Create Secondary Listing'
+        path={IssuanceRoute.createListing}
+      >
         <CreateListing />
       </AppRoute>
 

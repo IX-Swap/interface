@@ -14,7 +14,12 @@ export const useCreateIndividual = () => {
   const uri = identityURL.individuals.create(userId)
 
   const createOrUpdateIndividual = async (values: any) => {
-    return await apiService.put<IndividualIdentity>(uri, values)
+    const newValues = { ...values }
+
+    if (values.photo === undefined) {
+      newValues.photo = null
+    }
+    return await apiService.put<IndividualIdentity>(uri, newValues)
   }
 
   return useMutation(createOrUpdateIndividual, {

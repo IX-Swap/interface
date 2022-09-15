@@ -171,6 +171,7 @@ export const DSOTerms = () => {
                 variant='outlined'
                 helperText='In percent'
                 disabled={isDebt}
+                isOptional
               />
             </Grid>
           </Grid>

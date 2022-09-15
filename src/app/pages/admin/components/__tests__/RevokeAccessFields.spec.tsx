@@ -16,10 +16,5 @@ describe('RevokeAccessFields', () => {
     )
 
     expect(getByText(/enter the session id to revoke/i)).toBeTruthy()
-    expect(
-      getByText(
-        /if you do not specify session id, all sessions of this user will be revoked/i
-      )
-    ).toBeTruthy()
   })
 })

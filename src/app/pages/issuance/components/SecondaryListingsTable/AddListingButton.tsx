@@ -8,11 +8,11 @@ export const AddListingButton = () => {
     <Button
       component={AppRouterLinkComponent}
       to={paths.createListing}
-      size='small'
       color='primary'
-      variant='outlined'
+      variant='contained'
+      sx={{ height: 50 }}
     >
-      Create a new listing
+      Create a New Listing
     </Button>
   )
 }
