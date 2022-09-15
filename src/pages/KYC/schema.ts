@@ -35,7 +35,7 @@ export const individualErrorsSchema = yup.object().shape({
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
 
-  taxDeclarations: yup.array().min(1, 'Add at least 1 tax declaration').required('Required'),
+  taxDeclarations: yup.array().min(1, 'Add at least 1 tax declaration'),
   taxIdentification: yup.string().when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
   taxIdentificationReason: yup.string().when('taxTinUnavailable', { is: true, then: yup.string().required('Required') }),
 
@@ -54,9 +54,9 @@ export const individualErrorsSchema = yup.object().shape({
   }),
 
   accredited: yup.number().min(0).max(1),
-  investorDeclaration: yup.number().when('accredited', { is: 1, then: yup.number().required('Required') }),
-  confirmSafeguards: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
-  confirmOptout: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
+  investorDeclaration: yup.string().when('accredited', { is: 1, then: yup.string().required('Required') }),
+  acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
+  acceptOfRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
   evidenceOfAccreditation: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
   confirmStatusDeclaration: yup.boolean().isTrue('Required').required('Required')
 })

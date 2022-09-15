@@ -11,6 +11,7 @@ interface KYCProgressTopic {
   title: string
   href: string
   passed: boolean
+  failed?: boolean
 }
 
 interface Props {
@@ -68,7 +69,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
 
         <Column>
           {topics.map(
-            ({ title, href, passed }, index) =>
+            ({ title, href, passed, failed }, index) =>
               title && (
                 <PageLink
                   onClick={() => handleScrollToDiv(href, index)}
@@ -77,6 +78,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
                 >
                   {title}
                   {passed && KYCStatusIcons.approved()}
+                  {failed && KYCStatusIcons.rejected()}
                 </PageLink>
               )
           )}
