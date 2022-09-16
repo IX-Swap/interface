@@ -11,7 +11,7 @@ export const CapitalStructureFilter = () => {
       target: { value }
     } = event
 
-    if (value === '') {
+    if (value === '' || value === undefined) {
       removeFilter('capitalStructure')
     } else {
       updateFilter('capitalStructure', event.target.value)
@@ -24,10 +24,10 @@ export const CapitalStructureFilter = () => {
       inputProps={{ 'data-testid': 'select' }}
       variant='outlined'
       showLabel={false}
-      value={value}
+      value={value ?? 'Capital structure'}
       onChange={handleChange}
       label='Capital Structure'
-      placeholder='Capital Structure'
+      placeholder='Capital structure'
     />
   )
 }
