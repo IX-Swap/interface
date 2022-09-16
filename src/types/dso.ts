@@ -201,6 +201,7 @@ export type DSOFormValues = Omit<
   faqs: DsoFAQItem[]
   videos: DsoVideo[]
   uidCode?: string
+  step?: number
 }
 
 export type DSOBaseFormValues = Omit<
@@ -227,10 +228,10 @@ export type DSOBaseFormValues = Omit<
   | 'insight'
   | 'disabled'
   | 'corp'
-  | 'useOfProceeds'
-  | 'introduction'
-  | 'businessModel'
-  | 'fundraisingMilestone'
+  // | 'useOfProceeds'
+  // | 'introduction'
+  // | 'businessModel'
+  // | 'fundraisingMilestone'
 >
 
 export type DSORequestArgsStep1 = Partial<

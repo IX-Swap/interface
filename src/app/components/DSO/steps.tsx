@@ -23,7 +23,8 @@ export const dsoFormSteps = [
         introduction: data.introduction,
         businessModel: data.businessModel,
         useOfProceeds: data.useOfProceeds,
-        fundraisingMilestone: data.fundraisingMilestone
+        fundraisingMilestone: data.fundraisingMilestone,
+        step: 1
       }
     },
     getRequestPayload: (values: any) => {
@@ -39,7 +40,8 @@ export const dsoFormSteps = [
         subscriptionDocument: data.subscriptionDocument,
         documents: data.documents,
         videos: data.videos ?? [{}],
-        faqs: data.faqs ?? [{}]
+        faqs: data.faqs ?? [{}],
+        step: 2
       }
     },
     getRequestPayload: {},
