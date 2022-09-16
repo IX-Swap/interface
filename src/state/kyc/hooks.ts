@@ -167,14 +167,18 @@ export const updateIndividualKYC = async (kycId: number, newKYC: any, draft = fa
 
 
         for (const entry of entries) {
-          formData.append(entry.key, entry.value as string)
+          if (entry.value) {
+            formData.append(entry.key, entry.value as string)
+          }
         }
       } else if (typeof newKYC[key] === 'object') {
         const entries = Object.entries(newKYC[key])
             .map(([objKey, value]) => ({ key: `${key}[${objKey}]`, value: value as string }))
             
         for (const entry of entries) {
-          formData.append(entry.key, entry.value as string)
+          if (entry.value) {
+            formData.append(entry.key, entry.value as string)
+          }
         }
       } else {
         formData.append(key, newKYC[key])
