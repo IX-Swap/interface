@@ -15,7 +15,7 @@ export const DistributionFrequencySelect = (props: any) => {
         displayEmpty
       >
         <SelectItem disabled value={undefined}>
-          Frequency on return distribution
+          Frequency of return distribution
         </SelectItem>
         <SelectItem value='Not Applicable'>Not Applicable</SelectItem>
         <SelectItem value='Monthly'>Monthly</SelectItem>
