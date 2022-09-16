@@ -18,6 +18,7 @@ export const RemoveButton = ({
   const handleDelete = () => {
     if (remove !== undefined) {
       remove()
+      setCompleted(0)
       return
     }
 
