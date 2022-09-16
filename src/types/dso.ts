@@ -188,7 +188,6 @@ export type DSOFormValues = Omit<
   | 'authorizations'
   | 'authorization'
   | 'authorizationDocuments'
-  | 'subscriptionDocument'
   | 'insight'
   | 'disabled'
 > & {
