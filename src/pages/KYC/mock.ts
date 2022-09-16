@@ -205,9 +205,9 @@ export const individualFormInitialValues: IFormInitial = {
   usTin: '',
 
   accredited: -1,
-  investorDeclaration: -1,
-  confirmSafeguards: false,
-  confirmOptout: false,
+  investorDeclaration: undefined,
+  confirmSafeguards: undefined,
+  confirmOptout: undefined,
   evidenceOfAccreditation: [],
   confirmStatusDeclaration: false,
 

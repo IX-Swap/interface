@@ -183,7 +183,9 @@ export const updateIndividualKYC = async (kycId: number, newKYC: any, draft = fa
   }
 
   try {
-    const result = await apiService.put(kyc.updateIndividual(kycId, draft), formData)
+    const result = draft
+      ? await apiService.post(kyc.updateIndividual(kycId, draft), formData)
+      : await apiService.put(kyc.updateIndividual(kycId, draft), formData)
     return result.data
   } catch (e) {
     console.log(e)

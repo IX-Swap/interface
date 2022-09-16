@@ -1033,37 +1033,37 @@ export default function IndividualKycForm() {
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 'total-assets'}
+                                checked={values.investorDeclarationStatus === 'total-assets'}
                                 label="My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million"
-                                onClick={() => onRadioChange('investorDeclaration', 'total-assets', setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclarationStatus', 'total-assets', setFieldValue)}
                               />
                               
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 'annual-income'}
+                                checked={values.investorDeclarationStatus === 'annual-income'}
                                 label="My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)"
-                                onClick={() => onRadioChange('investorDeclaration', 'annual-income', setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclarationStatus', 'annual-income', setFieldValue)}
                               />
                               
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 'financial-assets'}
+                                checked={values.investorDeclarationStatus === 'financial-assets'}
                                 label="My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or its equivalent (or its equivalent in foreign currency)"
-                                onClick={() => onRadioChange('investorDeclaration', 'financial-assets', setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclarationStatus', 'financial-assets', setFieldValue)}
                               />
                               
                               <Checkbox
                                 name=""
                                 isRadio
-                                checked={values.investorDeclaration === 'joint-income'}
+                                checked={values.investorDeclarationStatus === 'joint-income'}
                                 label="My jointly held account with my spouse/any individual meets any of the above"
-                                onClick={() => onRadioChange('investorDeclaration', 'joint-income', setFieldValue)}
+                                onClick={() => onRadioChange('investorDeclarationStatus', 'joint-income', setFieldValue)}
                               />
                             </Column>
 
-                            {errors.investorDeclaration && (
+                            {errors.investorDeclarationStatus && (
                               <TYPE.small marginTop="-4px" color={'red1'}>
                                 <Trans>Choose one</Trans>
                               </TYPE.small>
@@ -1179,9 +1179,9 @@ export default function IndividualKycForm() {
                                 </Modal>
                               </LabeledCheckBox>
 
-                              {errors.confirmSafeguards && (
+                              {errors.acceptOfQualification && (
                                 <TYPE.small marginTop="-4px" color={'red1'}>
-                                  <Trans>{errors.confirmSafeguards}</Trans>
+                                  <Trans>{errors.acceptOfQualification}</Trans>
                                 </TYPE.small>
                               )}
                               
@@ -1189,8 +1189,8 @@ export default function IndividualKycForm() {
                               <LabeledCheckBox>
                                 <Checkbox 
                                   label={''} 
-                                  checked={values.acceptOfRefusalRight}
-                                  onClick={() => setFieldValue('acceptOfRefusalRight', !values.acceptOfRefusalRight, false)}
+                                  checked={values.acceptRefusalRight}
+                                  onClick={() => setFieldValue('acceptRefusalRight', !values.acceptRefusalRight, false)}
                                 />
 
                                 <TYPE.description3>
@@ -1266,9 +1266,9 @@ export default function IndividualKycForm() {
                                 </Modal>
                               </LabeledCheckBox>
                               
-                              {errors.confirmOptout && (
+                              {errors.acceptRefusalRight && (
                                 <TYPE.small marginTop="-4px" color={'red1'}>
-                                  <Trans>{errors.confirmOptout}</Trans>
+                                  <Trans>{errors.acceptRefusalRight}</Trans>
                                 </TYPE.small>
                               )}
                             </Column>
