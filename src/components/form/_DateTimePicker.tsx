@@ -13,7 +13,7 @@ import { TextInput } from 'ui/TextInput/TextInput'
 export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
   return (
     <MobileDateTimePicker
-      inputFormat='MM/dd/yy hh:mm'
+      inputFormat='mm/dd/yyyy'
       {...props}
       renderInput={inputProps => (
         <TextInput
@@ -33,7 +33,7 @@ export const DesktopDateTimePickerComponent = (
 ) => {
   return (
     <DesktopDateTimePicker
-      inputFormat='MM/dd/yy hh:mm a'
+      inputFormat='mm/dd/yyyy'
       InputAdornmentProps={{ style: { paddingRight: 8.5 } }}
       {...props}
       renderInput={inputProps => (
