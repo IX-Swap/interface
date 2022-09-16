@@ -205,7 +205,7 @@ describe('useAppNavigation', () => {
       { label: 'View DSO Listings', path: IssuanceRoute.list },
       { label: 'Create Secondary Listing', path: IssuanceRoute.createListing },
       {
-        label: 'Secondary Listings',
+        label: 'View Secondary Listings',
         path: IssuanceRoute.secondaryListings
       },
       { label: 'Financial Reports', path: IssuanceRoute.financialReports }
