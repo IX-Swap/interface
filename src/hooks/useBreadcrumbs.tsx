@@ -11,6 +11,7 @@ export interface BreadcrumbsState {
   push: (crumb: InternalRouteBase) => void
   remove: (crumb: InternalRouteBase) => void
   reset: () => void
+  rename: (crumbname: string, index?: number | undefined) => void
 }
 
 export const BreadcrumbsContext = createContext<BreadcrumbsState | null>(null)
@@ -49,9 +50,22 @@ export const BreadcrumbsProvider = ({ children }: PropsWithChildren<any>) => {
     })
   }
 
+  const rename = (crumbname: string, index?: number | undefined) => {
+    if (data.length > 0) {
+      const tempData = data
+      const targetIndex = index === undefined ? data.length - 1 : index
+      tempData[targetIndex] = {
+        label: crumbname,
+        path: data[targetIndex].path
+      }
+      console.log('data[targetIndex]', tempData[targetIndex])
+    }
+    // setData([...tempData])
+  }
+
   return (
     <BreadcrumbsContext.Provider
-      value={{ crumbs: data, push, remove, reset: replace }}
+      value={{ crumbs: data, push, remove, reset: replace, rename }}
     >
       {children}
     </BreadcrumbsContext.Provider>
