@@ -8,7 +8,6 @@ import * as useCreateDSO from 'app/pages/issuance/hooks/useCreateDSO'
 import * as useSubmitDSO from 'app/pages/issuance/hooks/useSubmitDSO'
 import * as useUpdateDSO from 'app/pages/issuance/hooks/useUpdateDSO'
 import { dsoFormSteps } from 'app/components/DSO/steps'
-import { transformDSOToFormValues } from 'app/components/DSO/utils'
 
 jest.mock('app/components/FormStepper/FormStepper', () => ({
   FormStepper: jest.fn(() => null)

@@ -14,6 +14,10 @@ jest.mock('app/components/DSO/DSOView', () => ({
   DSOView: jest.fn(() => null)
 }))
 
+jest.mock('app/components/FormStepper/FormStepper', () => ({
+  FormStepper: jest.fn(() => null)
+}))
+
 describe('DSO', () => {
   const props: DSOProps = {
     dsoId: dso._id,
@@ -53,12 +57,7 @@ describe('DSO', () => {
 
     render(<DSO {...props} />)
 
-    expect(DSOForm).toHaveBeenCalledWith(
-      {
-        data: dso
-      },
-      {}
-    )
+    expect(DSOForm).toHaveBeenCalledWith({}, {})
   })
 
   it('renders DSOView with correct props in view mode', () => {
