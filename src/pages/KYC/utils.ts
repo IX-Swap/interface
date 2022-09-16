@@ -1,6 +1,8 @@
 import { IdentityDocumentType } from './enum'
 import { legalEntityTypes } from './mock'
 
+const filterFields = ['investorDeclarationStatus', 'investorDeclarationId', 'acceptOfQualification', 'acceptRefusalRight']
+
 export const corporateTransformApiData = (data: any) => {
   const {
     typeOfLegalEntity,
@@ -134,6 +136,10 @@ export const individualTransformApiData = (data: any) => {
     nationality: { value: 0, label: nationality },
     income: { value: 0, label: income },
     removedDocuments: [],
+
+    investorDeclarationStatus: data.investorDeclaration?.status,
+    acceptOfQualification: data.investorDeclaration?.acceptOfQualification,
+    acceptRefusalRight: data.investorDeclaration?.acceptRefusalRight
   }
 }
 
@@ -184,14 +190,21 @@ export const individualTransformKycDto = (values: any) => {
     isUSTaxPayer: isUSTaxPayer ? true : false,
 
     investorDeclaration: {
-      status: values.investorDeclaration,
+      ...values.investorDeclaration,
+
+      status: values.investorDeclarationStatus,
       acceptOfQualification: values.acceptOfQualification,
-      acceptRefusalRight: values.acceptOfRefusalRight,
+      acceptRefusalRight: values.acceptRefusalRight,
     },
 
     taxDeclarations: [
       ...(taxDeclarations?.map((t: any, idx: number) => ({ ...t, country: t.country.label, isAdditional: idx > 0 })) ?? [])
     ],
+  }
+
+
+  for (const entry of filterFields) {
+    delete result[entry];
   }
 
   return Object.entries(result)
