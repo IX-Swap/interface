@@ -12,6 +12,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 export const DSOTableFilters = () => {
   const { isMiniLaptop, isTablet } = useAppBreakpoints()
   const { removeFilters } = useQueryFilter()
+  const textInputSearchFilterRef = React.useRef<HTMLInputElement | null>(null)
 
   const clearAll = () => {
     removeFilters([
@@ -24,6 +25,14 @@ export const DSOTableFilters = () => {
       'sortField',
       'sortOrder'
     ])
+
+    if (
+      // eslint-disable-next-line
+      textInputSearchFilterRef.current !== null &&
+      textInputSearchFilterRef.current.value !== null
+    ) {
+      textInputSearchFilterRef.current.value = ''
+    }
   }
 
   return (
@@ -32,7 +41,11 @@ export const DSOTableFilters = () => {
         <CapitalStructureFilter />
       </Grid>
       <Grid item xs={12} md={10}>
-        <TextInputSearchFilter fullWidth placeholder='Search' />
+        <TextInputSearchFilter
+          fullWidth
+          placeholder='Search'
+          inputRef={textInputSearchFilterRef}
+        />
       </Grid>
 
       <Grid item xs={12}>
