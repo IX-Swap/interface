@@ -32,7 +32,7 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
           </SelectItem>
         )}
         {!includeAll && (
-          <SelectItem value={undefined}>Select capital structure</SelectItem>
+          <SelectItem value={undefined}>Capital structure</SelectItem>
         )}
         {renderSelectItems(
           capitalStructures.map(option => ({ label: option, value: option }))
