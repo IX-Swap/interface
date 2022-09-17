@@ -1,7 +1,7 @@
-import React from 'react'
-import { DigitalSecurityOffering } from 'types/dso'
 import { CircularProgress, Grid, IconButton } from '@mui/material'
 import { useToggleDSOFavorite } from 'app/pages/invest/hooks/useToggleDSOFavorite'
+import React, { useState } from 'react'
+import { DigitalSecurityOffering } from 'types/dso'
 import { Icon } from 'ui/Icons/Icon'
 import useStyles from './DSOCardFavorite.style'
 
@@ -17,9 +17,11 @@ export const DSOCardFavorite = (props: DSOCardFavoriteProps) => {
     props.dso,
     props.dependentQueryKeys
   )
+  const [toogleFav, setToggleFav] = useState(isFav)
 
   const handleFav = async () => {
-    await toggleDSOFavorite(isFav)
+    !toogleFav ? setToggleFav(true) : setToggleFav(false)
+    await toggleDSOFavorite(toogleFav)
   }
 
   return (
@@ -38,22 +40,31 @@ export const DSOCardFavorite = (props: DSOCardFavoriteProps) => {
             size={16}
           />
         ) : (
-          <IconButton
-            onClick={handleFav}
-            data-testid='icon-button'
-            className={classes.iconButton}
-            size={'medium'}
-          >
-            {isFav ? (
-              <Icon
-                name={'star-filled'}
-                className={classes.icon}
-                style={{ fill: '#ffffff' }}
-              />
+          <>
+            {toogleFav ? (
+              <IconButton
+                onClick={handleFav}
+                data-testid='icon-button'
+                className={`${classes.iconButton} ${classes.iconButtonActive}`}
+                size={'medium'}
+              >
+                <Icon
+                  name={'star-filled'}
+                  className={classes.icon}
+                  style={{ fill: '#ffffff' }}
+                />
+              </IconButton>
             ) : (
-              <Icon name={'star'} className={classes.icon} />
+              <IconButton
+                onClick={handleFav}
+                data-testid='icon-button'
+                className={`${classes.iconButton} ${classes.iconButtonNormal}`}
+                size={'medium'}
+              >
+                <Icon name={'star'} className={classes.icon} />
+              </IconButton>
             )}
-          </IconButton>
+          </>
         )}
       </Grid>
     </Grid>

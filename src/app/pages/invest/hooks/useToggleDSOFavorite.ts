@@ -1,8 +1,8 @@
+import { issuanceURL } from 'config/apiURL'
+import { getIdFromObj } from 'helpers/strings'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
-import { getIdFromObj } from 'helpers/strings'
 import { DigitalSecurityOffering } from 'types/dso'
-import { issuanceURL } from 'config/apiURL'
 
 export const useToggleDSOFavorite = (
   dso: DigitalSecurityOffering,
@@ -13,8 +13,8 @@ export const useToggleDSOFavorite = (
   const dsoId = getIdFromObj(dso)
   const uri = issuanceURL.dso.favorite(dsoId)
 
-  const mutateFn = async (isFav: boolean) => {
-    if (isFav) {
+  const mutateFn = async (toogleFav: boolean) => {
+    if (toogleFav) {
       return await apiService.delete(uri, {})
     } else {
       return await apiService.put(uri, {})
