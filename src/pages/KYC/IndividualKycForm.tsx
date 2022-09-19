@@ -764,7 +764,7 @@ export default function IndividualKycForm() {
                             onSelect={item => onSourceOfFundsChange(item, values.sourceOfFunds, setFieldValue)}
                           />
                           
-                          {values.sourceOfFunds.some((x: any) => x.label === 'Others') && (
+                          {values.sourceOfFunds.some((x: any) => x.label === 'Others' || x === 'Others') && (
                             <TextInput
                               style={{ marginTop: 20 }}
                               placeholder="Other Source of Funds...."
