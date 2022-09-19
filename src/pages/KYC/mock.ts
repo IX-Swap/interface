@@ -196,7 +196,7 @@ export const individualFormInitialValues: IFormInitial = {
   employer: '',
   income: null,
   
-  taxDeclarations: [],
+  taxDeclarations: [{ country: null, idNumber: '' }],
 
   sourceOfFunds: [],
   otherFunds: '',
