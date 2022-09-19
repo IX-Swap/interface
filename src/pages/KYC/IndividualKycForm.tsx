@@ -1051,38 +1051,62 @@ export default function IndividualKycForm() {
                               </TYPE.title6>
                             </RowBetween>
 
-                            <Column style={{ margin: '1rem', gap: "1rem" }}>
-                              <Checkbox
-                                name=""
-                                isRadio
-                                checked={values.investorDeclarationStatus === 'total-assets'}
-                                label="My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million"
-                                onClick={() => onRadioChange('investorDeclarationStatus', 'total-assets', setFieldValue)}
-                              />
+                            <Column style={{ margin: '1rem', marginLeft: 0, gap: "1rem" }}>
+                              <LabeledCheckBox>
+                                <Checkbox
+                                  name=""
+                                  label=""
+                                  isRadio
+                                  checked={values.investorDeclarationStatus === 'total-assets'}
+                                  onClick={() => onRadioChange('investorDeclarationStatus', 'total-assets', setFieldValue)}
+                                />
+                                <TYPE.description3>
+                                  My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
+                                </TYPE.description3>
+                              </LabeledCheckBox>
+
+                              <LabeledCheckBox>
+                                <Checkbox
+                                  name=""
+                                  label=""
+                                  isRadio
+                                  checked={values.investorDeclarationStatus === 'annual-income'}
+                                  onClick={() => onRadioChange('investorDeclarationStatus', 'annual-income', setFieldValue)}
+                                />
+                                <TYPE.description3>
+                                  My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
+                                </TYPE.description3>
+                              </LabeledCheckBox>
+
+                              <LabeledCheckBox>
+                                <Checkbox
+                                  name=""
+                                  label=""
+                                  isRadio
+                                  checked={values.investorDeclarationStatus === 'financial-assets'}
+                                  onClick={() => onRadioChange('investorDeclarationStatus', 'financial-assets', setFieldValue)}
+                                />
+                                <TYPE.description3>
+                                  My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or 
+                                  its equivalent (or its equivalent in foreign currency)
+                                </TYPE.description3>
+                              </LabeledCheckBox>
                               
-                              <Checkbox
-                                name=""
-                                isRadio
-                                checked={values.investorDeclarationStatus === 'annual-income'}
-                                label="My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)"
-                                onClick={() => onRadioChange('investorDeclarationStatus', 'annual-income', setFieldValue)}
-                              />
+                              <LabeledCheckBox>
+                                <Checkbox
+                                  name=""
+                                  label=""
+                                  isRadio
+                                  checked={values.investorDeclarationStatus === 'joint-income'}
+                                  onClick={() => onRadioChange('investorDeclarationStatus', 'joint-income', setFieldValue)}
+                                />
+                                <TYPE.description3>
+                                  My jointly held account with my spouse/any individual meets any of the above
+                                </TYPE.description3>
+                              </LabeledCheckBox>
                               
-                              <Checkbox
-                                name=""
-                                isRadio
-                                checked={values.investorDeclarationStatus === 'financial-assets'}
-                                label="My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or its equivalent (or its equivalent in foreign currency)"
-                                onClick={() => onRadioChange('investorDeclarationStatus', 'financial-assets', setFieldValue)}
-                              />
                               
-                              <Checkbox
-                                name=""
-                                isRadio
-                                checked={values.investorDeclarationStatus === 'joint-income'}
-                                label="My jointly held account with my spouse/any individual meets any of the above"
-                                onClick={() => onRadioChange('investorDeclarationStatus', 'joint-income', setFieldValue)}
-                              />
+                              
                             </Column>
 
                             {errors.investorDeclarationStatus && (
