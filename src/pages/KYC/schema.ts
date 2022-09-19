@@ -1,4 +1,5 @@
 import * as yup from 'yup'
+import { string } from 'yup/lib/locale'
 
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
@@ -35,7 +36,17 @@ export const individualErrorsSchema = yup.object().shape({
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
 
-  taxDeclarations: yup.array().min(1, 'Add at least 1 tax declaration'),
+  taxDeclarations: yup.array().of(
+    yup.object().shape({ 
+      tinUnavailable: yup.bool(),
+      country: yup.object().shape({ label: yup.string() }).nullable().required('Required'), 
+      idNumber: yup.string().when('tinUnavailable', { is: true, then: yup.string().nullable(), otherwise: yup.string().required('Required') }),
+      reason: yup.string().when('tinUnavailable', { is: true, then: yup.string().required('Required'), otherwise: yup.string().nullable() })
+    })
+  )
+    .min(1, 'Add at least 1 tax declaration')
+    .required('Required'),
+
   taxIdentification: yup.string().when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
   taxIdentificationReason: yup.string().when('taxTinUnavailable', { is: true, then: yup.string().required('Required') }),
 

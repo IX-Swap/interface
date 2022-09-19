@@ -137,6 +137,8 @@ export const individualTransformApiData = (data: any) => {
     income: { value: 0, label: income },
     removedDocuments: [],
 
+    taxDeclarations: data.taxDeclarations.map((t: any) => ({ ...t, tinUnavailable: !!t.reason, country: { label: t.country } })),
+
     investorDeclarationStatus: data.investorDeclaration?.status,
     acceptOfQualification: data.investorDeclaration?.acceptOfQualification,
     acceptRefusalRight: data.investorDeclaration?.acceptRefusalRight
@@ -197,9 +199,8 @@ export const individualTransformKycDto = (values: any) => {
       acceptRefusalRight: values.acceptRefusalRight,
     },
 
-    taxDeclarations: [
-      ...(taxDeclarations?.map((t: any, idx: number) => ({ ...t, country: t.country.label, isAdditional: idx > 0 })) ?? [])
-    ],
+    taxDeclarations: taxDeclarations
+      ?.map((t: any, idx: number) => ({ ...t, country: t.country.label, isAdditional: idx > 0 })) 
   }
 
 

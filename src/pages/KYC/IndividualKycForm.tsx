@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import { Formik } from 'formik'
+import { ErrorMessage, FieldArray, Formik } from 'formik'
 import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
@@ -124,7 +124,11 @@ export default function IndividualKycForm() {
       const data = await getIndividualProgress()
       if (data) {
         const transformedData = individualTransformApiData(data)
-        setFormData(transformedData)
+        const taxDeclarations = transformedData.taxDeclarations?.length === 0
+          ? [{ country: null, idNumber: '' }]
+          : transformedData.taxDeclarations
+
+        setFormData({ ...transformedData, taxDeclarations })
       }
     }
 
@@ -278,7 +282,7 @@ export default function IndividualKycForm() {
 
         if (data?.id) {
           history.push('/kyc')
-          addPopup({ info: { success: true, summary: 'KYC was successfully submitted' } })
+          addPopup({ info: { success: true, summary: 'KYC was successfully saved' } })
         } else {
           setCanSubmit(true)
           addPopup({ info: { success: false, summary: 'Something went wrong' } })
@@ -817,94 +821,112 @@ export default function IndividualKycForm() {
                           </RowBetween>
                         </ExtraInfoCard>
 
-                        {values.taxDeclarations?.map((tax: any) => (
-                          <RowBetween key={`tax-${tax.country}`} width="100%" style={{ padding: '1rem' }}>
-                            <FormGrid columns={2} style={{ flexGrow: 1 }}>
-                              {/* <TextInput label="Country of Tax Declaration" value={tax.country} /> */}
-                              <Select
-                                isDisabled
-                                withScroll
-                                label="Country of Tax Declaration"
-                                selectedItem={tax.country}
-                                items={countries.filter(
-                                  ({ label }) =>
-                                    !['United States of America', 'United States Minor Outlying Islands'].includes(label)
-                                )}
-                                onSelect={(country) => onSelectChange('taxCountry', country, setFieldValue)}
-                                error={errors.taxCountry && errors.taxCountry}
-                              />
-                              <TextInput disabled label="Tax Identification Number (TIN)" value={tax.idNumber} />
-                            </FormGrid>
-                            
-                            <IconButton onClick={() => onTaxDeclarationRemove(tax, values.taxDeclarations, setFieldValue)}>
-                              <TrashIcon />
-                            </IconButton>
-                          </RowBetween>
-                        ))}
+                        <FieldArray name="taxDeclarations">
+                          {({ insert, remove, push }) => (
+                            <>
+                              {values.taxDeclarations?.map((tax: any, index: number) => (
+                                <>
+                                  <RowBetween key={`tax-${tax.country}`} width="100%" style={{ padding: '1rem' }} alignItems="center">
+                                    <FormGrid columns={2} style={{ flexGrow: 1 }}>
+                                      <div>
+                                        <Select
+                                          withScroll
+                                          label="Country of Tax Declaration"
+                                          selectedItem={values.taxDeclarations[index].country}
+                                          items={countries.filter(
+                                            ({ label }) =>
+                                              !['United States of America', 'United States Minor Outlying Islands'].includes(label)
+                                          )}
+                                          onSelect={(country) => onSelectChange(`taxDeclarations.${index}.country`, country, setFieldValue)}
+                                          error={errors.taxCountry && errors.taxCountry}
+                                        />
+
+                                        {errors[`taxDeclarations[${index}].country`] && (
+                                          <TYPE.small marginTop="8px" color={'red1'}>
+                                            {errors[`taxDeclarations[${index}].country`]}
+                                          </TYPE.small>
+                                        )}
+                                      </div>
+
+                                      <div>
+                                        <TextInput 
+                                          label="Tax Identification Number (TIN)"
+                                          value={values.taxDeclarations[index].idNumber} 
+                                          error={errors.taxDeclarations?.length && errors.taxDeclarations[index].idNumber}
+                                          disabled={values.taxDeclarations[index].tinUnavailable}
+                                          onChange={e => onChangeInput(`taxDeclarations.${index}.idNumber`, e.currentTarget.value, values, setFieldValue)} 
+                                        />
+                                        {errors[`taxDeclarations[${index}].idNumber`] && (
+                                          <TYPE.small marginTop="8px" color={'red1'}>
+                                            {errors[`taxDeclarations[${index}].idNumber`]}
+                                          </TYPE.small>
+                                        )}
+                                      </div>
+                                    </FormGrid>
+                                    
+                                    {index > 0 && (
+                                      <IconButton onClick={() => remove(index)} style={{ padding: '0 1rem', marginTop: '2rem' }}>
+                                        <TrashIcon />
+                                      </IconButton>
+                                    )}
+                                  </RowBetween>
+                                  <br />
+
+                                  <LabeledCheckBox>
+                                    <Checkbox 
+                                      label={''} 
+                                      checked={values.taxDeclarations[index].tinUnavailable}
+                                      onClick={() => setFieldValue(`taxDeclarations.${index}.tinUnavailable`, !values.taxDeclarations[index].tinUnavailable, false)}
+                                    />
+
+                                    <TYPE.description3>TIN is not available (please indicate reason):</TYPE.description3>
+                                  </LabeledCheckBox>
+
+                                  {values.taxDeclarations[index].tinUnavailable && (
+                                    <>
+                                      <TextInput 
+                                        label="Reason"
+                                        value={values.taxDeclarations[index].reason}
+                                        onChange={e => onChangeInput(`taxDeclarations.${index}.reason`, e.currentTarget.value, values, setFieldValue)} 
+                                      />
+                                      
+                                      {errors[`taxDeclarations[${index}].reason`] && (
+                                        <TYPE.small marginTop="8px" color={'red1'}>
+                                          {errors[`taxDeclarations[${index}].reason`]}
+                                        </TYPE.small>
+                                      )}
+                                    </>
+                                  )}
+                                </>
+                              ))}
+                              
+                              <HrLine />
+
+                              <LinkButton 
+                                type="button"
+                                onClick={() => push({ country: null, idNumber: '', isAdditional: true })} 
+                                style={{ marginTop: "32px", width: "100%" }}
+                              >
+                                <ExtraInfoCard>
+                                  <RowBetween>
+                                    <Box> Add Country </Box>
+                                    <Plus />
+                                  </RowBetween>
+                                </ExtraInfoCard>
+                              </LinkButton>
+                              
+                              {errors.taxDeclarations && (
+                                <TYPE.small marginTop="8px" color={'red1'}>
+                                  {errors.taxDeclarations}
+                                </TYPE.small>
+                              )}
+                            </>
+                          )}
+                        </FieldArray>
+
                         
                         
-                        <FormGrid columns={2} style={{ marginTop: "32px" }}>
-                          <Select
-                            withScroll
-                            label="Country of Tax Declaration"
-                            selectedItem={values.taxCountry}
-                            items={countries.filter(
-                              ({ label }) =>
-                                !['United States of America', 'United States Minor Outlying Islands'].includes(label)
-                            )}
-                            onSelect={(country) => onSelectChange('taxCountry', country, setFieldValue)}
-                            error={errors.taxCountry && errors.taxCountry}
-                          />
 
-                          <TextInput 
-                            label="Tax Identification Number (TIN)"
-                            value={values.taxIdentification} 
-                            error={errors.taxIdentification}
-                            disabled={values.taxTinUnavailable}
-                            onChange={e => onChangeInput('taxIdentification', e.currentTarget.value, values, setFieldValue)} 
-                          />
-                        </FormGrid>
-
-                        <br />
-
-                        <LabeledCheckBox>
-                          <Checkbox 
-                            label={''} 
-                            checked={values.taxTinUnavailable}
-                            onClick={() => setFieldValue('taxTinUnavailable', !values.taxTinUnavailable, false)}
-                          />
-
-                          <TYPE.description3>TIN is not available (please indicate reason):</TYPE.description3>
-                        </LabeledCheckBox>
-
-                        {values.taxTinUnavailable && (
-                          <TextInput 
-                            label="Reason"
-                            value={values.taxIdentificationReason}
-                            onChange={e => onChangeInput('taxIdentificationReason', e.currentTarget.value, values, setFieldValue)} 
-                          />
-                        )}
-
-                        <HrLine />
-
-                        <LinkButton 
-                          type="button"
-                          onClick={() => onTaxDeclarationAdd({ country: values.taxCountry, idNumber: values.taxIdentification }, values.taxDeclarations, setFieldValue)} 
-                          style={{ marginTop: "32px", width: "100%" }}
-                        >
-                          <ExtraInfoCard>
-                            <RowBetween>
-                              <Box> Add Country </Box>
-                              <Plus />
-                            </RowBetween>
-                          </ExtraInfoCard>
-                        </LinkButton>
-                        
-                        {errors.taxDeclarations && (
-                          <TYPE.small marginTop="8px" color={'red1'}>
-                            {errors.taxDeclarations}
-                          </TYPE.small>
-                        )}
                           
                         
                         <RowBetween marginBottom="32px" marginTop="64px">
