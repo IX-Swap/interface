@@ -61,13 +61,13 @@ export const individualErrorsSchema = yup.object().shape({
   usTin: yup.string().when('isUSTaxPayer', {
     is: 1,
     then: yup.string().required('Required'),
-    otherwise: yup.string(),
+    otherwise: yup.string().nullable(),
   }),
 
   accredited: yup.number().min(0).max(1),
-  investorDeclaration: yup.string().when('accredited', { is: 1, then: yup.string().required('Required') }),
+  investorDeclarationStatus: yup.string().when('accredited', { is: 1, then: yup.string().required('Required') }),
   acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
-  acceptOfRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
+  acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
   evidenceOfAccreditation: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
   confirmStatusDeclaration: yup.boolean().isTrue('Required').required('Required')
 })

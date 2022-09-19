@@ -128,6 +128,7 @@ export const individualTransformApiData = (data: any) => {
     city: address?.city,
     proofOfAddress: documents?.filter(({ type }: any) => type === 'address'),
     proofOfIdentity: documents?.filter(({ type }: any) => type === 'identity'),
+    evidenceOfAccreditation: documents?.filter(({ type }: any) => type === 'accreditation'),
     idType: { value: 0, label: IdentityDocumentType[idTypeKey] },
     citizenship: { value: 0, label: citizenship },
     employmentStatus: { value: 0, label: employmentStatus },
@@ -164,6 +165,8 @@ export const individualTransformKycDto = (values: any) => {
     taxDeclarations
   } = values
 
+  const isLabel = sourceOfFunds.some((x: any) => x.label)
+
   const result = {
     ...values,
 
@@ -181,7 +184,7 @@ export const individualTransformKycDto = (values: any) => {
     idIssueDate: typeof idIssueDate === 'string' ? idIssueDate : idIssueDate?.format('MM/DD/YYYY'),
     idExpiryDate: typeof idExpiryDate === 'string' ? idExpiryDate : idExpiryDate?.format('MM/DD/YYYY'),
 
-    sourceOfFunds: [...sourceOfFunds.map((x: any) => x.label), ...(sourceOfFunds.some((x: any) => x.label === 'Others') ? [otherFunds] : [])].join(', '),
+    sourceOfFunds: [...sourceOfFunds.map((x: any) => isLabel ? x.label : x), ...(sourceOfFunds.some((x: any) => isLabel ? x.label === 'Others' : x === 'Others') ? [otherFunds] : [])].join(', '),
 
     occupation: occupation?.label,
     employmentStatus: employmentStatus?.label,
