@@ -168,8 +168,6 @@ export const individualTransformKycDto = (values: any) => {
   const isLabel = sourceOfFunds.some((x: any) => x.label)
   const emptyInvestorDeclaration = {
     status: null,
-    acceptOfQualification: false,
-    acceptRefusalRight: false,
     confirmStatusDeclaration: false
   }
 
