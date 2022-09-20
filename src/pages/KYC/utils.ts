@@ -166,6 +166,12 @@ export const individualTransformKycDto = (values: any) => {
   } = values
 
   const isLabel = sourceOfFunds.some((x: any) => x.label)
+  const emptyInvestorDeclaration = {
+    status: null,
+    acceptOfQualification: false,
+    acceptRefusalRight: false,
+    confirmStatusDeclaration: false
+  }
 
   const result = {
     ...values,
@@ -194,13 +200,14 @@ export const individualTransformKycDto = (values: any) => {
     country: country?.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
 
-    investorDeclaration: {
+    investorDeclaration: values?.accredited ? 
+    {
       ...values.investorDeclaration,
 
       status: values?.investorDeclarationStatus,
       acceptOfQualification: values?.acceptOfQualification,
       acceptRefusalRight: values?.acceptRefusalRight,
-    },
+    } : emptyInvestorDeclaration,
 
     taxDeclarations: taxDeclarations
       ?.map((t: any, idx: number) => ({ ...t, country: t?.country?.label, isAdditional: idx > 0 })),
