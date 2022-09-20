@@ -113,7 +113,7 @@ export const individualTransformApiData = (data: any) => {
     occupation,
     idType,
   } = data
-  const [funds, otherFunds = ''] = sourceOfFunds.split(', Others, ')
+  const [funds = '', otherFunds = ''] = (sourceOfFunds ?? '').split(', Others, ')
 
   const idTypeKey = idType?.replaceAll(' ', '_') as keyof typeof IdentityDocumentType
 
@@ -197,13 +197,13 @@ export const individualTransformKycDto = (values: any) => {
     investorDeclaration: {
       ...values.investorDeclaration,
 
-      status: values.investorDeclarationStatus,
-      acceptOfQualification: values.acceptOfQualification,
-      acceptRefusalRight: values.acceptRefusalRight,
+      status: values?.investorDeclarationStatus,
+      acceptOfQualification: values?.acceptOfQualification,
+      acceptRefusalRight: values?.acceptRefusalRight,
     },
 
     taxDeclarations: taxDeclarations
-      ?.map((t: any, idx: number) => ({ ...t, country: t.country.label, isAdditional: idx > 0 })),
+      ?.map((t: any, idx: number) => ({ ...t, country: t?.country?.label, isAdditional: idx > 0 })),
 
     removedTaxDeclarations: values.removedTaxDeclarations
   }
@@ -219,6 +219,10 @@ export const individualTransformKycDto = (values: any) => {
   }
 
   return Object.entries(result)
-    .filter(([key, value]) => !!value)
+    .filter(([key, value]) =>
+      value !== '' && 
+      value !== null &&
+      value !== undefined
+    )
     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {} as Record<string, any>)
 }
