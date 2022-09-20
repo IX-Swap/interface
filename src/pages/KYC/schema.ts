@@ -68,8 +68,16 @@ export const individualErrorsSchema = yup.object().shape({
   investorDeclarationStatus: yup.string().when('accredited', { is: 1, then: yup.string().required('Required') }),
   acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
   acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
-  evidenceOfAccreditation: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
-  confirmStatusDeclaration: yup.boolean().isTrue('Required').required('Required')
+  evidenceOfAccreditation: yup.array().when('accredited', {
+    is: 1, 
+    then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),
+    otherwise: yup.array().nullable()
+  }),
+  confirmStatusDeclaration: yup.boolean().when('accredited', {
+    is: 1,
+    then: yup.boolean().isTrue('Required').required('Required'),
+    otherwise: yup.boolean().nullable()
+  })
 })
 
 export const corporateErrorsSchema = yup.object().shape({
