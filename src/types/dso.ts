@@ -125,6 +125,7 @@ export interface NewBaseDigitalSecurityOffering
   interestRate?: number
   leverage?: number
   productSpecification?: string
+  step?: number
 }
 
 export interface DSOInsight {
@@ -164,8 +165,6 @@ export interface NewDigitalSecurityOffering
   disableInvestInCampaign?: boolean
 }
 
-export type DSOStepperFormValues = DSOFormValuesStep1
-
 export type DSOFormValues = Omit<
   DigitalSecurityOffering,
   | '_id'
@@ -189,7 +188,6 @@ export type DSOFormValues = Omit<
   | 'authorizations'
   | 'authorization'
   | 'authorizationDocuments'
-  | 'subscriptionDocument'
   | 'insight'
   | 'disabled'
 > & {
@@ -203,9 +201,10 @@ export type DSOFormValues = Omit<
   faqs: DsoFAQItem[]
   videos: DsoVideo[]
   uidCode?: string
+  step?: number
 }
 
-export type DSOFormValuesStep1 = Omit<
+export type DSOBaseFormValues = Omit<
   NewBaseDigitalSecurityOffering,
   | '_id'
   | 'deleted'
@@ -229,11 +228,15 @@ export type DSOFormValuesStep1 = Omit<
   | 'insight'
   | 'disabled'
   | 'corp'
+  // | 'useOfProceeds'
+  // | 'introduction'
+  // | 'businessModel'
+  // | 'fundraisingMilestone'
 >
 
 export type DSORequestArgsStep1 = Partial<
   Omit<
-    DSOFormValuesStep1,
+    DSOBaseFormValues,
     | '_id'
     | 'deleted'
     | 'createdBy'
@@ -309,24 +312,24 @@ export interface DSOFormActionsProps {
 }
 export interface RedirectArgs {
   createModeRedirect: CreateModeRedirect
-  data: any
+  data?: any
   dsoId: string
+  issuerId: string
   history: H.History
 }
 export interface RedirectOnSaveArgs {
   createModeRedirect: CreateModeRedirect
   data: any
-  isCreateMode: boolean
   nextLocation: H.Location<unknown> | undefined
   setIsRedirecting: any
 }
 
 export interface RedirectSaveArgs {
   createModeRedirect: CreateModeRedirect
-  data: any
-  isCreateMode: boolean
+  data?: any
   nextLocation: H.Location<unknown> | undefined
   setIsRedirecting: any
   dsoId: string
+  issuerId: string
   history: H.History
 }

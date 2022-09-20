@@ -182,6 +182,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 // @ts-expect-error
                 defaultValue={null}
                 helperText='mm/dd/yyyy'
+                placeholder='mm/dd/yyyy'
                 inputVariant='outlined'
                 withIcon
               />

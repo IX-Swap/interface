@@ -1,5 +1,5 @@
-import { DSOFormValuesStep1 } from 'types/dso'
+import { DSOBaseFormValues } from 'types/dso'
 
-export const getDSOPayloadStep1 = (data: DSOFormValuesStep1) => {
+export const getDSOPayloadStep1 = (data: DSOBaseFormValues) => {
   return data
 }

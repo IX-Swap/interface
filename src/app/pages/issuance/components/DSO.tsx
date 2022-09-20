@@ -35,5 +35,5 @@ export const DSO: React.FC<DSOProps> = (props: DSOProps) => {
     )
   }
 
-  return <DSOForm data={data} />
+  return <DSOForm />
 }

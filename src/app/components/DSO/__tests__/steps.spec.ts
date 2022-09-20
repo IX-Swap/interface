@@ -1,12 +1,12 @@
-import React from 'react'
 import { render } from 'test-utils'
 import { getIdFromObj } from 'helpers/strings'
-import { formValues } from '__fixtures__/issuance'
+import { baseDSOFormValues, formValues } from '__fixtures__/issuance'
 import { dsoFormSteps } from 'app/components/DSO/steps'
 import { percentageToNumber } from 'app/pages/issuance/utils/utils'
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
+import { DSOBaseFormValues } from 'types/dso'
 
 jest.mock('app/components/DSO/components/DSOInformationFields', () => ({
   DSOInformationFields: jest.fn(() => null)
@@ -25,7 +25,7 @@ describe('steps', () => {
     jest.clearAllMocks()
   })
 
-  it('steps have the correct labels', () => {
+  it('has the correct labels', () => {
     expect(dsoFormSteps[0].label).toEqual('DSO Information')
     expect(dsoFormSteps[1].label).toEqual('Company Information')
     expect(dsoFormSteps[2].label).toEqual('Documents')
@@ -42,32 +42,35 @@ describe('steps', () => {
       currency: getIdFromObj({ _id: formValues.currency }),
       uniqueIdentifierCode: formValues.uniqueIdentifierCode,
       network: formValues.network,
-      dividendYield: percentageToNumber(formValues.dividendYield),
-      grossIRR: percentageToNumber(formValues.grossIRR),
+      dividendYield: formValues.dividendYield,
+      grossIRR: formValues.grossIRR,
       investmentStructure: formValues.investmentStructure,
-      equityMultiple: percentageToNumber(formValues.equityMultiple),
-      interestRate: percentageToNumber(formValues.interestRate),
-      leverage: percentageToNumber(formValues.leverage),
+      equityMultiple: formValues.equityMultiple,
+      interestRate: formValues.interestRate,
+      leverage: formValues.leverage,
       totalFundraisingAmount: formValues.totalFundraisingAmount,
       pricePerUnit: formValues.pricePerUnit,
       distributionFrequency: formValues.distributionFrequency,
       investmentPeriod: formValues.investmentPeriod,
       minimumInvestment: formValues.minimumInvestment,
       launchDate: formValues.launchDate ?? null,
-      completionDate: formValues.completionDate ?? null
+      completionDate: formValues.completionDate ?? null,
+      step: 0
     })
     expect(dsoFormSteps[1].getFormValues(formValues as any)).toEqual({
       team: formValues.team ?? [{}],
       introduction: formValues.introduction,
       businessModel: formValues.businessModel,
       useOfProceeds: formValues.useOfProceeds,
-      fundraisingMilestone: formValues.fundraisingMilestone
+      fundraisingMilestone: formValues.fundraisingMilestone,
+      step: 1
     })
     expect(dsoFormSteps[2].getFormValues(formValues as any)).toEqual({
       subscriptionDocument: formValues.subscriptionDocument,
       documents: formValues.documents,
       videos: formValues.videos ?? [{}],
-      faqs: formValues.faqs ?? [{}]
+      faqs: formValues.faqs ?? [{}],
+      step: 2
     })
   })
 

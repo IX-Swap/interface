@@ -13,13 +13,10 @@ describe('CreateDSO', () => {
   })
 
   it('renders DSOForm with correct props', () => {
-    render(<CreateDSO />)
+    const { getByText } = render(<CreateDSO />)
 
-    expect(DSOForm).toHaveBeenCalledWith(
-      {
-        isNew: true
-      },
-      {}
-    )
+    expect(DSOForm).toHaveBeenCalledWith({}, {})
+
+    expect(getByText('Create Digital Security Offering')).not.toBe(null)
   })
 })

@@ -8,18 +8,12 @@ import * as useCreateDSO from 'app/pages/issuance/hooks/useCreateDSO'
 import * as useSubmitDSO from 'app/pages/issuance/hooks/useSubmitDSO'
 import * as useUpdateDSO from 'app/pages/issuance/hooks/useUpdateDSO'
 import { dsoFormSteps } from 'app/components/DSO/steps'
-import { transformDSOToFormValues } from 'app/components/DSO/utils'
 
 jest.mock('app/components/FormStepper/FormStepper', () => ({
   FormStepper: jest.fn(() => null)
 }))
 
 describe('DSOForm', () => {
-  const props: DSOFormProps = {
-    isNew: false,
-    data: dso
-  }
-
   const createDSO = jest.fn()
   const updateDSO = jest.fn()
   const submitDSO = jest.fn()
@@ -47,15 +41,16 @@ describe('DSOForm', () => {
   })
 
   it('renders form field components', () => {
-    render(<DSOForm {...props} />)
+    render(<DSOForm />)
     expect(FormStepper).toHaveBeenCalledWith(
       expect.objectContaining({
         formTitle: 'Create DSO',
-        data: transformDSOToFormValues(props.data),
         steps: dsoFormSteps,
         createMutation: [createDSO, { isLoading: false }],
         editMutation: [updateDSO, { isLoading: false }],
-        submitMutation: [submitDSO, { isLoading: false }]
+        submitMutation: [submitDSO, { isLoading: false }],
+        submitText: 'DSO',
+        isRequiredOnLastStep: true
       }),
       {}
     )

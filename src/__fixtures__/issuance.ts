@@ -9,7 +9,7 @@ import {
   DsoVideo,
   DepositAddress,
   DigitalSecurityOffering,
-  DSOFormValuesStep1
+  DSOBaseFormValues
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -146,7 +146,7 @@ export const videoLink: DsoVideo = {
   link: 'Link'
 }
 
-export const baseDSOFormValues: DSOFormValuesStep1 = {
+export const baseDSOFormValues: DSOBaseFormValues = {
   logo: '5f898b69aa141c6d0d358ce6',
   totalFundraisingAmount: 100000,
   tokenSymbol: '$#',
