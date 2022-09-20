@@ -208,6 +208,11 @@ export const individualTransformKycDto = (values: any) => {
     removedTaxDeclarations: values.removedTaxDeclarations
   }
 
+  for (const tax of result.taxDeclarations) {
+    if (tax.reason === null) {
+      delete tax.reason
+    }
+  }
 
   for (const entry of filterFields) {
     delete result[entry];
