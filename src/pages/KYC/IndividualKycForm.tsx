@@ -809,7 +809,7 @@ export default function IndividualKycForm() {
                                     (Common Reporting Standard) Regulations 2016.
                                   </TYPE.description2>
 
-                                  <ButtonIXSGradient onClick={() => setShowTaxModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                  <ButtonIXSGradient type="button" onClick={() => setShowTaxModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                     OK
                                   </ButtonIXSGradient>
                                 </Column>
@@ -956,7 +956,7 @@ export default function IndividualKycForm() {
                                     </ol>
                                   </TYPE.description2>
 
-                                  <ButtonIXSGradient onClick={() => setShowFATCAModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                  <ButtonIXSGradient type="button" onClick={() => setShowFATCAModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                     OK
                                   </ButtonIXSGradient>
                                 </Column>
@@ -1135,7 +1135,7 @@ export default function IndividualKycForm() {
                                 <TYPE.description3>
                                   I have been informed of and understand the consequences of my qualification as an Accredited Investor, 
                                   in particular the reduced regulatory investor 
-                                  <InlineLinkButton onClick={() => setShowSafeguardModal(true)}>safeguards</InlineLinkButton> 
+                                  <InlineLinkButton type="button" onClick={() => setShowSafeguardModal(true)}>safeguards</InlineLinkButton> 
                                   for Accredited Investors.
                                 </TYPE.description3>
 
@@ -1216,7 +1216,7 @@ export default function IndividualKycForm() {
                                         retail clients (reg. 3A(5)(c)-(e) and (7) SF(LCB)R; reg. 4A(6) FAR.
                                       </TYPE.description2>
 
-                                      <ButtonIXSGradient onClick={() => setShowSafeguardModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                      <ButtonIXSGradient type="button" onClick={() => setShowSafeguardModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                         OK
                                       </ButtonIXSGradient>
                                     </Column>
@@ -1240,7 +1240,7 @@ export default function IndividualKycForm() {
 
                                 <TYPE.description3>
                                   I have been informed of and understand my right to 
-                                  <InlineLinkButton onClick={() => setShowOptoutModal(true)}>opt out</InlineLinkButton> 
+                                  <InlineLinkButton type="button" onClick={() => setShowOptoutModal(true)}>opt out</InlineLinkButton> 
                                   of the Accredited Investors status
                                 </TYPE.description3>
 
@@ -1274,11 +1274,11 @@ export default function IndividualKycForm() {
                                       </TYPE.description2>
 
                                       <FormGrid columns={2}>
-                                        <ButtonGradientBorder onClick={() => setShowOptoutModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonGradientBorder type="button" onClick={() => setShowOptoutModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonIXSGradient onClick={openConfirmationModal} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonIXSGradient type="button" onClick={openConfirmationModal} style={{ 'width': '100%', marginTop: '32px' }}>
                                           Opt Out
                                         </ButtonIXSGradient>
                                         
@@ -1297,11 +1297,11 @@ export default function IndividualKycForm() {
                                       <br />
 
                                       <FormGrid columns={2}>
-                                        <ButtonGradientBorder onClick={() => setShowOptoutConfirmationModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonGradientBorder type="button" onClick={() => setShowOptoutConfirmationModal(false)} style={{ 'width': '100%', marginTop: '32px' }}>
                                           Cancel
                                         </ButtonGradientBorder>
 
-                                        <ButtonIXSGradient onClick={() => confirmOptOut(setFieldValue)} style={{ 'width': '100%', marginTop: '32px' }}>
+                                        <ButtonIXSGradient type="button" onClick={() => confirmOptOut(setFieldValue)} style={{ 'width': '100%', marginTop: '32px' }}>
                                           Ok
                                         </ButtonIXSGradient>
                                         
