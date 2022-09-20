@@ -129,12 +129,17 @@ export default function IndividualKycForm() {
           : transformedData.taxDeclarations
 
         setFormData({ ...transformedData, taxDeclarations })
+
+        if (kyc?.status === KYCStatuses.DRAFT) {
+          setCanSubmit(true)
+        }
       }
     }
 
     if ([KYCStatuses.CHANGES_REQUESTED, KYCStatuses.DRAFT].some(s => s === kyc?.status)) {
       getProgress()
       setUpdateKycId(kyc!.id)
+
     } else {
       setFormData(individualFormInitialValues)
     }
@@ -160,11 +165,12 @@ export default function IndividualKycForm() {
       const newErrors = { ...errors }
       delete newErrors[key]
       setErrors(newErrors)
-      setCanSubmit(true)
     }
+    
+    setCanSubmit(true)
   }
 
-  const onChangeInput = (key: string, value: string, values: any, setFieldValue: any) => {
+  const onChangeInput = (key: string, value: any, values: any, setFieldValue: any) => {
     if (values[key] !== value) {
       setFieldValue(key, value, false)
     }
@@ -180,23 +186,6 @@ export default function IndividualKycForm() {
   const onRadioChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
     validationSeen(key)
-  }
-
-  const onTaxDeclarationAdd = (value: { country: string; idNumber?: string, reason?: string }, fields: any[], setFieldValue: any) => {
-    if (!value.country && (!value.idNumber && !value.reason)) {
-      validationSeen('taxCountry')
-      validationSeen('taxDeclarations')
-
-      return;
-    }
-
-    setFieldValue('taxDeclarations', [...(fields ?? []), value], false)
-    setFieldValue('taxCountry', '', false)
-    setFieldValue('taxIdentification', '', false)
-  }
-  
-  const onTaxDeclarationRemove = (value: { country: string; id?: string }, fields: any[], setFieldValue: any) => {
-    setFieldValue('taxDeclarations', [...(fields ?? [])].filter(f => f.country !== value.country), false)
   }
 
   const onSourceOfFundsChange = (source: {value: string, label: string}[], fields: any[], setFieldValue: any) => {
@@ -218,6 +207,14 @@ export default function IndividualKycForm() {
     setFieldValue('sourceOfFunds', result, false)
     validationSeen('sourceOfFunds')
     validationSeen('otherFunds')
+  }
+
+  const removeTaxDeclaration = (values: any, index: number, setFieldValues: any, callback: (idx: number) => void) => {
+    if (values.taxDeclarations[index]?.id) {
+      setFieldValues('removedTaxDeclarations', [...(values.removedTaxDeclarations ?? []), values.taxDeclarations[index]?.id])
+    }
+
+    callback(index)
   }
 
   const goBack = (e?: any) => {
@@ -837,8 +834,8 @@ export default function IndividualKycForm() {
                                             ({ label }) =>
                                               !['United States of America', 'United States Minor Outlying Islands'].includes(label)
                                           )}
-                                          onSelect={(country) => onSelectChange(`taxDeclarations.${index}.country`, country, setFieldValue)}
-                                          error={errors.taxCountry && errors.taxCountry}
+                                          onSelect={(country) => onSelectChange(`taxDeclarations[${index}].country`, country, setFieldValue)}
+                                          error={errors[`taxDeclarations[${index}].country`]}
                                         />
 
                                         {errors[`taxDeclarations[${index}].country`] && (
@@ -852,9 +849,9 @@ export default function IndividualKycForm() {
                                         <TextInput 
                                           label="Tax Identification Number (TIN)"
                                           value={values.taxDeclarations[index].idNumber} 
-                                          error={errors.taxDeclarations?.length && errors.taxDeclarations[index].idNumber}
+                                          error={errors[`taxDeclarations[${index}].idNumber`]}
                                           disabled={values.taxDeclarations[index].tinUnavailable}
-                                          onChange={e => onChangeInput(`taxDeclarations.${index}.idNumber`, e.currentTarget.value, values, setFieldValue)} 
+                                          onChange={e => onChangeInput(`taxDeclarations[${index}].idNumber`, e.currentTarget.value, values, setFieldValue)} 
                                         />
                                         {errors[`taxDeclarations[${index}].idNumber`] && (
                                           <TYPE.small marginTop="8px" color={'red1'}>
@@ -865,7 +862,10 @@ export default function IndividualKycForm() {
                                     </FormGrid>
                                     
                                     {index > 0 && (
-                                      <IconButton onClick={() => remove(index)} style={{ padding: '0 1rem', marginTop: '2rem' }}>
+                                      <IconButton 
+                                        onClick={() => removeTaxDeclaration(values, index, setFieldValue, remove)} 
+                                        style={{ padding: '0 1rem', marginTop: '2rem' }}
+                                      >
                                         <TrashIcon />
                                       </IconButton>
                                     )}
@@ -876,7 +876,11 @@ export default function IndividualKycForm() {
                                     <Checkbox 
                                       label={''} 
                                       checked={values.taxDeclarations[index].tinUnavailable}
-                                      onClick={() => setFieldValue(`taxDeclarations.${index}.tinUnavailable`, !values.taxDeclarations[index].tinUnavailable, false)}
+                                      onClick={() => {
+                                        onChangeInput(`taxDeclarations[${index}].tinUnavailable`, !values.taxDeclarations[index].tinUnavailable, values, setFieldValue)
+                                        onChangeInput(`taxDeclarations[${index}].idNumber`, '', values, setFieldValue)
+                                        onChangeInput(`taxDeclarations[${index}].reason`, '', values, setFieldValue)
+                                      }}
                                     />
 
                                     <TYPE.description3>TIN is not available (please indicate reason):</TYPE.description3>
@@ -887,7 +891,7 @@ export default function IndividualKycForm() {
                                       <TextInput 
                                         label="Reason"
                                         value={values.taxDeclarations[index].reason}
-                                        onChange={e => onChangeInput(`taxDeclarations.${index}.reason`, e.currentTarget.value, values, setFieldValue)} 
+                                        onChange={e => onChangeInput(`taxDeclarations[${index}].reason`, e.currentTarget.value, values, setFieldValue)} 
                                       />
                                       
                                       {errors[`taxDeclarations[${index}].reason`] && (
@@ -923,11 +927,6 @@ export default function IndividualKycForm() {
                             </>
                           )}
                         </FieldArray>
-
-                        
-                        
-
-                          
                         
                         <RowBetween marginBottom="32px" marginTop="64px">
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
@@ -1130,7 +1129,7 @@ export default function IndividualKycForm() {
                                 <Checkbox 
                                   label={''} 
                                   checked={values.acceptOfQualification} 
-                                  onClick={() => setFieldValue('acceptOfQualification', !values.acceptOfQualification, false)}
+                                  onClick={() => onChangeInput('acceptOfQualification', !values.acceptOfQualification, values, setFieldValue)}
                                 />
 
                                 <TYPE.description3>
@@ -1236,7 +1235,7 @@ export default function IndividualKycForm() {
                                 <Checkbox 
                                   label={''} 
                                   checked={values.acceptRefusalRight}
-                                  onClick={() => setFieldValue('acceptRefusalRight', !values.acceptRefusalRight, false)}
+                                  onClick={() => onChangeInput('acceptRefusalRight', !values.acceptRefusalRight, values, setFieldValue)}
                                 />
 
                                 <TYPE.description3>
@@ -1354,7 +1353,7 @@ export default function IndividualKycForm() {
                               <Checkbox 
                                 label={''} 
                                 checked={values.confirmStatusDeclaration}
-                                onClick={() => setFieldValue('confirmStatusDeclaration', !values.confirmStatusDeclaration, false)}
+                                onClick={() => onChangeInput('confirmStatusDeclaration', !values.confirmStatusDeclaration, values, setFieldValue)}
                               />
 
                               <TYPE.description3>
@@ -1382,7 +1381,7 @@ export default function IndividualKycForm() {
                       handleSubmit={handleSubmit}
                       handleSaveProgress={() => saveProgress(form?.current?.values)}
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
-                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
+                      disabled={!canSubmit || Object.keys(errors).length !== 0}
                       topics={[
                         { title: 'Personal Information', href: 'personal', passed: personalFilled && addressFilled && filesFilled, failed: personalFailed },
                         { title: 'Financial Information', href: 'financial', passed: financialFilled, failed: financialFailed },

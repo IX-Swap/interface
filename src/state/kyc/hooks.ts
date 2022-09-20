@@ -77,6 +77,8 @@ export const createIndividualKYC = async (newKYC: any, draft = false) => {
       newKYC[key].forEach((item: any) => {
         formData.append(`${key}`, item)
       })
+    } else if (['removedDocuments', 'removedTaxDeclarations'].some(x => x === key)) {
+      formData.append(key, JSON.stringify(newKYC[key]))
     } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
 
       const entries = (newKYC[key] as Array<any>)
@@ -155,7 +157,7 @@ export const updateIndividualKYC = async (kycId: number, newKYC: any, draft = fa
         }
       })
     } else {
-      if (key === 'removedDocuments') {
+      if (['removedDocuments', 'removedTaxDeclarations'].some(x => x === key)) {
         formData.append(key, JSON.stringify(newKYC[key]))
       } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
 
