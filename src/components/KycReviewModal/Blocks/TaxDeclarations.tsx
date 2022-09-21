@@ -12,10 +12,13 @@ interface Props {
 }
 
 export const TaxDeclarations: FC<Props> = ({ data }: Props) => {
+  if (data.taxDeclarations.length === 0) {
+    return null
+  }
+
   return (
     <Block title="Tax Declarations">
       <GridContainer spacing={30}>
-        {data.taxDeclarations.length === 0 && (<TYPE.description3>Empty</TYPE.description3>)}
         {data.taxDeclarations.map((declaration, index) => (
           <>
             <GridItem key={`declaration-${index}-country`} md={4}>
