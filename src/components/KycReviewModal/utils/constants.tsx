@@ -71,7 +71,7 @@ export const personalInfoKeys = [
 export const individualDocumentKeys = [
   {
     key: 'idType',
-    label: 'Document Type',
+    label: 'ID Type',
     width: { xs: 12, sm: 6 },
     format: (value: string): string => {
       if (!value) return 'Not completed'
@@ -83,13 +83,13 @@ export const individualDocumentKeys = [
 
   {
     key: 'idIssueDate',
-    label: 'Document Issue Date',
+    label: 'ID Issuance Date',
     width: { xs: 12, sm: 6 },
     format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
   },
   {
     key: 'idExpiryDate',
-    label: 'Document Expiry Date',
+    label: 'ID Expiration Date',
     width: { xs: 12, sm: 6 },
     format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
   },
@@ -191,6 +191,12 @@ export const taxDeclarationKeys = [
     key: 'taxNumber',
     label: 'Tax Indentification Number',
   },
+]
+
+export const IndividualTaxDeclarationKeys = [
+  { key: 'country', label: 'Country of Tax Declaration' },
+  { key: 'idNumber', label: 'Tax Identification Number (TIN)', format: (value: string) => value ?? 'Not available' },
+  { key: 'reason', label: 'Reason' }
 ]
 
 export const beneficialOwnersKeys = [
