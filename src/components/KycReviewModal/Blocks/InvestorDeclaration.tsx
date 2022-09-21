@@ -16,62 +16,76 @@ interface Props {
 
 export const InvestorDeclaration = ({ data }: Props) => {
   console.log(data)
+
+  if (!data.investorDeclarationStatus && data.acceptOfQualification === undefined && data.acceptRefusalRight === undefined) {
+    return null
+  }
+
   return (
     <Block title="Investor Declaration">
       <>
         <Column style={{ margin: '1rem', marginLeft: 0, gap: "1rem" }}>
-          <LabeledCheckBox>
-            <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'total-assets'} />
-            <TYPE.description3>
-              My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
-            </TYPE.description3>
-          </LabeledCheckBox>
+          {data.investorDeclarationStatus !== undefined && (
+            <>
+              <LabeledCheckBox>
+                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'total-assets'} />
+                <TYPE.description3>
+                  My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
+                </TYPE.description3>
+              </LabeledCheckBox>
 
-          <LabeledCheckBox>
-            <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'annual-income'} />
-            <TYPE.description3>
-              My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
-            </TYPE.description3>
-          </LabeledCheckBox>
+              <LabeledCheckBox>
+                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'annual-income'} />
+                <TYPE.description3>
+                  My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
+                </TYPE.description3>
+              </LabeledCheckBox>
 
-          <LabeledCheckBox>
-            <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'financial-assets'} />
-            <TYPE.description3>
-              My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or 
-              its equivalent (or its equivalent in foreign currency)
-            </TYPE.description3>
-          </LabeledCheckBox>
+              <LabeledCheckBox>
+                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'financial-assets'} />
+                <TYPE.description3>
+                  My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or 
+                  its equivalent (or its equivalent in foreign currency)
+                </TYPE.description3>
+              </LabeledCheckBox>
+              
+              <LabeledCheckBox>
+                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'joint-income'} />
+                <TYPE.description3>
+                  My jointly held account with my spouse/any individual meets any of the above
+                </TYPE.description3>
+              </LabeledCheckBox>
+            </>
+          )}
           
-          <LabeledCheckBox>
-            <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'joint-income'} />
-            <TYPE.description3>
-              My jointly held account with my spouse/any individual meets any of the above
-            </TYPE.description3>
-          </LabeledCheckBox>
+          {data.acceptOfQualification !== undefined && data.acceptRefusalRight !== null && (
+            <RowBetween marginTop="32px">
+              <TYPE.title7 style={{ textTransform: 'uppercase' }}>
+                <Trans>Opt-in requirement</Trans>
+              </TYPE.title7>
+            </RowBetween>
+          )}
 
+          {data.acceptOfQualification !== undefined && (
+            <LabeledCheckBox>
+              <Checkbox label='' disabled checked={data.acceptOfQualification} />
+
+              <TYPE.description3>
+                I have been informed of and understand the consequences of my qualification as an Accredited Investor, 
+                in particular the reduced regulatory investor safeguards for Accredited Investors.
+              </TYPE.description3>
+            </LabeledCheckBox>
+          )}
           
-          <RowBetween marginTop="32px">
-            <TYPE.title7 style={{ textTransform: 'uppercase' }}>
-              <Trans>Opt-in requirement</Trans>
-            </TYPE.title7>
-          </RowBetween>
+          {data.acceptRefusalRight !== undefined && (
+            <LabeledCheckBox>
+              <Checkbox label='' disabled checked={data.acceptRefusalRight} />
 
-          <LabeledCheckBox>
-            <Checkbox label='' disabled checked={data.acceptOfQualification} />
-
-            <TYPE.description3>
-              I have been informed of and understand the consequences of my qualification as an Accredited Investor, 
-              in particular the reduced regulatory investor safeguards for Accredited Investors.
-            </TYPE.description3>
-          </LabeledCheckBox>
-          
-          <LabeledCheckBox>
-            <Checkbox label='' disabled checked={data.acceptRefusalRight} />
-
-            <TYPE.description3>
-              I have been informed of and understand my right to opt out of the Accredited Investors status
-            </TYPE.description3>
-          </LabeledCheckBox>
+              <TYPE.description3>
+                I have been informed of and understand my right to opt out of the Accredited Investors status
+              </TYPE.description3>
+            </LabeledCheckBox>
+          )}
         </Column>
       </>
     </Block>
