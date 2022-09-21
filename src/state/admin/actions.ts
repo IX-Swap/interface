@@ -443,7 +443,15 @@ export interface IndividualKyc {
   sourceOfFunds: string
   updatedAt: string
   usTin: string | null
+  investorDeclarationStatus: string
+  taxDeclarations: TaxDeclaration[]
   [key: string]: any
+}
+
+export interface TaxDeclaration {
+  country: string
+  idNumber?: string
+  reason?: string
 }
 
 export interface CorporateKyc {
@@ -480,6 +488,8 @@ export interface CorporateKyc {
   sourceOfFunds: string
   updatedAt: string
   usTin: string | null
+  investorDeclarationStatus: string
+  taxDeclarations: TaxDeclaration[]
   [key: string]: any
 }
 

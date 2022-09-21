@@ -12,6 +12,8 @@ import {
   UploadedDocuments,
   Occupation,
   InvestorStatusDeclaration,
+  TaxDeclarations,
+  InvestorDeclaration,
 } from './Blocks'
 
 interface Props {
@@ -23,13 +25,18 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
   return (
     <>
       <Cynopsis riskJSON={riskJSON} />
+
       <Information data={data} kycKey="individual" />
-      <IndividualDocument data={data} />
       <Address data={data} />
-      <SourceOfFunds data={data} kycKey="individual" />
-      <InvestorStatusDeclaration data={data} kycKey="individual" />
-      <Fatca data={data} />
+      <IndividualDocument data={data} />
+
       <Occupation data={data} />
+      <SourceOfFunds data={data} kycKey="individual" />
+      <TaxDeclarations data={data} />
+      <Fatca data={data} />
+
+      <InvestorStatusDeclaration data={data} kycKey="individual" />
+      <InvestorDeclaration data={data} />
       <UploadedDocuments data={data.documents} />
     </>
   )
