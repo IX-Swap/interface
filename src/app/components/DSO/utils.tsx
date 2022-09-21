@@ -9,7 +9,6 @@ import {
   RedirectSaveArgs
 } from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
-import { percentageToNumber } from 'app/pages/issuance/utils/utils'
 import { getIdFromObj } from 'helpers/strings'
 import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'
@@ -44,7 +43,8 @@ export const redirectSave = ({
   dsoId,
   issuerId,
   history,
-  setIsRedirecting
+  setIsRedirecting,
+  data
 }: RedirectSaveArgs) => {
   if (
     createModeRedirect !== undefined &&
@@ -54,7 +54,7 @@ export const redirectSave = ({
   ) {
     const redirect =
       typeof createModeRedirect === 'function'
-        ? createModeRedirect('dso')
+        ? createModeRedirect(dsoId)
         : createModeRedirect
     history.replace(
       generatePath(`${redirect}${nextLocation.search}`, {
@@ -91,7 +91,8 @@ export const transformDSOToFormValuesStep1 = (
       interestRate: '',
       dividendYield: '',
       investmentPeriod: '',
-      productSpecification: ''
+      productSpecification: '',
+      isCampaign: false
     } as any
   }
 
@@ -117,7 +118,8 @@ export const transformDSOToFormValuesStep1 = (
     investmentPeriod: dso.investmentPeriod,
     minimumInvestment: dso.minimumInvestment,
     launchDate: dso.launchDate ?? null,
-    completionDate: dso.completionDate ?? null
+    completionDate: dso.completionDate ?? null,
+    isCampaign: dso.isCampaign
   }
 }
 
@@ -153,7 +155,9 @@ export const transformDSOToFormValues = (
       dividendYield: '',
       investmentPeriod: '',
       issuerName: '',
-      uniqueIdentifierCode: ''
+      uniqueIdentifierCode: '',
+      decimalPlaces: 0,
+      step: 0
     } as any
   }
 
@@ -179,11 +183,11 @@ export const transformDSOToFormValues = (
     investmentStructure: dso.investmentStructure,
     currency: getIdFromObj(dso.currency),
     network: getIdFromObj(dso.network),
-    dividendYield: percentageToNumber(dso.dividendYield),
-    grossIRR: percentageToNumber(dso.grossIRR),
-    equityMultiple: percentageToNumber(dso.equityMultiple),
-    interestRate: percentageToNumber(dso.interestRate),
-    leverage: percentageToNumber(dso.leverage),
+    dividendYield: dso.dividendYield,
+    grossIRR: dso.grossIRR,
+    equityMultiple: dso.equityMultiple,
+    interestRate: dso.interestRate,
+    leverage: dso.leverage,
     documents: dso.documents.map(document => ({ value: document })),
     team: dso.team.map(({ _id, ...person }) => person),
     faqs:
@@ -194,7 +198,9 @@ export const transformDSOToFormValues = (
       dso.videos !== undefined && dso.videos.length > 0
         ? dso.videos.map(({ _id, ...video }) => video)
         : [{}],
-    uniqueIdentifierCode: dso.uniqueIdentifierCode
+    uniqueIdentifierCode: dso.uniqueIdentifierCode,
+    decimalPlaces: dso.decimalPlaces,
+    step: dso.step
   }
 }
 
@@ -222,7 +228,8 @@ export const getDSOInformationFormValues = (data: DSOFormValues) => {
     minimumInvestment: data.minimumInvestment,
     launchDate: data.launchDate ?? null,
     completionDate: data.completionDate ?? null,
-    step: 0
+    step: 0,
+    decimalPlaces: data.decimalPlaces
   }
 }
 

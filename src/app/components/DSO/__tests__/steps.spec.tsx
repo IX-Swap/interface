@@ -55,7 +55,8 @@ describe('steps', () => {
       minimumInvestment: formValues.minimumInvestment,
       launchDate: formValues.launchDate ?? null,
       completionDate: formValues.completionDate ?? null,
-      step: 0
+      step: 0,
+      decimalPlaces: formValues.decimalPlaces
     })
     expect(dsoFormSteps[1].getFormValues(formValues as any)).toEqual({
       team: formValues.team ?? [{}],

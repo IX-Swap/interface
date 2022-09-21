@@ -37,6 +37,9 @@ export interface FormStepProps {
   isRequiredOnLastStep?: boolean
   followDefaultMode?: boolean
   dataToCheck?: any
+  isCreateMode?: {
+    value: boolean
+  }
 }
 
 interface OnSubmitSuccessArgs {
@@ -99,7 +102,8 @@ export const FormStep = (props: FormStepProps) => {
     redirectOnSave,
     isRequiredOnLastStep = false,
     followDefaultMode = true,
-    dataToCheck = undefined
+    dataToCheck = undefined,
+    isCreateMode: hasCreateMode = undefined
   } = props
   const isCurrentStep = activeStep === index
   const classes = useStyles()
@@ -177,7 +181,9 @@ export const FormStep = (props: FormStepProps) => {
       <SaveOnNavigate
         transformData={step.getRequestPayload}
         mutation={saveMutation}
-        isCreateMode={data === undefined}
+        isCreateMode={
+          hasCreateMode !== undefined ? hasCreateMode.value : data === undefined
+        }
         createModeRedirect={createModeRedirect}
         activeStep={activeStep}
         redirectOnSave={redirectOnSave}

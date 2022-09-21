@@ -79,11 +79,6 @@ module.exports = {
     ]
   },
   plugins: [
-    {
-      apply: compiler => {
-        compiler.hooks.compile.tap('Generate SVG Sprite', generateSprite)
-      }
-    },
     new HtmlWebpackPlugin({
       inject: 'head',
       scriptLoading: 'defer',

@@ -230,7 +230,8 @@ export const formValues: DSOFormValues = {
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
   capitalStructure: 'Good',
-  businessModel: '<p>Hello world</p>'
+  businessModel: '<p>Hello world</p>',
+  decimalPlaces: 0
 }
 
 export const requestargs: DSORequestArgs = {
@@ -268,7 +269,8 @@ export const requestargs: DSORequestArgs = {
   businessModel: '<p>Hello world</p>',
   issuerName: 'IXIssuer',
   tokenName: 'IXWTKN',
-  tokenSymbol: '$#'
+  tokenSymbol: '$#',
+  decimalPlaces: 0
 }
 
 export const investmentGrowthData: Array<[Date, number]> = [
