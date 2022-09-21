@@ -188,6 +188,35 @@ export default function IndividualKycForm() {
     validationSeen(key)
   }
 
+  const onAccreditedChange = (value: number, setFieldValue: any) => {
+    setFieldValue('accredited', value, false)
+
+    if (value === 0) {
+      const keys = [
+        'investorDeclarationStatus',
+        'acceptOfQualification',
+        'acceptRefusalRight',
+        'confirmStatusDeclaration',
+        'evidenceOfAccreditation'
+      ]
+
+      setFieldValue('investorDeclarationStatus', individualFormInitialValues.investorDeclarationStatus)
+      setFieldValue('acceptOfQualification', individualFormInitialValues.acceptOfQualification)
+      setFieldValue('acceptRefusalRight', individualFormInitialValues.acceptRefusalRight)
+      setFieldValue('confirmStatusDeclaration', individualFormInitialValues.confirmStatusDeclaration)
+      setFieldValue('evidenceOfAccreditation', individualFormInitialValues.evidenceOfAccreditation)
+
+      const newErrors = { ...errors }
+
+      for (const key of keys) {
+        delete newErrors[key]
+      }
+
+      setErrors(newErrors)
+      setCanSubmit(true)
+    }
+  }
+
   const onSourceOfFundsChange = (source: {value: string, label: string}[], fields: any[], setFieldValue: any) => {
     const oldSources = new Set(fields.map(x => x.value))
     const newSources = new Set(source.map(x => x.value))
@@ -1017,7 +1046,7 @@ export default function IndividualKycForm() {
                                 name="accredited"
                                 isRadio
                                 checked={values.accredited === 1}
-                                onClick={() => onRadioChange('accredited', 1, setFieldValue)}
+                                onClick={() => onAccreditedChange(1, setFieldValue)}
                                 label={`I declare I am an Individual Accredited Investor`}
                               />
                             </BorderBox>
@@ -1027,7 +1056,7 @@ export default function IndividualKycForm() {
                                 name="accredited"
                                 isRadio
                                 checked={values.accredited === 0}
-                                onClick={() => onRadioChange('accredited', 0, setFieldValue)}
+                                onClick={() => onAccreditedChange(0, setFieldValue)}
                                 label="I declare I am a Retail Investor"
                               />
                             </BorderBox>
