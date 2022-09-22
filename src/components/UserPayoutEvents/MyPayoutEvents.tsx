@@ -26,8 +26,8 @@ export const MyPayouts = () => {
 
   const items = [
     { label: 'Passed Accreditation', type: 'passed-accreditation', data: accredited },
-    { label: 'Owning Tokens', type: 'owning-tokens', data: owningTokens },
-    { label: 'Already Claimed', type: 'already-claimed', data: claimed },
+    { label: 'Active Events', type: 'owning-tokens', data: owningTokens },
+    { label: 'Past Events', type: 'already-claimed', data: claimed },
   ]
 
   useEffect(() => {
