@@ -14,6 +14,7 @@ const headerCells = [t`File`, t`Type`, t`Uploaded At`]
 const formattedTypes = {
   identity: t`Proof of Identity`,
   address: t`Proof of Address`,
+  accreditation: t`Evidence of Accreditation`,
   financial: t`Financial Documents`,
   authorization: t`Authorization document`,
   corporate: t`Corporate documents`,
