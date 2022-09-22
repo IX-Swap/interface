@@ -1,19 +1,19 @@
+import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
-  DsoFAQItem,
   DSOBaseFormValues,
+  DsoFAQItem,
   DsoTeamMember,
   DsoVideo
 } from 'types/dso'
-import { array, boolean, number, object, string } from 'yup'
 import { corporateName, lettersOrSpaces } from 'validation/regexes'
+import { array, boolean, number, object, string } from 'yup'
 import { dateSchema, validationMessages } from './shared'
 import {
   isBeforeDate,
   pastDateValidator,
   uniqueIdentifierCodeValidator
 } from './validators'
-import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -319,3 +319,57 @@ export const getDSOInformationSchema = (data: any) => {
     ? editLiveDSOValidationSchemaStep1
     : editDSOValidationSchemaStep1
 }
+
+export const getDSOCompanyInformationSchema = object().shape<any>({
+  introduction: string()
+    // eslint-disable-next-line
+    .test(
+      'default_values',
+      'Introduction is required',
+      (value: any) => !value.includes(`<p></p>\n`)
+    )
+    .required('Introduction is required'),
+  useOfProceeds: string()
+    // eslint-disable-next-line
+    .test(
+      'default_values',
+      'Use of Proceeds is required',
+      (value: any) => !value.includes(`<p></p>\n`)
+    )
+    .required('Use of Proceeds is required'),
+  businessModel: string()
+    // eslint-disable-next-line
+    .test(
+      'default_values',
+      'Business Model is required',
+      (value: any) => !value.includes(`<p></p>\n`)
+    )
+    .required('Business Model is required'),
+  fundraisingMilestone: string()
+    // eslint-disable-next-line
+    .test(
+      'default_values',
+      'Fundraising Milestone is required',
+      (value: any) => !value.includes(`<p></p>\n`)
+    )
+    .required('Fundraising Milestone is required'),
+  // team: array<DsoTeamMember>()
+  //   .of(dsoTeamMemberSchema.required('Team Member Details are required'))
+  //   .ensure()
+  //   .required('Team Member is required'),
+  step: number()
+})
+
+export const getDSODocumentschema = object().shape<any>({
+  subscriptionDocument: object<DataroomFile>(),
+  documents: array<FormArrayElement<DataroomFile>>()
+    .ensure()
+    .required('Documents are required'),
+  faqs: array<DsoFAQItem>()
+    .of(dsoFAQItemSchema.required(validationMessages.required))
+    .required('FAQs are required'),
+  videos: array<DsoVideo>().of(
+    dsoVideoLinkSchema.required('Videos are required')
+  ),
+  step: number()
+})

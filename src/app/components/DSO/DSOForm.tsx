@@ -67,14 +67,16 @@ export const DSOForm = () => {
       issuerId: data?.data.createdBy
     })
   }
+  console.log({ data })
 
   return (
     <FormStepper
       data={transformDSOToFormValues(data)}
       dataToCheck={transformDSOToFormValues(data)}
       followDefaultMode={data !== undefined}
-      createMutation={createMutation}
-      editMutation={editMutation}
+      createMutation={data != null ? editMutation : createMutation}
+      // editMutation={editMutation}
+      editMutation={data != null ? editMutation : createMutation}
       submitMutation={submitMutation}
       steps={dsoFormSteps}
       nonLinear
