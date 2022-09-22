@@ -20,6 +20,11 @@ export const numericValueExtractor = (
   values: NumberFormatValues
 ): number | undefined => values.floatValue
 
+export const integerValueExtractor = (
+  values: NumberFormatValues
+): number | undefined =>
+  isNaN(parseInt(values.value)) ? 0 : parseInt(values.value)
+
 export const numericStringValueExtractor = (values: NumberFormatValues) =>
   values.value.toString()
 

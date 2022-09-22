@@ -8,7 +8,7 @@ export interface RichTextEditorProps extends TypedFieldRenderComponentProps {}
 
 export const RichTextEditor = memo(
   (props: RichTextEditorProps) => {
-    const { onChange, value = '' } = props
+    const { onChange, value = '', error } = props
     const ref = useRef<any>(null)
     const contentHTML = convertFromHTML(value)
 
@@ -25,6 +25,7 @@ export const RichTextEditor = memo(
           label='Start typing...'
           defaultValue={content}
           inlineToolbar
+          error={error}
           onChange={data => {
             onChange(
               JSON.stringify(convertToRaw(data.getCurrentContent() as any))

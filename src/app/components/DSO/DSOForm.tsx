@@ -25,6 +25,14 @@ export interface DSOFormProps {
   isNew?: boolean
 }
 
+export const getCreateModeRedirect = (dsoId: string) => {
+  if (dsoId !== undefined) {
+    return IssuanceRoute.edit
+  }
+
+  return IssuanceRoute.create
+}
+
 export const DSOForm = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data } = useDSOById(dsoId, issuerId)
@@ -53,28 +61,22 @@ export const DSOForm = () => {
       createModeRedirect,
       nextLocation,
       data,
-      dsoId,
+      dsoId: data?.data.id,
       history,
       setIsRedirecting,
-      issuerId
+      issuerId: data?.data.createdBy
     })
   }
-
-  const getCreateModeRedirect = () => {
-    if (dsoId !== undefined) {
-      return IssuanceRoute.edit
-    }
-
-    return IssuanceRoute.create
-  }
+  console.log({ data })
 
   return (
     <FormStepper
       data={transformDSOToFormValues(data)}
       dataToCheck={transformDSOToFormValues(data)}
       followDefaultMode={data !== undefined}
-      createMutation={createMutation}
-      editMutation={editMutation}
+      createMutation={data != null ? editMutation : createMutation}
+      // editMutation={editMutation}
+      editMutation={data != null ? editMutation : createMutation}
       submitMutation={submitMutation}
       steps={dsoFormSteps}
       nonLinear
@@ -84,6 +86,7 @@ export const DSOForm = () => {
       redirectOnSave={redirectOnSave}
       redirectCallback={redirectCallback}
       isRequiredOnLastStep={true}
+      isCreateMode={{ value: dsoId === undefined }}
     />
   )
 }

@@ -97,6 +97,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   marketType?: string
   dso?: string
   productSpecification?: string
+  step: number
 }
 
 export interface NewBaseDigitalSecurityOffering
@@ -126,6 +127,7 @@ export interface NewBaseDigitalSecurityOffering
   leverage?: number
   productSpecification?: string
   step?: number
+  isCampaign: boolean
 }
 
 export interface DSOInsight {
@@ -228,10 +230,10 @@ export type DSOBaseFormValues = Omit<
   | 'insight'
   | 'disabled'
   | 'corp'
-  // | 'useOfProceeds'
-  // | 'introduction'
-  // | 'businessModel'
-  // | 'fundraisingMilestone'
+  | 'useOfProceeds'
+  | 'introduction'
+  | 'businessModel'
+  | 'fundraisingMilestone'
 >
 
 export type DSORequestArgsStep1 = Partial<

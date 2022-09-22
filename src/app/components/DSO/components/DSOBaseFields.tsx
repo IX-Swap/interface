@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Grid, IconButton, InputAdornment } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
@@ -10,21 +10,72 @@ import { TypedField } from 'components/form/TypedField'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { VSpacer } from 'components/VSpacer'
 import { DataroomFileType } from 'config/dataroom'
-import { booleanValueExtractor, dateTimeValueExtractor } from 'helpers/forms'
+import {
+  booleanValueExtractor,
+  dateTimeValueExtractor,
+  integerValueExtractor
+} from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
+import { Icon } from 'ui/Icons/Icon'
+import useStyles from './DSODecimalButton.styles'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
   isLive: boolean
 }
 
+export interface DSOCounterProps {
+  incrementAmt?: number
+  decrementAmt?: number
+  val?: number
+  name: string
+  minVal?: number | null
+  maxVal?: number | null
+  setterFunction: (name: string, val: number) => void
+}
+export type DSOIncrementProps = Omit<DSOCounterProps, 'decrementAmt' | 'minVal'>
+export type DSODecrementProps = Omit<DSOCounterProps, 'increment' | 'maxVal'>
+
+export const decrement = (props: DSODecrementProps) => {
+  const {
+    decrementAmt = 1,
+    val = 0,
+    name,
+    minVal = null,
+    setterFunction
+  } = props
+
+  if (minVal !== null) {
+    setterFunction(name, val > minVal ? val - decrementAmt : val)
+  } else {
+    setterFunction(name, val - decrementAmt)
+  }
+}
+
+export const increment = (props: DSOIncrementProps) => {
+  const {
+    incrementAmt = 1,
+    val = 0,
+    name,
+    maxVal = null,
+    setterFunction
+  } = props
+
+  if (maxVal !== null) {
+    setterFunction(name, val >= maxVal ? val : val + incrementAmt)
+  } else {
+    setterFunction(name, val - incrementAmt)
+  }
+}
+
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
   const { control } = useFormContext<DSOFormValues>()
+  const classes = useStyles()
 
   return (
     <Grid item>
@@ -111,6 +162,56 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 control={control}
                 placeHolder='Select blockchain network'
                 variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                control={control}
+                component={TextInput}
+                valueExtractor={integerValueExtractor}
+                label='Decimal Places'
+                name='decimalPlaces'
+                variant='outlined'
+                defaultValue={0}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position='start'
+                      style={{ height: '100%', marginLeft: '-0.5rem' }}
+                    >
+                      <IconButton
+                        onClick={() =>
+                          decrement({
+                            val: control.getValues('decimalPlaces'),
+                            name: 'decimalPlaces',
+                            minVal: 0,
+                            setterFunction: control.setValue
+                          })
+                        }
+                        className={classes.button}
+                      >
+                        <Icon name='minus' />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position='end' style={{ height: '100%' }}>
+                      <IconButton
+                        onClick={() =>
+                          increment({
+                            val: control.getValues('decimalPlaces'),
+                            name: 'decimalPlaces',
+                            maxVal: 18,
+                            setterFunction: control.setValue
+                          })
+                        }
+                        className={classes.button}
+                      >
+                        <Icon name='plus' />
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
           </Grid>

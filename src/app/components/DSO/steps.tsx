@@ -3,7 +3,11 @@ import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCo
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
 import { DSOFormValues } from 'types/dso'
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
-import { getDSOInformationSchema } from 'validation/dso'
+import {
+  getDSOInformationSchema,
+  getDSOCompanyInformationSchema,
+  getDSODocumentschema
+} from 'validation/dso'
 import { getDSOInformationFormValues } from './utils'
 import { getDSOInformationRequestPayload } from './requests'
 
@@ -20,17 +24,18 @@ export const dsoFormSteps = [
     getFormValues: (data: DSOFormValues) => {
       return {
         team: data.team ?? [{}],
-        introduction: data.introduction,
-        businessModel: data.businessModel,
-        useOfProceeds: data.useOfProceeds,
-        fundraisingMilestone: data.fundraisingMilestone,
+        introduction: data.introduction ?? '',
+        businessModel: data.businessModel ?? '',
+        useOfProceeds: data.useOfProceeds ?? '',
+        fundraisingMilestone: data.fundraisingMilestone ?? '',
         step: 1
       }
     },
     getRequestPayload: (values: any) => {
       return values
     },
-    validationSchema: {},
+    validationSchema: getDSOCompanyInformationSchema,
+    initialValidationSchema: getDSOCompanyInformationSchema,
     component: () => <DSOCompanyInformationFields />
   },
   {
@@ -44,8 +49,10 @@ export const dsoFormSteps = [
         step: 2
       }
     },
-    getRequestPayload: {},
-    validationSchema: {},
+    getRequestPayload: (values: any) => {
+      return values
+    },
+    validationSchema: getDSODocumentschema,
     component: () => <DSODocumentsFields />
   }
 ]

@@ -47,6 +47,9 @@ export interface FormStepperProps {
   isRequiredOnLastStep?: boolean
   followDefaultMode?: boolean
   dataToCheck?: any
+  isCreateMode?: {
+    value: boolean
+  }
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -68,7 +71,8 @@ export const FormStepper = (props: FormStepperProps) => {
     redirectCallback,
     isRequiredOnLastStep,
     followDefaultMode = true,
-    dataToCheck = undefined
+    dataToCheck = undefined,
+    isCreateMode = undefined
   } = props
 
   const { isMobile } = useAppBreakpoints()
@@ -190,6 +194,7 @@ export const FormStepper = (props: FormStepperProps) => {
             isRequiredOnLastStep={isRequiredOnLastStep}
             followDefaultMode={followDefaultMode}
             dataToCheck={dataToCheck}
+            isCreateMode={isCreateMode}
           />
         ))}
       </Grid>

@@ -36,6 +36,15 @@ export const moneyNumberFormat: NumberFormatProps<any> = {
   allowNegative: false
 }
 
+export const numberWithMaxFormat: any = (maximumValue: number) => {
+  return {
+    inputMode: 'numeric',
+    allowEmptyFormatting: true,
+    allowNegative: false,
+    maximumValue
+  }
+}
+
 export const leadingZerosNumberFormat: NumberFormatProps<any> = {
   ...positiveNumberFormat,
   isNumericString: true,

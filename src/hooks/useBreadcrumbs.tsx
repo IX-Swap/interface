@@ -58,9 +58,7 @@ export const BreadcrumbsProvider = ({ children }: PropsWithChildren<any>) => {
         label: crumbname,
         path: data[targetIndex].path
       }
-      console.log('data[targetIndex]', tempData[targetIndex])
     }
-    // setData([...tempData])
   }
 
   return (
