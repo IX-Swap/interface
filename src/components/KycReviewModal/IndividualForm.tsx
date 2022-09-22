@@ -23,6 +23,14 @@ interface Props {
 }
 
 export const IndividualForm = ({ data, riskJSON }: Props) => {
+  const documents = data?.documents?.filter(document => {
+    if (+data?.accredited === 0) {
+      return document.type !== 'accreditation'
+    }
+
+    return document
+  })
+
   return (
     <>
       <Cynopsis riskJSON={riskJSON} />
@@ -40,7 +48,7 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
 
       <InvestorStatusDeclaration data={data} kycKey="individual" />
       <InvestorDeclaration data={data} />
-      <UploadedDocuments data={data.documents} />
+      <UploadedDocuments data={documents} />
     </>
   )
 }
