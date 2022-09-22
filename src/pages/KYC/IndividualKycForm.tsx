@@ -879,7 +879,7 @@ export default function IndividualKycForm() {
                                           label="Tax Identification Number (TIN)"
                                           value={values.taxDeclarations[index].idNumber} 
                                           error={errors[`taxDeclarations[${index}].idNumber`]}
-                                          disabled={values.taxDeclarations[index].tinUnavailable}
+                                          disabled={values.taxDeclarations[index].isAdditional}
                                           onChange={e => onChangeInput(`taxDeclarations[${index}].idNumber`, e.currentTarget.value, values, setFieldValue)} 
                                         />
                                         {errors[`taxDeclarations[${index}].idNumber`] && (
@@ -904,9 +904,9 @@ export default function IndividualKycForm() {
                                   <LabeledCheckBox>
                                     <Checkbox 
                                       label={''} 
-                                      checked={values.taxDeclarations[index].tinUnavailable}
+                                      checked={values.taxDeclarations[index].isAdditional}
                                       onClick={() => {
-                                        onChangeInput(`taxDeclarations[${index}].tinUnavailable`, !values.taxDeclarations[index].tinUnavailable, values, setFieldValue)
+                                        onChangeInput(`taxDeclarations[${index}].isAdditional`, !values.taxDeclarations[index].isAdditional, values, setFieldValue)
                                         onChangeInput(`taxDeclarations[${index}].idNumber`, '', values, setFieldValue)
                                         onChangeInput(`taxDeclarations[${index}].reason`, '', values, setFieldValue)
                                       }}
@@ -915,7 +915,7 @@ export default function IndividualKycForm() {
                                     <TYPE.description3>TIN is not available (please indicate reason):</TYPE.description3>
                                   </LabeledCheckBox>
 
-                                  {values.taxDeclarations[index].tinUnavailable && (
+                                  {values.taxDeclarations[index].isAdditional && (
                                     <>
                                       <TextInput 
                                         label="Reason"
@@ -937,7 +937,7 @@ export default function IndividualKycForm() {
 
                               <LinkButton 
                                 type="button"
-                                onClick={() => push({ country: null, idNumber: '', isAdditional: true })} 
+                                onClick={() => push({ country: null, idNumber: '', isAdditional: false})} 
                                 style={{ marginTop: "32px", width: "100%" }}
                               >
                                 <ExtraInfoCard>

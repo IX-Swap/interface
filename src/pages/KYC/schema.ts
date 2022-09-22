@@ -38,17 +38,17 @@ export const individualErrorsSchema = yup.object().shape({
 
   taxDeclarations: yup.array().of(
     yup.object().shape({ 
-      tinUnavailable: yup.bool(),
+      isAdditional: yup.bool(),
       country: yup.object().shape({ label: yup.string() }).nullable().required('Required'), 
-      idNumber: yup.string().when('tinUnavailable', { is: true, then: yup.string().nullable(), otherwise: yup.string().required('Required') }),
-      reason: yup.string().when('tinUnavailable', { is: true, then: yup.string().required('Required'), otherwise: yup.string().nullable() })
+      idNumber: yup.string().when('isAdditional', { is: true, then: yup.string().nullable(), otherwise: yup.string().required('Required') }),
+      reason: yup.string().when('isAdditional', { is: true, then: yup.string().required('Required'), otherwise: yup.string().nullable() })
     })
   )
     .min(1, 'Add at least 1 tax declaration')
     .required('Required'),
 
   taxIdentification: yup.string().when('taxCountry', { is: (country: any) => !!country, then: yup.string().required('Required') }),
-  taxIdentificationReason: yup.string().when('taxTinUnavailable', { is: true, then: yup.string().required('Required') }),
+  taxIdentificationReason: yup.string().when('taxisAdditional', { is: true, then: yup.string().required('Required') }),
 
   sourceOfFunds: yup.array().min(1, 'Choose one').required('Required'),
   otherFunds: yup.string().when('sourceOfFunds', {
