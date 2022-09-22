@@ -50,6 +50,7 @@ import { IconButton } from '@material-ui/core'
 import { HrLine } from 'pages/CreateNFT/styleds'
 import { Plus } from 'react-feather'
 import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
+import { KYCValidationErrors } from './KYCValidationErrors'
 
 
 type FormSubmitHanderArgs = { 
@@ -771,7 +772,7 @@ export default function IndividualKycForm() {
                               onChange={(e: any) => onChangeInput('employer', e.currentTarget.value, values, setFieldValue)}
                             />
                             <Select
-                              label="Total Income in USD in preceding 12 months"
+                              label="Total Income (in SGD) in the Last 12 Months"
                               items={incomes}
                               selectedItem={values.income}
                               onSelect={(income) => onSelectChange('income', income, setFieldValue)}
@@ -1406,6 +1407,7 @@ export default function IndividualKycForm() {
                   </FormContainer>
 
                   <StyledStickyBox>
+                    <KYCValidationErrors fields={Object.keys(errors)} />
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
                       handleSaveProgress={() => saveProgress(form?.current?.values)}

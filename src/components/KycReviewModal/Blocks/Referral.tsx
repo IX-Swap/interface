@@ -12,7 +12,7 @@ interface Props {
 export const Referral = ({ data }: Props) => {
   return (
     <Block title="Referral">
-        <Field label='Referral Code' value={data.referral ?? 'Not provided'} />
+        <Field label='Referral Code' value={data.referralCode ?? 'Not provided'} />
     </Block>
   )
 }

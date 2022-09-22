@@ -17,11 +17,7 @@ interface Props {
 export const InvestorDeclaration = ({ data }: Props) => {
   console.log(data)
 
-  if (
-    !data.investorDeclaration.status && 
-    data.investorDeclaration.acceptOfQualification === undefined && 
-    data.investorDeclaration.acceptRefusalRight === undefined
-  ) {
+  if (data.accredited === 0) {
     return null
   }
 
