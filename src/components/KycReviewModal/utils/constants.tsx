@@ -150,7 +150,7 @@ export const fatcaKeys = [
   {
     key: 'fatca1',
     label:
-      'I confirm that I am a US citizen and/or resident in the US for tax purposes and my US federal taxpayer ID number (US TIN) is as follows: ',
+      'I confirm that I am a US citizen and/or resident in the US for tax purposes and my U.S. federal',
   },
   {
     key: 'fatca2',
@@ -162,7 +162,7 @@ export const ocupationKeys = [
   { key: 'occupation', label: 'Occupation', width: { xs: 12, sm: 6 } },
   { key: 'employmentStatus', label: 'Employment Status', width: { xs: 12, sm: 6 } },
   { key: 'employer', label: 'Employer', width: { xs: 12, sm: 6 } },
-  { key: 'income', label: 'Income in USD in preceding 12 months', width: { xs: 12, sm: 6 } },
+  { key: 'income', label: 'Total Income (in SGD) in the Last 12 Months', width: { xs: 12, sm: 6 } },
 ]
 
 export const optInRequirementKeys = [

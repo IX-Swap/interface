@@ -15,6 +15,7 @@ import {
   TaxDeclarations,
   InvestorDeclaration,
 } from './Blocks'
+import { Referral } from './Blocks/Referral'
 
 interface Props {
   data: IndividualKyc
@@ -29,6 +30,8 @@ export const IndividualForm = ({ data, riskJSON }: Props) => {
       <Information data={data} kycKey="individual" />
       <Address data={data} />
       <IndividualDocument data={data} />
+
+      <Referral data={data} />
 
       <Occupation data={data} />
       <SourceOfFunds data={data} kycKey="individual" />

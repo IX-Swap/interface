@@ -2,10 +2,8 @@ import React, { FC } from 'react'
 
 import { Block } from '../molecules/Block'
 import { GridContainer, GridItem } from 'components/Grid'
-import { IndividualTaxDeclarationKeys, taxDeclarationKeys } from '../utils/constants'
 import { Field } from '../molecules/Field'
 import { IndividualKyc } from 'state/admin/actions'
-import { TYPE } from 'theme'
 
 interface Props {
   data: IndividualKyc
@@ -29,11 +27,9 @@ export const TaxDeclarations: FC<Props> = ({ data }: Props) => {
               <Field label={'Tax Identification Number (TIN)'} value={declaration.idNumber ?? 'Not available'} />
             </GridItem>
             
-            {declaration.reason && (
-              <GridItem key={`declaration-${index}-reason`} md={4}>
-                <Field label={'Reason'} value={declaration.reason} />
-              </GridItem>
-            )}
+            <GridItem key={`declaration-${index}-reason`} md={4}>
+              {declaration.reason ? (<Field label={'Reason'} value={declaration.reason} />) : (<div></div>)}
+            </GridItem>
           </>
         ))}
       </GridContainer>

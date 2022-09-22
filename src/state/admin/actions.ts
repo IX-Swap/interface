@@ -443,7 +443,7 @@ export interface IndividualKyc {
   sourceOfFunds: string
   updatedAt: string
   usTin: string | null
-  investorDeclarationStatus: string
+  investorDeclarationStatus: InvestorDeclaration
   taxDeclarations: TaxDeclaration[]
   [key: string]: any
 }
@@ -488,9 +488,15 @@ export interface CorporateKyc {
   sourceOfFunds: string
   updatedAt: string
   usTin: string | null
-  investorDeclarationStatus: string
+  investorDeclarationStatus: InvestorDeclaration
   taxDeclarations: TaxDeclaration[]
   [key: string]: any
+}
+
+interface InvestorDeclaration {
+  status: string
+  acceptOfQualification: boolean
+  acceptRefusalRight: boolean
 }
 
 export interface KycItem {

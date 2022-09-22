@@ -17,7 +17,11 @@ interface Props {
 export const InvestorDeclaration = ({ data }: Props) => {
   console.log(data)
 
-  if (!data.investorDeclarationStatus && data.acceptOfQualification === undefined && data.acceptRefusalRight === undefined) {
+  if (
+    !data.investorDeclaration.status && 
+    data.investorDeclaration.acceptOfQualification === undefined && 
+    data.investorDeclaration.acceptRefusalRight === undefined
+  ) {
     return null
   }
 
@@ -25,24 +29,24 @@ export const InvestorDeclaration = ({ data }: Props) => {
     <Block title="Investor Declaration">
       <>
         <Column style={{ margin: '1rem', marginLeft: 0, gap: "1rem" }}>
-          {data.investorDeclarationStatus !== undefined && (
+          {data.investorDeclaration.status !== undefined && (
             <>
               <LabeledCheckBox>
-                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'total-assets'} />
+                <Checkbox label="" isRadio disabled checked={data.investorDeclaration.status === 'total-assets'} />
                 <TYPE.description3>
                   My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
                 </TYPE.description3>
               </LabeledCheckBox>
 
               <LabeledCheckBox>
-                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'annual-income'} />
+                <Checkbox label="" isRadio disabled checked={data.investorDeclaration.status === 'annual-income'} />
                 <TYPE.description3>
                   My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
                 </TYPE.description3>
               </LabeledCheckBox>
 
               <LabeledCheckBox>
-                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'financial-assets'} />
+                <Checkbox label="" isRadio disabled checked={data.investorDeclaration.status === 'financial-assets'} />
                 <TYPE.description3>
                   My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or 
                   its equivalent (or its equivalent in foreign currency)
@@ -50,7 +54,7 @@ export const InvestorDeclaration = ({ data }: Props) => {
               </LabeledCheckBox>
               
               <LabeledCheckBox>
-                <Checkbox label="" isRadio disabled checked={data.investorDeclarationStatus === 'joint-income'} />
+                <Checkbox label="" isRadio disabled checked={data.investorDeclaration.status === 'joint-income'} />
                 <TYPE.description3>
                   My jointly held account with my spouse/any individual meets any of the above
                 </TYPE.description3>
@@ -58,7 +62,7 @@ export const InvestorDeclaration = ({ data }: Props) => {
             </>
           )}
           
-          {data.acceptOfQualification !== undefined && data.acceptRefusalRight !== null && (
+          {data.investorDeclaration.acceptOfQualification !== undefined && data.investorDeclaration.acceptRefusalRight !== null && (
             <RowBetween marginTop="32px">
               <TYPE.title7 style={{ textTransform: 'uppercase' }}>
                 <Trans>Opt-in requirement</Trans>
@@ -66,9 +70,9 @@ export const InvestorDeclaration = ({ data }: Props) => {
             </RowBetween>
           )}
 
-          {data.acceptOfQualification !== undefined && (
+          {data.investorDeclaration.acceptOfQualification !== undefined && (
             <LabeledCheckBox>
-              <Checkbox label='' disabled checked={data.acceptOfQualification} />
+              <Checkbox label='' disabled checked={data.investorDeclaration.acceptOfQualification} />
 
               <TYPE.description3>
                 I have been informed of and understand the consequences of my qualification as an Accredited Investor, 
@@ -77,9 +81,9 @@ export const InvestorDeclaration = ({ data }: Props) => {
             </LabeledCheckBox>
           )}
           
-          {data.acceptRefusalRight !== undefined && (
+          {data.investorDeclaration.acceptRefusalRight !== undefined && (
             <LabeledCheckBox>
-              <Checkbox label='' disabled checked={data.acceptRefusalRight} />
+              <Checkbox label='' disabled checked={data.investorDeclaration.acceptRefusalRight} />
 
               <TYPE.description3>
                 I have been informed of and understand my right to opt out of the Accredited Investors status

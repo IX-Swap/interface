@@ -20,13 +20,13 @@ export const InvestorStatusDeclaration = ({ data, kycKey }: Props) => {
         <Column style={{ gap: '16px' }}>
           <LabeledCheckBox>
             <Checkbox scaleSize={1.4} isRadio checked={data.accredited === 0} disabled label='' />
-            <TYPE.title6 style={{ textTransform: 'uppercase' }}>I am not an accredited investor</TYPE.title6>
+            <TYPE.title6 style={{ textTransform: 'uppercase' }}>I declare I am a Retail Investor</TYPE.title6>
           </LabeledCheckBox>
 
           <LabeledCheckBox>
             <Checkbox scaleSize={1.4} isRadio checked={data.accredited === 1} disabled label='' />
             <TYPE.title6 style={{ textTransform: 'uppercase' }}>
-              {`I declare that i am “${ kycKey === 'individual' ? 'individual' : 'corporate' } accredited Investor”`}
+              {`I declare that I am ${ kycKey === 'individual' ? 'an Individual' : 'a Corporate' } Accredited Investor`}
             </TYPE.title6>
           </LabeledCheckBox>
         </Column>
