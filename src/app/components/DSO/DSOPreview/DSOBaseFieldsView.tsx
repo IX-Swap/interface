@@ -119,7 +119,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
             <Grid item xs={12} md={4}>
               <LabelledValue
                 label='Decimal'
-                value={dso?.decimals}
+                value={dso?.decimalPlaces}
                 labelColor={!isLightThemeActive ? 'dark' : 'default'}
                 isNewThemeOn={isLightThemeActive}
                 valueColor='rgb(255,255,255)'
