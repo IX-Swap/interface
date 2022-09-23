@@ -191,6 +191,7 @@ export default function IndividualKycForm() {
 
   const onAccreditedChange = (value: number, setFieldValue: any) => {
     setFieldValue('accredited', value, false)
+    validationSeen('accredited')
 
     if (value === 0) {
       const keys = [
