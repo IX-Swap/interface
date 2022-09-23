@@ -61,7 +61,7 @@ export const TokenDeploymentView = ({ data }: TokenDeploymentViewProps) => {
         />
       </Grid>
       <Grid item xs={12} md={4}>
-        <LabelledValue label='Decimals' value={data.decimals ?? 0} />
+        <LabelledValue label='Decimals' value={data.decimals ?? 18} />
       </Grid>
       <Grid item xs={12}>
         <Box p={2} />

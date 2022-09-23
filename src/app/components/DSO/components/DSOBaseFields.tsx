@@ -172,7 +172,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Decimal Places'
                 name='decimalPlaces'
                 variant='outlined'
-                defaultValue={0}
+                defaultValue={18}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
