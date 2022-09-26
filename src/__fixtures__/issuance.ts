@@ -123,7 +123,8 @@ export const dso: DigitalSecurityOffering = {
   disabled: false,
   faqs: [],
   isStarred: false,
-  videos: []
+  videos: [],
+  step: 0
 }
 
 export const teamMember: DsoTeamMember = {
@@ -167,7 +168,9 @@ export const baseDSOFormValues: DSOBaseFormValues = {
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
-  capitalStructure: 'Good'
+  capitalStructure: 'Good',
+  isCampaign: true,
+  decimalPlaces: 18
 }
 
 export const formValues: DSOFormValues = {
@@ -231,7 +234,8 @@ export const formValues: DSOFormValues = {
   corporate: '5f898a64aa141c6d0d358ce1',
   capitalStructure: 'Good',
   businessModel: '<p>Hello world</p>',
-  decimalPlaces: 0
+  decimalPlaces: 0,
+  step: 2
 }
 
 export const requestargs: DSORequestArgs = {
@@ -270,7 +274,8 @@ export const requestargs: DSORequestArgs = {
   issuerName: 'IXIssuer',
   tokenName: 'IXWTKN',
   tokenSymbol: '$#',
-  decimalPlaces: 0
+  decimalPlaces: 0,
+  step: 3
 }
 
 export const investmentGrowthData: Array<[Date, number]> = [

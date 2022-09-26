@@ -256,7 +256,8 @@ export const dso: DigitalSecurityOffering = {
     corporates: []
   },
   status: 'Approved',
-  insight: dsoInsight
+  insight: dsoInsight,
+  step: 0
 }
 
 export const commitment: Commitment = {

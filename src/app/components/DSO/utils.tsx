@@ -92,7 +92,8 @@ export const transformDSOToFormValuesStep1 = (
       dividendYield: '',
       investmentPeriod: '',
       productSpecification: '',
-      isCampaign: false
+      isCampaign: false,
+      decimalPlaces: 18
     } as any
   }
 
@@ -119,7 +120,8 @@ export const transformDSOToFormValuesStep1 = (
     minimumInvestment: dso.minimumInvestment,
     launchDate: dso.launchDate ?? null,
     completionDate: dso.completionDate ?? null,
-    isCampaign: dso.isCampaign
+    isCampaign: dso.isCampaign,
+    decimalPlaces: dso.decimalPlaces
   }
 }
 

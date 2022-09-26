@@ -128,6 +128,7 @@ export interface NewBaseDigitalSecurityOffering
   productSpecification?: string
   step?: number
   isCampaign: boolean
+  decimalPlaces: number
 }
 
 export interface DSOInsight {
