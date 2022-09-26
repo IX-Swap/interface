@@ -15,6 +15,15 @@ import isPast from 'date-fns/isPast'
 import { Network, Urls } from 'types/networks'
 import { sanitize } from 'dompurify'
 import { generatePath } from 'react-router-dom'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
+
+export const getCreateModeRedirect = (dsoId: string) => {
+  if (dsoId !== undefined) {
+    return IssuanceRoute.edit
+  }
+
+  return IssuanceRoute.create
+}
 
 export const redirect = ({
   createModeRedirect,

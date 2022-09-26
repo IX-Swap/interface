@@ -12,25 +12,17 @@ import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { dsoFormSteps } from './steps'
 import {
+  getCreateModeRedirect,
   redirect,
   redirectSave,
   transformDSOToFormValues
 } from 'app/components/DSO/utils'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAuth } from 'hooks/auth/useAuth'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering
   isNew?: boolean
-}
-
-export const getCreateModeRedirect = (dsoId: string) => {
-  if (dsoId !== undefined) {
-    return IssuanceRoute.edit
-  }
-
-  return IssuanceRoute.create
 }
 
 export const DSOForm = () => {
@@ -74,7 +66,6 @@ export const DSOForm = () => {
       dataToCheck={transformDSOToFormValues(data)}
       followDefaultMode={data !== undefined}
       createMutation={data != null ? editMutation : createMutation}
-      // editMutation={editMutation}
       editMutation={data != null ? editMutation : createMutation}
       submitMutation={submitMutation}
       steps={dsoFormSteps}
