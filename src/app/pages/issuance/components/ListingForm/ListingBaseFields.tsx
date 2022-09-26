@@ -6,7 +6,7 @@ import { NetworkSelect } from 'components/form/NetworkSelect'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
-import { positiveNumberFormat } from 'config/numberFormat'
+import { numberWithMaxFormat } from 'config/numberFormat'
 import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -137,7 +137,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               fullWidth
               component={NumericInput}
               customRenderer
-              numberFormat={positiveNumberFormat}
+              numberFormat={{ ...numberWithMaxFormat(18) }}
               label='Decimal Places'
               disabled={
                 isDataFromDSO &&

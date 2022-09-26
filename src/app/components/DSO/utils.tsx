@@ -156,7 +156,7 @@ export const transformDSOToFormValues = (
       investmentPeriod: '',
       issuerName: '',
       uniqueIdentifierCode: '',
-      decimalPlaces: 0,
+      decimalPlaces: 18,
       step: 0
     } as any
   }
