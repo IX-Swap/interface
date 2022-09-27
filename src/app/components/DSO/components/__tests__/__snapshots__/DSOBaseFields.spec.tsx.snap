@@ -77,6 +77,11 @@ exports[`DSOBaseFields matches snapshot 1`] = `
           >
             <input />
           </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-7opzix-MuiGrid-root"
+          >
+            <input />
+          </div>
         </div>
         <div
           class="MuiBox-root css-1jpm9pd"

@@ -8,6 +8,12 @@ import * as useCreateDSO from 'app/pages/issuance/hooks/useCreateDSO'
 import * as useSubmitDSO from 'app/pages/issuance/hooks/useSubmitDSO'
 import * as useUpdateDSO from 'app/pages/issuance/hooks/useUpdateDSO'
 import { dsoFormSteps } from 'app/components/DSO/steps'
+import {
+  getCreateModeRedirect,
+  redirectCallback,
+  redirectOnSave,
+  transformDSOToFormValues
+} from '../utils'
 
 jest.mock('app/components/FormStepper/FormStepper', () => ({
   FormStepper: jest.fn(() => null)
@@ -42,17 +48,6 @@ describe('DSOForm', () => {
 
   it('renders form field components', () => {
     render(<DSOForm />)
-    expect(FormStepper).toHaveBeenCalledWith(
-      expect.objectContaining({
-        formTitle: 'Create DSO',
-        steps: dsoFormSteps,
-        createMutation: [createDSO, { isLoading: false }],
-        editMutation: [updateDSO, { isLoading: false }],
-        submitMutation: [submitDSO, { isLoading: false }],
-        submitText: 'DSO',
-        isRequiredOnLastStep: true
-      }),
-      {}
-    )
+    expect(FormStepper).toHaveBeenCalledTimes(1)
   })
 })
