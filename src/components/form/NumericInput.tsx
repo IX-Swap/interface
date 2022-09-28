@@ -25,6 +25,7 @@ export interface NumericInputAdornmentProps extends NumericInputProps {
   InputProps?: {
     startAdornment: JSX.Element
     endAdornment: JSX.Element
+    inputProps: any
   }
   isAllowed?: (values: any) => boolean | boolean
 }
