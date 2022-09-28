@@ -179,6 +179,8 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Decimal Places'
                 name='decimalPlaces'
                 variant='outlined'
+                isOptional
+                optionalText='(0-18)'
                 defaultValue={18}
                 InputProps={{
                   startAdornment: (
@@ -217,7 +219,12 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                         <Icon name='plus' />
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
+                  inputProps: {
+                    style: {
+                      textAlign: 'center'
+                    }
+                  }
                 }}
               />
             </Grid>
