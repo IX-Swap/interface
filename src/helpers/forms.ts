@@ -21,9 +21,16 @@ export const numericValueExtractor = (
 ): number | undefined => values.floatValue
 
 export const integerValueExtractor = (
-  values: NumberFormatValues
+  values: NumberFormatValues | any,
+  maxValue?: number
 ): number | undefined =>
-  isNaN(parseInt(values.value)) ? 0 : parseInt(values.value)
+  isNaN(parseInt(values.value))
+    ? undefined
+    : maxValue !== undefined
+    ? values.value > maxValue
+      ? maxValue
+      : parseInt(values.value)
+    : parseInt(values.value)
 
 export const numericStringValueExtractor = (values: NumberFormatValues) =>
   values.value.toString()

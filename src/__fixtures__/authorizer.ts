@@ -257,7 +257,8 @@ export const dso: DigitalSecurityOffering = {
   },
   status: 'Approved',
   insight: dsoInsight,
-  step: 0
+  step: 0,
+  decimalPlaces: 18
 }
 
 export const commitment: Commitment = {

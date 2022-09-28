@@ -6,7 +6,8 @@ import {
   DSOBaseFormValues,
   NewBaseDigitalSecurityOffering,
   RedirectArgs,
-  RedirectSaveArgs
+  RedirectSaveArgs,
+  RedirectOnSaveArgs
 } from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
 import { getIdFromObj } from 'helpers/strings'
@@ -16,6 +17,34 @@ import { Network, Urls } from 'types/networks'
 import { sanitize } from 'dompurify'
 import { generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { CreateModeRedirect } from '../FormStepper/FormStepper'
+
+export const redirectCallback = (
+  createModeRedirect: CreateModeRedirect,
+  data: any,
+  history: any,
+  dsoId: any,
+  issuerId: any
+) => {
+  redirect({ createModeRedirect, data, history, dsoId, issuerId })
+}
+export const redirectOnSave = ({
+  createModeRedirect,
+  nextLocation,
+  data,
+  setIsRedirecting,
+  history
+}: RedirectOnSaveArgs | any) => {
+  redirectSave({
+    createModeRedirect,
+    nextLocation,
+    data,
+    dsoId: data?.data.id,
+    history,
+    setIsRedirecting,
+    issuerId: data?.data.createdBy
+  })
+}
 
 export const getCreateModeRedirect = (dsoId: string) => {
   if (dsoId !== undefined) {
@@ -135,7 +164,7 @@ export const transformDSOToFormValuesStep1 = (
 }
 
 export const transformDSOToFormValues = (
-  dso: DigitalSecurityOffering | undefined
+  dso?: DigitalSecurityOffering | undefined
 ): DSOFormValues => {
   if (dso === undefined) {
     return {
@@ -168,7 +197,10 @@ export const transformDSOToFormValues = (
       issuerName: '',
       uniqueIdentifierCode: '',
       decimalPlaces: 18,
-      step: 0
+      step: 0,
+      launchDate: '',
+      completionDate: '',
+      subscriptionDocument: undefined
     } as any
   }
 

@@ -54,7 +54,12 @@ describe('transformDSOToFormValues', () => {
       dividendYield: '',
       investmentPeriod: '',
       issuerName: '',
-      uniqueIdentifierCode: ''
+      uniqueIdentifierCode: '',
+      decimalPlaces: 18,
+      step: 0,
+      launchDate: '',
+      completionDate: '',
+      subscriptionDocument: undefined
     })
   })
 })

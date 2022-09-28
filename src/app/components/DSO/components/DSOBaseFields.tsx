@@ -22,6 +22,8 @@ import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { Icon } from 'ui/Icons/Icon'
 import useStyles from './DSODecimalButton.styles'
+import { NumericInput } from 'components/form/NumericInput'
+import { numberFormat } from 'config/numberFormat'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -167,8 +169,13 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             <Grid item xs={12} md={6}>
               <TypedField
                 control={control}
-                component={TextInput}
+                component={NumericInput}
                 valueExtractor={integerValueExtractor}
+                numberFormat={{ ...numberFormat }}
+                isAllowed={(values: any) => {
+                  const { value } = values
+                  return value <= 18
+                }}
                 label='Decimal Places'
                 name='decimalPlaces'
                 variant='outlined'
