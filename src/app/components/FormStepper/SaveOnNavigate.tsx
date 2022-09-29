@@ -34,7 +34,7 @@ export const SaveOnNavigate = ({
 
   const handleSave = async () => {
     const payload = transformData(values)
-
+    console.log('payload', payload)
     return await save(
       {
         ...payload,

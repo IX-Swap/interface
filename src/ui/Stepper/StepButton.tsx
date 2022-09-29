@@ -50,7 +50,6 @@ export const StepButton = ({
   const cn = Object.keys(conditions).filter((key: string) => {
     return conditions[key as keyof VariantsConditions]
   })
-
   const validate = async () => {
     if (stepData.isLast === true) {
       setValidState(true)

@@ -67,7 +67,6 @@ export const DSOForm = () => {
       issuerId: data?.data.createdBy
     })
   }
-  console.log({ data })
 
   return (
     <FormStepper

@@ -208,23 +208,23 @@ export const dsoInformationValidationSchemaStep1: any = {
   distributionFrequency: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Distribution Frequency is required')
+    then: string()
   }),
   dividendYield: number().when('capitalStructure', {
     is: 'Equity',
-    then: number().required('Dividend Yield is required')
+    then: number()
   }),
   equityMultiple: number().when('capitalStructure', {
     is: 'Equity',
-    then: number().required('Equity Multiple is required')
+    then: number()
   }),
   grossIRR: number().when('capitalStructure', {
     is: 'Equity',
-    then: number().required('Gross IRR is required')
+    then: number()
   }),
   interestRate: number().when('capitalStructure', {
     is: 'Debt',
-    then: number().required('Interest Rate is required')
+    then: number()
   }),
   isCampaign: boolean(),
   investmentPeriod: number()
@@ -232,14 +232,12 @@ export const dsoInformationValidationSchemaStep1: any = {
     .when('capitalStructure', {
       is: capitalStructure =>
         capitalStructure === 'Equity' || capitalStructure === 'Debt',
-      then: number()
-        .transform(numberTransformer)
-        .required('Investment Period is required')
+      then: number().transform(numberTransformer)
     }),
   investmentStructure: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Investment Structure is required')
+    then: string()
   }),
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
@@ -258,7 +256,7 @@ export const dsoInformationValidationSchemaStep1: any = {
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
   leverage: number().when('capitalStructure', {
     is: 'Debt',
-    then: number().required('Leverage is required')
+    then: number()
   }),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
