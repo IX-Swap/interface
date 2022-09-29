@@ -14,6 +14,7 @@ export const getDSOInformationRequestPayload = (data: any) => {
 
   return {
     ...data,
-    ...dsoTermDefaults
+    ...dsoTermDefaults,
+    step: 1
   }
 }

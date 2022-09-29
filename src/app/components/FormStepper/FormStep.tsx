@@ -40,6 +40,7 @@ export interface FormStepProps {
   isCreateMode?: {
     value: boolean
   }
+  overRideStep?: boolean
 }
 
 interface OnSubmitSuccessArgs {
@@ -103,7 +104,8 @@ export const FormStep = (props: FormStepProps) => {
     isRequiredOnLastStep = false,
     followDefaultMode = true,
     dataToCheck = undefined,
-    isCreateMode: hasCreateMode = undefined
+    isCreateMode: hasCreateMode = undefined,
+    overRideStep = false
   } = props
   const isCurrentStep = activeStep === index
   const classes = useStyles()
@@ -187,6 +189,7 @@ export const FormStep = (props: FormStepProps) => {
         createModeRedirect={createModeRedirect}
         activeStep={activeStep}
         redirectOnSave={redirectOnSave}
+        overRideStep={overRideStep}
       />
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='small' />

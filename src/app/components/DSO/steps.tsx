@@ -32,7 +32,7 @@ export const dsoFormSteps = [
       }
     },
     getRequestPayload: (values: any) => {
-      return values
+      return { ...values, step: 2 }
     },
     validationSchema: getDSOCompanyInformationSchema,
     initialValidationSchema: getDSOCompanyInformationSchema,
@@ -50,7 +50,7 @@ export const dsoFormSteps = [
       }
     },
     getRequestPayload: (values: any) => {
-      return values
+      return { ...values, step: 3 }
     },
     validationSchema: getDSODocumentschema,
     component: () => <DSODocumentsFields />

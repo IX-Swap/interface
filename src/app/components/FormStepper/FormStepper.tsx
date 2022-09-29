@@ -50,6 +50,7 @@ export interface FormStepperProps {
   isCreateMode?: {
     value: boolean
   }
+  overRideStep?: boolean
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -72,7 +73,8 @@ export const FormStepper = (props: FormStepperProps) => {
     isRequiredOnLastStep,
     followDefaultMode = true,
     dataToCheck = undefined,
-    isCreateMode = undefined
+    isCreateMode = undefined,
+    overRideStep = false
   } = props
 
   const { isMobile } = useAppBreakpoints()
@@ -195,6 +197,7 @@ export const FormStepper = (props: FormStepperProps) => {
             followDefaultMode={followDefaultMode}
             dataToCheck={dataToCheck}
             isCreateMode={isCreateMode}
+            overRideStep={overRideStep}
           />
         ))}
       </Grid>

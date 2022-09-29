@@ -86,6 +86,7 @@ export const DSOForm = () => {
       redirectCallback={redirectCallback}
       isRequiredOnLastStep={true}
       isCreateMode={{ value: dsoId === undefined }}
+      overRideStep
     />
   )
 }
