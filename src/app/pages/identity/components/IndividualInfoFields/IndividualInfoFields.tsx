@@ -138,7 +138,7 @@ export const IndividualInfoFields = (
               rootName={rootName}
               control={control}
               name='dob'
-              label='Date'
+              label='Date of Birth'
               component={DatePicker}
               customRenderer
               defaultValue={null as any}
