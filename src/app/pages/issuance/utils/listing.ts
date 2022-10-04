@@ -36,13 +36,13 @@ export const transformListingToListingFormValue = (
   }
 
   return {
-    corporate: data.corporate._id,
-    network: data.network._id,
+    corporate: data.corporate?._id,
+    network: data.network?._id,
     tokenName: data.tokenName,
     tokenSymbol: data.tokenSymbol,
     decimals: data.decimals,
     capitalStructure: data.capitalStructure,
-    currency: data.markets[0].currency,
+    currency: data.markets[0]?.currency,
     launchDate: data.launchDate,
     dso: data.dso?._id
   }
