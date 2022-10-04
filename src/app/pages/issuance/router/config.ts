@@ -47,6 +47,7 @@ export const IssuanceRoute = {
   secondaryListings: '/app/issuance/secondary-listings',
   createListing: '/app/issuance/create',
   editListing: '/app/issuance/secondary-listings/:listingId/edit',
+  editOTCListing: '/app/issuance/secondary-listings/:UserId/:OTCListingId/edit',
   viewListing: '/app/issuance/secondary-listings/:listingId/view',
   previewListing:
     '/app/issuance/secondary-listings/:issuerId/:listingId/preview'

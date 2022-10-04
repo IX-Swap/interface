@@ -365,7 +365,9 @@ export const custodyAccount = {
 export const listingsURL = {
   getById: (userId?: string, listingId?: string) =>
     `/exchange/listing/${userId}/${listingId}`,
-  createOrUpdate: (userId?: string) => `/exchange/otc/listing/${userId}`
+  createOrUpdate: (userId?: string) => `/exchange/listing/${userId}`,
+  getOTCListing: (userId?: string, otcId?: string) =>
+    `/otc/listing/${userId}/${otcId}`
 }
 
 export const assetsURL = {
