@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react'
 import { Box, IconButton } from '@mui/material'
 import { IssuanceRoute as paths } from 'app/pages/issuance/router/config'
@@ -16,13 +17,22 @@ export interface ActionsProps {
 export const Actions = ({ item }: ActionsProps) => {
   const { user } = useAuth()
   const classes = useStyles()
+  const exchange = item?.listingType === 'Exchange' || 'Exchange/OTC'
+
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  const params = exchange
+    ? { listingId: item._id, issuerId: getIdFromObj(user) }
+    : {
+        UserId: item.authorization?.authorizer ?? item.user,
+        OTCListingId: item._id
+      }
 
   return (
     <Box display={'flex'} justifyContent={'flex-start'}>
       <IconButton
         component={AppRouterLinkComponent}
-        to={paths.editListing}
-        params={{ listingId: item._id, issuerId: getIdFromObj(user) }}
+        to={exchange ? paths.editListing : paths.editOTCListing}
+        params={params}
       >
         <EditIcon />
       </IconButton>

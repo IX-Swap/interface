@@ -64,3 +64,7 @@ export interface AuthorizerViewParams {
   itemId: string
   ownerId: string
 }
+
+export interface Authorization {
+  authorizer?: string
+}
