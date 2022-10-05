@@ -201,6 +201,7 @@ export const TextInput: FC<TextInputProps> = ({
           name={name}
           placeholder={placeholder}
           value={value}
+          data-testid={id}
           onChange={onChange}
           style={style}
           type={type}
@@ -259,6 +260,7 @@ export const KycTextInput: FC<TextInputProps> = ({
 export const TextareaInput: FC<TextInputProps> = ({
   label,
   value,
+  id,
   onChange,
   placeholder,
   style,

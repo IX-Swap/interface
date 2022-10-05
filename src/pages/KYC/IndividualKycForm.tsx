@@ -860,6 +860,7 @@ export default function IndividualKycForm() {
                                         <Select
                                           withScroll
                                           label="Country of Tax Declaration"
+                                          id="countryOfTaxDeclaration"
                                           selectedItem={values.taxDeclarations[index].country}
                                           items={countries.filter(
                                             ({ label }) =>
@@ -879,6 +880,7 @@ export default function IndividualKycForm() {
                                       <div>
                                         <TextInput 
                                           label="Tax Identification Number (TIN)"
+                                          id="taxIdentificationNumberField"
                                           value={values.taxDeclarations[index].idNumber} 
                                           error={errors[`taxDeclarations[${index}].idNumber`]}
                                           disabled={values.taxDeclarations[index].isAdditional}
@@ -1056,6 +1058,7 @@ export default function IndividualKycForm() {
                             <BorderBox active={values.accredited === 0}>
                               <Checkbox
                                 name="accredited"
+                                id="retailInvestorToggle"
                                 isRadio
                                 checked={values.accredited === 0}
                                 onClick={() => onAccreditedChange(0, setFieldValue)}

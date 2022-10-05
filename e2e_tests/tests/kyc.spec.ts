@@ -1,7 +1,7 @@
 import { test } from '../fixtures/metamaskFixture'
 import { expect } from '@playwright/test'
 import { individualKycFormData } from '../testData/kyc/kycFormData'
-import { deleteUser } from '../helpers/api/kycApiHelper'
+import { deleteUser } from '../helpers/api/generalApiHelper'
 
 test.use({ recoveryPhrase: process.env.KYC_METAMASK_RECOVERY });
 
@@ -10,12 +10,13 @@ test.beforeEach(async ({ kovanNetwork, kycPage}) => {
 })
 
 test.afterEach(async ({kycPage}) => {
-  await deleteUser(await kycPage.getUserId(), await kycPage.getAuthToken());
+  await deleteUser(await kycPage.getUserId(), await kycPage.getAuthToken(process.env.KYC_METAMASK_ADDRESS));
 })
 
 test.describe('Check KYC section functions', () => {
   test.describe('Check KYC section functions', () => {
     test('Test the ability to "Submit KYC" as "Individual"', async ({ kycPage, topNavigationBar, page }) => {
+      await page.pause();
       await kycPage.fillKycForm(individualKycFormData);
       await kycPage.clickSubmitButton();
 
@@ -36,7 +37,7 @@ test.describe('Check KYC section functions', () => {
       await adminPage.checkPendingStatusForCurrentUserIsVisible(individualKycFormData);
     })
 
-    test('Check the KYC section for the "Approved" user', async ({ kycPage, adminPage, securityTokensPage, topNavigationBar, page }) => {
+    test.skip('Check the KYC section for the "Approved" user', async ({ kycPage, adminPage, securityTokensPage, topNavigationBar, page }) => {
       await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
       await adminPage.clickKycApproveButton();
 
@@ -47,7 +48,7 @@ test.describe('Check KYC section functions', () => {
       await expect(securityTokensPage.securityTokensTitle).toBeVisible();
     })
 
-    test('Check the KYC section for the "Rejected" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
+    test.skip('Check the KYC section for the "Rejected" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
       await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
       await adminPage.clickKycRejectButton();
       await adminPage.fillRejectAnnotationTextField(individualKycFormData.rejectAnnotation);
@@ -59,7 +60,7 @@ test.describe('Check KYC section functions', () => {
       await expect(topNavigationBar.securityTokensButton).toHaveAttribute('disabled', '');
     })
 
-    test('Check the KYC section for the "Changes requested" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
+    test.skip('Check the KYC section for the "Changes requested" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
       await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
       await adminPage.clickKycRequestAChangeButton();
       await adminPage.fillChangeRequestTextField(individualKycFormData.changeRequest);
