@@ -43,7 +43,6 @@ export class KycPage extends WebPage {
 
   readonly countryOfTaxDeclarationDropdown: Locator;
   readonly taxIdentificationNumberField: Locator;
-  readonly retailInvestorToggle: Locator;
 
   kycAdminURL = config.use.baseURL + '#/admin/kyc';
   kycURL = config.use.baseURL + '#/kyc';
@@ -65,7 +64,6 @@ export class KycPage extends WebPage {
     this.dropdownListBlock = ('[id*=react-select]');
     this.countryOfTaxDeclarationDropdown = page.locator('[id="countryOfTaxDeclaration"]');
     this.taxIdentificationNumberField = page.locator('[data-testid="taxIdentificationNumberField"]');
-    this.retailInvestorToggle = page.locator('[id="retailInvestorToggle"]')
     //PERSONAL INFORMATION
     this.firstNameField = page.locator(`[data-testid="firstNameInput"]`);
     this.middleNameField = page.locator(`[data-testid="middleNameInput"]`);
@@ -164,7 +162,6 @@ export class KycPage extends WebPage {
     await this.uploadProofOfAddressFile(userData);
     await this.pickCountryOfTaxDeclarationDropdown(userData.country);
     await this.fillTaxIdentificationNumberField(userData.taxIdentificationNumber);
-    await this.clickRetailInvestorToggle();
   }
 
   //PERSONAL INFORMATION
@@ -339,10 +336,5 @@ export class KycPage extends WebPage {
 
   async fillTaxIdentificationNumberField(taxNumber) {
     await this.taxIdentificationNumberField.fill(taxNumber);
-  }
-
-  //INVESTOR STATUS DECLARATION
-  async clickRetailInvestorToggle() {
-    await this.retailInvestorToggle.click();
   }
 }

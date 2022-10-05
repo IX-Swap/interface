@@ -18,7 +18,7 @@ export const individualKycFormData  = {
   country: 'Chile',
   city: 'Santiago',
   sourceOfFunds: 'Investments',
-  investorStatusDeclaration: 'accredited',
+  investorStatusDeclaration: 'retailInvestor',
   FATCHA: 'notCitizenOfUS',
   occupation: 'ACCOUNTANT',
   employmentStatus: 'Full-Time Employee',

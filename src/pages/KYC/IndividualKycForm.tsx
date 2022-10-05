@@ -597,12 +597,14 @@ export default function IndividualKycForm() {
                           <FormGrid>
                             <TextInput
                               label="Address"
+                              id="addressField"
                               value={values.address}
                               error={errors.address}
                               onChange={(e: any) => onChangeInput('address', e.currentTarget.value, values, setFieldValue)}
                             />
                             <TextInput
                               label="Postal Code"
+                              id="postalCodeField"
                               value={values.postalCode}
                               error={errors.postalCode}
                               onChange={(e: any) => onChangeInput('postalCode', e.currentTarget.value, values, setFieldValue)}
@@ -613,6 +615,7 @@ export default function IndividualKycForm() {
                             <Select
                               withScroll
                               label="Country"
+                              id="countryDropdown"
                               selectedItem={values.country}
                               items={countries.filter(
                                 ({ label }) =>
@@ -623,6 +626,7 @@ export default function IndividualKycForm() {
                             />
                             <TextInput
                               label="City"
+                              id="cityField"
                               value={values.city}
                               error={errors.city}
                               onChange={(e: any) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
@@ -751,6 +755,7 @@ export default function IndividualKycForm() {
                           <FormGrid columns={2}>
                             <Select
                               label="Occupation"
+                              id="occupationDropdown"
                               selectedItem={values.occupation}
                               items={occupationList}
                               onSelect={(status) => onSelectChange('occupation', status, setFieldValue)}
@@ -758,6 +763,7 @@ export default function IndividualKycForm() {
                             />
                             <Select
                               label="Employment Status"
+                              id="employmentStatusDropdown"
                               selectedItem={values.employmentStatus}
                               items={empleymentStatuses}
                               onSelect={(status: any) => onSelectChange('employmentStatus', status, setFieldValue)}
@@ -768,12 +774,14 @@ export default function IndividualKycForm() {
                           <FormGrid columns={2}>
                             <TextInput
                               label="Employer"
+                              id="employerField"
                               value={values.employer}
                               error={errors.employer}
                               onChange={(e: any) => onChangeInput('employer', e.currentTarget.value, values, setFieldValue)}
                             />
                             <Select
                               label="Total Income (in SGD) in the Last 12 Months"
+                              id="incomeUsdDropdown"
                               items={incomes}
                               selectedItem={values.income}
                               onSelect={(income) => onSelectChange('income', income, setFieldValue)}
@@ -785,6 +793,7 @@ export default function IndividualKycForm() {
                             isMulti
                             withScroll
                             label="Source of Funds"
+                            id="sourceOfFundsDropdown"
                             selectedItem={values.sourceOfFunds}
                             items={sourceOfFunds}
                             value={values.sourceOfFunds}
@@ -1058,7 +1067,7 @@ export default function IndividualKycForm() {
                             <BorderBox active={values.accredited === 0}>
                               <Checkbox
                                 name="accredited"
-                                id="retailInvestorToggle"
+                                id="retailInvestor"
                                 isRadio
                                 checked={values.accredited === 0}
                                 onClick={() => onAccreditedChange(0, setFieldValue)}

@@ -37,7 +37,7 @@ test.describe('Check KYC section functions', () => {
       await adminPage.checkPendingStatusForCurrentUserIsVisible(individualKycFormData);
     })
 
-    test.skip('Check the KYC section for the "Approved" user', async ({ kycPage, adminPage, securityTokensPage, topNavigationBar, page }) => {
+    test('Check the KYC section for the "Approved" user', async ({ kycPage, adminPage, securityTokensPage, topNavigationBar, page }) => {
       await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
       await adminPage.clickKycApproveButton();
 
@@ -48,7 +48,7 @@ test.describe('Check KYC section functions', () => {
       await expect(securityTokensPage.securityTokensTitle).toBeVisible();
     })
 
-    test.skip('Check the KYC section for the "Rejected" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
+    test('Check the KYC section for the "Rejected" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
       await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
       await adminPage.clickKycRejectButton();
       await adminPage.fillRejectAnnotationTextField(individualKycFormData.rejectAnnotation);
@@ -60,7 +60,7 @@ test.describe('Check KYC section functions', () => {
       await expect(topNavigationBar.securityTokensButton).toHaveAttribute('disabled', '');
     })
 
-    test.skip('Check the KYC section for the "Changes requested" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
+    test('Check the KYC section for the "Changes requested" user', async ({ kycPage, adminPage, topNavigationBar, page }) => {
       await adminPage.clickReviewButtonOfCurrentUser(individualKycFormData);
       await adminPage.clickKycRequestAChangeButton();
       await adminPage.fillChangeRequestTextField(individualKycFormData.changeRequest);

@@ -135,6 +135,7 @@ export const Select: FC<SelectProps> = ({
 }
 
 export const KycSelect: FC<SelectProps> = ({
+  id,
   label,
   onSelect,
   selectedItem,
@@ -158,6 +159,7 @@ export const KycSelect: FC<SelectProps> = ({
       ) : (
         <ReactSelect
           name={name}
+          id={id}
           placeholder={placeholder}
           onSelect={onSelect}
           value={selectedItem}
@@ -201,7 +203,6 @@ export const TextInput: FC<TextInputProps> = ({
           name={name}
           placeholder={placeholder}
           value={value}
-          data-testid={id}
           onChange={onChange}
           style={style}
           type={type}
@@ -220,6 +221,7 @@ export const TextInput: FC<TextInputProps> = ({
 }
 
 export const KycTextInput: FC<TextInputProps> = ({
+  id,
   label,
   value,
   onChange,
@@ -244,6 +246,7 @@ export const KycTextInput: FC<TextInputProps> = ({
           onBlur={onBlur}
           name={name}
           placeholder={placeholder}
+          data-testid={id}
           value={value}
           onChange={onChange}
           style={style}
