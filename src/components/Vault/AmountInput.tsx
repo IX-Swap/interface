@@ -57,7 +57,8 @@ interface Props {
   rightItem?: ReactNode
   onUserInput: (typedValue: string) => void
   token: any
-  widthdraw?: boolean
+  widthdraw?: boolean,
+  originalDecimals?: number
 }
 export const AmountInput = ({
   currency,
@@ -68,6 +69,7 @@ export const AmountInput = ({
   showMax = false,
   token,
   widthdraw,
+  originalDecimals = 0,
   ...rest
 }: Props) => {
   return (
@@ -81,7 +83,7 @@ export const AmountInput = ({
                 value={value}
                 onUserInput={(val) => {
                   const floatingPart = val.split('.')[1]
-                  if (floatingPart && currency && currency?.decimals < floatingPart.length) return
+                  if (floatingPart && currency && originalDecimals < floatingPart.length) return
                   onUserInput(val)
                 }}
               />

@@ -33,6 +33,7 @@ import walletValidator from 'multicoin-address-validator'
 import { useAddPopup, useToggleTransactionModal } from 'state/application/hooks'
 import { setLogItem } from 'state/eventLog/actions'
 import { formatRpcError } from 'utils/formatRpcError'
+import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -113,8 +114,17 @@ export function useDerivedWithdrawInfo(): {
   let formattedTo = isAddress(receiver)
   if (!receiver) {
     inputError = inputError ?? t`Enter a receiver`
-  } else if (!formattedTo) {
-    const isValidForNetwork = walletValidator.validate(receiver, networkName ?? 'Ethereum')
+  } else{//if (!formattedTo) {
+    const network = networkName ?? 'Ethereum'
+    const currency = walletValidator.findCurrency(network)
+    let isValidForNetwork = true
+
+    if (currency) {
+      isValidForNetwork = walletValidator.validate(receiver, network)
+    } else {
+      isValidForNetwork = manualValidation(receiver, network);
+    }
+
     if (!isValidForNetwork) {
       inputError = inputError ?? t`Receiver is invalid`
     }
@@ -133,6 +143,23 @@ export function useDerivedWithdrawInfo(): {
     inputError,
   }
 }
+
+const manualValidation = (address: string, network: string) => {
+  const expressions = NETWORK_ADDRESS_PATTERNS[network]
+
+  return expressions[0].test(address)
+  /*if (!expressions[0].test(address)) {
+    return false;
+  }
+
+  if (expressions[1].test(address) || expressions[2].test(address)) {
+    // If it's all small caps or all all caps, return true
+    return true;
+  }
+
+  return false;*/
+}
+
 export const withdrawToken = async ({ id, amount, receiver }: { id: number; amount: string; receiver: string }) => {
   const response = await apiService.post(custody.withdraw, {
     amount,
