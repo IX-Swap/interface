@@ -44,7 +44,7 @@ export const ArrowWrapper = styled.div`
   background-color: ${({ theme }) => theme.bg9};
 `
 interface Props {
-  currency?: SecCurrency & { tokenInfo?: { decimals?: number } }
+  currency?: SecCurrency & { tokenInfo?: { decimals?: number, originalDecimals?: number } }
   token: any
 }
 
@@ -117,6 +117,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <AmountInput
               token={token}
               currency={currency}
+              originalDecimals={tokenInfo.originalDecimals}
               value={amount ?? ''}
               onUserInput={onTypeAmount}
               amount={parsedAmount}
@@ -161,6 +162,7 @@ export const DepositRequestForm = ({ currency, token }: Props) => {
             <AmountInput
               token={token}
               currency={currency}
+              originalDecimals={tokenInfo.originalDecimals}
               value={amount ? `${amount} ${currency?.symbol || currency?.originalSymbol}` : ''}
               onUserInput={onTypeAmount}
               amount={parsedAmount}
