@@ -13,6 +13,7 @@ import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { ListingHiddenFields } from 'app/pages/issuance/components/ListingForm/ListingHiddenFields'
+
 export interface ListingBaseFieldsProps {
   isNew: boolean
   isLive: boolean
@@ -20,7 +21,7 @@ export interface ListingBaseFieldsProps {
 }
 
 export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
-  const { isNew, isLive, isDataFromDSO } = props
+  const { isNew, isDataFromDSO } = props
   const { control, watch } = useFormContext()
 
   return (
@@ -29,7 +30,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
         <Grid item>
           <FormSectionHeader title='General Information' />
         </Grid>
-
         <Grid item container>
           <Grid item xs={12} md={12}>
             <TypedField
@@ -41,9 +41,10 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               variant='outlined'
               inputProps={{ 'data-testid': 'capital-structure' }}
               disabled={
-                isDataFromDSO &&
-                watch('capitalStructure') !==
-                  initialListingFormValues.capitalStructure
+                !isNew ||
+                (isDataFromDSO &&
+                  watch('capitalStructure') !==
+                    initialListingFormValues.capitalStructure)
               }
             />
           </Grid>
@@ -57,8 +58,9 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               control={control}
               variant='outlined'
               disabled={
-                isDataFromDSO &&
-                watch('corporate') !== initialListingFormValues.corporate
+                !isNew ||
+                (isDataFromDSO &&
+                  watch('corporate') !== initialListingFormValues.corporate)
               }
             />
           </Grid>
@@ -72,7 +74,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               name='launchDate'
               control={control}
               disabled={
-                isLive || (isDataFromDSO && watch('launchDate') !== null)
+                !isNew || (isDataFromDSO && watch('launchDate') !== null)
               }
               valueExtractor={dateTimeValueExtractor}
               defaultValue={null}
@@ -86,7 +88,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               label='Token Name'
               name='tokenName'
               disabled={
-                isLive ||
+                !isNew ||
                 (isDataFromDSO &&
                   watch('tokenName') !== initialListingFormValues.tokenName)
               }
@@ -124,7 +126,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               }
               name='tokenSymbol'
               disabled={
-                isLive ||
+                !isNew ||
                 (isDataFromDSO &&
                   watch('tokenSymbol') !== initialListingFormValues.tokenSymbol)
               }
@@ -144,8 +146,9 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               }}
               label='Decimal Places'
               disabled={
-                isDataFromDSO &&
-                watch('decimals') !== initialListingFormValues.decimals
+                !isNew ||
+                (isDataFromDSO &&
+                  watch('decimals') !== initialListingFormValues.decimals)
               }
               name='decimals'
               control={control}
