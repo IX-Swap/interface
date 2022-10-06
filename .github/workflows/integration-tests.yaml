@@ -20,6 +20,9 @@ jobs:
       KYC_METAMASK_RECOVERY: ${{ secrets.KYC_METAMASK_RECOVERY }}
       KYC_METAMASK_PRIVATE_KEY: ${{ secrets.KYC_METAMASK_PRIVATE_KEY }}
       KYC_METAMASK_ADDRESS: ${{ secrets.KYC_METAMASK_ADDRESS }}
+      SEC_METAMASK_RECOVERY: ${{ secrets.SEC_METAMASK_RECOVERY }}
+      SEC_METAMASK_PRIVATE_KEY: ${{ secrets.SEC_METAMASK_PRIVATE_KEY }}
+      SEC_METAMASK_ADDRESS: ${{ secrets.SEC_METAMASK_ADDRESS }}
       E2E_CI: true
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 

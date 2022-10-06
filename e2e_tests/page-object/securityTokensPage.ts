@@ -8,6 +8,9 @@ export class SecurityTokensPage extends WebPage {
     super(page, context);
     this.securityTokensTitle = page.locator('[data-testid="securityTokensTitle"]');
   }
+
+  //Actions
+
 }
 
 
