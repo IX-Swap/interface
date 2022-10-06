@@ -142,6 +142,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token, onRedirect }
             amount={parsedAmount}
             showMax={true}
             currency={currency}
+            originalDecimals={tokenInfo?.originalDecimals}
             value={amount ?? ''}
             onUserInput={onTypeAmount}
           />
