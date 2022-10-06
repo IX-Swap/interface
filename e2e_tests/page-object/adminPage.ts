@@ -1,5 +1,8 @@
 import { WebPage } from './webPage'
 import { BrowserContext, expect, Locator, Page } from '@playwright/test'
+import config from '../playwright.config'
+import { createKycRequest } from '../helpers/api/kycApiHelper'
+import { individualKycFormData, kycRequestBody } from '../testData/kyc/kycFormData'
 
 export class AdminPage extends WebPage {
   readonly kycApproveButton: Locator;
@@ -7,6 +10,8 @@ export class AdminPage extends WebPage {
   readonly kycRequestAChangeButton: Locator;
   readonly rejectAnnotationTextField: Locator;
   readonly submitRejectAnnotationButton: Locator;
+
+  kycAdminURL = config.use.baseURL + '#/admin/kyc';
 
   constructor(page: Page, context?: BrowserContext) {
     super(page, context);
@@ -24,6 +29,17 @@ export class AdminPage extends WebPage {
   }
 
   //Actions
+  async approveKycRequest(userData) {
+    await this.openKycAdminPage();
+    await this.checkPendingStatusForCurrentUserIsVisible(userData);
+    await this.clickReviewButtonOfCurrentUser(userData);
+    await this.clickKycApproveButton();
+  }
+
+  async openKycAdminPage() {
+    await this.page.goto(this.kycAdminURL);
+  }
+
   async clickReviewButtonOfCurrentUser(user) {
     await this.page.click(`text=${user.firstName} ${user.lastName}I >> [data-testid="reviewButton"]`);
   }

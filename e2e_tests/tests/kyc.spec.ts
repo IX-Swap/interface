@@ -33,7 +33,7 @@ test.describe('Check KYC section functions', () => {
       await kycPage.fillKycForm(individualKycFormData);
       await kycPage.clickSubmitButton();
       await expect(kycPage.pendingApprovalStatus).toBeVisible();
-      await kycPage.openKycAdminPage();
+      await adminPage.openKycAdminPage();
       await adminPage.checkPendingStatusForCurrentUserIsVisible(individualKycFormData);
     })
 

@@ -44,9 +44,9 @@ export const corporateKycForm = {
 };
 
 export const kycRequestBody = {
-  'firstName': 'Test',
-  'middleName': 'Test',
-  'lastName': 'Sec',
+  'firstName': 'Jack',
+  'middleName': 'Junior',
+  'lastName': 'Jonson',
   'gender': 'Male',
   'dateOfBirth': '01/04/2000',
   'nationality': 'Argentina',

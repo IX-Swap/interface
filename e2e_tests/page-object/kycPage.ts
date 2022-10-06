@@ -2,6 +2,8 @@ import { WebPage } from './webPage'
 import { BrowserContext, expect, Locator, Page } from '@playwright/test'
 import { MetamaskPage } from './metamaskPage'
 import config from '../playwright.config'
+import { createKycRequest } from '../helpers/api/kycApiHelper'
+import { individualKycFormData, kycRequestBody } from '../testData/kyc/kycFormData'
 
 export class KycPage extends WebPage {
   readonly metamaskPage: MetamaskPage;
@@ -44,7 +46,6 @@ export class KycPage extends WebPage {
   readonly countryOfTaxDeclarationDropdown: Locator;
   readonly taxIdentificationNumberField: Locator;
 
-  kycAdminURL = config.use.baseURL + '#/admin/kyc';
   kycURL = config.use.baseURL + '#/kyc';
   pendingApprovalText = 'Pending approval';
   changesRequestedText = 'Changes Requested';
@@ -131,10 +132,6 @@ export class KycPage extends WebPage {
   async openKycPage() {
     await this.page.goto(this.kycURL);
     await this.page.reload();
-  }
-
-  async openKycAdminPage() {
-    await this.page.goto(this.kycAdminURL);
   }
 
   async clickPassKycAsIndividualButton() {
