@@ -1,7 +1,7 @@
 import { test } from '../fixtures/metamaskFixture'
 import { expect } from '@playwright/test'
 import { individualKycFormData } from '../testData/kyc/kycFormData'
-import { deleteUser } from '../helpers/api/kycApiHelper'
+import { deleteUser } from '../helpers/api/generalApiHelper'
 
 test.use({ recoveryPhrase: process.env.KYC_METAMASK_RECOVERY });
 
@@ -10,12 +10,13 @@ test.beforeEach(async ({ kovanNetwork, kycPage}) => {
 })
 
 test.afterEach(async ({kycPage}) => {
-  await deleteUser(await kycPage.getUserId(), await kycPage.getAuthToken());
+  await deleteUser(await kycPage.getUserId(), await kycPage.getAuthToken(process.env.KYC_METAMASK_ADDRESS));
 })
 
 test.describe('Check KYC section functions', () => {
   test.describe('Check KYC section functions', () => {
     test('Test the ability to "Submit KYC" as "Individual"', async ({ kycPage, topNavigationBar, page }) => {
+      await page.pause();
       await kycPage.fillKycForm(individualKycFormData);
       await kycPage.clickSubmitButton();
 

@@ -88,13 +88,13 @@ export class WebPage {
     return await this.page.$$eval(selector, selector => selector.length);
   }
 
-  async getAuthToken() {
+  async getAuthToken(metamaskAddress) {
     const localData = await this.page.evaluate(() => {
       const res = (localStorage.getItem(`redux_localstorage_simple_auth`));
       const token = JSON.parse(res);
       return JSON.stringify(token.token);
     })
-    const parsedData = localData.replace(`${process.env.KYC_METAMASK_ADDRESS}`, ``);
+    const parsedData = localData.replace(`${metamaskAddress}`, ``);
     return parsedData.replace(/[^a-zA-Z0-9_.-]/g, ``);
   }
 

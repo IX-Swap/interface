@@ -39,6 +39,10 @@ export class KycPage extends WebPage {
   readonly makeChangesAndResendKycButton: Locator;
   readonly personalInformationKycForm: Locator;
   readonly dropdownListBlock: string;
+  readonly sourceOfFunds: Locator;
+
+  readonly countryOfTaxDeclarationDropdown: Locator;
+  readonly taxIdentificationNumberField: Locator;
 
   kycAdminURL = config.use.baseURL + '#/admin/kyc';
   kycURL = config.use.baseURL + '#/kyc';
@@ -58,6 +62,8 @@ export class KycPage extends WebPage {
     this.makeChangesAndResendKycButton = page.locator('[data-testid="makeChangesAndResendKycButton"]');
     this.personalInformationKycForm = page.locator('[id="personal"]');
     this.dropdownListBlock = ('[id*=react-select]');
+    this.countryOfTaxDeclarationDropdown = page.locator('[id="countryOfTaxDeclaration"]');
+    this.taxIdentificationNumberField = page.locator('[data-testid="taxIdentificationNumberField"]');
     //PERSONAL INFORMATION
     this.firstNameField = page.locator(`[data-testid="firstNameInput"]`);
     this.middleNameField = page.locator(`[data-testid="middleNameInput"]`);
@@ -83,9 +89,14 @@ export class KycPage extends WebPage {
     this.employmentStatusDropdown = page.locator(`[id="employmentStatusDropdown"]`);
     this.employerField = page.locator(`[data-testid="employerField"]`);
     this.incomeUsdDropdown = page.locator(`[id="incomeUsdDropdown"]`);
+    this.sourceOfFunds = page.locator(`[id="sourceOfFundsDropdown"]`);
     //UPLOAD DOCUMENTS
     this.proofOfIdentityFile = page.locator(`[type=file] >> nth=0`);
     this.proofOfAddressFile = page.locator(`[type=file] >> nth=1`);
+
+    // Country of Tax Declaration
+    // Tax Identification Number (TIN)
+    // INVESTOR DECLARATION
 
   }
   //Assertions
@@ -122,6 +133,10 @@ export class KycPage extends WebPage {
     await this.page.reload();
   }
 
+  async openKycAdminPage() {
+    await this.page.goto(this.kycAdminURL);
+  }
+
   async clickPassKycAsIndividualButton() {
     await this.passKycAsIndividualButton.click();
     await this.page.waitForLoadState();
@@ -145,6 +160,8 @@ export class KycPage extends WebPage {
     await this.fillEmploymentInformation(userData);
     await this.uploadProofOfIdentityFile(userData);
     await this.uploadProofOfAddressFile(userData);
+    await this.pickCountryOfTaxDeclarationDropdown(userData.country);
+    await this.fillTaxIdentificationNumberField(userData.taxIdentificationNumber);
   }
 
   //PERSONAL INFORMATION
@@ -261,7 +278,8 @@ export class KycPage extends WebPage {
 
   //SOURCE OF FUNDS
   async pickSourceOfFunds(source) {
-    await this.page.click(`[id="${source}"]`);
+    await this.sourceOfFunds.click();
+    await this.page.click(`${this.dropdownListBlock} >> text=${source}`);
   }
 
   //INVESTOR STATUS DECLARATION
@@ -310,7 +328,13 @@ export class KycPage extends WebPage {
     await this.proofOfAddressFile.setInputFiles(userData.documentFilePath);
   }
 
-  async openKycAdminPage() {
-    await this.page.goto(this.kycAdminURL);
+  //TAX DECLARATION
+  async pickCountryOfTaxDeclarationDropdown(countryOfTaxDeclaration) {
+    await this.countryOfTaxDeclarationDropdown.click();
+    await this.page.click(`${this.dropdownListBlock} >> text=${countryOfTaxDeclaration}`);
+  }
+
+  async fillTaxIdentificationNumberField(taxNumber) {
+    await this.taxIdentificationNumberField.fill(taxNumber);
   }
 }
