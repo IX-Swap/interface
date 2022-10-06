@@ -12,7 +12,7 @@ import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { SaveDraftButton } from 'app/components/FormStepper/SaveDraftButton'
 import { DSOFormStep } from './DSOFormStep'
 
-export interface FormStepperStep {
+export interface DSOStepperStep {
   label: string
   component: ComponentType
   getFormValues: any
@@ -22,8 +22,8 @@ export interface FormStepperStep {
   formId?: string
 }
 
-export interface FormStepperProps {
-  steps: FormStepperStep[]
+export interface DSOStepperProps {
+  steps: DSOStepperStep[]
   data: any
   createMutation: MutationResultPair<any, any, any, any>
   editMutation: MutationResultPair<any, any, any, any>
@@ -40,7 +40,7 @@ export interface FormStepperProps {
   redirectFunction: (dsoId: string) => string
 }
 
-export const DSOStepper = (props: FormStepperProps) => {
+export const DSOStepper = (props: DSOStepperProps) => {
   const {
     steps,
     data,
@@ -109,7 +109,7 @@ export const DSOStepper = (props: FormStepperProps) => {
 
   const getStepFilterValue: () => number | undefined = () => {
     const stepByFilterIndex = steps.findIndex(
-      (step: FormStepperStep) => step.label === stepFilter
+      (step: DSOStepperStep) => step.label === stepFilter
     )
 
     return stepByFilterIndex > -1 ? stepByFilterIndex : undefined
@@ -138,7 +138,7 @@ export const DSOStepper = (props: FormStepperProps) => {
   }
 
   const getStepStatus = (
-    step: FormStepperStep,
+    step: DSOStepperStep,
     index: number,
     activeStepValue: number
   ) => {
