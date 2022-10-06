@@ -103,7 +103,7 @@ export function useDerivedDepositInfo(): {
   if (!sender) {
     inputError = inputError ?? t`Enter a sender`
   } else {//if (!formattedFrom) {
-    const network = networkName ?? 'Ethereum'
+    const network = networkName || 'Ethereum'
     const currency = walletValidator.findCurrency(network)
     let isValidForNetwork = true
 
