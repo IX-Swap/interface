@@ -115,7 +115,7 @@ export function useDerivedWithdrawInfo(): {
   if (!receiver) {
     inputError = inputError ?? t`Enter a receiver`
   } else{//if (!formattedTo) {
-    const network = networkName ?? 'Ethereum'
+    const network = networkName || 'Ethereum'
     const currency = walletValidator.findCurrency(network)
     let isValidForNetwork = true
 
