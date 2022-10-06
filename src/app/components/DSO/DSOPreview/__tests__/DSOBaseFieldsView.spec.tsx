@@ -91,7 +91,7 @@ describe('DSOBaseFieldsView', () => {
       6,
       {
         label: 'Decimal',
-        value: dso.decimals,
+        value: dso.decimalPlaces,
         labelColor: 'default',
         isNewThemeOn: true,
         valueColor: 'rgb(255,255,255)'

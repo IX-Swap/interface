@@ -21,8 +21,17 @@ export interface NumericInputProps {
   variant?: 'outlined' | 'standard'
 }
 
+export interface NumericInputAdornmentProps extends NumericInputProps {
+  InputProps?: {
+    startAdornment: JSX.Element
+    endAdornment: JSX.Element
+    inputProps: any
+  }
+  isAllowed?: (values: any) => boolean | boolean
+}
+
 export const NumericInput = (
-  props: NumericInputProps & InputProps
+  props: NumericInputAdornmentProps & InputProps
 ): JSX.Element => {
   const { numberFormat, variant, ...rest } = props
 

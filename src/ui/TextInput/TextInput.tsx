@@ -13,6 +13,7 @@ import classnames from 'classnames'
 export type InputProps = TextFieldProps & {
   loading?: boolean
   hideIcon?: boolean
+  inputProps?: any
 }
 
 export const TextInput = (props: InputProps) => {

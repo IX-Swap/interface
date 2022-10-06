@@ -10,7 +10,7 @@ import { DigitalSecurityOffering, DsoTeamMember } from './dso'
 import { Market } from './market'
 import { Network } from './networks'
 import User from './user'
-import { AuthorizableWithIdentity } from './authorizer'
+import { AuthorizableWithIdentity, Authorization } from './authorizer'
 
 export interface Listing {
   _id: string
@@ -58,6 +58,8 @@ export interface Listing {
   promoted: boolean
   disabled: boolean
   marketType: string
+  authorization?: Authorization
+  listingType?: string | undefined
 }
 
 export interface ListingView extends AuthorizableWithIdentity {

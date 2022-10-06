@@ -19,7 +19,7 @@ export const MainInfo = ({ dso }: MainInfoProps) => {
         <Info label='Network' value={dso.network?.name} />
       </Grid>
       <Grid item xs={12}>
-        <Info label='Decimal' value={dso.decimals ?? 0} />
+        <Info label='Decimal' value={dso.decimals ?? 18} />
       </Grid>
       <Grid item xs={12}>
         <Info label='Capital Structure' value={dso.capitalStructure} />
