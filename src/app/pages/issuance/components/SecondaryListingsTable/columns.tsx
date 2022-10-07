@@ -8,7 +8,7 @@ import { renderListingStatus } from 'helpers/tables'
 export const columns = [
   {
     label: <Box ml={2}>Pair</Box>,
-    key: 'tokenSymbol'
+    key: ['tokenSymbol,currency[0].symbol']
   },
   {
     label: 'Name',

@@ -1,7 +1,8 @@
-import React from 'react'
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { TableCell } from '@mui/material'
-import get from 'lodash/get'
 import { privateClassNames } from 'helpers/classnames'
+import get from 'lodash/get'
+import React from 'react'
 import { TableColumn } from 'types/util'
 
 export interface TableCellsProps<T> {
@@ -33,6 +34,11 @@ export const TableCellWrapper = <T,>({
       {column.key.length > 0 &&
         (typeof column.render === 'function'
           ? column.render(get(row, column.key), row)
+          : column.key.constructor.name === 'Array'
+          ? `${get(row, column.key[0].split(',')[0])}/${get(
+              row,
+              column.key[0].split(',')[1]
+            )}`
           : get(row, column.key))}
     </TableCell>
   )
