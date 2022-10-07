@@ -27,7 +27,7 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
       </Grid>
       <Grid item>
         <FieldContainer>
-          <ListingMarketInfo status={status} />
+          <ListingMarketInfo status={status} isNew={isNew} />
         </FieldContainer>
       </Grid>
     </Grid>
