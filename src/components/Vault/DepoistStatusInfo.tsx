@@ -8,9 +8,10 @@ interface Props {
   fromAddress?: string | null
   toAddress?: string | null
   amount?: string | null
+  network?: string | undefined
 }
 
-export const DepoistStatusInfo = ({ fromAddress, toAddress, amount, originalSymbol }: Props) => {
+export const DepoistStatusInfo = ({ fromAddress, toAddress, amount, originalSymbol, network }: Props) => {
   return (
     <Container>
       <Info>
@@ -19,9 +20,9 @@ export const DepoistStatusInfo = ({ fromAddress, toAddress, amount, originalSymb
       <Title>
         Send from your <span>Ethereum Wallet</span>
       </Title>
-      <CopyAddress address={fromAddress ?? ''} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
+      <CopyAddress address={fromAddress ?? ''} network={network} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
       <Title style={{ marginTop: 25 }}>To Custodian Wallet</Title>
-      <CopyAddress address={toAddress ?? ''} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
+      <CopyAddress address={toAddress ?? ''} network={network} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
     </Container>
   )
 }

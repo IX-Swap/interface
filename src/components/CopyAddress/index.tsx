@@ -20,10 +20,11 @@ interface Props {
   address: string
   size?: number
   wrapperStyles?: CSSProperties
-  isShortenAddress?: boolean
+  isShortenAddress?: boolean,
+  network?: string,
 }
 
-export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isShortenAddress = true }) => {
+export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isShortenAddress = true, network }) => {
   const [copied, setCopied] = useCopyClipboard()
 
   return (
@@ -32,7 +33,7 @@ export const CopyAddress: FC<Props> = ({ address, wrapperStyles, size = 18, isSh
         <Trans>Copied!</Trans>
       ) : (
         <Flex style={wrapperStyles}>
-          {isShortenAddress ? shortenAddress(address || '') : address}
+          {isShortenAddress ? (network ? shortenAddress(address || '', 4, network) : shortenAddress(address || '')) : address}
           <IconWrapper
             style={wrapperStyles}
             size={size}
