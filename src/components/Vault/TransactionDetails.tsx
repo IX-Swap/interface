@@ -140,6 +140,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                       fromAddress={data.fromAddress}
                       toAddress={data.depositAddress}
                       amount={data.amount}
+                      network={originalNetworkName}
                     />
                   </div>
 
@@ -147,7 +148,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                     <QRCodeWrap
                       value={data.depositAddress ?? ''}
                       size={80}
-                      info={<StyledQrInfo>{shortenAddress(data?.depositAddress || '')}</StyledQrInfo>}
+                      info={<StyledQrInfo>{shortenAddress(data?.depositAddress || '', 4, originalNetworkName)}</StyledQrInfo>}
                     ></QRCodeWrap>
                   </div>
                 </Row>
@@ -193,7 +194,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                 </label>
                 <TYPE.descriptionThin>
                   <Flex>
-                    <CopyAddress address={data?.fromAddress || ''} />
+                    <CopyAddress address={data?.fromAddress || ''} network={originalNetworkName}/>
                   </Flex>
                 </TYPE.descriptionThin>
               </RowBetween>
@@ -205,7 +206,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                 </label>
                 <TYPE.descriptionThin>
                   <Flex>
-                    <CopyAddress address={data?.depositAddress || ''} />
+                    <CopyAddress address={data?.depositAddress || ''} network={originalNetworkName}/>
                   </Flex>
                 </TYPE.descriptionThin>
               </RowBetween>
