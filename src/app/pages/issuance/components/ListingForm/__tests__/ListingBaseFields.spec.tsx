@@ -8,6 +8,7 @@ import {
 } from 'app/pages/issuance/components/ListingForm/ListingBaseFields'
 import * as useFormContext from 'react-hook-form'
 import { initialListingFormValues } from 'app/pages/issuance/consts/listing'
+import { dateTimeValueExtractor } from 'helpers/forms'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)
@@ -73,7 +74,8 @@ describe('ListingBaseFields', () => {
       3,
       expect.objectContaining({
         label: 'Launch Date',
-        name: 'launchDate'
+        name: 'launchDate',
+        valueExtractor: dateTimeValueExtractor
       }),
       {}
     )
@@ -154,7 +156,11 @@ describe('ListingBaseFields', () => {
       expect.objectContaining({
         label: 'Launch Date',
         name: 'launchDate',
-        disabled: true
+        disabled: false,
+        valueExtractor: dateTimeValueExtractor,
+        withIcon: true,
+        customRenderer: true,
+        defaultValue: null
       }),
       {}
     )
@@ -164,7 +170,7 @@ describe('ListingBaseFields', () => {
       expect.objectContaining({
         label: 'Token Name',
         name: 'tokenName',
-        disabled: true
+        disabled: false
       }),
       {}
     )
