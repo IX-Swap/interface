@@ -38,7 +38,7 @@ export interface TableViewProps<T> {
   name?: string
   uri?: string
   queryEnabled?: boolean
-  columns: Array<TableColumn<T>>
+  columns: Array<TableColumn<T>> | any
   bordered?: boolean
   filter?: BaseFilter
   hasStatus?: boolean
@@ -154,7 +154,7 @@ export const TableView = <T,>({
           />
         )
       },
-      ...columns.filter(col => col.label !== columns[0].label)
+      ...columns.filter((col: any) => col.label !== columns[0].label)
     ]
   }
 
@@ -182,6 +182,7 @@ export const TableView = <T,>({
           <Grid item>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, 50]}
+              // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
               colSpan={columns.length + +hasActions}
               count={total}
               rowsPerPage={rowsPerPage}

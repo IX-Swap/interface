@@ -1,19 +1,20 @@
-import React, { useEffect, useMemo } from 'react'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { FormControlLabel, Grid, Typography } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { RadioGroup } from 'components/form/RadioGroup'
-import { useFormContext } from 'react-hook-form'
-import { useAssetsData } from 'hooks/asset/useAssetsData'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { UIRadio } from 'components/UIRadio/UIRadio'
 import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import classnames from 'classnames'
+import { RadioGroup } from 'components/form/RadioGroup'
+import { TypedField } from 'components/form/TypedField'
+import { UIRadio } from 'components/UIRadio/UIRadio'
+import { useAssetsData } from 'hooks/asset/useAssetsData'
+import React, { useEffect, useMemo } from 'react'
+import { useFormContext } from 'react-hook-form'
 
-export const ListingMarketInfo = () => {
+export const ListingMarketInfo = (props: any) => {
   const classes = useStyles()
   const { control, watch, setValue } = useFormContext()
   const currency = watch('currency')
+  const { status } = props
 
   const { data, isLoading } = useAssetsData('Currency')
   const currencyList = useMemo(() => data.list.reverse(), [data])
@@ -55,6 +56,10 @@ export const ListingMarketInfo = () => {
               display={'grid'}
               gap={{ xs: 1.5, md: 3 }}
               gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }}
+              style={{
+                opacity: status === 'Approved' ? '.3' : 'initial',
+                filter: status === 'Approved' ? 'grayscale(1)' : 'none'
+              }}
             >
               {currencyList.map(item => {
                 return (
@@ -66,6 +71,9 @@ export const ListingMarketInfo = () => {
                       [classes.active]: currency === item._id
                     })}
                     onClick={() => setValue('currency', item._id)}
+                    style={{
+                      pointerEvents: status === 'Approved' ? 'none' : 'auto'
+                    }}
                   >
                     <FormControlLabel
                       label={item.symbol}

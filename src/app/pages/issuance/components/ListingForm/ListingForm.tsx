@@ -38,6 +38,7 @@ export const ListingForm = (props: ListingFormProps) => {
             isNew={isNew}
             isLive={isLive}
             isDataFromDSO={isDataFromDSO}
+            status={data?.status}
           />
         </Grid>
 
