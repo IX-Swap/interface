@@ -231,7 +231,7 @@ export const TableView = <T,>({
                   }}
                 >
                   <TableRow>
-                    {columns.map(e => renderHeadCell({ item: e }))}
+                    {columns.map((e: any) => renderHeadCell({ item: e }))}
                     {hasActions && renderHeadCell({ content: actionHeader })}
                   </TableRow>
                 </TableHead>
