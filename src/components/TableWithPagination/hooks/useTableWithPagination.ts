@@ -117,7 +117,7 @@ export const useTableWithPagination = <TData>({
     data.length > 0 &&
     data[data.length - 1].data !== undefined &&
     data[data.length - 1].data.length > 0
-      ? data[data.length - 1].data[0].documents.length ?? 0
+      ? data[data.length - 1].data[0].count ?? 0
       : 0
   const isActuallyLoading = isLoading || isFetching || Boolean(isFetchingMore)
   const items = isActuallyLoading ? previousPageData : currentPageData
