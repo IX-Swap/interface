@@ -8,6 +8,7 @@ import { BIG_INT_ZERO } from 'constants/misc'
 import { TokenAddressMap } from '../state/lists/hooks'
 import JSBI from 'jsbi'
 import walletValidator from 'multicoin-address-validator'
+import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -23,6 +24,40 @@ export function isAddress(value: any): string | false {
     return false
   }
 }
+
+export function isExternalAddress(value: any, network?: string): string | false {
+  if (!value) {
+    return false
+  }
+  try {
+    return getAddress(value)
+  } catch {
+    if (network) {
+      return manualValidation(value, network) ? value : false
+    }
+    else if (walletValidator.validate(value, 'Tezos') || walletValidator.validate(value, 'Algorand')) {
+      return value
+    }
+    return false
+  }
+}
+
+const manualValidation = (address: string, network: string) => {
+  const expressions = NETWORK_ADDRESS_PATTERNS[network]
+
+  return expressions[0].test(address)
+  /*if (!expressions[0].test(address)) {
+    return false;
+  }
+
+  if (expressions[1].test(address) || expressions[2].test(address)) {
+    // If it's all small caps or all all caps, return true
+    return true;
+  }
+
+  return false;*/
+}
+
 export function isEthChainAddress(value: any): string | false {
   if (!value) {
     return false
@@ -44,8 +79,8 @@ export const isValidAddress = (value: string): string | false => {
 }
 
 // shorten the checksummed version of the input address to have 0x + 4 characters at start and end
-export function shortenAddress(address: string, chars = 4): string {
-  const parsed = isAddress(address)
+export function shortenAddress(address: string, chars = 4, network?: string): string {
+  const parsed = network ? isExternalAddress(address, network) : isAddress(address)
   if (!parsed) {
     throw Error(`Invalid 'address' '${address}'`)
   }
