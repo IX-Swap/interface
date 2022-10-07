@@ -8,10 +8,11 @@ export interface ListingFormFieldsProps {
   isNew: boolean
   isLive: boolean
   isDataFromDSO: boolean
+  status?: string
 }
 
 export const ListingFormFields = (props: ListingFormFieldsProps) => {
-  const { isNew, isLive, isDataFromDSO } = props
+  const { isNew, isLive, isDataFromDSO, status } = props
 
   return (
     <Grid container direction={'column'} spacing={2}>
@@ -26,7 +27,7 @@ export const ListingFormFields = (props: ListingFormFieldsProps) => {
       </Grid>
       <Grid item>
         <FieldContainer>
-          <ListingMarketInfo />
+          <ListingMarketInfo status={status} />
         </FieldContainer>
       </Grid>
     </Grid>
