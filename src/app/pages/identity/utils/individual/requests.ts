@@ -92,9 +92,15 @@ export const getInvestorDeclarationRequestPayload = (
       investorsStatus: rest
     },
     documents: [
-      ...getDocuments(evidenceOfAccreditation),
-      ...getDocuments(proofOfAddress),
-      ...getDocuments(proofOfIdentity)
+      getDocuments(evidenceOfAccreditation) !== undefined
+        ? getDocuments(evidenceOfAccreditation)
+        : undefined,
+      getDocuments(proofOfAddress) !== undefined
+        ? getDocuments(proofOfAddress)
+        : [],
+      getDocuments(proofOfIdentity) !== undefined
+        ? getDocuments(proofOfIdentity)
+        : []
     ]
   }
 }
