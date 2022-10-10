@@ -1,22 +1,15 @@
-import { DSOForm, DSOFormProps } from 'app/components/DSO/DSOForm'
-import { FormStepper } from 'app/components/FormStepper/FormStepper'
+import { DSOForm, getCreateModeRedirect } from 'app/components/DSO/DSOForm'
 import React from 'react'
 import { render } from 'test-utils'
-import { dso } from '__fixtures__/authorizer'
 import * as useSetPageTitle from 'app/hooks/useSetPageTitle'
 import * as useCreateDSO from 'app/pages/issuance/hooks/useCreateDSO'
 import * as useSubmitDSO from 'app/pages/issuance/hooks/useSubmitDSO'
 import * as useUpdateDSO from 'app/pages/issuance/hooks/useUpdateDSO'
 import { dsoFormSteps } from 'app/components/DSO/steps'
-import {
-  getCreateModeRedirect,
-  redirectCallback,
-  redirectOnSave,
-  transformDSOToFormValues
-} from '../utils'
+import { DSOStepper } from 'app/components/DSO/DSOFormStepper'
 
-jest.mock('app/components/FormStepper/FormStepper', () => ({
-  FormStepper: jest.fn(() => null)
+jest.mock('app/components/DSO/DSOFormStepper', () => ({
+  DSOStepper: jest.fn(() => null)
 }))
 
 describe('DSOForm', () => {
@@ -48,6 +41,19 @@ describe('DSOForm', () => {
 
   it('renders form field components', () => {
     render(<DSOForm />)
-    expect(FormStepper).toHaveBeenCalledTimes(1)
+    expect(DSOStepper).toHaveBeenCalledWith(
+      expect.objectContaining({
+        formTitle: 'Create DSO',
+        steps: dsoFormSteps,
+        createMutation: [createDSO, { isLoading: false }],
+        editMutation: [updateDSO, { isLoading: false }],
+        submitMutation: [submitDSO, { isLoading: false }],
+        submitText: 'DSO',
+        isRequiredOnLastStep: true,
+        redirectFunction: getCreateModeRedirect,
+        isNew: true
+      }),
+      {}
+    )
   })
 })

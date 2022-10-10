@@ -1,4 +1,5 @@
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
+import _ from 'lodash'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
   DSOBaseFormValues,
@@ -10,8 +11,12 @@ import { corporateName, lettersOrSpaces } from 'validation/regexes'
 import { array, boolean, number, object, string } from 'yup'
 import { dateSchema, validationMessages } from './shared'
 import {
+  businessModelValidation,
+  fundraisingValidation,
+  introductionValidator,
   isBeforeDate,
   pastDateValidator,
+  proceedsValidator,
   uniqueIdentifierCodeValidator
 } from './validators'
 
@@ -203,23 +208,23 @@ export const dsoInformationValidationSchemaStep1: any = {
   distributionFrequency: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Distribution Frequency is required')
+    then: string()
   }),
   dividendYield: number().when('capitalStructure', {
     is: 'Equity',
-    then: number().required('Dividend Yield is required')
+    then: number()
   }),
   equityMultiple: number().when('capitalStructure', {
     is: 'Equity',
-    then: number().required('Equity Multiple is required')
+    then: number()
   }),
   grossIRR: number().when('capitalStructure', {
     is: 'Equity',
-    then: number().required('Gross IRR is required')
+    then: number()
   }),
   interestRate: number().when('capitalStructure', {
     is: 'Debt',
-    then: number().required('Interest Rate is required')
+    then: number()
   }),
   isCampaign: boolean(),
   investmentPeriod: number()
@@ -227,14 +232,12 @@ export const dsoInformationValidationSchemaStep1: any = {
     .when('capitalStructure', {
       is: capitalStructure =>
         capitalStructure === 'Equity' || capitalStructure === 'Debt',
-      then: number()
-        .transform(numberTransformer)
-        .required('Investment Period is required')
+      then: number().transform(numberTransformer)
     }),
   investmentStructure: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Investment Structure is required')
+    then: string()
   }),
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
@@ -253,7 +256,7 @@ export const dsoInformationValidationSchemaStep1: any = {
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
   leverage: number().when('capitalStructure', {
     is: 'Debt',
-    then: number().required('Leverage is required')
+    then: number()
   }),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
@@ -308,7 +311,7 @@ export const editLiveDSOValidationSchemaStep1 = object()
   .notRequired()
 
 export const getDSOInformationSchema = (data: any) => {
-  const isNew = data === transformDSOToFormValues(undefined)
+  const isNew = _.isEqual(data, transformDSOToFormValues())
   const isLive = isDSOLive(data)
 
   if (isNew) {
@@ -323,26 +326,18 @@ export const getDSOInformationSchema = (data: any) => {
 export const getDSOCompanyInformationSchema = object().shape<any>({
   introduction: string()
     // eslint-disable-next-line
-    .test(
-      'default_values',
-      'Introduction is required',
-      (value: any) => !value.includes(`<p></p>\n`)
-    )
+    .test('default_values', 'Introduction is required', introductionValidator)
     .required('Introduction is required'),
   useOfProceeds: string()
     // eslint-disable-next-line
-    .test(
-      'default_values',
-      'Use of Proceeds is required',
-      (value: any) => !value.includes(`<p></p>\n`)
-    )
+    .test('default_values', 'Use of Proceeds is required', proceedsValidator)
     .required('Use of Proceeds is required'),
   businessModel: string()
     // eslint-disable-next-line
     .test(
       'default_values',
       'Business Model is required',
-      (value: any) => !value.includes(`<p></p>\n`)
+      businessModelValidation
     )
     .required('Business Model is required'),
   fundraisingMilestone: string()
@@ -350,7 +345,7 @@ export const getDSOCompanyInformationSchema = object().shape<any>({
     .test(
       'default_values',
       'Fundraising Milestone is required',
-      (value: any) => !value.includes(`<p></p>\n`)
+      fundraisingValidation
     )
     .required('Fundraising Milestone is required'),
   // team: array<DsoTeamMember>()

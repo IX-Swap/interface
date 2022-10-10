@@ -13,6 +13,7 @@ export interface SaveOnNavigateProps {
   createModeRedirect: CreateModeRedirect
   activeStep?: number
   redirectOnSave?: (args: RedirectOnSaveArgs) => void
+  overRideStep?: boolean
 }
 
 export const SaveOnNavigate = ({
@@ -21,7 +22,8 @@ export const SaveOnNavigate = ({
   isCreateMode,
   createModeRedirect,
   activeStep = 0,
-  redirectOnSave
+  redirectOnSave,
+  overRideStep = false
 }: SaveOnNavigateProps) => {
   const { watch, formState } = useFormContext()
   const values = watch()
@@ -31,14 +33,18 @@ export const SaveOnNavigate = ({
     Location<unknown> | undefined
   >(undefined)
   const [isRedirecting, setIsRedirecting] = useState(false)
+  const payload = transformData(values)
 
   const handleSave = async () => {
-    const payload = transformData(values)
-
+    console.log('payload', payload.step, payload)
     return await save(
       {
         ...payload,
-        step: isCreateMode ? activeStep + 1 : activeStep
+        step: overRideStep
+          ? payload.step
+          : isCreateMode
+          ? activeStep + 1
+          : activeStep
       },
       {
         onSettled: (data: any) => {

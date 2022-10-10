@@ -1,23 +1,50 @@
 import { Grid, Box, Button } from '@mui/material'
-import {
-  CreateModeRedirect,
-  FormStepperStep
-} from 'app/components/FormStepper/FormStepper'
 import { BackButton } from 'app/components/FormStepper/BackButton'
 import { Form } from 'components/form/Form'
 import React, { createElement, Fragment } from 'react'
-import { MutationResultPair } from 'react-query'
 import { VSpacer } from 'components/VSpacer'
 import { ScrollToTop } from 'components/ScrollToTop'
 import { SkipButton } from 'app/components/FormStepper/SkipButton'
 import { isSuccessRequest } from 'helpers/strings'
-import { SaveOnNavigate } from 'app/components/FormStepper/SaveOnNavigate'
 import { useStyles } from 'app/components/FormStepper/FormStep.styles'
 import { useHistory, generatePath } from 'react-router-dom'
+import { DSOSaveOnNavigate } from './DSOSaveOnNavigate'
+import { MutationResultPair } from 'react-query'
+import { FormStepperStep } from '../FormStepper/FormStepper'
 import * as H from 'history'
-import { RedirectOnSaveArgs } from 'types/dso'
 
-export interface FormStepProps {
+export interface onSubmitSuccessProps {
+  data: any
+  isLastStep: boolean
+  isEditing: boolean
+  setCompleted: () => void
+  redirectFunction: (dsoId: string) => string
+  history: H.History
+}
+const onSubmitSuccess = ({
+  data,
+  isLastStep,
+  isEditing,
+  setCompleted,
+  redirectFunction,
+  history
+}: onSubmitSuccessProps) => {
+  if (isSuccessRequest(data?.status) && !isLastStep && isEditing) {
+    //eslint-disable-line
+    setCompleted?.()
+  }
+  const redirect = redirectFunction(data?.data._id)
+
+  console.log('redirect', redirect)
+  history.replace(
+    generatePath(redirect, {
+      dsoId: data?.data._id,
+      issuerId: data?.data.user._id
+    })
+  )
+}
+
+export interface DSOFormStepProps {
   step: FormStepperStep
   data: any
   index: number
@@ -28,62 +55,15 @@ export interface FormStepProps {
   editMutation: MutationResultPair<any, any, any, any>
   submitMutation: MutationResultPair<any, any, any, any>
   shouldSaveOnMove: boolean
-  setCompleted?: () => void
+  setCompleted: () => void
   skippable?: boolean
   completed: number[]
-  createModeRedirect: CreateModeRedirect
-  redirectOnSave?: (args: RedirectOnSaveArgs) => void
-  redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
   isRequiredOnLastStep?: boolean
-  followDefaultMode?: boolean
-  dataToCheck?: any
-  isCreateMode?: {
-    value: boolean
-  }
-  overRideStep?: boolean
+  isNew: boolean
+  redirectFunction: (dsoId: string) => string
 }
 
-interface OnSubmitSuccessArgs {
-  data: any
-  isLastStep: boolean
-  isEditing: boolean
-  setCompleted?: () => void
-  redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
-  createModeRedirect: CreateModeRedirect
-  history: H.History
-}
-
-const onSubmitSuccess = ({
-  data,
-  isLastStep,
-  isEditing,
-  setCompleted,
-  redirectCallback,
-  createModeRedirect,
-  history
-}: OnSubmitSuccessArgs) => {
-  if (isSuccessRequest(data?.status) && !isLastStep && isEditing) {
-    //eslint-disable-line
-    setCompleted?.()
-  }
-  if (redirectCallback !== undefined) {
-    redirectCallback(createModeRedirect, data)
-  } else if (!isEditing && createModeRedirect !== undefined) {
-    const redirect =
-      typeof createModeRedirect === 'function'
-        ? createModeRedirect(data?.data.type ?? 'corporate')
-        : createModeRedirect
-
-    history.replace(
-      generatePath(redirect, {
-        identityId: data?.data._id,
-        userId: data?.data.user._id
-      })
-    )
-  }
-}
-
-export const FormStep = (props: FormStepProps) => {
+export const DSOFormStep = (props: DSOFormStepProps) => {
   const {
     index,
     activeStep,
@@ -98,14 +78,9 @@ export const FormStep = (props: FormStepProps) => {
     setCompleted,
     skippable,
     completed,
-    createModeRedirect,
-    redirectCallback,
-    redirectOnSave,
+    redirectFunction,
     isRequiredOnLastStep = false,
-    followDefaultMode = true,
-    dataToCheck = undefined,
-    isCreateMode: hasCreateMode = undefined,
-    overRideStep = false
+    isNew = true
   } = props
   const isCurrentStep = activeStep === index
   const classes = useStyles()
@@ -116,10 +91,9 @@ export const FormStep = (props: FormStepProps) => {
   }
 
   const hasNextStep = activeStep < totalSteps - 1
+
   const hasPrevStep = activeStep !== 0
-  const isEditing = followDefaultMode
-    ? data !== undefined
-    : Object.is(data, dataToCheck)
+  const isEditing = !isNew
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
 
@@ -128,8 +102,6 @@ export const FormStep = (props: FormStepProps) => {
       setActiveStep(activeStep + 1)
       return
     }
-
-    const isNew = data === undefined
     const mutation = isNew
       ? createMutation[0]
       : isLastStep
@@ -144,8 +116,7 @@ export const FormStep = (props: FormStepProps) => {
         isLastStep,
         isEditing,
         setCompleted,
-        redirectCallback,
-        createModeRedirect,
+        redirectFunction,
         history
       })
     }
@@ -180,16 +151,12 @@ export const FormStep = (props: FormStepProps) => {
       allowInvalid
       id={`${step.formId ?? 'form'}-${index}`}
     >
-      <SaveOnNavigate
+      <DSOSaveOnNavigate
         transformData={step.getRequestPayload}
         mutation={saveMutation}
-        isCreateMode={
-          hasCreateMode !== undefined ? hasCreateMode.value : data === undefined
-        }
-        createModeRedirect={createModeRedirect}
+        isNew={isNew}
+        redirectFunction={redirectFunction}
         activeStep={activeStep}
-        redirectOnSave={redirectOnSave}
-        overRideStep={overRideStep}
       />
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='small' />

@@ -85,16 +85,22 @@ export const getInvestorDeclarationRequestPayload = (
     values
 
   const getDocuments = (documents: Array<FormArrayElement<DataroomFile>>) =>
-    documents.map(doc => doc.value._id).filter(doc => doc !== undefined)
+    documents?.map(doc => doc.value._id).filter(doc => doc !== undefined)
 
   return {
     declarations: {
       investorsStatus: rest
     },
     documents: [
-      ...getDocuments(evidenceOfAccreditation),
-      ...getDocuments(proofOfAddress),
-      ...getDocuments(proofOfIdentity)
+      getDocuments(evidenceOfAccreditation) !== undefined
+        ? getDocuments(evidenceOfAccreditation)
+        : undefined,
+      getDocuments(proofOfAddress) !== undefined
+        ? getDocuments(proofOfAddress)
+        : [],
+      getDocuments(proofOfIdentity) !== undefined
+        ? getDocuments(proofOfIdentity)
+        : []
     ]
   }
 }
@@ -105,7 +111,7 @@ export const getDocumentsRequestPayload = (
   const documents = {
     documents: Object.values(values).reduce<string[]>((result, documents) => {
       if (Array.isArray(documents)) {
-        return [...result, ...documents.map(document => document.value._id)]
+        return [...result, ...documents.map(document => document.value?._id)]
       }
 
       return result

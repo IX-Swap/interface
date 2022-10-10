@@ -65,7 +65,7 @@ describe('SaveOnNavigate', () => {
     })
 
     await waitFor(() => {
-      expect(save).toBeCalled()
+      expect(save).toBeCalledTimes(0)
     })
   })
 })

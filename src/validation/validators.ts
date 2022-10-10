@@ -256,6 +256,82 @@ export const validateUEN = (uen: any) => {
   return false
 }
 
+export const introductionValidator = (value: string | undefined | null) => {
+  if (
+    value !== null &&
+    value !== undefined &&
+    value.length > 0 &&
+    typeof value === 'string'
+  ) {
+    let error: string | undefined
+    if (value.includes('<p></p>\n')) {
+      error = 'Introduction is required'
+    }
+
+    return error !== undefined
+      ? new ValidationError(error, value, 'introduction')
+      : true
+  }
+  return true
+}
+
+export const proceedsValidator = (value: string | undefined | null) => {
+  if (
+    value !== null &&
+    value !== undefined &&
+    value.length > 0 &&
+    typeof value === 'string'
+  ) {
+    let error: string | undefined
+    if (value.includes('<p></p>\n')) {
+      error = 'Use of Proceeds is required'
+    }
+
+    return error !== undefined
+      ? new ValidationError(error, value, 'useOfProceeds')
+      : true
+  }
+  return true
+}
+
+export const fundraisingValidation = (value: string | undefined | null) => {
+  if (
+    value !== null &&
+    value !== undefined &&
+    value.length > 0 &&
+    typeof value === 'string'
+  ) {
+    let error: string | undefined
+    if (value.includes('<p></p>\n')) {
+      error = 'Fundraising Milestone is required'
+    }
+
+    return error !== undefined
+      ? new ValidationError(error, value, 'fundraisingMilestone')
+      : true
+  }
+  return true
+}
+
+export const businessModelValidation = (value: string | undefined | null) => {
+  if (
+    value !== null &&
+    value !== undefined &&
+    value.length > 0 &&
+    typeof value === 'string'
+  ) {
+    let error: string | undefined
+    if (value.includes('<p></p>\n')) {
+      error = 'Business Model is required'
+    }
+
+    return error !== undefined
+      ? new ValidationError(error, value, 'businessModel')
+      : true
+  }
+  return true
+}
+
 export const uniqueIdentifierCodeValidator = (
   value: string | undefined | null
 ) => {
