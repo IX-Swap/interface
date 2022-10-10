@@ -19,7 +19,6 @@ export interface DSOFormProps {
 }
 
 export const getCreateModeRedirect = (dsoId: string) => {
-  console.log('dsoId', dsoId)
   if (dsoId !== undefined) {
     return IssuanceRoute.edit
   }
