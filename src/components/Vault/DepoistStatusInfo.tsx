@@ -18,7 +18,7 @@ export const DepoistStatusInfo = ({ fromAddress, toAddress, amount, originalSymb
         Make Deposit by sending {amount} {originalSymbol}:
       </Info>
       <Title>
-        Send from your <span>Ethereum Wallet</span>
+        Send from your <span>{network} Wallet</span>
       </Title>
       <CopyAddress address={fromAddress ?? ''} network={network} wrapperStyles={{ fontSize: '13px', fontWeight: 500 }} />
       <Title style={{ marginTop: 25 }}>To Custodian Wallet</Title>
