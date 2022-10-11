@@ -38,7 +38,7 @@ describe('EmploymentField', () => {
     )
 
     const occupation = getByLabelText('Occupation (Optional)')
-    const status = getByLabelText('Employment Sector')
+    const status = getByLabelText('Employment Status')
     const employer = getByLabelText('Employer')
 
     expect(occupation).toHaveAttribute('aria-disabled', 'true')

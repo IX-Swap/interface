@@ -51,7 +51,7 @@ export const EmploymentField = () => {
               control={control}
               variant='outlined'
               name='employmentStatus'
-              label='Employment Sector'
+              label='Employment Status'
               data-testid='Employment-select'
               fullWidth
               disabled={statusIsSingPass}
