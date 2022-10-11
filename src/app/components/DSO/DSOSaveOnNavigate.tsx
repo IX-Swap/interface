@@ -31,7 +31,6 @@ export const DSOSaveOnNavigate = ({
   >(undefined)
   const [isRedirecting, setIsRedirecting] = useState(false)
   const payload = transformData(values)
-  console.log('isNew', isNew)
 
   const handleSave = async () => {
     // eslint-disable-next-line
@@ -44,7 +43,6 @@ export const DSOSaveOnNavigate = ({
           setIsRedirecting(true)
 
           const redirect = redirectFunction(isNew)
-          console.log('redirect & nextLocation', redirect, nextLocation)
           if (nextLocation != null && nextLocation.search !== '') {
             history.replace(
               generatePath(redirect, {
@@ -62,11 +60,8 @@ export const DSOSaveOnNavigate = ({
   const [saveForm] = useMutation(handleSave)
 
   const saveOnNavigate = (location: Location<unknown>, action: Action) => {
-    console.log('save on navigate got called')
     if (location?.search !== '') {
       setNextLocation(location)
-
-      console.log('location', location)
 
       if (!isRedirecting) {
         void saveForm()

@@ -35,7 +35,6 @@ const onSubmitSuccess = ({
   }
   const redirect = redirectFunction(data?.data._id)
 
-  console.log('redirect', redirect)
   history.replace(
     generatePath(redirect, {
       dsoId: data?.data._id,

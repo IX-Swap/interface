@@ -14,7 +14,7 @@ export const DSOInformationFields = () => {
 
   const { data } = useDSOById(dsoId, issuerId)
   const isLive = isDSOLive(data)
-  const isNew = data === undefined
+  const isNew = dsoId === undefined
 
   return (
     <Fragment>
