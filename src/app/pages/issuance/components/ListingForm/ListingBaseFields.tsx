@@ -34,7 +34,14 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
           <Grid item xs={12} md={12}>
             <TypedField
               control={control}
-              component={CapitalStructureSelect}
+              component={
+                !isNew ||
+                (isDataFromDSO &&
+                  watch('capitalStructure') !==
+                    initialListingFormValues.capitalStructure)
+                  ? TextInput
+                  : CapitalStructureSelect
+              }
               label='Capital Structure'
               name='capitalStructure'
               displayEmpty
@@ -57,6 +64,11 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               name='corporate'
               control={control}
               variant='outlined'
+              isDisabled={
+                !isNew ||
+                (isDataFromDSO &&
+                  watch('corporate') !== initialListingFormValues.corporate)
+              }
               disabled={
                 !isNew ||
                 (isDataFromDSO &&
@@ -101,6 +113,11 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               component={NetworkSelect}
               label='Network'
               name='network'
+              isDisabled={
+                !isNew ||
+                (isDataFromDSO &&
+                  watch('network') !== initialListingFormValues.network)
+              }
               disabled={
                 !isNew ||
                 (isDataFromDSO &&
