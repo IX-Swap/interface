@@ -15,7 +15,6 @@ import { DateTimeComponent } from './_DateTimePickerComponent'
 export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
   return (
     <MobileDateTimePicker
-      inputFormat='MM/DD/YYYY'
       {...props}
       InputProps={{
         endAdornment: (
@@ -30,10 +29,6 @@ export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
           fullWidth
           placeholder='mm/dd/yyyy'
           label='Date'
-          hideIcon={false}
-          InputProps={{
-            endAdornment: <InputAdornment position='end'>XXX</InputAdornment>
-          }}
           {...inputProps}
         />
       )}
@@ -69,9 +64,7 @@ export const DateTimePicker = ({
 }: DateTimePickerProps) => {
   const { name } = props
   const { hasError, error } = useFormError(name ?? '')
-  const PickerComponent = !withIcon
-    ? DateTimeComponent
-    : DateTimePickerComponent
+  const PickerComponent = withIcon ? DateTimePickerComponent : DateTimeComponent
 
   return (
     <>
