@@ -26,7 +26,6 @@ export const TextInput = (props: InputProps) => {
     name,
     value,
     hideIcon = false,
-    label,
     ...rest
   } = props
   const theme = useTheme()
@@ -36,9 +35,6 @@ export const TextInput = (props: InputProps) => {
     error === undefined || !error ? InputProps?.error ?? error : error
   )
   const inputIsEmpty = value === undefined || value === null || value === ''
-
-  if (label === 'Launch Date') {
-  }
 
   return (
     <TextField
