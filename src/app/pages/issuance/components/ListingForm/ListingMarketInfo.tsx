@@ -14,7 +14,7 @@ export const ListingMarketInfo = (props: any) => {
   const classes = useStyles()
   const { control, watch, setValue } = useFormContext()
   const currency = watch('currency')
-  const { status } = props
+  const { status, isNew } = props
 
   const { data, isLoading } = useAssetsData('Currency')
   const currencyList = useMemo(() => data.list.reverse(), [data])
@@ -57,8 +57,11 @@ export const ListingMarketInfo = (props: any) => {
               gap={{ xs: 1.5, md: 3 }}
               gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }}
               style={{
-                opacity: status === 'Approved' ? '.3' : 'initial',
-                filter: status === 'Approved' ? 'grayscale(1)' : 'none'
+                // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                opacity: status === 'Approved' && !isNew ? '.3' : 'initial',
+                filter:
+                  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                  status === 'Approved' && !isNew ? 'grayscale(1)' : 'none'
               }}
             >
               {currencyList.map(item => {
@@ -72,7 +75,9 @@ export const ListingMarketInfo = (props: any) => {
                     })}
                     onClick={() => setValue('currency', item._id)}
                     style={{
-                      pointerEvents: status === 'Approved' ? 'none' : 'auto'
+                      pointerEvents:
+                        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                        status === 'Approved' && !isNew ? 'none' : 'auto'
                     }}
                   >
                     <FormControlLabel
