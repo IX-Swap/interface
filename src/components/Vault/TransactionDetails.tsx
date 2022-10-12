@@ -116,7 +116,7 @@ export const TransactionDetails = ({ currency }: Props) => {
           {isDeposit(data.type) && status === DepositStatus.PENDING && (
             <DepositWarningInfo>
               <div>WARNING</div>
-              Please execute the transaction of wCTI Tokens to the Custodians wallet address on the <br />
+              Please execute the transaction of {currency?.originalSymbol} Tokens to the Custodians wallet address on the <br />
               Ethereum Blockchain.
             </DepositWarningInfo>
           )}
