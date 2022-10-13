@@ -257,6 +257,7 @@ export const getDSOInformationFormValues = (data: DSOFormValues) => {
     corporate: data.corporate,
     currency: getIdFromObj({ _id: data.currency }),
     uniqueIdentifierCode: data.uniqueIdentifierCode,
+    isCampaign: data.isCampaign,
     network: data.network,
     dividendYield: data.dividendYield,
     grossIRR: data.grossIRR,
@@ -271,7 +272,7 @@ export const getDSOInformationFormValues = (data: DSOFormValues) => {
     minimumInvestment: data.minimumInvestment,
     launchDate: data.launchDate ?? null,
     completionDate: data.completionDate ?? null,
-    step: 0,
+    step: 1,
     decimalPlaces: data.decimalPlaces
   }
 }

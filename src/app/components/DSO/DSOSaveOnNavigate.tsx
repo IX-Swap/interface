@@ -40,10 +40,14 @@ export const DSOSaveOnNavigate = ({
       },
       {
         onSettled: (data: any) => {
-          setIsRedirecting(true)
-
-          const redirect = redirectFunction(isNew)
-          if (nextLocation != null && nextLocation.search !== '') {
+          console.log('data', data)
+          if (
+            data !== undefined &&
+            nextLocation != null &&
+            nextLocation.search !== ''
+          ) {
+            setIsRedirecting(true)
+            const redirect = redirectFunction(data?._id)
             history.replace(
               generatePath(redirect, {
                 issuerId: data?.user._id,

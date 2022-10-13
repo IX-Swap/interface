@@ -30,7 +30,7 @@ export const DSOForm = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data } = useDSOById(dsoId, issuerId)
   const { user } = useAuth()
-
+  console.log('DSO data', data)
   const createMutation = useCreateDSO()
   const editMutation = useUpdateDSO(dsoId, getIdFromObj(user) ?? issuerId)
   const submitMutation = useSubmitDSO(dsoId)
