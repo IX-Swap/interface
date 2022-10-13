@@ -367,8 +367,8 @@ export const listingsURL = {
     `/exchange/listing/${userId}/${listingId}`,
   createOrUpdate: (userId?: string) => `/exchange/listing/${userId}`,
   create: (userId?: string) => `/exchange/otc/listing/${userId}`,
-  getOTCListing: (userId?: string, otcId?: string) =>
-    `/otc/listing/${userId}/${otcId}`
+  getOTCListing: (UserId?: string, OTCListingId?: string) =>
+    `/otc/listing/${UserId}/${OTCListingId}`
 }
 
 export const assetsURL = {

@@ -49,7 +49,7 @@ export const TablePagination = ({ ...props }: TablePaginationProps) => {
   return (
     <MuiTablePagination
       {...props}
-      labelRowsPerPage={props.labelRowsPerPage ?? 'Rows:'}
+      labelRowsPerPage={'Rows:'}
       ActionsComponent={Actions}
       className={classes.wrapper}
       classes={{
@@ -57,7 +57,7 @@ export const TablePagination = ({ ...props }: TablePaginationProps) => {
         toolbar: classes.toolbar,
         select: classes.select
       }}
-      rowsPerPageOptions={props.rowsPerPageOptions ?? [5, 10, 25, 50]}
+      rowsPerPageOptions={[5, 10, 25, 50]}
     />
   )
 }
