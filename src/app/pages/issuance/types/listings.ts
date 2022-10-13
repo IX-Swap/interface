@@ -106,6 +106,7 @@ export interface Listing {
   team: DsoTeamMember[]
   promoted: boolean
   disabled: boolean
+  listingType?: string | undefined
 }
 
 export interface ListingFormValuesForSubmit {

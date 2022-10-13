@@ -31,33 +31,29 @@ export const CorporateSelect = (props: CorporateSelectProps) => {
     })
   }
   return (
-    <>
-      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
-      <div className={props.isDisabled ? classes.root : null}>
-        <InputLabel>{props.label}</InputLabel>
-        {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
-        {props.isDisabled ? (
-          <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
-        ) : null}
-        <Select
-          {...props}
-          style={{ minWidth: 100 }}
-          label={undefined}
-          placeholder={String(props.placeHolder)}
-          renderValue={renderName}
-          displayEmpty
-        >
-          <SelectItem disabled value={undefined}>
-            Select corporate
+    <div className={props.isDisabled ? classes.root : ''}>
+      <InputLabel>{props.label}</InputLabel>
+      {props.isDisabled ? (
+        <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
+      ) : null}
+      <Select
+        {...props}
+        style={{ minWidth: 100 }}
+        label={undefined}
+        placeholder={String(props.placeHolder)}
+        renderValue={renderName}
+        displayEmpty
+      >
+        <SelectItem disabled value={undefined}>
+          Select corporate
+        </SelectItem>
+        {data.list.map(({ _id, companyLegalName }) => (
+          <SelectItem value={_id} key={_id}>
+            {companyLegalName}
           </SelectItem>
-          {data.list.map(({ _id, companyLegalName }) => (
-            <SelectItem value={_id} key={_id}>
-              {companyLegalName}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
-    </>
+        ))}
+      </Select>
+    </div>
   )
 }
 CorporateSelect.displayName = 'Select_CorporateSelect'

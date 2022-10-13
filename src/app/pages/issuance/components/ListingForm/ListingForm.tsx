@@ -19,7 +19,7 @@ export interface ListingFormProps {
 }
 
 export const ListingForm = (props: ListingFormProps) => {
-  const { data, isNew = false, listingType } = props
+  const { data, isNew = false } = props
   const isLive = isDSOLive(data as any)
   const isDataFromDSO = data !== undefined && !('maximumTradeUnits' in data)
 
@@ -47,7 +47,8 @@ export const ListingForm = (props: ListingFormProps) => {
             <ListingFormActions
               isDataFromDSO={isDataFromDSO}
               listing={data}
-              listingType={listingType}
+              // displaying data?.listingType based on conditions
+              listingType={data?.listingType}
             />
           </Grid>
         </Grid>

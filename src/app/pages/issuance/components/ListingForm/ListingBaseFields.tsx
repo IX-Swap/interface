@@ -44,7 +44,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               }
               label='Capital Structure'
               name='capitalStructure'
-              displayEmpty
+              // displayEmpty
               variant='outlined'
               inputProps={{ 'data-testid': 'capital-structure' }}
               disabled={

@@ -28,35 +28,31 @@ export const NetworkSelect = (props: NetworkSelectProps): JSX.Element => {
     })
   }
   return (
-    <>
-      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
-      <div className={props.isDisabled ? classes.root : null}>
-        <InputLabel>{props.label}</InputLabel>
-        {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
-        {props.isDisabled ? (
-          <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
-        ) : null}
-        <Select
-          {...props}
-          label={undefined}
-          placeholder={String(props.placeHolder)}
-          displayEmpty
-          renderValue={renderName}
-          style={{ minWidth: 70 }}
-          data-testid='network-select'
-          defaultValue={undefined}
-        >
-          <SelectItem disabled value={undefined}>
-            Select blockchain network
+    <div className={props.isDisabled ? classes.root : ''}>
+      <InputLabel>{props.label}</InputLabel>
+      {props.isDisabled ? (
+        <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
+      ) : null}
+      <Select
+        {...props}
+        label={undefined}
+        placeholder={String(props.placeHolder)}
+        displayEmpty
+        renderValue={renderName}
+        style={{ minWidth: 70 }}
+        data-testid='network-select'
+        defaultValue={undefined}
+      >
+        <SelectItem disabled value={undefined}>
+          Select blockchain network
+        </SelectItem>
+        {data?.map(({ name, _id }) => (
+          <SelectItem key={_id} value={_id} className={privateClassNames()}>
+            {name}
           </SelectItem>
-          {data?.map(({ name, _id }) => (
-            <SelectItem key={_id} value={_id} className={privateClassNames()}>
-              {name}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
-    </>
+        ))}
+      </Select>
+    </div>
   )
 }
 NetworkSelect.displayName = 'Select_NetworkSelect'

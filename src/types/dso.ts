@@ -98,6 +98,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   dso?: string
   productSpecification?: string
   step: number
+  listingType?: string
 }
 
 export interface NewBaseDigitalSecurityOffering

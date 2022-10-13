@@ -17,32 +17,41 @@ export interface ActionsProps {
 export const Actions = ({ item }: ActionsProps) => {
   const { user } = useAuth()
   const classes = useStyles()
-  const [listingType, setListingType] = useState(item?.listingType)
+  const [to, setTo] = useState('')
+  const [params, setParams] = useState({})
 
   useEffect(() => {
-    if (item?.listingType === 'OTC') setListingType('OTC')
-    if (item?.listingType === 'Exchange') setListingType('Exchange')
-    if (item?.listingType === 'Exchange/OTC') setListingType('Exchange')
+    switch (item?.listingType) {
+      case 'OTC':
+        setTo(paths.editOTCListing)
+        item.listingType = 'OTC'
+        setParams({
+          UserId: item.authorization?.authorizer ?? item.user,
+          OTCListingId: item._id
+        })
+        break
+      case 'Exchange':
+        item.listingType = 'Exchange'
+        setTo(paths.editListing)
+        setParams({
+          listingId: item._id,
+          issuerId: getIdFromObj(user)
+        })
+        break
+      case 'Exchange/OTC':
+        item.listingType = 'Exchange/OTC'
+        setTo(paths.editListing)
+        setParams({
+          listingId: item._id,
+          issuerId: getIdFromObj(user)
+        })
+        break
+    }
   }, [])
 
   return (
     <Box display={'flex'} justifyContent={'flex-start'}>
-      <IconButton
-        component={AppRouterLinkComponent}
-        to={
-          listingType?.includes('Exchange')
-            ? paths.editListing
-            : paths.editOTCListing
-        }
-        params={
-          listingType?.includes('Exchange')
-            ? { listingId: item._id, issuerId: getIdFromObj(user) }
-            : {
-                UserId: item.authorization?.authorizer ?? item.user,
-                OTCListingId: item._id
-              }
-        }
-      >
+      <IconButton component={AppRouterLinkComponent} to={to} params={params}>
         <EditIcon />
       </IconButton>
       <IconButton
