@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Grid } from '@mui/material'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import {
-  ListingDetails,
-  ListingType
+  ListingDetails
+  // ListingType
 } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { ListingForm } from 'app/pages/issuance/components/ListingForm/ListingForm'
@@ -21,7 +21,8 @@ export interface ListingFormWrapperProps {
 
 export const ListingFormWrapper = (props: ListingFormWrapperProps) => {
   const { data: initialListingData, isNew = false } = props
-  const [listingType, setListingType] = useState<ListingType>('Secondary')
+  // const [listingType, setListingType] = useState<ListingType>('Secondary')
+  const [listingType, setListingType] = useState<any>('')
   const [dsoId, setDsoId] = useState<string | undefined>(undefined)
   const [issuerId, setIssuerId] = useState<string | undefined>(undefined)
 

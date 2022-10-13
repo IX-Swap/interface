@@ -15,25 +15,25 @@ import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDe
 export interface ListingFormProps {
   data?: DigitalSecurityOffering | Listing
   isNew?: boolean
-  listingType: null | ListingType
+  listingType: null | ListingType | any
 }
 
 export const ListingForm = (props: ListingFormProps) => {
-  const { data, isNew = false } = props
+  const { data, isNew = false, listingType } = props
   const isLive = isDSOLive(data as any)
   const isDataFromDSO = data !== undefined && !('maximumTradeUnits' in data)
-  const [listingType, setListingType] = useState('')
+  const [listingTypeUpdated, setListingTypeUpdated] = useState('')
 
   useEffect(() => {
     switch (data?.listingType) {
       case 'Exchange':
-        setListingType('Secondary')
+        setListingTypeUpdated('Secondary')
         break
       case 'OTC':
-        setListingType('Otc')
+        setListingTypeUpdated('Otc')
         break
       case 'Exchange/OTC':
-        setListingType('Both')
+        setListingTypeUpdated('Both')
         break
     }
   }, [data?.listingType])
@@ -62,7 +62,9 @@ export const ListingForm = (props: ListingFormProps) => {
             <ListingFormActions
               isDataFromDSO={isDataFromDSO}
               listing={data}
-              listingType={listingType}
+              listingType={
+                listingType === '' ? listingTypeUpdated : listingType
+              }
             />
           </Grid>
         </Grid>

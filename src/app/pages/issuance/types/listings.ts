@@ -20,6 +20,7 @@ export interface SecondaryListingFormValues {
   currency: string
   launchDate: Date | string
   dso: string
+  type?: string
 }
 
 export interface ListingFormValues {
@@ -52,6 +53,7 @@ export interface ListingFormValues {
   marketType: string
   asset: string
   dso: string
+  type?: string
 }
 
 export interface Currency {
