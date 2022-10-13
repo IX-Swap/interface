@@ -6,13 +6,13 @@ import {
   RadioGroup,
   Typography
 } from '@mui/material'
-import React, { useState } from 'react'
+import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
-import { UIRadio } from 'components/UIRadio/UIRadio'
-import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
 import classnames from 'classnames'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { UIRadio } from 'components/UIRadio/UIRadio'
+import React, { useState } from 'react'
 
 export type ListingType = 'Secondary' | 'Otc' | 'Both'
 
