@@ -9,11 +9,12 @@ import { useCreateListing } from 'app/pages/issuance/hooks/useCreateListing'
 import { useUpdateListing } from 'app/pages/issuance/hooks/useUpdateListing'
 import { Listing, ListingFormValues } from 'app/pages/issuance/types/listings'
 
-import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
+// import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
 export interface CreateOrSaveListingButtonProps {
   listing: DigitalSecurityOffering | Listing | undefined
-  listingType: null | ListingType
+  // listingType?: null | ListingType | undefined
+  listingType?: null | string | undefined
   isDataFromDSO: boolean
 }
 
