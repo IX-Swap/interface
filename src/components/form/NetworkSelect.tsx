@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { SelectProps } from '@mui/material'
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 import { privateClassNames } from 'helpers/classnames'
@@ -10,6 +9,7 @@ import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { Icon } from 'ui/Icons/Icon'
 import { useDisabledSelectComponent } from './useFormStyles/disabledSelectComponent'
+import classnames from 'classnames'
 
 interface NetworkSelectProps extends SelectProps {
   placeHolder?: string | undefined
@@ -28,11 +28,15 @@ export const NetworkSelect = (props: NetworkSelectProps): JSX.Element => {
     })
   }
   return (
-    <div className={props.isDisabled ? classes.root : ''}>
+    <div
+      className={classnames({
+        [classes.root]: props.isDisabled
+      })}
+    >
       <InputLabel>{props.label}</InputLabel>
-      {props.isDisabled ? (
+      {props.isDisabled === true && (
         <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
-      ) : null}
+      )}
       <Select
         {...props}
         label={undefined}

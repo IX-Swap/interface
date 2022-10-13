@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { SelectProps } from '@mui/material'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
@@ -11,6 +9,7 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { queryStatusRenderer } from './renderUtils'
 import { Icon } from 'ui/Icons/Icon'
 import { useDisabledSelectComponent } from './useFormStyles/disabledSelectComponent'
+import classnames from 'classnames'
 
 interface CorporateSelectProps extends SelectProps {
   placeHolder?: string | undefined
@@ -31,11 +30,15 @@ export const CorporateSelect = (props: CorporateSelectProps) => {
     })
   }
   return (
-    <div className={props.isDisabled ? classes.root : ''}>
+    <div
+      className={classnames({
+        [classes.root]: props.isDisabled
+      })}
+    >
       <InputLabel>{props.label}</InputLabel>
-      {props.isDisabled ? (
+      {props.isDisabled === true && (
         <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
-      ) : null}
+      )}
       <Select
         {...props}
         style={{ minWidth: 100 }}

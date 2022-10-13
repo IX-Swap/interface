@@ -56,8 +56,17 @@ export const Actions = ({ item }: ActionsProps) => {
       </IconButton>
       <IconButton
         component={AppRouterLinkComponent}
-        to={paths.viewListing}
-        params={{ listingId: item._id }}
+        to={
+          item?.listingType === 'OTC' ? paths.viewOTCListing : paths.viewListing
+        }
+        params={
+          item?.listingType === 'OTC'
+            ? {
+                UserId: item.authorization?.authorizer ?? item.user,
+                OTCListingId: item._id
+              }
+            : { listingId: item._id }
+        }
         className={classes.button}
       >
         <LaunchIcon color='disabled' />

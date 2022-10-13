@@ -39,6 +39,7 @@ export interface TypedFieldProps<
     path: string,
     control: TControl
   ) => void
+  displayEmpty?: boolean
 }
 
 type FieldsToOverride =

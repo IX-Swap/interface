@@ -11,7 +11,7 @@ import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDe
 export interface ListingFormActionsProps {
   listing: DigitalSecurityOffering | Listing | undefined
   isDataFromDSO: boolean
-  listingType?: null | ListingType | string | undefined
+  listingType?: ListingType | any
 }
 
 export const ListingFormActions = (props: ListingFormActionsProps) => {

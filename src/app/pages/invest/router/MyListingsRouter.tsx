@@ -1,6 +1,9 @@
 import { EditListing } from 'app/pages/issuance/pages/SecondaryListings/EditListing'
 import { SecondaryListings } from 'app/pages/issuance/pages/SecondaryListings/SecondaryListings'
-import { ViewListing } from 'app/pages/issuance/pages/SecondaryListings/ViewListing'
+import {
+  ViewListing,
+  ViewListingOTC
+} from 'app/pages/issuance/pages/SecondaryListings/ViewListing'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
@@ -20,8 +23,15 @@ export const MyListingsRouter = () => {
         <SecondaryListings />
       </AppRoute>
 
-      <AppRoute breadcrumb='View Listing' path={IssuanceRoute.viewListing}>
-        <ViewListing />
+      <AppRoute
+        breadcrumb='View Listing'
+        path={
+          pathnameLength > 1
+            ? IssuanceRoute.viewOTCListing
+            : IssuanceRoute.viewListing
+        }
+      >
+        {pathnameLength > 1 ? <ViewListingOTC /> : <ViewListing />}
       </AppRoute>
 
       <AppRoute

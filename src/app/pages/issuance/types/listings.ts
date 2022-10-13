@@ -157,6 +157,8 @@ export interface ListingFormValuesForSubmit {
   promoted: boolean
   disabled: boolean
   marketType: string
+  type?: string
+  result2?: any
 }
 
 export type ListingRequestArgs = Partial<
