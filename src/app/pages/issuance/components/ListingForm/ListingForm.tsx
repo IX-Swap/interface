@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { isDSOLive } from 'app/components/DSO/utils'
 import { Grid } from '@mui/material'
@@ -22,6 +22,21 @@ export const ListingForm = (props: ListingFormProps) => {
   const { data, isNew = false } = props
   const isLive = isDSOLive(data as any)
   const isDataFromDSO = data !== undefined && !('maximumTradeUnits' in data)
+  const [listingType, setListingType] = useState('')
+
+  useEffect(() => {
+    switch (data?.listingType) {
+      case 'Exchange':
+        setListingType('Secondary')
+        break
+      case 'OTC':
+        setListingType('Otc')
+        break
+      case 'Exchange/OTC':
+        setListingType('Both')
+        break
+    }
+  }, [data?.listingType])
 
   return (
     <Form
@@ -47,8 +62,7 @@ export const ListingForm = (props: ListingFormProps) => {
             <ListingFormActions
               isDataFromDSO={isDataFromDSO}
               listing={data}
-              // displaying data?.listingType based on conditions
-              listingType={data?.listingType}
+              listingType={listingType}
             />
           </Grid>
         </Grid>
