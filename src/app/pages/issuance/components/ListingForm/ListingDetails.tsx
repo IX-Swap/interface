@@ -12,7 +12,7 @@ import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSele
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import classnames from 'classnames'
 import { UIRadio } from 'components/UIRadio/UIRadio'
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 export type ListingType = 'Secondary' | 'Otc' | 'Both'
 
@@ -46,6 +46,11 @@ export const ListingDetails = ({
 
   const { data, isLoading } = useDSOsByUserId('Approved')
   const [selectedDSOValue, setSelectedDSOValue] = useState<string>('')
+  const radioButtonRef = useRef<any>()
+
+  useEffect(() => {
+    radioButtonRef?.current?.children[0]?.click()
+  }, [])
 
   return (
     <Grid item container direction={'column'} spacing={{ xs: 4, md: 5 }}>
@@ -65,6 +70,7 @@ export const ListingDetails = ({
               display={'grid'}
               gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr 1fr' }}
               gap={1.5}
+              ref={radioButtonRef}
             >
               {radioButtonsList.map(({ label, value }) => {
                 return (
