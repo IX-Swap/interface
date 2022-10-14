@@ -26,10 +26,10 @@ export async function addNetwork({
       params: [
         {
           chainId: formattedChainId,
-          chainName: info.chainName,
-          rpcUrls: info.rpcUrls,
-          nativeCurrency: info.nativeCurrency,
-          blockExplorerUrls: info.blockExplorerUrls
+          chainName: info?.chainName,
+          rpcUrls: info?.rpcUrls,
+          nativeCurrency: info?.nativeCurrency,
+          blockExplorerUrls: info?.blockExplorerUrls
         }
       ]
     })

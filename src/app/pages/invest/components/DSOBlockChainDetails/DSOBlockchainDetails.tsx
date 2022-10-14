@@ -46,7 +46,7 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
   }
   const metamaskMessageMap = {
     [AccountState.NOT_CONNECTED]: `To add token first connect to Metamask`,
-    [AccountState.DIFFERENT_CHAIN]: `Please connect to ${info.chainName} to add token in Your Metamask wallet`,
+    [AccountState.DIFFERENT_CHAIN]: `Please connect to ${info?.chainName} to add token in Your Metamask wallet`,
     [AccountState.SAME_CHAIN]: 'Add to Metamask'
   }
   const hideComponent =
@@ -66,7 +66,7 @@ export const DSOBlockchainDetails = ({ dso }: DSOBlockchainDetailsProps) => {
     <Box className={classes.root}>
       <Box className={classes.addressBox}>
         <Tooltip
-          title={`Switch to ${info.chainName}`}
+          title={`Switch to ${info?.chainName}`}
           aria-label={`switch-chain`}
           arrow
         >
