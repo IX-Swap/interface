@@ -233,14 +233,8 @@ export const transformDSOToFormValues = (
     leverage: dso.leverage,
     documents: dso.documents.map(document => ({ value: document })),
     team: dso.team.map(({ _id, ...person }) => person),
-    faqs:
-      dso.faqs !== undefined && dso.faqs.length > 0
-        ? dso.faqs.map(({ _id, ...faqItem }) => faqItem)
-        : [{}],
-    videos:
-      dso.videos !== undefined && dso.videos.length > 0
-        ? dso.videos.map(({ _id, ...video }) => video)
-        : [{}],
+    faqs: dso.faqs.map(({ _id, ...faqItem }) => faqItem),
+    videos: dso.videos.map(({ _id, ...video }) => video),
     uniqueIdentifierCode: dso.uniqueIdentifierCode,
     decimalPlaces: dso.decimalPlaces,
     step: dso.step

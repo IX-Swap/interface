@@ -3,11 +3,9 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering, DSORequestArgs } from 'types/dso'
 import { useMutation, useQueryCache } from 'react-query'
 import { QueryOrMutationCallbacks } from 'hooks/types'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
-import { generatePath, useHistory, useParams } from 'react-router-dom'
 
 export const useUpdateDSO = (
   dsoId: string,
@@ -15,8 +13,6 @@ export const useUpdateDSO = (
   callbacks?: QueryOrMutationCallbacks<DigitalSecurityOffering>
 ) => {
   const { apiService, snackbarService } = useServices()
-  const params = useParams<{ dsoId: string; issuerId: string }>()
-  const { replace } = useHistory()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const queryCache = useQueryCache()
@@ -30,7 +26,6 @@ export const useUpdateDSO = (
   return useMutation(updateDSO, {
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
-      replace(generatePath(IssuanceRoute.edit, params))
 
       void snackbarService.showSnackbar('Success', 'success')
       void queryCache.invalidateQueries(

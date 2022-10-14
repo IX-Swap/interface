@@ -4,6 +4,7 @@ import { generatePath, Prompt, useHistory } from 'react-router-dom'
 import { Action, Location } from 'history'
 import { MutationResultPair, useMutation } from 'react-query'
 import { RedirectOnSaveArgs } from 'types/dso'
+import { getIdFromObj } from 'helpers/strings'
 
 export interface SaveOnNavigateProps {
   mutation: MutationResultPair<any, any, any, any>
@@ -12,15 +13,14 @@ export interface SaveOnNavigateProps {
   activeStep?: number
   redirectOnSave?: (args: RedirectOnSaveArgs) => void
   overRideStep?: boolean
-  redirectFunction?: any
+  redirectFunction: (dsoId: string) => string
+  isSaveDraft?: boolean
 }
 
 export const DSOSaveOnNavigate = ({
   mutation,
   transformData,
-  redirectFunction,
-  activeStep = 0,
-  isNew
+  redirectFunction
 }: any) => {
   const { watch, formState } = useFormContext()
   const values = watch()
@@ -40,18 +40,21 @@ export const DSOSaveOnNavigate = ({
       },
       {
         onSettled: (data: any) => {
-          console.log('data', data)
+          setIsRedirecting(true)
+
           if (
             data !== undefined &&
             nextLocation != null &&
             nextLocation.search !== ''
           ) {
-            setIsRedirecting(true)
-            const redirect = redirectFunction(data?._id)
+            const redirect: string = redirectFunction(data.data._id)
             history.replace(
-              generatePath(redirect, {
-                issuerId: data?.user._id,
-                dsoId: data?._id
+              generatePath(`${redirect}${nextLocation.search}`, {
+                issuerId:
+                  typeof data.data.user === 'string'
+                    ? data.data.user
+                    : getIdFromObj(data.data.user),
+                dsoId: data.data._id
               })
             )
             setIsRedirecting(false)
@@ -64,7 +67,8 @@ export const DSOSaveOnNavigate = ({
   const [saveForm] = useMutation(handleSave)
 
   const saveOnNavigate = (location: Location<unknown>, action: Action) => {
-    if (location?.search !== '') {
+    // @ts-expect-error
+    if (location.search !== '') {
       setNextLocation(location)
 
       if (!isRedirecting) {

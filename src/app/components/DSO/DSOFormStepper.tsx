@@ -9,8 +9,9 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { TwoFANotice } from 'app/components/FormStepper/TwoFANotice'
 import { MutationResultPair } from 'react-query'
 import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
-import { SaveDraftButton } from 'app/components/FormStepper/SaveDraftButton'
-import { DSOFormStep } from './DSOFormStep'
+import { DSOFormStep, getStepSchema, submitHandler } from './DSOFormStep'
+import { SaveDraftButton } from './DSODraftButton'
+import { Form } from 'components/form/Form'
 
 export interface DSOStepperStep {
   label: string
@@ -119,6 +120,7 @@ export const DSOStepper = (props: DSOStepperProps) => {
   }
 
   const activeStep: number = getStepFilterValue() ?? defaultActiveStep ?? 0
+  const mutation = isNew ? createMutation[0] : editMutation[0]
 
   const getCompletedStatus = (lastStep: boolean, index: number) => {
     if (lastStep) {
@@ -151,105 +153,120 @@ export const DSOStepper = (props: DSOStepperProps) => {
   }
 
   return (
-    <Grid container direction={matches ? 'column-reverse' : 'row'}>
-      <Grid item className={classes.content}>
-        {stepsMemo.map((step: any, index: number) => (
-          <DSOFormStep
-            key={`step-content-${index}`}
-            step={step}
-            index={index}
-            totalSteps={steps.length}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            setCompleted={handleComplete}
-            data={data}
-            createMutation={createMutation}
-            editMutation={editMutation}
-            submitMutation={submitMutation}
-            shouldSaveOnMove={shouldSaveOnMove}
-            skippable={skippable}
-            completed={completed}
-            isRequiredOnLastStep={isRequiredOnLastStep}
-            isNew={isNew}
-            redirectFunction={redirectFunction}
-          />
-        ))}
-      </Grid>
-      <Grid item container className={classes.rightBlock}>
-        <Grid item className={classes.stepperBlock}>
-          <Paper className={classes.stepperBlockWrapper}>
-            <Stepper
-              nonLinear={nonLinear}
-              orientation={matches ? 'horizontal' : 'vertical'}
+    <Form
+      defaultValues={stepsMemo[activeStep].getFormValues(data)}
+      validationSchema={getStepSchema(stepsMemo[activeStep].validationSchema)}
+      onSubmit={submitHandler}
+      allowInvalid
+      id={`${stepsMemo[activeStep].formId ?? 'form'}-${activeStep}`}
+    >
+      <Grid container direction={matches ? 'column-reverse' : 'row'}>
+        <Grid item className={classes.content}>
+          {stepsMemo.map((step: any, index: number) => (
+            <DSOFormStep
+              key={`step-content-${index}`}
+              step={step}
+              index={index}
+              totalSteps={steps.length}
               activeStep={activeStep}
-              title={matches ? formTitle : 'Progress'}
-              stepInfo={{
-                label: steps[activeStep].label,
-                activeStep: activeStep + 1,
-                totalSteps: steps.length
-              }}
-              actions={
-                <Grid container spacing={2}>
-                  {matches ? null : (
+              setActiveStep={setActiveStep}
+              setCompleted={handleComplete}
+              data={data}
+              createMutation={createMutation}
+              editMutation={editMutation}
+              submitMutation={submitMutation}
+              shouldSaveOnMove={shouldSaveOnMove}
+              skippable={skippable}
+              completed={completed}
+              isRequiredOnLastStep={isRequiredOnLastStep}
+              isNew={isNew}
+              redirectFunction={redirectFunction}
+            />
+          ))}
+        </Grid>
+        <Grid item container className={classes.rightBlock}>
+          <Grid item className={classes.stepperBlock}>
+            <Paper className={classes.stepperBlockWrapper}>
+              <Stepper
+                nonLinear={nonLinear}
+                orientation={matches ? 'horizontal' : 'vertical'}
+                activeStep={activeStep}
+                title={matches ? formTitle : 'Progress'}
+                stepInfo={{
+                  label: steps[activeStep].label,
+                  activeStep: activeStep + 1,
+                  totalSteps: steps.length
+                }}
+                actions={
+                  <Grid container spacing={2}>
+                    {matches ? null : (
+                      <Grid item xs={12}>
+                        <SubmitButton
+                          mutation={submitMutation}
+                          data={data}
+                          step={steps[steps.length - 1]}
+                          fullWidth
+                          size='medium'
+                          submitText={submitText}
+                        />
+                      </Grid>
+                    )}
                     <Grid item xs={12}>
-                      <SubmitButton
-                        mutation={submitMutation}
-                        data={data}
-                        step={steps[steps.length - 1]}
-                        fullWidth
-                        size='medium'
-                        submitText={submitText}
+                      <SaveDraftButton
+                        isLastStep={activeStep === steps.length - 1}
+                        formId={`${
+                          steps[activeStep].formId ?? 'form'
+                        }-${activeStep}`}
+                        disabled={
+                          data?.status === 'Submitted' ||
+                          data?.status === 'Approved'
+                        }
+                        mutation={mutation}
+                        transformData={stepsMemo[activeStep].getRequestPayload}
+                        redirectFunction={redirectFunction}
+                        search={
+                          '?step=' +
+                          stepsMemo[activeStep].label.replace(' ', '+')
+                        }
                       />
                     </Grid>
-                  )}
-                  <Grid item xs={12}>
-                    <SaveDraftButton
-                      isLastStep={activeStep === steps.length - 1}
-                      formId={`${
-                        steps[activeStep].formId ?? 'form'
-                      }-${activeStep}`}
-                      disabled={
-                        data?.status === 'Submitted' ||
-                        data?.status === 'Approved'
-                      }
-                    />
                   </Grid>
-                </Grid>
-              }
-            >
-              {steps.map((formStep: any, index: number) => {
-                const step = index + 1
-                return (
-                  <Step key={formStep.label}>
-                    <StepButton
-                      step={step}
-                      variantsConditions={getStepStatus(
-                        formStep,
-                        index,
-                        activeStep
-                      )}
-                      stepData={{
-                        step: steps[index],
-                        formData: data,
-                        isLast: index === steps.length - 1,
-                        shouldValidate: completed.includes(index)
-                      }}
-                      onClick={handleStepButtonClick(index)}
-                    >
-                      {formStep.label}
-                    </StepButton>
-                  </Step>
-                )
-              })}
-            </Stepper>
-          </Paper>
-        </Grid>
-        {!isMobile && (
-          <Grid item xs={12}>
-            <TwoFANotice />
+                }
+              >
+                {steps.map((formStep: any, index: number) => {
+                  const step = index + 1
+                  return (
+                    <Step key={formStep.label}>
+                      <StepButton
+                        step={step}
+                        variantsConditions={getStepStatus(
+                          formStep,
+                          index,
+                          activeStep
+                        )}
+                        stepData={{
+                          step: steps[index],
+                          formData: data,
+                          isLast: index === steps.length - 1,
+                          shouldValidate: completed.includes(index)
+                        }}
+                        onClick={handleStepButtonClick(index)}
+                      >
+                        {formStep.label}
+                      </StepButton>
+                    </Step>
+                  )
+                })}
+              </Stepper>
+            </Paper>
           </Grid>
-        )}
+          {!isMobile && (
+            <Grid item xs={12}>
+              <TwoFANotice />
+            </Grid>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+    </Form>
   )
 }
