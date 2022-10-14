@@ -20,7 +20,7 @@ export const getCorporateInfoRequestPayload = (
   const customLegalEntityStatus =
     otherLegalEntityStatus !== undefined && otherLegalEntityStatus.trim() !== ''
 
-  const representativesTransformed = representatives.map(rep => ({
+  const representativesTransformed = representatives?.map(rep => ({
     ...rep,
     documents: rep.documents?.map(doc => ({ ...doc.value }))
   }))
