@@ -67,7 +67,6 @@ export const DSOSaveOnNavigate = ({
   const [saveForm] = useMutation(handleSave)
 
   const saveOnNavigate = (location: Location<unknown>, action: Action) => {
-    // @ts-expect-error
     if (location.search !== '') {
       setNextLocation(location)
 
