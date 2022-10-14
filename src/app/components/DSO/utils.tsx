@@ -164,7 +164,7 @@ export const transformDSOToFormValuesStep1 = (
 }
 
 export const transformDSOToFormValues = (
-  dso?: DigitalSecurityOffering | undefined
+  dso: DigitalSecurityOffering | undefined
 ): DSOFormValues => {
   if (dso === undefined) {
     return {

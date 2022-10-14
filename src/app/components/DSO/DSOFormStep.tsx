@@ -1,5 +1,4 @@
-import { Grid, Box, Button } from '@mui/material'
-import { BackButton } from 'app/components/FormStepper/BackButton'
+import { Grid, Box } from '@mui/material'
 import React, { createElement, Fragment } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { ScrollToTop } from 'components/ScrollToTop'
@@ -11,6 +10,9 @@ import { DSOSaveOnNavigate } from './DSOSaveOnNavigate'
 import { MutationResultPair } from 'react-query'
 import { FormStepperStep } from '../FormStepper/FormStepper'
 import * as H from 'history'
+import { DSOStepperStep } from './DSOFormStepper'
+import { DSOStepperProgress } from './DSOStepperProgress'
+import { Form } from 'components/form/Form'
 
 export interface onSubmitSuccessProps {
   data: any
@@ -129,13 +131,28 @@ export interface DSOFormStepProps {
   createMutation: MutationResultPair<any, any, any, any>
   editMutation: MutationResultPair<any, any, any, any>
   submitMutation: MutationResultPair<any, any, any, any>
-  shouldSaveOnMove: boolean
   setCompleted: () => void
   skippable?: boolean
   completed: number[]
   isRequiredOnLastStep?: boolean
   isNew: boolean
   redirectFunction: (dsoId: string) => string
+  stepsList: DSOStepperStep[]
+  nonLinear: any
+  matches: boolean
+  formTitle: string
+  submitText: string
+  getStepStatus: (
+    step: DSOStepperStep,
+    index: number,
+    activeStepValue: number
+  ) => {
+    active: boolean
+    completed: boolean
+    error: boolean
+  }
+  handleStepButtonClick: (step: number) => () => void
+  contentClassName: string
 }
 
 export const DSOFormStep = (props: DSOFormStepProps) => {
@@ -147,15 +164,25 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
     step,
     createMutation,
     editMutation,
-    shouldSaveOnMove,
     setCompleted,
     skippable,
     redirectFunction,
     isRequiredOnLastStep = false,
-    isNew = true
+    isNew = true,
+    stepsList,
+    nonLinear,
+    matches,
+    formTitle,
+    submitText,
+    submitMutation,
+    data,
+    getStepStatus,
+    completed,
+    handleStepButtonClick,
+    contentClassName
   } = props
   const isCurrentStep = activeStep === index
-  const classes = useStyles()
+  const classes: any = useStyles()
 
   if (!isCurrentStep) {
     return null
@@ -168,64 +195,92 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
 
-  const nextCallback = () => {
-    setCompleted?.()
-    setActiveStep(activeStep + 1)
+  const mutation = isNew
+    ? createMutation[0]
+    : isLastStep
+    ? submitMutation[0]
+    : editMutation[0]
+
+  const nextCallback = (nextStep: number) => {
+    setCompleted()
+    setActiveStep(nextStep)
   }
 
   return (
-    <>
-      <DSOSaveOnNavigate
-        transformData={step.getRequestPayload}
-        mutation={saveMutation}
-        isNew={isNew}
-        redirectFunction={redirectFunction}
-        activeStep={activeStep}
-      />
-      <Grid item>{createElement(step.component)}</Grid>
-      <VSpacer size='small' />
+    <Form
+      defaultValues={step.getFormValues(data)}
+      validationSchema={getStepSchema(step.validationSchema)}
+      onSubmit={submitHandler}
+      allowInvalid
+      id={`${step.formId ?? 'form'}-${activeStep}`}
+    >
+      <Grid container>
+        <Grid item className={contentClassName}>
+          <Grid item>{createElement(step.component)}</Grid>
+          <VSpacer size='small' />
 
-      <Grid item container justifyContent='flex-end'>
-        <Box className={classes.stepButtons}>
-          {skippable !== undefined && skippable && !isLastStep && (
-            <Fragment>
-              <SkipButton mutation={saveMutation} />
-              <Box mx={1} />
-            </Fragment>
-          )}
+          <Grid item container justifyContent='flex-end'>
+            <Box className={classes.stepButtons}>
+              {skippable !== undefined && skippable && !isLastStep && (
+                <Fragment>
+                  <SkipButton mutation={saveMutation} />
+                  <Box mx={1} />
+                </Fragment>
+              )}
 
-          {hasPrevStep &&
-            (!isRequiredOnLastStep ? !isLastStep : isRequiredOnLastStep) && (
-              <Fragment>
-                <BackButton
-                  fullWidth
-                  mutation={editMutation}
-                  getRequestPayload={step.getRequestPayload}
-                  shouldSaveStep={shouldSaveOnMove}
-                  nextStep={activeStep - 1}
-                  setActiveStep={setActiveStep}
-                  isLastStep={isLastStep}
-                >
-                  Back
-                </BackButton>
-                <Box mx={1} />
-              </Fragment>
-            )}
+              {hasPrevStep &&
+                (!isRequiredOnLastStep
+                  ? !isLastStep
+                  : isRequiredOnLastStep) && (
+                  <Fragment>
+                    <DSOSaveOnNavigate
+                      transformData={step.getRequestPayload}
+                      mutation={saveMutation}
+                      isNew={isNew}
+                      redirectFunction={redirectFunction}
+                      activeStep={activeStep}
+                      move={'backward'}
+                      stepsList={stepsList}
+                      nextCallback={nextCallback}
+                    />
+                    <Box mx={1} />
+                  </Fragment>
+                )}
 
-          {hasNextStep && (
-            <Button
-              fullWidth
-              variant='contained'
-              color='primary'
-              onClick={nextCallback}
-              size='large'
-            >
-              Next
-            </Button>
-          )}
-        </Box>
+              {hasNextStep && (
+                <DSOSaveOnNavigate
+                  transformData={step.getRequestPayload}
+                  mutation={saveMutation}
+                  isNew={isNew}
+                  redirectFunction={redirectFunction}
+                  activeStep={activeStep}
+                  move={'forward'}
+                  stepsList={stepsList}
+                  nextCallback={nextCallback}
+                />
+              )}
+            </Box>
+          </Grid>
+          <ScrollToTop />
+        </Grid>
+        <Grid item>
+          <DSOStepperProgress
+            nonLinear={nonLinear}
+            matches={matches}
+            activeStep={activeStep}
+            formTitle={formTitle}
+            steps={stepsList}
+            submitText={submitText}
+            submitMutation={submitMutation}
+            data={data}
+            mutation={mutation}
+            getStepStatus={getStepStatus}
+            completed={completed}
+            handleStepButtonClick={handleStepButtonClick}
+            redirectFunction={redirectFunction}
+          />
+        </Grid>
       </Grid>
-      <ScrollToTop />
-    </>
+    </Form>
   )
 }

@@ -31,13 +31,8 @@ export const getDSOCompanyInformationPayload = (data: any) => {
   let team = []
   if ('team' in data) {
     team = data.team.filter((val: any) => {
-      console.log(
-        'getDSOCompanyInformationPayload',
-        _.isEqual(val, dsoTeamDefaults)
-      )
       return !_.isEqual(val, dsoTeamDefaults)
     })
-    console.log('team', team)
   }
 
   return {
