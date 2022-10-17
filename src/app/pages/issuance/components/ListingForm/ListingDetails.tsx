@@ -6,13 +6,13 @@ import {
   RadioGroup,
   Typography
 } from '@mui/material'
-import React, { useState } from 'react'
+import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
-import { UIRadio } from 'components/UIRadio/UIRadio'
-import { useStyles } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect.styles'
 import classnames from 'classnames'
-import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { UIRadio } from 'components/UIRadio/UIRadio'
+import React, { useState, useRef, useEffect } from 'react'
 
 export type ListingType = 'Secondary' | 'Otc' | 'Both'
 
@@ -46,6 +46,11 @@ export const ListingDetails = ({
 
   const { data, isLoading } = useDSOsByUserId('Approved')
   const [selectedDSOValue, setSelectedDSOValue] = useState<string>('')
+  const radioButtonRef = useRef<any>()
+
+  useEffect(() => {
+    radioButtonRef?.current?.children[0]?.click()
+  }, [])
 
   return (
     <Grid item container direction={'column'} spacing={{ xs: 4, md: 5 }}>
@@ -65,6 +70,7 @@ export const ListingDetails = ({
               display={'grid'}
               gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr 1fr' }}
               gap={1.5}
+              ref={radioButtonRef}
             >
               {radioButtonsList.map(({ label, value }) => {
                 return (

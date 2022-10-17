@@ -22,7 +22,7 @@ export const useUpdateListing = (
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 
-  const url = listingsURL.createOrUpdate(issuerId ?? userId)
+  const url = listingsURL.create(issuerId ?? userId)
   const updateDSO = async (args: ListingRequestArgs) => {
     return await apiService.post<ListingFormValuesForSubmit>(url, {
       ...args,

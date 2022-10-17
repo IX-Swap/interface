@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { SelectProps } from '@mui/material'
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 import { privateClassNames } from 'helpers/classnames'
@@ -10,6 +9,7 @@ import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { Icon } from 'ui/Icons/Icon'
 import { useDisabledSelectComponent } from './useFormStyles/disabledSelectComponent'
+import classnames from 'classnames'
 
 interface NetworkSelectProps extends SelectProps {
   placeHolder?: string | undefined
@@ -28,35 +28,35 @@ export const NetworkSelect = (props: NetworkSelectProps): JSX.Element => {
     })
   }
   return (
-    <>
-      {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
-      <div className={props.isDisabled ? classes.root : null}>
-        <InputLabel>{props.label}</InputLabel>
-        {/* eslint-disable-next-line @typescript-eslint/strict-boolean-expressions */}
-        {props.isDisabled ? (
-          <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
-        ) : null}
-        <Select
-          {...props}
-          label={undefined}
-          placeholder={String(props.placeHolder)}
-          displayEmpty
-          renderValue={renderName}
-          style={{ minWidth: 70 }}
-          data-testid='network-select'
-          defaultValue={undefined}
-        >
-          <SelectItem disabled value={undefined}>
-            Select blockchain network
+    <div
+      className={classnames({
+        [classes.root]: props.isDisabled
+      })}
+    >
+      <InputLabel>{props.label}</InputLabel>
+      {props.isDisabled === true && (
+        <Icon color={'#7DD320'} name={'check'} className='svgCheck' />
+      )}
+      <Select
+        {...props}
+        label={undefined}
+        placeholder={String(props.placeHolder)}
+        displayEmpty
+        renderValue={renderName}
+        style={{ minWidth: 70 }}
+        data-testid='network-select'
+        defaultValue={undefined}
+      >
+        <SelectItem disabled value={undefined}>
+          Select blockchain network
+        </SelectItem>
+        {data?.map(({ name, _id }) => (
+          <SelectItem key={_id} value={_id} className={privateClassNames()}>
+            {name}
           </SelectItem>
-          {data?.map(({ name, _id }) => (
-            <SelectItem key={_id} value={_id} className={privateClassNames()}>
-              {name}
-            </SelectItem>
-          ))}
-        </Select>
-      </div>
-    </>
+        ))}
+      </Select>
+    </div>
   )
 }
 NetworkSelect.displayName = 'Select_NetworkSelect'

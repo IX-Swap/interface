@@ -20,6 +20,7 @@ export interface SecondaryListingFormValues {
   currency: string
   launchDate: Date | string
   dso: string
+  type?: string
 }
 
 export interface ListingFormValues {
@@ -52,6 +53,7 @@ export interface ListingFormValues {
   marketType: string
   asset: string
   dso: string
+  type?: string
 }
 
 export interface Currency {
@@ -106,6 +108,7 @@ export interface Listing {
   team: DsoTeamMember[]
   promoted: boolean
   disabled: boolean
+  listingType?: string | undefined
 }
 
 export interface ListingFormValuesForSubmit {
@@ -154,6 +157,8 @@ export interface ListingFormValuesForSubmit {
   promoted: boolean
   disabled: boolean
   marketType: string
+  type?: string
+  result2?: any
 }
 
 export type ListingRequestArgs = Partial<

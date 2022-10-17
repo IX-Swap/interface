@@ -210,6 +210,8 @@ export const exchange = {
   userOrders: (userId?: string) => generateQueryKey('user-orders', userId),
   userHoldings: (userId?: string) => generateQueryKey('user-holdings', userId),
   listing: (listingId?: string) => generateQueryKey('listing', listingId),
+  OTClisting: (otcId?: string, userId?: string) =>
+    generateQueryKey('listing', userId, otcId),
   market: (pairId?: string) => generateQueryKey('market', pairId)
 }
 

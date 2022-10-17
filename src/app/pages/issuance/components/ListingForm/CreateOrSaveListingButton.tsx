@@ -13,7 +13,8 @@ import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDe
 
 export interface CreateOrSaveListingButtonProps {
   listing: DigitalSecurityOffering | Listing | undefined
-  listingType: null | ListingType
+  listingType?: ListingType | any
+  // listingType?: null | string | undefined
   isDataFromDSO: boolean
 }
 
@@ -26,7 +27,8 @@ export const CreateOrSaveListingButton = (
   const listingId = getIdFromObj(listing)
 
   const { watch } = useFormContext<ListingFormValues>()
-  const [createListing, { isLoading: isCreating }] = useCreateListing()
+  const [createListing, { isLoading: isCreating }] =
+    useCreateListing(listingType)
   const [updateListing, { isLoading: isUpdating }] = useUpdateListing(
     listingId,
     typeof listing?.user === 'string'
@@ -41,6 +43,11 @@ export const CreateOrSaveListingButton = (
     userId: userId
   } as any)
 
+  console.log({
+    defaultFormValues,
+    dso,
+    formValues
+  })
   const handleClick =
     listing === undefined || isDataFromDSO
       ? async () => await createListing(formValues)
