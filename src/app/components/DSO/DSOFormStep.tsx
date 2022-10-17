@@ -210,6 +210,23 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
       allowInvalid
       id={`${step.formId ?? 'form'}-${activeStep}`}
     >
+      <Grid item>
+        <DSOStepperProgress
+          nonLinear={nonLinear}
+          matches={matches}
+          activeStep={activeStep}
+          formTitle={formTitle}
+          steps={stepsList}
+          submitText={submitText}
+          submitMutation={submitMutation}
+          data={data}
+          mutation={mutation}
+          getStepStatus={getStepStatus}
+          completed={completed}
+          handleStepButtonClick={handleStepButtonClick}
+          redirectFunction={redirectFunction}
+        />
+      </Grid>
       <Grid container>
         <Grid item className={contentClassName}>
           <Grid item>{createElement(step.component)}</Grid>
@@ -258,23 +275,6 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
             </Box>
           </Grid>
           <ScrollToTop />
-        </Grid>
-        <Grid item>
-          <DSOStepperProgress
-            nonLinear={nonLinear}
-            matches={matches}
-            activeStep={activeStep}
-            formTitle={formTitle}
-            steps={stepsList}
-            submitText={submitText}
-            submitMutation={submitMutation}
-            data={data}
-            mutation={mutation}
-            getStepStatus={getStepStatus}
-            completed={completed}
-            handleStepButtonClick={handleStepButtonClick}
-            redirectFunction={redirectFunction}
-          />
         </Grid>
       </Grid>
     </Form>

@@ -81,6 +81,7 @@ export const DSOSaveOnNavigate = ({
   if (move === 'backward') {
     return (
       <Button
+        fullWidth
         variant='outlined'
         color='primary'
         onClick={() => {
