@@ -93,10 +93,12 @@ export const TypedField = <
     if (onChange !== undefined) {
       onChange(value, path, control)
     } else {
+      console.log('path value', path, value)
       control.setValue(path, value, {
         shouldValidate: true,
         shouldDirty: true
       })
+      console.log('control', control.getValues())
     }
   }
   const hasError = getErrorFromControl(path, control) !== undefined

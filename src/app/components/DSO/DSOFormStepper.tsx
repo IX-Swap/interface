@@ -158,7 +158,6 @@ export const DSOStepper = (props: DSOStepperProps) => {
           createMutation={createMutation}
           editMutation={editMutation}
           submitMutation={submitMutation}
-          shouldSaveOnMove={shouldSaveOnMove}
           skippable={skippable}
           completed={completed}
           isRequiredOnLastStep={isRequiredOnLastStep}

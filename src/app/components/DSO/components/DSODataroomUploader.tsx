@@ -23,7 +23,6 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
     DataroomDocumentType.Other
   )
   const files = [...fields, {}]
-
   return (
     <Grid container direction={'column'} spacing={5}>
       <Grid item>
@@ -58,12 +57,45 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
                 title: fileType,
                 ...documentInfo
               }}
-              onSuccessUploadCallback={(file: any) => append({ value: file })}
+              onSuccessUploadCallback={(file: any) => {
+                control.setValue(`dataroom_${i}`, file, {
+                  shouldValidate: true,
+                  shouldDirty: true
+                })
+                append({ value: file })
+              }}
               onRemoveCallback={() => {
                 remove(i)
               }}
             />
           </Grid>
+          // <Grid item>
+          //   <FileUpload
+          //     key={item.id ?? i}
+          //     value={fields[i]?.value ?? {}}
+          //     fullWidth
+          //     label={
+          //       <Box display={'flex'} alignItems={'center'}>
+          //         <Icon name={'file'} />
+          //         <Box ml={2}>Upload file</Box>
+          //       </Box>
+          //     }
+          //     name={`dataroom_${i}`}
+          //     documentInfo={{
+          //       type: fileType,
+          //       title: fileType,
+          //       ...documentInfo
+          //     }}
+          //     onSuccessUploadCallback={file => {
+          //       control.setValue(`dataroom_${i}`, file)
+          //       console.log('control.getValues()', control.getValues())
+          //       append({ value: file })
+          //     }}
+          //     onRemoveCallback={() => {
+          //       remove(i)
+          //     }}
+          //   />
+          // </Grid>
         ))}
       </Grid>
     </Grid>

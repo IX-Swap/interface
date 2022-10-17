@@ -195,11 +195,7 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
 
-  const mutation = isNew
-    ? createMutation[0]
-    : isLastStep
-    ? submitMutation[0]
-    : editMutation[0]
+  const mutation = isNew ? createMutation[0] : editMutation[0]
 
   const nextCallback = (nextStep: number) => {
     setCompleted()

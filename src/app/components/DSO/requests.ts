@@ -45,7 +45,7 @@ export const getDSOCompanyInformationPayload = (data: any) => {
 export const getDSODocumentsPayload = (data: any) => {
   const videosDefaults = { title: '', link: '' }
   const faqsDefaults = { question: '', answer: '' }
-
+  console.log('dso documents payload', data)
   let videos = []
   let faqs = []
   const documents: any[] = []
