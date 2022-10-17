@@ -21,7 +21,7 @@ export const Select = ({
       ? selected.length === 0
       : selected === null || selected === undefined || selected === ''
 
-    if (isPlaceholderVisible) {
+    if (isPlaceholderVisible && props.placeholder !== undefined) {
       return <Box className={classes.placeholder}>{props.placeholder}</Box>
     }
     if (renderValue instanceof Function) {
