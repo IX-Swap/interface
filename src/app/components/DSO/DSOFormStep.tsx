@@ -13,7 +13,7 @@ import * as H from 'history'
 import { DSOStepperStep } from './DSOFormStepper'
 import { DSOStepperProgress } from './DSOStepperProgress'
 import { Form } from 'components/form/Form'
-
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 export interface onSubmitSuccessProps {
   data: any
   isLastStep: boolean
@@ -152,7 +152,7 @@ export interface DSOFormStepProps {
     error: boolean
   }
   handleStepButtonClick: (step: number) => () => void
-  contentClassName: string
+  contentClassName?: string
 }
 
 export const DSOFormStep = (props: DSOFormStepProps) => {
@@ -178,12 +178,11 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
     data,
     getStepStatus,
     completed,
-    handleStepButtonClick,
-    contentClassName
+    handleStepButtonClick
   } = props
   const isCurrentStep = activeStep === index
   const classes: any = useStyles()
-
+  const { isTablet } = useAppBreakpoints()
   if (!isCurrentStep) {
     return null
   }
@@ -210,25 +209,8 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
       allowInvalid
       id={`${step.formId ?? 'form'}-${activeStep}`}
     >
-      <Grid item>
-        <DSOStepperProgress
-          nonLinear={nonLinear}
-          matches={matches}
-          activeStep={activeStep}
-          formTitle={formTitle}
-          steps={stepsList}
-          submitText={submitText}
-          submitMutation={submitMutation}
-          data={data}
-          mutation={mutation}
-          getStepStatus={getStepStatus}
-          completed={completed}
-          handleStepButtonClick={handleStepButtonClick}
-          redirectFunction={redirectFunction}
-        />
-      </Grid>
-      <Grid container>
-        <Grid item className={contentClassName}>
+      <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
+        <Grid item xs={8}>
           <Grid item>{createElement(step.component)}</Grid>
           <VSpacer size='small' />
 
@@ -275,6 +257,23 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
             </Box>
           </Grid>
           <ScrollToTop />
+        </Grid>
+        <Grid item>
+          <DSOStepperProgress
+            nonLinear={nonLinear}
+            matches={matches}
+            activeStep={activeStep}
+            formTitle={formTitle}
+            steps={stepsList}
+            submitText={submitText}
+            submitMutation={submitMutation}
+            data={data}
+            mutation={mutation}
+            getStepStatus={getStepStatus}
+            completed={completed}
+            handleStepButtonClick={handleStepButtonClick}
+            redirectFunction={redirectFunction}
+          />
         </Grid>
       </Grid>
     </Form>

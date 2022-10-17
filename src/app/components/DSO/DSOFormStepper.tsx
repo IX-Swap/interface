@@ -143,7 +143,7 @@ export const DSOStepper = (props: DSOStepperProps) => {
   }
 
   return (
-    <Grid container direction={matches ? 'column-reverse' : 'row'}>
+    <Grid>
       {steps.map((step: any, index: number) => (
         <DSOFormStep
           key={`step-content-${index}`}
