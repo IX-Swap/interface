@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { generatePath, useHistory } from 'react-router-dom'
-import { MutationResultPair, useMutation } from 'react-query'
+import { MutationResultPair } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { Button } from '@mui/material'
 import { DSOStepperStep } from './DSOFormStepper'
@@ -49,20 +49,20 @@ export const DSOSaveOnNavigate = ({
 
   const handleSave = async () => {
     // eslint-disable-next-line
+
     return await save(
       {
         ...payload
       },
       {
         onSettled: (data: any) => {
-          nextCallback(getNewActiveStep())
-
           if (data !== undefined) {
             const redirect: string = redirectFunction(data.data._id)
             const newActiveStep = getNewActiveStep()
             const search: string = `?step=${stepsList[
               newActiveStep
             ].label.replace(' ', '+')}`
+
             history.replace(
               generatePath(`${redirect}${search}`, {
                 issuerId:
@@ -78,15 +78,14 @@ export const DSOSaveOnNavigate = ({
     )
   }
 
-  const [saveForm] = useMutation(handleSave)
-
   if (move === 'backward') {
     return (
       <Button
         variant='outlined'
         color='primary'
         onClick={() => {
-          void saveForm()
+          void handleSave()
+          nextCallback(getNewActiveStep())
         }}
         disableElevation
         size='large'
@@ -102,7 +101,8 @@ export const DSOSaveOnNavigate = ({
       variant='contained'
       color='primary'
       onClick={() => {
-        void saveForm()
+        void handleSave()
+        nextCallback(getNewActiveStep())
       }}
       size='large'
     >

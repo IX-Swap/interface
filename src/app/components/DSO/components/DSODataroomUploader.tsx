@@ -8,17 +8,18 @@ import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { Icon } from 'ui/Icons/Icon'
 import { TypedField } from 'components/form/TypedField'
 import { plainValueExtractor } from 'helpers/forms'
+import { VSpacer } from 'components/VSpacer'
 
 export interface DSODataroomUploaderProps {
   fields: any[]
   append: (value: { value: DataroomFile }) => any
-  remove: (index: number) => any
+  remove?: (index: number) => any
   documentInfo?: UploadDocumentInfo
   control?: any
 }
 
 export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
-  const { append, fields, remove, documentInfo = {}, control } = props
+  const { append, fields, documentInfo = {}, control } = props
   const [fileType, setFileType] = useState<DataroomDocumentType>(
     DataroomDocumentType.Other
   )
@@ -37,14 +38,12 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
 
       <Grid item container direction={'column'} spacing={2}>
         {files.map((item, i) => (
-          <Grid item>
+          <>
             <TypedField
               customRenderer
               control={control}
               component={FileUpload}
               fullWidth
-              valueExtractor={plainValueExtractor}
-              key={item.id ?? i}
               label={
                 <Box display={'flex'} alignItems={'center'}>
                   <Icon name={'file'} />
@@ -52,50 +51,21 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
                 </Box>
               }
               name={`dataroom_${i}`}
+              valueExtractor={plainValueExtractor}
               documentInfo={{
                 type: fileType,
                 title: fileType,
                 ...documentInfo
               }}
               onSuccessUploadCallback={(file: any) => {
-                control.setValue(`dataroom_${i}`, file, {
-                  shouldValidate: true,
-                  shouldDirty: true
-                })
                 append({ value: file })
               }}
               onRemoveCallback={() => {
-                remove(i)
+                control.setValue(`dataroom_${i}`, undefined)
               }}
             />
-          </Grid>
-          // <Grid item>
-          //   <FileUpload
-          //     key={item.id ?? i}
-          //     value={fields[i]?.value ?? {}}
-          //     fullWidth
-          //     label={
-          //       <Box display={'flex'} alignItems={'center'}>
-          //         <Icon name={'file'} />
-          //         <Box ml={2}>Upload file</Box>
-          //       </Box>
-          //     }
-          //     name={`dataroom_${i}`}
-          //     documentInfo={{
-          //       type: fileType,
-          //       title: fileType,
-          //       ...documentInfo
-          //     }}
-          //     onSuccessUploadCallback={file => {
-          //       control.setValue(`dataroom_${i}`, file)
-          //       console.log('control.getValues()', control.getValues())
-          //       append({ value: file })
-          //     }}
-          //     onRemoveCallback={() => {
-          //       remove(i)
-          //     }}
-          //   />
-          // </Grid>
+            <VSpacer size='small' />
+          </>
         ))}
       </Grid>
     </Grid>

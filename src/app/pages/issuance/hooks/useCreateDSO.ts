@@ -18,7 +18,6 @@ export const useCreateDSO = () => {
       void snackbarService.showSnackbar('Success', 'success')
     },
     onError: (error: any) => {
-      console.log('error', error)
       void snackbarService.showSnackbar(error.message, 'error')
     }
   })
