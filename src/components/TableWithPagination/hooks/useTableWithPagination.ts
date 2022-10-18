@@ -51,7 +51,7 @@ export const useTableWithPagination = <TData>({
       setPrevPage(0)
     }
   }, [filter, disabledUseEffect])
-
+  const [totalPage, setTotalPage] = useState(0)
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
     const payload: KeyValueMap<any> = {
@@ -64,6 +64,7 @@ export const useTableWithPagination = <TData>({
         ? await apiService.post<PaginatedData<TData>>(uri!, payload)
         : await apiService.get<PaginatedData<TData>>(uri!, payload)
 
+    setTotalPage(result?.data[0]?.count)
     return result
   }
 
@@ -117,7 +118,7 @@ export const useTableWithPagination = <TData>({
     data.length > 0 &&
     data[data.length - 1].data !== undefined &&
     data[data.length - 1].data.length > 0
-      ? data[data.length - 1].data[0].count ?? 0
+      ? totalPage ?? 0
       : 0
   const isActuallyLoading = isLoading || isFetching || Boolean(isFetchingMore)
   const items = isActuallyLoading ? previousPageData : currentPageData
