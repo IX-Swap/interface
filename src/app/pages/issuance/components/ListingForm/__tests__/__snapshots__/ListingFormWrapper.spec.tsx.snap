@@ -218,15 +218,16 @@ exports[`ListingFormWrapper should match snapshot 1`] = `
                       role="button"
                       tabindex="0"
                     >
-                      <span
-                        class="notranslate"
+                      <div
+                        class="makeStyles-placeholder-8 MuiBox-root css-0"
                       >
-                        ​
-                      </span>
+                        Select item
+                      </div>
                     </div>
                     <input
                       aria-hidden="true"
                       class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      placeholder="Select item"
                       tabindex="-1"
                       value=""
                     />
