@@ -11,7 +11,8 @@ import {
   FormControlLabel,
   Typography,
   Box,
-  CircularProgress
+  CircularProgress,
+  PaperProps
 } from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
@@ -57,6 +58,7 @@ export interface TableViewProps<T> {
   paginationPlacement?: 'top' | 'bottom' | 'both' | 'none'
   labelRowsPerPage?: React.ReactNode
   activeSortLabel?: string
+  paperProps?: PaperProps
 }
 
 export const TableView = <T,>({
@@ -81,7 +83,8 @@ export const TableView = <T,>({
   method = 'POST',
   paginationPlacement = 'bottom',
   labelRowsPerPage,
-  activeSortLabel
+  activeSortLabel,
+  paperProps
 }: TableViewProps<T>): JSX.Element => {
   const hasActions = actions !== undefined
   const {
@@ -221,7 +224,7 @@ export const TableView = <T,>({
       {['top', 'both'].includes(paginationPlacement) && renderPagination()}
       <Grid item>
         {renderTableLoading()}
-        <Paper style={{ backgroundColor: 'inherit' }}>
+        <Paper style={{ backgroundColor: 'inherit' }} {...paperProps}>
           <TableContainer style={{ overflow: 'visible' }}>
             <Table aria-label='table' data-testid='table' size={size}>
               {columns.length > 0 ? (
