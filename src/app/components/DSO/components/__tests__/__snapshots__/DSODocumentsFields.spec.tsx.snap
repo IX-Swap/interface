@@ -222,77 +222,76 @@ exports[`DSODocumentsFields should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-10h8c1q-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                        class=" MuiBox-root css-1r25d6u"
                       >
                         <div
-                          class=" MuiBox-root css-1r25d6u"
+                          class="MuiBox-root css-70qvj9"
                         >
-                          <div
-                            class="MuiBox-root css-70qvj9"
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
                           >
-                            <p
-                              class="MuiTypography-root MuiTypography-body1 label css-rm0xct-MuiTypography-root"
+                            <div
+                              class="MuiBox-root css-70qvj9"
                             >
-                              <div
-                                class="MuiBox-root css-70qvj9"
+                              <svg
+                                class="css-1s8o7ec"
+                                fill="#778194"
+                                height="24px"
+                                width="24px"
                               >
-                                <svg
-                                  class="css-1s8o7ec"
-                                  fill="#778194"
-                                  height="24px"
-                                  width="24px"
-                                >
-                                  <use
-                                    href="image-mock#file"
-                                  />
-                                </svg>
-                                <div
-                                  class="MuiBox-root css-d0uhtl"
-                                >
-                                  Upload file
-                                </div>
+                                <use
+                                  href="image-mock#file"
+                                />
+                              </svg>
+                              <div
+                                class="MuiBox-root css-d0uhtl"
+                              >
+                                Upload file
                               </div>
-                            </p>
-                          </div>
-                          <div
-                            class="MuiBox-root css-0"
-                            role="button"
-                            tabindex="0"
+                            </div>
+                          </p>
+                        </div>
+                        <div
+                          class="MuiBox-root css-0"
+                          role="button"
+                          tabindex="0"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
                           >
-                            <p
-                              class="MuiTypography-root MuiTypography-body1 css-1r5z425-MuiTypography-root"
-                            >
-                              Browse
-                            </p>
-                            <input
-                              accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
-                              autocomplete="off"
-                              hidden=""
-                              id="file"
-                              name="file"
-                              style="display: none;"
-                              tabindex="-1"
-                              type="file"
-                            />
-                          </div>
-                          <div
-                            class="MuiBox-root css-16mkun2"
+                            Browse
+                          </p>
+                          <input
+                            accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
+                            autocomplete="off"
+                            hidden=""
+                            id="dataroom_0"
+                            name="dataroom_0"
+                            style="display: none;"
+                            tabindex="-1"
+                            type="file"
+                          />
+                        </div>
+                        <div
+                          class="MuiBox-root css-16mkun2"
+                        >
+                          <span
+                            aria-valuemax="100"
+                            aria-valuemin="0"
+                            aria-valuenow="0"
+                            class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
+                            role="progressbar"
                           >
                             <span
-                              aria-valuemax="100"
-                              aria-valuemin="0"
-                              aria-valuenow="0"
-                              class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate css-6gra9t-MuiLinearProgress-root"
-                              role="progressbar"
-                            >
-                              <span
-                                class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
-                                style="transform: translateX(-100%);"
-                              />
-                            </span>
-                          </div>
+                              class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate css-14iuyd7-MuiLinearProgress-bar1"
+                              style="transform: translateX(-100%);"
+                            />
+                          </span>
                         </div>
                       </div>
+                      <div
+                        class="MuiBox-root css-1jpm9pd"
+                      />
                     </div>
                   </div>
                 </div>

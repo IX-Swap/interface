@@ -47,6 +47,7 @@ describe('steps', () => {
       investmentStructure: formValues.investmentStructure,
       equityMultiple: formValues.equityMultiple,
       interestRate: formValues.interestRate,
+      isCampaign: formValues.isCampaign,
       leverage: formValues.leverage,
       totalFundraisingAmount: formValues.totalFundraisingAmount,
       pricePerUnit: formValues.pricePerUnit,
@@ -55,7 +56,7 @@ describe('steps', () => {
       minimumInvestment: formValues.minimumInvestment,
       launchDate: formValues.launchDate ?? null,
       completionDate: formValues.completionDate ?? null,
-      step: 0,
+      step: 1,
       decimalPlaces: formValues.decimalPlaces
     })
     expect(dsoFormSteps[1].getFormValues(formValues as any)).toEqual({
@@ -64,14 +65,14 @@ describe('steps', () => {
       businessModel: formValues.businessModel,
       useOfProceeds: formValues.useOfProceeds,
       fundraisingMilestone: formValues.fundraisingMilestone,
-      step: 1
+      step: 2
     })
     expect(dsoFormSteps[2].getFormValues(formValues as any)).toEqual({
       subscriptionDocument: formValues.subscriptionDocument,
       documents: formValues.documents,
       videos: formValues.videos ?? [{}],
       faqs: formValues.faqs ?? [{}],
-      step: 2
+      step: 3
     })
   })
 

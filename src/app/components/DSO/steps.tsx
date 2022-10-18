@@ -9,7 +9,11 @@ import {
   getDSODocumentschema
 } from 'validation/dso'
 import { getDSOInformationFormValues } from './utils'
-import { getDSOInformationRequestPayload } from './requests'
+import {
+  getDSOCompanyInformationPayload,
+  getDSODocumentsPayload,
+  getDSOInformationRequestPayload
+} from './requests'
 
 export const dsoFormSteps = [
   {
@@ -28,12 +32,10 @@ export const dsoFormSteps = [
         businessModel: data.businessModel ?? '',
         useOfProceeds: data.useOfProceeds ?? '',
         fundraisingMilestone: data.fundraisingMilestone ?? '',
-        step: 1
+        step: 2
       }
     },
-    getRequestPayload: (values: any) => {
-      return { ...values, step: 2 }
-    },
+    getRequestPayload: getDSOCompanyInformationPayload,
     validationSchema: getDSOCompanyInformationSchema,
     initialValidationSchema: getDSOCompanyInformationSchema,
     component: () => <DSOCompanyInformationFields />
@@ -46,12 +48,10 @@ export const dsoFormSteps = [
         documents: data.documents,
         videos: data.videos ?? [{}],
         faqs: data.faqs ?? [{}],
-        step: 2
+        step: 3
       }
     },
-    getRequestPayload: (values: any) => {
-      return { ...values, step: 3 }
-    },
+    getRequestPayload: getDSODocumentsPayload,
     validationSchema: getDSODocumentschema,
     component: () => <DSODocumentsFields />
   }

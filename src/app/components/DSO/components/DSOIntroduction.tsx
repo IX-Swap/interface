@@ -8,7 +8,6 @@ import { DSOFormValues } from 'types/dso'
 
 export const DSOIntroduction = () => {
   const { control } = useFormContext<DSOFormValues>()
-
   return (
     <DSOContainer
       title='Company Information'

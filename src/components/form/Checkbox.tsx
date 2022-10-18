@@ -23,7 +23,6 @@ export const Checkbox = (
     reverse = false,
     ...rest
   } = props
-
   const getColor = () => {
     if (error) {
       return 'error'

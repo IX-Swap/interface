@@ -48,6 +48,7 @@ export const DSODataroom = () => {
                       fields={fields}
                       append={append}
                       remove={remove}
+                      control={control}
                     />
 
                     <FormError name='documents' render={TextError} />

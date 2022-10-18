@@ -233,14 +233,8 @@ export const transformDSOToFormValues = (
     leverage: dso.leverage,
     documents: dso.documents.map(document => ({ value: document })),
     team: dso.team.map(({ _id, ...person }) => person),
-    faqs:
-      dso.faqs !== undefined && dso.faqs.length > 0
-        ? dso.faqs.map(({ _id, ...faqItem }) => faqItem)
-        : [{}],
-    videos:
-      dso.videos !== undefined && dso.videos.length > 0
-        ? dso.videos.map(({ _id, ...video }) => video)
-        : [{}],
+    faqs: dso.faqs.map(({ _id, ...faqItem }) => faqItem),
+    videos: dso.videos.map(({ _id, ...video }) => video),
     uniqueIdentifierCode: dso.uniqueIdentifierCode,
     decimalPlaces: dso.decimalPlaces,
     step: dso.step
@@ -257,6 +251,7 @@ export const getDSOInformationFormValues = (data: DSOFormValues) => {
     corporate: data.corporate,
     currency: getIdFromObj({ _id: data.currency }),
     uniqueIdentifierCode: data.uniqueIdentifierCode,
+    isCampaign: data.isCampaign,
     network: data.network,
     dividendYield: data.dividendYield,
     grossIRR: data.grossIRR,
@@ -271,7 +266,7 @@ export const getDSOInformationFormValues = (data: DSOFormValues) => {
     minimumInvestment: data.minimumInvestment,
     launchDate: data.launchDate ?? null,
     completionDate: data.completionDate ?? null,
-    step: 0,
+    step: 1,
     decimalPlaces: data.decimalPlaces
   }
 }

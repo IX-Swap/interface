@@ -60,7 +60,6 @@ exports[`ListingFormWrapper should match snapshot 1`] = `
                         class="MuiRadio-root MuiRadio-colorPrimary MuiButtonBase-root MuiRadio-root MuiRadio-colorPrimary PrivateSwitchBase-root Mui-checked css-pvro6c-MuiButtonBase-root-MuiRadio-root"
                       >
                         <input
-                          checked=""
                           class="PrivateSwitchBase-input css-1m9pwf3"
                           name="listPlace"
                           type="radio"
