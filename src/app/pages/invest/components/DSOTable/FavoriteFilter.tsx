@@ -38,7 +38,7 @@ export const FavoriteFilter = () => {
         )}
         {isTablet ? (
           <Typography
-            color={value === 'yes' ? '#FFF' : '#778194'}
+            color={value === 'true' ? '#FFF' : '#778194'}
             variant='subtitle1'
             sx={{ ml: 1.5 }}
           >
