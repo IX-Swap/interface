@@ -71,7 +71,6 @@ export const PrimaryOfferings = ({
     disabledUseEffect: true
   })
 
-  console.log({ items, total })
   const handleChangePage = (_: any, newPage: number) => {
     setPage(newPage - 1)
   }
