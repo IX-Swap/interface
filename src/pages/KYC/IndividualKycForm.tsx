@@ -677,7 +677,7 @@ export default function IndividualKycForm() {
 
                           <FormGrid>
                             <DateInput
-                              label="ID Issueance Date"
+                              label="ID Issuance Date"
                               id="documentIssueDateButton"
                               maxHeight={60}
                               error={errors.idIssueDate}
@@ -1400,11 +1400,10 @@ export default function IndividualKycForm() {
                               />
 
                               <TYPE.description3>
-                                I understand and acknowledge that any offer made to me via IX Swap is a personal 
-                                offer of securities under the small offer exemption in accordance with Section 
-                                272 (1) of Securities and Futures Act (289) Singapore and it is not accompanied
-                                by a prospectus that is reviewed or vetted by the Monetary Authority of Singapore. 
-                                I am interested in receiving and participating in such personal offers.
+                                I understand and acknowledge that any offer made to me via IX Swap is an exempt offer of securities in
+                                accordance with Section 275 of the Securities and Futures Act 2001 of Singapore and is not accompanied by a
+                                prospectus that is reviewed or vetted by the Monetary Authority of Singapore. I am interested in receiving and
+                                participating in such offers.
                               </TYPE.description3>
                             </LabeledCheckBox>
 
