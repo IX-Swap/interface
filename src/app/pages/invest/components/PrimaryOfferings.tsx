@@ -172,7 +172,7 @@ export const PrimaryOfferings = ({
               />
             ) : (
               <Pagination
-                count={Math.floor(total / 6)}
+                count={Math.ceil(total / 6)}
                 page={page + 1}
                 onChange={handleChangePage}
               />
