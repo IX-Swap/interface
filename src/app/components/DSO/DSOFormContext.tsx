@@ -1,0 +1,41 @@
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState
+} from 'react'
+
+interface Step {
+  values: any
+  errors: any
+}
+
+interface DSOFormContextInterface {
+  stepValues: Step[]
+  setStepValues: Dispatch<SetStateAction<Step[]>>
+}
+
+const DSOFormContext = createContext<DSOFormContextInterface | null>(null)
+
+export const DSOFormContextWrapper: React.FC = ({ children }) => {
+  const [stepValues, setStepValues] = useState<Step[]>([])
+
+  return (
+    <DSOFormContext.Provider value={{ stepValues, setStepValues }}>
+      {children}
+    </DSOFormContext.Provider>
+  )
+}
+
+export const useDSOFormContext = () => {
+  const DSOForm = useContext(DSOFormContext)
+
+  if (DSOForm === undefined) {
+    throw new Error(
+      'useDSOFormContext must be used inside of DSOFormContext component'
+    )
+  }
+
+  return DSOForm as DSOFormContextInterface
+}

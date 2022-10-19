@@ -1,13 +1,15 @@
-import React, { PropsWithChildren, useMemo } from 'react'
+import React, { PropsWithChildren, useEffect, useMemo } from 'react'
 import {
   SubmitHandler,
   useForm,
   FormProvider,
-  ValidationMode
+  ValidationMode,
+  ErrorOption
 } from 'react-hook-form'
 import { ObjectSchema, Shape, object } from 'yup'
 import { yupResolver } from '@hookform/resolvers'
 import { useUnmountCallback } from 'hooks/useUnmountCallback'
+import { isEmpty } from 'lodash'
 
 export interface FormProps<T extends {}> {
   defaultValues?: Partial<T>
@@ -20,6 +22,7 @@ export interface FormProps<T extends {}> {
   id?: string
   mode?: keyof ValidationMode
   reValidateMode?: keyof Omit<ValidationMode, 'all' | 'onTouched'>
+  errors?: any
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -35,6 +38,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     id,
     mode = 'onBlur',
     reValidateMode = 'onChange',
+    errors,
     ...rest
   } = props
 
@@ -46,6 +50,8 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     shouldUnregister: shouldUnregister,
     reValidateMode: reValidateMode
   })
+
+  const { setError } = form
 
   useUnmountCallback(() => {
     if (form.formState.isDirty) {
@@ -61,6 +67,14 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
   const handleInvalidSubmit = (_: any) => {
     onSubmit(form.getValues())
   }
+
+  useEffect(() => {
+    if (!isEmpty(errors)) {
+      Object.entries(errors).forEach(([key, value]) =>
+        setError(key, value as ErrorOption)
+      )
+    }
+  }, [errors, setError])
 
   return (
     <FormProvider {...form}>

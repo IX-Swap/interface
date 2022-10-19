@@ -5,6 +5,7 @@ import { MutationResultPair } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { Button } from '@mui/material'
 import { DSOStepperStep } from './DSOFormStepper'
+import { useDSOFormContext } from './DSOFormContext'
 
 export interface SaveOnNavigateProps {
   mutation: MutationResultPair<any, any, any, any>
@@ -30,7 +31,9 @@ export const DSOSaveOnNavigate = ({
   move = 'forward',
   nextCallback
 }: SaveOnNavigateProps) => {
-  const { watch } = useFormContext()
+  const { watch, errors } = useFormContext()
+  const { stepValues, setStepValues } = useDSOFormContext()
+
   const values = watch()
   const [save] = mutation
   const history = useHistory()
@@ -48,6 +51,10 @@ export const DSOSaveOnNavigate = ({
   }
 
   const handleSave = async () => {
+    const newValues = [...stepValues]
+    newValues[activeStep] = { values, errors: { ...errors } }
+
+    setStepValues(newValues)
     // eslint-disable-next-line
     return await save(
       {

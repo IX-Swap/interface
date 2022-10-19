@@ -5,6 +5,7 @@ import { useStyles } from '../FormStepper/FormStepper.styles'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { MutationResultPair } from 'react-query'
 import { DSOFormStep } from './DSOFormStep'
+import { DSOFormContextWrapper } from './DSOFormContext'
 
 export interface DSOStepperStep {
   label: string
@@ -158,34 +159,36 @@ export const DSOStepper = (props: DSOStepperProps) => {
 
   return (
     <Grid>
-      {steps.map((step: any, index: number) => (
-        <DSOFormStep
-          key={`step-content-${index}`}
-          step={step}
-          stepsList={steps}
-          index={index}
-          totalSteps={steps.length}
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-          setCompleted={handleComplete}
-          data={data}
-          createMutation={createMutation}
-          editMutation={editMutation}
-          submitMutation={submitMutation}
-          skippable={skippable}
-          completed={completed}
-          isRequiredOnLastStep={isRequiredOnLastStep}
-          isNew={isNew}
-          redirectFunction={redirectFunction}
-          nonLinear={nonLinear}
-          matches={matches}
-          formTitle={formTitle}
-          submitText={submitText}
-          getStepStatus={getStepStatus}
-          handleStepButtonClick={handleStepButtonClick}
-          contentClassName={classes.content}
-        />
-      ))}
+      <DSOFormContextWrapper>
+        {steps.map((step: any, index: number) => (
+          <DSOFormStep
+            key={`step-content-${index}`}
+            step={step}
+            stepsList={steps}
+            index={index}
+            totalSteps={steps.length}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+            setCompleted={handleComplete}
+            data={data}
+            createMutation={createMutation}
+            editMutation={editMutation}
+            submitMutation={submitMutation}
+            skippable={skippable}
+            completed={completed}
+            isRequiredOnLastStep={isRequiredOnLastStep}
+            isNew={isNew}
+            redirectFunction={redirectFunction}
+            nonLinear={nonLinear}
+            matches={matches}
+            formTitle={formTitle}
+            submitText={submitText}
+            getStepStatus={getStepStatus}
+            handleStepButtonClick={handleStepButtonClick}
+            contentClassName={classes.content}
+          />
+        ))}
+      </DSOFormContextWrapper>
     </Grid>
   )
 }
