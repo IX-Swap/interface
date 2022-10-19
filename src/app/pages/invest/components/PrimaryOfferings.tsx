@@ -71,6 +71,7 @@ export const PrimaryOfferings = ({
     disabledUseEffect: true
   })
 
+  console.log({ items, total })
   const handleChangePage = (_: any, newPage: number) => {
     setPage(newPage - 1)
   }
@@ -172,7 +173,7 @@ export const PrimaryOfferings = ({
               />
             ) : (
               <Pagination
-                count={Math.floor(total / 6)}
+                count={Math.ceil(total / 6)}
                 page={page + 1}
                 onChange={handleChangePage}
               />
