@@ -166,7 +166,10 @@ export const dsoFormBaseValidationSchema = {
   tokenName: string()
     .required('Token Name is required')
     .matches(lettersOrSpaces, 'Token Name must not have special characters'),
-  tokenSymbol: string().required('Token Symbol is required'),
+  tokenSymbol: string()
+    .min(2, 'Minimum 2 characters')
+    .max(6, 'Maximum 6 characters')
+    .required('Token Symbol is required'),
   totalFundraisingAmount: number()
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
