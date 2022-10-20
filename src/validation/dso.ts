@@ -34,11 +34,11 @@ export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
 export const dsoFAQItemSchema = object().shape<DsoFAQItem>(
   {
     question: string().when('answer', {
-      is: answer => Boolean(answer),
+      is: answer => answer !== '',
       then: string().required('Question is required when answer is provided')
     }),
     answer: string().when('question', {
-      is: question => Boolean(question),
+      is: question => question !== '',
       then: string().required('Answer is required when question is provided')
     })
   },
