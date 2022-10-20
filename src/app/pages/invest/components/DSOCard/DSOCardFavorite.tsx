@@ -12,16 +12,16 @@ export interface DSOCardFavoriteProps {
 
 export const DSOCardFavorite = (props: DSOCardFavoriteProps) => {
   const isFav = props.dso.isStarred
-  const classes = useStyles({ isFav })
   const [toggleDSOFavorite, { isLoading }] = useToggleDSOFavorite(
     props.dso,
     props.dependentQueryKeys
   )
-  const [toogleFav, setToggleFav] = useState(isFav)
+  const [toggleFav, setToggleFav] = useState(isFav)
+  const classes = useStyles({ isFav: toggleFav })
 
   const handleFav = async () => {
-    !toogleFav ? setToggleFav(true) : setToggleFav(false)
-    await toggleDSOFavorite(toogleFav)
+    !toggleFav ? setToggleFav(true) : setToggleFav(false)
+    await toggleDSOFavorite(toggleFav)
   }
 
   return (
@@ -40,31 +40,22 @@ export const DSOCardFavorite = (props: DSOCardFavoriteProps) => {
             size={16}
           />
         ) : (
-          <>
-            {toogleFav ? (
-              <IconButton
-                onClick={handleFav}
-                data-testid='icon-button'
-                className={`${classes.iconButton} ${classes.iconButtonActive}`}
-                size={'medium'}
-              >
-                <Icon
-                  name={'star-filled'}
-                  className={classes.icon}
-                  style={{ fill: '#ffffff' }}
-                />
-              </IconButton>
+          <IconButton
+            onClick={handleFav}
+            data-testid='icon-button'
+            className={`${classes.iconButton}`}
+            size={'medium'}
+          >
+            {toggleFav ? (
+              <Icon
+                name={'star-filled'}
+                className={classes.icon}
+                style={{ fill: '#ffffff' }}
+              />
             ) : (
-              <IconButton
-                onClick={handleFav}
-                data-testid='icon-button'
-                className={`${classes.iconButton} ${classes.iconButtonNormal}`}
-                size={'medium'}
-              >
-                <Icon name={'star'} className={classes.icon} />
-              </IconButton>
+              <Icon name={'star'} className={classes.icon} />
             )}
-          </>
+          </IconButton>
         )}
       </Grid>
     </Grid>
