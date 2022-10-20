@@ -9,16 +9,16 @@ export default makeStyles(theme => ({
     cursor: 'pointer',
     width: 56,
     height: 36,
-    borderRadius: 8
-    // backgroundColor: (props: Props) => (props.isFav ? '#FFC900' : 'inherit'),
-    // border: (props: Props) =>
-    //   `1px solid ${
-    //     props.isFav ? theme.palette.warning.main : theme.palette.menu.border
-    //   }`,
-    // '&:hover': {
-    //   backgroundColor: (props: Props) => (props.isFav ? '#FFC900' : 'inherit'),
-    //   opacity: 0.7
-    // }
+    borderRadius: 8,
+    backgroundColor: (props: Props) => (props.isFav ? '#FFC900' : 'inherit'),
+    border: (props: Props) =>
+      `1px solid ${
+        props.isFav ? theme.palette.warning.main : theme.palette.menu.border
+      }`,
+    '&:hover': {
+      backgroundColor: (props: Props) => (props.isFav ? '#FFC900' : 'inherit'),
+      opacity: 0.7
+    }
   },
   iconButtonActive: {
     backgroundColor: '#FFC900',

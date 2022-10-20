@@ -10,6 +10,7 @@ import { queryStatusRenderer } from './renderUtils'
 import { Icon } from 'ui/Icons/Icon'
 import { useDisabledSelectComponent } from './useFormStyles/disabledSelectComponent'
 import classnames from 'classnames'
+import { isEmpty } from 'lodash'
 
 interface CorporateSelectProps extends SelectProps {
   placeHolder?: string | undefined
@@ -43,9 +44,11 @@ export const CorporateSelect = (props: CorporateSelectProps) => {
         {...props}
         style={{ minWidth: 100 }}
         label={undefined}
-        placeholder={String(props.placeHolder)}
         renderValue={renderName}
         displayEmpty
+        {...(!isEmpty(props.placeHolder) && {
+          placeholder: String(props.placeHolder)
+        })}
       >
         <SelectItem disabled value={undefined}>
           Select corporate

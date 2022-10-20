@@ -17,7 +17,7 @@ export const Actions = (props: TablePaginationActionsProps) => {
 
   const isPrevButtonDisabled = props.page === 0
   const isNextButtonDisabled =
-    props.page * props.rowsPerPage + props.rowsPerPage === props.count
+    props.page * props.rowsPerPage + props.rowsPerPage >= props.count
 
   return (
     <Box display={'flex'} className={classes.actions}>

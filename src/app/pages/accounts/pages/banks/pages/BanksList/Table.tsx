@@ -83,6 +83,12 @@ export const Table: React.FC = () => {
           />
         )}
         noHeader={isTablet}
+        paperProps={{
+          style: {
+            position: 'relative',
+            zIndex: 1
+          }
+        }}
       >
         {isTablet
           ? (props: TableViewRendererProps<Bank>) => (

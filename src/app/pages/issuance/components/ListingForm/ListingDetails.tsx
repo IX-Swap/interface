@@ -119,6 +119,8 @@ export const ListingDetails = ({
                 style={{ height: 50 }}
                 fullWidth
                 label='My DSO'
+                placeholder='Select item'
+                displayEmpty={!isLoading}
                 value={selectedDSOValue}
                 disabled={isLoading}
                 options={data.list}
