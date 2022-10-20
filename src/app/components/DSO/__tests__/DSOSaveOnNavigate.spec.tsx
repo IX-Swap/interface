@@ -1,6 +1,5 @@
-import { SaveOnNavigate } from 'app/components/FormStepper/SaveOnNavigate'
-import { Form } from 'components/form/Form'
 import React from 'react'
+import { Form } from 'components/form/Form'
 import { render, cleanup } from 'test-utils'
 import { Route } from 'react-router-dom'
 import { history } from 'config/history'
@@ -86,7 +85,25 @@ describe('DSOSaveOnNavigate', () => {
         />
       </Form>
     )
-    expect(getByText('Back')).toBeTruthy()
+    expect(getByText('Next')).toBeTruthy()
+  })
+
+  it('renders a Next button if move prop is null', () => {
+    const { getByText } = render(
+      <Form>
+        <DSOSaveOnNavigate
+          transformData={transformer}
+          mutation={mutation}
+          isNew={false}
+          redirectFunction={() => IdentityRoute.editCorporate}
+          activeStep={1}
+          move={null}
+          stepsList={dsoFormSteps}
+          nextCallback={nextCallback}
+        />
+      </Form>
+    )
+    expect(getByText('Next')).toBeTruthy()
   })
 
   it('invokes save function when location changed', async () => {

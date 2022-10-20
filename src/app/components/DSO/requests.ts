@@ -72,8 +72,8 @@ export const getDSODocumentsPayload = (data: any) => {
   }
 
   return {
-    subscriptionDocument: data.subscriptionDocument,
-    documents,
+    subscriptionDocument: data.subscriptionDocument?._id,
+    documents: documents.map(item => item._id),
     step: 3,
     videos,
     faqs

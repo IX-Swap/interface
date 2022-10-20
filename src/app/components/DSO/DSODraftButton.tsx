@@ -1,7 +1,9 @@
 import { Box, Button } from '@mui/material'
+import { getIdFromObj } from 'helpers/strings'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { MutateFunction, useMutation } from 'react-query'
+import { generatePath } from 'react-router'
 import { useHistory } from 'react-router-dom'
 
 export interface SaveDraftButtonProps {
@@ -31,7 +33,16 @@ export const SaveDraftButton = ({
     // eslint-disable-next-line
     await mutation(payload).then((data: any) => {
       if (data !== undefined) {
-        history.go(0)
+        const redirect: string = redirectFunction(data.data._id)
+        history.replace(
+          generatePath(`${redirect}${search}`, {
+            issuerId:
+              typeof data.data.user === 'string'
+                ? data.data.user
+                : getIdFromObj(data.data.user),
+            dsoId: data.data._id
+          })
+        )
       }
     })
   }
