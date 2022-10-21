@@ -202,7 +202,7 @@ export default function IndividualKycForm() {
         'evidenceOfAccreditation'
       ]
 
-      setFieldValue('investorDeclarationStatus', individualFormInitialValues.investorDeclarationStatus)
+      setFieldValue('investorDeclarationIsFilled', individualFormInitialValues.investorDeclarationIsFilled)
       setFieldValue('acceptOfQualification', individualFormInitialValues.acceptOfQualification)
       setFieldValue('acceptRefusalRight', individualFormInitialValues.acceptRefusalRight)
       setFieldValue('confirmStatusDeclaration', individualFormInitialValues.confirmStatusDeclaration)
@@ -217,6 +217,23 @@ export default function IndividualKycForm() {
       setErrors(newErrors)
       setCanSubmit(true)
     }
+  }
+
+  const onInvestorDeclarationChange = (field: string, value: boolean, values: any, setFieldValue: any) => {
+    onChangeInput(field, value, values, setFieldValue)
+
+    const relevantField = [
+      'isTotalAssets',
+      'isAnnualIncome',
+      'isFinancialAssets',
+      'isJointIncome',
+    ]
+
+    const atLeastOneFieldIsFilled = relevantField.some(f => f === field ? value : values[f])
+
+    // Check whether any of investor declaration fields are checked
+    setFieldValue('investorDeclarationIsFilled', atLeastOneFieldIsFilled, false)
+    validationSeen('investorDeclarationIsFilled')
   }
 
   const onSourceOfFundsChange = (source: {value: string, label: string}[], fields: any[], setFieldValue: any) => {
@@ -375,54 +392,41 @@ export default function IndividualKycForm() {
             isInitialValid={false}
             enableReinitialize
             onSubmit={async (values) => {
-              individualErrorsSchema
-                .validate(values, { abortEarly: false })
-                .then(async () => {
-                  canLeavePage.current = true
-                  setCanSubmit(false)
-                  const body = individualTransformKycDto(values)
-                  let data: any = null
+              try {
+                await individualErrorsSchema.validate(values, { abortEarly: false })
 
-                  if (updateKycId) {
-                    data = await updateIndividualKYC(updateKycId, body)
-                  } else {
-                    data = await createIndividualKYC(body)
-                  }
+                canLeavePage.current = true
 
-                  if (data?.id) {
-                    history.push('/kyc')
-                    addPopup({
-                      info: {
-                        success: true,
-                        summary: 'KYC was successfully submitted',
-                      },
-                    })
-                  } else {
-                    setCanSubmit(true)
-                    addPopup({
-                      info: {
-                        success: false,
-                        summary: 'Something went wrong',
-                      },
-                    })
-                  }
-                })
-                .catch((error) => {
-                  const newErrors: any = {}
-                  error.inner.forEach((e: any) => {
-                    newErrors[e.path] = e.message
-                  })
-                  addPopup({
-                    info: {
-                      success: false,
-                      summary: 'Please, fill the valid data',
-                    },
-                  })
-                  setIsSubmittedOnce(true)
-                  setErrors(newErrors)
+                setCanSubmit(false)
+
+                const body = individualTransformKycDto(values)
+                const data = updateKycId
+                  ? await updateIndividualKYC(updateKycId, body)
+                  : await createIndividualKYC(body)
+
+                if (data?.id) {
+                  history.push('/kyc')
+
+                  addPopup({ info: { success: true, summary: 'KYC was successfully submitted' } })
+                } else {
+                  addPopup({ info: { success: false, summary: 'Something went wrong' } })
                   setCanSubmit(true)
-                  canLeavePage.current = false
+                }
+              } catch (error: any) {
+                const newErrors: any = {}
+
+                error.inner.forEach((e: any) => {
+                  newErrors[e.path] = e.message
                 })
+
+                addPopup({ info: { success: false, summary: 'Please, fill the valid data' } })
+
+                setIsSubmittedOnce(true)
+                setErrors(newErrors)
+                setCanSubmit(true)
+
+                canLeavePage.current = false
+              }
             }}
           >
             {({ values, handleSubmit, setFieldValue, dirty }) => {
@@ -1098,9 +1102,8 @@ export default function IndividualKycForm() {
                                 <Checkbox
                                   name=""
                                   label=""
-                                  isRadio
-                                  checked={values.investorDeclarationStatus === 'total-assets'}
-                                  onClick={() => onRadioChange('investorDeclarationStatus', 'total-assets', setFieldValue)}
+                                  checked={values.isTotalAssets}
+                                  onClick={() => onInvestorDeclarationChange('isTotalAssets', !values.isTotalAssets, values, setFieldValue)}
                                 />
                                 <TYPE.description3>
                                   My total net personal assets (including up to SGD 1 million of your primary residence) exceed SGD 2 million
@@ -1111,9 +1114,8 @@ export default function IndividualKycForm() {
                                 <Checkbox
                                   name=""
                                   label=""
-                                  isRadio
-                                  checked={values.investorDeclarationStatus === 'annual-income'}
-                                  onClick={() => onRadioChange('investorDeclarationStatus', 'annual-income', setFieldValue)}
+                                  checked={values.isAnnualIncome}
+                                  onClick={() => onInvestorDeclarationChange('isAnnualIncome', !values.isAnnualIncome, values, setFieldValue)}
                                 />
                                 <TYPE.description3>
                                   My income in the preceding 12 months is not less than SGD 300,000 (or its equivalent in a foreign currency)
@@ -1124,9 +1126,8 @@ export default function IndividualKycForm() {
                                 <Checkbox
                                   name=""
                                   label=""
-                                  isRadio
-                                  checked={values.investorDeclarationStatus === 'financial-assets'}
-                                  onClick={() => onRadioChange('investorDeclarationStatus', 'financial-assets', setFieldValue)}
+                                  checked={values.isFinancialAssets}
+                                  onClick={() => onInvestorDeclarationChange('isFinancialAssets', !values.isFinancialAssets, values, setFieldValue)}
                                 />
                                 <TYPE.description3>
                                   My personal financial asset (e.g. deposits and investment product) exceed SGD 1 million or 
@@ -1138,9 +1139,8 @@ export default function IndividualKycForm() {
                                 <Checkbox
                                   name=""
                                   label=""
-                                  isRadio
-                                  checked={values.investorDeclarationStatus === 'joint-income'}
-                                  onClick={() => onRadioChange('investorDeclarationStatus', 'joint-income', setFieldValue)}
+                                  checked={values.isJointIncome}
+                                  onClick={() => onInvestorDeclarationChange('isJointIncome', !values.isJointIncome, values, setFieldValue)}
                                 />
                                 <TYPE.description3>
                                   My jointly held account with my spouse/any individual meets any of the above
@@ -1151,9 +1151,9 @@ export default function IndividualKycForm() {
                               
                             </Column>
 
-                            {errors.investorDeclarationStatus && (
+                            {errors.investorDeclarationIsFilled && (
                               <TYPE.small marginTop="-4px" color={'red1'}>
-                                <Trans>Choose one</Trans>
+                                <Trans>{errors.investorDeclarationIsFilled}</Trans>
                               </TYPE.small>
                             )}
                             

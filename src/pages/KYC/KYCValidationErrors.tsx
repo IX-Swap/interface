@@ -51,7 +51,7 @@ const errorLabelMap = [
   { field: 'usTin', label: 'US TIN' },
 
   { field: 'accredited', label: 'Investor Status Declaration' },
-  { field: 'investorDeclarationStatus', label: 'Investor Declaration' },
+  { field: 'investorDeclarationIsFilled', label: 'Investor Declaration' },
   { field: 'acceptOfQualification', label: 'Qualification Confirmation' },
   { field: 'acceptRefusalRight', label: 'Opt-out Confirmation' },
   { field: 'evidenceOfAccreditation', label: 'Evidence of Accreditation' },
@@ -72,8 +72,6 @@ export const KYCValidationErrors = ({ fields }: KYCValidationErrorsProps) => {
   if (fields.length === 0) {
     return null
   }
-
-  console.log(fields, labels)
 
   return (
     <FormCard style={{ marginBottom: '1rem' }}>

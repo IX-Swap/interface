@@ -205,6 +205,13 @@ export const individualFormInitialValues: IFormInitial = {
   isUSTaxPayer: -1,
   usTin: '',
 
+  investorDeclarationIsFilled: false,
+
+  isTotalAssets: false,
+  isAnnualIncome: false,
+  isFinancialAssets: false,
+  isJointIncome: false,
+
   accredited: -1,
   investorDeclaration: undefined,
   confirmSafeguards: undefined,
