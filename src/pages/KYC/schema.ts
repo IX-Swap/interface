@@ -36,6 +36,9 @@ export const individualErrorsSchema = yup.object().shape({
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
 
+  investorDeclarationIsFilled: yup.boolean()
+    .when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
+
   taxDeclarations: yup.array().of(
     yup.object().shape({ 
       isAdditional: yup.bool(),
@@ -65,9 +68,8 @@ export const individualErrorsSchema = yup.object().shape({
   }),
 
   accredited: yup.number().min(0).max(1),
-  investorDeclarationStatus: yup.string().when('accredited', { is: 1, then: yup.string().required('Required') }),
-  acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
-  acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().required('Required') }),
+  acceptOfQualification: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
+  acceptRefusalRight: yup.boolean().when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
   evidenceOfAccreditation: yup.array().when('accredited', {
     is: 1, 
     then: yup.array().min(1, 'Required').nullable().required('Evidence of Accreditation is required'),

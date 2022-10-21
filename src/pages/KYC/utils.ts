@@ -119,7 +119,7 @@ export const individualTransformApiData = (data: any) => {
 
   return {
     ...data,
-    sourceOfFunds: otherFunds?.length ? [...funds.split(', '), 'Others'] : funds.split(', '),
+    sourceOfFunds: (otherFunds?.length ? [...funds.split(', '), 'Others'] : funds.split(', ')).filter((x: string) => x.length > 0),
     isUSTaxPayer: usTin ? 1 : 0,
     otherFunds,
     address: address?.address,
@@ -135,12 +135,24 @@ export const individualTransformApiData = (data: any) => {
     gender: { value: 0, label: gender },
     occupation: { value: 0, label: occupation },
     nationality: { value: 0, label: nationality },
-    income: { value: 0, label: income },
+    income: income && { value: 0, label: income },
     removedDocuments: [],
+
 
     taxDeclarations: data.taxDeclarations.map((t: any) => ({ ...t, country: { label: t.country } })),
 
-    investorDeclarationStatus: data.investorDeclaration?.status,
+    investorDeclarationIsFilled: [
+      data.investorDeclaration.isTotalAssets,
+      data.investorDeclaration.isAnnualIncome,
+      data.investorDeclaration.isFinancialAssets,
+      data.investorDeclaration.isJointIncome,
+    ].some(x => !!x),
+
+    isTotalAssets: data.investorDeclaration.isTotalAssets,
+    isAnnualIncome: data.investorDeclaration.isAnnualIncome,
+    isFinancialAssets: data.investorDeclaration.isFinancialAssets,
+    isJointIncome: data.investorDeclaration.isJointIncome,
+
     acceptOfQualification: data.investorDeclaration?.acceptOfQualification,
     acceptRefusalRight: data.investorDeclaration?.acceptRefusalRight
   }
@@ -202,7 +214,11 @@ export const individualTransformKycDto = (values: any) => {
     {
       ...values.investorDeclaration,
 
-      status: values?.investorDeclarationStatus,
+      isTotalAssets: values.isTotalAssets,
+      isAnnualIncome: values.isAnnualIncome,
+      isFinancialAssets: values.isFinancialAssets,
+      isJointIncome: values.isJointIncome,
+
       acceptOfQualification: values?.acceptOfQualification,
       acceptRefusalRight: values?.acceptRefusalRight,
     } : emptyInvestorDeclaration,
