@@ -241,7 +241,7 @@ export const transformDSOToFormValues = (
   }
 }
 
-export const getDSOInformationFormValues = (data: DSOFormValues) => {
+export const getDSOInformationFormValues = (data: any) => {
   return {
     capitalStructure: data.capitalStructure,
     logo: data.logo,

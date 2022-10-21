@@ -121,6 +121,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                         shouldValidate: completed.includes(index)
                       }}
                       onClick={handleStepButtonClick(index)}
+                      data-testid={'dsoStepId'}
                     >
                       {formStep.label}
                     </StepButton>

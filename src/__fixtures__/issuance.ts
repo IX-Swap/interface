@@ -1,6 +1,6 @@
 import {
   DSORequestArgs,
-  DSOFormValues,
+  // DSOFormValues,
   DsoTeamMember,
   DeploymentInfo,
   DSOInsight,
@@ -173,7 +173,7 @@ export const baseDSOFormValues: DSOBaseFormValues = {
   decimalPlaces: 18
 }
 
-export const formValues: DSOFormValues = {
+export const formValues: any = {
   team: [
     {
       name: 'Team Ultimate',
@@ -235,7 +235,16 @@ export const formValues: DSOFormValues = {
   capitalStructure: 'Good',
   businessModel: '<p>Hello world</p>',
   decimalPlaces: 0,
-  step: 2
+  step: 2,
+  dataroom_0: {
+    _id: '5f898b52aa141c6d0d358ce5',
+    createdAt: '2020-10-16T12:00:18.823Z',
+    originalFileName: 'a.jpg',
+    title: '',
+    type: '',
+    updatedAt: '2020-10-16T12:00:18.823Z',
+    user: '5f7c1398fbc4b5491a1634ce'
+  }
 }
 
 export const requestargs: DSORequestArgs = {
