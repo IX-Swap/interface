@@ -24,6 +24,7 @@ import { DepositModalView } from './reducer'
 import walletValidator from 'multicoin-address-validator'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal, useToggleTransactionModal } from 'state/application/hooks'
+import { NETWORK_ADDRESS_PATTERNS } from 'state/wallet/constants'
 
 export function useDepositState(): AppState['deposit'] {
   return useSelector<AppState, AppState['deposit']>((state) => state.deposit)
@@ -101,8 +102,17 @@ export function useDerivedDepositInfo(): {
   let formattedFrom = isAddress(sender)
   if (!sender) {
     inputError = inputError ?? t`Enter a sender`
-  } else if (!formattedFrom) {
-    const isValidForNetwork = walletValidator.validate(sender, networkName ?? 'Ethereum')
+  } else {//if (!formattedFrom) {
+    const network = networkName || 'Ethereum'
+    const currency = walletValidator.findCurrency(network)
+    let isValidForNetwork = true
+
+    if (currency) {
+      isValidForNetwork = walletValidator.validate(sender, network)
+    } else {
+      isValidForNetwork = manualValidation(sender, network);
+    }
+
     if (!isValidForNetwork) {
       inputError = inputError ?? t`Sender is invalid`
     }
@@ -116,6 +126,22 @@ export function useDerivedDepositInfo(): {
     formattedFrom,
     inputError,
   }
+}
+
+const manualValidation = (address: string, network: string) => {
+  const expressions = NETWORK_ADDRESS_PATTERNS[network]
+
+  return expressions[0].test(address)
+  /*if (!expressions[0].test(address)) {
+    return false;
+  }
+
+  if (expressions[1].test(address) || expressions[2].test(address)) {
+    // If it's all small caps or all all caps, return true
+    return true;
+  }
+
+  return false;*/
 }
 
 export const depositToken = async ({
