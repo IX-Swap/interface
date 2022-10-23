@@ -14,17 +14,30 @@ export const ListingMarketInfo = (props: any) => {
   const classes = useStyles()
   const { control, watch, setValue } = useFormContext()
   const currency = watch('currency')
-  const { status, isNew } = props
+  const { status, isNew, data: dsoData } = props
 
   const { data, isLoading } = useAssetsData('Currency')
   const currencyList = useMemo(() => data.list.reverse(), [data])
 
   useEffect(() => {
     if (!isLoading && data !== undefined && data.list.length > 0) {
-      setValue('currency', currencyList[0]._id)
+      setValue(
+        'currency',
+        dsoData?.currency !== undefined
+          ? dsoData?.currency?._id
+          : dsoData?.markets[0]?.currency
+      )
     }
-  }, [data, currencyList, isLoading, setValue])
+  }, [
+    data,
+    currencyList,
+    isLoading,
+    setValue,
+    dsoData?.markets,
+    dsoData?.currency
+  ])
 
+  console.log({ dsoData })
   if (isLoading) {
     return <LoadingIndicator />
   }
