@@ -38,7 +38,8 @@ export default function CommonBases({
     return Object.keys(secTokens)
       .filter(
         (tokenId) =>
-          (secTokens[tokenId] as any).tokenInfo?.accreditationRequest?.status === AccreditationStatusEnum.APPROVED
+          (secTokens[tokenId] as any).tokenInfo?.accreditationRequest?.brokerDealerStatus === AccreditationStatusEnum.APPROVED
+          && (secTokens[tokenId] as any).tokenInfo?.accreditationRequest?.custodianStatus === AccreditationStatusEnum.APPROVED
       )
       .reduce<{
         [address: string]: Token
