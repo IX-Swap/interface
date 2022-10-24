@@ -8,6 +8,11 @@ import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFi
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
 import { DSOBaseFormValues } from 'types/dso'
+import {
+  getDSOCompanyInformationSchema,
+  getDSODocumentschema,
+  getDSOInformationSchema
+} from 'validation/dso'
 
 jest.mock('app/components/DSO/components/DSOInformationFields', () => ({
   DSOInformationFields: jest.fn(() => null)
@@ -30,6 +35,14 @@ describe('steps', () => {
     expect(dsoFormSteps[0].label).toEqual('DSO Information')
     expect(dsoFormSteps[1].label).toEqual('Company Information')
     expect(dsoFormSteps[2].label).toEqual('Documents')
+  })
+
+  it('has the corresponding components per step', () => {
+    expect(dsoFormSteps[0].validationSchema).toEqual(getDSOInformationSchema)
+    expect(dsoFormSteps[1].validationSchema).toEqual(
+      getDSOCompanyInformationSchema
+    )
+    expect(dsoFormSteps[2].validationSchema).toEqual(getDSODocumentschema)
   })
 
   it('steps have the form value getters', () => {
