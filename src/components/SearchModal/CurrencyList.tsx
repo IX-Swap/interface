@@ -363,7 +363,9 @@ export default function CurrencyList({
 
       const isUnapprovedToken =
         token && secTokens[currencyId]
-          ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.status !==
+          ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.brokerDealerStatus !==
+            AccreditationStatusEnum.APPROVED ||
+            (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.custodianStatus !==
             AccreditationStatusEnum.APPROVED
           : false
       if (showImport && token) {
