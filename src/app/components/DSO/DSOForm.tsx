@@ -11,7 +11,7 @@ import { transformDSOToFormValues } from 'app/components/DSO/utils'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useAuth } from 'hooks/auth/useAuth'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { DSOStepper } from './DSOFormStepper'
+import { DSOStepper } from 'app/components/DSO/DSOFormStepper'
 
 export interface DSOFormProps {
   data?: DigitalSecurityOffering

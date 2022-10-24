@@ -173,6 +173,84 @@ export const baseDSOFormValues: DSOBaseFormValues = {
   decimalPlaces: 18
 }
 
+export const DSOInformation: DSOBaseFormValues = {
+  logo: '5f898b69aa141c6d0d358ce6',
+  totalFundraisingAmount: 100000,
+  tokenSymbol: '$#',
+  tokenName: 'IXWTKN',
+  pricePerUnit: 10,
+  minimumInvestment: 200,
+  leverage: 1,
+  launchDate: '2020-10-16T18:30:00.000Z',
+  completionDate: '2220-10-16T18:30:00.000Z',
+  issuerName: 'IXIssuer',
+  investmentStructure: '1',
+  investmentPeriod: 2,
+  interestRate: 1,
+  grossIRR: 1,
+  network: network._id,
+  equityMultiple: 1,
+  dividendYield: 1,
+  distributionFrequency: 'Monthly',
+  currency: '5f732c5b8a568b50914d8373',
+  corporate: '5f898a64aa141c6d0d358ce1',
+  capitalStructure: 'Good',
+  isCampaign: true,
+  decimalPlaces: 18,
+  step: 1
+}
+
+export const CompanyInformation: any = {
+  introduction: '<p>Hello world</p>',
+  fundraisingMilestone: '<p>Hello world</p>',
+  useOfProceeds: '<p>Hello world</p>',
+  businessModel: '<p>Hello world</p>',
+  team: [
+    {
+      name: 'Team Ultimate',
+      position: 'Maintainer',
+      about: '<p>Hello world</p>',
+      photo: 'id'
+    }
+  ],
+  step: 2
+}
+
+export const DSODocuments: any = {
+  faqs: [
+    {
+      question: 'FAQ #1',
+      answer: 'Text'
+    }
+  ],
+  videos: [
+    {
+      title: 'Video #1',
+      link: 'Link'
+    }
+  ],
+  documents: [],
+  dataroom_0: {
+    _id: '5f898b52aa141c6d0d358ce5',
+    user: '5f7c1398fbc4b5491a1634ce',
+    title: '',
+    type: '',
+    originalFileName: 'a.jpg',
+    createdAt: '2020-10-16T12:00:18.823Z',
+    updatedAt: '2020-10-16T12:00:18.823Z'
+  },
+  subscriptionDocument: {
+    _id: '5f898b52aa141c6d0d358ce5',
+    createdAt: '2020-10-16T12:00:18.823Z',
+    originalFileName: 'a.jpg',
+    title: '',
+    type: '',
+    updatedAt: '2020-10-16T12:00:18.823Z',
+    user: '5f7c1398fbc4b5491a1634ce'
+  },
+  step: 3
+}
+
 export const formValues: any = {
   team: [
     {
