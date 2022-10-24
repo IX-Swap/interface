@@ -56,6 +56,7 @@ export const DateInput = ({
           openTo={openTo ?? 'year'}
           views={['year', 'month', 'date']}
           inputFormat="DD/MM/YYYY"
+          disableCloseOnSelect={false}
           renderInput={({ inputProps }: Record<string, any>) => (
             <TextFieldContainer className="dateInput">
               <TextField {...inputProps} data-testid={id} placeholder={placeholder} disabled={isDisabled} error={error} />
