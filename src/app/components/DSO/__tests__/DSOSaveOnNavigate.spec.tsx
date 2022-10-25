@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { DSOSaveOnNavigate } from '../DSOSaveOnNavigate'
 import { dsoFormSteps } from '../steps'
+import { DSOFormContextWrapper } from '../DSOFormContext'
 
 jest.mock('react-hook-form', () => ({
   ...jest.requireActual('react-hook-form'),
@@ -37,78 +38,7 @@ describe('DSOSaveOnNavigate', () => {
 
   it('renders without errors', () => {
     render(
-      <Form>
-        <DSOSaveOnNavigate
-          transformData={transformer}
-          mutation={mutation}
-          isNew={false}
-          redirectFunction={() => IdentityRoute.editCorporate}
-          activeStep={1}
-          move={'backward'}
-          stepsList={dsoFormSteps}
-          nextCallback={nextCallback}
-        />
-      </Form>
-    )
-  })
-
-  it('renders a Back button if passed with backward move prop', () => {
-    const { getByText } = render(
-      <Form>
-        <DSOSaveOnNavigate
-          transformData={transformer}
-          mutation={mutation}
-          isNew={false}
-          redirectFunction={() => IdentityRoute.editCorporate}
-          activeStep={1}
-          move={'backward'}
-          stepsList={dsoFormSteps}
-          nextCallback={nextCallback}
-        />
-      </Form>
-    )
-    expect(getByText('Back')).toBeTruthy()
-  })
-
-  it('renders a Next button if passed with forward move prop', () => {
-    const { getByText } = render(
-      <Form>
-        <DSOSaveOnNavigate
-          transformData={transformer}
-          mutation={mutation}
-          isNew={false}
-          redirectFunction={() => IdentityRoute.editCorporate}
-          activeStep={1}
-          move={'forward'}
-          stepsList={dsoFormSteps}
-          nextCallback={nextCallback}
-        />
-      </Form>
-    )
-    expect(getByText('Next')).toBeTruthy()
-  })
-
-  it('renders a Next button if move prop is null', () => {
-    const { getByText } = render(
-      <Form>
-        <DSOSaveOnNavigate
-          transformData={transformer}
-          mutation={mutation}
-          isNew={false}
-          redirectFunction={() => IdentityRoute.editCorporate}
-          activeStep={1}
-          move={null}
-          stepsList={dsoFormSteps}
-          nextCallback={nextCallback}
-        />
-      </Form>
-    )
-    expect(getByText('Next')).toBeTruthy()
-  })
-
-  it('invokes save function when location changed', async () => {
-    render(
-      <Route path={pathname}>
+      <DSOFormContextWrapper>
         <Form>
           <DSOSaveOnNavigate
             transformData={transformer}
@@ -121,6 +51,87 @@ describe('DSOSaveOnNavigate', () => {
             nextCallback={nextCallback}
           />
         </Form>
+      </DSOFormContextWrapper>
+    )
+  })
+
+  it('renders a Back button if passed with backward move prop', () => {
+    const { getByText } = render(
+      <DSOFormContextWrapper>
+        <Form>
+          <DSOSaveOnNavigate
+            transformData={transformer}
+            mutation={mutation}
+            isNew={false}
+            redirectFunction={() => IdentityRoute.editCorporate}
+            activeStep={1}
+            move={'backward'}
+            stepsList={dsoFormSteps}
+            nextCallback={nextCallback}
+          />
+        </Form>
+      </DSOFormContextWrapper>
+    )
+    expect(getByText('Back')).toBeTruthy()
+  })
+
+  it('renders a Next button if passed with forward move prop', () => {
+    const { getByText } = render(
+      <DSOFormContextWrapper>
+        <Form>
+          <DSOSaveOnNavigate
+            transformData={transformer}
+            mutation={mutation}
+            isNew={false}
+            redirectFunction={() => IdentityRoute.editCorporate}
+            activeStep={1}
+            move={'forward'}
+            stepsList={dsoFormSteps}
+            nextCallback={nextCallback}
+          />
+        </Form>
+      </DSOFormContextWrapper>
+    )
+    expect(getByText('Next')).toBeTruthy()
+  })
+
+  it('renders a Next button if move prop is null', () => {
+    const { getByText } = render(
+      <DSOFormContextWrapper>
+        <Form>
+          <DSOSaveOnNavigate
+            transformData={transformer}
+            mutation={mutation}
+            isNew={false}
+            redirectFunction={() => IdentityRoute.editCorporate}
+            activeStep={1}
+            move={null}
+            stepsList={dsoFormSteps}
+            nextCallback={nextCallback}
+          />
+        </Form>
+      </DSOFormContextWrapper>
+    )
+    expect(getByText('Next')).toBeTruthy()
+  })
+
+  it('invokes save function when location changed', async () => {
+    render(
+      <Route path={pathname}>
+        <DSOFormContextWrapper>
+          <Form>
+            <DSOSaveOnNavigate
+              transformData={transformer}
+              mutation={mutation}
+              isNew={false}
+              redirectFunction={() => IdentityRoute.editCorporate}
+              activeStep={1}
+              move={'backward'}
+              stepsList={dsoFormSteps}
+              nextCallback={nextCallback}
+            />
+          </Form>
+        </DSOFormContextWrapper>
       </Route>
     )
 
