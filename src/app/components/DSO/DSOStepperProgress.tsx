@@ -10,6 +10,7 @@ import { SaveDraftButton } from './DSODraftButton'
 import { DSOStepperStep } from './DSOFormStepper'
 import { MutateFunction, MutationResultPair } from 'react-query'
 import { useFormContext } from 'react-hook-form'
+import { useDSOFormContext } from './DSOFormContext'
 export interface DSOStepperProgressProps {
   transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
@@ -61,12 +62,17 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
   const [save] = saveMutation
-  const { watch } = useFormContext()
+  const { watch, errors } = useFormContext()
   const values = watch()
   const payload = transformData(values)
+  const { stepValues, setStepValues } = useDSOFormContext()
 
   const handleSave = async () => {
     // eslint-disable-next-line
+    const newValues = [...stepValues]
+    newValues[activeStep] = { values, errors: { ...errors } }
+
+    setStepValues(newValues)
     return await save({
       ...payload
     })
@@ -145,11 +151,8 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                       shouldValidate: completed.includes(index)
                     }}
                     onClick={() => {
-                      // handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)
                       void handleSave()
                     }}
-
-                    // onClick={handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)}
                   >
                     {formStep.label}
                   </StepButton>
