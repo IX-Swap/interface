@@ -43,12 +43,18 @@ export const dsoFormSteps = [
   {
     label: 'Documents',
     getFormValues: (data: DSOFormValues) => {
+      const dataroomProperties: any = {}
+      data.documents.forEach((item, index) => {
+        dataroomProperties[`dataroom_${index}`] = item.value
+      })
+
       return {
         subscriptionDocument: data.subscriptionDocument,
         documents: data.documents,
         videos: data.videos ?? [{}],
         faqs: data.faqs ?? [{}],
-        step: 3
+        step: 3,
+        ...dataroomProperties
       }
     },
     getRequestPayload: getDSODocumentsPayload,

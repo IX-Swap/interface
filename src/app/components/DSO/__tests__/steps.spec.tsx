@@ -1,3 +1,4 @@
+import React from 'react'
 import { render } from 'test-utils'
 import { getIdFromObj } from 'helpers/strings'
 import { baseDSOFormValues, formValues } from '__fixtures__/issuance'
@@ -7,6 +8,11 @@ import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFi
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
 import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCompanyInformationFields'
 import { DSOBaseFormValues } from 'types/dso'
+import {
+  getDSOCompanyInformationSchema,
+  getDSODocumentschema,
+  getDSOInformationSchema
+} from 'validation/dso'
 
 jest.mock('app/components/DSO/components/DSOInformationFields', () => ({
   DSOInformationFields: jest.fn(() => null)
@@ -24,40 +30,48 @@ describe('steps', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
-
+  const formVal: any = formValues
   it('has the correct labels', () => {
     expect(dsoFormSteps[0].label).toEqual('DSO Information')
     expect(dsoFormSteps[1].label).toEqual('Company Information')
     expect(dsoFormSteps[2].label).toEqual('Documents')
   })
 
+  it('has the corresponding components per step', () => {
+    expect(dsoFormSteps[0].validationSchema).toEqual(getDSOInformationSchema)
+    expect(dsoFormSteps[1].validationSchema).toEqual(
+      getDSOCompanyInformationSchema
+    )
+    expect(dsoFormSteps[2].validationSchema).toEqual(getDSODocumentschema)
+  })
+
   it('steps have the form value getters', () => {
-    expect(dsoFormSteps[0].getFormValues(formValues as any)).toEqual({
-      capitalStructure: formValues.capitalStructure,
-      logo: formValues.logo,
-      tokenName: formValues.tokenName,
-      tokenSymbol: formValues.tokenSymbol,
-      issuerName: formValues.issuerName,
-      corporate: formValues.corporate,
-      currency: getIdFromObj({ _id: formValues.currency }),
-      uniqueIdentifierCode: formValues.uniqueIdentifierCode,
-      network: formValues.network,
-      dividendYield: formValues.dividendYield,
-      grossIRR: formValues.grossIRR,
-      investmentStructure: formValues.investmentStructure,
-      equityMultiple: formValues.equityMultiple,
-      interestRate: formValues.interestRate,
-      isCampaign: formValues.isCampaign,
-      leverage: formValues.leverage,
-      totalFundraisingAmount: formValues.totalFundraisingAmount,
-      pricePerUnit: formValues.pricePerUnit,
-      distributionFrequency: formValues.distributionFrequency,
-      investmentPeriod: formValues.investmentPeriod,
-      minimumInvestment: formValues.minimumInvestment,
-      launchDate: formValues.launchDate ?? null,
-      completionDate: formValues.completionDate ?? null,
+    expect(dsoFormSteps[0].getFormValues(formVal as any)).toEqual({
+      capitalStructure: formVal.capitalStructure,
+      logo: formVal.logo,
+      tokenName: formVal.tokenName,
+      tokenSymbol: formVal.tokenSymbol,
+      issuerName: formVal.issuerName,
+      corporate: formVal.corporate,
+      currency: getIdFromObj({ _id: formVal.currency }),
+      uniqueIdentifierCode: formVal.uniqueIdentifierCode,
+      network: formVal.network,
+      dividendYield: formVal.dividendYield,
+      grossIRR: formVal.grossIRR,
+      investmentStructure: formVal.investmentStructure,
+      equityMultiple: formVal.equityMultiple,
+      interestRate: formVal.interestRate,
+      isCampaign: formVal.isCampaign,
+      leverage: formVal.leverage,
+      totalFundraisingAmount: formVal.totalFundraisingAmount,
+      pricePerUnit: formVal.pricePerUnit,
+      distributionFrequency: formVal.distributionFrequency,
+      investmentPeriod: formVal.investmentPeriod,
+      minimumInvestment: formVal.minimumInvestment,
+      launchDate: formVal.launchDate ?? null,
+      completionDate: formVal.completionDate ?? null,
       step: 1,
-      decimalPlaces: formValues.decimalPlaces
+      decimalPlaces: formVal.decimalPlaces
     })
     expect(dsoFormSteps[1].getFormValues(formValues as any)).toEqual({
       team: formValues.team ?? [{}],
@@ -67,12 +81,13 @@ describe('steps', () => {
       fundraisingMilestone: formValues.fundraisingMilestone,
       step: 2
     })
-    expect(dsoFormSteps[2].getFormValues(formValues as any)).toEqual({
-      subscriptionDocument: formValues.subscriptionDocument,
-      documents: formValues.documents,
-      videos: formValues.videos ?? [{}],
-      faqs: formValues.faqs ?? [{}],
-      step: 3
+    expect(dsoFormSteps[2].getFormValues(formVal as any)).toEqual({
+      subscriptionDocument: formVal.subscriptionDocument,
+      documents: formVal.documents,
+      videos: formVal.videos ?? [{}],
+      faqs: formVal.faqs ?? [{}],
+      step: 3,
+      dataroom_0: formVal.dataroom_0
     })
   })
 

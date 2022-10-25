@@ -49,7 +49,6 @@ export const DSOSaveOnNavigate = ({
 
   const handleSave = async () => {
     // eslint-disable-next-line
-    console.log(...payload, 'payload')
     return await save(
       {
         ...payload

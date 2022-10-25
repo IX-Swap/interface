@@ -208,7 +208,10 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   return (
     <Form
       defaultValues={step.getFormValues(data)}
-      validationSchema={getStepSchema(step.validationSchema)}
+      validationSchema={getStepSchema({
+        schema: step.validationSchema,
+        data
+      })}
       onSubmit={submitHandler}
       allowInvalid
       id={`${step.formId ?? 'form'}-${activeStep}`}

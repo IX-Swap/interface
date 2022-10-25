@@ -67,106 +67,103 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
 
   const handleSave = async () => {
     // eslint-disable-next-line
-    console.log(...payload, 'payload')
     return await save({
       ...payload
     })
   }
   return (
-    <>
-      <Grid item container className={classes.rightBlock}>
-        <Grid item className={classes.stepperBlock}>
-          <Paper className={classes.stepperBlockWrapper}>
-            <Stepper
-              nonLinear={nonLinear}
-              orientation={matches ? 'horizontal' : 'vertical'}
-              activeStep={activeStep}
-              title={matches ? formTitle : 'Progress'}
-              stepInfo={{
-                label: steps[activeStep].label,
-                activeStep: activeStep + 1,
-                totalSteps: steps.length
-              }}
-              actions={
-                <Grid container spacing={2}>
-                  {matches ? null : (
-                    <Grid item xs={12}>
-                      <SubmitButton
-                        mutation={submitMutation}
-                        data={data}
-                        step={steps[steps.length - 1]}
-                        fullWidth
-                        size='medium'
-                        submitText={submitText}
-                      />
-                    </Grid>
-                  )}
+    <Grid item container className={classes.rightBlock}>
+      <Grid item className={classes.stepperBlock}>
+        <Paper className={classes.stepperBlockWrapper}>
+          <Stepper
+            nonLinear={nonLinear}
+            orientation={matches ? 'horizontal' : 'vertical'}
+            activeStep={activeStep}
+            title={matches ? formTitle : 'Progress'}
+            stepInfo={{
+              label: steps[activeStep].label,
+              activeStep: activeStep + 1,
+              totalSteps: steps.length
+            }}
+            actions={
+              <Grid container spacing={2}>
+                {matches ? null : (
                   <Grid item xs={12}>
-                    <SaveDraftButton
-                      isLastStep={activeStep === steps.length - 1}
-                      formId={`${
-                        steps[activeStep].formId ?? 'form'
-                      }-${activeStep}`}
-                      disabled={
-                        data?.status === 'Submitted' ||
-                        data?.status === 'Approved' ||
-                        activeStep < 2
-                      }
-                      mutation={mutation}
-                      transformData={steps[activeStep].getRequestPayload}
-                      redirectFunction={redirectFunction}
-                      search={
-                        '?step=' + steps[activeStep].label.replace(' ', '+')
-                      }
+                    <SubmitButton
+                      mutation={submitMutation}
+                      data={data}
+                      step={steps[steps.length - 1]}
+                      fullWidth
+                      size='medium'
+                      submitText={submitText}
                     />
                   </Grid>
+                )}
+                <Grid item xs={12}>
+                  <SaveDraftButton
+                    isLastStep={activeStep === steps.length - 1}
+                    formId={`${
+                      steps[activeStep].formId ?? 'form'
+                    }-${activeStep}`}
+                    disabled={
+                      data?.status === 'Submitted' ||
+                      data?.status === 'Approved' ||
+                      activeStep < 2
+                    }
+                    mutation={mutation}
+                    transformData={steps[activeStep].getRequestPayload}
+                    redirectFunction={redirectFunction}
+                    search={
+                      '?step=' + steps[activeStep].label.replace(' ', '+')
+                    }
+                  />
                 </Grid>
-              }
-            >
-              {steps.map((formStep: any, index: number) => {
-                const step = index + 1
-                return (
-                  <Step
-                    key={formStep.label}
-                    onClick={handleStepButtonClick(
+              </Grid>
+            }
+          >
+            {steps.map((formStep: any, index: number) => {
+              const step = index + 1
+              return (
+                <Step
+                  key={formStep.label}
+                  onClick={handleStepButtonClick(
+                    index,
+                    steps[activeStep].getRequestPayload
+                  )}
+                >
+                  <StepButton
+                    step={step}
+                    variantsConditions={getStepStatus(
+                      formStep,
                       index,
-                      steps[activeStep].getRequestPayload
+                      activeStep
                     )}
-                  >
-                    <StepButton
-                      step={step}
-                      variantsConditions={getStepStatus(
-                        formStep,
-                        index,
-                        activeStep
-                      )}
-                      stepData={{
-                        step: steps[index],
-                        formData: data,
-                        isLast: index === steps.length - 1,
-                        shouldValidate: completed.includes(index)
-                      }}
-                      onClick={() => {
-                        // handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)
-                        void handleSave()
-                      }}
+                    stepData={{
+                      step: steps[index],
+                      formData: data,
+                      isLast: index === steps.length - 1,
+                      shouldValidate: completed.includes(index)
+                    }}
+                    onClick={() => {
+                      // handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)
+                      void handleSave()
+                    }}
 
-                      // onClick={handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)}
-                    >
-                      {formStep.label}
-                    </StepButton>
-                  </Step>
-                )
-              })}
-            </Stepper>
-          </Paper>
-        </Grid>
-        {!isMobile && (
-          <Grid item xs={12}>
-            <TwoFANotice />
-          </Grid>
-        )}
+                    // onClick={handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)}
+                  >
+                    {formStep.label}
+                  </StepButton>
+                </Step>
+              )
+            })}
+          </Stepper>
+        </Paper>
       </Grid>
-    </>
+      {!isMobile && (
+        <Grid item xs={12}>
+          <TwoFANotice />
+        </Grid>
+      )}
+    </Grid>
   )
 }

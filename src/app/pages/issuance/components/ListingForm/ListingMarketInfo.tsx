@@ -37,7 +37,6 @@ export const ListingMarketInfo = (props: any) => {
     dsoData?.currency
   ])
 
-  console.log({ dsoData })
   if (isLoading) {
     return <LoadingIndicator />
   }
