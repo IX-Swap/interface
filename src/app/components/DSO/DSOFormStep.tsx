@@ -151,7 +151,11 @@ export interface DSOFormStepProps {
     completed: boolean
     error: boolean
   }
-  handleStepButtonClick: (step: number) => () => void
+  handleStepButtonClick: (
+    step: number,
+    save?: any,
+    transformData?: any
+  ) => () => void
   contentClassName?: string
 }
 
@@ -263,6 +267,8 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
         </Grid>
         <Grid item>
           <DSOStepperProgress
+            transformData={step.getRequestPayload}
+            saveMutation={saveMutation}
             nonLinear={nonLinear}
             matches={matches}
             activeStep={activeStep}

@@ -57,18 +57,34 @@ export const DSOStepper = (props: DSOStepperProps) => {
   const matches = useMediaQuery(theme.breakpoints.down('md'))
   const { getFilterValue, updateFilter } = useQueryFilter()
   const stepFilter = getFilterValue('step')
+  // const { watch } = useFormContext()
+  // const history = useHistory()
 
-  const handleStepButtonClick = (step: number) => () => {
-    if (nonLinear) {
-      setCompleted([...completed, activeStep])
-      setActiveStep(step)
-      return
-    }
+  // const [save] = mutation;
 
-    if (completed.includes(step) || step === Math.max(...completed) + 1) {
-      setActiveStep(step)
+  const handleStepButtonClick =
+    (step: number, save: any, transformData: any) => () => {
+      if (nonLinear) {
+        setCompleted([...completed, activeStep])
+        setActiveStep(step)
+        // const values = watch()
+
+        const payload = transformData({})
+        save(
+          { ...payload },
+          {
+            onSettled: (data: any) => {
+              console.log(data)
+            }
+          }
+        )
+        return
+      }
+
+      if (completed.includes(step) || step === Math.max(...completed) + 1) {
+        setActiveStep(step)
+      }
     }
-  }
 
   const handleComplete = () => {
     if (!completed.includes(activeStep)) {

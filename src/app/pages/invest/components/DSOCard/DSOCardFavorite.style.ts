@@ -20,22 +20,6 @@ export default makeStyles(theme => ({
       opacity: 0.7
     }
   },
-  iconButtonActive: {
-    backgroundColor: '#FFC900',
-    border: `1px solid ${theme.palette.warning.main}`,
-    '&:hover': {
-      backgroundColor: '#FFC900',
-      opacity: 0.7
-    }
-  },
-  iconButtonNormal: {
-    backgroundColor: 'inherit',
-    border: `1px solid ${theme.palette.menu.border}`,
-    '&:hover': {
-      backgroundColor: 'inherit',
-      opacity: 0.7
-    }
-  },
   icon: {
     width: 17,
     height: 16

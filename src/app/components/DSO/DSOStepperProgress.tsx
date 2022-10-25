@@ -9,8 +9,10 @@ import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { SaveDraftButton } from './DSODraftButton'
 import { DSOStepperStep } from './DSOFormStepper'
 import { MutateFunction, MutationResultPair } from 'react-query'
-
+import { useFormContext } from 'react-hook-form'
 export interface DSOStepperProgressProps {
+  transformData: any
+  saveMutation: MutationResultPair<any, any, any, any>
   nonLinear: boolean
   matches: boolean
   activeStep: number
@@ -30,12 +32,18 @@ export interface DSOStepperProgressProps {
     error: boolean
   }
   completed: number[]
-  handleStepButtonClick: (step: number) => () => void
+  handleStepButtonClick: (
+    step: number,
+    save?: any,
+    transformData?: any
+  ) => () => void
   redirectFunction: (dsoId: string) => string
 }
 
 export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const {
+    transformData,
+    saveMutation,
     nonLinear,
     matches,
     activeStep,
@@ -52,6 +60,18 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   } = props
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
+  const [save] = saveMutation
+  const { watch } = useFormContext()
+  const values = watch()
+  const payload = transformData(values)
+
+  const handleSave = async () => {
+    // eslint-disable-next-line
+    console.log(...payload, 'payload')
+    return await save({
+      ...payload
+    })
+  }
   return (
     <Grid item container className={classes.rightBlock}>
       <Grid item className={classes.stepperBlock}>
@@ -105,7 +125,13 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
             {steps.map((formStep: any, index: number) => {
               const step = index + 1
               return (
-                <Step key={formStep.label}>
+                <Step
+                  key={formStep.label}
+                  onClick={handleStepButtonClick(
+                    index,
+                    steps[activeStep].getRequestPayload
+                  )}
+                >
                   <StepButton
                     step={step}
                     variantsConditions={getStepStatus(
@@ -119,8 +145,12 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                       isLast: index === steps.length - 1,
                       shouldValidate: completed.includes(index)
                     }}
-                    onClick={handleStepButtonClick(index)}
-                    data-testid={'dsoStepId'}
+                    onClick={() => {
+                      // handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)
+                      void handleSave()
+                    }}
+
+                    // onClick={handleStepButtonClick(index, save, steps[activeStep].getRequestPayload)}
                   >
                     {formStep.label}
                   </StepButton>
