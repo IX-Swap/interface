@@ -161,7 +161,6 @@ describe('getCreateDSOPayload', () => {
 
 describe('getUpdateDSOPayload', () => {
   it('returns payload with videos and faqs fields', () => {
-    console.log(getUpdateDSOPayload({}))
     expect(getUpdateDSOPayload({})).toEqual({ faqs: [], videos: [] })
   })
 })

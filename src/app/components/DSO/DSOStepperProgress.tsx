@@ -67,7 +67,6 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
 
   const handleSave = async () => {
     // eslint-disable-next-line
-    console.log(...payload, 'payload')
     return await save({
       ...payload
     })

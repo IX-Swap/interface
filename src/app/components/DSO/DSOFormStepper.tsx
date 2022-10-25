@@ -73,9 +73,7 @@ export const DSOStepper = (props: DSOStepperProps) => {
         save(
           { ...payload },
           {
-            onSettled: (data: any) => {
-              console.log(data)
-            }
+            onSettled: (data: any) => {}
           }
         )
         return
