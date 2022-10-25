@@ -54,6 +54,7 @@ export const ListingForm = (props: ListingFormProps) => {
             isLive={isLive}
             isDataFromDSO={isDataFromDSO}
             status={data?.status}
+            data={data}
           />
         </Grid>
 
