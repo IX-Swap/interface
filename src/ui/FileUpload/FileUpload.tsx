@@ -9,6 +9,8 @@ import { useFormError } from 'hooks/useFormError'
 import { useServices } from 'hooks/useServices'
 import { File } from 'ui/FileUpload/File'
 import { Avatar } from 'ui/FileUpload/Avatar'
+import { getIdFromObj } from 'helpers/strings'
+import { useDeleteFile } from 'hooks/useDeleteFile'
 
 export interface FileUploadProps {
   name: string
@@ -60,7 +62,10 @@ export const FileUpload = (props: FileUploadProps) => {
   const { hasError } = useFormError(name)
   const [completed, setCompleted] = useState(0)
 
-  const handleRemove = () => {
+  const [deleteFile] = useDeleteFile(getIdFromObj(value))
+
+  const handleRemove = async () => {
+    await deleteFile()
     if (props.onRemoveCallback !== undefined) {
       props.onRemoveCallback(value)
     }
