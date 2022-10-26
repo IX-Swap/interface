@@ -161,12 +161,33 @@ export default function IndividualKycForm() {
     e.returnValue = ''
   }
 
+  const validateValue = async (key: string, value: any) => {
+    if (form.current.values[key] === value) {
+      return
+    }
+    
+    try {
+      await individualErrorsSchema.validateAt(key, { [key]: value })
+
+      const errorCopy = { ...errors }
+
+      delete errorCopy[key]
+
+      setErrors(errorCopy)
+      form.current.setErrors(errorCopy)
+    } catch (err: any) {
+      setErrors(Object.assign(errors, { [key]: err.message }))
+      form.current.setFieldError(key, err.message)
+    } 
+  }
+
   const validationSeen = (key: string) => {
     if (errors[key]) {
       const newErrors = { ...errors }
       delete newErrors[key]
       setErrors(newErrors)
     }
+
     
     setCanSubmit(true)
   }
@@ -176,16 +197,19 @@ export default function IndividualKycForm() {
       setFieldValue(key, value, false)
     }
 
+    validateValue(key, value)
     validationSeen(key)
   }
 
   const onSelectChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
+    validateValue(key, value)
     validationSeen(key)
   }
 
   const onRadioChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
+    validateValue(key, value)
     validationSeen(key)
   }
 
@@ -233,6 +257,8 @@ export default function IndividualKycForm() {
 
     // Check whether any of investor declaration fields are checked
     setFieldValue('investorDeclarationIsFilled', atLeastOneFieldIsFilled, false)
+    
+    validateValue('investorDeclarationIsFilled', value)
     validationSeen('investorDeclarationIsFilled')
   }
 
@@ -253,6 +279,10 @@ export default function IndividualKycForm() {
     }
 
     setFieldValue('sourceOfFunds', result, false)
+
+    validateValue('sourceOfFunds', result)
+    // validateValue('otherFunds', value)
+
     validationSeen('sourceOfFunds')
     validationSeen('otherFunds')
   }
@@ -279,6 +309,7 @@ export default function IndividualKycForm() {
       arrayOfFiles.push(file)
 
       setFieldValue(key, arrayOfFiles, false)
+      validateValue(key, arrayOfFiles)
       validationSeen(key)
     }
   }
@@ -294,6 +325,7 @@ export default function IndividualKycForm() {
       arrayOfFiles.splice(index, 1)
 
       setFieldValue(key, arrayOfFiles, false)
+      validateValue(key, arrayOfFiles)
       validationSeen(key)
     }
 
@@ -386,6 +418,7 @@ export default function IndividualKycForm() {
           <Formik
             innerRef={form}
             initialValues={formData}
+            initialErrors={errors}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -577,6 +610,7 @@ export default function IndividualKycForm() {
                               value={values.phoneNumber}
                               onChange={(value) => {
                                 setFieldValue('phoneNumber', value, false)
+                                validateValue('phoneNumber', value)
                                 validationSeen('phoneNumber')
                               }}
                             />
