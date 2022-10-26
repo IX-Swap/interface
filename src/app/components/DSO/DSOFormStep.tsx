@@ -14,6 +14,8 @@ import { DSOStepperStep } from './DSOFormStepper'
 import { DSOStepperProgress } from './DSOStepperProgress'
 import { Form } from 'components/form/Form'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { useDSOFormContext } from './DSOFormContext'
+import { isEmpty } from 'lodash'
 export interface onSubmitSuccessProps {
   data: any
   isLastStep: boolean
@@ -187,6 +189,8 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   const isCurrentStep = activeStep === index
   const classes: any = useStyles()
   const { isTablet } = useAppBreakpoints()
+  const { stepValues } = useDSOFormContext()
+
   if (!isCurrentStep) {
     return null
   }
@@ -207,7 +211,11 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
 
   return (
     <Form
-      defaultValues={step.getFormValues(data)}
+      defaultValues={
+        !isEmpty(stepValues[index])
+          ? stepValues[index].values
+          : step.getFormValues(data)
+      }
       validationSchema={getStepSchema({
         schema: step.validationSchema,
         data
@@ -215,6 +223,7 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
       onSubmit={submitHandler}
       allowInvalid
       id={`${step.formId ?? 'form'}-${activeStep}`}
+      errors={stepValues[index]?.errors}
     >
       <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
         <Grid item xs={8}>
