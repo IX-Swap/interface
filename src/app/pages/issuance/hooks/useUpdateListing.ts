@@ -15,6 +15,7 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 export const useUpdateListing = (
   listingId: string,
   issuerId: string,
+  listingType: string,
   callbacks?: QueryOrMutationCallbacks<ListingFormValuesForSubmit>
 ) => {
   const { apiService, snackbarService } = useServices()
@@ -35,7 +36,8 @@ export const useUpdateListing = (
       callbacks?.onSuccess?.(data)
       replace(
         generatePath(IssuanceRoute.viewListing, {
-          listingId: data.data._id
+          listingId:
+            listingType === 'Both' ? data.data.result.id : data.data._id
         })
       )
 

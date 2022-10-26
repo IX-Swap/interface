@@ -158,6 +158,7 @@ export interface ListingFormValuesForSubmit {
   disabled: boolean
   marketType: string
   type?: string
+  result?: any
   result2?: any
 }
 
