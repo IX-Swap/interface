@@ -6,6 +6,7 @@ import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
+import dayjs from 'dayjs'
 
 import usePrevious from 'hooks/usePrevious'
 import Column, { AutoColumn } from 'components/Column'
@@ -569,7 +570,7 @@ export default function IndividualKycForm() {
                               value={values.dateOfBirth}
                               id="dateOfBirthButton"
                               onChange={(value) => {
-                                setFieldValue('dateOfBirth', value, false)
+                                setFieldValue('dateOfBirth', dayjs(value).local().format('YYYY-MM-DD'), false)
                                 validationSeen('dateOfBirth')
                               }}
                               maxDate={moment().subtract(18, 'years')}
@@ -721,7 +722,7 @@ export default function IndividualKycForm() {
                               error={errors.idIssueDate}
                               value={values.idIssueDate}
                               onChange={(value) => {
-                                setFieldValue('idIssueDate', value, false)
+                                setFieldValue('idIssueDate', dayjs(value).local().format('YYYY-MM-DD'), false)
                                 validationSeen('idIssueDate')
                               }}
                               maxDate={new Date()}
@@ -733,7 +734,7 @@ export default function IndividualKycForm() {
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
                               onChange={(value) => {
-                                setFieldValue('idExpiryDate', value, false)
+                                setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
                                 validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
