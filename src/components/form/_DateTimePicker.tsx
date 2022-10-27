@@ -5,10 +5,9 @@ import DesktopDateTimePicker, {
 import MobileDateTimePicker, {
   MobileDateTimePickerProps
 } from '@mui/lab/MobileDateTimePicker'
-import { FormHelperText, InputAdornment } from '@mui/material'
+import { FormHelperText } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
 import React from 'react'
-import { Icon } from 'ui/Icons/Icon'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { DateTimeComponent } from './_DateTimePickerComponent'
 
@@ -16,13 +15,6 @@ export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
   return (
     <MobileDateTimePicker
       {...props}
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position='end'>
-            <Icon noHover name='date' />
-          </InputAdornment>
-        )
-      }}
       renderInput={inputProps => (
         <TextInput
           variant='outlined'
