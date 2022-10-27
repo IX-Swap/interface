@@ -33,7 +33,7 @@ describe('Network Filter', () => {
     const select = getByRole('button')
     fireEvent.mouseDown(select)
     const listBox = within(getByRole('listbox'))
-    fireEvent.click(listBox.getByText(`Network`))
+    fireEvent.click(listBox.getByText(`All Networks`))
 
     await waitFor(() => {
       expect(history.location.search).toBe(``)
