@@ -24,6 +24,7 @@ import { Icon } from 'ui/Icons/Icon'
 import useStyles from './DSODecimalButton.styles'
 import { NumericInput } from 'components/form/NumericInput'
 import { numberFormat } from 'config/numberFormat'
+import _ from 'lodash'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -198,7 +199,13 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                           })
                         }
                         className={classes.button}
-                        disabled={control.getValues('decimalPlaces') === 0}
+                        disabled={
+                          !_.isEmpty(control) &&
+                          typeof control.getValues === 'function'
+                            ? // @ts-expect-error
+                              control.getValues('decimalPlaces') === 0
+                            : false
+                        }
                       >
                         <Icon name='minus' />
                       </IconButton>
@@ -216,7 +223,13 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                           })
                         }
                         className={classes.button}
-                        disabled={control.getValues('decimalPlaces') === 18}
+                        disabled={
+                          !_.isEmpty(control) &&
+                          typeof control.getValues === 'function'
+                            ? // @ts-expect-error
+                              control.getValues('decimalPlaces') === 18
+                            : false
+                        }
                       >
                         <Icon name='plus' />
                       </IconButton>
