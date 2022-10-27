@@ -6,6 +6,7 @@ import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
+import dayjs from 'dayjs'
 
 import usePrevious from 'hooks/usePrevious'
 import Column, { AutoColumn } from 'components/Column'
@@ -129,7 +130,10 @@ export default function IndividualKycForm() {
           ? [{ country: null, idNumber: '' }]
           : transformedData.taxDeclarations
 
-        setFormData({ ...transformedData, taxDeclarations })
+        const formData = { ...transformedData, taxDeclarations }
+
+        setFormData(formData)
+        form.current.setValues(formData)
 
         if (kyc?.status === KYCStatuses.DRAFT) {
           setCanSubmit(true)
@@ -161,14 +165,109 @@ export default function IndividualKycForm() {
     e.returnValue = ''
   }
 
+  const validateValue = async (key: string, value: any) => {
+    if (form.current.values[key] === value) {
+      return
+    }
+    
+    try {
+      let root = { [key]: value }
+
+      if (key.startsWith('taxDeclarations[')) {
+        const match = /taxDeclarations\[([0-9]+)\]\.(\w+)/.exec(key)!
+
+        const index = match[1]
+        const field = match[2]
+
+        const declaration = { ...form.current.values.taxDeclarations[index], [field]: value } 
+
+        root = form.current.values
+
+        root.taxDeclarations[index] = declaration
+      }
+
+      await individualErrorsSchema.validateAt(key, root)
+
+      const errorCopy = { ...errors }
+
+      delete errorCopy[key]
+
+      setErrors(errorCopy)
+      form.current.setErrors(errorCopy)
+    } catch (err: any) {
+      setErrors(Object.assign(errors, { [key]: err.message }))
+      form.current.setFieldError(key, err.message)
+    } 
+
+    form.current.setFieldTouched(key, true)
+  }
+
   const validationSeen = (key: string) => {
     if (errors[key]) {
       const newErrors = { ...errors }
       delete newErrors[key]
       setErrors(newErrors)
     }
+
     
     setCanSubmit(true)
+  }
+
+  const onIsAdditionalChange = async (index: number, setFieldValue: any) => {
+    const values = form.current.values
+
+    const declaration = { ...values.taxDeclarations[index] }
+
+    declaration.isAdditional = !values.taxDeclarations[index].isAdditional
+    declaration.idNumber = ''
+    declaration.reason = ''
+
+    const root = { ...values }
+
+    root.taxDeclarations[index] = declaration
+
+
+    const fields = [
+      `taxDeclarations[${index}].isAdditional`,
+      `taxDeclarations[${index}].idNumber`,
+      `taxDeclarations[${index}].reason`
+    ]
+
+    const validationErrors: Record<string, string> = { }
+
+    for (const field of fields) {
+      try {
+        await individualErrorsSchema.validateAt(field, root)
+      } catch (err: any) {
+        validationErrors[field] = err.message
+      }
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      const updatedErrors = Object.assign(errors, validationErrors)
+
+      for (const field of fields) {
+        if (updatedErrors[field] && !validationErrors[field]) {
+          delete updatedErrors[field]
+        }
+      }
+
+      setErrors(updatedErrors)
+      form.current.setErrors(updatedErrors)
+    } else {
+      const prunedErrors = { ...errors }
+
+      for (const field of fields) {
+        delete prunedErrors[field]
+      }
+
+      setErrors(prunedErrors)
+      form.current.setErrors(prunedErrors)
+    }
+    
+    setFieldValue(`taxDeclarations[${index}].isAdditional`, declaration.isAdditional, false)
+    setFieldValue(`taxDeclarations[${index}].idNumber`, declaration.idNumber, false)
+    setFieldValue(`taxDeclarations[${index}].reason`, declaration.reason, false)
   }
 
   const onChangeInput = (key: string, value: any, values: any, setFieldValue: any) => {
@@ -176,16 +275,19 @@ export default function IndividualKycForm() {
       setFieldValue(key, value, false)
     }
 
+    validateValue(key, value)
     validationSeen(key)
   }
 
   const onSelectChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
+    validateValue(key, value)
     validationSeen(key)
   }
 
   const onRadioChange = (key: string, value: any, setFieldValue: any) => {
     setFieldValue(key, value, false)
+    validateValue(key, value)
     validationSeen(key)
   }
 
@@ -233,6 +335,8 @@ export default function IndividualKycForm() {
 
     // Check whether any of investor declaration fields are checked
     setFieldValue('investorDeclarationIsFilled', atLeastOneFieldIsFilled, false)
+    
+    validateValue('investorDeclarationIsFilled', value)
     validationSeen('investorDeclarationIsFilled')
   }
 
@@ -253,6 +357,10 @@ export default function IndividualKycForm() {
     }
 
     setFieldValue('sourceOfFunds', result, false)
+
+    validateValue('sourceOfFunds', result)
+    // validateValue('otherFunds', value)
+
     validationSeen('sourceOfFunds')
     validationSeen('otherFunds')
   }
@@ -279,6 +387,7 @@ export default function IndividualKycForm() {
       arrayOfFiles.push(file)
 
       setFieldValue(key, arrayOfFiles, false)
+      validateValue(key, arrayOfFiles)
       validationSeen(key)
     }
   }
@@ -294,6 +403,7 @@ export default function IndividualKycForm() {
       arrayOfFiles.splice(index, 1)
 
       setFieldValue(key, arrayOfFiles, false)
+      validateValue(key, arrayOfFiles)
       validationSeen(key)
     }
 
@@ -385,7 +495,8 @@ export default function IndividualKycForm() {
         {!waitingForInitialValues && formData && (
           <Formik
             innerRef={form}
-            initialValues={formData}
+            initialValues={individualFormInitialValues}
+            initialErrors={errors}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -430,8 +541,7 @@ export default function IndividualKycForm() {
             }}
           >
             {({ values, handleSubmit, setFieldValue, dirty }) => {
-              const shouldValidate = dirty && isSubmittedOnce
-
+              const shouldValidate = dirty
 
               const personalFilled =
                 shouldValidate &&
@@ -488,9 +598,9 @@ export default function IndividualKycForm() {
 
               const investorStatusAcknowledgementFilled = shouldValidate && !errors.confirmStatusDeclaration
 
-              const personalFailed = shouldValidate && (!personalFilled || !addressFilled || !filesFilled)
-              const financialFailed = shouldValidate && !financialFilled
-              const statusDeclarationFailed = shouldValidate && !statusDeclarationFilled
+              const personalFailed = (!personalFilled || !addressFilled || !filesFilled)
+              const financialFailed = !financialFilled
+              const statusDeclarationFailed = !statusDeclarationFilled
 
               return (
                 <FormRow>
@@ -536,7 +646,7 @@ export default function IndividualKycForm() {
                               value={values.dateOfBirth}
                               id="dateOfBirthButton"
                               onChange={(value) => {
-                                setFieldValue('dateOfBirth', value, false)
+                                setFieldValue('dateOfBirth', dayjs(value).local().format('YYYY-MM-DD'), false)
                                 validationSeen('dateOfBirth')
                               }}
                               maxDate={moment().subtract(18, 'years')}
@@ -577,6 +687,7 @@ export default function IndividualKycForm() {
                               value={values.phoneNumber}
                               onChange={(value) => {
                                 setFieldValue('phoneNumber', value, false)
+                                validateValue('phoneNumber', value)
                                 validationSeen('phoneNumber')
                               }}
                             />
@@ -687,7 +798,7 @@ export default function IndividualKycForm() {
                               error={errors.idIssueDate}
                               value={values.idIssueDate}
                               onChange={(value) => {
-                                setFieldValue('idIssueDate', value, false)
+                                setFieldValue('idIssueDate', dayjs(value).local().format('YYYY-MM-DD'), false)
                                 validationSeen('idIssueDate')
                               }}
                               maxDate={new Date()}
@@ -699,7 +810,7 @@ export default function IndividualKycForm() {
                               error={errors.idExpiryDate}
                               value={values.idExpiryDate}
                               onChange={(value) => {
-                                setFieldValue('idExpiryDate', value, false)
+                                setFieldValue('idExpiryDate', dayjs(value).local().format('YYYY-MM-DD'), false)
                                 validationSeen('idExpiryDate')
                               }}
                               minDate={new Date()}
@@ -922,11 +1033,7 @@ export default function IndividualKycForm() {
                                     <Checkbox 
                                       label={''} 
                                       checked={values.taxDeclarations[index].isAdditional}
-                                      onClick={() => {
-                                        onChangeInput(`taxDeclarations[${index}].isAdditional`, !values.taxDeclarations[index].isAdditional, values, setFieldValue)
-                                        onChangeInput(`taxDeclarations[${index}].idNumber`, '', values, setFieldValue)
-                                        onChangeInput(`taxDeclarations[${index}].reason`, '', values, setFieldValue)
-                                      }}
+                                      onClick={() => onIsAdditionalChange(index, setFieldValue)}
                                     />
 
                                     <TYPE.description3>TIN is not available (please indicate reason):</TYPE.description3>
