@@ -142,16 +142,16 @@ export const individualTransformApiData = (data: any) => {
     taxDeclarations: data.taxDeclarations.map((t: any) => ({ ...t, country: { label: t.country } })),
 
     investorDeclarationIsFilled: [
-      data.investorDeclaration.isTotalAssets,
-      data.investorDeclaration.isAnnualIncome,
-      data.investorDeclaration.isFinancialAssets,
-      data.investorDeclaration.isJointIncome,
+      data.investorDeclaration?.isTotalAssets,
+      data.investorDeclaration?.isAnnualIncome,
+      data.investorDeclaration?.isFinancialAssets,
+      data.investorDeclaration?.isJointIncome,
     ].some(x => !!x),
 
-    isTotalAssets: data.investorDeclaration.isTotalAssets,
-    isAnnualIncome: data.investorDeclaration.isAnnualIncome,
-    isFinancialAssets: data.investorDeclaration.isFinancialAssets,
-    isJointIncome: data.investorDeclaration.isJointIncome,
+    isTotalAssets: data.investorDeclaration?.isTotalAssets,
+    isAnnualIncome: data.investorDeclaration?.isAnnualIncome,
+    isFinancialAssets: data.investorDeclaration?.isFinancialAssets,
+    isJointIncome: data.investorDeclaration?.isJointIncome,
 
     acceptOfQualification: data.investorDeclaration?.acceptOfQualification,
     acceptRefusalRight: data.investorDeclaration?.acceptRefusalRight
