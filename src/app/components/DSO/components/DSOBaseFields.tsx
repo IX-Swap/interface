@@ -198,6 +198,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                           })
                         }
                         className={classes.button}
+                        disabled={control.getValues('decimalPlaces') === 0}
                       >
                         <Icon name='minus' />
                       </IconButton>
@@ -215,6 +216,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                           })
                         }
                         className={classes.button}
+                        disabled={control.getValues('decimalPlaces') === 18}
                       >
                         <Icon name='plus' />
                       </IconButton>
