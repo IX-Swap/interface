@@ -202,8 +202,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                         disabled={
                           !_.isEmpty(control) &&
                           typeof control.getValues === 'function'
-                            ? // @ts-expect-error
-                              control.getValues('decimalPlaces') === 0
+                            ? control.getValues('decimalPlaces') === 0
                             : false
                         }
                       >
@@ -226,8 +225,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                         disabled={
                           !_.isEmpty(control) &&
                           typeof control.getValues === 'function'
-                            ? // @ts-expect-error
-                              control.getValues('decimalPlaces') === 18
+                            ? control.getValues('decimalPlaces') === 18
                             : false
                         }
                       >
