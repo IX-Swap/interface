@@ -46,7 +46,7 @@ export const DSOTerms = () => {
               style={{
                 color: theme.palette.grey[greyText],
                 marginLeft: '0.5rem',
-                marginTop: '0.1rem'
+                marginTop: '0.25rem'
               }}
               variant='body1'
             >
