@@ -27,7 +27,7 @@ export const dsoFormSteps = [
     label: 'Company Information',
     getFormValues: (data: DSOFormValues) => {
       return {
-        team: data.team ?? [{}],
+        team: data.team.length > 0 ? [...data.team, {}] : [{}],
         introduction: data.introduction ?? '',
         businessModel: data.businessModel ?? '',
         useOfProceeds: data.useOfProceeds ?? '',
@@ -51,8 +51,8 @@ export const dsoFormSteps = [
       return {
         subscriptionDocument: data.subscriptionDocument,
         documents: data.documents,
-        videos: data.videos ?? [{}],
-        faqs: data.faqs ?? [{}],
+        videos: data.videos.length > 0 ? [...data.videos, {}] : [{}, {}],
+        faqs: data.faqs.length > 0 ? [...data.faqs, {}] : [{}, {}],
         step: 3,
         ...dataroomProperties
       }

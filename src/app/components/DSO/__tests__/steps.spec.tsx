@@ -74,7 +74,7 @@ describe('steps', () => {
       decimalPlaces: formVal.decimalPlaces
     })
     expect(dsoFormSteps[1].getFormValues(formValues as any)).toEqual({
-      team: formValues.team ?? [{}],
+      team: formValues.team.length > 0 ? [...formValues.team, {}] : [{}],
       introduction: formValues.introduction,
       businessModel: formValues.businessModel,
       useOfProceeds: formValues.useOfProceeds,
@@ -84,8 +84,8 @@ describe('steps', () => {
     expect(dsoFormSteps[2].getFormValues(formVal as any)).toEqual({
       subscriptionDocument: formVal.subscriptionDocument,
       documents: formVal.documents,
-      videos: formVal.videos ?? [{}],
-      faqs: formVal.faqs ?? [{}],
+      videos: formVal.videos.length > 0 ? [...formVal.videos, {}] : [{}, {}],
+      faqs: formVal.faqs.length > 0 ? [...formVal.faqs, {}] : [{}, {}],
       step: 3,
       dataroom_0: formVal.dataroom_0
     })
