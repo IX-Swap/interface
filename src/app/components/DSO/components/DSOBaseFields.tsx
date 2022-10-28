@@ -145,7 +145,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 name='tokenSymbol'
                 disabled={isLive}
                 control={control}
-                helperText='Token Symbol'
+                helperText='Token symbol'
                 variant='outlined'
                 isOptional
                 optionalText='(2-6 alphanumeric characters)'

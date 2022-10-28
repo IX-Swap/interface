@@ -74,7 +74,6 @@ export const DSOTerms = () => {
                 component={NumericInput}
                 name='dividendYield'
                 label='Dividend Yield'
-                isOptional
                 helperText='In percent'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
@@ -94,7 +93,6 @@ export const DSOTerms = () => {
                 label='Interest Rate'
                 helperText='In percent'
                 name='interestRate'
-                isOptional
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
@@ -107,7 +105,6 @@ export const DSOTerms = () => {
                 component={NumericInput}
                 name='grossIRR'
                 label='Gross IRR'
-                isOptional
                 helperText='In percent'
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
@@ -125,7 +122,6 @@ export const DSOTerms = () => {
                 control={control}
                 component={TextInput}
                 label='Investment Structure'
-                isOptional
                 name='investmentStructure'
                 variant='outlined'
                 helperText='Holding structure'
@@ -152,7 +148,6 @@ export const DSOTerms = () => {
                 component={NumericInput}
                 name='leverage'
                 label='Leverage'
-                isOptional
                 numberFormat={percentageNumberFormat}
                 valueExtractor={numericValueExtractor}
                 variant='outlined'
@@ -171,7 +166,6 @@ export const DSOTerms = () => {
                 variant='outlined'
                 helperText='In percent'
                 disabled={isDebt}
-                isOptional
               />
             </Grid>
           </Grid>

@@ -31,7 +31,7 @@ export const NetworkFilter = () => {
       list: data,
       extractor: (item: Network) => item.name
     })
-    return val === '' ? 'All' : val
+    return val === '' ? 'All Networks' : val
   }
   const queryStatus = queryStatusRenderer(status)
   if (queryStatus !== undefined) return queryStatus
@@ -50,7 +50,7 @@ export const NetworkFilter = () => {
         marginTop: 0
       }}
     >
-      <SelectItem value={'All'}>Network</SelectItem>
+      <SelectItem value={'All'}>All Networks</SelectItem>
       {data?.map(({ name, _id }) => (
         <SelectItem key={_id} value={_id} className={privateClassNames()}>
           {name}
