@@ -36,7 +36,7 @@ describe('UsCitizenshipConfirmation', () => {
     )
 
     const yesRadio = getByLabelText(
-      'I confirm that I am a US citizen and/or resident in the US for tax purposes and my U.S. federal'
+      'I confirm that I am a US citizen and/or Resident in the US for Tax purposes and my US TIN is'
     )
     const noRadio = getByLabelText(
       'I confirm that I am not a US citizen or resident in the US for tax purposes.'
