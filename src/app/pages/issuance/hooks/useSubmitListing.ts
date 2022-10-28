@@ -19,6 +19,7 @@ export const useSubmitListing = (listingId: string) => {
     onSuccess: () => {
       void snackbarService.showSnackbar('Success', 'success')
       void queryCache.invalidateQueries(exchangeQueryKeys.listing(listingId))
+      void queryCache.invalidateQueries(exchangeQueryKeys.OTClisting(listingId))
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
