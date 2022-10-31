@@ -39,6 +39,11 @@ export const individualErrorsSchema = yup.object().shape({
   investorDeclarationIsFilled: yup.boolean()
     .when('accredited', { is: 1, then: yup.boolean().equals([true], 'Required') }),
 
+  isTotalAssets: yup.boolean(),
+  isAnnualIncome: yup.boolean(),
+  isFinancialAssets: yup.boolean(),
+  isJointIncome: yup.boolean(),
+
   taxDeclarations: yup.array().of(
     yup.object().shape({ 
       isAdditional: yup.bool(),

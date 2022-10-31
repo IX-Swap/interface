@@ -540,63 +540,60 @@ export default function IndividualKycForm() {
               }
             }}
           >
-            {({ values, handleSubmit, setFieldValue, dirty }) => {
+            {({ values, handleSubmit, setFieldValue, dirty, initialValues }) => {
+              const isFilled = (name: string): boolean => values[name] !== initialValues[name] && !errors[name]
               const shouldValidate = dirty
 
               const personalFilled =
                 shouldValidate &&
-                !errors.firstName &&
-                !errors.middleName &&
-                !errors.lastName &&
-                !errors.dateOfBirth &&
-                !errors.gender &&
-                !errors.nationality &&
-                !errors.citizenship &&
-                !errors.phoneNumber &&
-                !errors.email
+                isFilled('firstName') &&
+                isFilled('middleName') &&
+                isFilled('lastName') &&
+                isFilled('dateOfBirth') &&
+                isFilled('gender') &&
+                isFilled('nationality') &&
+                isFilled('citizenship') &&
+                isFilled('phoneNumber') &&
+                isFilled('email')
 
               const referralFilled = !!values.referralCode
 
               const financialFilled =
                 shouldValidate &&
-                !errors.occupation &&
-                !errors.employmentStatus &&
-                !errors.employer &&
-                !errors.income &&
-                !errors.sourceOfFunds
-                
-              const employmentInfoFilled =
-                shouldValidate &&
-                !errors.occupation &&
-                !errors.employmentStatus &&
-                !errors.employer &&
-                !errors.income
+                isFilled('occupation') &&
+                isFilled('employmentStatus') &&
+                isFilled('employer') &&
+                isFilled('income') &&
+                isFilled('sourceOfFunds')
 
               const statusDeclarationFilled =
                 shouldValidate &&
-                !errors.accredited
+                isFilled('accredited')
 
               const identityDocumentFilled =
                 shouldValidate &&
-                !errors.idType &&
-                !errors.idNumber &&
-                !errors.idIssueDate &&
-                !errors.idExpiryDate
+                isFilled('idType') &&
+                isFilled('idNumber') &&
+                isFilled('idIssueDate') &&
+                isFilled('idExpiryDate')
 
-              const investorFilled = shouldValidate && !errors.accredited
+              const taxDeclarationFilled =
+                shouldValidate &&
+                isFilled('taxDeclaration')
 
               const addressFilled =
                 shouldValidate &&
-                !errors.address &&
-                !errors.postalCode &&
-                !errors.country &&
-                !errors.city
+                isFilled('address') &&
+                isFilled('postalCode') &&
+                isFilled('country') &&
+                isFilled('city')
 
-              const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
-              const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
-              const filesFilled = shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress
+              const fatcaFilled = shouldValidate && isFilled('usTin') && isFilled('isUSTaxPayer')
+              const filesFilled = shouldValidate && 
+                isFilled('proofOfIdentity') &&
+                isFilled('proofOfAddress')
 
-              const investorStatusAcknowledgementFilled = shouldValidate && !errors.confirmStatusDeclaration
+              const investorStatusAcknowledgementFilled = shouldValidate && isFilled('confirmStatusDeclaration')
 
               const personalFailed = (!personalFilled || !addressFilled || !filesFilled)
               const financialFailed = !financialFilled
@@ -1533,7 +1530,7 @@ export default function IndividualKycForm() {
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
                       disabled={!canSubmit || Object.keys(errors).length !== 0}
                       topics={[
-                        { title: 'Personal Information', href: 'personal', passed: personalFilled && addressFilled && filesFilled, failed: personalFailed },
+                        { title: 'Personal Information', href: 'personal', passed: personalFilled && addressFilled && filesFilled && identityDocumentFilled, failed: personalFailed },
                         { title: 'Financial Information', href: 'financial', passed: financialFilled, failed: financialFailed },
                         { title: 'Investor Status Declaration', href: 'status-declaration', passed: statusDeclarationFilled, failed: statusDeclarationFailed },
                         // { title: 'Investor Declaration', href: 'investor-declaration', passed: investorFilled },
