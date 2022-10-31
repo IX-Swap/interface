@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import { useAPIService } from 'hooks/useAPIService'
 import { useEffect, useMemo, useState } from 'react'
 import { QueryStatus, useInfiniteQuery, useQueryCache } from 'react-query'
-import { useAPIService } from 'hooks/useAPIService'
 import { KeyValueMap, PaginatedData } from 'services/api/types'
 import { BaseFilter } from 'types/util'
 
@@ -20,7 +21,7 @@ export interface UseTableWithPaginationReturnType<TData> {
 interface UseTableWithPaginationParams {
   queryKey?: string
   uri?: string
-  defaultFilter: BaseFilter | undefined
+  defaultFilter: BaseFilter | any
   queryEnabled: boolean
   defaultRowsPerPage?: number
   disabledUseEffect?: boolean
@@ -40,6 +41,7 @@ export const useTableWithPagination = <TData>({
   const apiService = useAPIService()
   const [prevPage, setPrevPage] = useState(0)
   const [page, setPage] = useState(0)
+  const [pageAf, setPageAf] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(
     defaultRowsPerPage !== undefined ? defaultRowsPerPage : 25
   )
@@ -50,12 +52,20 @@ export const useTableWithPagination = <TData>({
       setPage(0)
       setPrevPage(0)
     }
+    if (Object.values(filter).find(d => d)) {
+      setPageAf(s => s + 1)
+    }
   }, [filter, disabledUseEffect])
   const [totalPage, setTotalPage] = useState(0)
+  let a = -1
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
+    if (Object.values(filter).find(d => d)) {
+      setPageAf(a++)
+    }
     const payload: KeyValueMap<any> = {
-      skip: p * r,
+      // skip: p * r,
+      skip: Object.values(filter).find(d => d) ? pageAf : p * r,
       limit: r,
       ...(filter ?? {})
     }
