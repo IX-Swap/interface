@@ -38,9 +38,7 @@ export const DSOSaveOnNavigate = ({
   const [save] = mutation
   const history = useHistory()
   const payload = transformData(values)
-  console.log(error, 'errorssss')
   const getNewActiveStep = (): number => {
-    console.log(error, 'errorssss')
     if (move === 'forward') {
       const obj = error
       if (
@@ -89,7 +87,6 @@ export const DSOSaveOnNavigate = ({
       Object.keys(obj).length !== 0 &&
       obj.constructor === Object
     ) {
-      console.log('error')
     } else {
       return await save(
         {
