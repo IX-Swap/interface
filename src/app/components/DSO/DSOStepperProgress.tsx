@@ -73,9 +73,17 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     newValues[activeStep] = { values, errors: { ...errors } }
 
     setStepValues(newValues)
-    return await save({
-      ...payload
-    })
+    const obj = errors
+    if (
+      activeStep === 0 &&
+      Object.keys(obj).length !== 0 &&
+      obj.constructor === Object
+    ) {
+    } else {
+      return await save({
+        ...payload
+      })
+    }
   }
   return (
     <Grid item container className={classes.rightBlock}>
