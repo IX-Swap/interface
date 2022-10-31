@@ -346,7 +346,7 @@ export const listings = {
     `/exchange/listing/combinedlist/${userId}`,
   getListByUser: (userId?: string) => `exchange/listing/list/${userId}`,
   submitListing: (userId?: string, listingId?: string) =>
-    `/exchange/listing/${userId}/${listingId}/submit`
+    `/exchange/listing/${userId}/${listingId}/submitBoth`
 }
 
 export const charts = {
