@@ -61,11 +61,11 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
           {address && secTokens[address] && allowSwap && (
             <>
               {Boolean(authorizationInProgress) ? (
-                <ButtonIXSGradient disabled style={{ width: '100%' }}>
+                <ButtonIXSGradient disabled style={{ width: '100%' }} data-testid={'authorize' + secTokens[address]?.symbol + 'button'}>
                   Confirming transaction with broker...
                 </ButtonIXSGradient>
               ) : (
-                <ButtonIXSGradient onClick={() => startFirstStep(address)} style={{ width: '100%' }}>
+                <ButtonIXSGradient onClick={() => startFirstStep(address)} style={{ width: '100%' }} data-testid={'authorize' + secTokens[address]?.symbol + 'button'}>
                   Authorize {secTokens[address]?.symbol}
                 </ButtonIXSGradient>
               )}

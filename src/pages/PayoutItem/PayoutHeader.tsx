@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Box, Flex } from 'rebass'
+import { Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { NavLink, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
@@ -8,7 +8,7 @@ import { ButtonGradientBorder, ButtonPrimary, ButtonText } from 'components/Butt
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReadMore } from 'components/ReadMore'
 import Column from 'components/Column'
-import { TYPE } from 'theme'
+import { ellipsisText, MEDIA_WIDTHS, TYPE } from 'theme'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { routes } from 'utils/routes'
@@ -38,26 +38,31 @@ export const PayoutHeader: FC<Props> = ({ payout, isMyPayout }) => {
 
   return (
     <Column style={{ gap: '32px' }}>
-      <Flex justifyContent="space-between">
-        <Flex>
-          <ButtonText height="fit-content" marginTop="16px" marginRight="16px" onClick={goBack}>
+      <Flex>
+        <BackContainer>
+          <ButtonText height="fit-content" onClick={goBack}>
             <ArrowLeft fill="white !important" />
           </ButtonText>
-          <CurrencyLogo currency={new WrappedTokenInfo(secToken)} size="52px" />
-          <Box marginLeft="16px">
-            <TYPE.title4>
+        </BackContainer>
+        <TitleContainer>
+          <TitleContent>
+            <LogoContainer>
+              <CurrencyLogo currency={new WrappedTokenInfo(secToken)} size="52px" />
+            </LogoContainer>
+            <Title>
               <Trans>{title}</Trans>
-            </TYPE.title4>
-            <SecTokenLink to={routes.securityToken(secToken.catalogId)}>
-              {secToken.originalSymbol ?? secToken.symbol}
-            </SecTokenLink>
-          </Box>
-        </Flex>
+            </Title>
+          </TitleContent>
 
-        <Flex marginTop="16px">
-          {isMyPayout && status !== PAYOUT_STATUS.ENDED && <EditButton onClick={edit}>Edit</EditButton>}
-          <PayoutStatus status={status} />
-        </Flex>
+          <SecTokenLink to={routes.securityToken(secToken.catalogId)}>
+            {secToken.originalSymbol ?? secToken.symbol}
+          </SecTokenLink>
+
+          <StatusAndEdit>
+            {isMyPayout && status !== PAYOUT_STATUS.ENDED && <EditButton onClick={edit}>Edit</EditButton>}
+            <PayoutStatus status={status} />
+          </StatusAndEdit>
+        </TitleContainer>
       </Flex>
 
       <ReadMoreContainer>
@@ -85,11 +90,86 @@ export const PayoutStatus: FC<{ status: PAYOUT_STATUS }> = ({ status }) => {
   )
 }
 
+const TitleContent = styled.div`
+  display: flex;
+  align-items: center;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall + 1}px) {
+    flex: 1;
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    width: 100%;
+    align-items: flex-start;
+  }
+`
+
+const LogoContainer = styled.div`
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    display: flex;
+    align-items: center;
+    height: 42px;
+    > img,
+    svg {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+  }
+`
+
+const BackContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: 56px;
+  margin-right: 16px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    height: 42px;
+  }
+`
+
+const StatusAndEdit = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  order: 2;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    order: 3;
+  }
+`
+
+const TitleContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  row-gap: 2px;
+  > * {
+    align-self: center;
+  }
+`
+
+const Title = styled(TYPE.title4)`
+  margin-left: 4px !important;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    font-size: 28px !important;
+    line-height: 42px !important;
+  }
+`
+
 const SecTokenLink = styled(NavLink)`
   font-size: 18px;
   line-height: 27px;
   text-decoration: underline;
+  flex: 1;
   color: ${({ theme }) => theme.text1};
+  order: 3;
+  @media (min-width: ${MEDIA_WIDTHS.upToSmall + 1}px) {
+    margin-left: 52px;
+    min-width: 100%;
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    order: 2;
+  }
 `
 
 const EditButton = styled(ButtonGradientBorder)`
@@ -99,7 +179,6 @@ const EditButton = styled(ButtonGradientBorder)`
   font-size: 14px;
   line-height: 16px;
   font-weight: 600;
-  margin-right: 24px;
   border-radius: 40px;
 
   :before {
@@ -120,6 +199,7 @@ const Status = styled(ButtonPrimary)<{ backgroundColor: string; color: string; b
   pointer-events: none;
   border-radius: 40px;
   width: auto;
+  margin-left: 16px;
 `
 
 export const ReadMoreContainer = styled.div`

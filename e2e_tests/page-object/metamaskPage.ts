@@ -17,7 +17,7 @@ export class MetamaskPage extends WebPage{
   readonly cancelOperationButton: Locator;
   readonly declineButton: string;
   readonly nextMetamaskPopUpButton: string;
-  readonly connectMetamaskPopUpButton: string;
+  readonly confirmMetamaskPopUpButton: string;
   readonly signMetamaskRequestPopUpButton: string;
   readonly copyMetamaskAccountAddressButton: Locator;
   readonly optionMenuButton: Locator;
@@ -46,7 +46,7 @@ export class MetamaskPage extends WebPage{
     this.cancelOperationButton = page.locator('[class="button btn--rounded btn-secondary"]');
     this.declineButton = ('[class="button btn--rounded btn-secondary"]');
     this.nextMetamaskPopUpButton = ('[class="button btn--rounded btn-primary"]');
-    this.connectMetamaskPopUpButton = ('[data-testid="page-container-footer-next"]');
+    this.confirmMetamaskPopUpButton = ('[data-testid="page-container-footer-next"]');
     this.signMetamaskRequestPopUpButton = ('[data-testid="request-signature__sign"]');
     this.copyMetamaskAccountAddressButton = page.locator('[class="qr-code__address"]');
     this.optionMenuButton = page.locator('[data-testid="account-options-menu-button"]');

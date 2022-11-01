@@ -135,8 +135,10 @@ export const CardContainer = styled.div`
   background-color: ${({ theme }) => theme.bg22};
   cursor: pointer;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    min-width: 152px;
     border-radius: 12px;
     padding: 12px 8px;
+    min-width: 150px;
   }
 `
 

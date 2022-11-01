@@ -65,7 +65,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       </div>
       {/* <div>risk level</div> */}
       <div>
-        <StyledReviewButton onClick={openModal}>Review</StyledReviewButton>
+        <StyledReviewButton onClick={openModal} data-testid="reviewButton">Review</StyledReviewButton>
       </div>
     </StyledBodyRow>
   )

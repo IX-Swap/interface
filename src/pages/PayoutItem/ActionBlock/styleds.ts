@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { ButtonIXSGradient } from 'components/Button'
-import { gradientBorder } from 'theme'
+import { gradientBorder, MEDIA_WIDTHS } from 'theme'
 
 const commonStyles = css`
   display: flex;
@@ -43,4 +43,40 @@ export const FuturePayoutContainer = styled.div`
     radial-gradient(79.76% 116.06% at 44.22% 136.36%, rgba(102, 20, 206, 0.132) 0%, rgba(26, 18, 58, 0) 100%),
     radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.198) 0%, rgba(26, 18, 58, 0) 100%),
     rgba(44, 37, 74, 0.3);
+`
+
+export const DelayedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  > div:first-child {
+    font-weight: 400;
+    font-size: 16px;
+  }
+  > div:nth-child(2) {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 36px;
+    @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+      line-height: 24px;
+      font-weight: 400;
+      font-size: 16px;
+      > div:nth-child(2) {
+        font-size: 18px;
+      }
+    }
+  }
+  > div:last-child {
+    color: ${({ theme }) => theme.text9};
+    font-weight: 400;
+    font-size: 16px;
+  }
 `

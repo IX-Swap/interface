@@ -1,6 +1,6 @@
-import {BrowserContext, expect, Locator, Page} from '@playwright/test';
-import config from "../playwright.config";
-import {timeouts} from "../helpers/timeouts";
+import { BrowserContext, expect, Locator, Page } from '@playwright/test'
+import config from '../playwright.config'
+import { timeouts } from '../helpers/timeouts'
 
 export class WebPage {
   readonly page: Page;
@@ -11,6 +11,11 @@ export class WebPage {
     this.page = page;
     this.context = context;
     this.loader = page.locator('[img[alt="Loading..."]');
+  }
+
+  async clickTokenItem(token) {
+    await this.page.waitForLoadState();
+    await this.page.locator(`//div[text()='${token}']`).click();
   }
 
   async click(locator: Locator) {
@@ -38,34 +43,6 @@ export class WebPage {
   async assertPageScreenshotMatchToSnapshot(page: Page) {
     await this.page.waitForTimeout(2000);
     expect(await page.screenshot()).toMatchSnapshot();
-  }
-
-  async newPageHandle(page: Page, element: string, replacingPage: boolean = false) {
-    let indexOfPageToBeReturned;
-    const numberOfPagesBeforeNewPage = await this.context.pages().length;
-
-    await page.click(element);
-
-    if (replacingPage) {
-      indexOfPageToBeReturned = numberOfPagesBeforeNewPage - 1; // array of pages returned starting from 0
-
-      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage - 1);
-      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage);
-    } else {
-      indexOfPageToBeReturned = numberOfPagesBeforeNewPage;
-
-      await this.waitForOpenPagesNumber(numberOfPagesBeforeNewPage + 1);
-    }
-
-    const newPage = this.context.pages()[indexOfPageToBeReturned];
-
-    if(!newPage) throw new Error('New page was not opened');
-    await newPage.waitForLoadState();
-    return newPage;
-  }
-
-  async openAndReplacePageByClick(page: Page, element: string) {
-    return await this.newPageHandle(page, element, true)
   }
 
   async openNewPageByClick(page: Page, element: string) {
@@ -111,7 +88,26 @@ export class WebPage {
     return await this.page.$$eval(selector, selector => selector.length);
   }
 
-  async clickWhileElementNotVisibleByCss (elementForClick, elementToBePresent){
+  async getAuthToken(metamaskAddress) {
+    const localData = await this.page.evaluate(() => {
+      const res = (localStorage.getItem(`redux_localstorage_simple_auth`));
+      const token = JSON.parse(res);
+      return JSON.stringify(token.token);
+    })
+    const parsedData = localData.replace(`${metamaskAddress}`, ``);
+    return parsedData.replace(/[^a-zA-Z0-9_.-]/g, ``);
+  }
+
+  async getUserId() {
+    return await this.page.evaluate(() => {
+      const res = (localStorage.getItem(`redux_localstorage_simple_user`));
+      const parsedRes = JSON.parse(res);
+      const userInfo = parsedRes.me
+      return userInfo.id;
+    })
+  }
+
+  async clickWhileElementNotVisibleByCss (elementForClick, elementToBePresent) {
     await this.page.click(elementForClick);
     await this.page.evaluate(async ([elementForClick, elementToBePresent]) => {
       let intervalId;
@@ -137,5 +133,46 @@ export class WebPage {
         }, config.use.actionTimeout);
       })
     }, [elementForClick, elementToBePresent]);
+  }
+
+  async clickElementWhileItVisible (elementForClick: Locator){
+    let intervalId;
+
+    await elementForClick.waitFor({state: 'visible'});
+    await new Promise(function(resolve, reject){
+      intervalId = setInterval(async () => {
+
+        if (await elementForClick.isVisible()) {
+          await elementForClick.click({ force: true });
+        } else {
+          clearInterval(intervalId);
+          return resolve(true);
+        }
+      }, 300);
+      setTimeout(() => {
+        clearInterval(intervalId);
+        return reject(`${elementForClick} is still visible after clicking it for ${timeouts.mediumTimeout} seconds`);
+      }, timeouts.mediumTimeout);
+    })
+  }
+
+  async checkElementIsVisibleAfterReloadingPage(element: Locator) {
+    let intervalId;
+    const page = await this.page;
+    await new Promise(function(resolve, reject){
+      intervalId = setInterval(async () => {
+        if (await element.isVisible() === false) {
+          await page.reload();
+          await page.waitForLoadState();
+        } else {
+          clearInterval(intervalId);
+          return resolve(true);
+        }
+      }, 5000);
+      setTimeout(() => {
+        clearInterval(intervalId);
+        return reject(`${element} is not visible after reloading page for ${timeouts.longTimeout} seconds`);
+      }, timeouts.longTimeout);
+    })
   }
 }

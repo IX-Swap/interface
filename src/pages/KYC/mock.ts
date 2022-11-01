@@ -169,31 +169,58 @@ export const individualFormInitialValues: IFormInitial = {
   firstName: '',
   middleName: '',
   lastName: '',
+
   dateOfBirth: null,
   gender: null,
+
   nationality: null,
   citizenship: null,
   email: '',
   phoneNumber: '',
-  idType: '',
-  idNumber: '',
-  idIssueDate: null,
-  idExpiryDate: null,
+  
   address: '',
   postalCode: '',
   country: null,
   city: '',
-  sourceOfFunds: [],
-  otherFunds: '',
-  accredited: -1,
-  isUSTaxPayer: -1,
-  usTin: '',
+
+  idType: '',
+  idNumber: '',
+  idIssueDate: null,
+  idExpiryDate: null,
+  
+  proofOfIdentity: [],
+  proofOfAddress: [],
+  
   occupation: '',
   employmentStatus: null,
   employer: '',
   income: null,
-  proofOfIdentity: [],
-  proofOfAddress: [],
+  
+  taxDeclarations: [{ country: null, idNumber: '' }],
+  removedTaxDeclarations: [],
+
+  sourceOfFunds: [],
+  otherFunds: '',
+
+  isUSTaxPayer: -1,
+  usTin: '',
+
+  investorDeclarationIsFilled: false,
+
+  isTotalAssets: false,
+  isAnnualIncome: false,
+  isFinancialAssets: false,
+  isJointIncome: false,
+
+  accredited: -1,
+  investorDeclaration: undefined,
+  confirmSafeguards: undefined,
+  confirmOptout: undefined,
+  evidenceOfAccreditation: [],
+  confirmStatusDeclaration: false,
+
+  taxCountry: '',
+  taxIdentification: '',
 }
 
 export const corporateFormInitialValues: IFormInitial = {

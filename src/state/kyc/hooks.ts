@@ -10,7 +10,7 @@ import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 import { LONG_WAIT_RESPONSE } from 'constants/misc'
 import { KYCStatuses } from 'pages/KYC/enum'
 
-const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity']
+const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'evidenceOfAccreditation']
 const corporateKYCFiles = [
   'beneficialOwnersAddress',
   'beneficialOwnersIdentity',
@@ -69,7 +69,7 @@ export const getCorporateProgress = async () => {
   }
 }
 
-export const createIndividualKYC = async (newKYC: any) => {
+export const createIndividualKYC = async (newKYC: any, draft = false) => {
   const formData = new FormData()
 
   for (const key in newKYC) {
@@ -77,13 +77,34 @@ export const createIndividualKYC = async (newKYC: any) => {
       newKYC[key].forEach((item: any) => {
         formData.append(`${key}`, item)
       })
+    } else if (['removedDocuments', 'removedTaxDeclarations'].some(x => x === key)) {
+      formData.append(key, JSON.stringify(newKYC[key]))
+    } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
+
+      const entries = (newKYC[key] as Array<any>)
+        .map((x: any, idx: number) => Object.entries(x)
+          .map(([objKey, value]) => ({ key: `${key}[${idx}][${objKey}]`, value: value as string })))
+
+        .reduce((acc, e) => [...acc, ...e], [])
+
+
+      for (const entry of entries) {
+        formData.append(entry.key, entry.value as string)
+      }
+    } else if (typeof newKYC[key] === 'object') {
+      const entries = Object.entries(newKYC[key])
+          .map(([objKey, value]) => ({ key: `${key}[${objKey}]`, value: value as string }))
+          
+      for (const entry of entries) {
+        formData.append(entry.key, entry.value as string)
+      }
     } else {
       formData.append(key, newKYC[key])
     }
   }
 
   try {
-    const result = await apiService.post(kyc.createIndividual, formData)
+    const result = await apiService.post(draft ? kyc.createIndividualDraft :kyc.createIndividual, formData)
     return result.data
   } catch (e: any) {
     if (e.message === LONG_WAIT_RESPONSE) {
@@ -123,7 +144,7 @@ export const createCorporateKYC = async (newKYC: any) => {
   }
 }
 
-export const updateIndividualKYC = async (kycId: number, newKYC: any) => {
+export const updateIndividualKYC = async (kycId: number, newKYC: any, draft = false) => {
   const formData = new FormData()
 
   for (const key in newKYC) {
@@ -136,8 +157,31 @@ export const updateIndividualKYC = async (kycId: number, newKYC: any) => {
         }
       })
     } else {
-      if (key === 'removedDocuments') {
+      if (['removedDocuments', 'removedTaxDeclarations'].some(x => x === key)) {
         formData.append(key, JSON.stringify(newKYC[key]))
+      } else if (typeof newKYC[key] === 'object' && newKYC[key].length) {
+
+        const entries = (newKYC[key] as Array<any>)
+          .map((x: any, idx: number) => Object.entries(x)
+            .map(([objKey, value]) => ({ key: `${key}[${idx}][${objKey}]`, value: value as string })))
+
+          .reduce((acc, e) => [...acc, ...e], [])
+
+
+        for (const entry of entries) {
+          if (entry.value) {
+            formData.append(entry.key, entry.value as string)
+          }
+        }
+      } else if (typeof newKYC[key] === 'object') {
+        const entries = Object.entries(newKYC[key])
+            .map(([objKey, value]) => ({ key: `${key}[${objKey}]`, value: value as string }))
+            
+        for (const entry of entries) {
+          if (entry.value) {
+            formData.append(entry.key, entry.value as string)
+          }
+        }
       } else {
         formData.append(key, newKYC[key])
       }
@@ -145,7 +189,9 @@ export const updateIndividualKYC = async (kycId: number, newKYC: any) => {
   }
 
   try {
-    const result = await apiService.put(kyc.updateIndividual(kycId), formData)
+    const result = draft
+      ? await apiService.post(kyc.updateIndividual(kycId, draft), formData)
+      : await apiService.put(kyc.updateIndividual(kycId, draft), formData)
     return result.data
   } catch (e) {
     console.log(e)
@@ -185,10 +231,10 @@ export function useCreateIndividualKYC() {
   const dispatch = useDispatch<AppDispatch>()
   const getMyKyc = useGetMyKyc()
   const callback = useCallback(
-    async (newKYC: any) => {
+    async (newKYC: any, draft = false) => {
       try {
         dispatch(createKYC.pending())
-        const data = await createIndividualKYC(newKYC)
+        const data = await createIndividualKYC(newKYC, draft)
         dispatch(createKYC.fulfilled(data))
         await getMyKyc()
         return data
@@ -259,11 +305,12 @@ export function useUpdateCorporateKYC() {
 export function useUpdateIndividualKYC() {
   const dispatch = useDispatch<AppDispatch>()
   const getMyKyc = useGetMyKyc()
+
   const callback = useCallback(
-    async (kycId: number, newKYC: any) => {
+    async (kycId: number, newKYC: any, draft = false) => {
       try {
         dispatch(updateKYC.pending())
-        const data = await updateIndividualKYC(kycId, newKYC)
+        const data = await updateIndividualKYC(kycId, newKYC, draft)
         dispatch(updateKYC.fulfilled(data))
         await getMyKyc()
         return data

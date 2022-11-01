@@ -11,7 +11,7 @@ export default function SwapHeader() {
     <StyledPageHeader>
       <RowBetween>
         <RowFixed>
-          <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
+          <TYPE.black data-testid="swapTitle" fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
             <Trans>Swap</Trans>
           </TYPE.black>
         </RowFixed>

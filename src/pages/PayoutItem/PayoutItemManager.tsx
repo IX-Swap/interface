@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import React, { useState, useEffect, useCallback } from 'react'
+import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 import { Loadable } from 'components/LoaderHover'
@@ -16,6 +16,9 @@ import { PayoutTimeline } from './Timeline/PayoutTimeline'
 import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutHistory } from './History'
+import { useUserState } from 'state/user/hooks'
+import { ROLES } from 'constants/roles'
+import { routes } from 'utils/routes'
 
 export default function PayoutItemForManager({
   match: {
@@ -27,23 +30,47 @@ export default function PayoutItemForManager({
   const [page, setPage] = useState(1)
   const [claimHistory, setClaimHistory] = useState([])
   const [isClaimHistoryLoading, setIsClaimHistoryLoading] = useState(false)
+  const [isMyPayout, setIsMyPayout] = useState<boolean | undefined>(undefined)
   const { loadingRequest } = usePayoutState()
   const { account } = useActiveWeb3React()
   const { token } = useAuthState()
+  const { me } = useUserState()
+  const history = useHistory()
   const getPayoutItemById = useGetPayoutItem()
   const isLoggedIn = !!token && !!account
   const status = PAYOUT_STATUS.STARTED
-
+  
   useEffect(() => {
-    const getPayoutItem = async () => {
+    if (me && me.role !== ROLES.TOKEN_MANAGER) {
+      history.push(routes.payoutItem(+payoutId))
+    }
+  }, [me, history])
+
+  const getPayoutItem = useCallback(
+    async () => {
       const data = await getPayoutItemById(+payoutId)
       if (data?.id) {
         setPayout(data)
       }
-    }
+    },
+    [payoutId]
+  )
 
+  useEffect(() => {
     getPayoutItem()
   }, [payoutId, account])
+
+  useEffect(() => {
+    if (payout) {
+      setIsMyPayout(payout.userId === me.id)
+    }
+  }, [payout, me])
+
+  useEffect(() => {
+    if (isMyPayout === false) {
+      history.replace(routes.tokenManager('payout-events', null))
+    }
+  }, [isMyPayout])
 
   useEffect(() => {
     setIsClaimHistoryLoading(true)
@@ -67,7 +94,7 @@ export default function PayoutItemForManager({
           <Column style={{ gap: '40px' }}>
             <PayoutHeader payout={payout} isMyPayout />
             <PayoutTimeline payout={payout} />
-            <PayoutActionBlock payout={payout} isMyPayout />
+            <PayoutActionBlock payout={payout} isMyPayout myAmount={1} />
             {[PAYOUT_STATUS.ENDED, PAYOUT_STATUS.STARTED].includes(status) && (
               <PayoutHistory
                 isLoading={isClaimHistoryLoading}

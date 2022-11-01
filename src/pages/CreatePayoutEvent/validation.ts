@@ -4,11 +4,12 @@ import dayjs from 'dayjs'
 export const validation = object().shape({
   title: string().required('Field is required').max(100, 'Maximum is allowed 100 chars'),
   description: string().required('Field is required').max(5000, 'Maximum is allowed 5000 chars'),
+  tokenAmount: string().required('Field is required'),
   type: string().required('Field is required'),
-  otherType: string().when('type', {
+  otherType: string().nullable().when('type', {
     is: (type: string) => type === 'Other',
     then: string().required('Field is required').max(50, 'Maximum is allowed 50 chars'),
-    otherwise: string(),
+    otherwise: string().nullable(),
   }),
   secToken: object().nullable().required('Field is required'),
   token: object().nullable().required('Field is required'),
@@ -37,7 +38,7 @@ export const validation = object().shape({
         return true
       }
     ),
-  endDate: string().test(
+  endDate: string().nullable().test(
     'isAfter',
     'End date must be after start date plus 1 day',
     (value = '', context: TestContext<{ startDate?: string }>) => {

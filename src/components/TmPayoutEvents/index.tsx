@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { useHistory } from 'react-router-dom'
+import { Flex } from 'rebass'
 
 import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
@@ -21,6 +22,7 @@ import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import { useDeletePayoutItem, usePayoutState } from 'state/payout/hooks'
 import { AreYouSureModal } from 'components/AreYouSureModal'
+import { MouseoverTooltip } from 'components/Tooltip'
 import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
 
@@ -90,10 +92,10 @@ export const TmPayoutEvents = () => {
             forManager
           />
           {payoutList.items?.length ? (
-            <>
+            <Flex flexDirection="column" style={{ gap: 32 }}>
               <Table body={<Body items={payoutList.items} />} header={<Header />} />
               <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
-            </>
+            </Flex>
           ) : (
             <TmEmptyPage tab="payout-events" filtred />
           )}
@@ -118,16 +120,19 @@ const Row = ({ item }: IRow) => {
   const deletePayout = useDeletePayoutItem()
   const history = useHistory()
 
-  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken } = item
-  const amountClaimed = 0
+  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed } = item
 
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
   const currency = useCurrency(payoutToken)
-
   const dateFormat = 'MMM DD, YYYY'
 
   const clickView = () => {
     history.push({ pathname: routes.payoutItemManager(id) })
+  }
+
+  const splitClaimedAmount = (amount: string) => {
+    const result = amount.substring(amount.indexOf('.') + 1)
+    return result.length > 0 ? Number(amount).toFixed(4) : result
   }
 
   const onDelete = () => {
@@ -137,9 +142,17 @@ const Row = ({ item }: IRow) => {
 
   const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
 
+  const amountClaimed = claimed
+    ? splitClaimedAmount(claimed.toString())
+    : null
+
   const onEdit = () => {
     history.push(`/payout/edit/${id}`)
   }
+
+  const tooltipText = `Token: ${currency?.symbol || '-'} 
+  Token amount: ${tokenAmount}
+  Claimed: ${amountClaimed}`
 
   return (
     <>
@@ -168,7 +181,12 @@ const Row = ({ item }: IRow) => {
         <div style={{ fontWeight: 500 }}>
           {amountClaimed ? (
             <>
-              <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              <MouseoverTooltip
+                style={{ height: '24px' }}
+                text={tooltipText}
+                textStyle={{ whiteSpace: 'pre-line' }}>
+                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              </MouseoverTooltip>
               {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
             </>
           ) : (

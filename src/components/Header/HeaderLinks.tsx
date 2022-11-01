@@ -135,7 +135,7 @@ export const HeaderLinks = () => {
   return (
     <HeaderLinksWrap links={7}>
       {isAllowed('/swap') && account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+        <StyledNavLink id={`swap-nav-link`} to={'/swap'} data-testid={`swap-nav-link`}>
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}
@@ -143,6 +143,7 @@ export const HeaderLinks = () => {
       {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
           disabled={!isKycApproved}
+          data-testid="securityTokensButton"
           id={`stake-nav-link`}
           to={routes.securityTokens('tokens')}
           isActive={(match, { pathname }) => {

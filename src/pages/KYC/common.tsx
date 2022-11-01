@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, HTMLProps } from 'react'
+import React, { CSSProperties, FC, HTMLProps, useMemo } from 'react'
 import { Box, Flex } from 'rebass'
 import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
@@ -17,6 +17,7 @@ import { AcceptFiles } from 'components/Upload/types'
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
+import { ReactComponent as InvalidFormInputIcon } from 'assets/svg/invalid-form-input-icon.svg'
 
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import Row from 'components/Row'
@@ -32,6 +33,7 @@ export interface UploaderProps {
   required?: boolean
   tooltipText?: string | JSX.Element
   isDisabled?: boolean
+  id?: any
 }
 
 interface SelectProps {
@@ -50,6 +52,9 @@ interface SelectProps {
   isDisabled?: boolean
   isClearable?: boolean
   tooltipText?: string | JSX.Element
+  addCustom?: boolean
+  id?: any
+  value?: any
 }
 
 type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
@@ -58,7 +63,35 @@ type TextInputProps = HTMLProps<HTMLInputElement | HTMLTextAreaElement> & {
   tooltipText?: string | JSX.Element
 }
 
+interface KycInputLabelProps {
+  name?: string
+  error?: any
+  label?: string
+  tooltipText?: string | JSX.Element
+  style?: string
+}
+
+export const KycInputLabel: FC<KycInputLabelProps> = ({label, error, name, tooltipText}) => {
+  if (!label) {
+    return null
+  }
+
+  return (
+    <Row alignItems='center'>
+      {error && (
+        <div>
+          <InvalidFormInputIcon style={{ margin: '0 0.5rem'}} />
+        </div>
+      )}
+      <div>
+        <Label label={label} htmlFor={name || ''}  tooltipText={tooltipText} color={error && "#FF007F"}  />
+      </div>
+    </Row>
+  )
+}
+
 export const Select: FC<SelectProps> = ({
+  id,
   label,
   onSelect,
   selectedItem,
@@ -84,6 +117,7 @@ export const Select: FC<SelectProps> = ({
           name={name}
           placeholder={placeholder}
           onSelect={onSelect}
+          id={id}
           value={selectedItem}
           options={items}
           error={error}
@@ -100,7 +134,47 @@ export const Select: FC<SelectProps> = ({
   )
 }
 
+export const KycSelect: FC<SelectProps> = ({
+  id,
+  label,
+  onSelect,
+  selectedItem,
+  placeholder,
+  items,
+  error,
+  name,
+  required,
+  tooltipText,
+  isDisabled,
+  ...rest
+}: SelectProps) => {
+  return (
+    <Box>
+      <KycInputLabel label={label} tooltipText={tooltipText} error={error} />
+      {isDisabled && selectedItem ? (
+        <Row alignItems="center" style={{ columnGap: 4 }}>
+          {selectedItem?.icon}
+          {selectedItem?.label}
+        </Row>
+      ) : (
+        <ReactSelect
+          name={name}
+          id={id}
+          placeholder={placeholder}
+          onSelect={onSelect}
+          value={selectedItem}
+          options={items}
+          error={error}
+          isDisabled={isDisabled}
+          {...rest}
+        />
+      )}
+    </Box>
+  )
+}
+
 export const TextInput: FC<TextInputProps> = ({
+  id,
   label,
   value,
   onChange,
@@ -124,6 +198,7 @@ export const TextInput: FC<TextInputProps> = ({
         <div>{value}</div>
       ) : (
         <StyledInput
+          data-testid={id}
           onBlur={onBlur}
           name={name}
           placeholder={placeholder}
@@ -145,9 +220,50 @@ export const TextInput: FC<TextInputProps> = ({
   )
 }
 
+export const KycTextInput: FC<TextInputProps> = ({
+  id,
+  label,
+  value,
+  onChange,
+  placeholder,
+  style,
+  name,
+  type,
+  onBlur,
+  required,
+  error = false,
+  tooltipText,
+  disabled = false,
+}: TextInputProps) => {
+  return (
+    <Box>
+      <KycInputLabel name={name} label={label} error={error} tooltipText={tooltipText} />
+
+      {disabled && value ? (
+        <div>{value}</div>
+      ) : (
+        <StyledInput
+          onBlur={onBlur}
+          name={name}
+          placeholder={placeholder}
+          data-testid={id}
+          value={value}
+          onChange={onChange}
+          style={style}
+          type={type}
+          autoComplete="off"
+          disabled={disabled}
+          error={error}
+        />
+      )}
+    </Box>
+  )
+}
+
 export const TextareaInput: FC<TextInputProps> = ({
   label,
   value,
+  id,
   onChange,
   placeholder,
   style,
@@ -179,6 +295,7 @@ export const TextareaInput: FC<TextInputProps> = ({
 }
 
 export const Uploader: FC<UploaderProps> = ({
+  id,
   title,
   subtitle,
   files,
@@ -204,7 +321,7 @@ export const Uploader: FC<UploaderProps> = ({
         )}
       </Flex>
       {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
-      {files.length > 0 && (
+      {files && files.length > 0 && (
         <Flex flexWrap="wrap">
           {files.map((file: any, index) => (
             <FilePreview
@@ -224,6 +341,7 @@ export const Uploader: FC<UploaderProps> = ({
         <Upload
           isDisabled={isDisabled}
           accept={`${AcceptFiles.IMAGE},${AcceptFiles.PDF}` as AcceptFiles}
+          data-testid={id}
           file={null}
           onDrop={onDrop}
         >
@@ -255,16 +373,17 @@ interface ChooseFileTypes {
   onDrop: (file: FileWithPath) => void
   error?: any
   handleDeleteClick: () => void
+  id?: any
 }
 
-export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: ChooseFileTypes) => {
+export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick, id }: ChooseFileTypes) => {
   return (
     <Box style={{ maxWidth: 200 }}>
       {label && <Label label={label} />}
       {file ? (
         <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
-        <Upload file={file} onDrop={onDrop}>
+        <Upload file={file} onDrop={onDrop} data-testid={id}>
           <ButtonGradient type="button" style={{ height: 52, padding: '7px 16px' }}>
             <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
           </ButtonGradient>
@@ -348,6 +467,7 @@ const StyledInput = styled(Input)`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
+  border: ${({ error, theme }) => error ? 'solid 1px' + theme.error : 'none'};
   background-color: ${({ theme: { bg19 } }) => bg19};
   :focus {
     background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};

@@ -29,7 +29,7 @@ const RateRow = styled(Row)<{ active: boolean }>`
 export const CurrentRate = ({ trade, allowedSlippage }: Props) => {
   const [showInverted, setShowInverted] = useState<boolean>(false)
   return (
-    <RateRow active={!!trade}>
+    <RateRow active={!!trade} data-testid="currentRate">
       <RowFixed>
         <Trans>Current Rate</Trans>
       </RowFixed>

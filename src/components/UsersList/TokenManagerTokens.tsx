@@ -169,7 +169,7 @@ const TokenHeader = styled.div`
 const TokenPayoutEventList = styled.div`
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 8px;
   overflow: auto;
 `

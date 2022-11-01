@@ -60,7 +60,7 @@ export class ConnectWalletScreen extends WebPage {
           await this.metamaskPage.signMetamask(signPage);
         }),
 
-      openedMetamaskPage.click(this.metamaskPage.connectMetamaskPopUpButton),
+      openedMetamaskPage.click(this.metamaskPage.confirmMetamaskPopUpButton),
     ]);
 
     await this.signMetamaskConnectionIfRequestAppeared();

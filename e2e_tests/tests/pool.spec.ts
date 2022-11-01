@@ -8,7 +8,7 @@ test.beforeEach(async ({ kovanNetwork, topNavigationBar, liquidityPoolsPage }) =
 
 test.describe('Check Liquidity pool functions', () => {
   const ethAmountForLiquidityPoolString = '0.0001';
-  const ethAmountForLiquidityPoolFloat = 0.0001;
+  const ethAmountForLiquidityPoolFloat = parseFloat(ethAmountForLiquidityPoolString);
   const ethTokenTitle = 'Ether';
   const ixsTokenTitle = 'Ixs Token';
   const wsecTokenTitle = 'WSec Test (WSEC)';
@@ -69,7 +69,7 @@ test.describe('Check Liquidity pool functions', () => {
           const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButtonSelector);
           await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
-          await metamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
+          await metamaskPopUp.click(metamaskPage.confirmMetamaskPopUpButton);
           await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
         });
 
@@ -110,7 +110,7 @@ test.describe('Check Liquidity pool functions', () => {
       const confirmMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmRemovePoolButton);
       await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
-      await confirmMetamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
+      await confirmMetamaskPopUp.click(metamaskPage.confirmMetamaskPopUpButton);
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
 
       await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
@@ -132,7 +132,7 @@ test.describe('Check Liquidity pool functions', () => {
       const confirmMetamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmRemovePoolButton);
       await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
-      await confirmMetamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
+      await confirmMetamaskPopUp.click(metamaskPage.confirmMetamaskPopUpButton);
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
 
       await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();
@@ -161,7 +161,7 @@ test.describe('Check Liquidity pool functions', () => {
       const metamaskPopUp = await webPage.openNewPageByClick(page, liquidityPoolsPage.confirmSupplyButtonSelector);
       await expect(liquidityPoolsPage.waitingForConfirmationPopUpText).toBeVisible();
 
-      await metamaskPopUp.click(metamaskPage.connectMetamaskPopUpButton);
+      await metamaskPopUp.click(metamaskPage.confirmMetamaskPopUpButton);
       await expect(liquidityPoolsPage.transactionSubmittedPopUpText).toBeVisible();
 
       await liquidityPoolsPage.clickTransactionSubmittedPopUpCloseButton();

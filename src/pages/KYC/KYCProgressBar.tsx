@@ -1,21 +1,29 @@
 import { Trans } from '@lingui/macro'
 import React, { FC, useState, useCallback } from 'react'
 
-import { ButtonIXSGradient } from 'components/Button'
+import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { TYPE } from 'theme'
 
 import { FormCard, PageLink, KYCStatusIcons } from './styleds'
 
+interface KYCProgressTopic {
+  title: string
+  href: string
+  passed: boolean
+  failed?: boolean
+}
+
 interface Props {
-  topics: any[]
+  topics: KYCProgressTopic[]
   reasons: string[]
   description: string | null
   disabled?: boolean
   handleSubmit?: (e: any) => void
+  handleSaveProgress?: (e: any) => void
 }
 
-export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handleSubmit }: Props) => {
+export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handleSubmit, handleSaveProgress }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
 
   const handleScrollToDiv = useCallback(
@@ -61,7 +69,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
 
         <Column>
           {topics.map(
-            ({ title, href, passed }, index) =>
+            ({ title, href, passed, failed }, index) =>
               title && (
                 <PageLink
                   onClick={() => handleScrollToDiv(href, index)}
@@ -70,6 +78,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
                 >
                   {title}
                   {passed && KYCStatusIcons.approved()}
+                  {failed && KYCStatusIcons.rejected()}
                 </PageLink>
               )
           )}
@@ -80,14 +89,15 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
         onClick={handleSubmit}
         disabled={disabled}
         type="submit"
+        data-testid="submitButton"
         style={{ width: '100%' }}
         marginY="24px"
       >
         Submit form
       </ButtonIXSGradient>
-      {/* <ButtonGradientBorder disabled style={{ width: '100%' }}>
+      <ButtonGradientBorder style={{ width: '100%' }} onClick={handleSaveProgress}>
         Save Progress
-      </ButtonGradientBorder> */}
+      </ButtonGradientBorder>
     </div>
   )
 }
