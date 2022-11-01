@@ -15,8 +15,8 @@ export const useSubmitDSO = (dsoId: string) => {
   const { user } = useAuth()
   const url = issuanceURL.dso.submit(getIdFromObj(user), dsoId)
   const queryCache = useQueryCache()
-  const submitDSO = async () => {
-    return await apiService.patch<DigitalSecurityOffering>(url, {})
+  const submitDSO = async (data: any) => {
+    return await apiService.patch<DigitalSecurityOffering>(url, data)
   }
 
   return useMutation(submitDSO, {
