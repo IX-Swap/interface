@@ -14,12 +14,6 @@ export const ListingStatusAndActions = ({
   data
 }: ListingStatusAndActionsProps) => {
   const { push } = useHistory()
-  const { pathname } = useLocation()
-  const extractPathname = pathname.split('/')
-  const pathnameLength = extractPathname.slice(
-    extractPathname.indexOf('secondary-listings') + 1,
-    -1
-  ).length
 
   return (
     <Grid container spacing={6} direction='column'>
@@ -47,7 +41,7 @@ export const ListingStatusAndActions = ({
             disableElevation
             onClick={() =>
               push(
-                pathnameLength > 1
+                data?.listingType === 'OTC' || data?.listingType === 'Otc'
                   ? generatePath(IssuanceRoute.editOTCListing, {
                       UserId: data.user,
                       OTCListingId: data._id

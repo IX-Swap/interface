@@ -114,6 +114,7 @@ export interface ListingView extends AuthorizableWithIdentity {
     corporates: CorporateIdentity[]
     individual: IndividualIdentity
   }
+  listingType?: string
 }
 
 export interface ExchangeMarket {
