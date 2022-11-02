@@ -92,7 +92,8 @@ describe('DSOBaseFields', () => {
       6,
       expect.objectContaining({
         label: 'Decimal Places',
-        name: 'decimalPlaces'
+        name: 'decimalPlaces',
+        defaultValue: 18
       }),
       {}
     )

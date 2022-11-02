@@ -45,7 +45,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
         alignItems={'flex-end'}
         spacing={{ xs: 5, md: 2 }}
       >
-        <Grid item width={'100%'}>
+        <Grid item width={'100%'} height={122}>
           <TypedField
             fullWidth
             key={fieldId}
@@ -59,7 +59,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
           />
         </Grid>
 
-        <Grid item width={'100%'}>
+        <Grid item width={'100%'} height={122}>
           <TypedField
             fullWidth
             key={fieldId}

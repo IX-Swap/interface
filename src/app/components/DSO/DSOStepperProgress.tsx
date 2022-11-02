@@ -5,12 +5,13 @@ import { Grid, Paper, Step } from '@mui/material'
 import { StepButton } from 'ui/Stepper/StepButton'
 import { TwoFANotice } from '../FormStepper/TwoFANotice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { SubmitButton } from 'app/components/FormStepper/SubmitButton'
 import { SaveDraftButton } from './DSODraftButton'
 import { DSOStepperStep } from './DSOFormStepper'
 import { MutateFunction, MutationResultPair } from 'react-query'
 import { useFormContext } from 'react-hook-form'
 import { useDSOFormContext } from './DSOFormContext'
+import _ from 'lodash'
+import { SubmitButton } from '../FormStepper/SubmitButton'
 export interface DSOStepperProgressProps {
   transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
@@ -39,6 +40,14 @@ export interface DSOStepperProgressProps {
     transformData?: any
   ) => () => void
   redirectFunction: (dsoId: string) => string
+}
+
+export const getSubmitDSOPayload = (data: any) => {
+  const teams = _.isEmpty(data.teams) ? null : data.teams
+  return {
+    ...data,
+    teams
+  }
 }
 
 export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
@@ -101,18 +110,16 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
             }}
             actions={
               <Grid container spacing={2}>
-                {matches ? null : (
-                  <Grid item xs={12}>
-                    <SubmitButton
-                      mutation={submitMutation}
-                      data={data}
-                      step={steps[steps.length - 1]}
-                      fullWidth
-                      size='medium'
-                      submitText={submitText}
-                    />
-                  </Grid>
-                )}
+                <Grid item xs={12}>
+                  <SubmitButton
+                    mutation={submitMutation}
+                    data={getSubmitDSOPayload(data)}
+                    step={steps[steps.length - 1]}
+                    fullWidth
+                    size='medium'
+                    submitText={submitText}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <SaveDraftButton
                     isLastStep={activeStep === steps.length - 1}

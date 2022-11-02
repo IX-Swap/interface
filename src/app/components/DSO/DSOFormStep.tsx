@@ -226,7 +226,7 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
       errors={stepValues[index]?.errors}
     >
       <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <Grid item>{createElement(step.component)}</Grid>
           <VSpacer size='small' />
 
@@ -274,7 +274,7 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
           </Grid>
           <ScrollToTop />
         </Grid>
-        <Grid item>
+        <Grid item xs={1}>
           <DSOStepperProgress
             transformData={step.getRequestPayload}
             saveMutation={saveMutation}
