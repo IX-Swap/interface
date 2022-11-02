@@ -14,6 +14,7 @@ import {
   getDSODocumentsPayload,
   getDSOInformationRequestPayload
 } from './requests'
+import { isEqual } from 'lodash'
 
 export const dsoFormSteps = [
   {
@@ -27,7 +28,7 @@ export const dsoFormSteps = [
     label: 'Company Information',
     getFormValues: (data: DSOFormValues) => {
       return {
-        team: data.team ?? [{}],
+        team: data.team.length > 0 ? [...data.team, {}] : [{}],
         introduction: data.introduction ?? '',
         businessModel: data.businessModel ?? '',
         useOfProceeds: data.useOfProceeds ?? '',
@@ -44,15 +45,22 @@ export const dsoFormSteps = [
     label: 'Documents',
     getFormValues: (data: DSOFormValues) => {
       const dataroomProperties: any = {}
+      const videos: any[] = []
+      const faqs: any[] = []
       data.documents.forEach((item, index) => {
         dataroomProperties[`dataroom_${index}`] = item.value
       })
-
+      data.videos.forEach(item => {
+        if (!isEqual(item, {})) videos.push(item)
+      })
+      data.faqs.forEach(item => {
+        if (!isEqual(item, {})) faqs.push(item)
+      })
       return {
         subscriptionDocument: data.subscriptionDocument,
         documents: data.documents,
-        videos: data.videos ?? [{}],
-        faqs: data.faqs ?? [{}],
+        videos: videos.length > 0 ? [...videos, {}] : [{}, {}],
+        faqs: faqs.length > 0 ? [...faqs, {}] : [{}, {}],
         step: 3,
         ...dataroomProperties
       }
