@@ -36,9 +36,13 @@ export const MyListingsRouter = () => {
 
       <AppRoute
         breadcrumb='Preview Listing'
-        path={IssuanceRoute.previewListing}
+        path={
+          pathnameLength > 1
+            ? IssuanceRoute.previewOTCListing
+            : IssuanceRoute.previewListing
+        }
       >
-        <ViewListing />
+        {pathnameLength > 1 ? <ViewListingOTC /> : <ViewListing />}
       </AppRoute>
 
       <AppRoute

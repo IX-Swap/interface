@@ -27,15 +27,20 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
           color='primary'
           disableElevation
           onClick={() =>
-            push(
-              generatePath(IssuanceRoute.previewListing, {
-                listingId: listing?._id,
-                issuerId:
-                  typeof listing?.user === 'string'
-                    ? listing?.user
-                    : getIdFromObj(listing?.user)
-              })
-            )
+            push({
+              pathname:
+                listingType === 'Otc' || listingType === 'OTC'
+                  ? generatePath(IssuanceRoute.previewOTCListing, {
+                      OTCListingId: listing?._id,
+                      UserId:
+                        typeof listing?.user === 'string'
+                          ? listing?.user
+                          : getIdFromObj(listing?.user)
+                    })
+                  : generatePath(IssuanceRoute.previewListing, {
+                      listingId: listing?._id
+                    })
+            })
           }
         >
           Preview
