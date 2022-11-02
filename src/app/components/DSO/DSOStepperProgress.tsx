@@ -10,7 +10,8 @@ import { DSOStepperStep } from './DSOFormStepper'
 import { MutateFunction, MutationResultPair } from 'react-query'
 import { useFormContext } from 'react-hook-form'
 import { useDSOFormContext } from './DSOFormContext'
-import { DSOSubmitButton } from './DSOSubmitButton'
+import _ from 'lodash'
+import { SubmitButton } from '../FormStepper/SubmitButton'
 export interface DSOStepperProgressProps {
   transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
@@ -39,6 +40,14 @@ export interface DSOStepperProgressProps {
     transformData?: any
   ) => () => void
   redirectFunction: (dsoId: string) => string
+}
+
+export const getSubmitDSOPayload = (data: any) => {
+  const teams = _.isEmpty(data.teams) ? null : data.teams
+  return {
+    ...data,
+    teams
+  }
 }
 
 export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
@@ -102,9 +111,9 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
             actions={
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <DSOSubmitButton
+                  <SubmitButton
                     mutation={submitMutation}
-                    data={data}
+                    data={getSubmitDSOPayload(data)}
                     step={steps[steps.length - 1]}
                     fullWidth
                     size='medium'
