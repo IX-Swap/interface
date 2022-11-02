@@ -46,11 +46,6 @@ export const DSOSaveOnNavigate = ({
         Object.keys(obj).length !== 0 &&
         obj.constructor === Object
       ) {
-        console.log('valdition', activeStep)
-        console.log(
-          Object.keys(obj).length !== 0 && obj.constructor === Object,
-          'kkjkjkj'
-        )
       } else {
         return activeStep + 1
       }
