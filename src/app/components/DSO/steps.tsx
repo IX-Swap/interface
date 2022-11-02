@@ -14,7 +14,7 @@ import {
   getDSODocumentsPayload,
   getDSOInformationRequestPayload
 } from './requests'
-import _ from 'lodash'
+import { isEqual } from 'lodash'
 
 export const dsoFormSteps = [
   {
@@ -51,10 +51,10 @@ export const dsoFormSteps = [
         dataroomProperties[`dataroom_${index}`] = item.value
       })
       data.videos.forEach(item => {
-        if (!_.isEqual(item, {})) videos.push(item)
+        if (!isEqual(item, {})) videos.push(item)
       })
       data.faqs.forEach(item => {
-        if (!_.isEqual(item, {})) faqs.push(item)
+        if (!isEqual(item, {})) faqs.push(item)
       })
       return {
         subscriptionDocument: data.subscriptionDocument,
