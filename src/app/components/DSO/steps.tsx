@@ -54,7 +54,7 @@ export const dsoFormSteps = [
         if (!_.isEqual(item, {})) videos.push(item)
       })
       data.faqs.forEach(item => {
-        if (!_.isEqual(item, {})) videos.push(item)
+        if (!_.isEqual(item, {})) faqs.push(item)
       })
       return {
         subscriptionDocument: data.subscriptionDocument,
