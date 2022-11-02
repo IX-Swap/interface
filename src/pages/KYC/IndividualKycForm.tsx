@@ -596,7 +596,9 @@ export default function IndividualKycForm() {
 
               const investorStatusAcknowledgementFilled = shouldValidate && isFilled('confirmStatusDeclaration')
 
+              const personalPassed = personalFilled && addressFilled && filesFilled && identityDocumentFilled
               const personalFailed = (!personalFilled || !addressFilled || !filesFilled)
+
               const financialFailed = !financialFilled
               const statusDeclarationFailed = !statusDeclarationFilled
 
@@ -609,7 +611,7 @@ export default function IndividualKycForm() {
                           <TYPE.title6 style={{ textTransform: 'uppercase' }}>
                             <Trans>Personal Information</Trans>
                           </TYPE.title6>
-                          {personalFilled && <StyledBigPassed />}
+                          {personalPassed && <StyledBigPassed />}
                           {personalFailed && <InvalidFormInputIcon /> }
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
@@ -1531,7 +1533,7 @@ export default function IndividualKycForm() {
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
                       disabled={!canSubmit || Object.keys(errors).length !== 0}
                       topics={[
-                        { title: 'Personal Information', href: 'personal', passed: personalFilled && addressFilled && filesFilled && identityDocumentFilled, failed: personalFailed },
+                        { title: 'Personal Information', href: 'personal', passed: personalPassed, failed: personalFailed },
                         { title: 'Financial Information', href: 'financial', passed: financialFilled, failed: financialFailed },
                         { title: 'Investor Status Declaration', href: 'status-declaration', passed: statusDeclarationFilled, failed: statusDeclarationFailed },
                         // { title: 'Investor Declaration', href: 'investor-declaration', passed: investorFilled },
