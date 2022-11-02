@@ -119,6 +119,7 @@ export const individualTransformApiData = (data: any) => {
 
   return {
     ...data,
+    middleName: data.middleName ?? '',
     sourceOfFunds: (otherFunds?.length ? [...funds.split(', '), 'Others'] : funds.split(', ')).filter((x: string) => x.length > 0),
     isUSTaxPayer: usTin ? 1 : 0,
     otherFunds,
