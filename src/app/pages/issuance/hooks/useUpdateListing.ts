@@ -35,10 +35,15 @@ export const useUpdateListing = (
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
       replace(
-        generatePath(IssuanceRoute.viewListing, {
-          listingId:
-            listingType === 'Both' ? data.data.result.id : data.data._id
-        })
+        listingType === 'OTC' || listingType === 'Otc'
+          ? generatePath(IssuanceRoute.previewOTCListing, {
+              OTCListingId: data.data._id,
+              UserId: data.data.user._id
+            })
+          : generatePath(IssuanceRoute.viewListing, {
+              listingId:
+                listingType === 'Both' ? data.data.result.id : data.data._id
+            })
       )
 
       void snackbarService.showSnackbar('Success', 'success')
