@@ -27,7 +27,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
   const { control } = useFormContext<{ team: DSOFormValues['team'] }>()
   const { isTablet } = useAppBreakpoints()
   const renderTitle = (index: number) =>
-    index === 0 ? 'Team Member' : `(${index + 1}) Team Member`
+    index === 0 ? 'Team Members' : `(${index + 1}) Team Members`
 
   return (
     <Grid
@@ -90,6 +90,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
               key={fieldId}
               component={TextInput}
               placeholder={"Team Member's Name"}
+              helperText={"Team Member's Name"}
               control={control}
               defaultValue={defaultValue?.name ?? ''}
               label='Name'
@@ -104,6 +105,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
               key={fieldId}
               control={control}
               placeholder={"Team Member's Position"}
+              helperText={"Team Member's Position"}
               component={TextInput}
               defaultValue={defaultValue?.position ?? ''}
               label='Position'
