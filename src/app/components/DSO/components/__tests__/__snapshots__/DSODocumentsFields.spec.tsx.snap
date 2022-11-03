@@ -313,13 +313,23 @@ exports[`DSODocumentsFields should match snapshot 1`] = `
               class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiBox-root css-0"
+                class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
               >
-                <h5
-                  class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+                <div
+                  class="MuiBox-root css-0"
                 >
-                  Video Links
-                </h5>
+                  <h5
+                    class="MuiTypography-root MuiTypography-h5 css-1br8tjs-MuiTypography-root"
+                  >
+                    Video Links
+                  </h5>
+                </div>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1b4l2pg-MuiTypography-root"
+                  style="color: rgb(117, 117, 117); margin-left: 0.5rem; margin-top: 0.25rem;"
+                >
+                  (Optional)
+                </p>
               </div>
             </div>
             <div
