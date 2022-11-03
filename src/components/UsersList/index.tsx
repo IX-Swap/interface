@@ -179,6 +179,9 @@ const Row: FC<RowProps> = ({ item, changeUser }) => {
                   e.preventDefault()
                   e.stopPropagation()
                   changeUser(item)
+                  if (expanded) {
+                    toggleAccordion()
+                  }
                 }}
               >
                 Edit

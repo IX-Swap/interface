@@ -50,7 +50,10 @@ export const Summary: FC<Props> = ({ tokenAmount, isLoading, isRecordFuture, set
 
   return (
     <>
-      <Label label={t`Token Payout Summary`} />
+      <Label
+        label={t`Token Payout Summary`}
+        tooltipText="Shows the total amount of tokens both held in wallets and contributed to liquidity pools. It also indicates the number of tokens to be distributed for this payout event."
+      />
 
       <Card>
         <Flex marginBottom="8px" justifyContent="space-between" alignItems="center" opacity="50%">

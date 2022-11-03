@@ -1,7 +1,7 @@
 import React, { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 
-import { SupportedChainId } from 'constants/chains'
+// import { SupportedChainId } from 'constants/chains'
 import { routes } from 'utils/routes'
 
 import Faucet from 'pages/Faucet'
@@ -35,6 +35,7 @@ const CreateCollection = lazy(() => import('pages/CreateCollection'))
 const NftAssetPage = lazy(() => import('pages/NFTAsset'))
 const TokenManager = lazy(() => import('pages/TokenManager'))
 const CreatePayoutEvent = lazy(() => import('pages/CreatePayoutEvent'))
+const EditPayoutEvent = lazy(() => import('pages/CreatePayoutEvent/EditPayoutEvent'))
 const PayoutItem = lazy(() => import('pages/PayoutItem'))
 const PayoutItemManager = lazy(() => import('pages/PayoutItem/PayoutItemManager'))
 
@@ -60,38 +61,38 @@ export const routeConfigs: RouteMapEntry[] = [
   {
     path: routes.nftCreate,
     component: CreateNFT,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
-  { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN } },
+  { path: routes.nftList, component: ListNFT, conditions: { isWhitelisted: true } },
   {
     path: routes.nftCollections,
     component: NFTCollections,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftCollectionCreate,
     component: CreateCollection,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftEditCollectionPath,
     component: UpdateCollection,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftCollectionImport,
     component: NftImport,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftViewCollectionPath,
     component: NFTCollection,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
   {
     path: routes.nftItemPath,
     component: NftAssetPage,
-    conditions: { isWhitelisted: true, chainId: SupportedChainId.KOVAN },
+    conditions: { isWhitelisted: true },
   },
 
   { path: routes.kyc, component: KYC, conditions: { isWhitelisted: true } },
@@ -123,6 +124,7 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: '/token-manager', render: () => <Redirect to={routes.tokenManager('my-tokens', null)} /> },
   { path: routes.tokenManager(), component: TokenManager },
   { path: routes.createPayoutEvent, component: CreatePayoutEvent },
+  { path: routes.editPayoutEvent(), component: EditPayoutEvent },
   { path: routes.payoutItem(), component: PayoutItem },
   { path: routes.payoutItemManager(), component: PayoutItemManager },
 

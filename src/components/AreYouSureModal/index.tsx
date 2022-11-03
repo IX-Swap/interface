@@ -62,5 +62,7 @@ const ButtonsContainer = styled.div`
   gap: 16px;
   > button {
     width: 100%;
+    min-height: 40px;
+    height: 40px;
   }
 `

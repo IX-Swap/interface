@@ -1,8 +1,11 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ReactSelect, { StylesConfig, components } from 'react-select'
 import styled, { css } from 'styled-components'
 
 import { Checkbox } from 'components/Checkbox'
+import { isValidAddress, shortAddress } from 'utils'
+import { useAddUserToken } from 'state/user/hooks'
+import { useToken } from 'hooks/Tokens'
 
 type Option = { label?: string; value?: any; disabled?: boolean }
 
@@ -18,6 +21,8 @@ interface Props {
   borderRadius?: string
   isDisabled?: boolean
   isClearable?: boolean
+  addCustom?: boolean
+  id?: any
 }
 
 const colourStyles = {
@@ -120,9 +125,18 @@ const SingleValue = (props: any) => {
 }
 
 const Option = (props: any) => {
+  const addToken = useAddUserToken()
+
   return (
     <components.Option {...props}>
-      <StyledValue disabled={props.isDisabled}>
+      <StyledValue
+        disabled={props.isDisabled}
+        onClick={() => {
+          if (props.data?.token) {
+            addToken(props.data?.token)
+          }
+        }}
+      >
         {props.isMulti && <Checkbox checked={props.isSelected} label="" />}
         {props?.data?.icon}
         {props?.data?.label}
@@ -137,13 +151,19 @@ export const Select = ({
   options,
   placeholder = '',
   name,
+  id,
   isDisabled = false,
   isSearchable = true,
   isMulti = false,
   isClearable = true,
   error = '',
   borderRadius = '36px',
+  addCustom = false,
 }: Props) => {
+  const [search, handleSearch] = useState('')
+
+  const token = useToken(search)
+
   const selectedValue = useMemo(() => {
     if (isMulti) {
       return value.map((el: any) =>
@@ -156,13 +176,26 @@ export const Select = ({
     )
   }, [value, options, isMulti])
 
+  const existingToken = useMemo(() => {
+    return Boolean(options.find((option) => option.value === search))
+  }, [search, options])
+
+  const customOptions = useMemo(() => {
+    if (addCustom && isValidAddress(search) && token && !existingToken) {
+      return [{ label: `Import ${token.symbol} ${shortAddress(search)}`, value: search, token }, ...options]
+    }
+    return options
+  }, [options, addCustom, search, token])
+
   return (
     <StyledReactSelect
+      onInputChange={handleSearch}
       error={error}
-      options={options}
+      options={customOptions}
       isSearchable={isSearchable}
       isClearable={isClearable}
       isMulti={isMulti}
+      inputId={id}
       onChange={(option: unknown) => {
         onSelect(option as Option)
       }}
@@ -189,12 +222,12 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string; borderRadius: str
     padding: 0px 16px;
     background: ${({ theme }) => theme.bg19};
     border: none;
-    /* ${({ error }) =>
+    ${({ error }) =>
       error &&
       css`
         border: 1px solid;
         border-color: #ed0376 !important;
-      `} */
+      `}
   }
   *[class*='indicatorSeparator'] {
     display: none;

@@ -60,7 +60,7 @@ export const Menu = ({ close }: Props) => {
         </CloseContainer>
         <MenuList>
           {isAllowed('/swap') && chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close}>
+            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} data-testid={`swap-nav-link`}>
               <Trans>Swap/Trade</Trans>
             </MenuListItem>
           )}
@@ -131,6 +131,16 @@ export const Menu = ({ close }: Props) => {
           {isAllowed('/kyc') && (
             <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
               <Trans>KYC</Trans>
+            </MenuListItem>
+          )}
+          {isAllowed(routes.tokenManager()) && (
+            <MenuListItem
+              activeClassName="active-item"
+              id={`kyc-nav-link`}
+              to={routes.tokenManager('my-tokens', null)}
+              onClick={close}
+            >
+              <Trans>Token Manager</Trans>
             </MenuListItem>
           )}
         </MenuList>

@@ -11,7 +11,7 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 const StyledDialogContent = styled(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, isLarge, ...rest }) => (
-    <AnimatedDialogContent {...rest} />
+    <AnimatedDialogContent {...rest} data-testid="submittedDialog"/>
   )
 ).attrs({
   'aria-label': 'dialog',

@@ -14,9 +14,16 @@ interface Props {
   handleDeleteClick: any
   style?: CSSProperties
   withBackground?: boolean
+  isDisabled?: boolean
 }
 
-export const FilePreview: FC<Props> = ({ file, style, handleDeleteClick, withBackground = true }: Props) => {
+export const FilePreview: FC<Props> = ({
+  file,
+  style,
+  handleDeleteClick,
+  withBackground = true,
+  isDisabled = false,
+}: Props) => {
   const deleteIcon = KYCStatusIcons[KYCStatuses.REJECTED]
 
   return (
@@ -30,9 +37,11 @@ export const FilePreview: FC<Props> = ({ file, style, handleDeleteClick, withBac
       >
         {file.name}
       </TYPE.subHeader>
-      <ButtonText style={{ minWidth: 24, minHeight: 24 }} onClick={handleDeleteClick} type="button">
-        {deleteIcon()}
-      </ButtonText>
+      {!isDisabled && (
+        <ButtonText style={{ minWidth: 24, minHeight: 24 }} onClick={handleDeleteClick} type="button">
+          {deleteIcon()}
+        </ButtonText>
+      )}
     </Wrapper>
   )
 }

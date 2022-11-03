@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import { useHistory } from 'react-router-dom'
+import { Flex } from 'rebass'
 
 import { routes } from 'utils/routes'
 import { MultipleFilters } from 'components/MultipleFilters'
@@ -19,9 +20,14 @@ import { TmEmptyPage } from 'components/TmEmptyPage'
 import { PayoutEvent } from 'state/token-manager/types'
 import { useUserState } from 'state/user/hooks'
 import { useAuthState } from 'state/auth/hooks'
+import { useDeletePayoutItem, usePayoutState } from 'state/payout/hooks'
+import { AreYouSureModal } from 'components/AreYouSureModal'
+import { MouseoverTooltip } from 'components/Tooltip'
+import { ReactComponent as DeleteIcon } from 'assets/images/delete-basket.svg'
+import { PAYOUT_STATUS } from 'constants/enums'
 
 import { StatusCell } from './StatusCell'
-import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton } from './styleds'
+import { Container, StyledBodyRow, StyledHeaderRow, BodyContainer, CreateButton, ActionsContainer } from './styleds'
 import { PAYOUT_TYPE_LABEL } from './constants'
 
 const headerCells = [
@@ -43,6 +49,7 @@ export const TmPayoutEvents = () => {
   const { account } = useUserState()
   const { token } = useAuthState()
   const { payoutList, isLoading } = useTokenManagerState()
+  const { loadingRequest } = usePayoutState()
   const getMyPayouts = useGetMyPayout()
 
   useEffect(() => {
@@ -58,10 +65,6 @@ export const TmPayoutEvents = () => {
     getMyPayouts({ ...params, my: true })
   }
 
-  const onEdit = () => {
-    // TO DO - redirect to edit event
-  }
-
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
     fetch({ ...filters, page, offset: 10 })
@@ -73,7 +76,7 @@ export const TmPayoutEvents = () => {
 
   return (
     <>
-      <LoadingIndicator isLoading={isLoading} />
+      <LoadingIndicator isLoading={isLoading || loadingRequest} />
       {payoutList.items?.length || haveFilters ? (
         <Container>
           <MultipleFilters
@@ -89,10 +92,10 @@ export const TmPayoutEvents = () => {
             forManager
           />
           {payoutList.items?.length ? (
-            <>
-              <Table body={<Body onEdit={onEdit} items={payoutList.items} />} header={<Header />} />
+            <Flex flexDirection="column" style={{ gap: 32 }}>
+              <Table body={<Body items={payoutList.items} />} header={<Header />} />
               <Pagination totalPages={payoutList.totalPages} page={payoutList.page || 1} onPageChange={onPageChange} />
-            </>
+            </Flex>
           ) : (
             <TmEmptyPage tab="payout-events" filtred />
           )}
@@ -110,84 +113,116 @@ export const TmPayoutEvents = () => {
 
 interface IRow {
   item: PayoutEvent
-  onEdit: (item: PayoutEvent) => void
 }
 
-const Row = ({ item, onEdit }: IRow) => {
+const Row = ({ item }: IRow) => {
+  const [isWarningOpen, setIsWarningOpen] = useState(false)
+  const deletePayout = useDeletePayoutItem()
   const history = useHistory()
 
-  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken } = item
-  const amountClaimed = 0
+  const { id, status, type, secToken, startDate, endDate, recordDate, tokenAmount, payoutToken, claimed } = item
 
   const secCurrency = secToken ? new WrappedTokenInfo(secToken) : undefined
   const currency = useCurrency(payoutToken)
-
   const dateFormat = 'MMM DD, YYYY'
 
   const clickView = () => {
     history.push({ pathname: routes.payoutItemManager(id) })
   }
 
-  return (
-    <StyledBodyRow>
-      <div>#{id}</div>
-      <div>
-        <StatusCell status={status} />
-      </div>
-      <div>{PAYOUT_TYPE_LABEL[type] || type}</div>
-      <div>
-        <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
-        {secToken?.symbol || '-'}
-      </div>
-      <div>
-        {dayjs(startDate).format(dateFormat)}
-        {Boolean(endDate) && (
-          <>
-            &nbsp;-
-            <br />
-            {dayjs(endDate).format(dateFormat)}
-          </>
-        )}
-      </div>
-      <div>{dayjs(recordDate).format(dateFormat)}</div>
-      <div style={{ fontWeight: 500 }}>
-        {amountClaimed ? (
-          <>
-            <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
-            {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
-          </>
-        ) : (
-          '-'
-        )}
-      </div>
+  const splitClaimedAmount = (amount: string) => {
+    const result = amount.substring(amount.indexOf('.') + 1)
+    return result.length > 0 ? Number(amount).toFixed(4) : result
+  }
 
-      <div>
-        <ButtonGradientBorder
-          style={{ marginRight: 25 }}
-          onClick={(e: any) => {
-            e.preventDefault()
-            e.stopPropagation()
-            onEdit(item)
-          }}
-        >
-          <Trans>Edit</Trans>
-        </ButtonGradientBorder>
-        <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
-      </div>
-    </StyledBodyRow>
+  const onDelete = () => {
+    toggleIsWarningOpen()
+    deletePayout(id)
+  }
+
+  const toggleIsWarningOpen = () => setIsWarningOpen((state) => !state)
+
+  const amountClaimed = claimed
+    ? splitClaimedAmount(claimed.toString())
+    : null
+
+  const onEdit = () => {
+    history.push(`/payout/edit/${id}`)
+  }
+
+  const tooltipText = `Token: ${currency?.symbol || '-'} 
+  Token amount: ${tokenAmount}
+  Claimed: ${amountClaimed}`
+
+  return (
+    <>
+      <AreYouSureModal onAccept={onDelete} onDecline={toggleIsWarningOpen} isOpen={isWarningOpen} />
+      <StyledBodyRow>
+        <div>#{id}</div>
+        <div>
+          <StatusCell status={status} />
+        </div>
+        <div>{PAYOUT_TYPE_LABEL[type] || type}</div>
+        <div>
+          <CurrencyLogo currency={secCurrency} style={{ marginRight: 4 }} size="24px" />
+          {secToken?.symbol || '-'}
+        </div>
+        <div>
+          {dayjs(startDate).format(dateFormat)}
+          {Boolean(endDate) && (
+            <>
+              &nbsp;-
+              <br />
+              {dayjs(endDate).format(dateFormat)}
+            </>
+          )}
+        </div>
+        <div>{dayjs(recordDate).format(dateFormat)}</div>
+        <div style={{ fontWeight: 500 }}>
+          {amountClaimed ? (
+            <>
+              <MouseoverTooltip
+                style={{ height: '24px' }}
+                text={tooltipText}
+                textStyle={{ whiteSpace: 'pre-line' }}>
+                <CurrencyLogo currency={currency} style={{ marginRight: 4 }} size="24px" />
+              </MouseoverTooltip>
+              {currency?.symbol || '-'}&nbsp;{amountClaimed}/{tokenAmount}
+            </>
+          ) : (
+            '-'
+          )}
+        </div>
+
+        <ActionsContainer>
+          {status === PAYOUT_STATUS.DRAFT && <DeleteIcon onClick={toggleIsWarningOpen} />}
+          {status !== PAYOUT_STATUS.ENDED && (
+            <ButtonGradientBorder
+              onClick={(e: any) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onEdit()
+              }}
+            >
+              <Trans>Edit</Trans>
+            </ButtonGradientBorder>
+          )}
+          <EyeIcon onClick={clickView} style={{ cursor: 'pointer' }} />
+        </ActionsContainer>
+      </StyledBodyRow>
+    </>
   )
 }
 
 interface IBody {
   items: PayoutEvent[]
-  onEdit: (item: PayoutEvent) => void
 }
 
-const Body = ({ items, onEdit }: IBody) => {
+const Body = ({ items }: IBody) => {
   return (
     <BodyContainer>
       {items.map((item) => (
-        <Row onEdit={onEdit} item={item} key={`payout-${item.id}`} />
+        <Row item={item} key={`payout-${item.id}`} />
       ))}
     </BodyContainer>
   )

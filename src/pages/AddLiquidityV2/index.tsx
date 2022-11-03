@@ -11,8 +11,9 @@ import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
 
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
-import { setPoolTransactionHash, useMitigationEnabled } from 'state/pool/hooks'
+import { setPoolTransactionHash, useAddLiquidity, useMitigationEnabled } from 'state/pool/hooks'
 import { routes } from 'utils/routes'
+import { NETWORK_NAMES } from 'constants/chains'
 
 import { ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
@@ -58,9 +59,10 @@ export default function AddLiquidity({
 }: RouteComponentProps<{ currencyIdA?: string; currencyIdB?: string }>) {
   const { account, chainId, library } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
+  const addLiquidity = useAddLiquidity()
 
-  const currencyA = useAccreditedToken({ currencyId: currencyIdA })
-  const currencyB = useAccreditedToken({ currencyId: currencyIdB })
+  const currencyA = useAccreditedToken({ currencyId: currencyIdA }) as any
+  const currencyB = useAccreditedToken({ currencyId: currencyIdB }) as any
   const [enableMitigation, setEnableMitigation] = useState<boolean>(false)
   const disableToggleMitigation = useMemo(() => {
     if ((currencyA as any)?.isSecToken || (currencyB as any)?.isSecToken) {
@@ -210,6 +212,11 @@ export default function AddLiquidity({
       value = null
     }
 
+    let secTokenId = 0
+
+    if (currencyA.isSecToken) secTokenId = currencyA.tokenInfo.id
+    if (currencyB.isSecToken) secTokenId = currencyB.tokenInfo.id
+
     setAttemptingTxn(true)
     await estimate(...args, value ? { value } : {})
       .then((estimatedGasLimit) =>
@@ -218,6 +225,20 @@ export default function AddLiquidity({
           gasLimit: calculateGasMargin(estimatedGasLimit),
         }).then((response) => {
           setAttemptingTxn(false)
+          response.wait().then((res: any) => {
+            if (isCreating && secTokenId) {
+              const last = res.events.length - 2
+              addLiquidity({
+                address: res.events[last].address,
+                tokenId: secTokenId,
+                token0: currencyA.wrapped.address,
+                token1: currencyB.wrapped.address,
+                network: NETWORK_NAMES[chainId],
+                blockNumber: res.events[last].blockNumber,
+                decimals: pair?.liquidityToken?.decimals || 18,
+              })
+            }
+          })
 
           addTransaction(response, {
             summary: t`Add ${parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)} ${
@@ -331,6 +352,7 @@ export default function AddLiquidity({
                 showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
                 currency={currencies[Field.CURRENCY_A]}
                 id="add-liquidity-input-tokena"
+                data-testid="add-liquidity-input-tokena"
                 showCommonBases={false}
                 title={<Trans>Choose token to create a pool</Trans>}
               />
@@ -347,6 +369,7 @@ export default function AddLiquidity({
                 showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
                 currency={currencies[Field.CURRENCY_B]}
                 id="add-liquidity-input-tokenb"
+                data-testid="add-liquidity-input-tokenb"
                 showCommonBases={false}
                 title={<Trans>Choose token to create a pool</Trans>}
               />

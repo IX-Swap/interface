@@ -80,6 +80,7 @@ export const AmountInput = ({
             <>
               <NumericalInput
                 className="token-amount-input"
+                data-testid="token-amount-input"
                 value={value}
                 onUserInput={(val) => {
                   const floatingPart = val.split('.')[1]

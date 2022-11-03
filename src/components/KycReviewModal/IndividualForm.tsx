@@ -12,7 +12,10 @@ import {
   UploadedDocuments,
   Occupation,
   InvestorStatusDeclaration,
+  TaxDeclarations,
+  InvestorDeclaration,
 } from './Blocks'
+import { Referral } from './Blocks/Referral'
 
 interface Props {
   data: IndividualKyc
@@ -20,17 +23,32 @@ interface Props {
 }
 
 export const IndividualForm = ({ data, riskJSON }: Props) => {
+  const documents = data?.documents?.filter(document => {
+    if (+data?.accredited === 0) {
+      return document.type !== 'accreditation'
+    }
+
+    return document
+  })
+
   return (
     <>
       <Cynopsis riskJSON={riskJSON} />
+
       <Information data={data} kycKey="individual" />
-      <IndividualDocument data={data} />
       <Address data={data} />
-      <SourceOfFunds data={data} kycKey="individual" />
-      <InvestorStatusDeclaration data={data} kycKey="individual" />
-      <Fatca data={data} />
+      <IndividualDocument data={data} />
+
+      <Referral data={data} />
+
       <Occupation data={data} />
-      <UploadedDocuments data={data.documents} />
+      <SourceOfFunds data={data} kycKey="individual" />
+      <TaxDeclarations data={data} />
+      <Fatca data={data} />
+
+      <InvestorStatusDeclaration data={data} kycKey="individual" />
+      <InvestorDeclaration data={data} />
+      <UploadedDocuments data={documents} />
     </>
   )
 }

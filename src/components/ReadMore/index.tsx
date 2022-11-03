@@ -10,7 +10,7 @@ export const ReadMoreButton = styled(ButtonEmpty)`
   padding: 0;
   margin: 0;
   margin-left: 5px;
-  color: ${({ theme }) => theme.text1};
+  color: ${({ theme }) => theme.text1} !important;
   :hover {
     text-decoration: underline;
   }

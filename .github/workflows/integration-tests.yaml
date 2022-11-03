@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - development
-      - ci-update
 
 jobs:
   integration-tests:
@@ -16,6 +15,14 @@ jobs:
       METAMASK_RECOVERY: ${{ secrets.METAMASK_RECOVERY }}
       METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
       METAMASK_PRIVATE_KEY: ${{ secrets.METAMASK_PRIVATE_KEY }}
+      INFURA_KEY: ${{ secrets.INFURA_KEY }}
+      METAMASK_ADDRESS: ${{ secrets.METAMASK_ADDRESS }}
+      KYC_METAMASK_RECOVERY: ${{ secrets.KYC_METAMASK_RECOVERY }}
+      KYC_METAMASK_PRIVATE_KEY: ${{ secrets.KYC_METAMASK_PRIVATE_KEY }}
+      KYC_METAMASK_ADDRESS: ${{ secrets.KYC_METAMASK_ADDRESS }}
+      SEC_METAMASK_RECOVERY: ${{ secrets.SEC_METAMASK_RECOVERY }}
+      SEC_METAMASK_PRIVATE_KEY: ${{ secrets.SEC_METAMASK_PRIVATE_KEY }}
+      SEC_METAMASK_ADDRESS: ${{ secrets.SEC_METAMASK_ADDRESS }}
       E2E_CI: true
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
@@ -28,14 +35,19 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: create .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-      - run: yarn
-      - run: npx playwright install
-      # - run: CI=false yarn build
+      - name: Install dependencies
+        run: yarn
+      - name: Install Playwright dependencies
+        run: npx playwright install
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - run: yarn integration-test
+      - name: Start application
+        run: (yarn start &) && npx wait-on http://localhost:3000
+        timeout-minutes: 5
+      - name: Run E2E tests
+        run: yarn integration-test
 
       - uses: actions/upload-artifact@v2
-        if: failure()
+        if: always()
         with:
           name: my-artifact
           path: ./e2e_tests/test-results

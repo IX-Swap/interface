@@ -18,6 +18,12 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
   [137]: 'Polygon',
 }
 
+export const NETWORK_NAMES: { [chainId: number]: string } = {
+  [1]: 'ethereum',
+  [42]: 'kovan',
+  [137]: 'polygon',
+}
+
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
 

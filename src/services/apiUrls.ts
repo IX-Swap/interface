@@ -41,20 +41,33 @@ export const auth = {
 export const payout = {
   createDraft: `payout/draft`,
   publish: `payout/publish`,
+  validateEvent: (id: number) => `payout/validate/${id}`,
   payoutsList: 'payout/list',
   payoutHistory: 'payout/history',
   myPayoutsList: 'payout/list/my',
   payoutById: (id: number) => `/payout/${id}`,
   claims: (payoutId: number) => `payout/claims?payoutId=${payoutId}`,
   totalAmount: (tokenId: number, recordDate: any) => `payout/total-amount/${tokenId}?recordDate=${recordDate}`,
+  deleteDraft: (id: number) => `payout/draft/${id}`,
+  payoutAuthorization: '/payout/init',
+  paidPayout:(id: number) => `/payout/pay/${id}`,
+  getMyPayoutAmount: (id: number) => `/payout/my-amount/${id}`,
+  claimAuthorization: (id: number) => `/payout/init/claim/${id}`,
+  claimBackAuthorization: (id: number) => `/payout/init/claim-back/${id}`,
+  saveUserClaim: 'payout/claim',
+  saveManagerClaimBack: 'payout/claim-back',
+  getUserClaim: (id: number) => `payout/claim/${id}`,
+  getTotalClaims: (id: number) => `payout/claims/total/${id}`,
+  getRemainingTokens: (id: number) => `payout/remain/${id}`
 }
 
 export const kyc = {
   getAccreditation: (tokenId: number, isKyc: boolean) => `kyc/getAccreditation/${tokenId}?isKyc=${isKyc}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
   createIndividual: `/newkyc/individual`,
+  createIndividualDraft: `/newkyc/individual/draft`,
   createCorporate: `/newkyc/corporate`,
-  updateIndividual: (kycId: number) => `/newkyc/individual/${kycId}`,
+  updateIndividual: (kycId: number, draft = false) => `/newkyc/individual/${kycId}${draft ? '/draft' : ''}`,
   updateCorporate: (kycId: number) => `/newkyc/corporate/${kycId}`,
   cynopsisRisks: (address: string) => `/newkyc/cynopsis/${address}`,
   getMyKyc: `newkyc/me`,
@@ -107,6 +120,11 @@ export const users = {
 
 export const whitelabel = {
   config: '/white-label/config',
+}
+
+export const pool = {
+  addLiquidity: '/liquidity-pool/create',
+  removeLiquidity: (id: number) => `/liquidity-pool/${id}`,
 }
 
 export interface PaginateWithFilter {

@@ -35,29 +35,30 @@ export const Details = ({ stats, levels, rectangles, isNSFW }: Props) => {
   return (
     <NftAttributesContainer>
       {rectangles?.length > 0 && (
-        <NftAttributeSection
-          title="Properties"
-          description="Textual traits that show up as rectangles"
-          icon={<BurgerMenu />}
-          row
-        >
-          <TraitsShow type={TraitType.RECTANGLE} traitList={rectangles} />
-        </NftAttributeSection>
+        <>
+          <NftAttributeSection
+            title="Properties"
+            description="Textual traits that show up as rectangles"
+            icon={<BurgerMenu />}
+            row
+          >
+            <TraitsShow type={TraitType.RECTANGLE} traitList={rectangles} />
+          </NftAttributeSection>
+          <Divider />
+        </>
       )}
 
       {levels?.length > 0 && (
         <>
-          <Divider />
-
           <NftAttributeSection title="Levels" description="Numerical traits that just show as numbers" icon={<Star />}>
             <TraitsShow type={TraitType.PROGRESS} traitList={levels} />
           </NftAttributeSection>
+          <Divider />
         </>
       )}
 
       {stats.length > 0 && (
         <>
-          <Divider />
           <NftAttributeSection
             row
             title="Stats"
@@ -69,7 +70,6 @@ export const Details = ({ stats, levels, rectangles, isNSFW }: Props) => {
           <Divider />
         </>
       )}
-
       <SwitchRow
         data={isNSFW}
         title="Explict & Sensitive Content"

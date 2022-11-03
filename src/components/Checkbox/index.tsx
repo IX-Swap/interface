@@ -19,9 +19,11 @@ interface Props {
   onBlur?: (e: any) => void
   name?: string
   buttonStyles?: CSSProperties
+  id?: any
 }
 
 export const Checkbox: FC<Props> = ({
+  id,
   label,
   checked,
   onClick,
@@ -34,25 +36,25 @@ export const Checkbox: FC<Props> = ({
 }: Props) => {
   const style = { transform: `scale(${scaleSize})` }
   const checkedImage = isRadio ? <StyledRadioChecked style={style} /> : <StyledChecked style={style} />
-  const notCheckedImage = isRadio ? <StyledRadioNotChecked style={style} /> : <StyledNotChecked style={style} />
+  const notCheckedImage = isRadio ? <StyledRadioNotChecked style={style} id={id}/> : <StyledNotChecked style={style} />
 
   return (
     <ButtonText
       name={name}
       onBlur={onBlur}
+      id={id}
       type="button"
       style={{ ...buttonStyles, textDecoration: 'none', textAlign: 'inherit' }}
       onClick={onClick}
       disabled={disabled}
+      className="checkbox"
     >
-      <Flex>
+      <Flex style={{ gap: 8 }}>
         {checked ? checkedImage : notCheckedImage}
         {scaleSize !== 1 ? (
-          <TYPE.title6 fontWeight={checked ? 700 : 400} marginLeft="8px">
-            {label}
-          </TYPE.title6>
+          <TYPE.title6 fontWeight={checked ? 700 : 400}>{label}</TYPE.title6>
         ) : (
-          <TYPE.body3 marginLeft="8px">{label}</TYPE.body3>
+          <TYPE.body3>{label}</TYPE.body3>
         )}
       </Flex>
     </ButtonText>

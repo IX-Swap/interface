@@ -3,7 +3,11 @@ import { useMemo } from 'react'
 import { useSingleCallResult } from '../state/multicall/hooks'
 import { useTokenContract } from './useContract'
 
-export function useTokenAllowance(token?: Token, owner?: string, spender?: string): CurrencyAmount<Token> | undefined {
+export function useTokenAllowance(
+  token?: Token | null,
+  owner?: string | null,
+  spender?: string | null
+): CurrencyAmount<Token> | undefined {
   const contract = useTokenContract(token?.address, false)
 
   const inputs = useMemo(() => [owner, spender], [owner, spender])

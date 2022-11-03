@@ -62,7 +62,7 @@ export default function SettingsTab({ placeholderSlippage }: { placeholderSlippa
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
     <StyledMenu>
-      <StyledMenuButton id="open-settings-dialog-button" onClick={toggle}>
+      <StyledMenuButton id="open-settings-dialog-button" data-testid="open-settings-button" onClick={toggle}>
         <StyledMenuIcon open={open} />
         {expertMode ? (
           <EmojiWrapper>

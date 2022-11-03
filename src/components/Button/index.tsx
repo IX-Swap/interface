@@ -345,24 +345,24 @@ const ButtonConfirmedStyle = styled(Base)`
 `
 
 const ButtonErrorStyle = styled(Base)`
-  background-color: ${({ theme }) => theme.red1};
-  border: 1px solid ${({ theme }) => theme.red1};
+  background-color: ${({ theme }) => theme.error};
+  border: 1px solid ${({ theme }) => theme.error};
 
   &:focus {
-    background-color: ${({ theme }) => darken(0.05, theme.red1)};
+    background-color: ${({ theme }) => darken(0.05, theme.error)};
   }
   &:hover {
-    background-color: ${({ theme }) => darken(0.05, theme.red1)};
+    background-color: ${({ theme }) => darken(0.05, theme.error)};
   }
   &:active {
-    background-color: ${({ theme }) => darken(0.1, theme.red1)};
+    background-color: ${({ theme }) => darken(0.1, theme.error)};
   }
   &:disabled {
     opacity: 50%;
     cursor: auto;
     box-shadow: none;
-    background-color: ${({ theme }) => theme.red1};
-    border: 1px solid ${({ theme }) => theme.red1};
+    background-color: ${({ theme }) => theme.error};
+    border: 1px solid ${({ theme }) => theme.error};
   }
 `
 

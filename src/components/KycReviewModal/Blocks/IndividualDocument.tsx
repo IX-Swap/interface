@@ -13,7 +13,7 @@ interface Props {
 
 export const IndividualDocument = ({ data }: Props) => {
   return (
-    <Block title="Individual Document">
+    <Block title="Identification">
       <GridContainer spacing={30}>
         {individualDocumentKeys.map(({ key, label, width = {}, format }) => (
           <GridItem key={key} {...width}>

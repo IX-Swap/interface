@@ -104,24 +104,27 @@ export default function KYC() {
         return (
           <>
             <Description description={description} />
+
             <Flex
               width="100%"
               flexDirection={isMobile ? 'column' : 'row'}
               justifyContent="space-between"
-              alignItems={isMobile ? 'center' : 'flex-start'}
+              alignItems={isMobile ? 'center' : 'flex-end'}
+              style={{ gap: '1rem' }}
             >
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
                 <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
-                  <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                  <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px" data-testid="passKycAsIndividualButton">
                     <Trans>Pass KYC as Individual</Trans>
                   </ButtonIXSGradient>
                 </Link>
               </Flex>
+
               <Flex flexDirection="column" alignItems="center">
                 <CorporateKYC />
                 <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
-                  <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
+                  <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px" data-testid="passKycAsCorporateButton">
                     <Trans>Pass KYC as Corporate</Trans>
                   </ButtonGradientBorder>
                 </Link>
@@ -129,6 +132,42 @@ export default function KYC() {
             </Flex>
           </>
         )
+        
+      case KYCStatuses.DRAFT:
+        return (
+          <>
+            <Description description={description} />
+            <Flex
+              width="100%"
+              flexDirection={isMobile ? 'column' : 'row'}
+              justifyContent="center"
+              alignItems={isMobile ? 'center' : 'flex-start'}
+            >
+              {kyc?.individual && (
+                <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
+                  <IndividualKYC />
+                  <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
+                    <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                      <Trans>Continue Pass KYC as Individual</Trans>
+                    </ButtonIXSGradient>
+                  </Link>
+                </Flex>
+              )}
+
+              {kyc?.corporate && (
+                <Flex flexDirection="column" alignItems="center">
+                  <CorporateKYC />
+                  <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
+                    <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
+                      <Trans>Continue Pass KYC as Corporate</Trans>
+                    </ButtonGradientBorder>
+                  </Link>
+                </Flex>
+              )}
+            </Flex>
+          </>
+        )
+
       case KYCStatuses.REJECTED:
         return (
           <>
@@ -149,7 +188,7 @@ export default function KYC() {
             <Description description={description} />
             <DateInfo submittedDate={kyc?.createdAt} changeRequestDate={kyc?.updatedAt} />
             <Link style={{ textDecoration: 'none ' }} to={`/kyc/${kyc?.corporateKycId ? 'corporate' : 'individual'}`}>
-              <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+              <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px" data-testid="makeChangesAndResendKycButton">
                 <Trans>Make changes and resend KYC</Trans>
               </ButtonIXSGradient>
             </Link>
@@ -194,16 +233,6 @@ export default function KYC() {
           </RowCenter>
         ) : (
           <Column style={{ alignItems: 'center' }}>
-            {(status === KYCStatuses.NOT_SUBMITTED || status === null) && (
-              <TYPE.mediumHeader
-                marginBottom={isMobile ? '12px' : '0px'}
-                textAlign="center"
-                marginTop="24px"
-                color="text1"
-              >
-                You need to pass KYC to access the full {config?.name || 'IX Swap'} App and trade Security Tokens
-              </TYPE.mediumHeader>
-            )}
             <Content
               flexDirection="column"
               marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '40px'}

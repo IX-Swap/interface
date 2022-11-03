@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import ReactPaginate from 'react-paginate'
 
 import { Input } from 'components/Input'
-import { inputGradientBorder } from 'theme'
+import { inputGradientBorder, MEDIA_WIDTHS } from 'theme'
 
 import { ReactComponent as ArrowIcon } from '../../assets/images/chevron.svg'
 
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
-  const [inputPage, hanldeInputPage] = useState(0)
+  const [inputPage, hanldeInputPage] = useState<number | string>(0)
 
   useEffect(() => {
     hanldeInputPage(page)
@@ -26,19 +26,23 @@ export const Pagination = ({ page, onPageChange, totalPages }: Props) => {
   }
 
   const onPageInputChange = ({ target: { value } }: { target: { value: string } }) => {
-    if (!value) {
-      hanldeInputPage(1)
-    }
-    if (+value && +value > totalPages) {
-      hanldeInputPage(totalPages)
-
-      return
-    }
-    hanldeInputPage(+value || 1)
+    hanldeInputPage(+value || value)
   }
 
   const onClickButton = () => {
-    onPageChange(inputPage)
+    if (!inputPage) {
+      hanldeInputPage(1)
+      onPageChange(1)
+      return
+    }
+
+    if (+inputPage && +inputPage > totalPages) {
+      hanldeInputPage(totalPages)
+      onPageChange(totalPages)
+
+      return
+    }
+    onPageChange(+inputPage)
   }
 
   if (!totalPages) return null
@@ -91,13 +95,20 @@ const StyledInput = styled(Input)`
   padding: 0;
   width: 100%;
   text-align: center;
+  position: relative;
 `
 
 const Container = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 48px;
+  /* margin-top: 48px; */
+  gap: 16px;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    flex-direction: column;
+  }
   .pagination-container {
+    margin: 0px;
+    padding: 0px;
     flex: 1;
     display: flex;
     align-items: center;
