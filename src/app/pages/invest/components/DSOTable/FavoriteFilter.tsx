@@ -6,7 +6,6 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 // import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 
-
 export const FavoriteFilter = () => {
   const { getFilterValue, updateFilter } = useQueryFilter()
   const { isTablet } = useAppBreakpoints()
@@ -14,13 +13,12 @@ export const FavoriteFilter = () => {
   const classes = useStyles({ isFav: value === 'true' })
 
   const handleChange = () => {
-   const isFavorite = value === 'true' ? 'false' : 'true'
+    const isFavorite = value === 'true' ? 'false' : 'true'
     updateFilter('isFavorite', isFavorite)
-    if(isFavorite){
-      localStorage.setItem('isFavorite', isFavorite);
-    }
-    else{
-      localStorage.removeItem('isFavorite');
+    if (isFavorite === 'true') {
+      localStorage.setItem('isFavorite', isFavorite)
+    } else {
+      localStorage.removeItem('isFavorite')
     }
   }
 

@@ -82,7 +82,12 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
           />
         </Grid>
 
-        <Grid item width={getRemoveButtonWrapperWidth(isTablet)}>
+        <Grid
+          item
+          width={getRemoveButtonWrapperWidth(isTablet)}
+          height={122}
+          style={{ paddingTop: '42px' }}
+        >
           <DSOTeamRemoveButton
             sx={{ width: getRemoveButtonWidth(isTablet), height: 50 }}
             disabled={index === 0}
