@@ -542,7 +542,7 @@ export default function IndividualKycForm() {
           >
             {({ values, handleSubmit, setFieldValue, dirty, initialValues }) => {
               const hasNoErrors = (name: string) => !errors[name]
-              const isFilled = (name: string): boolean => values[name] !== initialValues[name] && hasNoErrors(name)
+              const isFilled = (name: string): boolean => !!values[name] && values[name] !== initialValues[name] && hasNoErrors(name)
               const shouldValidate = dirty
 
               const personalFilled =
