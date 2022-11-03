@@ -1,5 +1,6 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { FieldsArray } from 'components/form/FieldsArray'
@@ -15,11 +16,25 @@ export const DSOVideoLinks = () => {
   const fieldName = 'videos'
   const { isTablet } = useAppBreakpoints()
   const { control } = useFormContext<DSOFormValues>()
+  const theme = useTheme()
+  const greyText = theme.palette.mode === 'dark' ? 500 : 600
 
   return (
     <Grid container direction='column' spacing={{ xs: 4, md: 5 }}>
       <Grid item>
-        <FormSectionHeader title='Video Links' />
+        <Grid container>
+          <FormSectionHeader title='Video Links' />
+          <Typography
+            style={{
+              color: theme.palette.grey[greyText],
+              marginLeft: '0.5rem',
+              marginTop: '0.25rem'
+            }}
+            variant='body1'
+          >
+            (Optional)
+          </Typography>
+        </Grid>
       </Grid>
       <FieldsArray name={fieldName} control={control}>
         {({ fields, append, remove }) => (
