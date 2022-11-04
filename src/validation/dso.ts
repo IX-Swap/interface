@@ -19,6 +19,8 @@ import {
   proceedsValidator,
   uniqueIdentifierCodeValidator
 } from './validators'
+const validURL =
+  /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gim
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -51,15 +53,17 @@ export const dsoFAQItemSchema = object().shape<DsoFAQItem>(
 export const dsoVideoLinkSchema = object().shape<DsoVideo>(
   {
     title: string().when('link', {
-      is: link => Boolean(link),
+      is: link => link !== '',
       then: string().required('Video Title is required when link is provided')
     }),
-    link: string().when('title', {
-      is: title => Boolean(title),
-      then: string().required(
-        'Video Link is required when Video Title is provided'
-      )
-    })
+    link: string()
+      .matches(validURL, 'URL is not valid')
+      .when('title', {
+        is: title => title !== '',
+        then: string().required(
+          'Video Link is required when Video Title is provided'
+        )
+      })
   },
   [
     ['title', 'link'],
