@@ -49,6 +49,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
               key={fieldId}
               component={TextInput}
               placeholder={'Title'}
+              helperText={'Title'}
               control={control}
               defaultValue={defaultValue?.question ?? ''}
               name={['faqs', index, 'question']}
@@ -70,6 +71,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
             key={fieldId}
             control={control}
             placeholder={'Answer'}
+            helperText={'Answer'}
             component={TextInput}
             defaultValue={defaultValue?.answer ?? ''}
             name={['faqs', index, 'answer']}
