@@ -53,6 +53,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
             control={control}
             defaultValue={defaultValue?.title ?? ''}
             label='Video Title'
+            helperText='Title'
             placeholder='Title'
             name={['videos', index, 'title']}
             variant='outlined'
@@ -76,6 +77,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
             }
             name={['videos', index, 'link']}
             variant='outlined'
+            helperText='Source'
             placeholder='Source'
           />
         </Grid>
