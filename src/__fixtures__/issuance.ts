@@ -269,7 +269,7 @@ export const formValues: any = {
   videos: [
     {
       title: 'Video #1',
-      link: 'Link'
+      link: 'https://www.youtube.com/'
     }
   ],
   documents: [
