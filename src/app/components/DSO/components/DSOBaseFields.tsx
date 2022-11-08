@@ -328,7 +328,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 helperText='mm/dd/yyyy'
                 inputVariant='outlined'
                 withIcon
-                isOptional
               />
             </Grid>
             <VSpacer size='small' />
