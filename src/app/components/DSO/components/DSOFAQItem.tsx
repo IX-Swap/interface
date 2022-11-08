@@ -57,7 +57,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
             />
             {!isTablet && (
               <DSOTeamRemoveButton
-                disabled={index === 0}
+                // disabled={index === 0}
                 sx={{ width: 50, height: 50, marginLeft: 2 }}
                 remove={remove}
                 index={index}
