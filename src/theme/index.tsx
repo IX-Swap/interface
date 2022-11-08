@@ -216,6 +216,34 @@ export function theme(darkMode: boolean, config: Whitelabel | null): DefaultThem
       display: flex;
       flex-flow: row nowrap;
     `,
+
+    launchpad: launchpadTheme()
+  }
+}
+
+export function launchpadTheme() {
+  return {
+    font: 'Inter',
+
+    colors: {
+      primary: '#6666FF',
+      accent: '#E6E6FF',
+
+      background: '#FFFFFF',
+      foreground: '#F7F7FF',
+
+      border: {
+        default: '#E6E6FF'
+      },
+
+      text: {
+        title: '#292933',
+        body: '#666680',
+        caption: '#B8B8CC',
+
+        light: '#FFFFFF'
+      },
+    },
   }
 }
 
