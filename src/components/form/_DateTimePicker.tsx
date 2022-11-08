@@ -11,10 +11,14 @@ import React from 'react'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { DateTimeComponent } from './_DateTimePickerComponent'
 
-export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
+export const DateTimePickerComponent = (
+  props: MobileDateTimePickerProps & { error: boolean }
+) => {
   return (
     <MobileDateTimePicker
       {...props}
+      // Setting to null so the red outline error is not shown on first load
+      value={props.value === '' ? null : props.value}
       renderInput={inputProps => (
         <TextInput
           variant='outlined'
@@ -22,6 +26,8 @@ export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
           placeholder='mm/dd/yyyy'
           label='Date'
           {...inputProps}
+          // Override error from inputProps to show red outline error
+          error={props.error}
         />
       )}
     />
@@ -53,7 +59,7 @@ export interface DateTimePickerProps
 export const DateTimePicker = ({
   withIcon = false,
   ...props
-}: DateTimePickerProps) => {
+}: DateTimePickerProps & { error: boolean }) => {
   const { name } = props
   const { hasError, error } = useFormError(name ?? '')
   const PickerComponent = withIcon ? DateTimePickerComponent : DateTimeComponent
