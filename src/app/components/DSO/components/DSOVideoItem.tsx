@@ -13,6 +13,7 @@ export interface DSOVideoItemProps {
   index: number
   remove: (field: any) => void
   defaultValue: DsoVideo
+  item: any
 }
 
 export const getWrapValue = (isTablet: boolean) =>
@@ -23,7 +24,7 @@ export const getRemoveButtonWrapperWidth = (isTablet: boolean) =>
   isTablet ? '100%' : 'initial'
 
 export const DSOVideoItem = (props: DSOVideoItemProps) => {
-  const { defaultValue, fieldId, index, remove } = props
+  const { defaultValue, fieldId, index, item, remove } = props
   const { control } = useFormContext<{
     videos: DSOFormValues['videos']
   }>()
@@ -90,7 +91,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
         >
           <DSOTeamRemoveButton
             sx={{ width: getRemoveButtonWidth(isTablet), height: 50 }}
-            disabled={false}
+            disabled={!(item.length > 1)}
             remove={remove}
             index={index}
           />
