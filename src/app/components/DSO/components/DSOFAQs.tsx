@@ -40,6 +40,7 @@ export const DSOFAQs = () => {
           <Grid container direction='column' spacing={{ xs: 4, md: 5 }}>
             <Grid item container direction='column'>
               {fields.map((item, index) => {
+                console.log(fields, 'field')
                 return (
                   <DSOFAQItem
                     key={item.id}
@@ -47,6 +48,7 @@ export const DSOFAQs = () => {
                     fieldId={item.id}
                     index={index}
                     remove={remove}
+                    item={fields}
                   />
                 )
               })}
