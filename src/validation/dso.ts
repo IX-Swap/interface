@@ -61,7 +61,6 @@ export const dsoVideoLinkSchema = object().shape<DsoVideo>(
         .url('URL is not valid'),
       otherwise: string().when('link', {
         is: link => link !== '',
-        // then: string().matches(validURL, 'URL is not valid')
         then: string().url('URL is not valid')
       })
     })
