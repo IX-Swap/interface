@@ -59,7 +59,6 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
             variant='outlined'
           />
         </Grid>
-
         <Grid item width={'100%'} height={122}>
           <TypedField
             fullWidth
