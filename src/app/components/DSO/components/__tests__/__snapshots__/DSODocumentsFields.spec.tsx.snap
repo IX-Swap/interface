@@ -134,7 +134,7 @@ exports[`DSODocumentsFields should match snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-hoc6b0-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-19hkhe-MuiGrid-root"
                   />
                 </div>
               </div>
@@ -219,7 +219,7 @@ exports[`DSODocumentsFields should match snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 MuiGrid-direction-xs-column css-10h8c1q-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-80wlp8-MuiGrid-root"
                     >
                       <div
                         class=" MuiBox-root css-1r25d6u"
@@ -265,8 +265,8 @@ exports[`DSODocumentsFields should match snapshot 1`] = `
                             accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp,.docx,.xlsx,.pdf,.odt,.txt,.csv"
                             autocomplete="off"
                             hidden=""
-                            id="dataroom_0"
-                            name="dataroom_0"
+                            id="dataroom"
+                            name="dataroom"
                             style="display: none;"
                             tabindex="-1"
                             type="file"
@@ -289,9 +289,6 @@ exports[`DSODocumentsFields should match snapshot 1`] = `
                           </span>
                         </div>
                       </div>
-                      <div
-                        class="MuiBox-root css-1jpm9pd"
-                      />
                     </div>
                   </div>
                 </div>
