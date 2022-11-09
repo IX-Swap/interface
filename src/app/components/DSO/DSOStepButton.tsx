@@ -16,6 +16,7 @@ export interface StepButtonProps extends MuiStepButtonProps {
   step: number
   variantsConditions: VariantsConditions
   stepData?: any
+  index: number
 }
 
 const getIconType = ({ active, completed, error }: VariantsConditions) => {
@@ -34,11 +35,12 @@ const getIconType = ({ active, completed, error }: VariantsConditions) => {
   return 'default'
 }
 
-export const StepButton = ({
+export const DSOStepButton = ({
   variantsConditions,
   step,
   children,
   stepData = {},
+  index,
   ...props
 }: StepButtonProps) => {
   const [validState, setValidState] = useState(false)
@@ -59,12 +61,14 @@ export const StepButton = ({
 
     try {
       const schema =
-        typeof stepData.step?.validationSchema === 'function'
-          ? stepData.step?.validationSchema(stepData.formData)
-          : stepData.step?.validationSchema
+        typeof stepData.step.validationSchema === 'function'
+          ? stepData.step.validationSchema(stepData.formData?.[index].values)
+          : stepData.step.validationSchema
       setValidating(true)
       setValidState(
-        await schema?.isValid(stepData.step?.getFormValues(stepData.formData))
+        await schema?.isValid(
+          stepData.step?.getFormValues(stepData.formData?.[index].values)
+        )
       )
     } catch (error) {
       console.log(error)

@@ -38,7 +38,7 @@ export const dsoFormSteps = [
     },
     getRequestPayload: getDSOCompanyInformationPayload,
     validationSchema: getDSOCompanyInformationSchema,
-    initialValidationSchema: getDSOCompanyInformationSchema,
+    // initialValidationSchema: getDSOCompanyInformationSchema,
     component: () => <DSOCompanyInformationFields />
   },
   {

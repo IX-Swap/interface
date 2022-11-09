@@ -47,29 +47,28 @@ export const useTableWithPagination = <TData>({
   const filter = defaultFilter
 
   useEffect(() => {
-    // const location = useLocation();
-  // console.log(location.pathname);
     if (disabledUseEffect !== undefined && !disabledUseEffect) {
       setPage(0)
       setPrevPage(0)
     }
-
-
   }, [filter, disabledUseEffect])
   const [totalPage, setTotalPage] = useState(0)
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  // if(location.pathname === '/app/invest/overview/primary-offerings'){}
+
   const fetcher = async (key: string, p: number, r: number, f?: BaseFilter) => {
-   const isFavorite = localStorage.getItem('isFavorite')
-   const isFavoriteCount = localStorage.getItem('isFavoriteCount')
-   if(isFavorite && isFavorite ==='true' && !isFavoriteCount){
-    p = 0
-    localStorage.setItem('isFavoriteCount', '1')
-   }else{
-    localStorage.removeItem('isFavoriteCount')
-    localStorage.removeItem('isFavorite')
-   }
-   
+    const { isFavorite, isFavoriteCount }: Storage = localStorage
+    if (
+      isFavorite !== null &&
+      isFavorite !== undefined &&
+      isFavorite === 'true' &&
+      isFavoriteCount === null
+    ) {
+      p = 0
+      localStorage.setItem('isFavoriteCount', '1')
+    } else {
+      localStorage.removeItem('isFavoriteCount')
+      localStorage.removeItem('isFavorite')
+    }
+
     const payload: KeyValueMap<any> = {
       skip: p * r,
       limit: r,

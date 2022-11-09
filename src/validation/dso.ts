@@ -19,8 +19,6 @@ import {
   proceedsValidator,
   uniqueIdentifierCodeValidator
 } from './validators'
-const validURL =
-  /^((ftp|http|https):\/\/)?(www.)?(?!.*(ftp|http|https|www.))[a-zA-Z0-9_-]+(\.[a-zA-Z]+)+((\/)[\w#]+)*(\/\w+\?[a-zA-Z0-9_]+=\w+(&[a-zA-Z0-9_]+=\w+)*)?$/gim
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -56,14 +54,17 @@ export const dsoVideoLinkSchema = object().shape<DsoVideo>(
       is: link => link !== '',
       then: string().required('Video Title is required when link is provided')
     }),
-    link: string()
-      .matches(validURL, 'URL is not valid')
-      .when('title', {
-        is: title => title !== '',
-        then: string().required(
-          'Video Link is required when Video Title is provided'
-        )
+    link: string().when('title', {
+      is: title => title !== '',
+      then: string()
+        .required('Video Link is required when title is provided')
+        .url('URL is not valid'),
+      otherwise: string().when('link', {
+        is: link => link !== '',
+        // then: string().matches(validURL, 'URL is not valid')
+        then: string().url('URL is not valid')
       })
+    })
   },
   [
     ['title', 'link'],
@@ -220,18 +221,30 @@ export const dsoInformationValidationSchemaStep1: any = {
   dividendYield: number().when('capitalStructure', {
     is: 'Equity',
     then: number()
+      .required('Dividend Yield is required')
+      .typeError('Dividend Yield must be a number'),
+    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
   }),
   equityMultiple: number().when('capitalStructure', {
     is: 'Equity',
     then: number()
+      .required('Equity Multiple Yield is required')
+      .typeError('Equity Multiple Yield must be a number'),
+    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
   }),
   grossIRR: number().when('capitalStructure', {
     is: 'Equity',
     then: number()
+      .required('Gross IRR is required')
+      .typeError('Gross IRR must be a number'),
+    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
   }),
   interestRate: number().when('capitalStructure', {
     is: 'Debt',
     then: number()
+      .required('Interest Rate is required')
+      .typeError('Leverage must be a number'),
+    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
   }),
   isCampaign: boolean(),
   investmentPeriod: number()
@@ -247,8 +260,7 @@ export const dsoInformationValidationSchemaStep1: any = {
     then: string()
   }),
   issuerName: string().required('Issuer Name is required'),
-  launchDate: dateSchema
-    .required('Launch Date is required')
+  launchDate: string()
     .test(
       'before-completionDate',
       'Launch date cannot be later than completion date',
@@ -257,13 +269,17 @@ export const dsoInformationValidationSchemaStep1: any = {
         return isBeforeDate(launch, completionDate)
       }
     )
-    .test('pastDate', 'Launch Date must be future date', pastDateValidator),
+    .test('pastDate', 'Launch Date must be future date', pastDateValidator)
+    .required('Launch Date is required'),
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
   leverage: number().when('capitalStructure', {
     is: 'Debt',
     then: number()
+      .required('Leverage is required')
+      .typeError('Leverage must be a number'),
+    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
   }),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
@@ -281,7 +297,7 @@ export const dsoInformationValidationSchemaStep1: any = {
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
     .nullable(),
-  logo: string().required('Logo is required'),
+  logo: string(),
   status: string(),
   uniqueIdentifierCode: string().test(
     'length',
@@ -355,15 +371,13 @@ export const getDSOCompanyInformationSchema = object().shape<any>({
       fundraisingValidation
     )
     .required('Fundraising Milestone is required'),
-  // team: array<DsoTeamMember>()
-  //   .of(dsoTeamMemberSchema.required('Team Member Details are required'))
-  //   .ensure()
-  //   .required('Team Member is required'),
   step: number()
 })
 
 export const getDSODocumentschema = object().shape<any>({
-  subscriptionDocument: object<DataroomFile>(),
+  subscriptionDocument: object<DataroomFile>().required(
+    'Subscription Document is required'
+  ),
   documents: array<FormArrayElement<DataroomFile>>()
     .ensure()
     .required('Documents are required'),

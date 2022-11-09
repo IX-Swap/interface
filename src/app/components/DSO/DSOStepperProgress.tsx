@@ -2,7 +2,6 @@ import React from 'react'
 import { useStyles } from '../FormStepper/FormStepper.styles'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { Grid, Paper, Step } from '@mui/material'
-import { StepButton } from 'ui/Stepper/StepButton'
 import { TwoFANotice } from '../FormStepper/TwoFANotice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { SaveDraftButton } from './DSODraftButton'
@@ -10,8 +9,11 @@ import { DSOStepperStep } from './DSOFormStepper'
 import { MutateFunction, MutationResultPair } from 'react-query'
 import { useFormContext } from 'react-hook-form'
 import { useDSOFormContext } from './DSOFormContext'
-import _ from 'lodash'
+import _, { isEmpty } from 'lodash'
 import { SubmitButton } from '../FormStepper/SubmitButton'
+import { generatePath, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router'
+import { DSOStepButton } from './DSOStepButton'
 export interface DSOStepperProgressProps {
   transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
@@ -71,29 +73,43 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
   const [save] = saveMutation
-  const { watch, errors } = useFormContext()
+  const { watch, errors, trigger } = useFormContext()
   const values = watch()
   const payload = transformData(values)
   const { stepValues, setStepValues } = useDSOFormContext()
+  const { dsoId, issuerId } = useParams()
+  const history = useHistory()
 
-  const handleSave = async () => {
+  const handleSave = async (index: number) => {
     // eslint-disable-next-line
     const newValues = [...stepValues]
-    newValues[activeStep] = { values, errors: { ...errors } }
 
+    newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
+    await trigger()
     const obj = errors
-    if (
-      activeStep === 0 &&
-      Object.keys(obj).length !== 0 &&
-      obj.constructor === Object
-    ) {
+
+    if (!isEmpty(obj)) {
+      const search: string = `?step=${steps[index].label.replace(' ', '+')}`
+      if (dsoId !== undefined && issuerId !== undefined) {
+        const redirect: string = redirectFunction(dsoId)
+        history.replace(
+          generatePath(`${redirect}${search}`, {
+            issuerId,
+            dsoId
+          })
+        )
+      } else {
+        /* eslint-disable no-restricted-globals */
+        history.replace(generatePath(`${location?.pathname}${search}`))
+      }
     } else {
       return await save({
         ...payload
       })
     }
   }
+
   return (
     <Grid item container className={classes.rightBlock}>
       <Grid item className={classes.stepperBlock}>
@@ -128,9 +144,9 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                     }-${activeStep}`}
                     disabled={
                       data?.status === 'Submitted' ||
-                      data?.status === 'Approved' ||
-                      activeStep < 2
+                      data?.status === 'Approved'
                     }
+                    activeStep={activeStep}
                     mutation={mutation}
                     transformData={steps[activeStep].getRequestPayload}
                     redirectFunction={redirectFunction}
@@ -152,25 +168,26 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                     steps[activeStep].getRequestPayload
                   )}
                 >
-                  <StepButton
+                  <DSOStepButton
                     step={step}
                     variantsConditions={getStepStatus(
                       formStep,
                       index,
                       activeStep
                     )}
+                    index={index}
                     stepData={{
                       step: steps[index],
-                      formData: data,
+                      formData: stepValues,
                       isLast: index === steps.length - 1,
                       shouldValidate: completed.includes(index)
                     }}
                     onClick={() => {
-                      void handleSave()
+                      void handleSave(index)
                     }}
                   >
                     {formStep.label}
-                  </StepButton>
+                  </DSOStepButton>
                 </Step>
               )
             })}

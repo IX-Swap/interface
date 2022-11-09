@@ -1,11 +1,13 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { generatePath, useHistory } from 'react-router-dom'
+import { generatePath, useHistory, useLocation } from 'react-router-dom'
 import { MutationResultPair } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { Button } from '@mui/material'
 import { DSOStepperStep } from './DSOFormStepper'
 import { useDSOFormContext } from './DSOFormContext'
+import { useParams } from 'react-router'
+import { isEmpty } from 'lodash'
 
 export interface SaveOnNavigateProps {
   mutation: MutationResultPair<any, any, any, any>
@@ -31,12 +33,16 @@ export const DSOSaveOnNavigate = ({
   move = 'forward',
   nextCallback
 }: SaveOnNavigateProps) => {
-  const { watch, errors } = useFormContext()
+  const { watch, errors, trigger } = useFormContext()
   const { stepValues, setStepValues } = useDSOFormContext()
+  const { dsoId, issuerId } = useParams()
+  const location = useLocation()
+  const error = errors
   const values = watch()
   const [save] = mutation
   const history = useHistory()
   const payload = transformData(values)
+
   const getNewActiveStep = (): number => {
     if (move === 'forward') {
       return activeStep + 1
@@ -49,36 +55,56 @@ export const DSOSaveOnNavigate = ({
   const handleSave = async () => {
     const newValues = [...stepValues]
     newValues[activeStep] = { values, errors: { ...errors } }
-
     setStepValues(newValues)
+    await trigger()
     // eslint-disable-next-line
 
-    return await save(
-      {
-        ...payload
-      },
-      {
-        onSettled: (data: any) => {
-          if (data !== undefined) {
-            const redirect: string = redirectFunction(data.data._id)
-            const newActiveStep = getNewActiveStep()
-            const search: string = `?step=${stepsList[
-              newActiveStep
-            ].label.replace(' ', '+')}`
+    const obj = error
+    if (!isEmpty(obj)) {
+      const newActiveStep = getNewActiveStep()
+      const search: string = `?step=${stepsList[newActiveStep].label.replace(
+        ' ',
+        '+'
+      )}`
+      if (dsoId !== undefined && issuerId !== undefined) {
+        const redirect: string = redirectFunction(dsoId)
+        history.replace(
+          generatePath(`${redirect}${search}`, {
+            issuerId,
+            dsoId
+          })
+        )
+      } else {
+        history.replace(generatePath(`${location.pathname}${search}`))
+      }
+    } else {
+      return await save(
+        {
+          ...payload
+        },
+        {
+          onSettled: (data: any) => {
+            if (data !== undefined) {
+              const redirect: string = redirectFunction(data.data._id)
+              const newActiveStep = getNewActiveStep()
+              const search: string = `?step=${stepsList[
+                newActiveStep
+              ].label.replace(' ', '+')}`
 
-            history.replace(
-              generatePath(`${redirect}${search}`, {
-                issuerId:
-                  typeof data.data.user === 'string'
-                    ? data.data.user
-                    : getIdFromObj(data.data.user),
-                dsoId: data.data._id
-              })
-            )
+              history.replace(
+                generatePath(`${redirect}${search}`, {
+                  issuerId:
+                    typeof data.data.user === 'string'
+                      ? data.data.user
+                      : getIdFromObj(data.data.user),
+                  dsoId: data.data._id
+                })
+              )
+            }
           }
         }
-      }
-    )
+      )
+    }
   }
 
   if (move === 'backward') {
