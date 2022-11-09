@@ -264,7 +264,7 @@ export const introductionValidator = (value: string | undefined | null) => {
     typeof value === 'string'
   ) {
     let error: string | undefined
-    if (value === '<p></p>\n') {
+    if (value.includes('<p></p>\n')) {
       error = 'Introduction is required'
     }
 
@@ -283,7 +283,7 @@ export const proceedsValidator = (value: string | undefined | null) => {
     typeof value === 'string'
   ) {
     let error: string | undefined
-    if (value === '<p></p>\n') {
+    if (value.includes('<p></p>\n')) {
       error = 'Use of Proceeds is required'
     }
 
@@ -321,7 +321,7 @@ export const businessModelValidation = (value: string | undefined | null) => {
     typeof value === 'string'
   ) {
     let error: string | undefined
-    if (value === '<p></p>\n') {
+    if (value.includes('<p></p>\n')) {
       error = 'Business Model is required'
     }
 

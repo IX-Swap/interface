@@ -48,17 +48,11 @@ export const getDSODocumentsPayload = (data: any) => {
 
   let videos = []
   let faqs = []
-  const documents: any[] = []
-  const dataroomProperties = Object.keys(data).filter(property =>
-    property.includes('dataroom_')
-  )
-  dataroomProperties.forEach(item => {
-    const id: number = parseInt(item.slice(9))
 
-    if (data[item] !== undefined) {
-      documents[id] = data[item]
-    }
-  })
+  const documents: any[] =
+    data.documents !== undefined
+      ? data?.documents?.map((item: any) => item.value._id)
+      : []
 
   if ('videos' in data) {
     videos = data.videos.filter((val: any) => {
@@ -73,7 +67,7 @@ export const getDSODocumentsPayload = (data: any) => {
 
   return {
     subscriptionDocument: data.subscriptionDocument?._id,
-    documents: documents.map(item => item._id),
+    documents,
     step: 3,
     videos,
     faqs
