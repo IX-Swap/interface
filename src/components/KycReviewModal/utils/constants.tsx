@@ -55,7 +55,7 @@ export const personalInfoKeys = [
     key: 'dateOfBirth',
     label: 'Date of Birth',
     width: { xs: 12, sm: 6 },
-    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+    format: (value: string) => dayjs(value).utc().format('DD/MM/YYYY'),
   },
   { key: 'nationality', label: 'Nationality', width: { xs: 12, sm: 6 } },
   { key: 'citizenship', label: 'Citizenship', width: { xs: 12, sm: 6 } },
@@ -85,13 +85,13 @@ export const individualDocumentKeys = [
     key: 'idIssueDate',
     label: 'ID Issuance Date',
     width: { xs: 12, sm: 6 },
-    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
+    format: (value: string) => (value ? dayjs(value).utc().format('DD/MM/YYYY') : 'Not completed'),
   },
   {
     key: 'idExpiryDate',
     label: 'ID Expiration Date',
     width: { xs: 12, sm: 6 },
-    format: (value: string) => (value ? dayjs(value).format('DD/MM/YYYY') : 'Not completed'),
+    format: (value: string) => (value ? dayjs(value).utc().format('DD/MM/YYYY') : 'Not completed'),
   },
 ]
 
