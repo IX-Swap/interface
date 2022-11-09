@@ -7,6 +7,7 @@ import { MutateFunction, useMutation } from 'react-query'
 import { generatePath } from 'react-router'
 import { useHistory } from 'react-router-dom'
 import { useDSOFormContext } from './DSOFormContext'
+import { DSOStepperStep } from './DSOFormStepper'
 
 export interface SaveDraftButtonProps {
   formId: string
@@ -17,6 +18,7 @@ export interface SaveDraftButtonProps {
   redirectFunction: (dsoId: string) => string
   search: string
   activeStep: number
+  steps: DSOStepperStep[]
 }
 
 export const SaveDraftButton = ({
@@ -36,11 +38,10 @@ export const SaveDraftButton = ({
 
   const handleSave = async () => {
     const newValues = [...stepValues]
-
+    await trigger()
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
 
-    await trigger()
     if (!isEmpty(errors)) {
     } else {
       // eslint-disable-next-line

@@ -37,7 +37,7 @@ export const DSOSaveOnNavigate = ({
   const { stepValues, setStepValues } = useDSOFormContext()
   const { dsoId, issuerId } = useParams()
   const location = useLocation()
-  const error = errors
+
   const values = watch()
   const [save] = mutation
   const history = useHistory()
@@ -54,13 +54,11 @@ export const DSOSaveOnNavigate = ({
   }
   const handleSave = async () => {
     const newValues = [...stepValues]
+    await trigger()
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
-    await trigger()
     // eslint-disable-next-line
-
-    const obj = error
-    if (!isEmpty(obj)) {
+    if (!isEmpty(errors)) {
       const newActiveStep = getNewActiveStep()
       const search: string = `?step=${stepsList[newActiveStep].label.replace(
         ' ',
@@ -83,14 +81,13 @@ export const DSOSaveOnNavigate = ({
           ...payload
         },
         {
-          onSettled: (data: any) => {
+          onSettled: async (data: any) => {
             if (data !== undefined) {
               const redirect: string = redirectFunction(data.data._id)
               const newActiveStep = getNewActiveStep()
               const search: string = `?step=${stepsList[
                 newActiveStep
               ].label.replace(' ', '+')}`
-
               history.replace(
                 generatePath(`${redirect}${search}`, {
                   issuerId:

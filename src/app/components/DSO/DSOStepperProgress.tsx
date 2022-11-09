@@ -14,6 +14,7 @@ import { SubmitButton } from '../FormStepper/SubmitButton'
 import { generatePath, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import { DSOStepButton } from './DSOStepButton'
+import { getIdFromObj } from 'helpers/strings'
 export interface DSOStepperProgressProps {
   transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
@@ -83,10 +84,9 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const handleSave = async (index: number) => {
     // eslint-disable-next-line
     const newValues = [...stepValues]
-
+    await trigger()
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
-    await trigger()
     const obj = errors
 
     if (!isEmpty(obj)) {
@@ -104,9 +104,32 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
         history.replace(generatePath(`${location?.pathname}${search}`))
       }
     } else {
-      return await save({
-        ...payload
-      })
+      return await save(
+        {
+          ...payload
+        },
+        {
+          onSettled: (data: any) => {
+            if (data !== undefined) {
+              const redirect: string = redirectFunction(data.data._id)
+              const newActiveStep = index
+              const search: string = `?step=${steps[
+                newActiveStep
+              ].label.replace(' ', '+')}`
+
+              history.replace(
+                generatePath(`${redirect}${search}`, {
+                  issuerId:
+                    typeof data.data.user === 'string'
+                      ? data.data.user
+                      : getIdFromObj(data.data.user),
+                  dsoId: data.data._id
+                })
+              )
+            }
+          }
+        }
+      )
     }
   }
 
@@ -146,6 +169,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                       data?.status === 'Submitted' ||
                       data?.status === 'Approved'
                     }
+                    steps={steps}
                     activeStep={activeStep}
                     mutation={mutation}
                     transformData={steps[activeStep].getRequestPayload}
