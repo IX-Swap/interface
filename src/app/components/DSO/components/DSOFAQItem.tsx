@@ -25,7 +25,6 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
   const { defaultValue, fieldId, index, remove, item } = props
   const { control } = useFormContext<{ faqs: DSOFormValues['faqs'] }>()
   const { isTablet } = useAppBreakpoints()
-  console.log(item, 'mkkkn')
   return (
     <Grid
       item
