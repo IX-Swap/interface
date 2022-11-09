@@ -13,7 +13,7 @@ export interface DSOVideoItemProps {
   index: number
   remove: (field: any) => void
   defaultValue: DsoVideo
-  item: any
+  item?: any
 }
 
 export const getWrapValue = (isTablet: boolean) =>

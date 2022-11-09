@@ -13,7 +13,7 @@ export interface DSOFAQItemProps {
   index: number
   remove: (field: any) => void
   defaultValue: DsoFAQItem
-  item: any
+  item?: any
 }
 
 export const getMarginTopValue = (index: number, isTablet: boolean) => {
