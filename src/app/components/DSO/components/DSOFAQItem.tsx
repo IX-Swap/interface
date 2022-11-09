@@ -7,11 +7,13 @@ import { useFormContext } from 'react-hook-form'
 import { DsoFAQItem, DSOFormValues } from 'types/dso'
 import { TextInput } from 'ui/TextInput/TextInput'
 import { Divider } from 'ui/Divider'
+// import { itemComparator } from 'helpers/dataroom'
 export interface DSOFAQItemProps {
   fieldId: string
   index: number
   remove: (field: any) => void
   defaultValue: DsoFAQItem
+  item?: any
 }
 
 export const getMarginTopValue = (index: number, isTablet: boolean) => {
@@ -20,10 +22,9 @@ export const getMarginTopValue = (index: number, isTablet: boolean) => {
 }
 
 export const DSOFAQItem = (props: DSOFAQItemProps) => {
-  const { defaultValue, fieldId, index, remove } = props
+  const { defaultValue, fieldId, index, remove, item } = props
   const { control } = useFormContext<{ faqs: DSOFormValues['faqs'] }>()
   const { isTablet } = useAppBreakpoints()
-
   return (
     <Grid
       item
@@ -60,7 +61,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
                 sx={{ width: 50, height: 50, marginLeft: 2 }}
                 remove={remove}
                 index={index}
-                disabled={false}
+                disabled={!(item.length > 1)}
               />
             )}
           </Box>
