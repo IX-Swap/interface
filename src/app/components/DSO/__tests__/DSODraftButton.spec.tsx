@@ -24,4 +24,10 @@ describe('DSO Save Draft Button', () => {
     render(<DSOForm />)
     expect(SaveDraftButton).toHaveBeenCalled()
   })
+
+  it('should match snapshot', () => {
+    const { container } = render(<DSOForm />)
+
+    expect(container).toMatchSnapshot()
+  })
 })

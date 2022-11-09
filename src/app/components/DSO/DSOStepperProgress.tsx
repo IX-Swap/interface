@@ -13,8 +13,8 @@ import _, { isEmpty } from 'lodash'
 import { SubmitButton } from '../FormStepper/SubmitButton'
 import { generatePath, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
-import { DSOStepButton } from './DSOStepButton'
 import { getIdFromObj } from 'helpers/strings'
+import { StepButton } from 'ui/Stepper/StepButton'
 export interface DSOStepperProgressProps {
   transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
@@ -192,7 +192,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                     steps[activeStep].getRequestPayload
                   )}
                 >
-                  <DSOStepButton
+                  <StepButton
                     step={step}
                     variantsConditions={getStepStatus(
                       formStep,
@@ -211,7 +211,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                     }}
                   >
                     {formStep.label}
-                  </DSOStepButton>
+                  </StepButton>
                 </Step>
               )
             })}
