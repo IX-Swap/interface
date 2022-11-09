@@ -90,7 +90,6 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
         >
           <DSOTeamRemoveButton
             sx={{ width: getRemoveButtonWidth(isTablet), height: 50 }}
-            disabled={index === 0}
             remove={remove}
             index={index}
           />
