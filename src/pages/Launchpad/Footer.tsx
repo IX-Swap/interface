@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
+import { ReactComponent as Logo } from 'assets/launchpad/svg/logo-alternative.svg'
 
 export const Footer = () => {
   const [active, setActive] = React.useState(false)
@@ -44,7 +45,9 @@ export const Footer = () => {
 
       <FooterInfoContainer>
         <About>
-          <header>IXSwap</header>
+          <header>
+            <Logo /> <div>IXSwap</div>
+          </header>
           <main>
             IX Swap is built by a global team of capital markets, 
             legal and blockchain experts, bringing you the next 
@@ -155,6 +158,15 @@ const About = styled.div`
   width: 270px;
 
   header {
+    display: flex;
+    
+    flex-flow: row nowrap;
+    align-items: center;
+    
+    gap: 0.5rem;
+
+    margin-bottom: 1rem;
+
     font-style: normal;
     font-weight: 600;
     font-size: 18px;

@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Wallet } from 'components/Launchpad/Wallet'
-import Web3Status from 'components/Web3Status'
+
+import { ReactComponent as Logo } from 'assets/launchpad/svg/logo.svg'
 
 export const Header = () => {
   return (
     <HeaderContainer>
       <TitleSection>
+        <Logo />
         <span className='bold-title'>IXS </span>
         <span className='dimmed-title'>Launchpad</span>
       </TitleSection>
@@ -60,6 +62,13 @@ const HeaderLinks = styled.div`
 `
 
 const TitleSection = styled.div`
+  display: flex;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 0.5rem;
+
   .bold-title {
     font-style: normal;
     font-weight: 700;
