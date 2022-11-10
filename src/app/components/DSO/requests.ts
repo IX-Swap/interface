@@ -11,7 +11,9 @@ export const getDSOInformationRequestPayload = (data: any) => {
     distributionFrequency:
       data.distributionFrequency === ''
         ? 'Not Applicable'
-        : data.distributionFrequency
+        : data.distributionFrequency,
+    uniqueIdentifierCode:
+      data.uniqueIdentifierCode === '' ? null : data.uniqueIdentifierCode
   }
 
   return {
