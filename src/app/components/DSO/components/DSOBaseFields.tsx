@@ -77,7 +77,7 @@ export const increment = (props: DSOIncrementProps) => {
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
-  const { control } = useFormContext<DSOFormValues>()
+  const { control, trigger } = useFormContext<DSOFormValues>()
   const classes = useStyles()
 
   return (
@@ -313,6 +313,8 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 placeholder='mm/dd/yyyy'
                 inputVariant='outlined'
                 withIcon
+                disablePast
+                onAccept={async () => await trigger('completionDate')}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -328,6 +330,8 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 helperText='mm/dd/yyyy'
                 inputVariant='outlined'
                 withIcon
+                disablePast
+                onAccept={async () => await trigger('launchDate')}
               />
             </Grid>
             <VSpacer size='small' />
