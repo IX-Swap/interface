@@ -142,6 +142,7 @@ export const dsoFormBaseValidationSchema = {
 }
 
 export const dsoInformationValidationSchemaStep1: any = {
+  logo: string().required('Logo is required'),
   capitalStructure: string().required('Capital Structure is required'),
   corporate: string()
     .max(50, 'Maximum of 50 characters')
@@ -186,7 +187,6 @@ export const dsoInformationValidationSchemaStep1: any = {
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
     .nullable(),
-  logo: string(),
   status: string(),
   uniqueIdentifierCode: string().test(
     'length',
