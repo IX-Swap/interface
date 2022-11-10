@@ -29,6 +29,7 @@ export const DSOTeam = () => {
                         fieldId={value.id}
                         index={index}
                         remove={remove}
+                        item={fields}
                       />
                     ))}
                   </Grid>
