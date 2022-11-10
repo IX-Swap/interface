@@ -50,10 +50,10 @@ export const DSODataroom = () => {
                       remove={remove}
                       control={control}
                     />
-                    <FormError name='documents' render={TextError} />
                   </Fragment>
                 )}
               </FieldsArray>
+              <FormError name='documents' render={TextError} />
             </Grid>
           </Grid>
         </Grid>

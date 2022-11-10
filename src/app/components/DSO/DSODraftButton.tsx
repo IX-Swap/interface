@@ -41,7 +41,6 @@ export const SaveDraftButton = ({
     await trigger()
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
-
     if (isEmpty(errors)) {
       // eslint-disable-next-line
       return await mutation(payload).then((data: any) => {

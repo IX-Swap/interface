@@ -15,6 +15,7 @@ import { generatePath, useHistory } from 'react-router-dom'
 import { useParams } from 'react-router'
 import { getIdFromObj } from 'helpers/strings'
 import { StepButton } from 'ui/Stepper/StepButton'
+import { dsoFormBaseValidationSchema } from 'validation/dso'
 export interface DSOStepperProgressProps {
   transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
@@ -153,6 +154,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                   <SubmitButton
                     mutation={submitMutation}
                     data={getSubmitDSOPayload(data)}
+                    customSchema={dsoFormBaseValidationSchema}
                     step={steps[steps.length - 1]}
                     fullWidth
                     size='medium'
@@ -200,6 +202,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                       activeStep
                     )}
                     index={index}
+                    data={data}
                     stepData={{
                       step: steps[index],
                       formData: stepValues,

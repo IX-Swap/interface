@@ -11,12 +11,8 @@ import { corporateName, lettersOrSpaces } from 'validation/regexes'
 import { array, boolean, number, object, string } from 'yup'
 import { dateSchema, validationMessages } from './shared'
 import {
-  businessModelValidation,
-  fundraisingValidation,
-  introductionValidator,
   isBeforeDate,
   pastDateValidator,
-  proceedsValidator,
   uniqueIdentifierCodeValidator
 } from './validators'
 
@@ -82,45 +78,6 @@ export const dsoFormBaseValidationSchema = {
       "Corporate must include only letters, numbers and these special characters . , - ; & '"
     ),
   currency: string().required('Currency is required'),
-  distributionFrequency: string().when('capitalStructure', {
-    is: capitalStructure =>
-      capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Distribution Frequency is required')
-  }),
-  dividendYield: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Equity',
-      then: number()
-        .transform(numberTransformer)
-        .required('Dividend Yield is required')
-    }),
-  equityMultiple: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Equity',
-      then: number()
-        .transform(numberTransformer)
-        .required('Equity Multiple is required')
-    }),
-  fundraisingMilestone: string().required('Fundraising Milestone is required'),
-  grossIRR: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Equity',
-      then: number()
-        .transform(numberTransformer)
-        .required('Gross IRR is required')
-    }),
-  interestRate: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Debt',
-      then: number()
-        .transform(numberTransformer)
-        .required('Interest Rate is required')
-    }),
-  introduction: string().required('Introduction is required'),
   investmentPeriod: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
@@ -130,11 +87,6 @@ export const dsoFormBaseValidationSchema = {
         .transform(numberTransformer)
         .required('Investment Period is required')
     }),
-  investmentStructure: string().when('capitalStructure', {
-    is: capitalStructure =>
-      capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Investment Structure is required')
-  }),
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
     .required('Launch Date is is required')
@@ -150,14 +102,6 @@ export const dsoFormBaseValidationSchema = {
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
-  leverage: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: 'Debt',
-      then: number()
-        .transform(numberTransformer)
-        .required('Leverage is required')
-    }),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
     .nullable()
@@ -166,7 +110,7 @@ export const dsoFormBaseValidationSchema = {
     .typeError('Unit Price must be a number')
     .nullable()
     .required('Unit Price is required'),
-  subscriptionDocument: object<DataroomFile>(),
+  subscriptionDocument: object<DataroomFile>().required(),
   tokenName: string()
     .required('Token Name is required')
     .matches(lettersOrSpaces, 'Token Name must not have special characters'),
@@ -178,17 +122,12 @@ export const dsoFormBaseValidationSchema = {
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
     .nullable(),
-  useOfProceeds: string().required('Use of Proceeds is required'),
   logo: string().required('Logo is required'),
-  policyBuilder: object(),
   status: string(),
-  documents: array<FormArrayElement<DataroomFile>>()
-    .ensure()
-    .required('Documents are required'),
-  team: array<DsoTeamMember>()
-    .of(dsoTeamMemberSchema.required('Team Member Details are required'))
-    .ensure()
-    .required('Team Member is required'),
+  // documents: array<FormArrayElement<DataroomFile>>()
+  //   .min(1)
+  //   .ensure()
+  //   .required('Documents are required'),
   faqs: array<DsoFAQItem>()
     .of(dsoFAQItemSchema.required(validationMessages.required))
     .required('FAQs are required'),
@@ -212,52 +151,7 @@ export const dsoInformationValidationSchemaStep1: any = {
       "Corporate must include only letters, numbers and these special characters . , - ; & '"
     ),
   currency: string().required('Currency is required'),
-  distributionFrequency: string().when('capitalStructure', {
-    is: capitalStructure =>
-      capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string()
-  }),
-  dividendYield: number().when('capitalStructure', {
-    is: 'Equity',
-    then: number()
-      .required('Dividend Yield is required')
-      .typeError('Dividend Yield must be a number'),
-    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
-  }),
-  equityMultiple: number().when('capitalStructure', {
-    is: 'Equity',
-    then: number()
-      .required('Equity Multiple Yield is required')
-      .typeError('Equity Multiple Yield must be a number'),
-    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
-  }),
-  grossIRR: number().when('capitalStructure', {
-    is: 'Equity',
-    then: number()
-      .required('Gross IRR is required')
-      .typeError('Gross IRR must be a number'),
-    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
-  }),
-  interestRate: number().when('capitalStructure', {
-    is: 'Debt',
-    then: number()
-      .required('Interest Rate is required')
-      .typeError('Leverage must be a number'),
-    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
-  }),
   isCampaign: boolean(),
-  investmentPeriod: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: capitalStructure =>
-        capitalStructure === 'Equity' || capitalStructure === 'Debt',
-      then: number().transform(numberTransformer)
-    }),
-  investmentStructure: string().when('capitalStructure', {
-    is: capitalStructure =>
-      capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string()
-  }),
   issuerName: string().required('Issuer Name is required'),
   launchDate: string()
     .test(
@@ -273,13 +167,6 @@ export const dsoInformationValidationSchemaStep1: any = {
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
-  leverage: number().when('capitalStructure', {
-    is: 'Debt',
-    then: number()
-      .required('Leverage is required')
-      .typeError('Leverage must be a number'),
-    otherwise: number().transform(value => (isNaN(value) ? 0 : value))
-  }),
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
     .nullable()
@@ -346,30 +233,30 @@ export const getDSOInformationSchema = (data: any) => {
 }
 
 export const getDSOCompanyInformationSchema = object().shape<any>({
-  introduction: string()
-    // eslint-disable-next-line
-    .test('default_values', 'Introduction is required', introductionValidator)
-    .required('Introduction is required'),
-  useOfProceeds: string()
-    // eslint-disable-next-line
-    .test('default_values', 'Use of Proceeds is required', proceedsValidator)
-    .required('Use of Proceeds is required'),
-  businessModel: string()
-    // eslint-disable-next-line
-    .test(
-      'default_values',
-      'Business Model is required',
-      businessModelValidation
-    )
-    .required('Business Model is required'),
-  fundraisingMilestone: string()
-    // eslint-disable-next-line
-    .test(
-      'default_values',
-      'Fundraising Milestone is required',
-      fundraisingValidation
-    )
-    .required('Fundraising Milestone is required'),
+  // introduction: string()
+  //   // eslint-disable-next-line
+  //   .test('default_values', 'Introduction is required', introductionValidator)
+  //   .required('Introduction is required'),
+  // useOfProceeds: string()
+  //   // eslint-disable-next-line
+  //   .test('default_values', 'Use of Proceeds is required', proceedsValidator)
+  //   .required('Use of Proceeds is required'),
+  // businessModel: string()
+  //   // eslint-disable-next-line
+  //   .test(
+  //     'default_values',
+  //     'Business Model is required',
+  //     businessModelValidation
+  //   )
+  //   .required('Business Model is required'),
+  // fundraisingMilestone: string()
+  //   // eslint-disable-next-line
+  //   .test(
+  //     'default_values',
+  //     'Fundraising Milestone is required',
+  //     fundraisingValidation
+  //   )
+  //   .required('Fundraising Milestone is required'),
   step: number()
 })
 
