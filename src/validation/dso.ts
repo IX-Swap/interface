@@ -92,7 +92,7 @@ export const dsoFormBaseValidationSchema = {
     .required('Launch Date is is required')
     .test(
       'before-completionDate',
-      'Launch date cannot be later than completion date',
+      'Launch Date cannot be later than Completion Date',
       function (launch) {
         const { completionDate } = this.parent
         return isBeforeDate(launch, completionDate)
@@ -115,9 +115,9 @@ export const dsoFormBaseValidationSchema = {
     .required('Token Name is required')
     .matches(lettersOrSpaces, 'Token Name must not have special characters'),
   tokenSymbol: string()
+    .required('Token Symbol is required')
     .min(2, 'Minimum 2 characters')
-    .max(6, 'Maximum 6 characters')
-    .required('Token Symbol is required'),
+    .max(6, 'Maximum 6 characters'),
   totalFundraisingAmount: number()
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
@@ -156,7 +156,7 @@ export const dsoInformationValidationSchemaStep1: any = {
   launchDate: string()
     .test(
       'before-completionDate',
-      'Launch date cannot be later than completion date',
+      'Launch Date cannot be later than Completion Date',
       function (launch) {
         const { completionDate } = this.parent
         return isBeforeDate(launch, completionDate)
@@ -178,7 +178,10 @@ export const dsoInformationValidationSchemaStep1: any = {
   tokenName: string()
     .required('Token Name is required')
     .matches(lettersOrSpaces, 'Token Name must not have special characters'),
-  tokenSymbol: string().required('Token Symbol is required'),
+  tokenSymbol: string()
+    .required('Token Symbol is required')
+    .min(2, 'Minimum 2 characters')
+    .max(6, 'Maximum 6 characters'),
   totalFundraisingAmount: number()
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
