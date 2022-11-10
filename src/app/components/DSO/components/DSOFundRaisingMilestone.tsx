@@ -5,8 +5,6 @@ import { wysiwygValueExtractor } from 'helpers/forms'
 import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
-import { FormError } from 'components/form/FormError'
-import { TextError } from 'components/TextError'
 
 export const DSOFundRaisingMilestone = () => {
   const { control } = useFormContext<DSOFormValues>()
@@ -26,8 +24,6 @@ export const DSOFundRaisingMilestone = () => {
         name='fundraisingMilestone'
         valueExtractor={wysiwygValueExtractor}
       />
-
-      <FormError name='fundraisingMilestone' render={TextError} />
     </DSOContainer>
   )
 }
