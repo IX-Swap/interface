@@ -61,7 +61,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
                 sx={{ width: 50, height: 50, marginLeft: 2 }}
                 remove={remove}
                 index={index}
-                disabled={!(item.length > 1)}
+                disabled={!(item?.length > 1)}
               />
             )}
           </Box>

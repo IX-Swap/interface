@@ -229,16 +229,19 @@ export const DSODocuments: any = {
       link: 'Link'
     }
   ],
-  documents: [],
-  dataroom_0: {
-    _id: '5f898b52aa141c6d0d358ce5',
-    user: '5f7c1398fbc4b5491a1634ce',
-    title: '',
-    type: '',
-    originalFileName: 'a.jpg',
-    createdAt: '2020-10-16T12:00:18.823Z',
-    updatedAt: '2020-10-16T12:00:18.823Z'
-  },
+  documents: [
+    {
+      value: {
+        _id: '5f898b52aa141c6d0d358ce5',
+        user: '5f7c1398fbc4b5491a1634ce',
+        title: '',
+        type: '',
+        originalFileName: 'a.jpg',
+        createdAt: '2020-10-16T12:00:18.823Z',
+        updatedAt: '2020-10-16T12:00:18.823Z'
+      }
+    }
+  ],
   subscriptionDocument: {
     _id: '5f898b52aa141c6d0d358ce5',
     createdAt: '2020-10-16T12:00:18.823Z',
@@ -313,16 +316,7 @@ export const formValues: any = {
   capitalStructure: 'Good',
   businessModel: '<p>Hello world</p>',
   decimalPlaces: 0,
-  step: 2,
-  dataroom_0: {
-    _id: '5f898b52aa141c6d0d358ce5',
-    createdAt: '2020-10-16T12:00:18.823Z',
-    originalFileName: 'a.jpg',
-    title: '',
-    type: '',
-    updatedAt: '2020-10-16T12:00:18.823Z',
-    user: '5f7c1398fbc4b5491a1634ce'
-  }
+  step: 2
 }
 
 export const requestargs: DSORequestArgs = {
