@@ -125,7 +125,7 @@ describe('DSOFAQItem', () => {
 
     expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
       {
-        disabled: false,
+        disabled: true,
         sx: { width: 50, height: 50, marginLeft: 2 },
         remove: removeFn,
         index: 1

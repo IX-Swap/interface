@@ -1,10 +1,13 @@
 import { Box, Button } from '@mui/material'
 import { getIdFromObj } from 'helpers/strings'
+import { isEmpty } from 'lodash'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { MutateFunction, useMutation } from 'react-query'
 import { generatePath } from 'react-router'
 import { useHistory } from 'react-router-dom'
+import { useDSOFormContext } from './DSOFormContext'
+import { DSOStepperStep } from './DSOFormStepper'
 
 export interface SaveDraftButtonProps {
   formId: string
@@ -14,6 +17,8 @@ export interface SaveDraftButtonProps {
   transformData: any
   redirectFunction: (dsoId: string) => string
   search: string
+  activeStep: number
+  steps: DSOStepperStep[]
 }
 
 export const SaveDraftButton = ({
@@ -22,29 +27,37 @@ export const SaveDraftButton = ({
   mutation,
   transformData,
   redirectFunction,
-  search
+  search,
+  activeStep
 }: SaveDraftButtonProps) => {
-  const { watch } = useFormContext()
+  const { watch, errors, trigger } = useFormContext()
+  const { stepValues, setStepValues } = useDSOFormContext()
   const values = watch()
   const history = useHistory()
   const payload = transformData(values)
 
   const handleSave = async () => {
-    // eslint-disable-next-line
-    await mutation(payload).then((data: any) => {
-      if (data !== undefined) {
-        const redirect: string = redirectFunction(data.data._id)
-        history.replace(
-          generatePath(`${redirect}${search}`, {
-            issuerId:
-              typeof data.data.user === 'string'
-                ? data.data.user
-                : getIdFromObj(data.data.user),
-            dsoId: data.data._id
-          })
-        )
-      }
-    })
+    const newValues = [...stepValues]
+    await trigger()
+    newValues[activeStep] = { values, errors: { ...errors } }
+    setStepValues(newValues)
+    if (isEmpty(errors)) {
+      // eslint-disable-next-line
+      return await mutation(payload).then((data: any) => {
+        if (data !== undefined) {
+          const redirect: string = redirectFunction(data.data._id)
+          history.replace(
+            generatePath(`${redirect}${search}`, {
+              issuerId:
+                typeof data.data.user === 'string'
+                  ? data.data.user
+                  : getIdFromObj(data.data.user),
+              dsoId: data.data._id
+            })
+          )
+        }
+      })
+    }
   }
   const [saveForm] = useMutation(handleSave)
 

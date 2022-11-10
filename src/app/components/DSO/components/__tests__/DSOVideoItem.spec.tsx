@@ -125,7 +125,7 @@ describe('DSOVideoItem', () => {
 
     expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
       {
-        disabled: false,
+        disabled: true,
         sx: { width: 50, height: 50 },
         remove: removeFn,
         index: 1
@@ -153,7 +153,7 @@ describe('DSOVideoItem', () => {
 
     expect(DSOTeamRemoveButton).toHaveBeenCalledWith(
       {
-        disabled: false,
+        disabled: true,
         sx: { width: '100%', height: 50 },
         remove: removeFn,
         index: 1

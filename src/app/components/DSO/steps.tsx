@@ -28,7 +28,7 @@ export const dsoFormSteps = [
     label: 'Company Information',
     getFormValues: (data: DSOFormValues) => {
       return {
-        team: data.team.length > 0 ? [...data.team, {}] : [{}],
+        team: data.team.length > 0 ? [...data.team] : [{}],
         introduction: data.introduction ?? '',
         businessModel: data.businessModel ?? '',
         useOfProceeds: data.useOfProceeds ?? '',
@@ -44,12 +44,9 @@ export const dsoFormSteps = [
   {
     label: 'Documents',
     getFormValues: (data: DSOFormValues) => {
-      const dataroomProperties: any = {}
       const videos: any[] = []
       const faqs: any[] = []
-      data.documents.forEach((item, index) => {
-        dataroomProperties[`dataroom_${index}`] = item.value
-      })
+
       data.videos.forEach(item => {
         if (!isEqual(item, {})) videos.push(item)
       })
@@ -61,8 +58,7 @@ export const dsoFormSteps = [
         documents: data.documents,
         videos: videos.length > 0 ? [...videos, {}] : [{}, {}],
         faqs: faqs.length > 0 ? [...faqs, {}] : [{}, {}],
-        step: 3,
-        ...dataroomProperties
+        step: 3
       }
     },
     getRequestPayload: getDSODocumentsPayload,

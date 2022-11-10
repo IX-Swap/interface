@@ -19,11 +19,11 @@ export interface DSODataroomUploaderProps {
 }
 
 export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
-  const { append, fields, documentInfo = {}, control } = props
+  const { append, fields, documentInfo = {}, control, remove } = props
   const [fileType, setFileType] = useState<DataroomDocumentType>(
     DataroomDocumentType.Other
   )
-  const files = [...fields, {}]
+
   return (
     <Grid container direction={'column'} spacing={5}>
       <Grid item>
@@ -36,8 +36,8 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
         />
       </Grid>
 
-      <Grid item container direction={'column'} spacing={2}>
-        {files.map((item, i) => (
+      <Grid item container direction={'column'}>
+        {fields.map((item, i) => (
           <>
             <TypedField
               customRenderer
@@ -50,23 +50,42 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
                   <Box ml={2}>Upload file</Box>
                 </Box>
               }
-              name={`dataroom_${i}`}
+              name={['documents', i, 'value']}
+              defaultValue={fields[i].value}
               valueExtractor={plainValueExtractor}
               documentInfo={{
                 type: fileType,
                 title: fileType,
                 ...documentInfo
               }}
-              onSuccessUploadCallback={(file: any) => {
-                append({ value: file })
-              }}
               onRemoveCallback={() => {
-                control.setValue(`dataroom_${i}`, undefined)
+                remove?.(i)
               }}
             />
             <VSpacer size='small' />
           </>
         ))}
+
+        <FileUpload
+          // control={control}
+          fullWidth
+          label={
+            <Box display={'flex'} alignItems={'center'}>
+              <Icon name={'file'} />
+              <Box ml={2}>Upload file</Box>
+            </Box>
+          }
+          name={'dataroom'}
+          documentInfo={{
+            type: fileType,
+            title: fileType,
+            ...documentInfo
+          }}
+          onSuccessUploadCallback={(file: any) => {
+            append({ value: file })
+          }}
+          neverComplete
+        />
       </Grid>
     </Grid>
   )

@@ -9,6 +9,7 @@ export interface SubmitButtonProps extends ButtonProps {
   data: any
   step: FormStepperStep
   submitText?: string
+  customSchema?: any
 }
 
 export const SubmitButton = (props: SubmitButtonProps) => {
@@ -18,7 +19,8 @@ export const SubmitButton = (props: SubmitButtonProps) => {
     step,
     fullWidth,
     size = 'large',
-    submitText = 'Identity'
+    submitText = 'Identity',
+    customSchema = undefined
   } = props
 
   const [save, { isLoading }] = mutation
@@ -26,7 +28,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   const isApproved = data?.status === 'Approved'
 
   const [validating, setValidating] = useState(false)
-  const [isValid, setIsValid] = useState(true)
+  const [isValid, setIsValid] = useState(false)
 
   const getButtonText = () => {
     if (isApproved) {
@@ -45,16 +47,24 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   }, [data]) // eslint-disable-line
 
   const checkValidation = async () => {
-    const schema =
-      typeof step.validationSchema === 'function'
-        ? step.validationSchema(data)
-        : step.validationSchema
+    let schema: any
+    if (customSchema !== undefined) {
+      schema =
+        typeof customSchema === 'function' ? customSchema(data) : customSchema
+    } else {
+      schema =
+        typeof step.validationSchema === 'function'
+          ? step.validationSchema(data)
+          : step.validationSchema
+    }
 
     setValidating(true)
     try {
       const isFormDataValid = await schema?.isValid(step.getFormValues(data))
+
       setIsValid(isFormDataValid)
     } catch (error) {
+      console.log('error', error)
     } finally {
       setValidating(false)
     }
