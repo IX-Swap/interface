@@ -20,10 +20,11 @@ export interface DSOTeamMemberProps {
   index: number
   remove: (field: any) => void
   defaultValue: DsoTeamMember
+  item?: any
 }
 
 export const DSOTeamMember = (props: DSOTeamMemberProps) => {
-  const { defaultValue, fieldId, index, remove } = props
+  const { defaultValue, fieldId, index, remove, item } = props
   const { control } = useFormContext<{ team: DSOFormValues['team'] }>()
   const { isTablet } = useAppBreakpoints()
   const renderTitle = (index: number) =>
@@ -52,11 +53,15 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
           <Grid item>
             <FormSectionHeader title={renderTitle(index)} />
           </Grid>
-          {index > 0 && (
-            <Grid item>
-              <DSOTeamRemoveButton remove={remove} index={index} />
-            </Grid>
-          )}
+          {/* {index > 0 && ( */}
+          <Grid item>
+            <DSOTeamRemoveButton
+              disabled={!(item?.length > 1)}
+              remove={remove}
+              index={index}
+            />
+          </Grid>
+          {/* )} */}
         </Grid>
 
         <Grid item xs={12} md={2}>
