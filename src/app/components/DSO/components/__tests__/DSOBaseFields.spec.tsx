@@ -47,7 +47,9 @@ describe('DSOBaseFields', () => {
         name: 'logo',
         label: 'Upload Photo',
         placeHolder: 'Upload File',
-        helperText: 'Upload Photo'
+        helperText: 'Upload Photo',
+        isOptional: true,
+        optionalText: ' '
       }),
       {}
     )
