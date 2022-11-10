@@ -52,13 +52,7 @@ export const dsoVideoLinkSchema = object().shape<DsoVideo>(
     }),
     link: string().when('title', {
       is: title => title !== '',
-      then: string()
-        .required('Video Link is required when title is provided')
-        .url('URL is not valid'),
-      otherwise: string().when('link', {
-        is: link => link !== '',
-        then: string().url('URL is not valid')
-      })
+      then: string().required('Video Link is required when title is provided')
     })
   },
   [
