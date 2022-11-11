@@ -10,6 +10,7 @@ import { DSOSubscriptionDocument } from 'app/components/DSO/components/DSOSubscr
 import { itemComparator, SelectedDocument } from 'helpers/dataroom'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { DSODataroomUploader } from 'app/components/DSO/components/DSODataroomUploader'
+import { VSpacer } from 'components/VSpacer'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()
@@ -53,6 +54,7 @@ export const DSODataroom = () => {
                   </Fragment>
                 )}
               </FieldsArray>
+              <VSpacer size='small' />
               <FormError name='documents' render={TextError} />
             </Grid>
           </Grid>

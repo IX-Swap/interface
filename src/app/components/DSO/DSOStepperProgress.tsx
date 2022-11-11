@@ -86,6 +86,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     // eslint-disable-next-line
     const newValues = [...stepValues]
     await trigger()
+    await trigger('documents')
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
     const obj = errors

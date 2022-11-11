@@ -118,10 +118,9 @@ export const dsoFormBaseValidationSchema = {
     .nullable(),
   logo: string().required('Logo is required'),
   status: string(),
-  // documents: array<FormArrayElement<DataroomFile>>()
-  //   .min(1)
-  //   .ensure()
-  //   .required('Documents are required'),
+  documents: array<FormArrayElement<DataroomFile>>()
+    .ensure()
+    .required('Documents are required'),
   faqs: array<DsoFAQItem>()
     .of(dsoFAQItemSchema.required(validationMessages.required))
     .required('FAQs are required'),
