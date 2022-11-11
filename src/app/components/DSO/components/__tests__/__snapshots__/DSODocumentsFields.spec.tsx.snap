@@ -291,6 +291,9 @@ exports[`DSODocumentsFields should match snapshot 1`] = `
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="MuiBox-root css-1jpm9pd"
+                  />
                 </div>
               </div>
             </div>
