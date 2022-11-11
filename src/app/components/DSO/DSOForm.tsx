@@ -38,6 +38,7 @@ export const DSOForm = () => {
 
   return (
     <DSOStepper
+      rawData={data}
       data={dataProvider}
       createMutation={createMutation}
       editMutation={editMutation}

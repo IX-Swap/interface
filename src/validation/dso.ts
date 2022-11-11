@@ -1,6 +1,6 @@
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 import _ from 'lodash'
-import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
+import { DataroomFile } from 'types/dataroomFile'
 import {
   DSOBaseFormValues,
   DsoFAQItem,
@@ -182,11 +182,13 @@ export const dsoInformationValidationSchemaStep1: any = {
     .typeError('Total Fundraising Amount must be a number')
     .nullable(),
   status: string(),
-  uniqueIdentifierCode: string().test(
-    'length',
-    'Unique identifier code is required',
-    uniqueIdentifierCodeValidator
-  ),
+  uniqueIdentifierCode: string()
+    .test(
+      'length',
+      'Unique identifier code is required',
+      uniqueIdentifierCodeValidator
+    )
+    .nullable(),
   decimalPlaces: number()
     .required('Decimal Places value is required')
     .typeError('Decimal Places must be a number'),
@@ -261,14 +263,14 @@ export const getDSODocumentschema = object().shape<any>({
   subscriptionDocument: object<DataroomFile>().required(
     'Subscription Document is required'
   ),
-  documents: array<FormArrayElement<DataroomFile>>()
-    .ensure()
-    .required('Documents are required'),
-  faqs: array<DsoFAQItem>()
-    .of(dsoFAQItemSchema.required(validationMessages.required))
-    .required('FAQs are required'),
-  videos: array<DsoVideo>().of(
-    dsoVideoLinkSchema.required('Videos are required')
-  ),
+  // documents: array<FormArrayElement<DataroomFile>>()
+  //   .ensure()
+  //   .required('Documents are required'),
+  // faqs: array<DsoFAQItem>()
+  //   .of(dsoFAQItemSchema.required(validationMessages.required))
+  //   .required('FAQs are required'),
+  // videos: array<DsoVideo>().of(
+  //   dsoVideoLinkSchema.required('Videos are required')
+  // ),
   step: number()
 })

@@ -159,6 +159,11 @@ export interface DSOFormStepProps {
     transformData?: any
   ) => () => void
   contentClassName?: string
+  rawData: any
+  removeComplete: any
+  removeCreateComplete: any
+  setCreateComplete: any
+  createComplete: any
 }
 
 export const DSOFormStep = (props: DSOFormStepProps) => {
@@ -184,7 +189,11 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
     data,
     getStepStatus,
     completed,
-    handleStepButtonClick
+    handleStepButtonClick,
+    removeComplete,
+    removeCreateComplete,
+    setCreateComplete,
+    createComplete
   } = props
   const isCurrentStep = activeStep === index
   const classes: any = useStyles()
@@ -205,7 +214,6 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   const mutation = isNew ? createMutation[0] : editMutation[0]
 
   const nextCallback = (nextStep: number) => {
-    setCompleted()
     setActiveStep(nextStep)
   }
 
@@ -245,6 +253,12 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
                   : isRequiredOnLastStep) && (
                   <Fragment>
                     <DSOSaveOnNavigate
+                      removeCreateComplete={removeCreateComplete}
+                      setCreateComplete={setCreateComplete}
+                      createComplete={createComplete}
+                      removeComplete={removeComplete}
+                      completed={completed}
+                      setCompleted={setCompleted}
                       transformData={step.getRequestPayload}
                       mutation={saveMutation}
                       isNew={isNew}
@@ -260,6 +274,12 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
 
               {hasNextStep && (
                 <DSOSaveOnNavigate
+                  removeCreateComplete={removeCreateComplete}
+                  setCreateComplete={setCreateComplete}
+                  createComplete={createComplete}
+                  removeComplete={removeComplete}
+                  completed={completed}
+                  setCompleted={setCompleted}
                   transformData={step.getRequestPayload}
                   mutation={saveMutation}
                   isNew={isNew}
@@ -276,7 +296,13 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
         </Grid>
         <Grid item xs={1}>
           <DSOStepperProgress
+            removeCreateComplete={removeCreateComplete}
+            setCreateComplete={setCreateComplete}
+            createComplete={createComplete}
             transformData={step.getRequestPayload}
+            removeComplete={removeComplete}
+            setCompleted={setCompleted}
+            rawData={data}
             saveMutation={saveMutation}
             nonLinear={nonLinear}
             matches={matches}
@@ -291,6 +317,7 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
             completed={completed}
             handleStepButtonClick={handleStepButtonClick}
             redirectFunction={redirectFunction}
+            nextCallback={nextCallback}
           />
         </Grid>
       </Grid>
