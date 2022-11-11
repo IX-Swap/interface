@@ -75,7 +75,6 @@ export const DSOStepButton = ({
             )
           : stepData.step.validationSchema
       setValidating(true)
-      // @ts-expect-error
       setValidState(
         await schema?.isValid(
           stepData.step?.getFormValues(
