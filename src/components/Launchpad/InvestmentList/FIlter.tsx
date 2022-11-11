@@ -114,6 +114,7 @@ const FilterSearchField = styled.div`
 const FilterSearchInput = styled.input`
   flex-grow: 1;
   border: none;
+  outline: 0;
 `
 
 const FilterButton = styled.button`

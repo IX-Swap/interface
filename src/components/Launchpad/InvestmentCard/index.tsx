@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { ReactComponent as InvestmentApprovedIcon } from 'assets/launchpad/svg/investment-approved-icon.svg'
 import { ReactComponent as InvestmentMetaSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
+import { useCheckKYC } from 'state/launchpad/hooks'
 
 interface Props {
   title: string
@@ -27,9 +28,15 @@ interface Props {
 }
 
 export const InvestmentCard: React.FC<Props> = (props) => {
+  const checkKYC = useCheckKYC()
+
   const [showDetails, setShowDetails] = React.useState(false)
 
   const toggleShowDetails = React.useCallback(() => setShowDetails(state => !state), [])
+
+  const onClick = React.useCallback(() => {
+    checkKYC(() => alert('KYC is present'))
+  }, [checkKYC])
 
   return (
     <InvestmentCardContainer>
@@ -45,7 +52,7 @@ export const InvestmentCard: React.FC<Props> = (props) => {
       <InvestmentCardInfoWrapper>
 
       </InvestmentCardInfoWrapper>
-      <InvestmentCardInfoContainer onClick={toggleShowDetails} expanded={showDetails}>
+      <InvestmentCardInfoContainer  expanded={showDetails}>
         <InvestmentCardIcon src={props.icon} />
 
         <InvestmentCardMetaContainer>
@@ -63,41 +70,47 @@ export const InvestmentCard: React.FC<Props> = (props) => {
           <InvestmentMetaSeparator />
         </InvestmentCardMetaContainer>
 
-        <InvestmentCardDescriptionContainer>
+        <InvestmentCardDescriptionContainer onClick={toggleShowDetails}>
           <InvestmentCardTitle>{props.title}</InvestmentCardTitle>
           <InvestmentCardDescription>{props.description}</InvestmentCardDescription>
         </InvestmentCardDescriptionContainer>
 
         <InvestmentCardDetailsContainer show={showDetails}>
-          <InvestmentCardDetailsEntry>
-            <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
-            <InvestmentCardDetailsEntryValue>{props.details.projectedFundraise}</InvestmentCardDetailsEntryValue>
-          </InvestmentCardDetailsEntry>
+          {showDetails && (
+            <>
+              <InvestmentCardDetailsEntry>
+                <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
+                <InvestmentCardDetailsEntryValue>{props.details.projectedFundraise}</InvestmentCardDetailsEntryValue>
+              </InvestmentCardDetailsEntry>
 
-          <InvestmentCardDetailsSeparator />
-          
-          <InvestmentCardDetailsEntry>
-            <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
-            <InvestmentCardDetailsEntryValue>{props.details.minimumInvestment}</InvestmentCardDetailsEntryValue>
-          </InvestmentCardDetailsEntry>
-          
-          <InvestmentCardDetailsSeparator />
-          
-          <InvestmentCardDetailsEntry>
-            <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
-            <InvestmentCardDetailsEntryValue>{props.details.investmentType}</InvestmentCardDetailsEntryValue>
-          </InvestmentCardDetailsEntry>
-          
-          <InvestmentCardDetailsSeparator />
-          
-          <InvestmentCardDetailsEntry>
-            <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
-            <InvestmentCardDetailsEntryValue>{props.details.issuer}</InvestmentCardDetailsEntryValue>
-          </InvestmentCardDetailsEntry>
+              <InvestmentCardDetailsSeparator />
+              
+              <InvestmentCardDetailsEntry>
+                <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
+                <InvestmentCardDetailsEntryValue>{props.details.minimumInvestment}</InvestmentCardDetailsEntryValue>
+              </InvestmentCardDetailsEntry>
+              
+              <InvestmentCardDetailsSeparator />
+              
+              <InvestmentCardDetailsEntry>
+                <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
+                <InvestmentCardDetailsEntryValue>{props.details.investmentType}</InvestmentCardDetailsEntryValue>
+              </InvestmentCardDetailsEntry>
+              
+              <InvestmentCardDetailsSeparator />
+              
+              <InvestmentCardDetailsEntry>
+                <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
+                <InvestmentCardDetailsEntryValue>{props.details.issuer}</InvestmentCardDetailsEntryValue>
+              </InvestmentCardDetailsEntry>
+            </>
+          )}
         </InvestmentCardDetailsContainer>
         
-        {props.saleStatus === 'Public Sale' && <InvestButton>Invest</InvestButton>}
-        {props.saleStatus !== 'Public Sale' && <InvestButton>Learn More</InvestButton>}
+        <InvestmentCardFooter>
+          {props.saleStatus === 'Public Sale' && <InvestButton type="button" onClick={onClick}>Invest</InvestButton>}
+          {props.saleStatus !== 'Public Sale' && <InvestButton type="button" onClick={onClick}>Learn More</InvestButton>}
+        </InvestmentCardFooter>
       </InvestmentCardInfoContainer>
     </InvestmentCardContainer>
   )
@@ -122,6 +135,10 @@ const InvestmentCardContainer = styled.article`
 
 const InvestmentCardHeader = styled.header`
   position: relative;
+`
+
+const InvestmentCardFooter = styled.footer`
+  z-index: 20;
 `
 
 const InvestmentCardImage = styled.img`
@@ -211,6 +228,7 @@ const InvestmentCardDetailsContainer = styled.div<{ show: boolean }>`
   
   transition: height 0.3s ease-in-out, opacity 0.2s ease-out 0.1s;
 
+  z-index: 10;
 
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -292,6 +310,8 @@ const InvestButton = styled.button`
   border-radius: 6px;
 
   padding: 0.75rem;
+
+  cursor: pointer;
 
   width: 100%;
 

@@ -22,7 +22,11 @@ const Container = styled.div`
 
   flex-flow: column nowrap;
   justify-content: space-around;
-  align-items: center;
+  align-items: stretch;
+
+  gap: 1rem;
+
+  text-align: center;
 `
 const CompianceNotice = styled.div`
   font-style: normal;
@@ -40,7 +44,8 @@ const CompianceNotice = styled.div`
 `
 
 const Separator = styled.div`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  margin-top: 2rem;
+  border-top: 1px solid ${props => props.theme.launchpad.colors.border.default};
 `
 
 const ProcessingEstimationInfo = styled.div`

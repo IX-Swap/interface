@@ -12,6 +12,7 @@ import { Pinned } from './Pinned'
 
 import { getLaunchpadOffers, InvestmentOffer } from './utils'
 import { FilterConfig } from 'components/Launchpad/InvestmentList/FIlter'
+import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 
 
 export default function Launchpad() {
@@ -56,6 +57,8 @@ export default function Launchpad() {
       <Pinned offer={pinnedOffer} />
       <InvestmentList offers={mainOfferList} onFilter={setFilter} />
       <Footer />
+
+      <KYCPrompt />
     </LaunchpadContainer>
   )
 }
