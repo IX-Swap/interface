@@ -47,6 +47,7 @@ export const SaveDraftButton = ({
   const handleSave = async () => {
     const newValues = [...stepValues]
     await trigger()
+    await trigger('documents')
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
     if (isEmpty(errors)) {

@@ -118,21 +118,23 @@ export const dsoFormBaseValidationSchema = {
     .nullable(),
   logo: string().required('Logo is required'),
   status: string(),
-  // documents: array<FormArrayElement<DataroomFile>>()
-  //   .min(1)
-  //   .ensure()
-  //   .required('Documents are required'),
+  documents: array<FormArrayElement<DataroomFile>>()
+    .ensure()
+    .required('Documents are required'),
   faqs: array<DsoFAQItem>()
     .of(dsoFAQItemSchema.required(validationMessages.required))
     .required('FAQs are required'),
   videos: array<DsoVideo>()
     .of(dsoVideoLinkSchema.required('Videos are required'))
     .required(validationMessages.required),
-  uniqueIdentifierCode: string().test(
-    'length',
-    'Unique identifier code is required',
-    uniqueIdentifierCodeValidator
-  )
+  uniqueIdentifierCode: string()
+    .test(
+      'length',
+      'Unique identifier code is required',
+
+      uniqueIdentifierCodeValidator
+    )
+    .nullable()
 }
 
 export const dsoInformationValidationSchemaStep1: any = {

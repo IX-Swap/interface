@@ -67,6 +67,7 @@ export const DSOSaveOnNavigate = ({
   const handleSave = async () => {
     const newValues = [...stepValues]
     await trigger()
+    await trigger('documents')
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
     // eslint-disable-next-line
