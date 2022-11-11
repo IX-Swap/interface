@@ -25,6 +25,6 @@ export const columns = [
   },
   {
     label: 'Available Market',
-    key: 'marketType'
+    key: 'listingType'
   }
 ]
