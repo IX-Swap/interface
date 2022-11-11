@@ -148,7 +148,8 @@ export const dsoInformationValidationSchemaStep1: any = {
   currency: string().required('Currency is required'),
   isCampaign: boolean(),
   issuerName: string().required('Issuer Name is required'),
-  launchDate: string()
+  launchDate: dateSchema
+    .required('Launch Date is required')
     .test(
       'before-completionDate',
       'Launch Date cannot be later than Completion Date',
@@ -157,8 +158,7 @@ export const dsoInformationValidationSchemaStep1: any = {
         return isBeforeDate(launch, completionDate)
       }
     )
-    .test('pastDate', 'Launch Date must be future date', pastDateValidator)
-    .required('Launch Date is required'),
+    .test('pastDate', 'Launch Date must be future date', pastDateValidator),
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
