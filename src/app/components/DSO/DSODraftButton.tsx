@@ -19,6 +19,10 @@ export interface SaveDraftButtonProps {
   search: string
   activeStep: number
   steps: DSOStepperStep[]
+  setCompleted: any
+  removeComplete: any
+  completed: number[]
+  setCreateComplete: any
 }
 
 export const SaveDraftButton = ({
@@ -28,7 +32,11 @@ export const SaveDraftButton = ({
   transformData,
   redirectFunction,
   search,
-  activeStep
+  activeStep,
+  setCompleted,
+  removeComplete,
+  completed,
+  setCreateComplete
 }: SaveDraftButtonProps) => {
   const { watch, errors, trigger } = useFormContext()
   const { stepValues, setStepValues } = useDSOFormContext()
@@ -46,6 +54,7 @@ export const SaveDraftButton = ({
       // eslint-disable-next-line
       return await mutation(payload).then((data: any) => {
         if (data !== undefined) {
+          setCompleted()
           const redirect: string = redirectFunction(data.data._id)
           history.replace(
             generatePath(`${redirect}${search}`, {
@@ -58,6 +67,10 @@ export const SaveDraftButton = ({
           )
         }
       })
+    } else {
+      if (completed.includes(activeStep)) {
+        removeComplete(activeStep, completed)
+      }
     }
   }
   const [saveForm] = useMutation(handleSave)
@@ -70,6 +83,7 @@ export const SaveDraftButton = ({
         variant='outlined'
         onClick={() => {
           void saveForm()
+          setCreateComplete()
         }}
         form={formId}
       >
