@@ -25,6 +25,8 @@ import useStyles from './DSODecimalButton.styles'
 import { NumericInput } from 'components/form/NumericInput'
 import { numberFormat } from 'config/numberFormat'
 import _ from 'lodash'
+import { FormError } from 'components/form/FormError'
+import { TextError } from 'components/TextError'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -104,9 +106,12 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               type: 'DSO Logo'
             }}
             isOptional
+            optionalText=' '
             helperText='Upload Photo'
           />
+
           <VSpacer size='small' />
+          <FormError name='logo' render={TextError} />
         </Grid>
         <Grid item>
           <Grid container spacing={3} pt={2}>

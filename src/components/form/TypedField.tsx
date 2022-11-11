@@ -201,7 +201,7 @@ export const TypedField = <
 
             {hasError && isErrorMessageEnabled && (
               <ErrorMessage
-                errors={control.formStateRef.current.errors}
+                errors={control.formStateRef?.current.errors}
                 name={path}
                 render={({ message }) => (
                   <FormHelperText error>{message}</FormHelperText>
