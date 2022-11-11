@@ -11,6 +11,7 @@ import { Footer } from './Footer'
 import { Pinned } from './Pinned'
 
 import { getLaunchpadOffers, InvestmentOffer } from './utils'
+import { FilterConfig } from 'components/Launchpad/InvestmentList/FIlter'
 
 
 export default function Launchpad() {
@@ -18,9 +19,19 @@ export default function Launchpad() {
 
   const [offers, setOffers] = React.useState<InvestmentOffer[]>([])
   const [loading, setLoading] = React.useState<boolean>(true)
+  const [filter, setFilter] = React.useState<FilterConfig | null>(null)
+
+  const isSelected = React.useCallback((offer: InvestmentOffer) => {
+    return !offer.pinned &&
+      (!filter ||
+        (filter.industry.length === 0 || filter.industry.find(x => x.value === offer.industry)) &&
+        (filter.stage.length === 0 || filter.stage.find(x => x.value === offer.stage)) &&
+        (filter.type.length === 0 || filter.stage.find(x => x.value === offer.type))
+      )
+  }, [filter])
 
   const pinnedOffer = React.useMemo(() => offers.find(offer => offer.pinned)!, [offers])
-  const mainOfferList = React.useMemo(() => offers.filter(offer => !offer.pinned), [offers])
+  const mainOfferList = React.useMemo(() => offers.filter(offer => !offer.pinned && isSelected(offer)), [offers, isSelected])
 
   React.useEffect(() => {
     hideHeader(true)
@@ -43,7 +54,7 @@ export default function Launchpad() {
       <Header />
       <Banner />
       <Pinned offer={pinnedOffer} />
-      <InvestmentList offers={mainOfferList} />
+      <InvestmentList offers={mainOfferList} onFilter={setFilter} />
       <Footer />
     </LaunchpadContainer>
   )

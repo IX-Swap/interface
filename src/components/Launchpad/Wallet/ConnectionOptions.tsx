@@ -166,6 +166,8 @@ const OptionContainer = styled.button<{ clickable?: boolean }>`
   height: 40px;
   width: 100%;
 
+  cursor: pointer;
+
   background: ${props => props.theme.launchpad.colors.background};
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;

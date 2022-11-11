@@ -10,12 +10,12 @@ interface Props {
   description: string
 
   type: string
-  category: string
+  industry: string
 
   icon: string
   image: string
 
-  status: string
+  stage: string
   saleStatus?: string
 
   details: {
@@ -37,7 +37,7 @@ export const InvestmentCard: React.FC<Props> = (props) => {
 
       <InvestmentCardHeader>
         <InvestmentCardTagsContainer>
-          <InvestmentStatusBadge status={props.status} />
+          <InvestmentStatusBadge status={props.stage} />
           <InvestmentStatusBadge status={props.saleStatus} />
         </InvestmentCardTagsContainer>
       </InvestmentCardHeader>
@@ -49,7 +49,7 @@ export const InvestmentCard: React.FC<Props> = (props) => {
         <InvestmentCardIcon src={props.icon} />
 
         <InvestmentCardMetaContainer>
-          {props.status !== 'whitelist' && (
+          {props.stage !== 'whitelist' && (
             <>
               <InvestmentApprovedIcon />
               <InvestmentMetaSeparator />
@@ -59,7 +59,7 @@ export const InvestmentCard: React.FC<Props> = (props) => {
           <InvestmentCardMetaEntry>{props.type}</InvestmentCardMetaEntry>
           <InvestmentMetaSeparator />
 
-          <InvestmentCardMetaEntry>{props.category}</InvestmentCardMetaEntry>
+          <InvestmentCardMetaEntry>{props.industry}</InvestmentCardMetaEntry>
           <InvestmentMetaSeparator />
         </InvestmentCardMetaContainer>
 

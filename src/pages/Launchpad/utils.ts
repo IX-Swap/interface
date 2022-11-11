@@ -17,19 +17,34 @@ const genericOffer = {
 
   date: new Date(),
 
-  type: 'Security token',
-  category: 'Technology',
 
-  status: 'Closes soon',
   saleStatus: 'Public Sale',
 
   details: genericDetails
 }
 
-const statuses = [
-  'Closes soon',
-  'Fully Funded',
-  'Register to Invest',
+const industries = [
+  'Technology',
+  'Finance',
+  'Blockchain',
+  'Real Estate',
+  'Gaming',
+  'Energy',
+  'Healthcare',
+  'Others',
+]
+
+const stages = [
+  'Register to invest',
+  'Pre-Sale',
+  'Public Sale',
+  'Closed' 
+]
+
+const types = [
+  'Security token',
+  'Fractionalized-NFT',
+  'Cryptocurrency' 
 ]
 
 const saleStatuses = [
@@ -50,9 +65,9 @@ export interface InvestmentOffer {
   date: Date
 
   type: string
-  category: string
+  industry: string
   
-  status: string
+  stage: string
   saleStatus: string
 
   details: {
@@ -78,7 +93,9 @@ async function getGenericOffers(): Promise<InvestmentOffer[]> {
       id: getUniqueOfferId(), 
       image: images[index], 
       icon: icons[index],
-      status: statuses[Math.floor(Math.random() * statuses.length)],
+      industry: industries[Math.floor(Math.random() * industries.length)],
+      type: types[Math.floor(Math.random() * types.length)],
+      stage: stages[Math.floor(Math.random() * stages.length)],
       saleStatus: saleStatuses[Math.floor(Math.random() * saleStatuses.length)],
     }))
 }
@@ -98,9 +115,9 @@ export async function getLaunchpadOffers(): Promise<InvestmentOffer[]> {
       date: new Date('2022.12.31'),
 
       type: 'Security token',
-      category: 'Technology',
+      industry: 'Technology',
       
-      status: 'Closes soon',
+      stage: 'Closes soon',
       saleStatus: 'Public Sale',
 
       details: genericDetails

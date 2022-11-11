@@ -116,6 +116,8 @@ const ConnectButton = styled.button`
 
   text-align: center;
 
+  cursor: pointer;
+
   .title {
     font-style: normal;
     font-weight: 600;

@@ -15,7 +15,7 @@ export const Pinned: React.FC<Props> = (props) => {
       <PinnedContainer>
         <PinnedImageContainer>
           <PinnedImage src={props.offer.image}/>
-          <PinnerCategory>{props.offer.category}</PinnerCategory>
+          <PinnerCategory>{props.offer.industry}</PinnerCategory>
         </PinnedImageContainer>
 
         <PinnedContent>
