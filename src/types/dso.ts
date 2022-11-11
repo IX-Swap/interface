@@ -92,7 +92,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   user: string
   decimals?: number
   decimalPlaces?: number
-  uniqueIdentifierCode?: string
+  uniqueIdentifierCode?: string | null
   dealStatus?: string
   marketType?: string
   dso?: string
@@ -108,7 +108,7 @@ export interface NewBaseDigitalSecurityOffering
   capitalStructure: string
   tokenName: string
   tokenSymbol: string
-  uniqueIdentifierCode?: string
+  uniqueIdentifierCode?: string | null
   currency: string
   network: string
   logo: string

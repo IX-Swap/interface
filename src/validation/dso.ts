@@ -127,11 +127,14 @@ export const dsoFormBaseValidationSchema = {
   videos: array<DsoVideo>()
     .of(dsoVideoLinkSchema.required('Videos are required'))
     .required(validationMessages.required),
-  uniqueIdentifierCode: string().test(
-    'length',
-    'Unique identifier code is required',
-    uniqueIdentifierCodeValidator
-  )
+  uniqueIdentifierCode: string()
+    .test(
+      'length',
+      'Unique identifier code is required',
+
+      uniqueIdentifierCodeValidator
+    )
+    .nullable()
 }
 
 export const dsoInformationValidationSchemaStep1: any = {
@@ -181,11 +184,13 @@ export const dsoInformationValidationSchemaStep1: any = {
     .typeError('Total Fundraising Amount must be a number')
     .nullable(),
   status: string(),
-  uniqueIdentifierCode: string().test(
-    'length',
-    'Unique identifier code is required',
-    uniqueIdentifierCodeValidator
-  ),
+  uniqueIdentifierCode: string()
+    .test(
+      'length',
+      'Unique identifier code is required',
+      uniqueIdentifierCodeValidator
+    )
+    .nullable(),
   decimalPlaces: number()
     .required('Decimal Places value is required')
     .typeError('Decimal Places must be a number'),
