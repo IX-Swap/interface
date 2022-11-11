@@ -260,6 +260,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 control={control}
                 helperText='ISIN or CUSIP number'
                 variant='outlined'
+                isOptional
               />
             </Grid>
             <Grid item xs={12} md={6}>
