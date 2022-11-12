@@ -54,6 +54,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             <FormSectionHeader title={renderTitle(index)} />
             <Typography
               marginLeft={1}
+              marginTop={0.3}
               display={'inline'}
               color={'text.secondary'}
             >
