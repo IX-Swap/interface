@@ -1,6 +1,6 @@
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 import _ from 'lodash'
-import { DataroomFile } from 'types/dataroomFile'
+import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
   DSOBaseFormValues,
   DsoFAQItem,
@@ -118,9 +118,9 @@ export const dsoFormBaseValidationSchema = {
     .nullable(),
   logo: string().required('Logo is required'),
   status: string(),
-  documents: array<FormArrayElement<DataroomFile>>()
-    .ensure()
-    .required('Documents are required'),
+  // documents: array<FormArrayElement<DataroomFile>>()
+  //   .ensure()
+  //   .required('Documents are required'),
   faqs: array<DsoFAQItem>()
     .of(dsoFAQItemSchema.required(validationMessages.required))
     .required('FAQs are required'),
@@ -265,9 +265,9 @@ export const getDSODocumentschema = object().shape<any>({
   subscriptionDocument: object<DataroomFile>()
     .required('Subscription Document is required')
     .nullable(),
-  // documents: array<FormArrayElement<DataroomFile>>()
-  //   .ensure()
-  //   .required('Documents are required'),
+  documents: array<FormArrayElement<DataroomFile>>()
+    .ensure()
+    .required('Documents are required'),
   // faqs: array<DsoFAQItem>()
   //   .of(dsoFAQItemSchema.required(validationMessages.required))
   //   .required('FAQs are required'),
