@@ -262,9 +262,9 @@ export const getDSOCompanyInformationSchema = object().shape<any>({
 })
 
 export const getDSODocumentschema = object().shape<any>({
-  subscriptionDocument: object<DataroomFile>().required(
-    'Subscription Document is required'
-  ),
+  subscriptionDocument: object<DataroomFile>()
+    .required('Subscription Document is required')
+    .nullable(),
   // documents: array<FormArrayElement<DataroomFile>>()
   //   .ensure()
   //   .required('Documents are required'),
