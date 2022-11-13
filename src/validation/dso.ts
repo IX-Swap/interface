@@ -268,11 +268,11 @@ export const getDSODocumentschema = object().shape<any>({
   documents: array<FormArrayElement<DataroomFile>>()
     .ensure()
     .required('Documents are required'),
-  // faqs: array<DsoFAQItem>()
-  //   .of(dsoFAQItemSchema.required(validationMessages.required))
-  //   .required('FAQs are required'),
-  // videos: array<DsoVideo>().of(
-  //   dsoVideoLinkSchema.required('Videos are required')
-  // ),
+  faqs: array<DsoFAQItem>()
+    .of(dsoFAQItemSchema.required(validationMessages.required))
+    .required('FAQs are required'),
+  videos: array<DsoVideo>().of(
+    dsoVideoLinkSchema.required('Videos are required')
+  ),
   step: number()
 })
