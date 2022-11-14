@@ -50,7 +50,6 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   const c0 = localStorage.getItem('conditions_0')
   const c1 = localStorage.getItem('conditions_1')
   const c2 = localStorage.getItem('conditions_2')
-
   const shouldEnableSubmit = (): boolean => {
     if (c0 !== null && c1 !== null && c2 !== null) {
       const cond0: ConditionProps = JSON.parse(c0)
@@ -86,10 +85,11 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
       isApproved ||
       isLoading ||
       isSubmitted ||
-      validating
+      validating ||
+      !isEmpty(errors)
 
     setDisabled(disable)
-  }, [data]) // eslint-disable-line
+  }, [data, errors]) // eslint-disable-line
 
   useEffect(() => {
     void checkValidation()
