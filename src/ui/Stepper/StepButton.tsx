@@ -85,7 +85,7 @@ export const StepButton = ({
         )
       }
     } catch (error) {
-      console.log(error)
+      console.log()
     } finally {
       setValidating(false)
     }

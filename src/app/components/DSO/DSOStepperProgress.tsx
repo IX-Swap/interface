@@ -10,8 +10,7 @@ import { MutateFunction, MutationResultPair } from 'react-query'
 import { useFormContext } from 'react-hook-form'
 import { useDSOFormContext } from './DSOFormContext'
 import _, { isEmpty } from 'lodash'
-import { generatePath, useHistory } from 'react-router-dom'
-import { useParams } from 'react-router'
+import { generatePath, useHistory, useParams } from 'react-router-dom'
 import { getIdFromObj } from 'helpers/strings'
 import { dsoFormBaseValidationSchema } from 'validation/dso'
 import { DSOStepButton } from './DSOStepButton'
@@ -95,7 +94,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const values = watch()
   const payload = transformData(values)
   const { stepValues, setStepValues } = useDSOFormContext()
-  const { dsoId, issuerId } = useParams()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const history = useHistory()
 
   const [stepConditions, setStepConditions] = useState<any>([])
@@ -131,21 +130,38 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
         {
           onSettled: (data: any) => {
             if (data !== undefined) {
-              const redirect: string = redirectFunction(data.data._id)
-              const newActiveStep = index
-              const search: string = `?step=${steps[
-                newActiveStep
-              ].label.replace(' ', '+')}`
+              if (activeStep === 0 && dsoId === undefined) {
+                const redirect: string = redirectFunction(data.data._id)
+                const search: string = `?step=${steps[activeStep].label.replace(
+                  ' ',
+                  '+'
+                )}`
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
+              } else {
+                const redirect: string = redirectFunction(data.data._id)
+                const newActiveStep = index
+                const search: string = `?step=${steps[
+                  newActiveStep
+                ].label.replace(' ', '+')}`
 
-              history.replace(
-                generatePath(`${redirect}${search}`, {
-                  issuerId:
-                    typeof data.data.user === 'string'
-                      ? data.data.user
-                      : getIdFromObj(data.data.user),
-                  dsoId: data.data._id
-                })
-              )
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
+              }
             }
           }
         }
@@ -237,10 +253,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                       step: steps[index],
                       formData: stepValues,
                       isLast: index === steps.length - 1,
-                      shouldValidate:
-                        dsoId !== undefined
-                          ? createComplete.includes(index)
-                          : completed.includes(index)
+                      shouldValidate: completed.includes(index)
                     }}
                     onClick={() => {
                       void handleSave(index)
