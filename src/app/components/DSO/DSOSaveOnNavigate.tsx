@@ -70,11 +70,9 @@ export const DSOSaveOnNavigate = ({
     await trigger('documents')
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
+    setCompleted()
     // eslint-disable-next-line
     if (!isEmpty(errors)) {
-      if (completed.includes(activeStep)) {
-        removeComplete(activeStep, completed)
-      }
       const newActiveStep = getNewActiveStep()
       const search: string = `?step=${stepsList[newActiveStep].label.replace(
         ' ',
@@ -99,7 +97,6 @@ export const DSOSaveOnNavigate = ({
         {
           onSettled: async (data: any) => {
             if (data !== undefined) {
-              setCompleted()
               const redirect: string = redirectFunction(data.data._id)
               const newActiveStep = getNewActiveStep()
               const search: string = `?step=${stepsList[

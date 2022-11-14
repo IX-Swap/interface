@@ -50,11 +50,11 @@ export const SaveDraftButton = ({
     await trigger('documents')
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
+    setCompleted()
     if (isEmpty(errors)) {
       // eslint-disable-next-line
       return await mutation(payload).then((data: any) => {
         if (data !== undefined) {
-          setCompleted()
           const redirect: string = redirectFunction(data.data._id)
           history.replace(
             generatePath(`${redirect}${search}`, {
@@ -67,10 +67,6 @@ export const SaveDraftButton = ({
           )
         }
       })
-    } else {
-      if (completed.includes(activeStep)) {
-        removeComplete(activeStep, completed)
-      }
     }
   }
   const [saveForm] = useMutation(handleSave)

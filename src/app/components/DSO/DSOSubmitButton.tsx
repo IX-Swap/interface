@@ -5,7 +5,11 @@ import { ButtonProps } from '@mui/material/Button'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { isEmpty } from 'lodash'
 import { useFormContext } from 'react-hook-form'
-
+export interface ConditionProps {
+  completed: boolean
+  active: boolean
+  error: boolean
+}
 export interface SubmitButtonProps extends ButtonProps {
   mutation: MutationResultPair<any, any, any, any>
   data: any
@@ -17,6 +21,7 @@ export interface SubmitButtonProps extends ButtonProps {
   removeComplete: any
   setStepValues: any
   stepValues: any
+  stepConditions: ConditionProps[]
 }
 
 export const DSOSubmitButton = (props: SubmitButtonProps) => {
@@ -32,7 +37,8 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
     activeStep,
     removeComplete,
     setStepValues,
-    stepValues
+    stepValues,
+    stepConditions
   } = props
 
   const [save, { isLoading }] = mutation
@@ -41,8 +47,16 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   const { trigger, errors, watch } = useFormContext()
   const [validating, setValidating] = useState(false)
   const [isValid, setIsValid] = useState(false)
-  const allCompleted =
-    completed?.includes(0) && completed?.includes(1) && completed?.includes(2)
+  const allCompleted: boolean =
+    stepConditions.length > 0
+      ? stepConditions[0].completed &&
+        !stepConditions[0].error &&
+        stepConditions[1].completed &&
+        !stepConditions[1].error &&
+        stepConditions[2].completed &&
+        !stepConditions[2].error
+      : false
+
   const values = watch()
   const getButtonText = () => {
     if (isApproved) {
