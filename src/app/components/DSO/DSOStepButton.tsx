@@ -93,7 +93,7 @@ export const DSOStepButton = ({
         )
       )
     } catch (error) {
-      console.log(error)
+      console.log()
     } finally {
       setValidating(false)
     }

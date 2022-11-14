@@ -64,7 +64,7 @@ export const SubmitButton = (props: SubmitButtonProps) => {
 
       setIsValid(isFormDataValid)
     } catch (error) {
-      console.log('error', error)
+      console.log()
     } finally {
       setValidating(false)
     }
