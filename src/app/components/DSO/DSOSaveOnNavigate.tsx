@@ -21,11 +21,6 @@ export interface SaveOnNavigateProps {
   stepsList: DSOStepperStep[]
   nextCallback: (nextStep: number) => void
   setCompleted: any
-  removeComplete: any
-  completed: number[]
-  removeCreateComplete: any
-  setCreateComplete: any
-  createComplete: any
 }
 
 export type DSOStepperMovement = 'forward' | 'backward' | null
@@ -38,12 +33,7 @@ export const DSOSaveOnNavigate = ({
   stepsList,
   move = 'forward',
   nextCallback,
-  setCompleted,
-  removeComplete,
-  completed,
-  removeCreateComplete,
-  setCreateComplete,
-  createComplete
+  setCompleted
 }: SaveOnNavigateProps) => {
   const { watch, errors, trigger } = useFormContext()
   const { stepValues, setStepValues } = useDSOFormContext()
@@ -70,11 +60,9 @@ export const DSOSaveOnNavigate = ({
     await trigger('documents')
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
+    setCompleted()
     // eslint-disable-next-line
     if (!isEmpty(errors)) {
-      if (completed.includes(activeStep)) {
-        removeComplete(activeStep, completed)
-      }
       const newActiveStep = getNewActiveStep()
       const search: string = `?step=${stepsList[newActiveStep].label.replace(
         ' ',
@@ -99,7 +87,6 @@ export const DSOSaveOnNavigate = ({
         {
           onSettled: async (data: any) => {
             if (data !== undefined) {
-              setCompleted()
               const redirect: string = redirectFunction(data.data._id)
               const newActiveStep = getNewActiveStep()
               const search: string = `?step=${stepsList[
@@ -130,7 +117,6 @@ export const DSOSaveOnNavigate = ({
         onClick={() => {
           void handleSave()
           nextCallback(getNewActiveStep())
-          setCreateComplete()
         }}
         disableElevation
         size='large'
@@ -148,7 +134,6 @@ export const DSOSaveOnNavigate = ({
       onClick={() => {
         void handleSave()
         nextCallback(getNewActiveStep())
-        setCreateComplete()
       }}
       size='large'
       // disabled={checkData()}

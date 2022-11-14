@@ -4,7 +4,7 @@ import { getOfferingName, getIdFromObj } from 'helpers/strings'
 import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
 import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { dsoFormSteps } from './steps'
 import { transformDSOToFormValues } from 'app/components/DSO/utils'
@@ -35,9 +35,11 @@ export const DSOForm = () => {
   const editMutation = useUpdateDSO(dsoId, getIdFromObj(user) ?? issuerId)
   const submitMutation = useSubmitDSO(dsoId)
   useSetPageTitle(getOfferingName(data))
+  const numRef = useRef(0)
 
   return (
     <DSOStepper
+      numRef={numRef}
       rawData={data}
       data={dataProvider}
       createMutation={createMutation}

@@ -5,7 +5,11 @@ import { ButtonProps } from '@mui/material/Button'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { isEmpty } from 'lodash'
 import { useFormContext } from 'react-hook-form'
-
+export interface ConditionProps {
+  completed: boolean
+  active: boolean
+  error: boolean
+}
 export interface SubmitButtonProps extends ButtonProps {
   mutation: MutationResultPair<any, any, any, any>
   data: any
@@ -17,6 +21,8 @@ export interface SubmitButtonProps extends ButtonProps {
   removeComplete: any
   setStepValues: any
   stepValues: any
+  mainConditions: any
+  rawData: any
 }
 
 export const DSOSubmitButton = (props: SubmitButtonProps) => {
@@ -32,17 +38,34 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
     activeStep,
     removeComplete,
     setStepValues,
-    stepValues
+    stepValues,
+    rawData
   } = props
 
   const [save, { isLoading }] = mutation
-  const isSubmitted = data?.status === 'Submitted'
-  const isApproved = data?.status === 'Approved'
+  const [disabled, setDisabled] = useState(true)
   const { trigger, errors, watch } = useFormContext()
   const [validating, setValidating] = useState(false)
   const [isValid, setIsValid] = useState(false)
-  const allCompleted =
-    completed?.includes(0) && completed?.includes(1) && completed?.includes(2)
+  const c0 = localStorage.getItem('conditions_0')
+  const c1 = localStorage.getItem('conditions_1')
+  const c2 = localStorage.getItem('conditions_2')
+  const shouldEnableSubmit = (): boolean => {
+    if (c0 !== null && c1 !== null && c2 !== null) {
+      const cond0: ConditionProps = JSON.parse(c0)
+      const cond1: ConditionProps = JSON.parse(c1)
+      const cond2: ConditionProps = JSON.parse(c2)
+      const first = cond0.completed && !cond0.error
+      const second = cond1.completed && !cond1.error
+      const third = cond2.completed && !cond2.error
+
+      return first && second && third
+    }
+
+    return false
+  }
+  const isSubmitted = rawData?.status === 'Submitted'
+  const isApproved = rawData?.status === 'Approved'
   const values = watch()
   const getButtonText = () => {
     if (isApproved) {
@@ -55,6 +78,18 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
 
     return `Submit ${submitText}`
   }
+
+  useEffect(() => {
+    const disable =
+      !shouldEnableSubmit() ||
+      isApproved ||
+      isLoading ||
+      isSubmitted ||
+      validating ||
+      !isEmpty(errors)
+
+    setDisabled(disable)
+  }, [data, errors]) // eslint-disable-line
 
   useEffect(() => {
     void checkValidation()
@@ -117,14 +152,12 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
         <Button
           variant='contained'
           color='primary'
-          onClick={async () => await handleSave()}
-          disabled={
-            isApproved ||
-            isLoading ||
-            isSubmitted ||
-            validating ||
-            (completed !== undefined ? !allCompleted : !isValid)
-          }
+          onClick={async () => {
+            if (!disabled) {
+              return await handleSave()
+            }
+          }}
+          disabled={disabled}
           disableElevation
           fullWidth={fullWidth}
           size={size}

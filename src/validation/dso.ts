@@ -30,11 +30,11 @@ export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
 export const dsoFAQItemSchema = object().shape<DsoFAQItem>(
   {
     question: string().when('answer', {
-      is: answer => answer !== '',
+      is: answer => Boolean(answer),
       then: string().required('Question is required when answer is provided')
     }),
     answer: string().when('question', {
-      is: question => question !== '',
+      is: question => Boolean(question),
       then: string().required('Answer is required when question is provided')
     })
   },
@@ -47,11 +47,11 @@ export const dsoFAQItemSchema = object().shape<DsoFAQItem>(
 export const dsoVideoLinkSchema = object().shape<DsoVideo>(
   {
     title: string().when('link', {
-      is: link => link !== '',
+      is: link => Boolean(link),
       then: string().required('Video Title is required when link is provided')
     }),
     link: string().when('title', {
-      is: title => title !== '',
+      is: title => Boolean(title),
       then: string().required('Video Link is required when title is provided')
     })
   },
@@ -268,11 +268,7 @@ export const getDSODocumentschema = object().shape<any>({
   documents: array<FormArrayElement<DataroomFile>>()
     .ensure()
     .required('Documents are required'),
-  faqs: array<DsoFAQItem>()
-    .of(dsoFAQItemSchema.required(validationMessages.required))
-    .required('FAQs are required'),
-  videos: array<DsoVideo>().of(
-    dsoVideoLinkSchema.required('Videos are required')
-  ),
+  faqs: array<DsoFAQItem>().of(dsoFAQItemSchema),
+  videos: array<DsoVideo>().of(dsoVideoLinkSchema),
   step: number()
 })

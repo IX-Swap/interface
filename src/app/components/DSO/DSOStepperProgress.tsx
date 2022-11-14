@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles } from '../FormStepper/FormStepper.styles'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { Grid, Paper, Step } from '@mui/material'
@@ -51,6 +51,8 @@ export interface DSOStepperProgressProps {
   removeCreateComplete: any
   setCreateComplete: any
   createComplete: any
+  setMainConditions: any
+  mainConditions: any
 }
 
 export const getSubmitDSOPayload = (data: any) => {
@@ -81,7 +83,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     setCompleted,
     removeComplete,
     setCreateComplete,
-    createComplete
+    createComplete,
+    setMainConditions,
+    mainConditions,
+    rawData
   } = props
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
@@ -93,6 +98,8 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const { dsoId, issuerId } = useParams()
   const history = useHistory()
 
+  const [stepConditions, setStepConditions] = useState<any>([])
+
   const handleSave = async (index: number) => {
     // eslint-disable-next-line
     const newValues = [...stepValues]
@@ -101,11 +108,8 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
     const obj = errors
-
+    setCompleted()
     if (!isEmpty(obj)) {
-      if (completed.includes(activeStep)) {
-        removeComplete(activeStep, completed)
-      }
       const search: string = `?step=${steps[index].label.replace(' ', '+')}`
       if (dsoId !== undefined && issuerId !== undefined) {
         const redirect: string = redirectFunction(dsoId)
@@ -127,7 +131,6 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
         {
           onSettled: (data: any) => {
             if (data !== undefined) {
-              setCompleted()
               const redirect: string = redirectFunction(data.data._id)
               const newActiveStep = index
               const search: string = `?step=${steps[
@@ -168,6 +171,8 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <DSOSubmitButton
+                    rawData={rawData}
+                    mainConditions={mainConditions}
                     setStepValues={setStepValues}
                     stepValues={stepValues}
                     activeStep={activeStep}
@@ -214,6 +219,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
               return (
                 <Step key={formStep.label}>
                   <DSOStepButton
+                    mainConditions={mainConditions}
+                    setMainConditions={setMainConditions}
+                    stepConditions={stepConditions}
+                    setStepConditions={setStepConditions}
                     step={step}
                     createComplete={createComplete}
                     variantsConditions={getStepStatus(

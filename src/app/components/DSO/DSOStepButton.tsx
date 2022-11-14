@@ -20,6 +20,10 @@ export interface StepButtonProps extends MuiStepButtonProps {
   data?: any
   rawData: any
   createComplete: any
+  setStepConditions: any
+  setMainConditions: any
+  stepConditions: any
+  mainConditions: any
 }
 
 export interface SchemaDataProps {
@@ -51,18 +55,22 @@ export const DSOStepButton = ({
   data,
   rawData,
   createComplete,
+  setStepConditions,
+  setMainConditions,
+  stepConditions,
+  mainConditions,
   ...props
 }: StepButtonProps) => {
-  const [validState, setValidState] = useState(false)
+  const [validState, setValidState] = useState(true)
   const [validating, setValidating] = useState(true)
   const conditions = {
     ...variantsConditions,
-    // completed: dsoId ? variantsConditions.completed : variantsConditions.completed && validState,
     error: validating ? false : !validState || variantsConditions.error
   }
   const cn = Object.keys(conditions).filter((key: string) => {
     return conditions[key as keyof VariantsConditions]
   })
+  localStorage.setItem(`conditions_${index}`, JSON.stringify(conditions))
 
   const validate = async () => {
     try {
