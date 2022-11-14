@@ -21,11 +21,6 @@ export interface SaveOnNavigateProps {
   stepsList: DSOStepperStep[]
   nextCallback: (nextStep: number) => void
   setCompleted: any
-  removeComplete: any
-  completed: number[]
-  removeCreateComplete: any
-  setCreateComplete: any
-  createComplete: any
 }
 
 export type DSOStepperMovement = 'forward' | 'backward' | null
@@ -38,12 +33,7 @@ export const DSOSaveOnNavigate = ({
   stepsList,
   move = 'forward',
   nextCallback,
-  setCompleted,
-  removeComplete,
-  completed,
-  removeCreateComplete,
-  setCreateComplete,
-  createComplete
+  setCompleted
 }: SaveOnNavigateProps) => {
   const { watch, errors, trigger } = useFormContext()
   const { stepValues, setStepValues } = useDSOFormContext()
@@ -127,7 +117,6 @@ export const DSOSaveOnNavigate = ({
         onClick={() => {
           void handleSave()
           nextCallback(getNewActiveStep())
-          setCreateComplete()
         }}
         disableElevation
         size='large'
@@ -145,7 +134,6 @@ export const DSOSaveOnNavigate = ({
       onClick={() => {
         void handleSave()
         nextCallback(getNewActiveStep())
-        setCreateComplete()
       }}
       size='large'
       // disabled={checkData()}

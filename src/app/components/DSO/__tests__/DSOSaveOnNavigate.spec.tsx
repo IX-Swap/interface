@@ -26,6 +26,7 @@ describe('DSOSaveOnNavigate', () => {
   const mutation = [save, { isLoading: false }] as any
   const transformer = jest.fn()
   const nextCallback = jest.fn()
+  const setCompleted = jest.fn()
 
   afterEach(async () => {
     await cleanup()
@@ -49,6 +50,7 @@ describe('DSOSaveOnNavigate', () => {
             move={'backward'}
             stepsList={dsoFormSteps}
             nextCallback={nextCallback}
+            setCompleted={setCompleted}
           />
         </Form>
       </DSOFormContextWrapper>
@@ -60,6 +62,7 @@ describe('DSOSaveOnNavigate', () => {
       <DSOFormContextWrapper>
         <Form>
           <DSOSaveOnNavigate
+            setCompleted={setCompleted}
             transformData={transformer}
             mutation={mutation}
             isNew={false}
@@ -80,6 +83,7 @@ describe('DSOSaveOnNavigate', () => {
       <DSOFormContextWrapper>
         <Form>
           <DSOSaveOnNavigate
+            setCompleted={setCompleted}
             transformData={transformer}
             mutation={mutation}
             isNew={false}
@@ -108,6 +112,7 @@ describe('DSOSaveOnNavigate', () => {
             move={null}
             stepsList={dsoFormSteps}
             nextCallback={nextCallback}
+            setCompleted={setCompleted}
           />
         </Form>
       </DSOFormContextWrapper>
@@ -121,6 +126,7 @@ describe('DSOSaveOnNavigate', () => {
         <DSOFormContextWrapper>
           <Form>
             <DSOSaveOnNavigate
+              setCompleted={setCompleted}
               transformData={transformer}
               mutation={mutation}
               isNew={false}

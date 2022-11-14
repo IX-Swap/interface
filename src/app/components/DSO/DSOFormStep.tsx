@@ -258,11 +258,6 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
                   : isRequiredOnLastStep) && (
                   <Fragment>
                     <DSOSaveOnNavigate
-                      removeCreateComplete={removeCreateComplete}
-                      setCreateComplete={setCreateComplete}
-                      createComplete={createComplete}
-                      removeComplete={removeComplete}
-                      completed={completed}
                       setCompleted={setCompleted}
                       transformData={step.getRequestPayload}
                       mutation={saveMutation}
@@ -279,11 +274,6 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
 
               {hasNextStep && (
                 <DSOSaveOnNavigate
-                  removeCreateComplete={removeCreateComplete}
-                  setCreateComplete={setCreateComplete}
-                  createComplete={createComplete}
-                  removeComplete={removeComplete}
-                  completed={completed}
                   setCompleted={setCompleted}
                   transformData={step.getRequestPayload}
                   mutation={saveMutation}
