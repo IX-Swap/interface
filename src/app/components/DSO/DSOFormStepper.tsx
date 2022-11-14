@@ -1,6 +1,6 @@
 import { Grid, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import React, { ComponentType } from 'react'
+import React, { ComponentType, useRef } from 'react'
 import { useStyles } from '../FormStepper/FormStepper.styles'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { MutationResultPair } from 'react-query'
@@ -34,6 +34,7 @@ export interface DSOStepperProps {
   skippable?: boolean
   redirectFunction: (dsoId: string) => string
   rawData: any
+  numRef: any
 }
 
 export const DSOStepper = (props: DSOStepperProps) => {
@@ -51,7 +52,8 @@ export const DSOStepper = (props: DSOStepperProps) => {
     isRequiredOnLastStep = true,
     submitText,
     skippable = false,
-    redirectFunction
+    redirectFunction,
+    rawData
   } = props
 
   const classes = useStyles()
@@ -180,18 +182,21 @@ export const DSOStepper = (props: DSOStepperProps) => {
       error: getErrorStatus(lastStep, index)
     }
   }
-
+  const setMainConditions = () => {}
+  const mainConditions = useRef({})
   return (
     <Grid>
       <DSOFormContextWrapper>
         {steps.map((step: any, index: number) => (
           <>
             <DSOFormStep
+              mainConditions={mainConditions}
+              setMainConditions={setMainConditions}
               removeComplete={removeComplete}
               removeCreateComplete={removeCreateComplete}
               setCreateComplete={handleCreateComplete}
               createComplete={createCompleted}
-              rawData={data}
+              rawData={rawData}
               key={`step-content-${index}`}
               step={step}
               stepsList={steps}

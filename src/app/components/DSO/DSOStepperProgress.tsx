@@ -51,6 +51,8 @@ export interface DSOStepperProgressProps {
   removeCreateComplete: any
   setCreateComplete: any
   createComplete: any
+  setMainConditions: any
+  mainConditions: any
 }
 
 export const getSubmitDSOPayload = (data: any) => {
@@ -81,7 +83,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     setCompleted,
     removeComplete,
     setCreateComplete,
-    createComplete
+    createComplete,
+    setMainConditions,
+    mainConditions,
+    rawData
   } = props
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
@@ -166,7 +171,8 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <DSOSubmitButton
-                    stepConditions={stepConditions}
+                    rawData={rawData}
+                    mainConditions={mainConditions}
                     setStepValues={setStepValues}
                     stepValues={stepValues}
                     activeStep={activeStep}
@@ -213,6 +219,9 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
               return (
                 <Step key={formStep.label}>
                   <DSOStepButton
+                    mainConditions={mainConditions}
+                    setMainConditions={setMainConditions}
+                    stepConditions={stepConditions}
                     setStepConditions={setStepConditions}
                     step={step}
                     createComplete={createComplete}

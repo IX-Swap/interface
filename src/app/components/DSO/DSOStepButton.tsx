@@ -21,6 +21,9 @@ export interface StepButtonProps extends MuiStepButtonProps {
   rawData: any
   createComplete: any
   setStepConditions: any
+  setMainConditions: any
+  stepConditions: any
+  mainConditions: any
 }
 
 export interface SchemaDataProps {
@@ -53,9 +56,12 @@ export const DSOStepButton = ({
   rawData,
   createComplete,
   setStepConditions,
+  setMainConditions,
+  stepConditions,
+  mainConditions,
   ...props
 }: StepButtonProps) => {
-  const [validState, setValidState] = useState(false)
+  const [validState, setValidState] = useState(true)
   const [validating, setValidating] = useState(true)
   const conditions = {
     ...variantsConditions,
@@ -64,6 +70,7 @@ export const DSOStepButton = ({
   const cn = Object.keys(conditions).filter((key: string) => {
     return conditions[key as keyof VariantsConditions]
   })
+  localStorage.setItem(`conditions_${index}`, JSON.stringify(conditions))
 
   const validate = async () => {
     try {
@@ -93,7 +100,6 @@ export const DSOStepButton = ({
   }
 
   useEffect(() => {
-    setStepConditions(conditions)
     stepData.shouldValidate === true && validate()
   }, [stepData.formData, stepData.shouldValidate]) //eslint-disable-line
 

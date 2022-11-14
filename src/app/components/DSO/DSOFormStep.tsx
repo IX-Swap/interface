@@ -164,6 +164,8 @@ export interface DSOFormStepProps {
   removeCreateComplete: any
   setCreateComplete: any
   createComplete: any
+  setMainConditions: any
+  mainConditions: any
 }
 
 export const DSOFormStep = (props: DSOFormStepProps) => {
@@ -193,7 +195,10 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
     removeComplete,
     removeCreateComplete,
     setCreateComplete,
-    createComplete
+    createComplete,
+    setMainConditions,
+    mainConditions,
+    rawData
   } = props
   const isCurrentStep = activeStep === index
   const classes: any = useStyles()
@@ -296,13 +301,15 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
         </Grid>
         <Grid item xs={1}>
           <DSOStepperProgress
+            mainConditions={mainConditions}
+            setMainConditions={setMainConditions}
             removeCreateComplete={removeCreateComplete}
             setCreateComplete={setCreateComplete}
             createComplete={createComplete}
             transformData={step.getRequestPayload}
             removeComplete={removeComplete}
             setCompleted={setCompleted}
-            rawData={data}
+            rawData={rawData}
             saveMutation={saveMutation}
             nonLinear={nonLinear}
             matches={matches}
