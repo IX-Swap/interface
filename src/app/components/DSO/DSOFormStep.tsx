@@ -212,7 +212,7 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   const hasNextStep = activeStep < totalSteps - 1
 
   const hasPrevStep = activeStep !== 0
-  const isEditing = !isNew
+  const isEditing = isNew
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = isEditing ? editMutation : createMutation
 
