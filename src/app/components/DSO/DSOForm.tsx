@@ -46,7 +46,7 @@ export const DSOForm = () => {
       submitMutation={submitMutation}
       steps={dsoFormSteps}
       nonLinear
-      formTitle={'Create DSO'}
+      formTitle={data !== undefined ? 'Edit DSO' : 'Create DSO'}
       redirectFunction={getCreateModeRedirect}
       submitText='DSO'
       isRequiredOnLastStep={true}
