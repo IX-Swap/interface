@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import { Wallet } from 'components/Launchpad/Wallet'
 
 import { ReactComponent as Logo } from 'assets/launchpad/svg/logo.svg'
+import { routes } from 'utils/routes'
+import { Link } from 'react-router-dom'
+import { isDevelopment } from 'utils/isEnvMode'
 
 export const Header = () => {
   return (
@@ -15,14 +18,12 @@ export const Header = () => {
       </TitleSection>
 
       <HeaderLinks>
-        <Link>Swap/Trade</Link>
-        <Link>Security Tokens</Link>
-        <Link>Liquidity Pools</Link>
-        <Link>IXS Launchpad</Link>
-        <Link>FNFT</Link>
-        <Link>Farming</Link>
-        <Link>Charts</Link>
-        <Link>Faucet</Link>
+        <HeaderLink to={routes.swap}>Swap/Trade</HeaderLink>
+        <HeaderLink to={routes.securityTokens()}>Security Tokens</HeaderLink>
+        <HeaderLink to={routes.pool}>Liquidity Pools</HeaderLink>
+        <HeaderLink to={routes.launchpad}>IXS Launchpad</HeaderLink>
+        <HeaderLink to={'#'}>Farming</HeaderLink>
+        <HeaderLink to={(isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}>Charts</HeaderLink>
       </HeaderLinks>
 
       <Wallet />
@@ -93,13 +94,21 @@ const TitleSection = styled.div`
 `
 
 
-const Link = styled.a`
+const HeaderLink = styled(Link)`
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
+
+  text-decoration: none;
 
   line-height: 16px;
   letter-spacing: -0.02em;
 
   color: ${props => props.theme.launchpad.colors.text.title};
+
+  transition: transform 0.1s ease-in-out;
+
+  :hover {
+    transform: scale(1.02);
+  }
 `
