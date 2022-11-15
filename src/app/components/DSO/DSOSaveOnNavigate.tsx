@@ -1,12 +1,16 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { generatePath, useHistory, useLocation } from 'react-router-dom'
+import {
+  generatePath,
+  useHistory,
+  useLocation,
+  useParams
+} from 'react-router-dom'
 import { MutationResultPair } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { Button } from '@mui/material'
 import { DSOStepperStep } from './DSOFormStepper'
 import { useDSOFormContext } from './DSOFormContext'
-import { useParams } from 'react-router'
 import { isEmpty } from 'lodash'
 
 export interface SaveOnNavigateProps {
@@ -20,6 +24,7 @@ export interface SaveOnNavigateProps {
   move: DSOStepperMovement
   stepsList: DSOStepperStep[]
   nextCallback: (nextStep: number) => void
+  setCompleted: any
 }
 
 export type DSOStepperMovement = 'forward' | 'backward' | null
@@ -31,11 +36,12 @@ export const DSOSaveOnNavigate = ({
   activeStep = 0,
   stepsList,
   move = 'forward',
-  nextCallback
+  nextCallback,
+  setCompleted
 }: SaveOnNavigateProps) => {
   const { watch, errors, trigger } = useFormContext()
   const { stepValues, setStepValues } = useDSOFormContext()
-  const { dsoId, issuerId } = useParams()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const location = useLocation()
 
   const values = watch()
@@ -58,8 +64,11 @@ export const DSOSaveOnNavigate = ({
     await trigger('documents')
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
+    const obj = errors
+    console.log('errors', obj)
+    setCompleted()
     // eslint-disable-next-line
-    if (!isEmpty(errors)) {
+    if (!isEmpty(obj)) {
       const newActiveStep = getNewActiveStep()
       const search: string = `?step=${stepsList[newActiveStep].label.replace(
         ' ',
@@ -84,20 +93,37 @@ export const DSOSaveOnNavigate = ({
         {
           onSettled: async (data: any) => {
             if (data !== undefined) {
-              const redirect: string = redirectFunction(data.data._id)
-              const newActiveStep = getNewActiveStep()
-              const search: string = `?step=${stepsList[
-                newActiveStep
-              ].label.replace(' ', '+')}`
-              history.replace(
-                generatePath(`${redirect}${search}`, {
-                  issuerId:
-                    typeof data.data.user === 'string'
-                      ? data.data.user
-                      : getIdFromObj(data.data.user),
-                  dsoId: data.data._id
-                })
-              )
+              console.log('activeStep dsoId', activeStep, dsoId)
+              if (activeStep === 0 && dsoId === undefined) {
+                const redirect: string = redirectFunction(data.data._id)
+                const search: string = `?step=${stepsList[
+                  activeStep
+                ].label.replace(' ', '+')}`
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
+              } else {
+                const redirect: string = redirectFunction(data.data._id)
+                const newActiveStep = getNewActiveStep()
+                const search: string = `?step=${stepsList[
+                  newActiveStep
+                ].label.replace(' ', '+')}`
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
+              }
             }
           }
         }

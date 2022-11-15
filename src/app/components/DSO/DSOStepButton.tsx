@@ -16,8 +16,18 @@ export interface StepButtonProps extends MuiStepButtonProps {
   step: number
   variantsConditions: VariantsConditions
   stepData?: any
-  index?: number
+  index: number
   data?: any
+  rawData: any
+  createComplete: any
+  setStepConditions: any
+  setMainConditions: any
+  stepConditions: any
+  mainConditions: any
+}
+
+export interface SchemaDataProps {
+  data: any
 }
 
 const getIconType = ({ active, completed, error }: VariantsConditions) => {
@@ -36,16 +46,22 @@ const getIconType = ({ active, completed, error }: VariantsConditions) => {
   return 'default'
 }
 
-export const StepButton = ({
+export const DSOStepButton = ({
   variantsConditions,
   step,
   children,
   stepData = {},
-  index = undefined,
+  index,
   data,
+  rawData,
+  createComplete,
+  setStepConditions,
+  setMainConditions,
+  stepConditions,
+  mainConditions,
   ...props
 }: StepButtonProps) => {
-  const [validState, setValidState] = useState(false)
+  const [validState, setValidState] = useState(true)
   const [validating, setValidating] = useState(true)
   const conditions = {
     ...variantsConditions,
@@ -54,36 +70,28 @@ export const StepButton = ({
   const cn = Object.keys(conditions).filter((key: string) => {
     return conditions[key as keyof VariantsConditions]
   })
-  const validate = async () => {
-    if (stepData.isLast === true) {
-      setValidState(true)
-      return
-    }
+  localStorage.setItem(`conditions_${index}`, JSON.stringify(conditions))
 
+  const validate = async () => {
     try {
-      if (index !== undefined) {
-        const schema =
-          typeof stepData.step.validationSchema === 'function'
-            ? stepData.step.validationSchema(stepData.formData?.[index].values)
-            : stepData.step.validationSchema
-        setValidating(true)
-        setValidState(
-          await schema?.isValid(
-            stepData.step?.getFormValues(
-              stepData.formData[index]?.values ?? data
+      const schema =
+        typeof stepData.step.validationSchema === 'function'
+          ? stepData.step.validationSchema(
+              stepData.formData?.[index]?.values !== undefined
+                ? stepData.formData?.[index]?.values
+                : rawData
             )
+          : stepData.step.validationSchema
+      setValidating(true)
+      setValidState(
+        await schema?.isValid(
+          stepData.step?.getFormValues(
+            stepData.formData[index]?.values !== undefined
+              ? stepData.formData[index]?.values
+              : rawData
           )
         )
-      } else {
-        const schema =
-          typeof stepData.step?.validationSchema === 'function'
-            ? stepData.step?.validationSchema(stepData.formData)
-            : stepData.step?.validationSchema
-        setValidating(true)
-        setValidState(
-          await schema?.isValid(stepData.step?.getFormValues(stepData.formData))
-        )
-      }
+      )
     } catch (error) {
       console.log()
     } finally {

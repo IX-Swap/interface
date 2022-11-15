@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState
-} from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 interface Step {
   values: any
@@ -13,13 +7,13 @@ interface Step {
 
 interface DSOFormContextInterface {
   stepValues: Step[]
-  setStepValues: Dispatch<SetStateAction<Step[]>>
+  setStepValues: any
 }
 
 const DSOFormContext = createContext<DSOFormContextInterface | null>(null)
 
 export const DSOFormContextWrapper: React.FC = ({ children }) => {
-  const [stepValues, setStepValues] = useState<Step[]>([])
+  const [stepValues, setStepValues] = useState([])
 
   return (
     <DSOFormContext.Provider value={{ stepValues, setStepValues }}>

@@ -50,8 +50,16 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
           justifyContent={'space-between'}
           alignItems={'center'}
         >
-          <Grid item>
+          <Grid item display={'flex'}>
             <FormSectionHeader title={renderTitle(index)} />
+            <Typography
+              marginLeft={1}
+              marginTop={0.4}
+              display={'inline'}
+              color={'text.secondary'}
+            >
+              (Optional)
+            </Typography>
           </Grid>
           {/* {index > 0 && ( */}
           <Grid item>

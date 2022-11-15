@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useStyles } from '../FormStepper/FormStepper.styles'
 import { Stepper } from 'ui/Stepper/Stepper'
 import { Grid, Paper, Step } from '@mui/material'
@@ -10,14 +10,12 @@ import { MutateFunction, MutationResultPair } from 'react-query'
 import { useFormContext } from 'react-hook-form'
 import { useDSOFormContext } from './DSOFormContext'
 import _, { isEmpty } from 'lodash'
-import { SubmitButton } from '../FormStepper/SubmitButton'
-import { generatePath, useHistory } from 'react-router-dom'
-import { useParams } from 'react-router'
+import { generatePath, useHistory, useParams } from 'react-router-dom'
 import { getIdFromObj } from 'helpers/strings'
-import { StepButton } from 'ui/Stepper/StepButton'
 import { dsoFormBaseValidationSchema } from 'validation/dso'
+import { DSOStepButton } from './DSOStepButton'
+import { DSOSubmitButton } from './DSOSubmitButton'
 export interface DSOStepperProgressProps {
-  transformData: any
   saveMutation: MutationResultPair<any, any, any, any>
   nonLinear: boolean
   matches: boolean
@@ -44,6 +42,16 @@ export interface DSOStepperProgressProps {
     transformData?: any
   ) => () => void
   redirectFunction: (dsoId: string) => string
+  rawData: any
+  nextCallback: any
+  setCompleted: any
+  removeComplete: any
+  transformData: any
+  removeCreateComplete: any
+  setCreateComplete: any
+  createComplete: any
+  setMainConditions: any
+  mainConditions: any
 }
 
 export const getSubmitDSOPayload = (data: any) => {
@@ -69,8 +77,15 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     mutation,
     getStepStatus,
     completed,
-    handleStepButtonClick,
-    redirectFunction
+    redirectFunction,
+    nextCallback,
+    setCompleted,
+    removeComplete,
+    setCreateComplete,
+    createComplete,
+    setMainConditions,
+    mainConditions,
+    rawData
   } = props
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
@@ -79,8 +94,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const values = watch()
   const payload = transformData(values)
   const { stepValues, setStepValues } = useDSOFormContext()
-  const { dsoId, issuerId } = useParams()
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const history = useHistory()
+
+  const [stepConditions, setStepConditions] = useState<any>([])
 
   const handleSave = async (index: number) => {
     // eslint-disable-next-line
@@ -90,7 +107,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     newValues[activeStep] = { values, errors: { ...errors } }
     setStepValues(newValues)
     const obj = errors
-
+    setCompleted()
     if (!isEmpty(obj)) {
       const search: string = `?step=${steps[index].label.replace(' ', '+')}`
       if (dsoId !== undefined && issuerId !== undefined) {
@@ -113,21 +130,38 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
         {
           onSettled: (data: any) => {
             if (data !== undefined) {
-              const redirect: string = redirectFunction(data.data._id)
-              const newActiveStep = index
-              const search: string = `?step=${steps[
-                newActiveStep
-              ].label.replace(' ', '+')}`
+              if (activeStep === 0 && dsoId === undefined) {
+                const redirect: string = redirectFunction(data.data._id)
+                const search: string = `?step=${steps[activeStep].label.replace(
+                  ' ',
+                  '+'
+                )}`
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
+              } else {
+                const redirect: string = redirectFunction(data.data._id)
+                const newActiveStep = index
+                const search: string = `?step=${steps[
+                  newActiveStep
+                ].label.replace(' ', '+')}`
 
-              history.replace(
-                generatePath(`${redirect}${search}`, {
-                  issuerId:
-                    typeof data.data.user === 'string'
-                      ? data.data.user
-                      : getIdFromObj(data.data.user),
-                  dsoId: data.data._id
-                })
-              )
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
+              }
             }
           }
         }
@@ -152,7 +186,13 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
             actions={
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <SubmitButton
+                  <DSOSubmitButton
+                    rawData={rawData}
+                    mainConditions={mainConditions}
+                    setStepValues={setStepValues}
+                    stepValues={stepValues}
+                    activeStep={activeStep}
+                    removeComplete={removeComplete}
                     mutation={submitMutation}
                     data={getSubmitDSOPayload(data)}
                     customSchema={dsoFormBaseValidationSchema}
@@ -160,6 +200,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                     fullWidth
                     size='medium'
                     submitText={submitText}
+                    completed={completed}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -180,6 +221,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                     search={
                       '?step=' + steps[activeStep].label.replace(' ', '+')
                     }
+                    setCompleted={setCompleted}
+                    removeComplete={removeComplete}
+                    completed={completed}
+                    setCreateComplete={setCreateComplete}
                   />
                 </Grid>
               </Grid>
@@ -188,20 +233,20 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
             {steps.map((formStep: any, index: number) => {
               const step = index + 1
               return (
-                <Step
-                  key={formStep.label}
-                  onClick={handleStepButtonClick(
-                    index,
-                    steps[activeStep].getRequestPayload
-                  )}
-                >
-                  <StepButton
+                <Step key={formStep.label}>
+                  <DSOStepButton
+                    mainConditions={mainConditions}
+                    setMainConditions={setMainConditions}
+                    stepConditions={stepConditions}
+                    setStepConditions={setStepConditions}
                     step={step}
+                    createComplete={createComplete}
                     variantsConditions={getStepStatus(
                       formStep,
                       index,
                       activeStep
                     )}
+                    rawData={data}
                     index={index}
                     data={data}
                     stepData={{
@@ -212,10 +257,12 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                     }}
                     onClick={() => {
                       void handleSave(index)
+                      nextCallback(index)
+                      setCreateComplete()
                     }}
                   >
                     {formStep.label}
-                  </StepButton>
+                  </DSOStepButton>
                 </Step>
               )
             })}

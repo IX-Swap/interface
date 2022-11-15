@@ -46,7 +46,7 @@ export const DSOSubscriptionDocument = () => {
             title: 'Please upload your subscription document'
           }}
           onRemoveCallback={() => {
-            control.setValue('subscriptionDocument', undefined)
+            control.setValue('subscriptionDocument', '')
           }}
         />
       </Grid>

@@ -1,6 +1,6 @@
 import { Grid, useMediaQuery } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import React, { ComponentType } from 'react'
+import React, { ComponentType, useRef } from 'react'
 import { useStyles } from '../FormStepper/FormStepper.styles'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { MutationResultPair } from 'react-query'
@@ -33,6 +33,8 @@ export interface DSOStepperProps {
   isLive?: boolean
   skippable?: boolean
   redirectFunction: (dsoId: string) => string
+  rawData: any
+  numRef: any
 }
 
 export const DSOStepper = (props: DSOStepperProps) => {
@@ -50,7 +52,8 @@ export const DSOStepper = (props: DSOStepperProps) => {
     isRequiredOnLastStep = true,
     submitText,
     skippable = false,
-    redirectFunction
+    redirectFunction,
+    rawData
   } = props
 
   const classes = useStyles()
@@ -58,10 +61,6 @@ export const DSOStepper = (props: DSOStepperProps) => {
   const matches = useMediaQuery(theme.breakpoints.down('md'))
   const { getFilterValue, updateFilter } = useQueryFilter()
   const stepFilter = getFilterValue('step')
-  // const { watch } = useFormContext()
-  // const history = useHistory()
-
-  // const [save] = mutation;
 
   const handleStepButtonClick =
     (step: number, save: any, transformData: any) => () => {
@@ -87,7 +86,31 @@ export const DSOStepper = (props: DSOStepperProps) => {
 
   const handleComplete = () => {
     if (!completed.includes(activeStep)) {
-      setCompleted([...completed, activeStep])
+      const tempComplete = new Set([...completed, activeStep])
+      setCompleted(Array.from(tempComplete))
+    }
+  }
+
+  const handleCreateComplete = () => {
+    if (!createCompleted.includes(activeStep)) {
+      const tempComplete = new Set([...createCompleted, activeStep])
+      setCreateCompleted(Array.from(tempComplete))
+    }
+  }
+
+  const removeComplete = (index: number, completed: any) => {
+    if (completed.includes(index) as boolean) {
+      const tempComplete = new Set([...completed])
+      tempComplete.delete(index)
+      setCompleted(Array.from(tempComplete))
+    }
+  }
+
+  const removeCreateComplete = (index: number, completed: any) => {
+    if (createCompleted.includes(index)) {
+      const tempComplete = new Set([...createCompleted])
+      tempComplete.delete(index)
+      setCreateCompleted(Array.from(tempComplete))
     }
   }
 
@@ -114,6 +137,15 @@ export const DSOStepper = (props: DSOStepperProps) => {
     )
   )
 
+  const [createCompleted, setCreateCompleted] = React.useState<number[]>(
+    Array.from(
+      {
+        length: getCompleted()
+      },
+      (x, i) => i
+    )
+  )
+
   const getStepFilterValue: () => number | undefined = () => {
     const stepByFilterIndex = steps.findIndex(
       (step: DSOStepperStep) => step.label === stepFilter
@@ -128,12 +160,6 @@ export const DSOStepper = (props: DSOStepperProps) => {
   const activeStep: number = getStepFilterValue() ?? defaultActiveStep ?? 0
 
   const getCompletedStatus = (lastStep: boolean, index: number) => {
-    if (lastStep) {
-      return data !== undefined
-        ? data?.status === 'Submitted' || data?.status === 'Approved'
-        : false
-    }
-
     return completed.includes(index)
   }
 
@@ -156,37 +182,47 @@ export const DSOStepper = (props: DSOStepperProps) => {
       error: getErrorStatus(lastStep, index)
     }
   }
-
+  const setMainConditions = () => {}
+  const mainConditions = useRef({})
   return (
     <Grid>
       <DSOFormContextWrapper>
         {steps.map((step: any, index: number) => (
-          <DSOFormStep
-            key={`step-content-${index}`}
-            step={step}
-            stepsList={steps}
-            index={index}
-            totalSteps={steps.length}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-            setCompleted={handleComplete}
-            data={data}
-            createMutation={createMutation}
-            editMutation={editMutation}
-            submitMutation={submitMutation}
-            skippable={skippable}
-            completed={completed}
-            isRequiredOnLastStep={isRequiredOnLastStep}
-            isNew={isNew}
-            redirectFunction={redirectFunction}
-            nonLinear={nonLinear}
-            matches={matches}
-            formTitle={formTitle}
-            submitText={submitText}
-            getStepStatus={getStepStatus}
-            handleStepButtonClick={handleStepButtonClick}
-            contentClassName={classes.content}
-          />
+          <>
+            <DSOFormStep
+              mainConditions={mainConditions}
+              setMainConditions={setMainConditions}
+              removeComplete={removeComplete}
+              removeCreateComplete={removeCreateComplete}
+              setCreateComplete={handleCreateComplete}
+              createComplete={createCompleted}
+              rawData={rawData}
+              key={`step-content-${index}`}
+              step={step}
+              stepsList={steps}
+              index={index}
+              totalSteps={steps.length}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
+              setCompleted={handleComplete}
+              data={data}
+              createMutation={createMutation}
+              editMutation={editMutation}
+              submitMutation={submitMutation}
+              skippable={skippable}
+              completed={completed}
+              isRequiredOnLastStep={isRequiredOnLastStep}
+              isNew={isNew}
+              redirectFunction={redirectFunction}
+              nonLinear={nonLinear}
+              matches={matches}
+              formTitle={formTitle}
+              submitText={submitText}
+              getStepStatus={getStepStatus}
+              handleStepButtonClick={handleStepButtonClick}
+              contentClassName={classes.content}
+            />
+          </>
         ))}
       </DSOFormContextWrapper>
     </Grid>

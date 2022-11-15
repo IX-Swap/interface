@@ -9,6 +9,7 @@ import { Icon } from 'ui/Icons/Icon'
 import { TypedField } from 'components/form/TypedField'
 import { plainValueExtractor } from 'helpers/forms'
 import { VSpacer } from 'components/VSpacer'
+import { useFormContext } from 'react-hook-form'
 
 export interface DSODataroomUploaderProps {
   fields: any[]
@@ -23,6 +24,8 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
   const [fileType, setFileType] = useState<DataroomDocumentType>(
     DataroomDocumentType.Other
   )
+
+  const { clearErrors, errors, trigger } = useFormContext()
 
   return (
     <Grid container direction={'column'} spacing={5}>
@@ -58,7 +61,10 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
                 title: fileType,
                 ...documentInfo
               }}
-              onRemoveCallback={() => {
+              onRemoveCallback={async () => {
+                if (fields.length === 1) {
+                  await trigger('documents')
+                }
                 remove?.(i)
               }}
             />
@@ -81,7 +87,9 @@ export const DSODataroomUploader = (props: DSODataroomUploaderProps) => {
             title: fileType,
             ...documentInfo
           }}
-          onSuccessUploadCallback={(file: any) => {
+          onSuccessUploadCallback={async (file: any) => {
+            console.log('successful callback', errors)
+            await clearErrors()
             append({ value: file })
           }}
           neverComplete
