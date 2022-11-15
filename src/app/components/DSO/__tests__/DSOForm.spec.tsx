@@ -43,7 +43,7 @@ describe('DSOForm', () => {
     render(<DSOForm />)
     expect(DSOStepper).toHaveBeenCalledWith(
       expect.objectContaining({
-        formTitle: 'Create DSO',
+        formTitle: 'Create DSO' || 'Edit DSO',
         steps: dsoFormSteps,
         createMutation: [createDSO, { isLoading: false }],
         editMutation: [updateDSO, { isLoading: false }],
