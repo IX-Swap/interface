@@ -34,4 +34,5 @@ export const routes = {
   tokenManager: (tab?: string, id?: number | null) =>
     `/token-manager/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
   admin: (tab?: string, id?: number | null) => `/admin/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
+  launchpad: '/launchpad'
 }
