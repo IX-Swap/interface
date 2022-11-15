@@ -39,6 +39,8 @@ const EditPayoutEvent = lazy(() => import('pages/CreatePayoutEvent/EditPayoutEve
 const PayoutItem = lazy(() => import('pages/PayoutItem'))
 const PayoutItemManager = lazy(() => import('pages/PayoutItem/PayoutItemManager'))
 
+const Launchpad = lazy(() => import('pages/Launchpad'))
+
 export interface RouteMapEntry {
   path: string
 
@@ -130,4 +132,5 @@ export const routeConfigs: RouteMapEntry[] = [
 
   { path: routes.staking, component: StakingTab },
   { path: routes.vesting, component: VestingTab },
+  { path: '/launchpad', component: Launchpad }
 ]

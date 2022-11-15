@@ -115,6 +115,30 @@ export interface Grids {
   lg: number
 }
 
+export interface LaunchpadTheme {
+    colors: {
+      primary: string
+      accent: string
+
+      background: string,
+      foreground: string,
+
+      border: {
+        default: string
+      },
+
+      text: {
+        title: string,
+        body: string,
+        caption: string,
+
+        light: string
+      }
+    }
+
+    font: string
+}
+
 declare module 'styled-components' {
   export interface DefaultTheme extends Colors {
     grids: Grids
@@ -134,5 +158,7 @@ declare module 'styled-components' {
     // css snippets
     flexColumnNoWrap: FlattenSimpleInterpolation
     flexRowNoWrap: FlattenSimpleInterpolation
+
+    launchpad: LaunchpadTheme
   }
 }
