@@ -16,7 +16,7 @@ export const InvestmentList: React.FC<Props> = (props) => {
       <InvestmentTitle>Investments</InvestmentTitle>
       <InvestmentListFilter onFilter={props.onFilter}/>
       <InvestmentListGrid>
-        {props.offers.map(offer => <InvestmentCard key={offer.id} {...offer} />)}
+        {props.offers.map(offer => <InvestmentCard key={offer.id} offer={offer} />)}
       </InvestmentListGrid>
     </InvestmentListContainer>
   )

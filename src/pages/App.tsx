@@ -233,7 +233,7 @@ export default function App() {
             </Suspense>
           </Web3ReactManager>
         </ToggleableBody>
-        <Footer />
+        {!hideHeader && <Footer />}
       </AppWrapper>
     </ErrorBoundary>
   )

@@ -57,8 +57,6 @@ export default function Launchpad() {
       <Pinned offer={pinnedOffer} />
       <InvestmentList offers={mainOfferList} onFilter={setFilter} />
       <Footer />
-
-      <KYCPrompt />
     </LaunchpadContainer>
   )
 }

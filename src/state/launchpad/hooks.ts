@@ -7,34 +7,35 @@ import { useKYCState } from "state/kyc/hooks"
 
 import { toggleKYCDialog } from './actions'
 
-export const useKYCModalState = () => {
+export const useKYCIsModalOpen = () => {
   return useSelector<AppState, boolean>(state => state.launchpad.isKYCModalOpen)
+}
+
+export const useKYCAllowOnlyAccredited = () => {
+  return useSelector<AppState, boolean>(state => state.launchpad.allowOnlyAccredited)
 }
 
 export const useToggleKYCModal = () => {
   const dispatch = useDispatch()
-  const isOpen = useKYCModalState()
-
+  const isOpen = useKYCIsModalOpen()
 
   return React.useCallback(() => {
-    console.log('toggling modal: ', !isOpen)
     dispatch(toggleKYCDialog({ open: !isOpen }))
   }, [isOpen])
 }
 
-export const useCheckKYC = () => {
+export const useSetAllowOnlyAccredited = () => {
   const dispatch = useDispatch()
 
+  return React.useCallback((allowOnlyAccredited: boolean) => {
+    dispatch(toggleKYCDialog({ open: allowOnlyAccredited }))
+  }, [dispatch])
+}
+
+export const useCheckKYC = () => {
   const { kyc } = useKYCState()
   
-  return React.useCallback((callback: () => void) => {
-    console.log('checking KYC')
-
-    if (kyc && kyc.status === KYCStatuses.APPROVED && kyc.individual?.accredited) {
-      callback()
-    } else {
-      console.log('opening modal')
-      dispatch(toggleKYCDialog({ open: true }))
-    }
+  return React.useCallback((allowOnlyAccredited: boolean) => {
+    return kyc && kyc.status === KYCStatuses.APPROVED && (!allowOnlyAccredited || kyc.individual?.accredited === 1)
   }, [kyc])
 }

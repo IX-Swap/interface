@@ -1,3 +1,5 @@
+import moment from "moment";
+
 let id = 0;
 
 function getUniqueOfferId() {
@@ -52,6 +54,13 @@ const saleStatuses = [
   'Closed'
 ]
 
+export enum SaleStatus {
+  notStarted,
+  publicSale,
+  closedSuccesfully,
+  closedUnsuccessfully
+}
+
 export interface InvestmentOffer {
   id: number
 
@@ -66,9 +75,14 @@ export interface InvestmentOffer {
 
   type: string
   industry: string
+
+  allowOnlyAccredited: boolean
   
   stage: string
-  saleStatus: string
+  sale: {
+    status: SaleStatus,
+    endsAt: Date
+  }
 
   details: {
     projectedFundraise: string
@@ -96,11 +110,43 @@ async function getGenericOffers(): Promise<InvestmentOffer[]> {
       industry: industries[Math.floor(Math.random() * industries.length)],
       type: types[Math.floor(Math.random() * types.length)],
       stage: stages[Math.floor(Math.random() * stages.length)],
-      saleStatus: saleStatuses[Math.floor(Math.random() * saleStatuses.length)],
+      allowOnlyAccredited: Math.random() > 0.5,
+      sale: getSaleStatus(),
     }))
 }
 
+function getSaleStatus() {
+  const saleStatuses = [
+    SaleStatus.notStarted,
+    SaleStatus.publicSale,
+    SaleStatus.closedSuccesfully,
+    SaleStatus.closedUnsuccessfully,
+  ]
+
+  const randomStatus = saleStatuses[Math.floor(Math.random() * saleStatuses.length)]
+
+  const endsAt = moment()
+
+  switch (randomStatus) {
+    case SaleStatus.notStarted:
+    case SaleStatus.publicSale:
+      endsAt.add(Math.floor(Math.random() * 200), 'days')
+      break;
+      
+    case SaleStatus.closedSuccesfully:
+    case SaleStatus.closedUnsuccessfully:
+      endsAt.subtract(Math.floor(Math.random() * 50), 'days')
+      break;
+  }
+
+  return {
+    status: randomStatus,
+    endsAt: new Date(endsAt.valueOf())
+  }
+}
+
 export async function getLaunchpadOffers(): Promise<InvestmentOffer[]> {
+
   return [
     { 
       id: 0,
@@ -118,7 +164,9 @@ export async function getLaunchpadOffers(): Promise<InvestmentOffer[]> {
       industry: 'Technology',
       
       stage: 'Closes soon',
-      saleStatus: 'Public Sale',
+      sale: getSaleStatus(),
+
+      allowOnlyAccredited: false,
 
       details: genericDetails
     },

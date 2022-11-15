@@ -12,18 +12,20 @@ import { ReactComponent as ContactUsIcon } from 'assets/launchpad/svg/contact-us
 
 import Modal from 'components/Modal'
 
-import { useKYCModalState, useToggleKYCModal } from 'state/launchpad/hooks'
 import { useKYCState } from 'state/kyc/hooks'
 
 import { KYCStatuses } from 'pages/KYC/enum'
 import { TextAreaField, TextField } from './TextField'
 
+interface Props {
+  allowOnlyAccredited: boolean
+}
 
-export const KYCPrompt = () => {
-  const isModalOpen = useKYCModalState()
-  const toggleModal = useToggleKYCModal()
-  
+export const KYCPrompt: React.FC<Props> = (props) => {
   const { kyc } = useKYCState()
+
+  const [isOpen, setIsOpen] = React.useState(true)
+  const toggleModal = React.useCallback(() => setIsOpen(state => !state), [])
 
   const [contactFormOpen, setContactForm] = React.useState(false)
 
@@ -32,7 +34,7 @@ export const KYCPrompt = () => {
   const showFooter = React.useMemo(() => !contactFormOpen && (!kyc || [KYCStatuses.NOT_SUBMITTED, KYCStatuses.PENDING].includes(kyc.status)), [kyc])
 
   return (
-    <Modal isOpen={isModalOpen} onDismiss={toggleModal}>
+    <Modal isOpen={isOpen} onDismiss={toggleModal}>
       <KYCPromptContainer>
         {!contactFormOpen && (
           <>
@@ -68,7 +70,7 @@ export const KYCPrompt = () => {
               </>
             )}
 
-            {kyc && kyc.status === KYCStatuses.APPROVED && !kyc.individual?.accredited && (
+            {kyc && kyc.status === KYCStatuses.APPROVED && props.allowOnlyAccredited && !kyc.individual?.accredited && (
               <>
                 <KYCPromptIconContainer>
                   <ErrorIcon />

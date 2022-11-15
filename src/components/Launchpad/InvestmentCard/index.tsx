@@ -1,118 +1,178 @@
 import React from 'react'
+import moment from 'moment'
 import styled from 'styled-components'
+
+import { useCheckKYC, useSetAllowOnlyAccredited, useToggleKYCModal } from 'state/launchpad/hooks'
+import { InvestmentOffer, SaleStatus } from 'pages/Launchpad/utils'
+
+import { Tooltip } from './Tooltip'
+import { InvestmentStatusBadge } from './InvestmentStatusBadge'
+import { InvestmentSaleStatusInfo } from './InvestmentSaleStatusInfo'
 
 import { ReactComponent as InvestmentApprovedIcon } from 'assets/launchpad/svg/investment-approved-icon.svg'
 import { ReactComponent as InvestmentMetaSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
-import { InvestmentStatusBadge } from './InvestmentStatusBadge'
-import { useCheckKYC } from 'state/launchpad/hooks'
+import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
+import Portal from '@reach/portal'
+import { KYCPrompt } from '../KYCPrompt'
+
 
 interface Props {
-  title: string
-  description: string
-
-  type: string
-  industry: string
-
-  icon: string
-  image: string
-
-  stage: string
-  saleStatus?: string
-
-  details: {
-    projectedFundraise: string
-    minimumInvestment: string
-    investmentType: string
-    issuer: string
-  }
+  offer: InvestmentOffer
 }
 
-export const InvestmentCard: React.FC<Props> = (props) => {
+export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const checkKYC = useCheckKYC()
 
   const [showDetails, setShowDetails] = React.useState(false)
+  const [showKYCModal, setShowKYCModal] = React.useState(false)
 
   const toggleShowDetails = React.useCallback(() => setShowDetails(state => !state), [])
+  const toggleKYCModal = React.useCallback(() => setShowKYCModal(state => !state), [])
+
+  const isClosed = React.useMemo(() => {
+    return [SaleStatus.closedSuccesfully, SaleStatus.closedUnsuccessfully].includes(offer.sale.status)
+  }, [offer])
+
+  const stage = React.useMemo(() => {
+    if (isClosed) {
+      return { label: 'Fully Funded', color: '#1FBA66' }
+    }
+    
+    const daysLeft =  moment(offer.sale.endsAt).diff(moment()).valueOf() / (24 * 60 * 60 * 1000)
+    
+    if (daysLeft > 60) {
+      return { label: 'Register to Invest', color: '#FFFFFF' }
+    }
+
+    return { label: 'Closes Soon', color: '#FF6060' }
+  }, [offer, isClosed])
+
+  const saleStatus = React.useMemo(() => {
+    if (isClosed) {
+      return 'Closed'
+    }
+
+    return 'Public Sale'
+  }, [offer, isClosed])
 
   const onClick = React.useCallback(() => {
-    checkKYC(() => alert('KYC is present'))
-  }, [checkKYC])
+    const canOpen = checkKYC(offer.allowOnlyAccredited)
+    
+    if (canOpen) {
+      alert('KYC is present')
+    } else {
+      toggleKYCModal()
+    }
+  }, [checkKYC, toggleKYCModal])
 
   return (
-    <InvestmentCardContainer>
-      <InvestmentCardImage src={props.image} />
+    <>
+      <InvestmentCardContainer>
+        <InvestmentCardImage src={offer.image} />
 
-      <InvestmentCardHeader>
-        <InvestmentCardTagsContainer>
-          <InvestmentStatusBadge status={props.stage} />
-          <InvestmentStatusBadge status={props.saleStatus} />
-        </InvestmentCardTagsContainer>
-      </InvestmentCardHeader>
+        <InvestmentCardHeader>
+          <InvestmentCardTagsContainer>
+            <InvestmentStatusBadge label={stage.label} color={stage.color} />
+            <InvestmentStatusBadge label={saleStatus} color="rgba(41, 41, 51, 0.2)" />
+          </InvestmentCardTagsContainer>
+        </InvestmentCardHeader>
 
-      <InvestmentCardInfoWrapper>
+        <InvestmentCardInfoWrapper>
 
-      </InvestmentCardInfoWrapper>
-      <InvestmentCardInfoContainer  expanded={showDetails}>
-        <InvestmentCardIcon src={props.icon} />
+        </InvestmentCardInfoWrapper>
 
-        <InvestmentCardMetaContainer>
-          {props.stage !== 'whitelist' && (
-            <>
-              <InvestmentApprovedIcon />
-              <InvestmentMetaSeparator />
-            </>
-          )}
+        <InvestmentCardInfoContainer  expanded={showDetails}>
+          <InvestmentCardIcon src={offer.icon} />
 
-          <InvestmentCardMetaEntry>{props.type}</InvestmentCardMetaEntry>
-          <InvestmentMetaSeparator />
+          <InvestmentCardMetaContainer>
+            {offer.stage !== 'whitelist' && (
+              <>
+                <InvestmentApprovedIcon />
+                <InvestmentMetaSeparator />
+              </>
+            )}
 
-          <InvestmentCardMetaEntry>{props.industry}</InvestmentCardMetaEntry>
-          <InvestmentMetaSeparator />
-        </InvestmentCardMetaContainer>
+            <InvestmentCardMetaEntry>{offer.type}</InvestmentCardMetaEntry>
+            <InvestmentMetaSeparator />
 
-        <InvestmentCardDescriptionContainer onClick={toggleShowDetails}>
-          <InvestmentCardTitle>{props.title}</InvestmentCardTitle>
-          <InvestmentCardDescription>{props.description}</InvestmentCardDescription>
-        </InvestmentCardDescriptionContainer>
+            <InvestmentCardMetaEntry>{offer.industry}</InvestmentCardMetaEntry>
+            <InvestmentMetaSeparator />
+          </InvestmentCardMetaContainer>
 
-        <InvestmentCardDetailsContainer show={showDetails}>
-          {showDetails && (
-            <>
-              <InvestmentCardDetailsEntry>
-                <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
-                <InvestmentCardDetailsEntryValue>{props.details.projectedFundraise}</InvestmentCardDetailsEntryValue>
-              </InvestmentCardDetailsEntry>
+          <InvestmentCardDescriptionContainer onClick={toggleShowDetails}>
+            <InvestmentCardTitle>{offer.title}</InvestmentCardTitle>
+            <InvestmentCardDescription>{offer.description}</InvestmentCardDescription>
 
-              <InvestmentCardDetailsSeparator />
-              
-              <InvestmentCardDetailsEntry>
-                <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
-                <InvestmentCardDetailsEntryValue>{props.details.minimumInvestment}</InvestmentCardDetailsEntryValue>
-              </InvestmentCardDetailsEntry>
-              
-              <InvestmentCardDetailsSeparator />
-              
-              <InvestmentCardDetailsEntry>
-                <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
-                <InvestmentCardDetailsEntryValue>{props.details.investmentType}</InvestmentCardDetailsEntryValue>
-              </InvestmentCardDetailsEntry>
-              
-              <InvestmentCardDetailsSeparator />
-              
-              <InvestmentCardDetailsEntry>
-                <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
-                <InvestmentCardDetailsEntryValue>{props.details.issuer}</InvestmentCardDetailsEntryValue>
-              </InvestmentCardDetailsEntry>
-            </>
-          )}
-        </InvestmentCardDetailsContainer>
-        
-        <InvestmentCardFooter>
-          {props.saleStatus === 'Public Sale' && <InvestButton type="button" onClick={onClick}>Invest</InvestButton>}
-          {props.saleStatus !== 'Public Sale' && <InvestButton type="button" onClick={onClick}>Learn More</InvestButton>}
-        </InvestmentCardFooter>
-      </InvestmentCardInfoContainer>
-    </InvestmentCardContainer>
+          </InvestmentCardDescriptionContainer>
+
+          <InvestmentCardDetailsContainer show={showDetails}>
+            {showDetails && (
+              <>
+                <InvestmentCardDetailsEntry>
+                  <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryValue>{offer.details.projectedFundraise}</InvestmentCardDetailsEntryValue>
+                </InvestmentCardDetailsEntry>
+
+                <InvestmentCardDetailsSeparator />
+                
+                <InvestmentCardDetailsEntry>
+                  <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryValue>{offer.details.minimumInvestment}</InvestmentCardDetailsEntryValue>
+                </InvestmentCardDetailsEntry>
+                
+                <InvestmentCardDetailsSeparator />
+                
+                <InvestmentCardDetailsEntry>
+                  <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryValue>{offer.details.investmentType}</InvestmentCardDetailsEntryValue>
+                </InvestmentCardDetailsEntry>
+                
+                <InvestmentCardDetailsSeparator />
+                
+                <InvestmentCardDetailsEntry>
+                  <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
+                  <InvestmentCardDetailsEntryValue>{offer.details.issuer}</InvestmentCardDetailsEntryValue>
+                </InvestmentCardDetailsEntry>
+              </>
+            )}
+          </InvestmentCardDetailsContainer>
+          
+          <InvestmentSaleStatusInfo 
+            endsAt={offer.sale.endsAt}
+            status={offer.sale.status}
+            allowOnlyAccredited={offer.allowOnlyAccredited}
+          />
+          
+          <InvestmentCardFooter>
+            {!isClosed && !offer.allowOnlyAccredited && (
+              <InvestButton type="button" onClick={onClick}>
+                Invest
+              </InvestButton>
+            )}
+            
+            {!isClosed && offer.allowOnlyAccredited && (
+              <InvestButton type="button" onClick={onClick}>
+                <Tooltip 
+                  title="Accredited investors only" 
+                  body={<>To access this deal you have to be an accredited investor. <a href="#">How to get accredited</a></>}
+                >
+                  <LockIcon /> 
+                </Tooltip>
+                Invest
+              </InvestButton>
+            )}
+
+            {isClosed && <InvestButton type="button" onClick={onClick}>Learn More</InvestButton>}
+          </InvestmentCardFooter>
+        </InvestmentCardInfoContainer>
+      </InvestmentCardContainer>
+      
+      {showKYCModal && (
+        <Portal>
+          <KYCPrompt allowOnlyAccredited={offer.allowOnlyAccredited} />
+        </Portal>
+      )}
+    </>
   )
 }
 
@@ -170,13 +230,19 @@ const InvestmentCardInfoWrapper = styled.main`
   position: relative;
 
   margin-top: 295px;
-  min-height: 220px;
+  min-height: 270px;
 `
 
 const InvestmentCardInfoContainer = styled.div<{ expanded: boolean }>`
   position: absolute;
 
   bottom: 0;
+
+  display: flex;
+
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
 
   padding: 1rem 1.5rem;
   padding-top: 3rem;
@@ -230,11 +296,7 @@ const InvestmentCardDetailsContainer = styled.div<{ show: boolean }>`
 
   z-index: 10;
 
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-
-  margin-left: -1.5rem;
-  margin-right: -1.5rem;
+  ${props => props.show && `margin: 0.5rem -1.5rem;`}
 
   border-top: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-bottom: 1px solid ${props => props.theme.launchpad.colors.border.default};
@@ -304,6 +366,14 @@ const InvestmentCardMetaEntry = styled.div`
 `
 
 const InvestButton = styled.button`
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.5rem;
+
   background: ${props => props.theme.launchpad.colors.background};
   color: ${props => props.theme.launchpad.colors.primary};
   border: 1px solid ${props => props.theme.launchpad.colors.primary};

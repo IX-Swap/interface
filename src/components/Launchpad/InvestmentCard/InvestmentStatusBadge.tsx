@@ -1,31 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { SaleStatus } from 'pages/Launchpad/utils'
+
 interface Props {
-  status?: string
-}
-
-function getBadgeColor(status?: string) {
-  switch (status) {
-    case 'Closes soon':
-      return '#FF6060'
-
-    case 'Fully Funded':
-      return '#1FBA66'
-
-    case 'Register to Invest':
-      return '#FFFFFF'
-
-    default:
-      return 'rgba(41, 41, 51, 0.2)'
-  }
+  label: string
+  color: string
 }
 
 export const InvestmentStatusBadge: React.FC<Props> = (props) => {
-  const color = React.useMemo(() => getBadgeColor(props.status), [])
 
   return (
-    <Container color={color}>{props.status}</Container>
+    <Container color={props.color}>{props.label}</Container>
   )
 }
 
