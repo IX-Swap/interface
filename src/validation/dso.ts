@@ -205,7 +205,7 @@ export const createDSOInformationSchema = object()
 
 export const editDSOValidationSchemaStep1 = object()
   .shape<DSOBaseFormValues>({
-    network: string(),
+    network: string().required('Network is required'),
     ...dsoInformationValidationSchemaStep1
   })
   .notRequired()
