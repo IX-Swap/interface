@@ -43,15 +43,14 @@ describe('DSOForm', () => {
     render(<DSOForm />)
     expect(DSOStepper).toHaveBeenCalledWith(
       expect.objectContaining({
-        formTitle: 'Create DSO',
+        formTitle: expect.stringMatching(/Create DSO||Edit DSO/),
         steps: dsoFormSteps,
         createMutation: [createDSO, { isLoading: false }],
         editMutation: [updateDSO, { isLoading: false }],
         submitMutation: [submitDSO, { isLoading: false }],
         submitText: 'DSO',
         isRequiredOnLastStep: true,
-        redirectFunction: getCreateModeRedirect,
-        isNew: true
+        redirectFunction: getCreateModeRedirect
       }),
       {}
     )

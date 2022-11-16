@@ -36,7 +36,7 @@ export const DSOForm = () => {
   const submitMutation = useSubmitDSO(dsoId)
   useSetPageTitle(getOfferingName(data))
   const numRef = useRef(0)
-
+  const isNew = data?.authorizations.length === 0
   return (
     <DSOStepper
       numRef={numRef}
@@ -47,11 +47,11 @@ export const DSOForm = () => {
       submitMutation={submitMutation}
       steps={dsoFormSteps}
       nonLinear
-      formTitle='Create DSO'
+      formTitle={isNew ? 'Create DSO' : 'Edit DSO'}
       redirectFunction={getCreateModeRedirect}
       submitText='DSO'
       isRequiredOnLastStep={true}
-      isNew={dsoId === undefined}
+      isNew={isNew}
     />
   )
 }

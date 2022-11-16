@@ -1,5 +1,6 @@
 import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
 import React from 'react'
+
 import { render, cleanup, fireEvent, waitFor } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { teamMember } from '__fixtures__/issuance'

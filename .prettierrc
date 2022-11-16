@@ -8,6 +8,7 @@
   "arrowParens": "avoid",
   "bracketSpacing": true,
   "jsxSingleQuote": true,
+  "endOfLine": "auto",
   "printWidth": 80,
   "overrides": [
     {
