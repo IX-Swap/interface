@@ -18,7 +18,6 @@ export interface DSOFormFieldsProps {
 
 export const DSOFormFields = (props: DSOFormFieldsProps) => {
   const { isNew, isLive } = props
-
   return (
     <Fragment>
       <Element name={DSOFormSection['DSO Information']}>

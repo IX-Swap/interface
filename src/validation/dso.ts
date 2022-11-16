@@ -1,5 +1,4 @@
-import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
-import _ from 'lodash'
+import { isDSOLive } from 'app/components/DSO/utils'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
   DSOBaseFormValues,
@@ -221,7 +220,7 @@ export const editLiveDSOValidationSchemaStep1 = object()
   .notRequired()
 
 export const getDSOInformationSchema = (data: any) => {
-  const isNew = _.isEqual(data, transformDSOToFormValues())
+  const isNew = data === undefined
   const isLive = isDSOLive(data)
 
   if (isNew) {

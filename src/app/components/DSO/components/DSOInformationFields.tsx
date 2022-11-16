@@ -14,8 +14,7 @@ export const DSOInformationFields = () => {
 
   const { data } = useDSOById(dsoId, issuerId)
   const isLive = isDSOLive(data)
-  const isNew = data?.authorizations.length === 0
-
+  const isNew = data === undefined || data?.authorizations.length === 0
   return (
     <Fragment>
       <Grid container spacing={2}>
