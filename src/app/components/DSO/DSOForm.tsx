@@ -36,7 +36,7 @@ export const DSOForm = () => {
   const submitMutation = useSubmitDSO(dsoId)
   useSetPageTitle(getOfferingName(data))
   const numRef = useRef(0)
-  const isNew = data?.authorizations.length === 0
+  const isNew = data === undefined || data?.authorizations.length === 0
   return (
     <DSOStepper
       numRef={numRef}
