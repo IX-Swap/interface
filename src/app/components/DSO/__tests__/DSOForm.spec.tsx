@@ -50,8 +50,7 @@ describe('DSOForm', () => {
         submitMutation: [submitDSO, { isLoading: false }],
         submitText: 'DSO',
         isRequiredOnLastStep: true,
-        redirectFunction: getCreateModeRedirect,
-        isNew: true
+        redirectFunction: getCreateModeRedirect
       }),
       {}
     )

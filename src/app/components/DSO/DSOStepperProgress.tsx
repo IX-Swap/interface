@@ -230,10 +230,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
               </Grid>
             }
           >
-            {steps.map((formStep: any, index: number) => {
+            {steps.map((formStep: DSOStepperStep, index: number) => {
               const step = index + 1
               return (
-                <Step key={formStep.label}>
+                <Step key={`dso-stepper-${formStep.label}`}>
                   <DSOStepButton
                     mainConditions={mainConditions}
                     setMainConditions={setMainConditions}

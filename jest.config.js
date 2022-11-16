@@ -6,7 +6,11 @@ module.exports = {
       '<rootDir>/tests/image.mock.ts',
     '.*\\.(css|less)$': '<rootDir>/tests/style.mock.ts'
   },
-  setupFilesAfterEnv: ['@testing-library/jest-dom', 'jest-localstorage-mock'],
+  setupFilesAfterEnv: [
+    '@testing-library/jest-dom',
+    'jest-localstorage-mock',
+    'mutationobserver-shim'
+  ],
   globalSetup: '<rootDir>/tests/global-setup.ts',
   testMatch: ['<rootDir>/src/**/__tests__/*.spec.ts?(x)'],
   resetMocks: false,
