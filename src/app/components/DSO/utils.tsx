@@ -46,12 +46,14 @@ export const redirectOnSave = ({
   })
 }
 
-export const getCreateModeRedirect = (dsoId: string) => {
-  if (dsoId !== undefined) {
+export const getCreateModeRedirect = (isCreate: boolean, dsoId: string) => {
+  if (!isCreate && dsoId !== undefined) {
     return IssuanceRoute.edit
   }
-
-  return IssuanceRoute.create
+  if (isCreate && dsoId !== undefined) {
+    return IssuanceRoute.create
+  }
+  return IssuanceRoute.createNew
 }
 
 export const redirect = ({

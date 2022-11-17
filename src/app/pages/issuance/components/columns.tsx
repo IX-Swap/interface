@@ -5,7 +5,7 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Grid } from '@mui/material'
 import { renderPriceWithCurrency } from 'app/pages/invest/components/DSOTable/columns'
 
-export const renderDSOLogo = (dsoId: string) => (
+export const renderDSOLogo = (isCreate: boolean, dsoId: string) => (
   <Grid container justifyContent='center' alignItems='center'>
     <DSOLogo dsoId={dsoId} size={70} />
   </Grid>

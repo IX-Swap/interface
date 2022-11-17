@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { isDSOLive } from 'app/components/DSO/utils'
@@ -11,10 +11,10 @@ import { FieldContainer } from 'app/pages/identity/components/FieldContainer/Fie
 
 export const DSOInformationFields = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
-
+  const { pathname } = useLocation<{ pathname: string }>()
   const { data } = useDSOById(dsoId, issuerId)
   const isLive = isDSOLive(data)
-  const isNew = dsoId === undefined
+  const isNew = pathname.includes('/create')
 
   return (
     <Fragment>

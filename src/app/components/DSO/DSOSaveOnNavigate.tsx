@@ -19,7 +19,7 @@ export interface SaveOnNavigateProps {
   isNew?: boolean
   activeStep?: number
   overRideStep?: boolean
-  redirectFunction: (dsoId: string) => string
+  redirectFunction: (isCreate: boolean, dsoId: string) => string
   isSaveDraft?: boolean
   move: DSOStepperMovement
   stepsList: DSOStepperStep[]
@@ -75,7 +75,10 @@ export const DSOSaveOnNavigate = ({
         '+'
       )}`
       if (dsoId !== undefined && issuerId !== undefined) {
-        const redirect: string = redirectFunction(dsoId)
+        const redirect: string = redirectFunction(
+          location.pathname.includes('/create'),
+          dsoId
+        )
         history.replace(
           generatePath(`${redirect}${search}`, {
             issuerId,
@@ -95,7 +98,10 @@ export const DSOSaveOnNavigate = ({
             if (data !== undefined) {
               console.log('activeStep dsoId', activeStep, dsoId)
               if (activeStep === 0 && dsoId === undefined) {
-                const redirect: string = redirectFunction(data.data._id)
+                const redirect: string = redirectFunction(
+                  location.pathname.includes('/create'),
+                  data.data._id
+                )
                 const search: string = `?step=${stepsList[
                   activeStep
                 ].label.replace(' ', '+')}`
@@ -109,7 +115,10 @@ export const DSOSaveOnNavigate = ({
                   })
                 )
               } else {
-                const redirect: string = redirectFunction(data.data._id)
+                const redirect: string = redirectFunction(
+                  location.pathname.includes('/create'),
+                  data.data._id
+                )
                 const newActiveStep = getNewActiveStep()
                 const search: string = `?step=${stepsList[
                   newActiveStep

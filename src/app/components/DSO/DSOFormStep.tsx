@@ -21,7 +21,7 @@ export interface onSubmitSuccessProps {
   isLastStep: boolean
   isEditing: boolean
   setCompleted: () => void
-  redirectFunction: (dsoId: string) => string
+  redirectFunction: (isCreate: boolean, dsoId: string) => string
   history: H.History
 }
 const onSubmitSuccess = ({
@@ -36,7 +36,7 @@ const onSubmitSuccess = ({
     //eslint-disable-line
     setCompleted?.()
   }
-  const redirect = redirectFunction(data?.data._id)
+  const redirect = redirectFunction(!isEditing, data?.data._id)
 
   history.replace(
     generatePath(redirect, {
@@ -60,6 +60,7 @@ export interface SubmitHandlerProps {
   redirectFunction: any
   isEditing: boolean
   data: any
+  rawData: any
   setCompleted: any
   step: any
 }
@@ -79,20 +80,22 @@ export const submitHandler = async (props: SubmitHandlerProps) => {
     history,
     redirectFunction,
     data,
+    rawData,
     setCompleted
   } = props
   if (!shouldSaveOnMove) {
     setActiveStep(activeStep + 1)
     return
   }
-  const mutation = isNew
-    ? createMutation[0]
-    : isLastStep
-    ? submitMutation[0]
-    : editMutation[0]
+  console.log(rawData)
+  const mutation =
+    rawData === undefined
+      ? createMutation[0]
+      : isLastStep
+      ? submitMutation[0]
+      : editMutation[0]
   const shouldSaveStep = shouldSaveOnMove && !isLastStep
   const payload = step.getRequestPayload(values)
-
   const onSuccessfulSubmit = (data: any) => {
     onSubmitSuccess({
       data,
@@ -138,7 +141,7 @@ export interface DSOFormStepProps {
   completed: number[]
   isRequiredOnLastStep?: boolean
   isNew: boolean
-  redirectFunction: (dsoId: string) => string
+  redirectFunction: (isCreate: boolean, dsoId: string) => string
   stepsList: DSOStepperStep[]
   nonLinear: any
   matches: boolean
@@ -212,11 +215,10 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   const hasNextStep = activeStep < totalSteps - 1
 
   const hasPrevStep = activeStep !== 0
-  const isEditing = !isNew
   const isLastStep = activeStep === totalSteps - 1
-  const saveMutation = isEditing ? editMutation : createMutation
+  const saveMutation = rawData !== undefined ? editMutation : createMutation
 
-  const mutation = isNew ? createMutation[0] : editMutation[0]
+  const mutation = rawData !== undefined ? editMutation[0] : createMutation[0]
 
   const nextCallback = (nextStep: number) => {
     setActiveStep(nextStep)

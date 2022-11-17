@@ -5,7 +5,7 @@ import { useCreateDSO } from 'app/pages/issuance/hooks/useCreateDSO'
 import { useSubmitDSO } from 'app/pages/issuance/hooks/useSubmitDSO'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
 import React, { useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { dsoFormSteps } from './steps'
 import { transformDSOToFormValues } from 'app/components/DSO/utils'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
@@ -18,16 +18,25 @@ export interface DSOFormProps {
   isNew?: boolean
 }
 
-export const getCreateModeRedirect = (dsoId: string): string => {
-  if (dsoId !== undefined) {
+export const getCreateModeRedirect = (
+  isCreate: boolean,
+  dsoId: string
+): string => {
+  if (!isCreate && dsoId !== undefined) {
     return IssuanceRoute.edit
   }
-
-  return IssuanceRoute.create
+  if (isCreate && dsoId !== undefined) {
+    return IssuanceRoute.create
+  }
+  return IssuanceRoute.createNew
 }
 
 export const DSOForm = () => {
-  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { dsoId, issuerId } = useParams<{
+    dsoId: string
+    issuerId: string
+  }>()
+  const location = useLocation()
   const { data } = useDSOById(dsoId, issuerId)
   const { user } = useAuth()
   const dataProvider = transformDSOToFormValues(data)
@@ -36,7 +45,6 @@ export const DSOForm = () => {
   const submitMutation = useSubmitDSO(dsoId)
   useSetPageTitle(getOfferingName(data))
   const numRef = useRef(0)
-
   return (
     <DSOStepper
       numRef={numRef}
@@ -47,11 +55,11 @@ export const DSOForm = () => {
       submitMutation={submitMutation}
       steps={dsoFormSteps}
       nonLinear
-      formTitle='Create DSO'
+      formTitle={'Create DSO'}
       redirectFunction={getCreateModeRedirect}
       submitText='DSO'
       isRequiredOnLastStep={true}
-      isNew={dsoId === undefined}
+      isNew={location.pathname.includes('/create')}
     />
   )
 }

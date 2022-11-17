@@ -29,7 +29,15 @@ export const IssuanceRoute = {
     'deployments'
   ]),
   edit: makeURL(['app', 'issuance', 'offerings', 'issuerId', 'dsoId', 'edit']),
-  create: makeURL(['app', 'issuance', 'offerings', 'create']),
+  create: makeURL([
+    'app',
+    'issuance',
+    'offerings',
+    'issuerId',
+    'dsoId',
+    'create'
+  ]),
+  createNew: makeURL(['app', 'issuance', 'offerings', 'create']),
   commitments: makeURL(['app', 'issuance', 'commitments', 'issuerId', 'dsoId']),
   capTable: makeURL(['app', 'issuance', 'captable', 'issuerId', 'dsoId']),
   manageDistributions: makeURL([
