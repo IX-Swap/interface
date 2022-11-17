@@ -1,6 +1,8 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
+import { useWeb3React } from '@web3-react/core'
+
 import { Link } from 'react-router-dom'
 
 import { PromptFooter } from './PromptFooter'
@@ -9,23 +11,28 @@ import { ReactComponent as KYCPromptIcon } from 'assets/launchpad/svg/kyc-prompt
 import { ReactComponent as Loading } from 'assets/launchpad/svg/loader.svg'
 import { ReactComponent as ErrorIcon } from 'assets/launchpad/svg/error-icon.svg'
 import { ReactComponent as ContactUsIcon } from 'assets/launchpad/svg/contact-us-icon.svg'
+import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
+
 
 import Modal from 'components/Modal'
 
 import { useKYCState } from 'state/kyc/hooks'
 
 import { KYCStatuses } from 'pages/KYC/enum'
+
 import { TextAreaField, TextField } from './TextField'
+import { ConnectionDialog } from '../Wallet/ConnectionDialog'
 
 interface Props {
   allowOnlyAccredited: boolean
 }
 
 export const KYCPrompt: React.FC<Props> = (props) => {
+  const { account } = useWeb3React()
   const { kyc } = useKYCState()
 
   const [isOpen, setIsOpen] = React.useState(true)
-  const toggleModal = React.useCallback(() => setIsOpen(state => !state), [])
+  const toggleModal = React.useCallback((isOpen?: boolean) => setIsOpen(state => isOpen ?? !state), [])
 
   const [contactFormOpen, setContactForm] = React.useState(false)
 
@@ -34,108 +41,116 @@ export const KYCPrompt: React.FC<Props> = (props) => {
   const showFooter = React.useMemo(() => !contactFormOpen && (!kyc || [KYCStatuses.NOT_SUBMITTED, KYCStatuses.PENDING].includes(kyc.status)), [kyc])
 
   return (
-    <Modal isOpen={isOpen} onDismiss={toggleModal}>
-      <KYCPromptContainer>
-        {!contactFormOpen && (
-          <>
-            {(!kyc || kyc.status === KYCStatuses.NOT_SUBMITTED) && (
-              <>
-                <KYCPromptIconContainer>
-                  <KYCPromptIcon />
-                </KYCPromptIconContainer>
+    <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
+      <ExitIconContainer onClick={() => toggleModal(false)}>
+        <CrossIcon />
+      </ExitIconContainer>
 
-                <KYCPromptTitle>
-                  Verify your account to participate in the deals on IXS Launchpad
-                </KYCPromptTitle>
+      {!account && <ConnectionDialog onConnect={() => toggleModal(true)} />}
 
-                <VerifyButton to="/kyc">
-                  Verify Account
-                </VerifyButton>
-              </>
-            )}
+      {account && (
+        <KYCPromptContainer>
+          {!contactFormOpen && (
+            <>
+              {(!kyc || kyc.status === KYCStatuses.NOT_SUBMITTED) && (
+                <>
+                  <KYCPromptIconContainer>
+                    <KYCPromptIcon />
+                  </KYCPromptIconContainer>
 
-            {kyc && kyc.status === KYCStatuses.PENDING && (
-              <>
-                <KYCLoadingIconContainer>
-                  <Loading />
-                </KYCLoadingIconContainer>
+                  <KYCPromptTitle>
+                    Verify your account to participate in the deals on IXS Launchpad
+                  </KYCPromptTitle>
 
-                <KYCPromptTitle>
-                  We are still verifying your account 
-                </KYCPromptTitle>
+                  <VerifyButton to="/kyc">
+                    Verify Account
+                  </VerifyButton>
+                </>
+              )}
 
-                <VerifyButton to="/kyc">
-                  Check status
-                </VerifyButton>
-              </>
-            )}
+              {kyc && kyc.status === KYCStatuses.PENDING && (
+                <>
+                  <KYCLoadingIconContainer>
+                    <Loading />
+                  </KYCLoadingIconContainer>
 
-            {kyc && kyc.status === KYCStatuses.APPROVED && props.allowOnlyAccredited && !kyc.individual?.accredited && (
-              <>
-                <KYCPromptIconContainer>
-                  <ErrorIcon />
-                </KYCPromptIconContainer>
+                  <KYCPromptTitle>
+                    We are still verifying your account 
+                  </KYCPromptTitle>
 
-                <KYCPromptTitle>
-                  To access this deal you have to be an accredited investor
-                </KYCPromptTitle>
-                
-                <ContactUsButton type="button" onClick={toggleModal}>
-                  Close
-                </ContactUsButton>
-              </>
-            )}
+                  <VerifyButton to="/kyc">
+                    Check status
+                  </VerifyButton>
+                </>
+              )}
 
-            {kyc && kyc.status === KYCStatuses.REJECTED && (
-              <>
-                <KYCPromptIconContainer>
-                  <ErrorIcon />
-                </KYCPromptIconContainer>
-                
-                <KYCPromptTitle>
-                  Your account verification was unsuccessful, 
-                  therefore you are not able to participate in 
-                  any deals. If you believe there is an issue 
-                  please contact us. 
-                </KYCPromptTitle>
+              {kyc && kyc.status === KYCStatuses.APPROVED && props.allowOnlyAccredited && !kyc.individual?.accredited && (
+                <>
+                  <KYCPromptIconContainer>
+                    <ErrorIcon />
+                  </KYCPromptIconContainer>
 
-                <ContactUsButton type="button" onClick={toggleContactForm}>
-                  Contact us
-                </ContactUsButton>
-                
-                <Caption>
-                  You only have to verify your account once, we are sorry for any inconvenience caused.
-                </Caption>
-              </>
-            )}
+                  <KYCPromptTitle>
+                    To access this deal you have to be an accredited investor
+                  </KYCPromptTitle>
+                  
+                  <ContactUsButton type="button" onClick={() => toggleModal()}>
+                    Close
+                  </ContactUsButton>
+                </>
+              )}
 
-            {showFooter && <PromptFooter />}
-          </>
-        )}
+              {kyc && kyc.status === KYCStatuses.REJECTED && (
+                <>
+                  <KYCPromptIconContainer>
+                    <ErrorIcon />
+                  </KYCPromptIconContainer>
+                  
+                  <KYCPromptTitle>
+                    Your account verification was unsuccessful, 
+                    therefore you are not able to participate in 
+                    any deals. If you believe there is an issue 
+                    please contact us. 
+                  </KYCPromptTitle>
 
-        {contactFormOpen && (
-          <>
-            <KYCPromptIconContainer>
-              <ContactUsIcon />
-            </KYCPromptIconContainer>
+                  <ContactUsButton type="button" onClick={toggleContactForm}>
+                    Contact us
+                  </ContactUsButton>
+                  
+                  <Caption>
+                    You only have to verify your account once, we are sorry for any inconvenience caused.
+                  </Caption>
+                </>
+              )}
 
-            <KYCPromptTitle>
-              Leave us a message
-            </KYCPromptTitle>
+              {showFooter && <PromptFooter />}
+            </>
+          )}
 
-            <TextField label="Subject"/>
-            <TextField label="Email Address" />
-            <TextAreaField label="How can we help You?" />
+          {contactFormOpen && (
+            <>
+              <KYCPromptIconContainer>
+                <ContactUsIcon />
+              </KYCPromptIconContainer>
+
+              <KYCPromptTitle>
+                Leave us a message
+              </KYCPromptTitle>
+
+              <TextField label="Subject"/>
+              <TextField label="Email Address" />
+              <TextAreaField label="How can we help You?" />
 
 
-            <ContactUsButton>
-              Send
-            </ContactUsButton>
+              <ContactUsButton>
+                Send
+              </ContactUsButton>
 
-            <Caption>Our team will follow up with you shortly.</Caption>
-          </>
-        )}
-      </KYCPromptContainer>
+              <Caption>Our team will follow up with you shortly.</Caption>
+            </>
+          )}
+        </KYCPromptContainer>
+      )}
     </Modal>
   )
 }
@@ -253,4 +268,11 @@ const Caption = styled.div`
   color: ${props => props.theme.launchpad.colors.text.title};
   
   opacity: 0.6;
+`
+
+const ExitIconContainer = styled.div`
+  position: absolute;
+
+  top: 1rem;
+  right: 1rem;
 `

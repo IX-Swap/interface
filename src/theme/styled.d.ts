@@ -116,27 +116,31 @@ export interface Grids {
 }
 
 export interface LaunchpadTheme {
-    colors: {
-      primary: string
-      accent: string
+  font: string
 
-      background: string,
-      foreground: string,
+  content: {
+    maxWidth: string
+  }
 
-      border: {
-        default: string
-      },
+  colors: {
+    primary: string
+    accent: string
 
-      text: {
-        title: string,
-        body: string,
-        caption: string,
+    background: string,
+    foreground: string,
 
-        light: string
-      }
+    border: {
+      default: string
+    },
+
+    text: {
+      title: string,
+      body: string,
+      caption: string,
+
+      light: string
     }
-
-    font: string
+  }
 }
 
 declare module 'styled-components' {

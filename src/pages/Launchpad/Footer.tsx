@@ -1,8 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Link } from 'react-router-dom'
+
 import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
 import { ReactComponent as Logo } from 'assets/launchpad/svg/logo-alternative.svg'
+
+import { ReactComponent as TelegramLogo } from 'assets/launchpad/svg/social/telegram.svg'
+import { ReactComponent as TwitterLogo } from 'assets/launchpad/svg/social/twitter.svg'
+import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
+import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/discord.svg'
+import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
+import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
 
 export const Footer = () => {
   const [active, setActive] = React.useState(false)
@@ -38,6 +47,15 @@ export const Footer = () => {
             Submit
           </SubscriptionFormSubmitButton>
         </SubscriptionFormFieldContainer>
+
+        <SocialMediaLinks>
+          <SocialMediaLink to="#"><TelegramLogo /></SocialMediaLink>
+          <SocialMediaLink to="#"><TwitterLogo /></SocialMediaLink>
+          <SocialMediaLink to="#"><MLogo /></SocialMediaLink>
+          <SocialMediaLink to="#"><DiscordLogo /></SocialMediaLink>
+          <SocialMediaLink to="#"><YoutubeLogo /></SocialMediaLink>
+          <SocialMediaLink to="#"><LinkedInLogo /></SocialMediaLink>
+        </SocialMediaLinks>
         
       </SubscriptionFormContainer>
 
@@ -99,8 +117,12 @@ export const Footer = () => {
 }
 
 const FooterContainer = styled.div`
-  margin: 5rem 10%;
+  margin: 5rem auto;
+  
+  max-width: ${props => props.theme.launchpad.content.maxWidth};
 `
+
+
 const FooterInfoContainer = styled.div`
   display: grid;
 
@@ -115,6 +137,33 @@ const FooterInfoContainer = styled.div`
 
   margin-top: 4rem;
   padding-right: 4rem;
+`
+
+const SocialMediaLinks = styled.div`
+  display: flex;
+
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 2rem;
+
+  gap: 3rem;
+`
+
+const SocialMediaLink = styled(Link)`
+  display: grid;
+
+  place-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 1.5rem;
+
+  background: ${props => props.theme.launchpad.colors.foreground};
+
+  border-radius: 50%;
 `
 
 const Copyright = styled.div`

@@ -225,6 +225,10 @@ export function launchpadTheme() {
   return {
     font: 'Inter',
 
+    content: {
+      maxWidth: '1180px'
+    },
+
     colors: {
       primary: '#6666FF',
       accent: '#E6E6FF',
