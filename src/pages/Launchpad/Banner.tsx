@@ -22,14 +22,14 @@ export const Banner = () => {
 }
 
 const BannerContainer = styled.div`
-  width: 100vw;
-  margin: 10rem 10%;
+  max-width: ${props => props.theme.launchpad.content.maxWidth};
+  margin: 4rem auto;
 `
 
 const BannerTitle = styled.div`
   color: ${props => props.theme.launchpad.colors.text.title};
 
-  max-width: 40%;
+  max-width: 640px;
 
   font-family: ${props => props.theme.launchpad.font};
   font-style: normal;

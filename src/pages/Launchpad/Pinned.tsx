@@ -30,9 +30,6 @@ export const Pinned: React.FC<Props> = (props) => {
 }
 
 const PinnedWrapper = styled.div`
-  width: 100vw;
-  height: 500px;
-
   background-color: ${props => props.theme.launchpad.colors.foreground};
 
   padding: 2rem;
@@ -48,7 +45,8 @@ const PinnedContainer = styled.div`
 
   gap: 2rem;
 
-  margin: 0 10%;
+  margin: 0 auto;
+  max-width: ${props => props.theme.launchpad.content.maxWidth};
 `
 
 const PinnedImageContainer = styled.div`

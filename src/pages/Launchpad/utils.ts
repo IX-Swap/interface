@@ -145,32 +145,31 @@ function getSaleStatus() {
   }
 }
 
+export async function getPinnedOffer(): Promise<InvestmentOffer> {
+  return { 
+    id: 0,
+
+    pinned: true,
+
+    image: await import(`assets/launchpad/images/Pinned.png`).then(image => image.default),
+    icon: '',
+
+    title: 'Less than 30 days left to invest in Space Sip',
+    description: 'Those using digital assets for payments are more likely to lack a bank account or credit card — indicating crypto has been embraced by an audience traditional institutions struggle to reach.',
+    date: new Date('2022.12.31'),
+
+    type: 'Security token',
+    industry: 'Technology',
+    
+    stage: 'Closes soon',
+    sale: getSaleStatus(),
+
+    allowOnlyAccredited: false,
+
+    details: genericDetails
+  }
+}
+
 export async function getLaunchpadOffers(): Promise<InvestmentOffer[]> {
-
-  return [
-    { 
-      id: 0,
-
-      pinned: true,
-
-      image: await import(`assets/launchpad/images/Pinned.png`).then(image => image.default),
-      icon: '',
-
-      title: 'Less than 30 days left to invest in Space Sip',
-      description: 'Those using digital assets for payments are more likely to lack a bank account or credit card — indicating crypto has been embraced by an audience traditional institutions struggle to reach.',
-      date: new Date('2022.12.31'),
-
-      type: 'Security token',
-      industry: 'Technology',
-      
-      stage: 'Closes soon',
-      sale: getSaleStatus(),
-
-      allowOnlyAccredited: false,
-
-      details: genericDetails
-    },
-
-    ...(await getGenericOffers())
-  ]
+  return [ await getPinnedOffer(), ...(await getGenericOffers()) ]
 }
