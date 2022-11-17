@@ -76,7 +76,6 @@ export const submitHandler = async (props: SubmitHandlerProps) => {
     submitMutation,
     editMutation,
     isLastStep,
-    isNew,
     history,
     redirectFunction,
     data,
@@ -87,7 +86,6 @@ export const submitHandler = async (props: SubmitHandlerProps) => {
     setActiveStep(activeStep + 1)
     return
   }
-  console.log(rawData)
   const mutation =
     rawData === undefined
       ? createMutation[0]
@@ -100,7 +98,7 @@ export const submitHandler = async (props: SubmitHandlerProps) => {
     onSubmitSuccess({
       data,
       isLastStep,
-      isEditing: !isNew,
+      isEditing: data !== undefined,
       setCompleted,
       redirectFunction,
       history
@@ -217,7 +215,6 @@ export const DSOFormStep = (props: DSOFormStepProps) => {
   const hasPrevStep = activeStep !== 0
   const isLastStep = activeStep === totalSteps - 1
   const saveMutation = rawData !== undefined ? editMutation : createMutation
-
   const mutation = rawData !== undefined ? editMutation[0] : createMutation[0]
 
   const nextCallback = (nextStep: number) => {

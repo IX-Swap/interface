@@ -129,12 +129,12 @@ export const FormStep = (props: FormStepProps) => {
       return
     }
 
-    const isNew = data === undefined
-    const mutation = isNew
-      ? createMutation[0]
-      : isLastStep
-      ? submitMutation[0]
-      : editMutation[0]
+    const mutation =
+      data === undefined
+        ? createMutation[0]
+        : isLastStep
+        ? submitMutation[0]
+        : editMutation[0]
     const shouldSaveStep = shouldSaveOnMove && !isLastStep
     const payload = step.getRequestPayload(values)
 
