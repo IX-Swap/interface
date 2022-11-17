@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'

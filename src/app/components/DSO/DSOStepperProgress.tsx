@@ -10,7 +10,12 @@ import { MutateFunction, MutationResultPair } from 'react-query'
 import { useFormContext } from 'react-hook-form'
 import { useDSOFormContext } from './DSOFormContext'
 import _, { isEmpty } from 'lodash'
-import { generatePath, useHistory, useParams } from 'react-router-dom'
+import {
+  generatePath,
+  useHistory,
+  useParams,
+  useLocation
+} from 'react-router-dom'
 import { getIdFromObj } from 'helpers/strings'
 import { dsoFormBaseValidationSchema } from 'validation/dso'
 import { DSOStepButton } from './DSOStepButton'
@@ -41,7 +46,7 @@ export interface DSOStepperProgressProps {
     save?: any,
     transformData?: any
   ) => () => void
-  redirectFunction: (dsoId: string) => string
+  redirectFunction: (isCreate: boolean, dsoId: string) => string
   rawData: any
   nextCallback: any
   setCompleted: any
@@ -96,7 +101,7 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const { stepValues, setStepValues } = useDSOFormContext()
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const history = useHistory()
-
+  const { pathname } = useLocation<{ pathname: string }>()
   const [stepConditions, setStepConditions] = useState<any>([])
 
   const handleSave = async (index: number) => {
@@ -111,7 +116,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
     if (!isEmpty(obj)) {
       const search: string = `?step=${steps[index].label.replace(' ', '+')}`
       if (dsoId !== undefined && issuerId !== undefined) {
-        const redirect: string = redirectFunction(dsoId)
+        const redirect: string = redirectFunction(
+          pathname.includes('/create'),
+          dsoId
+        )
         history.replace(
           generatePath(`${redirect}${search}`, {
             issuerId,
@@ -131,7 +139,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
           onSettled: (data: any) => {
             if (data !== undefined) {
               if (activeStep === 0 && dsoId === undefined) {
-                const redirect: string = redirectFunction(data.data._id)
+                const redirect: string = redirectFunction(
+                  pathname.includes('/create'),
+                  data.data._id
+                )
                 const search: string = `?step=${steps[activeStep].label.replace(
                   ' ',
                   '+'
@@ -146,7 +157,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
                   })
                 )
               } else {
-                const redirect: string = redirectFunction(data.data._id)
+                const redirect: string = redirectFunction(
+                  pathname.includes('/create'),
+                  data.data._id
+                )
                 const newActiveStep = index
                 const search: string = `?step=${steps[
                   newActiveStep
@@ -230,10 +244,10 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
               </Grid>
             }
           >
-            {steps.map((formStep: DSOStepperStep, index: number) => {
+            {steps.map((formStep: any, index: number) => {
               const step = index + 1
               return (
-                <Step key={`dso-stepper-${formStep.label}`}>
+                <Step key={formStep.label}>
                   <DSOStepButton
                     mainConditions={mainConditions}
                     setMainConditions={setMainConditions}

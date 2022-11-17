@@ -27,7 +27,7 @@ export const getCorporateInfoRequestPayload = (
 
   return {
     ...rest,
-    logo: (logo as DataroomFile)?._id ?? logo,
+    logo: (logo as DataroomFile)?._id,
     representatives: representativesTransformed,
     legalEntityStatus: customLegalEntityStatus
       ? otherLegalEntityStatus

@@ -32,7 +32,7 @@ export interface DSOStepperProps {
   isNew: boolean
   isLive?: boolean
   skippable?: boolean
-  redirectFunction: (dsoId: string) => string
+  redirectFunction: (isCreate: boolean, dsoId: string) => string
   rawData: any
   numRef: any
 }

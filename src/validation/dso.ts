@@ -1,4 +1,5 @@
-import { isDSOLive } from 'app/components/DSO/utils'
+import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
+import _ from 'lodash'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import {
   DSOBaseFormValues,
@@ -205,7 +206,7 @@ export const createDSOInformationSchema = object()
 
 export const editDSOValidationSchemaStep1 = object()
   .shape<DSOBaseFormValues>({
-    network: string().required('Network is required'),
+    network: string(),
     ...dsoInformationValidationSchemaStep1
   })
   .notRequired()
@@ -220,7 +221,7 @@ export const editLiveDSOValidationSchemaStep1 = object()
   .notRequired()
 
 export const getDSOInformationSchema = (data: any) => {
-  const isNew = data === undefined
+  const isNew = _.isEqual(data, transformDSOToFormValues())
   const isLive = isDSOLive(data)
 
   if (isNew) {

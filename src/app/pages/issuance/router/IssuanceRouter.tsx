@@ -35,6 +35,14 @@ export const IssuanceRouter = () => {
       </AppRoute>
 
       <AppRoute
+        breadcrumb='Create Digital Security Offering'
+        exact
+        path={IssuanceRoute.createNew}
+      >
+        <CreateDSO />
+      </AppRoute>
+
+      <AppRoute
         breadcrumb='View Digital Security Offering'
         exact
         path={IssuanceRoute.view}

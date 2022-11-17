@@ -37,7 +37,6 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "mui-rte": "^2.0.1",
-    "mutationobserver-shim": "^0.3.7",
     "process": "^0.11.10",
     "pure-react-carousel": "^1.27.6",
     "react": "^17.0.2",

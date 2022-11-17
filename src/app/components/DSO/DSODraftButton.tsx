@@ -5,7 +5,7 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { MutateFunction, useMutation } from 'react-query'
 import { generatePath } from 'react-router'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { useDSOFormContext } from './DSOFormContext'
 import { DSOStepperStep } from './DSOFormStepper'
 
@@ -15,7 +15,7 @@ export interface SaveDraftButtonProps {
   disabled?: boolean
   mutation: MutateFunction<any, any, any, any>
   transformData: any
-  redirectFunction: (dsoId: string) => string
+  redirectFunction: (isCreate: boolean, dsoId: string) => string
   search: string
   activeStep: number
   steps: DSOStepperStep[]
@@ -43,7 +43,7 @@ export const SaveDraftButton = ({
   const values = watch()
   const history = useHistory()
   const payload = transformData(values)
-
+  const { pathname } = useLocation<{ pathname: string }>()
   const handleSave = async () => {
     const newValues = [...stepValues]
     await trigger()
@@ -57,7 +57,10 @@ export const SaveDraftButton = ({
       // eslint-disable-next-line
       return await mutation(payload).then((data: any) => {
         if (data !== undefined) {
-          const redirect: string = redirectFunction(data.data._id)
+          const redirect: string = redirectFunction(
+            pathname.includes('/create'),
+            data.data._id
+          )
           history.replace(
             generatePath(`${redirect}${search}`, {
               issuerId:

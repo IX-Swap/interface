@@ -1,7 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { fireEvent, waitFor } from '@testing-library/react'
-
 import {
   DownloadDSOSubscriptionDocument,
   DownloadDSOSubscriptionDocumentProps
