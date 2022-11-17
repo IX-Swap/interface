@@ -3,7 +3,7 @@ import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 import { DigitalSecurityOffering } from 'types/dso'
 
-export const useDisableDSO = (isCreate: boolean, dsoId: string) => {
+export const useDisableDSO = (dsoId: string) => {
   const { apiService, snackbarService } = useServices()
 
   const disableDSO = async (isDisabled: boolean) => {
