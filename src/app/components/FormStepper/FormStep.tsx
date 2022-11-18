@@ -32,15 +32,23 @@ export interface FormStepProps {
   skippable?: boolean
   completed: number[]
   createModeRedirect: CreateModeRedirect
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
   redirectOnSave?: (args: RedirectOnSaveArgs) => void
   redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
   isRequiredOnLastStep?: boolean
   followDefaultMode?: boolean
   dataToCheck?: any
+<<<<<<< Updated upstream
   isCreateMode?: {
     value: boolean
   }
   overRideStep?: boolean
+=======
+>>>>>>> Stashed changes
 }
 
 interface OnSubmitSuccessArgs {
@@ -81,6 +89,10 @@ const onSubmitSuccess = ({
       })
     )
   }
+<<<<<<< Updated upstream
+=======
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -98,14 +110,25 @@ export const FormStep = (props: FormStepProps) => {
     setCompleted,
     skippable,
     completed,
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    createModeRedirect
+=======
+>>>>>>> Stashed changes
     createModeRedirect,
     redirectCallback,
     redirectOnSave,
     isRequiredOnLastStep = false,
     followDefaultMode = true,
+<<<<<<< Updated upstream
     dataToCheck = undefined,
     isCreateMode: hasCreateMode = undefined,
     overRideStep = false
+=======
+    dataToCheck = undefined
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
   } = props
   const isCurrentStep = activeStep === index
   const classes = useStyles()

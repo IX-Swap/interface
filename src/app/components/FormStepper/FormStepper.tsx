@@ -23,12 +23,24 @@ export interface FormStepperStep {
   formId?: string
 }
 
+<<<<<<< Updated upstream
 export type CreateModeRedirect =
   | string
   | ((type?: string) => string)
   | ((type: string) => string)
   | undefined
 
+=======
+<<<<<<< HEAD
+export type CreateModeRedirect = string | ((type: string) => string) | undefined
+=======
+export type CreateModeRedirect =
+  | string
+  | ((type?: string) => string)
+  | undefined
+
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
 export interface FormStepperProps {
   steps: FormStepperStep[]
   data: any
@@ -41,16 +53,25 @@ export interface FormStepperProps {
   skippable?: boolean
   formTitle?: string
   createModeRedirect: CreateModeRedirect
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
   submitText?: string
   redirectOnSave?: (args: RedirectOnSaveArgs) => void
   redirectCallback?: (createModeRedirect: CreateModeRedirect, data: any) => void
   isRequiredOnLastStep?: boolean
   followDefaultMode?: boolean
   dataToCheck?: any
+<<<<<<< Updated upstream
   isCreateMode?: {
     value: boolean
   }
   overRideStep?: boolean
+=======
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -66,15 +87,26 @@ export const FormStepper = (props: FormStepperProps) => {
     nonLinear = false,
     skippable = false,
     formTitle,
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+    createModeRedirect
+=======
+>>>>>>> Stashed changes
     createModeRedirect,
     submitText,
     redirectOnSave,
     redirectCallback,
     isRequiredOnLastStep,
     followDefaultMode = true,
+<<<<<<< Updated upstream
     dataToCheck = undefined,
     isCreateMode = undefined,
     overRideStep = false
+=======
+    dataToCheck = undefined
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
   } = props
 
   const { isMobile } = useAppBreakpoints()
@@ -191,13 +223,22 @@ export const FormStepper = (props: FormStepperProps) => {
             skippable={skippable}
             completed={completed}
             createModeRedirect={createModeRedirect}
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
             redirectOnSave={redirectOnSave}
             redirectCallback={redirectCallback}
             isRequiredOnLastStep={isRequiredOnLastStep}
             followDefaultMode={followDefaultMode}
             dataToCheck={dataToCheck}
+<<<<<<< Updated upstream
             isCreateMode={isCreateMode}
             overRideStep={overRideStep}
+=======
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
           />
         ))}
       </Grid>

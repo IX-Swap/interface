@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     background: theme.palette.backgrounds.default,
-    height: '70px',
+    height: `70px`,
     width: '55px !important',
     '&:focus': {
       border: `1px solid ${theme.palette.otpInput.borderFocus}`

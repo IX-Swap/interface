@@ -8,8 +8,17 @@ import {
   DsoFAQItem,
   DsoVideo,
   DepositAddress,
+<<<<<<< Updated upstream
   DigitalSecurityOffering,
   DSOBaseFormValues
+=======
+<<<<<<< HEAD
+  DigitalSecurityOffering
+=======
+  DigitalSecurityOffering,
+  DSOBaseFormValues
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -147,6 +156,11 @@ export const videoLink: DsoVideo = {
   link: 'Link'
 }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 export const baseDSOFormValues: DSOBaseFormValues = {
   logo: '5f898b69aa141c6d0d358ce6',
   totalFundraisingAmount: 100000,
@@ -168,6 +182,7 @@ export const baseDSOFormValues: DSOBaseFormValues = {
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
+<<<<<<< Updated upstream
   capitalStructure: 'Good',
   isCampaign: true,
   decimalPlaces: 18
@@ -205,6 +220,13 @@ export const CompanyInformation: any = {
   fundraisingMilestone: '<p>Hello world</p>',
   useOfProceeds: '<p>Hello world</p>',
   businessModel: '<p>Hello world</p>',
+=======
+  capitalStructure: 'Good'
+}
+
+>>>>>>> 440082842 (DSO Step 1 integration)
+export const formValues: DSOFormValues = {
+>>>>>>> Stashed changes
   team: [
     {
       name: 'Team Ultimate',
