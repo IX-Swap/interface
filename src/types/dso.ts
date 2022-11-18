@@ -96,15 +96,9 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   dealStatus?: string
   marketType?: string
   dso?: string
-<<<<<<< Updated upstream
   productSpecification?: string
   step: number
   listingType?: string
-=======
-<<<<<<< HEAD
-=======
-  productSpecification?: string
->>>>>>> Stashed changes
 }
 
 export interface NewBaseDigitalSecurityOffering
@@ -114,11 +108,7 @@ export interface NewBaseDigitalSecurityOffering
   capitalStructure: string
   tokenName: string
   tokenSymbol: string
-<<<<<<< Updated upstream
   uniqueIdentifierCode?: string | null
-=======
-  uniqueIdentifierCode?: string
->>>>>>> Stashed changes
   currency: string
   network: string
   logo: string
@@ -138,12 +128,8 @@ export interface NewBaseDigitalSecurityOffering
   leverage?: number
   productSpecification?: string
   step?: number
-<<<<<<< Updated upstream
   isCampaign: boolean
   decimalPlaces: number
-=======
->>>>>>> 440082842 (DSO Step 1 integration)
->>>>>>> Stashed changes
 }
 
 export interface DSOInsight {
@@ -170,11 +156,6 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   disableInvestInCampaign?: boolean
 }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 export interface NewDigitalSecurityOffering
   extends BaseDigitalSecurityOffering {
   promoted: boolean
@@ -188,10 +169,6 @@ export interface NewDigitalSecurityOffering
   disableInvestInCampaign?: boolean
 }
 
-<<<<<<< Updated upstream
-=======
->>>>>>> 440082842 (DSO Step 1 integration)
->>>>>>> Stashed changes
 export type DSOFormValues = Omit<
   DigitalSecurityOffering,
   | '_id'
@@ -231,11 +208,6 @@ export type DSOFormValues = Omit<
   step?: number
 }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 export type DSOBaseFormValues = Omit<
   NewBaseDigitalSecurityOffering,
   | '_id'
@@ -294,10 +266,6 @@ export type DSORequestArgsStep1 = Partial<
   >
 >
 
-<<<<<<< Updated upstream
-=======
->>>>>>> 440082842 (DSO Step 1 integration)
->>>>>>> Stashed changes
 export type DSORequestArgs = Partial<
   Omit<DSOFormValues, 'documents' | 'subscriptionDocument'> & {
     subscriptionDocument?: string
@@ -346,11 +314,6 @@ export interface DSOFormActionsProps {
   dso: DigitalSecurityOffering | undefined
   schema: ObjectSchema<Shape<object | undefined, DSOFormValues>, object>
 }
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
 export interface RedirectArgs {
   createModeRedirect: CreateModeRedirect
   data?: any
@@ -368,17 +331,9 @@ export interface RedirectOnSaveArgs {
 export interface RedirectSaveArgs {
   createModeRedirect: CreateModeRedirect
   data?: any
-<<<<<<< Updated upstream
-=======
-  isCreateMode: boolean
->>>>>>> Stashed changes
   nextLocation: H.Location<unknown> | undefined
   setIsRedirecting: any
   dsoId: string
   issuerId: string
   history: H.History
 }
-<<<<<<< Updated upstream
-=======
->>>>>>> 440082842 (DSO Step 1 integration)
->>>>>>> Stashed changes

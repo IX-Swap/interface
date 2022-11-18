@@ -3,7 +3,6 @@ import { DSOCompanyInformationFields } from 'app/components/DSO/components/DSOCo
 import { DSODocumentsFields } from 'app/components/DSO/components/DSODocumentsFields'
 import { DSOFormValues } from 'types/dso'
 import { DSOInformationFields } from 'app/components/DSO/components/DSOInformationFields'
-<<<<<<< Updated upstream
 import {
   getDSOInformationSchema,
   getDSOCompanyInformationSchema,
@@ -16,11 +15,6 @@ import {
   getDSOInformationRequestPayload
 } from './requests'
 import { isEqual } from 'lodash'
-=======
-import { getDSOInformationSchema } from 'validation/dso'
-import { getDSOInformationFormValues } from './utils'
-import { getDSOInformationRequestPayload } from './requests'
->>>>>>> Stashed changes
 
 export const dsoFormSteps = [
   {
@@ -34,7 +28,6 @@ export const dsoFormSteps = [
     label: 'Company Information',
     getFormValues: (data: DSOFormValues) => {
       return {
-<<<<<<< Updated upstream
         team: data.team.length > 0 ? [...data.team] : [{}],
         introduction: data.introduction ?? '',
         businessModel: data.businessModel ?? '',
@@ -46,25 +39,11 @@ export const dsoFormSteps = [
     getRequestPayload: getDSOCompanyInformationPayload,
     validationSchema: getDSOCompanyInformationSchema,
     initialValidationSchema: getDSOCompanyInformationSchema,
-=======
-        team: data.team ?? [{}],
-        introduction: data.introduction,
-        businessModel: data.businessModel,
-        useOfProceeds: data.useOfProceeds,
-        fundraisingMilestone: data.fundraisingMilestone
-      }
-    },
-    getRequestPayload: (values: any) => {
-      return values
-    },
-    validationSchema: {},
->>>>>>> Stashed changes
     component: () => <DSOCompanyInformationFields />
   },
   {
     label: 'Documents',
     getFormValues: (data: DSOFormValues) => {
-<<<<<<< Updated upstream
       const videos: any[] = []
       const faqs: any[] = []
 
@@ -84,17 +63,6 @@ export const dsoFormSteps = [
     },
     getRequestPayload: getDSODocumentsPayload,
     validationSchema: getDSODocumentschema,
-=======
-      return {
-        subscriptionDocument: data.subscriptionDocument,
-        documents: data.documents,
-        videos: data.videos ?? [{}],
-        faqs: data.faqs ?? [{}]
-      }
-    },
-    getRequestPayload: {},
-    validationSchema: {},
->>>>>>> Stashed changes
     component: () => <DSODocumentsFields />
   }
 ]
