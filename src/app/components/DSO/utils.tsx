@@ -2,23 +2,12 @@ import React from 'react'
 import {
   DigitalSecurityOffering,
   DSOFormValues,
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-  DSOLaunchStatus
-=======
->>>>>>> Stashed changes
   DSOLaunchStatus,
   DSOBaseFormValues,
   NewBaseDigitalSecurityOffering,
   RedirectArgs,
-<<<<<<< Updated upstream
   RedirectSaveArgs,
   RedirectOnSaveArgs
-=======
-  RedirectSaveArgs
->>>>>>> 440082842 (DSO Step 1 integration)
->>>>>>> Stashed changes
 } from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
 import { getIdFromObj } from 'helpers/strings'
@@ -26,7 +15,6 @@ import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'
 import { Network, Urls } from 'types/networks'
 import { sanitize } from 'dompurify'
-<<<<<<< Updated upstream
 import { generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { CreateModeRedirect } from '../FormStepper/FormStepper'
@@ -67,11 +55,6 @@ export const getCreateModeRedirect = (isCreate: boolean, dsoId: string) => {
   }
   return IssuanceRoute.createNew
 }
-=======
-<<<<<<< HEAD
-=======
-import { generatePath } from 'react-router-dom'
->>>>>>> Stashed changes
 
 export const redirect = ({
   createModeRedirect,
@@ -82,11 +65,7 @@ export const redirect = ({
   if (createModeRedirect !== undefined && issuerId !== '' && dsoId !== '') {
     const redirect =
       typeof createModeRedirect === 'function'
-<<<<<<< Updated upstream
         ? createModeRedirect('dso')
-=======
-        ? createModeRedirect()
->>>>>>> Stashed changes
         : createModeRedirect
 
     history.replace(
@@ -104,12 +83,8 @@ export const redirectSave = ({
   dsoId,
   issuerId,
   history,
-<<<<<<< Updated upstream
   setIsRedirecting,
   data
-=======
-  setIsRedirecting
->>>>>>> Stashed changes
 }: RedirectSaveArgs) => {
   if (
     createModeRedirect !== undefined &&
@@ -119,11 +94,7 @@ export const redirectSave = ({
   ) {
     const redirect =
       typeof createModeRedirect === 'function'
-<<<<<<< Updated upstream
         ? createModeRedirect(dsoId)
-=======
-        ? createModeRedirect()
->>>>>>> Stashed changes
         : createModeRedirect
     history.replace(
       generatePath(`${redirect}${nextLocation.search}`, {
@@ -160,13 +131,9 @@ export const transformDSOToFormValuesStep1 = (
       interestRate: '',
       dividendYield: '',
       investmentPeriod: '',
-<<<<<<< Updated upstream
       productSpecification: '',
       isCampaign: false,
       decimalPlaces: 18
-=======
-      productSpecification: ''
->>>>>>> Stashed changes
     } as any
   }
 
@@ -192,18 +159,11 @@ export const transformDSOToFormValuesStep1 = (
     investmentPeriod: dso.investmentPeriod,
     minimumInvestment: dso.minimumInvestment,
     launchDate: dso.launchDate ?? null,
-<<<<<<< Updated upstream
     completionDate: dso.completionDate ?? null,
     isCampaign: dso.isCampaign,
     decimalPlaces: dso.decimalPlaces
   }
 }
-=======
-    completionDate: dso.completionDate ?? null
-  }
-}
->>>>>>> 440082842 (DSO Step 1 integration)
->>>>>>> Stashed changes
 
 export const transformDSOToFormValues = (
   dso?: DigitalSecurityOffering | undefined
@@ -310,34 +270,6 @@ export const getDSOInformationFormValues = (data: any) => {
     completionDate: data.completionDate ?? null,
     step: 1,
     decimalPlaces: data.decimalPlaces
-  }
-}
-
-export const getDSOInformationFormValues = (data: DSOFormValues) => {
-  return {
-    capitalStructure: data.capitalStructure,
-    logo: data.logo,
-    tokenName: data.tokenName,
-    tokenSymbol: data.tokenSymbol,
-    issuerName: data.issuerName,
-    corporate: data.corporate,
-    currency: getIdFromObj({ _id: data.currency }),
-    uniqueIdentifierCode: data.uniqueIdentifierCode,
-    network: data.network,
-    dividendYield: data.dividendYield,
-    grossIRR: data.grossIRR,
-    investmentStructure: data.investmentStructure,
-    equityMultiple: data.equityMultiple,
-    interestRate: data.interestRate,
-    leverage: data.leverage,
-    totalFundraisingAmount: data.totalFundraisingAmount,
-    pricePerUnit: data.pricePerUnit,
-    distributionFrequency: data.distributionFrequency,
-    investmentPeriod: data.investmentPeriod,
-    minimumInvestment: data.minimumInvestment,
-    launchDate: data.launchDate ?? null,
-    completionDate: data.completionDate ?? null,
-    step: 0
   }
 }
 

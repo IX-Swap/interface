@@ -1,27 +1,12 @@
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 import _ from 'lodash'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-<<<<<<< Updated upstream
 import {
   DSOBaseFormValues,
   DsoFAQItem,
   DsoTeamMember,
   DsoVideo
 } from 'types/dso'
-=======
-<<<<<<< HEAD
-import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
-=======
-import {
-  DsoFAQItem,
-  DSOFormValues,
-  DSOBaseFormValues,
-  DsoTeamMember,
-  DsoVideo
-} from 'types/dso'
->>>>>>> 440082842 (DSO Step 1 integration)
-import { array, number, object, string } from 'yup'
->>>>>>> Stashed changes
 import { corporateName, lettersOrSpaces } from 'validation/regexes'
 import { array, boolean, number, object, string } from 'yup'
 import { dateSchema, validationMessages } from './shared'
@@ -30,7 +15,6 @@ import {
   pastDateValidator,
   uniqueIdentifierCodeValidator
 } from './validators'
-import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -153,14 +137,8 @@ export const dsoFormBaseValidationSchema = {
     .nullable()
 }
 
-<<<<<<< Updated upstream
 export const dsoInformationValidationSchemaStep1: any = {
   logo: string().required('Logo is required'),
-=======
-<<<<<<< HEAD
-=======
-export const dsoInformationValidationSchemaStep1 = {
->>>>>>> Stashed changes
   capitalStructure: string().required('Capital Structure is required'),
   corporate: string()
     .max(50, 'Maximum of 50 characters')
@@ -170,63 +148,13 @@ export const dsoInformationValidationSchemaStep1 = {
       "Corporate must include only letters, numbers and these special characters . , - ; & '"
     ),
   currency: string().required('Currency is required'),
-<<<<<<< Updated upstream
   isCampaign: boolean(),
-=======
-  distributionFrequency: string().when('capitalStructure', {
-    is: capitalStructure =>
-      capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Distribution Frequency is required')
-  }),
-  dividendYield: number().when('capitalStructure', {
-    is: 'Equity',
-    then: number()
-      .transform(numberTransformer)
-      .required('Dividend Yield is required')
-  }),
-  equityMultiple: number().when('capitalStructure', {
-    is: 'Equity',
-    then: number()
-      .transform(numberTransformer)
-      .required('Equity Multiple is required')
-  }),
-  grossIRR: number().when('capitalStructure', {
-    is: 'Equity',
-    then: number()
-      .transform(numberTransformer)
-      .required('Gross IRR is required')
-  }),
-  interestRate: number().when('capitalStructure', {
-    is: 'Debt',
-    then: number()
-      .transform(numberTransformer)
-      .required('Interest Rate is required')
-  }),
-  investmentPeriod: number()
-    .transform(numberTransformer)
-    .when('capitalStructure', {
-      is: capitalStructure =>
-        capitalStructure === 'Equity' || capitalStructure === 'Debt',
-      then: number()
-        .transform(numberTransformer)
-        .required('Investment Period is required')
-    }),
-  investmentStructure: string().when('capitalStructure', {
-    is: capitalStructure =>
-      capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Investment Structure is required')
-  }),
->>>>>>> Stashed changes
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
     .required('Launch Date is required')
     .test(
       'before-completionDate',
-<<<<<<< Updated upstream
       'Launch Date cannot be later than Completion Date',
-=======
-      'Launch date cannot be later than completion date',
->>>>>>> Stashed changes
       function (launch) {
         const { completionDate } = this.parent
         return isBeforeDate(launch, completionDate)
@@ -236,13 +164,6 @@ export const dsoInformationValidationSchemaStep1 = {
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
-<<<<<<< Updated upstream
-=======
-  leverage: number().when('capitalStructure', {
-    is: 'Debt',
-    then: number().transform(numberTransformer).required('Leverage is required')
-  }),
->>>>>>> Stashed changes
   minimumInvestment: number()
     .typeError('Minimum Investment must be a number')
     .nullable()
@@ -254,19 +175,14 @@ export const dsoInformationValidationSchemaStep1 = {
   tokenName: string()
     .required('Token Name is required')
     .matches(lettersOrSpaces, 'Token Name must not have special characters'),
-<<<<<<< Updated upstream
   tokenSymbol: string()
     .required('Token Symbol is required')
     .min(2, 'Minimum 2 characters')
     .max(6, 'Maximum 6 characters'),
-=======
-  tokenSymbol: string().required('Token Symbol is required'),
->>>>>>> Stashed changes
   totalFundraisingAmount: number()
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
     .nullable(),
-<<<<<<< Updated upstream
   status: string(),
   uniqueIdentifierCode: string()
     .test(
@@ -283,105 +199,31 @@ export const dsoInformationValidationSchemaStep1 = {
 
 export const createDSOInformationSchema = object()
   .shape<DSOBaseFormValues>({
-=======
-  logo: string().required('Logo is required'),
-  status: string(),
-  uniqueIdentifierCode: string().test(
-    'length',
-    'Unique identifier code is required',
-    uniqueIdentifierCodeValidator
-  )
-}
-
->>>>>>> 440082842 (DSO Step 1 integration)
-export const createDSOValidationSchema = object()
-  .shape<DSOFormValues>({
->>>>>>> Stashed changes
     network: string().required('Network is required'),
     ...dsoInformationValidationSchemaStep1
   })
   .notRequired()
 
-<<<<<<< Updated upstream
 export const editDSOValidationSchemaStep1 = object()
   .shape<DSOBaseFormValues>({
-=======
-<<<<<<< HEAD
-=======
-export const createDSOInformationSchema = object()
-  .shape<DSOBaseFormValues>({
-    network: string().required('Network is required'),
-    ...dsoInformationValidationSchemaStep1
-  })
-  .notRequired()
-
->>>>>>> 440082842 (DSO Step 1 integration)
-export const editDSOValidationSchema = object()
-  .shape<DSOFormValues>({
->>>>>>> Stashed changes
     network: string(),
     ...dsoInformationValidationSchemaStep1
   })
   .notRequired()
 
-<<<<<<< Updated upstream
 export const editLiveDSOValidationSchemaStep1 = object()
   .shape<DSOBaseFormValues>({
     ...dsoInformationValidationSchemaStep1,
-=======
-<<<<<<< HEAD
-=======
-export const editDSOValidationSchemaStep1 = object()
-  .shape<DSOBaseFormValues>({
-    network: string(),
-    ...dsoInformationValidationSchemaStep1
-  })
-  .notRequired()
-
->>>>>>> 440082842 (DSO Step 1 integration)
-export const editLiveDSOValidationSchema = object()
-  .shape<DSOFormValues>({
-    ...dsoFormBaseValidationSchema,
->>>>>>> Stashed changes
     network: string(),
     launchDate: string().required(validationMessages.required),
     completionDate: string().required(validationMessages.required)
   })
   .notRequired()
 
-<<<<<<< Updated upstream
 export const getDSOInformationSchema = (data: any) => {
   const isNew = _.isEqual(data, transformDSOToFormValues())
   const isLive = isDSOLive(data)
 
-=======
-<<<<<<< HEAD
-=======
-export const editLiveDSOValidationSchemaStep1 = object()
-  .shape<DSOBaseFormValues>({
-    ...dsoFormBaseValidationSchema,
-    network: string(),
-    launchDate: string().required(validationMessages.required),
-    completionDate: string().required(validationMessages.required)
-  })
-  .notRequired()
-
-export const getDSOInformationSchema = (data: any) => {
-  const isNew = data === transformDSOToFormValues(undefined)
-  const isLive = isDSOLive(data)
-
-  if (isNew) {
-    return createDSOInformationSchema
-  }
-
-  return isLive
-    ? editLiveDSOValidationSchemaStep1
-    : editDSOValidationSchemaStep1
-}
-
->>>>>>> 440082842 (DSO Step 1 integration)
-export const getDSOValidationSchema = (isNew: boolean, isLive: boolean) => {
->>>>>>> Stashed changes
   if (isNew) {
     return createDSOInformationSchema
   }
