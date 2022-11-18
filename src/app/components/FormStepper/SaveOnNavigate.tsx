@@ -36,6 +36,7 @@ export const SaveOnNavigate = ({
   const payload = transformData(values)
 
   const handleSave = async () => {
+<<<<<<< Updated upstream
     return await save(
       {
         ...payload,
@@ -58,6 +59,43 @@ export const SaveOnNavigate = ({
                 setIsRedirecting
               })
             }
+=======
+    const payload = transformData(values)
+
+    return await save(
+      { ...payload, step: isCreateMode ? activeStep + 1 : activeStep },
+      {
+        onSettled: (data: any) => {
+          setIsRedirecting(true)
+<<<<<<< HEAD
+          const redirect =
+            typeof createModeRedirect === 'function'
+              ? createModeRedirect(data?.data.type ?? 'corporate')
+              : createModeRedirect
+          if (
+            isCreateMode &&
+            redirect !== undefined &&
+            nextLocation !== undefined &&
+            data?.data._id !== undefined &&
+            data?.data.user._id !== undefined
+          ) {
+            history.replace(
+              generatePath(`${redirect}${nextLocation.search}`, {
+                identityId: data?.data._id,
+                userId: data?.data.user._id
+              })
+            )
+            setIsRedirecting(false)
+=======
+
+          if (redirectOnSave !== undefined && data !== undefined) {
+            redirectOnSave({
+              createModeRedirect,
+              data,
+              nextLocation,
+              setIsRedirecting
+            })
+>>>>>>> Stashed changes
           } else {
             const redirect =
               typeof createModeRedirect === 'function'
@@ -78,6 +116,10 @@ export const SaveOnNavigate = ({
               )
               setIsRedirecting(false)
             }
+<<<<<<< Updated upstream
+=======
+>>>>>>> 440082842 (DSO Step 1 integration)
+>>>>>>> Stashed changes
           }
         }
       }

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import _ from 'lodash'
 
 export const getDSOInformationRequestPayload = (data: any) => {
@@ -73,5 +74,12 @@ export const getDSODocumentsPayload = (data: any) => {
     step: 3,
     videos,
     faqs
+=======
+import { DSOBaseFormValues } from 'types/dso'
+
+export const getDSOInformationRequestPayload = (data: DSOBaseFormValues) => {
+  return {
+    ...data
+>>>>>>> Stashed changes
   }
 }
