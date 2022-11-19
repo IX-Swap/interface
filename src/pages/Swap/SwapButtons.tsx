@@ -16,6 +16,7 @@ import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { ParsedAmounts } from 'state/swap/typings'
 import { useSetSwapState } from 'state/swapHelper/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
+import { useUserSecTokens } from 'state/user/hooks'
 import { verifySwap } from 'utils/verifySwap'
 
 import { ButtonIXSWide } from '../../components/Button'
@@ -27,6 +28,7 @@ import { useHandleSwap } from './handleSwap'
 import { WrapText } from './typings'
 import { usePriceImpact } from './usePriceImpact'
 import { useSwapApproval } from './useSwapApproval'
+import { AccreditationStatusEnum } from 'components/Vault/enum'
 
 export const SwapButtons = ({
   parsedAmounts,
@@ -55,6 +57,7 @@ export const SwapButtons = ({
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
   const { approvalState, signatureState } = useSwapApproval()
 
+  const { secTokens: userSecTokens } = useUserSecTokens()
   const { showConfirm, swapErrorMessage, setSwapState } = useSetSwapState()
 
   // for expert mode
@@ -70,9 +73,28 @@ export const SwapButtons = ({
   //const isSecToken = Boolean(secTokens[token.address])
   const showError = useShowError()
 
+  const isAccredited = (currency: any): boolean => {
+    const currencyId = currency?.address
+
+    return currency?.isSecToken === false ? true : 
+      Boolean(
+        (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.brokerDealerStatus ===
+          AccreditationStatusEnum.APPROVED &&
+        (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.custodianStatus ===
+          AccreditationStatusEnum.APPROVED)
+  }
+
   const onClick = useCallback(async () => {
     if (trade && account) {
       try {
+        if (
+          !isAccredited(trade.inputAmount.currency) ||
+          !isAccredited(trade.outputAmount.currency)
+        ) {
+          showError('There is no accreditation for the token')
+          return
+        }
+
         await verifySwap(trade, chainId || 137)
       } catch (err) {
         showError((err as Error).message)

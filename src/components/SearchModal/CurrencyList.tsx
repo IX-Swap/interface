@@ -414,8 +414,10 @@ export default function CurrencyList({
     const currencyId = token?.address
     const isUnapprovedToken =
       token && secTokens[currencyId]
-        ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.status !==
-          AccreditationStatusEnum.APPROVED
+        ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.brokerDealerStatus !==
+            AccreditationStatusEnum.APPROVED ||
+          (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.custodianStatus !==
+            AccreditationStatusEnum.APPROVED
         : false
     return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
   }
