@@ -38,7 +38,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
   const toggleContactForm = React.useCallback(() => setContactForm(state => !state), [])
 
-  const showFooter = React.useMemo(() => !contactFormOpen && (!kyc || [KYCStatuses.NOT_SUBMITTED, KYCStatuses.PENDING].includes(kyc.status)), [kyc])
+  const showFooter = React.useMemo(() => !contactFormOpen && (!kyc || [KYCStatuses.NOT_SUBMITTED, KYCStatuses.PENDING, KYCStatuses.IN_PROGRESS].includes(kyc.status)), [kyc])
 
   return (
     <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
@@ -52,7 +52,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
         <KYCPromptContainer>
           {!contactFormOpen && (
             <>
-              {(!kyc || kyc.status === KYCStatuses.NOT_SUBMITTED) && (
+              {(!kyc || kyc.status === KYCStatuses.CHANGES_REQUESTED) && (
                 <>
                   <KYCPromptIconContainer>
                     <KYCPromptIcon />
@@ -68,7 +68,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                 </>
               )}
 
-              {kyc && kyc.status === KYCStatuses.PENDING && (
+              {kyc && [KYCStatuses.PENDING, KYCStatuses.IN_PROGRESS].includes(kyc.status)  && (
                 <>
                   <KYCLoadingIconContainer>
                     <Loading />
@@ -107,19 +107,22 @@ export const KYCPrompt: React.FC<Props> = (props) => {
                   </KYCPromptIconContainer>
                   
                   <KYCPromptTitle>
-                    Your account verification was unsuccessful, 
-                    therefore you are not able to participate in 
-                    any deals. If you believe there is an issue 
-                    please contact us. 
+                    Account verification was unsuccessful.
+                    Therefore, you are not able to use the IXS Launchpad. 
+                    Please try again or contact us for more information.
                   </KYCPromptTitle>
 
-                  <ContactUsButton type="button" onClick={toggleContactForm}>
-                    Contact us
-                  </ContactUsButton>
-                  
+                  <VerifyButton to="/kyc">
+                    Try Again
+                  </VerifyButton>
+
                   <Caption>
-                    You only have to verify your account once, we are sorry for any inconvenience caused.
+                    Account verification is a one-time process.
                   </Caption>
+
+                  <ContactUsTextButton type="button" onClick={toggleContactForm}>
+                    Contact us
+                  </ContactUsTextButton>
                 </>
               )}
 
@@ -250,6 +253,33 @@ const ContactUsButton = styled.button`
 
   color: ${props => props.theme.launchpad.colors.text.light};
   background: ${props => props.theme.launchpad.colors.primary};
+  border-radius: 6px;
+  border: none;
+  outline: 0;
+`
+
+const ContactUsTextButton = styled.button`
+  display: grid;
+
+  place-content: center;
+
+  height: 60px;
+  width: 100%;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+
+  line-height: 19px;
+  letter-spacing: -0.02em;
+
+  cursor: pointer;
+
+  color: ${props => props.theme.launchpad.colors.primary};
+  background: ${props => props.theme.launchpad.colors.text.light};
   border-radius: 6px;
   border: none;
   outline: 0;
