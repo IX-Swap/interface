@@ -46,7 +46,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleKYCModal = React.useCallback(() => setShowKYCModal(state => !state), [])
 
   const isClosed = React.useMemo(() => offer.status === OfferStatus.closed, [offer])
-  
+
   const currentTimeframe = React.useMemo(() => 
     offer.timeframes.find(frame => isWithinTimeframe(frame)) 
       ?? offer.timeframes.slice(-1).pop()!, 
@@ -63,7 +63,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
       case OfferTimeframeType.sale:
         return { label: 'Sale', color: '#1FBA66' }
       case OfferTimeframeType.whitelist:
-        return { label: 'Whitelist', color: '#1FBA66' }
+        return { label: 'Registed to invest', color: '#1FBA66' }
     }
   }, [offer])
 
