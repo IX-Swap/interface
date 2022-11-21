@@ -119,8 +119,10 @@ export default function App() {
   )
 
   const defaultPage = useMemo(() => {
+    const defaultPath = pathname === routes.launchpad ? routes.launchpad : routes.kyc
+
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
-      return routes.kyc
+      return defaultPath
     }
     if (
       isAllowed({ path: routes.securityTokens('tokens') }) &&
@@ -132,7 +134,7 @@ export default function App() {
       return routes.securityTokens('tokens')
     }
 
-    return (config?.pages ?? []).length > 0 ? config?.pages[0] : routes.kyc
+    return (config?.pages ?? []).length > 0 ? config?.pages[0] : defaultPath
   }, [kyc, account, chainId, isWhitelisted, chains])
 
   useAccount()

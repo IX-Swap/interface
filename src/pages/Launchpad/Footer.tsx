@@ -49,12 +49,24 @@ export const Footer = () => {
         </SubscriptionFormFieldContainer>
 
         <SocialMediaLinks>
-          <SocialMediaLink to="#"><TelegramLogo /></SocialMediaLink>
-          <SocialMediaLink to="#"><TwitterLogo /></SocialMediaLink>
-          <SocialMediaLink to="#"><MLogo /></SocialMediaLink>
-          <SocialMediaLink to="#"><DiscordLogo /></SocialMediaLink>
-          <SocialMediaLink to="#"><YoutubeLogo /></SocialMediaLink>
-          <SocialMediaLink to="#"><LinkedInLogo /></SocialMediaLink>
+          <SocialMediaLink href="https://t.me/ixswapofficial" target="_blank" rel="noreferrer">
+            <TelegramLogo />
+          </SocialMediaLink>
+          <SocialMediaLink href="https://twitter.com/IxSwap" target="_blank" rel="noreferrer">
+            <TwitterLogo />
+          </SocialMediaLink>
+          <SocialMediaLink href="https://coinmarketcap.com/currencies/ix-swap/" target="_blank" rel="noreferrer">
+            <MLogo />
+          </SocialMediaLink>
+          <SocialMediaLink href="https://discord.com/invite/KXrGyZQx4t" target="_blank" rel="noreferrer">
+            <DiscordLogo />
+          </SocialMediaLink>
+          <SocialMediaLink href="https://www.youtube.com/channel/UCaYPNR-eLs9iuB5ZVKRx-fw" target="_blank" rel="noreferrer">
+            <YoutubeLogo />
+          </SocialMediaLink>
+          <SocialMediaLink href="https://www.linkedin.com/company/ixswap" target="_blank" rel="noreferrer">
+            <LinkedInLogo />
+          </SocialMediaLink>
         </SocialMediaLinks>
         
       </SubscriptionFormContainer>
@@ -151,7 +163,7 @@ const SocialMediaLinks = styled.div`
   gap: 3rem;
 `
 
-const SocialMediaLink = styled(Link)`
+const SocialMediaLink = styled.a`
   display: grid;
 
   place-content: center;

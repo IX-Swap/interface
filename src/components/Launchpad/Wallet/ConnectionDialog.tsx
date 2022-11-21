@@ -82,8 +82,10 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       )}
 
       <AgreementNotice>
-        By connecting a wallet, you agree to IX Swap’s <a>Terms and Conditions</a> and 
-        acknowledge that you have read and understood the IX Swap Privacy Policy.
+        By connecting a wallet, you agree to IX Swap’s
+        <a href="https://ixswap.io/terms-and-conditions/" target="_blank" rel="noreferrer"> Terms and Conditions</a> and 
+        acknowledge that you have read and understood the IX Swap 
+        <a href="https://ixswap.io/privacy-policy/" target="_blank" rel="noreferrer"> Privacy Policy.</a>
       </AgreementNotice>
     </ModalContainer>
   )
