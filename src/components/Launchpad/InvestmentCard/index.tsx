@@ -2,6 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
+import Portal from '@reach/portal'
+
 import { useCheckKYC, useSetAllowOnlyAccredited, useToggleKYCModal } from 'state/launchpad/hooks'
 import { InvestmentOffer, SaleStatus } from 'pages/Launchpad/utils'
 
@@ -12,12 +14,26 @@ import { InvestmentSaleStatusInfo } from './InvestmentSaleStatusInfo'
 import { ReactComponent as InvestmentApprovedIcon } from 'assets/launchpad/svg/investment-approved-icon.svg'
 import { ReactComponent as InvestmentMetaSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
 import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
-import Portal from '@reach/portal'
+
 import { KYCPrompt } from '../KYCPrompt'
+import { isWithinTimeframe, Offer, OfferIndustry, OfferStatus, OfferTimeframeType, OfferType } from 'state/launchpad/types'
+import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
 
 
 interface Props {
-  offer: InvestmentOffer
+  offer: Offer
+}
+
+const getTypeLabel = (type: OfferType) => {
+  return OFFER_TYPE_LABELS.find(x => x.value === type)!.label
+}
+
+const getIndustryLabel = (industry: OfferIndustry) => {
+  return OFFER_INDUSTRY_LABELS.find(x => x.value === industry)!.label
+}
+
+const getStageLabel = (stage: OfferStatus) => {
+  return OFFER_STAGE_LABELS.find(x => x.value === stage)!.label
 }
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
@@ -29,23 +45,29 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails(state => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal(state => !state), [])
 
-  const isClosed = React.useMemo(() => {
-    return [SaleStatus.closedSuccesfully, SaleStatus.closedUnsuccessfully].includes(offer.sale.status)
-  }, [offer])
+  const isClosed = React.useMemo(() => offer.status === OfferStatus.closed, [offer])
+  
+  const currentTimeframe = React.useMemo(() => 
+    offer.timeframes.find(frame => isWithinTimeframe(frame)) 
+      ?? offer.timeframes.slice(-1).pop()!, 
+  [])
 
   const stage = React.useMemo(() => {
-    if (isClosed) {
-      return { label: 'Fully Funded', color: '#1FBA66' }
+    switch (currentTimeframe?.type) {
+      case OfferTimeframeType.claim:
+        return { label: 'Claim', color: '#1FBA66' }
+      case OfferTimeframeType.closed:
+        return { label: 'Closed', color: '#1FBA66' }
+      case OfferTimeframeType.preSale:
+        return { label: 'Pre-sale', color: '#1FBA66' }
+      case OfferTimeframeType.sale:
+        return { label: 'Sale', color: '#1FBA66' }
+      case OfferTimeframeType.whitelist:
+        return { label: 'Whitelist', color: '#1FBA66' }
     }
-    
-    const daysLeft =  moment(offer.sale.endsAt).diff(moment()).valueOf() / (24 * 60 * 60 * 1000)
-    
-    if (daysLeft > 60) {
-      return { label: 'Register to Invest', color: '#FFFFFF' }
-    }
+  }, [offer])
 
-    return { label: 'Closes Soon', color: '#FF6060' }
-  }, [offer, isClosed])
+
 
   const saleStatus = React.useMemo(() => {
     if (isClosed) {
@@ -68,12 +90,15 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   return (
     <>
       <InvestmentCardContainer>
-        <InvestmentCardImage src={offer.image} />
+        <InvestmentCardImage src={offer.cardPicture.public} />
 
         <InvestmentCardHeader>
           <InvestmentCardTagsContainer>
             <InvestmentStatusBadge label={stage.label} color={stage.color} />
-            <InvestmentStatusBadge label={saleStatus} color="rgba(41, 41, 51, 0.2)" />
+
+            {offer.status !== OfferStatus.claim && (
+              <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
+            )}
           </InvestmentCardTagsContainer>
         </InvestmentCardHeader>
 
@@ -82,26 +107,26 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         </InvestmentCardInfoWrapper>
 
         <InvestmentCardInfoContainer  expanded={showDetails}>
-          <InvestmentCardIcon src={offer.icon} />
+          <InvestmentCardIcon src={offer.profilePicture.public} />
 
           <InvestmentCardMetaContainer>
-            {offer.stage !== 'whitelist' && (
+            {currentTimeframe.type !== OfferTimeframeType.whitelist && (
               <>
                 <InvestmentApprovedIcon />
                 <InvestmentMetaSeparator />
               </>
             )}
 
-            <InvestmentCardMetaEntry>{offer.type}</InvestmentCardMetaEntry>
+            <InvestmentCardMetaEntry>{getTypeLabel(offer.type)}</InvestmentCardMetaEntry>
             <InvestmentMetaSeparator />
 
-            <InvestmentCardMetaEntry>{offer.industry}</InvestmentCardMetaEntry>
+            <InvestmentCardMetaEntry>{getIndustryLabel(offer.industry)}</InvestmentCardMetaEntry>
             <InvestmentMetaSeparator />
           </InvestmentCardMetaContainer>
 
           <InvestmentCardDescriptionContainer onClick={toggleShowDetails}>
             <InvestmentCardTitle>{offer.title}</InvestmentCardTitle>
-            <InvestmentCardDescription>{offer.description}</InvestmentCardDescription>
+            <InvestmentCardDescription>{offer.shortDescription}</InvestmentCardDescription>
 
           </InvestmentCardDescriptionContainer>
 
@@ -110,36 +135,37 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               <>
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{offer.details.projectedFundraise}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>{offer.hardCap}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
 
                 <InvestmentCardDetailsSeparator />
                 
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{offer.details.minimumInvestment}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>{offer.minInvestment}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
                 
                 <InvestmentCardDetailsSeparator />
                 
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{offer.details.investmentType}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>{offer.investmentType}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
                 
                 <InvestmentCardDetailsSeparator />
                 
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{offer.details.issuer}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>{offer.issuerName}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
               </>
             )}
           </InvestmentCardDetailsContainer>
           
           <InvestmentSaleStatusInfo 
-            endsAt={offer.sale.endsAt}
-            status={offer.sale.status}
+            isClosed={offer.status === OfferStatus.closed}
+            isSuccesfull={offer.softCapReached}
+            daysTillSale={offer.daysTillSale}
             allowOnlyAccredited={offer.allowOnlyAccredited}
           />
           
@@ -207,7 +233,9 @@ const InvestmentCardImage = styled.img`
   top: 0;
   left: 0;
   
-  height: 295px;
+
+  width: 380px;
+  overflow-x: hidden;
 
   border-radius: 6px;
 `

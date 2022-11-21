@@ -2,26 +2,41 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
-import { InvestmentOffer } from './utils'
+import { Offer } from 'state/launchpad/types'
+import { useGetPinnedOffer } from 'state/launchpad/hooks'
 
+import Loader from 'components/Loader'
 
-interface Props {
-  offer: InvestmentOffer
-}
+export const Pinned: React.FC = (props) => {
+  const getPinnedOffer = useGetPinnedOffer()
 
-export const Pinned: React.FC<Props> = (props) => {
+  const [offer, setOffer] = React.useState<Offer>()
+  const [loading, setLoading] = React.useState(true)
+
+  React.useEffect(() => {
+    getPinnedOffer().then(setOffer).finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return <Loader />
+  }
+
+  if (!offer) {
+    return null
+  }
+
   return (
     <PinnedWrapper>
       <PinnedContainer>
         <PinnedImageContainer>
-          <PinnedImage src={props.offer.image}/>
-          <PinnerCategory>{props.offer.industry}</PinnerCategory>
+          <PinnedImage src={offer.cardPicture.public}/>
+          <PinnerCategory>{offer.industry}</PinnerCategory>
         </PinnedImageContainer>
 
         <PinnedContent>
-          <PinnedContentDate>{moment(props.offer.date).format('MMMM D, YYYY')}</PinnedContentDate>
-          <PinnedContentTitle>{props.offer.title}</PinnedContentTitle>
-          <PinnedContentBody>{props.offer.description}</PinnedContentBody>
+          <PinnedContentDate>{moment(offer.createdAt).format('MMMM D, YYYY')}</PinnedContentDate>
+          <PinnedContentTitle>{offer.title}</PinnedContentTitle>
+          <PinnedContentBody>{offer.longDescription}</PinnedContentBody>
           <PinnedContentButton>Invest</PinnedContentButton>
         </PinnedContent>
       </PinnedContainer>
@@ -64,6 +79,7 @@ const PinnerCategory = styled.div`
 
 const PinnedImage = styled.img`
   border-radius: 8px;
+  max-height: 385px;
 `
 
 const PinnedContent = styled.div`
@@ -75,7 +91,7 @@ const PinnedContent = styled.div`
 
   gap: 1rem;
 
-  max-width: 500px;
+  max-width: 600px;
 `
 
 const PinnedContentDate = styled.div`

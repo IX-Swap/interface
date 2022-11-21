@@ -14,7 +14,7 @@ export const Banner = () => {
         <BannerInfoRedirectImage src={LearnMoreIcon} />
         <BannerInfoRedirectLabel>
           <BannerInfoRedirectTitle>How does IXS Launchpad work?</BannerInfoRedirectTitle>
-          <BannerInfoRedirectSubtitle>Learn more</BannerInfoRedirectSubtitle>
+          <BannerInfoRedirectSubtitle href="https://academy.ixswap.io/">Learn more</BannerInfoRedirectSubtitle>
         </BannerInfoRedirectLabel>
       </BannerInfoRedirect>
     </BannerContainer>
@@ -82,7 +82,7 @@ const BannerInfoRedirectTitle = styled.div`
   letter-spacing: -0.02em;
 `
 
-const BannerInfoRedirectSubtitle = styled.div`
+const BannerInfoRedirectSubtitle = styled.a`
   color: ${props => props.theme.launchpad.colors.primary};
   
   font-family: ${props => props.theme.launchpad.font};
@@ -92,4 +92,6 @@ const BannerInfoRedirectSubtitle = styled.div`
 
   line-height: 16px;
   letter-spacing: -0.02em;
+
+  text-decoration: none;
 `

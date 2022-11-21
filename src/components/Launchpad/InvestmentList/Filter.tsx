@@ -5,32 +5,12 @@ import { FilterDropdown, FilterOption } from './FilterDropdown'
 
 import { ReactComponent as FilterIcon } from 'assets/launchpad/svg/filter-icon.svg'
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
+import { OfferIndustry, OfferStatus, OfferType } from 'state/launchpad/types'
+import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
 
-const industryOptions = [
-  { label: "Technology", value: "Technology" },
-  { label: "Finance", value: "Finance" },
-  { label: "Blockchain", value: "Blockchain" },
-  { label: "Real Estate", value: "Real Estate" },
-  { label: "Gaming", value: "Gaming" },
-  { label: "Energy", value: "Energy" },
-  { label: "Healthcare", value: "Healthcare" },
-  { label: "Others", value: "Others" },
-]
-
-const stageOptions = [
-  { label: "Register to invest", value: "Register to invest" },
-  { label: "Pre-Sale", value: "Pre-Sale" },
-  { label: "Public Sale", value: "Public Sale" },
-  { label: "Closed", value: "Closed" } 
-]
-
-const typeOptions = [
-  { label: "Security token", value: "Security token" },
-  { label: "Fractionalized-NFT", value: "Fractionalized-NFT" },
-  { label: "Cryptocurrency", value: "Cryptocurrency" } 
-]
 
 export interface FilterConfig {
+  search: string
   industry: FilterOption<string>[]
   stage: FilterOption<string>[]
   type: FilterOption<string>[]
@@ -41,7 +21,12 @@ interface Props {
 }
 
 export const InvestmentListFilter: React.FC<Props> = (props) => {
-  const [filter, setFilter] = React.useState<FilterConfig>({ industry: [], stage: [], type: [] })
+  const [filter, setFilter] = React.useState<FilterConfig>({ search: '', industry: [], stage: [], type: [] })
+
+  const onSearchChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => 
+      setFilter(state => ({ ...state, search: event.target.value })), 
+    [])
 
   const onIndustrySelect = React.useCallback((options: FilterOption<string>[]) => {
     setFilter(state => ({ ...state, industry: options }))
@@ -55,19 +40,23 @@ export const InvestmentListFilter: React.FC<Props> = (props) => {
     setFilter(state => ({ ...state, type: options }))
   }, [])
 
+  React.useEffect(() => {
+    props.onFilter(filter)
+  }, [filter])
+
   return (
     <FilterContainer>
-      <FilterDropdown label="Industry" options={industryOptions} onSelect={onIndustrySelect} />
-      <FilterDropdown label="Stage" options={stageOptions} onSelect={onStageSelect} />
+      <FilterDropdown label="Industry" options={OFFER_INDUSTRY_LABELS} onSelect={onIndustrySelect} />
+      <FilterDropdown label="Stage" options={OFFER_STAGE_LABELS} onSelect={onStageSelect} />
 
       <FilterSearchField>
-        <FilterSearchInput />
+        <FilterSearchInput onChange={onSearchChange} />
         <SearchIcon />
       </FilterSearchField>
 
       <Spacer />
 
-      <FilterDropdown label="Type" options={typeOptions} onSelect={onTypeSelect} />
+      <FilterDropdown label="Type" options={OFFER_TYPE_LABELS} onSelect={onTypeSelect} />
 
       <FilterButton type="button" onClick={() => props.onFilter(filter)}>
         <FilterIcon /> Filter
