@@ -13,7 +13,7 @@ export const OFFER_INDUSTRY_LABELS = [
 
 export const OFFER_STAGE_LABELS = [
   { label: 'Coming Soon', value: OfferStatus.approved },
-  { label: 'Whitelist', value: OfferStatus.whitelist },
+  { label: 'Register To Invest', value: OfferStatus.whitelist },
   { label: 'Pre-Sale', value: OfferStatus.preSale },
   { label: 'Public Sale', value: OfferStatus.sale },
   { label: 'Closed', value: OfferStatus.closed },
