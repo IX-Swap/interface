@@ -2,11 +2,11 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
-import { InvestmentOffer } from './utils'
+import { Offer } from 'state/launchpad/types'
 
 
 interface Props {
-  offer: InvestmentOffer
+  offer: Offer
 }
 
 export const Pinned: React.FC<Props> = (props) => {
@@ -14,14 +14,14 @@ export const Pinned: React.FC<Props> = (props) => {
     <PinnedWrapper>
       <PinnedContainer>
         <PinnedImageContainer>
-          <PinnedImage src={props.offer.image}/>
+          <PinnedImage src={props.offer.cardPicture.public}/>
           <PinnerCategory>{props.offer.industry}</PinnerCategory>
         </PinnedImageContainer>
 
         <PinnedContent>
-          <PinnedContentDate>{moment(props.offer.date).format('MMMM D, YYYY')}</PinnedContentDate>
+          <PinnedContentDate>{moment(props.offer.createdAt).format('MMMM D, YYYY')}</PinnedContentDate>
           <PinnedContentTitle>{props.offer.title}</PinnedContentTitle>
-          <PinnedContentBody>{props.offer.description}</PinnedContentBody>
+          <PinnedContentBody>{props.offer.longDescription}</PinnedContentBody>
           <PinnedContentButton>Invest</PinnedContentButton>
         </PinnedContent>
       </PinnedContainer>

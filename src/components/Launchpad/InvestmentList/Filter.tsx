@@ -5,16 +5,17 @@ import { FilterDropdown, FilterOption } from './FilterDropdown'
 
 import { ReactComponent as FilterIcon } from 'assets/launchpad/svg/filter-icon.svg'
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
+import { OfferIndustry, OfferType } from 'state/launchpad/types'
 
 const industryOptions = [
-  { label: "Technology", value: "Technology" },
-  { label: "Finance", value: "Finance" },
-  { label: "Blockchain", value: "Blockchain" },
-  { label: "Real Estate", value: "Real Estate" },
-  { label: "Gaming", value: "Gaming" },
-  { label: "Energy", value: "Energy" },
-  { label: "Healthcare", value: "Healthcare" },
-  { label: "Others", value: "Others" },
+  { label: "Technology", value: OfferIndustry.technology},
+  { label: "Finance", value: OfferIndustry.finance },
+  { label: "Blockchain", value: OfferIndustry.blockchain },
+  { label: "Real Estate", value: OfferIndustry.realEstate },
+  { label: "Gaming", value: OfferIndustry.gaming },
+  { label: "Energy", value: OfferIndustry.energy },
+  { label: "Healthcare", value: OfferIndustry.healthcare},
+  { label: "Others", value: OfferIndustry.other },
 ]
 
 const stageOptions = [
@@ -25,9 +26,9 @@ const stageOptions = [
 ]
 
 const typeOptions = [
-  { label: "Security token", value: "Security token" },
-  { label: "Fractionalized-NFT", value: "Fractionalized-NFT" },
-  { label: "Cryptocurrency", value: "Cryptocurrency" } 
+  { label: "Security token", value: OfferType.securityToken },
+  { label: "Fractionalized-NFT", value: OfferType.fNFT },
+  { label: "Cryptocurrency", value: OfferType.crypto } 
 ]
 
 export interface FilterConfig {

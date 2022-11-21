@@ -52,8 +52,13 @@ export function FilterDropdown<T>(props: Props<T>) {
   }, [showDropdown, container])
 
   const selectOption = useCallback((option: FilterOption<T>) => {
-    setSelectedOptions(state => state.includes(option) ? state.filter(x => x !== option) : state.concat(option))
-  }, [])
+    const updatedSelectedOptions = selectedOptions.includes(option)
+      ? selectedOptions.filter(x => x !== option)
+      : selectedOptions.concat(option)
+
+    setSelectedOptions(updatedSelectedOptions)
+    props.onSelect(updatedSelectedOptions)
+  }, [selectedOptions])
 
   return (
     <DropdownContainer ref={container}>
