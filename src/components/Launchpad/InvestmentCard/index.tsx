@@ -17,6 +17,7 @@ import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
 
 import { KYCPrompt } from '../KYCPrompt'
 import { isWithinTimeframe, Offer, OfferIndustry, OfferStatus, OfferTimeframeType, OfferType } from 'state/launchpad/types'
+import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
 
 
 interface Props {
@@ -24,35 +25,15 @@ interface Props {
 }
 
 const getTypeLabel = (type: OfferType) => {
-  switch (type) {
-    case OfferType.crypto:
-      return 'Crypto'
-    case OfferType.fNFT:
-      return 'F-NFT'
-    case OfferType.securityToken:
-      return 'Security Token'
-  }
+  return OFFER_TYPE_LABELS.find(x => x.value === type)!.label
 }
 
 const getIndustryLabel = (industry: OfferIndustry) => {
-  switch (industry) {
-    case OfferIndustry.blockchain:
-      return 'Blockchain'
-    case OfferIndustry.energy:
-      return 'Energy'
-    case OfferIndustry.finance:
-      return 'Finance'
-    case OfferIndustry.gaming:
-      return 'Gaming'
-    case OfferIndustry.healthcare:
-      return 'healthcare'
-    case OfferIndustry.realEstate:
-      return 'Real Estate'
-    case OfferIndustry.technology:
-      return 'Technology'
-    case OfferIndustry.other:
-      return 'Other'
-  }
+  return OFFER_INDUSTRY_LABELS.find(x => x.value === industry)!.label
+}
+
+const getStageLabel = (stage: OfferStatus) => {
+  return OFFER_STAGE_LABELS.find(x => x.value === stage)!.label
 }
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
@@ -114,7 +95,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         <InvestmentCardHeader>
           <InvestmentCardTagsContainer>
             <InvestmentStatusBadge label={stage.label} color={stage.color} />
-            <InvestmentStatusBadge label={saleStatus} color="rgba(41, 41, 51, 0.2)" />
+            <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
           </InvestmentCardTagsContainer>
         </InvestmentCardHeader>
 
@@ -151,7 +132,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               <>
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Projected fundraise</InvestmentCardDetailsEntryLabel>
-                  <InvestmentCardDetailsEntryValue>{'???'}</InvestmentCardDetailsEntryValue>
+                  <InvestmentCardDetailsEntryValue>{offer.hardCap}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
 
                 <InvestmentCardDetailsSeparator />
@@ -249,7 +230,9 @@ const InvestmentCardImage = styled.img`
   top: 0;
   left: 0;
   
-  height: 295px;
+
+  width: 380px;
+  overflow-x: hidden;
 
   border-radius: 6px;
 `

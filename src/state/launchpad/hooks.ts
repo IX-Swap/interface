@@ -62,12 +62,12 @@ export const useCheckKYC = () => {
 
 export const useGetOffers = () => {
   return React.useCallback(async (page: number, filter?: FilterConfig) => {
-    let query = [`page=${page}`, `offset=${page === 1 ? 7 : 6}`]
+    let query = [`page=${page}`, 'offset=6']
 
     if (filter) {
       query = query.concat(Object.entries(filter)
         .filter(([key, value]) => value.length > 0)
-        .map(([key, value]) => `${key}=${value.map((x: any) => x.value).join(',')}`))
+        .map(([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`))
     }
 
     const result = await apiService.get(`/offers?${query.join('&')}`).then(res => res.data as OfferPagination)
@@ -77,4 +77,8 @@ export const useGetOffers = () => {
       items: result.items
     }
   }, [])
+}
+
+export const useGetPinnedOffer = () => {
+  return React.useCallback(() => apiService.get('/offers/main').then(res => res.data as Offer), [])
 }

@@ -19,9 +19,6 @@ export const Offers = () => {
   const [loading, setLoading] = React.useState<boolean>(true)
   const [filter, setFilter] = React.useState<FilterConfig | undefined>()
 
-  const mainOfferList = React.useMemo(() => offers.filter(offer => !offer.isMain), [offers])
-  const pinnedOffer = React.useMemo(() => offers.find(offer => offer.isMain), [offers])
-  
   React.useEffect(() => {
     getOffers(1, filter)
       .then(page => setOffers(page.items))
@@ -44,8 +41,8 @@ export const Offers = () => {
 
   return (
     <div>
-      {pinnedOffer && <Pinned offer={pinnedOffer} />}
-      <InvestmentList offers={mainOfferList} onFilter={setFilter}  fetchMore={fetchMore} hasMore={hasMore}/>
+      <Pinned />
+      <InvestmentList offers={offers} onFilter={setFilter}  fetchMore={fetchMore} hasMore={hasMore}/>
     </div>
   )
 }

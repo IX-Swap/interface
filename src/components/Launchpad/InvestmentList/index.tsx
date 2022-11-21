@@ -59,10 +59,10 @@ const InvestmentTitle = styled.div`
 const InvestmentListGrid = styled.div`
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(380px, auto));
+  grid-template-columns: repeat(auto-fit, 380px);
   grid-template-rows: repeat(2, auto);
 
   gap: 1rem;
 
-  place-content: center;
+  place-content: start;
 `
