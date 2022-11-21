@@ -21,7 +21,10 @@ export const Offers = () => {
 
   React.useEffect(() => {
     getOffers(1, filter)
-      .then(page => setOffers(page.items))
+      .then(page => {
+        setOffers(page.items)
+        setHasMore(page.hasMore)
+      })
       .then(() => setLoading(false))
       .then(() => setPage(2))
   }, [filter])

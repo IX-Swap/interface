@@ -79,7 +79,7 @@ const PinnerCategory = styled.div`
 
 const PinnedImage = styled.img`
   border-radius: 8px;
-  max-height: 450px;
+  max-height: 385px;
 `
 
 const PinnedContent = styled.div`
@@ -91,7 +91,7 @@ const PinnedContent = styled.div`
 
   gap: 1rem;
 
-  max-width: 500px;
+  max-width: 600px;
 `
 
 const PinnedContentDate = styled.div`
