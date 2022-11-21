@@ -17,7 +17,7 @@ export const SourceOfFunds = ({ data, kycKey }: Props) => {
   const keys = kycKey === 'individual' ? sourceOfFunds : corporateSourceOfFunds
   const kycSourceOfFunds = data?.sourceOfFunds
 
-  const othersSourceOfFunds = kycSourceOfFunds.split('Others, ')[1]
+  const othersSourceOfFunds = kycSourceOfFunds?.split('Others, ')[1]
 
   return (
     <Block title="Source of Funds">
