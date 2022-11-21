@@ -179,8 +179,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           </InvestmentCardDetailsContainer>
           
           <InvestmentSaleStatusInfo 
-            endsAt={currentTimeframe.endDate}
-            status={SaleStatus.closedSuccesfully}
+            isClosed={offer.status === OfferStatus.closed}
+            isSuccesfull={offer.softCapReached}
+            daysTillSale={offer.daysTillSale}
             allowOnlyAccredited={offer.allowOnlyAccredited}
           />
           

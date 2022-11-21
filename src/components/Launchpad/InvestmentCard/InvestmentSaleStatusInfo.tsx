@@ -6,35 +6,26 @@ import { SaleStatus } from 'pages/Launchpad/utils'
 import { Tooltip } from './Tooltip'
 
 interface Props {
-  status: SaleStatus
-  endsAt: Date
-
+  isClosed: boolean
+  isSuccesfull: boolean
+  daysTillSale?: number
   allowOnlyAccredited: boolean
 }
 
 
 export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
-  const daysLeft = React.useMemo(() => {
-    return Math.floor(moment(props.endsAt).diff(moment()).valueOf() / (24 * 60 * 60 * 1000))
-  }, [props.endsAt])
-
-  const isClosed = React.useMemo(() => {
-    return [SaleStatus.closedSuccesfully, SaleStatus.closedUnsuccessfully].includes(props.status)
-  }, [props.status])
-  
-
-  if (isClosed) {
+  if (props.isClosed) {
     return (
       <ClosedContainer>
         <ClosedLabel>Closed</ClosedLabel>
 
-        {props.status === SaleStatus.closedSuccesfully && (
+        {props.isSuccesfull && (
           <Tooltip title="Successful" body="This deal was successfully funded and reached above it’s soft cap funding goal.">
             <ClosedSuccessullyLabel>Successfully</ClosedSuccessullyLabel>
           </Tooltip>
         )}
 
-        {props.status === SaleStatus.closedUnsuccessfully && (
+        {!props.isSuccesfull && (
           <Tooltip title="Unsuccessful" body="This deal was unsuccessfully funded and did not reach above it’s soft cap funding goal.">
             <ClosedUnsuccessfullyLabel>Unsuccessfully</ClosedUnsuccessfullyLabel>
           </Tooltip>
@@ -43,11 +34,15 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
     )
   }
 
-  return (
-    <ActiveContainer>
-      <span className="bold">{daysLeft} Days </span> until the sale closes
-    </ActiveContainer>
-  )
+  if (props.daysTillSale) {
+    return (
+      <ActiveContainer>
+        <span className="bold">{props.daysTillSale} Days </span> until the sale closes
+      </ActiveContainer>
+    )
+  }
+
+  return null
 }
 
 

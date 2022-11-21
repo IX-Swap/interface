@@ -56,6 +56,10 @@ export const InvestmentListFilter: React.FC<Props> = (props) => {
     setFilter(state => ({ ...state, type: options }))
   }, [])
 
+  React.useEffect(() => {
+    props.onFilter(filter)
+  }, [filter])
+
   return (
     <FilterContainer>
       <FilterDropdown label="Industry" options={industryOptions} onSelect={onIndustrySelect} />

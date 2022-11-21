@@ -19,16 +19,7 @@ export const Offers = () => {
   const [loading, setLoading] = React.useState<boolean>(true)
   const [filter, setFilter] = React.useState<FilterConfig | undefined>()
 
-  const isSelected = React.useCallback((offer: Offer) => {
-    return !offer.isMain &&
-      (!filter ||
-        (filter.industry.length === 0 || filter.industry.find(x => x.value === offer.industry)) &&
-        // (filter.stage.length === 0 || filter.stage.find(x => x.value === offer.stage)) &&
-        (filter.type.length === 0 || filter.stage.find(x => x.value === offer.type))
-      )
-  }, [filter])
-
-  const mainOfferList = React.useMemo(() => offers.filter(offer => !offer.isMain && isSelected(offer)), [offers, isSelected])
+  const mainOfferList = React.useMemo(() => offers.filter(offer => !offer.isMain), [offers])
   const pinnedOffer = React.useMemo(() => offers.find(offer => offer.isMain), [offers])
   
   React.useEffect(() => {
