@@ -82,6 +82,7 @@ export const dsoFormBaseValidationSchema = {
         .required('Investment Period is required')
     }),
   issuerName: string().required('Issuer Name is required'),
+  network: string().required('Network is required'),
   launchDate: dateSchema
     .required('Launch Date is is required')
     .test(
@@ -168,6 +169,7 @@ export const dsoInformationValidationSchemaStep1: any = {
     .typeError('Minimum Investment must be a number')
     .nullable()
     .required('Minimum Investment is required'),
+  network: string().required('Network is required'),
   pricePerUnit: number()
     .typeError('Unit Price must be a number')
     .nullable()
@@ -202,14 +204,14 @@ export const createDSOInformationSchema = object()
     network: string().required('Network is required'),
     ...dsoInformationValidationSchemaStep1
   })
-  .notRequired()
+  .required()
 
 export const editDSOValidationSchemaStep1 = object()
   .shape<DSOBaseFormValues>({
     network: string(),
     ...dsoInformationValidationSchemaStep1
   })
-  .notRequired()
+  .required()
 
 export const editLiveDSOValidationSchemaStep1 = object()
   .shape<DSOBaseFormValues>({
@@ -218,7 +220,7 @@ export const editLiveDSOValidationSchemaStep1 = object()
     launchDate: string().required(validationMessages.required),
     completionDate: string().required(validationMessages.required)
   })
-  .notRequired()
+  .required()
 
 export const getDSOInformationSchema = (data: any) => {
   const isNew = _.isEqual(data, transformDSOToFormValues())
