@@ -21,13 +21,13 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
 
         {props.isSuccesfull && (
           <Tooltip title="Successful" body="This deal was successfully funded and reached above it’s soft cap funding goal.">
-            <ClosedSuccessullyLabel>Successfully</ClosedSuccessullyLabel>
+            <ClosedSuccessullyLabel>Successful</ClosedSuccessullyLabel>
           </Tooltip>
         )}
 
         {!props.isSuccesfull && (
           <Tooltip title="Unsuccessful" body="This deal was unsuccessfully funded and did not reach above it’s soft cap funding goal.">
-            <ClosedUnsuccessfullyLabel>Unsuccessfully</ClosedUnsuccessfullyLabel>
+            <ClosedUnsuccessfullyLabel>Unsuccessful</ClosedUnsuccessfullyLabel>
           </Tooltip>
         )}
       </ClosedContainer>

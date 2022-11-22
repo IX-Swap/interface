@@ -14,6 +14,7 @@ import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/disco
 import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
 import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
 import { useSubscribeToOffer } from 'state/launchpad/hooks'
+import { useAddPopup } from 'state/application/hooks'
 
 type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
 
@@ -28,6 +29,7 @@ const schema = object().shape({
 
 export const Footer = () => {
   const subscribe = useSubscribeToOffer()
+  const addPopup = useAddPopup()
 
   const [active, setActive] = React.useState(false)
 
@@ -39,8 +41,14 @@ export const Footer = () => {
     []
   )
 
-  const submit = React.useCallback((values: { email: string }) => {
-    subscribe(values.email)
+  const submit = React.useCallback(async (values: { email: string }) => {
+    try {
+      await subscribe(values.email)
+
+      addPopup({ info: { success: true, summary: `You have subscribed successfully` } })
+    } catch (err: any)  {
+      addPopup({ info: { success: false, summary: err.message } })
+    }
   }, [])
 
   return (

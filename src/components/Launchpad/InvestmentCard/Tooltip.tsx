@@ -1,5 +1,5 @@
-import Portal from "@reach/portal"
 import React from "react"
+import Portal from "@reach/portal"
 import styled from "styled-components"
 
 interface Props {
@@ -12,7 +12,9 @@ interface Position {
   y: number
 }
 
+
 export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
+  const timeout = React.useRef<NodeJS.Timeout>()
   const container = React.useRef<HTMLDivElement>(null)
   const [position, setPosition] = React.useState<Position | null>(null)
   const [showTooltip, setShowTooltip] = React.useState(false)
@@ -21,8 +23,20 @@ export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
     event.preventDefault()
     event.stopPropagation()
 
-    setShowTooltip(state => !state)
+    setShowTooltip(true)
   }, [])
+
+  const startTooltipTimer = React.useCallback(() => {
+    timeout.current = setTimeout(() => setShowTooltip(false), 500)
+  }, [])
+
+  const clearTooltipTimer = React.useCallback(() => {
+    if (!timeout.current) {
+      return
+    }
+
+    clearTimeout(timeout.current!)
+  }, [timeout])
 
   React.useEffect(() => {
     const rect = container.current?.getBoundingClientRect();
@@ -52,13 +66,13 @@ export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
 
   return (
     <>
-      <ChildrenWrapper ref={container} onClick={toggleTooltip}>
+      <ChildrenWrapper ref={container} onMouseEnter={toggleTooltip} onMouseLeave={startTooltipTimer}>
         {props.children}
       </ChildrenWrapper>
 
       {showTooltip && position && (
         <Portal>
-          <TooltipContainer x={position.x} y={position.y}>
+          <TooltipContainer x={position.x} y={position.y} onMouseEnter={clearTooltipTimer} onMouseLeave={startTooltipTimer}>
             <header>{props.title}</header>
             <main>{props.body}</main>
           </TooltipContainer>

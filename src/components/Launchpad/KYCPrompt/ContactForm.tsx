@@ -9,6 +9,7 @@ import { KYCPromptIconContainer, KYCPromptTitle, Caption, KYCButton } from './st
 import { ReactComponent as ContactUsIcon } from 'assets/launchpad/svg/contact-us-icon.svg'
 import { useRequestSupport } from 'state/launchpad/hooks'
 import { Formik, FormikHelpers, FormikValues } from 'formik'
+import { useAddPopup } from 'state/application/hooks'
 
 interface Props {
   offerId: string
@@ -34,6 +35,7 @@ const schema = object().shape({
 })
 
 export const ContactForm: React.FC<Props> = (props) => {
+  const addPopup = useAddPopup()
   const getSupport = useRequestSupport()
 
   const onSubmit = React.useCallback(async (values: Payload) => {
@@ -41,8 +43,9 @@ export const ContactForm: React.FC<Props> = (props) => {
       await getSupport(props.offerId, values)
 
       props.onSubmit()
-    } catch (err) {
-
+      addPopup({ info: { success: true, summary: `Your message has been sent successfully` } })
+    } catch (err: any)  {
+      addPopup({ info: { success: false, summary: err.message } })
     }
     
   }, [])
