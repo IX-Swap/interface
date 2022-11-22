@@ -3,13 +3,16 @@ import styled from 'styled-components'
 
 interface FieldProps {
   label: string
+  error?: string
+  onChange: (text: string) => void
 }
 
 export const TextField: React.FC<FieldProps> = (props) => {
   return (
     <FieldContainer>
       <FieldLabel>{props.label}</FieldLabel>
-      <FieldTextInput />
+      <FieldTextInput onChange={e => props.onChange?.(e.target.value)} />
+      {props.error && <ErrorText>{props.error}</ErrorText>}
     </FieldContainer>
   )
 }
@@ -18,7 +21,8 @@ export const TextAreaField: React.FC<FieldProps> = (props) => {
   return (
     <FieldContainer>
       <FieldLabel>{props.label}</FieldLabel>
-      <FieldTextareaInput />
+      <FieldTextareaInput onChange={e => props.onChange?.(e.target.value)}/>
+      {props.error && <ErrorText>{props.error}</ErrorText>}
     </FieldContainer>
   )
 }
@@ -39,6 +43,8 @@ const FieldLabel = styled.div`
 
   line-height: 16px;
   letter-spacing: -0.02em;
+
+  margin-bottom: 0.25rem;
 
   color: ${props => props.theme.launchpad.colors.text.caption};
 `
@@ -66,4 +72,12 @@ const FieldTextareaInput = styled.textarea`
   border-radius: 8px;
 
   outline: 0;
+`
+
+const ErrorText = styled.div`
+  color: #FF6060;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
 `
