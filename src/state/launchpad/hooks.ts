@@ -56,8 +56,8 @@ export const useSetAllowOnlyAccredited = () => {
 export const useCheckKYC = () => {
   const { kyc } = useKYCState()
   
-  return React.useCallback((allowOnlyAccredited: boolean) => {
-    return kyc && kyc.status === KYCStatuses.APPROVED && (!allowOnlyAccredited || kyc.individual?.accredited === 1)
+  return React.useCallback((allowOnlyAccredited: boolean, isClosed: boolean) => {
+    return kyc && kyc.status === KYCStatuses.APPROVED && (isClosed || (!allowOnlyAccredited || kyc.individual?.accredited === 1))
   }, [kyc])
 }
 
@@ -88,11 +88,12 @@ interface GetSupportPayload {
   email: string
   subject: string
   text: string
+  offerId?: string
 }
 
 export const useRequestSupport = () => {
-  return React.useCallback((id: string, payload: GetSupportPayload) => {
-    return apiService.post(`/offers/${id}/support`, payload)
+  return React.useCallback((payload: GetSupportPayload) => {
+    return apiService.post(`/offers/support`, payload)
   }, [])
 }
 

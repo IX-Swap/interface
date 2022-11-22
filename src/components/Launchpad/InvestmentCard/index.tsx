@@ -78,7 +78,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   }, [offer, isClosed])
 
   const onClick = React.useCallback(() => {
-    const canOpen = checkKYC(offer.allowOnlyAccredited)
+    const canOpen = checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
     
     if (canOpen) {
       alert('KYC is present')
@@ -180,7 +180,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               <InvestButton type="button" onClick={onClick}>
                 <Tooltip 
                   title="Accredited investors only" 
-                  body={<>To access this deal you have to be an accredited investor. <a href="#">How to get accredited</a></>}
+                  body={<>You have to be an accredited investor (AI) to access this deal. <a href="#">Learn more.</a></>}
                 >
                   <LockIcon /> 
                 </Tooltip>
