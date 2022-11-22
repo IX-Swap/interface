@@ -12,6 +12,7 @@ import { Offer } from "state/launchpad/types"
 import { toggleKYCDialog } from './actions'
 
 import apiService from 'services/apiService'
+import { string } from "yup"
 
 interface OfferPagination {
   page: number
@@ -81,4 +82,20 @@ export const useGetOffers = () => {
 
 export const useGetPinnedOffer = () => {
   return React.useCallback(() => apiService.get('/offers/main').then(res => res.data as Offer), [])
+}
+
+interface GetSupportPayload {
+  email: string
+  subject: string
+  text: string
+}
+
+export const useRequestSupport = () => {
+  return React.useCallback((id: string, payload: GetSupportPayload) => {
+    return apiService.post(`/offers/${id}/support`, payload)
+  }, [])
+}
+
+export const useSubscribeToOffer = () => {
+  return React.useCallback((email: string) => apiService.post('/offers/2e059028-ad39-4f4b-ba4d-cf1dfdef8680/subscribe', { email }), [])
 }

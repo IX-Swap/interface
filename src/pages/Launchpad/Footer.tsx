@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
+import { Formik } from 'formik'
+import { object, string } from 'yup'
 
 import { ReactComponent as DotSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
 import { ReactComponent as Logo } from 'assets/launchpad/svg/logo-alternative.svg'
@@ -12,17 +13,35 @@ import { ReactComponent as MLogo } from 'assets/launchpad/svg/social/m.svg'
 import { ReactComponent as DiscordLogo } from 'assets/launchpad/svg/social/discord.svg'
 import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtube.svg'
 import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
+import { useSubscribeToOffer } from 'state/launchpad/hooks'
+
+type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
+
+const initialValues = {
+  email: ''
+}
+
+const schema = object().shape({
+  email: string().required('Please write your email').email('Please enter a valid email')
+})
+
 
 export const Footer = () => {
+  const subscribe = useSubscribeToOffer()
+
   const [active, setActive] = React.useState(false)
 
-
   const handleEmailInput = React.useCallback(
-    (text: string) => {
+    (text: string, setFieldValue: ValueSetter) => {
       setActive(text !== '')
+      setFieldValue('email', text)
     },
     []
   )
+
+  const submit = React.useCallback((values: { email: string }) => {
+    subscribe(values.email)
+  }, [])
 
   return (
     <FooterContainer>
@@ -35,18 +54,26 @@ export const Footer = () => {
           Keep up to date on all the news, events, developments and our Public Sale.
         </SubscriptionFormSubtitle>
 
-        <SubscriptionFormFieldContainer>
-          <SubscriptionFormEmailField>
-            <SubscriptionFormEmailFieldInput onChange={(e) => handleEmailInput(e.target.value)}/>
+        <Formik initialValues={initialValues} validationSchema={schema} onSubmit={submit}>
+          {({ errors, setFieldValue, submitForm }) => (
+            <SubscriptionFormFieldContainer>
+              <SubscriptionFormEmailField>
+                <SubscriptionFormEmailFieldInput onChange={(e) => handleEmailInput(e.target.value, setFieldValue)}/>
 
-            <SubscriptionFormEmailFieldLabel active={active}>
-              Email Address
-            </SubscriptionFormEmailFieldLabel>
-          </SubscriptionFormEmailField>
-          <SubscriptionFormSubmitButton>
-            Submit
-          </SubscriptionFormSubmitButton>
-        </SubscriptionFormFieldContainer>
+                <SubscriptionFormEmailFieldLabel active={active}>
+                  Email Address
+                </SubscriptionFormEmailFieldLabel>
+
+                {errors.email && <ErrorText>{errors.email}</ErrorText>}
+              </SubscriptionFormEmailField>
+
+
+              <SubscriptionFormSubmitButton onClick={submitForm}>
+                Submit
+              </SubscriptionFormSubmitButton>
+            </SubscriptionFormFieldContainer>
+          )}
+        </Formik>
 
         <SocialMediaLinks>
           <SocialMediaLink href="https://t.me/ixswapofficial" target="_blank" rel="noreferrer">
@@ -394,7 +421,17 @@ const SubscriptionFormSubmitButton = styled.button`
   padding: 1rem 3rem;
 
   height: 60px;
+
+  cursor: pointer;
   
   border: none;
   border-radius: 6px;
+`
+
+const ErrorText = styled.div`
+  color: #FF6060;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
 `

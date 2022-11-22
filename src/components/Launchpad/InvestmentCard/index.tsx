@@ -195,7 +195,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
       
       {showKYCModal && (
         <Portal>
-          <KYCPrompt allowOnlyAccredited={offer.allowOnlyAccredited} />
+          <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
         </Portal>
       )}
     </>
