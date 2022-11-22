@@ -6,7 +6,7 @@ export const Listings = () => {
   return (
     <AuthorizerList
       title='Authorize Listings'
-      uri='/exchange/listing/list'
+      uri={`/exchange/combinedListing`}
       name={'listings'}
       columns={columns}
     />
