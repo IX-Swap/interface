@@ -201,7 +201,7 @@ describe('useAppNavigation', () => {
         label: 'Overview',
         path: IssuanceRoute.insight
       },
-      { label: 'Create New DSO', path: IssuanceRoute.create },
+      { label: 'Create New DSO', path: IssuanceRoute.createNew },
       { label: 'View DSO Listings', path: IssuanceRoute.list },
       { label: 'Create Secondary Listing', path: IssuanceRoute.createListing },
       {
