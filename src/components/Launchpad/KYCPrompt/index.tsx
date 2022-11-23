@@ -57,7 +57,22 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
           {!contactFormOpen && (
             <>
-              {(!kyc || kyc.status === KYCStatuses.CHANGES_REQUESTED) && (
+              {(!kyc) && (
+                <>
+                  <KYCPromptIconContainer>
+                    <KYCPromptIcon />
+                  </KYCPromptIconContainer>
+
+                  <KYCPromptTitle>
+                    Verify your account to use the  IXS Launchpad
+                  </KYCPromptTitle>
+
+                  <VerifyButton to="/kyc">
+                    Verify Account
+                  </VerifyButton>
+                </>
+              )}
+              {(kyc && kyc.status === KYCStatuses.CHANGES_REQUESTED) && (
                 <>
                   <KYCLoadingIconContainer>
                     <Loading />
@@ -135,7 +150,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
             </>
           )}
 
-          {contactFormOpen && <ContactForm offerId={props.offerId} onSubmit={() => toggleModal(false)} />}
+          {contactFormOpen && <ContactForm onSubmit={() => toggleModal(false)} />}
         </KYCPromptContainer>
       )}
     </Modal>
