@@ -342,8 +342,7 @@ export const trading = {
   createOrder: '/otc/order'
 }
 export const listings = {
-  getCombinedList: (userId: string) =>
-    `/exchange/listing/combinedlist/${userId}`,
+  getCombinedList: (userId: string) => `/exchange/combinedListing/${userId}`,
   getListByUser: (userId?: string) => `exchange/listing/list/${userId}`,
   submitListing: (userId?: string, listingId?: string) =>
     `/exchange/listing/${userId}/${listingId}/submitBoth`
