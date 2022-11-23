@@ -153,7 +153,7 @@ export const FormStep = (props: FormStepProps) => {
       payload.step = activeStep
     }
 
-    return await mutation({ _id: data._id, ...payload }).then(
+    return await mutation({ _id: data?._id, ...payload }).then(
       onSuccessfulSubmit
     )
   }
