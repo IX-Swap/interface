@@ -12,6 +12,8 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
+import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
+
 export enum PromptView {
   options,
   optionsSecondary,
@@ -21,6 +23,7 @@ export enum PromptView {
 
 interface Props {
   onConnect: () => void
+  onClose: () => void
 }
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
@@ -71,6 +74,10 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
   
   return (
     <ModalContainer>
+      <ExitIconContainer onClick={props.onClose}>
+        <CrossIcon />
+      </ExitIconContainer>
+
       {walletView === PromptView.options && (
         <>
           <ConnectionOptions onSelect={onSelect}/>
@@ -96,6 +103,8 @@ const ModalContainer = styled.div`
   border-radius: 10px;
 
   padding: 2rem 4rem;
+
+  position: relative;
 `
 
 const AgreementNotice = styled.div`
@@ -116,5 +125,18 @@ const AgreementNotice = styled.div`
 
   a {
     text-decoration: underline;
+  }
+`
+
+const ExitIconContainer = styled.div`
+  position: absolute;
+
+  top: 1rem;
+  right: 1rem;
+
+  cursor: pointer;
+
+  svg {
+    fill: ${props => props.theme.launchpad.colors.text.body};
   }
 `

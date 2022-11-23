@@ -23,7 +23,7 @@ export const ConnectPrompt: React.FC<Props> = (props: Props) => {
       </ConnectButton>
 
       <Modal isOpen={showConnectModal} onDismiss={toggleModal} maxWidth="430px" maxHeight="310px">
-        <ConnectionDialog onConnect={props.onConnect} />
+        <ConnectionDialog onConnect={props.onConnect} onClose={toggleModal} />
       </Modal>
     </>
   )
