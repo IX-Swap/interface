@@ -47,7 +47,7 @@ export const KYCPrompt: React.FC<Props> = (props) => {
 
   return (
     <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
-      {!account && <ConnectionDialog onConnect={() => toggleModal(true)} />}
+      {!account && <ConnectionDialog onConnect={() => toggleModal(true)} onClose={() => toggleModal(false)} />}
 
       {account && (
         <KYCPromptContainer>
