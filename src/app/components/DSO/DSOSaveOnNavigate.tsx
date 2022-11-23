@@ -48,7 +48,7 @@ export const DSOSaveOnNavigate = ({
   const [save] = mutation
   const history = useHistory()
   const payload = transformData(values)
-
+  const isEdit = location.pathname.includes('/edit')
   const getNewActiveStep = (): number => {
     if (move === 'forward') {
       return activeStep + 1
@@ -89,54 +89,56 @@ export const DSOSaveOnNavigate = ({
         history.replace(generatePath(`${location.pathname}${search}`))
       }
     } else {
-      return await save(
-        {
-          ...payload
-        },
-        {
-          onSettled: async (data: any) => {
-            if (data !== undefined) {
-              console.log('activeStep dsoId', activeStep, dsoId)
-              if (activeStep === 0 && dsoId === undefined) {
-                const redirect: string = redirectFunction(
-                  location.pathname.includes('/create'),
-                  data.data._id
-                )
-                const search: string = `?step=${stepsList[
-                  activeStep
-                ].label.replace(' ', '+')}`
-                history.replace(
-                  generatePath(`${redirect}${search}`, {
-                    issuerId:
-                      typeof data.data.user === 'string'
-                        ? data.data.user
-                        : getIdFromObj(data.data.user),
-                    dsoId: data.data._id
-                  })
-                )
-              } else {
-                const redirect: string = redirectFunction(
-                  location.pathname.includes('/create'),
-                  data.data._id
-                )
-                const newActiveStep = getNewActiveStep()
-                const search: string = `?step=${stepsList[
-                  newActiveStep
-                ].label.replace(' ', '+')}`
-                history.replace(
-                  generatePath(`${redirect}${search}`, {
-                    issuerId:
-                      typeof data.data.user === 'string'
-                        ? data.data.user
-                        : getIdFromObj(data.data.user),
-                    dsoId: data.data._id
-                  })
-                )
+      if (!isEdit) {
+        return await save(
+          {
+            ...payload
+          },
+          {
+            onSettled: async (data: any) => {
+              if (data !== undefined) {
+                console.log('activeStep dsoId', activeStep, dsoId)
+                if (activeStep === 0 && dsoId === undefined) {
+                  const redirect: string = redirectFunction(
+                    location.pathname.includes('/create'),
+                    data.data._id
+                  )
+                  const search: string = `?step=${stepsList[
+                    activeStep
+                  ].label.replace(' ', '+')}`
+                  history.replace(
+                    generatePath(`${redirect}${search}`, {
+                      issuerId:
+                        typeof data.data.user === 'string'
+                          ? data.data.user
+                          : getIdFromObj(data.data.user),
+                      dsoId: data.data._id
+                    })
+                  )
+                } else {
+                  const redirect: string = redirectFunction(
+                    location.pathname.includes('/create'),
+                    data.data._id
+                  )
+                  const newActiveStep = getNewActiveStep()
+                  const search: string = `?step=${stepsList[
+                    newActiveStep
+                  ].label.replace(' ', '+')}`
+                  history.replace(
+                    generatePath(`${redirect}${search}`, {
+                      issuerId:
+                        typeof data.data.user === 'string'
+                          ? data.data.user
+                          : getIdFromObj(data.data.user),
+                      dsoId: data.data._id
+                    })
+                  )
+                }
               }
             }
           }
-        }
-      )
+        )
+      }
     }
   }
 
