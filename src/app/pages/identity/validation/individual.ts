@@ -29,7 +29,7 @@ export const personalInfoSchema = yup
   .shape<IndividualPersonalInfoFormValues>({
     photo: yup.string(),
     firstName: nameSchema.required(validationMessages.required),
-    middleName: nameSchema,
+    // middleName: nameSchema,
     lastName: nameSchema.required(validationMessages.required),
     nationality: yup.string().required(validationMessages.required),
     dob: birthdaySchema.required(validationMessages.required),
