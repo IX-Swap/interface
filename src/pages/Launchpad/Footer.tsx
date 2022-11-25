@@ -26,8 +26,11 @@ const schema = object().shape({
   email: string().required('Please write your email').email('Please enter a valid email')
 })
 
+interface Props {
+  offerId?: string
+}
 
-export const Footer = () => {
+export const Footer: React.FC<Props> = (props) => {
   const subscribe = useSubscribeToOffer()
   const addPopup = useAddPopup()
 
@@ -43,7 +46,7 @@ export const Footer = () => {
 
   const submit = React.useCallback(async (values: { email: string }) => {
     try {
-      await subscribe(values.email)
+      await subscribe(values.email, props.offerId)
 
       addPopup({ info: { success: true, summary: `You have subscribed successfully` } })
     } catch (err: any)  {
@@ -55,7 +58,7 @@ export const Footer = () => {
     <FooterContainer>
       <SubscriptionFormContainer>
         <SubscriptionFormTitle>
-          Subscribe for Updates
+          Subscribe for {props.offerId ? "the Deal's" : ''} Updates
         </SubscriptionFormTitle>
 
         <SubscriptionFormSubtitle>
@@ -341,7 +344,7 @@ const SubscriptionFormTitle = styled.div`
   line-height: 110%;
   letter-spacing: -0.05em;
 
-  max-width: 350px;
+  max-width: 550px;
 
   color: ${props => props.theme.launchpad.colors.text.title};
 `

@@ -1,4 +1,4 @@
-import { OfferIndustry, OfferStatus, OfferType } from "./types"
+import { OfferIndustry, OfferStatus, OfferTimeframeType, OfferType } from "./types"
 
 export const OFFER_INDUSTRY_LABELS = [
   { label: "Technology", value: OfferIndustry.technology},
@@ -18,6 +18,14 @@ export const OFFER_STAGE_LABELS = [
   { label: 'Public Sale', value: OfferStatus.sale },
   { label: 'Closed', value: OfferStatus.closed },
   { label: 'Claim', value: OfferStatus.claim },
+]
+
+export const OFFER_TIMEFRAME_TYPE_LABELS = [
+  { label: 'Register To Invest', value: OfferTimeframeType.whitelist },
+  { label: 'Pre-Sale', value: OfferTimeframeType.preSale },
+  { label: 'Public Sale', value: OfferTimeframeType.sale },
+  { label: 'Closed', value: OfferTimeframeType.closed },
+  { label: 'Token Claim', value: OfferTimeframeType.claim },
 ]
 
 export const OFFER_TYPE_LABELS = [
