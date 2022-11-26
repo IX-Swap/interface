@@ -155,7 +155,9 @@ export interface Offer {
 
   isMain: boolean
   allowOnlyAccredited: boolean
+  closesSoon: boolean
   softCapReached: boolean
+  hardCapReached: boolean
 
   contractAddress: string
 

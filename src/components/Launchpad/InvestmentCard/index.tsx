@@ -53,18 +53,15 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   [])
 
   const stage = React.useMemo(() => {
-    switch (currentTimeframe?.type) {
-      case OfferTimeframeType.claim:
-        return { label: 'Claim', color: '#1FBA66' }
-      case OfferTimeframeType.closed:
-        return { label: 'Closed', color: '#1FBA66' }
-      case OfferTimeframeType.preSale:
-        return { label: 'Pre-sale', color: '#1FBA66' }
-      case OfferTimeframeType.sale:
-        return { label: 'Sale', color: '#1FBA66' }
-      case OfferTimeframeType.whitelist:
-        return { label: 'Registed to invest', color: '#1FBA66' }
+    if (offer?.hardCapReached) {
+      return { label: 'Funded', color: '#1FBA66' }
     }
+
+    if (offer?.closesSoon) {
+      return { label: 'Closes soon', color: '#FF6060' }
+    }
+
+    return null
   }, [offer])
 
 
@@ -94,7 +91,9 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
         <InvestmentCardHeader>
           <InvestmentCardTagsContainer>
-            <InvestmentStatusBadge label={stage.label} color={stage.color} />
+            {stage && (
+              <InvestmentStatusBadge label={stage.label} color={stage.color} />
+            )}
 
             {offer.status !== OfferStatus.claim && (
               <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
