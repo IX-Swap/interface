@@ -41,7 +41,7 @@ export const getDirectorsAndBeneficialOwnerRequestPayload = (
   const { directors, beneficialOwners } = data
 
   return {
-    directors: directors.map(director => {
+    directors: directors?.map(director => {
       return {
         ...director,
         documents: [
@@ -50,7 +50,7 @@ export const getDirectorsAndBeneficialOwnerRequestPayload = (
         ]
       }
     }),
-    beneficialOwners: beneficialOwners.map(beneficialOwner => {
+    beneficialOwners: beneficialOwners?.map(beneficialOwner => {
       return {
         ...beneficialOwner,
         documents: [
