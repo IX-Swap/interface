@@ -7,6 +7,8 @@ import { ChevronRight, ChevronLeft, X } from 'react-feather'
 
 import { OfferFile, OfferFileType } from 'state/launchpad/types'
 
+import { ReactComponent as PlayButton } from 'assets/launchpad/svg/play-button.svg'
+
 interface Props {
   initial?: OfferFile
   files: OfferFile[]
@@ -46,7 +48,7 @@ export const OfferGalleryViewer: React.FC<Props> = (props) => {
         </CloseButton>
 
         <ViewerActiveMedia>
-          <MediaEntry media={activeMedia} />
+          <MediaEntry canPlayVideo media={activeMedia} />
         </ViewerActiveMedia>
 
         <ViewerMediaSelector>
@@ -70,17 +72,22 @@ export const OfferGalleryViewer: React.FC<Props> = (props) => {
 
 interface MediaEntryProps {
   media: OfferFile
+  canPlayVideo?: boolean
 }
 
-const MediaEntry: React.FC<MediaEntryProps> = (props) => {
+export const MediaEntry: React.FC<MediaEntryProps> = (props) => {
   return (
     <>
       {props.media.type === OfferFileType.image && <Image src={props.media.file.public} />}
-      {props.media.type === OfferFileType.video && (
-        <Video controls>
-          <source src={props.media.videoUrl} />
-        </Video>
+      {props.media.type === OfferFileType.video && props.canPlayVideo && <Video src={props.media.videoUrl} controls />}
+      {props.media.type === OfferFileType.video && !props.canPlayVideo && (
+        <VideoThumbnail>
+          <PlayButtonWrapper>
+            <PlayButton />
+          </PlayButtonWrapper>
+        </VideoThumbnail>
       )}
+      
     </>
   )
 }
@@ -169,7 +176,35 @@ const Image = styled.img`
 `
 
 const Video = styled.video`
+  border-radius: 8px;
+`
 
+const VideoThumbnail = styled.div`
+  position: relative;
+
+  height: 100%;
+  width: 180px;
+  
+  border-radius: 8px;
+
+  background: ${props => props.theme.launchpad.colors.foreground};
+  backdrop-filter: blur(16px);
+`
+
+const PlayButtonWrapper = styled.div`
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  place-content: center;
 `
 
 const CloseButton = styled.button`

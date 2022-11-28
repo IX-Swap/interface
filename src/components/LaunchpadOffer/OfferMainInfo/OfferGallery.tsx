@@ -12,7 +12,7 @@ import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/link
 import { ReactComponent as RedditLogo } from 'assets/launchpad/svg/social/reddit.svg'
 import { ReactComponent as CoingeckoLogo } from 'assets/launchpad/svg/social/coingecko.svg'
 
-import { OfferGalleryViewer } from './OfferGalleryViewer'
+import { MediaEntry, OfferGalleryViewer } from './OfferGalleryViewer'
 
 
 interface Props {
@@ -52,7 +52,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
         <GalleryCarouselExtraMediaList>
           {gallery.slice(0, 3).map((media, idx) => (
             <GalerryCarouselEntry key={`carousel-${idx}`} onClick={() => openViewer(media)}>
-              {media.type === OfferFileType.image && <GalleryCarouselImage src={media.file.public} />}
+              <MediaEntry media={media} />
             </GalerryCarouselEntry>
           ))}
 

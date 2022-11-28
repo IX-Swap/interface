@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from "styled-components"
 
+import { Separator } from '../styled'
+
 interface InfoEntry {
   label: React.ReactNode
   value?: React.ReactNode
@@ -80,9 +82,3 @@ const Value = styled.div`
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 
-const Separator = styled.hr`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
-  opacity: 0.8;
-
-  margin: 0;
-`
