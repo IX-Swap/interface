@@ -8,7 +8,7 @@ import { Tooltip } from './Tooltip'
 interface Props {
   isClosed: boolean
   isSuccesfull: boolean
-  daysTillSale?: number
+  daysTillClosed?: number
   allowOnlyAccredited: boolean
 }
 
@@ -34,10 +34,10 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
     )
   }
 
-  if (props.daysTillSale) {
+  if (props.daysTillClosed) {
     return (
       <ActiveContainer>
-        <span className="bold">{props.daysTillSale} Days </span> until the sale closes
+        <span className="bold">{props.daysTillClosed} {props.daysTillClosed > 1 ? 'Days' : 'Day'} </span> until the sale closes
       </ActiveContainer>
     )
   }
