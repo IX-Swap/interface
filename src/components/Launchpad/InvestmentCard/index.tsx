@@ -1,36 +1,28 @@
 import React from 'react'
-import moment from 'moment'
 import styled from 'styled-components'
 
 import Portal from '@reach/portal'
 
-import { useCheckKYC, useSetAllowOnlyAccredited, useToggleKYCModal } from 'state/launchpad/hooks'
-import { InvestmentOffer, SaleStatus } from 'pages/Launchpad/utils'
+import { useHistory } from 'react-router-dom'
+
+import { useCheckKYC} from 'state/launchpad/hooks'
+import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
+import { isWithinTimeframe, Offer, OfferStatus, OfferTimeframeType } from 'state/launchpad/types'
 
 import { Tooltip } from './Tooltip'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
 import { InvestmentSaleStatusInfo } from './InvestmentSaleStatusInfo'
 
-import { ReactComponent as InvestmentApprovedIcon } from 'assets/launchpad/svg/investment-approved-icon.svg'
-import { ReactComponent as InvestmentMetaSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
 import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
 
 import { KYCPrompt } from '../KYCPrompt'
-import { isWithinTimeframe, Offer, OfferIndustry, OfferStatus, OfferTimeframeType, OfferType } from 'state/launchpad/types'
-import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
+import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 
 
 interface Props {
   offer: Offer
 }
 
-const getTypeLabel = (type: OfferType) => {
-  return OFFER_TYPE_LABELS.find(x => x.value === type)!.label
-}
-
-const getIndustryLabel = (industry: OfferIndustry) => {
-  return OFFER_INDUSTRY_LABELS.find(x => x.value === industry)!.label
-}
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find(x => x.value === stage)!.label
@@ -38,6 +30,7 @@ const getStageLabel = (stage: OfferStatus) => {
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const checkKYC = useCheckKYC()
+  const history = useHistory()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -64,21 +57,11 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     return null
   }, [offer])
 
-
-
-  const saleStatus = React.useMemo(() => {
-    if (isClosed) {
-      return 'Closed'
-    }
-
-    return 'Public Sale'
-  }, [offer, isClosed])
-
   const onClick = React.useCallback(() => {
     const canOpen = checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
     
     if (canOpen) {
-      alert('KYC is present')
+      history.push(`/offers/${offer.id}`)
     } else {
       toggleKYCModal()
     }
@@ -108,20 +91,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
         <InvestmentCardInfoContainer  expanded={showDetails}>
           <InvestmentCardIcon src={offer.profilePicture.public} />
 
-          <InvestmentCardMetaContainer>
-            {currentTimeframe.type !== OfferTimeframeType.whitelist && (
-              <>
-                <InvestmentApprovedIcon />
-                <InvestmentMetaSeparator />
-              </>
-            )}
-
-            <InvestmentCardMetaEntry>{getTypeLabel(offer.type)}</InvestmentCardMetaEntry>
-            <InvestmentMetaSeparator />
-
-            <InvestmentCardMetaEntry>{getIndustryLabel(offer.industry)}</InvestmentCardMetaEntry>
-            <InvestmentMetaSeparator />
-          </InvestmentCardMetaContainer>
+          <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />
 
           <InvestmentCardDescriptionContainer onClick={toggleShowDetails}>
             <InvestmentCardTitle>{offer.title}</InvestmentCardTitle>
@@ -369,28 +339,6 @@ const InvestmentCardDetailsEntryValue = styled.div`
 `
 
 
-const InvestmentCardMetaContainer = styled.div`
-  display: flex;
-
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: center;
-
-  gap: 0.5rem;
-
-  margin-bottom: 1rem;
-`
-
-const InvestmentCardMetaEntry = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.caption};
-`
 
 const InvestButton = styled.button`
   display: flex;

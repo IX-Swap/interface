@@ -1,3 +1,5 @@
+import { User } from "state/admin/actions"
+
 export enum OfferStatus {
   draft = 'draft',
   pendingApproval = 'pendingApproval',
@@ -95,12 +97,88 @@ export enum PaymentType {
 
 export interface Asset {
   public: string
+  name: string
 }
 
 export interface OfferTimeframe {
   type: OfferTimeframeType
   startDate: Date
   endDate: Date
+}
+
+export interface OfferTerms {
+  grossIrr: string
+  dividentYield: string
+  investmentStructure: string
+  investmentPeriod: number
+  distributionFrequency: OfferDistributionFrequency
+}
+
+export interface OfferTeamMember {
+  avatar: Asset
+  name: string
+  title: string
+  description: string
+}
+
+export interface OfferFAQ {
+  question: string
+  answer: string
+}
+
+export interface OfferFile {
+  type: OfferFileType
+  videoUrl: string
+  file: Asset
+}
+
+export enum InvestmentStatus {
+  pending = 'pending',
+  done = 'done',
+  failed = 'failed',
+}
+
+export interface OfferInvestment {
+  id: number
+
+  amount: string
+  token: string
+
+  tokenAddress: string
+
+  usdtValue: string
+
+  stage: InvestmentStage
+  status: InvestmentStatus
+
+  offerId: number
+
+  userId: number
+
+  transactionId: number
+
+  user: User
+
+  // transaction: EthTransaction
+}
+
+interface OfferPayment {
+  id: string
+  type: PaymentType
+  amount: string
+  user: User
+}
+
+interface OfferSubscription {
+  id: string
+  email: string
+}
+
+interface OfferWhitelist {
+  status: WhitelistStatus
+  isInterested: boolean
+  amount: string
+  user: User
 }
 
 export interface Offer {
@@ -117,6 +195,10 @@ export interface Offer {
   network: OfferNetwork
 
   issuerName: string
+  issuerIdentificationNumber: string
+
+  tokenAddress: string
+  tokenSymbol: string
 
   industry: OfferIndustry
 
@@ -124,7 +206,6 @@ export interface Offer {
 
   capitalStructure: OfferCapitalStructure
 
-  issuerIdentificationNumber: string
 
   country: string
 
@@ -139,7 +220,7 @@ export interface Offer {
 
   softCap: string
   hardCap: string
-
+  
   minInvestment: string
   maxInvestment: string
 
@@ -166,16 +247,28 @@ export interface Offer {
 
   ownerId: number
 
-  profilePicture: Asset;
-  cardPicture: Asset;
+  profilePicture: Asset
+  cardPicture: Asset
 
   timeframes: OfferTimeframe[]
+  terms: OfferTerms
 
   daysTillSale?: number
+  totalInvestment: number
+  
+  members: OfferTeamMember[]
+  faq: OfferFAQ[]
 
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  createdAt: Date
+  updatedAt: Date
+  deletedAt?: Date
+
+  owner: User
+  files: OfferFile[];
+  investments: OfferInvestment[];
+  payments: OfferPayment[];
+  subscriptions: OfferSubscription[];
+  whitelists: OfferWhitelist[];
 }
 
 export function isWithinTimeframe(frame: OfferTimeframe, date: Date = new Date()) {
