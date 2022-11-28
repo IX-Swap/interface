@@ -134,7 +134,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           <InvestmentSaleStatusInfo 
             isClosed={offer.status === OfferStatus.closed}
             isSuccesfull={offer.softCapReached}
-            daysTillSale={offer.daysTillSale}
+            daysTillClosed={offer.daysTillClosed}
             allowOnlyAccredited={offer.allowOnlyAccredited}
           />
           
