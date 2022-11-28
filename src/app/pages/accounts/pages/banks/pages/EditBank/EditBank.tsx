@@ -24,6 +24,10 @@ export const EditBank: React.FC = () => {
 
   const bank = data.map[bankId]
 
+  if (bank === undefined) {
+    return null
+  }
+
   return (
     <Grid container direction='column' spacing={2} style={{ display: 'table' }}>
       <Grid item>
