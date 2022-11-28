@@ -4,15 +4,19 @@ import { Icon } from 'ui/Icons/Icon'
 import { IconButton, Typography } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-// import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 
-export const FavoriteFilter = () => {
+ interface FiltersFavProps {
+  setPage?: (page: number)=>void
+}
+
+export const FavoriteFilter = (props:FiltersFavProps) => {
   const { getFilterValue, updateFilter } = useQueryFilter()
   const { isTablet } = useAppBreakpoints()
   const value = getFilterValue('isFavorite')
   const classes = useStyles({ isFav: value === 'true' })
 
   const handleChange = () => {
+    props.setPage && props.setPage(0);
     const isFavorite = value === 'true' ? 'false' : 'true'
     updateFilter('isFavorite', isFavorite)
     if (isFavorite === 'true') {
@@ -56,3 +60,5 @@ export const FavoriteFilter = () => {
     </IconButton>
   )
 }
+
+

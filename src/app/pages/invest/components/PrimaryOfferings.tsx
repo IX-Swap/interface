@@ -19,6 +19,7 @@ import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFi
 import { TablePagination } from 'ui/Pagination/TablePagination'
 import { Pagination } from 'ui/Pagination/Pagination'
 
+
 export interface PrimaryOfferingsProps {
   fullview?: boolean
 }
@@ -187,7 +188,7 @@ export const PrimaryOfferings = ({
     <Grid container spacing={3}>
       {fullview ? (
         <Grid item xs={12}>
-          <DSOTableFilters />
+          <DSOTableFilters setPage={setPage}/>
         </Grid>
       ) : (
         <Grid
