@@ -170,6 +170,7 @@ export interface Offer {
   timeframes: OfferTimeframe[]
 
   daysTillSale?: number
+  daysTillClosed?: number
 
   createdAt: Date;
   updatedAt: Date;
