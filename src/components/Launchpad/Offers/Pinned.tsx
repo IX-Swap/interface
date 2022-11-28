@@ -2,20 +2,37 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
-import { Offer } from 'state/launchpad/types'
-import { useGetPinnedOffer } from 'state/launchpad/hooks'
+import Portal from '@reach/portal'
+
+import { Offer, OfferStatus } from 'state/launchpad/types'
+import { useGetPinnedOffer, useCheckKYC } from 'state/launchpad/hooks'
 
 import Loader from 'components/Loader'
+import { KYCPrompt } from '../KYCPrompt'
 
 export const Pinned: React.FC = (props) => {
   const getPinnedOffer = useGetPinnedOffer()
+  const checkKYC = useCheckKYC()
 
   const [offer, setOffer] = React.useState<Offer>()
   const [loading, setLoading] = React.useState(true)
+  const [showKYCModal, setShowKYCModal] = React.useState(false)
+
+  const toggleKYCModal = React.useCallback(() => setShowKYCModal(state => !state), [])
 
   React.useEffect(() => {
     getPinnedOffer().then(setOffer).finally(() => setLoading(false))
   }, [])
+
+  const onClick = React.useCallback(() => {
+    const canOpen = checkKYC(offer?.allowOnlyAccredited || false, offer?.status === OfferStatus.closed)
+    
+    if (canOpen) {
+      alert('KYC is present')
+    } else {
+      toggleKYCModal()
+    }
+  }, [checkKYC, toggleKYCModal])
 
   if (loading) {
     return <Loader />
@@ -37,9 +54,16 @@ export const Pinned: React.FC = (props) => {
           <PinnedContentDate>{moment(offer.createdAt).format('MMMM D, YYYY')}</PinnedContentDate>
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
           <PinnedContentBody>{offer.longDescription}</PinnedContentBody>
-          <PinnedContentButton>Invest</PinnedContentButton>
+          <PinnedContentButton type="button" onClick={onClick}>Invest</PinnedContentButton>
         </PinnedContent>
       </PinnedContainer>
+
+      {showKYCModal && (
+        <Portal>
+          <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
+        </Portal>
+      )}
+
     </PinnedWrapper>
   )
 }
@@ -138,4 +162,6 @@ const PinnedContentButton = styled.button`
   border: unset;
 
   max-width: fit-content;
+
+  cursor: pointer;
 `

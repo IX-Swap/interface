@@ -221,9 +221,6 @@ export interface Offer {
   softCap: string
   hardCap: string
   
-  softCapReached: boolean
-  hardCapReached: boolean
-
   minInvestment: string
   maxInvestment: string
 
@@ -239,6 +236,9 @@ export interface Offer {
 
   isMain: boolean
   allowOnlyAccredited: boolean
+  closesSoon: boolean
+  softCapReached: boolean
+  hardCapReached: boolean
 
   contractAddress: string
 
