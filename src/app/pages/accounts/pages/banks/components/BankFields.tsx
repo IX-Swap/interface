@@ -55,6 +55,7 @@ export const BankFields = () => {
             component={AssetSelect}
             name='asset'
             label='Currency'
+            placeHolder='Currency'
             assetType='Currency'
           />
         </Grid>

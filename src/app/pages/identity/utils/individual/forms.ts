@@ -7,6 +7,7 @@ import {
   IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
 import { titleCase } from 'app/pages/identity/utils/shared'
+import { isEmpty } from 'lodash'
 
 export const getPersonalInfoFormValues = (
   data: IndividualIdentity
@@ -109,7 +110,7 @@ export const getInvestorDeclarationFormValues = (
 export const getDocumentsFormValues = (
   data: IndividualIdentity
 ): IdentityDocumentsFormValues => {
-  if (data === undefined) {
+  if (data === undefined || isEmpty(data)) {
     return {
       evidenceOfAccreditation: [],
       proofOfAddress: [],
