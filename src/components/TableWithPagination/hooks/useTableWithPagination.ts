@@ -63,7 +63,7 @@ export const useTableWithPagination = <TData>({
       isFavoriteCount === null
     ) {
       p = 0
-      localStorage.setItem('isFavoriteCount', '1')
+      localStorage.setItem('isFavoriteCount', "1")
     } else {
       localStorage.removeItem('isFavoriteCount')
       localStorage.removeItem('isFavorite')
