@@ -15,6 +15,7 @@ import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/InvestmentStatusBadge'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadOffer/styled'
+import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
 
 
 const getStageLabel = (stage: OfferStatus) => {
@@ -85,7 +86,8 @@ export const Pinned: React.FC = (props) => {
         </PinnedImageContainer>
 
         <PinnedContent>
-          <PinnedContentDate>{moment(offer.createdAt).format('MMMM D, YYYY')}</PinnedContentDate>
+          <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />
+          
           <PinnedContentTitle>{offer.title}</PinnedContentTitle>
           <PinnedContentBody>{offer.longDescription}</PinnedContentBody>
           <PinnedContentButton type="button" onClick={onClick}>Invest</PinnedContentButton>
@@ -147,7 +149,7 @@ const PinnedContent = styled.div`
   justify-content: center;
   align-items: flex-start;
 
-  gap: 1rem;
+  gap: 0.5rem;
 
   max-width: 600px;
 `

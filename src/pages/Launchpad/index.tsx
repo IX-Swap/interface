@@ -29,7 +29,7 @@ export default function Launchpad() {
   }, [])
   
   const blurred = React.useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account, 
+    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0), 
     [account, chainId]
   )
 
