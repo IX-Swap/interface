@@ -2,12 +2,13 @@ import React from 'react'
 
 import { InvestmentList } from 'components/Launchpad/InvestmentList'
 import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { Centered } from 'components/LaunchpadOffer/styled'
 
 import { Pinned } from './Pinned'
 
 import { Offer } from 'state/launchpad/types'
 import { useGetOffers } from 'state/launchpad/hooks'
-import Loader from 'components/Loader'
 
 
 export const Offers = () => {
@@ -39,7 +40,11 @@ export const Offers = () => {
   }, [offers, page, filter])
 
   if (loading) {
-    return <Loader />
+    return (
+      <Centered width="100%">
+        <Loader />
+      </Centered>
+    )
   }
 
   return (

@@ -6,18 +6,8 @@ interface Props {
 }
 
 export const PaginationTrigger: React.FC<Props> = (props) => {
-  const [isVisible, setIsVisible] = React.useState(false)
-
-  const toggleContactForm = React.useCallback(() => setIsVisible(true), [])
-
-  React.useEffect(() => {
-    if (isVisible) {
-      props.onTriggered()
-    }
-  }, [isVisible])
-
   return (
-    <LoadMoreButton type="button" onClick={toggleContactForm}>
+    <LoadMoreButton type="button" onClick={props.onTriggered}>
       Load more
     </LoadMoreButton>
   )
@@ -43,8 +33,15 @@ const LoadMoreButton = styled.button`
 
   cursor: pointer;
 
-  color: ${props => props.theme.launchpad.colors.primary};
-  background: ${props => props.theme.launchpad.colors.text.light};
+  margin: 1rem auto;
+  padding: 0.25rem 3rem;
+
+  width: max-content;
+
+
+
+  color: ${props => props.theme.launchpad.colors.text.light};
+  background: ${props => props.theme.launchpad.colors.primary};
   border-radius: 6px;
   border: none;
   outline: 0;

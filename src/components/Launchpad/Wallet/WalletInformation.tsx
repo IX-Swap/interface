@@ -56,7 +56,7 @@ export const WalletInformation = () => {
       
       <NetworkSelector>
         <NetworkSelectorControls onClick={() => toggleNetworkMenu()}>
-          <Logo src={CHAIN_INFO[chainId!].logoUrl} />
+          <Logo src={CHAIN_INFO[chainId!]?.logoUrl} />
           <DropdownControl open={networkMenuOpen}>
             <ChevronDown size="20" color={theme.launchpad.colors.text.title} />
           </DropdownControl>
