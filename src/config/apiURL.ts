@@ -301,6 +301,8 @@ export const exchange = {
     `/exchange/orders/cancel/${userId}/${orderId}`,
   getListing: (userId?: string, listingId?: string) =>
     `/exchange/listing/${userId}/${listingId}`,
+  getOtcListing: (userId?: string, listingId?: string) =>
+    `/otc/listing/${userId}/${listingId}`,
   getMarket: (pairId?: string) => `/exchange/markets/pair/${pairId}`
 }
 

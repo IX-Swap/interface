@@ -14,6 +14,13 @@ export const AuthorizerListingsRouter = () => {
       >
         <ListingAuthorization />
       </AppRoute>
+      <AppRoute
+        exact
+        breadcrumb='Listing Details'
+        path='/app/authorizer/listings/:userId/:listingId/:type/view'
+      >
+        <ListingAuthorization />
+      </AppRoute>
       <AppRoute path='/app/authorizer/listings'>
         <Listings />
       </AppRoute>

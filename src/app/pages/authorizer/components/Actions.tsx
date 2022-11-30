@@ -27,6 +27,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
     typeof (item as any).user === 'string'
       ? (item as any).user
       : (item as any).user?._id
+  const listingType: string = (item as any).listingType
 
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
@@ -43,12 +44,15 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const view = () =>
     category === 'virtual-accounts'
       ? history.push(`/app/authorizer/${category}/${id}/view`)
+      : category === 'listings' && listingType === 'OTC'
+      ? history.push(
+          `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
+        )
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
 
   const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
-
   return (
     <Grid container wrap='nowrap' justifyContent='flex-end'>
       <Grid item>
@@ -59,11 +63,14 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
           to={
             category === 'virtual-accounts'
               ? `/app/authorizer/${category}/${id}/view`
+              : category === 'listings' && listingType === 'OTC'
+              ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
               : `/app/authorizer/${category}/${userId}/${id}/view`
           }
           params={{
             itemId: id,
-            cacheQueryKey
+            cacheQueryKey,
+            listingType
           }}
         >
           <LaunchIcon color='disabled' />
