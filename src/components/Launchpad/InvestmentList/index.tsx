@@ -39,6 +39,8 @@ const InvestmentListContainer = styled.div`
 
   margin: auto;
 
+  position: relative;
+
   @media (max-width: 1180px) {
     margin: 0 1rem;
   }

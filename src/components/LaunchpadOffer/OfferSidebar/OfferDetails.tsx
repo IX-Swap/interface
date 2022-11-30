@@ -13,6 +13,7 @@ import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 import { shortenAddress } from 'utils'
 import { OfferInvestmentIndicator } from './OfferInvestmentIndicator'
 import { Link } from 'react-router-dom'
+import { InvestDialog } from '../InvestDialog'
 
 interface Props {
   offer: Offer
@@ -37,6 +38,11 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
   const showAmount = React.useMemo(() => [OfferStatus.preSale, OfferStatus.sale, OfferStatus.closed].includes(props.offer.status), [])
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { currency: 'USD' }), [])
+
+  const [showInvestDialog, setShowInvestDialog] = React.useState(false)
+
+  const openInvestDialog = React.useCallback(() => setShowInvestDialog(true), [])
+  const closeInvestDialog = React.useCallback(() => setShowInvestDialog(false), [])
 
   return (
     <Container>
@@ -73,9 +79,11 @@ export const OfferDetails: React.FC<Props> = (props) => {
       </OfferStats>
 
       <InvestButtonContainer>
-        <InvestButton>Register to Invest</InvestButton>
+        <InvestButton onClick={openInvestDialog}>Register to Invest</InvestButton>
         <InvestHelpLink to="#">How does this work?</InvestHelpLink>
       </InvestButtonContainer>
+
+      {showInvestDialog && <InvestDialog offer={props.offer} onClose={closeInvestDialog} />}
 
       <TokenInfo>
         <TokenInfoCard><span className='label'>Token Network: </span>{capitalize(props.offer.network)}</TokenInfoCard>

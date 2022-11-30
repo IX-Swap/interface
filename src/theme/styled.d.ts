@@ -126,6 +126,12 @@ export interface LaunchpadTheme {
     primary: string
     accent: string
 
+    success: string
+    error: string
+    info: string
+
+    disabled: string
+
     background: string,
     foreground: string,
 
@@ -136,6 +142,7 @@ export interface LaunchpadTheme {
     text: {
       title: string,
       body: string,
+      bodyAlt: string,
       caption: string,
 
       light: string

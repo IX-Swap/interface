@@ -233,6 +233,12 @@ export function launchpadTheme() {
       primary: '#6666FF',
       accent: '#E6E6FF',
 
+      success: '#1fba66',
+      error: '#FF6060',
+      info: '#FFC93F',
+
+      disabled: '#DCDCF0',
+
       background: '#FFFFFF',
       foreground: '#F7F7FF',
 
@@ -243,6 +249,7 @@ export function launchpadTheme() {
       text: {
         title: '#292933',
         body: '#666680',
+        bodyAlt: '#8D8DA3',
         caption: '#B8B8CC',
 
         light: '#FFFFFF'
