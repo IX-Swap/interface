@@ -8,14 +8,14 @@ import { ReactComponent as Checked } from 'assets/images/checked_solid.svg'
 import { ReactComponent as NotChecked } from 'assets/images/not_checked_solid.svg'
 
 export interface FilterOption<T> {
-  label: string
+  label: React.ReactNode
   value: T
 }
 
 interface Props<T> {
-  label: string
+  label: React.ReactNode
   options: FilterOption<T>[]
-
+  single?: boolean
   onSelect: (options: FilterOption<T>[]) => void
 }
 
@@ -54,7 +54,7 @@ export function FilterDropdown<T>(props: Props<T>) {
   const selectOption = useCallback((option: FilterOption<T>) => {
     const updatedSelectedOptions = selectedOptions.includes(option)
       ? selectedOptions.filter(x => x !== option)
-      : selectedOptions.concat(option)
+      : props.single ? [option] : selectedOptions.concat(option)
 
     setSelectedOptions(updatedSelectedOptions)
     props.onSelect(updatedSelectedOptions)
@@ -125,7 +125,7 @@ const DropdownMenu = styled.div<{ x?: number, y?: number, open?: boolean }>`
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 
-  z-index: 10;
+  z-index: 30;
 
   opacity: ${props => props.open ? '1' : '0'};
 
@@ -147,7 +147,7 @@ const DropdownOption = styled.div`
   line-height: 16px;
   letter-spacing: -0.02em;
 
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 0.75rem;
   width: 100%;
 
   cursor: pointer;

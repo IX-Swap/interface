@@ -4,13 +4,25 @@ import styled from 'styled-components'
 
 import Portal from '@reach/portal'
 
+import { useHistory } from 'react-router-dom'
+
 import { Offer, OfferStatus } from 'state/launchpad/types'
+import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
 import { useGetPinnedOffer, useCheckKYC } from 'state/launchpad/hooks'
 
-import Loader from 'components/Loader'
+
 import { KYCPrompt } from '../KYCPrompt'
+import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/InvestmentStatusBadge'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { Centered } from 'components/LaunchpadOffer/styled'
+
+
+const getStageLabel = (stage: OfferStatus) => {
+  return OFFER_STAGE_LABELS.find(x => x.value === stage)!.label
+}
 
 export const Pinned: React.FC = (props) => {
+  const history = useHistory()
   const getPinnedOffer = useGetPinnedOffer()
   const checkKYC = useCheckKYC()
 
@@ -28,14 +40,30 @@ export const Pinned: React.FC = (props) => {
     const canOpen = checkKYC(offer?.allowOnlyAccredited || false, offer?.status === OfferStatus.closed)
     
     if (canOpen) {
-      alert('KYC is present')
+      history.push(`/offers/${offer!.id}`)
     } else {
       toggleKYCModal()
     }
-  }, [checkKYC, toggleKYCModal])
+  }, [checkKYC, toggleKYCModal, offer])
+  
+  const stage = React.useMemo(() => {
+    if (offer?.hardCapReached) {
+      return { label: 'Funded', color: '#1FBA66' }
+    }
+
+    if (offer?.closesSoon) {
+      return { label: 'Closes soon', color: '#FF6060' }
+    }
+
+    return null
+  }, [offer])
 
   if (loading) {
-    return <Loader />
+    return (
+      <Centered width="100%">
+        <Loader />
+      </Centered>
+    )
   }
 
   if (!offer) {
@@ -47,7 +75,13 @@ export const Pinned: React.FC = (props) => {
       <PinnedContainer>
         <PinnedImageContainer>
           <PinnedImage src={offer.cardPicture.public}/>
-          <PinnerCategory>{offer.industry}</PinnerCategory>
+          <PinnedTags>
+            {stage && (<InvestmentStatusBadge label={stage.label} color={stage.color} /> )}
+
+            {offer.status !== OfferStatus.claim && (
+              <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
+            )}
+          </PinnedTags>
         </PinnedImageContainer>
 
         <PinnedContent>
@@ -164,4 +198,18 @@ const PinnedContentButton = styled.button`
   max-width: fit-content;
 
   cursor: pointer;
+`
+
+const PinnedTags = styled.header`
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+
+  display: flex;
+
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 0.5rem;
 `

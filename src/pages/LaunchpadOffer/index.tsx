@@ -107,7 +107,7 @@ const OfferContainer = styled.article`
 
   gap: 2rem 4rem;
   
-  main, aside {
+  > main, > aside {
     display: flex;
 
     flex-flow: column nowrap;
@@ -117,23 +117,23 @@ const OfferContainer = styled.article`
     gap: 2rem;
   }
 
-  main {
+  > main {
     grid-area: main;
   }
 
-  section {
+  > section {
     grid-area: summary;
   }
 
-  aside {
+  > aside {
     grid-area: sidebar;
   }
 
-  header {
+  > header {
     grid-area: header;
   }
 
-  footer {
+  > footer {
     grid-area: footer;
   }
 `

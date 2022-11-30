@@ -123,6 +123,8 @@ const ViewerActiveMedia = styled.div`
   grid-area: main-media;
 
   place-self: center;
+
+  max-height: 60vh;
 `
 
 const ViewerMediaSelector = styled.div`

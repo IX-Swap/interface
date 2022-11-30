@@ -10,6 +10,8 @@ interface InfoEntry {
 
 interface Props {
   title?: React.ReactNode
+  fontSize?: string;
+  lineHeight?: string
   entries: InfoEntry[]
 }
 
@@ -22,7 +24,7 @@ export const InfoList: React.FC<Props> = (props) => {
 
       {props.entries.map((entry, idx) => (
         <>
-          <Entry key={`entry-${idx}`}>
+          <Entry key={`entry-${idx}`} fontSize={props.fontSize} lineHeight={props.lineHeight}>
             <Label>{entry.label}</Label>
             {entry.value && <Value>{entry.value}</Value>}
           </Entry>
@@ -34,7 +36,14 @@ export const InfoList: React.FC<Props> = (props) => {
   )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  display: flex;
+
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+`
+
 const Title = styled.div`
   font-style: normal;
   font-weight: 800;
@@ -43,12 +52,17 @@ const Title = styled.div`
   line-height: 120%;
   letter-spacing: -0.03em;
 
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 
-const Entry = styled.div`
+interface TextProps {
+  fontSize?: string
+  lineHeight?: string
+}
+
+const Entry = styled.div<TextProps>`
   display: flex;
 
   flex-flow: row nowrap;
@@ -57,25 +71,22 @@ const Entry = styled.div`
 
   max-width: 100%;
   contain: content;
+  
+  font-style: normal;
+  font-size: ${props => props.fontSize ?? '14px'};
+
+  line-height: ${props => props.lineHeight ?? '40px'};
+  letter-spacing: -0.02em;
 `
 
-const Label = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
 
-  line-height: 40px;
-  letter-spacing: -0.02em;
+const Label = styled.div`
+  font-weight: 400;
 
   color: ${props => props.theme.launchpad.colors.text.body};
 `
 const Value = styled.div`
-  font-style: normal;
   font-weight: 600;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
   
   text-align: right;
 
