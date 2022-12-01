@@ -11,7 +11,7 @@ import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsD
 import { useLocation } from 'react-router-dom'
 
 export interface ActionsProps<T> {
-  item: T
+  item: any
   cacheQueryKey: any
 }
 
@@ -19,9 +19,11 @@ export type ActionsType<T> = (props: ActionsProps<T>) => ReactElement
 
 export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const { item, cacheQueryKey } = props
-  const { pathname } = useLocation()
+  const location = useLocation()
   const id: string = (item as any)._id
-  const splitted = pathname.split('/')
+  const splitted = location.pathname.split('/')
+  const status = location.search.split('=')[1]
+
   const category = splitted[splitted.length - 1]
   const userId: string =
     typeof (item as any).user === 'string'
@@ -48,9 +50,13 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       ? history.push(
           `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
         )
-      : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
+      : status === 'Approved' || status === 'Rejected' || status === 'Submitted'
+      ? history.push(`/app/authorizer/${category}/${userId}/${status}/view`)
+      : status === ' '
+      ? history.push(`/app/authorizer/${category}/${userId}/Submitted/view`)
+      : history.push(`/app/authorizer/${category}/${userId}/view`)
 
-  const isUnauthorized = (item as any).status === 'Submitted'
+  const isUnauthorized = (item as any).status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   return (
@@ -65,6 +71,12 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
               ? `/app/authorizer/${category}/${id}/view`
               : category === 'listings' && listingType === 'OTC'
               ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
+              : status === 'Approved' ||
+                status === 'Rejected' ||
+                status === 'Submitted'
+              ? `/app/authorizer/${category}/${userId}/${id}/${status}/view`
+              : status === ''
+              ? `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
               : `/app/authorizer/${category}/${userId}/${id}/view`
           }
           params={{
