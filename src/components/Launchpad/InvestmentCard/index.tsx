@@ -78,9 +78,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               <InvestmentStatusBadge label={stage.label} color={stage.color} />
             )}
 
-            {offer.status !== OfferStatus.claim && (
-              <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
-            )}
+            <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
           </InvestmentCardTagsContainer>
         </InvestmentCardHeader>
 
