@@ -7,7 +7,7 @@ import { X } from 'react-feather'
 import { RegisterToInvestStage } from './content/RegisterToInvest'
 import { SaleStage } from './content/Sale'
 
-import { Offer } from 'state/launchpad/types'
+import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import { InvestDialogSidebar } from './Sidebar'
 import { ClosedStage } from './content/Closed'
@@ -17,8 +17,34 @@ interface Props {
   onClose: () => void
 }
 
+enum StageForm {
+  register,
+  sale,
+  closed
+}
+
 export const InvestDialog: React.FC<Props> = (props) => {
   const theme = useTheme()
+
+  const stage = React.useMemo(() => {
+    console.log(props.offer.status)
+
+    switch (props.offer.status) {
+      case OfferStatus.whitelist:
+        return StageForm.register
+        
+      case OfferStatus.preSale:
+      case OfferStatus.sale:
+        return StageForm.sale
+        
+      case OfferStatus.closed:
+      case OfferStatus.claim:
+        return StageForm.closed
+
+      default:
+        return null
+    }
+  }, [])
 
   return (
     <Portal>
@@ -35,13 +61,12 @@ export const InvestDialog: React.FC<Props> = (props) => {
                 <X size="18" stroke={theme.launchpad.colors.text.bodyAlt} />
               </DialogHeaderExit>
             </DialogHeader>
-
           </header>
 
           <main>
-            {/* <RegisterToInvestStage /> */}
-            <SaleStage offer={props.offer} />
-            {/* <ClosedStage offer={props.offer} /> */}
+            {stage === StageForm.register && <RegisterToInvestStage />}
+            {stage === StageForm.sale && <SaleStage offer={props.offer} />}
+            {stage === StageForm.closed && <ClosedStage offer={props.offer} />}
           </main>
         </DialogContainer>
       </ModalWrapper>
@@ -80,7 +105,7 @@ const DialogContainer = styled.article`
   border-radius: 16px;
 
   max-width: 700px;
-  min-height: 600px;
+  min-height: 500px;
 
   > header {
     grid-area: header;

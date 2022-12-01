@@ -2,7 +2,6 @@ import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
 
-import { SaleStatus } from 'pages/Launchpad/utils'
 import { Tooltip } from './Tooltip'
 
 interface Props {
@@ -10,13 +9,15 @@ interface Props {
   isSuccesfull: boolean
   daysTillClosed?: number
   allowOnlyAccredited: boolean
+
+  margin?: string
 }
 
 
 export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
   if (props.isClosed) {
     return (
-      <ClosedContainer>
+      <ClosedContainer margin={props.margin}>
         <ClosedLabel>Closed</ClosedLabel>
 
         {props.isSuccesfull && (
@@ -46,12 +47,12 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
 }
 
 
-const BaseContainer = styled.div`
+const BaseContainer = styled.div<{ margin?: string }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 
-  margin: 1rem 0;
+  margin: ${props => props.margin ?? '1rem 0'};
   padding: 0 1rem;
   height: 40px;
 

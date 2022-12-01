@@ -16,7 +16,7 @@ const labels = [
   { label: 'Pre-Sale', value: OfferStatus.preSale },
   { label: 'Public Sale', value: OfferStatus.sale },
   { label: 'Closed', value: OfferStatus.closed },
-  { label: 'Claim', value: OfferStatus.claim },
+  { label: 'Token Claim', value: OfferStatus.claim },
 ]
 
 export const InvestDialogSidebar: React.FC<Props> = (props) => {
