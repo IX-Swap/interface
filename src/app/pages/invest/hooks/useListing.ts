@@ -4,10 +4,11 @@ import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { ListingView } from 'types/listing'
 
 export const useListing = () => {
+  const location = useLocation()
   const { apiService } = useServices()
   const { user } = useAuth()
   const { listingId, userId } = useParams<{
@@ -17,9 +18,15 @@ export const useListing = () => {
   const _userId = userId ?? getIdFromObj(user)
 
   const getListing = async () => {
-    return await apiService.get<ListingView>(
-      exchangeApiUrl.getListing(_userId, listingId)
-    )
+    if (location.pathname.includes('OTC')) {
+      return await apiService.get<ListingView>(
+        exchangeApiUrl.getOtcListing(_userId, listingId)
+      )
+    } else {
+      return await apiService.get<ListingView>(
+        exchangeApiUrl.getListing(_userId, listingId)
+      )
+    }
   }
 
   const { data, ...rest } = useQuery(
