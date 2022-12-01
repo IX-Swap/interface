@@ -254,6 +254,7 @@ export interface Offer {
   terms: OfferTerms
 
   daysTillSale?: number
+  daysTillClosed?: number
   totalInvestment: number
   
   members: OfferTeamMember[]

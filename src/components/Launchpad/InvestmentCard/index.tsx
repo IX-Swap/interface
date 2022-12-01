@@ -38,7 +38,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails(state => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal(state => !state), [])
 
-  const isClosed = React.useMemo(() => offer.status === OfferStatus.closed, [offer])
+  const isClosed = React.useMemo(() => [OfferStatus.closed, OfferStatus.claim].includes(offer.status), [offer])
 
   const currentTimeframe = React.useMemo(() => 
     offer.timeframes.find(frame => isWithinTimeframe(frame)) 
@@ -78,9 +78,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               <InvestmentStatusBadge label={stage.label} color={stage.color} />
             )}
 
-            {offer.status !== OfferStatus.claim && (
-              <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
-            )}
+            <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
           </InvestmentCardTagsContainer>
         </InvestmentCardHeader>
 
@@ -134,7 +132,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           <InvestmentSaleStatusInfo 
             isClosed={offer.status === OfferStatus.closed}
             isSuccesfull={offer.softCapReached}
-            daysTillSale={offer.daysTillSale}
+            daysTillClosed={offer.daysTillClosed}
             allowOnlyAccredited={offer.allowOnlyAccredited}
           />
           

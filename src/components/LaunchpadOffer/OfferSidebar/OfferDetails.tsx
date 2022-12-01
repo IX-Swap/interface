@@ -77,7 +77,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
             <InvestmentSaleStatusInfo 
               isClosed       
               isSuccesfull={props.offer.softCapReached}
-              daysTillSale={props.offer.daysTillSale}
+              daysTillClosed={props.offer.daysTillSale}
               allowOnlyAccredited={props.offer.allowOnlyAccredited}
               margin="0 0 1.5rem 0"
             />
