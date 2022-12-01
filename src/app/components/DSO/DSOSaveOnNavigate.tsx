@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import {
   generatePath,
@@ -58,6 +58,11 @@ export const DSOSaveOnNavigate = ({
     }
     return activeStep
   }
+  useEffect(() => {
+    if (activeStep === 1 && dsoId !== undefined) {
+      setCompleted(0)
+    }
+  }, [activeStep, dsoId, setCompleted])
   const handleSave = async () => {
     const newValues = [...stepValues]
     await trigger()
@@ -66,14 +71,13 @@ export const DSOSaveOnNavigate = ({
     setStepValues(newValues)
     const obj = errors
     console.log('errors', obj)
+    const newActiveStep = getNewActiveStep()
+    const search: string = `?step=${stepsList[newActiveStep].label.replace(
+      ' ',
+      '+'
+    )}`
     setCompleted()
-    // eslint-disable-next-line
     if (!isEmpty(obj)) {
-      const newActiveStep = getNewActiveStep()
-      const search: string = `?step=${stepsList[newActiveStep].label.replace(
-        ' ',
-        '+'
-      )}`
       if (dsoId !== undefined && issuerId !== undefined) {
         const redirect: string = redirectFunction(
           location.pathname.includes('/create'),
@@ -103,27 +107,6 @@ export const DSOSaveOnNavigate = ({
                     location.pathname.includes('/create'),
                     data.data._id
                   )
-                  const search: string = `?step=${stepsList[
-                    activeStep
-                  ].label.replace(' ', '+')}`
-                  history.replace(
-                    generatePath(`${redirect}${search}`, {
-                      issuerId:
-                        typeof data.data.user === 'string'
-                          ? data.data.user
-                          : getIdFromObj(data.data.user),
-                      dsoId: data.data._id
-                    })
-                  )
-                } else {
-                  const redirect: string = redirectFunction(
-                    location.pathname.includes('/create'),
-                    data.data._id
-                  )
-                  const newActiveStep = getNewActiveStep()
-                  const search: string = `?step=${stepsList[
-                    newActiveStep
-                  ].label.replace(' ', '+')}`
                   history.replace(
                     generatePath(`${redirect}${search}`, {
                       issuerId:

@@ -84,10 +84,15 @@ export const DSOStepper = (props: DSOStepperProps) => {
       }
     }
 
-  const handleComplete = () => {
-    if (!completed.includes(activeStep)) {
-      const tempComplete = new Set([...completed, activeStep])
+  const handleComplete = (step?: number) => {
+    if (step !== undefined) {
+      const tempComplete = new Set([...completed, step])
       setCompleted(Array.from(tempComplete))
+    } else {
+      if (!completed.includes(activeStep)) {
+        const tempComplete = new Set([...completed, activeStep])
+        setCompleted(Array.from(tempComplete))
+      }
     }
   }
 
