@@ -59,10 +59,11 @@ export const DSOSaveOnNavigate = ({
     return activeStep
   }
   useEffect(() => {
-    if (activeStep === 1 && dsoId !== undefined) {
+    if (activeStep === 1 && dsoId !== undefined && !isEdit) {
       setCompleted(0)
     }
-  }, [activeStep, dsoId, setCompleted])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const handleSave = async () => {
     const newValues = [...stepValues]
     await trigger()
