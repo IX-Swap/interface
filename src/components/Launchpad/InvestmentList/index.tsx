@@ -9,9 +9,12 @@ import { Offer } from 'state/launchpad/types'
 
 interface Props {
   offers: Offer[]
-  onFilter: (filter: FilterConfig) => void
+  
   hasMore: boolean
+  isLoading?: boolean
+
   fetchMore: () => void
+  onFilter: (filter: FilterConfig) => void
 }
 
 export const InvestmentList: React.FC<Props> = (props) => {
@@ -23,7 +26,7 @@ export const InvestmentList: React.FC<Props> = (props) => {
         {props.offers.map(offer => <InvestmentCard key={offer.id} offer={offer} />)}
       </InvestmentListGrid>
 
-      {props.hasMore && <PaginationTrigger onTriggered={props.fetchMore} />}
+      {props.hasMore && <PaginationTrigger isLoading={props.isLoading} onTriggered={props.fetchMore} />}
     </InvestmentListContainer>
   )
 }

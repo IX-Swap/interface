@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 import { Offer } from 'state/launchpad/types'
 import { InfoList } from '../util/InfoList'
+import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
+import { Info } from 'react-feather'
 
 interface Props {
   offer: Offer
@@ -46,7 +48,12 @@ export const OfferPreSaleInfo: React.FC<Props> = (props) => {
 
   return (
     <SaleAllocationContainer>
-      <SaleAllocationTitle>Pre-Sale</SaleAllocationTitle>
+      <SaleAllocationTitle>
+        Pre-Sale
+        <Tooltip title="Pre-Sale" body="The pre-sale round has its own maximum and minimum investment sizes that may differ from the public sale. You need to register to invest in order to participate in the pre-sale round.">
+          <Info size="14" />
+        </Tooltip>
+      </SaleAllocationTitle>
       
       <Separator />
 
@@ -73,6 +80,10 @@ const SaleAllocationContainer = styled.div`
 `
 
 const SaleAllocationTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
   font-style: normal;
   font-weight: 400;
   font-size: 14px;

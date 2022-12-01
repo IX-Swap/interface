@@ -1,9 +1,10 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { ChevronDown, ChevronUp } from 'react-feather'
+import { ChevronDown, ChevronUp, Info } from 'react-feather'
 
 import { Offer } from 'state/launchpad/types'
+import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 
 interface Props {
   offer: Offer
@@ -17,13 +18,42 @@ export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
       <Indicator percentage={50} />
 
       <SoftcapMarker percentage={20}>
-        <div>Soft Cap</div>
+        <div>
+          Soft Cap
+          
+          <Tooltip title="Soft Cap" body="This is the minimum amount that needs to be raised for the deal to be successful.">
+            <Info size="10" />  
+          </Tooltip>
+        </div>
         <ChevronDown fill={theme.launchpad.colors.primary} stroke={theme.launchpad.colors.primary} />
       </SoftcapMarker>
 
       <PreSaleGoalMarker percentage={35}>
         <ChevronUp fill={theme.launchpad.colors.primary} stroke={theme.launchpad.colors.primary} />
-        <div>Pre-Sale Goal</div>
+        <div>
+          Pre-Sale Goal
+          
+          <Tooltip 
+            title="Pre-Sale Goal" 
+            body={(
+              <div>
+                Deal issuers can divide the funding round by adding a &quot;pre-sale&quot; 
+                round and allocating it a part of the total funding. 
+
+                <br /><br />
+
+                The pre-sale round is only available for investors approved in the 
+                investment registration stage.
+                
+                <br /><br />
+
+                Pre-sale is on a first come first serve basis.
+              </div>
+            )}
+          >
+            <Info size="10" />  
+          </Tooltip>
+        </div>
       </PreSaleGoalMarker>
     </IndicatorContainer>
   )
@@ -78,6 +108,12 @@ const Marker = styled.div<{ percentage: number }>`
   letter-spacing: -0.02em;
 
   color: ${props => props.theme.launchpad.colors.text.caption};
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 `
 
 const SoftcapMarker = styled(Marker)`

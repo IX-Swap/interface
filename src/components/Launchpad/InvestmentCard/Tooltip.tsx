@@ -51,7 +51,7 @@ export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
     if (showTooltip) {
       setPosition({
         x: rect!.x + window.scrollX + (rect!.width / 2) - 160, 
-        y: rect!.y + window.scrollY - 170 
+        y: rect!.y + window.scrollY
       })
       
       document?.addEventListener('click', handleClickOutside)
@@ -86,18 +86,24 @@ const ChildrenWrapper = styled.div`
   position: relative;
 
   cursor: pointer;
+
+  height: fit-content;
+
+  padding: 0;
+  margin: 0;
 `
 
 const TooltipContainer = styled.article<{ x: number; y: number }>`
   position: absolute;
 
   width: 320px;
-  height: 160px;
 
   z-index: 20;
 
   left: ${props => props.x}px;
   top: ${props => props.y}px;
+
+  transform: translate(0, -100%);
 
   background: ${props => props.theme.launchpad.colors.background};
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};

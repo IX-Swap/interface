@@ -6,8 +6,6 @@ import { useParams } from 'react-router-dom'
 import { Header } from 'pages/Launchpad/Header'
 import { Footer } from 'pages/Launchpad/Footer'
 
-import Loader from 'components/Loader'
-
 import { Offer } from 'state/launchpad/types'
 import { useGetOffer } from 'state/launchpad/hooks'
 import { useSetHideHeader } from 'state/application/hooks'
@@ -16,6 +14,7 @@ import { OfferSummary } from 'components/LaunchpadOffer/OfferSummary'
 import { OfferMainInfo } from 'components/LaunchpadOffer/OfferMainInfo'
 import { OfferSidebar } from 'components/LaunchpadOffer/OfferSidebar'
 
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
 
 
 interface OfferPageParams {
@@ -46,7 +45,7 @@ export default function LaunchpadOffer() {
   }, [])
 
   if (loading) {
-    return <Centered><Loader size='40px' /></Centered>
+    return <Centered><Loader /></Centered>
   }
 
   if (!offer) {
