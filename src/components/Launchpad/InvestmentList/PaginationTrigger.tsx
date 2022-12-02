@@ -1,17 +1,33 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { Centered } from 'components/LaunchpadOffer/styled'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+
 interface Props {
+  isLoading?: boolean
   onTriggered: () => void
 }
 
 export const PaginationTrigger: React.FC<Props> = (props) => {
+  if (props.isLoading) {
+    return (
+      <LoaderWrapper>
+        <Loader />
+      </LoaderWrapper>
+    )
+  }
+
   return (
     <LoadMoreButton type="button" onClick={props.onTriggered}>
       Load more
     </LoadMoreButton>
   )
 }
+
+const LoaderWrapper = styled(Centered)`
+  padding: 1rem;
+`
 
 const LoadMoreButton = styled.button`
   display: grid;

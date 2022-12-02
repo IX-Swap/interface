@@ -1,13 +1,16 @@
 import React from 'react'
+import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
-import { CheckCircle } from 'react-feather'
+import { CheckCircle, Clock, Info } from 'react-feather'
+
+import { Offer, OfferStatus } from 'state/launchpad/types'
+
+import { InvestFormContainer } from './styled'
+import { Column, Row, Separator } from 'components/LaunchpadOffer/styled'
 
 import { InvestFormSubmitButton, InvestSubmitState } from '../utils/InvestSubmitButton'
-import { InvestFormContainer } from './styled'
-import { Separator } from 'components/LaunchpadOffer/styled'
-import { Offer, OfferStatus } from 'state/launchpad/types'
-import Row from 'components/Row'
+import { OfferLinks } from '../utils/OfferLinks'
 
 interface Props {
   offer: Offer
@@ -17,36 +20,68 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const canClaim = React.useMemo(() => props.offer.status === OfferStatus.claim, [])
+  const timeframe = React.useMemo(() => props.offer.timeframes.find(x => x.type.toString() == props.offer.status.toString())!, [])
+
+  const isSuccessfull = React.useMemo(() => props.offer.softCapReached, [])
+  const amountToClaim = React.useMemo(() => Math.floor(Math.random() * Number(props.offer.maxInvestment)), [])
 
   return (
-    <InvestFormContainer gap="1.5rem">
-      <Title>Closed</Title>
+    <InvestFormContainer gap="1rem" padding='0 0 3rem 0'>
+      <Title>{canClaim ? 'Token Claim' : 'Closed'}</Title>
 
-      <InvestFormSubmitButton disabled state={InvestSubmitState.success}>
-        This deal has been successfully funded <CheckCircle size="15" color={theme.launchpad.colors.success} />
+      <InvestFormSubmitButton disabled state={isSuccessfull ? InvestSubmitState.success : InvestSubmitState.error}>
+        {isSuccessfull && <>This deal has been successfully funded <CheckCircle size="15" color={theme.launchpad.colors.success} /></>}
+        {!isSuccessfull && <>This deal has been unsuccessfully funded <Info size="15" color={theme.launchpad.colors.error} /></>}
+        
       </InvestFormSubmitButton>
-
-      <div style={{ justifyContent: ''}}></div>
 
       <Separator />
       
-      <InvestmentClaim>
-        <MyInvestment>
+      <Row justifyContent='space-between' alignItems='center'>
+        <Column>
           <MyInvestmentLabel>My Investment</MyInvestmentLabel>
-          <MyInvestmentAmount>1023 {props.offer.tokenSymbol}</MyInvestmentAmount>
-        </MyInvestment>
+          <MyInvestmentAmount>{amountToClaim} {props.offer.tokenSymbol}</MyInvestmentAmount>
+        </Column>
 
-        <ClaimButton disabled={!canClaim}>
+        <ClaimButton disabled={!canClaim} hasInvestments={amountToClaim > 0}>
           Claim
         </ClaimButton>
-      </InvestmentClaim>
+      </Row>
 
       <Separator />
 
       {!canClaim && (
-         <Row justifyContent=""></Row>
+         <Row alignItems='center' gap="1rem">
+            <Clock color={theme.launchpad.colors.primary} size="50" />
+            <CantClaimNotice>
+              You cannot claim any tokens yet. 
+              Please come back <b>{moment(timeframe?.endDate).format('DD/MM/YYYY')}</b>, 
+              on the token claim date.
+            </CantClaimNotice>
+         </Row>
       )}
+
+      {canClaim && (
+        <Column gap="0.5rem">
+          {!isSuccessfull && (
+            <UnsuccessfulFundNotice>
+              Your refund will be in USDT regardless of the token used for payment.  
+            </UnsuccessfulFundNotice>
+          )}
+
+          <CanClaimNotice>
+            Once claimed, you can find your tokens in your wallet. 
+            Please make sure to add the token address to your wallet to see the token on your wallet feed.
+          </CanClaimNotice>
+
+          <OfferLinks offer={props.offer} />
+        </Column>
+      )}
+
       <Separator />
+
+      <HelpLabel>Need help?</HelpLabel>
+      <HelpButton>Contact Us</HelpButton>
     </InvestFormContainer>
   )
 }
@@ -63,16 +98,90 @@ const Title = styled.div`
 
   color: ${props => props.theme.launchpad.colors.text.title};
 `
+const CanClaimNotice = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
 
-const InvestmentClaim = styled.div`
-  display: flex;
+  line-height: 150%;
+  letter-spacing: -0.02em;
 
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
+  color: ${props => props.theme.launchpad.colors.text.title};
+
+  opacity: 0.8;
+
+  max-width: 85%;
+`
+const UnsuccessfulFundNotice = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 150%;
+  /* identical to box height, or 20px */
+
+  letter-spacing: -0.02em;
+
+  color: ${props => props.theme.launchpad.colors.error};
+
+  opacity: 0.8;
+`
+const CantClaimNotice = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${props => props.theme.launchpad.colors.text.title + 'cc'};
+  
+  max-width: 70%;
+
+  b {
+    font-weight: 700;
+    color: ${props => props.theme.launchpad.colors.text.title};
+  }
 `
 
-const MyInvestment = styled.div`
+const HelpLabel = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+`
+
+const HelpButton = styled.div`
+  display: grid;
+  place-content: center;
+
+  background: ${props => props.theme.launchpad.colors.background};
+  border: 1px solid ${props => props.theme.launchpad.colors.primary};
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+
+  line-height: 19px;
+  letter-spacing: -0.02em;
+
+  height: 60px;
+  
+  text-align: center;
+
+  color: ${props => props.theme.launchpad.colors.primary};
+
+  transition: background 0.4s;
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.foreground + 'b1'};
+  }
 `
 
 const MyInvestmentLabel = styled.div`
@@ -97,7 +206,7 @@ const MyInvestmentAmount = styled.div`
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 
-const ClaimButton = styled.button`
+const ClaimButton = styled.button<{ hasInvestments: boolean }>`
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -107,16 +216,50 @@ const ClaimButton = styled.button`
 
   height: 50px;
 
-  color: ${props => props.disabled 
-    ? props.theme.launchpad.colors.text.light
-    : props.theme.launchpad.colors.primary};
-
-  background: ${props => props.disabled
-    ? props.theme.launchpad.colors.disabled
-    : props.theme.launchpad.colors.background};
-
-  border: ${props => props.disabled ? 'none' : `1px solid ${props.theme.launchpad.colors.border.default}`};
+  cursor: pointer;
+  
   border-radius: 6px;
 
   padding: 0.25rem 3rem;
+
+  ${props => !props.disabled && props.hasInvestments && `
+    color: ${props.theme.launchpad.colors.text.light};
+    background: ${props.theme.launchpad.colors.primary};
+  `}
+
+  ${props => !props.disabled && !props.hasInvestments && `
+    color: ${props.theme.launchpad.colors.primary};
+    background: ${props.theme.launchpad.colors.background};
+    border: 1px solid ${props.theme.launchpad.colors.border.default};
+  `}
+
+  ${props => props.disabled && `
+    color: ${props.theme.launchpad.colors.text.light};
+    background: ${props.theme.launchpad.colors.disabled};
+    border: none;
+  `}
+
+  ${props => !props.disabled && `
+    border: none;
+
+    position: relative;
+
+    ::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      content: '';
+      opacity: 0.2;
+    
+      transition: background 0.3s;
+    }
+
+    :hover::before {
+      background: ${props.theme.launchpad.colors.text.bodyAlt};
+    }
+  `}
 `

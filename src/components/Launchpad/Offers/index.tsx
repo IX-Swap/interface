@@ -31,26 +31,29 @@ export const Offers = () => {
   }, [filter])
   
   const fetchMore = React.useCallback(async () => {
+    setLoading(true)
+
     const result = await getOffers(page, filter)
 
     setOffers(state => state.concat(result.items))
     setPage(state => state + 1)
     setHasMore(result.hasMore)
-
+    
+    setLoading(false)
   }, [offers, page, filter])
 
-  if (loading) {
-    return (
-      <Centered width="100%">
-        <Loader />
-      </Centered>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <Centered width="100%">
+  //       <Loader />
+  //     </Centered>
+  //   )
+  // }
 
   return (
     <div>
       <Pinned />
-      <InvestmentList offers={offers} onFilter={setFilter}  fetchMore={fetchMore} hasMore={hasMore}/>
+      <InvestmentList offers={offers} onFilter={setFilter}  fetchMore={fetchMore} isLoading={loading} hasMore={hasMore}/>
     </div>
   )
 }
