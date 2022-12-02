@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Offer } from 'state/launchpad/types'
-import { InfoList } from '../util/InfoList'
-import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { Info } from 'react-feather'
+
+import { Offer } from 'state/launchpad/types'
+import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 
 interface Props {
   offer: Offer
@@ -19,8 +19,8 @@ export const OfferSaleAllocation: React.FC<Props> = (props) => {
 
       <SaleAllocationEntry>
         <div>
-          <span className='bold'>${props.offer.softCap}</span> Soft Cap /
-          <span className='bold'>${props.offer.hardCap}</span> Hard Cap
+          <span className='bold'>wTTNM {props.offer.softCap}</span> Soft Cap /
+          <span className='bold'>wTTNM {props.offer.hardCap}</span> Hard Cap
         </div>
       </SaleAllocationEntry>
       
@@ -28,7 +28,7 @@ export const OfferSaleAllocation: React.FC<Props> = (props) => {
       
       <SaleAllocationEntry>
         <div>
-          <span className='bold'>${props.offer.presaleAlocated}</span> Allocated for Pre-Sale
+          <span className='bold'>wTTNM {props.offer.presaleAlocated}</span> Allocated for Pre-Sale
         </div>
       </SaleAllocationEntry>
       
@@ -36,7 +36,7 @@ export const OfferSaleAllocation: React.FC<Props> = (props) => {
       
       <SaleAllocationEntry>
         <div>
-          <span className='bold'>${Number(props.offer.hardCap) - Number(props.offer.presaleAlocated)}</span> Allocated for Public Sale
+          <span className='bold'>wTTNM {Number(props.offer.hardCap) - Number(props.offer.presaleAlocated)}</span> Allocated for Public Sale
         </div>
       </SaleAllocationEntry>
     </SaleAllocationContainer>
@@ -59,14 +59,14 @@ export const OfferPreSaleInfo: React.FC<Props> = (props) => {
 
       <SaleAllocationEntry>
         <EntryLabel>Max. Investment Size</EntryLabel>
-        <EntryValue>${formatter.format(Number(props.offer.presaleMaxInvestment))}</EntryValue>
+        <EntryValue>wTTNM {formatter.format(Number(props.offer.presaleMaxInvestment))}</EntryValue>
       </SaleAllocationEntry>
       
       <Separator />
       
       <SaleAllocationEntry>
         <EntryLabel>Min. Investment Size</EntryLabel>
-        <EntryValue>${formatter.format(Number(props.offer.presaleMinInvestment))}</EntryValue>
+        <EntryValue>wTTNM {formatter.format(Number(props.offer.presaleMinInvestment))}</EntryValue>
       </SaleAllocationEntry>
     </SaleAllocationContainer>
   )

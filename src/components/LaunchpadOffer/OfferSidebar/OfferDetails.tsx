@@ -37,16 +37,16 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { currency: 'USD' }), [])
 
-  const minTokenInvestment = React.useMemo(() => Math.floor(Number(props.offer.minInvestment) / Number(props.offer.tokenUsdValue)), [])
-  const maxTokenInvestment = React.useMemo(() => Math.floor(Number(props.offer.maxInvestment) / Number(props.offer.tokenUsdValue)), [])
+  const minTokenInvestment = React.useMemo(() => Math.floor(Number(props.offer.minInvestment) / Number(props.offer.tokenPrice)), [])
+  const maxTokenInvestment = React.useMemo(() => Math.floor(Number(props.offer.maxInvestment) / Number(props.offer.tokenPrice)), [])
 
   const offerInfo = React.useMemo(() => [
     { label: 'Issuer', value: props.offer.issuerName },
     { label: 'Country', value: props.offer.country },
     { label: 'Investment Type', value: props.offer.investmentType },
-    { label: 'Token Price', value: `$${props.offer.tokenUsdValue} / 1 ${props.offer.tokenSymbol}` },
-    { label: 'Max. Investment Size', value: `$${props.offer.maxInvestment} / ${maxTokenInvestment} ${props.offer.tokenSymbol}` },
-    { label: 'Min. Investment Size', value: `$${props.offer.minInvestment} / ${minTokenInvestment} ${props.offer.tokenSymbol}` },
+    { label: 'Token Price', value: `wTTNM ${props.offer.tokenPrice} / 1 ${props.offer.tokenSymbol}` },
+    { label: 'Max. Investment Size', value: `wTTNM ${props.offer.maxInvestment} / ${maxTokenInvestment} ${props.offer.tokenSymbol}` },
+    { label: 'Min. Investment Size', value: `wTTNM ${props.offer.minInvestment} / ${minTokenInvestment} ${props.offer.tokenSymbol}` },
   ], [minTokenInvestment, maxTokenInvestment])
 
   const stageStatus = React.useMemo(() => {

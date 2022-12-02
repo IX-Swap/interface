@@ -28,7 +28,7 @@ export const RegisterToInvestStage = () => {
   }, [submitState])
 
   return (
-    <InvestFormContainer gap="1.5rem">
+    <InvestFormContainer gap="1.5rem" padding="0 0 2rem 0">
       <Title>
         Are you interested to participate in this deal? 
       </Title>

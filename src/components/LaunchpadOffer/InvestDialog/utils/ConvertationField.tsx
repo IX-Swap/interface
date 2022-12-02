@@ -21,8 +21,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const convertedValue = React.useMemo(() => inputValue, [inputValue])
 
   const offerToken = React.useMemo(() => {
-    console.log(props.offer.tokenAddress)
-    console.log(tokensOptions)
     const token = tokensOptions
       .find(x => props.offer.tokenAddress === x.address ||
           props.offer.tokenAddress === x.value)

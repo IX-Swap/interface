@@ -57,7 +57,7 @@ const getTooltip = (frame: OfferTimeframe) => {
 export const OfferStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const timeframes = React.useMemo(() => props.offer.timeframes
-    .sort((a, b) => new Date(b.startDate).getMilliseconds() - new Date(a.startDate).getMilliseconds())
+    .sort((a, b) => Date.parse(a.startDate.toString()) - Date.parse(b.startDate.toString()))
     .map(frame => {
       const hasStarted = frame.startDate <= new Date()
 

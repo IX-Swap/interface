@@ -33,7 +33,7 @@ export default function LaunchpadOffer() {
 
   React.useEffect(() => {
     getOffer(params.offerId).then(setOffer).finally(() => setLoading(false))
-  }, [])
+  }, [params.offerId])
 
 
   React.useEffect(() => {

@@ -212,10 +212,10 @@ export interface Offer {
   socialMedia: OfferSocialMediaLinks
 
   tokenName: string
-
   tokenTicker: string
-  tokenUsdValue: string
+  tokenPrice: string
   tokenStandart: OfferTokenStandart
+  
   decimals: number
 
   softCap: string
