@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import styled from 'styled-components'
 
 import { Tooltip } from './Tooltip'
@@ -8,6 +7,7 @@ interface Props {
   isClosed: boolean
   isSuccesfull: boolean
   daysTillClosed?: number
+  hoursTillClosed?: number
   allowOnlyAccredited: boolean
 
   margin?: string
@@ -15,6 +15,10 @@ interface Props {
 
 
 export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
+  const info = props.hoursTillClosed
+    ? `${props.hoursTillClosed > 1 ? `${props.hoursTillClosed} Hours` : 'Less than 1 Hour'}` : props.daysTillClosed
+    ? `${props.daysTillClosed} ${props.daysTillClosed > 1 ? 'Days' : 'Day'}` : null
+
   if (props.isClosed) {
     return (
       <ClosedContainer margin={props.margin}>
@@ -35,10 +39,10 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
     )
   }
 
-  if (props.daysTillClosed) {
+  if (info) {
     return (
       <ActiveContainer>
-        <span className="bold">{props.daysTillClosed} {props.daysTillClosed > 1 ? 'Days' : 'Day'} </span> until the sale closes
+        <span className="bold">{info} </span> until the sale closes
       </ActiveContainer>
     )
   }
