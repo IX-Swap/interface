@@ -11,9 +11,9 @@ export const AuthorizerCashWithdrawalsRouter = () => {
       <AppRoute
         exact
         breadcrumb='Cash Withdrawal Details'
-        path='/app/authorizer/cash-withdrawals/:userId/:cashWithdrawalId/view'
+        path='/app/authorizer/cash-withdrawals/:userId/:cashWithdrawalId/:status/view'
       >
-        <CashWithdrawalAuthorization />
+        <CashWithdrawalAuthorization/>
       </AppRoute>
 
       <AppRoute path={AuthorizerRoute.cashWithdrawals}>
