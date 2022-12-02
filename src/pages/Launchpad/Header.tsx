@@ -11,7 +11,7 @@ import { isDevelopment } from 'utils/isEnvMode'
 export const Header = () => {
   return (
     <HeaderContainer>
-      <TitleSection>
+      <TitleSection to="/launchpad">
         <Logo />
         <span className='bold-title'>IXS </span>
         <span className='dimmed-title'>Launchpad</span>
@@ -62,13 +62,24 @@ const HeaderLinks = styled.div`
   margin: 0 3rem;
 `
 
-const TitleSection = styled.div`
+const TitleSection = styled(Link)`
   display: flex;
 
   justify-content: flex-start;
   align-items: center;
 
   gap: 0.5rem;
+  padding: 0.5rem 1rem;
+
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  transition: background 0.3s;
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.foreground};
+  }
 
   .bold-title {
     font-style: normal;

@@ -27,8 +27,6 @@ export const InvestDialog: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const stage = React.useMemo(() => {
-    console.log(props.offer.status)
-
     switch (props.offer.status) {
       case OfferStatus.whitelist:
         return StageForm.register

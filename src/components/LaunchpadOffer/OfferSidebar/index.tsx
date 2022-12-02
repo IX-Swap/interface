@@ -8,6 +8,7 @@ import { OfferDetails } from './OfferDetails'
 import { OfferSaleAllocation, OfferPreSaleInfo } from './OfferSaleAllocation'
 import { OfferStage } from './OfferStage'
 import { OfferTerms } from './OfferTerms'
+import { OfferVesting } from './OfferVesting'
 
 interface Props {
   offer: Offer
@@ -21,6 +22,7 @@ export const OfferSidebar: React.FC<Props> = (props) => {
       <OfferPreSaleInfo offer={props.offer} />
       <OfferStage offer={props.offer} />
       <OfferTerms offer={props.offer} />
+      <OfferVesting offer={props.offer} />
       <OfferAdditionalDocs files={props.offer.files} />
       <OfferContact offer={props.offer} />
     </>

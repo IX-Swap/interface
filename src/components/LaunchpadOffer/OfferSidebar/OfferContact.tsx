@@ -12,15 +12,25 @@ interface Props {
 
 export const OfferContact: React.FC<Props> = (props) => {
   const entries = React.useMemo(() => [
-    { label: <ContactLine><Mail size="18" /> {props.offer.contactUsEmail}</ContactLine> }
+    { 
+      label: (
+        <ContactLine href={`mailto:${props.offer.contactUsEmail}`}>
+          <Mail size="18" /> {props.offer.contactUsEmail}
+        </ContactLine> 
+      )
+    }
   ], [])
 
   return <InfoList title="Contact Us" entries={entries} />
 }
 
-const ContactLine = styled.div`
+const ContactLine = styled.a`
   display: flex;
   align-items: center;
+
+  color: ${props => props.theme.launchpad.colors.text.body};
+
+  text-decoration: none;
 
   svg {
     margin-right: 0.5rem;

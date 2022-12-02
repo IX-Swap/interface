@@ -30,14 +30,14 @@ export const SaleStage: React.FC<Props> = (props) => {
 
 
   const presaleCondition = React.useMemo(() => [
-    { label: 'Min. Investment Size', value: formatter.format(Number(props.offer.presaleMaxInvestment)) },
-    { label: 'Max. Investment Size', value: formatter.format(Number(props.offer.presaleMaxInvestment)) }
+    { label: 'Min. Investment Size', value: `${formatter.format(Number(props.offer.presaleMaxInvestment))} wTTNM` },
+    { label: 'Max. Investment Size', value: `${formatter.format(Number(props.offer.presaleMaxInvestment))} wTTNM` }
   ], [])
 
   const investmentAllowance = React.useMemo(() => {
     const items = [
-      { label: 'Available to invest', value: `9,000.00 USD` },
-      { label: 'Already invested', value: `1,000.00 USD` }
+      { label: 'Available to invest', value: `9,000.00 wTTNM` },
+      { label: 'Already invested', value: `1,000.00 wTTNM` }
     ]
 
     return items.filter(x => !!x)

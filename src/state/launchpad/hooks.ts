@@ -97,13 +97,7 @@ export const useRequestSupport = () => {
 }
 
 export const useSubscribeToOffer = () => {
-  return React.useCallback((email: string, offerId?: string) => {
-    const url = offerId
-      ? `/offers/${offerId}/subscribe`
-      : '/offers/subscribe'
-
-    return apiService.post(url, { email })
-  }, [])
+  return React.useCallback((email: string, offerId?: string) => apiService.post('/offers/subscribe', { email, offerId }), [])
 }
 
 export const useGetOffer = () => {
