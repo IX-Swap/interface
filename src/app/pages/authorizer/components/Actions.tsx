@@ -50,9 +50,11 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       ? history.push(
           `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
         )
-      : status === 'Approved' || status === 'Rejected' || status === 'Submitted'
+      : status ===
+          ('Approved' || status === 'Rejected' || status === 'Submitted') &&
+        category === 'cash-withdrawals'
       ? history.push(`/app/authorizer/${category}/${userId}/${status}/view`)
-      : status === ' '
+      : status === ' ' && category === 'cash-withdrawals'
       ? history.push(`/app/authorizer/${category}/${userId}/Submitted/view`)
       : history.push(`/app/authorizer/${category}/${userId}/view`)
 
@@ -71,11 +73,11 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
               ? `/app/authorizer/${category}/${id}/view`
               : category === 'listings' && listingType === 'OTC'
               ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
-              : status === 'Approved' ||
+              : (status === 'Approved' ||
                 status === 'Rejected' ||
-                status === 'Submitted'
+                status === 'Submitted') && category === 'cash-withdrawals'
               ? `/app/authorizer/${category}/${userId}/${id}/${status}/view`
-              : status === ''
+              : status === '' && category === 'cash-withdrawals'
               ? `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
               : `/app/authorizer/${category}/${userId}/${id}/view`
           }
