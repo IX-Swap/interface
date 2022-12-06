@@ -20,10 +20,28 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const [inputValue, setInputValue] = React.useState('')
   const convertedValue = React.useMemo(() => inputValue, [inputValue])
 
+  console.log(tokensOptions)
+
   const offerToken = React.useMemo(() => {
     const token = tokensOptions
       .find(x => props.offer.tokenAddress === x.address ||
           props.offer.tokenAddress === x.value)
+
+    if (!token) {
+      return
+    }
+
+    return {
+      name: token.label,
+      address: token.address,
+      icon: token.icon,
+    } as TokenOption
+  }, [tokensOptions])
+
+  const offerInvestmentToken = React.useMemo(() => {
+    const token = tokensOptions
+      .find(x => props.offer.investingTokenAddress === x.address ||
+          props.offer.investingTokenAddress === x.value)
 
     if (!token) {
       return
@@ -42,7 +60,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         type='number'
         onChange={setInputValue}
         
-        trailing={<CurrencyDropdown />}
+        trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
 
         // padding="1rem 1.5rem"
         height="90px"

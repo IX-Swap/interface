@@ -59,22 +59,29 @@ export const OfferStage: React.FC<Props> = (props) => {
   const timeframes = React.useMemo(() => props.offer.timeframes
     .sort((a, b) => Date.parse(a.startDate.toString()) - Date.parse(b.startDate.toString()))
     .map(frame => {
-      const hasStarted = frame.startDate <= new Date()
+      const hasStarted = Date.parse(frame.startDate.toString()) <= Date.now()
 
       const label = getTypeLabel(frame.type)
-      const value = `${moment(frame.startDate).format('Do MMMM, HH:mm zz')} - ${moment(frame.endDate).format('Do MMM')}`
+      const value = [
+        moment(new Date(frame.startDate)).format('Do MMMM, HH:mm'),
+        frame.type !== OfferTimeframeType.claim && (' - ' + moment(Date.parse(frame.endDate.toString())).format('Do MMM'))
+      ].filter(x => x).join()
 
       return { 
         label: (
           <StageLabel hasStarted={hasStarted}>
-            {hasStarted && <ChevronRight color={theme.launchpad.colors.primary} />}
-            {label} 
+            {hasStarted && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
+            <div>
+              {label} 
+            </div>
             <Tooltip {...getTooltip(frame)}>
               <Info size="14" color={theme.launchpad.colors.text.caption}/>
             </Tooltip>
           </StageLabel>
         ), 
-        value
+        value: (
+          <Nowrap>{value}</Nowrap>
+        )
       }
     }),
   [])
@@ -82,13 +89,18 @@ export const OfferStage: React.FC<Props> = (props) => {
   return <InfoList title="Investment Stage" entries={timeframes} />
 }
 
-const StageLabel = styled.div<{ hasStarted: boolean}>`
+const Nowrap = styled.div`
+  white-space: nowrap;
+`
+
+const StageLabel = styled(Nowrap)<{ hasStarted: boolean}>`
   display: flex;
 
   flex-flow: row nowrap;
+  justify-content: flex-start;
   align-items: center;
 
-  gap: 0.5rem;
+  gap: 0.25rem;
 
   color: ${props => props.hasStarted
     ? props.theme.launchpad.colors.primary

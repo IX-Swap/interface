@@ -26,6 +26,8 @@ import { Caption, KYCButton, KYCPromptContainer, KYCPromptIconContainer, KYCProm
 interface Props {
   offerId: string
   allowOnlyAccredited: boolean
+  
+  onClose?: () => void
 }
 
 export const KYCPrompt: React.FC<Props> = (props) => {
@@ -35,7 +37,13 @@ export const KYCPrompt: React.FC<Props> = (props) => {
   const { kyc } = useKYCState()
 
   const [isOpen, setIsOpen] = React.useState(true)
-  const toggleModal = React.useCallback((isOpen?: boolean) => setIsOpen(state => isOpen ?? !state), [])
+  const toggleModal = React.useCallback((isOpen?: boolean) => {
+    setIsOpen(state => isOpen ?? !state)
+
+    if (!isOpen && props.onClose) {
+      props.onClose()
+    }
+  }, [])
 
   const [contactFormOpen, setContactForm] = React.useState(false)
 

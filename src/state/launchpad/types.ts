@@ -215,6 +215,9 @@ export interface Offer {
   tokenTicker: string
   tokenPrice: string
   tokenStandart: OfferTokenStandart
+
+  investingTokenAddress: string
+  investingTokenSymbol: string
   
   decimals: number
 

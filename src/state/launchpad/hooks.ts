@@ -56,7 +56,7 @@ export const useCheckKYC = () => {
   const { kyc } = useKYCState()
   
   return React.useCallback((allowOnlyAccredited: boolean, isClosed: boolean) => {
-    return kyc && kyc.status === KYCStatuses.APPROVED && (isClosed || (!allowOnlyAccredited || kyc.individual?.accredited === 1))
+    return !!kyc && kyc.status === KYCStatuses.APPROVED && (isClosed || (!allowOnlyAccredited || kyc.individual?.accredited === 1))
   }, [kyc])
 }
 
