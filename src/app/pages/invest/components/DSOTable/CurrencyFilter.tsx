@@ -7,11 +7,16 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 const CURRENCIES = ['SGD', 'USD']
 
-export const CurrencyFilter = () => {
+interface FiltersFavProps {
+  setPage?: (page: number)=>void
+}
+
+export const CurrencyFilter = (props:FiltersFavProps) => {
   const { getFilterValue, updateFilter } = useQueryFilter()
   const currency = getFilterValue('currency')
 
   const handleChange = (event: SelectChangeEvent<any>) => {
+    props.setPage && props.setPage(0);
     updateFilter(
       'currency',
       typeof event.target.value === 'string'
