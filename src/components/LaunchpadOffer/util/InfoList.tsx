@@ -2,10 +2,14 @@ import React from 'react'
 import styled from "styled-components"
 
 import { Separator } from '../styled'
+import { Attachment } from './Attachment'
+
+import { Asset } from 'state/launchpad/types'
 
 interface InfoEntry {
   label: React.ReactNode
   value?: React.ReactNode
+  file?: Asset
 }
 
 interface Props {
@@ -23,14 +27,7 @@ export const InfoList: React.FC<Props> = (props) => {
       <Separator />
 
       {props.entries.map((entry, idx) => (
-        <>
-          <Entry key={`entry-${idx}`} fontSize={props.fontSize} lineHeight={props.lineHeight}>
-            <Label>{entry.label}</Label>
-            {entry.value && <Value>{entry.value}</Value>}
-          </Entry>
-
-          <Separator key={`separator-${idx}`}/>
-        </>
+        <Attachment key={idx} entry={entry} idx ={idx} fontSize={props.fontSize} lineHeight={props.lineHeight} />
       ))}
     </Container>
   )

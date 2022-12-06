@@ -25,7 +25,8 @@ export const OfferAdditionalDocs: React.FC<Props> = (props) => {
             <File size="18"/> {crop(file.file.name)}
           </FileName>
         ),
-        value: <Eye size="14" stroke={theme.launchpad.colors.text.body} />
+        value: <Eye size="14" stroke={theme.launchpad.colors.text.body} />,
+        file: file.file
       }))
 
   }, [])
