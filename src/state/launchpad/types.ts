@@ -98,6 +98,8 @@ export enum PaymentType {
 export interface Asset {
   public: string
   name: string
+  publicUrl: string
+  mimeType: string
 }
 
 export interface OfferTimeframe {
