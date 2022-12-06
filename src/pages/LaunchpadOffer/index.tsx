@@ -1,13 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import Portal from '@reach/portal'
 
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
+
+import { useActiveWeb3React } from 'hooks/web3'
 
 import { Header } from 'pages/Launchpad/Header'
 import { Footer } from 'pages/Launchpad/Footer'
 
-import { Offer } from 'state/launchpad/types'
-import { useGetOffer } from 'state/launchpad/hooks'
+import { Offer, OfferStatus } from 'state/launchpad/types'
+import { useCheckKYC, useGetOffer } from 'state/launchpad/hooks'
 import { useSetHideHeader } from 'state/application/hooks'
 
 import { OfferSummary } from 'components/LaunchpadOffer/OfferSummary'
@@ -15,6 +18,12 @@ import { OfferMainInfo } from 'components/LaunchpadOffer/OfferMainInfo'
 import { OfferSidebar } from 'components/LaunchpadOffer/OfferSidebar'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { CenteredFixed } from 'components/LaunchpadOffer/styled'
+import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+
+import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
+
 
 
 interface OfferPageParams {
@@ -22,18 +31,28 @@ interface OfferPageParams {
 }
 
 export default function LaunchpadOffer() {
+  const history = useHistory()
   const params = useParams<OfferPageParams>()
   
   const getOffer = useGetOffer()
   const hideHeader = useSetHideHeader()
+  const checkKYC = useCheckKYC()
 
-  const [loading, setLoading] = React.useState(true)
   const [offer, setOffer] = React.useState<Offer>()
+  const [loading, setLoading] = React.useState(true)
+  const [isAllowed, setIsAllowed] = React.useState<boolean>()
   
+  const { library, chainId, account } = useActiveWeb3React()
 
   React.useEffect(() => {
     getOffer(params.offerId).then(setOffer).finally(() => setLoading(false))
   }, [params.offerId])
+
+  React.useEffect(() => {
+    if (offer) {
+      setIsAllowed(checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed))
+    }
+  }, [offer])
 
 
   React.useEffect(() => {
@@ -43,13 +62,40 @@ export default function LaunchpadOffer() {
       hideHeader(false)
     }
   }, [])
-
+  
+  const blurred = React.useMemo(
+    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0), 
+    [account, chainId]
+  )
+  
   if (loading) {
     return <Centered><Loader /></Centered>
   }
 
   if (!offer) {
-    return <div>Not found</div>
+    return <Centered>Not found</Centered>
+  }
+
+  if (blurred) {
+    return (
+      <Portal>
+        <CenteredFixed width="100vw" height="100vh">
+          <NetworkNotAvailable />
+        </CenteredFixed>
+      </Portal>
+    )
+  }
+
+  if (!isAllowed) {
+    return (
+      <Portal>
+        <KYCPrompt 
+          offerId={offer.id}
+          allowOnlyAccredited={offer.allowOnlyAccredited}
+          onClose={() => history.push('/launchpad')}
+        />
+      </Portal>
+    )
   }
 
   return (
