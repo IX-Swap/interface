@@ -28,7 +28,7 @@ export const InvestDialogSidebar: React.FC<Props> = (props) => {
             {entry.label}
           </Stage>
 
-          {idx < labels.length - 1 && <Separator />}
+          {idx < labels.length - 1 && <Separator key={`separator-${idx}`} />}
         </>
       ))}
 

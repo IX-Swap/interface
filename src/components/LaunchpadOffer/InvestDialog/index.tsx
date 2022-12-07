@@ -5,12 +5,12 @@ import styled, { useTheme } from 'styled-components'
 import { X } from 'react-feather'
 
 import { RegisterToInvestStage } from './content/RegisterToInvest'
+import { ClosedStage } from './content/Closed'
 import { SaleStage } from './content/Sale'
 
 import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import { InvestDialogSidebar } from './Sidebar'
-import { ClosedStage } from './content/Closed'
 
 interface Props {
   offer: Offer
@@ -62,9 +62,12 @@ export const InvestDialog: React.FC<Props> = (props) => {
           </header>
 
           <main>
-            {stage === StageForm.register && <RegisterToInvestStage />}
+           {/* <RegisterToInvestStage {...props} />  */}
+           {/* <SaleStage {...props} /> */}
+           <ClosedStage {...props} />
+            {/* {stage === StageForm.register && <RegisterToInvestStage offer={props.offer} />}
             {stage === StageForm.sale && <SaleStage offer={props.offer} />}
-            {stage === StageForm.closed && <ClosedStage offer={props.offer} />}
+            {stage === StageForm.closed && <ClosedStage offer={props.offer} />} */}
           </main>
         </DialogContainer>
       </ModalWrapper>

@@ -84,3 +84,16 @@ export const KYCButton = styled.button`
   border: none;
   outline: 0;
 `
+
+export const ExitIconContainer = styled.div`
+  position: absolute;
+
+  top: 1rem;
+  right: 1rem;
+
+  cursor: pointer;
+
+  svg {
+    fill: ${props => props.theme.launchpad.colors.text.body};
+  }
+`

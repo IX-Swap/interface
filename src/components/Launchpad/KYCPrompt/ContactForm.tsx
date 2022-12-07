@@ -12,6 +12,7 @@ import { Formik, FormikHelpers, FormikValues } from 'formik'
 import { useAddPopup } from 'state/application/hooks'
 
 interface Props {
+  offerId?: string
   onSubmit: () => void
 }
 
@@ -39,7 +40,7 @@ export const ContactForm: React.FC<Props> = (props) => {
 
   const onSubmit = React.useCallback(async (values: Payload) => {
     try {
-      await getSupport({ ...values })
+      await getSupport({ ...values, offerId: props.offerId })
 
       props.onSubmit()
       addPopup({ info: { success: true, summary: `Your message has been sent successfully` } })

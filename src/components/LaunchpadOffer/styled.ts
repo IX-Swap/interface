@@ -116,3 +116,17 @@ export const IconButton = styled.button`
     background: ${props => props.theme.launchpad.colors.foreground};
   }
 `
+
+export const FormFieldContaienr = styled(Column)`
+  gap: 0.125rem;
+`
+
+export const ErrorText = styled.div<{ padding?: string }>`
+  color: #FF6060;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+
+  ${props => props.padding ?? `paddding: ${props.padding};`}
+`

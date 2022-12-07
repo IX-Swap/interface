@@ -7,11 +7,13 @@ import { KYCStatuses } from "pages/KYC/enum"
 
 import { AppState } from "state"
 import { useKYCState } from "state/kyc/hooks"
-import { Offer } from "state/launchpad/types"
+import { Offer, OfferStatus } from "state/launchpad/types"
 
 import { toggleKYCDialog } from './actions'
 
 import apiService from 'services/apiService'
+import { number } from "@lingui/core/cjs/formats"
+import { Offers } from "components/Launchpad/Offers"
 
 interface OfferPagination {
   page: number
@@ -87,10 +89,10 @@ export const useFormatOfferValue = () => {
   return React.useCallback((value: string) => {
     let result = value
 
-    if (result && result.length > 3) {
-      const decimals = result.split('.')[1]
-      const digits = result
-        .split('.')[0]
+    if (result) {
+      const [wholeNumber, decimals] = result.split('.')
+
+      const digits = wholeNumber
         .split('').reverse()
         .filter(x => /[0-9]/.test(x))
 
@@ -99,7 +101,7 @@ export const useFormatOfferValue = () => {
         .flat().reverse()
         .join('')
       
-      if (decimals) {
+      if (decimals !== undefined) {
         result = result.concat(`.${decimals}`)
       }
     }
@@ -127,4 +129,24 @@ export const useSubscribeToOffer = () => {
 
 export const useGetOffer = () => {
   return React.useCallback((id: string) => apiService.get(`/offers/${id}`).then(res => res.data as Offer), [])
+}
+
+export const useRequestWhitelist = (id: string) => {
+  return React.useCallback((payload: { amount: number; isInterested: boolean }) => 
+    apiService.post(`/offers/${id}/me/whitelist`, payload), [id])
+}
+
+export const useInvest = (id: string) => {
+  return React.useCallback((status: OfferStatus, payload: { amount: string; txHash: string }) => {
+    if (![OfferStatus.preSale, OfferStatus.sale].includes(status)) {
+      throw new Error('Invalid offer status')
+    }
+
+    return apiService.post(`/offers/${id}/${status.toLowerCase()}`, payload)
+  }, [id])
+}
+
+export const useClaimOffer = (id: string) => {
+  return React.useCallback((isSuccessful: boolean) => 
+    apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, null), [id])
 }
