@@ -90,7 +90,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
           {stageStatus !== OfferStageStatus.notStarted && (
             <>
               <OfferInvestmentAmount>
-                {props.offer.tokenSymbol} {formatter.format(props.offer.totalInvestment)}
+                {props.offer.investingTokenSymbol} {formatter.format(props.offer.totalInvestment)}
               </OfferInvestmentAmount>
 
               <Row alignItems="center" gap="1rem">

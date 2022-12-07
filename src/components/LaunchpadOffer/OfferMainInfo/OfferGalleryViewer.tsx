@@ -79,7 +79,7 @@ export const MediaEntry: React.FC<MediaEntryProps> = (props) => {
   return (
     <>
       {props.media.type === OfferFileType.image && <Image src={props.media.file.public} />}
-      {props.media.type === OfferFileType.video && props.canPlayVideo && <Video src={props.media.videoUrl} controls />}
+      {props.media.type === OfferFileType.video && props.canPlayVideo && <VideoViewer src={props.media.videoUrl} />}
       {props.media.type === OfferFileType.video && !props.canPlayVideo && (
         <VideoThumbnail>
           <PlayButtonWrapper>
@@ -90,6 +90,84 @@ export const MediaEntry: React.FC<MediaEntryProps> = (props) => {
       
     </>
   )
+}
+
+enum VideoLinkType {
+  youtube,
+  youtubeShare,
+  other
+}
+
+interface VideoViewerProps {
+  src: string
+}
+
+const VideoViewer: React.FC<VideoViewerProps> = (props) => {
+  const linkType = React.useMemo(() => {
+    if (/youtube.com/.test(props.src)) {
+      return VideoLinkType.youtube
+    }
+
+    if (/youtu.be/.test(props.src)) {
+      return VideoLinkType.youtubeShare
+    }
+    
+    return VideoLinkType.other
+  }, [props.src]) 
+
+  const youtubeVideoId = React.useMemo(() => {
+    switch (linkType) {
+      case VideoLinkType.youtube:
+        const [path, query] = props.src.split('?')
+
+        if (!query) {
+          return path.split('/').pop()
+        }
+
+        const queryParams = query
+          .split('&')
+          .map(x => x.split('='))
+          .map(([key, value]) => ({ key, value}))
+
+        const link = queryParams.find(x => x.key === 'v')
+
+        if (link) {
+          return link.value
+        }
+
+        return path.split('/').pop()
+
+      case VideoLinkType.youtubeShare:
+        const queryShare = props.src
+          .split('?').shift()!
+          .split('/').pop()
+
+        return queryShare
+
+      default:
+        return null
+    }
+  }, [props.src, linkType])
+
+
+  switch (linkType) {
+    case VideoLinkType.youtube:
+    case VideoLinkType.youtubeShare:
+      return (
+        <YoutubeVideo 
+          width="660"
+          height="415"
+          src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+          title="YouTube video player" 
+          frameBorder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen>
+        </YoutubeVideo>
+      )
+
+    case VideoLinkType.other:
+      return <Video src={props.src} controls />
+  }
 }
 
 const ViewerContainer = styled.div`
@@ -179,6 +257,11 @@ const Image = styled.img`
 
 const Video = styled.video`
   border-radius: 8px;
+`
+
+const YoutubeVideo = styled.iframe`
+  max-width: 100%;
+  max-height: 100%;
 `
 
 const VideoThumbnail = styled.div`
