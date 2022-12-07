@@ -28,9 +28,10 @@ export const SaleStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
 
+  const [isDisabled, setDisabled] = React.useState(true)
 
   const presaleCondition = React.useMemo(() => [
-    { label: 'Min. Investment Size', value: `${formatter.format(Number(props.offer.presaleMaxInvestment))} ${props.offer.investingTokenSymbol}` },
+    { label: 'Min. Investment Size', value: `${formatter.format(Number(props.offer.presaleMinInvestment))} ${props.offer.investingTokenSymbol}` },
     { label: 'Max. Investment Size', value: `${formatter.format(Number(props.offer.presaleMaxInvestment))} ${props.offer.investingTokenSymbol}` }
   ], [])
 
@@ -60,7 +61,7 @@ export const SaleStage: React.FC<Props> = (props) => {
       <InfoList title={<InfoListTitle>Pre-Sale Conditions</InfoListTitle>} fontSize='13px' lineHeight='32px' entries={presaleCondition} />
       <InfoList title={<InfoListTitle>Pre-Sale Conditions</InfoListTitle>} fontSize='13px' lineHeight='32px' entries={investmentAllowance} />
 
-      <ConvertationField offer={props.offer} />
+      <ConvertationField offer={props.offer} setDisabled={setDisabled}/>
 
       <Agreement>
         <AgreementCheckbox checked />
@@ -69,7 +70,7 @@ export const SaleStage: React.FC<Props> = (props) => {
         </AgreementText>
       </Agreement>
 
-      <InvestFormSubmitButton state={submitState.current} onSubmit={submit}>
+      <InvestFormSubmitButton state={submitState.current} disabled={isDisabled} onSubmit={submit}>
         {submitState.current === InvestSubmitState.default && "Invest"}
         {submitState.current === InvestSubmitState.loading && (
           <Row justifyContent='space-between' alignItems='center' width="100%" padding="1rem">

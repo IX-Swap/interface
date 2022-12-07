@@ -15,8 +15,8 @@ export const OfferFundRaiseIndicator: React.FC<Props> = (props) => {
   const size = React.useMemo(() => props.size ?? 20, [props.size])
   const radius = React.useMemo(() => (size / 2) - 1, [size])
 
-  const invested = React.useMemo(() => Math.floor(Math.random() * Number(props.offer.hardCap)), [props.offer.hardCap])
-  const percentage = React.useMemo(() => invested / Number(props.offer.hardCap), [invested, props.offer.hardCap])
+  //const invested = React.useMemo(() => Math.floor(Math.random() * Number(props.offer.hardCap)), [props.offer.hardCap])
+  const percentage = React.useMemo(() => props.offer.totalInvestment / Number(props.offer.hardCap), [props.offer.totalInvestment, props.offer.hardCap])
 
   const arc = React.useMemo(() => describeArc(size / 2, size / 2, radius, 0, percentage * 360), [size, radius, percentage])
 
