@@ -68,6 +68,9 @@ const SubmitButton = styled.button<{ state: InvestSubmitState, disabled?: boolea
   border-radius: 6px;
 
   ${props => !props.disabled && 'cursor: pointer;'}
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.text.bodyAlt};
+  `}
 
   height: 60px;
 

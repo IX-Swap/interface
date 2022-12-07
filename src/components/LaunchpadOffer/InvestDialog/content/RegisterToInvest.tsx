@@ -9,7 +9,11 @@ import { InvestFormContainer, Title } from './styled'
 import { InvestTextField } from '../utils/InvestTextField'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
 
-export const RegisterToInvestStage = () => {
+interface Props {
+  symbol: string
+}
+
+export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const submitState = useInvestSubmitState()
 
@@ -46,7 +50,7 @@ export const RegisterToInvestStage = () => {
       <InvestTextField 
         type="number" 
         label="How much will be your estimated investment?"
-        trailing={<CurrencyLabel>USD</CurrencyLabel>}
+        trailing={<CurrencyLabel>{props.symbol}</CurrencyLabel>}
         onChange={onInvestmentChange}
       />
 

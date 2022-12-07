@@ -62,7 +62,7 @@ export const InvestDialog: React.FC<Props> = (props) => {
           </header>
 
           <main>
-            {stage === StageForm.register && <RegisterToInvestStage />}
+            {stage === StageForm.register && <RegisterToInvestStage symbol={props.offer.investingTokenSymbol}/>}
             {stage === StageForm.sale && <SaleStage offer={props.offer} />}
             {stage === StageForm.closed && <ClosedStage offer={props.offer} />}
           </main>

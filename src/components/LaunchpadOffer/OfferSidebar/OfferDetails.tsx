@@ -27,6 +27,7 @@ interface Props {
 }
 
 enum OfferStageStatus {
+  disabled,
   notStarted,
   active,
   closed
@@ -61,6 +62,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
       case OfferStatus.closed:
       case OfferStatus.claim:
         return OfferStageStatus.closed
+
+      case OfferStatus.approved:
+        return OfferStageStatus.disabled
 
       default:
         return OfferStageStatus.notStarted
@@ -124,8 +128,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.notStarted &&
+          {stageStatus !== OfferStageStatus.disabled &&
             <InvestButton onClick={openInvestDialog}>
+              {stageStatus === OfferStageStatus.notStarted && 'Register to Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open dashboard '}
             </InvestButton>

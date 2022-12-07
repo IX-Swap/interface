@@ -3,8 +3,6 @@ import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
 
-import { BigNumber, utils } from 'ethers'
-
 import { Offer } from 'state/launchpad/types'
 
 import { InvestTextField } from './InvestTextField'
@@ -13,6 +11,7 @@ import { useFormatOfferValue } from 'state/launchpad/hooks'
 
 interface Props {
   offer: Offer
+  setDisabled: (value: boolean) => void
 }
 
 export const ConvertationField: React.FC<Props> = (props) => {
@@ -22,16 +21,33 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const formatedValue = useFormatOfferValue()
 
   const [inputValue, setInputValue] = React.useState('')
+  const [warning, setWarning] = React.useState('')
+
+  const changeValue = React.useCallback((value: string) => {
+    setInputValue(value)
+
+    const realValue = value ? +(value.replace(/,/g, '')) : 0
+    const symbol = props.offer.investingTokenSymbol
+
+    const isMinError = +props.offer.presaleMinInvestment > realValue
+    const isMaxError = +props.offer.presaleMaxInvestment < realValue
+    const isAvailableError = 9000 < realValue
+    
+    setWarning(
+      isMinError ? `Min.investment size ${props.offer.presaleMinInvestment} ${symbol}` :
+      isMaxError ? `Max.investment size ${props.offer.presaleMaxInvestment} ${symbol}` :
+      isAvailableError ? `Available to invest 9,000 ${symbol}`: ''
+    )
+
+    props.setDisabled(isMinError || isMaxError || isAvailableError)    
+  }, [])
 
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
-      /*const bnMultiplier = utils.parseUnits('1', DECIMAL).mod(utils.parseUnits(props.offer.tokenPrice, DECIMAL))
-      const bnResult = utils.parseUnits(inputValue, DECIMAL)
-      const result = bnMultiplier.mul(bnResult)
-
-      return utils.formatEther((result as any).toString(10))*/
+      const realValue = +(inputValue.replace(/,/g, ''))
       const multiplier = (1 / +props.offer.tokenPrice).toFixed(4)
-      let result = `${+(inputValue.replace(/,/g, '')) * +multiplier}`
+      
+      let result = `${realValue * +multiplier}`
 
       if (result.split('.')[1]?.length > 4) {
         result = (+result).toFixed(4)
@@ -79,11 +95,11 @@ export const ConvertationField: React.FC<Props> = (props) => {
     <ConvertationContainer>
       <InvestTextField 
         type='number'
-        onChange={setInputValue}
+        onChange={changeValue}
         
         trailing={<CurrencyDropdown disabled value={offerInvestmentToken} />}
 
-        // padding="1rem 1.5rem"
+        caption={warning}
         height="90px"
 
         fontSize='24px'
