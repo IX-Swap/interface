@@ -3,10 +3,13 @@ import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
 
+import { BigNumber, utils } from 'ethers'
+
 import { Offer } from 'state/launchpad/types'
 
 import { InvestTextField } from './InvestTextField'
 import { useTokensList } from 'hooks/useTokensList'
+import { useFormatOfferValue } from 'state/launchpad/hooks'
 
 interface Props {
   offer: Offer
@@ -16,11 +19,29 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
   
   const { tokensOptions } = useTokensList()
+  const formatedValue = useFormatOfferValue()
 
   const [inputValue, setInputValue] = React.useState('')
-  const convertedValue = React.useMemo(() => inputValue, [inputValue])
 
-  console.log(tokensOptions)
+  const convertedValue = React.useMemo(() => {
+    if (inputValue) {
+      /*const bnMultiplier = utils.parseUnits('1', DECIMAL).mod(utils.parseUnits(props.offer.tokenPrice, DECIMAL))
+      const bnResult = utils.parseUnits(inputValue, DECIMAL)
+      const result = bnMultiplier.mul(bnResult)
+
+      return utils.formatEther((result as any).toString(10))*/
+      const multiplier = (1 / +props.offer.tokenPrice).toFixed(4)
+      let result = `${+(inputValue.replace(/,/g, '')) * +multiplier}`
+
+      if (result.split('.')[1]?.length > 4) {
+        result = (+result).toFixed(4)
+      }
+
+      return formatedValue(result)
+    }
+
+    return inputValue
+  }, [inputValue])
 
   const offerToken = React.useMemo(() => {
     const token = tokensOptions
@@ -74,7 +95,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
         disabled
         value={convertedValue}
         onChange={() => null}
-        caption="~$3912.33451"
 
         trailing={<CurrencyDropdown disabled value={offerToken} />}
         

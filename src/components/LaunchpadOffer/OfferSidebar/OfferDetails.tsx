@@ -8,6 +8,8 @@ import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
+import { useFormatOfferValue } from 'state/launchpad/hooks'
+
 import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/InvestmentSaleStatusInfo'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
@@ -34,19 +36,20 @@ const capitalize = (value: string) => `${value[0].toUpperCase()}${value.slice(1)
 
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const formatedValue = useFormatOfferValue()
 
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { currency: 'USD' }), [])
 
-  const minTokenInvestment = React.useMemo(() => Math.floor(Number(props.offer.minInvestment) / Number(props.offer.tokenPrice)), [])
-  const maxTokenInvestment = React.useMemo(() => Math.floor(Number(props.offer.maxInvestment) / Number(props.offer.tokenPrice)), [])
+  const minTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.offer.minInvestment) / Number(props.offer.tokenPrice))}`), [])
+  const maxTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.offer.maxInvestment) / Number(props.offer.tokenPrice))}`), [])
 
   const offerInfo = React.useMemo(() => [
     { label: 'Issuer', value: props.offer.issuerName },
     { label: 'Country', value: props.offer.country },
     { label: 'Investment Type', value: props.offer.investmentType },
-    { label: 'Token Price', value: `${props.offer.investingTokenSymbol}  ${props.offer.tokenPrice} / 1 ${props.offer.tokenSymbol}` },
-    { label: 'Max. Investment Size', value: `${props.offer.investingTokenSymbol} ${props.offer.maxInvestment} / ${maxTokenInvestment} ${props.offer.tokenSymbol}` },
-    { label: 'Min. Investment Size', value: `${props.offer.investingTokenSymbol}  ${props.offer.minInvestment} / ${minTokenInvestment} ${props.offer.tokenSymbol}` },
+    { label: 'Token Price', value: `${props.offer.investingTokenSymbol}  ${formatedValue(props.offer.tokenPrice)} / 1 ${props.offer.tokenSymbol}` },
+    { label: 'Max. Investment Size', value: `${props.offer.investingTokenSymbol} ${formatedValue(props.offer.maxInvestment)} / ${maxTokenInvestment} ${props.offer.tokenSymbol}` },
+    { label: 'Min. Investment Size', value: `${props.offer.investingTokenSymbol}  ${formatedValue(props.offer.minInvestment)} / ${minTokenInvestment} ${props.offer.tokenSymbol}` },
   ], [minTokenInvestment, maxTokenInvestment])
 
   const stageStatus = React.useMemo(() => {
