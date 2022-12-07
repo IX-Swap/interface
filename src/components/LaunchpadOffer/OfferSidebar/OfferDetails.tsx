@@ -124,11 +124,12 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          <InvestButton onClick={openInvestDialog}>
-            {stageStatus === OfferStageStatus.notStarted && 'Register to Invest'}
-            {stageStatus === OfferStageStatus.active && 'Invest'}
-            {stageStatus === OfferStageStatus.closed && 'Open dashboard '}
-          </InvestButton>
+          {stageStatus !== OfferStageStatus.notStarted &&
+            <InvestButton onClick={openInvestDialog}>
+              {stageStatus === OfferStageStatus.active && 'Invest'}
+              {stageStatus === OfferStageStatus.closed && 'Open dashboard '}
+            </InvestButton>
+          }
 
           <InvestHelpLink to="#">How does this work?</InvestHelpLink>
         </InvestButtonContainer>
