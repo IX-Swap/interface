@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useFormatOfferValue } from 'state/launchpad/hooks'
+
 interface StylingProps {
   padding?: string
   height?: string
@@ -26,6 +28,8 @@ interface Props extends StylingProps {
 }
 
 export const InvestTextField: React.FC<Props> = (props) => {
+  const formatedValue = useFormatOfferValue()
+
   const [inputValue, setInputValue] = React.useState<string | undefined>(props.value)
   const [focused, setFocused] = React.useState(false)
 
@@ -37,19 +41,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
     let value = event.target.value
 
     if (props.type === 'number' && value.length > 3) {
-      const before = value
-      const digits = value
-        .split('').reverse()
-        .filter(x => /[0-9]/.test(x))
-
-      console.log({ digits })
-
-      value = digits
-        .flatMap((x, idx) => idx > 0 && idx % 3 === 0 ? [',', x] : x)
-        .flat().reverse()
-        .join('')
-
-      console.log({ before, after: value })
+      value = formatedValue(value)
     }
 
     setInputValue(value)
@@ -68,12 +60,13 @@ export const InvestTextField: React.FC<Props> = (props) => {
         {props.placeholder && <Placeholder active={focused}>{props.placeholder}</Placeholder>}
 
         <Input
-          type="text" 
+          type="text"
           fontSize={props.fontSize}
           lineHeight={props.lineHeight}
           disabled={props.disabled} 
           value={inputValue}
-          onChange={onChange} 
+          onChange={onChange}
+          maxLength={19}
         />
 
         {props.caption && <Caption>{props.caption}</Caption>}

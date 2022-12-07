@@ -83,6 +83,31 @@ export const useGetPinnedOffer = () => {
   return React.useCallback(() => apiService.get('/offers/main').then(res => res.data as Offer), [])
 }
 
+export const useFormatOfferValue = () => {
+  return React.useCallback((value: string) => {
+    let result = value
+
+    if (result && result.length > 3) {
+      const decimals = result.split('.')[1]
+      const digits = result
+        .split('.')[0]
+        .split('').reverse()
+        .filter(x => /[0-9]/.test(x))
+
+      result = digits
+        .flatMap((x, idx) => idx > 0 && idx % 3 === 0 ? [',', x] : x)
+        .flat().reverse()
+        .join('')
+      
+      if (decimals) {
+        result = result.concat(`.${decimals}`)
+      }
+    }
+
+    return result
+  }, [])
+}
+
 interface GetSupportPayload {
   email: string
   subject: string
