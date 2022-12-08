@@ -17,9 +17,11 @@ interface Props {
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
   
-  const { tokensOptions } = useTokensList()
+  const { tokensOptions, secTokensOptions } = useTokensList()
+  
   const formatedValue = useFormatOfferValue()
 
+  const mixedTokens = [...tokensOptions, ...secTokensOptions]
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
 
@@ -60,9 +62,10 @@ export const ConvertationField: React.FC<Props> = (props) => {
   }, [inputValue])
 
   const offerToken = React.useMemo(() => {
-    const token = tokensOptions
-      .find(x => props.offer.tokenAddress === x.address ||
-          props.offer.tokenAddress === x.value)
+    const token = mixedTokens
+      .find(x =>
+        props.offer.tokenAddress.toLocaleLowerCase() === x.address?.toLocaleLowerCase() ||
+        props.offer.tokenAddress.toLocaleLowerCase() === `${x.value}`.toLocaleLowerCase())
 
     if (!token) {
       return
@@ -70,15 +73,16 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
     return {
       name: token.label,
-      address: token.address,
+      address: token.address || token.value,
       icon: token.icon,
     } as TokenOption
-  }, [tokensOptions])
+  }, [mixedTokens])
 
   const offerInvestmentToken = React.useMemo(() => {
-    const token = tokensOptions
-      .find(x => props.offer.investingTokenAddress === x.address ||
-          props.offer.investingTokenAddress === x.value)
+    const token = mixedTokens
+      .find(x =>
+        props.offer.investingTokenAddress.toLocaleLowerCase() === x.address?.toLocaleLowerCase() ||
+        props.offer.investingTokenAddress.toLocaleLowerCase() === `${x.value}`.toLocaleLowerCase())
 
     if (!token) {
       return
@@ -86,10 +90,10 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
     return {
       name: token.label,
-      address: token.address,
+      address: token.address || token.value,
       icon: token.icon,
     } as TokenOption
-  }, [tokensOptions])
+  }, [mixedTokens])
 
   return (
     <ConvertationContainer>

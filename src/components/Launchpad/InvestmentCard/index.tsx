@@ -130,7 +130,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           </InvestmentCardDetailsContainer>
           
           <InvestmentSaleStatusInfo 
-            isClosed={offer.status === OfferStatus.closed}
+            isClosed={isClosed}
             isSuccesfull={offer.softCapReached}
             daysTillClosed={offer.daysTillClosed}
             hoursTillClosed={offer.hoursTillClosed}
