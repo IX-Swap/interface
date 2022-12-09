@@ -39,10 +39,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
 
-  console.log(props.offer.tokenAddress)
-  console.log(props.offer.investingTokenAddress)
-  console.log(mixedTokens)
-
   const formatedValue = useFormatOfferValue()
 
   const [inputValue, setInputValue] = React.useState('')

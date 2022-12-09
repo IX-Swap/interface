@@ -9,7 +9,8 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Header } from 'pages/Launchpad/Header'
 import { Footer } from 'pages/Launchpad/Footer'
 
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import { Offer, OfferStatus} from 'state/launchpad/types'
+import { OFFER_RELATED_TIMEFRAMES } from 'state/launchpad/constants'
 import { useCheckKYC, useGetOffer } from 'state/launchpad/hooks'
 import { useSetHideHeader } from 'state/application/hooks'
 
@@ -44,8 +45,23 @@ export default function LaunchpadOffer() {
   
   const { library, chainId, account } = useActiveWeb3React()
 
+  const updateTimeFrames = React.useCallback((data: Offer) => {
+
+    data.timeframes.forEach(item => {
+      const frame = data.timeframes.find(timeframe => timeframe.type === OFFER_RELATED_TIMEFRAMES[item.type])
+
+      if (frame?.startDate) {
+        item.endDate = frame.startDate
+      }
+    })
+
+    return data
+  }, [])
+
   React.useEffect(() => {
-    getOffer(params.offerId).then(setOffer).finally(() => setLoading(false))
+    getOffer(params.offerId).then((data)=> {      
+      setOffer(updateTimeFrames(data))
+    }).finally(() => setLoading(false))
   }, [params.offerId])
 
   React.useEffect(() => {
