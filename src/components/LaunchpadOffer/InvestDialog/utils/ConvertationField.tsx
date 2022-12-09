@@ -9,7 +9,6 @@ import { InvestTextField } from './InvestTextField'
 import { Option, useTokensList } from 'hooks/useTokensList'
 import { useFormatOfferValue } from 'state/launchpad/hooks'
 
-import { TokenPopup } from 'components/AdminSecurityCatalog/TokenPopup'
 
 interface Props {
   offer: Offer
@@ -18,7 +17,10 @@ interface Props {
 }
 
 const getTokenInfo = (address: string, options: Option[]) => {
-  const token = options.find(x => address === x.address || address === x.value)
+  const token = options
+    .find(x => 
+      address.toLocaleLowerCase() === x.address?.toLocaleLowerCase() || 
+      address.toLocaleLowerCase() === `${x.value}`.toLocaleLowerCase())
 
   if (!token) {
     return
@@ -26,7 +28,7 @@ const getTokenInfo = (address: string, options: Option[]) => {
 
   return {
     name: token.label,
-    address: token.address,
+    address: token.address ?? token.value,
     icon: token.icon,
   } as TokenOption
 }
@@ -34,7 +36,13 @@ const getTokenInfo = (address: string, options: Option[]) => {
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
   
-  const { tokensOptions } = useTokensList()
+  const { tokensOptions, secTokensOptions } = useTokensList()
+  const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
+
+  console.log(props.offer.tokenAddress)
+  console.log(props.offer.investingTokenAddress)
+  console.log(mixedTokens)
+
   const formatedValue = useFormatOfferValue()
 
   const [inputValue, setInputValue] = React.useState('')
@@ -77,8 +85,8 @@ export const ConvertationField: React.FC<Props> = (props) => {
     return inputValue
   }, [inputValue])
   
-  const offerToken = React.useMemo(() => getTokenInfo(props.offer.tokenAddress, tokensOptions), [tokensOptions])
-  const offerInvestmentToken = React.useMemo(() => getTokenInfo(props.offer.investingTokenAddress, tokensOptions), [tokensOptions])
+  const offerToken = React.useMemo(() => getTokenInfo(props.offer.tokenAddress, mixedTokens), [mixedTokens])
+  const offerInvestmentToken = React.useMemo(() => getTokenInfo(props.offer.investingTokenAddress, mixedTokens), [mixedTokens])
 
   return (
     <ConvertationContainer>

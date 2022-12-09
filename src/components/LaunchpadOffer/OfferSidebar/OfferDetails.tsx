@@ -123,7 +123,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
           <DayCount>
             <header>The deal closes in</header>
-            <main>{props.offer.daysTillSale ?? 0} Days</main>
+            <main>{props.offer.daysTillClosed ?? 0} Days</main>
           </DayCount>
         </OfferStats>
 

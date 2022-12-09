@@ -62,12 +62,9 @@ export const InvestDialog: React.FC<Props> = (props) => {
           </header>
 
           <main>
-           {/* <RegisterToInvestStage {...props} />  */}
-           {/* <SaleStage {...props} /> */}
-           <ClosedStage {...props} />
-            {/* {stage === StageForm.register && <RegisterToInvestStage offer={props.offer} />}
-            {stage === StageForm.sale && <SaleStage offer={props.offer} />}
-            {stage === StageForm.closed && <ClosedStage offer={props.offer} />} */}
+            {stage === StageForm.register && <RegisterToInvestStage {...props} />}
+            {stage === StageForm.sale && <SaleStage {...props} />}
+            {stage === StageForm.closed && <ClosedStage {...props} />}
           </main>
         </DialogContainer>
       </ModalWrapper>
