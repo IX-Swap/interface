@@ -1,20 +1,22 @@
 import React from 'react'
+import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
 import { Formik } from 'formik'
 import { boolean, number, object } from 'yup'
 
-import { Mail, CheckCircle, Info } from 'react-feather'
+import { Mail, CheckCircle, Info, Clock, Check } from 'react-feather'
 
-import { Offer } from 'state/launchpad/types'
-import { useRequestWhitelist } from 'state/launchpad/hooks'
+import { Offer, WhitelistStatus } from 'state/launchpad/types'
+import { useGetWhitelistStatus, useRequestWhitelist } from 'state/launchpad/hooks'
 
-import { ErrorText, FormFieldContaienr, Row, Separator } from 'components/LaunchpadOffer/styled'
+import { Centered, Column, ErrorText, FormFieldContaienr, Row, Separator } from 'components/LaunchpadOffer/styled'
 import { InvestFormContainer, Title } from './styled'
 
 import { InvestTextField } from '../utils/InvestTextField'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 
 interface Props {
   offer: Offer
@@ -26,6 +28,8 @@ interface FormValues {
   isInterested?: boolean
 }
 
+type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
+
 const initialValues: FormValues = {
   amount: undefined,
   isInterested: undefined
@@ -33,7 +37,7 @@ const initialValues: FormValues = {
 
 const schema = object().shape({
   amount: number().required('Please, enter amount of your estimated investment'),
-  isInterested: boolean().required('Please, specify if you are interested in this deal')
+  isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal')
 })
 
 const cleanAmount = (value: string) => Number(value.split('').filter(x => /[0-9.]/.test(x)).join(''))
@@ -41,10 +45,15 @@ const cleanAmount = (value: string) => Number(value.split('').filter(x => /[0-9.
 export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const submitState = useInvestSubmitState()
+
+  const whitelist = useGetWhitelistStatus(props.offer.id)
   const requestWhitelist = useRequestWhitelist(props.offer.id)
+  
+  const disableForm = React.useMemo(() => whitelist.status === WhitelistStatus.accepted, [whitelist])
+  const timeframe = React.useMemo(() => props.offer.timeframes.find(x => x.type.toString() == props.offer.status.toString())!, [])
 
   const submit = React.useCallback(async (values: FormValues) => {
-    if (!values.amount || !values.isInterested) {
+    if (!values.amount || values.isInterested === undefined) {
       return
     }
 
@@ -60,55 +69,114 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     }
   }, [submitState])
 
+  const onChange = React.useCallback((field: string, value: any, setValue: ValueSetter) => {
+    if (disableForm) {
+      return
+    }
+
+    setValue(field, value)
+  }, [])
+
   return (
     <Formik initialValues={initialValues} validationSchema={schema} onSubmit={submit}>
       {({ errors, values, setFieldValue, submitForm }) => (
         <InvestFormContainer gap="1.5rem" padding="0 0 2rem 0">
-          <Title>
-            Are you interested to participate in this deal? 
-          </Title>
+          {whitelist.loading && (
+            <Centered style={{ flexGrow: 1 }}>
+              <Loader />
+            </Centered>
+          )}
 
-          <FormFieldContaienr>
-            <ParticipationInterest>
-              <ParticipationInterestButton active={values.isInterested === true} onClick={() => setFieldValue('isInterested', true)}>
-                Yes
-              </ParticipationInterestButton>
+          {!whitelist.loading && !whitelist.status && (
+            <>
+              <Title>
+                Are you interested to participate in this deal? 
+              </Title>
 
-              <ParticipationInterestButton active={values.isInterested === false} onClick={() => setFieldValue('isInterested', false)}>
-                No
-              </ParticipationInterestButton>
-            </ParticipationInterest>
-            
-            {errors.isInterested && <ErrorText>{errors.isInterested}</ErrorText>}
-          </FormFieldContaienr>
+              <FormFieldContaienr>
+                <ParticipationInterest>
+                  <ParticipationInterestButton 
+                    active={values.isInterested === true} 
+                    onClick={() => onChange('isInterested', true, setFieldValue)}
+                  >
+                    Yes
+                  </ParticipationInterestButton>
 
-          <FormFieldContaienr>
-            <InvestTextField 
-              type="number" 
-              label="How much will be your estimated investment?"
-              trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}</CurrencyLabel>}
-              onChange={(value) => setFieldValue('amount', cleanAmount(value))}
-            />
+                  <ParticipationInterestButton 
+                    active={values.isInterested === false} 
+                    onClick={() => onChange('isInterested', false, setFieldValue)}
+                  >
+                    No
+                  </ParticipationInterestButton>
+                </ParticipationInterest>
+                
+                {errors.isInterested && <ErrorText>{errors.isInterested}</ErrorText>}
+              </FormFieldContaienr>
 
-            {errors.amount && <ErrorText>{errors.amount}</ErrorText>}
-          </FormFieldContaienr>
+              <FormFieldContaienr>
+                <InvestTextField 
+                  type="number" 
+                  label="How much will be your estimated investment?"
+                  trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}</CurrencyLabel>}
+                  onChange={(value) => setFieldValue('amount', cleanAmount(value))}
+                />
 
-          <InvestFormSubmitButton state={submitState.current} onSubmit={submitForm}>
-            {submitState.current === InvestSubmitState.default && 'Submit'}
-            {submitState.current === InvestSubmitState.success && <>Submitted <CheckCircle size="15" color={theme.launchpad.colors.success} /></>}
-            {submitState.current === InvestSubmitState.loading && (
-              <Row justifyContent='space-between' alignItems='center' width="100%" padding="1rem">
-                <div style={{ flexGrow: 1, textAlign: 'left' }}>Your order is being processed...</div>
-                <Loader size="18px" />
-              </Row>
-            )}
-            {submitState.current === InvestSubmitState.error && (
-              <Row justifyContent='space-between' alignItems='center' width="100%" padding="1rem">
-                <div style={{ flexGrow: 1, textAlign: 'left' }}>Your order was not executed.</div>
-                <Info size="18" color={theme.launchpad.colors.error} />
-              </Row>
-            )}
-          </InvestFormSubmitButton>
+                {errors.amount && <ErrorText>{errors.amount}</ErrorText>}
+              </FormFieldContaienr>
+
+              <InvestFormSubmitButton state={submitState.current} onSubmit={submitForm}>
+                {submitState.current === InvestSubmitState.default && 'Submit'}
+                {submitState.current === InvestSubmitState.success && <>Submitted <CheckCircle size="15" color={theme.launchpad.colors.success} /></>}
+
+                {submitState.current === InvestSubmitState.loading && (
+                  <Row justifyContent='space-between' alignItems='center' width="100%" padding="1rem">
+                    <div style={{ flexGrow: 1, textAlign: 'left' }}>Your order is being processed...</div>
+                    <Loader size="18px" />
+                  </Row>
+                )}
+
+                {submitState.current === InvestSubmitState.error && (
+                  <Row justifyContent='space-between' alignItems='center' width="100%" padding="1rem">
+                    <div style={{ flexGrow: 1, textAlign: 'left' }}>Your order was not executed.</div>
+                    <Info size="18" color={theme.launchpad.colors.error} />
+                  </Row>
+                )}
+              </InvestFormSubmitButton>
+            </>
+          )}
+
+          {!whitelist.loading && whitelist.status && (
+            <Column justifyContent='center' alignItems="center" gap="1rem" style={{ flexGrow: 1 }}>
+              <KYCPromptIconContainer>
+                {whitelist.status === WhitelistStatus.accepted && <Check color={theme.launchpad.colors.success} size="35" />}
+                {whitelist.status !== WhitelistStatus.accepted && <Clock color={theme.launchpad.colors.primary} size="35" />}
+              </KYCPromptIconContainer>
+
+              <WhitelistMessage>
+                {whitelist.status === WhitelistStatus.pending && (
+                  <>
+                    Thank you. Please check by <b>{moment(timeframe?.endDate).format('DD/MM/YYYY')}</b> for 
+                    the result of your registration application.
+                  </>
+                )}
+                
+                {whitelist.status === WhitelistStatus.declined  && (
+                  <>
+                    Your registration to invest was unsuccessful. 
+                    You can invest in this deal once the public sale opens.
+                  </>
+                )}
+                
+                {whitelist.status === WhitelistStatus.accepted  && (
+                  <>
+                    Your registration to invest was successful. 
+                    You can invest in this deal once the pre-sale starts.
+                  </>
+                )}
+                
+              </WhitelistMessage>
+            </Column>
+          )}
 
           <Separator />
           
@@ -190,4 +258,23 @@ const CurrencyLabel = styled.div`
   letter-spacing: -0.02em;
 
   color: ${props => props.theme.launchpad.colors.text.body};
+`
+
+const WhitelistMessage = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+
+  line-height: 29px;
+  letter-spacing: -0.04em;
+  
+  text-align: center;
+
+  max-width: 80%;
+
+  color: ${props => props.theme.launchpad.colors.text.title};
+
+  b {
+    color: ${props => props.theme.launchpad.colors.primary};
+  }
 `

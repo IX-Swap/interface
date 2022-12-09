@@ -7,7 +7,7 @@ import { KYCStatuses } from "pages/KYC/enum"
 
 import { AppState } from "state"
 import { useKYCState } from "state/kyc/hooks"
-import { Offer, OfferStatus } from "state/launchpad/types"
+import { Offer, OfferStatus, WhitelistStatus } from "state/launchpad/types"
 
 import { toggleKYCDialog } from './actions'
 
@@ -129,6 +129,19 @@ export const useSubscribeToOffer = () => {
 
 export const useGetOffer = () => {
   return React.useCallback((id: string) => apiService.get(`/offers/${id}`).then(res => res.data as Offer), [])
+}
+
+export const useGetWhitelistStatus = (id: string) => {
+  const [loading, setLoading] = React.useState(true)
+  const [status, setStatus] = React.useState<WhitelistStatus>()
+
+  const getWhitelist = React.useCallback(() => apiService.get(`/offers/${id}/me/whitelist`), [id])
+
+  React.useEffect(() => {
+    getWhitelist().then(res => setStatus(res.data.status)).finally(() => setLoading(false))
+  }, [id])
+
+  return { status, loading }
 }
 
 export const useRequestWhitelist = (id: string) => {

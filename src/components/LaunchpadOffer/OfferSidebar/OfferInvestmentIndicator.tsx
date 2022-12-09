@@ -18,7 +18,7 @@ export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
   const softCapPercentage = React.useMemo(() => (Number(props.offer.softCap) / Number(props.offer.hardCap)) * 100, [])
   const presalePercentage = React.useMemo(() => (Number(props.offer.presaleAlocated) / Number(props.offer.hardCap)) * 100, [])
 
-  console.log(props.offer.totalInvestment, props.offer.hardCap)
+  console.log(props.offer.totalInvestment, props.offer.hardCap, props.offer.softCap)
 
   return (
     <IndicatorContainer>
