@@ -22,7 +22,7 @@ export const OfferSidebar: React.FC<Props> = (props) => {
       <OfferPreSaleInfo offer={props.offer} />
       <OfferStage offer={props.offer} />
       <OfferTerms offer={props.offer} />
-      <OfferVesting offer={props.offer} />
+      {/* <OfferVesting offer={props.offer} /> */}
       <OfferAdditionalDocs files={props.offer.files} />
       <OfferContact offer={props.offer} />
     </>
