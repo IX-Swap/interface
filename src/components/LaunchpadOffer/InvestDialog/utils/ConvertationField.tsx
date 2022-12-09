@@ -6,22 +6,45 @@ import { ArrowDown, ChevronDown } from 'react-feather'
 import { Offer } from 'state/launchpad/types'
 
 import { InvestTextField } from './InvestTextField'
-import { useTokensList } from 'hooks/useTokensList'
+import { Option, useTokensList } from 'hooks/useTokensList'
 import { useFormatOfferValue } from 'state/launchpad/hooks'
+
 
 interface Props {
   offer: Offer
   setDisabled: (value: boolean) => void
+  onChange: (value: string) => void
+}
+
+const getTokenInfo = (address: string, options: Option[]) => {
+  const token = options
+    .find(x => 
+      address.toLocaleLowerCase() === x.address?.toLocaleLowerCase() || 
+      address.toLocaleLowerCase() === `${x.value}`.toLocaleLowerCase())
+
+  if (!token) {
+    return
+  }
+
+  return {
+    name: token.label,
+    address: token.address ?? token.value,
+    icon: token.icon,
+  } as TokenOption
 }
 
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
   
   const { tokensOptions, secTokensOptions } = useTokensList()
-  
+  const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
+
+  console.log(props.offer.tokenAddress)
+  console.log(props.offer.investingTokenAddress)
+  console.log(mixedTokens)
+
   const formatedValue = useFormatOfferValue()
 
-  const mixedTokens = [...tokensOptions, ...secTokensOptions]
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
 
@@ -42,6 +65,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
     )
 
     props.setDisabled(isMinError || isMaxError || isAvailableError)    
+    props.onChange(value.split('').filter(x => /[0-9.]/.test(x)).join(''))
   }, [])
 
   const convertedValue = React.useMemo(() => {
@@ -60,40 +84,9 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
     return inputValue
   }, [inputValue])
-
-  const offerToken = React.useMemo(() => {
-    const token = mixedTokens
-      .find(x =>
-        props.offer.tokenAddress.toLocaleLowerCase() === x.address?.toLocaleLowerCase() ||
-        props.offer.tokenAddress.toLocaleLowerCase() === `${x.value}`.toLocaleLowerCase())
-
-    if (!token) {
-      return
-    }
-
-    return {
-      name: token.label,
-      address: token.address || token.value,
-      icon: token.icon,
-    } as TokenOption
-  }, [mixedTokens])
-
-  const offerInvestmentToken = React.useMemo(() => {
-    const token = mixedTokens
-      .find(x =>
-        props.offer.investingTokenAddress.toLocaleLowerCase() === x.address?.toLocaleLowerCase() ||
-        props.offer.investingTokenAddress.toLocaleLowerCase() === `${x.value}`.toLocaleLowerCase())
-
-    if (!token) {
-      return
-    }
-
-    return {
-      name: token.label,
-      address: token.address || token.value,
-      icon: token.icon,
-    } as TokenOption
-  }, [mixedTokens])
+  
+  const offerToken = React.useMemo(() => getTokenInfo(props.offer.tokenAddress, mixedTokens), [mixedTokens])
+  const offerInvestmentToken = React.useMemo(() => getTokenInfo(props.offer.investingTokenAddress, mixedTokens), [mixedTokens])
 
   return (
     <ConvertationContainer>

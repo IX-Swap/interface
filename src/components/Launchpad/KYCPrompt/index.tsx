@@ -21,7 +21,7 @@ import { KYCStatuses } from 'pages/KYC/enum'
 
 import { ContactForm } from './ContactForm'
 import { ConnectionDialog } from '../Wallet/ConnectionDialog'
-import { Caption, KYCButton, KYCPromptContainer, KYCPromptIconContainer, KYCPromptTitle } from './styled'
+import { Caption, ExitIconContainer, KYCButton, KYCPromptContainer, KYCPromptIconContainer, KYCPromptTitle } from './styled'
 
 interface Props {
   offerId: string
@@ -226,15 +226,3 @@ const ContactUsTextButton = styled.button`
   outline: 0;
 `
 
-const ExitIconContainer = styled.div`
-  position: absolute;
-
-  top: 1rem;
-  right: 1rem;
-
-  cursor: pointer;
-
-  svg {
-    fill: ${props => props.theme.launchpad.colors.text.body};
-  }
-`

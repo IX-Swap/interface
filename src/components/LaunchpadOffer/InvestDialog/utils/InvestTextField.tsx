@@ -40,7 +40,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
   const onChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value
 
-    if (props.type === 'number' && value.length > 3) {
+    if (props.type === 'number') {
       value = formatedValue(value)
     }
 
@@ -65,7 +65,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
           lineHeight={props.lineHeight}
           disabled={props.disabled} 
           value={inputValue}
-          onChange={onChange}
+          onInput={onChange}
           maxLength={19}
         />
 
@@ -138,6 +138,10 @@ const Placeholder = styled.label<{ active: boolean }>`
   position: absolute;
 
   ${props => props.active && 'opacity: 0;'}
+
+  top: 50%;
+  left: 1rem; 
+  transform: translate(0, -50%);
 
   pointer-events: none;
   

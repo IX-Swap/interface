@@ -18,17 +18,30 @@ import { ConvertationField } from '../utils/ConvertationField'
 import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
 import { Checkbox } from '../utils/Checkbox'
+import { useInvest } from 'state/launchpad/hooks'
+import { number, object } from 'yup'
 
 
 interface Props {
   offer: Offer
 }
 
+interface FormValues {
+  amount: string
+}
+
+const schema = object().shape({
+  amount: number().required()
+})
+
 export const SaleStage: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
+  const invest = useInvest(props.offer.id)
+
+  const [amount, setAmount] = React.useState<string>()
 
   const [isDisabled, setDisabled] = React.useState(true)
+  const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
 
   const presaleCondition = React.useMemo(() => [
     { label: 'Min. Investment Size', value: `${formatter.format(Number(props.offer.presaleMinInvestment))} ${props.offer.investingTokenSymbol}` },
@@ -46,13 +59,25 @@ export const SaleStage: React.FC<Props> = (props) => {
 
   const submitState = useInvestSubmitState()
   
-  const submit = React.useCallback(() => {
-    if (submitState.current === InvestSubmitState.default) {
-      submitState.setError()
-    } else {
-      submitState.setDefault()
+  const submit = React.useCallback(async () => {
+    if (!amount) {
+      return 
     }
-  }, [submitState])
+
+    if (submitState.current === InvestSubmitState.success) {
+      return
+    }
+
+    try {
+      submitState.setLoading()
+
+      await invest(props.offer.status, { amount, txHash: '' })
+      
+      submitState.setSuccess()
+    } catch {
+      submitState.setError()
+    }
+  }, [invest, submitState])
 
   return (
     <InvestFormContainer padding="0 0 2rem 0">
@@ -61,7 +86,7 @@ export const SaleStage: React.FC<Props> = (props) => {
       <InfoList title={<InfoListTitle>Pre-Sale Conditions</InfoListTitle>} fontSize='13px' lineHeight='32px' entries={presaleCondition} />
       <InfoList title={<InfoListTitle>Pre-Sale Conditions</InfoListTitle>} fontSize='13px' lineHeight='32px' entries={investmentAllowance} />
 
-      <ConvertationField offer={props.offer} setDisabled={setDisabled}/>
+      <ConvertationField offer={props.offer} onChange={setAmount} setDisabled={setDisabled} />
 
       <Agreement>
         <AgreementCheckbox checked />

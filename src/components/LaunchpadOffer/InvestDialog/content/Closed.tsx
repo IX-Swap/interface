@@ -1,23 +1,36 @@
 import React from 'react'
 import moment from 'moment'
+import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
+
 
 import { CheckCircle, Clock, Info } from 'react-feather'
 
+import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
+
+import { useClaimOffer } from 'state/launchpad/hooks'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadOffer/styled'
+import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
+import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
 
-import { InvestFormSubmitButton, InvestSubmitState } from '../utils/InvestSubmitButton'
+import { InvestFormSubmitButton, InvestInfoMessage, InvestSubmitState } from '../utils/InvestSubmitButton'
 import { OfferLinks } from '../utils/OfferLinks'
 
 interface Props {
   offer: Offer
+  onClose: () => void
 }
 
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
+
+  const claim = useClaimOffer(props.offer.id)
+  
+  const [contactFormOpen, setContactForm] = React.useState(false)
+  const toggleContactForm = React.useCallback(() => setContactForm(state => !state), [])
 
   const canClaim = React.useMemo(() => props.offer.status === OfferStatus.claim, [])
   const timeframe = React.useMemo(() => props.offer.timeframes.find(x => x.type.toString() == props.offer.status.toString())!, [])
@@ -25,27 +38,37 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const isSuccessfull = React.useMemo(() => props.offer.softCapReached, [])
   const amountToClaim = React.useMemo(() => Math.floor(Math.random() * Number(props.offer.maxInvestment)), [])
 
+  const onSubmit = React.useCallback(async () => {
+    try {
+      await claim(isSuccessfull)
+    } catch {
+
+    }
+  }, [claim])
+
   return (
     <InvestFormContainer gap="1rem" padding='0 0 3rem 0'>
       <Title>{canClaim ? 'Token Claim' : 'Closed'}</Title>
 
-      <InvestFormSubmitButton disabled state={isSuccessfull ? InvestSubmitState.success : InvestSubmitState.error}>
+      <InvestInfoMessage  state={isSuccessfull ? InvestSubmitState.success : InvestSubmitState.error}>
         {isSuccessfull && <>This deal has been successfully funded <CheckCircle size="15" color={theme.launchpad.colors.success} /></>}
         {!isSuccessfull && <>This deal has been unsuccessfully funded <Info size="15" color={theme.launchpad.colors.error} /></>}
-        
-      </InvestFormSubmitButton>
+      </InvestInfoMessage>
 
       <Separator />
       
       <Row justifyContent='space-between' alignItems='center'>
         <Column>
           <MyInvestmentLabel>My Investment</MyInvestmentLabel>
-          <MyInvestmentAmount>{amountToClaim} {props.offer.tokenSymbol}</MyInvestmentAmount>
+          <MyInvestmentAmount>{amountToClaim} {isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}</MyInvestmentAmount>
         </Column>
 
-        <ClaimButton disabled={!canClaim} hasInvestments={amountToClaim > 0}>
-          Claim
-        </ClaimButton>
+        {!isSuccessfull && (
+          <ClaimButton disabled={!canClaim} hasInvestments={amountToClaim > 0}>
+            Claim
+          </ClaimButton>
+        )}
+        
       </Row>
 
       <Separator />
@@ -81,7 +104,21 @@ export const ClosedStage: React.FC<Props> = (props) => {
       <Separator />
 
       <HelpLabel>Need help?</HelpLabel>
-      <HelpButton>Contact Us</HelpButton>
+      <HelpButton onClick={toggleContactForm}>Contact Us</HelpButton>
+      
+      {contactFormOpen && (
+        <Portal>
+          <ModalWrapper>
+            <ContactFormWrapper>
+              <ExitIconContainer onClick={toggleContactForm}>
+                <CrossIcon />
+              </ExitIconContainer>
+
+              <ContactForm offerId={props.offer.id} onSubmit={props.onClose} />
+            </ContactFormWrapper>
+          </ModalWrapper>
+        </Portal>
+      )}
     </InvestFormContainer>
   )
 }
@@ -262,4 +299,37 @@ const ClaimButton = styled.button<{ hasInvestments: boolean }>`
       background: ${props.theme.launchpad.colors.text.bodyAlt};
     }
   `}
+`
+
+const ModalWrapper = styled.div`
+  display: grid;
+  place-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+ 
+  z-index: 50;
+
+  backdrop-filter: blur(20px);
+`
+
+const ContactFormWrapper = styled.div`
+  display: flex;
+
+  flex-flow: column nowrap;
+  align-items: center;
+
+  gap: 1rem;
+ 
+  position: relative;
+
+  width: 480px;
+
+  background: ${props => props.theme.launchpad.colors.background};
+  border-radius: 8px;
+  padding: 2rem;
 `

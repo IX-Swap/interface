@@ -1,3 +1,4 @@
+import { ErrorText } from 'components/LaunchpadOffer/styled'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -72,12 +73,4 @@ const FieldTextareaInput = styled.textarea`
   border-radius: 8px;
 
   outline: 0;
-`
-
-const ErrorText = styled.div`
-  color: #FF6060;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
 `

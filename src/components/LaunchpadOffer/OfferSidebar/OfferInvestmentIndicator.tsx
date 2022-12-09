@@ -13,11 +13,18 @@ interface Props {
 export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
   const theme = useTheme()
 
+  const investmentPercentage = React.useMemo(() => (Number(props.offer.totalInvestment) / Number(props.offer.hardCap)) * 100, [])
+
+  const softCapPercentage = React.useMemo(() => (Number(props.offer.softCap) / Number(props.offer.hardCap)) * 100, [])
+  const presalePercentage = React.useMemo(() => (Number(props.offer.presaleAlocated) / Number(props.offer.hardCap)) * 100, [])
+
+  console.log(props.offer.totalInvestment, props.offer.hardCap)
+
   return (
     <IndicatorContainer>
-      <Indicator percentage={50} />
+      <Indicator percentage={investmentPercentage} />
 
-      <SoftcapMarker percentage={20}>
+      <SoftcapMarker percentage={softCapPercentage}>
         <div>
           Soft Cap
           
@@ -28,7 +35,7 @@ export const OfferInvestmentIndicator: React.FC<Props> = (props) => {
         <ChevronDown fill={theme.launchpad.colors.primary} stroke={theme.launchpad.colors.primary} />
       </SoftcapMarker>
 
-      <PreSaleGoalMarker percentage={35}>
+      <PreSaleGoalMarker percentage={presalePercentage}>
         <ChevronUp fill={theme.launchpad.colors.primary} stroke={theme.launchpad.colors.primary} />
         <div>
           Pre-Sale Goal
@@ -94,6 +101,7 @@ const Marker = styled.div<{ percentage: number }>`
   position: absolute;
 
   left: ${props => props.percentage}%;
+  transform: translate(-50%, 0);
 
   display: flex;
 
