@@ -3,12 +3,12 @@ import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
 import { Formik } from 'formik'
-import { boolean, number, object } from 'yup'
+import { boolean, number, object, string } from 'yup'
 
 import { Mail, CheckCircle, Info, Clock, Check } from 'react-feather'
 
 import { Offer, WhitelistStatus } from 'state/launchpad/types'
-import { useGetWhitelistStatus, useRequestWhitelist } from 'state/launchpad/hooks'
+import { useGetWhitelistStatus, useRequestWhitelist, useSubscribeToOffer } from 'state/launchpad/hooks'
 
 import { Centered, Column, ErrorText, FormFieldContaienr, Row, Separator } from 'components/LaunchpadOffer/styled'
 import { InvestFormContainer, Title } from './styled'
@@ -26,25 +26,31 @@ interface Props {
 interface FormValues { 
   amount?: number
   isInterested?: boolean
+  email?: string
 }
 
 type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
 
 const initialValues: FormValues = {
   amount: undefined,
-  isInterested: undefined
+  isInterested: undefined,
+  email: undefined
 }
 
 const schema = object().shape({
   amount: number().required('Please, enter amount of your estimated investment'),
-  isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal')
+  isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal'),
+  email: string().email('Please enter a valid email')
 })
 
 const cleanAmount = (value: string) => Number(value.split('').filter(x => /[0-9.]/.test(x)).join(''))
 
 export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const subscribe = useSubscribeToOffer()
   const submitState = useInvestSubmitState()
+
+  const [emailSubmitted, setEmailSubmitted] = React.useState(false)
 
   const whitelist = useGetWhitelistStatus(props.offer.id)
   const requestWhitelist = useRequestWhitelist(props.offer.id)
@@ -68,6 +74,20 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
       submitState.setError()
     }
   }, [submitState])
+
+  const subscribeToOffer = React.useCallback(async (values: FormValues) => {
+    if (!values.email) {
+      return
+    }
+
+    try {
+      await subscribe(values.email, props.offer.id)
+
+      setEmailSubmitted(true)
+    } catch (err: any)  {
+      setEmailSubmitted(false)
+    }
+  }, [])
 
   const onChange = React.useCallback((field: string, value: any, setValue: ValueSetter) => {
     if (disableForm) {
@@ -181,9 +201,16 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
           <Separator />
           
           <InvestTextField 
-            type="email" 
+            type="email"
             label="Sign Up for Updates"
+            onChange={(value) => setFieldValue('email', value)}
             placeholder={<EmailPlaceholder><Mail size="16" /> Email Address</EmailPlaceholder>}
+            trailing={
+              <EmailSubmitButton submitted={emailSubmitted} disabled={emailSubmitted} onClick={() => subscribeToOffer(values)}>
+                {!emailSubmitted && 'Submit'}
+                {emailSubmitted && (<>Submitted <Check color={theme.launchpad.colors.success} /></>)}
+              </EmailSubmitButton>
+            }
           />
         </InvestFormContainer>
       )}
@@ -247,6 +274,42 @@ const EmailPlaceholder = styled.div`
   letter-spacing: -0.02em;
 
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+`
+
+const EmailSubmitButton = styled.button<{ submitted: boolean }>`
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+
+  line-height: 40px;
+  letter-spacing: -0.02em;
+
+  border-radius: 8px;
+
+  ${props => props.submitted && `
+    color: ${props.theme.launchpad.colors.success};
+  `}
+
+  ${props => !props.submitted && `
+    color: ${props.theme.launchpad.colors.primary};
+    
+    cursor: pointer;
+    transition: background 0.3s;
+
+    :hover {
+      background: ${props.theme.launchpad.colors.primary + '1a'};
+    }
+  `}
+
+
+  border: none;
+  background: transparent;
+
 `
 
 const CurrencyLabel = styled.div`

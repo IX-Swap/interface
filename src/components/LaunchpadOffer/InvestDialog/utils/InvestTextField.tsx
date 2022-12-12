@@ -56,7 +56,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
     <FieldContainer>
       {props.label && <Label>{props.label}</Label>}
 
-      <FieldInputContainer height={props.height} padding={props.padding}>
+      <FieldInputContainer height={props.height} padding={props.padding} hasCaption={!!props.caption}>
         {props.placeholder && <Placeholder active={focused}>{props.placeholder}</Placeholder>}
 
         <Input
@@ -66,7 +66,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
           disabled={props.disabled} 
           value={inputValue}
           onInput={onChange}
-          maxLength={19}
+          maxLength={props.type === 'text' ? 19 : 255}
         />
 
         {props.caption && <Caption>{props.caption}</Caption>}
@@ -85,27 +85,28 @@ const FieldContainer = styled.div`
   gap: 0.5rem;
 `
 
-const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height'>>`
+const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height'> & { hasCaption: boolean }>`
   position: relative;
-  
-  // display: flex;
-
-  // flex-flow: row nowrap;
-
-  // jusity-content: flex-start;
-  // align-items: center;
-
-  gap: 0.25rem;
 
   display: grid;
 
   grid-template-columns: minmax(60%, 1fr) auto;
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "input trailing"
-    "caption trailing";
+
+  ${props => props.hasCaption && `
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas:
+      "input trailing"
+      "caption trailing";
+  `}
+  
+  ${props => !props.hasCaption && `
+    grid-template-rows: auto;
+    grid-template-areas: "input trailing";
+  `}
 
   place-content: center;
+  
+  gap: 0.25rem;
 
   background: ${props => props.theme.launchpad.colors.foreground};
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
