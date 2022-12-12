@@ -47,7 +47,7 @@ const CheckboxLabel = ({ isError }: CheckboxLabelProps) => {
       </Link>{' '}
       and{' '}
       <Link
-        href='https://investax.io/disclosure/'
+        href='https://investax.io/disclosures/'
         target='_blank'
         className={link}
       >
