@@ -5,12 +5,12 @@ import styled, { useTheme } from 'styled-components'
 import { Formik } from 'formik'
 import { boolean, number, object, string } from 'yup'
 
-import { Mail, CheckCircle, Info, Clock, Check } from 'react-feather'
+import { CheckCircle, Info, Clock, Check } from 'react-feather'
 
 import { Offer, WhitelistStatus } from 'state/launchpad/types'
-import { useGetWhitelistStatus, useRequestWhitelist, useSubscribeToOffer } from 'state/launchpad/hooks'
+import { useGetWhitelistStatus, useRequestWhitelist } from 'state/launchpad/hooks'
 
-import { Centered, Column, ErrorText, FormFieldContaienr, Row, Separator } from 'components/LaunchpadOffer/styled'
+import { Centered, Column, ErrorText, FormFieldContaienr, Row } from 'components/LaunchpadOffer/styled'
 import { InvestFormContainer, Title } from './styled'
 
 import { InvestTextField } from '../utils/InvestTextField'
@@ -38,19 +38,21 @@ const initialValues: FormValues = {
 }
 
 const schema = object().shape({
-  amount: number().required('Please, enter amount of your estimated investment'),
+  email: string().email('Please enter a valid email'),
   isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal'),
-  email: string().email('Please enter a valid email')
+  amount: number().when('isInterested', { 
+    is: true,
+    then: number().required('Please, enter amount of your estimated investment') ,
+    otherwise: number()
+  }),
 })
 
 const cleanAmount = (value: string) => Number(value.split('').filter(x => /[0-9.]/.test(x)).join(''))
 
 export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const subscribe = useSubscribeToOffer()
   const submitState = useInvestSubmitState()
 
-  const [emailSubmitted, setEmailSubmitted] = React.useState(false)
 
   const whitelist = useGetWhitelistStatus(props.offer.id)
   const requestWhitelist = useRequestWhitelist(props.offer.id)
@@ -59,14 +61,10 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const timeframe = React.useMemo(() => props.offer.timeframes.find(x => x.type.toString() == props.offer.status.toString())!, [])
 
   const submit = React.useCallback(async (values: FormValues) => {
-    if (!values.amount || values.isInterested === undefined) {
-      return
-    }
-
     try {
       submitState.setLoading()
       
-      await requestWhitelist({ amount: values.amount, isInterested: values.isInterested })
+      await requestWhitelist({ amount: values.amount! ?? null, isInterested: values.isInterested! })
 
       submitState.setSuccess()
       props.onClose()
@@ -74,20 +72,6 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
       submitState.setError()
     }
   }, [submitState])
-
-  const subscribeToOffer = React.useCallback(async (values: FormValues) => {
-    if (!values.email) {
-      return
-    }
-
-    try {
-      await subscribe(values.email, props.offer.id)
-
-      setEmailSubmitted(true)
-    } catch (err: any)  {
-      setEmailSubmitted(false)
-    }
-  }, [])
 
   const onChange = React.useCallback((field: string, value: any, setValue: ValueSetter) => {
     if (disableForm) {
@@ -197,21 +181,6 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
               </WhitelistMessage>
             </Column>
           )}
-
-          <Separator />
-          
-          <InvestTextField 
-            type="email"
-            label="Sign Up for Updates"
-            onChange={(value) => setFieldValue('email', value)}
-            placeholder={<EmailPlaceholder><Mail size="16" /> Email Address</EmailPlaceholder>}
-            trailing={
-              <EmailSubmitButton submitted={emailSubmitted} disabled={emailSubmitted} onClick={() => subscribeToOffer(values)}>
-                {!emailSubmitted && 'Submit'}
-                {emailSubmitted && (<>Submitted <Check color={theme.launchpad.colors.success} /></>)}
-              </EmailSubmitButton>
-            }
-          />
         </InvestFormContainer>
       )}
     </Formik>
@@ -256,60 +225,6 @@ const ParticipationInterestButton = styled.button<{ active: boolean }>`
   background: ${props => props.active 
     ? props.theme.launchpad.colors.primary
     : props.theme.launchpad.colors.foreground};
-`
-
-const EmailPlaceholder = styled.div`
-  display: flex;
-
-  flex-flow: row nowrap;
-  align-items: center;
-
-  gap: 0.5rem;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
-`
-
-const EmailSubmitButton = styled.button<{ submitted: boolean }>`
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  gap: 0.5rem;
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
-  border-radius: 8px;
-
-  ${props => props.submitted && `
-    color: ${props.theme.launchpad.colors.success};
-  `}
-
-  ${props => !props.submitted && `
-    color: ${props.theme.launchpad.colors.primary};
-    
-    cursor: pointer;
-    transition: background 0.3s;
-
-    :hover {
-      background: ${props.theme.launchpad.colors.primary + '1a'};
-    }
-  `}
-
-
-  border: none;
-  background: transparent;
-
 `
 
 const CurrencyLabel = styled.div`
