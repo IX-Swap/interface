@@ -12,8 +12,6 @@ import { shortenAddress } from 'utils'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 
 import { VioletCard } from 'components/Card'
-import { ChevronElement } from 'components/ChevronElement'
-import { NetworkCard } from 'components/Header/NetworkCard'
 
 import useTheme from 'hooks/useTheme'
 

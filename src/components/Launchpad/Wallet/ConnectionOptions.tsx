@@ -207,15 +207,6 @@ const InfoCard = styled.button<{ active?: boolean }>`
   }
 `
 
-const OptionCard = styled(InfoCard)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 2rem;
-  padding: 1rem;
-`
-
 const GreenCircle = styled.div`
   display: flex;
 

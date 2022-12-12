@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { t } from '@lingui/macro'
 
 import { Label } from 'components/Label'
-import { TYPE } from 'theme'
 import { Input } from 'components/Input'
 import { ReactComponent as CalendarIcon } from 'assets/images/calendar.svg'
 import { Props as LabelProps } from 'components/Label'
@@ -96,10 +95,6 @@ const TextField = styled(Input)<{ maxHeight?: number; error?: any }>`
   font-size: 16px;
   border: ${({ error, theme }) => error ? 'solid 1px' + theme.error : 'none'};
   background-color: ${({ theme: { bg19 } }) => bg19};
-`
-
-const StyledLabel = styled(Label)`
-  color: ${({ theme }) => theme.text2};
 `
 
 const Container = styled.div`
