@@ -58,13 +58,14 @@ export const OfferStage: React.FC<Props> = (props) => {
   const theme = useTheme()
   const timeframes = React.useMemo(() => props.offer.timeframes
     .sort((a, b) => Date.parse(a.startDate.toString()) - Date.parse(b.startDate.toString()))
-    .map(frame => {
+    .map((frame, idx) => {
       const hasStarted = Date.parse(frame.startDate.toString()) <= Date.now()
 
       const label = getTypeLabel(frame.type)
       const value = [
         moment(new Date(frame.startDate)).format('Do MMMM, HH:mm'),
-        frame.type !== OfferTimeframeType.claim && (' - ' + moment(Date.parse(frame.endDate.toString())).format('Do MMM'))
+        frame.type !== OfferTimeframeType.claim 
+          && (' - ' + moment(new Date(props.offer.timeframes[idx + 1].startDate)).format('Do MMM'))
       ].filter(x => x).join()
 
       return { 
