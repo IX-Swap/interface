@@ -17,5 +17,5 @@ export const OfferTerms: React.FC<Props> = (props) => {
     { label: 'Distribution Frequency', value: props.offer.terms.distributionFrequency ?? 'N/A' },
   ], [])
 
-  return <InfoList title="Offer Terms" entries={terms} />
+  return <InfoList title="Offering Terms" entries={terms} />
 }

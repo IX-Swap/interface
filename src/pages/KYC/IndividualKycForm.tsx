@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef, useCallback } from 'react'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
-import { ErrorMessage, FieldArray, Formik } from 'formik'
+import { FieldArray, Formik } from 'formik'
 import { Prompt, useHistory } from 'react-router-dom'
 import moment from 'moment'
 import dayjs from 'dayjs'
@@ -9,8 +9,8 @@ import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
-import Column, { AutoColumn } from 'components/Column'
-import { ButtonGradient, ButtonGradientBorder, ButtonIXSGradient, ButtonText } from 'components/Button'
+import Column from 'components/Column'
+import { ButtonGradientBorder, ButtonIXSGradient, ButtonText } from 'components/Button'
 import { LinkStyledButton, TYPE } from 'theme'
 import { ReactComponent as TrashIcon } from 'assets/svg/trash-icon.svg'
 import { GradientText } from 'pages/CustodianV2/styleds'
@@ -30,7 +30,7 @@ import { countriesList } from 'constants/countriesList'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import { KycInputLabel, KycSelect as Select, KycTextInput as TextInput, Uploader } from './common'
+import { KycSelect as Select, KycTextInput as TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import {
   empleymentStatuses,
@@ -562,8 +562,6 @@ export default function IndividualKycForm() {
                 isFilled('phoneNumber') &&
                 isFilled('email')
 
-              const referralFilled = !!values.referralCode
-
               const financialFilled =
                 shouldValidate &&
                 isFilled('occupation') &&
@@ -582,10 +580,6 @@ export default function IndividualKycForm() {
                 isFilled('idNumber') &&
                 isFilled('idIssueDate') &&
                 isFilled('idExpiryDate')
-
-              const taxDeclarationFilled =
-                shouldValidate &&
-                isFilled('taxDeclaration')
 
               const addressFilled =
                 shouldValidate &&

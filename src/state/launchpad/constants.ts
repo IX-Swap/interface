@@ -33,3 +33,11 @@ export const OFFER_TYPE_LABELS = [
   { label: "Fractionalized-NFT", value: OfferType.fNFT },
   { label: "Cryptocurrency", value: OfferType.crypto } 
 ]
+
+export const OFFER_RELATED_TIMEFRAMES = {
+  whitelist: 'preSale',
+  preSale: 'sale',
+  sale: 'closed',
+  closed: 'claim',
+  claim: 'claim'
+}

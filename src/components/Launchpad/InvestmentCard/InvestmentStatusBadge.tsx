@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { SaleStatus } from 'pages/Launchpad/utils'
-
 interface Props {
   label: string
   color: string
