@@ -1,4 +1,4 @@
-import { Box, Grid, Paper } from '@mui/material'
+import { Box, Grid, Paper, Typography } from '@mui/material'
 import { CurrencySelect } from 'app/pages/accounts/components/CurrencySelect/CurrencySelect'
 import { OTPInputField } from 'app/pages/accounts/components/OTPDialog/OTPInputField'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
@@ -18,10 +18,11 @@ import { useAssetsData } from 'hooks/asset/useAssetsData'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { useAppTheme } from 'hooks/useAppTheme'
 import { ManageBankAccountsButton } from './ManageBankAccountsButton'
 
 export const Setup: React.FC = () => {
-  const { container, selectRow, separator } = useStyles()
+  const { container, selectRow, separator, minimumWithdrawalText } = useStyles()
   const { watch, control, formState, reset } =
     useFormContext<WithdrawCashFormValues>()
   const bankAccountId = watch('bankAccountId')
@@ -44,6 +45,8 @@ export const Setup: React.FC = () => {
     bank?.address.country ?? '',
     bank?.swiftCode ?? ''
   )
+
+  const { theme } = useAppTheme()
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
@@ -131,6 +134,17 @@ export const Setup: React.FC = () => {
                     </Grid>
                   </>
                 ) : null}
+
+                {minWithdraw !== undefined ? (
+                  <Typography
+                    color={theme.palette.text.secondary}
+                    className={minimumWithdrawalText}
+                  >
+                    Minimum {formatMoney(minWithdraw, '')}
+                  </Typography>
+                ) : (
+                  ''
+                )}
               </Grid>
               <Box mt={5}>
                 <OTPInputField disabled={isEmptyString(bankAccountId)} />
