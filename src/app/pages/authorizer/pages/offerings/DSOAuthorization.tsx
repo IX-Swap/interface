@@ -12,7 +12,6 @@ export const DSOAuthorization = () => {
   if (isLoading || data === undefined) {
     return null
   }
-
   return (
     <AuthorizerView
       title={data.tokenName}

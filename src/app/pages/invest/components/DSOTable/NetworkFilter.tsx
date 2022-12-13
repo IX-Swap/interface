@@ -9,12 +9,17 @@ import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 import { renderValue } from 'helpers/forms'
 import { Network } from 'types/networks'
 
-export const NetworkFilter = () => {
+interface FiltersFavProps {
+  setPage?: (page: number)=>void
+}
+
+export const NetworkFilter = (props:FiltersFavProps) => {
   const { data, status } = useAllNetworks()
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
   const value = getFilterValue('network')
 
   const handleChange = (event: SelectChangeEvent<any>) => {
+    props.setPage && props.setPage(0);
     const {
       target: { value }
     } = event

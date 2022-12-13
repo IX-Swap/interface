@@ -42,7 +42,7 @@ export const DSOTableFilters = (props:FiltersFavProps) => {
   return (
     <Grid container spacing={isMiniLaptop ? 2 : 1}>
       <Grid item xs={12} md={2}>
-        <CapitalStructureFilter />
+        <CapitalStructureFilter setPage={setPage} />
       </Grid>
       <Grid item xs={12} md={10}>
         <TextInputSearchFilter
@@ -85,13 +85,13 @@ export const DSOTableFilters = (props:FiltersFavProps) => {
             >
               <Grid item sx={{ width: '100%' }} container spacing={1}>
                 <Grid item xs={12} md={4}>
-                  <PriceFilter />
+                  <PriceFilter setPage={setPage} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <CurrencyFilter />
+                  <CurrencyFilter setPage={setPage} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <NetworkFilter />
+                  <NetworkFilter setPage={setPage} />
                 </Grid>
               </Grid>
               <Grid item>

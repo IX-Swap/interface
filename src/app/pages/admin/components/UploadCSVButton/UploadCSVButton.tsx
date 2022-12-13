@@ -29,7 +29,7 @@ export const UploadCSVButton = () => {
         variant='outlined'
         color='primary'
         onClick={handleClick}
-        disabled={isLoading}
+        disabled={true}
       >
         {isLoading ? 'Uploading...' : 'Upload CSV File'}
       </Button>

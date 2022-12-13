@@ -32,5 +32,8 @@ export const useStyles = makeStyles(theme => ({
       gridTemplateColumns: '1fr',
       rowGap: theme.spacing(0.5)
     }
+  },
+  minimumWithdrawalText: {
+    marginTop: '20px'
   }
 }))

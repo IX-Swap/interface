@@ -2,11 +2,16 @@ import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ChangeEvent } from 'react'
 
-export const CapitalStructureFilter = () => {
+interface FiltersFavProps {
+  setPage?: (page: number)=>void
+}
+
+export const CapitalStructureFilter = (props:FiltersFavProps) => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
   const value = getFilterValue('capitalStructure')
 
   const handleChange = (event: ChangeEvent<{ value: string }>) => {
+    props.setPage && props.setPage(0);
     const {
       target: { value }
     } = event
