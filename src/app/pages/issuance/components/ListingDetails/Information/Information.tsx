@@ -12,12 +12,12 @@ export interface InformationProps {
 export const Information = ({ data }: InformationProps) => {
   return (
     <Grid container spacing={6} direction='column'>
-      <Profile profile={data.introduction} />
+      <Profile profile={data?.introduction} />
       <Grid item>
-        <Documents data={data.documents} title='Documents' />
+        <Documents data={data?.documents} title='Documents' />
       </Grid>
       <Grid item>
-        <TeamMembers listingId={data._id} teamMembers={data.team} />
+        <TeamMembers listingId={data?._id} teamMembers={data?.team} />
       </Grid>
     </Grid>
   )
