@@ -4,7 +4,7 @@ import styled, { useTheme } from 'styled-components'
 
 import Row from 'components/Row'
 
-import { Info } from 'react-feather'
+import { CheckCircle, Info } from 'react-feather'
 
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
@@ -64,14 +64,10 @@ export const SaleStage: React.FC<Props> = (props) => {
       return 
     }
 
-    if (submitState.current === InvestSubmitState.success) {
-      return
-    }
-
     try {
       submitState.setLoading()
 
-      await invest(props.offer.status, { amount, txHash: '' })
+      await invest(props.offer.status, { amount, txHash: '0x0730e3a6da14a38d8d43899f572d4c221318e3a70461db1c23d6dc8091e5db30' })
       
       submitState.setSuccess()
     } catch {
@@ -96,6 +92,7 @@ export const SaleStage: React.FC<Props> = (props) => {
       </Agreement>
 
       <InvestFormSubmitButton state={submitState.current} disabled={isDisabled} onSubmit={submit}>
+        {submitState.current === InvestSubmitState.success && <>Submitted <CheckCircle size="15" color={theme.launchpad.colors.success} /></>}
         {submitState.current === InvestSubmitState.default && "Invest"}
         {submitState.current === InvestSubmitState.loading && (
           <Row justifyContent='space-between' alignItems='center' width="100%" padding="1rem">
