@@ -4,5 +4,7 @@ export interface UploadReportFormValues {
   nav: number
   dateFrom: string
   dateTo: string
-  reportDocuments: DataroomFile[]
+  reportDocuments: Array<{
+    value: DataroomFile
+  }>
 }

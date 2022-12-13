@@ -6,7 +6,6 @@ import { FormPrompt } from 'app/pages/issuance/components/UploadReportForm/FormP
 import { useUploadReportFile } from 'app/pages/issuance/hooks/useUploadReportFile'
 import { UploadReportFormValues } from 'types/financialReports'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { DataroomFile } from 'types/dataroomFile'
 
 export const UploadReportForm = () => {
   const { getFilterValue } = useQueryFilter()
@@ -16,9 +15,7 @@ export const UploadReportForm = () => {
     await uploadReportFile({
       ...values,
       dso: getFilterValue('dso'),
-      reportDocuments: values.reportDocuments.map(
-        (doc: DataroomFile) => doc._id
-      )
+      reportDocuments: values.reportDocuments.map(doc => doc.value._id)
     })
   }
 
