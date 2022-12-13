@@ -36,6 +36,7 @@ export const CreateOrSaveListingButton = (
       : getIdFromObj(listing?.user) ?? listing?.createdBy ?? '',
     listingType
   )
+  console.log(listing, 'list')
   const { dso, ...defaultFormValues } = watch()
   const formValues = getUpdateListingPayload({
     ...defaultFormValues,
