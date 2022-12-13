@@ -52,7 +52,6 @@ export const AuthorizerView = <T,>(
   const approvedOrRejected = ['Approved', 'Rejected'].includes(data.status)
   const showForm = !(isTransaction && approvedOrRejected)
   const styles = useStyles()
-
   return (
     <Grid container direction='column' spacing={4} display='table'>
       <Grid item>

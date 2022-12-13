@@ -11,7 +11,6 @@ export const CommitmentAuthorization = () => {
     commitmentId: string
   }>()
   const { data, isLoading } = useCommitmentById(commitmentId, userId)
-
   if (isLoading || data === undefined) {
     return null
   }
