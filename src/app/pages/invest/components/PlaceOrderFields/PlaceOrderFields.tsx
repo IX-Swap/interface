@@ -40,6 +40,9 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           defaultValue={''}
           onChange={value => {
             setValue('price', value)
+            if (value === undefined) {
+              setValue('total', 0)
+            }
             // TODO Uncomment after testing
             // if (amount * value > balance) {
             //   setError('price', { message: 'Insufficient balance' })
@@ -62,6 +65,9 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           valueExtractor={numericValueExtractor}
           onChange={value => {
             setValue('amount', value)
+            if (value === undefined) {
+              setValue('total', 0)
+            }
             // TODO Uncomment after testing
             // if (price * value > balance) {
             //   setError('amount', { message: 'Insufficient balance' })
@@ -92,7 +98,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
               {totalCurrencyLabel}
             </InputAdornment>
           }
-          defaultValue={null}
+          defaultValue={0}
           numberFormat={moneyNumberFormat}
           valueExtractor={numericValueExtractor}
           disabled
