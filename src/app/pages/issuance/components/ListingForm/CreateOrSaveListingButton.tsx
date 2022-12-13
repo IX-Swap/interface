@@ -58,11 +58,6 @@ export const CreateOrSaveListingButton = (
     userId: userId
   } as any)
 
-  console.log({
-    defaultFormValues,
-    dso,
-    formValues
-  })
   const handleClick =
     listing === undefined || isDataFromDSO
       ? async () => await createListing(formValues)
