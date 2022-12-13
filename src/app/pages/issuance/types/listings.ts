@@ -21,6 +21,9 @@ export interface SecondaryListingFormValues {
   launchDate: Date | string
   dso: string
   type?: string
+  maximumTradeUnits?: any
+  minimumTradeUnits?: number
+  raisedAmount?: number
 }
 
 export interface ListingFormValues {

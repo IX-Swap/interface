@@ -99,6 +99,9 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   productSpecification?: string
   step: number
   listingType?: string
+  maximumTradeUnits?: number
+  minimumTradeUnits?: number
+  raisedAmount?: number
 }
 
 export interface NewBaseDigitalSecurityOffering
