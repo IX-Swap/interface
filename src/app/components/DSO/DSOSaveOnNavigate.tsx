@@ -94,35 +94,33 @@ export const DSOSaveOnNavigate = ({
         history.replace(generatePath(`${location.pathname}${search}`))
       }
     } else {
-      if (!isEdit) {
-        return await save(
-          {
-            ...payload
-          },
-          {
-            onSettled: async (data: any) => {
-              if (data !== undefined) {
-                console.log('activeStep dsoId', activeStep, dsoId)
-                if (activeStep === 0 && dsoId === undefined) {
-                  const redirect: string = redirectFunction(
-                    location.pathname.includes('/create'),
-                    data.data._id
-                  )
-                  history.replace(
-                    generatePath(`${redirect}${search}`, {
-                      issuerId:
-                        typeof data.data.user === 'string'
-                          ? data.data.user
-                          : getIdFromObj(data.data.user),
-                      dsoId: data.data._id
-                    })
-                  )
-                }
+      return await save(
+        {
+          ...payload
+        },
+        {
+          onSettled: async (data: any) => {
+            if (data !== undefined) {
+              console.log('activeStep dsoId', activeStep, dsoId)
+              if (activeStep === 0 && dsoId === undefined) {
+                const redirect: string = redirectFunction(
+                  location.pathname.includes('/create'),
+                  data.data._id
+                )
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
               }
             }
           }
-        )
-      }
+        }
+      )
     }
   }
 
