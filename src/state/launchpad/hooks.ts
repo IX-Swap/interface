@@ -133,15 +133,15 @@ export const useGetOffer = () => {
 
 export const useGetWhitelistStatus = (id: string) => {
   const [loading, setLoading] = React.useState(true)
-  const [status, setStatus] = React.useState<WhitelistStatus>()
+  const [info, setInfo] = React.useState<{ status: WhitelistStatus, isInterested: number }>()
 
   const getWhitelist = React.useCallback(() => apiService.get(`/offers/${id}/me/whitelist`), [id])
 
   React.useEffect(() => {
-    getWhitelist().then(res => setStatus(res.data.status)).finally(() => setLoading(false))
+    getWhitelist().then(res => setInfo(res.data)).finally(() => setLoading(false))
   }, [id])
 
-  return { status, loading }
+  return { ...info, loading }
 }
 
 export const useRequestWhitelist = (id: string) => {
@@ -155,7 +155,7 @@ export const useInvest = (id: string) => {
       throw new Error('Invalid offer status')
     }
 
-    return apiService.post(`/offers/${id}/${status.toLowerCase()}`, payload)
+    return apiService.post(`/offers/${id}/invest/${status.toLowerCase()}`, payload)
   }, [id])
 }
 

@@ -64,7 +64,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     try {
       submitState.setLoading()
       
-      await requestWhitelist({ amount: values.amount! ?? null, isInterested: values.isInterested! })
+      await requestWhitelist({ amount: values.amount! ?? 0, isInterested: values.isInterested! })
 
       submitState.setSuccess()
       props.onClose()
@@ -91,7 +91,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
             </Centered>
           )}
 
-          {!whitelist.loading && !whitelist.status && (
+          {!whitelist.loading && (!whitelist.status || !whitelist.isInterested) && (
             <>
               <Title>
                 Are you interested to participate in this deal? 
@@ -149,7 +149,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
             </>
           )}
 
-          {!whitelist.loading && whitelist.status && (
+          {!whitelist.loading && (whitelist.status && whitelist.isInterested) && (
             <Column justifyContent='center' alignItems="center" gap="1rem" style={{ flexGrow: 1 }}>
               <KYCPromptIconContainer>
                 {whitelist.status === WhitelistStatus.accepted && <Check color={theme.launchpad.colors.success} size="35" />}

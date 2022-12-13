@@ -16,8 +16,9 @@ import { Column, Row, Separator } from 'components/LaunchpadOffer/styled'
 import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
 
-import { InvestFormSubmitButton, InvestInfoMessage, InvestSubmitState } from '../utils/InvestSubmitButton'
+import { InvestInfoMessage, InvestSubmitState } from '../utils/InvestSubmitButton'
 import { OfferLinks } from '../utils/OfferLinks'
+import { useAddPopup } from 'state/application/hooks'
 
 interface Props {
   offer: Offer
@@ -27,6 +28,7 @@ interface Props {
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
 
+  const addPopup = useAddPopup()
   const claim = useClaimOffer(props.offer.id)
   
   const [contactFormOpen, setContactForm] = React.useState(false)
@@ -41,8 +43,10 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const onSubmit = React.useCallback(async () => {
     try {
       await claim(isSuccessfull)
-    } catch {
 
+      addPopup({ info: { success: true, summary: 'Claimed successfully' } })
+    } catch (err) {
+      addPopup({ info: { success: false, summary: `Error occured during claim: ${err}` } })
     }
   }, [claim])
 
