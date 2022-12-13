@@ -39,6 +39,20 @@ export const CreateOrSaveListingButton = (
   const { dso, ...defaultFormValues } = watch()
   const formValues = getUpdateListingPayload({
     ...defaultFormValues,
+    corporate: listing?.corporate._id,
+    asset: listing?.asset,
+    logo: listing?.logo,
+    completionDate: listing?.completionDate,
+    investmentPeriod: listing?.investmentPeriod,
+    dividendYield: listing?.dividendYield,
+    interestRate: listing?.interestRate,
+    grossIRR: listing?.grossIRR,
+    investmentStructure: listing?.investmentStructure,
+    distributionFrequency: listing?.distributionFrequency,
+    leverage: listing?.leverage,
+    equityMultiple: listing?.equityMultiple,
+    introduction: listing?.introduction,
+    team: listing?.team,
     type: listingType,
     dso: dso,
     userId: userId
