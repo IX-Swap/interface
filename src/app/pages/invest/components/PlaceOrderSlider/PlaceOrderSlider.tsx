@@ -44,7 +44,7 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
         (sliderRange.to / sliderRange.maxPercentageValue)
       setSlider(newSliderValue)
     } else {
-      setValue('total', '')
+      setValue('total', 0)
       setSlider(sliderRange.from)
     }
   }
@@ -54,12 +54,13 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
       const totalValue = price * amount
       setValue('total', totalValue)
     }
+
     if (!isEmptyString(String(amount))) {
       const newSliderValue = (amount / balance) * sliderRange.to
       setSlider(newSliderValue)
     }
     if (isEmptyString(String(price)) && isEmptyString(String(amount))) {
-      setValue('total', '')
+      setValue('total', 0)
       setSlider(sliderRange.from)
     }
   }
