@@ -18,15 +18,17 @@ export const DocumentsView = (props: DocumentsViewProps) => {
       <Table>
         <DataroomHeader />
         <TableBody>
-          {documents.map((document, index) => (
-            <TableRow key={index}>
-              <DataroomViewRow
-                showDivider={false}
-                title={document?.title ?? ''}
-                document={document}
-              />
-            </TableRow>
-          ))}
+          {documents !== undefined && documents.length > 0
+            ? documents.map((document, index) => (
+                <TableRow key={index}>
+                  <DataroomViewRow
+                    showDivider={false}
+                    title={document?.title ?? ''}
+                    document={document}
+                  />
+                </TableRow>
+              ))
+            : null}
         </TableBody>
       </Table>
     </TableContainer>

@@ -36,19 +36,33 @@ export const CreateOrSaveListingButton = (
       : getIdFromObj(listing?.user) ?? listing?.createdBy ?? '',
     listingType
   )
+  // console.log(listing, 'list')
   const { dso, ...defaultFormValues } = watch()
   const formValues = getUpdateListingPayload({
+    // ...listing,
     ...defaultFormValues,
+    corporate: listing?.corporate._id,
+    asset: listing?.asset,
+    logo: listing?.logo,
+    completionDate: listing?.completionDate,
+    investmentPeriod: listing?.investmentPeriod,
+    dividendYield: listing?.dividendYield,
+    interestRate: listing?.interestRate,
+    grossIRR: listing?.grossIRR,
+    investmentStructure: listing?.investmentStructure,
+    distributionFrequency: listing?.distributionFrequency,
+    leverage: listing?.leverage,
+    equityMultiple: listing?.equityMultiple,
+    maximumTradeUnits: listing?.maximumTradeUnits,
+    raisedAmount: listing?.raisedAmount,
+    minimumTradeUnits: listing?.minimumTradeUnits,
+    introduction: listing?.introduction,
+    team: listing?.team,
     type: listingType,
     dso: dso,
     userId: userId
   } as any)
 
-  console.log({
-    defaultFormValues,
-    dso,
-    formValues
-  })
   const handleClick =
     listing === undefined || isDataFromDSO
       ? async () => await createListing(formValues)
