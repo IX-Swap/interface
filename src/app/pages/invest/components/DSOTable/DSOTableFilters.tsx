@@ -19,6 +19,8 @@ export const DSOTableFilters = (props:FiltersFavProps) => {
   const textInputSearchFilterRef = React.useRef<HTMLInputElement | null>(null)
 
   const clearAll = () => {
+    props.setPage && props.setPage(0);
+
     removeFilters([
       'isFavorite',
       'isPriceAscending',
