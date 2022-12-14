@@ -7,6 +7,7 @@ import { isEmptyString } from 'helpers/strings'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useEffect } from 'react'
 import { Waypoint } from 'react-waypoint'
+import { useHistory } from 'react-router-dom'
 
 export interface PairTableProps {
   data: Pair[]
@@ -14,6 +15,7 @@ export interface PairTableProps {
 }
 
 export const PairTable = ({ data, loadMore }: PairTableProps) => {
+  const { location } = useHistory()
   const { updateFilters, getFilterValue } = useQueryFilter()
   useEffect(() => {
     const sortByValue = getFilterValue('sortBy')
@@ -31,15 +33,23 @@ export const PairTable = ({ data, loadMore }: PairTableProps) => {
     <Table>
       <TableHead>
         <TableRow>
-          <PairTableCell>
-            <SortByFilter label='Pair' filterValue='pair' />
-          </PairTableCell>
-          <PairTableCell>
-            <SortByFilter label='Last Price' filterValue='lastPrice' />
-          </PairTableCell>
-          <PairTableCell align='right'>
-            <SortByFilter label='Change' filterValue='change' />
-          </PairTableCell>
+          {location?.pathname?.includes('trading') ? (
+            <PairTableCell>
+              <SortByFilter label='Pair' filterValue='pair' />
+            </PairTableCell>
+          ) : (
+            <div>
+              <PairTableCell>
+                <SortByFilter label='Pair' filterValue='pair' />
+              </PairTableCell>
+              <PairTableCell>
+                <SortByFilter label='Last Price' filterValue='lastPrice' />
+              </PairTableCell>
+              <PairTableCell align='right'>
+                <SortByFilter label='Change' filterValue='change' />
+              </PairTableCell>
+            </div>
+          )}
         </TableRow>
       </TableHead>
       <TableBody>

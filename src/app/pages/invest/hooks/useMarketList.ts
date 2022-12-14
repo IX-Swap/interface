@@ -6,6 +6,7 @@ import { useServices } from 'hooks/useServices'
 import { useInfiniteQuery } from 'react-query'
 import { PaginatedData } from 'services/api/types'
 import useMarketListFilters from 'app/pages/invest/hooks/useMarketListFilters'
+import { useHistory } from 'react-router-dom'
 
 export interface Pair {
   _id: string
@@ -16,6 +17,7 @@ export interface Pair {
 }
 
 export const useMarketList = (showFilter: boolean | undefined = false) => {
+  const { location } = useHistory()
   const { apiService } = useServices()
   const { data: favorites } = useFavoritePairs()
   const context = showFilter ? 'withFilter' : ''
@@ -27,14 +29,28 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     cursor: number | undefined = 0
   ) => {
     const { listingKeyword, currency, sortBy, sortField } = usedFilters
-    return await apiService.post<PaginatedData<Pair>>(exchangeURL.marketList, {
-      skip: cursor,
-      limit: 25,
-      listingKeyword,
-      currency,
-      sortBy,
-      sortField
-    })
+    if (location?.pathname?.includes('trading')) {
+      return await apiService.post<PaginatedData<Pair>>(exchangeURL.otcList, {
+        skip: cursor,
+        limit: 100,
+        listingKeyword
+        // currency,
+        // sortBy,
+        // sortField
+      })
+    } else {
+      return await apiService.post<PaginatedData<Pair>>(
+        exchangeURL.marketList,
+        {
+          skip: cursor,
+          limit: 25,
+          listingKeyword,
+          currency,
+          sortBy,
+          sortField
+        }
+      )
+    }
   }
 
   const { data, ...rest } = useInfiniteQuery(
