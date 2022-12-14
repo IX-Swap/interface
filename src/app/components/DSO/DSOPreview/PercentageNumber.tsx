@@ -1,5 +1,4 @@
 import { percentageNumberFormat } from 'config/numberFormat'
-import { getPercentageValue } from 'config/utils'
 import React from 'react'
 import NumberFormat from 'react-number-format'
 
@@ -8,15 +7,11 @@ export interface PercentageNumberInterface {
 }
 
 export const PercentageNumber = ({ value }: PercentageNumberInterface) => {
-  const valueToPercent = (value?: number) => {
-    return value !== undefined ? getPercentageValue(value) : '-'
-  }
-
   return (
     <NumberFormat
       {...percentageNumberFormat}
       displayType='text'
-      value={valueToPercent(value)}
+      value={value !== undefined ? value : '-'}
     />
   )
 }
