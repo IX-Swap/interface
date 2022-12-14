@@ -10,10 +10,11 @@ export interface DSOCardCoverProps {
   type: 'Primary' | 'TopOffers'
   data: DigitalSecurityOffering
   viewURL: string
+  refetch: () => void
 }
 
 export const DSOCardCover = (props: DSOCardCoverProps) => {
-  const { data } = props
+  const { data, refetch } = props
   const classes = useStyles()
   const queryKeys = [dsoQueryKeys.getPromoted, dsoQueryKeys.getApprovedList]
 
@@ -30,7 +31,11 @@ export const DSOCardCover = (props: DSOCardCoverProps) => {
         </Typography>
       </Grid>
       <Grid item>
-        <DSOCardFavorite dependentQueryKeys={queryKeys} dso={data} />
+        <DSOCardFavorite
+          dependentQueryKeys={queryKeys}
+          dso={data}
+          refetch={refetch}
+        />
       </Grid>
     </Grid>
   )
