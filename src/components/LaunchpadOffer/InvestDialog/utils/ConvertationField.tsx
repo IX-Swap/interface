@@ -3,6 +3,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
 
+import { Offer } from 'state/launchpad/types'
 import { InvestTextField } from './InvestTextField'
 
 import { useActiveWeb3React } from 'hooks/web3'
@@ -10,7 +11,6 @@ import { Option, useTokensList } from 'hooks/useTokensList'
 import { useCurrency } from 'hooks/Tokens'
 
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import { Offer } from 'state/launchpad/types'
 import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
 
 
