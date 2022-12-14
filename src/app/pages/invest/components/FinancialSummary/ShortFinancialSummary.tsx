@@ -29,7 +29,7 @@ export const ShortFinancialSummary = () => {
                 dsoId: dso?._id,
                 issuerId: dso?.user
               }}
-              hideDropdown
+              // hideDropdown
             />
           </Box>
         </Box>
