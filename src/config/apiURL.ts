@@ -271,6 +271,7 @@ export const virtualAccounts = {
 
 export const exchange = {
   marketList: '/exchange/markets/list',
+  otcList: 'otc/market/list',
   userOrders: (userId?: string) => `/exchange/orders/list/${userId}`,
   userTrades: (userId?: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
