@@ -60,10 +60,9 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
     const realValue = value ? +(value.replace(/,/g, '')) : 0
 
-    const sufficientBalance = isSufficientBalance(value, inputCurrency, balance)
     const symbol = props.offer.investingTokenSymbol
 
-    const isInsufficientBalance = !sufficientBalance
+    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
     const isMinError = +props.offer.presaleMinInvestment > realValue
     const isMaxError = +props.offer.presaleMaxInvestment < realValue
     const isAvailableError = 9000 < realValue
