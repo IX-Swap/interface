@@ -23,13 +23,17 @@ export const DSOPricingViewCompact = ({ dso }: DSOPricingViewCompactProps) => {
       : ''
   const totalUnits =
     dso.totalFundraisingAmount !== null
-      ? (dso.totalFundraisingAmount / dso.pricePerUnit).toLocaleString()
+      ? addSymbol(
+          dso.totalFundraisingAmount / dso.pricePerUnit,
+          dso.tokenSymbol,
+          true
+        )
       : 0
   const minimumInvestmentPrice =
     dso.minimumInvestment !== null
-      ? addSymbol(dso.minimumInvestment * dso.pricePerUnit, currency, true)
+      ? formatMoney(dso.minimumInvestment * dso.pricePerUnit, currency, true)
       : 0
-
+  console.log('Tesrting')
   return (
     <Grid
       container

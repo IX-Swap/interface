@@ -8,6 +8,7 @@ import useStyles from './DSOCardFavorite.style'
 export interface DSOCardFavoriteProps {
   dso: DigitalSecurityOffering
   dependentQueryKeys: string[]
+  refetch: () => void
 }
 
 export const DSOCardFavorite = (props: DSOCardFavoriteProps) => {
@@ -21,7 +22,9 @@ export const DSOCardFavorite = (props: DSOCardFavoriteProps) => {
 
   const handleFav = async () => {
     !toggleFav ? setToggleFav(true) : setToggleFav(false)
-    await toggleDSOFavorite(toggleFav)
+    const a = await toggleDSOFavorite(toggleFav)
+    props.refetch()
+    console.log(a)
   }
 
   return (

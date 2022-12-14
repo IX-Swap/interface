@@ -7,6 +7,7 @@ import { DSOTitle } from 'app/components/DSO/components/DSOTitle'
 import { OverviewValue } from 'app/pages/invest/components/MakeCommitment/OverviewValue'
 import { DSOBlockchainDetails } from 'app/pages/invest/components/DSOBlockChainDetails/DSOBlockchainDetails'
 import { Divider } from 'ui/Divider'
+import { formatMoney } from 'helpers/numbers'
 
 export interface DSOInvestorViewHeaderProps {
   dso: DigitalSecurityOffering
@@ -48,7 +49,7 @@ export const DSOInvestorViewHeader = ({ dso }: DSOInvestorViewHeaderProps) => {
             >
               <OverviewValue
                 label='Unit Price'
-                value={`${dso.pricePerUnit} ${dso.currency.symbol}`}
+                value={formatMoney(dso.pricePerUnit, dso.currency.symbol, true)}
               />
             </Grid>
           </Grid>
