@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { Button, Grid, Typography } from '@mui/material'
 import { useStyles } from 'app/pages/invest/components/styles/OTCMarket.style'
@@ -18,7 +18,6 @@ import { DSOCardsCarousel } from 'app/pages/invest/components/DSOCardsCarousel/D
 import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
 import { TablePagination } from 'ui/Pagination/TablePagination'
 import { Pagination } from 'ui/Pagination/Pagination'
-
 
 export interface PrimaryOfferingsProps {
   fullview?: boolean
@@ -48,7 +47,8 @@ export const PrimaryOfferings = ({
     setPage,
     setRowsPerPage,
     page,
-    rowsPerPage
+    rowsPerPage,
+    refetch
   } = useTableWithPagination({
     queryKey: fullview
       ? dsoQueryKeys.getApprovedList
@@ -71,7 +71,9 @@ export const PrimaryOfferings = ({
     defaultRowsPerPage: 6,
     disabledUseEffect: true
   })
-
+  useEffect(() => {
+    refetch()
+  }, [refetch])
   const handleChangePage = (_: any, newPage: number) => {
     setPage(newPage - 1)
   }
@@ -109,6 +111,7 @@ export const PrimaryOfferings = ({
                   data={dso}
                   viewURL={InvestRoute.view}
                   key={dso._id}
+                  refetch={refetch}
                 />
               </Box>
             </Slide>
@@ -125,6 +128,7 @@ export const PrimaryOfferings = ({
             data={dso}
             viewURL={InvestRoute.view}
             key={dso._id}
+            refetch={refetch}
           />
         ))}
       </Grid>
@@ -150,6 +154,7 @@ export const PrimaryOfferings = ({
                 data={dso}
                 viewURL={InvestRoute.view}
                 key={dso._id}
+                refetch={refetch}
               />
             ))}
           </Grid>
@@ -188,7 +193,7 @@ export const PrimaryOfferings = ({
     <Grid container spacing={3}>
       {fullview ? (
         <Grid item xs={12}>
-          <DSOTableFilters setPage={setPage}/>
+          <DSOTableFilters setPage={setPage} />
         </Grid>
       ) : (
         <Grid
