@@ -16,6 +16,7 @@ export interface UseTableWithPaginationReturnType<TData> {
   setPage: (page: number) => void
   setRowsPerPage: (count: number) => void
   total: number
+  refetch: () => void
 }
 
 interface UseTableWithPaginationParams {
@@ -63,7 +64,7 @@ export const useTableWithPagination = <TData>({
       isFavoriteCount === null
     ) {
       p = 0
-      localStorage.setItem('isFavoriteCount', "1")
+      localStorage.setItem('isFavoriteCount', '1')
     } else {
       localStorage.removeItem('isFavoriteCount')
       localStorage.removeItem('isFavorite')
@@ -148,6 +149,10 @@ export const useTableWithPagination = <TData>({
     setPrevPage(page)
     setPage(nextPage)
   }
+  const refetch = () => {
+    void queryCache.removeQueries({ queryKey, exact: true })
+    setPage(page)
+  }
 
   return {
     setPage: _setPage,
@@ -158,6 +163,7 @@ export const useTableWithPagination = <TData>({
     setRowsPerPage,
     rowsPerPage,
     status,
-    isLoading: isActuallyLoading
+    isLoading: isActuallyLoading,
+    refetch
   }
 }

@@ -14,13 +14,14 @@ export interface DSOCardProps {
   type: 'Primary' | 'OTC' | 'TopOffers'
   data: DigitalSecurityOffering
   viewURL: string
+  refetch: () => void
 }
 
 export const DSOCard = (props: DSOCardProps) => {
   const classes = useStyles()
   const typeWithLogo = ['OTC', 'TopOffers']
 
-  const { data, viewURL, type } = props
+  const { data, viewURL, type, refetch } = props
 
   return (
     <Card
@@ -31,7 +32,12 @@ export const DSOCard = (props: DSOCardProps) => {
       style={{ flexDirection: 'column' }}
     >
       {type !== 'OTC' && (
-        <DSOCardCover type={type} data={data} viewURL={viewURL} />
+        <DSOCardCover
+          type={type}
+          data={data}
+          viewURL={viewURL}
+          refetch={refetch}
+        />
       )}
 
       <Grid
