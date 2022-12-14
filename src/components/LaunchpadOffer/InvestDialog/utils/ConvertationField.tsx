@@ -4,10 +4,14 @@ import styled, { useTheme } from 'styled-components'
 import { ArrowDown, ChevronDown } from 'react-feather'
 
 import { Offer } from 'state/launchpad/types'
-
 import { InvestTextField } from './InvestTextField'
+
+import { useActiveWeb3React } from 'hooks/web3'
 import { Option, useTokensList } from 'hooks/useTokensList'
-import { useFormatOfferValue } from 'state/launchpad/hooks'
+import { useCurrency } from 'hooks/Tokens'
+
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
 
 
 interface Props {
@@ -35,11 +39,18 @@ const getTokenInfo = (address: string, options: Option[]) => {
 
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
-  
+
+  const { account } = useActiveWeb3React()
+
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
 
   const formatedValue = useFormatOfferValue()
+
+  const inputCurrency = useCurrency(props.offer.investingTokenAddress)
+  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+
+  const isSufficientBalance = useDerivedBalanceInfo(props.offer.id)
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
@@ -48,8 +59,10 @@ export const ConvertationField: React.FC<Props> = (props) => {
     setInputValue(value)
 
     const realValue = value ? +(value.replace(/,/g, '')) : 0
+
     const symbol = props.offer.investingTokenSymbol
 
+    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
     const isMinError = +props.offer.presaleMinInvestment > realValue
     const isMaxError = +props.offer.presaleMaxInvestment < realValue
     const isAvailableError = 9000 < realValue
@@ -57,10 +70,11 @@ export const ConvertationField: React.FC<Props> = (props) => {
     setWarning(
       isMinError ? `Min.investment size ${props.offer.presaleMinInvestment} ${symbol}` :
       isMaxError ? `Max.investment size ${props.offer.presaleMaxInvestment} ${symbol}` :
+      isInsufficientBalance ? `Insufficient balance` :
       isAvailableError ? `Available to invest 9,000 ${symbol}`: ''
     )
 
-    props.setDisabled(isMinError || isMaxError || isAvailableError)    
+    props.setDisabled(isMinError || isMaxError || isAvailableError || isInsufficientBalance)
     props.onChange(value.split('').filter(x => /[0-9.]/.test(x)).join(''))
   }, [])
 
@@ -80,7 +94,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
     return inputValue
   }, [inputValue])
-  
+
   const offerToken = React.useMemo(() => getTokenInfo(props.offer.tokenAddress, mixedTokens), [mixedTokens])
   const offerInvestmentToken = React.useMemo(() => getTokenInfo(props.offer.investingTokenAddress, mixedTokens), [mixedTokens])
 
