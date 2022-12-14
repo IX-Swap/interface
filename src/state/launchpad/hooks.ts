@@ -1,19 +1,22 @@
 import React from "react"
+import { Currency, CurrencyAmount } from "@ixswap1/sdk-core"
 import { useDispatch, useSelector } from "react-redux"
 
 import { FilterConfig } from "components/Launchpad/InvestmentList/Filter"
 
 import { KYCStatuses } from "pages/KYC/enum"
 
+import { useCurrency } from "hooks/Tokens"
+
 import { AppState } from "state"
 import { useKYCState } from "state/kyc/hooks"
+import { tryParseAmount } from "state/swap/helpers"
+
 import { Offer, OfferStatus, WhitelistStatus } from "state/launchpad/types"
 
-import { toggleKYCDialog } from './actions'
+import { toggleKYCDialog } from "./actions"
 
-import apiService from 'services/apiService'
-import { number } from "@lingui/core/cjs/formats"
-import { Offers } from "components/Launchpad/Offers"
+import apiService from "services/apiService"
 
 interface OfferPagination {
   page: number
@@ -156,6 +159,22 @@ export const useInvest = (id: string) => {
     }
 
     return apiService.post(`/offers/${id}/invest/${status.toLowerCase()}`, payload)
+  }, [id])
+}
+
+export const useDerivedBalanceInfo = (id: string) => { 
+  return React.useCallback((
+    amount: string,
+    inputCurrency: Currency | null | undefined,
+    balance?: CurrencyAmount<Currency>
+  ) => {
+    if (amount) {
+      const realAmount = amount.replace(/,/g, '')
+      const parsedAmount = tryParseAmount(realAmount, inputCurrency ?? undefined)
+  
+      return parsedAmount && balance && !balance.lessThan(parsedAmount)
+    }
+    return true
   }, [id])
 }
 
