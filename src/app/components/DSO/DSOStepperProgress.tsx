@@ -104,7 +104,6 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   const { pathname } = useLocation<{ pathname: string }>()
   const [stepConditions, setStepConditions] = useState<any>([])
   const location = useLocation()
-  const isEdit = location.pathname.includes('/edit')
   const handleSave = async (index: number) => {
     // eslint-disable-next-line
     const newValues = [...stepValues]
@@ -132,56 +131,55 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
         history.replace(generatePath(`${location?.pathname}${search}`))
       }
     } else {
-      if (!isEdit) {
-        return await save(
-          {
-            ...payload
-          },
-          {
-            onSettled: (data: any) => {
-              if (data !== undefined) {
-                if (activeStep === 0 && dsoId === undefined) {
-                  const redirect: string = redirectFunction(
-                    pathname.includes('/create'),
-                    data.data._id
-                  )
-                  const search: string = `?step=${steps[
-                    activeStep
-                  ].label.replace(' ', '+')}`
-                  history.replace(
-                    generatePath(`${redirect}${search}`, {
-                      issuerId:
-                        typeof data.data.user === 'string'
-                          ? data.data.user
-                          : getIdFromObj(data.data.user),
-                      dsoId: data.data._id
-                    })
-                  )
-                } else {
-                  const redirect: string = redirectFunction(
-                    pathname.includes('/create'),
-                    data.data._id
-                  )
-                  const newActiveStep = index
-                  const search: string = `?step=${steps[
-                    newActiveStep
-                  ].label.replace(' ', '+')}`
+      return await save(
+        {
+          ...payload
+        },
+        {
+          onSettled: (data: any) => {
+            if (data !== undefined) {
+              if (activeStep === 0 && dsoId === undefined) {
+                const redirect: string = redirectFunction(
+                  pathname.includes('/create'),
+                  data.data._id
+                )
+                const search: string = `?step=${steps[activeStep].label.replace(
+                  ' ',
+                  '+'
+                )}`
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
+              } else {
+                const redirect: string = redirectFunction(
+                  pathname.includes('/create'),
+                  data.data._id
+                )
+                const newActiveStep = index
+                const search: string = `?step=${steps[
+                  newActiveStep
+                ].label.replace(' ', '+')}`
 
-                  history.replace(
-                    generatePath(`${redirect}${search}`, {
-                      issuerId:
-                        typeof data.data.user === 'string'
-                          ? data.data.user
-                          : getIdFromObj(data.data.user),
-                      dsoId: data.data._id
-                    })
-                  )
-                }
+                history.replace(
+                  generatePath(`${redirect}${search}`, {
+                    issuerId:
+                      typeof data.data.user === 'string'
+                        ? data.data.user
+                        : getIdFromObj(data.data.user),
+                    dsoId: data.data._id
+                  })
+                )
               }
             }
           }
-        )
-      }
+        }
+      )
     }
   }
 
