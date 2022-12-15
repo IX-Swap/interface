@@ -16,7 +16,8 @@ export const useCreateIndividual = () => {
   const createOrUpdateIndividual = async (values: any) => {
     const newValues = { ...values }
 
-    if (values.photo === undefined) {
+    // remove photo field if the avatar is removed at step 0
+    if (values.step === 0 && values.photo === undefined) {
       newValues.photo = null
     }
     return await apiService.put<IndividualIdentity>(uri, newValues)
