@@ -5,9 +5,10 @@ import { Pair } from 'app/pages/invest/hooks/useMarketList'
 import { useMarkPairAsFavorite } from 'app/pages/invest/hooks/useMarkPairAsFavorite'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
-import { generatePath } from 'react-router-dom'
+import { generatePath, useHistory } from 'react-router-dom'
 import { useStyles } from './PairTable.styles'
 import { InvestRoute } from 'app/pages/invest/router/config'
+import { useServices } from 'hooks/useServices'
 
 export interface PairNameProps {
   pair: Pair
@@ -15,11 +16,16 @@ export interface PairNameProps {
 
 export const PairName = ({ pair }: PairNameProps) => {
   const { markAsFavorite } = useMarkPairAsFavorite()
+  const { snackbarService } = useServices()
   const { data: favoritePairs } = useFavoritePairs()
   const { wrapper } = useStyles({})
+  const { location } = useHistory()
 
   const handleClick = () => {
     markAsFavorite(pair._id)
+  }
+  const handleClickError = () => {
+    void snackbarService.showSnackbar('This token is not yet deployed')
   }
 
   return (
@@ -34,11 +40,22 @@ export const PairName = ({ pair }: PairNameProps) => {
         </IconButton>
       </Grid>
       <Grid item>
-        <AppRouterLink
-          to={generatePath(InvestRoute.exchange, { pairId: pair._id })}
-        >
-          {pair.name}
-        </AppRouterLink>
+        {location?.pathname?.includes('trading') ? (
+          <div onClick={handleClickError}>
+            <AppRouterLink
+              to={''}
+              // to={generatePath(InvestRoute.trading, { pairId: pair._id })}
+            >
+              {pair.name}
+            </AppRouterLink>
+          </div>
+        ) : (
+          <AppRouterLink
+            to={generatePath(InvestRoute.exchange, { pairId: pair._id })}
+          >
+            {pair.name}
+          </AppRouterLink>
+        )}
       </Grid>
     </Grid>
   )
