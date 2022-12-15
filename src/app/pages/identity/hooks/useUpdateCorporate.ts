@@ -16,6 +16,7 @@ export const useUpdateCorporate = (corporateType: string) => {
 
   const updateCorporate = async (values: any) => {
     const uri = identityURL.corporates.update(userId, params.identityId)
+    delete values._id
     return await apiService.put<CorporateIdentity>(uri, {
       ...values,
       type: corporateType

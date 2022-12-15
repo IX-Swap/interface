@@ -15,10 +15,9 @@ export const useSubmitCorporate = (callback?: () => void) => {
 
   const submitCorporate = async (data: CorporateIdentity) => {
     const uri = identityURL.corporates.submit(params.identityId)
-    return await apiService.patch<CorporateIdentity>(
-      uri,
-      getCorporateSubmitPayload(data)
-    )
+    return await apiService.patch<CorporateIdentity>(uri, {
+      ...getCorporateSubmitPayload(data)
+    })
   }
 
   return useMutation(submitCorporate, {
