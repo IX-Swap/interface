@@ -128,7 +128,7 @@ export const FormStep = (props: FormStepProps) => {
       setActiveStep(activeStep + 1)
       return
     }
-
+    const formValues = isLastStep ? data : values
     const mutation =
       data === undefined
         ? createMutation[0]
@@ -136,7 +136,7 @@ export const FormStep = (props: FormStepProps) => {
         ? submitMutation[0]
         : editMutation[0]
     const shouldSaveStep = shouldSaveOnMove && !isLastStep
-    const payload = step.getRequestPayload(values)
+    const payload = step.getRequestPayload(formValues)
 
     const onSuccessfulSubmit = (data: any) => {
       onSubmitSuccess({
