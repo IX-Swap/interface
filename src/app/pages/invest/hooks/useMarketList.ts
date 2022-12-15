@@ -14,6 +14,7 @@ export interface Pair {
   isFavorite: boolean
   latestPrice: number
   _24hChangePercentage: number
+  otc?: any
 }
 
 export const useMarketList = (showFilter: boolean | undefined = false) => {
