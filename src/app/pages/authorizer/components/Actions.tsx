@@ -34,13 +34,15 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
-    cacheQueryKey
+    cacheQueryKey,
+    listingType
   })
 
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'reject',
-    cacheQueryKey
+    cacheQueryKey,
+    listingType
   })
 
   const view = () =>
