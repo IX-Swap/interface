@@ -3,7 +3,6 @@ import { DigitalSecurityOffering } from 'types/dso'
 import Grid from '@mui/material/Grid'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatAmount } from 'helpers/numbers'
-import { percentageToNumber } from 'app/pages/issuance/utils/utils'
 import { formatDateToDDMonYYYY } from 'helpers/dates'
 import { Typography } from '@mui/material'
 
@@ -85,7 +84,7 @@ export const PrimaryCardContent = (props: PrimaryCardContentProps) => {
             valueFontSize={14}
             labelFontSize={14}
             label={'Expected Return'}
-            value={percentageToNumber(
+            value={Number(
               data.capitalStructure === 'Debt'
                 ? data.interestRate
                 : data.grossIRR

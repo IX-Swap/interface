@@ -1,7 +1,6 @@
 import { Grid, Paper, Typography } from '@mui/material'
 import { Info } from 'app/components/DSO/MainInfo/Info'
 import { Expandable } from 'app/components/Expandable/Expandable'
-import { getPercentageValue } from 'config/utils'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
@@ -13,22 +12,13 @@ export interface OfferingTermsProps {
 export const OfferingTerms = ({ dso }: OfferingTermsProps) => {
   const { isTablet } = useAppBreakpoints()
   const dividendYield =
-    dso.dividendYield !== undefined
-      ? `${getPercentageValue(dso.dividendYield)}%`
-      : undefined
+    dso.dividendYield !== undefined ? `${dso.dividendYield}%` : undefined
   const interestRate =
-    dso.interestRate !== undefined
-      ? `${getPercentageValue(dso.interestRate)}%`
-      : undefined
-  const grossIRR =
-    dso.grossIRR !== undefined
-      ? `${getPercentageValue(dso.grossIRR)}%`
-      : undefined
+    dso.interestRate !== undefined ? `${dso.interestRate}%` : undefined
+  const grossIRR = dso.grossIRR !== undefined ? `${dso.grossIRR}%` : undefined
 
   const equityMultiple =
-    dso.equityMultiple !== undefined
-      ? `${getPercentageValue(dso.equityMultiple)}%`
-      : undefined
+    dso.equityMultiple !== undefined ? `${dso.equityMultiple}%` : undefined
 
   const investmentPeriod =
     dso.investmentPeriod !== undefined
