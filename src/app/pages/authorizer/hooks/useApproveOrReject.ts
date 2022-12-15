@@ -9,10 +9,11 @@ export interface UseApproveOrRejectArgs {
   action: 'approve' | 'reject'
   cacheQueryKey?: any
   payload?: Record<string, any>
+  listingType?: any
 }
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
-  const { action, cacheQueryKey, id, payload } = args
+  const { action, cacheQueryKey, id, payload, listingType } = args
   const queryCache = useQueryCache()
   const category = useAuthorizerCategory()
   const { uri, listRoute } = authorizerItemMap[category]
@@ -20,6 +21,8 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const url =
     category === 'virtual-accounts'
       ? `${_uri}/assign/${id}/${action}`
+      : listingType === 'OTC'
+      ? `/otc/listing/${id}/${action}`
       : `${_uri}/${id}/${action}`
 
   const { search } = useLocation()
