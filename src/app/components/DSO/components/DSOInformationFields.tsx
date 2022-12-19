@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { isDSOLive } from 'app/components/DSO/utils'
+// import { isDSOLive } from 'app/components/DSO/utils'
 import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
@@ -13,7 +13,7 @@ export const DSOInformationFields = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { pathname } = useLocation<{ pathname: string }>()
   const { data } = useDSOById(dsoId, issuerId)
-  const isLive = isDSOLive(data)
+  // const isLive = isDSOLive(data)
   const isNew = pathname.includes('/create')
   console.log(data, 'Live')
   return (
@@ -24,7 +24,7 @@ export const DSOInformationFields = () => {
             <DSOBaseFields
               status={data?.status}
               isNew={isNew}
-              isLive={isLive}
+              // isLive={isLive}
             />
           </FieldContainer>
         </Grid>
