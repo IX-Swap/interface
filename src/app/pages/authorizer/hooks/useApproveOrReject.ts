@@ -18,11 +18,14 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const category = useAuthorizerCategory()
   const { uri, listRoute } = authorizerItemMap[category]
   const _uri = uri.replace(/\/list$/, '')
+  console.log(listingType, 'listing')
+  console.log(category, 'category')
   const url =
     category === 'virtual-accounts'
       ? `${_uri}/assign/${id}/${action}`
-      : listingType === 'OTC'
-      ? `/otc/listing/${id}/${action}`
+      : category === 'listings' && action === 'approve'
+      ? // : listingType === 'OTC' || listingType === 'Exchange' || listingType === 'Exchange/OTC'
+        `/exchange/listing/${id}/${action}`
       : `${_uri}/${id}/${action}`
 
   const { search } = useLocation()
