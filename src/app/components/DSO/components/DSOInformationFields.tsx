@@ -15,13 +15,17 @@ export const DSOInformationFields = () => {
   const { data } = useDSOById(dsoId, issuerId)
   const isLive = isDSOLive(data)
   const isNew = pathname.includes('/create')
-
+  console.log(data, 'Live')
   return (
     <Fragment>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <FieldContainer>
-            <DSOBaseFields isNew={isNew} isLive={isLive} />
+            <DSOBaseFields
+              status={data?.status}
+              isNew={isNew}
+              isLive={isLive}
+            />
           </FieldContainer>
         </Grid>
       </Grid>
