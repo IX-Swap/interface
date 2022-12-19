@@ -30,7 +30,8 @@ import { TextError } from 'components/TextError'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
-  isLive: boolean
+  // isLive: boolean
+  status: any
 }
 
 export interface DSOCounterProps {
@@ -78,7 +79,7 @@ export const increment = (props: DSOIncrementProps) => {
 }
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
-  const { isNew, isLive } = props
+  const { isNew, status } = props
   const { control, trigger } = useFormContext<DSOFormValues>()
   const classes = useStyles()
   console.log(props)
@@ -138,7 +139,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 component={TextInput}
                 label='Token Name'
                 name='tokenName'
-                disabled={!isLive}
+                disabled={status === 'Approved'}
                 control={control}
                 helperText='Name of the token offering'
                 variant='outlined'
@@ -149,7 +150,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 component={TextInput}
                 label='Symbol'
                 name='tokenSymbol'
-                disabled={!isLive}
+                disabled={status === 'Approved'}
                 control={control}
                 helperText='Token symbol'
                 variant='outlined'
@@ -257,7 +258,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 component={TextInput}
                 label='Unique Identifier Code'
                 name='uniqueIdentifierCode'
-                disabled={!isLive}
+                disabled={status === 'Approved'}
                 control={control}
                 helperText='ISIN or CUSIP number'
                 variant='outlined'
@@ -312,7 +313,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 label='Launch Date'
                 name='launchDate'
                 control={control}
-                disabled={!isLive}
+                disabled={status === 'Approved'}
                 valueExtractor={dateTimeValueExtractor}
                 // @ts-expect-error
                 defaultValue={null}
