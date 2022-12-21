@@ -1,4 +1,4 @@
-import { ErrorText } from 'components/LaunchpadOffer/styled'
+import { ErrorText } from 'components/LaunchpadMisc/styled'
 import React from 'react'
 import styled from 'styled-components'
 

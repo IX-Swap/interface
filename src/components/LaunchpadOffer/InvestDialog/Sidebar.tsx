@@ -5,7 +5,7 @@ import { OfferStatus } from 'state/launchpad/types'
 
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
 
-import { Separator, Spacer } from '../styled'
+import { Separator, Spacer } from '../../LaunchpadMisc/styled'
 
 interface Props {
   stage: OfferStatus

@@ -12,7 +12,7 @@ import { useClaimOffer } from 'state/launchpad/hooks'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import { InvestFormContainer } from './styled'
-import { Column, Row, Separator } from 'components/LaunchpadOffer/styled'
+import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
 

@@ -14,7 +14,7 @@ import { useGetPinnedOffer, useCheckKYC } from 'state/launchpad/hooks'
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/InvestmentStatusBadge'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { Centered } from 'components/LaunchpadOffer/styled'
+import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
 
 

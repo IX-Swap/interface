@@ -18,7 +18,7 @@ import { OfferInvestmentIndicator } from './OfferInvestmentIndicator'
 import { OfferFundRaiseIndicator } from './OfferFundRaiseIndicatpor'
 
 import { InvestDialog } from '../InvestDialog'
-import { Row, Column, Separator } from '../styled'
+import { Row, Column, Separator } from '../../LaunchpadMisc/styled'
 
 import { shortenAddress } from 'utils'
 

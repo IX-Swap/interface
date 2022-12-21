@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "styled-components"
 import axios from 'axios'
 
-import { Separator } from '../styled'
+import { Separator } from '../../LaunchpadMisc/styled'
 
 import { Asset } from 'state/launchpad/types'
 import { KycLightDocPreviewModal } from 'components/KycLightDocPreviewModal'

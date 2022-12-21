@@ -10,7 +10,7 @@ import { CheckCircle, Info, Clock, Check } from 'react-feather'
 import { Offer, WhitelistStatus } from 'state/launchpad/types'
 import { useGetWhitelistStatus, useRequestWhitelist } from 'state/launchpad/hooks'
 
-import { Centered, Column, ErrorText, FormFieldContaienr, Row } from 'components/LaunchpadOffer/styled'
+import { Centered, Column, ErrorText, FormFieldContaienr, Row } from 'components/LaunchpadMisc/styled'
 import { InvestFormContainer, Title } from './styled'
 
 import { InvestTextField } from '../utils/InvestTextField'

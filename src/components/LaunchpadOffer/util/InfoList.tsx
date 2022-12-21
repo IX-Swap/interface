@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components"
 
-import { Separator } from '../styled'
+import { Separator } from '../../LaunchpadMisc/styled'
 import { Attachment } from './Attachment'
 
 import { Asset } from 'state/launchpad/types'

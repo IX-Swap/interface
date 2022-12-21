@@ -19,7 +19,7 @@ import { OfferMainInfo } from 'components/LaunchpadOffer/OfferMainInfo'
 import { OfferSidebar } from 'components/LaunchpadOffer/OfferSidebar'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { CenteredFixed } from 'components/LaunchpadOffer/styled'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'

@@ -3,7 +3,7 @@ import React from 'react'
 import { InvestmentList } from 'components/Launchpad/InvestmentList'
 import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { Centered } from 'components/LaunchpadOffer/styled'
+import { Centered } from 'components/LaunchpadMisc/styled'
 
 import { Pinned } from './Pinned'
 

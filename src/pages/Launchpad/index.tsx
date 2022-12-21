@@ -12,7 +12,7 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
-import { CenteredFixed } from 'components/LaunchpadOffer/styled'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 export default function Launchpad() {
@@ -53,7 +53,8 @@ export default function Launchpad() {
   )
 }
 
-const LaunchpadContainer = styled.div`
+export const LaunchpadContainer = styled.div`
+  min-height: 100vh;
   padding: 0 4rem;
 
   font-family: ${props => props.theme.launchpad.font};
