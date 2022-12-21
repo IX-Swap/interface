@@ -79,7 +79,7 @@ describe('WithdrawalPreview', () => {
     expect(LabelledValue).toHaveBeenNthCalledWith(
       7,
       {
-        label: 'Bank Contact Number',
+        label: 'Bank Account Number',
         value: props.data.bank.bankAccountNumber
       },
       {}
