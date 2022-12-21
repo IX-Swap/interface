@@ -56,7 +56,7 @@ export const WithdrawalPreview = (props: WithdrawalViewProps) => {
         </Grid>
         <Grid item xs={4}>
           <LabelledValue
-            label='Bank Contact Number'
+            label='Bank Account Number'
             value={data.bank.bankAccountNumber}
           />
         </Grid>
