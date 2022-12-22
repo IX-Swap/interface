@@ -33,11 +33,11 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     if (location?.pathname?.includes('trading')) {
       return await apiService.post<PaginatedData<Pair>>(exchangeURL.otcList, {
         skip: cursor,
-        limit: 100,
-        listingKeyword
-        // currency,
-        // sortBy,
-        // sortField
+        limit: 25,
+        listingKeyword,
+        currency,
+        sortBy,
+        sortField
       })
     } else {
       return await apiService.post<PaginatedData<Pair>>(
