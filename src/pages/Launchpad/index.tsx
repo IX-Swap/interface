@@ -53,10 +53,10 @@ export default function Launchpad() {
   )
 }
 
-export const LaunchpadContainer = styled.div`
+export const LaunchpadContainer = styled.div<{ background?: string }>`
   min-height: 100vh;
   padding: 0 4rem;
 
   font-family: ${props => props.theme.launchpad.font};
-  background: ${props => props.theme.launchpad.colors.background};
+  background: ${props => props.background ?? props.theme.launchpad.colors.background};
 `

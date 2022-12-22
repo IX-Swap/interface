@@ -5,6 +5,7 @@ import { ReactComponent as LoaderIcon } from 'assets/launchpad/svg/loader.svg'
 
 interface Props {
   size?: string
+  color?: string
 }
 
 export const Loader: React.FC<Props> = (props) => {
@@ -34,4 +35,11 @@ const Container = styled.div<Props>`
     width: ${props => props.size ?? '40px'};
     height: ${props => props.size ?? '40px'};
   }
+
+  ${props => props.color && `
+    path {
+      stroke: ${props.color};
+    }
+  `}
+
 `

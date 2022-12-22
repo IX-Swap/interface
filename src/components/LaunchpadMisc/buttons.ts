@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const BaseButton = styled.button<{ grow?: number, height?: string, padding?: string }>`
+const BaseButton = styled.button<{ grow?: number, height?: string, width?: string, padding?: string }>`
   display: flex;
   flex-flow: row nowrap;
 
@@ -19,7 +19,8 @@ const BaseButton = styled.button<{ grow?: number, height?: string, padding?: str
   border: none;
   background: none;
 
-  ${props => props.grow && `flex-grow: ${props.grow}`}
+  ${props => props.grow && `flex-grow: ${props.grow};`}
+  ${props => props.width && `width: ${props.width};`}
 `
 
 export const FilledButton = styled(BaseButton)<{ background?: string, color?: string }>`

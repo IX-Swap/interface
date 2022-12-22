@@ -5,7 +5,11 @@ import { LaunchpadContainer } from 'pages/Launchpad'
 
 import { useSetHideHeader } from 'state/application/hooks'
 
-export const IssuancePageLayout: React.FC<React.PropsWithChildren> = (props) => {
+interface Props {
+  background?: string
+}
+
+export const IssuancePageLayout: React.FC<React.PropsWithChildren<Props>> = (props) => {
   const hideHeader = useSetHideHeader()
 
   React.useEffect(() => {
@@ -17,7 +21,7 @@ export const IssuancePageLayout: React.FC<React.PropsWithChildren> = (props) => 
   }, [])
 
   return (
-    <LaunchpadContainer>
+    <LaunchpadContainer background={props.background}>
       <Header />
       {props.children}
     </LaunchpadContainer>

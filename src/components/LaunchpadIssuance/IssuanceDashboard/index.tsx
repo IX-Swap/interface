@@ -2,28 +2,51 @@ import React from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
-import Portal from '@reach/portal'
-
-import { Plus, Eye } from 'react-feather'
+import { Eye } from 'react-feather'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
 
+import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issuances.svg'
+
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { Centered, Column } from 'components/LaunchpadMisc/styled'
+
 import { IssuanceFilter, issuers, IssuanceStatus, Issuance } from '../types'
-import { Row } from 'components/LaunchpadMisc/styled'
-import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { useHistory } from 'react-router-dom'
-import { IssuanceTextField } from '../utils/TextField'
-import { IssuanceDialog } from '../utils/Dialog'
+import { IssuanceCreateButton } from '../IssuanceCreateButton'
 
 
-const useGetIssuances = () => {
-  return React.useCallback(async (filter: IssuanceFilter) => {
+const useIssuances = () => {
+  const [loading, setLoading] = React.useState(true)
+  const [items, setIssuances] = React.useState<Issuance[]>([])
+
+
+  const load = React.useCallback(async (filter: IssuanceFilter) => {
+    if (filter !== IssuanceFilter.pending) {
+      return []
+    }
+
     return Array(10).fill(null).map(() => ({
       startDate: new Date(),
       issuer: issuers[Math.floor(Math.random() * issuers.length)],
       status: Math.floor(Math.random() * 5) as IssuanceStatus
     } as Issuance))
   }, [])
+  
+  const fetch = React.useCallback(async (filter: IssuanceFilter) => {
+    try {
+      setLoading(true)
+      setIssuances(await load(filter))
+    } finally {
+      setLoading(false)
+    }
+  }, [load])
+
+  React.useEffect(() => {
+    fetch(IssuanceFilter.pending)
+  }, [])
+
+  return { items, loading, fetch }
 }
 
 interface TabsProps {
@@ -51,16 +74,13 @@ const IssuanceTabs: React.FC<TabsProps> = (props) => {
 
 export const IssuanceDashboard = () => {
   const theme = useTheme()
-  const history = useHistory()
-  const getIssuances = useGetIssuances()
+  const issuances  = useIssuances()
 
   const [activeTab, setActiveTab] = React.useState(IssuanceFilter.pending)
-  const [issuances, setIssuances] = React.useState<Issuance[]>([])
 
-  const [showIssuanceDialog, setShowIssuanceDialog] = React.useState(false)
 
   React.useEffect(() => {
-    getIssuances(activeTab).then(setIssuances)
+    issuances.fetch(activeTab)
   }, [activeTab])
   
   const tabs = React.useMemo(() => [
@@ -69,39 +89,42 @@ export const IssuanceDashboard = () => {
     { title: 'Old', value: IssuanceFilter.old },
   ], [])
 
-  const toggleNewIssuanceDialog = React.useCallback(() => {
-    setShowIssuanceDialog(state => !state)
-  }, [])
-
-  const openIssuanceForm = React.useCallback(() => {
-    history.push('/issuance/create')
-  }, [])
-  
+  const issuancesFetched = React.useMemo(() => !issuances.loading && issuances.items.length > 0, [issuances])
 
   return (
     <Container>
 
-      <IssuanceDialog title="New Issuance" show={showIssuanceDialog} onClose={toggleNewIssuanceDialog}>
-        <IssuanceTextField label="Name" placeholder="Name of Asset" />
-        
-        <Row gap="1rem" justifyContent='spaced-evenly' width='100%'>
-          <OutlineButton grow={1} onClick={toggleNewIssuanceDialog}>Cancel</OutlineButton>
-          <FilledButton grow={1} onClick={openIssuanceForm}>Submit</FilledButton>
-        </Row>
-      </IssuanceDialog>
-
       <Header>
         <TabRow>
           <IssuanceTabs current={activeTab} options={tabs} onSelect={setActiveTab} />
-          
-          <OutlineButton onClick={toggleNewIssuanceDialog}>
-            <Plus size="15" color={theme.launchpad.colors.primary} /> New Issuance
-          </OutlineButton>
+          <IssuanceCreateButton />
         </TabRow>
       </Header>
 
       <Body>
-        {activeTab === IssuanceFilter.pending && (
+        {issuances.loading && (
+          <Centered>
+            <Loader />
+          </Centered>
+        )}
+
+        {!issuancesFetched && (
+          <NoItemsContainer>
+            <NoIssuancesIcon />
+
+            <Column>
+              <NoItemsTitle>No Issuances yet</NoItemsTitle>
+              <NoItemsSubtitle>Please add new issuences.</NoItemsSubtitle>
+            </Column>
+
+            <IssuanceCreateButton 
+              background={theme.launchpad.colors.primary}
+              color={theme.launchpad.colors.text.light}
+            />
+          </NoItemsContainer>
+        )}
+
+        {issuancesFetched && activeTab === IssuanceFilter.pending && (
           <IssuanceTable>
             <TableHeader tab={IssuanceFilter.pending}>
               <div>Issuances</div>
@@ -110,7 +133,7 @@ export const IssuanceDashboard = () => {
               <div>Action</div>
             </TableHeader>
 
-            {issuances.map((issuance, idx) => (
+            {issuances.items.map((issuance, idx) => (
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <div>{issuance.issuer}</div>
 
@@ -126,13 +149,13 @@ export const IssuanceDashboard = () => {
           </IssuanceTable>
         )}
         
-        {activeTab === IssuanceFilter.live && (
+        {issuancesFetched && activeTab === IssuanceFilter.live && (
           <IssuanceTable>
 
           </IssuanceTable>
         )}
         
-        {activeTab === IssuanceFilter.old && (
+        {issuancesFetched && activeTab === IssuanceFilter.old && (
           <IssuanceTable>
 
           </IssuanceTable>
@@ -236,11 +259,6 @@ const NewIssuanceButton = styled.button`
   background: none;
 `
 
-const ViewApplicationButton = styled(NewIssuanceButton)`
-  height: 34px;
-  color: ${props => props.theme.launchpad.colors.primary + '80'};
-`
-
 const IssuanceTable = styled.div`
   display: flex;
   flex-flow: column nowrap;
@@ -297,4 +315,47 @@ const IssuanceRow = styled(TableHeader)<{ tab: IssuanceFilter }>`
   color: ${props => props.theme.launchpad.colors.text.title};
 
   opacity: 0.8;
+`
+
+const NoItemsContainer = styled.div`
+  display: flex;
+
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  gap: 2rem;
+
+  width: 1180px;
+  height: 460px;
+
+  margin: auto;
+
+  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border-radius: 8px;
+`
+
+const NoItemsTitle = styled.div`
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 130%;
+  letter-spacing: -0.03em;
+  
+  text-align: center;
+
+  color: ${props => props.theme.launchpad.colors.text.title};
+`
+
+const NoItemsSubtitle = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  
+  text-align: center;
+
+  color: ${props => props.theme.launchpad.colors.text.body};
 `

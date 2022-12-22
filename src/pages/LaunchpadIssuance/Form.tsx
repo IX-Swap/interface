@@ -1,13 +1,16 @@
 import React from 'react'
+import { useTheme } from 'styled-components'
 
-import { IssuanceForm } from 'components/LaunchpadIssuance/IssuanceForm'
+import { NewIssuanceForm } from 'components/LaunchpadIssuance/NewIssuanceForm'
 import { IssuancePageLayout } from './layout'
 
 
 export default function IssuanceFormPage(props: React.PropsWithChildren) {
+  const theme = useTheme()
+
   return (
-    <IssuancePageLayout>
-      <IssuanceForm />
+    <IssuancePageLayout background={theme.launchpad.colors.foreground}>
+      <NewIssuanceForm />
     </IssuancePageLayout>
   )
 }

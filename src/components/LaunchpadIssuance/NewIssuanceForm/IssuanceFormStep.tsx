@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 interface Props {
   title: string
-  description: string
-  icon: React.ReactElement
+  description: React.ReactNode
+  icon: React.ReactNode
   stepNumber: number
 }
 
@@ -43,6 +43,7 @@ const StepContainer = styled(_CenteredColumn)`
 
   gap: 2rem;
 
+  background: ${props => props.theme.launchpad.colors.background};
   border: 1px solid ${props => props.theme.launchpad.colors.border.default + 'cc'};
   border-radius: 8px;
 `
@@ -60,6 +61,8 @@ const StepIcon = styled.div`
 
 const StepInfo = styled(_CenteredColumn)`
   gap: 0.5rem;
+
+  max-width: 60%;
 `
 
 const StepInfoTitle = styled.div`
@@ -88,12 +91,15 @@ const StepInfoDescription = styled.div`
   color: ${props => props.theme.launchpad.colors.text.body};
 `
 
-const StepAction = styled(_CenteredColumn)``
+const StepAction = styled(_CenteredColumn)`
+  gap: 0.5rem;
+`
 
 const StepNumberLabel = styled.div`
   position: absolute;
 
-  transform: translate(2rem, 2rem);
+  top: 2rem;
+  left: 2rem;
 
   font-style: normal;
   font-weight: 500;
