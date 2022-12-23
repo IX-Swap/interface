@@ -174,7 +174,12 @@ export const NewIssuanceForm = () => {
             title="Issuance Information" 
             description="All information provided about the new issuance created will be displayed to the investors."
           >
-            <FilledButton color={theme.launchpad.colors.text.light} background={theme.launchpad.colors.primary} width="320px">
+            <FilledButton
+              width="320px"
+              color={theme.launchpad.colors.text.light}
+              background={theme.launchpad.colors.primary} 
+              onClick={() => history.push('/issuance/create/information')}
+            >
               Proceed
             </FilledButton>
           </IssuanceFormStep>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme } from 'styled-components'
 
-import { NewIssuanceForm } from 'components/LaunchpadIssuance/NewIssuanceForm'
+import { NewIssuanceForm } from 'components/LaunchpadIssuance/IssuanceForm'
 import { IssuancePageLayout } from './layout'
 
 

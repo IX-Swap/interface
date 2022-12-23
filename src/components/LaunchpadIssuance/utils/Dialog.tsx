@@ -4,8 +4,12 @@ import { X } from 'react-feather'
 import styled from 'styled-components'
 
 interface Props {
-  title: React.ReactNode
   show: boolean
+
+  title?: React.ReactNode
+
+  width?: string
+  height?: string
 
   onClose?: () => void
 }
@@ -18,14 +22,12 @@ export const IssuanceDialog: React.FC<React.PropsWithChildren<Props>> = (props) 
   return (
     <Portal>
       <DialogWrapper>
-        <DialogContainer>
+        <DialogContainer width={props.width} height={props.height}>
           <DialogCloseButton onClick={props.onClose}>
             <X size={14} />
           </DialogCloseButton>
 
-          <DialogTitle>
-            {props.title}
-          </DialogTitle>
+          {props.title && <DialogTitle>{props.title}</DialogTitle>}
 
           {props.children}
         </DialogContainer>
@@ -78,7 +80,7 @@ const DialogCloseButton = styled.div`
   }
 `
 
-const DialogContainer = styled.div`
+const DialogContainer = styled.div<{ height?: string, width?: string }>`
   position: relative;
 
   display: flex;
@@ -92,8 +94,8 @@ const DialogContainer = styled.div`
 
   padding: 2rem;
 
-  width: 480px;
-  height: 250px;
+  ${props => props.width && `height: ${props.width}`}
+  ${props => props.height && `height: ${props.height}`}
 
 `
 

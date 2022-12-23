@@ -140,6 +140,13 @@ export enum InvestmentStatus {
   failed = 'failed',
 }
 
+export enum OfferInvestmentStructure {
+  equity = 'equity',
+  debt = 'debt',
+  hybrid = 'hybrid',
+  other = 'other'
+}
+
 export interface OfferInvestment {
   id: number
 
