@@ -236,6 +236,7 @@ export function launchpadTheme() {
       success: '#1fba66',
       error: '#FF6060',
       info: '#FFC93F',
+      warn: '#FFC632',
 
       disabled: '#DCDCF0',
 

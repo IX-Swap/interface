@@ -5,7 +5,7 @@ import { Search, Copy, Plus } from 'react-feather'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
-import { IconButton, Row } from 'components/LaunchpadOffer/styled'
+import { IconButton, Row } from 'components/LaunchpadMisc/styled'
 
 import { shortenAddress } from 'utils'
 
