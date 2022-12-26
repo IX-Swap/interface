@@ -26,6 +26,8 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
       : category === 'listings' && action === 'approve'
       ? // : listingType === 'OTC' || listingType === 'Exchange' || listingType === 'Exchange/OTC'
         `/exchange/listing/${id}/${action}`
+      : category === 'listings' && action === 'reject' && listingType === 'OTC'
+      ? `/otc/listing/${id}/${action}`
       : `${_uri}/${id}/${action}`
 
   const { search } = useLocation()
