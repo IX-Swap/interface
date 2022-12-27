@@ -35,7 +35,9 @@ const ConnectButton = styled.button`
   border-radius: 6px;
   border: none;
 
-  padding: 0.5rem 3rem;
+  height: 48px;
+
+  padding: 0 3rem;
 
   text-align: center;
 
