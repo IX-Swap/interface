@@ -58,7 +58,6 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
   const requestWhitelist = useRequestWhitelist(props.offer.id)
   
   const disableForm = React.useMemo(() => whitelist.status === WhitelistStatus.accepted, [whitelist])
-  const timeframe = React.useMemo(() => props.offer.timeframes.find(x => x.type.toString() == props.offer.status.toString())!, [])
 
   const submit = React.useCallback(async (values: FormValues) => {
     try {
@@ -159,7 +158,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
               <WhitelistMessage>
                 {whitelist.status === WhitelistStatus.pending && (
                   <>
-                    Thank you. Please check by <b>{moment(timeframe?.endDate).format('DD/MM/YYYY')}</b> for 
+                    Thank you. Please check by <b>{moment(props.offer.timeframe.preSale).format('DD/MM/YYYY')}</b> for 
                     the result of your registration application.
                   </>
                 )}

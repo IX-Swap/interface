@@ -5,6 +5,7 @@ import { FormField } from './FormField'
 import { Column, Row } from 'components/LaunchpadMisc/styled'
 import { FileField } from './FileField'
 import { Plus, Trash } from 'react-feather'
+import { DeleteButton } from '../styled'
 
 interface Props {
   directorTitle: string
@@ -68,29 +69,6 @@ const FilesRow = styled.div`
   }
 `
 
-const DeleteButton = styled.button`
-  position: absolute;
-
-  top: -1rem;
-  right: 0;
-
-  border: none;
-  background: none;
-
-  border-radius: 50%;
-
-  display: grid;
-  place-content: center;
-
-  cursor: pointer;
-
-  width: 36px;
-  height: 36px;
-
-  :hover {
-    background: ${props => props.theme.launchpad.colors.foreground };
-  }
-`
 
 const AddDirectorButton = styled.button`
   display: grid;
