@@ -6,32 +6,39 @@ import moment from 'moment'
 import { Calendar, ChevronLeft, ChevronRight } from 'react-feather'
 
 import { CalendarPicker } from '../Calendar'
-import { DateRange } from '../../Information/types'
 
 import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 
+type DateRange = moment.Moment[]
 
 interface Props {
   mode: 'single' | 'range'
-  
+
   label: string
   error?: string
 
-  field: string
-  setter: (field: string, value: DateRange) => void
+  disabled?: boolean
+
+  field?: string
+  setter?: (field: string, value: DateRange) => void
+  onChange?: (range: DateRange) => void
 }
 
 export const DateRangeField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const [range, setRange] = React.useState<moment.Moment[]>([])
+  const [range, setRange] = React.useState<DateRange>([])
   const [showPicker, setShowPicker] = React.useState(false)
 
   const [currentMonth, setCurrentMonth] = React.useState(moment())
   const nextMonth = React.useMemo(() => currentMonth.clone().month(currentMonth.get('month') + 1), [currentMonth])
 
-  const toggle = React.useCallback(() => setShowPicker(state => !state), [])
+  const toggle = React.useCallback(() => {
+    if (!props.disabled) {
+      setShowPicker(state => !state)
+    }
+  }, [props.disabled])
 
   const onSelect = React.useCallback((value: moment.Moment) => {
     if (props.mode === 'single') {
@@ -41,6 +48,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
     } else {
       setRange([value])
     }
+
 
     // if (range.length === 0) {
     //   setRange([value])
@@ -78,6 +86,16 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const moveMonthBack = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') - 1)), [])
   const moveMonthForward = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') + 1)), [])
+  
+  React.useEffect(() => {
+    if (props.field && props.setter) {
+      props.setter(props.field, range)
+    }
+
+    if (props.onChange) {
+      props.onChange(range)
+    }
+  }, [range])
 
   return (
     <Column>
@@ -85,8 +103,13 @@ export const DateRangeField: React.FC<Props> = (props) => {
         <FieldIcon><Calendar color={theme.launchpad.colors.text.caption} /></FieldIcon>
         <FieldLabel>{props.label}</FieldLabel>
         
-        {!range && <FieldPlaceholder>mm/dd/yyyy - mm/dd/yyyy</FieldPlaceholder>}
-        {range && (
+        {range.length === 0 && (
+          <FieldPlaceholder>
+            mm/dd/yyyy {props.mode === 'range' && ' - mm/dd/yyyy'}
+          </FieldPlaceholder>
+        )}
+        
+        {range.length > 0 && (
           <FieldSelectedValue>
             {range.map(date => date.format('MM/DD/YYYY')).join(' - ')}
           </FieldSelectedValue>

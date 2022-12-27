@@ -4,11 +4,13 @@ import styled from 'styled-components'
 interface Props {
   title?: React.ReactNode
   description?: React.ReactNode
+  className?: string
 }
+
 
 export const FormGrid: React.FC<React.PropsWithChildren<Props>> = (props) => {
   return (
-    <Container>
+    <Container className={props.className}>
       {props.title && (
         <TitleSection>
           <Title>{props.title}</Title>

@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 import { useCheckKYC} from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
-import { isWithinTimeframe, Offer, OfferStatus, OfferTimeframeType } from 'state/launchpad/types'
+import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import { Tooltip } from './Tooltip'
 import { InvestmentStatusBadge } from './InvestmentStatusBadge'
@@ -39,11 +39,6 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleKYCModal = React.useCallback(() => setShowKYCModal(state => !state), [])
 
   const isClosed = React.useMemo(() => [OfferStatus.closed, OfferStatus.claim].includes(offer.status), [offer])
-
-  const currentTimeframe = React.useMemo(() => 
-    offer.timeframes.find(frame => isWithinTimeframe(frame)) 
-      ?? offer.timeframes.slice(-1).pop()!, 
-  [])
 
   const stage = React.useMemo(() => {
     if (offer?.hardCapReached) {

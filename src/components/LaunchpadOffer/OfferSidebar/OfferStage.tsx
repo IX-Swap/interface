@@ -19,8 +19,8 @@ const getTypeLabel = (type: OfferTimeframeType) => {
   return OFFER_TIMEFRAME_TYPE_LABELS.find(x => x.value === type)!.label
 }
 
-const getTooltip = (frame: OfferTimeframe) => {
-  switch (frame.type) {
+const getTooltip = (type: OfferTimeframeType) => {
+  switch (type) {
     case OfferTimeframeType.whitelist:
       return { 
         title: 'Register to invest', 
@@ -54,38 +54,105 @@ const getTooltip = (frame: OfferTimeframe) => {
   }
 }
 
+const format = (from: Date, to?: Date) =>
+  moment(from).format('Do MMM, HH:mm') + (to ? ` - ${moment(to).format('Do MMM')}` : '')
+
+const hasStarted = (date: Date) => Date.parse(date.toString()) <=Date.now()
+
 export const OfferStage: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const timeframes = React.useMemo(() => props.offer.timeframes
-    .sort((a, b) => Date.parse(a.startDate.toString()) - Date.parse(b.startDate.toString()))
-    .map((frame, idx) => {
-      const hasStarted = Date.parse(frame.startDate.toString()) <= Date.now()
+  const frames = React.useMemo(() => props.offer.timeframe, [])
 
-      const label = getTypeLabel(frame.type)
-      const value = [
-        moment(new Date(frame.startDate)).format('Do MMMM, HH:mm'),
-        frame.type !== OfferTimeframeType.claim 
-          && (' - ' + moment(new Date(props.offer.timeframes[idx + 1].startDate)).format('Do MMM'))
-      ].filter(x => x).join()
+  const stageHasStarted = React.useMemo(() => ({
+    whitelist: hasStarted(frames.whitelist),
+    preSale: hasStarted(frames.preSale),
+    sale: hasStarted(frames.sale),
+    closed: hasStarted(frames.closed),
+    claim: hasStarted(frames.claim),
+  }), [frames])
 
-      return { 
-        label: (
-          <StageLabel hasStarted={hasStarted}>
-            {hasStarted && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
-            <div>
-              {label} 
-            </div>
-            <Tooltip {...getTooltip(frame)}>
-              <Info size="14" color={theme.launchpad.colors.text.caption}/>
-            </Tooltip>
-          </StageLabel>
-        ), 
-        value: (
-          <Nowrap>{value}</Nowrap>
-        )
-      }
-    }),
-  [])
+  const timeframes = React.useMemo(() => [
+    { 
+      label: (
+        <StageLabel hasStarted={stageHasStarted.whitelist}>
+          {stageHasStarted.whitelist && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
+
+          <div>Register to invest</div>
+
+          <Tooltip {...getTooltip(OfferTimeframeType.whitelist)}>
+            <Info size="14" color={theme.launchpad.colors.text.caption}/>
+          </Tooltip>
+        </StageLabel>
+      ),
+      value: (
+        <Nowrap>{format(frames.whitelist, frames.preSale)}</Nowrap>
+      )
+    },
+    { 
+      label: (
+        <StageLabel hasStarted={stageHasStarted.preSale}>
+          {stageHasStarted.preSale && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
+
+          <div>Pre-Sale</div>
+
+          <Tooltip {...getTooltip(OfferTimeframeType.preSale)}>
+            <Info size="14" color={theme.launchpad.colors.text.caption}/>
+          </Tooltip>
+        </StageLabel>
+      ),
+      value: (
+        <Nowrap>{format(frames.preSale, frames.sale)}</Nowrap>
+      )
+    },
+    { 
+      label: (
+        <StageLabel hasStarted={stageHasStarted.sale}>
+          {stageHasStarted.sale && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
+
+          <div>Public Sale</div> 
+
+          <Tooltip {...getTooltip(OfferTimeframeType.sale)}>
+            <Info size="14" color={theme.launchpad.colors.text.caption}/>
+          </Tooltip>
+        </StageLabel>
+      ),
+      value: (
+        <Nowrap>{format(frames.sale, frames.closed)}</Nowrap>
+      )
+    },
+    { 
+      label: (
+        <StageLabel hasStarted={stageHasStarted.closed}>
+          {stageHasStarted.closed && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
+
+          <div>Closed</div>
+
+          <Tooltip {...getTooltip(OfferTimeframeType.closed)}>
+            <Info size="14" color={theme.launchpad.colors.text.caption}/>
+          </Tooltip>
+        </StageLabel>
+      ),
+      value: (
+        <Nowrap>{format(frames.closed, frames.claim)}</Nowrap>
+      )
+    },
+    { 
+      label: (
+        <StageLabel hasStarted={stageHasStarted.claim}>
+          {stageHasStarted.claim && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
+
+          <div>Token Claim</div>
+
+          <Tooltip {...getTooltip(OfferTimeframeType.claim)}>
+            <Info size="14" color={theme.launchpad.colors.text.caption}/>
+          </Tooltip>
+        </StageLabel>
+      ),
+      value: (
+        <Nowrap>{format(frames.claim)}</Nowrap>
+      )
+    },
+  ], [])
 
   return <InfoList title="Investment Stage" entries={timeframes} />
 }

@@ -2,12 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
-import { IssuanceTextField } from 'components/LaunchpadIssuance/utils/TextField'
+import { FormFieldWrapper } from '../styled'
 
 interface Props {
   label: string
   placeholder?: string
 
+  span?: number
   error?: string
 
   field: string
@@ -16,14 +17,14 @@ interface Props {
 
 export const TextareaField: React.FC<Props> = (props) => {
   return (
-    <Column gap="0.5rem" >
+    <FormFieldWrapper gap="0.5rem" span={props.span}>
       <FieldLabel>{props.label}</FieldLabel>
       <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>
 
-      <Textarea />
+      <Textarea onChange={v => props.setter(props.field, v.target.value)} />
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
-    </Column>
+    </FormFieldWrapper>
   )
 }
 

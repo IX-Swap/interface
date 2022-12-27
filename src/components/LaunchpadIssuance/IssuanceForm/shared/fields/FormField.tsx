@@ -1,14 +1,16 @@
 import React from 'react'
-import styled from 'styled-components'
 
-import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
+import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceTextField } from 'components/LaunchpadIssuance/utils/TextField'
+import { FormFieldWrapper, OptionalLabel } from '../styled'
 
 interface Props {
   label: string
   placeholder?: string
 
   optional?: boolean
+
+  span?: number
 
   error?: string
 
@@ -18,7 +20,7 @@ interface Props {
 
 export const FormField: React.FC<Props> = (props) => {
   return (
-    <Column gap="0.5rem">
+    <FormFieldWrapper gap="0.5rem" span={props.span}>
       <IssuanceTextField 
         label={<>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</>} 
         placeholder={props.placeholder}
@@ -26,19 +28,6 @@ export const FormField: React.FC<Props> = (props) => {
       />
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
-    </Column>
+    </FormFieldWrapper>
   )
 }
-
-const OptionalLabel = styled.span`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 8px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
-  text-transform: uppercase;
-
-  color: ${props => props.theme.launchpad.colors.text.caption};
-`

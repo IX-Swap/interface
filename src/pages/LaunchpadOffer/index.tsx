@@ -45,23 +45,9 @@ export default function LaunchpadOffer() {
   
   const { library, chainId, account } = useActiveWeb3React()
 
-  const updateTimeFrames = React.useCallback((data: Offer) => {
-
-    data.timeframes.forEach(item => {
-      const frame = data.timeframes.find(timeframe => timeframe.type === OFFER_RELATED_TIMEFRAMES[item.type])
-
-      if (frame?.startDate) {
-        item.endDate = frame.startDate
-      }
-    })
-
-    return data
-  }, [])
 
   React.useEffect(() => {
-    getOffer(params.offerId).then((data)=> {      
-      setOffer(updateTimeFrames(data))
-    }).finally(() => setLoading(false))
+    getOffer(params.offerId).then(setOffer).finally(() => setLoading(false))
   }, [params.offerId])
 
   React.useEffect(() => {

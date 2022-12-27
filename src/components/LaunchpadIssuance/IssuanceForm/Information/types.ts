@@ -51,17 +51,17 @@ export interface InformationFormValues {
   }
 }
 
-interface AdditionalDocument {
+export interface AdditionalDocument {
   name: string
   file: File
 }
 
-interface FAQEntry {
+export interface FAQEntry {
   question: string
   answer: string
 }
 
-interface TeamMember {
+export interface TeamMember {
   photo: File
   name: string
   role: string

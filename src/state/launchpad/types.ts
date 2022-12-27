@@ -71,6 +71,7 @@ export enum OfferDistributionFrequency {
   quarterly = 'quarterly',
   semiAnnually = 'semiAnnually',
   annually = 'annually',
+  other = 'other'
 }
 
 export enum WhitelistStatus {
@@ -103,9 +104,11 @@ export interface Asset {
 }
 
 export interface OfferTimeframe {
-  type: OfferTimeframeType
-  startDate: Date
-  endDate: Date
+  closed: Date
+  claim: Date
+  preSale: Date
+  sale: Date
+  whitelist: Date
 }
 
 export interface OfferTerms {
@@ -262,7 +265,7 @@ export interface Offer {
   profilePicture: Asset
   cardPicture: Asset
 
-  timeframes: OfferTimeframe[]
+  timeframe: OfferTimeframe
   terms: OfferTerms
 
   daysTillSale?: number
@@ -283,8 +286,4 @@ export interface Offer {
   payments: OfferPayment[];
   subscriptions: OfferSubscription[];
   whitelists: OfferWhitelist[];
-}
-
-export function isWithinTimeframe(frame: OfferTimeframe, date: Date = new Date()) {
-  return date >= frame.startDate && date <= frame.endDate
 }

@@ -1,8 +1,9 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
+import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { ChevronDown } from 'react-feather'
+import { FormFieldWrapper, OptionalLabel } from '../styled'
 
 interface Option<T> {
   value: T
@@ -15,6 +16,8 @@ interface Props<T> {
 
   options: Option<T>[]
 
+  optional?: boolean
+  span?: number
   error?: string
 
   field: string
@@ -52,9 +55,12 @@ export function DropdownField<T>(props: Props<T>) {
   }, [showDropdown, container])
 
   return (
-    <Column gap="0.5rem">
+    <FormFieldWrapper gap="0.5rem" span={props.span}>
       <FieldContainer ref={container} onClick={toggle}>
-        <FieldLabel>{props.label}</FieldLabel>
+        <FieldLabel>
+          {props.label}
+          {props.optional && <OptionalLabel>Optional</OptionalLabel>}
+        </FieldLabel>
 
         {props.placeholder && !selectedValue && <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>}
         {(!props.placeholder || selectedValue) && <FieldSelectedValue>{selectedValue?.label ?? 'Select'}</FieldSelectedValue>}
@@ -73,7 +79,7 @@ export function DropdownField<T>(props: Props<T>) {
       </FieldContainer>
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
-    </Column>
+    </FormFieldWrapper>
   )
 }
 

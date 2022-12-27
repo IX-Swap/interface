@@ -3,31 +3,57 @@ import styled, { useTheme } from 'styled-components'
 
 import { Paperclip } from 'react-feather'
 import { Column, ErrorText, Spacer } from 'components/LaunchpadMisc/styled'
+import { FormFieldWrapper } from '../styled'
+import { useDropzone } from 'react-dropzone'
 
 interface Props {
   label: string
   hint?: React.ReactNode
 
+  span?: number
   error?: string
 
+  disabled?: boolean
+
   field: string
-  setter: (field: string, value: string) => void
+  setter: (field: string, value: any) => void
 }
 
 export const FileField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
+  const input = React.useRef<HTMLInputElement>(null)
+
+  const openFileBrowser = React.useCallback(() => {
+    input.current?.click()
+  }, [input.current])
+
+  const onFileSelect = React.useCallback((files: File[]) => {
+    props.setter(props.field, files[0])
+  }, [])
+  
+  const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
+
+
   return (
-    <Column gap="1rem">
+    <FormFieldWrapper gap="1rem" span={props.span}>
       <Column gap="0.25rem">
         <FieldLabel>{props.label}</FieldLabel>
+
 
         {props.hint && <FieldHint>{props.hint}</FieldHint>}
       </Column>
 
-      <FieldWrapper>
+      <FieldWrapper {...getRootProps()} onClick={openFileBrowser}>
         <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />
-        <Prompt>Uploader File</Prompt>
+        <Prompt>Upload File</Prompt>
+
+        <input 
+          {...getInputProps()}
+          ref={input}
+          multiple={false} 
+          disabled={props.disabled} 
+        />
 
         <Spacer />
 
@@ -35,7 +61,7 @@ export const FileField: React.FC<Props> = (props) => {
       </FieldWrapper>
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
-    </Column>
+    </FormFieldWrapper>
   )
 }
 

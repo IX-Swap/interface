@@ -4,7 +4,7 @@ import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 
-import { Formik } from 'formik'
+import { Formik, FormikProps } from 'formik'
 
 import { InformationFormValues } from './types'
 
@@ -12,7 +12,7 @@ import { Row, Separator, Spacer } from 'components/LaunchpadMisc/styled'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
 import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
-import { OfferIndustry, OfferNetwork, OfferTokenStandart } from 'state/launchpad/types'
+import { OfferDistributionFrequency, OfferIndustry, OfferNetwork, OfferTokenStandart } from 'state/launchpad/types'
 
 import { FormField } from '../shared/fields/FormField'
 import { ImageField } from '../shared/fields/ImageField'
@@ -24,6 +24,8 @@ import { FormGrid } from '../shared/FormGrid'
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
 import { RejectionReasons } from './RejectionReasons'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
+import { TeamMembersBlock } from './TeamMembers'
+import { FAQBlock } from './FAQ'
 
 const initialValues = {
   profilePicture: undefined,
@@ -50,8 +52,8 @@ const initialValues = {
   presaleMinInvestment: '',
   presaleMaxInvestment: '',
   additionalDocuments: [],
-  members: [],
-  faq: [],
+  members: [{ id: 0 }],
+  faq: [{ id: 0 }],
   terms: {
     whitelist: undefined,
     presale: undefined,
@@ -105,9 +107,19 @@ const tokenTypeOptions = [
   { label: 'USDT', value: OfferTokenType.USDT },
 ]
 
+const distributionFrequencyOptions = [
+  { label: 'Monthly', value: OfferDistributionFrequency.monthly },
+  { label: 'Quarterly', value: OfferDistributionFrequency.quarterly },
+  { label: 'Annually', value: OfferDistributionFrequency.annually },
+  { label: 'N/A', value: OfferDistributionFrequency.notApplicable },
+  { label: 'Other', value: OfferDistributionFrequency.other },
+]
+
 export const IssuanceInformationForm = () => {
   const theme = useTheme()
   const history = useHistory()
+
+  const form = React.useRef<FormikProps<InformationFormValues>>(null)
 
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
@@ -151,6 +163,14 @@ export const IssuanceInformationForm = () => {
     }
   }, [])
 
+  React.useEffect(() => {
+    console.log(form.current?.values)
+  })
+
+  React.useEffect(() => {
+    console.log(form.current?.values)
+  }, [JSON.stringify(form.current?.values)])
+
   return (
     <FormContainer>
       <CloseConfirmation isOpen={showCloseDialog} onClose={onConfirmationClose} />
@@ -174,9 +194,10 @@ export const IssuanceInformationForm = () => {
         </FormSubmitContainer>
       </FormSideBar>
 
-      <Formik initialValues={initialValues}  onSubmit={submit}>
+      <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit}>
         {({ values, errors, setFieldValue }) => (
           <FormBody>
+            <div style={{ color: 'black' }}>{JSON.stringify(values)}</div>
             <ImageBlock>
               <ImageField 
                 label='Profile Picture'
@@ -296,6 +317,36 @@ export const IssuanceInformationForm = () => {
             </FormGrid>
 
             <Separator />
+
+            <FormGrid title="Offering Terms">
+              <FormField field='investmentStructure' setter={setFieldValue} label='Investment Structure' placeholder='Holding Structure' />
+              <FormField field='dividendYield' setter={setFieldValue} label='Dividend Yield' placeholder='In Percent' />
+              <FormField field='investmentPeriod' setter={setFieldValue} label='Investment Period' placeholder='In months' optional />
+              <FormField field='grossIrr' setter={setFieldValue} label='Gross IRR (%)' placeholder='In percent' optional />
+
+              <DropdownField 
+                span={2}
+                label="Distribution Frequency"
+                placeholder='Frequency of return distribution'
+                
+                field="distributionFrequency"
+                setter={setFieldValue}
+                options={distributionFrequencyOptions}
+                optional
+              />
+            </FormGrid>
+            
+            <Separator />
+
+            <FormGrid title="Team Members">
+              <TeamMembersBlock members={values.members} setter={setFieldValue} />
+            </FormGrid>
+            
+            <Separator />
+            
+            <FormGrid title="FAQ">
+              <FAQBlock faq={values.faq} setter={setFieldValue} />
+            </FormGrid>
           </FormBody>
         )}
       </Formik>
