@@ -151,7 +151,7 @@ const FieldSelectedValue = styled.div`
   line-height: 17px;
   letter-spacing: -0.01em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldOptionList = styled.div`

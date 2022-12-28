@@ -16,6 +16,7 @@ import { FileField } from '../shared/fields/FileField'
 import { DirectorField } from '../shared/fields/DIrectorFIeld'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
+import { TextareaField } from '../shared/fields/TextareaField'
 
 
 const initialValues = {
@@ -70,7 +71,7 @@ export const IssuanceVettingForm = () => {
         {({ submitForm, setFieldValue, errors }) => (
           <FormBody>
             <IssuerInfoBlock>
-              <FormField label="Applicant's Full Name" field="applicantFullName" setter={setFieldValue} />
+              <FormField label="Applicant's Full Name" placeholder="Full name of the Applicant" field="applicantFullName" setter={setFieldValue} />
               <FormField label="Email Address" placeholder="Email Address" field="applicantEmail" setter={setFieldValue} />
               <FormField label="Name of Company" placeholder="Name of your company" field="companyName" setter={setFieldValue} />
               <FormField label="Company Website" placeholder="Company Website" field="companyWebsite" setter={setFieldValue} />
@@ -89,9 +90,13 @@ export const IssuanceVettingForm = () => {
                 <Plus size="14" /> Add Document
               </OutlineButton>
 
-              <Description>
-                ...
-              </Description>
+              <TextareaField 
+                label="Description"
+                placeholder="Short description of the company/offering"
+                field="description"
+                setter={setFieldValue}
+                span={3}
+              />
             </DescriptionBlock>
             
             <Separator />
@@ -105,6 +110,7 @@ export const IssuanceVettingForm = () => {
                 setter={setFieldValue}
               />
               <FileField 
+                optional
                 label="Certificate of Incumbency"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="certificateIncumbency"
@@ -120,6 +126,7 @@ export const IssuanceVettingForm = () => {
                 setter={setFieldValue}
               />
               <FileField 
+                optional
                 label="Copy of Audited Financials"
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
                 field="copyOfAuditedFinancials"
@@ -186,7 +193,7 @@ const DescriptionBlock = styled.div`
     ". . ."
     "description description description";
 
-  gap: 2.5rem;
+  gap: 1rem;
 
   align-items: end;
 `
@@ -203,11 +210,6 @@ const Hint = styled.div`
 
   color: #8D8DA3;
 `
-
-const Description = styled.div`
-  grid-area: description;
-`
-
 
 const FilesBlock = styled.div`
   display: grid;

@@ -81,11 +81,22 @@ const AddDirectorButton = styled.button`
 
   place-items: start;
 
+  width: min-content;
+
   background: none;
   border: none;
+  border-radius: 6px;
 
   gap: 0.125rem;
   padding: 0.5rem;
+
+  cursor: pointer;
+
+  transition: background 0.3s;
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.foreground};
+  }
 
   header {
     grid-area: title;

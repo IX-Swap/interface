@@ -12,8 +12,6 @@ import { Row, Separator, Spacer } from 'components/LaunchpadMisc/styled'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
 import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
-import { OfferDistributionFrequency, OfferIndustry, OfferNetwork, OfferTokenStandart } from 'state/launchpad/types'
-
 import { FormField } from '../shared/fields/FormField'
 import { ImageField } from '../shared/fields/ImageField'
 import { DropdownField } from '../shared/fields/DropdownField'
@@ -27,93 +25,8 @@ import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { TeamMembersBlock } from './TeamMembers'
 import { FAQBlock } from './FAQ'
 
-const initialValues = {
-  profilePicture: undefined,
-  cardPicture: undefined,
-  shortDescription: '',
-  longDescription: '',
-  name: '',
-  companyIdNumber: '',
-  industry: undefined,
-  investmentStructure: undefined,
-  country: '',
-  tokenName: '',
-  tokenTicker: '',
-  tokenType: '',
-  network: undefined,
-  hardCap: '',
-  softcap: '',
-  pricePerToken: 0,
-  tokenStandart: undefined,
-  minInvestment: '',
-  maxInvestment: '',
-  hasPresale: undefined,
-  presaleAlocated: '',
-  presaleMinInvestment: '',
-  presaleMaxInvestment: '',
-  additionalDocuments: [],
-  members: [{ id: 0 }],
-  faq: [{ id: 0 }],
-  terms: {
-    whitelist: undefined,
-    presale: undefined,
-    sale: undefined,
-    claim: undefined
-  }
-} as unknown as InformationFormValues
+import { initialValues, industryOptions, tokenTypeOptions, networkOptions, standardOptions, distributionFrequencyOptions } from './util'
 
-enum OfferTokenType {
-  WIXS,
-  WBTC,
-  WETH,
-  MATIC,
-  USDC,
-  USDT
-}
-
-const industryOptions = [
-  { label: 'Blockchain', value: OfferIndustry.blockchain },
-  { label: 'Energy', value: OfferIndustry.energy },
-  { label: 'Finance', value: OfferIndustry.finance },
-  { label: 'Gaming', value: OfferIndustry.gaming },
-  { label: 'Healthcare', value: OfferIndustry.healthcare },
-  { label: 'Real Estate', value: OfferIndustry.realEstate },
-  { label: 'Technology', value: OfferIndustry.technology },
-  { label: 'Other', value: OfferIndustry.other },
-]
-
-const networkOptions = [
-  { label: 'Etherium', value: OfferNetwork.ethereum },
-  { label: 'Polygon', value: OfferNetwork.polygon },
-  { label: 'Kovan', value: OfferNetwork.kovan },
-]
-
-const standardOptions = [
-  { label: 'ERC20', value: OfferTokenStandart.erc20 },
-  { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite },
-]
-
-const structureOptions = [
-  { label: 'ERC20', value: OfferTokenStandart.erc20 },
-  { label: 'XTokenLite', value: OfferTokenStandart.xtokenlite },
-]
-
-const tokenTypeOptions = [
-  { label: 'WIXS', value: OfferTokenType.WIXS },
-  { label: 'WBTC', value: OfferTokenType.WBTC },
-  { label: 'WETH', value: OfferTokenType.WETH },
-  { label: 'MATIC', value: OfferTokenType.MATIC },
-  { label: 'USDC', value: OfferTokenType.USDC },
-  { label: 'USDT', value: OfferTokenType.USDT },
-]
-
-const distributionFrequencyOptions = [
-  { label: 'Monthly', value: OfferDistributionFrequency.monthly },
-  { label: 'Quarterly', value: OfferDistributionFrequency.quarterly },
-  { label: 'Annually', value: OfferDistributionFrequency.annually },
-  { label: 'N/A', value: OfferDistributionFrequency.notApplicable },
-  { label: 'Other', value: OfferDistributionFrequency.other },
-]
 
 export const IssuanceInformationForm = () => {
   const theme = useTheme()
@@ -197,7 +110,6 @@ export const IssuanceInformationForm = () => {
       <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit}>
         {({ values, errors, setFieldValue }) => (
           <FormBody>
-            <div style={{ color: 'black' }}>{JSON.stringify(values)}</div>
             <ImageBlock>
               <ImageField 
                 label='Profile Picture'

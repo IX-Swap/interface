@@ -131,7 +131,7 @@ const Placeholder = styled.label<{ active: boolean }>`
   line-height: 17px;
   letter-spacing: -0.01em;
   
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
@@ -144,7 +144,7 @@ const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
   color: ${props => props.theme.launchpad.colors.text.title};
 
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   font-size: ${props => props.fontSize ?? '14px'};
 
   line-height: ${props => props.lineHeight ?? '17px'};

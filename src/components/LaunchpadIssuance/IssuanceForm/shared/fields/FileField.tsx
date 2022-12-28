@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { Paperclip } from 'react-feather'
 import { Column, ErrorText, Spacer } from 'components/LaunchpadMisc/styled'
-import { FormFieldWrapper } from '../styled'
+import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { useDropzone } from 'react-dropzone'
 
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
   span?: number
   error?: string
 
+  optional?: boolean
   disabled?: boolean
 
   field: string
@@ -38,7 +39,10 @@ export const FileField: React.FC<Props> = (props) => {
   return (
     <FormFieldWrapper gap="1rem" span={props.span}>
       <Column gap="0.25rem">
-        <FieldLabel>{props.label}</FieldLabel>
+        <FieldLabel>
+          {props.label}
+          {props.optional && <OptionalLabel>optional</OptionalLabel>}
+        </FieldLabel>
 
 
         {props.hint && <FieldHint>{props.hint}</FieldHint>}

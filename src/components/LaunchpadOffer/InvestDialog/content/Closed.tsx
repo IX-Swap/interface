@@ -89,12 +89,6 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
       {canClaim && (
         <Column gap="0.5rem">
-          {!isSuccessfull && (
-            <UnsuccessfulFundNotice>
-              Your refund will be in USDT regardless of the token used for payment.  
-            </UnsuccessfulFundNotice>
-          )}
-
           <CanClaimNotice>
             Once claimed, you can find your tokens in your wallet. 
             Please make sure to add the token address to your wallet to see the token on your wallet feed.
