@@ -39,6 +39,14 @@ const EditPayoutEvent = lazy(() => import('pages/CreatePayoutEvent/EditPayoutEve
 const PayoutItem = lazy(() => import('pages/PayoutItem'))
 const PayoutItemManager = lazy(() => import('pages/PayoutItem/PayoutItemManager'))
 
+const Launchpad = lazy(() => import('pages/Launchpad'))
+const LaunchpadOffer = lazy(() => import('pages/LaunchpadOffer'))
+
+const LaunchpadIssuanceDashboard = lazy(() => import('pages/LaunchpadIssuance/Dashboard'))
+const LaunchpadIssuanceForm = lazy(() => import('pages/LaunchpadIssuance/Form'))
+const LaunchpadIssuanceVettingForm = lazy(() => import('pages/LaunchpadIssuance/VettingForm'))
+const LaunchpadIssuanceInformationForm = lazy(() => import('pages/LaunchpadIssuance/InformationForm'))
+
 export interface RouteMapEntry {
   path: string
 
@@ -130,4 +138,10 @@ export const routeConfigs: RouteMapEntry[] = [
 
   { path: routes.staking, component: StakingTab },
   { path: routes.vesting, component: VestingTab },
+  { path: '/launchpad', component: Launchpad },
+  { path: '/offers/:offerId', component: LaunchpadOffer },
+  { path: '/issuance', component: LaunchpadIssuanceDashboard },
+  { path: '/issuance/create', component: LaunchpadIssuanceForm },
+  { path: '/issuance/create/vetting', component: LaunchpadIssuanceVettingForm },
+  { path: '/issuance/create/information', component: LaunchpadIssuanceInformationForm }
 ]

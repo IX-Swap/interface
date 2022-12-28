@@ -8,6 +8,7 @@ import {
   PopupContent,
   removePopup,
   setBrokerDealerData,
+  setHideHeader,
   setOpenModal,
   setShowFakeApproval,
 } from './actions'
@@ -16,6 +17,15 @@ export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React()
 
   return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
+}
+
+export function useHideHeader(): boolean {
+  return useSelector((state: AppState) => state.application.hideHeader)
+}
+
+export function useSetHideHeader() {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback((hide: boolean) => dispatch(setHideHeader({ hideHeader: hide })), [dispatch])
 }
 
 export function useModalOpen(modal: ApplicationModal): boolean {

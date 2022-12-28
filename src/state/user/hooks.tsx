@@ -30,6 +30,7 @@ import { clearSwapHelperState } from 'state/swapHelper/actions'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
 import { KYCStatuses } from 'pages/KYC/enum'
+import { routes } from 'utils/routes'
 
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
@@ -577,8 +578,9 @@ export function useAccount() {
 
   useEffect(() => {
     if (kyc?.status !== KYCStatuses.APPROVED && accountChanged && !loadingRequest) {
-      if (pathname !== '/kyc') {
-        history.push('/kyc')
+      if (pathname !== routes.kyc) {
+        const defaultPath = pathname === routes.launchpad ? routes.launchpad : routes.kyc
+        history.push(defaultPath)
       }
       handleAccountChanged(false)
     }

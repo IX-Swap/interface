@@ -22,7 +22,6 @@ import {
 } from './actions'
 import { useAddPopup } from 'state/application/hooks'
 import { useGetMyPayout, useTokenManagerState } from 'state/token-manager/hooks'
-import { BigNumber } from 'ethers'
 
 interface PayPayoutDto {
   contractPayoutId: string

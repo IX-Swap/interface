@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, HTMLProps, useMemo } from 'react'
+import React, { CSSProperties, FC, HTMLProps } from 'react'
 import { Box, Flex } from 'rebass'
 import styled, { css } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
