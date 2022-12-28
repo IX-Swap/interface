@@ -70,7 +70,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
           {({ push, handleRemove }) => (
             <>
               {props.videos.map((video, idx) => (
-                <VideoLinkContainer>
+                <VideoLinkContainer key={idx}>
                   <FormField field={`videos[${idx}].title`} setter={props.setter} label="Video Title" placeholder='Title'/>
                   <VideoLinkSeparator />
                   <FormField 
