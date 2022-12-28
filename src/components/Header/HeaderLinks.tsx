@@ -218,8 +218,8 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
       
-      <StyledNavLink  id={`issuance-nav-link`} to={'/issuance'}>
-        <Trans>Issuance</Trans>
+      <StyledNavLink  id={`issuance-nav-link`} to={'/launchpad'}>
+        <Trans>Launchpad</Trans>
       </StyledNavLink>
     </HeaderLinksWrap>
   )
