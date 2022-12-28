@@ -144,8 +144,8 @@ export const Menu = ({ close }: Props) => {
             </MenuListItem>
           )}
           
-          <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/issuance'} onClick={close}>
-            <Trans>Issuance</Trans>
+          <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
+            <Trans>Launchpad</Trans>
           </MenuListItem>
         </MenuList>
       </Container>
