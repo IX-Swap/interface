@@ -1,6 +1,11 @@
 import { OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
 import { DateSchema } from "yup"
 
+export interface VideoLink {
+  title: string
+  url: string
+}
+
 export interface InformationFormValues {
   profilePicture: File
   cardPicture: File
@@ -37,6 +42,8 @@ export interface InformationFormValues {
   presaleMinInvestment: string
   presaleMaxInvestment: string
 
+  images: File[]
+  videos: VideoLink[]
   additionalDocuments: AdditionalDocument[]
 
   members: TeamMember[]

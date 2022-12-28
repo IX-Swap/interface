@@ -13,36 +13,55 @@ export enum OfferTokenType {
 export const initialValues = {
   profilePicture: undefined,
   cardPicture: undefined,
+
   shortDescription: '',
   longDescription: '',
+
   name: '',
+
   companyIdNumber: '',
+
   industry: undefined,
+
   investmentStructure: undefined,
+
   country: '',
+
   tokenName: '',
   tokenTicker: '',
   tokenType: '',
+
   network: undefined,
+
   hardCap: '',
   softcap: '',
+
   pricePerToken: 0,
   tokenStandart: undefined,
+
   minInvestment: '',
   maxInvestment: '',
+
   hasPresale: undefined,
   presaleAlocated: '',
   presaleMinInvestment: '',
   presaleMaxInvestment: '',
+  
+  images: [],
+  videos: [{ id: 0 }],
   additionalDocuments: [],
+
   members: [{ id: 0 }],
   faq: [{ id: 0 }],
+
   terms: {
     whitelist: undefined,
     presale: undefined,
     sale: undefined,
+    closed: undefined,
     claim: undefined
   }
+
 } as unknown as InformationFormValues
 
 

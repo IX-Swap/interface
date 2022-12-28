@@ -26,6 +26,7 @@ import { TeamMembersBlock } from './TeamMembers'
 import { FAQBlock } from './FAQ'
 
 import { initialValues, industryOptions, tokenTypeOptions, networkOptions, standardOptions, distributionFrequencyOptions } from './util'
+import { GalleryBlock } from './Gallery'
 
 
 export const IssuanceInformationForm = () => {
@@ -259,6 +260,8 @@ export const IssuanceInformationForm = () => {
             <FormGrid title="FAQ">
               <FAQBlock faq={values.faq} setter={setFieldValue} />
             </FormGrid>
+
+            <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} />
           </FormBody>
         )}
       </Formik>

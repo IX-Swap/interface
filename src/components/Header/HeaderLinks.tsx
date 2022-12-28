@@ -217,6 +217,10 @@ export const HeaderLinks = () => {
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
+      
+      <StyledNavLink  id={`issuance-nav-link`} to={'/issuance'}>
+        <Trans>Issuance</Trans>
+      </StyledNavLink>
     </HeaderLinksWrap>
   )
 }

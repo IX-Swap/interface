@@ -13,7 +13,7 @@ import { VettingFormValues } from './types'
 
 import { FormField } from '../shared/fields/FormField'
 import { FileField } from '../shared/fields/FileField'
-import { DirectorField } from '../shared/fields/DIrectorFIeld'
+import { DirectorField } from '../shared/fields/DirectorField'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
 import { TextareaField } from '../shared/fields/TextareaField'
@@ -34,8 +34,8 @@ const initialValues = {
   memorandumAndAssociacion: undefined,
   ownershipStructure: undefined,
   authorizedSignatoryList: undefined,
-  beneficialOwners: [],
-  directors: []
+  beneficialOwners: [{ id: 0 }],
+  directors: [{ id: 0 }]
 } as unknown as VettingFormValues
 
 export const IssuanceVettingForm = () => {
@@ -68,7 +68,7 @@ export const IssuanceVettingForm = () => {
       </FormSideBar>
       
       <Formik initialValues={initialValues} onSubmit={submit}>
-        {({ submitForm, setFieldValue, errors }) => (
+        {({ submitForm, setFieldValue, values, errors }) => (
           <FormBody>
             <IssuerInfoBlock>
               <FormField label="Applicant's Full Name" placeholder="Full name of the Applicant" field="applicantFullName" setter={setFieldValue} />
@@ -160,8 +160,8 @@ export const IssuanceVettingForm = () => {
 
             <Separator />
 
-            <DirectorField directorTitle='Beneficial Owner' setter={setFieldValue} field="beneficialOwners" />
-            <DirectorField directorTitle='Director' setter={setFieldValue} field="directors" />
+            <DirectorField directorTitle='Beneficial Owner' directors={values.beneficialOwners} setter={setFieldValue} field="beneficialOwners" />
+            <DirectorField directorTitle='Director' directors={values.directors} setter={setFieldValue} field="directors" />
 
             <Row justifyContent='flex-end' alignItems="center" gap="1.5rem">
               <OutlineButton width="280px">Back</OutlineButton>
