@@ -94,8 +94,8 @@ const DialogContainer = styled.div<{ height?: string, width?: string }>`
 
   padding: 2rem;
 
-  ${props => props.width && `height: ${props.width}`}
-  ${props => props.height && `height: ${props.height}`}
+  ${props => props.width && `width: ${props.width};`}
+  ${props => props.height && `height: ${props.height};`}
 
 `
 
