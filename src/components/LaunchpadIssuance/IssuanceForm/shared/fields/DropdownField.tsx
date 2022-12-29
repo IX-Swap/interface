@@ -170,6 +170,9 @@ const FieldOptionList = styled.div`
   flex-flow: column nowrap;
   align-items: stretch;
 
+  max-height: 300px;
+  overflow-y: auto;
+
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `

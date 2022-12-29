@@ -25,8 +25,9 @@ import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { TeamMembersBlock } from './TeamMembers'
 import { FAQBlock } from './FAQ'
 
-import { initialValues, industryOptions, tokenTypeOptions, networkOptions, standardOptions, distributionFrequencyOptions } from './util'
+import { initialValues, industryOptions, tokenTypeOptions, networkOptions, standardOptions, distributionFrequencyOptions, investmentStructureOptions } from './util'
 import { GalleryBlock } from './Gallery'
+import { countriesList } from 'constants/countriesList'
 
 
 export const IssuanceInformationForm = () => {
@@ -37,6 +38,12 @@ export const IssuanceInformationForm = () => {
 
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+  
+  const countries = React.useMemo(() => {
+    return countriesList
+      ?.map((name, index) => ({ value: ++index, label: name }))
+      .sort((a, b) => a.label.localeCompare(b.label))
+  }, [])
 
   const onConfirmationClose = React.useCallback(() => {
     setIsSafeToClose(true)
@@ -69,6 +76,18 @@ export const IssuanceInformationForm = () => {
     return isSafeToClose
   }, [])
 
+  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z ]/.test(x)).join(''), [])
+  const numberFilter = React.useCallback((value: string) => {
+    const [whole, ...decimals] = value
+      .split('')
+      .filter(x => /[0-9.]/.test(x))
+      .join('')
+      .split('.')
+
+    return whole + (decimals.length > 0 ? `.${decimals.join('')}` : '')
+
+  }, [])
+
   React.useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
 
@@ -76,14 +95,6 @@ export const IssuanceInformationForm = () => {
       window.removeEventListener('beforeunload', alertUser)
     }
   }, [])
-
-  React.useEffect(() => {
-    console.log(form.current?.values)
-  })
-
-  React.useEffect(() => {
-    console.log(form.current?.values)
-  }, [JSON.stringify(form.current?.values)])
 
   return (
     <FormContainer>
@@ -98,7 +109,8 @@ export const IssuanceInformationForm = () => {
       </FormHeader>
 
       <FormSideBar>
-        <RejectionReasons />
+        {Object.keys(form.current?.errors ?? {}).length > 0 && <RejectionReasons />}
+        
         
         <FormSubmitContainer>
           <OutlineButton>Save Draft</OutlineButton>
@@ -137,12 +149,42 @@ export const IssuanceInformationForm = () => {
               <FormField field="companyId" setter={setFieldValue} label="Company Identification Number" placeholder='Company Identification Number' />
 
               <DropdownField field="industry" setter={setFieldValue} label="Industry" options={industryOptions} />
-              <DropdownField field="industry" setter={setFieldValue} label="Investment Structure" options={industryOptions} />
-              <DropdownField field="industry" setter={setFieldValue} label="Deal Country" options={industryOptions} />
+              <DropdownField field="investmentStructure" setter={setFieldValue} label="Investment Structure" options={investmentStructureOptions} />
+              <DropdownField field="country" setter={setFieldValue} label="Deal Country" options={countries} />
             </FormGrid>
             
             <Separator />
 
+
+            <FormGrid title="Tokenomics">
+              <FormField field='tokenName' setter={setFieldValue} label='Token Name' placeholder='Must be the same as the issuance name' />
+              <FormField field='tokenTicker' setter={setFieldValue} label='Token Ticker' placeholder='2-6 alphanumeric characters' />
+              
+              <DropdownField field='tokenType' setter={setFieldValue} options={tokenTypeOptions} label='Token to Make Issuance in' placeholder='Token Type' />
+              <DropdownField field='network' setter={setFieldValue} options={networkOptions} label='Blockchain Network' placeholder='Blockchain Network' />
+              
+              <FormField field='hardCap' setter={setFieldValue} label='Total Amount to Raise (Amount in the selected token type)' placeholder='Total Amount to Raise' />
+              <FormField field='softCap' setter={setFieldValue} label='Minimum Amount to Raise' placeholder='Minimum Amount to Raise' />
+              
+              <FormField field='pricePerToken' setter={setFieldValue} label='Price per Token' placeholder='Price per Token' inputFilter={numberFilter} />
+              <DropdownField field='tokenStandard' setter={setFieldValue} options={standardOptions} label='Token Standard' placeholder='Token Standard' />
+              
+              <FormField field='minInvestment' setter={setFieldValue} label='Minimum Investment per Investor' placeholder='No. of Tokens' inputFilter={numberFilter} />
+              <FormField field='maxInvestment' setter={setFieldValue} label='Maximum Investment per Investor' placeholder='No. of Tokens' inputFilter={numberFilter} />
+
+              <Row gap="1rem">
+                <Checkbox checked />
+
+                <TokenAgreementText>
+                  I understand and agree that once I submit this form and it is approved, IX Swap will
+                  mint and deposit the tokens into a smart contract based on the information provided.
+                </TokenAgreementText>
+              </Row>
+
+            </FormGrid>
+            
+            <Separator />
+            
             <FormGrid title="Pre-Sale">
               <PresalveFieldContainer>
                 <PresaleFieldLabel>
@@ -161,53 +203,33 @@ export const IssuanceInformationForm = () => {
               </PresalveFieldContainer>
 
               <FormField 
+                disabled={!values.hasPresale}
                 field="presaleAlocated" 
                 setter={setFieldValue}
                 label="Pre-Sale Allocation"
-                placeholder='Total fundraising amount allocated for Pre-Sale' />
+                placeholder='Total fundraising amount allocated for Pre-Sale'
+                inputFilter={numberFilter}
+              />
 
               <FormField
+                disabled={!values.hasPresale}
                 field="presaleMaxInvestment"
                 setter={setFieldValue}
                 label="Maximum Investment per Investor"
-                placeholder='No. of Tokens' />
+                placeholder='No. of Tokens' 
+                inputFilter={numberFilter}
+              />
 
               <FormField 
+                disabled={!values.hasPresale}
                 field="presaleMinInvestment"
                 setter={setFieldValue}
                 label="Minimum Investment per Investor" 
-                placeholder='No. of Tokens' />
+                placeholder='No. of Tokens' 
+                inputFilter={numberFilter}
+              />
             </FormGrid>
 
-            <Separator />
-
-            <FormGrid title="Tokenomics">
-              <FormField field='tokenName' setter={setFieldValue} label='Token Name' placeholder='Must be the same as the issuance name' />
-              <FormField field='tokenTicker' setter={setFieldValue} label='Token Ticker' placeholder='2-6 alphanumeric characters' />
-              
-              <DropdownField field='tokenType' setter={setFieldValue} options={tokenTypeOptions} label='Token to Make Issuance in' placeholder='Token Type' />
-              <DropdownField field='network' setter={setFieldValue} options={networkOptions} label='Blockchain Network' placeholder='Blockchain Network' />
-              
-              <FormField field='hardCap' setter={setFieldValue} label='Total Amount to Raise (Amount in the selected token type)' placeholder='Total Amount to Raise' />
-              <FormField field='softCap' setter={setFieldValue} label='Minimum Amount to Raise' placeholder='Minimum Amount to Raise' />
-              
-              <FormField field='pricePerToken' setter={setFieldValue} label='Price per Token' placeholder='Price per Token' />
-              <DropdownField field='tokenStandard' setter={setFieldValue} options={standardOptions} label='Token Standard' placeholder='Token Standard' />
-              
-              <FormField field='minInvestment' setter={setFieldValue} label='Minimum Investment per Investor' placeholder='No. of Tokens' />
-              <FormField field='maxInvestment' setter={setFieldValue} label='Maximum Investment per Investor' placeholder='No. of Tokens' />
-
-              <Row gap="1rem">
-                <Checkbox checked />
-
-                <TokenAgreementText>
-                  I understand and agree that once I submit this form and it is approved, IX Swap will
-                  mint and deposit the tokens into a smart contract based on the information provided.
-                </TokenAgreementText>
-              </Row>
-
-            </FormGrid>
-            
             <Separator />
 
             <FormGrid 
@@ -233,7 +255,7 @@ export const IssuanceInformationForm = () => {
 
             <FormGrid title="Offering Terms">
               <FormField field='investmentStructure' setter={setFieldValue} label='Investment Structure' placeholder='Holding Structure' />
-              <FormField field='dividendYield' setter={setFieldValue} label='Dividend Yield' placeholder='In Percent' />
+              <FormField field='dividendYield' setter={setFieldValue} label='Dividend Yield' placeholder='In Percent' optional />
               <FormField field='investmentPeriod' setter={setFieldValue} label='Investment Period' placeholder='In months' optional />
               <FormField field='grossIrr' setter={setFieldValue} label='Gross IRR (%)' placeholder='In percent' optional />
 

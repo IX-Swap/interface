@@ -73,6 +73,7 @@ const Textarea = styled.textarea`
   padding: 1rem;
 
   outline: none;
+  resize: none;
 
   background: ${props => props.theme.launchpad.colors.background};
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};

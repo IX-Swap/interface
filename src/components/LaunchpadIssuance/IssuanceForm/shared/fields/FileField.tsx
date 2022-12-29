@@ -15,6 +15,9 @@ interface Props {
 
   optional?: boolean
   disabled?: boolean
+  showLabelInside?: boolean
+
+  icon?: React.ReactNode
 
   field: string
   setter: (field: string, value: any) => void
@@ -44,13 +47,12 @@ export const FileField: React.FC<Props> = (props) => {
           {props.optional && <OptionalLabel>optional</OptionalLabel>}
         </FieldLabel>
 
-
         {props.hint && <FieldHint>{props.hint}</FieldHint>}
       </Column>
 
       <FieldWrapper {...getRootProps()} onClick={openFileBrowser}>
-        <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />
-        <Prompt>Upload File</Prompt>
+        {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
+        <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>
 
         <input 
           {...getInputProps()}
