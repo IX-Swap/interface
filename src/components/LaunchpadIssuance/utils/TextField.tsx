@@ -23,6 +23,7 @@ interface Props extends StylingProps {
   error?: string
 
   onChange?: (value: string) => void
+  inputFilter?: (value: string) => string
 }
 
 export const IssuanceTextField: React.FC<Props> = (props) => {
@@ -40,6 +41,8 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
 
     if (props.type === 'number') {
       value = formatedValue(value)
+    } else if (props.inputFilter) {
+      value = props.inputFilter(value)
     }
 
     setInputValue(value)

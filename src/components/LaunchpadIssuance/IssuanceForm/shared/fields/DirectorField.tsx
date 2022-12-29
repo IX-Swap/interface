@@ -66,7 +66,7 @@ export const DirectorField: React.FC<Props> = (props) => {
           
           <AddDirectorButton onClick={() => push({ id: getId() })}>
             <header>Add Director</header>
-            <main>Must include all directors</main>
+            <main>Must include all {props.directorTitle}s</main>
             <aside><Plus color={theme.launchpad.colors.primary} size="12" /></aside>
           </AddDirectorButton>
         </>

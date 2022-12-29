@@ -9,6 +9,7 @@ interface Props {
   placeholder?: string
 
   optional?: boolean
+  disabled?: boolean
 
   span?: number
 
@@ -16,15 +17,19 @@ interface Props {
 
   field: string
   setter: (field: string, value: string) => void
+
+  inputFilter?: (value: string) => string
 }
 
 export const FormField: React.FC<Props> = (props) => {
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span}>
       <IssuanceTextField 
+        disabled={props.disabled}
         label={<>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</>} 
         placeholder={props.placeholder}
         onChange={value => props.setter(props.field, value)}
+        inputFilter={props.inputFilter} 
       />
 
       {props.error && <ErrorText>{props.error}</ErrorText>}

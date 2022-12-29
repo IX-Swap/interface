@@ -35,7 +35,6 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
   const history = useHistory()
 
   const [showIssuanceDialog, setShowIssuanceDialog] = React.useState(false)
-  const [issuer, setIssuer] = React.useState<string>()
 
   const toggleNewIssuanceDialog = React.useCallback(() => {
     setShowIssuanceDialog(state => !state)
@@ -45,6 +44,10 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
     setShowIssuanceDialog(false)
     history.push(`/issuance/create?issuer=${values.name}`)
   }, [history])
+
+  const inputFilter = React.useCallback((value: string) => {
+    return value.split('').filter(x => /[a-zA-Z ]/.test(x)).join('')
+  }, [])
 
   return (
     <>
@@ -66,6 +69,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
                 placeholder="Name of Asset"
                 value={values.name}
                 onChange={v => setFieldValue('name', v)} 
+                inputFilter={inputFilter}
               />
 
               {errors.name && <ErrorText>{errors.name}</ErrorText>}

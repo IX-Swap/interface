@@ -1,4 +1,4 @@
-import { OfferIndustry, OfferNetwork, OfferTokenStandart, OfferDistributionFrequency } from "state/launchpad/types"
+import { OfferIndustry, OfferNetwork, OfferTokenStandart, OfferDistributionFrequency, OfferInvestmentStructure } from "state/launchpad/types"
 import { InformationFormValues } from "./types"
 
 export enum OfferTokenType {
@@ -76,10 +76,17 @@ export const industryOptions = [
   { label: 'Other', value: OfferIndustry.other },
 ]
 
+export const investmentStructureOptions = [
+  { label: 'Equity', value: OfferInvestmentStructure.equity },
+  { label: 'Debt', value: OfferInvestmentStructure.debt },
+  { label: 'Hybrid', value: OfferInvestmentStructure.hybrid },
+  { label: 'Others', value: OfferInvestmentStructure.other },
+]
+
 export const networkOptions = [
-  { label: 'Etherium', value: OfferNetwork.ethereum },
+  // { label: 'Etherium', value: OfferNetwork.ethereum },
   { label: 'Polygon', value: OfferNetwork.polygon },
-  { label: 'Kovan', value: OfferNetwork.kovan },
+  // { label: 'Kovan', value: OfferNetwork.kovan },
 ]
 
 export const standardOptions = [

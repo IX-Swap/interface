@@ -42,7 +42,7 @@ export const FAQBlock: React.FC<Props> = (props) => {
                     <QuestionInput placeholder='Question Title'/>
                   </QuestionWrapper>
                   
-                  {idx > 0 && <RemoveButton onClick={handleRemove(idx)}><Trash /></RemoveButton>}
+                  {(faq.length > 1 || idx > 0) && <RemoveButton onClick={handleRemove(idx)}><Trash /></RemoveButton>}
                 </Question>
 
                 <Separator />
@@ -140,6 +140,7 @@ const AnswerInput = styled.textarea`
   border: none;
   background: none;
   outline: none;
+  resize: none;
 
   width: 100%;
   min-height: 120px;

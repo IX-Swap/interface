@@ -280,7 +280,6 @@ export interface Offer {
   updatedAt: Date
   deletedAt?: Date
 
-  owner: User
   files: OfferFile[];
   investments: OfferInvestment[];
   payments: OfferPayment[];
