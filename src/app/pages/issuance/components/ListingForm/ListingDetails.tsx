@@ -13,27 +13,26 @@ import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import classnames from 'classnames'
 import { UIRadio } from 'components/UIRadio/UIRadio'
 import React, { useState, useRef, useEffect } from 'react'
-
-export type ListingType = 'Secondary' | 'Otc' | 'Both'
+import { LISTING_TYPES } from '../../consts/listing'
 
 export interface ListingDetailsProps {
-  listingType: ListingType
-  setListingType: (value: ListingType) => void
+  listingType: LISTING_TYPES
+  setListingType: (value: LISTING_TYPES) => void
   onImportClick: (value: string) => void
 }
 
 export const radioButtonsList = [
   {
     label: 'Exchange',
-    value: 'Secondary'
+    value: LISTING_TYPES.EXCHANGE
   },
   {
     label: 'OTC',
-    value: 'Otc'
+    value: LISTING_TYPES.OTC
   },
   {
     label: 'Both',
-    value: 'Both'
+    value: LISTING_TYPES.BOTH
   }
 ]
 
@@ -81,7 +80,7 @@ export const ListingDetails = ({
                       [classes.active]: listingType === value
                     })}
                     onClick={() => {
-                      setListingType(value as ListingType)
+                      setListingType(value)
                     }}
                   >
                     <FormControlLabel

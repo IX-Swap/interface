@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { isDSOLive } from 'app/components/DSO/utils'
 import { Grid } from '@mui/material'
@@ -10,33 +10,18 @@ import {
   transformDataFromDSOToListingFormValue,
   transformListingToListingFormValue
 } from 'app/pages/issuance/utils/listing'
-import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
+import { LISTING_TYPES } from '../../consts/listing'
 
 export interface ListingFormProps {
   data?: DigitalSecurityOffering | Listing
   isNew?: boolean
-  listingType: null | ListingType | any
+  listingType?: LISTING_TYPES
 }
 
 export const ListingForm = (props: ListingFormProps) => {
   const { data, isNew = false, listingType } = props
   const isLive = isDSOLive(data as any)
   const isDataFromDSO = data !== undefined && !('maximumTradeUnits' in data)
-  const [listingTypeUpdated, setListingTypeUpdated] = useState('')
-
-  useEffect(() => {
-    switch (data?.listingType) {
-      case 'Exchange':
-        setListingTypeUpdated('Secondary')
-        break
-      case 'OTC':
-        setListingTypeUpdated('Otc')
-        break
-      case 'Exchange/OTC':
-        setListingTypeUpdated('Both')
-        break
-    }
-  }, [data?.listingType])
 
   return (
     <Form
@@ -63,9 +48,7 @@ export const ListingForm = (props: ListingFormProps) => {
             <ListingFormActions
               isDataFromDSO={isDataFromDSO}
               listing={data}
-              listingType={
-                listingType === '' ? listingTypeUpdated : listingType
-              }
+              listingType={listingType}
             />
           </Grid>
         </Grid>
