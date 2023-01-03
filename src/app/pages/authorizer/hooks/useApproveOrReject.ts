@@ -14,12 +14,13 @@ export interface UseApproveOrRejectArgs {
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const { action, cacheQueryKey, id, payload, listingType } = args
+  console.log(listingType, 'listingTypelistingType')
   const queryCache = useQueryCache()
   const category = useAuthorizerCategory()
   const { uri, listRoute } = authorizerItemMap[category]
   const _uri = uri.replace(/\/list$/, '')
-  console.log(listingType, 'listing')
-  console.log(category, 'category')
+  // console.log(listingType, 'listing')
+  // console.log(category, 'category')
   const url =
     category === 'virtual-accounts'
       ? `${_uri}/assign/${id}/${action}`
@@ -39,6 +40,9 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
     cacheQueryKey.length > 0
 
   const mutateFn = async () => {
+    if (category === 'listings' && action === 'approve') {
+      return await apiService.put(url, { listingType: listingType })
+    }
     return await apiService.put(url, payload)
   }
 
