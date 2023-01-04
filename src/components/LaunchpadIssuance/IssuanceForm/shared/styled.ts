@@ -101,11 +101,6 @@ export const OptionalLabel = styled.span`
 `
 
 export const DeleteButton = styled.button`
-  position: absolute;
-
-  top: -1rem;
-  right: 0;
-
   border: none;
   background: none;
 
