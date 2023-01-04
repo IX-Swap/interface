@@ -7,7 +7,7 @@ export const Banner = () => {
   return (
     <BannerContainer>
       <BannerTitle>
-        Invest in Startups and Other Unicorn Like Opportunites 
+        Invest in Startups and Other Unicorn-Like Opportunites 
       </BannerTitle>
 
       <BannerInfoRedirect>
