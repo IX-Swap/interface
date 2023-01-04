@@ -11,6 +11,7 @@ import {
   ListingRequestArgs
 } from 'app/pages/issuance/types/listings'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { LISTING_TYPES } from '../consts/listing'
 
 export const useUpdateListing = (
   listingId: string,
@@ -35,14 +36,16 @@ export const useUpdateListing = (
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
       replace(
-        listingType === 'OTC' || listingType === 'Otc'
+        listingType === LISTING_TYPES.OTC
           ? generatePath(IssuanceRoute.previewOTCListing, {
               OTCListingId: data.data._id,
               UserId: data.data.user._id
             })
           : generatePath(IssuanceRoute.viewListing, {
               listingId:
-                listingType === 'Both' ? data.data.result.id : data.data._id
+                listingType === LISTING_TYPES.BOTH
+                  ? data.data.result.id
+                  : data.data._id
             })
       )
 

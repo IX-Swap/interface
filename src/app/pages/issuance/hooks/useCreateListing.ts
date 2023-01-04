@@ -9,6 +9,7 @@ import {
   ListingRequestArgs
 } from 'app/pages/issuance/types/listings'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { LISTING_TYPES } from '../consts/listing'
 
 export const useCreateListing = (listingType: string | undefined) => {
   const { apiService, snackbarService } = useServices()
@@ -24,14 +25,14 @@ export const useCreateListing = (listingType: string | undefined) => {
   return useMutation(createListing, {
     onSuccess: data => {
       void snackbarService.showSnackbar('Success', 'success')
-      if (listingType === 'Secondary') {
+      if (listingType === LISTING_TYPES.EXCHANGE) {
         replace(
           generatePath(IssuanceRoute.viewListing, {
             listingId: data.data._id
           })
         )
       }
-      if (listingType === 'Otc') {
+      if (listingType === LISTING_TYPES.OTC) {
         replace(
           generatePath(IssuanceRoute.viewOTCListing, {
             UserId: user?._id,
@@ -39,7 +40,7 @@ export const useCreateListing = (listingType: string | undefined) => {
           })
         )
       }
-      if (listingType === 'Both') {
+      if (listingType === LISTING_TYPES.BOTH) {
         replace(
           generatePath(IssuanceRoute.viewOTCListing, {
             UserId: user?._id,

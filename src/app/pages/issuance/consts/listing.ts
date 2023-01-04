@@ -11,3 +11,9 @@ export const initialListingFormValues: SecondaryListingFormValues = {
   currency: '',
   dso: ''
 }
+
+export enum LISTING_TYPES {
+  OTC = 'OTC',
+  EXCHANGE = 'Exchange',
+  BOTH = 'Exchange/OTC'
+}

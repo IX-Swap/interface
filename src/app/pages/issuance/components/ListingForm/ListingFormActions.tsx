@@ -6,12 +6,12 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { CreateOrSaveListingButton } from 'app/pages/issuance/components/ListingForm/CreateOrSaveListingButton'
 import { getIdFromObj } from 'helpers/strings'
 import { Listing } from 'app/pages/issuance/types/listings'
-import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
+import { LISTING_TYPES } from '../../consts/listing'
 
 export interface ListingFormActionsProps {
   listing: DigitalSecurityOffering | Listing | undefined
   isDataFromDSO: boolean
-  listingType?: ListingType | any
+  listingType?: LISTING_TYPES | any
 }
 
 export const ListingFormActions = (props: ListingFormActionsProps) => {
@@ -29,7 +29,7 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
           onClick={() =>
             push({
               pathname:
-                listingType === 'Otc' || listingType === 'OTC'
+                listingType === LISTING_TYPES.OTC
                   ? generatePath(IssuanceRoute.previewOTCListing, {
                       OTCListingId: listing?._id,
                       UserId:

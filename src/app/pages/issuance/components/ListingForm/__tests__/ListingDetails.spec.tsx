@@ -5,6 +5,7 @@ import {
   radioButtonsList
 } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 import { fireEvent, waitFor } from '@testing-library/dom'
+import { LISTING_TYPES } from 'app/pages/issuance/consts/listing'
 
 describe('ListingDetails', () => {
   const setListPlace = jest.fn()
@@ -13,7 +14,7 @@ describe('ListingDetails', () => {
   it('invokes setListPlace on radio button wrapper click', async () => {
     const { getAllByTestId } = render(
       <ListingDetails
-        listingType={'Otc'}
+        listingType={LISTING_TYPES.OTC}
         setListingType={setListPlace}
         onImportClick={onImportClick}
       />

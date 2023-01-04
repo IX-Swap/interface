@@ -34,7 +34,7 @@ describe('CreateOrSaveListingButton', () => {
 
     const { getByText } = render(
       <CreateOrSaveListingButton
-        listingType={'Otc'}
+        listingType={'OTC'}
         listing={{} as any}
         isDataFromDSO={false}
       />
@@ -56,7 +56,7 @@ describe('CreateOrSaveListingButton', () => {
 
     const { getByText } = render(
       <CreateOrSaveListingButton
-        listingType={'Otc'}
+        listingType={'OTC'}
         listing={{} as any}
         isDataFromDSO={false}
       />
@@ -77,7 +77,7 @@ describe('CreateOrSaveListingButton', () => {
 
     const { getByText } = render(
       <CreateOrSaveListingButton
-        listingType={'Otc'}
+        listingType={'OTC'}
         listing={undefined}
         isDataFromDSO={false}
       />
@@ -105,7 +105,7 @@ describe('CreateOrSaveListingButton', () => {
 
     const { getByText } = render(
       <CreateOrSaveListingButton
-        listingType={'Otc'}
+        listingType={'OTC'}
         listing={{} as any}
         isDataFromDSO={true}
       />
@@ -133,7 +133,7 @@ describe('CreateOrSaveListingButton', () => {
 
     const { getByText } = render(
       <CreateOrSaveListingButton
-        listingType={'Otc'}
+        listingType={'OTC'}
         listing={{} as any}
         isDataFromDSO={false}
       />
