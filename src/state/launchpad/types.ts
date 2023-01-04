@@ -286,3 +286,10 @@ export interface Offer {
   subscriptions: OfferSubscription[];
   whitelists: OfferWhitelist[];
 }
+
+export interface Issuance {
+  id: string
+  name: string
+}
+
+export type IssuancePlain = Pick<Issuance, 'name'>

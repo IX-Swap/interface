@@ -5,13 +5,17 @@ import styled from 'styled-components'
 interface Props {
   current: moment.Moment
   selectedRange: moment.Moment[]
+
+  minDate?: Date
+
   onSelect: (value: moment.Moment) => void
 }
 
 export const CalendarPicker: React.FC<Props> = (props) => {
+  console.log(props.minDate)
   const [selectedRange, setSelectedRange] = React.useState<moment.Moment[]>([])
 
-  const currentDate = React.useMemo(() => moment(), [])
+  const currentDate = React.useMemo(() => moment(props.minDate), [])
   const firstDayOfMonth = React.useMemo(() => Number(moment(props.current).startOf('month').format('d')), [props.current])
 
   const weekdays = React.useMemo(() => moment.weekdaysMin(), [])

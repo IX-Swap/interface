@@ -1,15 +1,20 @@
 import React from 'react'
 
-import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceTextField } from 'components/LaunchpadIssuance/utils/TextField'
-import { FormFieldWrapper, OptionalLabel } from '../styled'
+import { FormFieldWrapper } from '../styled'
 
 interface Props {
-  label: string
+  label?: string
   placeholder?: string
 
+  trailing?: React.ReactNode
+
+  className?: string
+
+  value?: string
   optional?: boolean
   disabled?: boolean
+  borderless?: boolean
 
   span?: number
 
@@ -23,16 +28,18 @@ interface Props {
 
 export const FormField: React.FC<Props> = (props) => {
   return (
-    <FormFieldWrapper gap="0.5rem" span={props.span}>
+    <FormFieldWrapper gap="0.5rem" span={props.span} className={props.className}>
       <IssuanceTextField 
+        value={props.value}
         disabled={props.disabled}
-        label={<>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</>} 
+        label={props.label} 
+        error={props.error}
+        trailing={props.trailing}
+        borderless={props.borderless}
         placeholder={props.placeholder}
         onChange={value => props.setter(props.field, value)}
         inputFilter={props.inputFilter} 
       />
-
-      {props.error && <ErrorText>{props.error}</ErrorText>}
     </FormFieldWrapper>
   )
 }

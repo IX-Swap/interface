@@ -1,14 +1,7 @@
 import { OfferIndustry, OfferNetwork, OfferTokenStandart, OfferDistributionFrequency, OfferInvestmentStructure } from "state/launchpad/types"
-import { InformationFormValues } from "./types"
+import { InformationFormValues, OfferTokenType, SocialMediaType } from "./types"
 
-export enum OfferTokenType {
-  WIXS,
-  WBTC,
-  WETH,
-  MATIC,
-  USDC,
-  USDT
-}
+
 
 export const initialValues = {
   profilePicture: undefined,
@@ -60,7 +53,11 @@ export const initialValues = {
     sale: undefined,
     closed: undefined,
     claim: undefined
-  }
+  },
+
+  social: [
+    { type: SocialMediaType.twitter }
+  ]
 
 } as unknown as InformationFormValues
 

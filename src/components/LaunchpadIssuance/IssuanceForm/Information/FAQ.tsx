@@ -7,10 +7,8 @@ import { Plus, Trash } from 'react-feather'
 import { Column, Separator } from 'components/LaunchpadMisc/styled'
 
 import { OfferFAQ } from 'state/launchpad/types'
-
-import { FormGrid } from '../shared/FormGrid'
-import { FormField } from '../shared/fields/FormField'
-import { TextareaField } from '../shared/fields/TextareaField'
+import { useGetFieldArrayId } from 'state/launchpad/hooks'
+import { AddButton } from '../shared/styled'
 
 interface Props {
   faq: OfferFAQ[]
@@ -18,13 +16,9 @@ interface Props {
   setter: (field: string, value: any) => void
 }
 
-let counter = 0;
-function getId() {
-  return ++counter;
-}
-
 export const FAQBlock: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const getId = useGetFieldArrayId()
   
   const faq = React.useMemo(() => props.faq as (OfferFAQ & { id: number })[], [props.faq])
 
@@ -144,37 +138,6 @@ const AnswerInput = styled.textarea`
 
   width: 100%;
   min-height: 120px;
-`
-
-const AddButton = styled.button`
-  display: flex;
-  flex-flow: row nowrap;
-
-  justify-content: flex-start;
-  align-items: center;
-
-  gap: 0.5rem;
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  cursor: pointer;
-
-  color: ${props => props.theme.launchpad.colors.primary};
-
-  padding: 0.25rem;
-
-  border: none;
-  border-radius: 6px;
-  background: none;
-
-  :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
-  }
 `
 
 const RemoveButton = styled(AddButton)`

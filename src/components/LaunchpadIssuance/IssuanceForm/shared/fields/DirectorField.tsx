@@ -1,13 +1,17 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { FormField } from './FormField'
+import { Plus } from 'react-feather'
+import { FieldArray } from 'formik'
+
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
+
 import { Column, Row } from 'components/LaunchpadMisc/styled'
+
+import { FormField } from './FormField'
 import { FileField } from './FileField'
-import { Plus, Trash } from 'react-feather'
 import { DeleteButton } from '../styled'
 import { DirectorInfo } from '../../Vetting/types'
-import { FieldArray } from 'formik'
 
 interface Props {
   directorTitle: string
@@ -28,50 +32,56 @@ export const DirectorField: React.FC<Props> = (props) => {
   const directors = React.useMemo(() => props.directors as (DirectorInfo & { id: number })[], [props.directors])
 
   return (
-    <FieldArray name={props.field}>
-      {({ push, handleRemove }) => (
-        <>
-          {directors.map((entry, idx) => (
-            <Column gap="1rem" key={entry.id}>
-              <FormField 
-                label={`Name of ${props.directorTitle}`} 
-                placeholder={`Full name of ${props.directorTitle}`}
-                setter={props.setter}
-                field={`${props.field}[${idx}].name`}
-              />
+    <Column gap="1rem" alignItems="stretch">
+      <FieldArray name={props.field}>
+        {({ push, handleRemove }) => (
+          <>
+            {directors.map((entry, idx) => (
+              <Column gap="2rem" key={entry.id}>
+                <Column gap="0.25rem">
+                  <FullnameLabel>{`Name of ${props.directorTitle}`}</FullnameLabel>
+                  <FullnameHint>{`Full name of ${props.directorTitle}`}</FullnameHint>
+                  
+                  <FormField 
+                    placeholder="Full Name"
+                    setter={props.setter}
+                    field={`${props.field}[${idx}].name`}
+                  />
+                </Column>
 
-              <FilesRow>
-                <FileField 
-                  label={`Proof of Identity (${props.directorTitle})`}
-                  hint="Certified true copy of passport and other official forms of identification"
-                  field={`${props.field}[${idx}].proofOfIdentity`} 
-                  setter={props.setter}
-                />
-                <FileField 
-                  label={`Proof of Address (${props.directorTitle})`}
-                  hint={`Proof of Address for ${props.directorTitle}`}
-                  field={`${props.field}[${idx}].proofOfAddress`}
-                  setter={props.setter}
-                />
+                <FilesRow>
+                  <FileField 
+                    label={`Proof of Identity (${props.directorTitle})`}
+                    hint="Certified true copy of passport and other official forms of identification"
+                    field={`${props.field}[${idx}].proofOfIdentity`} 
+                    setter={props.setter}
+                  />
+                  <FileField 
+                    label={`Proof of Address (${props.directorTitle})`}
+                    hint={`Proof of Address for ${props.directorTitle}`}
+                    field={`${props.field}[${idx}].proofOfAddress`}
+                    setter={props.setter}
+                  />
 
-                {idx > 0 && (
-                  <DeleteButton onClick={handleRemove(idx)}>
-                    <Trash color={theme.launchpad.colors.text.bodyAlt} size="20" />
-                  </DeleteButton>
-                )}
-              </FilesRow>
+                  {(directors.length > 1 || idx > 0) && (
+                    <DeleteButton onClick={handleRemove(idx)}>
+                      <Trash />
+                    </DeleteButton>
+                  )}
+                </FilesRow>
 
-            </Column>
-          ))}
-          
-          <AddDirectorButton onClick={() => push({ id: getId() })}>
-            <header>Add Director</header>
-            <main>Must include all {props.directorTitle}s</main>
-            <aside><Plus color={theme.launchpad.colors.primary} size="12" /></aside>
-          </AddDirectorButton>
-        </>
-      )}
-    </FieldArray>
+              </Column>
+            ))}
+            
+            <AddDirectorButton onClick={() => push({ id: getId() })}>
+              <header>Add {props.directorTitle}</header>
+              <main>Must include all {props.directorTitle}s</main>
+              <aside><Plus color={theme.launchpad.colors.primary} size="12" /></aside>
+            </AddDirectorButton>
+          </>
+        )}
+      </FieldArray>
+    </Column>
   )
 }
 
@@ -89,19 +99,40 @@ const FilesRow = styled.div`
   }
 `
 
+const FullnameLabel = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${props => props.theme.launchpad.colors.text.title};
+`
+const FullnameHint = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 17px;
+  letter-spacing: -0.01em;
+  
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+`
 
 const AddDirectorButton = styled.button`
   display: grid;
   
   grid-template-rows: 10px auto;
-  grid-template-columns: 10px 190px;
+  grid-template-columns: 10px auto;
   grid-template-areas:
     "icon title"
     "icon subtitle";
 
+  place-content: start;
   place-items: start;
 
-  width: min-content;
+  width: max-content;
 
   background: none;
   border: none;
@@ -140,6 +171,8 @@ const AddDirectorButton = styled.button`
 
     line-height: 150%;
     letter-spacing: -0.02em;
+
+    text-align: left;
 
     color: ${props => props.theme.launchpad.colors.text.bodyAlt};
   }
