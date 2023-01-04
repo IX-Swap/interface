@@ -29,6 +29,7 @@ import { initialValues, industryOptions, tokenTypeOptions, networkOptions, stand
 import { GalleryBlock } from './Gallery'
 import { countriesList } from 'constants/countriesList'
 import { AdditionalInformation } from './AdditionalInformation'
+import { UploadDocuments } from './UploadDocuments'
 
 
 export const IssuanceInformationForm = () => {
@@ -152,7 +153,7 @@ export const IssuanceInformationForm = () => {
               <FormField field="companyId" setter={setFieldValue} label="Company Identification Number" placeholder='Company Identification Number' />
 
               <DropdownField field="industry" setter={setFieldValue} label="Industry" options={industryOptions} />
-              <DropdownField field="investmentStructure" setter={setFieldValue} label="Investment Structure" options={investmentStructureOptions} />
+              <DropdownField field="investmentStructure" setter={setFieldValue} label="Investment Type" options={investmentStructureOptions} />
               <DropdownField field="country" setter={setFieldValue} label="Deal Country" options={countries} />
             </FormGrid>
             
@@ -166,8 +167,8 @@ export const IssuanceInformationForm = () => {
               <DropdownField field='tokenType' setter={setFieldValue} options={tokenTypeOptions} label='Token to Make Issuance in' placeholder='Token Type' />
               <DropdownField field='network' setter={setFieldValue} options={networkOptions} label='Blockchain Network' placeholder='Blockchain Network' />
               
-              <FormField field='hardCap' setter={setFieldValue} label='Total Amount to Raise (Amount in the selected token type)' placeholder='Total Amount to Raise' />
-              <FormField field='softCap' setter={setFieldValue} label='Minimum Amount to Raise' placeholder='Minimum Amount to Raise' />
+              <FormField field='hardCap' setter={setFieldValue} label='Total Amount to Raise (Amount in the selected token type)' placeholder='Total Amount to Raise' inputFilter={numberFilter} />
+              <FormField field='softCap' setter={setFieldValue} label='Minimum Amount to Raise' placeholder='Minimum Amount to Raise' inputFilter={numberFilter}/>
               
               <FormField field='pricePerToken' setter={setFieldValue} label='Price per Token' placeholder='Price per Token' inputFilter={numberFilter} />
               <DropdownField field='tokenStandard' setter={setFieldValue} options={standardOptions} label='Token Standard' placeholder='Token Standard' />
@@ -325,6 +326,7 @@ export const IssuanceInformationForm = () => {
 
             <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} />
             <AdditionalInformation social={values.social} setter={setFieldValue}/>
+            <UploadDocuments documents={values.additionalDocuments} setter={setFieldValue} />
           </FormBody>
         )}
       </Formik>

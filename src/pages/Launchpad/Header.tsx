@@ -7,8 +7,12 @@ import { ReactComponent as Logo } from 'assets/launchpad/svg/logo.svg'
 import { routes } from 'utils/routes'
 import { Link } from 'react-router-dom'
 import { isDevelopment } from 'utils/isEnvMode'
+import { useUserState } from 'state/user/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 
 export const Header = () => {
+  const { kyc } = useKYCState()
+
   return (
     <HeaderContainer>
       <TitleSection to="/launchpad">
@@ -26,7 +30,8 @@ export const Header = () => {
         <HeaderLink to={(isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}>Charts</HeaderLink>
       </HeaderLinks>
 
-      <IssuancesLink to="/issuance">Issuance</IssuancesLink>
+      {kyc?.corporate && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
+
       <Wallet />
     </HeaderContainer>
   )

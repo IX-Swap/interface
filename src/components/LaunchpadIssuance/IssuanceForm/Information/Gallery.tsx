@@ -93,9 +93,9 @@ export const GalleryBlock: React.FC<Props> = (props) => {
                     placeholder='URL' 
                     borderless
                     trailing={(props.videos.length > 1 || idx > 0) && (
-                      <DeleteButton onClick={handleRemove(idx)}>
+                      <RemoveButton onClick={handleRemove(idx)}>
                         <Trash />
-                      </DeleteButton>
+                      </RemoveButton>
                     )}
                   />
                 </VideoLinkContainer>
@@ -237,4 +237,10 @@ const VideoLinkSeparator = styled.div`
   height: 100%;
 
   flex-grow: 0;
+`
+
+const RemoveButton = styled(DeleteButton)`
+  position: absolute;
+
+  right: 1rem;
 `

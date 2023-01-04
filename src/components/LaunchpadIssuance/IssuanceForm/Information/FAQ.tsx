@@ -2,7 +2,8 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { FieldArray } from 'formik'
-import { Plus, Trash } from 'react-feather'
+import { Plus } from 'react-feather'
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
 import { Column, Separator } from 'components/LaunchpadMisc/styled'
 

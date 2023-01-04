@@ -1,7 +1,8 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { Plus, Trash, Image } from 'react-feather'
+import { Plus, Image } from 'react-feather'
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
 import { FieldArray} from 'formik'
 
@@ -34,9 +35,9 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
             {members.map((member, idx) => (
               <MemberEntry key={`member-${member.id}`}>
                 {(members.length > 1 || idx > 0) && (
-                  <DeleteButton onClick={handleRemove(idx)}>
-                    <Trash color={theme.launchpad.colors.text.bodyAlt} size="20" />
-                  </DeleteButton>
+                  <RemoveButton onClick={handleRemove(idx)}>
+                    <Trash color={theme.launchpad.colors.text.bodyAlt} />
+                  </RemoveButton>
                 )}
 
                 <FileField 
@@ -94,4 +95,10 @@ const Container = styled.div`
 
 const MemberEntry = styled(FormGrid)`
   position: relative;
+`
+const RemoveButton = styled(DeleteButton)`
+  position: absolute;
+
+  top: -1rem;
+  right: 0;
 `

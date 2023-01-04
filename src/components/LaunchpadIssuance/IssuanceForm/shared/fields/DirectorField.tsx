@@ -38,7 +38,7 @@ export const DirectorField: React.FC<Props> = (props) => {
           <>
             {directors.map((entry, idx) => (
               <Column gap="2rem" key={entry.id}>
-                <Column gap="0.25rem">
+                <Column gap="0.25rem" width="50%" padding=" 0 0.75rem 0 0">
                   <FullnameLabel>{`Name of ${props.directorTitle}`}</FullnameLabel>
                   <FullnameHint>{`Full name of ${props.directorTitle}`}</FullnameHint>
                   
@@ -94,6 +94,8 @@ const FilesRow = styled.div`
   gap: 1.5rem;
   margin-top: 1rem;
 
+  grid-column: span 2;
+
   > * {
     flex-grow: 1;
   }
@@ -102,20 +104,20 @@ const FilesRow = styled.div`
 const FullnameLabel = styled.div`
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
 
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  line-height: 17px;
+  letter-spacing: -0.01em;
 
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 const FullnameHint = styled.div`
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 12px;
 
-  line-height: 17px;
-  letter-spacing: -0.01em;
+  line-height: 150%;
+  letter-spacing: -0.02em;
   
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
@@ -180,4 +182,11 @@ const AddDirectorButton = styled.button`
   aside {
     grid-area: icon;
   }
+`
+
+const RemoveButton = styled(DeleteButton)`
+  position: absolute;
+
+  top: -1rem;
+  right: 0;
 `

@@ -86,9 +86,9 @@ export const IssuanceVettingForm = () => {
                 Upload additional documents relevant to the funding objective. (Optional)
               </Hint>
 
-              <OutlineButton padding="0">
+              <AddDocumentButton padding="0">
                 <Plus size="14" /> Add Document
-              </OutlineButton>
+              </AddDocumentButton>
 
               <TextareaField 
                 label="Description"
@@ -193,9 +193,14 @@ const DescriptionBlock = styled.div`
     ". . ."
     "description description description";
 
-  gap: 1rem;
+  gap: 2.5rem 1rem;
 
   align-items: end;
+`
+
+
+const AddDocumentButton = styled(OutlineButton)`
+  margin-bottom: 1.25rem;
 `
 
 const Hint = styled.div`
@@ -209,6 +214,8 @@ const Hint = styled.div`
   text-align: right;
 
   color: #8D8DA3;
+  
+  margin-bottom: 1rem;
 `
 
 const FilesBlock = styled.div`

@@ -7,7 +7,7 @@ import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { useDropzone } from 'react-dropzone'
 
 interface Props {
-  label: string
+  label?: React.ReactNode
   hint?: React.ReactNode
 
   span?: number
@@ -15,6 +15,7 @@ interface Props {
 
   optional?: boolean
   disabled?: boolean
+  borderless?: boolean
   showLabelInside?: boolean
 
   icon?: React.ReactNode
@@ -50,7 +51,7 @@ export const FileField: React.FC<Props> = (props) => {
         {props.hint && <FieldHint>{props.hint}</FieldHint>}
       </Column>
 
-      <FieldWrapper {...getRootProps()} onClick={openFileBrowser}>
+      <FieldWrapper {...getRootProps()} onClick={openFileBrowser} borderless={props.borderless}>
         {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
         <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>
 
@@ -92,7 +93,7 @@ const FieldHint = styled.div`
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-const FieldWrapper = styled.div`
+const FieldWrapper = styled.div<{ borderless?: boolean }>`
   display: flex;
 
   flex-flow: row nowrap;
@@ -101,7 +102,7 @@ const FieldWrapper = styled.div`
   gap: 0.5rem;
   padding: 1.5rem 2rem;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  ${props => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
   border-radius: 6px;
 `
 

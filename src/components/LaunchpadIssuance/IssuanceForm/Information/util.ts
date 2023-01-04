@@ -42,7 +42,7 @@ export const initialValues = {
   
   images: [],
   videos: [{ id: 0 }],
-  additionalDocuments: [],
+  additionalDocuments: [{ id: 0 }],
 
   members: [{ id: 0 }],
   faq: [{ id: 0 }],

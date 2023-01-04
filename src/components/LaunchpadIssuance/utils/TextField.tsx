@@ -76,7 +76,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
           maxLength={props.type === 'text' ? 19 : 255}
         />
 
-        {props.trailing && props.trailing}
+        {props.trailing}
       </FieldInputContainer>
       
       {props.error && <ErrorText>{props.error}</ErrorText>}
