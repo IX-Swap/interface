@@ -28,6 +28,7 @@ import { FAQBlock } from './FAQ'
 import { initialValues, industryOptions, tokenTypeOptions, networkOptions, standardOptions, distributionFrequencyOptions, investmentStructureOptions } from './util'
 import { GalleryBlock } from './Gallery'
 import { countriesList } from 'constants/countriesList'
+import { AdditionalInformation } from './AdditionalInformation'
 
 
 export const IssuanceInformationForm = () => {
@@ -126,12 +127,14 @@ export const IssuanceInformationForm = () => {
             <ImageBlock>
               <ImageField 
                 label='Profile Picture'
+                image={values.profilePicture}
                 field='profilePicture'
                 setter={setFieldValue}
               />
               
               <ImageField 
                 label='Deal Cards Image'
+                image={values.cardPicture}
                 field='cardPicture'
                 setter={setFieldValue}
               />
@@ -243,11 +246,48 @@ export const IssuanceInformationForm = () => {
               }
             >
 
-              <DateRangeField mode='single' label='Register to Invest' field='terms.whitelist' setter={setFieldValue} />
-              <DateRangeField mode='single' label='Pre-Sale' field='terms.presale' setter={setFieldValue} />
+              <DateRangeField 
+                mode='single'
+                label='Register to Invest'
+                field='terms.whitelist'
+                setter={setFieldValue}
+              />
+
+              <DateRangeField 
+                mode='single'
+                label='Pre-Sale'
+                field='terms.presale'
+                setter={setFieldValue}
+                disabled={!values.hasPresale || !values.terms.whitelist}
+                minDate={values.terms.whitelist}
+              />
+
+              {/* <div style={{ color: 'black'}}>
+                {values.hasPresale?.toString() ?? 'not set'}
+                {values.terms.whitelist?.toString() ?? 'not set'}
+                {values.terms.presale?.toString() ?? 'not set'}
+              </div> */}
               
-              <DateRangeField mode='range' label='Public Sale to Closed' field='terms.sale' setter={setFieldValue} />
-              <DateRangeField mode='single' label='Token Claim' field='terms.claim' setter={setFieldValue} />
+              <DateRangeField 
+                mode='range'
+                label='Public Sale to Closed'
+                field='terms.sale'
+                disabled={(values.hasPresale && !values.terms.presale) || (!values.hasPresale && !values.terms.whitelist)}
+                minDate={values.hasPresale ? values.terms.presale : values.terms.whitelist}
+                onChange={([start, end]) => {
+                  setFieldValue('terms.sale', start?.toDate());
+                  setFieldValue('terms.closed', end?.toDate())
+                }}
+              />
+
+              <DateRangeField
+                mode='single'
+                label='Token Claim'
+                field='terms.claim'
+                setter={setFieldValue}
+                disabled={!values.terms.closed}
+                minDate={values.terms.closed}
+              />
 
             </FormGrid>
 
@@ -284,6 +324,7 @@ export const IssuanceInformationForm = () => {
             </FormGrid>
 
             <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} />
+            <AdditionalInformation social={values.social} setter={setFieldValue}/>
           </FormBody>
         )}
       </Formik>

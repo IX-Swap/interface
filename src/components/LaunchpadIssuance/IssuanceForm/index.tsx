@@ -16,6 +16,8 @@ import { IssuanceFormStep } from './IssuanceFormStep'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { IssuanceStatus } from '../types'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { useGetIssuanceFull } from 'state/launchpad/hooks'
+import { Issuance } from 'state/launchpad/types'
 
 const statuses = {
   // vettingStatus: IssuanceStatus.pendingApproval,
@@ -28,6 +30,10 @@ const statuses = {
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
+
+  const getIssuances = useGetIssuanceFull()
+
+  const [myIssuances, setMyIssuances] = React.useState<Issuance[]>([])
 
   const { issuanceStatus, vettingStatus } = statuses
 
@@ -42,6 +48,10 @@ export const NewIssuanceForm = () => {
 
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
 
+  React.useEffect(() => {
+    getIssuances().then(res => setMyIssuances(res.items))
+  }, [])
+
   return (
     <Wrapper>
       <FormHeader>
@@ -53,7 +63,7 @@ export const NewIssuanceForm = () => {
 
         <IssuanceNameContainer>
           <IssuanceName>{issuer}</IssuanceName>
-          <ChevronDown fill={theme.launchpad.colors.text.title} />
+          {myIssuances.length > 1 && <ChevronDown fill={theme.launchpad.colors.text.title} />}
         </IssuanceNameContainer>
         
         <NewIssuanceButtonContainer>

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { Formik } from 'formik'
+import { FieldArray, Formik } from 'formik'
 
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'

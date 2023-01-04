@@ -1,6 +1,26 @@
 import { OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
 import { DateSchema } from "yup"
 
+export enum OfferTokenType {
+  WIXS,
+  WBTC,
+  WETH,
+  MATIC,
+  USDC,
+  USDT
+}
+
+export enum SocialMediaType {
+  twitter = 'twitter',
+  telegram = 'telegram',
+  linkedIn = 'linkedIn',
+  discord = 'discord',
+  reddit = 'reddit',
+  youTube = 'youTube',
+  coinMarketCap = 'counMarketCap',
+  coinGecko = 'coinGecko'
+}
+
 export interface VideoLink {
   title: string
   url: string
@@ -51,11 +71,19 @@ export interface InformationFormValues {
   faq: FAQEntry[]
 
   terms: {
-    whitelist: DateRange
-    presale: DateRange
-    sale: DateRange
+    whitelist: Date
+    presale: Date
+    sale: Date
+    closed: Date
     claim: Date
   }
+
+  social: SocialMediaLink[]
+}
+
+export interface SocialMediaLink {
+  type: SocialMediaType
+  url: string
 }
 
 export interface AdditionalDocument {

@@ -20,8 +20,10 @@ interface Props {
 
   disabled?: boolean
 
+  minDate?: Date
+
   field?: string
-  setter?: (field: string, value: DateRange) => void
+  setter?: (field: string, value: any) => void
   onChange?: (range: DateRange) => void
 }
 
@@ -48,40 +50,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
     } else {
       setRange([value])
     }
-
-
-    // if (range.length === 0) {
-    //   setRange([value])
-    // } else if (range.length < 2) {
-    //   const selected = range[0]
-
-    //   if (selected.isBefore(value)) {
-    //     setRange([selected, value])
-    //   } else {
-    //     setRange([value, selected])
-    //   }
-    // } else {
-    //   const [start, end] = range
-
-    //   if (value.isBetween(start, end)) {
-    //     console.log(
-    //       value.format('DD/MM/YYYY'),
-    //       start.format('DD/MM/YYYY'), 
-    //       end.format('DD/MM/YYYY')
-    //     )
-
-    //     console.log(value.diff(start), end.diff(value))
-        
-    //     setRange(value.diff(start) < end.diff(value)
-    //       ? [value, end]
-    //       : [start, value])
-
-    //   } else if (value.isSameOrBefore(start)) {
-    //     setRange([value, end])
-    //   } if (value.isSameOrAfter(end)) {
-    //     setRange([start, value])
-    //   } 
-    // }
   }, [range])
 
   const moveMonthBack = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') - 1)), [])
@@ -89,7 +57,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
   
   React.useEffect(() => {
     if (props.field && props.setter) {
-      props.setter(props.field, range)
+      props.setter(props.field, props.mode === 'single' ? range[0] : range)
     }
 
     if (props.onChange) {
@@ -99,7 +67,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   return (
     <Column>
-      <FieldContainer onClick={toggle}>
+      <FieldContainer disabled={props.disabled} onClick={toggle}>
         <FieldIcon><Calendar color={theme.launchpad.colors.text.caption} /></FieldIcon>
         <FieldLabel>{props.label}</FieldLabel>
         
@@ -126,7 +94,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
             <DatePickerTitle>{currentMonth.format('MMMM YYYY')}</DatePickerTitle>
           </DatePickerHeader>
 
-          <CalendarPicker current={currentMonth} selectedRange={range} onSelect={onSelect} />
+          <CalendarPicker minDate={props.minDate} current={currentMonth} selectedRange={range} onSelect={onSelect} />
           
           <DatePickerHeader area='next-header'>
             <DatePickerTitle>{nextMonth.format('MMMM YYYY')}</DatePickerTitle>
@@ -135,7 +103,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
             </ChangeMonthButton>
           </DatePickerHeader>
 
-          <CalendarPicker current={nextMonth} selectedRange={range} onSelect={onSelect} />
+          <CalendarPicker minDate={props.minDate} current={nextMonth} selectedRange={range} onSelect={onSelect} />
         </DatePicker>
       </IssuanceDialog>
 
@@ -144,7 +112,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
   )
 }
 
-const FieldContainer = styled.div`
+const FieldContainer = styled.div<{ disabled?: boolean }>`
   position: relative;
 
   display: grid;
@@ -160,7 +128,7 @@ const FieldContainer = styled.div`
   gap: 0.25rem;
   padding: 1rem;
 
-  cursor: pointer;
+  ${props => !props.disabled && `cursor: pointer;`}
 
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;

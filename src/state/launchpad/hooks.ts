@@ -6,17 +6,16 @@ import { FilterConfig } from "components/Launchpad/InvestmentList/Filter"
 
 import { KYCStatuses } from "pages/KYC/enum"
 
-import { useCurrency } from "hooks/Tokens"
-
 import { AppState } from "state"
 import { useKYCState } from "state/kyc/hooks"
 import { tryParseAmount } from "state/swap/helpers"
 
-import { Offer, OfferStatus, WhitelistStatus } from "state/launchpad/types"
+import { Issuance, IssuancePlain, Offer, OfferStatus, WhitelistStatus } from "state/launchpad/types"
 
 import { toggleKYCDialog } from "./actions"
 
 import apiService from "services/apiService"
+import { PaginateResponse } from "types/pagination"
 
 interface OfferPagination {
   page: number
@@ -181,4 +180,19 @@ export const useDerivedBalanceInfo = (id: string) => {
 export const useClaimOffer = (id: string) => {
   return React.useCallback((isSuccessful: boolean) => 
     apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, null), [id])
+}
+
+
+export const useGetIssuancePlain = () => {
+  return React.useCallback(() => apiService.get('/issuances/me/plain').then(res => res.data as IssuancePlain[]), [])
+}
+
+export const useGetIssuanceFull = () => {
+  return React.useCallback(() => apiService.get('/issuances/me/full').then(res => res.data as PaginateResponse<Issuance>), [])
+}
+
+export const useGetFieldArrayId = () => {
+  let counter = 0;
+
+  return () => ++counter;
 }
