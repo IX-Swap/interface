@@ -45,7 +45,7 @@ export const DirectorField: React.FC<Props> = (props) => {
                   <FormField 
                     placeholder="Full Name"
                     setter={props.setter}
-                    field={`${props.field}[${idx}].name`}
+                    field={`${props.field}[${idx}].fullName`}
                   />
                 </Column>
 

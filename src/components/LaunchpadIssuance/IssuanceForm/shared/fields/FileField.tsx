@@ -29,12 +29,15 @@ export const FileField: React.FC<Props> = (props) => {
 
   const input = React.useRef<HTMLInputElement>(null)
 
+  const [value, setValue] = React.useState<File>()
+
   const openFileBrowser = React.useCallback(() => {
     input.current?.click()
   }, [input.current])
 
   const onFileSelect = React.useCallback((files: File[]) => {
     props.setter(props.field, files[0])
+    setValue(files[0])
   }, [])
   
   const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
@@ -53,7 +56,10 @@ export const FileField: React.FC<Props> = (props) => {
 
       <FieldWrapper {...getRootProps()} onClick={openFileBrowser} borderless={props.borderless}>
         {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
-        <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>
+
+        {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
+        {value && <Prompt>{value.name}</Prompt>}
+        
 
         <input 
           {...getInputProps()}

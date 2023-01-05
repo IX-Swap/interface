@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { FieldArray, Formik } from 'formik'
+import { Formik } from 'formik'
 
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
@@ -17,6 +17,7 @@ import { DirectorField } from '../shared/fields/DirectorField'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
 import { TextareaField } from '../shared/fields/TextareaField'
+import { useSubmitVettingForm } from 'state/launchpad/hooks'
 
 
 const initialValues = {
@@ -25,7 +26,6 @@ const initialValues = {
   companyName: undefined,
   companyWebsite: undefined,
   companyPitchDeck: undefined,
-  companyAdditionalFiles: [],
   description: undefined,
   certificateIncorporation: undefined,
   certificateIncumbency: undefined,
@@ -35,18 +35,42 @@ const initialValues = {
   ownershipStructure: undefined,
   authorizedSignatoryList: undefined,
   beneficialOwners: [{ id: 0 }],
-  directors: [{ id: 0 }]
+  directors: [{ id: 0 }],
+  fundingDocuments: []
 } as unknown as VettingFormValues
 
 export const IssuanceVettingForm = () => {
   const theme = useTheme()
   const history = useHistory()
-  
-  const goBack = React.useCallback(() => history.push('/issuance/create'), [history])
 
-  const submit = React.useCallback((values: VettingFormValues) => {
-    console.log('submitted')
+
+  const issuanceId = React.useMemo(() => {
+    const value = decodeURI(history.location.search).replace('?', '').split('&')
+      .map(x => x.split('='))
+      .map(([key, value]) => ({ key, value }))
+      .find(x => x.key === 'id')
+      ?.value
+
+    if (!value) {
+      return
+    }
+
+    return Number(value)
+  }, [history.location.search])
+  
+  const createVetting = useSubmitVettingForm(issuanceId)
+  
+  const goBack = React.useCallback(() => history.push(`/issuance/create?id=${issuanceId}`), [history, issuanceId])
+
+  const submit = React.useCallback(async (values: VettingFormValues) => {
+    await createVetting(values)
+
+    goBack();
   }, [])
+
+  if (!issuanceId) {
+    return null
+  }
 
   return (
     <FormContainer>
@@ -71,8 +95,8 @@ export const IssuanceVettingForm = () => {
         {({ submitForm, setFieldValue, values, errors }) => (
           <FormBody>
             <IssuerInfoBlock>
-              <FormField label="Applicant's Full Name" placeholder="Full name of the Applicant" field="applicantFullName" setter={setFieldValue} />
-              <FormField label="Email Address" placeholder="Email Address" field="applicantEmail" setter={setFieldValue} />
+              <FormField label="Applicant's Full Name" placeholder="Full name of the Applicant" field="applicantFullname" setter={setFieldValue} />
+              <FormField label="Email Address" placeholder="Email Address" field="email" setter={setFieldValue} />
               <FormField label="Name of Company" placeholder="Name of your company" field="companyName" setter={setFieldValue} />
               <FormField label="Company Website" placeholder="Company Website" field="companyWebsite" setter={setFieldValue} />
             </IssuerInfoBlock>
@@ -80,7 +104,7 @@ export const IssuanceVettingForm = () => {
             <Separator />
 
             <DescriptionBlock>
-              <FileField label="Upload the company’s pitch deck" field="companyPitchDeck" setter={setFieldValue} />
+              <FileField label="Upload the company’s pitch deck" field="pitchDeck" setter={setFieldValue} />
 
               <Hint>
                 Upload additional documents relevant to the funding objective. (Optional)
@@ -105,16 +129,16 @@ export const IssuanceVettingForm = () => {
               <FileField 
                 label="Certificate of Incorporation"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
-                field="certificateIncorporation"
-                error={errors.certificateIncorporation && 'Required'}
+                field="certificateOfIncorporation"
+                error={errors.certificateOfIncorporation && 'Required'}
                 setter={setFieldValue}
               />
               <FileField 
                 optional
                 label="Certificate of Incumbency"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
-                field="certificateIncumbency"
-                error={errors.certificateIncumbency && 'Required'}
+                field="certificateOfIncumbency"
+                error={errors.certificateOfIncumbency && 'Required'}
                 setter={setFieldValue}
               />
               
@@ -129,16 +153,16 @@ export const IssuanceVettingForm = () => {
                 optional
                 label="Copy of Audited Financials"
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
-                field="copyOfAuditedFinancials"
-                error={errors.copyOfAuditedFinancials && 'Required'}
+                field="auditedFinancials"
+                error={errors.auditedFinancials && 'Required'}
                 setter={setFieldValue}
               />
               
               <FileField 
                 label="Memorandum and Article of Association Company Constitution"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
-                field="memorandumAndAssociacion"
-                error={errors.memorandumAndAssociacion && 'Required'}
+                field="memorandumArticle"
+                error={errors.memorandumArticle && 'Required'}
                 setter={setFieldValue}
               />
               <FileField 
@@ -152,8 +176,8 @@ export const IssuanceVettingForm = () => {
               <FileField 
                 label="Resolution of Authorized Signatory List"
                 hint="Document must include specimen signatures or equivalent"
-                field="authorizedSignatoryList"
-                error={errors.authorizedSignatoryList && 'Required'}
+                field="resolutionAuthorizedSignatory"
+                error={errors.resolutionAuthorizedSignatory && 'Required'}
                 setter={setFieldValue}
               />
             </FilesBlock>

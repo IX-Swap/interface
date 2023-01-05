@@ -1,32 +1,32 @@
 export interface VettingFormValues {
   applicantFullname: string
-  applicantEmail: string
+  email: string
 
   companyName: string
   companyWebsite: string
 
-  companyPitchDeck: File
-  companyAdditionalFiles: File[]
-
   description: string
 
-  certificateIncorporation: File
-  certificateIncumbency: File
+  pitchDeck: File
+  fundingDocuments: File[]
+
+  certificateOfIncorporation: File
+  certificateOfIncumbency: File
 
   shareDirectorRegistry: File
-  copyOfAuditedFinancials: File
+  auditedFinancials: File
 
-  memorandumAndAssociacion: File
+  memorandumArticle: File
   ownershipStructure: File
 
-  authorizedSignatoryList: File
+  resolutionAuthorizedSignatory: File
 
   beneficialOwners: DirectorInfo[]
   directors: DirectorInfo[]
 }
 
 export interface DirectorInfo {
-  name: string
+  fullName: string
   proofOfIdentity: File
   proofOfAddress: File
 }
