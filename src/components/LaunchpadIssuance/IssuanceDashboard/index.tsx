@@ -12,7 +12,7 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { Centered, Column } from 'components/LaunchpadMisc/styled'
 
-import { IssuanceFilter, issuers, IssuanceStatus, Issuance } from '../types'
+import { IssuanceFilter, issuers, IssuanceStatus, Issuance, statuses } from '../types'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 
 
@@ -29,7 +29,7 @@ const useIssuances = () => {
     return Array(10).fill(null).map(() => ({
       startDate: new Date(),
       issuer: issuers[Math.floor(Math.random() * issuers.length)],
-      status: Math.floor(Math.random() * 5) as IssuanceStatus
+      status: statuses[Math.floor(Math.random() * statuses.length)] as IssuanceStatus
     } as Issuance))
   }, [])
   
