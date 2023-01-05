@@ -17,40 +17,44 @@ import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { IssuanceStatus } from '../types'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useGetIssuanceFull } from 'state/launchpad/hooks'
-import { Issuance } from 'state/launchpad/types'
-
-const statuses = {
-  // vettingStatus: IssuanceStatus.pendingApproval,
-  // issuanceStatus: IssuanceStatus.approved
-  
-  vettingStatus: undefined,
-  issuanceStatus: undefined
-}
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
 
-  const getIssuances = useGetIssuanceFull()
+  const issuances = useGetIssuanceFull()
 
-  const [myIssuances, setMyIssuances] = React.useState<Issuance[]>([])
-
-  const { issuanceStatus, vettingStatus } = statuses
-
-  const issuer = React.useMemo(() => {
+  const issuanceId = React.useMemo(() => {
     return decodeURI(history.location.search).replace('?', '').split('&')
       .map(x => x.split('='))
       .map(([key, value]) => ({ key, value }))
-      .find(x => x.key === 'issuer')
+      .find(x => x.key === 'id')
       ?.value
 
   }, [history.location.search])
 
+  const currentIssuance = React.useMemo(() => {
+    if (!issuanceId) {
+      return
+    }
+
+    const id = Number(issuanceId)
+
+    return issuances.items.find(x => x.id === id)
+  }, [issuanceId, issuances.items])
+
+  const vettingStatus = React.useMemo(() => currentIssuance?.vetting?.status, [currentIssuance])
+  const issuanceStatus = React.useMemo(() => undefined, [currentIssuance])
+
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
 
-  React.useEffect(() => {
-    getIssuances().then(res => setMyIssuances(res.items))
-  }, [])
+  if (issuances.loading) {
+    return null
+  }
+
+  if (!currentIssuance) {
+    return <FormTitle>Issuance not found</FormTitle>
+  }
 
   return (
     <Wrapper>
@@ -62,8 +66,8 @@ export const NewIssuanceForm = () => {
         <FormTitle>New Issuance</FormTitle>
 
         <IssuanceNameContainer>
-          <IssuanceName>{issuer}</IssuanceName>
-          {myIssuances.length > 1 && <ChevronDown fill={theme.launchpad.colors.text.title} />}
+          <IssuanceName>{currentIssuance.name}</IssuanceName>
+          {issuances.items!.length > 1 && <ChevronDown fill={theme.launchpad.colors.text.title} />}
         </IssuanceNameContainer>
         
         <NewIssuanceButtonContainer>
@@ -83,7 +87,7 @@ export const NewIssuanceForm = () => {
               width="320px"
               color={theme.launchpad.colors.text.light}
               background={theme.launchpad.colors.primary} 
-              onClick={() => history.push('/issuance/create/vetting')}
+              onClick={() => history.push(`/issuance/create/vetting?id=${issuanceId}`)}
             >
               Proceed
             </FilledButton>
@@ -185,10 +189,11 @@ export const NewIssuanceForm = () => {
             description="All information provided about the new issuance created will be displayed to the investors."
           >
             <FilledButton
+              disabled={vettingStatus !== IssuanceStatus.approved}
               width="320px"
               color={theme.launchpad.colors.text.light}
               background={theme.launchpad.colors.primary} 
-              onClick={() => history.push('/issuance/create/information')}
+              onClick={() => history.push(`/issuance/create/information?id=${issuanceId}`)}
             >
               Proceed
             </FilledButton>

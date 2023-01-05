@@ -1,4 +1,6 @@
 import React from "react"
+import lodash from 'lodash'
+
 import { Currency, CurrencyAmount } from "@ixswap1/sdk-core"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -16,6 +18,7 @@ import { toggleKYCDialog } from "./actions"
 
 import apiService from "services/apiService"
 import { PaginateResponse } from "types/pagination"
+import { DirectorInfo, VettingFormValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/types"
 
 interface OfferPagination {
   page: number
@@ -29,6 +32,15 @@ interface OfferPagination {
   itemsCount: number
 
   items: Offer[]
+}
+
+export const useLoader = () => {
+  const [isLoading, setLoading] = React.useState(true)
+
+  const stop = React.useCallback(() => setLoading(false), [])
+  const start = React.useCallback(() => setLoading(true), [])
+
+  return { isLoading, stop, start }
 }
 
 export const useKYCIsModalOpen = () => {
@@ -182,17 +194,166 @@ export const useClaimOffer = (id: string) => {
     apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, null), [id])
 }
 
+export const useCreateIssuance = () => {
+  return React.useCallback((name: string) => apiService.post('/issuances', { name }).then(res => res.data as Issuance), [])
+}
 
 export const useGetIssuancePlain = () => {
-  return React.useCallback(() => apiService.get('/issuances/me/plain').then(res => res.data as IssuancePlain[]), [])
+  const loader = useLoader()
+
+  const [items, setItems] = React.useState<IssuancePlain[]>([])
+
+  const load = React.useCallback(() => {
+    loader.start()
+
+    return apiService
+      .get('/issuances/me/plain')
+      .then(res => res.data as IssuancePlain[])
+      .then(setItems)
+      .then(loader.stop)
+  }, [])
+
+  React.useEffect(() => { load() }, [])
+
+  return { items, load, loading: loader.isLoading }
 }
 
 export const useGetIssuanceFull = () => {
-  return React.useCallback(() => apiService.get('/issuances/me/full').then(res => res.data as PaginateResponse<Issuance>), [])
+  const loader = useLoader()
+
+  const [items, setItems] = React.useState<Issuance[]>([])
+
+  const load = React.useCallback(() => {
+    loader.start()
+
+    return apiService
+      .get('/issuances/me/full')
+      .then(res => res.data as PaginateResponse<Issuance>)
+      .then(res => setItems(res.items))
+      .then(loader.stop)
+  }, [])
+
+  React.useEffect(() => { load() }, [])
+
+  return { items, load, loading: loader.isLoading }
 }
 
 export const useGetFieldArrayId = () => {
   let counter = 0;
 
   return () => ++counter;
+}
+
+interface FileUpload {
+  name: string
+  file: File
+}
+
+export const useUploadFiles = () => {
+  return React.useCallback(async (files: FileUpload[]) => {
+    const data = new FormData()
+
+    for (const entry of files) {
+      data.append(entry.name, entry.file)
+    }
+
+    return await apiService
+      .post('/storage/batch', data)
+      .then(res => res.data as { [key: string]: number })
+      .then(res => lodash.toPairs(res))
+      .then(res => res.map(([name, id]) => ({ name, id })));
+  }, [])
+}
+
+export const useSubmitVettingForm = (issuanceId?: number) => {
+  const uploadFiles = useUploadFiles()
+
+  const uploadVettingFiles = React.useCallback(async (payload: VettingFormValues) => {
+    const files: FileUpload[] = []
+
+    payload.directors.forEach((entry, idx) => {
+      files.push({ name: `directors.${idx}.proofOfAddressId`, file: entry.proofOfAddress })
+      files.push({ name: `directors.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity })
+    })
+
+    payload.beneficialOwners.forEach((entry, idx) => {
+      files.push({ name: `beneficialOwners.${idx}.proofOfAddressId`, file: entry.proofOfAddress })
+      files.push({ name: `beneficialOwners.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity })
+    })
+
+    payload.fundingDocuments.forEach((entry, idx) => {
+      files.push({ name: `fundingDocuments.${idx}`, file: entry })
+    })
+
+    files.push({ name: 'document.pitchDeckId', file: payload.pitchDeck })
+    files.push({ name: 'document.certificateOfIncorporationId', file: payload.certificateOfIncorporation })
+    files.push({ name: 'document.certificateOfIncumbencyId', file: payload.certificateOfIncumbency })
+    files.push({ name: 'document.shareDirectorRegistryId', file: payload.shareDirectorRegistry })
+    files.push({ name: 'document.auditedFinancialsId', file: payload.auditedFinancials })
+    files.push({ name: 'document.memorandumArticleId', file: payload.memorandumArticle })
+    files.push({ name: 'document.ownershipStructureId', file: payload.ownershipStructure })
+    files.push({ name: 'document.resolutionAuthorizedSignatoryId', file: payload.resolutionAuthorizedSignatory })
+
+    return uploadFiles(files)
+  }, [uploadFiles])
+
+  return React.useCallback(async (payload: VettingFormValues, isDraft = false) => {
+    const data: Record<string, any> = { 
+      issuanceId,
+
+      toSubmit: !isDraft,
+
+      applicantFullName: payload.applicantFullname,
+      email: payload.email,
+
+      companyName: payload.companyName,
+      companyWebsite: payload.companyWebsite,
+
+      description: payload.description,
+    }
+
+    const uploadedFiles = await uploadVettingFiles(payload)
+
+    const getDirectorFiles = (key: string) => {
+      const result = uploadedFiles
+        .filter(x => x.name.startsWith(key))
+        .map(x => {
+          const [index, fileName] = x.name.split('.').slice(1)
+
+          return ({ id: x.id, name: fileName, index })
+        })
+        .reduce((acc, e) => {
+          return { ...acc, [e.index]: { ...acc[e.index], [e.name]: e.id}}
+        }, {} as { [n: string]: Partial<DirectorInfo> })
+
+      return Object.entries(result)
+        .sort((a, b) => Number(a[0]) - Number(b[0]))
+        .map(([ index, value ]) => value)
+    }
+
+    console.log('Directors: ', getDirectorFiles('directors'))
+    
+    
+    data.directors = getDirectorFiles('directors')
+      .map((entry, idx) => ({ ...entry, fullName: payload.directors[idx].fullName }))
+
+    data.beneficialOwners = getDirectorFiles('beneficialOwners')
+      .map((entry, idx) => ({ ...entry, fullName: payload.beneficialOwners[idx].fullName }))
+
+    data.document = uploadedFiles
+      .filter(x => x.name.startsWith('document'))
+      .map(x => ({ ...x, name: x.name.split('.').pop()! }))
+      .reduce((acc, e) => ({ ...acc, [e.name]: e.id }), {})
+
+    data.fundingDocuments = uploadedFiles
+      .filter(x => x.name.startsWith('fundingDocuments'))
+      .map(x => x.id)
+
+
+    const result = await apiService.post('/vettings', data)
+
+    console.log(result)
+
+    return result
+  }, [uploadVettingFiles])
 }
