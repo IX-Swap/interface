@@ -21,11 +21,17 @@ const BaseButton = styled.button<{ grow?: number, height?: string, width?: strin
 
   ${props => props.grow && `flex-grow: ${props.grow};`}
   ${props => props.width && `width: ${props.width};`}
+
 `
 
 export const FilledButton = styled(BaseButton)<{ background?: string, color?: string }>`
   color: ${props => props.color ?? props.theme.launchpad.colors.background};
   background: ${props => props.background ?? props.theme.launchpad.colors.primary};
+  
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.disabled};
+    cursor: default;
+  `}
 `
 
 export const OutlineButton = styled(BaseButton)<{ borderColor?: string, color?: string, background?: string }>`

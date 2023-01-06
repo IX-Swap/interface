@@ -12,6 +12,7 @@ import { IssuanceDialog } from '../utils/Dialog'
 import { IssuanceTextField } from '../utils/TextField'
 import { object, string } from 'yup'
 import { Formik } from 'formik'
+import { useCreateIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
 
 interface Props {
   background?: string
@@ -34,17 +35,33 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
   const theme = useTheme()
   const history = useHistory()
 
+  const issuances = useGetIssuancePlain()
+  const createIssunace = useCreateIssuance()
+
   const [showIssuanceDialog, setShowIssuanceDialog] = React.useState(false)
-  const [issuer, setIssuer] = React.useState<string>()
 
   const toggleNewIssuanceDialog = React.useCallback(() => {
     setShowIssuanceDialog(state => !state)
   }, [])
 
-  const openIssuanceForm = React.useCallback((values: IssuanceNameFormValues) => {
+  const openIssuanceForm = React.useCallback(async (values: IssuanceNameFormValues) => {
+    if (!issuances.items) {
+      return 
+    }
+
+    if (issuances.items?.some(x => x.name === values.name)) {
+      throw new Error('Issuance with that name already exists')
+    }
+
+    const result = await createIssunace(values.name)
+
     setShowIssuanceDialog(false)
-    history.push(`/issuance/create?issuer=${values.name}`)
+    history.push(`/issuance/create?id=${result.id}`)
   }, [history])
+
+  const inputFilter = React.useCallback((value: string) => {
+    return value.split('').filter(x => /[a-zA-Z ]/.test(x)).join('')
+  }, [])
 
   return (
     <>
@@ -66,6 +83,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
                 placeholder="Name of Asset"
                 value={values.name}
                 onChange={v => setFieldValue('name', v)} 
+                inputFilter={inputFilter}
               />
 
               {errors.name && <ErrorText>{errors.name}</ErrorText>}

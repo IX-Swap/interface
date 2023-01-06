@@ -101,11 +101,6 @@ export const OptionalLabel = styled.span`
 `
 
 export const DeleteButton = styled.button`
-  position: absolute;
-
-  top: -1rem;
-  right: 0;
-
   border: none;
   background: none;
 
@@ -121,5 +116,35 @@ export const DeleteButton = styled.button`
 
   :hover {
     background: ${props => props.theme.launchpad.colors.foreground };
+  }
+`
+export const AddButton = styled.button`
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: flex-start;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  
+  line-height: 16px;
+  letter-spacing: -0.02em;;
+
+  cursor: pointer;
+
+  color: ${props => props.theme.launchpad.colors.primary};
+
+  padding: 0.25rem;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.foreground};
   }
 `

@@ -1,3 +1,4 @@
+import { IssuanceStatus } from "components/LaunchpadIssuance/types"
 import { User } from "state/admin/actions"
 
 export enum OfferStatus {
@@ -94,6 +95,12 @@ export enum InvestmentStage {
 export enum PaymentType {
   preSale = 'claim',
   sale = 'refund',
+}
+
+export enum IssunaceOfferStatus {
+  pre = 'pre',
+  live = 'live',
+  ended = 'ended'
 }
 
 export interface Asset {
@@ -280,10 +287,24 @@ export interface Offer {
   updatedAt: Date
   deletedAt?: Date
 
-  owner: User
   files: OfferFile[];
   investments: OfferInvestment[];
   payments: OfferPayment[];
   subscriptions: OfferSubscription[];
   whitelists: OfferWhitelist[];
 }
+
+export interface IssuanceVetting {
+  id: number
+  status: IssuanceStatus
+}
+
+export interface Issuance {
+  id: number
+  name: string
+  offerStatus: IssunaceOfferStatus
+
+  vetting?: IssuanceVetting
+}
+
+export type IssuancePlain = Pick<Issuance, 'name'>

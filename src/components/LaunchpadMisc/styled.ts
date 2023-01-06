@@ -97,6 +97,13 @@ export const CenteredFixed = styled(Centered)`
   ${props => props.height && `height: ${props.height};`}
 `
 
+export const LoaderContainer = styled(CenteredFixed)`
+  backdrop-filter: blur(20px);
+  
+  ${props => `width: ${props.width ?? '100vw'};`}
+  ${props => `height: ${props.height ?? '100vh'};`}
+`
+
 export const IconButton = styled.button`
   display: grid;
   place-content: center;

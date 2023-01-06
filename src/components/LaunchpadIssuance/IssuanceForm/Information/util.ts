@@ -1,14 +1,7 @@
-import { OfferIndustry, OfferNetwork, OfferTokenStandart, OfferDistributionFrequency } from "state/launchpad/types"
-import { InformationFormValues } from "./types"
+import { OfferIndustry, OfferNetwork, OfferTokenStandart, OfferDistributionFrequency, OfferInvestmentStructure } from "state/launchpad/types"
+import { InformationFormValues, OfferTokenType, SocialMediaType } from "./types"
 
-export enum OfferTokenType {
-  WIXS,
-  WBTC,
-  WETH,
-  MATIC,
-  USDC,
-  USDT
-}
+
 
 export const initialValues = {
   profilePicture: undefined,
@@ -49,7 +42,7 @@ export const initialValues = {
   
   images: [],
   videos: [{ id: 0 }],
-  additionalDocuments: [],
+  additionalDocuments: [{ id: 0 }],
 
   members: [{ id: 0 }],
   faq: [{ id: 0 }],
@@ -60,7 +53,11 @@ export const initialValues = {
     sale: undefined,
     closed: undefined,
     claim: undefined
-  }
+  },
+
+  social: [
+    { type: SocialMediaType.twitter }
+  ]
 
 } as unknown as InformationFormValues
 
@@ -76,10 +73,17 @@ export const industryOptions = [
   { label: 'Other', value: OfferIndustry.other },
 ]
 
+export const investmentStructureOptions = [
+  { label: 'Equity', value: OfferInvestmentStructure.equity },
+  { label: 'Debt', value: OfferInvestmentStructure.debt },
+  { label: 'Hybrid', value: OfferInvestmentStructure.hybrid },
+  { label: 'Others', value: OfferInvestmentStructure.other },
+]
+
 export const networkOptions = [
-  { label: 'Etherium', value: OfferNetwork.ethereum },
+  // { label: 'Etherium', value: OfferNetwork.ethereum },
   { label: 'Polygon', value: OfferNetwork.polygon },
-  { label: 'Kovan', value: OfferNetwork.kovan },
+  // { label: 'Kovan', value: OfferNetwork.kovan },
 ]
 
 export const standardOptions = [

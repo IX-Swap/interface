@@ -48,7 +48,7 @@ const getTooltip = (type: OfferTimeframeType) => {
     case OfferTimeframeType.claim:
       return { 
         title: 'Token Claim', 
-        body: 'For successful deals that reached its funding goal, you can claim the token that you purchased. For unsuccessful deals that did not reach its funding goal, you can claim back your initial investment in USDT.'  
+        body: 'For successful deals that reached their funding goal, you will receive the tokens that you purchased. You can claim back your initial investment for unsuccessful deals that did not reach their funding goal.'  
       }
       
   }

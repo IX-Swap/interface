@@ -63,7 +63,7 @@ const FieldPlaceholder = styled.div`
   line-height: 18px;
   letter-spacing: -0.02em;
   
-  color: ${props => props.theme.launchpad.colors.text.caption};
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const Textarea = styled.textarea`
@@ -73,6 +73,7 @@ const Textarea = styled.textarea`
   padding: 1rem;
 
   outline: none;
+  resize: none;
 
   background: ${props => props.theme.launchpad.colors.background};
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};

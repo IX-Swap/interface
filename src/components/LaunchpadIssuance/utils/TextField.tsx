@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useFormatOfferValue } from 'state/launchpad/hooks'
+import { OptionalLabel } from '../IssuanceForm/shared/styled'
 
 interface StylingProps {
   padding?: string
@@ -9,6 +10,8 @@ interface StylingProps {
 
   fontSize?: string
   lineHeight?: string
+  
+  borderless?: boolean
 }
 
 interface Props extends StylingProps {
@@ -16,20 +19,25 @@ interface Props extends StylingProps {
 
   label?: React.ReactNode
   placeholder?: React.ReactNode
+  trailing?: React.ReactNode
 
   disabled?: boolean
+  optional?: boolean
+
+  className?: string
 
   value?: string
   error?: string
 
   onChange?: (value: string) => void
+  inputFilter?: (value: string) => string
 }
 
 export const IssuanceTextField: React.FC<Props> = (props) => {
   const formatedValue = useFormatOfferValue()
 
   const [inputValue, setInputValue] = React.useState<string | undefined>(props.value)
-  const [focused, setFocused] = React.useState(false)
+  const [focused, setFocused] = React.useState(!!inputValue)
 
   React.useEffect(() => {
     setInputValue(props.value)
@@ -40,6 +48,8 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
 
     if (props.type === 'number') {
       value = formatedValue(value)
+    } else if (props.inputFilter) {
+      value = props.inputFilter(value)
     }
 
     setInputValue(value)
@@ -52,9 +62,9 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
 
   return (
     <FieldContainer>
-      <FieldInputContainer height={props.height} padding={props.padding}>
-        {props.label && <Label>{props.label}</Label>}
-        {props.placeholder && <Placeholder active={focused}>{props.placeholder}</Placeholder>}
+      <FieldInputContainer className={props.className} height={props.height} padding={props.padding} borderless={props.borderless}>
+        {props.label && <Label>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</Label>}
+        {props.placeholder && <Placeholder active={focused} hasLabel={!!props.label}>{props.placeholder}</Placeholder>}
 
         <Input
           type="text"
@@ -65,6 +75,8 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
           onInput={onChange}
           maxLength={props.type === 'text' ? 19 : 255}
         />
+
+        {props.trailing}
       </FieldInputContainer>
       
       {props.error && <ErrorText>{props.error}</ErrorText>}
@@ -79,7 +91,7 @@ const FieldContainer = styled.div`
   gap: 0.5rem;
 `
 
-const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height'>>`
+const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height' | 'borderless'>>`
   position: relative;
 
   display: flex;
@@ -87,7 +99,7 @@ const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height'>>
   
   gap: 0.25rem;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  ${props => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
   border-radius: 8px;
 
   max-width: 100%;
@@ -110,14 +122,14 @@ const Label = styled.div`
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-const Placeholder = styled.label<{ active: boolean }>`
+const Placeholder = styled.label<{ active: boolean, hasLabel?: boolean }>`
   position: absolute;
 
   ${props => props.active && 'opacity: 0;'}
 
   top: 50%;
   left: 1.25rem; 
-  transform: translate(0, -50% + 1rem);
+  transform: translate(0, -50% ${props => props.hasLabel && '+ 1rem'});
 
   pointer-events: none;
   
@@ -139,6 +151,7 @@ const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
 
   border: none;
   outline: none;
+  background: none;
 
   
   color: ${props => props.theme.launchpad.colors.text.title};

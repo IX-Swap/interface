@@ -5,13 +5,16 @@ import styled from 'styled-components'
 interface Props {
   current: moment.Moment
   selectedRange: moment.Moment[]
+
+  minDate?: Date
+
   onSelect: (value: moment.Moment) => void
 }
 
 export const CalendarPicker: React.FC<Props> = (props) => {
   const [selectedRange, setSelectedRange] = React.useState<moment.Moment[]>([])
 
-  const currentDate = React.useMemo(() => moment(), [])
+  const minDate = React.useMemo(() => moment(props.minDate), [])
   const firstDayOfMonth = React.useMemo(() => Number(moment(props.current).startOf('month').format('d')), [props.current])
 
   const weekdays = React.useMemo(() => moment.weekdaysMin(), [])
@@ -20,16 +23,14 @@ export const CalendarPicker: React.FC<Props> = (props) => {
   const daysInMonth = React.useMemo(() => Array(props.current.daysInMonth()).fill(null).map((_, idx) => idx + 1), [props.current])
 
   const select = React.useCallback((day: number) => {
-    if (currentDate.get('month') < props.current.get('month')) {
-      return
-    }
+    const selectedDate = props.current.clone().date(day)
 
-    if (currentDate.get('month') === props.current.get('month') && day < currentDate.get('date')) {
+    if (selectedDate < minDate) {
       return
     }
     
-    props.onSelect(props.current.clone().date(day))
-  }, [props.current, props.onSelect])
+    props.onSelect(selectedDate)
+  }, [props.current, minDate, props.onSelect])
 
   const isSelected = React.useCallback((day: number) => {
     return selectedRange.some(selected => 
@@ -67,7 +68,7 @@ export const CalendarPicker: React.FC<Props> = (props) => {
           onClick={() => select(day)}
           isSelected={isSelected(day)}
           isWithinRange={isWithinRange(day)}
-          isDisabled={props.current.clone().date(day).isBefore(currentDate)}
+          isDisabled={props.current.clone().date(day).isBefore(minDate)}
         >
           {day}
         </Day>

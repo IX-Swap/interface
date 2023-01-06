@@ -1,7 +1,8 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { Plus, Trash } from 'react-feather'
+import { Plus, Image } from 'react-feather'
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
 import { FieldArray} from 'formik'
 
@@ -10,8 +11,9 @@ import { FileField } from '../shared/fields/FileField'
 import { FormField } from '../shared/fields/FormField'
 import { TextareaField } from '../shared/fields/TextareaField'
 
-import { DeleteButton } from '../shared/styled'
+import { AddButton, DeleteButton } from '../shared/styled'
 import { TeamMember } from './types'
+import { useGetFieldArrayId } from 'state/launchpad/hooks'
 
 interface Props {
   members: TeamMember[]
@@ -19,13 +21,9 @@ interface Props {
   setter: (field: string, value: any) => void
 }
 
-let counter = 0;
-function getId() {
-  return ++counter;
-}
-
 export const TeamMembersBlock: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const getId = useGetFieldArrayId()
 
   const members = React.useMemo(() => props.members as (TeamMember & { id: number })[], [props.members])
 
@@ -36,13 +34,21 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
           <>
             {members.map((member, idx) => (
               <MemberEntry key={`member-${member.id}`}>
-                {idx > 0 && (
-                  <DeleteButton onClick={handleRemove(idx)}>
-                    <Trash color={theme.launchpad.colors.text.bodyAlt} size="20" />
-                  </DeleteButton>
+                {(members.length > 1 || idx > 0) && (
+                  <RemoveButton onClick={handleRemove(idx)}>
+                    <Trash color={theme.launchpad.colors.text.bodyAlt} />
+                  </RemoveButton>
                 )}
 
-                <FileField field={`members[${idx}].photo`} setter={props.setter} label="Upload Photo" hint="Optional" span={2} />
+                <FileField 
+                  field={`members[${idx}].photo`}
+                  setter={props.setter} 
+                  label="Upload Photo" 
+                  icon={<Image color={theme.launchpad.colors.text.bodyAlt} size="22" />}
+                  optional
+                  span={2} 
+                  showLabelInside
+                />
 
                 <FormField 
                   field={`members.${idx}.name`}
@@ -68,9 +74,9 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
               </MemberEntry>
             ))}
 
-            <AddMemberButton onClick={() => push({ id: getId() })}>
+            <AddButton onClick={() => push({ id: getId() })}>
               <Plus color={theme.launchpad.colors.primary} /> Add Member
-            </AddMemberButton>
+            </AddButton>
           </>
         )}
       </FieldArray>
@@ -90,34 +96,9 @@ const Container = styled.div`
 const MemberEntry = styled(FormGrid)`
   position: relative;
 `
+const RemoveButton = styled(DeleteButton)`
+  position: absolute;
 
-const AddMemberButton = styled.button`
-  display: flex;
-  flex-flow: row nowrap;
-
-  justify-content: flex-start;
-  align-items: center;
-
-  gap: 0.5rem;
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  cursor: pointer;
-
-  color: ${props => props.theme.launchpad.colors.primary};
-
-  padding: 0.25rem;
-
-  border: none;
-  border-radius: 6px;
-  background: none;
-
-  :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
-  }
+  top: -1rem;
+  right: 0;
 `

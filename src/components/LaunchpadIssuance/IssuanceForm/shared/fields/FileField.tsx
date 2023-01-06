@@ -2,19 +2,24 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Paperclip } from 'react-feather'
-import { Column, ErrorText, Spacer } from 'components/LaunchpadMisc/styled'
+import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { useDropzone } from 'react-dropzone'
 
 interface Props {
-  label: string
+  label?: React.ReactNode
   hint?: React.ReactNode
+  trailing?: React.ReactNode
 
   span?: number
   error?: string
 
   optional?: boolean
   disabled?: boolean
+  borderless?: boolean
+  showLabelInside?: boolean
+
+  icon?: React.ReactNode
 
   field: string
   setter: (field: string, value: any) => void
@@ -25,12 +30,15 @@ export const FileField: React.FC<Props> = (props) => {
 
   const input = React.useRef<HTMLInputElement>(null)
 
+  const [value, setValue] = React.useState<File>()
+
   const openFileBrowser = React.useCallback(() => {
     input.current?.click()
   }, [input.current])
 
   const onFileSelect = React.useCallback((files: File[]) => {
     props.setter(props.field, files[0])
+    setValue(files[0])
   }, [])
   
   const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
@@ -44,24 +52,30 @@ export const FileField: React.FC<Props> = (props) => {
           {props.optional && <OptionalLabel>optional</OptionalLabel>}
         </FieldLabel>
 
-
         {props.hint && <FieldHint>{props.hint}</FieldHint>}
       </Column>
 
-      <FieldWrapper {...getRootProps()} onClick={openFileBrowser}>
-        <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />
-        <Prompt>Upload File</Prompt>
+      <FieldWrapper borderless={props.borderless}>
+        <Row gap="0.5rem" {...getRootProps()} onClick={openFileBrowser}>
+          {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
 
-        <input 
-          {...getInputProps()}
-          ref={input}
-          multiple={false} 
-          disabled={props.disabled} 
-        />
+          {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
+          {value && <Prompt>{value.name}</Prompt>}
+          
 
-        <Spacer />
+          <input 
+            {...getInputProps()}
+            ref={input}
+            multiple={false} 
+            disabled={props.disabled} 
+          />
 
-        <BrowseButton>Browse</BrowseButton>
+          <Spacer />
+
+          <BrowseButton>Browse</BrowseButton>
+        </Row>
+
+        {props.trailing}
       </FieldWrapper>
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
@@ -90,7 +104,7 @@ const FieldHint = styled.div`
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-const FieldWrapper = styled.div`
+const FieldWrapper = styled.div<{ borderless?: boolean }>`
   display: flex;
 
   flex-flow: row nowrap;
@@ -99,8 +113,12 @@ const FieldWrapper = styled.div`
   gap: 0.5rem;
   padding: 1.5rem 2rem;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  ${props => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
   border-radius: 6px;
+
+  > *:first-child {
+    flex-grow: 1;
+  }
 `
 
 const Prompt = styled.div`

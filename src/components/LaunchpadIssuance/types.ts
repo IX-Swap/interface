@@ -5,11 +5,11 @@ export enum IssuanceFilter {
 }
 
 export enum IssuanceStatus {
-  approved,
-  rejected,
-  inProgress,
-  changeRequested,
-  pendingApproval
+  approved = 'approvet',
+  rejected = 'rejected',
+  inProgress = 'inProgress',
+  changeRequested = 'changeRequested',
+  pendingApproval = 'pendingApproval'
 }
 
 export interface Issuance {

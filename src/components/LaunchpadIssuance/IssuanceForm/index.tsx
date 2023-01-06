@@ -16,31 +16,53 @@ import { IssuanceFormStep } from './IssuanceFormStep'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { IssuanceStatus } from '../types'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-
-const statuses = {
-  // vettingStatus: IssuanceStatus.pendingApproval,
-  // issuanceStatus: IssuanceStatus.approved
-  
-  vettingStatus: undefined,
-  issuanceStatus: undefined
-}
+import { useGetIssuanceFull } from 'state/launchpad/hooks'
+import { DropdownField } from './shared/fields/DropdownField'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
 
-  const { issuanceStatus, vettingStatus } = statuses
+  const issuances = useGetIssuanceFull()
 
-  const issuer = React.useMemo(() => {
+  const [showDropdown, setShowDropdown] = React.useState(false)
+
+  const issuanceId = React.useMemo(() => {
     return decodeURI(history.location.search).replace('?', '').split('&')
       .map(x => x.split('='))
       .map(([key, value]) => ({ key, value }))
-      .find(x => x.key === 'issuer')
+      .find(x => x.key === 'id')
       ?.value
 
   }, [history.location.search])
 
+  const currentIssuance = React.useMemo(() => {
+    if (!issuanceId) {
+      return
+    }
+
+    const id = Number(issuanceId)
+
+    return issuances.items.find(x => x.id === id)
+  }, [issuanceId, issuances.items])
+
+  const vettingStatus = React.useMemo(() => currentIssuance?.vetting?.status, [currentIssuance])
+  const issuanceStatus = React.useMemo(() => undefined, [currentIssuance])
+
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
+  const selectIssuance = React.useCallback((id: number) => history.replace(`/issuance/create?id=${id}`), [history])
+
+  React.useEffect(() => {
+    issuances.load()
+  }, [issuanceId])
+
+  if (issuances.loading) {
+    return null
+  }
+
+  if (!currentIssuance) {
+    return <FormTitle>Issuance not found</FormTitle>
+  }
 
   return (
     <Wrapper>
@@ -51,9 +73,18 @@ export const NewIssuanceForm = () => {
 
         <FormTitle>New Issuance</FormTitle>
 
-        <IssuanceNameContainer>
-          <IssuanceName>{issuer}</IssuanceName>
-          <ChevronDown fill={theme.launchpad.colors.text.title} />
+        <IssuanceNameContainer onClick={() => setShowDropdown(state => !state)}>
+          <IssuanceName>{currentIssuance.name}</IssuanceName>
+
+          {issuances.items!.length > 1 && <ChevronDown fill={theme.launchpad.colors.text.title} />}
+
+          {showDropdown && (
+            <IssuanceList>
+              {issuances.items.map(item => (
+                <IssuanceEntry key={item.id} onClick={() => selectIssuance(item.id)}>{item.name}</IssuanceEntry>
+              ))}
+            </IssuanceList>
+          )}
         </IssuanceNameContainer>
         
         <NewIssuanceButtonContainer>
@@ -73,7 +104,7 @@ export const NewIssuanceForm = () => {
               width="320px"
               color={theme.launchpad.colors.text.light}
               background={theme.launchpad.colors.primary} 
-              onClick={() => history.push('/issuance/create/vetting')}
+              onClick={() => history.push(`/issuance/create/vetting?id=${issuanceId}`)}
             >
               Proceed
             </FilledButton>
@@ -175,10 +206,11 @@ export const NewIssuanceForm = () => {
             description="All information provided about the new issuance created will be displayed to the investors."
           >
             <FilledButton
+              disabled={vettingStatus !== IssuanceStatus.approved}
               width="320px"
               color={theme.launchpad.colors.text.light}
               background={theme.launchpad.colors.primary} 
-              onClick={() => history.push('/issuance/create/information')}
+              onClick={() => history.push(`/issuance/create/information?id=${issuanceId}`)}
             >
               Proceed
             </FilledButton>
@@ -317,6 +349,8 @@ const FormContainer = styled.div`
 
 const IssuanceNameContainer = styled.div`
   grid-area: name;
+
+  position: relative;
   
   display: flex;
   flex-flow: row nowrap;
@@ -388,4 +422,47 @@ const ContactEmail = styled.a`
   color: ${props => props.theme.launchpad.colors.primary};
 
   text-decoration: none;
+`
+
+const IssuanceList = styled.div`
+  position: absolute;
+
+  bottom: -0.5rem;
+  left: 0;
+  right: 0;
+
+  transform: translate(0, 100%);
+
+  z-index: 30;
+
+  display: flex;
+
+  flex-flow: column nowrap;
+  align-items: stretch;
+
+  max-height: 300px;
+  overflow-y: auto;
+
+  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border-radius: 6px;
+`
+
+const IssuanceEntry = styled.div`
+  padding: 0.5rem 1rem;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 17px;
+  letter-spacing: -0.01em;
+
+  cursor: pointer;
+
+  background: ${props => props.theme.launchpad.colors.background};
+  color: ${props => props.theme.launchpad.colors.text.title};
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.foreground};
+  }
 `
