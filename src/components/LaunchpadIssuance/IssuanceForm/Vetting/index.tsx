@@ -115,7 +115,7 @@ export const IssuanceVettingForm = () => {
         </FormSubmitContainer>
       </FormSideBar>
       
-      <Formik initialValues={initialValues} onSubmit={submit} validationSchema={schema}>
+      <Formik initialValues={initialValues} onSubmit={submit}>
         {({ submitForm, setFieldValue, values, errors }) => (
           <FormBody>
             <IssuerInfoBlock>
