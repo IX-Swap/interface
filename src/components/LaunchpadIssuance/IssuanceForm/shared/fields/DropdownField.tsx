@@ -21,7 +21,8 @@ interface Props<T> {
   error?: string
 
   field: string
-  setter: (field: string, value: T) => void
+  setter?: (field: string, value: T) => void
+  onChange?: (value: T) => void
 }
 
 export function DropdownField<T>(props: Props<T>) {
@@ -35,7 +36,14 @@ export function DropdownField<T>(props: Props<T>) {
   const toggle = React.useCallback(() => setShowDropdown(state => !state), [])
   const select = React.useCallback((option: Option<T>) => {
     setSelectedValue(option)
-    props.setter(props.field, option.value)
+
+    if (props.field && props.setter) {
+      props.setter(props.field, option.value)
+    }
+
+    if (props.onChange) {
+      props.onChange(option.value)
+    }
   }, [])
   
   React.useEffect(() => {

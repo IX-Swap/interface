@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { useDropzone } from 'react-dropzone'
-import { Image, Plus } from 'react-feather'
+import { Image, Plus, Trash } from 'react-feather'
 
 import { FieldArray } from 'formik'
 
@@ -11,11 +11,11 @@ import { Column } from 'components/LaunchpadMisc/styled'
 
 import { VideoLink } from './types'
 
-import { FormField } from '../shared/fields/FormField'
 import { AddButton, DeleteButton } from '../shared/styled'
+import { FormField } from '../shared/fields/FormField'
 import { FormGrid } from '../shared/FormGrid'
 
-import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
+import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg'
 import { useGetFieldArrayId } from 'state/launchpad/hooks'
 
 
@@ -28,10 +28,24 @@ export const GalleryBlock: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const getId = useGetFieldArrayId()
+  const container = React.useRef<HTMLDivElement>(null)
 
   const onFileSelect = React.useCallback((files: File[]) => {
-    console.log(files)
     props.setter('images', props.images.concat(files))
+
+    container.current?.scrollTo({ left: container.current.scrollWidth, behavior: 'smooth' })
+  }, [props.images, container])
+
+  const removeImage = React.useCallback((idx: number) => {
+    const images = [...props.images]
+
+    console.log(images)
+
+    images.splice(idx, 1)
+
+    console.log(images)
+
+    props.setter('images', images)
   }, [props.images])
 
   const urls = React.useMemo(() => props.images.map(x => URL.createObjectURL(x)), [props.images])
@@ -46,9 +60,13 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     <FormGrid title="Gallery">
       <TitledContainer>
         <Title>Images</Title>
-        <ImageFieldContainer>
+        <ImageFieldContainer ref={container}>
           {props.images.map((image, idx) => (
-            <ImageFileCardContainer key={idx} url={urls[idx]} />
+            <ImageFileCardContainer key={idx} url={urls[idx]}>
+              <ImageRemoveButton onClick={() => removeImage(idx)}>
+                <Trash size="15" color={theme.launchpad.colors.primary} />
+              </ImageRemoveButton>
+            </ImageFileCardContainer>
           ))}
 
 
@@ -94,7 +112,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
                     borderless
                     trailing={(props.videos.length > 1 || idx > 0) && (
                       <RemoveButton onClick={handleRemove(idx)}>
-                        <Trash />
+                        <TrashIcon />
                       </RemoveButton>
                     )}
                   />
@@ -149,6 +167,8 @@ const ImageFieldContainer = styled.div`
 `
 
 const ImageFileCardContainer = styled.div<{ url?: string }>`
+  position: relative;
+
   width: 160px;
   height: 160px;
 
@@ -165,6 +185,35 @@ const ImageFileCardContainer = styled.div<{ url?: string }>`
   `}
 
   content: contain;
+`
+
+const ImageRemoveButton = styled.button`
+  position: absolute;
+
+  display: grid;
+
+  place-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  right: 0.125rem;
+  top: 0.125rem;
+
+  background: none;
+  border: none;
+  outline: none;
+
+  padding: 0;
+
+  border-radius: 50%;
+  cursor: pointer;
+
+  transition: background 0.3s;
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.text.title + '20'};
+  }
 `
 
 const ImageFieldPromptContainer = styled(ImageFileCardContainer)`

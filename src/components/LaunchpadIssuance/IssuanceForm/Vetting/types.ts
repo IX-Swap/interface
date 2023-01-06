@@ -8,7 +8,7 @@ export interface VettingFormValues {
   description: string
 
   pitchDeck: File
-  fundingDocuments: File[]
+  fundingDocuments: FundingDocument[]
 
   certificateOfIncorporation: File
   certificateOfIncumbency: File
@@ -23,6 +23,11 @@ export interface VettingFormValues {
 
   beneficialOwners: DirectorInfo[]
   directors: DirectorInfo[]
+}
+
+export interface FundingDocument {
+  id: number
+  file: File
 }
 
 export interface DirectorInfo {

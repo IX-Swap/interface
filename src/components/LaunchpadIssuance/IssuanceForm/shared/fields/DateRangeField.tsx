@@ -18,6 +18,7 @@ interface Props {
   label: string
   error?: string
 
+  value?: Date | DateRange
   disabled?: boolean
 
   minDate?: Date
@@ -43,27 +44,40 @@ export const DateRangeField: React.FC<Props> = (props) => {
   }, [props.disabled])
 
   const onSelect = React.useCallback((value: moment.Moment) => {
+    let selectedRange: DateRange
+
     if (props.mode === 'single') {
-      setRange([value])
+      selectedRange = [value]
     } else if (range.length < 2) {
-      setRange(state => [...state, value])
+      selectedRange = [...range, value]
     } else {
-      setRange([value])
+      selectedRange =[value]
+    }
+
+    if (props.field && props.setter) {
+      props.setter(props.field, props.mode === 'single' ? selectedRange[0] : selectedRange)
+    }
+
+    if (props.onChange) {
+      props.onChange(selectedRange)
     }
   }, [range])
 
   const moveMonthBack = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') - 1)), [])
   const moveMonthForward = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') + 1)), [])
-  
-  React.useEffect(() => {
-    if (props.field && props.setter) {
-      props.setter(props.field, props.mode === 'single' ? range[0] : range)
-    }
 
-    if (props.onChange) {
-      props.onChange(range)
+  React.useEffect(() => {
+    console.log(props.value)
+    if (props.value !== undefined) {
+      if (props.mode === 'single') {
+        setRange([moment(props.value as Date)])
+      } else {
+        setRange(props.value as DateRange)
+      }
+    } else {
+      setRange([])
     }
-  }, [range])
+  }, [props.value])
 
   return (
     <Column>

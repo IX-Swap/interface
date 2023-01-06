@@ -17,7 +17,7 @@ export enum SocialMediaType {
   discord = 'discord',
   reddit = 'reddit',
   youTube = 'youTube',
-  coinMarketCap = 'counMarketCap',
+  coinMarketCap = 'coinMarketCap',
   coinGecko = 'coinGecko'
 }
 

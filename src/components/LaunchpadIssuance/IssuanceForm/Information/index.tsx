@@ -30,6 +30,7 @@ import { GalleryBlock } from './Gallery'
 import { countriesList } from 'constants/countriesList'
 import { AdditionalInformation } from './AdditionalInformation'
 import { UploadDocuments } from './UploadDocuments'
+import moment from 'moment'
 
 
 export const IssuanceInformationForm = () => {
@@ -88,6 +89,16 @@ export const IssuanceInformationForm = () => {
 
     return whole + (decimals.length > 0 ? `.${decimals.join('')}` : '')
 
+  }, [])
+
+  const setPresale = React.useCallback((value: boolean, setter: (field: string, value: any) => void) => {
+    setter('hasPresale', value)
+
+    setter('terms.whitelist', undefined)
+    setter('terms.presale', undefined)
+    setter('terms.sale', undefined)
+    setter('terms.closed', undefined)
+    setter('terms.claim', undefined)
   }, [])
 
   React.useEffect(() => {
@@ -197,11 +208,11 @@ export const IssuanceInformationForm = () => {
 
                 <Spacer />
 
-                <PresaleButton isSelected={values.hasPresale === true} onClick={() => setFieldValue('hasPresale', true)}>
+                <PresaleButton isSelected={values.hasPresale === true} onClick={() => setPresale(true, setFieldValue)}>
                   Yes
                 </PresaleButton>
                 
-                <PresaleButton isSelected={values.hasPresale === false} onClick={() => setFieldValue('hasPresale', false)}>
+                <PresaleButton isSelected={values.hasPresale === false} onClick={() => setPresale(false, setFieldValue)}>
                   No
                 </PresaleButton>
               </PresalveFieldContainer>
@@ -252,6 +263,7 @@ export const IssuanceInformationForm = () => {
                 label='Register to Invest'
                 field='terms.whitelist'
                 setter={setFieldValue}
+                value={values.terms.whitelist}
               />
 
               <DateRangeField 
@@ -259,6 +271,7 @@ export const IssuanceInformationForm = () => {
                 label='Pre-Sale'
                 field='terms.presale'
                 setter={setFieldValue}
+                value={values.terms.presale}
                 disabled={!values.hasPresale || !values.terms.whitelist}
                 minDate={values.terms.whitelist}
               />
@@ -273,10 +286,11 @@ export const IssuanceInformationForm = () => {
                 mode='range'
                 label='Public Sale to Closed'
                 field='terms.sale'
+                value={[values.terms.sale, values.terms.closed].filter(x => !!x).map(x => moment(x))}
                 disabled={(values.hasPresale && !values.terms.presale) || (!values.hasPresale && !values.terms.whitelist)}
                 minDate={values.hasPresale ? values.terms.presale : values.terms.whitelist}
                 onChange={([start, end]) => {
-                  setFieldValue('terms.sale', start?.toDate());
+                  setFieldValue('terms.sale', start?.toDate())
                   setFieldValue('terms.closed', end?.toDate())
                 }}
               />
@@ -288,6 +302,7 @@ export const IssuanceInformationForm = () => {
                 setter={setFieldValue}
                 disabled={!values.terms.closed}
                 minDate={values.terms.closed}
+                value={values.terms.claim}
               />
 
             </FormGrid>
@@ -313,6 +328,18 @@ export const IssuanceInformationForm = () => {
             </FormGrid>
             
             <Separator />
+            
+            <AdditionalInformation social={values.social} setter={setFieldValue}/>
+            
+            <Separator />
+            
+            <UploadDocuments documents={values.additionalDocuments} setter={setFieldValue} />
+            
+            <Separator />
+            
+            <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} />
+            
+            <Separator />
 
             <FormGrid title="Team Members">
               <TeamMembersBlock members={values.members} setter={setFieldValue} />
@@ -323,10 +350,6 @@ export const IssuanceInformationForm = () => {
             <FormGrid title="FAQ">
               <FAQBlock faq={values.faq} setter={setFieldValue} />
             </FormGrid>
-
-            <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} />
-            <AdditionalInformation social={values.social} setter={setFieldValue}/>
-            <UploadDocuments documents={values.additionalDocuments} setter={setFieldValue} />
           </FormBody>
         )}
       </Formik>

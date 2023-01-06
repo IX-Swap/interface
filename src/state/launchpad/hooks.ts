@@ -34,8 +34,8 @@ interface OfferPagination {
   items: Offer[]
 }
 
-export const useLoader = () => {
-  const [isLoading, setLoading] = React.useState(true)
+export const useLoader = (initial: boolean = true) => {
+  const [isLoading, setLoading] = React.useState(initial)
 
   const stop = React.useCallback(() => setLoading(false), [])
   const start = React.useCallback(() => setLoading(true), [])
@@ -282,7 +282,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
     })
 
     payload.fundingDocuments.forEach((entry, idx) => {
-      files.push({ name: `fundingDocuments.${idx}`, file: entry })
+      files.push({ name: `fundingDocuments.${idx}`, file: entry.file })
     })
 
     files.push({ name: 'document.pitchDeckId', file: payload.pitchDeck })
