@@ -34,7 +34,7 @@ interface OfferPagination {
   items: Offer[]
 }
 
-export const useLoader = (initial: boolean = true) => {
+export const useLoader = (initial = true) => {
   const [isLoading, setLoading] = React.useState(initial)
 
   const stop = React.useCallback(() => setLoading(false), [])
