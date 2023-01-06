@@ -9,9 +9,11 @@ import { Link } from 'react-router-dom'
 import { isDevelopment } from 'utils/isEnvMode'
 import { useUserState } from 'state/user/hooks'
 import { useKYCState } from 'state/kyc/hooks'
+import { ROLES } from 'constants/roles'
 
 export const Header = () => {
   const { kyc } = useKYCState()
+  const { me } = useUserState()
 
   return (
     <HeaderContainer>
@@ -30,7 +32,7 @@ export const Header = () => {
         <HeaderLink to={(isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}>Charts</HeaderLink>
       </HeaderLinks>
 
-      {kyc?.corporate && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
+      {kyc?.corporate && me.role === ROLES.OFFER_MANAGER && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
 
       <Wallet />
     </HeaderContainer>

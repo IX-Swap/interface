@@ -2,13 +2,14 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Paperclip } from 'react-feather'
-import { Column, ErrorText, Spacer } from 'components/LaunchpadMisc/styled'
+import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { useDropzone } from 'react-dropzone'
 
 interface Props {
   label?: React.ReactNode
   hint?: React.ReactNode
+  trailing?: React.ReactNode
 
   span?: number
   error?: string
@@ -54,23 +55,27 @@ export const FileField: React.FC<Props> = (props) => {
         {props.hint && <FieldHint>{props.hint}</FieldHint>}
       </Column>
 
-      <FieldWrapper {...getRootProps()} onClick={openFileBrowser} borderless={props.borderless}>
-        {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
+      <FieldWrapper borderless={props.borderless}>
+        <Row gap="0.5rem" {...getRootProps()} onClick={openFileBrowser}>
+          {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
 
-        {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
-        {value && <Prompt>{value.name}</Prompt>}
-        
+          {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
+          {value && <Prompt>{value.name}</Prompt>}
+          
 
-        <input 
-          {...getInputProps()}
-          ref={input}
-          multiple={false} 
-          disabled={props.disabled} 
-        />
+          <input 
+            {...getInputProps()}
+            ref={input}
+            multiple={false} 
+            disabled={props.disabled} 
+          />
 
-        <Spacer />
+          <Spacer />
 
-        <BrowseButton>Browse</BrowseButton>
+          <BrowseButton>Browse</BrowseButton>
+        </Row>
+
+        {props.trailing}
       </FieldWrapper>
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
@@ -110,6 +115,10 @@ const FieldWrapper = styled.div<{ borderless?: boolean }>`
 
   ${props => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
   border-radius: 6px;
+
+  > *:first-child {
+    flex-grow: 1;
+  }
 `
 
 const Prompt = styled.div`

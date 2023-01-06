@@ -1,16 +1,20 @@
+import React from 'react'
+import styled from 'styled-components'
+
+import { Plus } from 'react-feather'
+import { capitalize } from 'lodash'
+
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
-import { capitalize } from 'lodash'
-import React from 'react'
-import { Plus } from 'react-feather'
 
 import { DropdownField } from '../shared/fields/DropdownField'
 
 import { FormField } from '../shared/fields/FormField'
 import { FormGrid } from '../shared/FormGrid'
-import { AddButton } from '../shared/styled'
+import { AddButton, DeleteButton } from '../shared/styled'
 
 import { SocialMediaLink, SocialMediaType } from './types'
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
 
 interface Props {
@@ -55,6 +59,10 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
     toggleDialog()
   }, [addedSocial, addedSocialLink])
 
+  const removeSocialMedia = React.useCallback((link: SocialMediaLink) => {
+    props.setter('social', props.social.filter(x => x.type !== link.type))
+  }, [props.social])
+
   return (
     <FormGrid title="Additional Information">
       <FormField 
@@ -86,6 +94,11 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
           placeholder='URL'
           field={`socialMedia.${link.type}`}
           setter={props.setter} 
+          trailing={
+            <RemoveButton onClick={() => removeSocialMedia(link)}>
+              <Trash />
+            </RemoveButton>
+          }
         />
       ))}
 
@@ -115,3 +128,9 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
     </FormGrid>   
   )
 }
+
+const RemoveButton = styled(DeleteButton)`
+  position: absolute;
+
+  right: 1rem;
+`

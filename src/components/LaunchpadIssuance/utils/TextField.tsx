@@ -151,6 +151,7 @@ const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
 
   border: none;
   outline: none;
+  background: none;
 
   
   color: ${props => props.theme.launchpad.colors.text.title};
