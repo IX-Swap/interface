@@ -14,7 +14,7 @@ export interface UseApproveOrRejectArgs {
 
 export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const { action, cacheQueryKey, id, payload, listingType } = args
-  console.log(listingType, 'listingTypelistingType')
+  // console.log(listingType,cacheQueryKey, payload, id, 'listingTypelistingType')
   const queryCache = useQueryCache()
   const category = useAuthorizerCategory()
   const { uri, listRoute } = authorizerItemMap[category]

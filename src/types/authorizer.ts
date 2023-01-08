@@ -36,6 +36,7 @@ export interface Authorizable {
   authorization?: AuthorizationInfo
   level?: string
   assignedAt?: string
+  listingType?: string
 }
 
 export interface AuthorizableWithIdentity extends Authorizable {

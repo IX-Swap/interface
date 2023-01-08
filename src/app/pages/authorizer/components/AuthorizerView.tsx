@@ -52,6 +52,7 @@ export const AuthorizerView = <T,>(
   const approvedOrRejected = ['Approved', 'Rejected'].includes(data.status)
   const showForm = !(isTransaction && approvedOrRejected)
   const styles = useStyles()
+  // console.log(data, 'datadatadatadata')
   return (
     <Grid container direction='column' spacing={4} display='table'>
       <Grid item>
@@ -128,7 +129,11 @@ export const AuthorizerView = <T,>(
 
                 {showForm && category !== 'token-deployment' && (
                   <Grid item style={{ marginTop: 20 }}>
-                    <AuthorizerForm status={data.status} itemId={data._id} />
+                    <AuthorizerForm
+                      status={data.status}
+                      itemId={data._id}
+                      listingType={data?.listingType}
+                    />
                   </Grid>
                 )}
 
