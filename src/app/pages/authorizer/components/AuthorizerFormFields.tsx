@@ -14,18 +14,21 @@ import { TextInput } from 'ui/TextInput/TextInput'
 export interface AuthorizerFormFieldsProps {
   status: AuthorizableStatus
   itemId: string
+  listingType: string
 }
 
 export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
-  const { itemId, status } = props
+  const { itemId, status, listingType } = props
   const { control } = useFormContext<AuthorizerFormValues>()
   const [approve, { isLoading: isApproving }] = useAuthorizerAction({
     id: itemId,
-    action: 'approve'
+    action: 'approve',
+    listingType: listingType
   })
   const [reject, { isLoading: isRejecting }] = useAuthorizerAction({
     id: itemId,
-    action: 'reject'
+    action: 'reject',
+    listingType: listingType
   })
   const comment = control.watchInternal('comment') as string
   const hasComment = comment !== undefined && comment.trim().length > 0
@@ -34,7 +37,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
   const canShareComment = !isProcessing && hasComment
   const canApprove = !isProcessing && ['Submitted', 'Rejected'].includes(status)
   const canReject = !isProcessing && ['Submitted', 'Approved'].includes(status)
-
+  // console.log(props, 'last propspprprp')
   return (
     <>
       <TypedField

@@ -12,14 +12,18 @@ export interface AuthorizerFormValues {
 export interface AuthorizerFormProps {
   status: AuthorizableStatus
   itemId: string
+  listingType: any
 }
 
 export const AuthorizerForm = (props: AuthorizerFormProps) => {
-  const { itemId, status } = props
-
+  const { itemId, status, listingType } = props
   return (
     <Form validationSchema={authorizationFormSchema}>
-      <AuthorizerFormFields itemId={itemId} status={status} />
+      <AuthorizerFormFields
+        itemId={itemId}
+        status={status}
+        listingType={listingType}
+      />
     </Form>
   )
 }

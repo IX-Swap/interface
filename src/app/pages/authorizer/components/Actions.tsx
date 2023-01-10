@@ -30,7 +30,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       ? (item as any).user
       : (item as any).user?._id
   const listingType: string = (item as any).listingType
-
+  console.log(props, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
@@ -52,14 +52,26 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       ? history.push(
           `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
         )
-      : status ===
-          ('Approved' || status === 'Rejected' || status === 'Submitted') &&
+      : (status === 'Approved' ||
+          status === 'Rejected' ||
+          status === 'Submitted') &&
         category === 'cash-withdrawals'
-      ? history.push(`/app/authorizer/${category}/${userId}/${status}/view`)
-      : status === ' ' && category === 'cash-withdrawals'
-      ? history.push(`/app/authorizer/${category}/${userId}/Submitted/view`)
-      : history.push(`/app/authorizer/${category}/${userId}/view`)
-
+      ? history.push(
+          `/app/authorizer/${category}/${userId}/${id}/${status}/view`
+        )
+      : status === '' && category === 'cash-withdrawals'
+      ? history.push(
+          `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
+        )
+      : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
+  console.log(
+    category,
+    listingType,
+    userId,
+    id,
+    status,
+    'category,listingType,userId, id,status'
+  )
   const isUnauthorized = (item as any).status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
@@ -76,8 +88,9 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
               : category === 'listings' && listingType === 'OTC'
               ? `/app/authorizer/${category}/${userId}/${id}/${listingType}/view`
               : (status === 'Approved' ||
-                status === 'Rejected' ||
-                status === 'Submitted') && category === 'cash-withdrawals'
+                  status === 'Rejected' ||
+                  status === 'Submitted') &&
+                category === 'cash-withdrawals'
               ? `/app/authorizer/${category}/${userId}/${id}/${status}/view`
               : status === '' && category === 'cash-withdrawals'
               ? `/app/authorizer/${category}/${userId}/${id}/Submitted/view`
