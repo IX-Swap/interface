@@ -318,6 +318,12 @@ export interface IssuanceFundingDocument {
   document: Asset
 }
 
+export interface IssuanceOffer {
+  id: number
+  status: IssuanceStatus
+  startDate: Date
+}
+
 export interface IssuanceVetting {
   id: number
   status: IssuanceStatus
@@ -334,6 +340,7 @@ export interface IssuanceVetting {
 
   beneficialOwners: IssuanceVettingDirector[]
   directors: IssuanceVettingDirector[]
+  offer?: IssuanceOffer
 }
 
 export interface Issuance {
