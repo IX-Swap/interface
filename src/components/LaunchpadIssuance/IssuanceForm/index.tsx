@@ -160,7 +160,7 @@ export const NewIssuanceForm = () => {
           </IssuanceFormStep>
         )}
 
-        {vettingStatus === IssuanceStatus.changeRequested && (
+        {vettingStatus === IssuanceStatus.changesRequested && (
           <IssuanceFormStep 
             stepNumber={1} 
             icon={<IssuanceRequestedChangesIcon />}
@@ -266,7 +266,7 @@ export const NewIssuanceForm = () => {
           </IssuanceFormStep>
         )}
 
-        {issuanceStatus === IssuanceStatus.changeRequested && (
+        {issuanceStatus === IssuanceStatus.changesRequested && (
           <IssuanceFormStep 
             stepNumber={2} 
             icon={<IssuanceRequestedChangesIcon />}

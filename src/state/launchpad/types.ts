@@ -294,9 +294,16 @@ export interface Offer {
   whitelists: OfferWhitelist[];
 }
 
+export interface IssuanceOffer {
+  id: number
+  status: IssuanceStatus
+  startDate: Date
+}
+
 export interface IssuanceVetting {
   id: number
   status: IssuanceStatus
+  offer?: IssuanceOffer
 }
 
 export interface Issuance {

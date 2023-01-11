@@ -238,6 +238,19 @@ export const useGetIssuanceFull = () => {
   return { items, load, loading: loader.isLoading }
 }
 
+export const useGetIssuances = () => {
+  return React.useCallback(async (page: number) => {
+    const query = [`page=${page}`, 'offset=10']
+
+    const result = await apiService.get(`/issuances/me/full?${query.join('&')}`).then(res => res.data as PaginateResponse<Issuance>)
+
+    return {
+      hasMore: result.nextPage !== null,
+      items: result.items
+    }
+  }, [])
+}
+
 export const useGetFieldArrayId = () => {
   let counter = 0;
 
