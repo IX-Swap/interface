@@ -5,6 +5,7 @@ import { Currency, CurrencyAmount } from "@ixswap1/sdk-core"
 import { useDispatch, useSelector } from "react-redux"
 
 import { FilterConfig } from "components/Launchpad/InvestmentList/Filter"
+import { SearchConfig } from "components/LaunchpadIssuance/IssuanceDashboard/SearchFilter"
 
 import { KYCStatuses } from "pages/KYC/enum"
 
@@ -345,8 +346,14 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
 }
 
 export const useGetIssuances = () => {
-  return React.useCallback(async (page: number) => {
-    const query = [`page=${page}`, 'offset=10']
+  return React.useCallback(async (page: number, filter?: SearchConfig) => {
+    let query = [`page=${page}`, 'offset=10']
+
+    if (filter) {
+      query = query.concat(Object.entries(filter)
+        .filter(([_, value]) => value.length > 0)
+        .map(([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`))
+    }
 
     const result = await apiService.get(`/issuances/me/full?${query.join('&')}`).then(res => res.data as PaginateResponse<Issuance>)
 

@@ -2,6 +2,27 @@ import styled from "styled-components"
 
 import { IssuanceFilter } from '../LaunchpadIssuance/types'
 
+export const TableTitle = styled.div`
+  grid-area: title;
+
+  place-self: center start;
+
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+
+  line-height: 120%;
+  letter-spacing: -0.03em;
+
+  margin: auto;
+  padding: 0 0 1.25rem;
+
+  width: 100%;
+  max-width: 1180px;
+
+  color: ${props => props.theme.launchpad.colors.text.title};
+`
+
 export const IssuanceTable = styled.div`
   display: flex;
   flex-flow: column nowrap;
