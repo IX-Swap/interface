@@ -104,6 +104,7 @@ export enum IssunaceOfferStatus {
 }
 
 export interface Asset {
+  id: number
   public: string
   name: string
   publicUrl: string
@@ -294,9 +295,45 @@ export interface Offer {
   whitelists: OfferWhitelist[];
 }
 
+export interface IssuanceVettingDocuments {
+  pitchDeck: Asset
+  certificateOfIncorporation: Asset
+  certificateOfIncumbency: Asset
+  shareDirectorRegistry: Asset
+  auditedFinancials: Asset
+  memorandumArticle: Asset
+  ownershipStructure: Asset
+  resolutionAuthorizedSignatory: Asset
+}
+
+export interface IssuanceVettingDirector {
+  id: number
+  fullName: string
+  proofOfIdentity: Asset
+  proofOfAddress: Asset
+}
+
+export interface IssuanceFundingDocument {
+  id: number
+  document: Asset
+}
+
 export interface IssuanceVetting {
   id: number
   status: IssuanceStatus
+
+  applicantFullName: string
+  email: string
+  companyName: string
+  companyWebsite: string
+  description: string
+
+  document: IssuanceVettingDocuments
+
+  fundingDocuments: IssuanceFundingDocument[]
+
+  beneficialOwners: IssuanceVettingDirector[]
+  directors: IssuanceVettingDirector[]
 }
 
 export interface Issuance {

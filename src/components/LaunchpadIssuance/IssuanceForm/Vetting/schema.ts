@@ -8,11 +8,17 @@ const limitedSizeFileSchema = fileSchema.test('fileSize', 'File is too large', (
   return value[0].size <= 5 * 1024 * 1024
 })
 
-const directorSchema = yup.object().shape({
-  fullName: yup.string().required('Full name required'),
-  proofOfIdentity: fileSchema,
-  proofOfAddress: fileSchema
-})
+const requriedFileSchema = limitedSizeFileSchema.required('File requried')
+
+
+const directorSchema = yup.array(yup.object().shape({
+  fullName: yup.string()
+    .required('Full name required')
+    .min(2, 'Full name should be at least 2 characters long'),
+
+  proofOfIdentity: requriedFileSchema,
+  proofOfAddress: requriedFileSchema
+}))
 
 export const schema = yup.object().shape({
   applicantFullname: yup.string().required('Enter applicant\'s name'),
@@ -21,21 +27,25 @@ export const schema = yup.object().shape({
   companyName: yup.string().required('Enter company name'),
   companyWebsite: yup.string().url('Enter valid URL').required('Enter company website URL'),
 
-  description: yup.string().required('Description requried'),
+  description: yup.string()
+    .required('Description requried')
+    .min(10, 'Description should be at least 10 characters long'),
 
-  pitchDeck: fileSchema,
-  fundingDocuments: yup.array(fileSchema),
+  document: yup.object().shape({
+    pitchDeck: requriedFileSchema,
+    fundingDocuments: yup.array(fileSchema),
 
-  certificateOfIncorporation: limitedSizeFileSchema,
-  certificateOfIncumbency: fileSchema,
+    certificateOfIncorporation: requriedFileSchema,
+    certificateOfIncumbency: limitedSizeFileSchema,
 
-  shareDirectorRegistry: limitedSizeFileSchema,
-  auditedFinancials: fileSchema,
+    shareDirectorRegistry: requriedFileSchema,
+    auditedFinancials: limitedSizeFileSchema,
 
-  memorandumArticle: limitedSizeFileSchema,
-  ownershipStructure: fileSchema,
+    memorandumArticle: requriedFileSchema,
+    ownershipStructure: requriedFileSchema,
 
-  resolutionAuthorizedSignatory: fileSchema,
+    resolutionAuthorizedSignatory: requriedFileSchema,
+  }),
 
   beneficialOwners: directorSchema,
   directors: directorSchema,

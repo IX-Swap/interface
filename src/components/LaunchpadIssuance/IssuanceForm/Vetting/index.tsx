@@ -8,7 +8,7 @@ import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { CenteredFixed, LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
+import { LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
 
 import { VettingFormValues } from './types'
 
@@ -18,31 +18,13 @@ import { DirectorField } from '../shared/fields/DirectorField'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer, DeleteButton } from '../shared/styled'
 import { TextareaField } from '../shared/fields/TextareaField'
-import { useGetFieldArrayId, useLoader, useSubmitVettingForm } from 'state/launchpad/hooks'
+import { useGetFieldArrayId, useLoader, useSaveVettingDraft, useSubmitVettingForm, useVetting, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
 import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useAddPopup } from 'state/application/hooks'
 
-const initialValues = {
-  applicantFullname: undefined,
-  applicantEmail: undefined,
-  companyName: undefined,
-  companyWebsite: undefined,
-  companyPitchDeck: undefined,
-  description: undefined,
-  certificateIncorporation: undefined,
-  certificateIncumbency: undefined,
-  shareDirectorRegistry: undefined,
-  copyOfAuditedFinancials: undefined,
-  memorandumAndAssociacion: undefined,
-  ownershipStructure: undefined,
-  authorizedSignatoryList: undefined,
-  beneficialOwners: [{ id: 0 }],
-  directors: [{ id: 0 }],
-  fundingDocuments: []
-} as unknown as VettingFormValues
 
 export const IssuanceVettingForm = () => {
   const theme = useTheme()
@@ -65,16 +47,19 @@ export const IssuanceVettingForm = () => {
 
     return Number(value)
   }, [history.location.search])
-  
+
+  const initialValues = useVettingFormInitialValues(issuanceId)
+
   const createVetting = useSubmitVettingForm(issuanceId)
-  
+  const saveDraftVetting = useSaveVettingDraft(issuanceId)
+
   const goBack = React.useCallback(() => history.push(`/issuance/create?id=${issuanceId}`), [history, issuanceId])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
     loader.start()
 
     try {
-      await createVetting(values)
+      await createVetting(values, initialValues.data!, initialValues.vettingId)
 
       addPopup({ info: { success: true, summary: 'Vetting created successfully' }})
       goBack();
@@ -83,40 +68,64 @@ export const IssuanceVettingForm = () => {
     } finally {
       loader.stop()
     }
+  }, [initialValues.data, initialValues.vettingId])
 
-  }, [])
+  const saveDraft = React.useCallback(async (values: VettingFormValues) => {
+    loader.start()
+
+    try {
+      await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
+
+      addPopup({ info: { success: true, summary: 'Draft saved successfully' }})
+      goBack();
+    } catch (err) {
+      addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
+    } finally {
+      loader.stop()
+    }
+  }, [initialValues.data, initialValues.vettingId])
 
   if (!issuanceId) {
     return null
   }
 
+  if (initialValues.loading) {
+    return (
+      <LoaderContainer width="100vw" height="100vh">
+        <Loader />
+      </LoaderContainer>
+    )
+  }
+
+  console.log('Final initial data: ', initialValues.data)
+
   return (
-    <FormContainer>
-      {loader.isLoading && (
-        <LoaderContainer width="100vw" height="100vh">
-          <Loader />
-        </LoaderContainer>
-      )}
+    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema}>
+      {({ submitForm, setFieldValue, values, errors }) => (
+        <FormContainer>
+          {loader.isLoading && (
+            <LoaderContainer width="100vw" height="100vh">
+              <Loader />
+            </LoaderContainer>
+          )}
 
-      <FormHeader>
-        <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">
-          <ArrowLeft color={theme.launchpad.colors.primary} />
-        </OutlineButton>
+          <FormHeader>
+            <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">
+              <ArrowLeft color={theme.launchpad.colors.primary} />
+            </OutlineButton>
 
-        <FormTitle>Vetting</FormTitle>
-      </FormHeader>
+            <FormTitle>Vetting</FormTitle>
+          </FormHeader>
 
-      <FormSideBar>
-        <FormSubmitContainer>
-          <OutlineButton>Save Draft</OutlineButton>
-          <OutlineButton>Review</OutlineButton>
+          <FormSideBar>
+            <FormSubmitContainer>
+              <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
+              <OutlineButton>Review</OutlineButton>
 
-          <FilledButton>Submit</FilledButton>
-        </FormSubmitContainer>
-      </FormSideBar>
+              <FilledButton onClick={submitForm}>Submit</FilledButton>
+            </FormSubmitContainer>
+          </FormSideBar>
       
-      <Formik initialValues={initialValues} onSubmit={submit}>
-        {({ submitForm, setFieldValue, values, errors }) => (
           <FormBody>
             <IssuerInfoBlock>
               <FormField 
@@ -124,6 +133,7 @@ export const IssuanceVettingForm = () => {
                 placeholder="Full name of the Applicant"
                 field="applicantFullname"
                 setter={setFieldValue} 
+                value={values.applicantFullname}
                 error={errors.applicantFullname}
               />
 
@@ -132,6 +142,7 @@ export const IssuanceVettingForm = () => {
                 placeholder="Email Address"
                 field="email"
                 setter={setFieldValue} 
+                value={values.email}
                 error={errors.email}
               />
 
@@ -140,6 +151,7 @@ export const IssuanceVettingForm = () => {
                 placeholder="Name of your company"
                 field="companyName"
                 setter={setFieldValue}
+                value={values.companyName}
                 error={errors.companyName}
               />
 
@@ -148,6 +160,7 @@ export const IssuanceVettingForm = () => {
                 placeholder="Company Website"
                 field="companyWebsite"
                 setter={setFieldValue}
+                value={values.companyWebsite}
                 error={errors.companyWebsite}
               />
             </IssuerInfoBlock>
@@ -155,23 +168,33 @@ export const IssuanceVettingForm = () => {
             <Separator />
 
             <DescriptionBlock>
-              <FileField label="Upload the company’s pitch deck" field="pitchDeck" setter={setFieldValue} />
+              <FileField
+                label="Upload the company’s pitch deck"
+                field="document.pitchDeck"
+                setter={setFieldValue}
+                value={values.document.pitchDeck}
+                error={errors.document?.pitchDeck as string}
+              />
 
-              <Hint>
-                Upload additional documents relevant to the funding objective. (Optional)
-              </Hint>
 
               <FieldArray name="fundingDocuments">
                 {({ push, handleRemove }) => (
                   <>
-                    <AddDocumentButton padding="0" onClick={() => push({ id: getId() })}>
-                      <Plus size="14" /> Add Document
-                    </AddDocumentButton>
+                    <AdditionalFiles>
+                      <Hint>
+                        Upload additional documents relevant to the funding objective. (Optional)
+                      </Hint>
+
+                      <AddDocumentButton padding="0" onClick={() => push({ id: getId() })}>
+                        <Plus size="14" /> Add Document
+                      </AddDocumentButton>
+                    </AdditionalFiles>
 
                     <FundingDocumentsGrid>
                       {values.fundingDocuments.map((entry, idx) => (
                         <FileField 
                           key={entry.id}
+                          value={entry.file}
                           field={`fundingDocuments[${idx}].file`}
                           setter={setFieldValue} 
                           trailing={
@@ -186,13 +209,14 @@ export const IssuanceVettingForm = () => {
                 )}
               </FieldArray>
 
-
               <TextareaField 
                 label="Description"
                 placeholder="Short description of the company/offering"
                 field="description"
                 setter={setFieldValue}
                 span={3}
+                value={values.description}
+                error={errors.description}
               />
             </DescriptionBlock>
             
@@ -202,72 +226,92 @@ export const IssuanceVettingForm = () => {
               <FileField 
                 label="Certificate of Incorporation"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
-                field="certificateOfIncorporation"
-                error={errors.certificateOfIncorporation && 'Required'}
+                field="document.certificateOfIncorporation"
+                value={values.document.pitchDeck}
+                error={errors.document?.certificateOfIncorporation as string}
                 setter={setFieldValue}
               />
               <FileField 
                 optional
                 label="Certificate of Incumbency"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
-                field="certificateOfIncumbency"
-                error={errors.certificateOfIncumbency && 'Required'}
+                field="document.certificateOfIncumbency"
+                value={values.document.pitchDeck}
+                error={errors.document?.certificateOfIncumbency as string}
                 setter={setFieldValue}
               />
               
               <FileField 
                 label="Share & Director Registry"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
-                field="shareDirectorRegistry"
-                error={errors.shareDirectorRegistry && 'Required'}
+                field="document.shareDirectorRegistry"
+                value={values.document.pitchDeck}
+                error={errors.document?.shareDirectorRegistry as string}
                 setter={setFieldValue}
               />
               <FileField 
                 optional
                 label="Copy of Audited Financials"
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
-                field="auditedFinancials"
-                error={errors.auditedFinancials && 'Required'}
+                field="document.auditedFinancials"
+                value={values.document.pitchDeck}
+                error={errors.document?.auditedFinancials as string}
                 setter={setFieldValue}
               />
               
               <FileField 
                 label="Memorandum and Article of Association Company Constitution"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
-                field="memorandumArticle"
-                error={errors.memorandumArticle && 'Required'}
+                field="document.memorandumArticle"
+                value={values.document.pitchDeck}
+                error={errors.document?.memorandumArticle as string}
                 setter={setFieldValue}
               />
               <FileField 
                 label="Ownership Structure"
                 hint={<ExampleLink>See Examples</ExampleLink>}
-                field="ownershipStructure"
-                error={errors.ownershipStructure && 'File Required'}
+                field="document.ownershipStructure"
+                value={values.document.pitchDeck}
+                error={errors.document?.ownershipStructure as string}
                 setter={setFieldValue}
               />
               
               <FileField 
                 label="Resolution of Authorized Signatory List"
                 hint="Document must include specimen signatures or equivalent"
-                field="resolutionAuthorizedSignatory"
-                error={errors.resolutionAuthorizedSignatory && 'Required'}
+                field="document.resolutionAuthorizedSignatory"
+                value={values.document.pitchDeck}
+                error={errors.document?.resolutionAuthorizedSignatory as string}
                 setter={setFieldValue}
               />
             </FilesBlock>
 
             <Separator />
 
-            <DirectorField directorTitle='Beneficial Owner' directors={values.beneficialOwners} setter={setFieldValue} field="beneficialOwners" />
-            <DirectorField directorTitle='Director' directors={values.directors} setter={setFieldValue} field="directors" />
+            <DirectorField 
+              directorTitle='Beneficial Owner'
+              directors={values.beneficialOwners}
+              setter={setFieldValue} 
+              field="beneficialOwners"
+              errors={errors as { [key: string]: string }}
+            />
+
+            <DirectorField 
+              directorTitle='Director'
+              directors={values.directors}
+              setter={setFieldValue}
+              field="directors"
+              errors={errors as { [key: string]: string }}
+            />
 
             <Row justifyContent='flex-end' alignItems="center" gap="1.5rem">
               <OutlineButton width="280px">Back</OutlineButton>
               <FilledButton width="280px" onClick={submitForm}>Submit</FilledButton>
             </Row>
           </FormBody>
-        )}
-      </Formik>
-    </FormContainer>
+      </FormContainer>
+      )}
+    </Formik>
   )
 }
 
@@ -285,20 +329,22 @@ const DescriptionBlock = styled.div`
   display: grid;
 
   grid-template-rows: repeat(2, auto);
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-areas:
     ". . ."
-    "description description description";
+    "description description";
 
   gap: 2.5rem 1rem;
 
   align-items: end;
 `
 
-
-const AddDocumentButton = styled(OutlineButton)`
-  margin-bottom: 1.25rem;
+const AdditionalFiles = styled(FormGrid)`
+  padding-top: 2.75rem;
+  place-self: start;
 `
+
+const AddDocumentButton = styled(OutlineButton)``
 
 const Hint = styled.div`
   font-style: normal;
@@ -311,8 +357,6 @@ const Hint = styled.div`
   text-align: right;
 
   color: #8D8DA3;
-  
-  margin-bottom: 1rem;
 `
 
 const FilesBlock = styled.div`
@@ -321,7 +365,7 @@ const FilesBlock = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, auto);
 
-  align-items: end;
+  align-items: start;
 
   gap: 2rem;
 `
@@ -344,10 +388,4 @@ const FundingDocumentsGrid = styled(FormGrid)`
   grid-column: span 3;
 
   gap: 0.5rem 2rem;
-`
-
-const RemoveButton = styled(DeleteButton)`
-  position: absolute;
-
-  right: 1rem;
 `
