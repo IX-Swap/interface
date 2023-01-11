@@ -4,12 +4,14 @@ import styled, { useTheme } from 'styled-components'
 
 import { Eye } from 'react-feather'
 
+import { IssuancesFull } from './IssuancesFull'
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
 
 import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issuances.svg'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { IssuanceTable, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
 import { Centered, Column } from 'components/LaunchpadMisc/styled'
 
 import { IssuanceFilter, issuers, IssuanceStatus, Issuance, statuses } from '../types'
@@ -74,7 +76,7 @@ const IssuanceTabs: React.FC<TabsProps> = (props) => {
 
 export const IssuanceDashboard = () => {
   const theme = useTheme()
-  const issuances  = useIssuances()
+  const issuances = useIssuances()
 
   const [activeTab, setActiveTab] = React.useState(IssuanceFilter.pending)
 
@@ -124,29 +126,8 @@ export const IssuanceDashboard = () => {
           </NoItemsContainer>
         )}
 
-        {issuancesFetched && activeTab === IssuanceFilter.pending && (
-          <IssuanceTable>
-            <TableHeader tab={IssuanceFilter.pending}>
-              <div>Issuances</div>
-              <div>Start Date</div>
-              <div>Status</div>
-              <div>Action</div>
-            </TableHeader>
-
-            {issuances.items.map((issuance, idx) => (
-              <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
-                <div>{issuance.issuer}</div>
-
-                <div>{moment(issuance.startDate).format('DD/MM/YYYY')}</div>
-
-                <IssuanceStatusBadge status={issuance.status} />
-
-                <OutlineButton color={theme.launchpad.colors.primary + '80'} height="34px">
-                  View Application <Eye size="15" color={theme.launchpad.colors.primary} />
-                </OutlineButton>
-              </IssuanceRow>
-            ))}
-          </IssuanceTable>
+        {activeTab === IssuanceFilter.pending && (
+          <IssuancesFull />
         )}
         
         {issuancesFetched && activeTab === IssuanceFilter.live && (
@@ -257,64 +238,6 @@ const NewIssuanceButton = styled.button`
   border-radius: 6px;
 
   background: none;
-`
-
-const IssuanceTable = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-
-  width: 100%;
-  max-width: 1180px;
-
-  margin: auto;
-
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
-  border-radius: 8px;
-
-  > :nth-child(even) {
-    background: ${props => props.theme.launchpad.colors.foreground};
-  }
-`
-
-const TableHeader = styled.div<{ tab: IssuanceFilter }>`
-  display: grid;
-
-  grid-template-rows: 60px;
-
-  ${props => props.tab === IssuanceFilter.pending && `
-    grid-template-columns: 4fr repeat(3, 2fr);
-  `}
-  
-  ${props => props.tab !== IssuanceFilter.pending && `
-    grid-template-columns: 1.5fr repeat(6, 1fr)  1fr;
-  `}
-
-  place-content: center start ;
-  align-items: center;
-
-  gap: 2rem;
-
-  height: 60px;
-  width: 100%;
-
-  padding: 0.25rem 1rem;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 48px;
-  letter-spacing: -0.01em;
-  
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
-`
-
-const IssuanceRow = styled(TableHeader)<{ tab: IssuanceFilter }>`
-
-  color: ${props => props.theme.launchpad.colors.text.title};
-
-  opacity: 0.8;
 `
 
 const NoItemsContainer = styled.div`

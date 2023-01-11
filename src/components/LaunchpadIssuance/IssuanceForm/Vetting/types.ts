@@ -1,3 +1,5 @@
+import { IssuanceFile } from "../types"
+
 export interface VettingFormValues {
   applicantFullname: string
   email: string
@@ -7,19 +9,22 @@ export interface VettingFormValues {
 
   description: string
 
-  pitchDeck: File
   fundingDocuments: FundingDocument[]
 
-  certificateOfIncorporation: File
-  certificateOfIncumbency: File
+  document: {
+    pitchDeck: IssuanceFile
+    
+    certificateOfIncorporation: IssuanceFile
+    certificateOfIncumbency: IssuanceFile
 
-  shareDirectorRegistry: File
-  auditedFinancials: File
+    shareDirectorRegistry: IssuanceFile
+    auditedFinancials: IssuanceFile
 
-  memorandumArticle: File
-  ownershipStructure: File
+    memorandumArticle: IssuanceFile
+    ownershipStructure: IssuanceFile
 
-  resolutionAuthorizedSignatory: File
+    resolutionAuthorizedSignatory: IssuanceFile
+  }
 
   beneficialOwners: DirectorInfo[]
   directors: DirectorInfo[]
@@ -27,11 +32,12 @@ export interface VettingFormValues {
 
 export interface FundingDocument {
   id: number
-  file: File
+  file: IssuanceFile
 }
 
 export interface DirectorInfo {
+  id?: number
   fullName: string
-  proofOfIdentity: File
-  proofOfAddress: File
+  proofOfIdentity: IssuanceFile
+  proofOfAddress: IssuanceFile
 }

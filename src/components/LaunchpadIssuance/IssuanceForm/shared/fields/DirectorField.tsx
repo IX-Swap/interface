@@ -17,7 +17,7 @@ interface Props {
   directorTitle: string
   directors: DirectorInfo[]
 
-  error?: string
+  errors?: { [key: string]: any }
 
   field: string
   setter: (field: string, value: string) => void
@@ -30,6 +30,8 @@ export const DirectorField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const directors = React.useMemo(() => props.directors as (DirectorInfo & { id: number })[], [props.directors])
+  const errors = React.useMemo(() => props.errors?.[props.field], [props.errors, props.field])
+  const errorsLength = React.useMemo(() => errors?.length ?? 0, [errors])
 
   return (
     <Column gap="1rem" alignItems="stretch">
@@ -46,6 +48,8 @@ export const DirectorField: React.FC<Props> = (props) => {
                     placeholder="Full Name"
                     setter={props.setter}
                     field={`${props.field}[${idx}].fullName`}
+                    value={entry.fullName}
+                    error={errorsLength > idx && errors[idx]?.fullName}
                   />
                 </Column>
 
@@ -55,12 +59,16 @@ export const DirectorField: React.FC<Props> = (props) => {
                     hint="Certified true copy of passport and other official forms of identification"
                     field={`${props.field}[${idx}].proofOfIdentity`} 
                     setter={props.setter}
+                    value={entry.proofOfIdentity}
+                    error={errorsLength > idx && errors[idx]?.proofOfIdentity}
                   />
                   <FileField 
                     label={`Proof of Address (${props.directorTitle})`}
                     hint={`Proof of Address for ${props.directorTitle}`}
                     field={`${props.field}[${idx}].proofOfAddress`}
                     setter={props.setter}
+                    value={entry.proofOfAddress}
+                    error={errorsLength > idx && errors[idx]?.proofOfAddress}
                   />
 
                   {(directors.length > 1 || idx > 0) && (

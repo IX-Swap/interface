@@ -9,6 +9,7 @@ interface Props {
   placeholder?: string
 
   span?: number
+  value?: string
   error?: string
 
   field: string
@@ -21,7 +22,7 @@ export const TextareaField: React.FC<Props> = (props) => {
       <FieldLabel>{props.label}</FieldLabel>
       <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>
 
-      <Textarea onChange={v => props.setter(props.field, v.target.value)} />
+      <Textarea value={props.value} onChange={v => props.setter(props.field, v.target.value)} />
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
     </FormFieldWrapper>

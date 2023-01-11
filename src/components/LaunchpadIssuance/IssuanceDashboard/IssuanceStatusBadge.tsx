@@ -31,7 +31,7 @@ export const IssuanceStatusBadge: React.FC<BadgeProps> = (props) => {
           Application in Progress
         </IssuanceStatusBadgeWrapper>
       )
-    case IssuanceStatus.changeRequested:
+    case IssuanceStatus.changesRequested:
       return (
         <IssuanceStatusBadgeWrapper color="#4C88FF">
           Update Your Application
@@ -43,7 +43,8 @@ export const IssuanceStatusBadge: React.FC<BadgeProps> = (props) => {
           Pending Approval
         </IssuanceStatusBadgeWrapper>
       )
-
+    case IssuanceStatus.draft:
+      return (<div></div>)
     default:
       return props.status
   }
