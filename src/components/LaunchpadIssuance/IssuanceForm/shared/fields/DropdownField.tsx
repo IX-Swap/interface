@@ -16,6 +16,7 @@ interface Props<T> {
 
   options: Option<T>[]
 
+  searchable?: boolean
   optional?: boolean
   span?: number
   error?: string
@@ -33,9 +34,26 @@ export function DropdownField<T>(props: Props<T>) {
   const [selectedValue, setSelectedValue] = React.useState<Option<T> | undefined>()
   const [showDropdown, setShowDropdown] = React.useState(false)
 
+  const [optionSearch, setOptionSearch] = React.useState<string>()
+
+  const options = React.useMemo(() => {
+    if (!props.searchable) {
+      return props.options
+    }
+
+    if (!optionSearch) {
+      return props.options
+    }
+
+    const query = optionSearch.toLowerCase()
+
+    return props.options.filter(x => x.label.toLowerCase().startsWith(query))
+  }, [optionSearch])
+
   const toggle = React.useCallback(() => setShowDropdown(state => !state), [])
   const select = React.useCallback((option: Option<T>) => {
     setSelectedValue(option)
+    setOptionSearch(option.label)
 
     if (props.field && props.setter) {
       props.setter(props.field, option.value)
@@ -70,12 +88,21 @@ export function DropdownField<T>(props: Props<T>) {
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}
         </FieldLabel>
 
-        {props.placeholder && !selectedValue && <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>}
-        {(!props.placeholder || selectedValue) && <FieldSelectedValue>{selectedValue?.label ?? 'Select'}</FieldSelectedValue>}
+        {!props.searchable && props.placeholder && !selectedValue && (
+          <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>
+        )}
+
+        {!props.searchable && (!props.placeholder || selectedValue) && (
+          <FieldSelectedValue>{selectedValue?.label ?? 'Select'}</FieldSelectedValue>
+        )}
+
+        {props.searchable && (
+          <OptionSearch placeholder={props.placeholder ?? 'Select'} value={optionSearch} onChange={e => setOptionSearch(e.target.value)} />
+        )}
 
         {showDropdown && (
           <FieldOptionList>
-            {props.options.map((option, idx) => (
+            {options.map((option, idx) => (
               <FieldOption key={idx} onClick={() => select(option)}>{option.label}</FieldOption>
             ))}
           </FieldOptionList>
@@ -121,6 +148,21 @@ const FieldIcon = styled.div<{ isOpen: boolean }>`
     transition: transofrm 0.4s;
     ${props => props.isOpen && 'transform: rotate(180deg);' };
   }
+`
+
+const OptionSearch = styled.input`
+  border: none;
+  background: none;
+  outline: none;
+  
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 17px;
+  letter-spacing: -0.01em;
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldLabel = styled.div`

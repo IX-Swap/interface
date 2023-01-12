@@ -33,6 +33,7 @@ export const IssuanceVettingForm = () => {
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
+  
 
   const issuanceId = React.useMemo(() => {
     const value = decodeURI(history.location.search).replace('?', '').split('&')
@@ -54,6 +55,7 @@ export const IssuanceVettingForm = () => {
   const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
   const goBack = React.useCallback(() => history.push(`/issuance/create?id=${issuanceId}`), [history, issuanceId])
+  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
     loader.start()
@@ -120,7 +122,6 @@ export const IssuanceVettingForm = () => {
           <FormSideBar>
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
-              <OutlineButton>Review</OutlineButton>
 
               <FilledButton onClick={submitForm}>Submit</FilledButton>
             </FormSubmitContainer>
@@ -135,6 +136,7 @@ export const IssuanceVettingForm = () => {
                 setter={setFieldValue} 
                 value={values.applicantFullname}
                 error={errors.applicantFullname}
+                inputFilter={textFilter}
               />
 
               <FormField
@@ -144,6 +146,7 @@ export const IssuanceVettingForm = () => {
                 setter={setFieldValue} 
                 value={values.email}
                 error={errors.email}
+                inputFilter={textFilter}
               />
 
               <FormField
@@ -153,6 +156,7 @@ export const IssuanceVettingForm = () => {
                 setter={setFieldValue}
                 value={values.companyName}
                 error={errors.companyName}
+                inputFilter={textFilter}
               />
 
               <FormField
@@ -162,6 +166,7 @@ export const IssuanceVettingForm = () => {
                 setter={setFieldValue}
                 value={values.companyWebsite}
                 error={errors.companyWebsite}
+                inputFilter={textFilter}
               />
             </IssuerInfoBlock>
 

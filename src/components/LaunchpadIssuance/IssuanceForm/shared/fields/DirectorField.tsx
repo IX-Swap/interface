@@ -32,26 +32,37 @@ export const DirectorField: React.FC<Props> = (props) => {
   const directors = React.useMemo(() => props.directors as (DirectorInfo & { id: number })[], [props.directors])
   const errors = React.useMemo(() => props.errors?.[props.field], [props.errors, props.field])
   const errorsLength = React.useMemo(() => errors?.length ?? 0, [errors])
+  
+  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
 
   return (
-    <Column gap="1rem" alignItems="stretch">
+    <Column gap="2rem" alignItems="stretch">
       <FieldArray name={props.field}>
         {({ push, handleRemove }) => (
           <>
             {directors.map((entry, idx) => (
-              <Column gap="2rem" key={entry.id}>
-                <Column gap="0.25rem" width="50%" padding=" 0 0.75rem 0 0">
-                  <FullnameLabel>{`Name of ${props.directorTitle}`}</FullnameLabel>
-                  <FullnameHint>{`Full name of ${props.directorTitle}`}</FullnameHint>
+              <Column gap="1rem" key={entry.id}>
+                <Row justifyContent='space-between'>
+                  <Column gap="0.25rem" width="50%" padding=" 0 0.75rem 0 0">
+                    <FullnameLabel>{`Name of ${props.directorTitle}`}</FullnameLabel>
+                    <FullnameHint>{`Full name of ${props.directorTitle}`}</FullnameHint>
+                    
+                    <FormField 
+                      placeholder="Full Name"
+                      setter={props.setter}
+                      field={`${props.field}[${idx}].fullName`}
+                      value={entry.fullName}
+                      error={errorsLength > idx && errors[idx]?.fullName}
+                      inputFilter={textFilter}
+                    />
+                  </Column>
                   
-                  <FormField 
-                    placeholder="Full Name"
-                    setter={props.setter}
-                    field={`${props.field}[${idx}].fullName`}
-                    value={entry.fullName}
-                    error={errorsLength > idx && errors[idx]?.fullName}
-                  />
-                </Column>
+                  {(directors.length > 1 || idx > 0) && (
+                    <DeleteButton onClick={handleRemove(idx)}>
+                      <Trash />
+                    </DeleteButton>
+                  )}
+                </Row>
 
                 <FilesRow>
                   <FileField 
@@ -71,11 +82,6 @@ export const DirectorField: React.FC<Props> = (props) => {
                     error={errorsLength > idx && errors[idx]?.proofOfAddress}
                   />
 
-                  {(directors.length > 1 || idx > 0) && (
-                    <DeleteButton onClick={handleRemove(idx)}>
-                      <Trash />
-                    </DeleteButton>
-                  )}
                 </FilesRow>
 
               </Column>

@@ -62,6 +62,10 @@ export interface InformationFormValues {
   presaleMinInvestment: string
   presaleMaxInvestment: string
 
+  email: string
+  website: string
+  whitepaper: string
+
   images: File[]
   videos: VideoLink[]
   additionalDocuments: AdditionalDocument[]

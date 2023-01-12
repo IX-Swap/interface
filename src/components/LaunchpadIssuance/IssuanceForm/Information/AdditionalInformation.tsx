@@ -3,22 +3,25 @@ import styled from 'styled-components'
 
 import { Plus } from 'react-feather'
 import { capitalize } from 'lodash'
+import { FormikErrors } from 'formik'
+
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 
+
+import { FormGrid } from '../shared/FormGrid'
+import { FormField } from '../shared/fields/FormField'
+import { AddButton, DeleteButton } from '../shared/styled'
 import { DropdownField } from '../shared/fields/DropdownField'
 
-import { FormField } from '../shared/fields/FormField'
-import { FormGrid } from '../shared/FormGrid'
-import { AddButton, DeleteButton } from '../shared/styled'
-
-import { SocialMediaLink, SocialMediaType } from './types'
-import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
+import { InformationFormValues, SocialMediaLink, SocialMediaType } from './types'
 
 
 interface Props {
   social: SocialMediaLink[]
+  errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
 
@@ -63,6 +66,21 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
     props.setter('social', props.social.filter(x => x.type !== link.type))
   }, [props.social])
 
+  const getError = React.useCallback((link: SocialMediaLink) => {
+    switch (link.type) {
+      case SocialMediaType.twitter:
+      case SocialMediaType.coinGecko:
+      case SocialMediaType.coinMarketCap:
+      case SocialMediaType.discord:
+      case SocialMediaType.linkedIn:
+      case SocialMediaType.reddit:
+      case SocialMediaType.telegram:
+      case SocialMediaType.youTube:
+    }
+  }, [props.errors])
+
+  console.log(props.errors)
+
   return (
     <FormGrid title="Additional Information">
       <FormField 
@@ -70,6 +88,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='Email Address'
         field="email"
         setter={props.setter} 
+        error={props.errors.email}
       />
 
       <FormField 
@@ -77,6 +96,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="website"
         setter={props.setter} 
+        error={props.errors.website}
       />
       
       <FormField 
@@ -84,6 +104,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="whitepaper"
         setter={props.setter} 
+        error={props.errors.whitepaper}
       />
 
       {props.social.map((link, idx) => (
@@ -92,8 +113,9 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
           label={`${capitalize(link.type)}`}
           value={link.url}
           placeholder='URL'
-          field={`socialMedia.${link.type}`}
+          field={`social[${idx}].url`}
           setter={props.setter} 
+          error={(props.errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url}
           trailing={
             <RemoveButton onClick={() => removeSocialMedia(link)}>
               <Trash />
