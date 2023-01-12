@@ -351,4 +351,4 @@ export interface Issuance {
   vetting?: IssuanceVetting
 }
 
-export type IssuancePlain = Pick<Issuance, 'name'>
+export type IssuancePlain = Pick<Issuance, 'name' | 'id'>

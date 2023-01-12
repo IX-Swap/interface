@@ -239,6 +239,28 @@ export const useGetIssuanceFull = () => {
   return { items, load, loading: loader.isLoading }
 }
 
+export const useGetIssuance = () => {
+  const loader = useLoader()
+
+  const [data, setData] = React.useState<Issuance>()
+
+  const load = React.useCallback((id?: number) => {
+    if (!id) {
+      return
+    }
+
+    loader.start()
+
+    return apiService
+      .get(`/issuances/me/${id}/full`)
+      .then(res => res.data as Issuance)
+      .then(setData)
+      .then(loader.stop)
+  }, [])
+
+  return { data, load, loading: loader.isLoading }
+}
+
 export const useVetting = (issuanceId?: number) => {
   const loader = useLoader()
   const [vetting, setVettings] = React.useState<IssuanceVetting>()
