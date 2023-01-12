@@ -39,7 +39,7 @@ export const CreateOrSaveListingButton = (
   )
   // console.log(listing, 'list')
   const { dso, ...defaultFormValues } = watch()
-  const formValues = getUpdateListingPayload({
+  const payload = {
     // ...listing,
     ...defaultFormValues,
     corporate: listing?.corporate._id,
@@ -59,10 +59,15 @@ export const CreateOrSaveListingButton = (
     minimumTradeUnits: listing?.minimumTradeUnits,
     introduction: listing?.introduction,
     team: listing?.team,
-    type: listing?.listingType,
+    // type: listingType when creating a new listing
+    // type: listing?.listingType when eddting a listing
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    type: listingType || listing?.listingType,
     dso: dso,
     userId: userId
-  } as any)
+  } as any
+
+  const formValues = getUpdateListingPayload(payload)
 
   const handleClick =
     listing === undefined || isDataFromDSO
