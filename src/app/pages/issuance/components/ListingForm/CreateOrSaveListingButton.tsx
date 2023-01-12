@@ -8,12 +8,13 @@ import { getUpdateListingPayload } from 'app/pages/issuance/utils/listing'
 import { useCreateListing } from 'app/pages/issuance/hooks/useCreateListing'
 import { useUpdateListing } from 'app/pages/issuance/hooks/useUpdateListing'
 import { Listing, ListingFormValues } from 'app/pages/issuance/types/listings'
+import { LISTING_TYPES } from '../../consts/listing'
 
-import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
+// import { ListingType } from 'app/pages/issuance/components/ListingForm/ListingDetails'
 
 export interface CreateOrSaveListingButtonProps {
   listing: DigitalSecurityOffering | Listing | undefined
-  listingType?: ListingType | any
+  listingType?: LISTING_TYPES | any
   // listingType?: null | string | undefined
   isDataFromDSO: boolean
 }
@@ -58,7 +59,7 @@ export const CreateOrSaveListingButton = (
     minimumTradeUnits: listing?.minimumTradeUnits,
     introduction: listing?.introduction,
     team: listing?.team,
-    type: listingType,
+    type: listing?.listingType,
     dso: dso,
     userId: userId
   } as any)
