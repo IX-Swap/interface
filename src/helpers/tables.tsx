@@ -173,7 +173,7 @@ export const renderAmount = (
 
 export const renderClosureAmount = (val: string, row: Closure): string => {
   const amount = Number.isNaN(val) ? 0 : parseFloat(val)
-  const symbol = row.dso?.currency.symbol
+  const symbol = row.dso?.currency?.symbol
   return formatMoney(amount, symbol)
 }
 
