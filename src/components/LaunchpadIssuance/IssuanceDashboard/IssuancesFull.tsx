@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
+import { useHistory } from 'react-router-dom'
 import { Eye } from 'react-feather'
 
 import { ReactComponent as VectorIcon } from 'assets/launchpad/svg/vectors.svg'
@@ -23,6 +24,7 @@ import { useGetIssuances } from 'state/launchpad/hooks'
 
 export const IssuancesFull = () => {
   const theme = useTheme()
+  const history = useHistory()
   const getIssuances = useGetIssuances()
 
   const [loading, setLoading] = React.useState<boolean>(true)
@@ -68,6 +70,8 @@ export const IssuancesFull = () => {
         ? issuance.vetting.status
         : IssuanceStatus.inProgress
   }, [])
+
+  const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
 
   const onChaneNameOrder = React.useCallback(() => {
     const manner = isNameAsc ? 'ASC' : 'DESC'
@@ -121,7 +125,10 @@ export const IssuancesFull = () => {
 
             <IssuanceStatusBadge status={status(issuance)} />
 
-            <OutlineButton color={theme.launchpad.colors.primary + '80'} height="34px">
+            <OutlineButton
+              color={theme.launchpad.colors.primary + '80'}
+              height="34px"
+              onClick={() => veiwItem(issuance.id)}>
               View Application <Eye size="15" color={theme.launchpad.colors.primary} />
             </OutlineButton>
           </IssuanceRow>
