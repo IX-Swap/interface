@@ -23,13 +23,13 @@ export const CorporateInfo = (props: CorporateInfoProps) => {
       style={{ marginBottom: 70 }}
     >
       <Grid item>
-        <Typography variant='h3'>{data.companyLegalName}</Typography>
+        <Typography variant='h3'>{data?.companyLegalName}</Typography>
       </Grid>
 
       <Grid item>
         <Avatar
-          documentId={data.logo}
-          ownerId={getDataroomFileId(data.user)}
+          documentId={data?.logo}
+          ownerId={getDataroomFileId(data?.user)}
           size={[200, 130]}
           variant='rounded'
         />
@@ -37,8 +37,8 @@ export const CorporateInfo = (props: CorporateInfoProps) => {
 
       <Grid item>
         <AuthorizerIdentityLink
-          userId={getDataroomFileId(data.user)}
-          identityId={data._id}
+          userId={getDataroomFileId(data?.user)}
+          identityId={data?._id}
           type='corporate'
         />
       </Grid>
@@ -46,16 +46,16 @@ export const CorporateInfo = (props: CorporateInfoProps) => {
       <Grid item>
         <LabelledValue
           label='Address'
-          value={convertAddressToString(data.companyAddress)}
+          value={convertAddressToString(data?.companyAddress)}
         />
       </Grid>
 
       <Grid item>
-        <LabelledValue label='Contact' value={data.contactNumber} />
+        <LabelledValue label='Contact' value={data?.contactNumber} />
       </Grid>
 
       <Grid item>
-        <LabelledValue label='Email Address' value={data.email} />
+        <LabelledValue label='Email Address' value={data?.email} />
       </Grid>
     </Grid>
   )
