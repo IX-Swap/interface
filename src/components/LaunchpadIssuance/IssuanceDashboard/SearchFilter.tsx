@@ -8,6 +8,12 @@ export interface SearchConfig {
   search: string
 }
 
+export interface OrderConfig {
+  name: string
+  startDate?: string
+  status?: string
+}
+
 interface Props {
   onFilter: (filter: SearchConfig) => void
 }

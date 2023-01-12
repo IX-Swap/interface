@@ -4,14 +4,19 @@ import styled, { useTheme } from 'styled-components'
 
 import { Eye } from 'react-feather'
 
+import { ReactComponent as VectorIcon } from 'assets/launchpad/svg/vectors.svg'
+
 import { Issuance } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
-import { IssuanceStatusBadge } from './IssuanceStatusBadge'
-import { SearchFilter, SearchConfig } from './SearchFilter'
 
+import { IssuanceStatusBadge } from './IssuanceStatusBadge'
+import { SearchFilter, SearchConfig, OrderConfig } from './SearchFilter'
+import { PaginationTrigger } from './PaginationTrigger'
+
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceTable, TableTitle, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
-import { PaginationTrigger } from 'components/Launchpad/InvestmentList/PaginationTrigger'
 
 import { useGetIssuances } from 'state/launchpad/hooks'
 
@@ -24,30 +29,37 @@ export const IssuancesFull = () => {
   const [issuances, setIssuances] = React.useState<Issuance[]>([])
   
   const [page, setPage] = React.useState(1)
-  const [hasMore, setHasMore] = React.useState(true)
+  const [hasMore, setHasMore] = React.useState(false)
   const [filter, setFilter] = React.useState<SearchConfig | undefined>()
+  const [order, setOrder] = React.useState<OrderConfig>({ name: 'ASC' })
+  
+  const [isNameAsc, setNameAsc] = React.useState<boolean>(true)
+  const [isStartDateAsc, setStartDateAsc] = React.useState<boolean>(true)
+  const [isStatusAsc, setStatusAsc] = React.useState<boolean>(true)
 
   React.useEffect(() => {
-    getIssuances(1, filter)
+    setLoading(true)
+
+    getIssuances(1, filter, order)
       .then(page => {
         setIssuances(page.items)
         setHasMore(page.hasMore)
-      })
-      .then(() => setLoading(false))
+      })      
       .then(() => setPage(2))
-  }, [filter])
+      .finally(() => setLoading(false))
+  }, [filter, order])
 
   const fetchMore = React.useCallback(async () => {
     setLoading(true)
 
-    const result = await getIssuances(page)
+    const result = await getIssuances(page, filter, order)
 
     setIssuances(state => state.concat(result.items))
     setPage(state => state + 1)
     setHasMore(result.hasMore)
     
     setLoading(false)
-  }, [issuances, page])
+  }, [issuances, page, filter, order])
 
   const status = React.useCallback((issuance: Issuance) => {
     return issuance.vetting && issuance.vetting?.offer
@@ -56,7 +68,28 @@ export const IssuancesFull = () => {
         ? issuance.vetting.status
         : IssuanceStatus.inProgress
   }, [])
-  
+
+  const onChaneNameOrder = React.useCallback(() => {
+    const manner = isNameAsc ? 'ASC' : 'DESC'
+    
+    setOrder(state => ({ ...state, name: manner }))
+    setNameAsc(state => !state)
+  }, [isNameAsc])
+
+  const onChangeStartDateOrder = React.useCallback(() => {
+    const manner = isStartDateAsc ? 'ASC' : 'DESC'
+    
+    setOrder(state => ({ ...state, startDate: manner }))
+    setStartDateAsc(state => !state)
+  }, [isStartDateAsc])
+
+  const onChangeStatusOrder = React.useCallback(() => {
+    const manner = isStatusAsc ? 'ASC' : 'DESC'
+    
+    setOrder(state => ({ ...state, status: manner }))
+    setStatusAsc(state => !state)
+  }, [isStatusAsc])
+
   return (
     <Container>
       <TableTitle>Issuances</TableTitle>
@@ -64,13 +97,19 @@ export const IssuancesFull = () => {
 
       <IssuanceTable>
         <TableHeader tab={IssuanceFilter.pending}>
-          <div>Issuances</div>
-          <div>Start Date</div>
-          <div>Status</div>
-          <div>Action</div>
+          <Title onClick={onChaneNameOrder}> <VectorIcon /> Issuances</Title>
+          <Title onClick={onChangeStartDateOrder}> <VectorIcon /> Start Date</Title>
+          <Title onClick={onChangeStatusOrder}> <VectorIcon /> Status</Title>
+          <div>  Action</div>
         </TableHeader>
 
-        {issuances.map((issuance, idx) => (
+        {loading && (
+          <Centered>
+            <Loader />
+          </Centered>
+        )}
+
+        {!loading && issuances.map((issuance, idx) => (
           <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
             <div>{issuance.name}</div>
 
@@ -87,14 +126,18 @@ export const IssuancesFull = () => {
             </OutlineButton>
           </IssuanceRow>
         ))}
-        {hasMore && <PaginationTrigger isLoading={loading} onTriggered={fetchMore} />}
+          
+        {hasMore && !loading && <PaginationTrigger isLoading={loading} onTriggered={fetchMore} />}
       </IssuanceTable>
-
     </Container>
   )
 }
 
 const Container = styled.article`
   min-height: 100vh;
+`
+
+const Title = styled.div`
+  cursor: pointer;
 `
 
