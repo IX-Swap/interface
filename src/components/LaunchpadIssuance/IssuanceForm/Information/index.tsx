@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
@@ -8,29 +9,39 @@ import { Formik, FormikProps } from 'formik'
 
 import { InformationFormValues } from './types'
 
+import { countriesList } from 'constants/countriesList'
+
 import { Row, Separator, Spacer } from 'components/LaunchpadMisc/styled'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
 import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
+import { FormGrid } from '../shared/FormGrid'
 import { FormField } from '../shared/fields/FormField'
 import { ImageField } from '../shared/fields/ImageField'
 import { DropdownField } from '../shared/fields/DropdownField'
 import { TextareaField } from '../shared/fields/TextareaField'
-import { DateRangeField } from '../shared/fields/DateRangeField'
-
-import { FormGrid } from '../shared/FormGrid'
-import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
-import { RejectionReasons } from './RejectionReasons'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
-import { TeamMembersBlock } from './TeamMembers'
-import { FAQBlock } from './FAQ'
+import { DateRangeField } from '../shared/fields/DateRangeField'
+import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
 
-import { initialValues, industryOptions, tokenTypeOptions, networkOptions, standardOptions, distributionFrequencyOptions, investmentStructureOptions } from './util'
+import { FAQBlock } from './FAQ'
 import { GalleryBlock } from './Gallery'
-import { countriesList } from 'constants/countriesList'
-import { AdditionalInformation } from './AdditionalInformation'
+import { TeamMembersBlock } from './TeamMembers'
 import { UploadDocuments } from './UploadDocuments'
-import moment from 'moment'
+import { RejectionReasons } from './RejectionReasons'
+import { AdditionalInformation } from './AdditionalInformation'
+
+import { schema } from './schema'
+
+import { 
+  initialValues,
+  industryOptions,
+  tokenTypeOptions,
+  networkOptions,
+  standardOptions,
+  distributionFrequencyOptions,
+  investmentStructureOptions 
+} from './util'
 
 
 export const IssuanceInformationForm = () => {
@@ -79,7 +90,7 @@ export const IssuanceInformationForm = () => {
     return isSafeToClose
   }, [])
 
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z ]/.test(x)).join(''), [])
+  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&]/.test(x)).join(''), [])
   const numberFilter = React.useCallback((value: string) => {
     const [whole, ...decimals] = value
       .split('')
@@ -133,7 +144,7 @@ export const IssuanceInformationForm = () => {
         </FormSubmitContainer>
       </FormSideBar>
 
-      <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit}>
+      <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit} validationSchema={schema}>
         {({ values, errors, setFieldValue }) => (
           <FormBody>
             <ImageBlock>
@@ -165,7 +176,7 @@ export const IssuanceInformationForm = () => {
 
               <DropdownField field="industry" setter={setFieldValue} label="Industry" options={industryOptions} />
               <DropdownField field="investmentStructure" setter={setFieldValue} label="Investment Type" options={investmentStructureOptions} />
-              <DropdownField field="country" setter={setFieldValue} label="Deal Country" options={countries} />
+              <DropdownField field="country" setter={setFieldValue} label="Deal Country" options={countries} searchable />
             </FormGrid>
             
             <Separator />
@@ -329,7 +340,7 @@ export const IssuanceInformationForm = () => {
             
             <Separator />
             
-            <AdditionalInformation social={values.social} setter={setFieldValue}/>
+            <AdditionalInformation social={values.social} setter={setFieldValue} errors={errors} />
             
             <Separator />
             
@@ -337,7 +348,7 @@ export const IssuanceInformationForm = () => {
             
             <Separator />
             
-            <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} />
+            <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} errors={errors} />
             
             <Separator />
 

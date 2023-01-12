@@ -2,28 +2,27 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { useDropzone } from 'react-dropzone'
+import { FormikErrors, FieldArray } from 'formik'
 import { Image, Plus, Trash } from 'react-feather'
 
-import { FieldArray } from 'formik'
+import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg'
 
-
+import { useGetFieldArrayId } from 'state/launchpad/hooks'
 import { Column } from 'components/LaunchpadMisc/styled'
 
-import { VideoLink } from './types'
+import { InformationFormValues, VideoLink } from './types'
 
 import { AddButton, DeleteButton } from '../shared/styled'
 import { FormField } from '../shared/fields/FormField'
 import { FormGrid } from '../shared/FormGrid'
 
-import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg'
-import { useGetFieldArrayId } from 'state/launchpad/hooks'
-
-
 interface Props {
   images: File[]
   videos: VideoLink[]
+  errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
+
 export const GalleryBlock: React.FC<Props> = (props) => {
   const theme = useTheme()
 
@@ -93,30 +92,22 @@ export const GalleryBlock: React.FC<Props> = (props) => {
           {({ push, handleRemove }) => (
             <>
               {videos.map((video, idx) => (
-                <VideoLinkContainer key={video.id}>
-                  <FormField 
-                    field={`videos[${idx}].title`}
-                    setter={props.setter}
-                    label="Video Title"
-                    placeholder='Title'
-                    borderless
-                  />
+                <FormField 
+                  key={video.id}
+                  
+                  label="Link Source"
+                  placeholder='URL' 
 
-                  <VideoLinkSeparator />
+                  field={`videos[${idx}].url`}
+                  setter={props.setter}
+                  error={(props.errors.videos?.[idx] as FormikErrors<VideoLink> | undefined )?.url}
 
-                  <FormField 
-                    field={`videos[${idx}].url`}
-                    setter={props.setter}
-                    label="Link Source"
-                    placeholder='URL' 
-                    borderless
-                    trailing={(props.videos.length > 1 || idx > 0) && (
-                      <RemoveButton onClick={handleRemove(idx)}>
-                        <TrashIcon />
-                      </RemoveButton>
-                    )}
-                  />
-                </VideoLinkContainer>
+                  trailing={(props.videos.length > 1 || idx > 0) && (
+                    <RemoveButton onClick={handleRemove(idx)}>
+                      <TrashIcon />
+                    </RemoveButton>
+                  )}
+                />
               ))}
 
               <AddButton onClick={() => push({ id: getId() })}>
