@@ -3,11 +3,11 @@ import { AxiosResponse } from 'axios'
 import { APIResponse } from './types'
 
 export const responseSuccessInterceptor = (response: AxiosResponse<APIResponse>) => {
-  const data = response.data.data ?? response.data
+  const data = response?.data?.data ?? response?.data
 
   return {
     ...response,
-    message: response.data.message,
+    message: response?.data?.message,
     data,
   }
 }
