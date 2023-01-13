@@ -17,7 +17,7 @@ export interface ListingFormActionsProps {
 export const ListingFormActions = (props: ListingFormActionsProps) => {
   const { listing, isDataFromDSO, listingType } = props
   const { push } = useHistory()
-
+  console.log(listing, 'prprprprprprp')
   // TODO Needs to do refactoring this component for edit listing page
   return (
     <>
@@ -29,7 +29,7 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
           onClick={() =>
             push({
               pathname:
-                listingType === LISTING_TYPES.OTC
+                listing?.listingType === 'OTC'
                   ? generatePath(IssuanceRoute.previewOTCListing, {
                       OTCListingId: listing?._id,
                       UserId:
@@ -39,6 +39,7 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
                     })
                   : generatePath(IssuanceRoute.previewListing, {
                       listingId: listing?._id
+                      // listingType: listing?.listingType
                     })
             })
           }
