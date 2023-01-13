@@ -35,7 +35,7 @@ export const CreateOrSaveListingButton = (
     typeof listing?.user === 'string'
       ? listing?.user
       : getIdFromObj(listing?.user) ?? listing?.createdBy ?? '',
-    listingType
+    listing?.listingType
   )
   // console.log(listing, 'list')
   const { dso, ...defaultFormValues } = watch()
