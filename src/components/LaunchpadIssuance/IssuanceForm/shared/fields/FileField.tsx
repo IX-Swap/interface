@@ -5,6 +5,7 @@ import { Paperclip } from 'react-feather'
 import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { useDropzone } from 'react-dropzone'
+import { IssuanceFile } from '../../types'
 
 interface Props {
   label?: React.ReactNode
@@ -12,6 +13,7 @@ interface Props {
   trailing?: React.ReactNode
 
   span?: number
+  value?: IssuanceFile
   error?: string
 
   optional?: boolean
@@ -30,14 +32,14 @@ export const FileField: React.FC<Props> = (props) => {
 
   const input = React.useRef<HTMLInputElement>(null)
 
-  const [value, setValue] = React.useState<File>()
+  const [value, setValue] = React.useState<File | undefined>(props.value?.file)
 
   const openFileBrowser = React.useCallback(() => {
     input.current?.click()
   }, [input.current])
 
   const onFileSelect = React.useCallback((files: File[]) => {
-    props.setter(props.field, files[0])
+    props.setter(props.field, { file: files[0] })
     setValue(files[0])
   }, [])
   

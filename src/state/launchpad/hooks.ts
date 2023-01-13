@@ -5,6 +5,7 @@ import { Currency, CurrencyAmount } from "@ixswap1/sdk-core"
 import { useDispatch, useSelector } from "react-redux"
 
 import { FilterConfig } from "components/Launchpad/InvestmentList/Filter"
+import { SearchConfig, OrderConfig } from "components/LaunchpadIssuance/IssuanceDashboard/SearchFilter"
 
 import { KYCStatuses } from "pages/KYC/enum"
 
@@ -12,13 +13,14 @@ import { AppState } from "state"
 import { useKYCState } from "state/kyc/hooks"
 import { tryParseAmount } from "state/swap/helpers"
 
-import { Issuance, IssuancePlain, Offer, OfferStatus, WhitelistStatus } from "state/launchpad/types"
+import { Asset, Issuance, IssuancePlain, IssuanceVetting, Offer, OfferStatus, WhitelistStatus } from "state/launchpad/types"
 
 import { toggleKYCDialog } from "./actions"
 
 import apiService from "services/apiService"
 import { PaginateResponse } from "types/pagination"
 import { DirectorInfo, VettingFormValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/types"
+import { initialValues as vettingInitialFormValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/util"
 
 interface OfferPagination {
   page: number
@@ -238,6 +240,158 @@ export const useGetIssuanceFull = () => {
   return { items, load, loading: loader.isLoading }
 }
 
+export const useGetIssuance = () => {
+  const loader = useLoader()
+
+  const [data, setData] = React.useState<Issuance>()
+
+  const load = React.useCallback((id?: number) => {
+    if (!id) {
+      return
+    }
+
+    loader.start()
+
+    return apiService
+      .get(`/issuances/me/${id}/full`)
+      .then(res => res.data as Issuance)
+      .then(setData)
+      .then(loader.stop)
+  }, [])
+
+  return { data, load, loading: loader.isLoading }
+}
+
+export const useVetting = (issuanceId?: number) => {
+  const loader = useLoader()
+  const [vetting, setVettings] = React.useState<IssuanceVetting>()
+
+  React.useEffect(() => {
+    if (issuanceId) {
+      apiService.get(`/vettings/by-issuance/${issuanceId}`)
+        .then(res => res.data as IssuanceVetting)
+        .then(setVettings)
+        .then(loader.stop)
+    }
+  }, [issuanceId])
+
+  return { data: vetting, loading: loader.isLoading }
+}
+
+export const useVettingFormInitialValues = (issuanceId?: number) => {
+  const loader = useLoader()
+  const vetting = useVetting(issuanceId)
+
+  const [values, setValues] = React.useState<VettingFormValues>()
+
+  const getFile = React.useCallback((asset?: Asset) => {
+    if (!asset) {
+      return
+    }
+
+    return fetch(asset.public)
+      .then(res => res.blob())
+      .then(res => ({ id: asset.id, file: new File([res], asset.name) }))
+  }, [])
+
+  const findFile = React.useCallback((files: { id: number, file: File}[], id?: number) => {
+    if (!id) {
+      return 
+    }
+
+    return files.find(x => x.id === id)
+  }, [])
+
+  const transform = React.useCallback(async (payload: IssuanceVetting) => {
+    const files = await Promise.all([
+      getFile(payload.document.pitchDeck),
+      getFile(payload.document.certificateOfIncorporation),
+      getFile(payload.document.certificateOfIncumbency),
+      getFile(payload.document.memorandumArticle),
+      getFile(payload.document.ownershipStructure),
+      getFile(payload.document.resolutionAuthorizedSignatory),
+      getFile(payload.document.shareDirectorRegistry),
+      getFile(payload.document.auditedFinancials),
+
+      ...payload.fundingDocuments.map(x => getFile(x.document)),
+      
+      ...payload.directors.flatMap(entry => [getFile(entry.proofOfAddress), getFile(entry.proofOfIdentity)]),
+      ...payload.beneficialOwners.flatMap(entry => [getFile(entry.proofOfAddress), getFile(entry.proofOfIdentity)]),
+    ])
+      .then(files => files.filter(x => !!x).map(x => x as { id: number, file: File }))
+
+    const owners = payload.beneficialOwners.map(director => ({
+      ...director,
+      proofOfAddress: findFile(files, director.proofOfAddress?.id),
+      proofOfIdentity: findFile(files, director.proofOfIdentity?.id)
+    }))
+
+    const directors = payload.directors.map(director => ({
+      ...director,
+      proofOfAddress: findFile(files, director.proofOfAddress?.id),
+      proofOfIdentity: findFile(files, director.proofOfIdentity?.id)
+    }))
+
+    return {
+      ...payload,
+
+      document: {
+        pitchDeck: findFile(files, payload.document.pitchDeck.id),
+        certificateOfIncorporation: findFile(files, payload.document.certificateOfIncorporation.id),
+        certificateOfIncumbency: findFile(files, payload.document.certificateOfIncumbency.id),
+        memorandumArticle: findFile(files, payload.document.memorandumArticle.id),
+        ownershipStructure: findFile(files, payload.document.ownershipStructure.id),
+        resolutionAuthorizedSignatory: findFile(files, payload.document.resolutionAuthorizedSignatory.id),
+        shareDirectorRegistry: findFile(files, payload.document.shareDirectorRegistry.id),
+        auditedFinancials: findFile(files, payload.document.auditedFinancials.id),
+      },
+
+      directors: directors.length > 0 ? directors : vettingInitialFormValues.directors,
+      beneficialOwners: owners.length > 0 ? owners : vettingInitialFormValues.beneficialOwners,
+
+      fundingDocuments: payload.fundingDocuments.map(doc => ({ id: doc.document.id, file: findFile(files, doc.document.id) }))
+    } as unknown as VettingFormValues
+  }, [])
+
+  React.useEffect(() => {
+    if (!vetting.loading && !vetting.data) {
+      setValues(vettingInitialFormValues)
+      loader.stop()
+    } else if (!vetting.loading && vetting.data) {
+      transform(vetting.data!)
+        .then(setValues)
+        .then(loader.stop)
+    }
+  }, [vetting.loading])
+
+  return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id }
+}
+
+export const useGetIssuances = () => {
+  return React.useCallback(async (page: number, filter?: SearchConfig, order?: OrderConfig) => {
+    let query = [`page=${page}`, 'offset=10']
+
+    if (filter) {
+      query = query.concat(Object.entries(filter)
+        .filter(([_, value]) => value.length > 0)
+        .map(([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`))
+    }
+
+    if (order) {
+      query = query.concat(Object.entries(order)
+        .filter(([_, value]) => value.length > 0)
+        .map(([key, value]) => `order=${key}=${value}`))
+    }
+
+    const result = await apiService.get(`/issuances/me/full?${query.join('&')}`).then(res => res.data as PaginateResponse<Issuance>)
+
+    return {
+      hasMore: result.nextPage !== null,
+      items: result.items
+    }
+  }, [])
+}
+
 export const useGetFieldArrayId = () => {
   let counter = 0;
 
@@ -265,43 +419,221 @@ export const useUploadFiles = () => {
   }, [])
 }
 
-export const useSubmitVettingForm = (issuanceId?: number) => {
+
+
+const useUploadVettingFiles = () => {
   const uploadFiles = useUploadFiles()
 
-  const uploadVettingFiles = React.useCallback(async (payload: VettingFormValues) => {
+  return React.useCallback(async (payload: VettingFormValues, initial: VettingFormValues) => {
     const files: FileUpload[] = []
 
-    payload.directors.forEach((entry, idx) => {
-      files.push({ name: `directors.${idx}.proofOfAddressId`, file: entry.proofOfAddress })
-      files.push({ name: `directors.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity })
+    const addDocument = (key: keyof VettingFormValues['document']) => {
+      if (!initial.document[key] || initial.document[key].id !== payload.document?.[key].id) 
+        files.push({ name: `document.${key}Id`, file: payload.document[key]?.file })
+    }
+
+    payload.directors?.forEach((entry, idx) => {
+      if (!initial.directors[idx]?.proofOfAddress || initial.directors[idx]?.proofOfAddress.id !== entry.proofOfAddress?.id)
+        files.push({ name: `directors.${idx}.proofOfAddressId`, file: entry.proofOfAddress?.file })
+
+      if (!initial.directors[idx]?.proofOfIdentity || initial.directors[idx]?.proofOfIdentity.id !== entry.proofOfIdentity.id)
+        files.push({ name: `directors.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity?.file })
     })
 
-    payload.beneficialOwners.forEach((entry, idx) => {
-      files.push({ name: `beneficialOwners.${idx}.proofOfAddressId`, file: entry.proofOfAddress })
-      files.push({ name: `beneficialOwners.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity })
+    payload.beneficialOwners?.forEach((entry, idx) => {
+      if (!initial.beneficialOwners[idx]?.proofOfAddress || initial.beneficialOwners[idx]?.proofOfAddress.id !== entry.proofOfAddress?.id)
+        files.push({ name: `beneficialOwners.${idx}.proofOfAddressId`, file: entry.proofOfAddress?.file })
+      if (!initial.beneficialOwners[idx]?.proofOfIdentity || initial.beneficialOwners[idx]?.proofOfIdentity.id !== entry.proofOfIdentity.id)
+        files.push({ name: `beneficialOwners.${idx}.proofOfIdentityId`, file: entry.proofOfIdentity?.file })
     })
 
-    payload.fundingDocuments.forEach((entry, idx) => {
-      files.push({ name: `fundingDocuments.${idx}`, file: entry.file })
+    payload.fundingDocuments?.forEach((entry, idx) => {
+      if (!initial.fundingDocuments.some(x => x.id === entry.id)) 
+        files.push({ name: `fundingDocuments.${idx}`, file: entry.file?.file })
     })
 
-    files.push({ name: 'document.pitchDeckId', file: payload.pitchDeck })
-    files.push({ name: 'document.certificateOfIncorporationId', file: payload.certificateOfIncorporation })
-    files.push({ name: 'document.certificateOfIncumbencyId', file: payload.certificateOfIncumbency })
-    files.push({ name: 'document.shareDirectorRegistryId', file: payload.shareDirectorRegistry })
-    files.push({ name: 'document.auditedFinancialsId', file: payload.auditedFinancials })
-    files.push({ name: 'document.memorandumArticleId', file: payload.memorandumArticle })
-    files.push({ name: 'document.ownershipStructureId', file: payload.ownershipStructure })
-    files.push({ name: 'document.resolutionAuthorizedSignatoryId', file: payload.resolutionAuthorizedSignatory })
+    Object.keys(payload.document).map(key => addDocument(key as keyof VettingFormValues['document']))
 
-    return uploadFiles(files)
+    const updatedFundingDocuments = new Set(payload.fundingDocuments.map(x => x.id))
+    const removedFundingDocuments = initial.fundingDocuments.filter(x => !updatedFundingDocuments.has(x.id))
+
+    const filesToUpload = files.filter(x => !!x.file) 
+
+    if (filesToUpload.length === 0) {
+      return []
+    }
+
+    return uploadFiles(filesToUpload)
   }, [uploadFiles])
+}
 
-  return React.useCallback(async (payload: VettingFormValues, isDraft = false) => {
+export const useSaveVettingDraft = (issuanceId?: number) => {
+  const uploadFiles = useUploadVettingFiles()
+
+  return React.useCallback(async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
+    let data: Record<string, any> = { 
+      issuanceId,
+
+      toSubmit: false,
+
+      applicantFullName: payload.applicantFullname,
+      email: payload.email,
+
+      companyName: payload.companyName,
+      companyWebsite: payload.companyWebsite,
+
+      description: payload.description,
+
+      document: payload.document,
+      directors: payload.directors
+        .map((x: any) => ({ 
+          id: x.id,
+          fullName: x.fullName,
+          proofOfIdentityId: x.proofOfIdentityId,
+          proofOfAddressId: x.proofOfAddressId
+        })),
+
+      beneficialOwners: payload.beneficialOwners
+        .map((x: any) => ({ 
+          id: x.id,
+          fullName: x.fullName,
+          proofOfIdentityId: x.proofOfIdentityId,
+          proofOfAddressId: x.proofOfAddressId
+        })),
+
+      fundingDocuments: payload.fundingDocuments
+    }
+
+    const uploadedFiles = await uploadFiles(payload, initialValues)
+
+    const getDirectorFiles = (key: string) => {
+      const result = uploadedFiles
+        .filter(x => x.name.startsWith(key))
+        .map(x => {
+          const [index, fileName] = x.name.split('.').slice(1)
+
+          return ({ id: x.id, name: fileName, index })
+        })
+        .reduce((acc, e) => {
+          return { ...acc, [e.index]: { ...acc[e.index], [e.name]: e.id}}
+        }, {} as { [n: string]: any })
+
+
+      return Object.entries(result)
+        .sort((a, b) => Number(a[0]) - Number(b[0]))
+        .map(([ index, value ]) => ({ index: Number(index), value }))
+    }
+
+    const updateDirectors = (key: 'directors' | 'beneficialOwners') => {
+      const fileUpdates = uploadedFiles
+        .filter(x => x.name.startsWith(key))
+        .map(x => ({ ...x, name: x.name.split('.')[2] as keyof DirectorInfo, index: Number(x.name.split('.')[1]) }))
+
+      
+      fileUpdates.forEach(x => {
+        data[key][x.index][x.name] = x.id
+      })
+
+      const existingIds = new Set(initialValues[key].map(x => x.id))
+
+      payload[key]
+        .forEach((x, idx) => {
+          if (!existingIds.has(x.id)) {
+            delete data[key][idx].id
+          }
+        })
+    }
+
+    updateDirectors('beneficialOwners')
+    updateDirectors('directors')
+
+    // getDirectorFiles('directors')
+    //   .map((entry) => {
+    //     if (entry.index < initialValues.directors.length) {
+    //       return ({
+    //         index: entry.index,
+    //         fullName: payload.directors[entry.index].fullName,
+    //         proofOfAddressId: entry.value.proofOfAddressId ?? initialValues.directors[entry.index]?.proofOfAddress?.id,
+    //         proofOfIdentityId: entry.value.proofOfIdentityId ?? initialValues.directors[entry.index]?.proofOfIdentity?.id,
+    //       })
+    //     } 
+
+    //     return {
+    //       index: entry.index,
+    //       fullName: payload.directors[entry.index].fullName,
+    //       proofOfAddressId: entry.value.proofOfAddressId,
+    //       proofOfIdentityId: entry.value.proofOfIdentityId
+    //     }
+    //   })
+    //   .forEach(entry => {
+    //     const value = Object.entries({ ...entry })
+    //       .filter(([key, value]) => key !== 'index')
+    //       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
+
+    //     data.directors[entry.index] = value
+    //   })
+      
+    // getDirectorFiles('beneficialOwners')
+    //   .map((entry) => {
+    //     if (entry.index < initialValues.beneficialOwners.length) {
+    //       return ({
+    //         index: entry.index,
+    //         fullName: payload.beneficialOwners[entry.index].fullName,
+    //         proofOfAddressId: entry.value.proofOfAddressId ?? initialValues.beneficialOwners[entry.index]?.proofOfAddress?.id,
+    //         proofOfIdentityId: entry.value.proofOfIdentityId ?? initialValues.beneficialOwners[entry.index]?.proofOfIdentity?.id,
+    //       })
+    //     }
+        
+    //     return ({
+    //       index: entry.index,
+    //       fullName: payload.beneficialOwners[entry.index].fullName,
+    //       proofOfAddressId: entry.value.proofOfAddressId,
+    //       proofOfIdentityId: entry.value.proofOfIdentityId
+    //     })
+    //   })
+    //   .forEach(entry => {
+    //     const value = Object.entries({ ...entry })
+    //       .filter(([key, value]) => key !== 'index')
+    //       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
+
+    //     data.beneficialOwners[entry.index] = value
+    //   })
+
+
+    // data.beneficialOwners = getDirectorFiles('beneficialOwners')
+    //   .map((entry, idx) => ({ ...entry, fullName: payload.beneficialOwners[idx].fullName }))
+
+    data.document = uploadedFiles
+      .filter(x => x.name.startsWith('document'))
+      .map(x => ({ ...x, name: x.name.split('.').pop()! }))
+      .reduce((acc, e) => ({ ...acc, [e.name]: e.id }), {})
+
+    data.fundingDocuments = uploadedFiles
+      .filter(x => x.name.startsWith('fundingDocuments'))
+      .map(x => x.id)
+
+    data = Object.entries(data)
+      .filter(([key, value]) => typeof value === 'boolean' || value)
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value}), {})
+
+    if (vettindId) {
+      delete data.issuanceId
+      return apiService.put(`/vettings/${vettindId}`, data)
+    } else {
+      return apiService.post(`/vettings}`, data)
+    }
+
+  }, [uploadFiles])
+}
+
+export const useSubmitVettingForm = (issuanceId?: number) => {
+  const uploadFiles = useUploadVettingFiles()
+
+  return React.useCallback(async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
     const data: Record<string, any> = { 
       issuanceId,
 
-      toSubmit: !isDraft,
+      toSubmit: false,
 
       applicantFullName: payload.applicantFullname,
       email: payload.email,
@@ -312,7 +644,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
       description: payload.description,
     }
 
-    const uploadedFiles = await uploadVettingFiles(payload)
+    const uploadedFiles = await uploadFiles(payload, initialValues)
 
     const getDirectorFiles = (key: string) => {
       const result = uploadedFiles
@@ -331,9 +663,6 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
         .map(([ index, value ]) => value)
     }
 
-    console.log('Directors: ', getDirectorFiles('directors'))
-    
-    
     data.directors = getDirectorFiles('directors')
       .map((entry, idx) => ({ ...entry, fullName: payload.directors[idx].fullName }))
 
@@ -349,11 +678,11 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
       .filter(x => x.name.startsWith('fundingDocuments'))
       .map(x => x.id)
 
-
-    const result = await apiService.post('/vettings', data)
-
-    console.log(result)
-
-    return result
-  }, [uploadVettingFiles])
+    if (vettindId) {
+      delete data.issuanceId
+      return apiService.put(`/vettings/${vettindId}`, data)
+    } else {
+      return apiService.post(`/vettings}`, data)
+    }
+  }, [uploadFiles])
 }

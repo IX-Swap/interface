@@ -10,20 +10,20 @@ import { ReactComponent as IssuanceInformationIcon } from 'assets/launchpad/svg/
 import { ReactComponent as IssuanceRejectedIcon } from 'assets/launchpad/svg/issuance-rejected.svg'
 import { ReactComponent as IssuanceRequestedChangesIcon } from 'assets/launchpad/svg/issuance-requested-changes.svg'
 
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 
 import { IssuanceFormStep } from './IssuanceFormStep'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { IssuanceStatus } from '../types'
-import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { useGetIssuanceFull } from 'state/launchpad/hooks'
-import { DropdownField } from './shared/fields/DropdownField'
+import { useGetIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
 
-  const issuances = useGetIssuanceFull()
+  const issuance = useGetIssuance()
+  const issuances = useGetIssuancePlain()
 
   const [showDropdown, setShowDropdown] = React.useState(false)
 
@@ -33,36 +33,27 @@ export const NewIssuanceForm = () => {
       .map(([key, value]) => ({ key, value }))
       .find(x => x.key === 'id')
       ?.value
-
   }, [history.location.search])
 
-  const currentIssuance = React.useMemo(() => {
-    if (!issuanceId) {
-      return
-    }
-
-    const id = Number(issuanceId)
-
-    return issuances.items.find(x => x.id === id)
-  }, [issuanceId, issuances.items])
-
-  const vettingStatus = React.useMemo(() => currentIssuance?.vetting?.status, [currentIssuance])
-  const issuanceStatus = React.useMemo(() => undefined, [currentIssuance])
+  const vettingStatus = React.useMemo(() => issuance.data?.vetting?.status, [issuance.data])
+  const issuanceStatus = React.useMemo(() => undefined, [issuance.data])
 
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
-  const selectIssuance = React.useCallback((id: number) => history.replace(`/issuance/create?id=${id}`), [history])
+  const selectIssuance = React.useCallback((id: number) => {
+    if (window.history.pushState) {
+      const url = window.location.protocol + "//" 
+        + window.location.host + '#'
+        + history.location.pathname
+        + `?id=${id}`;
+        
+      window.history.pushState(null, '', url)
+      issuance.load(id)
+    }
+  }, [history])
 
   React.useEffect(() => {
-    issuances.load()
+    issuance.load(Number(issuanceId))
   }, [issuanceId])
-
-  if (issuances.loading) {
-    return null
-  }
-
-  if (!currentIssuance) {
-    return <FormTitle>Issuance not found</FormTitle>
-  }
 
   return (
     <Wrapper>
@@ -74,7 +65,7 @@ export const NewIssuanceForm = () => {
         <FormTitle>New Issuance</FormTitle>
 
         <IssuanceNameContainer onClick={() => setShowDropdown(state => !state)}>
-          <IssuanceName>{currentIssuance.name}</IssuanceName>
+          <IssuanceName>{issuance.data?.name}</IssuanceName>
 
           {issuances.items!.length > 1 && <ChevronDown fill={theme.launchpad.colors.text.title} />}
 
@@ -91,217 +82,231 @@ export const NewIssuanceForm = () => {
           <IssuanceCreateButton background={theme.launchpad.colors.background} />
         </NewIssuanceButtonContainer>
       </FormHeader>
+      
 
       <FormContainer>
-        {vettingStatus === undefined && (
-          <IssuanceFormStep 
-            stepNumber={1} 
-            icon={<VettingIcon />}
-            title="Initiate Vetting Process" 
-            description="The new issuance created will have to undergo a vetting process before it can be approved and issued to investors."
-          >
-            <FilledButton 
-              width="320px"
-              color={theme.launchpad.colors.text.light}
-              background={theme.launchpad.colors.primary} 
-              onClick={() => history.push(`/issuance/create/vetting?id=${issuanceId}`)}
-            >
-              Proceed
-            </FilledButton>
-          </IssuanceFormStep>
+        {issuance.loading && (
+          <LoaderContainer>
+            <Loader />
+          </LoaderContainer>
         )}
         
-        {vettingStatus === IssuanceStatus.approved && (
-          <IssuanceFormStep 
-            stepNumber={1} 
-            icon={<VettingApprovedIcon />}
-            title="Vetting is approved" 
-            description={
-              <>
-                To make changes to your application, 
-                please contact <ContactEmail href="mailto:C@ixswap.io">C@ixswap.io</ContactEmail>
-              </>
-            }
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.success}
-              background={theme.launchpad.colors.success + '0d'}
-              borderColor={theme.launchpad.colors.success + '4d'}
-              width="320px"
-            >
-              Approved <Check color={theme.launchpad.colors.success} size="12" />
-            </OutlineButton>
+        {!issuance.loading && !issuance.data && <FormTitle>Issuance not found</FormTitle>}
+        
+        {!issuance.loading && issuance.data && (
+          <>
+            {(vettingStatus === undefined || vettingStatus === IssuanceStatus.draft) && (
+              <IssuanceFormStep 
+                stepNumber={1} 
+                icon={<VettingIcon />}
+                title="Initiate Vetting Process" 
+                description="The new issuance created will have to undergo a vetting process before it can be approved and issued to investors."
+              >
+                <FilledButton 
+                  width="320px"
+                  color={theme.launchpad.colors.text.light}
+                  background={theme.launchpad.colors.primary} 
+                  onClick={() => history.push(`/issuance/create/vetting?id=${issuanceId}`)}
+                >
+                  Proceed
+                </FilledButton>
+              </IssuanceFormStep>
+            )}
             
-            <OutlineButton width="320px">
-              View Form
-            </OutlineButton>
-          </IssuanceFormStep>
-        )}
+            {vettingStatus === IssuanceStatus.approved && (
+              <IssuanceFormStep 
+                stepNumber={1} 
+                icon={<VettingApprovedIcon />}
+                title="Vetting is approved" 
+                description={
+                  <>
+                    To make changes to your application, 
+                    please contact <ContactEmail href="mailto:C@ixswap.io">C@ixswap.io</ContactEmail>
+                  </>
+                }
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.success}
+                  background={theme.launchpad.colors.success + '0d'}
+                  borderColor={theme.launchpad.colors.success + '4d'}
+                  width="320px"
+                >
+                  Approved <Check color={theme.launchpad.colors.success} size="12" />
+                </OutlineButton>
+                
+                <OutlineButton width="320px">
+                  View Form
+                </OutlineButton>
+              </IssuanceFormStep>
+            )}
 
-        {vettingStatus === IssuanceStatus.rejected && (
-          <IssuanceFormStep 
-            stepNumber={1} 
-            icon={<IssuanceRejectedIcon />}
-            title="Your application has been denied " 
-            description="See why your application got denied and try again."
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.error}
-              background={theme.launchpad.colors.error + '0d'}
-              borderColor={theme.launchpad.colors.error + '4d'}
-              width="320px"
-            >
-              Try again
-            </OutlineButton>
-            
-            <OutlineButton width="320px">
-              Contact support
-            </OutlineButton>
-          </IssuanceFormStep>
-        )}
+            {vettingStatus === IssuanceStatus.rejected && (
+              <IssuanceFormStep 
+                stepNumber={1} 
+                icon={<IssuanceRejectedIcon />}
+                title="Your application has been denied " 
+                description="See why your application got denied and try again."
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.error}
+                  background={theme.launchpad.colors.error + '0d'}
+                  borderColor={theme.launchpad.colors.error + '4d'}
+                  width="320px"
+                >
+                  Try again
+                </OutlineButton>
+                
+                <OutlineButton width="320px">
+                  Contact support
+                </OutlineButton>
+              </IssuanceFormStep>
+            )}
 
-        {vettingStatus === IssuanceStatus.changeRequested && (
-          <IssuanceFormStep 
-            stepNumber={1} 
-            icon={<IssuanceRequestedChangesIcon />}
-            title="Requested changes" 
-            description="Your application has requested an update."
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.success}
-              background={theme.launchpad.colors.success + '0d'}
-              borderColor={theme.launchpad.colors.success + '4d'}
-              width="320px"
-            >
-              Update
-            </OutlineButton>
-          </IssuanceFormStep>
-        )}
+            {vettingStatus === IssuanceStatus.changesRequested && (
+              <IssuanceFormStep 
+                stepNumber={1} 
+                icon={<IssuanceRequestedChangesIcon />}
+                title="Requested changes" 
+                description="Your application has requested an update."
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.success}
+                  background={theme.launchpad.colors.success + '0d'}
+                  borderColor={theme.launchpad.colors.success + '4d'}
+                  width="320px"
+                >
+                  Update
+                </OutlineButton>
+              </IssuanceFormStep>
+            )}
 
-        {vettingStatus === IssuanceStatus.pendingApproval && (
-          <IssuanceFormStep 
-            stepNumber={1} 
-            icon={<Loader color={theme.launchpad.colors.warn} />}
-            title="Pending approval" 
-            description="We are looking over your application"
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.warn}
-              background={theme.launchpad.colors.warn + '0d'}
-              borderColor={theme.launchpad.colors.warn + '4d'}
-              width="320px"
-            >
-              Pending approval
-            </OutlineButton>
-          </IssuanceFormStep>
-        )}
+            {vettingStatus === IssuanceStatus.pendingApproval && (
+              <IssuanceFormStep 
+                stepNumber={1} 
+                icon={<Loader color={theme.launchpad.colors.warn} />}
+                title="Pending approval" 
+                description="We are looking over your application"
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.warn}
+                  background={theme.launchpad.colors.warn + '0d'}
+                  borderColor={theme.launchpad.colors.warn + '4d'}
+                  width="320px"
+                >
+                  Pending approval
+                </OutlineButton>
+              </IssuanceFormStep>
+            )}
 
 
 
-        {issuanceStatus === undefined && (
-          <IssuanceFormStep 
-            stepNumber={2} 
-            icon={<IssuanceInformationIcon />}
-            title="Issuance Information" 
-            description="All information provided about the new issuance created will be displayed to the investors."
-          >
-            <FilledButton
-              disabled={vettingStatus !== IssuanceStatus.approved}
-              width="320px"
-              color={theme.launchpad.colors.text.light}
-              background={theme.launchpad.colors.primary} 
-              onClick={() => history.push(`/issuance/create/information?id=${issuanceId}`)}
-            >
-              Proceed
-            </FilledButton>
-          </IssuanceFormStep>
-        )}
+            {issuanceStatus === undefined && (
+              <IssuanceFormStep 
+                stepNumber={2} 
+                icon={<IssuanceInformationIcon />}
+                title="Issuance Information" 
+                description="All information provided about the new issuance created will be displayed to the investors."
+              >
+                <FilledButton
+                  disabled={vettingStatus !== IssuanceStatus.approved}
+                  width="320px"
+                  color={theme.launchpad.colors.text.light}
+                  background={theme.launchpad.colors.primary} 
+                  onClick={() => history.push(`/issuance/create/information?id=${issuanceId}`)}
+                >
+                  Proceed
+                </FilledButton>
+              </IssuanceFormStep>
+            )}
 
-        {issuanceStatus === IssuanceStatus.approved && (
-          <IssuanceFormStep 
-            stepNumber={2} 
-            icon={<IssuanceApprovedIcon />}
-            title="Issuance is approved" 
-            description={
-              <>
-                To make changes to your listing, 
-                please contact <ContactEmail href="mailto:C@ixswap.io">C@ixswap.io</ContactEmail>
-              </>
-            }
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.success}
-              background={theme.launchpad.colors.success + '0d'}
-              borderColor={theme.launchpad.colors.success + '4d'}
-              width="320px"
-            >
-              Approved <Check color={theme.launchpad.colors.success} size="12" />
-            </OutlineButton>
-            
-            <OutlineButton width="320px">
-              View Form
-            </OutlineButton>
-          </IssuanceFormStep>
-        )}
+            {issuanceStatus === IssuanceStatus.approved && (
+              <IssuanceFormStep 
+                stepNumber={2} 
+                icon={<IssuanceApprovedIcon />}
+                title="Issuance is approved" 
+                description={
+                  <>
+                    To make changes to your listing, 
+                    please contact <ContactEmail href="mailto:C@ixswap.io">C@ixswap.io</ContactEmail>
+                  </>
+                }
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.success}
+                  background={theme.launchpad.colors.success + '0d'}
+                  borderColor={theme.launchpad.colors.success + '4d'}
+                  width="320px"
+                >
+                  Approved <Check color={theme.launchpad.colors.success} size="12" />
+                </OutlineButton>
+                
+                <OutlineButton width="320px">
+                  View Form
+                </OutlineButton>
+              </IssuanceFormStep>
+            )}
 
-        {issuanceStatus === IssuanceStatus.rejected && (
-          <IssuanceFormStep 
-            stepNumber={2} 
-            icon={<IssuanceRejectedIcon />}
-            title="Your application has been denied " 
-            description="See why your listing got denied and try again."
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.error}
-              background={theme.launchpad.colors.error + '0d'}
-              borderColor={theme.launchpad.colors.error + '4d'}
-              width="320px"
-            >
-              Try again
-            </OutlineButton>
-            
-            <OutlineButton width="320px">
-              Contact support
-            </OutlineButton>
-          </IssuanceFormStep>
-        )}
+            {issuanceStatus === IssuanceStatus.rejected && (
+              <IssuanceFormStep 
+                stepNumber={2} 
+                icon={<IssuanceRejectedIcon />}
+                title="Your application has been denied " 
+                description="See why your listing got denied and try again."
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.error}
+                  background={theme.launchpad.colors.error + '0d'}
+                  borderColor={theme.launchpad.colors.error + '4d'}
+                  width="320px"
+                >
+                  Try again
+                </OutlineButton>
+                
+                <OutlineButton width="320px">
+                  Contact support
+                </OutlineButton>
+              </IssuanceFormStep>
+            )}
 
-        {issuanceStatus === IssuanceStatus.changeRequested && (
-          <IssuanceFormStep 
-            stepNumber={2} 
-            icon={<IssuanceRequestedChangesIcon />}
-            title="Requested changes" 
-            description="Your listing has requested to be updated."
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.success}
-              background={theme.launchpad.colors.success + '0d'}
-              borderColor={theme.launchpad.colors.success + '4d'}
-              width="320px"
-            >
-              Update
-            </OutlineButton>
-          </IssuanceFormStep>
-          
-        )}
-        {issuanceStatus === IssuanceStatus.pendingApproval && (
-          <IssuanceFormStep 
-            stepNumber={2} 
-            icon={<Loader color={theme.launchpad.colors.warn} />}
-            title="Pending approval" 
-            description="We are looking over your listing"
-          >
-            <OutlineButton 
-              color={theme.launchpad.colors.warn}
-              background={theme.launchpad.colors.warn + '0d'}
-              borderColor={theme.launchpad.colors.warn + '4d'}
-              width="320px"
-            >
-              Pending approval
-            </OutlineButton>
-          </IssuanceFormStep>
+            {issuanceStatus === IssuanceStatus.changesRequested && (
+              <IssuanceFormStep 
+                stepNumber={2} 
+                icon={<IssuanceRequestedChangesIcon />}
+                title="Requested changes" 
+                description="Your listing has requested to be updated."
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.success}
+                  background={theme.launchpad.colors.success + '0d'}
+                  borderColor={theme.launchpad.colors.success + '4d'}
+                  width="320px"
+                >
+                  Update
+                </OutlineButton>
+              </IssuanceFormStep>
+              
+            )}
+            {issuanceStatus === IssuanceStatus.pendingApproval && (
+              <IssuanceFormStep 
+                stepNumber={2} 
+                icon={<Loader color={theme.launchpad.colors.warn} />}
+                title="Pending approval" 
+                description="We are looking over your listing"
+              >
+                <OutlineButton 
+                  color={theme.launchpad.colors.warn}
+                  background={theme.launchpad.colors.warn + '0d'}
+                  borderColor={theme.launchpad.colors.warn + '4d'}
+                  width="320px"
+                >
+                  Pending approval
+                </OutlineButton>
+              </IssuanceFormStep>
+            )}
+          </>
         )}
       </FormContainer>
+
     </Wrapper>
   )
 }
@@ -345,6 +350,7 @@ const FormContainer = styled.div`
 
   gap: 1.5rem;
 
+  position: relative
 `
 
 const IssuanceNameContainer = styled.div`
@@ -465,4 +471,17 @@ const IssuanceEntry = styled.div`
   :hover {
     background: ${props => props.theme.launchpad.colors.foreground};
   }
+`
+
+const LoaderContainer = styled.div`
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: grid;
+
+  place-content: center;
 `
