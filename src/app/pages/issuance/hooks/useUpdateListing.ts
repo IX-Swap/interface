@@ -16,7 +16,7 @@ import { LISTING_TYPES } from '../consts/listing'
 export const useUpdateListing = (
   listingId: string,
   issuerId: string,
-  listingType: string,
+  listingType: string | undefined,
   callbacks?: QueryOrMutationCallbacks<ListingFormValuesForSubmit>
 ) => {
   const { apiService, snackbarService } = useServices()
