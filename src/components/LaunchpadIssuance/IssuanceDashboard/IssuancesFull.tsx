@@ -5,7 +5,7 @@ import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { Eye } from 'react-feather'
 
-import { ReactComponent as VectorIcon } from 'assets/launchpad/svg/vectors.svg'
+import { SortIcon } from '../utils/SortIcon'
 
 import { Issuance } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
@@ -33,11 +33,11 @@ export const IssuancesFull = () => {
   const [page, setPage] = React.useState(1)
   const [hasMore, setHasMore] = React.useState(false)
   const [filter, setFilter] = React.useState<SearchConfig | undefined>()
-  const [order, setOrder] = React.useState<OrderConfig>({ name: 'ASC' })
+  const [order, setOrder] = React.useState<OrderConfig>({})
   
-  const [isNameAsc, setNameAsc] = React.useState<boolean>(true)
-  const [isStartDateAsc, setStartDateAsc] = React.useState<boolean>(true)
-  const [isStatusAsc, setStatusAsc] = React.useState<boolean>(true)
+  const [isNameAsc, setNameAsc] = React.useState<string | null>('ASC')
+  const [isStartDateAsc, setStartDateAsc] = React.useState<string | null>('ASC')
+  const [isStatusAsc, setStatusAsc] = React.useState<string | null>('ASC')
 
   React.useEffect(() => {
     setLoading(true)
@@ -71,27 +71,29 @@ export const IssuancesFull = () => {
         : IssuanceStatus.inProgress
   }, [])
 
+  const orderType = React.useCallback((state: string | null) => !state ? 'ASC' : state === 'ASC' ? 'DESC' : null, [])
+
   const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
 
   const onChaneNameOrder = React.useCallback(() => {
-    const manner = isNameAsc ? 'ASC' : 'DESC'
+    const manner = isNameAsc ? isNameAsc : null
     
-    setOrder(state => ({ ...state, name: manner }))
-    setNameAsc(state => !state)
+    setOrder({ name: manner })
+    setNameAsc(orderType)
   }, [isNameAsc])
 
   const onChangeStartDateOrder = React.useCallback(() => {
-    const manner = isStartDateAsc ? 'ASC' : 'DESC'
+    const manner = isStartDateAsc ? isStartDateAsc : null
     
-    setOrder(state => ({ ...state, startDate: manner }))
-    setStartDateAsc(state => !state)
+    setOrder({ startDate: manner })
+    setStartDateAsc(orderType)
   }, [isStartDateAsc])
 
   const onChangeStatusOrder = React.useCallback(() => {
-    const manner = isStatusAsc ? 'ASC' : 'DESC'
+    const manner = isStatusAsc ? isStatusAsc : null
     
-    setOrder(state => ({ ...state, status: manner }))
-    setStatusAsc(state => !state)
+    setOrder({ status: manner })
+    setStatusAsc(orderType)
   }, [isStatusAsc])
 
   return (
@@ -101,9 +103,9 @@ export const IssuancesFull = () => {
 
       <IssuanceTable>
         <TableHeader tab={IssuanceFilter.pending}>
-          <Title onClick={onChaneNameOrder}> <VectorIcon /> Issuances</Title>
-          <Title onClick={onChangeStartDateOrder}> <VectorIcon /> Start Date</Title>
-          <Title onClick={onChangeStatusOrder}> <VectorIcon /> Status</Title>
+          <Title onClick={onChaneNameOrder}> <SortIcon type={order.name}/> Issuances</Title>
+          <Title onClick={onChangeStartDateOrder}> <SortIcon type={order.startDate}/> Start Date</Title>
+          <Title onClick={onChangeStatusOrder}> <SortIcon type={order.status}/> Status</Title>
           <div>  Action</div>
         </TableHeader>
 
@@ -146,5 +148,6 @@ const Container = styled.article`
 
 const Title = styled.div`
   cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
 `
-

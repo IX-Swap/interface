@@ -379,7 +379,7 @@ export const useGetIssuances = () => {
 
     if (order) {
       query = query.concat(Object.entries(order)
-        .filter(([_, value]) => value.length > 0)
+        .filter(([_, value]) => value && value.length > 0)
         .map(([key, value]) => `order=${key}=${value}`))
     }
 
