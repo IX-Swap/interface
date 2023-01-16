@@ -9,9 +9,9 @@ export interface SearchConfig {
 }
 
 export interface OrderConfig {
-  name: string
-  startDate?: string
-  status?: string
+  name?: string | null
+  startDate?: string | null
+  status?: string | null
 }
 
 interface Props {
