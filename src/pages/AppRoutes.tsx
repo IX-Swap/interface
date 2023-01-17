@@ -46,6 +46,8 @@ const LaunchpadIssuanceDashboard = lazy(() => import('pages/LaunchpadIssuance/Da
 const LaunchpadIssuanceForm = lazy(() => import('pages/LaunchpadIssuance/Form'))
 const LaunchpadIssuanceVettingForm = lazy(() => import('pages/LaunchpadIssuance/VettingForm'))
 const LaunchpadIssuanceInformationForm = lazy(() => import('pages/LaunchpadIssuance/InformationForm'))
+const LaunchpadIssuanceInformationEditForm = lazy(() => import('pages/LaunchpadIssuance/InformationEditForm'))
+const LaunchpadIssuanceInformationReview = lazy(() => import('pages/LaunchpadIssuance/InformationReview'))
 
 export interface RouteMapEntry {
   path: string
@@ -140,8 +142,13 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: routes.vesting, component: VestingTab },
   { path: '/launchpad', component: Launchpad },
   { path: '/offers/:offerId', component: LaunchpadOffer },
+  
   { path: '/issuance', component: LaunchpadIssuanceDashboard },
+
   { path: '/issuance/create', component: LaunchpadIssuanceForm },
   { path: '/issuance/create/vetting', component: LaunchpadIssuanceVettingForm },
-  { path: '/issuance/create/information', component: LaunchpadIssuanceInformationForm }
+
+  { path: '/issuance/create/information', component: LaunchpadIssuanceInformationForm },
+  { path: '/issuance/edit/information', component: LaunchpadIssuanceInformationEditForm },
+  { path: '/issuance/review/information', component: LaunchpadIssuanceInformationReview }
 ]

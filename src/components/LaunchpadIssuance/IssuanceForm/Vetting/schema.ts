@@ -21,7 +21,7 @@ const directorSchema = yup.array(yup.object().shape({
 }))
 
 export const schema = yup.object().shape({
-  applicantFullname: yup.string().required('Enter applicant\'s name'),
+  applicantFullName: yup.string().required('Enter applicant\'s name'),
   email: yup.string().email('Enter a valid email').required('Email required'),
 
   companyName: yup.string().required('Enter company name'),

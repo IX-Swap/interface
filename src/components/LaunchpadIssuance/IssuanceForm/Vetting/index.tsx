@@ -55,7 +55,7 @@ export const IssuanceVettingForm = () => {
   const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
   const goBack = React.useCallback(() => history.push(`/issuance/create?id=${issuanceId}`), [history, issuanceId])
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
+  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
     loader.start()
@@ -132,10 +132,10 @@ export const IssuanceVettingForm = () => {
               <FormField 
                 label="Applicant's Full Name"
                 placeholder="Full name of the Applicant"
-                field="applicantFullname"
+                field="applicantFullName"
                 setter={setFieldValue} 
-                value={values.applicantFullname}
-                error={errors.applicantFullname}
+                value={values.applicantFullName}
+                error={errors.applicantFullName}
                 inputFilter={textFilter}
               />
 

@@ -17,7 +17,9 @@ interface Props<T> {
   options: Option<T>[]
 
   searchable?: boolean
+  disabled?: boolean
   optional?: boolean
+
   span?: number
   error?: string
 
@@ -50,8 +52,19 @@ export function DropdownField<T>(props: Props<T>) {
     return props.options.filter(x => x.label.toLowerCase().startsWith(query))
   }, [optionSearch])
 
-  const toggle = React.useCallback(() => setShowDropdown(state => !state), [])
+  const toggle = React.useCallback(() => {
+    if (props.disabled) {
+      return
+    }
+
+    setShowDropdown(state => !state)
+  }, [props.disabled])
+
   const select = React.useCallback((option: Option<T>) => {
+    if (props.disabled) {
+      return
+    }
+
     setSelectedValue(option)
     setOptionSearch(option.label)
 
@@ -62,7 +75,7 @@ export function DropdownField<T>(props: Props<T>) {
     if (props.onChange) {
       props.onChange(option.value)
     }
-  }, [])
+  }, [props.disabled, props.onChange, props.setter])
   
   React.useEffect(() => {
     function handleClickOutside(event: Event) {
@@ -82,7 +95,7 @@ export function DropdownField<T>(props: Props<T>) {
 
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span}>
-      <FieldContainer ref={container} onClick={toggle}>
+      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled}>
         <FieldLabel>
           {props.label}
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}
@@ -118,7 +131,7 @@ export function DropdownField<T>(props: Props<T>) {
   )
 }
 
-const FieldContainer = styled.div`
+const FieldContainer = styled.div<{ disabled?: boolean }>`
   position: relative;
 
   display: grid;
@@ -136,6 +149,10 @@ const FieldContainer = styled.div`
 
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+  `}
 `
 
 const FieldIcon = styled.div<{ isOpen: boolean }>`

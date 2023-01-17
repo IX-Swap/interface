@@ -59,9 +59,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
     history.push(`/issuance/create?id=${result.id}`)
   }, [history])
 
-  const inputFilter = React.useCallback((value: string) => {
-    return value.split('').filter(x => /[a-zA-Z ]/.test(x)).join('')
-  }, [])
+  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
 
   return (
     <>
@@ -83,7 +81,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
                 placeholder="Name of Asset"
                 value={values.name}
                 onChange={v => setFieldValue('name', v)} 
-                inputFilter={inputFilter}
+                inputFilter={textFilter}
               />
 
               {errors.name && <ErrorText>{errors.name}</ErrorText>}

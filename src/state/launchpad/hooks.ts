@@ -143,8 +143,20 @@ export const useSubscribeToOffer = () => {
   return React.useCallback((email: string, offerId?: string) => apiService.post('/offers/subscribe', { email, offerId }), [])
 }
 
-export const useGetOffer = () => {
-  return React.useCallback((id: string) => apiService.get(`/offers/${id}`).then(res => res.data as Offer), [])
+export const useGetOffer = (id: string | number | undefined) => {
+  const loader = useLoader()
+  const [data, setData] = React.useState<Offer>()
+
+  const load = React.useCallback(() => {
+    apiService.get(`/offers/${id}`)
+      .then(res => res.data as Offer)
+      .then(setData)
+      .finally(loader.stop)
+  }, [])
+
+  React.useEffect(() => { load() }, [])
+
+  return { loading: loader.isLoading, load, data }
 }
 
 export const useGetWhitelistStatus = (id: string) => {
@@ -476,7 +488,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
       toSubmit: false,
 
-      applicantFullName: payload.applicantFullname,
+      applicantFullName: payload.applicantFullName,
       email: payload.email,
 
       companyName: payload.companyName,
@@ -506,24 +518,6 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
     const uploadedFiles = await uploadFiles(payload, initialValues)
 
-    const getDirectorFiles = (key: string) => {
-      const result = uploadedFiles
-        .filter(x => x.name.startsWith(key))
-        .map(x => {
-          const [index, fileName] = x.name.split('.').slice(1)
-
-          return ({ id: x.id, name: fileName, index })
-        })
-        .reduce((acc, e) => {
-          return { ...acc, [e.index]: { ...acc[e.index], [e.name]: e.id}}
-        }, {} as { [n: string]: any })
-
-
-      return Object.entries(result)
-        .sort((a, b) => Number(a[0]) - Number(b[0]))
-        .map(([ index, value ]) => ({ index: Number(index), value }))
-    }
-
     const updateDirectors = (key: 'directors' | 'beneficialOwners') => {
       const fileUpdates = uploadedFiles
         .filter(x => x.name.startsWith(key))
@@ -546,62 +540,6 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
     updateDirectors('beneficialOwners')
     updateDirectors('directors')
-
-    // getDirectorFiles('directors')
-    //   .map((entry) => {
-    //     if (entry.index < initialValues.directors.length) {
-    //       return ({
-    //         index: entry.index,
-    //         fullName: payload.directors[entry.index].fullName,
-    //         proofOfAddressId: entry.value.proofOfAddressId ?? initialValues.directors[entry.index]?.proofOfAddress?.id,
-    //         proofOfIdentityId: entry.value.proofOfIdentityId ?? initialValues.directors[entry.index]?.proofOfIdentity?.id,
-    //       })
-    //     } 
-
-    //     return {
-    //       index: entry.index,
-    //       fullName: payload.directors[entry.index].fullName,
-    //       proofOfAddressId: entry.value.proofOfAddressId,
-    //       proofOfIdentityId: entry.value.proofOfIdentityId
-    //     }
-    //   })
-    //   .forEach(entry => {
-    //     const value = Object.entries({ ...entry })
-    //       .filter(([key, value]) => key !== 'index')
-    //       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
-
-    //     data.directors[entry.index] = value
-    //   })
-      
-    // getDirectorFiles('beneficialOwners')
-    //   .map((entry) => {
-    //     if (entry.index < initialValues.beneficialOwners.length) {
-    //       return ({
-    //         index: entry.index,
-    //         fullName: payload.beneficialOwners[entry.index].fullName,
-    //         proofOfAddressId: entry.value.proofOfAddressId ?? initialValues.beneficialOwners[entry.index]?.proofOfAddress?.id,
-    //         proofOfIdentityId: entry.value.proofOfIdentityId ?? initialValues.beneficialOwners[entry.index]?.proofOfIdentity?.id,
-    //       })
-    //     }
-        
-    //     return ({
-    //       index: entry.index,
-    //       fullName: payload.beneficialOwners[entry.index].fullName,
-    //       proofOfAddressId: entry.value.proofOfAddressId,
-    //       proofOfIdentityId: entry.value.proofOfIdentityId
-    //     })
-    //   })
-    //   .forEach(entry => {
-    //     const value = Object.entries({ ...entry })
-    //       .filter(([key, value]) => key !== 'index')
-    //       .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
-
-    //     data.beneficialOwners[entry.index] = value
-    //   })
-
-
-    // data.beneficialOwners = getDirectorFiles('beneficialOwners')
-    //   .map((entry, idx) => ({ ...entry, fullName: payload.beneficialOwners[idx].fullName }))
 
     data.document = uploadedFiles
       .filter(x => x.name.startsWith('document'))
@@ -630,59 +568,99 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
+    const uploadedFiles = await uploadFiles(payload, initialValues)
+
+    const findDoc = (key: keyof VettingFormValues['document']) => 
+      uploadedFiles.find(x => x.name === `document.${key}Id`) ?? initialValues.document[key].id
+
     const data: Record<string, any> = { 
       issuanceId,
 
-      toSubmit: false,
+      toSubmit: true,
 
-      applicantFullName: payload.applicantFullname,
+      applicantFullName: payload.applicantFullName,
       email: payload.email,
 
       companyName: payload.companyName,
       companyWebsite: payload.companyWebsite,
 
       description: payload.description,
+
+      document: {
+        pitchDeckId: findDoc('pitchDeck'),
+        
+        certificateOfIncorporationId: findDoc('certificateOfIncorporation'),
+        certificateOfIncumbencyId: findDoc('certificateOfIncumbency'),
+
+        shareDirectorRegistryId: findDoc('shareDirectorRegistry'),
+        auditedFinancialsId: findDoc('auditedFinancials'),
+
+        memorandumArticleId: findDoc('memorandumArticle'),
+        ownershipStructureId: findDoc('ownershipStructure'),
+
+        resolutionAuthorizedSignatoryId: findDoc('resolutionAuthorizedSignatory'),
+      },
+
+      directors: payload.directors
+        .map((x: any) => ({ 
+          id: x.id,
+          fullName: x.fullName,
+          proofOfIdentityId: x.proofOfIdentityId,
+          proofOfAddressId: x.proofOfAddressId
+        })),
+
+      beneficialOwners: payload.beneficialOwners
+        .map((x: any) => ({ 
+          id: x.id,
+          fullName: x.fullName,
+          proofOfIdentityId: x.proofOfIdentityId,
+          proofOfAddressId: x.proofOfAddressId
+        })),
+
+      fundingDocuments: payload.fundingDocuments
     }
 
-    const uploadedFiles = await uploadFiles(payload, initialValues)
 
-    const getDirectorFiles = (key: string) => {
-      const result = uploadedFiles
+    const updateDirectors = (key: 'directors' | 'beneficialOwners') => {
+      const fileUpdates = uploadedFiles
         .filter(x => x.name.startsWith(key))
-        .map(x => {
-          const [index, fileName] = x.name.split('.').slice(1)
+        .map(x => ({ ...x, name: x.name.split('.')[2] as keyof DirectorInfo, index: Number(x.name.split('.')[1]) }))
 
-          return ({ id: x.id, name: fileName, index })
+      
+      fileUpdates.forEach(x => {
+        data[key][x.index][x.name] = x.id
+      })
+
+      const existingIds = new Set(initialValues[key].map(x => x.id))
+
+      payload[key]
+        .forEach((x, idx) => {
+          if (!existingIds.has(x.id)) {
+            delete data[key][idx].id
+          }
         })
-        .reduce((acc, e) => {
-          return { ...acc, [e.index]: { ...acc[e.index], [e.name]: e.id}}
-        }, {} as { [n: string]: Partial<DirectorInfo> })
-
-      return Object.entries(result)
-        .sort((a, b) => Number(a[0]) - Number(b[0]))
-        .map(([ index, value ]) => value)
     }
 
-    data.directors = getDirectorFiles('directors')
-      .map((entry, idx) => ({ ...entry, fullName: payload.directors[idx].fullName }))
+    updateDirectors('beneficialOwners')
+    updateDirectors('directors')
 
-    data.beneficialOwners = getDirectorFiles('beneficialOwners')
-      .map((entry, idx) => ({ ...entry, fullName: payload.beneficialOwners[idx].fullName }))
-
-    data.document = uploadedFiles
-      .filter(x => x.name.startsWith('document'))
-      .map(x => ({ ...x, name: x.name.split('.').pop()! }))
-      .reduce((acc, e) => ({ ...acc, [e.name]: e.id }), {})
-
-    data.fundingDocuments = uploadedFiles
-      .filter(x => x.name.startsWith('fundingDocuments'))
+    const updatedFundingDocuments = new Set(payload.fundingDocuments.map(x => x.id))
+    const oldFundingDocs = initialValues.fundingDocuments
       .map(x => x.id)
+      .filter(x => !updatedFundingDocuments.has(x))
+
+    data.fundingDocuments = [
+      ...oldFundingDocs,
+      ...uploadedFiles
+        .filter(x => x.name.startsWith('fundingDocuments'))
+        .map(x => x.id)
+    ]
 
     if (vettindId) {
       delete data.issuanceId
       return apiService.put(`/vettings/${vettindId}`, data)
     } else {
-      return apiService.post(`/vettings}`, data)
+      return apiService.post(`/vettings`, data)
     }
-  }, [uploadFiles])
+  }, [issuanceId, uploadFiles])
 }

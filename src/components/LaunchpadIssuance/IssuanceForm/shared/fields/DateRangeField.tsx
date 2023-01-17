@@ -146,6 +146,10 @@ const FieldContainer = styled.div<{ disabled?: boolean }>`
 
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+  
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+  `}
 `
 
 const FieldIcon = styled.div`

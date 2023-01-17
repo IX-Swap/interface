@@ -43,8 +43,11 @@ import {
   investmentStructureOptions 
 } from './util'
 
+interface Props {
+  edit?: boolean
+}
 
-export const IssuanceInformationForm = () => {
+export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const theme = useTheme()
   const history = useHistory()
 
@@ -132,236 +135,338 @@ export const IssuanceInformationForm = () => {
         <FormTitle>Information</FormTitle>
       </FormHeader>
 
-      <FormSideBar>
-        {Object.keys(form.current?.errors ?? {}).length > 0 && <RejectionReasons />}
-        
-        
-        <FormSubmitContainer>
-          <OutlineButton>Save Draft</OutlineButton>
-          <OutlineButton>Review</OutlineButton>
-
-          <FilledButton>Submit</FilledButton>
-        </FormSubmitContainer>
-      </FormSideBar>
-
       <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit} validationSchema={schema}>
-        {({ values, errors, setFieldValue }) => (
-          <FormBody>
-            <ImageBlock>
-              <ImageField 
-                label='Profile Picture'
-                image={values.profilePicture}
-                field='profilePicture'
-                setter={setFieldValue}
-              />
+        {({ values, errors, setFieldValue, submitForm }) => (
+          <>
+            <FormSideBar>
+              {Object.keys(form.current?.errors ?? {}).length > 0 && <RejectionReasons />}
               
-              <ImageField 
-                label='Deal Cards Image'
-                image={values.cardPicture}
-                field='cardPicture'
-                setter={setFieldValue}
-              />
-            </ImageBlock>
-
-            <TextareaField 
-              label='Short Description'
-              placeholder='A brief description on your deal card. 120-150 characters.'
-              field='shortDescription'
-              setter={setFieldValue}
-            />
-
-            <FormGrid>
-              <FormField field="name" setter={setFieldValue} label="Name of Issuance" placeholder='Name of Issuance' />
-              <FormField field="companyId" setter={setFieldValue} label="Company Identification Number" placeholder='Company Identification Number' />
-
-              <DropdownField field="industry" setter={setFieldValue} label="Industry" options={industryOptions} />
-              <DropdownField field="investmentStructure" setter={setFieldValue} label="Investment Type" options={investmentStructureOptions} />
-              <DropdownField field="country" setter={setFieldValue} label="Deal Country" options={countries} searchable />
-            </FormGrid>
-            
-            <Separator />
-
-
-            <FormGrid title="Tokenomics">
-              <FormField field='tokenName' setter={setFieldValue} label='Token Name' placeholder='Must be the same as the issuance name' />
-              <FormField field='tokenTicker' setter={setFieldValue} label='Token Ticker' placeholder='2-6 alphanumeric characters' />
               
-              <DropdownField field='tokenType' setter={setFieldValue} options={tokenTypeOptions} label='Token to Make Issuance in' placeholder='Token Type' />
-              <DropdownField field='network' setter={setFieldValue} options={networkOptions} label='Blockchain Network' placeholder='Blockchain Network' />
-              
-              <FormField field='hardCap' setter={setFieldValue} label='Total Amount to Raise (Amount in the selected token type)' placeholder='Total Amount to Raise' inputFilter={numberFilter} />
-              <FormField field='softCap' setter={setFieldValue} label='Minimum Amount to Raise' placeholder='Minimum Amount to Raise' inputFilter={numberFilter}/>
-              
-              <FormField field='pricePerToken' setter={setFieldValue} label='Price per Token' placeholder='Price per Token' inputFilter={numberFilter} />
-              <DropdownField field='tokenStandard' setter={setFieldValue} options={standardOptions} label='Token Standard' placeholder='Token Standard' />
-              
-              <FormField field='minInvestment' setter={setFieldValue} label='Minimum Investment per Investor' placeholder='No. of Tokens' inputFilter={numberFilter} />
-              <FormField field='maxInvestment' setter={setFieldValue} label='Maximum Investment per Investor' placeholder='No. of Tokens' inputFilter={numberFilter} />
+              <FormSubmitContainer>
+                {!props.edit && <OutlineButton>Save Draft</OutlineButton>}
 
-              <Row gap="1rem">
-                <Checkbox checked />
-
-                <TokenAgreementText>
-                  I understand and agree that once I submit this form and it is approved, IX Swap will
-                  mint and deposit the tokens into a smart contract based on the information provided.
-                </TokenAgreementText>
-              </Row>
-
-            </FormGrid>
-            
-            <Separator />
-            
-            <FormGrid title="Pre-Sale">
-              <PresalveFieldContainer>
-                <PresaleFieldLabel>
-                  Do you wish to apply a {'"Pre-Sale"'} stage to this deal? 
-                </PresaleFieldLabel>
-
-                <Spacer />
-
-                <PresaleButton isSelected={values.hasPresale === true} onClick={() => setPresale(true, setFieldValue)}>
-                  Yes
-                </PresaleButton>
+                <OutlineButton>Review</OutlineButton>
+                <FilledButton onClick={submitForm}>Submit</FilledButton>
+              </FormSubmitContainer>
+            </FormSideBar>
+            <FormBody>
+              <ImageBlock>
+                <ImageField 
+                  label='Profile Picture'
+                  image={values.profilePicture}
+                  field='profilePicture'
+                  setter={setFieldValue}
+                />
                 
-                <PresaleButton isSelected={values.hasPresale === false} onClick={() => setPresale(false, setFieldValue)}>
-                  No
-                </PresaleButton>
-              </PresalveFieldContainer>
+                <ImageField 
+                  label='Deal Cards Image'
+                  image={values.cardPicture}
+                  field='cardPicture'
+                  setter={setFieldValue}
+                />
+              </ImageBlock>
 
-              <FormField 
-                disabled={!values.hasPresale}
-                field="presaleAlocated" 
+              <TextareaField 
+                label='Short Description'
+                placeholder='A brief description on your deal card. 120-150 characters.'
+                field='shortDescription'
                 setter={setFieldValue}
-                label="Pre-Sale Allocation"
-                placeholder='Total fundraising amount allocated for Pre-Sale'
-                inputFilter={numberFilter}
               />
 
-              <FormField
-                disabled={!values.hasPresale}
-                field="presaleMaxInvestment"
-                setter={setFieldValue}
-                label="Maximum Investment per Investor"
-                placeholder='No. of Tokens' 
-                inputFilter={numberFilter}
-              />
+              <FormGrid>
+                <FormField 
+                  field="name"
+                  setter={setFieldValue}
+                  label="Name of Issuance"
+                  placeholder='Name of Issuance'
+                  disabled={props.edit}
+                />
 
-              <FormField 
-                disabled={!values.hasPresale}
-                field="presaleMinInvestment"
-                setter={setFieldValue}
-                label="Minimum Investment per Investor" 
-                placeholder='No. of Tokens' 
-                inputFilter={numberFilter}
-              />
-            </FormGrid>
+                <FormField
+                  field="companyId"
+                  setter={setFieldValue}
+                  label="Company Identification Number"
+                  placeholder='Company Identification Number'
+                  disabled={props.edit}
+                />
 
-            <Separator />
+                <DropdownField 
+                  field="industry"
+                  setter={setFieldValue}
+                  label="Industry"
+                  options={industryOptions}
+                />
 
-            <FormGrid 
-              title="Timeline" 
-              description={
-                <>
-                  The timeline will be in the following order: 
-                  Register to Invest {'>'} Pre-Sale {'>'} Public Sale {'>'} Token Claim. 
-                  Exclude the Pre-Sale stage if you decide to not include this.
-                </>
-              }
-            >
+                <DropdownField
+                  field="investmentStructure"
+                  setter={setFieldValue}
+                  label="Investment Type"
+                  options={investmentStructureOptions}
+                />
 
-              <DateRangeField 
-                mode='single'
-                label='Register to Invest'
-                field='terms.whitelist'
-                setter={setFieldValue}
-                value={values.terms.whitelist}
-              />
-
-              <DateRangeField 
-                mode='single'
-                label='Pre-Sale'
-                field='terms.presale'
-                setter={setFieldValue}
-                value={values.terms.presale}
-                disabled={!values.hasPresale || !values.terms.whitelist}
-                minDate={values.terms.whitelist}
-              />
-
-              {/* <div style={{ color: 'black'}}>
-                {values.hasPresale?.toString() ?? 'not set'}
-                {values.terms.whitelist?.toString() ?? 'not set'}
-                {values.terms.presale?.toString() ?? 'not set'}
-              </div> */}
+                <DropdownField
+                  field="country"
+                  setter={setFieldValue}
+                  label="Deal Country"
+                  options={countries}
+                  searchable
+                />
+              </FormGrid>
               
-              <DateRangeField 
-                mode='range'
-                label='Public Sale to Closed'
-                field='terms.sale'
-                value={[values.terms.sale, values.terms.closed].filter(x => !!x).map(x => moment(x))}
-                disabled={(values.hasPresale && !values.terms.presale) || (!values.hasPresale && !values.terms.whitelist)}
-                minDate={values.hasPresale ? values.terms.presale : values.terms.whitelist}
-                onChange={([start, end]) => {
-                  setFieldValue('terms.sale', start?.toDate())
-                  setFieldValue('terms.closed', end?.toDate())
-                }}
-              />
+              <Separator />
 
-              <DateRangeField
-                mode='single'
-                label='Token Claim'
-                field='terms.claim'
-                setter={setFieldValue}
-                disabled={!values.terms.closed}
-                minDate={values.terms.closed}
-                value={values.terms.claim}
-              />
-
-            </FormGrid>
-
-            <Separator />
-
-            <FormGrid title="Offering Terms">
-              <FormField field='investmentStructure' setter={setFieldValue} label='Investment Structure' placeholder='Holding Structure' />
-              <FormField field='dividendYield' setter={setFieldValue} label='Dividend Yield' placeholder='In Percent' optional />
-              <FormField field='investmentPeriod' setter={setFieldValue} label='Investment Period' placeholder='In months' optional />
-              <FormField field='grossIrr' setter={setFieldValue} label='Gross IRR (%)' placeholder='In percent' optional />
-
-              <DropdownField 
-                span={2}
-                label="Distribution Frequency"
-                placeholder='Frequency of return distribution'
+              <FormGrid title="Tokenomics">
+                <FormField
+                  field='tokenName'
+                  setter={setFieldValue}
+                  label='Token Name'
+                  placeholder='Must be the same as the issuance name'
+                  disabled={props.edit}
+                />
+                <FormField
+                  field='tokenTicker'
+                  setter={setFieldValue}
+                  label='Token Ticker'
+                  placeholder='2-6 alphanumeric characters'
+                  disabled={props.edit}
+                />
                 
-                field="distributionFrequency"
-                setter={setFieldValue}
-                options={distributionFrequencyOptions}
-                optional
-              />
-            </FormGrid>
-            
-            <Separator />
-            
-            <AdditionalInformation social={values.social} setter={setFieldValue} errors={errors} />
-            
-            <Separator />
-            
-            <UploadDocuments documents={values.additionalDocuments} setter={setFieldValue} />
-            
-            <Separator />
-            
-            <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} errors={errors} />
-            
-            <Separator />
+                <DropdownField
+                  field='tokenType'
+                  setter={setFieldValue}
+                  options={tokenTypeOptions}
+                  label='Token to Make Issuance in'
+                  placeholder='Token Type'
+                  disabled={props.edit}
+                />
+                <DropdownField
+                  field='network'
+                  setter={setFieldValue}
+                  options={networkOptions}
+                  label='Blockchain Network'
+                  placeholder='Blockchain Network'
+                  disabled={props.edit}
+                />
+                
+                <FormField
+                  field='hardCap'
+                  setter={setFieldValue}
+                  label='Total Amount to Raise (Amount in the selected token type)'
+                  placeholder='Total Amount to Raise'
+                  inputFilter={numberFilter}
+                  disabled={props.edit}
+                />
+                <FormField
+                  field='softCap'
+                  setter={setFieldValue}
+                  label='Minimum Amount to Raise'
+                  placeholder='Minimum Amount to Raise'
+                  inputFilter={numberFilter}
+                  disabled={props.edit}
+                />
+                
+                <FormField
+                  field='pricePerToken'
+                  setter={setFieldValue}
+                  label='Price per Token'
+                  placeholder='Price per Token'
+                  inputFilter={numberFilter}
+                  disabled={props.edit}
+                />
+                <DropdownField
+                  field='tokenStandard'
+                  setter={setFieldValue}
+                  options={standardOptions}
+                  label='Token Standard'
+                  placeholder='Token Standard'
+                  disabled={props.edit}
+                />
+                
+                <FormField
+                  field='minInvestment'
+                  setter={setFieldValue}
+                  label='Minimum Investment per Investor'
+                  placeholder='No. of Tokens'
+                  inputFilter={numberFilter}
+                  disabled={props.edit}
+                />
+                <FormField
+                  field='maxInvestment'
+                  setter={setFieldValue}
+                  label='MaximumInvestment per Investor'
+                  placeholder='No. of Tokens'
+                  inputFilter={numberFilter}
+                  disabled={props.edit}
+                />
 
-            <FormGrid title="Team Members">
-              <TeamMembersBlock members={values.members} setter={setFieldValue} />
-            </FormGrid>
-            
-            <Separator />
-            
-            <FormGrid title="FAQ">
-              <FAQBlock faq={values.faq} setter={setFieldValue} />
-            </FormGrid>
-          </FormBody>
+                <Row gap="1rem">
+                  <Checkbox checked />
+
+                  <TokenAgreementText>
+                    I understand and agree that once I submit this form and it is approved, IX Swap will
+                    mint and deposit the tokens into a smart contract based on the information provided.
+                  </TokenAgreementText>
+                </Row>
+
+              </FormGrid>
+              
+              <Separator />
+              
+              <FormGrid title="Pre-Sale">
+                <PresalveFieldContainer disabled={props.edit}>
+                  <PresaleFieldLabel>
+                    Do you wish to apply a {'"Pre-Sale"'} stage to this deal? 
+                  </PresaleFieldLabel>
+
+                  <Spacer />
+
+                  <PresaleButton isSelected={values.hasPresale === true} onClick={() => props.edit && setPresale(true, setFieldValue)}>
+                    Yes
+                  </PresaleButton>
+                  
+                  <PresaleButton isSelected={values.hasPresale === false} onClick={() => props.edit && setPresale(false, setFieldValue)}>
+                    No
+                  </PresaleButton>
+                </PresalveFieldContainer>
+
+                <FormField 
+                  disabled={props.edit || !values.hasPresale}
+                  field="presaleAlocated" 
+                  setter={setFieldValue}
+                  label="Pre-Sale Allocation"
+                  placeholder='Total fundraising amount allocated for Pre-Sale'
+                  inputFilter={numberFilter}
+                />
+
+                <FormField
+                  disabled={props.edit || !values.hasPresale}
+                  field="presaleMaxInvestment"
+                  setter={setFieldValue}
+                  label="Maximum Investment per Investor"
+                  placeholder='No. of Tokens' 
+                  inputFilter={numberFilter}
+                />
+
+                <FormField 
+                  disabled={props.edit || !values.hasPresale}
+                  field="presaleMinInvestment"
+                  setter={setFieldValue}
+                  label="Minimum Investment per Investor" 
+                  placeholder='No. of Tokens' 
+                  inputFilter={numberFilter}
+                />
+              </FormGrid>
+
+              <Separator />
+
+              <FormGrid 
+                title="Timeline" 
+                description={
+                  <>
+                    The timeline will be in the following order: 
+                    Register to Invest {'>'} Pre-Sale {'>'} Public Sale {'>'} Token Claim. 
+                    Exclude the Pre-Sale stage if you decide to not include this.
+                  </>
+                }
+              >
+
+                <DateRangeField 
+                  mode='single'
+                  label='Register to Invest'
+                  field='terms.whitelist'
+                  setter={setFieldValue}
+                  value={values.terms.whitelist}
+                  disabled={props.edit}
+                />
+
+                <DateRangeField 
+                  mode='single'
+                  label='Pre-Sale'
+                  field='terms.presale'
+                  setter={setFieldValue}
+                  value={values.terms.presale}
+                  disabled={props.edit || !values.hasPresale || !values.terms.whitelist}
+                  minDate={values.terms.whitelist}
+                />
+
+                {/* <div style={{ color: 'black'}}>
+                  {values.hasPresale?.toString() ?? 'not set'}
+                  {values.terms.whitelist?.toString() ?? 'not set'}
+                  {values.terms.presale?.toString() ?? 'not set'}
+                </div> */}
+                
+                <DateRangeField 
+                  mode='range'
+                  label='Public Sale to Closed'
+                  field='terms.sale'
+                  value={[values.terms.sale, values.terms.closed].filter(x => !!x).map(x => moment(x))}
+                  disabled={props.edit || (values.hasPresale && !values.terms.presale) || (!values.hasPresale && !values.terms.whitelist)}
+                  minDate={values.hasPresale ? values.terms.presale : values.terms.whitelist}
+                  onChange={([start, end]) => {
+                    setFieldValue('terms.sale', start?.toDate())
+                    setFieldValue('terms.closed', end?.toDate())
+                  }}
+                />
+
+                <DateRangeField
+                  mode='single'
+                  label='Token Claim'
+                  field='terms.claim'
+                  setter={setFieldValue}
+                  disabled={props.edit || !values.terms.closed}
+                  minDate={values.terms.closed}
+                  value={values.terms.claim}
+                />
+
+              </FormGrid>
+
+              <Separator />
+
+              <FormGrid title="Offering Terms">
+                <FormField field='investmentStructure' setter={setFieldValue} label='Investment Structure' placeholder='Holding Structure' disabled={props.edit} />
+                <FormField field='dividendYield' setter={setFieldValue} label='Dividend Yield' placeholder='In Percent' optional disabled={props.edit} />
+                <FormField field='investmentPeriod' setter={setFieldValue} label='Investment Period' placeholder='In months' optional disabled={props.edit} />
+                <FormField field='grossIrr' setter={setFieldValue} label='Gross IRR (%)' placeholder='In percent' optional disabled={props.edit} />
+
+                <DropdownField 
+                  span={2}
+                  label="Distribution Frequency"
+                  placeholder='Frequency of return distribution'
+                  
+                  field="distributionFrequency"
+                  setter={setFieldValue}
+                  options={distributionFrequencyOptions}
+                  optional
+
+                  disabled={props.edit}
+                />
+              </FormGrid>
+              
+              <Separator />
+              
+              <AdditionalInformation social={values.social} setter={setFieldValue} errors={errors} />
+              
+              <Separator />
+              
+              <UploadDocuments documents={values.additionalDocuments} setter={setFieldValue} />
+              
+              <Separator />
+              
+              <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} errors={errors} />
+              
+              <Separator />
+
+              <FormGrid title="Team Members">
+                <TeamMembersBlock members={values.members} setter={setFieldValue} />
+              </FormGrid>
+              
+              <Separator />
+              
+              <FormGrid title="FAQ">
+                <FAQBlock faq={values.faq} setter={setFieldValue} />
+              </FormGrid>
+            </FormBody>
+          </>
         )}
       </Formik>
 
@@ -391,7 +496,7 @@ const TokenAgreementText = styled.div`
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-const PresalveFieldContainer = styled.div`
+const PresalveFieldContainer = styled.div<{ disabled?: boolean }>`
   display: flex;
 
   flex-flow: row nowrap;
@@ -402,6 +507,10 @@ const PresalveFieldContainer = styled.div`
 
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+  `}
 `
 
 const PresaleFieldLabel = styled.div`
@@ -415,7 +524,7 @@ const PresaleFieldLabel = styled.div`
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 
-const PresaleButton = styled.button<{ isSelected: boolean }>`
+const PresaleButton = styled.button<{ isSelected: boolean, disabled?: boolean }>`
   padding: 0.75rem 1.5rem;
   border: 1px solid ${props => props.theme.launchpad.colors.primary + '33'};
   border-radius: 6px;
@@ -435,5 +544,10 @@ const PresaleButton = styled.button<{ isSelected: boolean }>`
   ${props => props.isSelected === true && `
     background: ${props.theme.launchpad.colors.primary};
     color: ${props.theme.launchpad.colors.text.light};
+  `}
+
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+    cursor: default;
   `}
 `

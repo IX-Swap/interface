@@ -61,7 +61,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
   }, [])
 
   return (
-    <FieldContainer>
+    <FieldContainer disabled={props.disabled}>
       <FieldInputContainer className={props.className} height={props.height} padding={props.padding} borderless={props.borderless}>
         {props.label && <Label>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</Label>}
         {props.placeholder && <Placeholder active={focused} hasLabel={!!props.label}>{props.placeholder}</Placeholder>}
@@ -84,11 +84,15 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
   )
 }
 
-const FieldContainer = styled.div`
+const FieldContainer = styled.div<{ disabled?: boolean }>`
   display: flex;
   flex-flow: column nowrap;
 
   gap: 0.5rem;
+  
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+  `}
 `
 
 const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height' | 'borderless'>>`
