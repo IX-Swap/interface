@@ -136,8 +136,8 @@ export const IssuancesFull = () => {
           </IssuanceRow>
         ))}
           
-        {hasMore && !loading && <PaginationTrigger isLoading={loading} onTriggered={fetchMore} />}
       </IssuanceTable>
+      {hasMore && !loading && <PaginationTrigger isLoading={loading} onTriggered={fetchMore} />}
     </Container>
   )
 }
