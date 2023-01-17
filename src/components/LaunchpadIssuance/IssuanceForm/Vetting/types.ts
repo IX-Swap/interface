@@ -1,7 +1,7 @@
 import { IssuanceFile } from "../types"
 
 export interface VettingFormValues {
-  applicantFullname: string
+  applicantFullName: string
   email: string
 
   companyName: string
