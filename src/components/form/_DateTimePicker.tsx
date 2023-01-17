@@ -63,7 +63,6 @@ export const DateTimePicker = ({
   const { name } = props
   const { hasError, error } = useFormError(name ?? '')
   const PickerComponent = withIcon ? DateTimePickerComponent : DateTimeComponent
-  console.log(props, 'propspropspropsprops')
   return (
     <>
       <PickerComponent
