@@ -26,11 +26,12 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
 
   const category = splitted[splitted.length - 1]
   const userId: string =
-    typeof (item as any).user === 'string'
-      ? (item as any).user
+    typeof (item as any).user === 'string' ||
+    typeof (item as any).createdBy === 'string'
+      ? (item as any).user || (item as any).createdBy
       : (item as any).user?._id
   const listingType: string = (item as any).listingType
-  console.log(props, 'propsdpdppd')
+  console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',

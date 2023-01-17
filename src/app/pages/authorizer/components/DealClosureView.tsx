@@ -15,45 +15,45 @@ export const DealClosureView = ({ data }: DealClosureViewProps) => {
       <Grid item xs={12} md={4}>
         <LabelledValue
           label='Company Name'
-          value={data.dso.corporate.companyLegalName}
+          value={data?.dso?.corporate?.companyLegalName}
         />
       </Grid>
       <Grid item xs={12} md={4}>
-        <LabelledValue label='Issued By' value={data.user.name} />
+        <LabelledValue label='Issued By' value={data?.user?.name} />
       </Grid>
       <Grid item xs={12} md={4}>
         <LabelledValue
           label='Issue Date'
-          value={formatDateToMMDDYY(data.dso.createdAt)}
+          value={formatDateToMMDDYY(data?.dso?.createdAt)}
         />
       </Grid>
       <Grid item xs={12} md={4}>
-        <LabelledValue label='Digital Security' value={data.dso.tokenName} />
+        <LabelledValue label='Digital Security' value={data?.dso?.tokenName} />
       </Grid>
       <Grid item xs={12} md={4}>
         <LabelledValue
           label='Price Per Unit'
-          value={formatMoney(data.dso.pricePerUnit, data.dso.currency.symbol)}
+          value={formatMoney(data?.dso?.pricePerUnit, data?.dso?.currency?.symbol)}
         />
       </Grid>
       <Grid item xs={12} md={4}>
         <LabelledValue
           label='Minimum Investment'
-          value={data.dso.minimumInvestment}
+          value={data?.dso?.minimumInvestment}
         />
       </Grid>
       <Grid item xs={12} md={4}>
         <LabelledValue
           label='Capital Structure'
-          value={data.dso.capitalStructure}
+          value={data?.dso?.capitalStructure}
         />
       </Grid>
       <Grid item xs={12} md={4}>
         <LabelledValue
           label='Total Amount Raised'
           value={formatMoney(
-            data.dso.insight.raisedTotal,
-            data.dso.currency.symbol
+            data?.dso?.insight?.raisedTotal,
+            data?.dso?.currency?.symbol
           )}
         />
       </Grid>
