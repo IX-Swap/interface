@@ -2,7 +2,7 @@ import { VettingFormValues } from "./types";
 
 export const initialValues = {
   document: {},
-  beneficialOwners: [{ id: 0 }],
-  directors: [{ id: 0 }],
+  beneficialOwners: [{ }],
+  directors: [{ }],
   fundingDocuments: []
 } as unknown as VettingFormValues

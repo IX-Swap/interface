@@ -558,7 +558,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
       delete data.issuanceId
       return apiService.put(`/vettings/${vettindId}`, data)
     } else {
-      return apiService.post(`/vettings}`, data)
+      return apiService.post(`/vettings`, data)
     }
 
   }, [uploadFiles])
