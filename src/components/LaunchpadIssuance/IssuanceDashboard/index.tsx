@@ -4,17 +4,14 @@ import styled, { useTheme } from 'styled-components'
 
 import { Eye } from 'react-feather'
 
-import { IssuancesFull } from './IssuancesFull'
-import { IssuanceStatusBadge } from './IssuanceStatusBadge'
-
 import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issuances.svg'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceTable, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
 import { Centered, Column } from 'components/LaunchpadMisc/styled'
 
 import { IssuanceFilter, issuers, IssuanceStatus, Issuance, statuses } from '../types'
+import { IssuancesFull } from './IssuancesFull'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 
 
@@ -79,7 +76,7 @@ export const IssuanceDashboard = () => {
   const issuances = useIssuances()
 
   const [activeTab, setActiveTab] = React.useState(IssuanceFilter.pending)
-
+  const [search, setSearch] = React.useState<string | undefined>('')
 
   React.useEffect(() => {
     issuances.fetch(activeTab)
@@ -92,6 +89,8 @@ export const IssuanceDashboard = () => {
   ], [])
 
   const issuancesFetched = React.useMemo(() => !issuances.loading && issuances.items.length > 0, [issuances])
+
+  const onSearchChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => setSearch(event.target.value), [])
 
   return (
     <Container>
