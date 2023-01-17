@@ -71,6 +71,7 @@ export const DateTimePicker = ({
           OpenPickerIcon: CalendarTodayOutlinedIcon
         }}
       />
+
       {props?.name === 'launchDate' && props?.disabled === true
         ? ''
         : hasError && <FormHelperText error>{error?.message}</FormHelperText>}
