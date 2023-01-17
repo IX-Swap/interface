@@ -8,7 +8,7 @@ interface Props {
 
 export const PaginationTrigger: React.FC<Props> = (props) => {
   return (
-    <LoadMoreButton type="button" disabled={props.isLoading} onClick={props.onTriggered}>
+    <LoadMoreButton type="button" onClick={props.onTriggered}>
       Load more
     </LoadMoreButton>
   )

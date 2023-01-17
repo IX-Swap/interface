@@ -174,6 +174,20 @@ const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
     margin: 0;
   }
 
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    border: none;
+    -webkit-text-fill-color: ${props => props.theme.launchpad.colors.text.title};
+    color: ${props => props.theme.launchpad.colors.text.title};
+    transition: background-color 100000s ease-in-out 0s;
+  }
+
+  ::-webkit-autofill::first-line {
+    font-family: 'Poppins', sans-serif;
+  }
+
+
   &[type=number] {
     -moz-appearance: textfield;
   }
