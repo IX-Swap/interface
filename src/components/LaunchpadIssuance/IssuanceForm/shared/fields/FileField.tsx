@@ -2,6 +2,8 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Paperclip } from 'react-feather'
+
+import { ReactComponent as CancelIcon } from 'assets/launchpad/svg/cancel-vector.svg'
 import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { useDropzone } from 'react-dropzone'
@@ -42,6 +44,11 @@ export const FileField: React.FC<Props> = (props) => {
     props.setter(props.field, { file: files[0] })
     setValue(files[0])
   }, [])
+
+  const onFileRemove = React.useCallback(() => {
+    props.setter(props.field, props.value?.id ? null : undefined)
+    setValue(undefined)
+  }, [])
   
   const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
 
@@ -58,7 +65,7 @@ export const FileField: React.FC<Props> = (props) => {
       </Column>
 
       <FieldWrapper borderless={props.borderless}>
-        <Row gap="0.5rem" {...getRootProps()} onClick={openFileBrowser}>
+        <Row gap="0.5rem" {...getRootProps()}>
           {props.icon ?? <Paperclip color={theme.launchpad.colors.text.bodyAlt} size="15" />}
 
           {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
@@ -72,9 +79,11 @@ export const FileField: React.FC<Props> = (props) => {
             disabled={props.disabled} 
           />
 
+          {value && <CancelIcon onClick={onFileRemove} title="remove" cursor="pointer" />}
+
           <Spacer />
 
-          <BrowseButton>Browse</BrowseButton>
+          <BrowseButton onClick={openFileBrowser}>Browse</BrowseButton>
         </Row>
 
         {props.trailing}

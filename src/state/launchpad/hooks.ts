@@ -438,10 +438,14 @@ const useUploadVettingFiles = () => {
 
   return React.useCallback(async (payload: VettingFormValues, initial: VettingFormValues) => {
     const files: FileUpload[] = []
+    const filesToRemove: { name: string, id: number | null } [] = []
 
     const addDocument = (key: keyof VettingFormValues['document']) => {
-      if (!initial.document[key] || initial.document[key].id !== payload.document?.[key].id) 
+      if (!initial.document[key] || initial.document[key].id !== payload.document?.[key]?.id) 
         files.push({ name: `document.${key}Id`, file: payload.document[key]?.file })
+      
+      if(initial.document[key] && payload.document?.[key] === null)
+        filesToRemove.push({ name: `document.${key}Id`, id: null })
     }
 
     payload.directors?.forEach((entry, idx) => {
@@ -471,11 +475,14 @@ const useUploadVettingFiles = () => {
 
     const filesToUpload = files.filter(x => !!x.file) 
 
-    if (filesToUpload.length === 0) {
+    const uploadedFiles = filesToUpload.length === 0 ? [] : await uploadFiles(filesToUpload)
+
+    return [ ...uploadedFiles, ...filesToRemove]
+
+    /*if (filesToUpload.length === 0 && filesToRemove.length === 0) {
       return []
     }
-
-    return uploadFiles(filesToUpload)
+    return uploadFiles(filesToUpload)*/
   }, [uploadFiles])
 }
 
