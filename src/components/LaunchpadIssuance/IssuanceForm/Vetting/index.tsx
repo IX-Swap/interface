@@ -370,7 +370,7 @@ const FilesBlock = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, auto);
 
-  align-items: start;
+  align-items: end;
 
   gap: 2rem;
 `

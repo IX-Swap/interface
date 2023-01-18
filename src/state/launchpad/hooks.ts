@@ -348,14 +348,14 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
       ...payload,
 
       document: {
-        pitchDeck: findFile(files, payload.document.pitchDeck.id),
-        certificateOfIncorporation: findFile(files, payload.document.certificateOfIncorporation.id),
-        certificateOfIncumbency: findFile(files, payload.document.certificateOfIncumbency.id),
-        memorandumArticle: findFile(files, payload.document.memorandumArticle.id),
-        ownershipStructure: findFile(files, payload.document.ownershipStructure.id),
-        resolutionAuthorizedSignatory: findFile(files, payload.document.resolutionAuthorizedSignatory.id),
-        shareDirectorRegistry: findFile(files, payload.document.shareDirectorRegistry.id),
-        auditedFinancials: findFile(files, payload.document.auditedFinancials.id),
+        pitchDeck: findFile(files, payload.document.pitchDeck?.id),
+        certificateOfIncorporation: findFile(files, payload.document.certificateOfIncorporation?.id),
+        certificateOfIncumbency: findFile(files, payload.document.certificateOfIncumbency?.id),
+        memorandumArticle: findFile(files, payload.document.memorandumArticle?.id),
+        ownershipStructure: findFile(files, payload.document.ownershipStructure?.id),
+        resolutionAuthorizedSignatory: findFile(files, payload.document.resolutionAuthorizedSignatory?.id),
+        shareDirectorRegistry: findFile(files, payload.document.shareDirectorRegistry?.id),
+        auditedFinancials: findFile(files, payload.document.auditedFinancials?.id),
       },
 
       directors: directors.length > 0 ? directors : vettingInitialFormValues.directors,

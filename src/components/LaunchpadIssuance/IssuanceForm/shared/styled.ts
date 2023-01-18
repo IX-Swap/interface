@@ -81,7 +81,8 @@ export const FormSubmitContainer = styled.div`
 `
 
 
-export const FormFieldWrapper = styled(Column)<{ span?: number }>`
+export const FormFieldWrapper = styled(Column)<{ span?: number, error?: string }>`
+  ${props => !props.error && `padding-bottom: 2rem;`}
   ${props => props.span && `grid-column: span ${props.span};`}
 `
 

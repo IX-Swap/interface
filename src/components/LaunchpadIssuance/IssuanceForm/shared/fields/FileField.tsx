@@ -47,7 +47,7 @@ export const FileField: React.FC<Props> = (props) => {
 
 
   return (
-    <FormFieldWrapper gap="1rem" span={props.span}>
+    <FormFieldWrapper gap="1rem" span={props.span} error={props.error}>
       <Column gap="0.25rem">
         <FieldLabel>
           {props.label}
