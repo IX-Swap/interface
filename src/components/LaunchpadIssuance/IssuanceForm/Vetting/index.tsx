@@ -99,8 +99,6 @@ export const IssuanceVettingForm = () => {
     )
   }
 
-  console.log('Final initial data: ', initialValues.data)
-
   return (
     <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema}>
       {({ submitForm, setFieldValue, values, errors }) => (
@@ -232,7 +230,7 @@ export const IssuanceVettingForm = () => {
                 label="Certificate of Incorporation"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncorporation"
-                value={values.document.pitchDeck}
+                value={values.document.certificateOfIncorporation}
                 error={errors.document?.certificateOfIncorporation as string}
                 setter={setFieldValue}
               />
@@ -241,7 +239,7 @@ export const IssuanceVettingForm = () => {
                 label="Certificate of Incumbency"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncumbency"
-                value={values.document.pitchDeck}
+                value={values.document.certificateOfIncumbency}
                 error={errors.document?.certificateOfIncumbency as string}
                 setter={setFieldValue}
               />
@@ -250,7 +248,7 @@ export const IssuanceVettingForm = () => {
                 label="Share & Director Registry"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.shareDirectorRegistry"
-                value={values.document.pitchDeck}
+                value={values.document.shareDirectorRegistry}
                 error={errors.document?.shareDirectorRegistry as string}
                 setter={setFieldValue}
               />
@@ -259,7 +257,7 @@ export const IssuanceVettingForm = () => {
                 label="Copy of Audited Financials"
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
                 field="document.auditedFinancials"
-                value={values.document.pitchDeck}
+                value={values.document.auditedFinancials}
                 error={errors.document?.auditedFinancials as string}
                 setter={setFieldValue}
               />
@@ -268,7 +266,7 @@ export const IssuanceVettingForm = () => {
                 label="Memorandum and Article of Association Company Constitution"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.memorandumArticle"
-                value={values.document.pitchDeck}
+                value={values.document.memorandumArticle}
                 error={errors.document?.memorandumArticle as string}
                 setter={setFieldValue}
               />
@@ -276,7 +274,7 @@ export const IssuanceVettingForm = () => {
                 label="Ownership Structure"
                 hint={<ExampleLink>See Examples</ExampleLink>}
                 field="document.ownershipStructure"
-                value={values.document.pitchDeck}
+                value={values.document.ownershipStructure}
                 error={errors.document?.ownershipStructure as string}
                 setter={setFieldValue}
               />
@@ -285,7 +283,7 @@ export const IssuanceVettingForm = () => {
                 label="Resolution of Authorized Signatory List"
                 hint="Document must include specimen signatures or equivalent"
                 field="document.resolutionAuthorizedSignatory"
-                value={values.document.pitchDeck}
+                value={values.document.resolutionAuthorizedSignatory}
                 error={errors.document?.resolutionAuthorizedSignatory as string}
                 setter={setFieldValue}
               />
