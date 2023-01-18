@@ -10,27 +10,35 @@ import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsD
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
 import { useLocation } from 'react-router-dom'
 
-export interface ActionsProps<T> {
+export interface ActionsProps {
   item: any
   cacheQueryKey: any
 }
 
-export type ActionsType<T> = (props: ActionsProps<T>) => ReactElement
+export type ActionsType = (props: ActionsProps) => ReactElement
 
-export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
+const getUserId = (item: any) => {
+  if (typeof item.user === 'string') {
+    return item.user
+  }
+
+  if (typeof item.createdBy === 'string') {
+    return item.createdBy
+  }
+
+  return item.user?._id
+}
+
+export const Actions = (props: ActionsProps): JSX.Element => {
   const { item, cacheQueryKey } = props
   const location = useLocation()
-  const id: string = (item as any)._id
+  const id: string = item._id
   const splitted = location.pathname.split('/')
   const status = location.search.split('=')[1]
 
   const category = splitted[splitted.length - 1]
-  const userId: string =
-    typeof (item as any).user === 'string' ||
-    typeof (item as any).createdBy === 'string'
-      ? (item as any).user?._id || (item as any).createdBy || (item as any).user
-      : (item as any).user?._id
-  const listingType: string = (item as any).listingType
+  const userId: string = getUserId(item)
+  const listingType: string = item.listingType
   console.log(props.item, 'propsdpdppd')
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
@@ -73,7 +81,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
     status,
     'category,listingType,userId, id,status'
   )
-  const isUnauthorized = (item as any).status === 'Submitted' || 'Approved'
+  const isUnauthorized = item.status === 'Submitted' || 'Approved'
   const isLoading = isApproving || isRejecting
   const isCommitment = category === 'commitments'
   return (
@@ -109,11 +117,11 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       <Grid item>
         <Box px={1} />
       </Grid>
-      {isCommitment && (item as any).fundStatus !== 'Funds on hold' ? (
+      {isCommitment && item.fundStatus !== 'Funds on hold' ? (
         <Grid item style={{ minWidth: 26 }} />
       ) : (
         <Grid item style={{ minWidth: 26 }}>
-          {(isUnauthorized || isCommitment) && (
+          {(Boolean(isUnauthorized) || isCommitment) && (
             <Dropdown
               contentTheme='dark'
               trigger={props => (
