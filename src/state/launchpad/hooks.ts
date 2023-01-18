@@ -221,7 +221,7 @@ export const useGetIssuancePlain = () => {
     loader.start()
 
     return apiService
-      .get('/issuances/me/plain')
+      .get('/issuances/plain')
       .then(res => res.data as IssuancePlain[])
       .then(setItems)
       .then(loader.stop)
@@ -241,7 +241,7 @@ export const useGetIssuanceFull = () => {
     loader.start()
 
     return apiService
-      .get('/issuances/me/full')
+      .get('/issuances/full')
       .then(res => res.data as PaginateResponse<Issuance>)
       .then(res => setItems(res.items))
       .then(loader.stop)
@@ -265,7 +265,7 @@ export const useGetIssuance = () => {
     loader.start()
 
     return apiService
-      .get(`/issuances/me/${id}/full`)
+      .get(`/issuances/${id}/full`)
       .then(res => res.data as Issuance)
       .then(setData)
       .then(loader.stop)
