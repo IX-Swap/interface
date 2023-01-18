@@ -395,7 +395,7 @@ export const useGetIssuances = () => {
         .map(([key, value]) => `order=${key}=${value}`))
     }
 
-    const result = await apiService.get(`/issuances/me/full?${query.join('&')}`).then(res => res.data as PaginateResponse<Issuance>)
+    const result = await apiService.get(`/issuances/full?${query.join('&')}`).then(res => res.data as PaginateResponse<Issuance>)
 
     return {
       hasMore: result.nextPage !== null,
@@ -571,7 +571,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
     const uploadedFiles = await uploadFiles(payload, initialValues)
 
     const findDoc = (key: keyof VettingFormValues['document']) => 
-      uploadedFiles.find(x => x.name === `document.${key}Id`) ?? initialValues.document[key].id
+      uploadedFiles.find(x => x.name === `document.${key}Id`)?.id ?? initialValues.document[key].id
 
     const data: Record<string, any> = { 
       issuanceId,
