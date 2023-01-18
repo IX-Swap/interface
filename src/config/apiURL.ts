@@ -302,9 +302,7 @@ export const exchange = {
     `/exchange/orders/cancel/${userId}/${orderId}`,
   getListing: (userId?: string, listingId?: string) =>
     `/exchange/listing/${userId}/${listingId}`,
-  getOtcListing: (userId?: string, listingId?: string) =>
-    `/otc/listing/${userId}/${listingId}`,
-  getMarket: (pairId?: string) => `/otc/pair/${pairId}`
+  getMarket: (pairId?: string) => `/exchange/markets/pair/${pairId}`
 }
 
 export const OTCUrl = {
@@ -342,7 +340,8 @@ export const trading = {
     `/otc/order/list/${side.toLowerCase()}`,
   getMatchedOrders: '/otc/order/list/match',
   getFeaturedPair: '/otc/config/featured-pair',
-  createOrder: '/otc/order'
+  createOrder: '/otc/order',
+  getMarket: (pairId?: string) => `/otc/pair/${pairId}`
 }
 export const listings = {
   getCombinedList: (userId: string) => `/exchange/combinedListing/${userId}`,
