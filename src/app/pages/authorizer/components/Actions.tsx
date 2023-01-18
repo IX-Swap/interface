@@ -28,7 +28,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const userId: string =
     typeof (item as any).user === 'string' ||
     typeof (item as any).createdBy === 'string'
-      ? (item as any).user || (item as any).createdBy
+      ? (item as any).user?._id || (item as any).createdBy || (item as any).user
       : (item as any).user?._id
   const listingType: string = (item as any).listingType
   console.log(props.item, 'propsdpdppd')
