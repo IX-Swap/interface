@@ -140,7 +140,7 @@ export const NewIssuanceForm = () => {
               </IssuanceFormStep>
             )}
 
-            {vettingStatus === IssuanceStatus.rejected && (
+            {vettingStatus === IssuanceStatus.declined && (
               <IssuanceFormStep 
                 stepNumber={1} 
                 icon={<IssuanceRejectedIcon />}
@@ -246,7 +246,7 @@ export const NewIssuanceForm = () => {
               </IssuanceFormStep>
             )}
 
-            {issuanceStatus === IssuanceStatus.rejected && (
+            {issuanceStatus === IssuanceStatus.declined && (
               <IssuanceFormStep 
                 stepNumber={2} 
                 icon={<IssuanceRejectedIcon />}
