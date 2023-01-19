@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Centered } from 'components/LaunchpadOffer/styled'
+import { Centered } from 'components/LaunchpadMisc/styled'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 
 interface Props {

@@ -1,3 +1,4 @@
+import { IssuanceStatus } from "components/LaunchpadIssuance/types"
 import { User } from "state/admin/actions"
 
 export enum OfferStatus {
@@ -71,6 +72,7 @@ export enum OfferDistributionFrequency {
   quarterly = 'quarterly',
   semiAnnually = 'semiAnnually',
   annually = 'annually',
+  other = 'other'
 }
 
 export enum WhitelistStatus {
@@ -95,7 +97,14 @@ export enum PaymentType {
   sale = 'refund',
 }
 
+export enum IssunaceOfferStatus {
+  pre = 'pre',
+  live = 'live',
+  ended = 'ended'
+}
+
 export interface Asset {
+  id: number
   public: string
   name: string
   publicUrl: string
@@ -103,9 +112,11 @@ export interface Asset {
 }
 
 export interface OfferTimeframe {
-  type: OfferTimeframeType
-  startDate: Date
-  endDate: Date
+  closed: Date
+  claim: Date
+  preSale: Date
+  sale: Date
+  whitelist: Date
 }
 
 export interface OfferTerms {
@@ -138,6 +149,13 @@ export enum InvestmentStatus {
   pending = 'pending',
   done = 'done',
   failed = 'failed',
+}
+
+export enum OfferInvestmentStructure {
+  equity = 'equity',
+  debt = 'debt',
+  hybrid = 'hybrid',
+  other = 'other'
 }
 
 export interface OfferInvestment {
@@ -255,7 +273,7 @@ export interface Offer {
   profilePicture: Asset
   cardPicture: Asset
 
-  timeframes: OfferTimeframe[]
+  timeframe: OfferTimeframe
   terms: OfferTerms
 
   daysTillSale?: number
@@ -270,7 +288,6 @@ export interface Offer {
   updatedAt: Date
   deletedAt?: Date
 
-  owner: User
   files: OfferFile[];
   investments: OfferInvestment[];
   payments: OfferPayment[];
@@ -278,6 +295,60 @@ export interface Offer {
   whitelists: OfferWhitelist[];
 }
 
-export function isWithinTimeframe(frame: OfferTimeframe, date: Date = new Date()) {
-  return date >= frame.startDate && date <= frame.endDate
+export interface IssuanceVettingDocuments {
+  pitchDeck: Asset
+  certificateOfIncorporation: Asset
+  certificateOfIncumbency: Asset
+  shareDirectorRegistry: Asset
+  auditedFinancials: Asset
+  memorandumArticle: Asset
+  ownershipStructure: Asset
+  resolutionAuthorizedSignatory: Asset
 }
+
+export interface IssuanceVettingDirector {
+  id: number
+  fullName: string
+  proofOfIdentity: Asset
+  proofOfAddress: Asset
+}
+
+export interface IssuanceFundingDocument {
+  id: number
+  document: Asset
+}
+
+export interface IssuanceOffer {
+  id: number
+  status: IssuanceStatus
+  startDate: Date
+}
+
+export interface IssuanceVetting {
+  id: number
+  status: IssuanceStatus
+
+  applicantFullName: string
+  email: string
+  companyName: string
+  companyWebsite: string
+  description: string
+
+  document: IssuanceVettingDocuments
+
+  fundingDocuments: IssuanceFundingDocument[]
+
+  beneficialOwners: IssuanceVettingDirector[]
+  directors: IssuanceVettingDirector[]
+  offer?: IssuanceOffer
+}
+
+export interface Issuance {
+  id: number
+  name: string
+  offerStatus: IssunaceOfferStatus
+
+  vetting?: IssuanceVetting
+}
+
+export type IssuancePlain = Pick<Issuance, 'name' | 'id'>

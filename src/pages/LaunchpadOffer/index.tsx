@@ -19,7 +19,7 @@ import { OfferMainInfo } from 'components/LaunchpadOffer/OfferMainInfo'
 import { OfferSidebar } from 'components/LaunchpadOffer/OfferSidebar'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { CenteredFixed } from 'components/LaunchpadOffer/styled'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
@@ -35,38 +35,17 @@ export default function LaunchpadOffer() {
   const history = useHistory()
   const params = useParams<OfferPageParams>()
   
-  const getOffer = useGetOffer()
+  const offer = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
   const checkKYC = useCheckKYC()
 
-  const [offer, setOffer] = React.useState<Offer>()
-  const [loading, setLoading] = React.useState(true)
   const [isAllowed, setIsAllowed] = React.useState<boolean>()
   
   const { library, chainId, account } = useActiveWeb3React()
 
-  const updateTimeFrames = React.useCallback((data: Offer) => {
-
-    data.timeframes.forEach(item => {
-      const frame = data.timeframes.find(timeframe => timeframe.type === OFFER_RELATED_TIMEFRAMES[item.type])
-
-      if (frame?.startDate) {
-        item.endDate = frame.startDate
-      }
-    })
-
-    return data
-  }, [])
-
   React.useEffect(() => {
-    getOffer(params.offerId).then((data)=> {      
-      setOffer(updateTimeFrames(data))
-    }).finally(() => setLoading(false))
-  }, [params.offerId])
-
-  React.useEffect(() => {
-    if (offer) {
-      setIsAllowed(checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed))
+    if (offer.data) {
+      setIsAllowed(checkKYC(offer.data.allowOnlyAccredited, offer.data.status === OfferStatus.closed))
     }
   }, [offer])
 
@@ -84,11 +63,11 @@ export default function LaunchpadOffer() {
     [account, chainId]
   )
   
-  if (loading) {
+  if (offer.loading) {
     return <Centered><Loader /></Centered>
   }
 
-  if (!offer) {
+  if (!offer.data) {
     return <Centered>Not found</Centered>
   }
 
@@ -106,8 +85,8 @@ export default function LaunchpadOffer() {
     return (
       <Portal>
         <KYCPrompt 
-          offerId={offer.id}
-          allowOnlyAccredited={offer.allowOnlyAccredited}
+          offerId={offer.data.id}
+          allowOnlyAccredited={offer.data.allowOnlyAccredited}
           onClose={() => history.push('/launchpad')}
         />
       </Portal>
@@ -122,15 +101,15 @@ export default function LaunchpadOffer() {
         </header>
 
         <section>
-          <OfferSummary offer={offer} />
+          <OfferSummary offer={offer.data} />
         </section>
 
         <main>
-          <OfferMainInfo offer={offer} />
+          <OfferMainInfo offer={offer.data} />
         </main>
 
         <aside>
-          <OfferSidebar offer={offer} />
+          <OfferSidebar offer={offer.data} />
         </aside>
 
         <footer>

@@ -12,7 +12,7 @@ import { useClaimOffer } from 'state/launchpad/hooks'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import { InvestFormContainer } from './styled'
-import { Column, Row, Separator } from 'components/LaunchpadOffer/styled'
+import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
 
@@ -35,7 +35,6 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const toggleContactForm = React.useCallback(() => setContactForm(state => !state), [])
 
   const canClaim = React.useMemo(() => props.offer.status === OfferStatus.claim, [])
-  const timeframe = React.useMemo(() => props.offer.timeframes.find(x => x.type.toString() == props.offer.status.toString())!, [])
 
   const isSuccessfull = React.useMemo(() => props.offer.softCapReached, [])
   const amountToClaim = React.useMemo(() => Math.floor(Math.random() * Number(props.offer.maxInvestment)), [])
@@ -82,7 +81,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
             <Clock color={theme.launchpad.colors.primary} size="50" />
             <CantClaimNotice>
               You cannot claim any tokens yet. 
-              Please come back <b>{moment(timeframe?.endDate).format('DD/MM/YYYY')}</b>, 
+              Please come back <b>{moment(props.offer.timeframe.claim).format('DD/MM/YYYY')}</b>, 
               on the token claim date.
             </CantClaimNotice>
          </Row>
@@ -90,12 +89,6 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
       {canClaim && (
         <Column gap="0.5rem">
-          {!isSuccessfull && (
-            <UnsuccessfulFundNotice>
-              Your refund will be in USDT regardless of the token used for payment.  
-            </UnsuccessfulFundNotice>
-          )}
-
           <CanClaimNotice>
             Once claimed, you can find your tokens in your wallet. 
             Please make sure to add the token address to your wallet to see the token on your wallet feed.

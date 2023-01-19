@@ -10,6 +10,7 @@ import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 
 interface Props {
   offer: Offer
+  borderless?: boolean
 }
 
 export const OfferSaleAllocation: React.FC<Props> = (props) => {
@@ -18,7 +19,7 @@ export const OfferSaleAllocation: React.FC<Props> = (props) => {
   const allocatedPublicSale = React.useMemo(() => formatedValue(`${Number(props.offer.hardCap) - Number(props.offer.presaleAlocated)}`), [])
 
   return (
-    <SaleAllocationContainer>
+    <SaleAllocationContainer borderless={props.borderless}>
       <SaleAllocationTitle>Token Sale Allocation</SaleAllocationTitle>
       
       <Separator />
@@ -55,7 +56,7 @@ export const OfferPreSaleInfo: React.FC<Props> = (props) => {
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
 
   return (
-    <SaleAllocationContainer>
+    <SaleAllocationContainer borderless={props.borderless}>
       <SaleAllocationTitle>
         Pre-Sale
         <Tooltip title="Pre-Sale" body="The pre-sale round has its own maximum and minimum investment sizes that may differ from the public sale. You need to register to invest in order to participate in the pre-sale round.">
@@ -80,11 +81,13 @@ export const OfferPreSaleInfo: React.FC<Props> = (props) => {
   )
 }
 
-const SaleAllocationContainer = styled.div`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
-  border-radius: 6px;
+const SaleAllocationContainer = styled.div<{ borderless?: boolean }>`
+  ${props => !props.borderless && `
+    border-radius: 6px;
+    border: 1px solid ${props.theme.launchpad.colors.border.default};
 
-  padding: 1rem 1.5rem;
+    padding: 1rem 1.5rem;
+  `}
 `
 
 const SaleAllocationTitle = styled.div`

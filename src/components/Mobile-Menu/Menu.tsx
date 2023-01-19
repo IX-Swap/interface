@@ -143,6 +143,10 @@ export const Menu = ({ close }: Props) => {
               <Trans>Token Manager</Trans>
             </MenuListItem>
           )}
+          
+          <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
+            <Trans>Launchpad</Trans>
+          </MenuListItem>
         </MenuList>
       </Container>
     </ModalContainer>

@@ -7,8 +7,14 @@ import { ReactComponent as Logo } from 'assets/launchpad/svg/logo.svg'
 import { routes } from 'utils/routes'
 import { Link } from 'react-router-dom'
 import { isDevelopment } from 'utils/isEnvMode'
+import { useUserState } from 'state/user/hooks'
+import { useKYCState } from 'state/kyc/hooks'
+import { ROLES } from 'constants/roles'
 
 export const Header = () => {
+  const { kyc } = useKYCState()
+  const { me } = useUserState()
+
   return (
     <HeaderContainer>
       <TitleSection to="/launchpad">
@@ -26,6 +32,8 @@ export const Header = () => {
         <HeaderLink to={(isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}>Charts</HeaderLink>
       </HeaderLinks>
 
+      {kyc?.corporate && me.role === ROLES.OFFER_MANAGER && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
+
       <Wallet />
     </HeaderContainer>
   )
@@ -37,6 +45,8 @@ const HeaderContainer = styled.div`
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
+
+  gap: 0.5rem;
 
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 0px 2px 2px rgba(122, 122, 204, 0.08);
@@ -121,5 +131,27 @@ const HeaderLink = styled(Link)`
 
   :hover {
     transform: scale(1.02);
+  }
+`
+
+const IssuancesLink = styled(Link)`
+  display: grid;
+  place-content: center;
+
+  height: 48px;
+
+  padding: 0 2rem;
+
+  text-decoration: none;
+
+  border: 1px solid ${props => props.theme.launchpad.colors.primary + '14'};
+  border-radius: 6px;
+
+  transition: background 0.3s;
+
+  color: ${props => props.theme.launchpad.colors.primary};
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.primary + '10'};
   }
 `

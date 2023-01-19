@@ -129,6 +129,7 @@ export interface LaunchpadTheme {
     success: string
     error: string
     info: string
+    warn: string
 
     disabled: string
 
