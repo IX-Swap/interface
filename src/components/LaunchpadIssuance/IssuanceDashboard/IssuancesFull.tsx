@@ -199,8 +199,6 @@ export const IssuancesFull = () => {
 
 const Container = styled.article`
   min-height: 100vh;
-
-  margin-bottom: 10rem;
 `
 
 const Title = styled.div`
