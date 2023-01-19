@@ -140,6 +140,11 @@ const Prompt = styled.div`
   line-height: 17px;
   letter-spacing: -0.01em;
 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 const BrowseButton = styled.button`
