@@ -19,7 +19,7 @@ export const IssuanceStatusBadge: React.FC<BadgeProps> = (props) => {
           Approved <Check size="15" />
         </IssuanceStatusBadgeWrapper>
       )
-    case IssuanceStatus.rejected:
+    case IssuanceStatus.declined:
       return (
         <IssuanceStatusBadgeWrapper color={theme.launchpad.colors.error}>
           Rejected

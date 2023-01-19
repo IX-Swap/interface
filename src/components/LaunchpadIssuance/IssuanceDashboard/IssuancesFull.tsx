@@ -3,7 +3,7 @@ import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
-import { Eye } from 'react-feather'
+import { ChevronDown, ChevronLeft, ChevronRight, Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
 
@@ -12,7 +12,6 @@ import { IssuanceFilter, IssuanceStatus } from '../types'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
 import { SearchFilter, SearchConfig, OrderConfig } from './SearchFilter'
-import { PaginationTrigger } from './PaginationTrigger'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
@@ -27,11 +26,17 @@ export const IssuancesFull = () => {
   const history = useHistory()
   const getIssuances = useGetIssuances()
 
+  const container = React.useRef<HTMLDivElement>(null)
+
+  const [showDropdown, setShowDropdown] = React.useState(false)
+
   const [loading, setLoading] = React.useState<boolean>(true)
   const [issuances, setIssuances] = React.useState<Issuance[]>([])
   
   const [page, setPage] = React.useState(1)
-  const [hasMore, setHasMore] = React.useState(false)
+  const [totalPages, setTotalPages] = React.useState(0)
+  const [totalItems, setTotalItems] = React.useState(0)
+  const [pageSize, setPageSize] = React.useState(10)
   const [filter, setFilter] = React.useState<SearchConfig | undefined>()
   const [order, setOrder] = React.useState<OrderConfig>({})
   
@@ -39,29 +44,6 @@ export const IssuancesFull = () => {
   const [isStartDateAsc, setStartDateAsc] = React.useState<string | null>('ASC')
   const [isStatusAsc, setStatusAsc] = React.useState<string | null>('ASC')
 
-  React.useEffect(() => {
-    setLoading(true)
-
-    getIssuances(1, filter, order)
-      .then(page => {
-        setIssuances(page.items)
-        setHasMore(page.hasMore)
-      })      
-      .then(() => setPage(2))
-      .finally(() => setLoading(false))
-  }, [filter, order])
-
-  const fetchMore = React.useCallback(async () => {
-    setLoading(true)
-
-    const result = await getIssuances(page, filter, order)
-
-    setIssuances(state => state.concat(result.items))
-    setPage(state => state + 1)
-    setHasMore(result.hasMore)
-    
-    setLoading(false)
-  }, [issuances, page, filter, order])
 
   const status = React.useCallback((issuance: Issuance) => {
     return issuance.vetting && issuance.vetting?.offer
@@ -80,6 +62,7 @@ export const IssuancesFull = () => {
     
     setOrder({ name: manner })
     setNameAsc(orderType)
+    setPage(1)
   }, [isNameAsc])
 
   const onChangeStartDateOrder = React.useCallback(() => {
@@ -87,6 +70,7 @@ export const IssuancesFull = () => {
     
     setOrder({ startDate: manner })
     setStartDateAsc(orderType)
+    setPage(1)
   }, [isStartDateAsc])
 
   const onChangeStatusOrder = React.useCallback(() => {
@@ -94,7 +78,49 @@ export const IssuancesFull = () => {
     
     setOrder({ status: manner })
     setStatusAsc(orderType)
+    setPage(1)
   }, [isStatusAsc])
+
+  const onChangePageSize = React.useCallback((size: number) => {
+    setPageSize(size)
+    setPage(1)
+  }, [])
+
+  const paginationSizes = React.useMemo(() => [
+    { label: '5', value: 5 },
+    { label: '10', value: 10 },
+    { label: '15', value: 15 },
+    { label: '25', value: 25 },
+    { label: '50', value: 50 },
+  ], [])
+  
+  React.useEffect(() => {
+    setLoading(true)
+
+    getIssuances(page, filter, order, pageSize)
+      .then(page => {
+        setIssuances(page.items)
+        setTotalItems(page.totalItems)
+        setTotalPages(page.totalPages)
+      })      
+      .finally(() => setLoading(false))
+  }, [filter, order, page, pageSize])
+
+  React.useEffect(() => {
+    function handleClickOutside(event: Event) {
+      if (!container.current?.contains(event.target as Node | null)) {
+        setShowDropdown(false)
+      }
+    }
+
+    if (showDropdown) {
+      document?.addEventListener('click', handleClickOutside)
+
+      return () => {
+        document?.removeEventListener('click', handleClickOutside)
+      }
+    }
+  }, [showDropdown, container])
 
   return (
     <Container>
@@ -137,17 +163,190 @@ export const IssuancesFull = () => {
         ))}
           
       </IssuanceTable>
-      {hasMore && !loading && <PaginationTrigger isLoading={loading} onTriggered={fetchMore} />}
+
+      <PaginationRow>
+        <PageSizeDropdown ref={container} onClick={() => setShowDropdown(state => !state)}>
+          <PageSizeLabel>{pageSize}</PageSizeLabel>
+          
+          <PageSizeIcon isOpen={showDropdown}>
+            <ChevronDown fill={theme.launchpad.colors.text.bodyAlt} size="18" />
+          </PageSizeIcon>
+          
+          {showDropdown && (
+            <PageSizeOptions>
+              {paginationSizes.map((option, idx) => (
+                <PageSizeOption key={idx} onClick={() => onChangePageSize(option.value)}>{option.label}</PageSizeOption>
+              ))}
+            </PageSizeOptions>
+          )}
+        </PageSizeDropdown>
+
+        <PageCount>
+          {((page - 1) * pageSize) + 1} - {page * pageSize < totalItems ? page * pageSize : totalItems} of {totalItems}
+        </PageCount>
+
+        <PageButton onClick={() => setPage(page => page - 1)} disabled={page <= 1}>
+          <ChevronLeft />
+        </PageButton>
+        
+        <PageButton onClick={() => setPage(page => page + 1)} disabled={page >= totalPages}>
+          <ChevronRight />
+        </PageButton>
+      </PaginationRow>
     </Container>
   )
 }
 
 const Container = styled.article`
   min-height: 100vh;
+
+  margin-bottom: 10rem;
 `
 
 const Title = styled.div`
   cursor: pointer;
   display: flex;
   flex-flow: row nowrap;
+`
+
+const PaginationRow = styled.div`
+  display: flex;
+
+  flex-flow: row nowrap;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  height: 40px;
+  max-width: 1180px;
+
+  margin: 1rem auto;
+`
+
+const PageCount = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+
+  line-height: 48px;
+  letter-spacing: -0.02em;
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+`
+
+const PageButton = styled.button`
+  display: grid;
+
+  place-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+
+  line-height: 27px;
+  letter-spacing: -0.02em;
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border-radius: 8px;
+
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.disabled};
+  `}
+
+  ${props => !props.disabled && `
+    cursor: pointer;
+
+    transition: all 0.3s;
+
+    :hover {
+      background: ${props.theme.launchpad.colors.foreground};
+      transform: scale(1.1);
+    }
+  `}
+`
+
+const PageSizeDropdown = styled.div`
+  position: relative;
+
+  display: flex;
+
+  flex-flow: row nowrap;
+
+  gap: 0.25rem;
+  padding: 0.5rem;
+
+  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border-radius: 6px;
+`
+
+const PageSizeLabel = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+`
+
+const PageSizeIcon = styled.div<{ isOpen: boolean }>`
+  grid-area: icon;
+
+  display: grid;
+  place-content: center;
+
+  > svg {
+    transition: transofrm 0.4s;
+    ${props => props.isOpen && 'transform: rotate(180deg);' };
+  }
+`
+
+const PageSizeOptions = styled.div`
+  position: absolute;
+
+  bottom: -0.5rem;
+  left: 0;
+  right: 0;
+
+  transform: translate(0, 100%);
+
+  z-index: 30;
+
+  display: flex;
+
+  flex-flow: column nowrap;
+  align-items: stretch;
+
+  max-height: 300px;
+  overflow-y: auto;
+
+  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border-radius: 6px;
+`
+
+const PageSizeOption = styled.div`
+  padding: 0.5rem 1rem;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+
+  line-height: 17px;
+  letter-spacing: -0.01em;
+
+  cursor: pointer;
+
+  background: ${props => props.theme.launchpad.colors.background};
+  color: ${props => props.theme.launchpad.colors.text.title};
+
+  :hover {
+    background: ${props => props.theme.launchpad.colors.foreground};
+  }
 `

@@ -7,7 +7,7 @@ export enum IssuanceFilter {
 export enum IssuanceStatus {
   draft = 'draft',
   approved = 'approved',
-  rejected = 'rejected',
+  declined = 'declined',
   inProgress = 'inProgress',
   changesRequested = 'changesRequested',
   pendingApproval = 'pendingApproval'
@@ -29,7 +29,7 @@ export const issuers = [
 
 export const statuses = [
   IssuanceStatus.approved,
-  IssuanceStatus.rejected,
+  IssuanceStatus.declined,
   IssuanceStatus.inProgress,
   IssuanceStatus.changesRequested,
   IssuanceStatus.pendingApproval,

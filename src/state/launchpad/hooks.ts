@@ -380,8 +380,8 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
 }
 
 export const useGetIssuances = () => {
-  return React.useCallback(async (page: number, filter?: SearchConfig, order?: OrderConfig) => {
-    let query = [`page=${page}`, 'offset=10']
+  return React.useCallback(async (page: number, filter?: SearchConfig, order?: OrderConfig, size = 10) => {
+    let query = [`page=${page}`, `offset=${size}`]
 
     if (filter) {
       query = query.concat(Object.entries(filter)
@@ -399,7 +399,10 @@ export const useGetIssuances = () => {
 
     return {
       hasMore: result.nextPage !== null,
-      items: result.items
+      items: result.items,
+      
+      totalPages: result.totalPages,
+      totalItems: result.totalItems,
     }
   }, [])
 }
