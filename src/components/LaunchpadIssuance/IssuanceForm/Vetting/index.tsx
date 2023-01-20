@@ -50,7 +50,6 @@ export const IssuanceVettingForm = () => {
 
     if (!isSafeToClose) {
       setShowCloseDialog(true)
-
     }
     
     return isSafeToClose
@@ -121,9 +120,10 @@ export const IssuanceVettingForm = () => {
 
   React.useEffect(() => {
     const listener = () => true
-    window.addEventListener('beforeunload', listener)
+    
+    window.addEventListener('beforeunload', alertUser)
   
-    return () => window.removeEventListener('beforeunload', listener)
+    return () => window.removeEventListener('beforeunload', alertUser)
   }, [])
 
   if (!issuanceId) {
