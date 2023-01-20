@@ -2,18 +2,19 @@ import React from 'react'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 
-import { FormSubmitContainer } from './styled'
-
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
+import { ReactComponent as InfoIcon } from 'assets/launchpad/svg/req-icon.svg'
 import { ReactComponent as WarningIcon } from 'assets/launchpad/svg/warn-icon.svg'
 
 interface Props {
   message?: string
-  vettingId?: number
+  issuanceId?: number
+  status?: IssuanceStatus
 
   onClear: () => void
   onContactUs: () => void
@@ -23,31 +24,34 @@ interface Props {
 export const RejectInfo: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const [contactFormOpen, setContactForm] = React.useState(false)
+  const [contactFormOpen, setContactForm] = React.useState<boolean>(false)
+  const [isRejected, setIsRejected] = React.useState<boolean>(props.status === IssuanceStatus.declined)
+
   const toggleContactForm = React.useCallback(() => setContactForm(state => !state), [])
 
   return (
-    <Container error={props.message}>
-      <Title> Reason for Rejection
-        <WarningIcon />        
+    <Container isRejected={isRejected}>
+      <Title isRejected={isRejected}> {isRejected ? 'Reason for Rejection' : 'Required Updates'}
+        {isRejected ? <WarningIcon /> : <InfoIcon />}
       </Title>
 
-      <Message>{props.message}</Message>
+      <Message isRejected={isRejected}>{props.message}</Message>
 
-      <ButtonsContainer>
-        <FilledButton
-          onClick={props.onSubmit}
-          color={theme.launchpad.colors.text.light}
-          background={theme.launchpad.colors.text.warning}>Try again
-        </FilledButton>
+      {isRejected && 
+        (<ButtonsContainer>
+          <FilledButton
+            onClick={props.onSubmit}
+            color={theme.launchpad.colors.text.light}
+            background={theme.launchpad.colors.text.warning}>Try again
+          </FilledButton>
 
-        <OutlineButton onClick={props.onClear}
-          color={theme.launchpad.colors.text.warning}
-          borderColor={theme.launchpad.colors.text.warning}>New Form
-        </OutlineButton>
-      </ButtonsContainer>
+          <OutlineButton onClick={props.onClear}
+            color={theme.launchpad.colors.text.warning}
+            borderColor={theme.launchpad.colors.text.warning}>New Form
+          </OutlineButton>
+        </ButtonsContainer>)}
 
-      <HelpButton onClick={toggleContactForm}>Contact Support</HelpButton>
+      {isRejected && (<HelpButton onClick={toggleContactForm}>Contact Support</HelpButton>)}
 
       {contactFormOpen && (
         <Portal>
@@ -57,7 +61,7 @@ export const RejectInfo: React.FC<Props> = (props) => {
                 <CrossIcon />
               </ExitIconContainer>
 
-              <ContactForm offerId={`${props.vettingId}`} onSubmit={() => setContactForm(false)} />
+              <ContactForm issuanceId={props.issuanceId} onSubmit={() => setContactForm(false)} />
             </ContactFormWrapper>
           </ModalWrapper>
         </Portal>
@@ -67,7 +71,7 @@ export const RejectInfo: React.FC<Props> = (props) => {
   )
 }
 
-export const Container = styled.div<{ error?: string }>`
+export const Container = styled.div<{ isRejected?: boolean }>`
   display: flex;
 
   flex-flow: column nowrap;
@@ -77,9 +81,9 @@ export const Container = styled.div<{ error?: string }>`
   padding: 1.5rem;
 
   max-height: 10%;
-  border: 1px solid ${ props => props.error
+  border: 1px solid ${ props => props.isRejected
     ? props.theme.launchpad.colors.border.error
-    : props.theme.launchpad.colors.border.default};
+    : props.theme.launchpad.colors.border.success};
   border-radius: 6px;
 `
 
@@ -93,7 +97,7 @@ const ButtonsContainer = styled.div`
   margin-bottom: 0.5rem;
 `
 
-const Title = styled.div`
+const Title = styled.div<{ isRejected?: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -112,10 +116,12 @@ const Title = styled.div`
   -webkit-justify-content: space-between;
   justify-content: space-between;
 
-  color: ${props => props.theme.launchpad.colors.text.warning};
+  color: ${ props => props.isRejected
+    ? props.theme.launchpad.colors.text.warning
+    : props.theme.launchpad.colors.text.title};
 `
 
-export const Message = styled.div`
+export const Message = styled.div<{ isRejected?: boolean }>`
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -128,7 +134,9 @@ export const Message = styled.div`
 
   margin: 0.5rem 0 0.75rem 0;
 
-  color: ${props => props.theme.launchpad.colors.text.warning};
+  color: ${ props => props.isRejected
+    ? props.theme.launchpad.colors.text.warning
+    : props.theme.launchpad.colors.text.body};
 `
 
 const HelpButton = styled.div`

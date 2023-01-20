@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
 
@@ -74,9 +75,13 @@ export const IssuanceVettingForm = () => {
   const createVetting = useSubmitVettingForm(issuanceId)
   const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
+  const goMain = React.useCallback(() => {
+    history.push(`/issuance/create?id=${issuanceId}`)
+  }, [history, issuanceId])
+
   const goBack = React.useCallback(() =>{
     if (isSafeToClose) {
-      history.push(`/issuance/create?id=${issuanceId}`)
+      goMain()
     } else {
       setShowCloseDialog(true)
     }
@@ -90,8 +95,8 @@ export const IssuanceVettingForm = () => {
     try {
       await createVetting(values, initialValues.data!, initialValues.vettingId)
 
-      addPopup({ info: { success: true, summary: 'Vetting created successfully' }})
-      goBack();
+      addPopup({ info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` }})
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
@@ -110,7 +115,7 @@ export const IssuanceVettingForm = () => {
       await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
 
       addPopup({ info: { success: true, summary: 'Draft saved successfully' }})
-      goBack();
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
@@ -121,9 +126,9 @@ export const IssuanceVettingForm = () => {
   React.useEffect(() => {
     const listener = () => true
     
-    window.addEventListener('beforeunload', alertUser)
+    window.addEventListener('beforeunload', listener)
   
-    return () => window.removeEventListener('beforeunload', alertUser)
+    return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
   if (!issuanceId) {
@@ -164,10 +169,12 @@ export const IssuanceVettingForm = () => {
 
           <FormSideBar>
 
-            {initialValues?.data?.changesRequested && (
+            {[IssuanceStatus.changesRequested, IssuanceStatus.declined]
+              .includes(initialValues?.data?.status as IssuanceStatus) && (
               <RejectInfo
                 message={initialValues?.data?.changesRequested}
-                vettingId={issuanceId}
+                status={initialValues?.data?.status}
+                issuanceId={issuanceId}
                 onClear={handleReset}
                 onSubmit={submitForm}
                 onContactUs={() => console.log('contact us!')}/>)}
