@@ -66,7 +66,7 @@ export const FormSideBar = styled.div`
 
 `
 
-export const FormSubmitContainer = styled.div`
+export const FormSubmitContainer = styled.div<{ error?: string }>`
   display: flex;
 
   flex-flow: column nowrap;
@@ -76,7 +76,9 @@ export const FormSubmitContainer = styled.div`
   padding: 1.5rem;
 
   max-height: 215px;
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${ props => props.error
+    ? props.theme.launchpad.colors.border.error
+    : props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 

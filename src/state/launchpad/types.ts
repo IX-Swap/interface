@@ -341,6 +341,8 @@ export interface IssuanceVetting {
   beneficialOwners: IssuanceVettingDirector[]
   directors: IssuanceVettingDirector[]
   offer?: IssuanceOffer
+
+  changesRequested?: string
 }
 
 export interface Issuance {

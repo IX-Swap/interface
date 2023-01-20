@@ -9,6 +9,8 @@ export interface VettingFormValues {
 
   description: string
 
+  changesRequested?: string
+
   fundingDocuments: FundingDocument[]
 
   document: {

@@ -15,8 +15,10 @@ import { VettingFormValues } from './types'
 import { FormField } from '../shared/fields/FormField'
 import { FileField } from '../shared/fields/FileField'
 import { DirectorField } from '../shared/fields/DirectorField'
+import { RejectInfo } from '../shared/RejectInfo'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer, DeleteButton } from '../shared/styled'
+import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { TextareaField } from '../shared/fields/TextareaField'
 import { useGetFieldArrayId, useLoader, useSaveVettingDraft, useSubmitVettingForm, useVetting, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
@@ -34,6 +36,25 @@ export const IssuanceVettingForm = () => {
   const loader = useLoader(false)
   const addPopup = useAddPopup()
   
+  const [isSafeToClose, setIsSafeToClose] = React.useState(false)
+  const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+
+  const onConfirmationClose = React.useCallback(() => {
+    setIsSafeToClose(true)
+    setShowCloseDialog(false)
+  }, [])
+
+  const alertUser = React.useCallback((event: BeforeUnloadEvent) => {
+    event.preventDefault()
+    event.returnValue = true
+
+    if (!isSafeToClose) {
+      setShowCloseDialog(true)
+
+    }
+    
+    return isSafeToClose
+  }, [])
 
   const issuanceId = React.useMemo(() => {
     const value = decodeURI(history.location.search).replace('?', '').split('&')
@@ -54,7 +75,14 @@ export const IssuanceVettingForm = () => {
   const createVetting = useSubmitVettingForm(issuanceId)
   const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
-  const goBack = React.useCallback(() => history.push(`/issuance/create?id=${issuanceId}`), [history, issuanceId])
+  const goBack = React.useCallback(() =>{
+    if (isSafeToClose) {
+      history.push(`/issuance/create?id=${issuanceId}`)
+    } else {
+      setShowCloseDialog(true)
+    }
+  }, [history, issuanceId])
+
   const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
@@ -72,6 +100,10 @@ export const IssuanceVettingForm = () => {
     }
   }, [initialValues.data, initialValues.vettingId])
 
+  const resetForm = React.useCallback(async (values: VettingFormValues) => {
+    values = {} as VettingFormValues
+  }, [initialValues.data, initialValues.vettingId])
+
   const saveDraft = React.useCallback(async (values: VettingFormValues) => {
     loader.start()
 
@@ -87,6 +119,13 @@ export const IssuanceVettingForm = () => {
     }
   }, [initialValues.data, initialValues.vettingId])
 
+  React.useEffect(() => {
+    const listener = () => true
+    window.addEventListener('beforeunload', listener)
+  
+    return () => window.removeEventListener('beforeunload', listener)
+  }, [])
+
   if (!issuanceId) {
     return null
   }
@@ -100,9 +139,15 @@ export const IssuanceVettingForm = () => {
   }
 
   return (
-    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema}>
-      {({ submitForm, setFieldValue, values, errors }) => (
+    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} onReset={resetForm}>
+      {({ submitForm, setFieldValue, values, handleReset, errors }) => (
         <FormContainer>
+          <CloseConfirmation
+            isOpen={showCloseDialog}
+            onDiscard={()=> history.push(`/issuance/create?id=${issuanceId}`)}
+            onClose={onConfirmationClose}
+            onSave={() => saveDraft(values)}/>
+
           {loader.isLoading && (
             <LoaderContainer width="100vw" height="100vh">
               <Loader />
@@ -118,6 +163,15 @@ export const IssuanceVettingForm = () => {
           </FormHeader>
 
           <FormSideBar>
+
+            {initialValues?.data?.changesRequested && (
+              <RejectInfo
+                message={initialValues?.data?.changesRequested}
+                vettingId={issuanceId}
+                onClear={handleReset}
+                onSubmit={submitForm}
+                onContactUs={() => console.log('contact us!')}/>)}
+
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
 

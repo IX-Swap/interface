@@ -106,7 +106,7 @@ export const NewIssuanceForm = () => {
                   width="320px"
                   color={theme.launchpad.colors.text.light}
                   background={theme.launchpad.colors.primary} 
-                  onClick={() => history.push(`/issuance/create/vetting?id=${issuanceId}`)}
+                  onClick={() => history.push(`/issuance/create/vetting?id=${issuance.data?.id}`)}
                 >
                   Proceed
                 </FilledButton>
@@ -174,6 +174,7 @@ export const NewIssuanceForm = () => {
                   background={theme.launchpad.colors.success + '0d'}
                   borderColor={theme.launchpad.colors.success + '4d'}
                   width="320px"
+                  onClick={() => history.push(`/issuance/create/vetting?id=${issuance.data?.id}`)}
                 >
                   Update
                 </OutlineButton>
@@ -212,7 +213,7 @@ export const NewIssuanceForm = () => {
                   width="320px"
                   color={theme.launchpad.colors.text.light}
                   background={theme.launchpad.colors.primary} 
-                  onClick={() => history.push(`/issuance/create/information?id=${issuanceId}`)}
+                  onClick={() => history.push(`/issuance/create/information?id=${issuance.data?.id}`)}
                 >
                   Proceed
                 </FilledButton>
