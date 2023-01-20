@@ -75,9 +75,13 @@ export const IssuanceVettingForm = () => {
   const createVetting = useSubmitVettingForm(issuanceId)
   const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
+  const goMain = React.useCallback(() => {
+    history.push(`/issuance/create?id=${issuanceId}`)
+  }, [history, issuanceId])
+
   const goBack = React.useCallback(() =>{
     if (isSafeToClose) {
-      history.push(`/issuance/create?id=${issuanceId}`)
+      goMain()
     } else {
       setShowCloseDialog(true)
     }
@@ -91,8 +95,8 @@ export const IssuanceVettingForm = () => {
     try {
       await createVetting(values, initialValues.data!, initialValues.vettingId)
 
-      addPopup({ info: { success: true, summary: 'Vetting created successfully' }})
-      goBack();
+      addPopup({ info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` }})
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
@@ -111,7 +115,7 @@ export const IssuanceVettingForm = () => {
       await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
 
       addPopup({ info: { success: true, summary: 'Draft saved successfully' }})
-      goBack();
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
