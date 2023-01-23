@@ -244,7 +244,9 @@ export function launchpadTheme() {
       foreground: '#F7F7FF',
 
       border: {
-        default: '#E6E6FF'
+        default: '#E6E6FF',
+        success: '#0EC080',
+        error: '#FF8282'
       },
 
       text: {
@@ -252,7 +254,8 @@ export function launchpadTheme() {
         body: '#666680',
         bodyAlt: '#8D8DA3',
         caption: '#B8B8CC',
-
+        success: '#0EC080',
+        warning: '#FF8282',
         light: '#FFFFFF'
       },
     },

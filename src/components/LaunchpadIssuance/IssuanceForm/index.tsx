@@ -1,4 +1,5 @@
 import React from 'react'
+import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
@@ -9,9 +10,12 @@ import { ReactComponent as VettingIcon } from 'assets/launchpad/svg/issuance-vet
 import { ReactComponent as IssuanceInformationIcon } from 'assets/launchpad/svg/issuance-information-icon.svg'
 import { ReactComponent as IssuanceRejectedIcon } from 'assets/launchpad/svg/issuance-rejected.svg'
 import { ReactComponent as IssuanceRequestedChangesIcon } from 'assets/launchpad/svg/issuance-requested-changes.svg'
+import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
+import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 
 import { IssuanceFormStep } from './IssuanceFormStep'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
@@ -26,6 +30,9 @@ export const NewIssuanceForm = () => {
   const issuances = useGetIssuancePlain()
 
   const [showDropdown, setShowDropdown] = React.useState(false)
+  const [contactFormOpen, setContactForm] = React.useState<boolean>(false)
+
+  const toggleContactForm = React.useCallback(() => setContactForm(state => !state), [])
 
   const issuanceId = React.useMemo(() => {
     return decodeURI(history.location.search).replace('?', '').split('&')
@@ -106,7 +113,7 @@ export const NewIssuanceForm = () => {
                   width="320px"
                   color={theme.launchpad.colors.text.light}
                   background={theme.launchpad.colors.primary} 
-                  onClick={() => history.push(`/issuance/create/vetting?id=${issuanceId}`)}
+                  onClick={() => history.push(`/issuance/create/vetting?id=${issuance.data?.id}`)}
                 >
                   Proceed
                 </FilledButton>
@@ -152,11 +159,12 @@ export const NewIssuanceForm = () => {
                   background={theme.launchpad.colors.error + '0d'}
                   borderColor={theme.launchpad.colors.error + '4d'}
                   width="320px"
+                  onClick={() => history.push(`/issuance/create/vetting?id=${issuance.data?.id}`)}
                 >
                   Try again
                 </OutlineButton>
                 
-                <OutlineButton width="320px">
+                <OutlineButton width="320px" onClick={toggleContactForm}>
                   Contact support
                 </OutlineButton>
               </IssuanceFormStep>
@@ -174,6 +182,7 @@ export const NewIssuanceForm = () => {
                   background={theme.launchpad.colors.success + '0d'}
                   borderColor={theme.launchpad.colors.success + '4d'}
                   width="320px"
+                  onClick={() => history.push(`/issuance/create/vetting?id=${issuance.data?.id}`)}
                 >
                   Update
                 </OutlineButton>
@@ -212,7 +221,7 @@ export const NewIssuanceForm = () => {
                   width="320px"
                   color={theme.launchpad.colors.text.light}
                   background={theme.launchpad.colors.primary} 
-                  onClick={() => history.push(`/issuance/create/information?id=${issuanceId}`)}
+                  onClick={() => history.push(`/issuance/create/information?id=${issuance.data?.id}`)}
                 >
                   Proceed
                 </FilledButton>
@@ -302,6 +311,20 @@ export const NewIssuanceForm = () => {
                   Pending approval
                 </OutlineButton>
               </IssuanceFormStep>
+            )}
+
+            {contactFormOpen && (
+              <Portal>
+                <ModalWrapper>
+                  <ContactFormWrapper>
+                    <ExitIconContainer onClick={toggleContactForm}>
+                      <CrossIcon />
+                    </ExitIconContainer>
+
+                    <ContactForm issuanceId={issuance.data?.id} onSubmit={() => setContactForm(false)} />
+                  </ContactFormWrapper>
+                </ModalWrapper>
+              </Portal>
             )}
           </>
         )}
@@ -484,4 +507,37 @@ const LoaderContainer = styled.div`
   display: grid;
 
   place-content: center;
+`
+
+const ModalWrapper = styled.div`
+  display: grid;
+  place-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+ 
+  z-index: 50;
+
+  backdrop-filter: blur(20px);
+`
+
+const ContactFormWrapper = styled.div`
+  display: flex;
+
+  flex-flow: column nowrap;
+  align-items: center;
+
+  gap: 1rem;
+ 
+  position: relative;
+
+  width: 480px;
+
+  background: ${props => props.theme.launchpad.colors.background};
+  border-radius: 8px;
+  padding: 2rem;
 `

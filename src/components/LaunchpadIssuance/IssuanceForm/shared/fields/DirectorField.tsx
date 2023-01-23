@@ -29,7 +29,11 @@ const getId = () => ++counter;
 export const DirectorField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const directors = React.useMemo(() => props.directors as (DirectorInfo & { id: number })[], [props.directors])
+  const directors = React.useMemo(() => props.directors.length > 0
+    ? props.directors as (DirectorInfo & { id: number })[]
+    : [{ id: getId() }] as (DirectorInfo & { id: number })[], 
+  [props.directors])
+
   const errors = React.useMemo(() => props.errors?.[props.field], [props.errors, props.field])
   const errorsLength = React.useMemo(() => errors?.length ?? 0, [errors])
   

@@ -14,6 +14,8 @@ import { IssuanceFilter, issuers, IssuanceStatus, Issuance, statuses } from '../
 import { IssuancesFull } from './IssuancesFull'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 
+import { Footer } from 'pages/Launchpad/Footer'
+
 
 const useIssuances = () => {
   const [loading, setLoading] = React.useState(true)
@@ -142,6 +144,8 @@ export const IssuanceDashboard = () => {
         )}
 
       </Body>
+
+      <Footer />
     </Container>
   )
 }

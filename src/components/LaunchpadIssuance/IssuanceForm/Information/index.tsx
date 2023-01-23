@@ -152,7 +152,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         <ChevronUp color={theme.launchpad.colors.foreground} size="20" />
       </ScrollToTop>
 
-      <CloseConfirmation isOpen={showCloseDialog} onClose={onConfirmationClose} />
+      <CloseConfirmation
+        isOpen={showCloseDialog}
+        onDiscard={onConfirmationClose}
+        onClose={onConfirmationClose}
+        onSave={() => console.log('save')} />
 
       <FormHeader>
         <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">

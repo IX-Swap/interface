@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
 
@@ -15,8 +16,10 @@ import { VettingFormValues } from './types'
 import { FormField } from '../shared/fields/FormField'
 import { FileField } from '../shared/fields/FileField'
 import { DirectorField } from '../shared/fields/DirectorField'
+import { RejectInfo } from '../shared/RejectInfo'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer, DeleteButton } from '../shared/styled'
+import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { TextareaField } from '../shared/fields/TextareaField'
 import { useGetFieldArrayId, useLoader, useSaveVettingDraft, useSubmitVettingForm, useVetting, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
@@ -34,6 +37,24 @@ export const IssuanceVettingForm = () => {
   const loader = useLoader(false)
   const addPopup = useAddPopup()
   
+  const [isSafeToClose, setIsSafeToClose] = React.useState(false)
+  const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+
+  const onConfirmationClose = React.useCallback(() => {
+    setIsSafeToClose(true)
+    setShowCloseDialog(false)
+  }, [])
+
+  const alertUser = React.useCallback((event: BeforeUnloadEvent) => {
+    event.preventDefault()
+    event.returnValue = true
+
+    if (!isSafeToClose) {
+      setShowCloseDialog(true)
+    }
+    
+    return isSafeToClose
+  }, [])
 
   const issuanceId = React.useMemo(() => {
     const value = decodeURI(history.location.search).replace('?', '').split('&')
@@ -54,7 +75,18 @@ export const IssuanceVettingForm = () => {
   const createVetting = useSubmitVettingForm(issuanceId)
   const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
-  const goBack = React.useCallback(() => history.push(`/issuance/create?id=${issuanceId}`), [history, issuanceId])
+  const goMain = React.useCallback(() => {
+    history.push(`/issuance/create?id=${issuanceId}`)
+  }, [history, issuanceId])
+
+  const goBack = React.useCallback(() =>{
+    if (isSafeToClose) {
+      goMain()
+    } else {
+      setShowCloseDialog(true)
+    }
+  }, [history, issuanceId])
+
   const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
@@ -63,13 +95,17 @@ export const IssuanceVettingForm = () => {
     try {
       await createVetting(values, initialValues.data!, initialValues.vettingId)
 
-      addPopup({ info: { success: true, summary: 'Vetting created successfully' }})
-      goBack();
+      addPopup({ info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` }})
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
       loader.stop()
     }
+  }, [initialValues.data, initialValues.vettingId])
+
+  const resetForm = React.useCallback(async (values: VettingFormValues) => {
+    values = {} as VettingFormValues
   }, [initialValues.data, initialValues.vettingId])
 
   const saveDraft = React.useCallback(async (values: VettingFormValues) => {
@@ -79,13 +115,21 @@ export const IssuanceVettingForm = () => {
       await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
 
       addPopup({ info: { success: true, summary: 'Draft saved successfully' }})
-      goBack();
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
       loader.stop()
     }
   }, [initialValues.data, initialValues.vettingId])
+
+  React.useEffect(() => {
+    const listener = () => true
+    
+    window.addEventListener('beforeunload', listener)
+  
+    return () => window.removeEventListener('beforeunload', listener)
+  }, [])
 
   if (!issuanceId) {
     return null
@@ -100,9 +144,15 @@ export const IssuanceVettingForm = () => {
   }
 
   return (
-    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema}>
-      {({ submitForm, setFieldValue, values, errors }) => (
+    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} onReset={resetForm}>
+      {({ submitForm, setFieldValue, values, handleReset, errors }) => (
         <FormContainer>
+          <CloseConfirmation
+            isOpen={showCloseDialog}
+            onDiscard={()=> history.push(`/issuance/create?id=${issuanceId}`)}
+            onClose={onConfirmationClose}
+            onSave={() => saveDraft(values)}/>
+
           {loader.isLoading && (
             <LoaderContainer width="100vw" height="100vh">
               <Loader />
@@ -118,6 +168,17 @@ export const IssuanceVettingForm = () => {
           </FormHeader>
 
           <FormSideBar>
+
+            {[IssuanceStatus.changesRequested, IssuanceStatus.declined]
+              .includes(initialValues?.data?.status as IssuanceStatus) && (
+              <RejectInfo
+                message={initialValues?.data?.changesRequested}
+                status={initialValues?.data?.status}
+                issuanceId={issuanceId}
+                onClear={handleReset}
+                onSubmit={submitForm}
+                onContactUs={() => console.log('contact us!')}/>)}
+
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
 

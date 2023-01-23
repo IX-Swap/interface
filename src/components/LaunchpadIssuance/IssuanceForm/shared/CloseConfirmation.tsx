@@ -8,7 +8,9 @@ import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 
 interface Props {
   isOpen: boolean
+  onDiscard: () => void
   onClose: () => void
+  onSave: () => void
 }
 
 export const CloseConfirmation: React.FC<Props> = (props) => {
@@ -32,13 +34,13 @@ export const CloseConfirmation: React.FC<Props> = (props) => {
           </MessageSubtitle>
         </Message>
         
-        <OutlineButton color={theme.launchpad.colors.error}>
+        <OutlineButton color={theme.launchpad.colors.error} onClick={props.onDiscard}>
           Discard
         </OutlineButton>
 
-        <OutlineButton>Cancel</OutlineButton>
+        <OutlineButton onClick={props.onClose}>Cancel</OutlineButton>
 
-        <FilledButton>Save changes</FilledButton>
+        <FilledButton onClick={props.onSave}>Save changes</FilledButton>
       </Container>
     </IssuanceDialog>
   )
