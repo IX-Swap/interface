@@ -3,7 +3,7 @@ import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
-import { ArrowLeft } from 'react-feather'
+import { ArrowLeft, ChevronUp } from 'react-feather'
 
 import { Formik, FormikProps } from 'formik'
 
@@ -66,7 +66,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   
   const countries = React.useMemo(() => {
     return countriesList
-      ?.map((name, index) => ({ value: ++index, label: name }))
+      ?.map((name, index) => ({ value: name, label: name }))
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
@@ -134,6 +134,10 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     setter('hasPresale', value)
   }, [])
 
+  const scrollToTop = React.useCallback(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   React.useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
 
@@ -144,6 +148,10 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   return (
     <FormContainer>
+      <ScrollToTop onClick={scrollToTop}>
+        <ChevronUp color={theme.launchpad.colors.foreground} size="20" />
+      </ScrollToTop>
+
       <CloseConfirmation isOpen={showCloseDialog} onClose={onConfirmationClose} />
 
       <FormHeader>
@@ -636,4 +644,25 @@ const PresaleButton = styled.button<{ isSelected: boolean, disabled?: boolean }>
 
 const AccreditedInvestorsLabel = styled(TokenAgreementText)`
   font-size: 14px;
+`
+
+const ScrollToTop = styled.button`
+  position: fixed;
+
+  bottom: 1rem;
+  right: 10rem;
+
+  background: ${props => props.theme.launchpad.colors.primary};
+  border-radius: 50%;
+
+  display: grid;
+
+  place-content: center;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+
+  padding: 0.75rem;
 `

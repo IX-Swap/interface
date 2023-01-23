@@ -24,8 +24,8 @@ interface Props<T> {
   error?: string
 
   field: string
-  setter?: (field: string, value: T) => void
-  onChange?: (value: T) => void
+  setter?: (field: string, value?: T) => void
+  onChange?: (value?: T) => void
 }
 
 export function DropdownField<T>(props: Props<T>) {
@@ -82,7 +82,17 @@ export function DropdownField<T>(props: Props<T>) {
   const updateSearch = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setOptionSearch(event.target.value) 
     setSearchActive(true)
-  }, [])
+
+    setSelectedValue(undefined)
+    
+    if (props.field && props.setter) {
+      props.setter(props.field, undefined)
+    }
+
+    if (props.onChange) {
+      props.onChange(undefined)
+    }
+  }, [props.setter, props.onChange])
   
   React.useEffect(() => {
     function handleClickOutside(event: Event) {

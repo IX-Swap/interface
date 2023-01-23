@@ -1,5 +1,7 @@
 import * as yup from 'yup'
 
+import { countriesList } from 'constants/countriesList'
+
 import { OfferDistributionFrequency, OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart, OfferType } from 'state/launchpad/types'
 import { OfferTokenType } from './types'
 
@@ -25,7 +27,7 @@ export const schema = yup.object().shape({
   investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required(),
 
   issuerIdentificationNumber: yup.string().required(),
-  country: yup.string().required(),
+  country: yup.string().required().oneOf(countriesList, 'Select a country from the list'),
 
   tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required(),
   tokenName: yup.string().required(),

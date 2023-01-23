@@ -16,6 +16,7 @@ import { AddButton, DeleteButton } from '../../shared/styled'
 import { FormField } from '../../shared/fields/FormField'
 import { FormGrid } from '../../shared/FormGrid'
 import { IssuanceFile } from '../../types'
+import { TextareaField } from '../../shared/fields/TextareaField'
 
 interface Props {
   images: IssuanceFile[]
@@ -120,6 +121,20 @@ export const GalleryBlock: React.FC<Props> = (props) => {
 
         </FieldArray>
       </TitledContainer>
+
+      <DescriptionContainer>
+        <DescriptionLabel>Description/Pitch</DescriptionLabel>
+        <DescriptionHint>Provide a description of the issuance. This is what the investors will see.</DescriptionHint>
+
+        <TextareaField 
+          field='longDescription' 
+          setter={props.setter}
+          label=""
+          placeholder=''
+          error={props.errors.longDescription}
+        />
+      </DescriptionContainer>
+
     </FormGrid>
   )
 }
@@ -156,6 +171,12 @@ const ImageFieldContainer = styled.div`
 
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+
+  scrollbar-height: thin;
+  scrollbar-color: ${props => props.theme.launchpad.colors.border.default};
+  ::-webkit-scrollbar-thumb {
+    background-color: ${props => props.theme.launchpad.colors.border.default};
+  }
 `
 
 const ImageFileCardContainer = styled.div<{ url?: string }>`
@@ -284,4 +305,38 @@ const RemoveButton = styled(DeleteButton)`
   position: absolute;
 
   right: 1rem;
+`
+
+const DescriptionContainer = styled.div`
+  display: flex;
+
+  flex-flow: column nowrap;
+
+  justify-content: flex-start;
+  align-items: stretch;
+
+  gap: 0.5rem;
+
+  grid-column: span 2;
+`
+const DescriptionLabel = styled.div`
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+
+  line-height: 130%;
+  letter-spacing: -0.03em;
+
+  color: #292933;
+`
+
+const DescriptionHint = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+
+  line-height: 150%;
+  letter-spacing: -0.02em;
+
+  color: #8D8DA3
 `
