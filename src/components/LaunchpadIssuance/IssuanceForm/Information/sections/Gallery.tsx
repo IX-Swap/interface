@@ -10,14 +10,15 @@ import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg
 import { useGetFieldArrayId } from 'state/launchpad/hooks'
 import { Column } from 'components/LaunchpadMisc/styled'
 
-import { InformationFormValues, VideoLink } from './types'
+import { InformationFormValues, VideoLink } from '../types'
 
-import { AddButton, DeleteButton } from '../shared/styled'
-import { FormField } from '../shared/fields/FormField'
-import { FormGrid } from '../shared/FormGrid'
+import { AddButton, DeleteButton } from '../../shared/styled'
+import { FormField } from '../../shared/fields/FormField'
+import { FormGrid } from '../../shared/FormGrid'
+import { IssuanceFile } from '../../types'
 
 interface Props {
-  images: File[]
+  images: IssuanceFile[]
   videos: VideoLink[]
   errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
@@ -30,7 +31,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
   const container = React.useRef<HTMLDivElement>(null)
 
   const onFileSelect = React.useCallback((files: File[]) => {
-    props.setter('images', props.images.concat(files))
+    props.setter('images', props.images.concat(files.map(x => ({ file: x }))))
 
     container.current?.scrollTo({ left: container.current.scrollWidth, behavior: 'smooth' })
   }, [props.images, container])
@@ -47,7 +48,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     props.setter('images', images)
   }, [props.images])
 
-  const urls = React.useMemo(() => props.images.map(x => URL.createObjectURL(x)), [props.images])
+  const urls = React.useMemo(() => props.images.map(x => URL.createObjectURL(x.file)), [props.images])
   const videos = React.useMemo(() => props.videos as (VideoLink & { id: number })[], [props.videos])
 
   const { getRootProps, getInputProps } = useDropzone({

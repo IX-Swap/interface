@@ -11,12 +11,12 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 
 
-import { FormGrid } from '../shared/FormGrid'
-import { FormField } from '../shared/fields/FormField'
-import { AddButton, DeleteButton } from '../shared/styled'
-import { DropdownField } from '../shared/fields/DropdownField'
+import { FormGrid } from '../../shared/FormGrid'
+import { FormField } from '../../shared/fields/FormField'
+import { AddButton, DeleteButton } from '../../shared/styled'
+import { DropdownField } from '../../shared/fields/DropdownField'
 
-import { InformationFormValues, SocialMediaLink, SocialMediaType } from './types'
+import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
 
 
 interface Props {
@@ -50,6 +50,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
   }, [props.social])
 
   const addSocialMedia = React.useCallback(() => {
+    console.log(addedSocial, addedSocialLink)
     if (!addedSocial || !addedSocialLink) {
       return 
     }
@@ -67,16 +68,14 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
   }, [props.social])
 
   const getError = React.useCallback((link: SocialMediaLink) => {
-    switch (link.type) {
-      case SocialMediaType.twitter:
-      case SocialMediaType.coinGecko:
-      case SocialMediaType.coinMarketCap:
-      case SocialMediaType.discord:
-      case SocialMediaType.linkedIn:
-      case SocialMediaType.reddit:
-      case SocialMediaType.telegram:
-      case SocialMediaType.youTube:
+    const index = props.social.findIndex(x => x.type === link.type)
+    const errors = (props.errors.social as FormikErrors<SocialMediaLink>[])
+
+    if (index < 0 || errors.length < index) {
+      return
     }
+
+    return errors[index]
   }, [props.errors])
 
   console.log(props.errors)
@@ -134,7 +133,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
           placeholder='URL'
           options={socialOptions}
           field={''}
-          setter={(field, value) => setAddedSocial(value)}
+          onChange={setAddedSocial}
         />
 
         <FormField 

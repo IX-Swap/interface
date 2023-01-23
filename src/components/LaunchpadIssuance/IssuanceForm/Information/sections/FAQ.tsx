@@ -1,19 +1,24 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { FieldArray } from 'formik'
 import { Plus } from 'react-feather'
+import { FieldArray, FormikErrors } from 'formik'
+
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
-import { Column, Separator } from 'components/LaunchpadMisc/styled'
+import { Column, ErrorText, Separator } from 'components/LaunchpadMisc/styled'
 
 import { OfferFAQ } from 'state/launchpad/types'
+
+import { AddButton } from '../../shared/styled'
+import { FormGrid } from '../../shared/FormGrid'
 import { useGetFieldArrayId } from 'state/launchpad/hooks'
-import { AddButton } from '../shared/styled'
+
+import { FAQEntry, InformationFormValues } from '../types'
 
 interface Props {
   faq: OfferFAQ[]
-
+  errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
 
@@ -24,7 +29,7 @@ export const FAQBlock: React.FC<Props> = (props) => {
   const faq = React.useMemo(() => props.faq as (OfferFAQ & { id: number })[], [props.faq])
 
   return (
-    <Container>
+    <FormGrid title="FAQ">
       <FieldArray name="faq">
         {({ push, handleRemove }) => (
           <>
@@ -38,6 +43,8 @@ export const FAQBlock: React.FC<Props> = (props) => {
                   </QuestionWrapper>
                   
                   {(faq.length > 1 || idx > 0) && <RemoveButton onClick={handleRemove(idx)}><Trash /></RemoveButton>}
+
+                  <ErrorMessage>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.question}</ErrorMessage>
                 </Question>
 
                 <Separator />
@@ -45,6 +52,8 @@ export const FAQBlock: React.FC<Props> = (props) => {
                 <AnswerWrapper>
                   <Label>Answer</Label>
                   <AnswerInput placeholder='Answer Description' />
+                  
+                  <ErrorText>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.answer}</ErrorText>
                 </AnswerWrapper>
               </FieldWrapper>
             ))}
@@ -55,37 +64,37 @@ export const FAQBlock: React.FC<Props> = (props) => {
           </>
         )}
       </FieldArray>
-    </Container>
+    </FormGrid>
   )
 }
-
-const Container = styled(Column)`
-  grid-column: span 2;
-  gap: 2rem;
-`
 
 const FieldWrapper = styled(Column)`
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+
+  grid-column: span 2;
+
+  padding: 1rem;
 `
 
 const Question = styled.div`
   display: grid;
 
   grid-template-columns: 1fr 25px;
-  grid-template-rows: repeat(2, auto);
+  grid-template-rows: minmax(auto, 20px) repeat(2, auto);
   grid-template-areas:
     "label remove"
-    "input remove";
+    "input remove"
+    "error error";
 
-  padding: 1rem;
+  gap: 0.25rem;
+
+  margin: 1rem;
 `
 
 const QuestionWrapper = styled.div`
   grid-area: input;
   
-  position: relative;
-
   display: flex;
 
   flex-flow: row nowrap;
@@ -143,4 +152,8 @@ const AnswerInput = styled.textarea`
 
 const RemoveButton = styled(AddButton)`
   grid-area: remove;
+`
+
+const ErrorMessage = styled(ErrorText)`
+  grid-area: error;
 `

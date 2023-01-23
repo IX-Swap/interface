@@ -35,6 +35,7 @@ export function DropdownField<T>(props: Props<T>) {
 
   const [selectedValue, setSelectedValue] = React.useState<Option<T> | undefined>()
   const [showDropdown, setShowDropdown] = React.useState(false)
+  const [searchActive, setSearchActive] = React.useState(false)
 
   const [optionSearch, setOptionSearch] = React.useState<string>()
 
@@ -43,14 +44,14 @@ export function DropdownField<T>(props: Props<T>) {
       return props.options
     }
 
-    if (!optionSearch) {
+    if (!optionSearch || !searchActive) {
       return props.options
     }
 
     const query = optionSearch.toLowerCase()
 
     return props.options.filter(x => x.label.toLowerCase().startsWith(query))
-  }, [optionSearch])
+  }, [optionSearch, searchActive])
 
   const toggle = React.useCallback(() => {
     if (props.disabled) {
@@ -67,6 +68,7 @@ export function DropdownField<T>(props: Props<T>) {
 
     setSelectedValue(option)
     setOptionSearch(option.label)
+    setSearchActive(false)
 
     if (props.field && props.setter) {
       props.setter(props.field, option.value)
@@ -76,6 +78,11 @@ export function DropdownField<T>(props: Props<T>) {
       props.onChange(option.value)
     }
   }, [props.disabled, props.onChange, props.setter])
+
+  const updateSearch = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setOptionSearch(event.target.value) 
+    setSearchActive(true)
+  }, [])
   
   React.useEffect(() => {
     function handleClickOutside(event: Event) {
@@ -110,7 +117,7 @@ export function DropdownField<T>(props: Props<T>) {
         )}
 
         {props.searchable && (
-          <OptionSearch placeholder={props.placeholder ?? 'Select'} value={optionSearch} onChange={e => setOptionSearch(e.target.value)} />
+          <OptionSearch placeholder={props.placeholder ?? 'Select'} value={optionSearch} onChange={updateSearch} />
         )}
 
         {showDropdown && (
