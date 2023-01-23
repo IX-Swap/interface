@@ -33,7 +33,7 @@ export const NoData = () => {
               <Grid item xs={12}>
                 <Button
                   component={AppRouterLinkComponent}
-                  to={IssuanceRoute.create}
+                  to={IssuanceRoute.createNew}
                   color='primary'
                 >
                   Create your first DSO
