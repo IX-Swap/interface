@@ -13,7 +13,7 @@ import { AppState } from "state"
 import { useKYCState } from "state/kyc/hooks"
 import { tryParseAmount } from "state/swap/helpers"
 
-import { Asset, Issuance, IssuancePlain, IssuanceVetting, Offer, OfferStatus, WhitelistStatus } from "state/launchpad/types"
+import { Asset, Issuance, IssuancePlain, IssuanceVetting, Offer, OfferFileType, OfferStatus, WhitelistStatus } from "state/launchpad/types"
 
 import { toggleKYCDialog } from "./actions"
 
@@ -21,6 +21,8 @@ import apiService from "services/apiService"
 import { PaginateResponse } from "types/pagination"
 import { DirectorInfo, VettingFormValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/types"
 import { initialValues as vettingInitialFormValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/util"
+import { InformationFormValues } from "components/LaunchpadIssuance/IssuanceForm/Information/types"
+import { initialValues } from "pages/CreatePayoutEvent/mock"
 
 interface OfferPagination {
   page: number
@@ -101,7 +103,7 @@ export const useGetPinnedOffer = () => {
   return React.useCallback(() => apiService.get('/offers/main').then(res => res.data as Offer), [])
 }
 
-export const useFormatOfferValue = () => {
+export const useFormatOfferValue = (addComa = true) => {
   return React.useCallback((value: string) => {
     let result = value
 
@@ -113,7 +115,7 @@ export const useFormatOfferValue = () => {
         .filter(x => /[0-9]/.test(x))
 
       result = digits
-        .flatMap((x, idx) => idx > 0 && idx % 3 === 0 ? [',', x] : x)
+        .flatMap((x, idx) => addComa && idx > 0 && idx % 3 === 0 ? [',', x] : x)
         .flat().reverse()
         .join('')
       
@@ -410,7 +412,7 @@ export const useGetIssuances = () => {
 export const useGetFieldArrayId = () => {
   let counter = 0;
 
-  return () => ++counter;
+  return React.useCallback(() => ++counter, []);
 }
 
 interface FileUpload {
@@ -673,4 +675,186 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
       return apiService.post(`/vettings`, data)
     }
   }, [issuanceId, uploadFiles])
+}
+
+const useUploadOfferFiles = () => {
+  const uploadFiles = useUploadFiles()
+
+  const getMemberFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+    const uploadedFiles = new Set(initial.members.filter(x => x.photo?.id).map(x => x.photo?.id))
+
+    const files: FileUpload[] = []
+    
+    payload.members.forEach((entry, idx) => {
+      if (uploadedFiles.has(entry.photo?.id)) {
+        return
+      }
+
+      files.push({ name: `member.photo.${idx}`, file: entry.photo.file })
+    })
+
+    return files
+  }, [])
+
+  const getImageFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+    const uploadedFiles = new Set(initial.images.filter(x => x.id).map(x => x.id))
+    
+    const files: FileUpload[] = []
+
+    payload.images.forEach((entry, idx) => {
+      if (uploadedFiles.has(entry.id)) {
+        return
+      }
+
+      files.push({ name: `image.${idx}`, file: entry.file })
+    })
+
+    return files
+  }, [])
+
+  const getDocumentFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+    const uploadedFiles = new Set(initial.additionalDocuments.filter(x => x.file.id).map(x => x.file.id))
+    
+    const files: FileUpload[] = []
+
+    payload.additionalDocuments.forEach((entry, idx) => {
+      if (uploadedFiles.has(entry.file.id)) {
+        return
+      }
+
+      files.push({ name: `document.${idx}`, file: entry.file.file })
+    })
+
+    return files
+  }, [])
+
+  return React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+    const files = [
+      ...getDocumentFiles(payload, initial),
+      ...getImageFiles(payload, initial),
+      ...getMemberFiles(payload, initial),
+    ]
+
+    if (payload.cardPicture.id !== initial.cardPicture.id) {
+      files.push({ name: 'card', file: payload.cardPicture.file })
+    }
+    
+    if (payload.profilePicture.id !== initial.profilePicture.id) {
+      files.push({ name: 'profile', file: payload.cardPicture.file })
+    }
+
+    return uploadFiles(files)
+  }, [uploadFiles, getDocumentFiles, getImageFiles, getMemberFiles])
+}
+
+export const useSubmitOffer = (vettingId?: number | string) => {
+  const uploadFiles = useUploadOfferFiles()
+
+  return React.useCallback(async (payload: InformationFormValues, initial: InformationFormValues, draft = false, offerId?: number) => {
+    const uploadedFiles = await uploadFiles(payload, initial)
+      
+    const findDoc = (prefix: 'member' | 'document' | 'image', idx: number) => 
+      uploadedFiles.find(x => x.name === `${prefix}.${idx}`)?.id 
+
+    const data: Record<string, any> = {
+      offerId,
+      vettingId,
+
+      toSubmit: !draft,
+
+      title: payload.name,
+
+      shortDescription: payload.shortDescription,
+      longDescription: payload.longDescription,
+
+      type: payload.tokenType,
+      network: payload.network,
+      industry: payload.industry,
+      investmentType: payload.investmentType,
+
+      issuerIdentificationNumber: payload.issuerIdentificationNumber,
+      country: payload.country,
+
+      socialMedia: payload.social.reduce((acc, e) => ({...acc, [e.type]: e.url}), {}),
+
+      tokenAddress: "",
+      tokenSymbol: payload.tokenTicker,
+      tokenPrice: payload.tokenPrice,
+      tokenStandart: payload.tokenStandart,
+
+      investingTokenAddress: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      investingTokenSymbol: "USDC",
+
+      decimals: 18,
+
+      softCap: payload.softCap,
+      hardCap: payload.hardCap,
+
+      minInvestment: payload.minInvestment,
+      maxInvestment: payload.maxInvestment,
+
+      hasPresale: payload.hasPresale,
+      presaleMinInvestment: payload.presaleMinInvestment,
+      presaleMaxInvestment: payload.presaleMaxInvestment,
+      presaleAlocated: payload.presaleAlocated,
+
+      contactUsEmail: payload.email,
+      issuerWebsite: payload.website,
+      whitepaperUrl: payload.whitepaper,
+
+      allowOnlyAccredited: true,
+
+      profilePictureId: uploadedFiles.find(x => x.name === 'profile')?.id ?? initial.profilePicture.id,
+      cardPictureId: uploadedFiles.find(x => x.name === 'card')?.id ?? initial.cardPicture.id,
+
+      terms: {
+        investmentStructure: payload.terms.investmentStructure,
+        dividentYield: payload.terms.dividentYield,
+        investmentPeriod: payload.terms.investmentPeriod,
+        grossIrr: payload.terms.grossIrr,
+        distributionFrequency: payload.terms.distributionFrequency
+      },
+
+      faq: payload.faq.map(x => ({ question: x.question, answer: x.answer })),
+
+      members: payload.members.map((x, idx) => ({
+        avatarId: findDoc('member', idx) ?? initial.members[idx].photo.id,
+        name: x.name,
+        title: x.role,
+        description: x.about
+      })),
+
+      files: [
+        ...payload.additionalDocuments.map((x, idx) => ({
+          type: OfferFileType.document,
+          fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file.id
+        })),
+        
+        ...payload.images.map((x, idx) => ({
+          type: OfferFileType.image,
+          fileId: findDoc('image', idx) ?? initial.images[idx].id
+        })),
+
+        ...payload.videos.map(x => ({
+          type: OfferFileType.video,
+          videoUrl: x.url
+        })),
+      ],
+      
+      timeframe: {
+        whitelist: payload.timeframe.whitelist,
+        preSale: payload.timeframe.presale,
+        sale: payload.timeframe.sale,
+        closed: payload.timeframe.closed,
+        claim: payload.timeframe.claim
+      }
+    }
+
+    if (offerId) {
+      delete data.offerId
+      return apiService.put(`/offers/${offerId}`, data)
+    } else {
+      return apiService.post(`/offers`, data)
+    }
+  }, [uploadFiles, vettingId])
 }

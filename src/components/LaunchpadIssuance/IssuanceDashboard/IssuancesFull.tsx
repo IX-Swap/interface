@@ -46,11 +46,24 @@ export const IssuancesFull = () => {
 
 
   const status = React.useCallback((issuance: Issuance) => {
+    if (!issuance.vetting) {
+      return IssuanceStatus.pendingApproval
+    }
+
+    if (
+      issuance.vetting && 
+      issuance.vetting.status === IssuanceStatus.approved && 
+      issuance.vetting.offer?.status !== IssuanceStatus.approved
+    ) {
+      return IssuanceStatus.inProgress
+    }
+
+
     return issuance.vetting && issuance.vetting?.offer
       ? issuance.vetting?.offer.status
       : (issuance.vetting && issuance.vetting?.status !== IssuanceStatus.draft)
         ? issuance.vetting.status
-        : IssuanceStatus.inProgress
+        : IssuanceStatus.pendingApproval
   }, [])
 
   const orderType = React.useCallback((state: string | null) => !state ? 'ASC' : state === 'ASC' ? 'DESC' : null, [])

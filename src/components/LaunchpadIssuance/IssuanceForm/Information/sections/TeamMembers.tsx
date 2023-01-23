@@ -4,20 +4,21 @@ import styled, { useTheme } from 'styled-components'
 import { Plus, Image } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
-import { FieldArray} from 'formik'
+import { FieldArray, FormikErrors} from 'formik'
 
-import { FormGrid } from '../shared/FormGrid'
-import { FileField } from '../shared/fields/FileField'
-import { FormField } from '../shared/fields/FormField'
-import { TextareaField } from '../shared/fields/TextareaField'
+import { FormGrid } from '../../shared/FormGrid'
+import { FileField } from '../../shared/fields/FileField'
+import { FormField } from '../../shared/fields/FormField'
+import { AddButton, DeleteButton } from '../../shared/styled'
+import { TextareaField } from '../../shared/fields/TextareaField'
 
-import { AddButton, DeleteButton } from '../shared/styled'
-import { TeamMember } from './types'
+import { InformationFormValues, TeamMember } from '../types'
+
 import { useGetFieldArrayId } from 'state/launchpad/hooks'
 
 interface Props {
   members: TeamMember[]
-
+  errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
 
@@ -28,7 +29,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
   const members = React.useMemo(() => props.members as (TeamMember & { id: number })[], [props.members])
 
   return (
-    <Container>
+    <FormGrid title="Team Members">
       <FieldArray name="members">
         {({ push, handleRemove, form }) => (
           <>
@@ -48,6 +49,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   optional
                   span={2} 
                   showLabelInside
+                  error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.photo as string}
                 />
 
                 <FormField 
@@ -55,6 +57,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   label="Full Name"
                   placeholder="Team Member’s Name" 
+                  error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.name}
                 />
 
                 <FormField 
@@ -62,6 +65,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   label="Position"
                   placeholder="Team Member’s Position"
+                  error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.role}
                 />
 
                 <TextareaField 
@@ -70,31 +74,27 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   label="About"
                   placeholder="Short Introduction about your team member" 
+                  error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.about}
                 />
               </MemberEntry>
             ))}
 
-            <AddButton onClick={() => push({ id: getId() })}>
-              <Plus color={theme.launchpad.colors.primary} /> Add Member
-            </AddButton>
+            {members.length < 6 && (
+              <AddButton onClick={() => push({ id: getId() })}>
+                <Plus color={theme.launchpad.colors.primary} /> Add Member
+              </AddButton>
+            )}
           </>
         )}
       </FieldArray>
-    </Container>
+    </FormGrid>
   )
 }
 
-const Container = styled.div`
-  display: flex;
-
-  flex-flow: column nowrap;
-  gap: 2rem;
-
-  grid-column: span 2;
-`
-
 const MemberEntry = styled(FormGrid)`
   position: relative;
+  
+  grid-column: span 2;
 `
 const RemoveButton = styled(DeleteButton)`
   position: absolute;

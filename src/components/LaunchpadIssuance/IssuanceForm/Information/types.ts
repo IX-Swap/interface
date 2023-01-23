@@ -1,13 +1,14 @@
-import { OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
+import { OfferDistributionFrequency, OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
 import { DateSchema } from "yup"
+import { IssuanceFile } from "../types"
 
 export enum OfferTokenType {
-  WIXS,
-  WBTC,
-  WETH,
-  MATIC,
-  USDC,
-  USDT
+  WIXS = 'WIXS',
+  WBTC = 'WBTC',
+  WETH = 'WETH',
+  MATIC = 'MATIC',
+  USDC = 'USDC',
+  USDT = 'USDT'
 }
 
 export enum SocialMediaType {
@@ -27,32 +28,32 @@ export interface VideoLink {
 }
 
 export interface InformationFormValues {
-  profilePicture: File
-  cardPicture: File
+  profilePicture: IssuanceFile
+  cardPicture: IssuanceFile
 
   shortDescription: string
   longDescription: string
 
   name: string
-  companyIdNumber: string
+  issuerIdentificationNumber: string
 
   industry: OfferIndustry
-  investmentStructure: OfferInvestmentStructure
+  investmentType: OfferInvestmentStructure
 
   country: string
 
   tokenName: string
   tokenTicker: string
   tokenType: string
+  tokenStandart: OfferTokenStandart
+  tokenPrice: number
 
   network: OfferNetwork
 
   hardCap: string
-  softcap: string
+  softCap: string
 
-  pricePerToken: number
-
-  tokenStandart: OfferTokenStandart
+  allowOnlyAccredited: boolean
 
   minInvestment: string
   maxInvestment: string
@@ -66,7 +67,7 @@ export interface InformationFormValues {
   website: string
   whitepaper: string
 
-  images: File[]
+  images: IssuanceFile[]
   videos: VideoLink[]
   additionalDocuments: AdditionalDocument[]
 
@@ -75,6 +76,14 @@ export interface InformationFormValues {
   faq: FAQEntry[]
 
   terms: {
+    investmentStructure: string
+    dividentYield: string
+    investmentPeriod: number
+    grossIrr: string
+    distributionFrequency: OfferDistributionFrequency
+  }
+
+  timeframe: {
     whitelist: Date
     presale: Date
     sale: Date
@@ -92,7 +101,7 @@ export interface SocialMediaLink {
 
 export interface AdditionalDocument {
   name: string
-  file: File
+  file: IssuanceFile
 }
 
 export interface FAQEntry {
@@ -101,7 +110,7 @@ export interface FAQEntry {
 }
 
 export interface TeamMember {
-  photo: File
+  photo: IssuanceFile
   name: string
   role: string
   about: string

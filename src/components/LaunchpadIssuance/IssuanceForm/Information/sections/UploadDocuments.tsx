@@ -2,22 +2,24 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Plus } from 'react-feather'
-import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
+import { FieldArray, FormikErrors } from 'formik'
 
-import { FieldArray } from 'formik'
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
 import { Column, Separator } from 'components/LaunchpadMisc/styled'
 
 import { useGetFieldArrayId } from 'state/launchpad/hooks'
 
-import { AddButton, DeleteButton } from '../shared/styled'
-import { AdditionalDocument } from './types'
-import { FormField } from '../shared/fields/FormField'
-import { FileField } from '../shared/fields/FileField'
-import { FormGrid } from '../shared/FormGrid'
+import { AddButton, DeleteButton } from '../../shared/styled'
+import { FormField } from '../../shared/fields/FormField'
+import { FileField } from '../../shared/fields/FileField'
+import { FormGrid } from '../../shared/FormGrid'
+
+import { AdditionalDocument, InformationFormValues } from '../types'
 
 interface Props {
   documents: AdditionalDocument[]
+  errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
 
@@ -39,6 +41,10 @@ export const UploadDocuments: React.FC<Props> = (props) => {
                   placeholder='Name'
                   field={`additionalDocuments[${idx}].name`} 
                   setter={props.setter}
+                  error={
+                    ((props.errors.additionalDocuments?.length ?? 0) > idx &&
+                    (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.name) as string
+                  }
                   trailing={documents.length > 1 && (
                     <RemoveButton onClick={handleRemove(idx)}>
                       <Trash />
@@ -53,6 +59,10 @@ export const UploadDocuments: React.FC<Props> = (props) => {
                   label={''} 
                   field={`additionalDocuments[${idx}].file`} 
                   setter={props.setter} 
+                  error={
+                    ((props.errors.additionalDocuments?.length ?? 0) > idx &&
+                    (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.file) as string
+                  }
                 />
               </FieldContainer>
             ))}

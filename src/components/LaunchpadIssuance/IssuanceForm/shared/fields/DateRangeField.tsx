@@ -51,7 +51,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
     } else if (range.length < 2) {
       selectedRange = [...range, value]
     } else {
-      selectedRange =[value]
+      selectedRange = [value]
     }
 
     if (props.field && props.setter) {
@@ -67,7 +67,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const moveMonthForward = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') + 1)), [])
 
   React.useEffect(() => {
-    console.log(props.value)
     if (props.value !== undefined) {
       if (props.mode === 'single') {
         setRange([moment(props.value as Date)])
