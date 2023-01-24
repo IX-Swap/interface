@@ -362,6 +362,7 @@ export interface DashboardOffer {
   status: OfferTimeframeType,
   softCapReached: boolean,
   hardCapReached: boolean,
+  investingTokenSymbol: string
   countInvestors: number,
   commitment: number,
   progress: number,

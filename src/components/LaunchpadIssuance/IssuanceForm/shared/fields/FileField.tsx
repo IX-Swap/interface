@@ -153,5 +153,7 @@ const BrowseButton = styled.button`
 
   cursor: pointer;
 
+  font-weight: 600;
+
   color: ${props => props.theme.launchpad.colors.primary};
 `

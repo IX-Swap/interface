@@ -399,7 +399,7 @@ const IssuanceName = styled.div`
   font-weight: 500;
   font-size: 14px;
 
-  line-height: 48px;
+  line-height: 1.25rem;
   letter-spacing: -0.01em;
 
   color: ${props => props.theme.launchpad.colors.text.title};

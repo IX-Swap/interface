@@ -408,7 +408,9 @@ const AdditionalFiles = styled(FormGrid)`
   place-self: start;
 `
 
-const AddDocumentButton = styled(OutlineButton)``
+const AddDocumentButton = styled(OutlineButton)`
+  font-weight: 600;
+`
 
 const Hint = styled.div`
   font-style: normal;
