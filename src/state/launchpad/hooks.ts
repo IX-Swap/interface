@@ -623,7 +623,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
     const uploadedFiles = await uploadFiles(payload, initialValues)
 
     const findDoc = (key: keyof VettingFormValues['document']) => 
-      uploadedFiles.find(x => x.name === `document.${key}Id`)?.id ?? initialValues.document[key].id
+      uploadedFiles.find(x => x.name === `document.${key}Id`)?.id ?? initialValues.document[key]?.id
 
     const data: Record<string, any> = { 
       issuanceId,
