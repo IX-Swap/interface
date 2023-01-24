@@ -6,11 +6,12 @@ import { useHistory } from 'react-router-dom'
 import { ChevronDown, ChevronLeft, ChevronRight, Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
+import { ReactComponent as ListingIcon } from 'assets/launchpad/svg/listing-icon.svg'
+import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
 
-import { Issuance } from 'state/launchpad/types'
-import { IssuanceFilter, IssuanceStatus } from '../types'
+import { DashboardOffer } from 'state/launchpad/types'
+import { IssuanceFilter } from '../types'
 
-import { IssuanceStatusBadge } from './IssuanceStatusBadge'
 import { SearchFilter, SearchConfig, OrderConfig } from './SearchFilter'
 import { EmptyTable } from './EmptyTable'
 
@@ -19,22 +20,28 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceTable, TableTitle, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
 
-import { useGetIssuances } from 'state/launchpad/hooks'
+import { useGetOffersFull, useFormatOfferValue } from 'state/launchpad/hooks'
 
-import { ITEM_ROWS } from '../utils/constants'
+import { ITEM_ROWS, OFFER_STATUSES } from '../utils/constants'
 
 
-export const IssuancesFull = () => {
+interface Props {
+  type: string
+}
+
+export const OffersFull: React.FC<Props> = (props) => {
   const theme = useTheme()
   const history = useHistory()
-  const getIssuances = useGetIssuances()
+
+  const formatedValue = useFormatOfferValue()
+  const getOffers = useGetOffersFull()
 
   const container = React.useRef<HTMLDivElement>(null)
 
   const [showDropdown, setShowDropdown] = React.useState(false)
 
   const [loading, setLoading] = React.useState<boolean>(true)
-  const [issuances, setIssuances] = React.useState<Issuance[]>([])
+  const [offers, setOffers] = React.useState<DashboardOffer[]>([])
   
   const [page, setPage] = React.useState(1)
   const [totalPages, setTotalPages] = React.useState(0)
@@ -43,27 +50,6 @@ export const IssuancesFull = () => {
   const [filter, setFilter] = React.useState<SearchConfig | undefined>()
   const [order, setOrder] = React.useState<OrderConfig>({})
 
-
-  const status = React.useCallback((issuance: Issuance) => {
-    if (!issuance.vetting) {
-      return IssuanceStatus.pendingApproval
-    }
-
-    if (
-      issuance.vetting && 
-      issuance.vetting.status === IssuanceStatus.approved && 
-      issuance.vetting.offer?.status !== IssuanceStatus.approved
-    ) {
-      return IssuanceStatus.inProgress
-    }
-
-
-    return issuance.vetting && issuance.vetting?.offer
-      ? issuance.vetting?.offer.status
-      : (issuance.vetting && issuance.vetting?.status !== IssuanceStatus.draft)
-        ? issuance.vetting.status
-        : IssuanceStatus.pendingApproval
-  }, [])
 
   const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
 
@@ -93,9 +79,9 @@ export const IssuancesFull = () => {
   React.useEffect(() => {
     setLoading(true)
 
-    getIssuances(page, filter, order, pageSize)
+    getOffers(page, filter, order, props.type, pageSize)
       .then(page => {
-        setIssuances(page.items)
+        setOffers(page.items)
         setTotalItems(page.totalItems)
         setTotalPages(page.totalPages)
       })      
@@ -119,19 +105,22 @@ export const IssuancesFull = () => {
   }, [showDropdown, container])
 
   return (
-
     <Container>
-      <TableTitle>Issuances</TableTitle>
+      <TableTitle>{props.type}</TableTitle>
       <SearchFilter onFilter={setFilter}/>
 
-      {!loading && issuances?.length === 0 && (<EmptyTable />)}
+      {!loading && offers?.length === 0 && (<EmptyTable />)}
 
-      {issuances?.length > 0 && (
+      {offers?.length > 0 && (
         <IssuanceTable>
-          <TableHeader tab={IssuanceFilter.pending}>
-            <Title onClick={() => onChangeOrder('name')}> <SortIcon type={order.name}/> Issuances</Title>
-            <Title onClick={() => onChangeOrder('startDate')}> <SortIcon type={order.startDate}/> Start Date</Title>
-            <Title onClick={() => onChangeOrder('status')}> <SortIcon type={order.status}/> Status</Title>
+          <TableHeader tab={IssuanceFilter.live}>
+            <Title onClick={() => onChangeOrder('issuanceName')}> <SortIcon type={order.issuanceName}/> Issuances</Title>
+            <Title onClick={() => onChangeOrder('countInvestors')}> <SortIcon type={order.countInvestors}/> Investors</Title>
+            <Title onClick={() => onChangeOrder('commitment')}> <SortIcon type={order.commitment}/> Commitment</Title>
+            <Title onClick={() => onChangeOrder('progress')}> <SortIcon type={order.progress}/> Progress</Title>
+            <Title onClick={() => onChangeOrder('softCapReached')}> <SortIcon type={order.softCapReached}/> Total Funding</Title>
+            <Title onClick={() => onChangeOrder('closeDate')}> <SortIcon type={order.closeDate}/> Close Date</Title>
+            <Title onClick={() => onChangeOrder('status')}> <SortIcon type={order.status}/> Stage</Title>
             <div>  Action</div>
           </TableHeader>
 
@@ -140,29 +129,43 @@ export const IssuancesFull = () => {
               <Loader />
             </Centered>
           )}
-          
 
-          {!loading && issuances.map((issuance, idx) => (
-            <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
-              <div>{issuance.name}</div>
+          {!loading && offers.map((offer, idx) => (
+            <IssuanceRow key={idx} tab={IssuanceFilter.live}>
+              <div>{offer.issuanceName}</div>
+              <div>{offer.countInvestors}</div>
+              <div>{formatedValue(`${offer.commitment}`)}</div>
+              <div>{offer.progressPercent}% - {formatedValue(`${offer.progress}`)}</div>
+              <div>{formatedValue(`${offer.softCapReached}`) || '0.00'} USD</div>
 
               <div>
-                {(issuance?.vetting?.offer && issuance?.vetting?.offer?.startDate)
-                  ? moment(issuance?.vetting?.offer?.startDate).format('DD/MM/YYYY')
+                {(offer?.closeDate)
+                  ? moment(offer?.closeDate).format('DD/MM/YYYY')
                   : ''}
               </div>
 
-              <IssuanceStatusBadge status={status(issuance)} />
+              <div>{OFFER_STATUSES[offer.status]}</div>
+
+              <ActionButtons>
+              <OutlineButton
+                color={theme.launchpad.colors.primary + '80'}
+                borderType="tiny"
+                height="34px"
+                onClick={() => veiwItem(offer.issuanceId)}>
+                Listing <ListingIcon />
+              </OutlineButton>
 
               <OutlineButton
                 color={theme.launchpad.colors.primary + '80'}
-                height="34px"
-                onClick={() => veiwItem(issuance.id)}>
-                View Application <Eye size="15" color={theme.launchpad.colors.primary} />
+                borderType="tiny"
+                height="34px">
+                <GearIcon />
               </OutlineButton>
+              </ActionButtons>
+              
             </IssuanceRow>
           ))}
-            
+  
         </IssuanceTable>
       )}
 
@@ -207,6 +210,11 @@ const Title = styled.div`
   cursor: pointer;
   display: flex;
   flex-flow: row nowrap;
+`
+
+const ActionButtons = styled.div`
+  display: flex;
+  gap: 0.5rem;
 `
 
 const PaginationRow = styled.div`

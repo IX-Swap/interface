@@ -34,9 +34,10 @@ export const FilledButton = styled(BaseButton)<{ background?: string, color?: st
   `}
 `
 
-export const OutlineButton = styled(BaseButton)<{ borderColor?: string, color?: string, background?: string }>`
+export const OutlineButton = styled(BaseButton)<{ borderColor?: string, color?: string, background?: string, borderType?: string }>`
   color: ${props => props.color ?? props.theme.launchpad.colors.primary};
   border: 1px solid ${props => props.borderColor ?? props.theme.launchpad.colors.border.default};
 
   ${props => props.background && `background: ${props.background}`};
+  ${props => props.borderType && `padding: 0 0.75rem;`}
 `
