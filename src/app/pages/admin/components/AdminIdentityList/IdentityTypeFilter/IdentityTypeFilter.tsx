@@ -13,7 +13,14 @@ export const IdentityTypeFilter = () => {
           <IdentityTypeSelect
             withAll
             displayEmpty
-            value={value ?? ''}
+            // value={value ?? ''}
+            value={
+              value === 'issuer_corporate'
+                ? 'issuer and corporate'
+                : value === ''
+                ? 'All'
+                : value
+            }
             onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}
