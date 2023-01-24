@@ -13,7 +13,17 @@ import { AppState } from "state"
 import { useKYCState } from "state/kyc/hooks"
 import { tryParseAmount } from "state/swap/helpers"
 
-import { Asset, Issuance, IssuancePlain, IssuanceVetting, Offer, OfferFileType, OfferStatus, WhitelistStatus } from "state/launchpad/types"
+import {
+  Asset,
+  Issuance,
+  DashboardOffer,
+  IssuancePlain,
+  IssuanceVetting,
+  Offer,
+  OfferFileType,
+  OfferStatus,
+  WhitelistStatus
+} from "state/launchpad/types"
 
 import { toggleKYCDialog } from "./actions"
 
@@ -398,6 +408,36 @@ export const useGetIssuances = () => {
     }
 
     const result = await apiService.get(`/issuances/full?${query.join('&')}`).then(res => res.data as PaginateResponse<Issuance>)
+
+    return {
+      hasMore: result.nextPage !== null,
+      items: result.items,
+      
+      totalPages: result.totalPages,
+      totalItems: result.totalItems,
+    }
+  }, [])
+}
+
+export const useGetOffersFull = () => {
+  return React.useCallback(async (page: number, filter?: SearchConfig, order?: OrderConfig, type?: string, size = 10) => {
+    let query = [`page=${page}`, `offset=${size}`]
+
+    if (filter) {
+      query = query.concat(Object.entries(filter)
+        .filter(([_, value]) => value.length > 0)
+        .map(([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`))
+    }
+
+    if (order) {
+      query = query.concat(Object.entries(order)
+        .filter(([_, value]) => value && value.length > 0)
+        .map(([key, value]) => `order=${key}=${value}`))
+    }
+
+    query = query.concat(`type=${type?.toLocaleLowerCase()}`)
+
+    const result = await apiService.get(`/offers/me?${query.join('&')}`).then(res => res.data as PaginateResponse<DashboardOffer>)
 
     return {
       hasMore: result.nextPage !== null,

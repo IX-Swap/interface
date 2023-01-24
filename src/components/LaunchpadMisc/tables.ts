@@ -51,13 +51,13 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   `}
   
   ${props => props.tab !== IssuanceFilter.pending && `
-    grid-template-columns: 1.5fr repeat(6, 1fr)  1fr;
+    grid-template-columns: 1.5fr repeat(6,1fr) 1.5fr;
   `}
 
   place-content: center start ;
   align-items: center;
 
-  gap: 2rem;
+  gap: ${props => props.tab === IssuanceFilter.pending ? '2rem' : '1rem'};
 
   height: 60px;
   width: 100%;
