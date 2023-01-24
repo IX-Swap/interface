@@ -135,16 +135,16 @@ export const OffersFull: React.FC<Props> = (props) => {
               <div>{offer.issuanceName}</div>
               <div>{offer.countInvestors}</div>
               <div>{formatedValue(`${offer.commitment}`)}</div>
-              <div>{offer.progressPercent}% - {formatedValue(`${offer.progress}`)}</div>
-              <div>{formatedValue(`${offer.softCapReached}`) || '0.00'} USD</div>
+              <CountRow>{offer.progressPercent}% - {formatedValue(`${offer.progress}`)}</CountRow>
+              <div>{formatedValue(`${offer.softCapReached}`) || '0.00'} {offer.investingTokenSymbol}</div>
 
-              <div>
+              <CountRow>
                 {(offer?.closeDate)
                   ? moment(offer?.closeDate).format('DD/MM/YYYY')
                   : ''}
-              </div>
+              </CountRow>
 
-              <div>{OFFER_STATUSES[offer.status]}</div>
+              <DefaultRaw>{OFFER_STATUSES[offer.status]}</DefaultRaw>
 
               <ActionButtons>
               <OutlineButton
@@ -210,6 +210,25 @@ const Title = styled.div`
   cursor: pointer;
   display: flex;
   flex-flow: row nowrap;
+`
+
+const DefaultRaw = styled.div`
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 48px;
+  letter-spacing: -0.01em;
+
+  opacity: 0.8;
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
+`
+
+const CountRow = styled.div`
+  opacity: 0.8;
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
 `
 
 const ActionButtons = styled.div`

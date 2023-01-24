@@ -59,7 +59,7 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
 
   gap: ${props => props.tab === IssuanceFilter.pending ? '2rem' : '1rem'};
 
-  height: 60px;
+  height: 65px;
   width: 100%;
 
   padding: 0.25rem 1rem;
@@ -68,7 +68,7 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   font-weight: 500;
   font-size: 14px;
 
-  line-height: 48px;
+  line-height: 1.5rem;
   letter-spacing: -0.01em;
   
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
