@@ -64,7 +64,7 @@ const IssuanceStatusBadgeWrapper = styled.div<{ color: string }>`
   width: max-content;
 
   color: ${props => props.color};
-  border: 1px solid ${props => props.color + '1e'};
+  border: 1px solid ${props => props.color};
   border-radius: 6px;
 `
 

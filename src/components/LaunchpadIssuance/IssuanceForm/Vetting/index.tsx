@@ -28,6 +28,8 @@ import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useAddPopup } from 'state/application/hooks'
 
+import { defaultValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/util"
+
 
 export const IssuanceVettingForm = () => {
   const theme = useTheme()
@@ -104,10 +106,6 @@ export const IssuanceVettingForm = () => {
     }
   }, [initialValues.data, initialValues.vettingId])
 
-  const resetForm = React.useCallback(async (values: VettingFormValues) => {
-    values = {} as VettingFormValues
-  }, [initialValues.data, initialValues.vettingId])
-
   const saveDraft = React.useCallback(async (values: VettingFormValues) => {
     loader.start()
 
@@ -144,8 +142,8 @@ export const IssuanceVettingForm = () => {
   }
 
   return (
-    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} onReset={resetForm}>
-      {({ submitForm, setFieldValue, values, handleReset, errors }) => (
+    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} enableReinitialize={true}>
+      {({ submitForm, setFieldValue, values, errors, resetForm }) => (
         <FormContainer>
           <CloseConfirmation
             isOpen={showCloseDialog}
@@ -173,11 +171,10 @@ export const IssuanceVettingForm = () => {
               .includes(initialValues?.data?.status as IssuanceStatus) && (
               <RejectInfo
                 message={initialValues?.data?.changesRequested}
-                status={initialValues?.data?.status}
+                status={IssuanceStatus.declined}
                 issuanceId={issuanceId}
-                onClear={handleReset}
-                onSubmit={submitForm}
-                onContactUs={() => console.log('contact us!')}/>)}
+                onClear={() => resetForm({ values: defaultValues })}
+                onSubmit={submitForm}/>)}
 
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
