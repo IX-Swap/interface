@@ -9,17 +9,17 @@ import { FavoriteFilter } from 'app/pages/invest/components/DSOTable/FavoriteFil
 import { CurrencyFilter } from 'app/pages/invest/components/DSOTable/CurrencyFilter'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 export interface FiltersFavProps {
-  setPage?: (page: number)=>void
+  setPage?: (page: number) => void
 }
 
-export const DSOTableFilters = (props:FiltersFavProps) => {
-  const {setPage} = props;
+export const DSOTableFilters = (props: FiltersFavProps) => {
+  const { setPage } = props
   const { isMiniLaptop, isTablet } = useAppBreakpoints()
   const { removeFilters } = useQueryFilter()
   const textInputSearchFilterRef = React.useRef<HTMLInputElement | null>(null)
 
   const clearAll = () => {
-    props.setPage && props.setPage(0);
+    // props.setPage && props.setPage(0);
 
     removeFilters([
       'isFavorite',
@@ -97,7 +97,7 @@ export const DSOTableFilters = (props:FiltersFavProps) => {
                 </Grid>
               </Grid>
               <Grid item>
-                <FavoriteFilter setPage={setPage}/>
+                <FavoriteFilter setPage={setPage} />
               </Grid>
             </Grid>
           </Grid>
