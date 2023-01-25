@@ -49,6 +49,10 @@ export const FileField: React.FC<Props> = (props) => {
     props.setter(props.field, props.value?.id ? null : undefined)
     setValue(undefined)
   }, [])
+
+  React.useEffect(()=> {
+    setValue(props.value?.file)
+  }, [props.value])
   
   const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
 

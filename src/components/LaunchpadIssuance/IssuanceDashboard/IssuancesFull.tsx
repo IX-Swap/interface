@@ -83,9 +83,24 @@ export const IssuancesFull = () => {
     setPage(1)
   }, [order])
 
+  const scrollToTop = React.useCallback(() => {
+    //window.scrollTo({ top: 0, behavior: 'smooth' })
+    const yOffset = document.documentElement.scrollTop || document.body.scrollTop;
+    if (yOffset > 0) {
+      window.requestAnimationFrame(scrollToTop);
+      window.scrollTo(0, yOffset - yOffset / 1.75);
+    }
+  }, [])
+
   const onChangePageSize = React.useCallback((size: number) => {
     setPageSize(size)
     setPage(1)
+    scrollToTop()
+  }, [])
+
+  const onChangePage = React.useCallback((pageNumber: number) => {
+    scrollToTop()
+    setPage(pageNumber)
   }, [])
 
   const paginationSizes = React.useMemo(() => ITEM_ROWS, [])
@@ -187,11 +202,11 @@ export const IssuancesFull = () => {
           {((page - 1) * pageSize) + 1} - {page * pageSize < totalItems ? page * pageSize : totalItems} of {totalItems}
         </PageCount>
 
-        <PageButton onClick={() => setPage(page => page - 1)} disabled={page <= 1}>
+        <PageButton onClick={() => onChangePage(page - 1)} disabled={page <= 1}>
           <ChevronLeft />
         </PageButton>
         
-        <PageButton onClick={() => setPage(page => page + 1)} disabled={page >= totalPages}>
+        <PageButton onClick={() => onChangePage(page + 1)} disabled={page >= totalPages}>
           <ChevronRight />
         </PageButton>
       </PaginationRow>

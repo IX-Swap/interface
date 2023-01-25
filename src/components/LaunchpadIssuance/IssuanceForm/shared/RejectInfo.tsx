@@ -17,7 +17,6 @@ interface Props {
   status?: IssuanceStatus
 
   onClear: () => void
-  onContactUs: () => void
   onSubmit: () => void
 }
 
