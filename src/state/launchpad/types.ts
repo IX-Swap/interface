@@ -1,3 +1,4 @@
+import { OfferTokenType } from "components/LaunchpadIssuance/IssuanceForm/Information/types"
 import { IssuanceStatus } from "components/LaunchpadIssuance/types"
 import { User } from "state/admin/actions"
 
@@ -114,7 +115,7 @@ export interface Asset {
 export interface OfferTimeframe {
   closed: Date
   claim: Date
-  preSale: Date
+  presale: Date
   sale: Date
   whitelist: Date
 }
@@ -222,7 +223,7 @@ export interface Offer {
 
   industry: OfferIndustry
 
-  investmentType: string
+  investmentType: OfferInvestmentStructure
 
   capitalStructure: OfferCapitalStructure
 
@@ -235,6 +236,7 @@ export interface Offer {
   tokenTicker: string
   tokenPrice: string
   tokenStandart: OfferTokenStandart
+  tokenType: OfferTokenType
 
   investingTokenAddress: string
   investingTokenSymbol: string

@@ -15,10 +15,6 @@ interface Props {
   offer: Offer
 }
 
-const getTypeLabel = (type: OfferTimeframeType) => {
-  return OFFER_TIMEFRAME_TYPE_LABELS.find(x => x.value === type)!.label
-}
-
 const getTooltip = (type: OfferTimeframeType) => {
   switch (type) {
     case OfferTimeframeType.whitelist:
@@ -59,19 +55,22 @@ const format = (from: Date, to?: Date) =>
 
 const hasStarted = (date: Date) => date ? Date.parse(date.toString()) <= Date.now() : false
 
-export const OfferStage: React.FC<Props> = (props) => {
+interface StageProps {
+  frames: OfferTimeframe
+}
+
+export const OfferStage: React.FC<StageProps> = (props) => {
   const theme = useTheme()
-  const frames = React.useMemo(() => props.offer.timeframe, [])
 
   const stageHasStarted = React.useMemo(() => ({
-    whitelist: hasStarted(frames.whitelist),
-    preSale: hasStarted(frames.preSale),
-    sale: hasStarted(frames.sale),
-    closed: hasStarted(frames.closed),
-    claim: hasStarted(frames.claim),
-  }), [frames])
+    whitelist: hasStarted(props.frames.whitelist),
+    preSale: hasStarted(props.frames.presale),
+    sale: hasStarted(props.frames.sale),
+    closed: hasStarted(props.frames.closed),
+    claim: hasStarted(props.frames.claim),
+  }), [props.frames])
 
-  const whitelistAndPresale = React.useMemo(() => frames.whitelist ? [
+  const whitelistAndPresale = React.useMemo(() => props.frames.whitelist ? [
     {
       label: (
         <StageLabel hasStarted={stageHasStarted.whitelist}>
@@ -85,7 +84,7 @@ export const OfferStage: React.FC<Props> = (props) => {
         </StageLabel>
       ),
       value: (
-        <Nowrap>{format(frames.whitelist, frames.preSale)}</Nowrap>
+        <Nowrap>{format(props.frames.whitelist, props.frames.presale)}</Nowrap>
       )
     },
     {
@@ -101,7 +100,7 @@ export const OfferStage: React.FC<Props> = (props) => {
         </StageLabel>
       ),
       value: (
-        <Nowrap>{format(frames.preSale, frames.sale)}</Nowrap>
+        <Nowrap>{format(props.frames.presale, props.frames.sale)}</Nowrap>
       )
     },
   ] : [], [])
@@ -121,7 +120,7 @@ export const OfferStage: React.FC<Props> = (props) => {
           </StageLabel>
         ),
         value: (
-          <Nowrap>{format(frames.sale, frames.closed)}</Nowrap>
+          <Nowrap>{format(props.frames.sale, props.frames.closed)}</Nowrap>
         )
       },
       { 
@@ -137,7 +136,7 @@ export const OfferStage: React.FC<Props> = (props) => {
           </StageLabel>
         ),
         value: (
-          <Nowrap>{format(frames.closed, frames.claim)}</Nowrap>
+          <Nowrap>{format(props.frames.closed, props.frames.claim)}</Nowrap>
         )
       },
       { 
@@ -153,7 +152,7 @@ export const OfferStage: React.FC<Props> = (props) => {
           </StageLabel>
         ),
         value: (
-          <Nowrap>{format(frames.claim)}</Nowrap>
+          <Nowrap>{format(props.frames.claim)}</Nowrap>
         )
       }]
     
