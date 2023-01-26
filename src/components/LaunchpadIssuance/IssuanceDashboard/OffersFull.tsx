@@ -18,7 +18,7 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, DefaultRaw, CountRow } from 'components/LaunchpadMisc/tables'
 
 import { useGetOffersFull, useFormatOfferValue } from 'state/launchpad/hooks'
 
@@ -146,9 +146,9 @@ export const OffersFull: React.FC<Props> = (props) => {
 
           {!loading && offers.map((offer, idx) => (
             <IssuanceRow key={idx} tab={IssuanceFilter.live}>
-              <div>{offer.issuanceName}</div>
-              <div>{offer.countInvestors}</div>
-              <div>{formatedValue(`${offer.commitment}`)}</div>
+              <Raw>{offer.issuanceName}</Raw>
+              <Raw>{offer.countInvestors}</Raw>
+              <Raw>{formatedValue(`${offer.commitment}`)}</Raw>
               <CountRow>{offer.progressPercent}% - {formatedValue(`${offer.progress}`)}</CountRow>
               <div>{formatedValue(`${offer.softCapReached}`) || '0.00'} {offer.investingTokenSymbol}</div>
 
@@ -224,25 +224,6 @@ const Title = styled.div`
   cursor: pointer;
   display: flex;
   flex-flow: row nowrap;
-`
-
-const DefaultRaw = styled.div`
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.25rem;
-  letter-spacing: -0.01em;
-
-  opacity: 0.8;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
-`
-
-const CountRow = styled.div`
-  opacity: 0.8;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
 `
 
 const ActionButtons = styled.div`

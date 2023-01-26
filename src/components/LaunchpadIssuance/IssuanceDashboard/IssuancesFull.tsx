@@ -17,7 +17,7 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
 
 import { useGetIssuances } from 'state/launchpad/hooks'
 
@@ -159,13 +159,13 @@ export const IssuancesFull = () => {
 
           {!loading && issuances.map((issuance, idx) => (
             <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
-              <div>{issuance.name}</div>
+              <Raw>{issuance.name}</Raw>
 
-              <div>
+              <Raw>
                 {(issuance?.vetting?.offer && issuance?.vetting?.offer?.startDate)
                   ? moment(issuance?.vetting?.offer?.startDate).format('DD/MM/YYYY')
                   : ''}
-              </div>
+              </Raw>
 
               <IssuanceStatusBadge status={status(issuance)} />
 
