@@ -124,6 +124,8 @@ const FilterButton = styled.button`
   border: 1px solid #E6E6FF;
   border-radius: 6px;
 
+  font-family: ${props => props.theme.launchpad.font};
+
   font-style: normal;
   font-weight: 500;
   font-size: 13px;

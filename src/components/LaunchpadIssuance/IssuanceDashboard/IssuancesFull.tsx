@@ -17,7 +17,7 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
 
 import { useGetIssuances } from 'state/launchpad/hooks'
 
@@ -46,7 +46,7 @@ export const IssuancesFull = () => {
 
   const status = React.useCallback((issuance: Issuance) => {
     if (!issuance.vetting) {
-      return IssuanceStatus.pendingApproval
+      return IssuanceStatus.inProgress
     }
 
     if (
@@ -216,12 +216,6 @@ export const IssuancesFull = () => {
 
 const Container = styled.article`
   min-height: 100vh;
-`
-
-const Title = styled.div`
-  cursor: pointer;
-  display: flex;
-  flex-flow: row nowrap;
 `
 
 const PaginationRow = styled.div`

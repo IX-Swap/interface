@@ -402,6 +402,11 @@ const IssuanceName = styled.div`
   line-height: 1.25rem;
   letter-spacing: -0.01em;
 
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 

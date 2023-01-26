@@ -63,6 +63,8 @@ const IssuanceStatusBadgeWrapper = styled.div<{ color: string }>`
   height: 34px;
   width: max-content;
 
+  font-family:  ${props => props.theme.launchpad.font};
+
   color: ${props => props.color};
   border: 1px solid ${props => props.color};
   border-radius: 6px;
