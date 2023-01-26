@@ -18,7 +18,7 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, DefaultRaw, CountRow } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, DefaultRaw, CountRow, Title } from 'components/LaunchpadMisc/tables'
 
 import { useGetOffersFull, useFormatOfferValue } from 'state/launchpad/hooks'
 
@@ -218,12 +218,6 @@ export const OffersFull: React.FC<Props> = (props) => {
 
 const Container = styled.article`
   min-height: 100vh;
-`
-
-const Title = styled.div`
-  cursor: pointer;
-  display: flex;
-  flex-flow: row nowrap;
 `
 
 const ActionButtons = styled.div`

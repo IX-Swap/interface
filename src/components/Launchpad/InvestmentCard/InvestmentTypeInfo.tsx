@@ -61,5 +61,7 @@ const InvestmentCardMetaEntry = styled.div`
   line-height: 16px;
   letter-spacing: -0.02em;
 
+  font-family: ${props => props.theme.launchpad.font};
+
   color: ${props => props.theme.launchpad.colors.text.caption};
 `
