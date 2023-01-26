@@ -51,7 +51,7 @@ export const OffersFull: React.FC<Props> = (props) => {
   const [order, setOrder] = React.useState<OrderConfig>({})
 
 
-  const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
+  const veiwItem = React.useCallback((id: number) => history.push(`/offers/${id}`), [history])
 
   const onChangeOrder = React.useCallback((key: string) => {
     const current = Object.keys(order)[0]
@@ -74,7 +74,21 @@ export const OffersFull: React.FC<Props> = (props) => {
     setPage(1)
   }, [])
 
+  const onChangePage = React.useCallback((pageNumber: number) => {
+    scrollToTop()
+    setPage(pageNumber)
+  }, [])
+
   const paginationSizes = React.useMemo(() => ITEM_ROWS, [])
+
+  const scrollToTop = React.useCallback(() => {
+    //window.scrollTo({ top: 0, behavior: 'smooth' })
+    const yOffset = document.documentElement.scrollTop || document.body.scrollTop;
+    if (yOffset > 0) {
+      window.requestAnimationFrame(scrollToTop);
+      window.scrollTo(0, yOffset - yOffset / 1.75);
+    }
+  }, [])
 
   React.useEffect(() => {
     setLoading(true)
@@ -151,7 +165,7 @@ export const OffersFull: React.FC<Props> = (props) => {
                 color={theme.launchpad.colors.primary + '80'}
                 borderType="tiny"
                 height="34px"
-                onClick={() => veiwItem(offer.issuanceId)}>
+                onClick={() => veiwItem(offer.id)}>
                 Listing <ListingIcon />
               </OutlineButton>
 
@@ -190,11 +204,11 @@ export const OffersFull: React.FC<Props> = (props) => {
           {((page - 1) * pageSize) + 1} - {page * pageSize < totalItems ? page * pageSize : totalItems} of {totalItems}
         </PageCount>
 
-        <PageButton onClick={() => setPage(page => page - 1)} disabled={page <= 1}>
+        <PageButton onClick={() => onChangePage(page - 1)} disabled={page <= 1}>
           <ChevronLeft />
         </PageButton>
         
-        <PageButton onClick={() => setPage(page => page + 1)} disabled={page >= totalPages}>
+        <PageButton onClick={() => onChangePage(page + 1)} disabled={page >= totalPages}>
           <ChevronRight />
         </PageButton>
       </PaginationRow>

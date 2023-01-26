@@ -348,7 +348,6 @@ export interface IssuanceVetting {
 export interface Issuance {
   id: number
   name: string
-  offerStatus: IssunaceOfferStatus
 
   vetting?: IssuanceVetting
 }
