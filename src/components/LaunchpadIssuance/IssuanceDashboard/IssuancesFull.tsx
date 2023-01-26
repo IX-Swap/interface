@@ -62,7 +62,7 @@ export const IssuancesFull = () => {
       ? issuance.vetting?.offer.status
       : (issuance.vetting && issuance.vetting?.status !== IssuanceStatus.draft)
         ? issuance.vetting.status
-        : IssuanceStatus.pendingApproval
+        : IssuanceStatus.inProgress
   }, [])
 
   const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
