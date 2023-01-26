@@ -9,14 +9,15 @@ import { useFormatOfferValue } from 'state/launchpad/hooks'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 
 interface Props {
-  offer: Offer
   borderless?: boolean
 }
 
-export const OfferSaleAllocation: React.FC<Props> = (props) => {
+type SaleProps = Props & Pick<Offer, 'hardCap' | 'softCap' | 'investingTokenSymbol' | 'presaleAlocated'>
+
+export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
   const formatedValue = useFormatOfferValue()
 
-  const allocatedPublicSale = React.useMemo(() => formatedValue(`${Number(props.offer.hardCap) - Number(props.offer.presaleAlocated)}`), [])
+  const allocatedPublicSale = React.useMemo(() => formatedValue(`${Number(props.hardCap) - Number(props.presaleAlocated)}`), [])
 
   return (
     <SaleAllocationContainer borderless={props.borderless}>
@@ -26,8 +27,8 @@ export const OfferSaleAllocation: React.FC<Props> = (props) => {
 
       <SaleAllocationEntry>
         <div>
-          <span className='bold'>{props.offer.investingTokenSymbol} {formatedValue(props.offer.softCap)}</span> Soft Cap /
-          <span className='bold'>{props.offer.investingTokenSymbol} {formatedValue(props.offer.hardCap)}</span> Hard Cap
+          <span className='bold'>{props.investingTokenSymbol} {formatedValue(props.softCap) ?? 'N/A'}</span> Soft Cap /
+          <span className='bold'>{props.investingTokenSymbol} {formatedValue(props.hardCap) ?? 'N/A'}</span> Hard Cap
         </div>
       </SaleAllocationEntry>
       
@@ -35,7 +36,7 @@ export const OfferSaleAllocation: React.FC<Props> = (props) => {
       
       <SaleAllocationEntry>
         <div>
-          <span className='bold'>{props.offer.investingTokenSymbol} {formatedValue(props.offer.presaleAlocated)}</span> Allocated for Pre-Sale
+          <span className='bold'>{props.investingTokenSymbol} {formatedValue(props.presaleAlocated)}</span> Allocated for Pre-Sale
         </div>
       </SaleAllocationEntry>
       
@@ -43,14 +44,16 @@ export const OfferSaleAllocation: React.FC<Props> = (props) => {
       
       <SaleAllocationEntry>
         <div>
-          <span className='bold'>{props.offer.investingTokenSymbol} {allocatedPublicSale}</span> Allocated for Public Sale
+          <span className='bold'>{props.investingTokenSymbol} {allocatedPublicSale}</span> Allocated for Public Sale
         </div>
       </SaleAllocationEntry>
     </SaleAllocationContainer>
   )
 }
 
-export const OfferPreSaleInfo: React.FC<Props> = (props) => {
+type PresaleProps = Props & Pick<Offer, 'investingTokenSymbol' | 'presaleMaxInvestment' | 'presaleMinInvestment'>
+
+export const OfferPreSaleInfo: React.FC<PresaleProps> = (props) => {
   const formatedValue = useFormatOfferValue()
 
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
@@ -68,14 +71,14 @@ export const OfferPreSaleInfo: React.FC<Props> = (props) => {
 
       <SaleAllocationEntry>
         <EntryLabel>Max. Investment Size</EntryLabel>
-        <EntryValue>{props.offer.investingTokenSymbol} {formatedValue(formatter.format(Number(props.offer.presaleMaxInvestment)))}</EntryValue>
+        <EntryValue>{props.investingTokenSymbol} {formatedValue(formatter.format(Number(props.presaleMaxInvestment)))}</EntryValue>
       </SaleAllocationEntry>
       
       <Separator />
       
       <SaleAllocationEntry>
         <EntryLabel>Min. Investment Size</EntryLabel>
-        <EntryValue>{props.offer.investingTokenSymbol} {formatedValue(formatter.format(Number(props.offer.presaleMinInvestment)))}</EntryValue>
+        <EntryValue>{props.investingTokenSymbol} {formatedValue(formatter.format(Number(props.presaleMinInvestment)))}</EntryValue>
       </SaleAllocationEntry>
     </SaleAllocationContainer>
   )

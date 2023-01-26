@@ -1,20 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Offer } from 'state/launchpad/types'
+import { OfferTerms as OfferTermsInfo } from 'state/launchpad/types'
 import { InfoList } from '../util/InfoList'
 
 interface Props {
-  offer: Offer
+  terms: OfferTermsInfo
 }
 
 export const OfferTerms: React.FC<Props> = (props) => {
   const terms = React.useMemo(() => [
-    { label: 'Investment Structure', value: props.offer.terms.investmentStructure ?? 'N/A' },
-    { label: 'Divident Yield', value: props.offer.terms.dividentYield ?? 'N/A' },
-    { label: 'Investment Period', value: props.offer.terms.investmentPeriod ?? 'N/A' },
-    { label: 'Gross IRR (%)', value: props.offer.terms.grossIrr ?? 'N/A' },
-    { label: 'Distribution Frequency', value: props.offer.terms.distributionFrequency ?? 'N/A' },
+    { label: 'Investment Structure', value: props.terms.investmentStructure ?? 'N/A' },
+    { label: 'Divident Yield', value: props.terms.dividentYield ?? 'N/A' },
+    { label: 'Investment Period', value: props.terms.investmentPeriod ?? 'N/A' },
+    { label: 'Gross IRR (%)', value: props.terms.grossIrr ?? 'N/A' },
+    { label: 'Distribution Frequency', value: props.terms.distributionFrequency ?? 'N/A' },
   ], [])
 
   return <InfoList title="Offering Terms" entries={terms} />

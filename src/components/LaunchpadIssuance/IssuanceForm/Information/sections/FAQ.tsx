@@ -39,7 +39,10 @@ export const FAQBlock: React.FC<Props> = (props) => {
                   <Label>Question</Label>
 
                   <QuestionWrapper>
-                    <QuestionInput placeholder='Question Title'/>
+                    <QuestionInput 
+                      placeholder='Question Title'
+                      onChange={e => props.setter(`faq[${idx}].question`, e.target.value)} 
+                    />
                   </QuestionWrapper>
                   
                   {(faq.length > 1 || idx > 0) && <RemoveButton onClick={handleRemove(idx)}><Trash /></RemoveButton>}
@@ -51,7 +54,10 @@ export const FAQBlock: React.FC<Props> = (props) => {
 
                 <AnswerWrapper>
                   <Label>Answer</Label>
-                  <AnswerInput placeholder='Answer Description' />
+                  <AnswerInput 
+                    placeholder='Answer Description'
+                    onChange={e => props.setter(`faq[${idx}].answer`, e.target.value)}
+                  />
                   
                   <ErrorText>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.answer}</ErrorText>
                 </AnswerWrapper>

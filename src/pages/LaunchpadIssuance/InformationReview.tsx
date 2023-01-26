@@ -6,7 +6,7 @@ import { OfferReview } from 'components/LaunchpadIssuance/IssuanceForm/Review'
 export default function InformationReviewPage() {
   return (
     <IssuancePageLayout>
-      <OfferReview />
+      {/* <OfferReview /> */}
     </IssuancePageLayout>
   )
 }

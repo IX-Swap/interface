@@ -87,7 +87,7 @@ export const IssuanceVettingForm = () => {
     }
   }, [history, issuanceId])
 
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
+  const textFilter = React.useCallback((value?: string) => value?.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join('') ?? '', [])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
     loader.start()
