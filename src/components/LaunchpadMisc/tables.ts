@@ -20,6 +20,8 @@ export const TableTitle = styled.div`
   width: 100%;
   max-width: 1180px;
 
+  font-family: ${props => props.theme.launchpad.font};
+
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 
@@ -51,15 +53,15 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   `}
   
   ${props => props.tab !== IssuanceFilter.pending && `
-    grid-template-columns: 1.5fr repeat(6, 1fr)  1fr;
+    grid-template-columns: 1.5fr repeat(6,1fr) 1.5fr;
   `}
 
   place-content: center start ;
   align-items: center;
 
-  gap: 2rem;
+  gap: ${props => props.tab === IssuanceFilter.pending ? '2rem' : '1rem'};
 
-  height: 60px;
+  height: 65px;
   width: 100%;
 
   padding: 0.25rem 1rem;
@@ -68,7 +70,7 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   font-weight: 500;
   font-size: 14px;
 
-  line-height: 48px;
+  line-height: 1.5rem;
   letter-spacing: -0.01em;
   
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
@@ -79,4 +81,41 @@ export const IssuanceRow = styled(TableHeader)<{ tab: IssuanceFilter }>`
   color: ${props => props.theme.launchpad.colors.text.title};
 
   opacity: 0.8;
+`
+
+export const Raw = styled.div`
+  font-family:  ${props => props.theme.launchpad.font};
+
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
+export const DefaultRaw = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.25rem;
+  letter-spacing: -0.01em;
+
+  opacity: 0.8;
+
+  font-family:  ${props => props.theme.launchpad.font};
+
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
+`
+
+export const CountRow = styled.div`
+  opacity: 0.8;
+  font-family:  ${props => props.theme.launchpad.font};
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
+`
+
+export const Title = styled.div`
+  cursor: pointer;
+  display: flex;
+  flex-flow: row nowrap;
+  
+  font-family:  ${props => props.theme.launchpad.font};
 `

@@ -20,6 +20,7 @@ import { RejectInfo } from '../shared/RejectInfo'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer, DeleteButton } from '../shared/styled'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
+import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { TextareaField } from '../shared/fields/TextareaField'
 import { useGetFieldArrayId, useLoader, useSaveVettingDraft, useSubmitVettingForm, useVetting, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
@@ -27,6 +28,8 @@ import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useAddPopup } from 'state/application/hooks'
+
+import { defaultValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/util"
 
 
 export const IssuanceVettingForm = () => {
@@ -38,6 +41,7 @@ export const IssuanceVettingForm = () => {
   const addPopup = useAddPopup()
   
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
+  const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
   const onConfirmationClose = React.useCallback(() => {
@@ -89,7 +93,13 @@ export const IssuanceVettingForm = () => {
 
   const textFilter = React.useCallback((value?: string) => value?.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join('') ?? '', [])
 
+  const toSubmit = React.useCallback(() => {
+    setShowConfirmDialog(true)
+  }, [showConfirmDialog])
+
   const submit = React.useCallback(async (values: VettingFormValues) => {
+    setShowConfirmDialog(false)
+
     loader.start()
 
     try {
@@ -102,10 +112,6 @@ export const IssuanceVettingForm = () => {
     } finally {
       loader.stop()
     }
-  }, [initialValues.data, initialValues.vettingId])
-
-  const resetForm = React.useCallback(async (values: VettingFormValues) => {
-    values = {} as VettingFormValues
   }, [initialValues.data, initialValues.vettingId])
 
   const saveDraft = React.useCallback(async (values: VettingFormValues) => {
@@ -144,9 +150,14 @@ export const IssuanceVettingForm = () => {
   }
 
   return (
-    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} onReset={resetForm}>
-      {({ submitForm, setFieldValue, values, handleReset, errors }) => (
+    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} enableReinitialize={true}>
+      {({ submitForm, setFieldValue, values, errors, resetForm }) => (
         <FormContainer>
+          <ConfirmationForm
+            isOpen={showConfirmDialog}
+            onClose={()=> setShowConfirmDialog(false)}
+            onSave={submitForm}/>
+
           <CloseConfirmation
             isOpen={showCloseDialog}
             onDiscard={()=> history.push(`/issuance/create?id=${issuanceId}`)}
@@ -175,14 +186,13 @@ export const IssuanceVettingForm = () => {
                 message={initialValues?.data?.changesRequested}
                 status={initialValues?.data?.status}
                 issuanceId={issuanceId}
-                onClear={handleReset}
-                onSubmit={submitForm}
-                onContactUs={() => console.log('contact us!')}/>)}
+                onClear={() => resetForm({ values: defaultValues })}
+                onSubmit={toSubmit}/>)}
 
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
 
-              <FilledButton onClick={submitForm}>Submit</FilledButton>
+              <FilledButton onClick={toSubmit}>Submit</FilledButton>
             </FormSubmitContainer>
           </FormSideBar>
       
@@ -370,7 +380,7 @@ export const IssuanceVettingForm = () => {
 
             <Row justifyContent='flex-end' alignItems="center" gap="1.5rem">
               <OutlineButton width="280px">Back</OutlineButton>
-              <FilledButton width="280px" onClick={submitForm}>Submit</FilledButton>
+              <FilledButton width="280px" onClick={toSubmit}>Submit</FilledButton>
             </Row>
           </FormBody>
       </FormContainer>
@@ -408,7 +418,9 @@ const AdditionalFiles = styled(FormGrid)`
   place-self: start;
 `
 
-const AddDocumentButton = styled(OutlineButton)``
+const AddDocumentButton = styled(OutlineButton)`
+  font-weight: 600;
+`
 
 const Hint = styled.div`
   font-style: normal;

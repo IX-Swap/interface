@@ -350,9 +350,25 @@ export interface IssuanceVetting {
 export interface Issuance {
   id: number
   name: string
-  offerStatus: IssunaceOfferStatus
 
   vetting?: IssuanceVetting
+}
+
+export interface DashboardOffer {
+  id: number,
+  issuanceId: number,
+  issuanceName: string,
+  hardCap: number,
+  closeDate: Date,
+  status: OfferTimeframeType,
+  softCapReached: boolean,
+  hardCapReached: boolean,
+  investingTokenSymbol: string
+  countInvestors: number,
+  commitment: number,
+  progress: number,
+  progressPercent: number,
+  isMine: boolean
 }
 
 export type IssuancePlain = Pick<Issuance, 'name' | 'id'>

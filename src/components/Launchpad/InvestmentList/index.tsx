@@ -54,6 +54,8 @@ const InvestmentTitle = styled.div`
 
   line-height: 120%;
   letter-spacing: -0.03em;
+  
+  font-family: ${props => props.theme.launchpad.font};
 
   color: ${props => props.theme.launchpad.colors.text.title};
 `

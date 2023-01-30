@@ -73,7 +73,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
           disabled={props.disabled} 
           value={inputValue}
           onInput={onChange}
-          maxLength={props.type === 'text' ? 19 : 255}
+          maxLength={props.type === 'text' ? 19 : 60}
         />
 
         {props.trailing}
