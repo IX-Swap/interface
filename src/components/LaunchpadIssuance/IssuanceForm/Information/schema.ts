@@ -21,37 +21,61 @@ export const schema = yup.object().shape({
 
   title: yup.string().required('Offer name required'),
 
-  // type: yup.string().oneOf(Object.values(OfferType)).required(),
-  network: yup.string().oneOf(Object.values(OfferNetwork)).required(),
-  industry: yup.string().oneOf(Object.values(OfferIndustry)).required(),
-  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required(),
+  network: yup.string().oneOf(Object.values(OfferNetwork)).required('Network required'),
+  industry: yup.string().oneOf(Object.values(OfferIndustry)).required('Industry requried'),
+  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required('Investment Type required'),
 
-  issuerIdentificationNumber: yup.string().required().min(8, 'Identification number should be at least 8 characters'),
-  country: yup.string().required().oneOf(countriesList, 'Select a country from the list'),
+  issuerIdentificationNumber: yup.string().required('Enter company identification number').min(8, 'Identification number should be at least 8 characters'),
+  country: yup.string().required('Country requried').oneOf(countriesList, 'Select a country from the list'),
 
-  tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required(),
-  tokenName: yup.string().required(),
-  tokenTicker: yup.string().required().min(2, 'Token symbol should at least 2 charachters'),
-  tokenPrice: yup.string().required(),
-  tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required(),
+  tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required('Token type required'),
+  tokenName: yup.string().required('Token name required'),
+  tokenTicker: yup.string().required('Token Ticker requried').min(2, 'Token symbol should at least 2 charachters'),
+  tokenPrice: yup.string().required('Enter token price'),
+  tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required('Token standart required'),
 
   // investingTokenAddress: yup.string().matches(/0x[0-9a-fA-F]+/),
   // investingTokenSymbol: yup.string(),
 
   // decimals: yup.number(),
 
-  softCap: yup.string().matches(/[0-9]+/).required(),
-  hardCap: yup.string().matches(/[0-9]+/).required(),
+  softCap: yup.string().matches(/[0-9]+/, 'Invalid value').required('Requried'),
+  hardCap: yup.string().matches(/[0-9]+/, 'Invalid value').required('Required'),
 
-  minInvestment: yup.string().required(),
-  maxInvestment: yup.string().required(),
+  minInvestment: yup.string()
+    .required('Required')
+    .test('minInvestmentConstraint', 'Mininimal investment should smaller than maximal investment', function (): boolean | yup.ValidationError {
+      if (!this.parent.maxInvestment || !this.parent.minInvestment) {
+        return true
+      }
 
-  hasPresale: yup.boolean().required(),
+      if (Number(this.parent.minInvestment) >= Number(this.parent.maxInvestment)) {
+        return false
+      }
 
-  presaleMaxInvestment: yup.string().when('hasPresale', { is: true, then: yup.string().required(), otherwise: yup.string() }),
-  presaleMinInvestment: yup.string().when('hasPresale', { is: true, then: yup.string().required(), otherwise: yup.string() }),
+      return true
+    }),
 
-  presaleAlocated: yup.string().when('hasPresale', { is: true, then: yup.string().required(), otherwise: yup.string() }),
+  maxInvestment: yup.string()
+    .required('Required')
+    .test('maxInvestmentConstraint', 'Maximal investment should bigger than minimal investment', function (maximal): boolean | yup.ValidationError {
+      if (!this.parent.maxInvestment || !this.parent.minInvestment) {
+        return true
+      }
+
+      if (Number(this.parent.maxInvestment) <= Number(this.parent.minInvestment)) {
+        return false
+      }
+
+      return true
+    }),
+
+  hasPresale: yup.boolean().required('Required'),
+
+  presaleMaxInvestment: yup.string().when('hasPresale', { is: true, then: yup.string().required('Required'), otherwise: yup.string() }),
+  presaleMinInvestment: yup.string().when('hasPresale', { is: true, then: yup.string().required('Required'), otherwise: yup.string() }),
+
+  presaleAlocated: yup.string().when('hasPresale', { is: true, then: yup.string().required('Requried'), otherwise: yup.string() }),
 
   email: yup.string().required('Email required').email('Enter a valid email'),
   website: yup.string().required('Website URL required').url('Enter a valid URL'),
@@ -63,7 +87,7 @@ export const schema = yup.object().shape({
   cardPicture: requriedFileSchema,
   
   terms: yup.object().shape({
-    investmentStructure: yup.string().required(),
+    investmentStructure: yup.string().required('Investment Structure required'),
     dividentYield: yup.string(),
     investmentPeriod: yup.number(),
     grossIrr: yup.string(),
@@ -77,28 +101,28 @@ export const schema = yup.object().shape({
 
   members: yup.array(yup.object().shape({
     photo: requriedFileSchema ,
-    name: yup.string().required(),
-    role: yup.string().required(),
-    about: yup.string().required()
+    name: yup.string().required('Required'),
+    role: yup.string().required('Required'),
+    about: yup.string().required('Required')
   })),
 
   timeframe: yup.object().when('hasPresale', {
     is: true,
     then: yup.object().shape({
-      whitelist: yup.date().required(),
-      presale: yup.date().required(),
+      whitelist: yup.date().required('Required'),
+      presale: yup.date().required('Required'),
 
-      sale: yup.date().required(),
-      closed: yup.date().required(),
-      claim: yup.date().required()
+      sale: yup.date().required('Required'),
+      closed: yup.date().required('Required'),
+      claim: yup.date().required('Required')
     }),
     otherwise: yup.object().shape({
       whitelist: yup.date(),
       presale: yup.date(),
 
-      sale: yup.date().required(),
-      closed: yup.date().required(),
-      claim: yup.date().required()
+      sale: yup.date().required('Required'),
+      closed: yup.date().required('Required'),
+      claim: yup.date().required('Required')
     })
   })
   ,

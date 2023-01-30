@@ -196,7 +196,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
           <ArrowLeft color={theme.launchpad.colors.primary} />
         </OutlineButton>
 
-        <FormTitle>Information1</FormTitle>
+        <FormTitle>Information</FormTitle>
       </FormHeader>
 
       <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit} validationSchema={schema}>

@@ -775,7 +775,7 @@ const useUploadOfferFiles = () => {
         return
       }
 
-      files.push({ name: `document.${idx}`, file: entry.file.file })
+      files.push({ name: `document.${idx}`, file: entry.file?.file })
     })
 
     return files
@@ -789,14 +789,14 @@ const useUploadOfferFiles = () => {
     ]
 
     if (payload.cardPicture?.id !== initial.cardPicture?.id) {
-      files.push({ name: 'card', file: payload.cardPicture.file })
+      files.push({ name: 'card', file: payload.cardPicture?.file })
     }
     
     if (payload.profilePicture?.id !== initial.profilePicture?.id) {
-      files.push({ name: 'profile', file: payload.cardPicture.file })
+      files.push({ name: 'profile', file: payload.cardPicture?.file })
     }
 
-    return uploadFiles(files)
+    return uploadFiles(files.filter(x => x.file))
   }, [uploadFiles, getDocumentFiles, getImageFiles, getMemberFiles])
 }
 
