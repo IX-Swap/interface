@@ -238,12 +238,12 @@ export interface Offer {
 
   investingTokenAddress: string
   investingTokenSymbol: string
-  
+
   decimals: number
 
   softCap: string
   hardCap: string
-  
+
   minInvestment: string
   maxInvestment: string
 
@@ -276,11 +276,11 @@ export interface Offer {
   timeframe: OfferTimeframe
   terms: OfferTerms
 
-  daysTillSale?: number
-  daysTillClosed?: number
-  hoursTillClosed?: number
+  daysTillSale: number
+  daysTillClosed: number
+  hoursTillClosed: number
   totalInvestment: number
-  
+
   members: OfferTeamMember[]
   faq: OfferFAQ[]
 
@@ -293,6 +293,9 @@ export interface Offer {
   payments: OfferPayment[];
   subscriptions: OfferSubscription[];
   whitelists: OfferWhitelist[];
+
+  usersClaimed: boolean;
+  issuerClaimed: boolean;
 }
 
 export interface IssuanceVettingDocuments {
@@ -370,3 +373,12 @@ export interface DashboardOffer {
 }
 
 export type IssuancePlain = Pick<Issuance, 'name' | 'id'>
+
+export interface ManagedOffer extends Offer {
+  preSaleParticipants: number;
+  saleParticipants: number;
+  totalParticipants: number;
+  preSaleInvestment: number;
+  saleInvestment: number;
+  totalInvestment: number;
+}

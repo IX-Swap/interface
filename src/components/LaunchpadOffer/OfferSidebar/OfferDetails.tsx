@@ -15,7 +15,7 @@ import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 
 import { OfferInvestmentIndicator } from './OfferInvestmentIndicator'
-import { OfferFundRaiseIndicator } from './OfferFundRaiseIndicatpor'
+import { OfferFundRaiseIndicator } from './OfferFundRaiseIndicator'
 
 import { InvestDialog } from '../InvestDialog'
 import { Row, Column, Separator } from '../../LaunchpadMisc/styled'

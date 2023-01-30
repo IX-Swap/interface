@@ -22,7 +22,8 @@ import {
   Offer,
   OfferFileType,
   OfferStatus,
-  WhitelistStatus
+  WhitelistStatus,
+  ManagedOffer
 } from "state/launchpad/types"
 
 import { toggleKYCDialog } from "./actions"
@@ -84,7 +85,7 @@ export const useSetAllowOnlyAccredited = () => {
 
 export const useCheckKYC = () => {
   const { kyc } = useKYCState()
-  
+
   return React.useCallback((allowOnlyAccredited: boolean, isClosed: boolean) => {
     return !!kyc && kyc.status === KYCStatuses.APPROVED && (isClosed || (!allowOnlyAccredited || kyc.individual?.accredited === 1))
   }, [kyc])
@@ -128,7 +129,7 @@ export const useFormatOfferValue = (addComa = true) => {
         .flatMap((x, idx) => addComa && idx > 0 && idx % 3 === 0 ? [',', x] : x)
         .flat().reverse()
         .join('')
-      
+
       if (decimals !== undefined) {
         result = result.concat(`.${decimals}`)
       }
@@ -185,7 +186,7 @@ export const useGetWhitelistStatus = (id: string) => {
 }
 
 export const useRequestWhitelist = (id: string) => {
-  return React.useCallback((payload: { amount: number; isInterested: boolean }) => 
+  return React.useCallback((payload: { amount: number; isInterested: boolean }) =>
     apiService.post(`/offers/${id}/me/whitelist`, payload), [id])
 }
 
@@ -199,7 +200,7 @@ export const useInvest = (id: string) => {
   }, [id])
 }
 
-export const useDerivedBalanceInfo = (id: string) => { 
+export const useDerivedBalanceInfo = (id: string) => {
   return React.useCallback((
     amount: string,
     inputCurrency: Currency | null | undefined,
@@ -208,7 +209,7 @@ export const useDerivedBalanceInfo = (id: string) => {
     if (amount) {
       const realAmount = amount.replace(/,/g, '')
       const parsedAmount = tryParseAmount(realAmount, inputCurrency ?? undefined)
-  
+
       return parsedAmount && balance && !balance.lessThan(parsedAmount)
     }
     return true
@@ -216,7 +217,7 @@ export const useDerivedBalanceInfo = (id: string) => {
 }
 
 export const useClaimOffer = (id: string) => {
-  return React.useCallback((isSuccessful: boolean) => 
+  return React.useCallback((isSuccessful: boolean) =>
     apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, null), [id])
 }
 
@@ -318,9 +319,9 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
       .then(res => ({ id: asset.id, file: new File([res], asset.name) }))
   }, [])
 
-  const findFile = React.useCallback((files: { id: number, file: File}[], id?: number) => {
+  const findFile = React.useCallback((files: { id: number, file: File }[], id?: number) => {
     if (!id) {
-      return 
+      return
     }
 
     return files.find(x => x.id === id)
@@ -338,7 +339,7 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
       getFile(payload.document.auditedFinancials),
 
       ...payload.fundingDocuments.map(x => getFile(x.document)),
-      
+
       ...payload.directors.flatMap(entry => [getFile(entry.proofOfAddress), getFile(entry.proofOfIdentity)]),
       ...payload.beneficialOwners.flatMap(entry => [getFile(entry.proofOfAddress), getFile(entry.proofOfIdentity)]),
     ])
@@ -412,7 +413,7 @@ export const useGetIssuances = () => {
     return {
       hasMore: result.nextPage !== null,
       items: result.items,
-      
+
       totalPages: result.totalPages,
       totalItems: result.totalItems,
     }
@@ -442,7 +443,7 @@ export const useGetOffersFull = () => {
     return {
       hasMore: result.nextPage !== null,
       items: result.items,
-      
+
       totalPages: result.totalPages,
       totalItems: result.totalItems,
     }
@@ -483,13 +484,13 @@ const useUploadVettingFiles = () => {
 
   return React.useCallback(async (payload: VettingFormValues, initial: VettingFormValues) => {
     const files: FileUpload[] = []
-    const filesToRemove: { name: string, id: number | null } [] = []
+    const filesToRemove: { name: string, id: number | null }[] = []
 
     const addDocument = (key: keyof VettingFormValues['document']) => {
-      if (!initial.document[key] || initial.document[key].id !== payload.document?.[key]?.id) 
+      if (!initial.document[key] || initial.document[key].id !== payload.document?.[key]?.id)
         files.push({ name: `document.${key}Id`, file: payload.document[key]?.file })
-      
-      if(initial.document[key] && payload.document?.[key] === null)
+
+      if (initial.document[key] && payload.document?.[key] === null)
         filesToRemove.push({ name: `document.${key}Id`, id: null })
     }
 
@@ -509,7 +510,7 @@ const useUploadVettingFiles = () => {
     })
 
     payload.fundingDocuments?.forEach((entry, idx) => {
-      if (!initial.fundingDocuments.some(x => x.id === entry.id)) 
+      if (!initial.fundingDocuments.some(x => x.id === entry.id))
         files.push({ name: `fundingDocuments.${idx}`, file: entry.file?.file })
     })
 
@@ -518,11 +519,11 @@ const useUploadVettingFiles = () => {
     const updatedFundingDocuments = new Set(payload.fundingDocuments.map(x => x.id))
     const removedFundingDocuments = initial.fundingDocuments.filter(x => !updatedFundingDocuments.has(x.id))
 
-    const filesToUpload = files.filter(x => !!x.file) 
+    const filesToUpload = files.filter(x => !!x.file)
 
     const uploadedFiles = filesToUpload.length === 0 ? [] : await uploadFiles(filesToUpload)
 
-    return [ ...uploadedFiles, ...filesToRemove]
+    return [...uploadedFiles, ...filesToRemove]
 
     /*if (filesToUpload.length === 0 && filesToRemove.length === 0) {
       return []
@@ -535,7 +536,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
-    let data: Record<string, any> = { 
+    let data: Record<string, any> = {
       issuanceId,
 
       toSubmit: false,
@@ -550,7 +551,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
       document: payload.document,
       directors: payload.directors
-        .map((x: any) => ({ 
+        .map((x: any) => ({
           id: x.id,
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
@@ -558,7 +559,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
         })),
 
       beneficialOwners: payload.beneficialOwners
-        .map((x: any) => ({ 
+        .map((x: any) => ({
           id: x.id,
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
@@ -575,7 +576,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
         .filter(x => x.name.startsWith(key))
         .map(x => ({ ...x, name: x.name.split('.')[2] as keyof DirectorInfo, index: Number(x.name.split('.')[1]) }))
 
-      
+
       fileUpdates.forEach(x => {
         data[key][x.index][x.name] = x.id
       })
@@ -604,7 +605,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
     data = Object.entries(data)
       .filter(([key, value]) => typeof value === 'boolean' || value)
-      .reduce((acc, [key, value]) => ({ ...acc, [key]: value}), {})
+      .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
     if (vettindId) {
       delete data.issuanceId
@@ -622,10 +623,10 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
   return React.useCallback(async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
     const uploadedFiles = await uploadFiles(payload, initialValues)
 
-    const findDoc = (key: keyof VettingFormValues['document']) => 
+    const findDoc = (key: keyof VettingFormValues['document']) =>
       uploadedFiles.find(x => x.name === `document.${key}Id`)?.id ?? initialValues.document[key].id
 
-    const data: Record<string, any> = { 
+    const data: Record<string, any> = {
       issuanceId,
 
       toSubmit: true,
@@ -640,7 +641,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
 
       document: {
         pitchDeckId: findDoc('pitchDeck'),
-        
+
         certificateOfIncorporationId: findDoc('certificateOfIncorporation'),
         certificateOfIncumbencyId: findDoc('certificateOfIncumbency'),
 
@@ -654,7 +655,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
       },
 
       directors: payload.directors
-        .map((x: any) => ({ 
+        .map((x: any) => ({
           id: x.id,
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
@@ -662,7 +663,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
         })),
 
       beneficialOwners: payload.beneficialOwners
-        .map((x: any) => ({ 
+        .map((x: any) => ({
           id: x.id,
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
@@ -678,7 +679,7 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
         .filter(x => x.name.startsWith(key))
         .map(x => ({ ...x, name: x.name.split('.')[2] as keyof DirectorInfo, index: Number(x.name.split('.')[1]) }))
 
-      
+
       fileUpdates.forEach(x => {
         data[key][x.index][x.name] = x.id
       })
@@ -724,7 +725,7 @@ const useUploadOfferFiles = () => {
     const uploadedFiles = new Set(initial.members.filter(x => x.photo?.id).map(x => x.photo?.id))
 
     const files: FileUpload[] = []
-    
+
     payload.members.forEach((entry, idx) => {
       if (uploadedFiles.has(entry.photo?.id)) {
         return
@@ -738,7 +739,7 @@ const useUploadOfferFiles = () => {
 
   const getImageFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
     const uploadedFiles = new Set(initial.images.filter(x => x.id).map(x => x.id))
-    
+
     const files: FileUpload[] = []
 
     payload.images.forEach((entry, idx) => {
@@ -754,7 +755,7 @@ const useUploadOfferFiles = () => {
 
   const getDocumentFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
     const uploadedFiles = new Set(initial.additionalDocuments.filter(x => x.file.id).map(x => x.file.id))
-    
+
     const files: FileUpload[] = []
 
     payload.additionalDocuments.forEach((entry, idx) => {
@@ -778,7 +779,7 @@ const useUploadOfferFiles = () => {
     if (payload.cardPicture.id !== initial.cardPicture.id) {
       files.push({ name: 'card', file: payload.cardPicture.file })
     }
-    
+
     if (payload.profilePicture.id !== initial.profilePicture.id) {
       files.push({ name: 'profile', file: payload.cardPicture.file })
     }
@@ -792,9 +793,9 @@ export const useSubmitOffer = (vettingId?: number | string) => {
 
   return React.useCallback(async (payload: InformationFormValues, initial: InformationFormValues, draft = false, offerId?: number) => {
     const uploadedFiles = await uploadFiles(payload, initial)
-      
-    const findDoc = (prefix: 'member' | 'document' | 'image', idx: number) => 
-      uploadedFiles.find(x => x.name === `${prefix}.${idx}`)?.id 
+
+    const findDoc = (prefix: 'member' | 'document' | 'image', idx: number) =>
+      uploadedFiles.find(x => x.name === `${prefix}.${idx}`)?.id
 
     const data: Record<string, any> = {
       offerId,
@@ -815,7 +816,7 @@ export const useSubmitOffer = (vettingId?: number | string) => {
       issuerIdentificationNumber: payload.issuerIdentificationNumber,
       country: payload.country,
 
-      socialMedia: payload.social.reduce((acc, e) => ({...acc, [e.type]: e.url}), {}),
+      socialMedia: payload.social.reduce((acc, e) => ({ ...acc, [e.type]: e.url }), {}),
 
       tokenAddress: "",
       tokenSymbol: payload.tokenTicker,
@@ -869,7 +870,7 @@ export const useSubmitOffer = (vettingId?: number | string) => {
           type: OfferFileType.document,
           fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file.id
         })),
-        
+
         ...payload.images.map((x, idx) => ({
           type: OfferFileType.image,
           fileId: findDoc('image', idx) ?? initial.images[idx].id
@@ -880,7 +881,7 @@ export const useSubmitOffer = (vettingId?: number | string) => {
           videoUrl: x.url
         })),
       ],
-      
+
       timeframe: {
         whitelist: payload.timeframe.whitelist,
         preSale: payload.timeframe.presale,
@@ -897,4 +898,19 @@ export const useSubmitOffer = (vettingId?: number | string) => {
       return apiService.post(`/offers`, data)
     }
   }, [uploadFiles, vettingId])
+}
+
+
+export const useGetManagedOffer = (id: string | undefined) => {
+  const loader = useLoader()
+  const [data, setData] = React.useState<ManagedOffer>()
+
+  const load = React.useCallback(() => {
+    apiService.get(`/offers/me/${id}`)
+      .then(res => res.data as ManagedOffer).then(setData)
+      .finally(loader.stop)
+  }, [])
+  React.useEffect(() => { load() }, [])
+
+  return { loading: loader.isLoading, load, data }
 }
