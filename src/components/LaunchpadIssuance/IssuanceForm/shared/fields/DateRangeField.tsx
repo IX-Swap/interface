@@ -11,6 +11,7 @@ import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 
 type DateRange = moment.Moment[]
+type DateRangeValue = Date[]
 
 interface Props {
   mode: 'single' | 'range'
@@ -25,7 +26,7 @@ interface Props {
 
   field?: string
   setter?: (field: string, value: any) => void
-  onChange?: (range: DateRange) => void
+  onChange?: (range: DateRangeValue) => void
 }
 
 export const DateRangeField: React.FC<Props> = (props) => {
@@ -55,11 +56,11 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
 
     if (props.field && props.setter) {
-      props.setter(props.field, props.mode === 'single' ? selectedRange[0] : selectedRange)
+      props.setter(props.field, props.mode === 'single' ? selectedRange[0].toDate() : selectedRange.map(x => x.toDate()))
     }
 
     if (props.onChange) {
-      props.onChange(selectedRange)
+      props.onChange(selectedRange.map(x => x.toDate()))
     }
   }, [range])
 
