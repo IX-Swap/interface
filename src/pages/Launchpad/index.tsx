@@ -59,4 +59,8 @@ export const LaunchpadContainer = styled.div<{ background?: string }>`
 
   font-family: ${props => props.theme.launchpad.font};
   background: ${props => props.background ?? props.theme.launchpad.colors.background};
+
+  * {
+    font-family: ${props => props.theme.launchpad.font};
+  }
 `

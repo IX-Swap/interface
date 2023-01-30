@@ -209,7 +209,7 @@ export const NewIssuanceForm = () => {
 
 
 
-            {issuanceStatus === undefined && (
+            {(issuanceStatus === undefined || issuanceStatus === IssuanceStatus.draft) && (
               <IssuanceFormStep 
                 stepNumber={2} 
                 icon={<IssuanceInformationIcon />}
