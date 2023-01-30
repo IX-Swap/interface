@@ -4,6 +4,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, ChevronUp } from 'react-feather'
+import Portal from '@reach/portal'
 
 import { Formik, FormikProps } from 'formik'
 
@@ -11,8 +12,10 @@ import { InformationFormValues } from './types'
 
 import { countriesList } from 'constants/countriesList'
 
-import { Row, Separator, Spacer } from 'components/LaunchpadMisc/styled'
+import { Row, Separator, Spacer, LoaderContainer } from 'components/LaunchpadMisc/styled'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
+import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
 import { FormGrid } from '../shared/FormGrid'
@@ -45,8 +48,7 @@ import {
 import { useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer, useVetting } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
-import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
-import Portal from '@reach/portal'
+
 
 interface Props {
   edit?: boolean
@@ -64,6 +66,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   const [showReview, setShowReview] = React.useState(false)
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
+  const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
   const issuanceId = React.useMemo(() => {
@@ -102,7 +105,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       await submitOffer(values, initialValues, draft, vetting.data?.id)
 
       addPopup({ info: { success: true, summary: 'Offer created successfully' }})
-      goBack();
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
@@ -111,8 +114,17 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [vetting.data?.id])
 
   const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
+
+  const toSubmit = React.useCallback(() => {
+    setShowConfirmDialog(true)
+  }, [showConfirmDialog])
+
   const submit = React.useCallback((values: InformationFormValues) => _submit(values, false), [_submit])
   
+  const goMain = React.useCallback(() => {
+    history.push(`/issuance/create?id=${issuanceId}`)
+  }, [history, issuanceId])
+
   const goBack = React.useCallback(() => {
     if (isSafeToClose) {
       history.push('/issuance/create')
@@ -166,11 +178,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [])
 
   React.useEffect(() => {
-    window.addEventListener('beforeunload', alertUser)
-
-    return () => {
-      window.removeEventListener('beforeunload', alertUser)
-    }
+    const listener = () => true
+    
+    window.addEventListener('beforeunload', listener)
+  
+    return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
   return (
@@ -179,32 +191,42 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         <ChevronUp color={theme.launchpad.colors.foreground} size="20" />
       </ScrollToTop>
 
-
-      <CloseConfirmation
-        isOpen={showCloseDialog}
-        onDiscard={onConfirmationClose}
-        onClose={onConfirmationClose}
-        onSave={() => console.log('save')} />
-
       <FormHeader>
         <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">
           <ArrowLeft color={theme.launchpad.colors.primary} />
         </OutlineButton>
 
-        <FormTitle>Information</FormTitle>
+        <FormTitle>Information1</FormTitle>
       </FormHeader>
 
       <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit} validationSchema={schema}>
         {({ values, errors, setFieldValue, submitForm }) => (
           <>
+            <ConfirmationForm
+              isOpen={showConfirmDialog}
+              onClose={()=> setShowConfirmDialog(false)}
+              onSave={submitForm}/>
+
+            <CloseConfirmation
+              isOpen={showCloseDialog}
+              onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
+              onClose={onConfirmationClose}
+              onSave={() => saveDraft(values)} />
+
             {showReview && (
               <Portal>
                 <OfferReview 
                   values={values}
                   onClose={() => setShowReview(false)}
-                  onSubmit={(draft: boolean) => _submit(values, draft)}
+                  onSubmit={(draft: boolean) => draft ? toSubmit() : _submit(values, draft)}
                 />
               </Portal>
+            )}
+
+            {loader.isLoading && (
+              <LoaderContainer width="100vw" height="100vh">
+                <Loader />
+              </LoaderContainer>
             )}
 
             <FormSideBar>
@@ -214,7 +236,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
                 <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                <FilledButton onClick={submitForm}>Submit</FilledButton>
+                <FilledButton onClick={toSubmit}>Submit</FilledButton>
               </FormSubmitContainer>
             </FormSideBar>
             <FormBody>

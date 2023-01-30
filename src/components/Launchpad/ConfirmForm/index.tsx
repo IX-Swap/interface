@@ -28,8 +28,7 @@ export const ConfirmationForm: React.FC<Props> = (props) => {
           </MessageTitle>
 
           <MessageSubtitle>
-            Would you like to submit
-            this Form?
+            Would you like to submit this form?
           </MessageSubtitle>
         </Message>
 
