@@ -14,10 +14,11 @@ import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/address
 import { useActiveWeb3React } from 'hooks/web3'
 import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
+import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
 
 export default function Launchpad() {
-  const { library, chainId, account } = useActiveWeb3React()
-  
+  const { chainId, account } = useActiveWeb3React()
+
   const hideHeader = useSetHideHeader()
 
   React.useEffect(() => {
@@ -27,9 +28,9 @@ export default function Launchpad() {
       hideHeader(false)
     }
   }, [])
-  
+
   const blurred = React.useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0), 
+    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
     [account, chainId]
   )
 
@@ -48,6 +49,7 @@ export default function Launchpad() {
       <Header />
       <Banner />
       <Offers />
+      <LaunchpadWhitelistWallet />
       <Footer />
     </LaunchpadContainer>
   )
@@ -57,6 +59,6 @@ export const LaunchpadContainer = styled.div<{ background?: string }>`
   min-height: 100vh;
   padding: 0 4rem;
 
-  font-family: ${props => props.theme.launchpad.font};
-  background: ${props => props.background ?? props.theme.launchpad.colors.background};
+  font-family: ${(props) => props.theme.launchpad.font};
+  background: ${(props) => props.background ?? props.theme.launchpad.colors.background};
 `

@@ -37,3 +37,11 @@ export interface PaginationArgs {
   skip: number
   limit: number
 }
+
+export enum WhiteListType {
+  ALL = 'all',
+  MANUAL = 'manual',
+  AUTOMATED = 'automated',
+}
+
+export type WhitelistFilter = Partial<Record<'search' | 'type' | 'page' | 'offset', number | string>>

@@ -1,5 +1,5 @@
-import { IssuanceStatus } from "components/LaunchpadIssuance/types"
-import { User } from "state/admin/actions"
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { User } from 'state/admin/actions'
 
 export enum OfferStatus {
   draft = 'draft',
@@ -72,7 +72,7 @@ export enum OfferDistributionFrequency {
   quarterly = 'quarterly',
   semiAnnually = 'semiAnnually',
   annually = 'annually',
-  other = 'other'
+  other = 'other',
 }
 
 export enum WhitelistStatus {
@@ -100,7 +100,7 @@ export enum PaymentType {
 export enum IssunaceOfferStatus {
   pre = 'pre',
   live = 'live',
-  ended = 'ended'
+  ended = 'ended',
 }
 
 export interface Asset {
@@ -155,7 +155,7 @@ export enum OfferInvestmentStructure {
   equity = 'equity',
   debt = 'debt',
   hybrid = 'hybrid',
-  other = 'other'
+  other = 'other',
 }
 
 export interface OfferInvestment {
@@ -226,7 +226,6 @@ export interface Offer {
 
   capitalStructure: OfferCapitalStructure
 
-
   country: string
 
   socialMedia: OfferSocialMediaLinks
@@ -238,12 +237,12 @@ export interface Offer {
 
   investingTokenAddress: string
   investingTokenSymbol: string
-  
+
   decimals: number
 
   softCap: string
   hardCap: string
-  
+
   minInvestment: string
   maxInvestment: string
 
@@ -280,7 +279,7 @@ export interface Offer {
   daysTillClosed?: number
   hoursTillClosed?: number
   totalInvestment: number
-  
+
   members: OfferTeamMember[]
   faq: OfferFAQ[]
 
@@ -288,11 +287,11 @@ export interface Offer {
   updatedAt: Date
   deletedAt?: Date
 
-  files: OfferFile[];
-  investments: OfferInvestment[];
-  payments: OfferPayment[];
-  subscriptions: OfferSubscription[];
-  whitelists: OfferWhitelist[];
+  files: OfferFile[]
+  investments: OfferInvestment[]
+  payments: OfferPayment[]
+  subscriptions: OfferSubscription[]
+  whitelists: OfferWhitelist[]
 }
 
 export interface IssuanceVettingDocuments {
@@ -353,19 +352,19 @@ export interface Issuance {
 }
 
 export interface DashboardOffer {
-  id: number,
-  issuanceId: number,
-  issuanceName: string,
-  hardCap: number,
-  closeDate: Date,
-  status: OfferTimeframeType,
-  softCapReached: boolean,
-  hardCapReached: boolean,
+  id: number
+  issuanceId: number
+  issuanceName: string
+  hardCap: number
+  closeDate: Date
+  status: OfferTimeframeType
+  softCapReached: boolean
+  hardCapReached: boolean
   investingTokenSymbol: string
-  countInvestors: number,
-  commitment: number,
-  progress: number,
-  progressPercent: number,
+  countInvestors: number
+  commitment: number
+  progress: number
+  progressPercent: number
   isMine: boolean
 }
 
