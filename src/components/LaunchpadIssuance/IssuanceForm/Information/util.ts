@@ -47,7 +47,9 @@ export const initialValues = {
   members: [{ id: 0 }],
   faq: [{ id: 0 }],
 
-  terms: {},
+  terms: {
+    investmentStructure: ""
+  },
 
   timeframe: {
     whitelist: undefined,

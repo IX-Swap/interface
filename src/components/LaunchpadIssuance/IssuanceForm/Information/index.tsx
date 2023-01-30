@@ -42,10 +42,11 @@ import {
   distributionFrequencyOptions,
   investmentStructureOptions 
 } from './util'
-import { useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer } from 'state/launchpad/hooks'
+import { useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer, useVetting } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
+import Portal from '@reach/portal'
 
 interface Props {
   edit?: boolean
@@ -65,7 +66,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
-  const vettingId = React.useMemo(() => {
+  const issuanceId = React.useMemo(() => {
     const value = decodeURI(history.location.search).replace('?', '').split('&')
       .map(x => x.split('='))
       .map(([key, value]) => ({ key, value }))
@@ -79,7 +80,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     return Number(value)
   }, [])
 
-  const offer = useOfferFormInitialValues(vettingId)
+  const vetting = useVetting(issuanceId)
+  const offer = useOfferFormInitialValues(issuanceId)
   
   const countries = React.useMemo(() => {
     return countriesList
@@ -92,12 +94,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     setShowCloseDialog(false)
   }, [])
 
-  const submitOffer = useSubmitOffer(vettingId)
+  const submitOffer = useSubmitOffer()
   const _submit = React.useCallback(async (values: InformationFormValues, draft = false) => {
     loader.start()
 
     try {
-      await submitOffer(values, initialValues, draft)
+      await submitOffer(values, initialValues, draft, vetting.data?.id)
 
       addPopup({ info: { success: true, summary: 'Offer created successfully' }})
       goBack();
@@ -106,7 +108,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     } finally {
       loader.stop()
     }
-  }, [])
+  }, [vetting.data?.id])
 
   const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
   const submit = React.useCallback((values: InformationFormValues) => _submit(values, false), [_submit])
@@ -195,9 +197,15 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit} validationSchema={schema}>
         {({ values, errors, setFieldValue, submitForm }) => (
           <>
-            <IssuanceDialog show={showReview} width="80vw" height='95vh' padding="2rem">
-              <OfferReview values={values} onClose={() => setShowReview(false)} />
-            </IssuanceDialog>
+            {showReview && (
+              <Portal>
+                <OfferReview 
+                  values={values}
+                  onClose={() => setShowReview(false)}
+                  onSubmit={(draft: boolean) => _submit(values, draft)}
+                />
+              </Portal>
+            )}
 
             <FormSideBar>
               {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
@@ -238,7 +246,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
               <FormGrid>
                 <FormField 
-                  field="name"
+                  field="title"
                   setter={setFieldValue}
                   label="Name of Issuance"
                   placeholder='Name of Issuance'
@@ -494,8 +502,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit || (values.hasPresale && !values.timeframe.presale)}
                   minDate={values.hasPresale ? values.timeframe.presale : undefined}
                   onChange={([start, end]) => {
-                    setFieldValue('timeframe.sale', start?.toDate())
-                    setFieldValue('timeframe.closed', end?.toDate())
+                    setFieldValue('timeframe.sale', start)
+                    setFieldValue('timeframe.closed', end)
                   }}
                   error={errors.timeframe?.sale as string}
                 />

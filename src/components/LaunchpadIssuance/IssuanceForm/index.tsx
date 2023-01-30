@@ -43,7 +43,7 @@ export const NewIssuanceForm = () => {
   }, [history.location.search])
 
   const vettingStatus = React.useMemo(() => issuance.data?.vetting?.status, [issuance.data])
-  const issuanceStatus = React.useMemo(() => undefined, [issuance.data])
+  const issuanceStatus = React.useMemo(() => issuance.data?.vetting?.offer?.status, [issuance.data])
 
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
   const selectIssuance = React.useCallback((id: number) => {

@@ -699,7 +699,7 @@ const useUploadOfferFiles = () => {
     const files: FileUpload[] = []
     
     payload.members.forEach((entry, idx) => {
-      if (uploadedFiles.has(entry.photo?.id)) {
+      if (!entry.photo || uploadedFiles.has(entry.photo?.id)) {
         return
       }
 
@@ -715,7 +715,7 @@ const useUploadOfferFiles = () => {
     const files: FileUpload[] = []
 
     payload.images.forEach((entry, idx) => {
-      if (uploadedFiles.has(entry.id)) {
+      if (uploadedFiles.has(entry?.id)) {
         return
       }
 
@@ -726,12 +726,12 @@ const useUploadOfferFiles = () => {
   }, [])
 
   const getDocumentFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
-    const uploadedFiles = new Set(initial.additionalDocuments.filter(x => x.file.id).map(x => x.file.id))
+    const uploadedFiles = new Set(initial.additionalDocuments.filter(x => x.file?.id).map(x => x.file?.id))
     
     const files: FileUpload[] = []
 
     payload.additionalDocuments.forEach((entry, idx) => {
-      if (uploadedFiles.has(entry.file.id)) {
+      if (!entry.file || uploadedFiles.has(entry.file?.id)) {
         return
       }
 
@@ -748,11 +748,11 @@ const useUploadOfferFiles = () => {
       ...getMemberFiles(payload, initial),
     ]
 
-    if (payload.cardPicture.id !== initial.cardPicture.id) {
+    if (payload.cardPicture?.id !== initial.cardPicture?.id) {
       files.push({ name: 'card', file: payload.cardPicture.file })
     }
     
-    if (payload.profilePicture.id !== initial.profilePicture.id) {
+    if (payload.profilePicture?.id !== initial.profilePicture?.id) {
       files.push({ name: 'profile', file: payload.cardPicture.file })
     }
 
@@ -804,7 +804,7 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       .then(res => res as { id: number, file: File }[])
 
     return { 
-      id: payload.id,
+      id: payload?.id,
       title: payload.title,
 
       shortDescription: payload.shortDescription,
@@ -876,16 +876,16 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
   return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id }
 }
 
-export const useSubmitOffer = (vettingId?: number | string) => {
+export const useSubmitOffer = () => {
   const uploadFiles = useUploadOfferFiles()
 
-  return React.useCallback(async (payload: InformationFormValues, initial: InformationFormValues, draft = false, offerId?: number) => {
+  return React.useCallback(async (payload: InformationFormValues, initial: InformationFormValues, draft = false, vettingId?: number | string,  offerId?: number) => {
     const uploadedFiles = await uploadFiles(payload, initial)
       
     const findDoc = (prefix: 'member' | 'document' | 'image', idx: number) => 
       uploadedFiles.find(x => x.name === `${prefix}.${idx}`)?.id 
 
-    const data: Record<string, any> = {
+    let data: Record<string, any> = {
       offerId,
       vettingId,
 
@@ -894,7 +894,6 @@ export const useSubmitOffer = (vettingId?: number | string) => {
       shortDescription: payload.shortDescription,
       longDescription: payload.longDescription,
 
-      type: payload.tokenType,
       network: payload.network,
       industry: payload.industry,
       investmentType: payload.investmentType,
@@ -906,8 +905,8 @@ export const useSubmitOffer = (vettingId?: number | string) => {
       issuerWebsite: payload.website,
       whitepaperUrl: payload.whitepaper,
 
-      profilePictureId: uploadedFiles.find(x => x.name === 'profile')?.id ?? initial.profilePicture.id,
-      cardPictureId: uploadedFiles.find(x => x.name === 'card')?.id ?? initial.cardPicture.id,
+      profilePictureId: uploadedFiles.find(x => x.name === 'profile')?.id ?? initial.profilePicture?.id,
+      cardPictureId: uploadedFiles.find(x => x.name === 'card')?.id ?? initial.cardPicture?.id,
 
       title: payload.title,
       issuerIdentificationNumber: payload.issuerIdentificationNumber,
@@ -951,7 +950,7 @@ export const useSubmitOffer = (vettingId?: number | string) => {
       faq: payload.faq.map(x => ({ question: x.question, answer: x.answer })),
 
       members: payload.members.map((x, idx) => ({
-        avatarId: findDoc('member', idx) ?? initial.members[idx].photo.id,
+        avatarId: findDoc('member', idx) ?? initial.members[idx].photo?.id,
         name: x.name,
         title: x.role,
         description: x.about
@@ -960,20 +959,54 @@ export const useSubmitOffer = (vettingId?: number | string) => {
       files: [
         ...payload.additionalDocuments.map((x, idx) => ({
           type: OfferFileType.document,
-          fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file.id
-        })),
+          fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file?.id
+        }))
+          .filter(x => x.fileId),
         
         ...payload.images.map((x, idx) => ({
           type: OfferFileType.image,
-          fileId: findDoc('image', idx) ?? initial.images[idx].id
-        })),
+          fileId: findDoc('image', idx) ?? initial.images[idx]?.id
+        }))
+          .filter(x => x.fileId),
 
         ...payload.videos.map(x => ({
           type: OfferFileType.video,
           videoUrl: x.url
-        })),
+        }))
+          .filter(x => x.videoUrl),
       ]
     }
+
+    function filter(data: any): any {
+      if (data === undefined || data === null) {
+        return data
+      }
+
+      if (typeof data === 'object' && data.length !== undefined) {
+        return data.map(filter).filter((x: any) => !!x)
+      }
+
+      if (typeof data !== 'object') {
+        return data
+      }
+
+      const result = Object.entries(data)
+        .map(([key, value]) => ({ key, value }))
+        .map(entry => ({ ...entry, value: filter(entry.value) }))
+        .filter(entry => !!entry.value || 
+          (typeof entry.value === 'boolean') ||
+          (typeof entry.value === 'object' && entry.value && Object.keys(entry.value).length > 0)
+        )
+        .reduce((acc, entry) => ({ ...acc, [entry.key]: filter(entry.value) }), {})
+
+      if (Object.keys(result).length === 0) {
+        return undefined
+      }
+
+      return result
+    }
+
+    data = filter(data)
 
     console.log(data)
 
@@ -983,5 +1016,5 @@ export const useSubmitOffer = (vettingId?: number | string) => {
     } else {
       return apiService.post(`/offers`, data)
     }
-  }, [uploadFiles, vettingId])
+  }, [uploadFiles])
 }
