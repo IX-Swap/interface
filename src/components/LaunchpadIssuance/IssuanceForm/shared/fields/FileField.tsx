@@ -49,6 +49,10 @@ export const FileField: React.FC<Props> = (props) => {
     props.setter(props.field, props.value?.id ? null : undefined)
     setValue(undefined)
   }, [])
+
+  React.useEffect(()=> {
+    setValue(props.value?.file)
+  }, [props.value])
   
   const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
 
@@ -152,6 +156,8 @@ const BrowseButton = styled.button`
   background: none;
 
   cursor: pointer;
+
+  font-weight: 600;
 
   color: ${props => props.theme.launchpad.colors.primary};
 `

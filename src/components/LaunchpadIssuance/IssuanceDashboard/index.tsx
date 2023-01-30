@@ -74,7 +74,7 @@ export const IssuanceDashboard = () => {
 
 const Container = styled.article`
   min-height: 100vh;
-
+  font-family: ${props => props.theme.launchpad.font};
 `
 
 const Header = styled.header`
@@ -131,6 +131,8 @@ const Tab = styled.div<{ active: boolean }>`
   ${props => props.active && `
     border-bottom: 1px solid ${props.theme.launchpad.colors.primary};
   `}
+
+  font-family:  ${props => props.theme.launchpad.font};
 
   font-style: normal;
   font-weight: 500;

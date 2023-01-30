@@ -78,8 +78,6 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
     return errors[index]
   }, [props.errors])
 
-  console.log(props.errors)
-
   return (
     <FormGrid title="Additional Information">
       <FormField 

@@ -23,7 +23,7 @@ interface Props {
   field: string
   setter: (field: string, value: string) => void
 
-  inputFilter?: (value: string) => string
+  inputFilter?: (value?: string) => string
 }
 
 export const FormField: React.FC<Props> = (props) => {

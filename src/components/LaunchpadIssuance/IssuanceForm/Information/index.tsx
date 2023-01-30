@@ -4,6 +4,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, ChevronUp } from 'react-feather'
+import Portal from '@reach/portal'
 
 import { Formik, FormikProps } from 'formik'
 
@@ -11,8 +12,10 @@ import { InformationFormValues } from './types'
 
 import { countriesList } from 'constants/countriesList'
 
-import { Row, Separator, Spacer } from 'components/LaunchpadMisc/styled'
+import { Row, Separator, Spacer, LoaderContainer } from 'components/LaunchpadMisc/styled'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
+import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
 import { FormGrid } from '../shared/FormGrid'
@@ -42,11 +45,12 @@ import {
   distributionFrequencyOptions,
   investmentStructureOptions 
 } from './util'
-import { useFormatOfferValue, useLoader, useSubmitOffer } from 'state/launchpad/hooks'
+import { useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer, useVetting } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
+import { OfferReview } from '../Review'
+
 
 interface Props {
-  vettindId?: number
   edit?: boolean
 }
 
@@ -54,15 +58,33 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const theme = useTheme()
   const history = useHistory()
   const addPopup = useAddPopup()
-  const formatValue = useFormatOfferValue(false)
 
   const loader = useLoader(false)
-  const submitOffer = useSubmitOffer(props.vettindId)
+  const formatValue = useFormatOfferValue(false)
 
   const form = React.useRef<FormikProps<InformationFormValues>>(null)
 
+  const [showReview, setShowReview] = React.useState(false)
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
+  const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+
+  const issuanceId = React.useMemo(() => {
+    const value = decodeURI(history.location.search).replace('?', '').split('&')
+      .map(x => x.split('='))
+      .map(([key, value]) => ({ key, value }))
+      .find(x => x.key === 'id')
+      ?.value
+
+    if (!value) {
+      return
+    }
+
+    return Number(value)
+  }, [])
+
+  const vetting = useVetting(issuanceId)
+  const offer = useOfferFormInitialValues(issuanceId)
   
   const countries = React.useMemo(() => {
     return countriesList
@@ -75,21 +97,34 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     setShowCloseDialog(false)
   }, [])
 
-  const submit = React.useCallback(async (values: InformationFormValues) => {
+  const submitOffer = useSubmitOffer()
+  const _submit = React.useCallback(async (values: InformationFormValues, draft = false) => {
     loader.start()
 
     try {
-      // await submitOffer(values, initialValues)
+      await submitOffer(values, initialValues, draft, vetting.data?.id)
 
       addPopup({ info: { success: true, summary: 'Offer created successfully' }})
-      goBack();
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
       loader.stop()
     }
-  }, [])
+  }, [vetting.data?.id])
+
+  const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
+
+  const toSubmit = React.useCallback(() => {
+    setShowConfirmDialog(true)
+  }, [showConfirmDialog])
+
+  const submit = React.useCallback((values: InformationFormValues) => _submit(values, false), [_submit])
   
+  const goMain = React.useCallback(() => {
+    history.push(`/issuance/create?id=${issuanceId}`)
+  }, [history, issuanceId])
+
   const goBack = React.useCallback(() => {
     if (isSafeToClose) {
       history.push('/issuance/create')
@@ -112,8 +147,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     return isSafeToClose
   }, [])
 
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&]/.test(x)).join(''), [])
-  const numberFilter = React.useCallback((value: string) => {
+  const textFilter = React.useCallback((value?: string) => value?.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&]/.test(x)).join(''), []) ?? ''
+  const numberFilter = React.useCallback((value?: string) => {
+    if (!value) {
+      return ''
+    }
+
     const [whole, ...decimals] = value
       .split('')
       .filter(x => /[0-9.]/.test(x))
@@ -139,11 +178,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [])
 
   React.useEffect(() => {
-    window.addEventListener('beforeunload', alertUser)
-
-    return () => {
-      window.removeEventListener('beforeunload', alertUser)
-    }
+    const listener = () => true
+    
+    window.addEventListener('beforeunload', listener)
+  
+    return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
   return (
@@ -151,12 +190,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       <ScrollToTop onClick={scrollToTop}>
         <ChevronUp color={theme.launchpad.colors.foreground} size="20" />
       </ScrollToTop>
-
-      <CloseConfirmation
-        isOpen={showCloseDialog}
-        onDiscard={onConfirmationClose}
-        onClose={onConfirmationClose}
-        onSave={() => console.log('save')} />
 
       <FormHeader>
         <OutlineButton background={theme.launchpad.colors.background} onClick={goBack} padding="1rem 0.75rem">
@@ -169,14 +202,41 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit} validationSchema={schema}>
         {({ values, errors, setFieldValue, submitForm }) => (
           <>
+            <ConfirmationForm
+              isOpen={showConfirmDialog}
+              onClose={()=> setShowConfirmDialog(false)}
+              onSave={submitForm}/>
+
+            <CloseConfirmation
+              isOpen={showCloseDialog}
+              onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
+              onClose={onConfirmationClose}
+              onSave={() => saveDraft(values)} />
+
+            {showReview && (
+              <Portal>
+                <OfferReview 
+                  values={values}
+                  onClose={() => setShowReview(false)}
+                  onSubmit={(draft: boolean) => draft ? toSubmit() : _submit(values, draft)}
+                />
+              </Portal>
+            )}
+
+            {loader.isLoading && (
+              <LoaderContainer width="100vw" height="100vh">
+                <Loader />
+              </LoaderContainer>
+            )}
+
             <FormSideBar>
               {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
               
               <FormSubmitContainer>
-                {!props.edit && <OutlineButton>Save Draft</OutlineButton>}
+                {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
-                <OutlineButton>Review</OutlineButton>
-                <FilledButton onClick={submitForm}>Submit</FilledButton>
+                <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
+                <FilledButton onClick={toSubmit}>Submit</FilledButton>
               </FormSubmitContainer>
             </FormSideBar>
             <FormBody>
@@ -208,12 +268,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
               <FormGrid>
                 <FormField 
-                  field="name"
+                  field="title"
                   setter={setFieldValue}
                   label="Name of Issuance"
                   placeholder='Name of Issuance'
                   disabled={props.edit}
-                  error={errors.name}
+                  error={errors.title}
                 />
 
                 <FormField
@@ -464,8 +524,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit || (values.hasPresale && !values.timeframe.presale)}
                   minDate={values.hasPresale ? values.timeframe.presale : undefined}
                   onChange={([start, end]) => {
-                    setFieldValue('timeframe.sale', start?.toDate())
-                    setFieldValue('timeframe.closed', end?.toDate())
+                    setFieldValue('timeframe.sale', start)
+                    setFieldValue('timeframe.closed', end)
                   }}
                   error={errors.timeframe?.sale as string}
                 />

@@ -18,13 +18,13 @@ export const OfferSidebar: React.FC<Props> = (props) => {
   return (
     <>
       <OfferDetails offer={props.offer} />
-      <OfferSaleAllocation offer={props.offer} />
-      <OfferPreSaleInfo offer={props.offer} />
-      <OfferStage offer={props.offer} />
-      <OfferTerms offer={props.offer} />
+      <OfferSaleAllocation {...props.offer} />
+      <OfferPreSaleInfo {...props.offer} />
+      <OfferStage frames={props.offer.timeframe} />
+      <OfferTerms terms={props.offer.terms} />
       {/* <OfferVesting offer={props.offer} /> */}
       <OfferAdditionalDocs files={props.offer.files} />
-      <OfferContact offer={props.offer} />
+      <OfferContact email={props.offer.contactUsEmail} />
     </>
   )
 }

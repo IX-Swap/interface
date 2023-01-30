@@ -18,7 +18,7 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, DefaultRaw, CountRow, Title } from 'components/LaunchpadMisc/tables'
 
 import { useGetOffersFull, useFormatOfferValue } from 'state/launchpad/hooks'
 
@@ -51,7 +51,7 @@ export const OffersFull: React.FC<Props> = (props) => {
   const [order, setOrder] = React.useState<OrderConfig>({})
 
 
-  const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
+  const veiwItem = React.useCallback((id: number) => history.push(`/offers/${id}`), [history])
 
   const onChangeOrder = React.useCallback((key: string) => {
     const current = Object.keys(order)[0]
@@ -74,7 +74,21 @@ export const OffersFull: React.FC<Props> = (props) => {
     setPage(1)
   }, [])
 
+  const onChangePage = React.useCallback((pageNumber: number) => {
+    scrollToTop()
+    setPage(pageNumber)
+  }, [])
+
   const paginationSizes = React.useMemo(() => ITEM_ROWS, [])
+
+  const scrollToTop = React.useCallback(() => {
+    //window.scrollTo({ top: 0, behavior: 'smooth' })
+    const yOffset = document.documentElement.scrollTop || document.body.scrollTop;
+    if (yOffset > 0) {
+      window.requestAnimationFrame(scrollToTop);
+      window.scrollTo(0, yOffset - yOffset / 1.75);
+    }
+  }, [])
 
   React.useEffect(() => {
     setLoading(true)
@@ -132,26 +146,26 @@ export const OffersFull: React.FC<Props> = (props) => {
 
           {!loading && offers.map((offer, idx) => (
             <IssuanceRow key={idx} tab={IssuanceFilter.live}>
-              <div>{offer.issuanceName}</div>
-              <div>{offer.countInvestors}</div>
-              <div>{formatedValue(`${offer.commitment}`)}</div>
-              <div>{offer.progressPercent}% - {formatedValue(`${offer.progress}`)}</div>
-              <div>{formatedValue(`${offer.softCapReached}`) || '0.00'} USD</div>
+              <Raw>{offer.issuanceName}</Raw>
+              <Raw>{offer.countInvestors}</Raw>
+              <Raw>{formatedValue(`${offer.commitment}`)}</Raw>
+              <CountRow>{offer.progressPercent}% - {formatedValue(`${offer.progress}`)}</CountRow>
+              <div>{formatedValue(`${offer.softCapReached}`) || '0.00'} {offer.investingTokenSymbol}</div>
 
-              <div>
+              <CountRow>
                 {(offer?.closeDate)
                   ? moment(offer?.closeDate).format('DD/MM/YYYY')
                   : ''}
-              </div>
+              </CountRow>
 
-              <div>{OFFER_STATUSES[offer.status]}</div>
+              <DefaultRaw>{OFFER_STATUSES[offer.status]}</DefaultRaw>
 
               <ActionButtons>
               <OutlineButton
                 color={theme.launchpad.colors.primary + '80'}
                 borderType="tiny"
                 height="34px"
-                onClick={() => veiwItem(offer.issuanceId)}>
+                onClick={() => veiwItem(offer.id)}>
                 Listing <ListingIcon />
               </OutlineButton>
 
@@ -190,11 +204,11 @@ export const OffersFull: React.FC<Props> = (props) => {
           {((page - 1) * pageSize) + 1} - {page * pageSize < totalItems ? page * pageSize : totalItems} of {totalItems}
         </PageCount>
 
-        <PageButton onClick={() => setPage(page => page - 1)} disabled={page <= 1}>
+        <PageButton onClick={() => onChangePage(page - 1)} disabled={page <= 1}>
           <ChevronLeft />
         </PageButton>
         
-        <PageButton onClick={() => setPage(page => page + 1)} disabled={page >= totalPages}>
+        <PageButton onClick={() => onChangePage(page + 1)} disabled={page >= totalPages}>
           <ChevronRight />
         </PageButton>
       </PaginationRow>
@@ -204,12 +218,6 @@ export const OffersFull: React.FC<Props> = (props) => {
 
 const Container = styled.article`
   min-height: 100vh;
-`
-
-const Title = styled.div`
-  cursor: pointer;
-  display: flex;
-  flex-flow: row nowrap;
 `
 
 const ActionButtons = styled.div`

@@ -17,7 +17,7 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
 
 import { useGetIssuances } from 'state/launchpad/hooks'
 
@@ -46,7 +46,7 @@ export const IssuancesFull = () => {
 
   const status = React.useCallback((issuance: Issuance) => {
     if (!issuance.vetting) {
-      return IssuanceStatus.pendingApproval
+      return IssuanceStatus.inProgress
     }
 
     if (
@@ -62,7 +62,7 @@ export const IssuancesFull = () => {
       ? issuance.vetting?.offer.status
       : (issuance.vetting && issuance.vetting?.status !== IssuanceStatus.draft)
         ? issuance.vetting.status
-        : IssuanceStatus.pendingApproval
+        : IssuanceStatus.inProgress
   }, [])
 
   const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
@@ -83,9 +83,24 @@ export const IssuancesFull = () => {
     setPage(1)
   }, [order])
 
+  const scrollToTop = React.useCallback(() => {
+    //window.scrollTo({ top: 0, behavior: 'smooth' })
+    const yOffset = document.documentElement.scrollTop || document.body.scrollTop;
+    if (yOffset > 0) {
+      window.requestAnimationFrame(scrollToTop);
+      window.scrollTo(0, yOffset - yOffset / 1.75);
+    }
+  }, [])
+
   const onChangePageSize = React.useCallback((size: number) => {
     setPageSize(size)
     setPage(1)
+    scrollToTop()
+  }, [])
+
+  const onChangePage = React.useCallback((pageNumber: number) => {
+    scrollToTop()
+    setPage(pageNumber)
   }, [])
 
   const paginationSizes = React.useMemo(() => ITEM_ROWS, [])
@@ -144,13 +159,13 @@ export const IssuancesFull = () => {
 
           {!loading && issuances.map((issuance, idx) => (
             <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
-              <div>{issuance.name}</div>
+              <Raw>{issuance.name}</Raw>
 
-              <div>
+              <Raw>
                 {(issuance?.vetting?.offer && issuance?.vetting?.offer?.startDate)
                   ? moment(issuance?.vetting?.offer?.startDate).format('DD/MM/YYYY')
                   : ''}
-              </div>
+              </Raw>
 
               <IssuanceStatusBadge status={status(issuance)} />
 
@@ -187,11 +202,11 @@ export const IssuancesFull = () => {
           {((page - 1) * pageSize) + 1} - {page * pageSize < totalItems ? page * pageSize : totalItems} of {totalItems}
         </PageCount>
 
-        <PageButton onClick={() => setPage(page => page - 1)} disabled={page <= 1}>
+        <PageButton onClick={() => onChangePage(page - 1)} disabled={page <= 1}>
           <ChevronLeft />
         </PageButton>
         
-        <PageButton onClick={() => setPage(page => page + 1)} disabled={page >= totalPages}>
+        <PageButton onClick={() => onChangePage(page + 1)} disabled={page >= totalPages}>
           <ChevronRight />
         </PageButton>
       </PaginationRow>
@@ -201,12 +216,6 @@ export const IssuancesFull = () => {
 
 const Container = styled.article`
   min-height: 100vh;
-`
-
-const Title = styled.div`
-  cursor: pointer;
-  display: flex;
-  flex-flow: row nowrap;
 `
 
 const PaginationRow = styled.div`

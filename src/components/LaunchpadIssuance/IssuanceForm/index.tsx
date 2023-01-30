@@ -43,7 +43,7 @@ export const NewIssuanceForm = () => {
   }, [history.location.search])
 
   const vettingStatus = React.useMemo(() => issuance.data?.vetting?.status, [issuance.data])
-  const issuanceStatus = React.useMemo(() => undefined, [issuance.data])
+  const issuanceStatus = React.useMemo(() => issuance.data?.vetting?.offer?.status, [issuance.data])
 
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
   const selectIssuance = React.useCallback((id: number) => {
@@ -209,7 +209,7 @@ export const NewIssuanceForm = () => {
 
 
 
-            {issuanceStatus === undefined && (
+            {(issuanceStatus === undefined || issuanceStatus === IssuanceStatus.draft) && (
               <IssuanceFormStep 
                 stepNumber={2} 
                 icon={<IssuanceInformationIcon />}
@@ -399,8 +399,13 @@ const IssuanceName = styled.div`
   font-weight: 500;
   font-size: 14px;
 
-  line-height: 48px;
+  line-height: 1.25rem;
   letter-spacing: -0.01em;
+
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   color: ${props => props.theme.launchpad.colors.text.title};
 `

@@ -90,6 +90,8 @@ const DropdownContainer = styled.div`
 const DropdownButton = styled.button`
   background: ${props => props.theme.launchpad.colors.background};
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  font-family: ${props => props.theme.launchpad.font};
+
   border-radius: 6px;
 
   display: flex;
@@ -151,6 +153,8 @@ const DropdownOption = styled.div`
   width: 100%;
 
   cursor: pointer;
+
+  font-family: ${props => props.theme.launchpad.font};
 
   color: ${props => props.theme.launchpad.colors.text.title};
 

@@ -1,11 +1,13 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
 import { useGetOffer } from 'state/launchpad/hooks'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { LoaderContainer } from 'components/LaunchpadMisc/styled'
+
+import { Asset, Offer, OfferFile, OfferFileType } from 'state/launchpad/types'
 
 import { OfferStage } from 'components/LaunchpadOffer/OfferSidebar/OfferStage'
 import { OfferTerms } from 'components/LaunchpadOffer/OfferSidebar/OfferTerms'
@@ -14,66 +16,100 @@ import { OfferGeneralInfo } from 'components/LaunchpadOffer/OfferSidebar/OfferDe
 import { OfferAdditionalDocs } from 'components/LaunchpadOffer/OfferSidebar/OfferAdditionalDocs'
 import { OfferPreSaleInfo, OfferSaleAllocation } from 'components/LaunchpadOffer/OfferSidebar/OfferSaleAllocation'
 
-export const OfferReview: React.FC = (props) => {
-  const history = useHistory()
+import { InformationFormValues } from '../Information/types'
+import { ArrowLeft } from 'react-feather'
+import { OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { ReviewSidebar } from './Sidebar'
 
-  const id = React.useMemo(() => {
-    return decodeURI(history.location.search).replace('?', '').split('&')
-      .map(x => x.split('='))
-      .map(([key, value]) => ({ key, value }))
-      .find(x => x.key === 'id')
-      ?.value
-  }, [history.location.search])
+interface Props {
+  values: InformationFormValues
+  onSubmit: (draft: boolean) => void
+  onClose: () => void
+}
 
-  const offer = useGetOffer(id)
-
-  if (offer.loading) {
-    return (
-      <LoaderContainer width="100vw" height="100vh">
-        <Loader />
-      </LoaderContainer>
-    )
-  }
-
-  if (!offer.data) {
-    return null
-  }
+export const OfferReview: React.FC<Props> = (props) => {
+  const theme = useTheme()
 
   return (
-    <ReviewContainer>
-      <Sidebar></Sidebar>
+    <ReviewModalContainer>
+      <ReviewContainer>
+        <Sidebar>
+          <ReviewSidebar offer={props.values} onSubmit={props.onClose} onClose={props.onClose} />
+        </Sidebar>
 
-      <Title>Review</Title>
-      
-      <Container area="stages">
-        <OfferStage offer={offer.data} />
-      </Container>
+        <Title>
+          <OutlineButton background={theme.launchpad.colors.background} onClick={props.onClose} padding="1rem 0.75rem">
+            <ArrowLeft color={theme.launchpad.colors.primary} />
+          </OutlineButton>
+          Review
+        </Title>
+        
+        <Container area="stages">
+          <OfferStage frames={props.values.timeframe} />
+        </Container>
 
-      <Container area="company-information">
-        <OfferGeneralInfo offer={offer.data} />
-      </Container>
+        <Container area="company-information">
+          <OfferGeneralInfo 
+            minInvestment={props.values.minInvestment}
+            maxInvestment={props.values.maxInvestment}
+            country={props.values.country}
+            tokenPrice={props.values.tokenPrice?.toString()}
+            tokenSymbol={props.values.tokenTicker}
+            investmentType={props.values.investmentType}
+            investingTokenSymbol={props.values.tokenType}
+          />
+        </Container>
 
 
-      <Container area="total-funding-size">
-        <OfferSaleAllocation offer={offer.data} borderless />
-      </Container>
+        <Container area="total-funding-size">
+          <OfferSaleAllocation 
+            hardCap={props.values.hardCap}
+            softCap={props.values.softCap}
+            investingTokenSymbol={props.values.tokenType}
+            presaleAlocated={props.values.presaleAlocated}
+            borderless
+          />
+        </Container>
 
-      <Container area="presale-size">
-        <OfferPreSaleInfo offer={offer.data} borderless />
-      </Container>
-      
-      <Container area="terms">
-        <OfferTerms offer={offer.data} />
-      </Container>
-      <Container area="additional-documents">
-        <OfferAdditionalDocs files={offer.data.files} />
-      </Container>
-      <Container area="contact">
-        <OfferContact offer={offer.data} />
-      </Container>
-    </ReviewContainer>
+        <Container area="presale-size">
+          <OfferPreSaleInfo 
+            investingTokenSymbol={props.values.tokenType}
+            presaleMaxInvestment={props.values.presaleMaxInvestment}
+            presaleMinInvestment={props.values.presaleMinInvestment}
+            borderless
+          />
+        </Container>
+        
+        <Container area="terms">
+          <OfferTerms terms={props.values.terms} />
+        </Container>
+        <Container area="additional-documents">
+          <OfferAdditionalDocs 
+            files={props.values.additionalDocuments
+              .filter(x => x.file)
+              .map(x => ({ file: { id: x.file?.id, name: x.name } as Asset, type: OfferFileType.document, videoUrl: '' }))
+            } 
+          />
+        </Container>
+        <Container area="contact">
+          <OfferContact email={props.values.email} />
+        </Container>
+      </ReviewContainer>
+    </ReviewModalContainer>
   )
 }
+
+const ReviewModalContainer = styled.div`
+  position: fixed;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+
+  z-index: 40;
+
+  background: ${props => props.theme.launchpad.colors.background};
+
+  overflow: auto;
+`
 
 const ReviewContainer = styled.div`
   display: grid;
@@ -89,13 +125,18 @@ const ReviewContainer = styled.div`
 
   gap: 1.25rem;
 
-  max-width: 1180px;
 
-  margin: 2.5rem auto;
+  max-width: 1180px;
+  margin: 3rem auto;
+
 `
 
 const Title = styled.div`
   grid-area: title;
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 
   font-style: normal;
   font-weight: 800;
