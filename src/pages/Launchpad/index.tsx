@@ -7,14 +7,13 @@ import { Offers } from 'components/Launchpad/Offers'
 
 import { useSetHideHeader } from 'state/application/hooks'
 
-import { Banner } from './Banner'
-import { Header } from './Header'
-import { Footer } from './Footer'
-import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { useActiveWeb3React } from 'hooks/web3'
-import { CenteredFixed } from 'components/LaunchpadMisc/styled'
 import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
-import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
+import { CenteredFixed } from 'components/LaunchpadMisc/styled'
+import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { useActiveWeb3React } from 'hooks/web3'
+import { Banner } from './Banner'
+import { Footer } from './Footer'
+import { Header } from './Header'
 
 export default function Launchpad() {
   const { chainId, account } = useActiveWeb3React()
@@ -49,7 +48,6 @@ export default function Launchpad() {
       <Header />
       <Banner />
       <Offers />
-      <LaunchpadWhitelistWallet offerId="33d8cc25-6fcb-4188-83b1-63b196763b0e" />
       <Footer />
     </LaunchpadContainer>
   )
