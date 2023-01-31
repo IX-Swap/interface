@@ -75,50 +75,37 @@ export const Pagination = ({
 
 const PaginationRow = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
-
   justify-content: flex-end;
   align-items: center;
-
   gap: 0.5rem;
-
   height: 40px;
   max-width: 1180px;
-
-  margin: 1rem auto;
+  margin: 0 auto;
 `
 
 const PageCount = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-
   line-height: 48px;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const PageButton = styled.button`
   display: grid;
-
   place-content: center;
-
   width: 30px;
   height: 30px;
-
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-
   line-height: 27px;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-
   ${(props) =>
     props.disabled &&
     `
@@ -141,14 +128,10 @@ const PageButton = styled.button`
 
 const PageSizeDropdown = styled.div`
   position: relative;
-
   display: flex;
-
   flex-flow: row nowrap;
-
   gap: 0.25rem;
   padding: 0.5rem;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
@@ -157,10 +140,8 @@ const PageSizeLabel = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -178,23 +159,16 @@ const PageSizeIcon = styled.div<{ isOpen: boolean }>`
 
 const PageSizeOptions = styled.div`
   position: absolute;
-
   bottom: -0.5rem;
   left: 0;
   right: 0;
-
   transform: translate(0, 100%);
-
   z-index: 30;
-
   display: flex;
-
   flex-flow: column nowrap;
   align-items: stretch;
-
   max-height: 300px;
   overflow-y: auto;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `

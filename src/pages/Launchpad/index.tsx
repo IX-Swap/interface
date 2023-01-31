@@ -49,7 +49,7 @@ export default function Launchpad() {
       <Header />
       <Banner />
       <Offers />
-      <LaunchpadWhitelistWallet />
+      <LaunchpadWhitelistWallet offerId="33d8cc25-6fcb-4188-83b1-63b196763b0e" />
       <Footer />
     </LaunchpadContainer>
   )

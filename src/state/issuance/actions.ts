@@ -1,5 +1,5 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
-import { WhitelistFilter, WhiteListType } from 'services/types'
+import { WhitelistFilter } from 'services/types'
 import { PaginateResponse } from 'types/pagination'
 import { WhitelistWallet } from './types'
 

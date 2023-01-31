@@ -8,13 +8,18 @@ import { PaginateResponse } from 'types/pagination'
 import { deleteWhitelistedWallet, getWhitelistedWallets, saveWhitelistedWallet } from './actions'
 import { WhitelistWallet, WhitelistWalletPayload } from './types'
 
-export const useWhitelistWallet = () => {
+export interface UseDeleteWhitelistedArgs {
+  onSuccess?: () => void
+}
+export type UseCreateWhitelistedArgs = UseDeleteWhitelistedArgs
+
+export const useWhitelistWallet = ({ onSuccess }: UseCreateWhitelistedArgs) => {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(async (offerId: string, data: WhitelistWalletPayload) => {
     dispatch(saveWhitelistedWallet.pending())
     try {
       await apiService.post(whitelist.add(offerId), data)
-
+      onSuccess?.()
       dispatch(saveWhitelistedWallet.fulfilled())
     } catch (e) {
       dispatch(saveWhitelistedWallet.rejected({ errorMessage: (e as { message: string }).message }))
@@ -36,12 +41,16 @@ export const useGetWhitelisted = () => {
   }, [])
 }
 
-export const useDeleteWhitelisted = () => {
+export interface UseDeleteWhitelistedArgs {
+  onSuccess?: () => void
+}
+export const useDeleteWhitelisted = ({ onSuccess }: UseDeleteWhitelistedArgs) => {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(async (offerId: string, walletAddress: string) => {
     dispatch(deleteWhitelistedWallet.pending())
     try {
       await apiService.delete(whitelist.delete(offerId, walletAddress), undefined)
+      onSuccess?.()
       dispatch(deleteWhitelistedWallet.fulfilled())
     } catch (e) {
       dispatch(deleteWhitelistedWallet.rejected({ errorMessage: (e as { message: string }).message }))

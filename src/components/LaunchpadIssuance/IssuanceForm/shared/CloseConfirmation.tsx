@@ -5,6 +5,7 @@ import { Save } from 'react-feather'
 
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { Message, MessageSubtitle, MessageTitle } from './PopUps/message'
 
 interface Props {
   isOpen: boolean
@@ -20,20 +21,17 @@ export const CloseConfirmation: React.FC<Props> = (props) => {
     <IssuanceDialog show={props.isOpen} onClose={props.onClose}>
       <Container>
         <Icon>
-          <Save color={theme.launchpad.colors.error} size="42" strokeWidth={1}/>
+          <Save color={theme.launchpad.colors.error} size="42" strokeWidth={1} />
         </Icon>
 
         <Message>
-          <MessageTitle>
-            Unsaved Changes
-          </MessageTitle>
+          <MessageTitle>Unsaved Changes</MessageTitle>
 
           <MessageSubtitle>
-            You are about to close this item with unsaved changes.
-            Would you like to save these changes before closing?
+            You are about to close this item with unsaved changes. Would you like to save these changes before closing?
           </MessageSubtitle>
         </Message>
-        
+
         <OutlineButton color={theme.launchpad.colors.error} onClick={props.onDiscard}>
           Discard
         </OutlineButton>
@@ -51,10 +49,10 @@ const Container = styled.div`
 
   grid-template-rows: auto auto 48px;
   grid-template-columns: repeat(3, 140px);
-  grid-template-areas: 
-    "icon icon icon"
-    "message message message"
-    ". . .";
+  grid-template-areas:
+    'icon icon icon'
+    'message message message'
+    '. . .';
 
   place-content: center;
 
@@ -75,44 +73,6 @@ const Icon = styled.div`
   width: 100px;
   height: 100px;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.error + '33'};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.error + '33'};
   border-radius: 50%;
-`
-
-const Message = styled.div`
-  grid-area: message;
-
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-
-  gap: 0.5rem;
-`
-
-const MessageTitle = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-
-  line-height: 130%;
-  letter-spacing: -0.03em;
-  
-  text-align: center;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
-`
-
-const MessageSubtitle = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
-  text-align: center;
-
-  max-width: 80%;
-
-  color: ${props => props.theme.launchpad.colors.text.body};
 `

@@ -6,7 +6,7 @@ import { WhitelistWallet } from './types'
 
 const defaultFilter = {
   page: 1,
-  offset: 2,
+  offset: 4,
   type: WhiteListType.MANUAL,
 }
 export interface WhitelistWalletStatusState {

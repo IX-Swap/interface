@@ -1,6 +1,6 @@
 export interface WhitelistWalletPayload {
   fullName: string
-  wallet: string
+  walletAddress: string
 }
 
 export interface WhitelistWallet {
