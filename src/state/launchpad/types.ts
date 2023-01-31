@@ -115,7 +115,7 @@ export interface Asset {
 export interface OfferTimeframe {
   closed: Date
   claim: Date
-  presale: Date
+  preSale: Date
   sale: Date
   whitelist: Date
 }
@@ -141,6 +141,7 @@ export interface OfferFAQ {
 }
 
 export interface OfferFile {
+  id?: number
   type: OfferFileType
   videoUrl: string
   file: Asset
@@ -156,7 +157,7 @@ export enum OfferInvestmentStructure {
   equity = 'equity',
   debt = 'debt',
   hybrid = 'hybrid',
-  other = 'other'
+  other = 'others'
 }
 
 export interface OfferInvestment {

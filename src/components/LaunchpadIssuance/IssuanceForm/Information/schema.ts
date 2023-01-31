@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-import { countriesList } from 'constants/countriesList'
+import { getCodes } from 'country-list' 
 
 import { OfferDistributionFrequency, OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart, OfferType } from 'state/launchpad/types'
 import { OfferTokenType } from './types'
@@ -15,6 +15,8 @@ const limitedSizeFileSchema = fileSchema.test('fileSize', 'File is too large', (
 
 const requriedFileSchema = limitedSizeFileSchema.required('File requried')
 
+const countryCodes = getCodes()
+
 export const schema = yup.object().shape({
   shortDescription: yup.string().required().min(10, 'Short Description must be longer than or equal to 10 characters'),
   longDescription: yup.string().required().min(10, 'Description must be longer than or equal to 10 characters'),
@@ -26,7 +28,7 @@ export const schema = yup.object().shape({
   investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required('Investment Type required'),
 
   issuerIdentificationNumber: yup.string().required('Enter company identification number').min(8, 'Identification number should be at least 8 characters'),
-  country: yup.string().required('Country requried').oneOf(countriesList, 'Select a country from the list'),
+  country: yup.string().required('Country requried').oneOf(countryCodes, 'Select a country from the list'),
 
   tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required('Token type required'),
   tokenName: yup.string().required('Token name required'),
@@ -110,7 +112,7 @@ export const schema = yup.object().shape({
     is: true,
     then: yup.object().shape({
       whitelist: yup.date().required('Required'),
-      presale: yup.date().required('Required'),
+      preSale: yup.date().required('Required'),
 
       sale: yup.date().required('Required'),
       closed: yup.date().required('Required'),
@@ -118,7 +120,7 @@ export const schema = yup.object().shape({
     }),
     otherwise: yup.object().shape({
       whitelist: yup.date(),
-      presale: yup.date(),
+      preSale: yup.date(),
 
       sale: yup.date().required('Required'),
       closed: yup.date().required('Required'),

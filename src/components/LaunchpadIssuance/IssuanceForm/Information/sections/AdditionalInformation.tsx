@@ -17,10 +17,12 @@ import { AddButton, DeleteButton } from '../../shared/styled'
 import { DropdownField } from '../../shared/fields/DropdownField'
 
 import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
+import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers'
 
 
 interface Props {
   social: SocialMediaLink[]
+  values: InformationFormValues
   errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
@@ -85,6 +87,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='Email Address'
         field="email"
         setter={props.setter} 
+        value={props.values.email}
         error={props.errors.email}
       />
 
@@ -93,6 +96,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="website"
         setter={props.setter} 
+        value={props.values.website}
         error={props.errors.website}
       />
       
@@ -101,6 +105,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="whitepaper"
         setter={props.setter} 
+        value={props.values.whitepaper}
         error={props.errors.whitepaper}
       />
 

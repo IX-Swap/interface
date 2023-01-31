@@ -49,6 +49,7 @@ export interface InformationFormValues {
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
   tokenPrice: number
+  tokenAddress?: string
 
   network: OfferNetwork
 
@@ -87,7 +88,7 @@ export interface InformationFormValues {
 
   timeframe: {
     whitelist: Date
-    presale: Date
+    preSale: Date
     sale: Date
     closed: Date
     claim: Date

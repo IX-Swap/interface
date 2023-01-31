@@ -32,7 +32,7 @@ import { PaginateResponse } from "types/pagination"
 import { DirectorInfo, VettingFormValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/types"
 import { initialValues as vettingInitialFormValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/util"
 import { initialValues as informationInitialFormValues } from "components/LaunchpadIssuance/IssuanceForm/Information/util"
-import { AdditionalDocument, InformationFormValues, SocialMediaType, TeamMember, VideoLink } from "components/LaunchpadIssuance/IssuanceForm/Information/types"
+import { AdditionalDocument, InformationFormValues, OfferTokenType, SocialMediaType, TeamMember, VideoLink } from "components/LaunchpadIssuance/IssuanceForm/Information/types"
 import { IssuanceFile } from "components/LaunchpadIssuance/IssuanceForm/types"
 
 interface OfferPagination {
@@ -804,19 +804,24 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
   const loader = useLoader()
   const getFile = useGetFile()
 
-  const vetting = useVetting(issuanceId)
-  const offer = useGetOffer(vetting?.data?.offer?.id)
+  const issuance = useGetIssuance()
+  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id)
   
   const [values, setValues] = React.useState<InformationFormValues>()
 
   React.useEffect(() => {
-    if (vetting.data && vetting.data.offer) {
-      offer.load()
-    }
-  }, [vetting.loading])
+    issuance.load(issuanceId)
+  }, [issuanceId])
 
   React.useEffect(() => {
-    if (!vetting.loading && offer.data) {
+    console.log(`Loading: ${issuance.loading}; Data: `, issuance.data)
+    if (!issuance.loading && issuance.data) {
+      offer.load()
+    }
+  }, [issuance.loading])
+
+  React.useEffect(() => {
+    if (!issuance.loading && offer.data) {
       loader.stop()
     }
   }, [offer.loading])
@@ -880,7 +885,7 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
 
       videos: payload.files
         .filter(x => x.type === OfferFileType.video)
-        .map(video => ({ url: video.videoUrl } as VideoLink)),
+        .map(video => ({ url: video.videoUrl, id: video.id } as VideoLink)),
 
       additionalDocuments: payload.files
         .filter(x => x.type === OfferFileType.document)
@@ -904,22 +909,23 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       network: payload.network,
       terms: payload.terms,
       timeframe: payload.timeframe,
-      tokenName: payload.tokenName,
+      tokenName: payload.tokenName ?? '',
       tokenPrice: Number(payload.tokenPrice),
       tokenStandart: payload.tokenStandart,
-      tokenTicker: payload.tokenTicker,
-      tokenType: payload.tokenType,
+      tokenTicker: payload.tokenSymbol,
+      tokenType: payload.investingTokenSymbol as OfferTokenType,
+      tokenAddress: payload.tokenAddress
     }
   }, [])
   
 
-  return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id }
+  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id }
 }
 
 export const useSubmitOffer = () => {
   const uploadFiles = useUploadOfferFiles()
 
-  return React.useCallback(async (payload: InformationFormValues, initial: InformationFormValues, draft = false, vettingId?: number | string,  offerId?: number) => {
+  return React.useCallback(async (payload: InformationFormValues, initial: InformationFormValues, draft = false, vettingId?: number | string,  offerId?: string) => {
     const uploadedFiles = await uploadFiles(payload, initial)
       
     const findDoc = (prefix: 'member' | 'document' | 'image', idx: number) => 
@@ -951,8 +957,10 @@ export const useSubmitOffer = () => {
       title: payload.title,
       issuerIdentificationNumber: payload.issuerIdentificationNumber,
 
+      tokenAddress: payload.tokenAddress,
+      tokenName: payload.tokenName,
       tokenSymbol: payload.tokenTicker,
-      tokenPrice: payload.tokenPrice,
+      tokenPrice: payload.tokenPrice.toString(),
       tokenStandart: payload.tokenStandart,
       
       investingTokenSymbol: payload.tokenType,
@@ -968,8 +976,7 @@ export const useSubmitOffer = () => {
       presaleMaxInvestment: payload.presaleMaxInvestment,
       presaleAlocated: payload.presaleAlocated,
 
-      allowOnlyAccredited: true,
-
+      allowOnlyAccredited: payload.allowOnlyAccredited,
 
       terms: {
         investmentStructure: payload.terms.investmentStructure,
@@ -981,7 +988,7 @@ export const useSubmitOffer = () => {
       
       timeframe: {
         whitelist: payload.timeframe.whitelist,
-        preSale: payload.timeframe.presale,
+        preSale: payload.timeframe.preSale,
         sale: payload.timeframe.sale,
         closed: payload.timeframe.closed,
         claim: payload.timeframe.claim
@@ -1052,7 +1059,9 @@ export const useSubmitOffer = () => {
 
     if (offerId) {
       delete data.offerId
-      return apiService.put(`/offers/${offerId}`, data)
+      delete data.vettingId
+      delete data.tokenName
+      return apiService.put(`/offers/${offerId}/full`, data)
     } else {
       return apiService.post(`/offers`, data)
     }
