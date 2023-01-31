@@ -1,11 +1,11 @@
+import React from 'react'
 import lodash from 'lodash'
-import React, { useCallback } from 'react'
 
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
-import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/IssuanceDashboard/SearchFilter'
+import { SearchConfig, OrderConfig } from 'components/LaunchpadIssuance/IssuanceDashboard/SearchFilter'
 
 import { KYCStatuses } from 'pages/KYC/enum'
 
@@ -14,21 +14,33 @@ import { useKYCState } from 'state/kyc/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 
 import {
-  Asset, DashboardOffer, Issuance, IssuancePlain,
+  Asset,
+  Issuance,
+  DashboardOffer,
+  IssuancePlain,
   IssuanceVetting,
   Offer,
   OfferFileType,
   OfferStatus,
-  WhitelistStatus
+  WhitelistStatus,
 } from 'state/launchpad/types'
 
 import { toggleKYCDialog } from './actions'
 
-import { InformationFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
-import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
-import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
 import apiService from 'services/apiService'
 import { PaginateResponse } from 'types/pagination'
+import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
+import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
+import { initialValues as informationInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
+import {
+  AdditionalDocument,
+  InformationFormValues,
+  OfferTokenType,
+  SocialMediaType,
+  TeamMember,
+  VideoLink,
+} from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
+import { IssuanceFile } from 'components/LaunchpadIssuance/IssuanceForm/types'
 
 interface OfferPagination {
   page: number
@@ -47,8 +59,8 @@ interface OfferPagination {
 export const useLoader = (initial = true) => {
   const [isLoading, setLoading] = React.useState(initial)
 
-  const stop = useCallback(() => setLoading(false), [])
-  const start = useCallback(() => setLoading(true), [])
+  const stop = React.useCallback(() => setLoading(false), [])
+  const start = React.useCallback(() => setLoading(true), [])
 
   return { isLoading, stop, start }
 }
@@ -65,7 +77,7 @@ export const useToggleKYCModal = () => {
   const dispatch = useDispatch()
   const isOpen = useKYCIsModalOpen()
 
-  return useCallback(() => {
+  return React.useCallback(() => {
     dispatch(toggleKYCDialog({ open: !isOpen }))
   }, [isOpen])
 }
@@ -73,7 +85,7 @@ export const useToggleKYCModal = () => {
 export const useSetAllowOnlyAccredited = () => {
   const dispatch = useDispatch()
 
-  return useCallback(
+  return React.useCallback(
     (allowOnlyAccredited: boolean) => {
       dispatch(toggleKYCDialog({ open: allowOnlyAccredited }))
     },
@@ -84,7 +96,7 @@ export const useSetAllowOnlyAccredited = () => {
 export const useCheckKYC = () => {
   const { kyc } = useKYCState()
 
-  return useCallback(
+  return React.useCallback(
     (allowOnlyAccredited: boolean, isClosed: boolean) => {
       return (
         !!kyc &&
@@ -97,7 +109,7 @@ export const useCheckKYC = () => {
 }
 
 export const useGetOffers = () => {
-  return useCallback(async (page: number, filter?: FilterConfig) => {
+  return React.useCallback(async (page: number, filter?: FilterConfig) => {
     let query = [`page=${page}`, 'offset=6']
 
     if (filter) {
@@ -120,11 +132,15 @@ export const useGetOffers = () => {
 }
 
 export const useGetPinnedOffer = () => {
-  return useCallback(() => apiService.get('/offers/main').then((res) => res.data as Offer), [])
+  return React.useCallback(() => apiService.get('/offers/main').then((res) => res.data as Offer), [])
 }
 
 export const useFormatOfferValue = (addComa = true) => {
-  return useCallback((value: string) => {
+  return React.useCallback((value?: string) => {
+    if (!value) {
+      return ''
+    }
+
     let result = value
 
     if (result) {
@@ -158,26 +174,33 @@ interface GetSupportPayload {
 }
 
 export const useRequestSupport = () => {
-  return useCallback((payload: GetSupportPayload) => {
+  return React.useCallback((payload: GetSupportPayload) => {
     return apiService.post(`/offers/support`, payload)
   }, [])
 }
 
 export const useSubscribeToOffer = () => {
-  return useCallback((email: string, offerId?: string) => apiService.post('/offers/subscribe', { email, offerId }), [])
+  return React.useCallback(
+    (email: string, offerId?: string) => apiService.post('/offers/subscribe', { email, offerId }),
+    []
+  )
 }
 
 export const useGetOffer = (id: string | number | undefined) => {
   const loader = useLoader()
   const [data, setData] = React.useState<Offer>()
 
-  const load = useCallback(() => {
+  const load = React.useCallback(() => {
+    if (!id) {
+      return
+    }
+
     apiService
       .get(`/offers/${id}`)
       .then((res) => res.data as Offer)
       .then(setData)
       .finally(loader.stop)
-  }, [])
+  }, [id])
 
   React.useEffect(() => {
     load()
@@ -190,7 +213,7 @@ export const useGetWhitelistStatus = (id: string) => {
   const [loading, setLoading] = React.useState(true)
   const [info, setInfo] = React.useState<{ status: WhitelistStatus; isInterested: number }>()
 
-  const getWhitelist = useCallback(() => apiService.get(`/offers/${id}/me/whitelist`), [id])
+  const getWhitelist = React.useCallback(() => apiService.get(`/offers/${id}/me/whitelist`), [id])
 
   React.useEffect(() => {
     getWhitelist()
@@ -202,14 +225,14 @@ export const useGetWhitelistStatus = (id: string) => {
 }
 
 export const useRequestWhitelist = (id: string) => {
-  return useCallback(
+  return React.useCallback(
     (payload: { amount: number; isInterested: boolean }) => apiService.post(`/offers/${id}/me/whitelist`, payload),
     [id]
   )
 }
 
 export const useInvest = (id: string) => {
-  return useCallback(
+  return React.useCallback(
     (status: OfferStatus, payload: { amount: string; txHash: string }) => {
       if (![OfferStatus.preSale, OfferStatus.sale].includes(status)) {
         throw new Error('Invalid offer status')
@@ -222,7 +245,7 @@ export const useInvest = (id: string) => {
 }
 
 export const useDerivedBalanceInfo = (id: string) => {
-  return useCallback(
+  return React.useCallback(
     (amount: string, inputCurrency: Currency | null | undefined, balance?: CurrencyAmount<Currency>) => {
       if (amount) {
         const realAmount = amount.replace(/,/g, '')
@@ -237,14 +260,17 @@ export const useDerivedBalanceInfo = (id: string) => {
 }
 
 export const useClaimOffer = (id: string) => {
-  return useCallback(
+  return React.useCallback(
     (isSuccessful: boolean) => apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, null),
     [id]
   )
 }
 
 export const useCreateIssuance = () => {
-  return useCallback((name: string) => apiService.post('/issuances', { name }).then((res) => res.data as Issuance), [])
+  return React.useCallback(
+    (name: string) => apiService.post('/issuances', { name }).then((res) => res.data as Issuance),
+    []
+  )
 }
 
 export const useGetIssuancePlain = () => {
@@ -252,7 +278,7 @@ export const useGetIssuancePlain = () => {
 
   const [items, setItems] = React.useState<IssuancePlain[]>([])
 
-  const load = useCallback(() => {
+  const load = React.useCallback(() => {
     loader.start()
 
     return apiService
@@ -274,7 +300,7 @@ export const useGetIssuanceFull = () => {
 
   const [items, setItems] = React.useState<Issuance[]>([])
 
-  const load = useCallback(() => {
+  const load = React.useCallback(() => {
     loader.start()
 
     return apiService
@@ -296,7 +322,7 @@ export const useGetIssuance = () => {
 
   const [data, setData] = React.useState<Issuance>()
 
-  const load = useCallback((id?: number) => {
+  const load = React.useCallback((id?: number) => {
     if (!id) {
       return
     }
@@ -330,13 +356,8 @@ export const useVetting = (issuanceId?: number) => {
   return { data: vetting, loading: loader.isLoading }
 }
 
-export const useVettingFormInitialValues = (issuanceId?: number) => {
-  const loader = useLoader()
-  const vetting = useVetting(issuanceId)
-
-  const [values, setValues] = React.useState<VettingFormValues>()
-
-  const getFile = useCallback((asset?: Asset) => {
+export const useGetFile = () => {
+  return React.useCallback((asset?: Asset) => {
     if (!asset) {
       return
     }
@@ -345,8 +366,16 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
       .then((res) => res.blob())
       .then((res) => ({ id: asset.id, file: new File([res], asset.name) }))
   }, [])
+}
 
-  const findFile = useCallback((files: { id: number; file: File }[], id?: number) => {
+export const useVettingFormInitialValues = (issuanceId?: number) => {
+  const loader = useLoader()
+  const getFile = useGetFile()
+  const vetting = useVetting(issuanceId)
+
+  const [values, setValues] = React.useState<VettingFormValues>()
+
+  const findFile = React.useCallback((files: { id: number; file: File }[], id?: number) => {
     if (!id) {
       return
     }
@@ -354,7 +383,7 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
     return files.find((x) => x.id === id)
   }, [])
 
-  const transform = useCallback(async (payload: IssuanceVetting) => {
+  const transform = React.useCallback(async (payload: IssuanceVetting) => {
     const files = await Promise.all([
       getFile(payload.document.pitchDeck),
       getFile(payload.document.certificateOfIncorporation),
@@ -420,7 +449,7 @@ export const useVettingFormInitialValues = (issuanceId?: number) => {
 }
 
 export const useGetIssuances = () => {
-  return useCallback(async (page: number, filter?: SearchConfig, order?: OrderConfig, size = 10) => {
+  return React.useCallback(async (page: number, filter?: SearchConfig, order?: OrderConfig, size = 10) => {
     let query = [`page=${page}`, `offset=${size}`]
 
     if (filter) {
@@ -456,47 +485,50 @@ export const useGetIssuances = () => {
 }
 
 export const useGetOffersFull = () => {
-  return useCallback(async (page: number, filter?: SearchConfig, order?: OrderConfig, type?: string, size = 10) => {
-    let query = [`page=${page}`, `offset=${size}`]
+  return React.useCallback(
+    async (page: number, filter?: SearchConfig, order?: OrderConfig, type?: string, size = 10) => {
+      let query = [`page=${page}`, `offset=${size}`]
 
-    if (filter) {
-      query = query.concat(
-        Object.entries(filter)
-          .filter(([_, value]) => value.length > 0)
-          .map(
-            ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
-          )
-      )
-    }
+      if (filter) {
+        query = query.concat(
+          Object.entries(filter)
+            .filter(([_, value]) => value.length > 0)
+            .map(
+              ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
+            )
+        )
+      }
 
-    if (order) {
-      query = query.concat(
-        Object.entries(order)
-          .filter(([_, value]) => value && value.length > 0)
-          .map(([key, value]) => `order=${key}=${value}`)
-      )
-    }
+      if (order) {
+        query = query.concat(
+          Object.entries(order)
+            .filter(([_, value]) => value && value.length > 0)
+            .map(([key, value]) => `order=${key}=${value}`)
+        )
+      }
 
-    query = query.concat(`type=${type?.toLocaleLowerCase()}`)
+      query = query.concat(`type=${type?.toLocaleLowerCase()}`)
 
-    const result = await apiService
-      .get(`/offers/me?${query.join('&')}`)
-      .then((res) => res.data as PaginateResponse<DashboardOffer>)
+      const result = await apiService
+        .get(`/offers/me?${query.join('&')}`)
+        .then((res) => res.data as PaginateResponse<DashboardOffer>)
 
-    return {
-      hasMore: result.nextPage !== null,
-      items: result.items,
+      return {
+        hasMore: result.nextPage !== null,
+        items: result.items,
 
-      totalPages: result.totalPages,
-      totalItems: result.totalItems,
-    }
-  }, [])
+        totalPages: result.totalPages,
+        totalItems: result.totalItems,
+      }
+    },
+    []
+  )
 }
 
 export const useGetFieldArrayId = () => {
   let counter = 0
 
-  return useCallback(() => ++counter, [])
+  return React.useCallback(() => ++counter, [])
 }
 
 interface FileUpload {
@@ -505,7 +537,7 @@ interface FileUpload {
 }
 
 export const useUploadFiles = () => {
-  return useCallback(async (files: FileUpload[]) => {
+  return React.useCallback(async (files: FileUpload[]) => {
     const data = new FormData()
 
     for (const entry of files) {
@@ -523,7 +555,7 @@ export const useUploadFiles = () => {
 const useUploadVettingFiles = () => {
   const uploadFiles = useUploadFiles()
 
-  return useCallback(
+  return React.useCallback(
     async (payload: VettingFormValues, initial: VettingFormValues) => {
       const files: FileUpload[] = []
       const filesToRemove: { name: string; id: number | null }[] = []
@@ -591,7 +623,7 @@ const useUploadVettingFiles = () => {
 export const useSaveVettingDraft = (issuanceId?: number) => {
   const uploadFiles = useUploadVettingFiles()
 
-  return useCallback(
+  return React.useCallback(
     async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
       let data: Record<string, any> = {
         issuanceId,
@@ -672,7 +704,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 export const useSubmitVettingForm = (issuanceId?: number) => {
   const uploadFiles = useUploadVettingFiles()
 
-  return useCallback(
+  return React.useCallback(
     async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
       const uploadedFiles = await uploadFiles(payload, initialValues)
 
@@ -769,13 +801,13 @@ export const useSubmitVettingForm = (issuanceId?: number) => {
 const useUploadOfferFiles = () => {
   const uploadFiles = useUploadFiles()
 
-  const getMemberFiles = useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+  const getMemberFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
     const uploadedFiles = new Set(initial.members.filter((x) => x.photo?.id).map((x) => x.photo?.id))
 
     const files: FileUpload[] = []
 
     payload.members.forEach((entry, idx) => {
-      if (uploadedFiles.has(entry.photo?.id)) {
+      if (!entry.photo || uploadedFiles.has(entry.photo?.id)) {
         return
       }
 
@@ -785,13 +817,13 @@ const useUploadOfferFiles = () => {
     return files
   }, [])
 
-  const getImageFiles = useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+  const getImageFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
     const uploadedFiles = new Set(initial.images.filter((x) => x.id).map((x) => x.id))
 
     const files: FileUpload[] = []
 
     payload.images.forEach((entry, idx) => {
-      if (uploadedFiles.has(entry.id)) {
+      if (uploadedFiles.has(entry?.id)) {
         return
       }
 
@@ -801,23 +833,23 @@ const useUploadOfferFiles = () => {
     return files
   }, [])
 
-  const getDocumentFiles = useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
-    const uploadedFiles = new Set(initial.additionalDocuments.filter((x) => x.file.id).map((x) => x.file.id))
+  const getDocumentFiles = React.useCallback((payload: InformationFormValues, initial: InformationFormValues) => {
+    const uploadedFiles = new Set(initial.additionalDocuments.filter((x) => x.file?.id).map((x) => x.file?.id))
 
     const files: FileUpload[] = []
 
     payload.additionalDocuments.forEach((entry, idx) => {
-      if (uploadedFiles.has(entry.file.id)) {
+      if (!entry.file || uploadedFiles.has(entry.file?.id)) {
         return
       }
 
-      files.push({ name: `document.${idx}`, file: entry.file.file })
+      files.push({ name: `document.${idx}`, file: entry.file?.file })
     })
 
     return files
   }, [])
 
-  return useCallback(
+  return React.useCallback(
     (payload: InformationFormValues, initial: InformationFormValues) => {
       const files = [
         ...getDocumentFiles(payload, initial),
@@ -825,60 +857,190 @@ const useUploadOfferFiles = () => {
         ...getMemberFiles(payload, initial),
       ]
 
-      if (payload.cardPicture.id !== initial.cardPicture.id) {
-        files.push({ name: 'card', file: payload.cardPicture.file })
+      if (payload.cardPicture?.id !== initial.cardPicture?.id) {
+        files.push({ name: 'card', file: payload.cardPicture?.file })
       }
 
-      if (payload.profilePicture.id !== initial.profilePicture.id) {
-        files.push({ name: 'profile', file: payload.cardPicture.file })
+      if (payload.profilePicture?.id !== initial.profilePicture?.id) {
+        files.push({ name: 'profile', file: payload.cardPicture?.file })
       }
 
-      return uploadFiles(files)
+      return uploadFiles(files.filter((x) => x.file))
     },
     [uploadFiles, getDocumentFiles, getImageFiles, getMemberFiles]
   )
 }
 
-export const useSubmitOffer = (vettingId?: number | string) => {
+export const useOfferFormInitialValues = (issuanceId?: number) => {
+  const loader = useLoader()
+  const getFile = useGetFile()
+
+  const issuance = useGetIssuance()
+  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id)
+
+  const [values, setValues] = React.useState<InformationFormValues>()
+
+  React.useEffect(() => {
+    issuance.load(issuanceId)
+  }, [issuanceId])
+
+  React.useEffect(() => {
+    console.log(`Loading: ${issuance.loading}; Data: `, issuance.data)
+    if (!issuance.loading && issuance.data) {
+      offer.load()
+    }
+  }, [issuance.loading])
+
+  React.useEffect(() => {
+    if (!issuance.loading && offer.data) {
+      loader.stop()
+    }
+  }, [offer.loading])
+
+  React.useEffect(() => {
+    if (!offer.loading && !offer.data) {
+      setValues(informationInitialFormValues)
+      loader.stop()
+    } else if (!offer.loading && offer.data) {
+      transform(offer.data!).then(setValues).then(loader.stop)
+    }
+  }, [offer.loading])
+
+  const transform = React.useCallback(async (payload: Offer): Promise<InformationFormValues> => {
+    const files = await Promise.all([
+      ...payload.members.map((x) => getFile(x.avatar)),
+      ...payload.files.filter((x) => x.type !== OfferFileType.video).map((x) => getFile(x.file)),
+
+      getFile(payload.cardPicture),
+      getFile(payload.profilePicture),
+    ])
+      .then((res) => res.filter((x) => !!x))
+      .then((res) => res as { id: number; file: File }[])
+
+    return {
+      id: payload?.id,
+      title: payload.title,
+
+      shortDescription: payload.shortDescription,
+      longDescription: payload.longDescription,
+
+      cardPicture: files.find((x) => x.id === payload.cardPicture?.id) as IssuanceFile,
+      profilePicture: files.find((x) => x.id === payload.profilePicture?.id) as IssuanceFile,
+
+      allowOnlyAccredited: payload.allowOnlyAccredited,
+
+      country: payload.country,
+      email: payload.contactUsEmail,
+      website: payload.issuerWebsite,
+      whitepaper: payload.whitepaperUrl,
+
+      hardCap: payload.hardCap,
+      softCap: payload.softCap,
+
+      faq: payload.faq,
+      members: payload.members.map(
+        (member) =>
+          ({
+            name: member.name,
+            role: member.title,
+            about: member.description,
+            photo: files.find((x) => x.id === member.avatar?.id),
+          } as TeamMember)
+      ),
+
+      social: Object.entries(payload.socialMedia).map(([name, link]) => ({ type: name as SocialMediaType, url: link })),
+
+      images: payload.files
+        .filter((x) => x.type === OfferFileType.image)
+        .map((image) => files.find((x) => x.id === image.file?.id) as IssuanceFile),
+
+      videos: payload.files
+        .filter((x) => x.type === OfferFileType.video)
+        .map((video) => ({ url: video.videoUrl, id: video.id } as VideoLink)),
+
+      additionalDocuments: payload.files
+        .filter((x) => x.type === OfferFileType.document)
+        .map((document) => {
+          const file = files.find((x) => x.id === document.file?.id)
+
+          return { name: file?.file.name, file: file } as AdditionalDocument
+        }),
+
+      hasPresale: payload.hasPresale,
+      presaleAlocated: payload.presaleAlocated,
+      presaleMaxInvestment: payload.presaleMaxInvestment,
+      presaleMinInvestment: payload.presaleMinInvestment,
+
+      industry: payload.industry,
+      investmentType: payload.investmentType,
+      issuerIdentificationNumber: payload.issuerIdentificationNumber,
+      maxInvestment: payload.maxInvestment,
+      minInvestment: payload.minInvestment,
+
+      network: payload.network,
+      terms: payload.terms,
+      timeframe: payload.timeframe,
+      tokenName: payload.tokenName ?? '',
+      tokenPrice: Number(payload.tokenPrice),
+      tokenStandart: payload.tokenStandart,
+      tokenTicker: payload.tokenSymbol,
+      tokenType: payload.investingTokenSymbol as OfferTokenType,
+      tokenAddress: payload.tokenAddress,
+    }
+  }, [])
+
+  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id }
+}
+
+export const useSubmitOffer = () => {
   const uploadFiles = useUploadOfferFiles()
 
-  return useCallback(
-    async (payload: InformationFormValues, initial: InformationFormValues, draft = false, offerId?: number) => {
+  return React.useCallback(
+    async (
+      payload: InformationFormValues,
+      initial: InformationFormValues,
+      draft = false,
+      vettingId?: number | string,
+      offerId?: string
+    ) => {
       const uploadedFiles = await uploadFiles(payload, initial)
 
       const findDoc = (prefix: 'member' | 'document' | 'image', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
 
-      const data: Record<string, any> = {
+      let data: Record<string, any> = {
         offerId,
         vettingId,
 
         toSubmit: !draft,
 
-        title: payload.name,
-
         shortDescription: payload.shortDescription,
         longDescription: payload.longDescription,
 
-        type: payload.tokenType,
         network: payload.network,
         industry: payload.industry,
         investmentType: payload.investmentType,
-
-        issuerIdentificationNumber: payload.issuerIdentificationNumber,
         country: payload.country,
 
         socialMedia: payload.social.reduce((acc, e) => ({ ...acc, [e.type]: e.url }), {}),
 
-        tokenAddress: '',
+        contactUsEmail: payload.email,
+        issuerWebsite: payload.website,
+        whitepaperUrl: payload.whitepaper,
+
+        profilePictureId: uploadedFiles.find((x) => x.name === 'profile')?.id ?? initial.profilePicture?.id,
+        cardPictureId: uploadedFiles.find((x) => x.name === 'card')?.id ?? initial.cardPicture?.id,
+
+        title: payload.title,
+        issuerIdentificationNumber: payload.issuerIdentificationNumber,
+
+        tokenAddress: payload.tokenAddress,
+        tokenName: payload.tokenName,
         tokenSymbol: payload.tokenTicker,
-        tokenPrice: payload.tokenPrice,
+        tokenPrice: payload.tokenPrice.toString(),
         tokenStandart: payload.tokenStandart,
 
-        investingTokenAddress: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
-        investingTokenSymbol: 'USDC',
-
-        decimals: 18,
+        investingTokenSymbol: payload.tokenType,
 
         softCap: payload.softCap,
         hardCap: payload.hardCap,
@@ -891,14 +1053,7 @@ export const useSubmitOffer = (vettingId?: number | string) => {
         presaleMaxInvestment: payload.presaleMaxInvestment,
         presaleAlocated: payload.presaleAlocated,
 
-        contactUsEmail: payload.email,
-        issuerWebsite: payload.website,
-        whitepaperUrl: payload.whitepaper,
-
-        allowOnlyAccredited: true,
-
-        profilePictureId: uploadedFiles.find((x) => x.name === 'profile')?.id ?? initial.profilePicture.id,
-        cardPictureId: uploadedFiles.find((x) => x.name === 'card')?.id ?? initial.cardPicture.id,
+        allowOnlyAccredited: payload.allowOnlyAccredited,
 
         terms: {
           investmentStructure: payload.terms.investmentStructure,
@@ -908,48 +1063,91 @@ export const useSubmitOffer = (vettingId?: number | string) => {
           distributionFrequency: payload.terms.distributionFrequency,
         },
 
+        timeframe: {
+          whitelist: payload.timeframe.whitelist,
+          preSale: payload.timeframe.preSale,
+          sale: payload.timeframe.sale,
+          closed: payload.timeframe.closed,
+          claim: payload.timeframe.claim,
+        },
+
         faq: payload.faq.map((x) => ({ question: x.question, answer: x.answer })),
 
         members: payload.members.map((x, idx) => ({
-          avatarId: findDoc('member', idx) ?? initial.members[idx].photo.id,
+          avatarId: findDoc('member', idx) ?? initial.members[idx].photo?.id,
           name: x.name,
           title: x.role,
           description: x.about,
         })),
 
         files: [
-          ...payload.additionalDocuments.map((x, idx) => ({
-            type: OfferFileType.document,
-            fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file.id,
-          })),
+          ...payload.additionalDocuments
+            .map((x, idx) => ({
+              type: OfferFileType.document,
+              fileId: findDoc('document', idx) ?? initial.additionalDocuments[idx].file?.id,
+            }))
+            .filter((x) => x.fileId),
 
-          ...payload.images.map((x, idx) => ({
-            type: OfferFileType.image,
-            fileId: findDoc('image', idx) ?? initial.images[idx].id,
-          })),
+          ...payload.images
+            .map((x, idx) => ({
+              type: OfferFileType.image,
+              fileId: findDoc('image', idx) ?? initial.images[idx]?.id,
+            }))
+            .filter((x) => x.fileId),
 
-          ...payload.videos.map((x) => ({
-            type: OfferFileType.video,
-            videoUrl: x.url,
-          })),
+          ...payload.videos
+            .map((x) => ({
+              type: OfferFileType.video,
+              videoUrl: x.url,
+            }))
+            .filter((x) => x.videoUrl),
         ],
-
-        timeframe: {
-          whitelist: payload.timeframe.whitelist,
-          preSale: payload.timeframe.presale,
-          sale: payload.timeframe.sale,
-          closed: payload.timeframe.closed,
-          claim: payload.timeframe.claim,
-        },
       }
+
+      function filter(data: any): any {
+        if (data === undefined || data === null) {
+          return data
+        }
+
+        if (typeof data === 'object' && data.length !== undefined) {
+          return data.map(filter).filter((x: any) => !!x)
+        }
+
+        if (typeof data !== 'object') {
+          return data
+        }
+
+        const result = Object.entries(data)
+          .map(([key, value]) => ({ key, value }))
+          .map((entry) => ({ ...entry, value: filter(entry.value) }))
+          .filter(
+            (entry) =>
+              !!entry.value ||
+              typeof entry.value === 'boolean' ||
+              (typeof entry.value === 'object' && entry.value && Object.keys(entry.value).length > 0)
+          )
+          .reduce((acc, entry) => ({ ...acc, [entry.key]: filter(entry.value) }), {})
+
+        if (Object.keys(result).length === 0) {
+          return undefined
+        }
+
+        return result
+      }
+
+      data = filter(data)
+
+      console.log(data)
 
       if (offerId) {
         delete data.offerId
-        return apiService.put(`/offers/${offerId}`, data)
+        delete data.vettingId
+        delete data.tokenName
+        return apiService.put(`/offers/${offerId}/full`, data)
       } else {
         return apiService.post(`/offers`, data)
       }
     },
-    [uploadFiles, vettingId]
+    [uploadFiles]
   )
 }

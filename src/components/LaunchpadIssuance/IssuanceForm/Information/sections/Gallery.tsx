@@ -21,6 +21,7 @@ import { TextareaField } from '../../shared/fields/TextareaField'
 interface Props {
   images: IssuanceFile[]
   videos: VideoLink[]
+  description: string
   errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
@@ -102,6 +103,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
 
                   field={`videos[${idx}].url`}
                   setter={props.setter}
+                  value={video.url}
                   error={(props.errors.videos?.[idx] as FormikErrors<VideoLink> | undefined )?.url}
 
                   trailing={(props.videos.length > 1 || idx > 0) && (
@@ -131,6 +133,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
           setter={props.setter}
           label=""
           placeholder=''
+          value={props.description}
           error={props.errors.longDescription}
         />
       </DescriptionContainer>

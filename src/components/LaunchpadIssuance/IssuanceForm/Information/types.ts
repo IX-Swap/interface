@@ -14,27 +14,29 @@ export enum OfferTokenType {
 export enum SocialMediaType {
   twitter = 'twitter',
   telegram = 'telegram',
-  linkedIn = 'linkedIn',
+  linkedIn = 'linkedin',
   discord = 'discord',
   reddit = 'reddit',
-  youTube = 'youTube',
-  coinMarketCap = 'coinMarketCap',
-  coinGecko = 'coinGecko'
+  youTube = 'youtube',
+  coinMarketCap = 'coinmarketcap',
+  coinGecko = 'coingecko'
 }
 
 export interface VideoLink {
-  title: string
+  title?: string
   url: string
 }
 
 export interface InformationFormValues {
+  id?: string
+
   profilePicture: IssuanceFile
   cardPicture: IssuanceFile
 
   shortDescription: string
   longDescription: string
 
-  name: string
+  title: string
   issuerIdentificationNumber: string
 
   industry: OfferIndustry
@@ -44,9 +46,10 @@ export interface InformationFormValues {
 
   tokenName: string
   tokenTicker: string
-  tokenType: string
+  tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
   tokenPrice: number
+  tokenAddress?: string
 
   network: OfferNetwork
 
@@ -85,7 +88,7 @@ export interface InformationFormValues {
 
   timeframe: {
     whitelist: Date
-    presale: Date
+    preSale: Date
     sale: Date
     closed: Date
     claim: Date

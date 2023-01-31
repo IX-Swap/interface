@@ -47,6 +47,12 @@ export const initialValues = {
   members: [{ id: 0 }],
   faq: [{ id: 0 }],
 
+  allowOnlyAccredited: undefined,
+
+  terms: {
+    investmentStructure: ""
+  },
+
   timeframe: {
     whitelist: undefined,
     presale: undefined,
@@ -108,6 +114,7 @@ export const tokenTypeOptions = [
 export const distributionFrequencyOptions = [
   { label: 'Monthly', value: OfferDistributionFrequency.monthly },
   { label: 'Quarterly', value: OfferDistributionFrequency.quarterly },
+  { label: 'Semi-Annually', value: OfferDistributionFrequency.semiAnnually },
   { label: 'Annually', value: OfferDistributionFrequency.annually },
   { label: 'N/A', value: OfferDistributionFrequency.notApplicable },
   { label: 'Other', value: OfferDistributionFrequency.other },

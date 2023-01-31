@@ -11,7 +11,7 @@ interface Props {
   files: OfferFile[]
 }
 
-const crop = (value: string) => value.length > 20 ? value.substring(0, 20) + '...' : value
+const crop = (value?: string) =>  (value?.length ?? 0) > 20 ? value?.substring(0, 20) + '...' : value
 
 export const OfferAdditionalDocs: React.FC<Props> = (props) => {
   const theme = useTheme()

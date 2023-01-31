@@ -265,6 +265,8 @@ const InvestmentCardTitle = styled.div`
   line-height: 140%;
   letter-spacing: -0.03em;
 
+  font-family: ${(props) => props.theme.launchpad.font};
+
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const InvestmentCardDescription = styled.div`
@@ -274,6 +276,8 @@ const InvestmentCardDescription = styled.div`
 
   line-height: 150%;
   letter-spacing: -0.02em;
+
+  font-family: ${(props) => props.theme.launchpad.font};
 
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `
@@ -351,6 +355,8 @@ const InvestButton = styled.button`
   width: 100%;
 
   text-align: center;
+
+  font-family: ${(props) => props.theme.launchpad.font};
 
   font-style: normal;
   font-weight: 600;

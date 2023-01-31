@@ -20,6 +20,7 @@ import { RejectInfo } from '../shared/RejectInfo'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer, DeleteButton } from '../shared/styled'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
+import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { TextareaField } from '../shared/fields/TextareaField'
 import { useGetFieldArrayId, useLoader, useSaveVettingDraft, useSubmitVettingForm, useVetting, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
@@ -40,6 +41,7 @@ export const IssuanceVettingForm = () => {
   const addPopup = useAddPopup()
   
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
+  const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
   const onConfirmationClose = React.useCallback(() => {
@@ -89,9 +91,15 @@ export const IssuanceVettingForm = () => {
     }
   }, [history, issuanceId])
 
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
+  const textFilter = React.useCallback((value?: string) => value?.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join('') ?? '', [])
+
+  const toSubmit = React.useCallback(() => {
+    setShowConfirmDialog(true)
+  }, [showConfirmDialog])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
+    setShowConfirmDialog(false)
+
     loader.start()
 
     try {
@@ -145,6 +153,11 @@ export const IssuanceVettingForm = () => {
     <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} enableReinitialize={true}>
       {({ submitForm, setFieldValue, values, errors, resetForm }) => (
         <FormContainer>
+          <ConfirmationForm
+            isOpen={showConfirmDialog}
+            onClose={()=> setShowConfirmDialog(false)}
+            onSave={submitForm}/>
+
           <CloseConfirmation
             isOpen={showCloseDialog}
             onDiscard={()=> history.push(`/issuance/create?id=${issuanceId}`)}
@@ -171,15 +184,15 @@ export const IssuanceVettingForm = () => {
               .includes(initialValues?.data?.status as IssuanceStatus) && (
               <RejectInfo
                 message={initialValues?.data?.changesRequested}
-                status={IssuanceStatus.declined}
+                status={initialValues?.data?.status}
                 issuanceId={issuanceId}
                 onClear={() => resetForm({ values: defaultValues })}
-                onSubmit={submitForm}/>)}
+                onSubmit={toSubmit}/>)}
 
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
 
-              <FilledButton onClick={submitForm}>Submit</FilledButton>
+              <FilledButton onClick={toSubmit}>Submit</FilledButton>
             </FormSubmitContainer>
           </FormSideBar>
       
@@ -367,7 +380,7 @@ export const IssuanceVettingForm = () => {
 
             <Row justifyContent='flex-end' alignItems="center" gap="1.5rem">
               <OutlineButton width="280px">Back</OutlineButton>
-              <FilledButton width="280px" onClick={submitForm}>Submit</FilledButton>
+              <FilledButton width="280px" onClick={toSubmit}>Submit</FilledButton>
             </Row>
           </FormBody>
       </FormContainer>

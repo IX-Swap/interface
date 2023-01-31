@@ -7,15 +7,15 @@ import { Offer } from 'state/launchpad/types'
 import { InfoList } from '../util/InfoList'
 
 interface Props {
-  offer: Offer
+  email?: string
 }
 
 export const OfferContact: React.FC<Props> = (props) => {
   const entries = React.useMemo(() => [
     { 
       label: (
-        <ContactLine href={`mailto:${props.offer.contactUsEmail}`}>
-          <Mail size="18" /> {props.offer.contactUsEmail}
+        <ContactLine href={props.email ? `mailto:${props.email}` : '#'}>
+          <Mail size="18" /> {props.email}
         </ContactLine> 
       )
     }

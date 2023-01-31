@@ -37,7 +37,7 @@ export const DirectorField: React.FC<Props> = (props) => {
   const errors = React.useMemo(() => props.errors?.[props.field], [props.errors, props.field])
   const errorsLength = React.useMemo(() => errors?.length ?? 0, [errors])
   
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
+  const textFilter = React.useCallback((value?: string) => value?.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join('') ?? '', []) 
 
   return (
     <Column gap="2rem" alignItems="stretch">

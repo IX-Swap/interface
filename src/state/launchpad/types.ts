@@ -1,3 +1,4 @@
+import { OfferTokenType } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { User } from 'state/admin/actions'
 
@@ -140,6 +141,7 @@ export interface OfferFAQ {
 }
 
 export interface OfferFile {
+  id?: number
   type: OfferFileType
   videoUrl: string
   file: Asset
@@ -155,7 +157,7 @@ export enum OfferInvestmentStructure {
   equity = 'equity',
   debt = 'debt',
   hybrid = 'hybrid',
-  other = 'other',
+  other = 'others',
 }
 
 export interface OfferInvestment {
@@ -222,7 +224,7 @@ export interface Offer {
 
   industry: OfferIndustry
 
-  investmentType: string
+  investmentType: OfferInvestmentStructure
 
   capitalStructure: OfferCapitalStructure
 
@@ -234,6 +236,7 @@ export interface Offer {
   tokenTicker: string
   tokenPrice: string
   tokenStandart: OfferTokenStandart
+  tokenType: OfferTokenType
 
   investingTokenAddress: string
   investingTokenSymbol: string
