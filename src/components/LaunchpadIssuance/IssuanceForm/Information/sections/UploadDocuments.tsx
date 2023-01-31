@@ -34,13 +34,14 @@ export const UploadDocuments: React.FC<Props> = (props) => {
         {({ push, handleRemove }) => (
           <>
             {documents.map((document, idx) => (
-              <FieldContainer key={`additional-document-${document.id}`}>
+              <FieldContainer key={`additional-document-${document.id ?? document.file?.id}`}>
                 <FormField  
                   borderless 
                   label="Document Name"
                   placeholder='Name'
                   field={`additionalDocuments[${idx}].name`} 
                   setter={props.setter}
+                  value={document.name}
                   error={
                     ((props.errors.additionalDocuments?.length ?? 0) > idx &&
                     (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.name) as string
@@ -59,6 +60,7 @@ export const UploadDocuments: React.FC<Props> = (props) => {
                   label={''} 
                   field={`additionalDocuments[${idx}].file`} 
                   setter={props.setter} 
+                  value={document.file}
                   error={
                     ((props.errors.additionalDocuments?.length ?? 0) > idx &&
                     (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.file) as string

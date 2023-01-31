@@ -119,8 +119,8 @@ const ReviewContainer = styled.div`
   grid-template-areas:
     "title title title"
     "stages company-information sidebar"
-    "total-funding-size presale-size sidebar"
-    "terms additional-documents sidebar"
+    "total-funding-size presale-size ."
+    "terms additional-documents ."
     "terms contact .";
 
   gap: 1.25rem;
