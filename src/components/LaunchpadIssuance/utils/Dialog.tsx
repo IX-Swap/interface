@@ -22,17 +22,15 @@ export const IssuanceDialog: React.FC<React.PropsWithChildren<Props>> = (props) 
 
   return (
     <Portal>
-      <DialogWrapper onScroll={e => e.stopPropagation()}>
-        <DialogContainer width={props.width} height={props.height} padding={props.padding} >
+      <DialogWrapper onScroll={(e) => e.stopPropagation()}>
+        <DialogContainer width={props.width} height={props.height} padding={props.padding}>
           <DialogCloseButton onClick={props.onClose}>
             <X size={14} />
           </DialogCloseButton>
 
           {props.title && <DialogTitle>{props.title}</DialogTitle>}
 
-          <Content>
-            {props.children}
-          </Content>
+          <Content>{props.children}</Content>
         </DialogContainer>
       </DialogWrapper>
     </Portal>
@@ -52,8 +50,8 @@ const DialogWrapper = styled.div`
   place-content: center;
 
   backdrop-filter: blur(5px);
-  background: ${props => props.theme.launchpad.colors.text.title + '1e'};
-  
+  background: ${(props) => props.theme.launchpad.colors.text.title + '1e'};
+
   z-index: 30;
 `
 
@@ -85,27 +83,24 @@ const DialogCloseButton = styled.div`
   }
 `
 
-const DialogContainer = styled.div<{ height?: string, width?: string, padding?: string }>`
+const DialogContainer = styled.div<{ height?: string; width?: string; padding?: string }>`
   position: relative;
 
-
-  background: ${props => props.theme.launchpad.colors.background};
+  background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 16px;
 
-  padding: ${props => props.padding ?? '2rem'};
+  padding: ${(props) => props.padding ?? '2rem'};
 
-  ${props => props.width && `width: ${props.width};`}
-  ${props => props.height && `height: ${props.height};`}
+  ${(props) => props.width && `width: ${props.width};`}
+  ${(props) => props.height && `height: ${props.height};`}
 `
 
 const Content = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  
-  gap: 1rem;
 
-  overflow-auto;
+  gap: 1rem;
 `
 
 const DialogTitle = styled.div`
