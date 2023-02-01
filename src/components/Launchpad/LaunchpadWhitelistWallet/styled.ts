@@ -32,8 +32,13 @@ export const Tab = styled.div<{ active: boolean }>`
     props.active ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.bodyAlt};
 `
 export const DialogWrapper = styled.div`
-  max-height: 90vh;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  max-height: 90vh;
+`
+export const FilterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 `
