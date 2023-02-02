@@ -883,7 +883,6 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
   }, [issuanceId])
 
   React.useEffect(() => {
-    console.log(`Loading: ${issuance.loading}; Data: `, issuance.data)
     if (!issuance.loading && issuance.data) {
       offer.load()
     }
@@ -975,6 +974,9 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       issuerIdentificationNumber: payload.issuerIdentificationNumber,
       maxInvestment: payload.maxInvestment,
       minInvestment: payload.minInvestment,
+
+      changesRequested: payload.changesRequested,
+      reasonRequested: payload.reasonRequested,
       
       terms: {
         distributionFrequency: payload.terms.distributionFrequency ?? '',
@@ -1131,8 +1133,6 @@ export const useSubmitOffer = () => {
     }
 
     data = filter(data)
-
-    console.log(data)
 
     if (offerId) {
       delete data.offerId

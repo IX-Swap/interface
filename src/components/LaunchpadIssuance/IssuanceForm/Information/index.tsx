@@ -27,6 +27,7 @@ import { DropdownField } from '../shared/fields/DropdownField'
 import { TextareaField } from '../shared/fields/TextareaField'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { DateRangeField } from '../shared/fields/DateRangeField'
+import { RejectInfo } from '../shared/RejectInfo'
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
 
 import { FAQBlock } from './sections/FAQ'
@@ -218,16 +219,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     }
   }, [issuanceId, offer.loading, offer.data])
 
-  if (offer.loading) {
+  if (offer.loading || !offer.data) {
     return (
       <LoaderContainer width="100vw" height="100vh">
         <Loader />
       </LoaderContainer>
     )
-  }
-
-  if (!offer.data) {
-    return null
   }
 
   return (
@@ -244,8 +241,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         <FormTitle>Information</FormTitle>
       </FormHeader>
 
-      <Formik innerRef={form} initialValues={offer.data ?? initialValues}  onSubmit={submit} validationSchema={validationSchema}>
-        {({ values, errors, setFieldValue, submitForm }) => (
+      <Formik innerRef={form} initialValues={offer.data ?? initialValues}  onSubmit={submit} validationSchema={validationSchema} enableReinitialize={true}>
+        {({ values, errors, setFieldValue, submitForm, resetForm }) => (
           <>
             <ConfirmationForm
               isOpen={showConfirmDialog}
@@ -277,6 +274,15 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
             <FormSideBar>
               {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
               
+              {[IssuanceStatus.changesRequested, IssuanceStatus.declined]
+                .includes(offer.data?.status as IssuanceStatus) && (
+                <RejectInfo
+                  message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
+                  status={offer.data?.status}
+                  issuanceId={issuanceId}
+                  onClear={() => resetForm({ values: initialValues })}
+                  onSubmit={toSubmit}/>)}
+
               <FormSubmitContainer>
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
@@ -441,7 +447,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='Price per Token'
                   inputFilter={numberFilter}
                   disabled={props.edit}
-                  value={values.tokenPrice?.toString()}
+                  value={`${values.tokenPrice}`}
                   error={errors.tokenPrice}
                 />
                 <DropdownField

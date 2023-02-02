@@ -70,6 +70,9 @@ export interface InformationFormValues {
   presaleMinInvestment: string
   presaleMaxInvestment: string
 
+  changesRequested?: string
+  reasonRequested?: string
+
   email: string
   website: string
   whitepaper: string

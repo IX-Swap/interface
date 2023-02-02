@@ -1,6 +1,12 @@
-import { OfferIndustry, OfferNetwork, OfferTokenStandart, OfferDistributionFrequency, OfferInvestmentStructure } from "state/launchpad/types"
 import { InformationFormValues, OfferTokenType, SocialMediaType } from "./types"
 
+import {
+  OfferIndustry,
+  OfferNetwork,
+  OfferTokenStandart,
+  OfferDistributionFrequency,
+  OfferInvestmentStructure
+} from "state/launchpad/types"
 
 
 export const initialValues = {
@@ -13,10 +19,12 @@ export const initialValues = {
   name: '',
 
   companyIdNumber: '',
+  title: '',
 
   industry: undefined,
 
-  investmentStructure: undefined,
+  investmentStructure: '',
+  issuerIdentificationNumber: '',
 
   country: '',
 
@@ -27,9 +35,10 @@ export const initialValues = {
   network: undefined,
 
   hardCap: '',
-  softcap: '',
+  softCap: '',
 
   pricePerToken: 0,
+  tokenPrice: 0,
   tokenStandart: undefined,
 
   minInvestment: '',
@@ -62,11 +71,14 @@ export const initialValues = {
   },
 
   social: [
-    { type: SocialMediaType.twitter }
-  ]
+    { type: '' }
+  ],
+
+  website: '',
+  whitepaper: '',
+  email: '',
 
 } as unknown as InformationFormValues
-
 
 export const industryOptions = [
   { label: 'Blockchain', value: OfferIndustry.blockchain },
