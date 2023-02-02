@@ -8,8 +8,8 @@ export const FormContainer = styled.div`
   grid-template-columns: 855px 325px;
   grid-template-rows: 60px auto;
   grid-template-areas:
-    "header header"
-    "body sidebar";
+    'header header'
+    'body sidebar';
 
   gap: 1.5rem;
 
@@ -40,20 +40,20 @@ export const FormTitle = styled.div`
 
   text-transform: capitalize;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 export const FormBody = styled.div`
   grid-area: body;
-
   display: flex;
   flex-flow: column nowrap;
-
   align-items: stretch;
-
   gap: 2.5rem;
 `
-
+export const ShortFormBody = styled(FormBody)`
+  gap: 1rem;
+  margin-top: 1rem;
+`
 export const FormSideBar = styled.div`
   grid-area: sidebar;
 
@@ -63,7 +63,6 @@ export const FormSideBar = styled.div`
   align-items: stretch;
 
   gap: 1.5rem;
-
 `
 
 export const FormSubmitContainer = styled.div<{ error?: string }>`
@@ -76,16 +75,15 @@ export const FormSubmitContainer = styled.div<{ error?: string }>`
   padding: 1.5rem;
 
   max-height: 215px;
-  border: 1px solid ${ props => props.error
-    ? props.theme.launchpad.colors.border.error
-    : props.theme.launchpad.colors.border.default};
+  border: 1px solid
+    ${(props) =>
+      props.error ? props.theme.launchpad.colors.border.error : props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
-
-export const FormFieldWrapper = styled(Column)<{ span?: number, error?: string }>`
-  ${props => !props.error && `padding-bottom: 0.5rem;`}
-  ${props => props.span && `grid-column: span ${props.span};`}
+export const FormFieldWrapper = styled(Column)<{ span?: number; error?: string }>`
+  ${(props) => !props.error && `padding-bottom: 0.5rem;`}
+  ${(props) => props.span && `grid-column: span ${props.span};`}
 `
 
 export const OptionalLabel = styled.span`
@@ -100,7 +98,7 @@ export const OptionalLabel = styled.span`
 
   margin: 0 0.5rem;
 
-  color: ${props => props.theme.launchpad.colors.text.caption};
+  color: ${(props) => props.theme.launchpad.colors.text.caption};
 `
 
 export const DeleteButton = styled.button`
@@ -118,7 +116,7 @@ export const DeleteButton = styled.button`
   height: 36px;
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground };
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 `
 export const AddButton = styled.button`
@@ -133,13 +131,13 @@ export const AddButton = styled.button`
   font-style: normal;
   font-weight: 600;
   font-size: 13px;
-  
+
   line-height: 16px;
-  letter-spacing: -0.02em;;
+  letter-spacing: -0.02em;
 
   cursor: pointer;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 
   padding: 0.25rem;
 
@@ -148,6 +146,6 @@ export const AddButton = styled.button`
   background: none;
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 `
