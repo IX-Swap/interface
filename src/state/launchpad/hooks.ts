@@ -1,11 +1,11 @@
-import React from 'react'
 import lodash from 'lodash'
+import React from 'react'
 
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
-import { SearchConfig, OrderConfig } from 'components/LaunchpadIssuance/IssuanceDashboard/SearchFilter'
+import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/IssuanceDashboard/SearchFilter'
 
 import { KYCStatuses } from 'pages/KYC/enum'
 
@@ -15,8 +15,8 @@ import { tryParseAmount } from 'state/swap/helpers'
 
 import {
   Asset,
-  Issuance,
   DashboardOffer,
+  Issuance,
   IssuancePlain,
   IssuanceVetting,
   Offer,
@@ -27,11 +27,6 @@ import {
 
 import { toggleKYCDialog } from './actions'
 
-import apiService from 'services/apiService'
-import { PaginateResponse } from 'types/pagination'
-import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
-import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
-import { initialValues as informationInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
 import {
   AdditionalDocument,
   InformationFormValues,
@@ -40,7 +35,12 @@ import {
   TeamMember,
   VideoLink,
 } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
+import { initialValues as informationInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Information/util'
 import { IssuanceFile } from 'components/LaunchpadIssuance/IssuanceForm/types'
+import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
+import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
+import apiService from 'services/apiService'
+import { PaginateResponse } from 'types/pagination'
 
 interface OfferPagination {
   page: number
@@ -273,7 +273,7 @@ export const useCreateIssuance = () => {
   )
 }
 
-export const useGetIssuancePlain = () => {
+export const useGetIssuancePlain = (params?: { showAll: string }) => {
   const loader = useLoader()
 
   const [items, setItems] = React.useState<IssuancePlain[]>([])
@@ -282,7 +282,7 @@ export const useGetIssuancePlain = () => {
     loader.start()
 
     return apiService
-      .get('/issuances/plain')
+      .get('/issuances/plain', undefined, params)
       .then((res) => res.data as IssuancePlain[])
       .then(setItems)
       .then(loader.stop)
@@ -290,7 +290,7 @@ export const useGetIssuancePlain = () => {
 
   React.useEffect(() => {
     load()
-  }, [])
+  }, [params?.showAll])
 
   return { items, load, loading: loader.isLoading }
 }

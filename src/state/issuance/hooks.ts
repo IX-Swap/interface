@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { whitelist } from 'services/apiUrls'
@@ -6,7 +6,7 @@ import { WhitelistFilter } from 'services/types'
 import { AppDispatch } from 'state'
 import { PaginateResponse } from 'types/pagination'
 import { deleteWhitelistedWallet, getWhitelistedWallets, saveWhitelistedWallet } from './actions'
-import { WhitelistWallet, WhitelistWalletPayload } from './types'
+import { IssuanceDataExtract, WhitelistWallet, WhitelistWalletPayload } from './types'
 
 export interface UseDeleteWhitelistedArgs {
   onSuccess?: () => void
@@ -55,5 +55,15 @@ export const useDeleteWhitelisted = ({ onSuccess }: UseDeleteWhitelistedArgs) =>
     } catch (e) {
       dispatch(deleteWhitelistedWallet.rejected({ errorMessage: (e as { message: string }).message }))
     }
+  }, [])
+}
+
+export const useGetOffersData = () => {
+  return React.useCallback(async (offerId: string, page: number, size = 11) => {
+    const result = await apiService
+      .get(`offers/${offerId}/data`, undefined, { page, size })
+      .then((res) => res.data as PaginateResponse<IssuanceDataExtract>)
+
+    return result
   }, [])
 }
