@@ -286,6 +286,9 @@ export interface Offer {
   members: OfferTeamMember[]
   faq: OfferFAQ[]
 
+  changesRequested?: string
+  reasonRequested?: string
+
   createdAt: Date
   updatedAt: Date
   deletedAt?: Date

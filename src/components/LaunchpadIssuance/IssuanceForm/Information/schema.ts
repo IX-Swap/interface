@@ -26,9 +26,9 @@ export const schema = yup.object().shape({
   network: yup.string().oneOf(Object.values(OfferNetwork)).required('Network required'),
   industry: yup.string().oneOf(Object.values(OfferIndustry)).required('Industry requried'),
   investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required('Investment Type required'),
+  country: yup.string().required('Country requried').oneOf(countryCodes, 'Select a country from the list'),
 
   issuerIdentificationNumber: yup.string().required('Enter company identification number').min(8, 'Identification number should be at least 8 characters'),
-  country: yup.string().required('Country requried').oneOf(countryCodes, 'Select a country from the list'),
 
   tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required('Token type required'),
   tokenName: yup.string().required('Token name required'),
@@ -142,5 +142,51 @@ export const schema = yup.object().shape({
 
   social: yup.array(yup.object().shape({
     url: yup.string().url('Enter a valid URL')
+  })),
+})
+
+export const editSchema = yup.object().shape({
+  profilePicture: requriedFileSchema,
+  cardPicture: requriedFileSchema,
+  
+  shortDescription: yup.string().required().min(10, 'Short Description must be longer than or equal to 10 characters'),
+  longDescription: yup.string().required().min(10, 'Description must be longer than or equal to 10 characters'),
+
+  network: yup.string().oneOf(Object.values(OfferNetwork)).required('Network required'),
+  industry: yup.string().oneOf(Object.values(OfferIndustry)).required('Industry requried'),
+  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required('Investment Type required'),
+  country: yup.string().required('Country requried').oneOf(countryCodes, 'Select a country from the list'),
+
+  email: yup.string().required('Email required').email('Enter a valid email'),
+  website: yup.string().required('Website URL required').url('Enter a valid URL'),
+  whitepaper: yup.string().required('Whitepaper URL required').url('Enter a valid URL'),
+
+  allowOnlyAccredited: yup.boolean(),
+
+  social: yup.array(yup.object().shape({
+    url: yup.string().url('Enter a valid URL')
+  })),
+  
+  gallery: yup.array(requriedFileSchema),
+
+  additionalDocuments: yup.array(yup.object().shape({
+    name: yup.string().when('file', { is: undefined, then: yup.string(), otherwise: yup.string().required() }),
+    file: fileSchema
+  })),
+
+  videos: yup.array(yup.object().shape({
+    url: yup.string().url('Enter a valid URL'),
+  })),
+  
+  faq: yup.array(yup.object().shape({
+    question: yup.string().required().min(10, 'Question should be at least 10 charachters'),
+    answer: yup.string().required().min(10, 'Answer should be at least 10 charachters')
+  })),
+
+  members: yup.array(yup.object().shape({
+    photo: requriedFileSchema ,
+    name: yup.string().required('Required'),
+    role: yup.string().required('Required'),
+    about: yup.string().required('Required')
   })),
 })
