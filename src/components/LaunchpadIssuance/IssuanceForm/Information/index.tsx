@@ -36,7 +36,7 @@ import { UploadDocuments } from './sections/UploadDocuments'
 import { RejectionReasons } from './sections/RejectionReasons'
 import { AdditionalInformation } from './sections/AdditionalInformation'
 
-import { schema } from './schema'
+import { schema, editSchema } from './schema'
 
 import { 
   initialValues,
@@ -47,9 +47,10 @@ import {
   distributionFrequencyOptions,
   investmentStructureOptions 
 } from './util'
-import { useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer, useVetting } from 'state/launchpad/hooks'
+import { useEditIssuanceOffer, useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer, useVetting } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 
 
 interface Props {
@@ -88,6 +89,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const vetting = useVetting(issuanceId)
   const offer = useOfferFormInitialValues(issuanceId)
   
+  const validationSchema = React.useMemo(() => props.edit ? editSchema : schema, [props.edit])
   const countries = React.useMemo(() => {
     return getData().map(country => ({ value: country.code, label: country.name }))
   }, [])
@@ -98,11 +100,18 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [])
 
   const submitOffer = useSubmitOffer()
+  const editOffer = useEditIssuanceOffer()
+
   const _submit = React.useCallback(async (values: InformationFormValues, draft = false) => {
     loader.start()
 
     try {
-      await submitOffer(values, offer.data ?? initialValues, draft, vetting.data?.id, offer.data?.id)
+
+      if (props.edit && offer.data) {
+        await editOffer(offer.data.id ?? '', values, offer.data)
+      } else {
+        await submitOffer(values, offer.data ?? initialValues, draft, vetting.data?.id, offer.data?.id)
+      }
 
       addPopup({ info: { success: true, summary: 'Offer created successfully' }})
       goMain();
@@ -111,7 +120,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     } finally {
       loader.stop()
     }
-  }, [vetting.data?.id, offer.data?.id])
+  }, [vetting.data?.id, offer.data?.id, offer.data])
 
   const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
 
@@ -185,6 +194,29 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
+  React.useEffect(() => {
+    if (!offer.loading && offer.data) {
+      const status = offer.data?.status ?? IssuanceStatus.draft
+
+      switch (status) {
+        case IssuanceStatus.draft:
+        case IssuanceStatus.changesRequested:
+          if (props.edit) {
+            history.replace(`/issuance/create/information?id=${issuanceId}`)
+          }
+
+          break;
+
+        case IssuanceStatus.pendingApproval:
+          if (!props.edit) {
+            history.replace(`/issuance/edit/information?id=${issuanceId}`)
+          }
+
+          break;
+      }
+    }
+  }, [issuanceId, offer.loading, offer.data])
+
   if (offer.loading) {
     return (
       <LoaderContainer width="100vw" height="100vh">
@@ -211,7 +243,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         <FormTitle>Information</FormTitle>
       </FormHeader>
 
-      <Formik innerRef={form} initialValues={offer.data ?? initialValues}  onSubmit={submit} validationSchema={schema}>
+      <Formik innerRef={form} initialValues={offer.data ?? initialValues}  onSubmit={submit} validationSchema={validationSchema}>
         {({ values, errors, setFieldValue, submitForm }) => (
           <>
             <ConfirmationForm
@@ -408,7 +440,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='Price per Token'
                   inputFilter={numberFilter}
                   disabled={props.edit}
-                  value={values.tokenPrice.toString()}
+                  value={values.tokenPrice?.toString()}
                   error={errors.tokenPrice}
                 />
                 <DropdownField
@@ -540,12 +572,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   minDate={values.timeframe.whitelist}
                   error={errors.timeframe?.preSale as string}
                 />
-
-                {/* <div style={{ color: 'black'}}>
-                  {values.hasPresale?.toString() ?? 'not set'}
-                  {values.terms.whitelist?.toString() ?? 'not set'}
-                  {values.terms.presale?.toString() ?? 'not set'}
-                </div> */}
                 
                 <DateRangeField 
                   mode='range'
@@ -604,7 +630,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='In months'
                   optional
                   disabled={props.edit}
-                  value={values.terms?.investmentPeriod.toString()}
+                  value={values.terms?.investmentPeriod?.toString()}
                   error={errors.terms?.investmentPeriod}
                   inputFilter={formatValue}
                 />
