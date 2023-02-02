@@ -17,13 +17,17 @@ interface Props<T> {
   options: Option<T>[]
 
   searchable?: boolean
+  disabled?: boolean
   optional?: boolean
+
   span?: number
+
+  value?: T
   error?: string
 
   field: string
-  setter?: (field: string, value: T) => void
-  onChange?: (value: T) => void
+  setter?: (field: string, value?: T) => void
+  onChange?: (value?: T) => void
 }
 
 export function DropdownField<T>(props: Props<T>) {
@@ -31,8 +35,9 @@ export function DropdownField<T>(props: Props<T>) {
 
   const container = React.useRef<HTMLDivElement>(null)
 
-  const [selectedValue, setSelectedValue] = React.useState<Option<T> | undefined>()
+  const [selectedValue, setSelectedValue] = React.useState<Option<T> | undefined>(props.options.find(x => x.value === props.value))
   const [showDropdown, setShowDropdown] = React.useState(false)
+  const [searchActive, setSearchActive] = React.useState(false)
 
   const [optionSearch, setOptionSearch] = React.useState<string>()
 
@@ -41,19 +46,31 @@ export function DropdownField<T>(props: Props<T>) {
       return props.options
     }
 
-    if (!optionSearch) {
+    if (!optionSearch || !searchActive) {
       return props.options
     }
 
     const query = optionSearch.toLowerCase()
 
     return props.options.filter(x => x.label.toLowerCase().startsWith(query))
-  }, [optionSearch])
+  }, [optionSearch, searchActive])
 
-  const toggle = React.useCallback(() => setShowDropdown(state => !state), [])
+  const toggle = React.useCallback(() => {
+    if (props.disabled) {
+      return
+    }
+
+    setShowDropdown(state => !state)
+  }, [props.disabled])
+
   const select = React.useCallback((option: Option<T>) => {
+    if (props.disabled) {
+      return
+    }
+
     setSelectedValue(option)
     setOptionSearch(option.label)
+    setSearchActive(false)
 
     if (props.field && props.setter) {
       props.setter(props.field, option.value)
@@ -62,7 +79,23 @@ export function DropdownField<T>(props: Props<T>) {
     if (props.onChange) {
       props.onChange(option.value)
     }
-  }, [])
+  }, [props.disabled, props.onChange, props.setter])
+
+  const updateSearch = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setOptionSearch(event.target.value) 
+    setSearchActive(true)
+    setShowDropdown(true)
+
+    setSelectedValue(undefined)
+    
+    if (props.field && props.setter) {
+      props.setter(props.field, undefined)
+    }
+
+    if (props.onChange) {
+      props.onChange(undefined)
+    }
+  }, [props.setter, props.onChange])
   
   React.useEffect(() => {
     function handleClickOutside(event: Event) {
@@ -82,7 +115,7 @@ export function DropdownField<T>(props: Props<T>) {
 
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span}>
-      <FieldContainer ref={container} onClick={toggle}>
+      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled}>
         <FieldLabel>
           {props.label}
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}
@@ -97,7 +130,7 @@ export function DropdownField<T>(props: Props<T>) {
         )}
 
         {props.searchable && (
-          <OptionSearch placeholder={props.placeholder ?? 'Select'} value={optionSearch} onChange={e => setOptionSearch(e.target.value)} />
+          <OptionSearch placeholder={props.placeholder ?? 'Select'} value={optionSearch} onChange={updateSearch} />
         )}
 
         {showDropdown && (
@@ -118,7 +151,7 @@ export function DropdownField<T>(props: Props<T>) {
   )
 }
 
-const FieldContainer = styled.div`
+const FieldContainer = styled.div<{ disabled?: boolean }>`
   position: relative;
 
   display: grid;
@@ -136,6 +169,10 @@ const FieldContainer = styled.div`
 
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+  `}
 `
 
 const FieldIcon = styled.div<{ isOpen: boolean }>`

@@ -5,21 +5,22 @@ import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { Eye } from 'react-feather'
 
-import { ReactComponent as VectorIcon } from 'assets/launchpad/svg/vectors.svg'
+import { SortIcon } from '../utils/SortIcon'
 
 import { Issuance } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
 import { SearchFilter, SearchConfig, OrderConfig } from './SearchFilter'
-import { PaginationTrigger } from './PaginationTrigger'
+import { EmptyTable } from './EmptyTable'
 
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
 
 import { useGetIssuances } from 'state/launchpad/hooks'
+import { IssuancePagination } from './IssuancePagination'
 
 
 export const IssuancesFull = () => {
@@ -31,39 +32,27 @@ export const IssuancesFull = () => {
   const [issuances, setIssuances] = React.useState<Issuance[]>([])
   
   const [page, setPage] = React.useState(1)
-  const [hasMore, setHasMore] = React.useState(false)
+  const [totalPages, setTotalPages] = React.useState(0)
+  const [totalItems, setTotalItems] = React.useState(0)
+  const [pageSize, setPageSize] = React.useState(10)
   const [filter, setFilter] = React.useState<SearchConfig | undefined>()
-  const [order, setOrder] = React.useState<OrderConfig>({ name: 'ASC' })
-  
-  const [isNameAsc, setNameAsc] = React.useState<boolean>(true)
-  const [isStartDateAsc, setStartDateAsc] = React.useState<boolean>(true)
-  const [isStatusAsc, setStatusAsc] = React.useState<boolean>(true)
+  const [order, setOrder] = React.useState<OrderConfig>({})
 
-  React.useEffect(() => {
-    setLoading(true)
-
-    getIssuances(1, filter, order)
-      .then(page => {
-        setIssuances(page.items)
-        setHasMore(page.hasMore)
-      })      
-      .then(() => setPage(2))
-      .finally(() => setLoading(false))
-  }, [filter, order])
-
-  const fetchMore = React.useCallback(async () => {
-    setLoading(true)
-
-    const result = await getIssuances(page, filter, order)
-
-    setIssuances(state => state.concat(result.items))
-    setPage(state => state + 1)
-    setHasMore(result.hasMore)
-    
-    setLoading(false)
-  }, [issuances, page, filter, order])
 
   const status = React.useCallback((issuance: Issuance) => {
+    if (!issuance.vetting) {
+      return IssuanceStatus.inProgress
+    }
+
+    if (
+      issuance.vetting && 
+      issuance.vetting.status === IssuanceStatus.approved && 
+      issuance.vetting.offer?.status !== IssuanceStatus.approved
+    ) {
+      return IssuanceStatus.inProgress
+    }
+
+
     return issuance.vetting && issuance.vetting?.offer
       ? issuance.vetting?.offer.status
       : (issuance.vetting && issuance.vetting?.status !== IssuanceStatus.draft)
@@ -73,69 +62,112 @@ export const IssuancesFull = () => {
 
   const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
 
-  const onChaneNameOrder = React.useCallback(() => {
-    const manner = isNameAsc ? 'ASC' : 'DESC'
-    
-    setOrder(state => ({ ...state, name: manner }))
-    setNameAsc(state => !state)
-  }, [isNameAsc])
+  const onChangeOrder = React.useCallback((key: string) => {
+    const current = Object.keys(order)[0]
+    if (!current || current !== key) {
+      setOrder({ [key]: 'ASC' })
+    }
 
-  const onChangeStartDateOrder = React.useCallback(() => {
-    const manner = isStartDateAsc ? 'ASC' : 'DESC'
-    
-    setOrder(state => ({ ...state, startDate: manner }))
-    setStartDateAsc(state => !state)
-  }, [isStartDateAsc])
+    if (current === key) {
+      const value = Object.values(order)[0]
+      const manner = !value ? 'ASC' : value === 'ASC' ? 'DESC' : null
 
-  const onChangeStatusOrder = React.useCallback(() => {
-    const manner = isStatusAsc ? 'ASC' : 'DESC'
-    
-    setOrder(state => ({ ...state, status: manner }))
-    setStatusAsc(state => !state)
-  }, [isStatusAsc])
+      setOrder({ [current]: manner })
+    }
+
+    setPage(1)
+  }, [order])
+
+  const scrollToTop = React.useCallback(() => {
+    //window.scrollTo({ top: 0, behavior: 'smooth' })
+    const yOffset = document.documentElement.scrollTop || document.body.scrollTop;
+    if (yOffset > 0) {
+      window.requestAnimationFrame(scrollToTop);
+      window.scrollTo(0, yOffset - yOffset / 1.75);
+    }
+  }, [])
+
+  const onChangePageSize = React.useCallback((size: number) => {
+    setPageSize(size)
+    setPage(1)
+    scrollToTop()
+  }, [])
+
+  const onChangePage = React.useCallback((pageNumber: number) => {
+    scrollToTop()
+    setPage(pageNumber)
+  }, [])
+
+
+  React.useEffect(() => {
+    setLoading(true)
+
+    getIssuances(page, filter, order, pageSize)
+      .then(page => {
+        setIssuances(page.items)
+        setTotalItems(page.totalItems)
+        setTotalPages(page.totalPages)
+      })      
+      .finally(() => setLoading(false))
+  }, [filter, order, page, pageSize])
+
 
   return (
+
     <Container>
       <TableTitle>Issuances</TableTitle>
       <SearchFilter onFilter={setFilter}/>
 
-      <IssuanceTable>
-        <TableHeader tab={IssuanceFilter.pending}>
-          <Title onClick={onChaneNameOrder}> <VectorIcon /> Issuances</Title>
-          <Title onClick={onChangeStartDateOrder}> <VectorIcon /> Start Date</Title>
-          <Title onClick={onChangeStatusOrder}> <VectorIcon /> Status</Title>
-          <div>  Action</div>
-        </TableHeader>
+      {!loading && issuances?.length === 0 && (<EmptyTable />)}
 
-        {loading && (
-          <Centered>
-            <Loader />
-          </Centered>
-        )}
+      {issuances?.length > 0 && (
+        <IssuanceTable>
+          <TableHeader tab={IssuanceFilter.pending}>
+            <Title onClick={() => onChangeOrder('name')}> <SortIcon type={order.name}/> Issuances</Title>
+            <Title onClick={() => onChangeOrder('startDate')}> <SortIcon type={order.startDate}/> Start Date</Title>
+            <Title onClick={() => onChangeOrder('status')}> <SortIcon type={order.status}/> Status</Title>
+            <div>  Action</div>
+          </TableHeader>
 
-        {!loading && issuances.map((issuance, idx) => (
-          <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
-            <div>{issuance.name}</div>
-
-            <div>
-              {(issuance?.vetting?.offer && issuance?.vetting?.offer?.startDate)
-                ? moment(issuance?.vetting?.offer?.startDate).format('DD/MM/YYYY')
-                : ''}
-            </div>
-
-            <IssuanceStatusBadge status={status(issuance)} />
-
-            <OutlineButton
-              color={theme.launchpad.colors.primary + '80'}
-              height="34px"
-              onClick={() => veiwItem(issuance.id)}>
-              View Application <Eye size="15" color={theme.launchpad.colors.primary} />
-            </OutlineButton>
-          </IssuanceRow>
-        ))}
+          {loading && (
+            <Centered>
+              <Loader />
+            </Centered>
+          )}
           
-        {hasMore && !loading && <PaginationTrigger isLoading={loading} onTriggered={fetchMore} />}
-      </IssuanceTable>
+
+          {!loading && issuances.map((issuance, idx) => (
+            <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
+              <Raw>{issuance.name}</Raw>
+
+              <Raw>
+                {(issuance?.vetting?.offer && issuance?.vetting?.offer?.startDate)
+                  ? moment(issuance?.vetting?.offer?.startDate).format('DD/MM/YYYY')
+                  : ''}
+              </Raw>
+
+              <IssuanceStatusBadge status={status(issuance)} />
+
+              <OutlineButton
+                color={theme.launchpad.colors.primary + '80'}
+                height="34px"
+                onClick={() => veiwItem(issuance.id)}>
+                View Application <Eye size="15" color={theme.launchpad.colors.primary} />
+              </OutlineButton>
+            </IssuanceRow>
+          ))}
+            
+        </IssuanceTable>
+      )}
+
+      <IssuancePagination  
+        currentPage={page}
+        pageSize={pageSize}
+        totalPages={totalPages}
+        totalItems={totalItems}
+        onChangePage={onChangePage}
+        onChangePageSize={onChangePageSize}
+      />
     </Container>
   )
 }
@@ -143,8 +175,3 @@ export const IssuancesFull = () => {
 const Container = styled.article`
   min-height: 100vh;
 `
-
-const Title = styled.div`
-  cursor: pointer;
-`
-

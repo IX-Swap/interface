@@ -5,7 +5,7 @@ import Portal from '@reach/portal'
 
 import { useHistory } from 'react-router-dom'
 
-import { useCheckKYC} from 'state/launchpad/hooks'
+import { useCheckKYC } from 'state/launchpad/hooks'
 import { OFFER_STAGE_LABELS } from 'state/launchpad/constants'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 
@@ -18,14 +18,12 @@ import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
 
-
 interface Props {
   offer: Offer
 }
 
-
 const getStageLabel = (stage: OfferStatus) => {
-  return OFFER_STAGE_LABELS.find(x => x.value === stage)!.label
+  return OFFER_STAGE_LABELS.find((x) => x.value === stage)!.label
 }
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
@@ -35,8 +33,8 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
 
-  const toggleShowDetails = React.useCallback(() => setShowDetails(state => !state), [])
-  const toggleKYCModal = React.useCallback(() => setShowKYCModal(state => !state), [])
+  const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
+  const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
   const isClosed = React.useMemo(() => [OfferStatus.closed, OfferStatus.claim].includes(offer.status), [offer])
 
@@ -54,7 +52,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
   const onClick = React.useCallback(() => {
     const canOpen = checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
-    
+
     if (canOpen) {
       history.push(`/offers/${offer.id}`)
     } else {
@@ -69,19 +67,15 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
         <InvestmentCardHeader>
           <InvestmentCardTagsContainer>
-            {stage && (
-              <InvestmentStatusBadge label={stage.label} color={stage.color} />
-            )}
+            {stage && <InvestmentStatusBadge label={stage.label} color={stage.color} />}
 
             <InvestmentStatusBadge label={getStageLabel(offer.status)} color="rgba(41, 41, 51, 0.2)" />
           </InvestmentCardTagsContainer>
         </InvestmentCardHeader>
 
-        <InvestmentCardInfoWrapper>
+        <InvestmentCardInfoWrapper></InvestmentCardInfoWrapper>
 
-        </InvestmentCardInfoWrapper>
-
-        <InvestmentCardInfoContainer  expanded={showDetails}>
+        <InvestmentCardInfoContainer expanded={showDetails}>
           <InvestmentCardIcon src={offer.profilePicture.public} />
 
           <InvestmentTypeInfo industry={offer.industry} type={offer.type} status={offer.status} />
@@ -89,7 +83,6 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           <InvestmentCardDescriptionContainer onClick={toggleShowDetails}>
             <InvestmentCardTitle>{offer.title}</InvestmentCardTitle>
             <InvestmentCardDescription>{offer.shortDescription}</InvestmentCardDescription>
-
           </InvestmentCardDescriptionContainer>
 
           <InvestmentCardDetailsContainer show={showDetails}>
@@ -101,21 +94,21 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
                 </InvestmentCardDetailsEntry>
 
                 <InvestmentCardDetailsSeparator />
-                
+
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Minimum Investment</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>{offer.minInvestment}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
-                
+
                 <InvestmentCardDetailsSeparator />
-                
+
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Investment type</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>{offer.investmentType}</InvestmentCardDetailsEntryValue>
                 </InvestmentCardDetailsEntry>
-                
+
                 <InvestmentCardDetailsSeparator />
-                
+
                 <InvestmentCardDetailsEntry>
                   <InvestmentCardDetailsEntryLabel>Issuer</InvestmentCardDetailsEntryLabel>
                   <InvestmentCardDetailsEntryValue>{offer.issuerName}</InvestmentCardDetailsEntryValue>
@@ -123,39 +116,47 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
               </>
             )}
           </InvestmentCardDetailsContainer>
-          
-          <InvestmentSaleStatusInfo 
+
+          <InvestmentSaleStatusInfo
             isClosed={isClosed}
             isSuccesfull={offer.softCapReached}
             daysTillClosed={offer.daysTillClosed}
             hoursTillClosed={offer.hoursTillClosed}
             allowOnlyAccredited={offer.allowOnlyAccredited}
           />
-          
+
           <InvestmentCardFooter>
             {!isClosed && !offer.allowOnlyAccredited && (
               <InvestButton type="button" onClick={onClick}>
                 Invest
               </InvestButton>
             )}
-            
+
             {!isClosed && offer.allowOnlyAccredited && (
               <InvestButton type="button" onClick={onClick}>
-                <Tooltip 
-                  title="Accredited investors only" 
-                  body={<>You have to be an accredited investor (AI) to access this deal. <a href="#">Learn more.</a></>}
+                <Tooltip
+                  title="Accredited investors only"
+                  body={
+                    <>
+                      You have to be an accredited investor (AI) to access this deal. <a href="#">Learn more.</a>
+                    </>
+                  }
                 >
-                  <LockIcon /> 
+                  <LockIcon />
                 </Tooltip>
                 Invest
               </InvestButton>
             )}
 
-            {isClosed && <InvestButton type="button" onClick={onClick}>Learn More</InvestButton>}
+            {isClosed && (
+              <InvestButton type="button" onClick={onClick}>
+                Learn More
+              </InvestButton>
+            )}
           </InvestmentCardFooter>
         </InvestmentCardInfoContainer>
       </InvestmentCardContainer>
-      
+
       {showKYCModal && (
         <Portal>
           <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />
@@ -165,11 +166,10 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   )
 }
 
-
 const InvestmentCardContainer = styled.article`
   position: relative;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 
   display: flex;
@@ -195,7 +195,6 @@ const InvestmentCardImage = styled.img`
 
   top: 0;
   left: 0;
-  
 
   width: 380px;
   overflow-x: hidden;
@@ -239,7 +238,7 @@ const InvestmentCardInfoContainer = styled.div<{ expanded: boolean }>`
   padding-top: 3rem;
 
   width: 100%;
-  background: ${props => props.theme.launchpad.colors.background};
+  background: ${(props) => props.theme.launchpad.colors.background};
 `
 
 const InvestmentCardIcon = styled.img`
@@ -266,7 +265,9 @@ const InvestmentCardTitle = styled.div`
   line-height: 140%;
   letter-spacing: -0.03em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  font-family: ${(props) => props.theme.launchpad.font};
+
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const InvestmentCardDescription = styled.div`
   font-style: normal;
@@ -276,21 +277,23 @@ const InvestmentCardDescription = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.body};
+  font-family: ${(props) => props.theme.launchpad.font};
+
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const InvestmentCardDetailsContainer = styled.div<{ show: boolean }>`
-  opacity: ${props => props.show ? '1' : '0'};
-  height: ${props => props.show ? '170px' : '0'};
-  
+  opacity: ${(props) => (props.show ? '1' : '0')};
+  height: ${(props) => (props.show ? '170px' : '0')};
+
   transition: height 0.3s ease-in-out, opacity 0.2s ease-out 0.1s;
 
   z-index: 10;
 
-  ${props => props.show && `margin: 0.5rem -1.5rem;`}
+  ${(props) => props.show && `margin: 0.5rem -1.5rem;`}
 
-  border-top: 1px solid ${props => props.theme.launchpad.colors.border.default};
-  border-bottom: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border-top: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
+  border-bottom: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
 
   width: 380px;
 `
@@ -301,10 +304,9 @@ const InvestmentCardDetailsEntry = styled.div`
   align-items: center;
 
   padding: 0 1.5rem;
-
 `
 const InvestmentCardDetailsSeparator = styled.hr`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   opacity: 0.8;
 
   margin: 0;
@@ -318,21 +320,19 @@ const InvestmentCardDetailsEntryLabel = styled.div`
   line-height: 40px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const InvestmentCardDetailsEntryValue = styled.div`
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-  
+
   line-height: 40px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
-
-
 
 const InvestButton = styled.button`
   display: flex;
@@ -343,9 +343,9 @@ const InvestButton = styled.button`
 
   gap: 0.5rem;
 
-  background: ${props => props.theme.launchpad.colors.background};
-  color: ${props => props.theme.launchpad.colors.primary};
-  border: 1px solid ${props => props.theme.launchpad.colors.primary};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  color: ${(props) => props.theme.launchpad.colors.primary};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
 
   padding: 0.75rem;
@@ -356,6 +356,8 @@ const InvestButton = styled.button`
 
   text-align: center;
 
+  font-family: ${(props) => props.theme.launchpad.font};
+
   font-style: normal;
   font-weight: 600;
   font-size: 13px;
@@ -363,4 +365,3 @@ const InvestButton = styled.button`
   line-height: 16px;
   letter-spacing: -0.02em;
 `
-

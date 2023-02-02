@@ -21,7 +21,7 @@ interface Props {
 export const ImageField: React.FC<Props> = (props) => {
   const onFileSelect = React.useCallback((files: File[]) => {
     if (files.length === 1) {
-      props.setter(props.field, files[0])
+      props.setter(props.field, { id: null, file: files[0] })
     }
   }, [props.image])
   

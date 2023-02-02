@@ -233,8 +233,8 @@ export function launchpadTheme() {
       primary: '#6666FF',
       accent: '#E6E6FF',
 
-      success: '#1fba66',
-      error: '#FF6060',
+      success: '#1DC78A',
+      error: '#FF8282',
       info: '#FFC93F',
       warn: '#FFC632',
 
@@ -244,15 +244,18 @@ export function launchpadTheme() {
       foreground: '#F7F7FF',
 
       border: {
-        default: '#E6E6FF'
+        default: '#E6E6FF',
+        success: '#0EC080',
+        error: '#FF8282'
       },
 
       text: {
         title: '#292933',
         body: '#666680',
-        bodyAlt: '#8D8DA3',
+        bodyAlt: '#8F8FB2',
         caption: '#B8B8CC',
-
+        success: '#0EC080',
+        warning: '#FF8282',
         light: '#FFFFFF'
       },
     },

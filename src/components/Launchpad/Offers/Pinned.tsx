@@ -128,15 +128,6 @@ const PinnedImageContainer = styled.div`
   position: relative;
 `
 
-const PinnerCategory = styled.div`
-  position: absolute;
-
-  top: 1rem;
-  right: 1rem;
-
-  color: ${props => props.theme.launchpad.colors.text.light}
-`
-
 const PinnedImage = styled.img`
   border-radius: 8px;
   max-height: 385px;
@@ -154,17 +145,6 @@ const PinnedContent = styled.div`
   max-width: 600px;
 `
 
-const PinnedContentDate = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.caption};
-`
-
 const PinnedContentTitle = styled.div`
   font-style: normal;
   font-weight: 800;
@@ -172,6 +152,8 @@ const PinnedContentTitle = styled.div`
 
   line-height: 110%;
   letter-spacing: -0.03em;
+
+  font-family: ${props => props.theme.launchpad.font};
 
   color: ${props => props.theme.launchpad.colors.text.title};
 `
@@ -183,12 +165,16 @@ const PinnedContentBody = styled.div`
   line-height: 140%;
   letter-spacing: -0.02em;
 
+  font-family: ${props => props.theme.launchpad.font};
+
   color: ${props => props.theme.launchpad.colors.text.body};
 `
 
 const PinnedContentButton = styled.button`
   color: ${props => props.theme.launchpad.colors.text.light};
-  background-color: ${props => props.theme.launchpad.colors.primary};
+  background-color: ${props => props.theme.launchpad.colors.primary};  
+  font-family: ${props => props.theme.launchpad.font};
+
   border-radius: 6px;
 
   text-align: center;

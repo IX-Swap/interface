@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
 
@@ -15,8 +16,11 @@ import { VettingFormValues } from './types'
 import { FormField } from '../shared/fields/FormField'
 import { FileField } from '../shared/fields/FileField'
 import { DirectorField } from '../shared/fields/DirectorField'
+import { RejectInfo } from '../shared/RejectInfo'
 
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer, DeleteButton } from '../shared/styled'
+import { CloseConfirmation } from '../shared/CloseConfirmation'
+import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { TextareaField } from '../shared/fields/TextareaField'
 import { useGetFieldArrayId, useLoader, useSaveVettingDraft, useSubmitVettingForm, useVetting, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
@@ -24,6 +28,8 @@ import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useAddPopup } from 'state/application/hooks'
+
+import { defaultValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/util"
 
 
 export const IssuanceVettingForm = () => {
@@ -34,6 +40,25 @@ export const IssuanceVettingForm = () => {
   const loader = useLoader(false)
   const addPopup = useAddPopup()
   
+  const [isSafeToClose, setIsSafeToClose] = React.useState(false)
+  const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
+  const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+
+  const onConfirmationClose = React.useCallback(() => {
+    setIsSafeToClose(true)
+    setShowCloseDialog(false)
+  }, [])
+
+  const alertUser = React.useCallback((event: BeforeUnloadEvent) => {
+    event.preventDefault()
+    event.returnValue = true
+
+    if (!isSafeToClose) {
+      setShowCloseDialog(true)
+    }
+    
+    return isSafeToClose
+  }, [])
 
   const issuanceId = React.useMemo(() => {
     const value = decodeURI(history.location.search).replace('?', '').split('&')
@@ -54,17 +79,34 @@ export const IssuanceVettingForm = () => {
   const createVetting = useSubmitVettingForm(issuanceId)
   const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
-  const goBack = React.useCallback(() => history.push(`/issuance/create?id=${issuanceId}`), [history, issuanceId])
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
+  const goMain = React.useCallback(() => {
+    history.push(`/issuance/create?id=${issuanceId}`)
+  }, [history, issuanceId])
+
+  const goBack = React.useCallback(() =>{
+    if (isSafeToClose) {
+      goMain()
+    } else {
+      setShowCloseDialog(true)
+    }
+  }, [history, issuanceId])
+
+  const textFilter = React.useCallback((value?: string) => value?.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join('') ?? '', [])
+
+  const toSubmit = React.useCallback(() => {
+    setShowConfirmDialog(true)
+  }, [showConfirmDialog])
 
   const submit = React.useCallback(async (values: VettingFormValues) => {
+    setShowConfirmDialog(false)
+
     loader.start()
 
     try {
       await createVetting(values, initialValues.data!, initialValues.vettingId)
 
-      addPopup({ info: { success: true, summary: 'Vetting created successfully' }})
-      goBack();
+      addPopup({ info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` }})
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
@@ -79,13 +121,21 @@ export const IssuanceVettingForm = () => {
       await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
 
       addPopup({ info: { success: true, summary: 'Draft saved successfully' }})
-      goBack();
+      goMain();
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
     } finally {
       loader.stop()
     }
   }, [initialValues.data, initialValues.vettingId])
+
+  React.useEffect(() => {
+    const listener = () => true
+    
+    window.addEventListener('beforeunload', listener)
+  
+    return () => window.removeEventListener('beforeunload', listener)
+  }, [])
 
   if (!issuanceId) {
     return null
@@ -99,12 +149,21 @@ export const IssuanceVettingForm = () => {
     )
   }
 
-  console.log('Final initial data: ', initialValues.data)
-
   return (
-    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema}>
-      {({ submitForm, setFieldValue, values, errors }) => (
+    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} enableReinitialize={true}>
+      {({ submitForm, setFieldValue, values, errors, resetForm }) => (
         <FormContainer>
+          <ConfirmationForm
+            isOpen={showConfirmDialog}
+            onClose={()=> setShowConfirmDialog(false)}
+            onSave={submitForm}/>
+
+          <CloseConfirmation
+            isOpen={showCloseDialog}
+            onDiscard={()=> history.push(`/issuance/create?id=${issuanceId}`)}
+            onClose={onConfirmationClose}
+            onSave={() => saveDraft(values)}/>
+
           {loader.isLoading && (
             <LoaderContainer width="100vw" height="100vh">
               <Loader />
@@ -120,10 +179,20 @@ export const IssuanceVettingForm = () => {
           </FormHeader>
 
           <FormSideBar>
+
+            {[IssuanceStatus.changesRequested, IssuanceStatus.declined]
+              .includes(initialValues?.data?.status as IssuanceStatus) && (
+              <RejectInfo
+                message={initialValues?.data?.changesRequested}
+                status={initialValues?.data?.status}
+                issuanceId={issuanceId}
+                onClear={() => resetForm({ values: defaultValues })}
+                onSubmit={toSubmit}/>)}
+
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
 
-              <FilledButton onClick={submitForm}>Submit</FilledButton>
+              <FilledButton onClick={toSubmit}>Submit</FilledButton>
             </FormSubmitContainer>
           </FormSideBar>
       
@@ -132,10 +201,10 @@ export const IssuanceVettingForm = () => {
               <FormField 
                 label="Applicant's Full Name"
                 placeholder="Full name of the Applicant"
-                field="applicantFullname"
+                field="applicantFullName"
                 setter={setFieldValue} 
-                value={values.applicantFullname}
-                error={errors.applicantFullname}
+                value={values.applicantFullName}
+                error={errors.applicantFullName}
                 inputFilter={textFilter}
               />
 
@@ -232,7 +301,7 @@ export const IssuanceVettingForm = () => {
                 label="Certificate of Incorporation"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncorporation"
-                value={values.document.pitchDeck}
+                value={values.document.certificateOfIncorporation}
                 error={errors.document?.certificateOfIncorporation as string}
                 setter={setFieldValue}
               />
@@ -241,7 +310,7 @@ export const IssuanceVettingForm = () => {
                 label="Certificate of Incumbency"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncumbency"
-                value={values.document.pitchDeck}
+                value={values.document.certificateOfIncumbency}
                 error={errors.document?.certificateOfIncumbency as string}
                 setter={setFieldValue}
               />
@@ -250,7 +319,7 @@ export const IssuanceVettingForm = () => {
                 label="Share & Director Registry"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.shareDirectorRegistry"
-                value={values.document.pitchDeck}
+                value={values.document.shareDirectorRegistry}
                 error={errors.document?.shareDirectorRegistry as string}
                 setter={setFieldValue}
               />
@@ -259,7 +328,7 @@ export const IssuanceVettingForm = () => {
                 label="Copy of Audited Financials"
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
                 field="document.auditedFinancials"
-                value={values.document.pitchDeck}
+                value={values.document.auditedFinancials}
                 error={errors.document?.auditedFinancials as string}
                 setter={setFieldValue}
               />
@@ -268,7 +337,7 @@ export const IssuanceVettingForm = () => {
                 label="Memorandum and Article of Association Company Constitution"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.memorandumArticle"
-                value={values.document.pitchDeck}
+                value={values.document.memorandumArticle}
                 error={errors.document?.memorandumArticle as string}
                 setter={setFieldValue}
               />
@@ -276,7 +345,7 @@ export const IssuanceVettingForm = () => {
                 label="Ownership Structure"
                 hint={<ExampleLink>See Examples</ExampleLink>}
                 field="document.ownershipStructure"
-                value={values.document.pitchDeck}
+                value={values.document.ownershipStructure}
                 error={errors.document?.ownershipStructure as string}
                 setter={setFieldValue}
               />
@@ -285,7 +354,7 @@ export const IssuanceVettingForm = () => {
                 label="Resolution of Authorized Signatory List"
                 hint="Document must include specimen signatures or equivalent"
                 field="document.resolutionAuthorizedSignatory"
-                value={values.document.pitchDeck}
+                value={values.document.resolutionAuthorizedSignatory}
                 error={errors.document?.resolutionAuthorizedSignatory as string}
                 setter={setFieldValue}
               />
@@ -311,7 +380,7 @@ export const IssuanceVettingForm = () => {
 
             <Row justifyContent='flex-end' alignItems="center" gap="1.5rem">
               <OutlineButton width="280px">Back</OutlineButton>
-              <FilledButton width="280px" onClick={submitForm}>Submit</FilledButton>
+              <FilledButton width="280px" onClick={toSubmit}>Submit</FilledButton>
             </Row>
           </FormBody>
       </FormContainer>
@@ -349,7 +418,9 @@ const AdditionalFiles = styled(FormGrid)`
   place-self: start;
 `
 
-const AddDocumentButton = styled(OutlineButton)``
+const AddDocumentButton = styled(OutlineButton)`
+  font-weight: 600;
+`
 
 const Hint = styled.div`
   font-style: normal;
@@ -370,7 +441,7 @@ const FilesBlock = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, auto);
 
-  align-items: start;
+  align-items: end;
 
   gap: 2rem;
 `

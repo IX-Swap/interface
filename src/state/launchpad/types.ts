@@ -1,5 +1,6 @@
-import { IssuanceStatus } from "components/LaunchpadIssuance/types"
-import { User } from "state/admin/actions"
+import { OfferTokenType } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { User } from 'state/admin/actions'
 
 export enum OfferStatus {
   draft = 'draft',
@@ -72,7 +73,7 @@ export enum OfferDistributionFrequency {
   quarterly = 'quarterly',
   semiAnnually = 'semiAnnually',
   annually = 'annually',
-  other = 'other'
+  other = 'other',
 }
 
 export enum WhitelistStatus {
@@ -100,7 +101,7 @@ export enum PaymentType {
 export enum IssunaceOfferStatus {
   pre = 'pre',
   live = 'live',
-  ended = 'ended'
+  ended = 'ended',
 }
 
 export interface Asset {
@@ -140,6 +141,7 @@ export interface OfferFAQ {
 }
 
 export interface OfferFile {
+  id?: number
   type: OfferFileType
   videoUrl: string
   file: Asset
@@ -155,7 +157,7 @@ export enum OfferInvestmentStructure {
   equity = 'equity',
   debt = 'debt',
   hybrid = 'hybrid',
-  other = 'other'
+  other = 'others',
 }
 
 export interface OfferInvestment {
@@ -222,10 +224,9 @@ export interface Offer {
 
   industry: OfferIndustry
 
-  investmentType: string
+  investmentType: OfferInvestmentStructure
 
   capitalStructure: OfferCapitalStructure
-
 
   country: string
 
@@ -235,15 +236,16 @@ export interface Offer {
   tokenTicker: string
   tokenPrice: string
   tokenStandart: OfferTokenStandart
+  tokenType: OfferTokenType
 
   investingTokenAddress: string
   investingTokenSymbol: string
-  
+
   decimals: number
 
   softCap: string
   hardCap: string
-  
+
   minInvestment: string
   maxInvestment: string
 
@@ -280,19 +282,22 @@ export interface Offer {
   daysTillClosed?: number
   hoursTillClosed?: number
   totalInvestment: number
-  
+
   members: OfferTeamMember[]
   faq: OfferFAQ[]
+
+  changesRequested?: string
+  reasonRequested?: string
 
   createdAt: Date
   updatedAt: Date
   deletedAt?: Date
 
-  files: OfferFile[];
-  investments: OfferInvestment[];
-  payments: OfferPayment[];
-  subscriptions: OfferSubscription[];
-  whitelists: OfferWhitelist[];
+  files: OfferFile[]
+  investments: OfferInvestment[]
+  payments: OfferPayment[]
+  subscriptions: OfferSubscription[]
+  whitelists: OfferWhitelist[]
 }
 
 export interface IssuanceVettingDocuments {
@@ -341,14 +346,32 @@ export interface IssuanceVetting {
   beneficialOwners: IssuanceVettingDirector[]
   directors: IssuanceVettingDirector[]
   offer?: IssuanceOffer
+
+  changesRequested?: string
 }
 
 export interface Issuance {
   id: number
   name: string
-  offerStatus: IssunaceOfferStatus
 
   vetting?: IssuanceVetting
+}
+
+export interface DashboardOffer {
+  id: number
+  issuanceId: number
+  issuanceName: string
+  hardCap: number
+  closeDate: Date
+  status: OfferTimeframeType
+  softCapReached: boolean
+  hardCapReached: boolean
+  investingTokenSymbol: string
+  countInvestors: number
+  commitment: number
+  progress: number
+  progressPercent: number
+  isMine: boolean
 }
 
 export type IssuancePlain = Pick<Issuance, 'name' | 'id'>

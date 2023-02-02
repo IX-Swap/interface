@@ -37,21 +37,8 @@ const capitalize = (value: string) => `${value[0].toUpperCase()}${value.slice(1)
 
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const formatedValue = useFormatOfferValue()
 
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { currency: 'USD' }), [])
-
-  const minTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.offer.minInvestment) / Number(props.offer.tokenPrice))}`), [])
-  const maxTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.offer.maxInvestment) / Number(props.offer.tokenPrice))}`), [])
-
-  const offerInfo = React.useMemo(() => [
-    { label: 'Issuer', value: props.offer.issuerName },
-    { label: 'Country', value: props.offer.country },
-    { label: 'Investment Type', value: props.offer.investmentType },
-    { label: 'Token Price', value: `${props.offer.investingTokenSymbol}  ${formatedValue(props.offer.tokenPrice)} / 1 ${props.offer.tokenSymbol}` },
-    { label: 'Max. Investment Size', value: `${props.offer.investingTokenSymbol} ${formatedValue(props.offer.maxInvestment)} / ${maxTokenInvestment} ${props.offer.tokenSymbol}` },
-    { label: 'Min. Investment Size', value: `${props.offer.investingTokenSymbol}  ${formatedValue(props.offer.minInvestment)} / ${minTokenInvestment} ${props.offer.tokenSymbol}` },
-  ], [minTokenInvestment, maxTokenInvestment])
 
   const stageStatus = React.useMemo(() => {
     switch (props.offer.status) {
@@ -155,9 +142,38 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </TokenInfoCard>
       </TokenInfo>
 
-      <InfoList entries={offerInfo} />
+      <OfferGeneralInfo {...props.offer} />
     </Container>
   )
+}
+
+type GeneralInfoFields = 'issuerName'
+  | 'country' 
+  | 'maxInvestment' 
+  | 'minInvestment' 
+  | 'investmentType' 
+  | 'investingTokenSymbol' 
+  | 'tokenPrice' 
+  | 'tokenSymbol'
+
+type GeneralInfoProps = Partial<Pick<Offer, GeneralInfoFields>>
+
+export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
+  const formatedValue = useFormatOfferValue()
+  
+  const minTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.minInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [])
+  const maxTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.maxInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [])
+
+  const offerInfo = React.useMemo(() => [
+    { label: 'Issuer', value: props.issuerName || 'N/A' },
+    { label: 'Country', value: props.country || 'N/A' },
+    { label: 'Investment Type', value: props.investmentType ?? 'N/A' },
+    { label: 'Token Price', value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}` },
+    { label: 'Max. Investment Size', value: `${props.investingTokenSymbol} ${formatedValue(props.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${props.tokenSymbol}` },
+    { label: 'Min. Investment Size', value: `${props.investingTokenSymbol}  ${formatedValue(props.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${props.tokenSymbol}` },
+  ], [minTokenInvestment, maxTokenInvestment])
+  
+  return <InfoList entries={offerInfo} />
 }
 
 const Container = styled.div`

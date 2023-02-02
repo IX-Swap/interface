@@ -10,6 +10,7 @@ interface Props {
 
   width?: string
   height?: string
+  padding?: string
 
   onClose?: () => void
 }
@@ -21,15 +22,15 @@ export const IssuanceDialog: React.FC<React.PropsWithChildren<Props>> = (props) 
 
   return (
     <Portal>
-      <DialogWrapper>
-        <DialogContainer width={props.width} height={props.height}>
+      <DialogWrapper onScroll={(e) => e.stopPropagation()}>
+        <DialogContainer width={props.width} height={props.height} padding={props.padding}>
           <DialogCloseButton onClick={props.onClose}>
             <X size={14} />
           </DialogCloseButton>
 
           {props.title && <DialogTitle>{props.title}</DialogTitle>}
 
-          {props.children}
+          <Content>{props.children}</Content>
         </DialogContainer>
       </DialogWrapper>
     </Portal>
@@ -49,8 +50,8 @@ const DialogWrapper = styled.div`
   place-content: center;
 
   backdrop-filter: blur(5px);
-  background: ${props => props.theme.launchpad.colors.text.title + '1e'};
-  
+  background: ${(props) => props.theme.launchpad.colors.text.title + '1e'};
+
   z-index: 30;
 `
 
@@ -67,6 +68,8 @@ const DialogCloseButton = styled.div`
 
   padding: 0.75rem;
 
+  z-index: 40;
+
   background: rgba(41, 41, 51, 0.6);
   box-shadow: 0px 2px 2px rgba(122, 122, 204, 0.08);
   backdrop-filter: blur(8px);
@@ -80,23 +83,24 @@ const DialogCloseButton = styled.div`
   }
 `
 
-const DialogContainer = styled.div<{ height?: string, width?: string }>`
+const DialogContainer = styled.div<{ height?: string; width?: string; padding?: string }>`
   position: relative;
 
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border-radius: 16px;
+
+  padding: ${(props) => props.padding ?? '2rem'};
+
+  ${(props) => props.width && `width: ${props.width};`}
+  ${(props) => props.height && `height: ${props.height};`}
+`
+
+const Content = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
 
   gap: 1rem;
-
-  background: ${props => props.theme.launchpad.colors.background};
-  border-radius: 16px;
-
-  padding: 2rem;
-
-  ${props => props.width && `width: ${props.width};`}
-  ${props => props.height && `height: ${props.height};`}
-
 `
 
 const DialogTitle = styled.div`

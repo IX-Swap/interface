@@ -70,6 +70,8 @@ const ActiveContainer = styled(BaseContainer)`
 
   justify-content: center;
 
+  font-family: ${props => props.theme.launchpad.font};
+
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -103,6 +105,8 @@ const ClosedLabel = styled.div`
 `
 
 const ClosedStatusLabel = styled.div`
+  font-family: ${props => props.theme.launchpad.font};  
+
   font-style: normal;
   font-weight: 600;
   font-size: 14px;

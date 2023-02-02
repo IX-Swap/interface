@@ -137,7 +137,9 @@ export interface LaunchpadTheme {
     foreground: string,
 
     border: {
-      default: string
+      default: string,
+      success: string,
+      error: string
     },
 
     text: {
@@ -145,7 +147,8 @@ export interface LaunchpadTheme {
       body: string,
       bodyAlt: string,
       caption: string,
-
+      success: string,
+      warning: string,
       light: string
     }
   }

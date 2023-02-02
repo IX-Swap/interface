@@ -11,6 +11,7 @@ import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 
 type DateRange = moment.Moment[]
+type DateRangeValue = Date[]
 
 interface Props {
   mode: 'single' | 'range'
@@ -25,7 +26,7 @@ interface Props {
 
   field?: string
   setter?: (field: string, value: any) => void
-  onChange?: (range: DateRange) => void
+  onChange?: (range: DateRangeValue) => void
 }
 
 export const DateRangeField: React.FC<Props> = (props) => {
@@ -51,15 +52,15 @@ export const DateRangeField: React.FC<Props> = (props) => {
     } else if (range.length < 2) {
       selectedRange = [...range, value]
     } else {
-      selectedRange =[value]
+      selectedRange = [value]
     }
 
     if (props.field && props.setter) {
-      props.setter(props.field, props.mode === 'single' ? selectedRange[0] : selectedRange)
+      props.setter(props.field, props.mode === 'single' ? selectedRange[0].toDate() : selectedRange.map(x => x.toDate()))
     }
 
     if (props.onChange) {
-      props.onChange(selectedRange)
+      props.onChange(selectedRange.map(x => x.toDate()))
     }
   }, [range])
 
@@ -67,7 +68,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
   const moveMonthForward = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') + 1)), [])
 
   React.useEffect(() => {
-    console.log(props.value)
     if (props.value !== undefined) {
       if (props.mode === 'single') {
         setRange([moment(props.value as Date)])
@@ -146,6 +146,10 @@ const FieldContainer = styled.div<{ disabled?: boolean }>`
 
   border: 1px solid ${props => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
+  
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+  `}
 `
 
 const FieldIcon = styled.div`

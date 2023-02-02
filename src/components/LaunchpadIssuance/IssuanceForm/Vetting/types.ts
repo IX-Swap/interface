@@ -1,13 +1,18 @@
 import { IssuanceFile } from "../types"
+import { IssuanceStatus } from "components/LaunchpadIssuance/types"
 
 export interface VettingFormValues {
-  applicantFullname: string
+  applicantFullName: string
   email: string
 
   companyName: string
   companyWebsite: string
 
   description: string
+
+  status: IssuanceStatus
+
+  changesRequested?: string
 
   fundingDocuments: FundingDocument[]
 

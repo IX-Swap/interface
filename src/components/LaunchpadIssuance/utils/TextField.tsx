@@ -61,7 +61,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
   }, [])
 
   return (
-    <FieldContainer>
+    <FieldContainer disabled={props.disabled}>
       <FieldInputContainer className={props.className} height={props.height} padding={props.padding} borderless={props.borderless}>
         {props.label && <Label>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</Label>}
         {props.placeholder && <Placeholder active={focused} hasLabel={!!props.label}>{props.placeholder}</Placeholder>}
@@ -73,7 +73,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
           disabled={props.disabled} 
           value={inputValue}
           onInput={onChange}
-          maxLength={props.type === 'text' ? 19 : 255}
+          maxLength={props.type === 'text' ? 19 : 60}
         />
 
         {props.trailing}
@@ -84,11 +84,15 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
   )
 }
 
-const FieldContainer = styled.div`
+const FieldContainer = styled.div<{ disabled?: boolean }>`
   display: flex;
   flex-flow: column nowrap;
 
   gap: 0.5rem;
+  
+  ${props => props.disabled && `
+    background: ${props.theme.launchpad.colors.foreground};
+  `}
 `
 
 const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height' | 'borderless'>>`
@@ -169,6 +173,20 @@ const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`
     -webkit-appearance: none;
     margin: 0;
   }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    border: none;
+    -webkit-text-fill-color: ${props => props.theme.launchpad.colors.text.title};
+    color: ${props => props.theme.launchpad.colors.text.title};
+    transition: background-color 100000s ease-in-out 0s;
+  }
+
+  ::-webkit-autofill::first-line {
+    font-family: 'Poppins', sans-serif;
+  }
+
 
   &[type=number] {
     -moz-appearance: textfield;

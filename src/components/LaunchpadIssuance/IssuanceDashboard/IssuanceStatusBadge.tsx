@@ -19,7 +19,7 @@ export const IssuanceStatusBadge: React.FC<BadgeProps> = (props) => {
           Approved <Check size="15" />
         </IssuanceStatusBadgeWrapper>
       )
-    case IssuanceStatus.rejected:
+    case IssuanceStatus.declined:
       return (
         <IssuanceStatusBadgeWrapper color={theme.launchpad.colors.error}>
           Rejected
@@ -63,8 +63,10 @@ const IssuanceStatusBadgeWrapper = styled.div<{ color: string }>`
   height: 34px;
   width: max-content;
 
+  font-family:  ${props => props.theme.launchpad.font};
+
   color: ${props => props.color};
-  border: 1px solid ${props => props.color + '1e'};
+  border: 1px solid ${props => props.color};
   border-radius: 6px;
 `
 

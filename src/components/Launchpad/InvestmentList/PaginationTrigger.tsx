@@ -40,6 +40,8 @@ const LoadMoreButton = styled.button`
   text-align: center;
   text-decoration: none;
 
+  font-family: ${props => props.theme.launchpad.font};
+
   font-style: normal;
   font-weight: 600;
   font-size: 16px;

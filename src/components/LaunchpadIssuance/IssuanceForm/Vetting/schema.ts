@@ -21,11 +21,14 @@ const directorSchema = yup.array(yup.object().shape({
 }))
 
 export const schema = yup.object().shape({
-  applicantFullname: yup.string().required('Enter applicant\'s name'),
+  applicantFullName: yup.string().required('Enter applicant\'s name'),
   email: yup.string().email('Enter a valid email').required('Email required'),
 
   companyName: yup.string().required('Enter company name'),
-  companyWebsite: yup.string().url('Enter valid URL').required('Enter company website URL'),
+  companyWebsite: yup.string().matches(
+    /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+    'Enter valid URL')
+    .required('Enter company website URL'),
 
   description: yup.string()
     .required('Description requried')

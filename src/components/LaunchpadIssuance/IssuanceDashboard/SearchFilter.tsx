@@ -9,9 +9,16 @@ export interface SearchConfig {
 }
 
 export interface OrderConfig {
-  name: string
-  startDate?: string
-  status?: string
+  name?: string | null
+  startDate?: string | null
+  status?: string | null
+  issuanceName?: string | null
+  countInvestors?: string | null
+  commitment?: string | null
+  progress?: string | null
+  hardCap?: string | null
+  closeDate?: string | null
+  softCapReached?: string | null
 }
 
 interface Props {

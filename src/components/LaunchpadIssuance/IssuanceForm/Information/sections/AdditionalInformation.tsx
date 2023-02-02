@@ -11,16 +11,18 @@ import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 
 
-import { FormGrid } from '../shared/FormGrid'
-import { FormField } from '../shared/fields/FormField'
-import { AddButton, DeleteButton } from '../shared/styled'
-import { DropdownField } from '../shared/fields/DropdownField'
+import { FormGrid } from '../../shared/FormGrid'
+import { FormField } from '../../shared/fields/FormField'
+import { AddButton, DeleteButton } from '../../shared/styled'
+import { DropdownField } from '../../shared/fields/DropdownField'
 
-import { InformationFormValues, SocialMediaLink, SocialMediaType } from './types'
+import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
+import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers'
 
 
 interface Props {
   social: SocialMediaLink[]
+  values: InformationFormValues
   errors: FormikErrors<InformationFormValues>
   setter: (field: string, value: any) => void
 }
@@ -50,6 +52,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
   }, [props.social])
 
   const addSocialMedia = React.useCallback(() => {
+    console.log(addedSocial, addedSocialLink)
     if (!addedSocial || !addedSocialLink) {
       return 
     }
@@ -67,19 +70,15 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
   }, [props.social])
 
   const getError = React.useCallback((link: SocialMediaLink) => {
-    switch (link.type) {
-      case SocialMediaType.twitter:
-      case SocialMediaType.coinGecko:
-      case SocialMediaType.coinMarketCap:
-      case SocialMediaType.discord:
-      case SocialMediaType.linkedIn:
-      case SocialMediaType.reddit:
-      case SocialMediaType.telegram:
-      case SocialMediaType.youTube:
-    }
-  }, [props.errors])
+    const index = props.social.findIndex(x => x.type === link.type)
+    const errors = (props.errors.social as FormikErrors<SocialMediaLink>[])
 
-  console.log(props.errors)
+    if (index < 0 || errors.length < index) {
+      return
+    }
+
+    return errors[index]
+  }, [props.errors])
 
   return (
     <FormGrid title="Additional Information">
@@ -88,6 +87,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='Email Address'
         field="email"
         setter={props.setter} 
+        value={props.values.email}
         error={props.errors.email}
       />
 
@@ -96,6 +96,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="website"
         setter={props.setter} 
+        value={props.values.website}
         error={props.errors.website}
       />
       
@@ -104,6 +105,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="whitepaper"
         setter={props.setter} 
+        value={props.values.whitepaper}
         error={props.errors.whitepaper}
       />
 
@@ -134,7 +136,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
           placeholder='URL'
           options={socialOptions}
           field={''}
-          setter={(field, value) => setAddedSocial(value)}
+          onChange={setAddedSocial}
         />
 
         <FormField 

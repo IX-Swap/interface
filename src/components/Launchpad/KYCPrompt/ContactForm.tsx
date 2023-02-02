@@ -13,6 +13,7 @@ import { useAddPopup } from 'state/application/hooks'
 
 interface Props {
   offerId?: string
+  issuanceId?: number
   onSubmit: () => void
 }
 
@@ -39,8 +40,11 @@ export const ContactForm: React.FC<Props> = (props) => {
   const getSupport = useRequestSupport()
 
   const onSubmit = React.useCallback(async (values: Payload) => {
+    const offer = props.offerId && { offerId: props.offerId }
+    const issuance = props.issuanceId && { issuanceId: props.issuanceId }
+
     try {
-      await getSupport({ ...values, offerId: props.offerId })
+      await getSupport({ ...values, ...offer, ...issuance })
 
       props.onSubmit()
       addPopup({ info: { success: true, summary: `Your message has been sent successfully` } })

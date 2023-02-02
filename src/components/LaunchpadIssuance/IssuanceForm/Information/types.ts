@@ -1,58 +1,66 @@
-import { OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
+import { IssuanceStatus } from "components/LaunchpadIssuance/types"
+import { OfferDistributionFrequency, OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
 import { DateSchema } from "yup"
+import { IssuanceFile } from "../types"
 
 export enum OfferTokenType {
-  WIXS,
-  WBTC,
-  WETH,
-  MATIC,
-  USDC,
-  USDT
+  WIXS = 'WIXS',
+  WBTC = 'WBTC',
+  WETH = 'WETH',
+  MATIC = 'MATIC',
+  USDC = 'USDC',
+  USDT = 'USDT'
 }
 
 export enum SocialMediaType {
   twitter = 'twitter',
   telegram = 'telegram',
-  linkedIn = 'linkedIn',
+  linkedIn = 'linkedin',
   discord = 'discord',
   reddit = 'reddit',
-  youTube = 'youTube',
-  coinMarketCap = 'coinMarketCap',
-  coinGecko = 'coinGecko'
+  youTube = 'youtube',
+  coinMarketCap = 'coinmarketcap',
+  coinGecko = 'coingecko'
 }
 
 export interface VideoLink {
-  title: string
+  title?: string
   url: string
 }
 
 export interface InformationFormValues {
-  profilePicture: File
-  cardPicture: File
+  id?: string
+  status?: IssuanceStatus
+
+  profilePicture: IssuanceFile
+  cardPicture: IssuanceFile
 
   shortDescription: string
   longDescription: string
 
-  name: string
-  companyIdNumber: string
+  title: string
+  issuerIdentificationNumber: string
 
   industry: OfferIndustry
-  investmentStructure: OfferInvestmentStructure
+  investmentType: OfferInvestmentStructure
 
   country: string
 
   tokenName: string
   tokenTicker: string
-  tokenType: string
+  tokenType: OfferTokenType
+  tokenStandart: OfferTokenStandart
+  tokenPrice: number
+  
+  tokenAddress?: string
+  investingTokenAddress?: string
 
   network: OfferNetwork
 
   hardCap: string
-  softcap: string
+  softCap: string
 
-  pricePerToken: number
-
-  tokenStandart: OfferTokenStandart
+  allowOnlyAccredited: boolean
 
   minInvestment: string
   maxInvestment: string
@@ -62,11 +70,14 @@ export interface InformationFormValues {
   presaleMinInvestment: string
   presaleMaxInvestment: string
 
+  changesRequested?: string
+  reasonRequested?: string
+
   email: string
   website: string
   whitepaper: string
 
-  images: File[]
+  images: IssuanceFile[]
   videos: VideoLink[]
   additionalDocuments: AdditionalDocument[]
 
@@ -75,8 +86,16 @@ export interface InformationFormValues {
   faq: FAQEntry[]
 
   terms: {
+    investmentStructure: string
+    dividentYield: string
+    investmentPeriod: number
+    grossIrr: string
+    distributionFrequency: OfferDistributionFrequency
+  }
+
+  timeframe: {
     whitelist: Date
-    presale: Date
+    preSale: Date
     sale: Date
     closed: Date
     claim: Date
@@ -92,16 +111,18 @@ export interface SocialMediaLink {
 
 export interface AdditionalDocument {
   name: string
-  file: File
+  file: IssuanceFile
 }
 
 export interface FAQEntry {
+  id?: number
   question: string
   answer: string
 }
 
 export interface TeamMember {
-  photo: File
+  id?: number
+  photo: IssuanceFile
   name: string
   role: string
   about: string
