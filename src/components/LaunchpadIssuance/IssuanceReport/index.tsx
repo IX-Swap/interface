@@ -5,6 +5,7 @@ import { ArrowLeft } from 'react-feather'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { useTheme } from 'styled-components'
 import { IssuanceDropdown } from './IssuanceDropdown'
+import { Tabs } from './Tabs'
 
 export const IssuanceReport = () => {
   const history = useHistory()
@@ -24,6 +25,9 @@ export const IssuanceReport = () => {
       </TableTitle>
       <TableTitle>
         <IssuanceDropdown />
+      </TableTitle>
+      <TableTitle>
+        <Tabs />
       </TableTitle>
     </Body>
   )

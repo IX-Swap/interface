@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import { populatePath } from 'utils/params'
 import { routes } from 'utils/routes'
 import { DropdownField } from '../IssuanceForm/shared/fields/DropdownField'
+import { EMPTY_VALUE } from './constants'
 
-const EMPTY_VALUE = { label: 'All', value: 'all' }
 export const IssuanceDropdown = () => {
   const history = useHistory()
   const { offerId } = useParams<{ offerId: string }>()
