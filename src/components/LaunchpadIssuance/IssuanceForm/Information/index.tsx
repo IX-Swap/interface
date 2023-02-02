@@ -201,6 +201,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       switch (status) {
         case IssuanceStatus.draft:
         case IssuanceStatus.changesRequested:
+        case IssuanceStatus.declined:
           if (props.edit) {
             history.replace(`/issuance/create/information?id=${issuanceId}`)
           }

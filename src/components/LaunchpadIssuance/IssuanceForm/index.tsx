@@ -267,6 +267,7 @@ export const NewIssuanceForm = () => {
                   background={theme.launchpad.colors.error + '0d'}
                   borderColor={theme.launchpad.colors.error + '4d'}
                   width="320px"
+                  onClick={() => history.push(`/issuance/create/information?id=${issuance.data?.id}`)}
                 >
                   Try again
                 </OutlineButton>

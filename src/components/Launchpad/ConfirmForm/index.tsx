@@ -15,6 +15,11 @@ interface Props {
 export const ConfirmationForm: React.FC<Props> = (props) => {
   const theme = useTheme()
 
+  const save = React.useCallback(() => {
+    props.onSave()
+    props.onClose()
+  }, [props.onSave, props.onClose])
+
   return (
     <IssuanceDialog show={props.isOpen} onClose={props.onClose}>
       <Container>
@@ -34,7 +39,7 @@ export const ConfirmationForm: React.FC<Props> = (props) => {
 
         <OutlineButton onClick={props.onClose}>Cancel</OutlineButton>
 
-        <FilledButton onClick={props.onSave}>Submit</FilledButton>
+        <FilledButton onClick={save}>Submit</FilledButton>
       </Container>
     </IssuanceDialog>
   )
