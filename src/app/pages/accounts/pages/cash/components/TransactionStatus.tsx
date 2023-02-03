@@ -6,7 +6,7 @@ import { useStyles } from 'app/pages/accounts/pages/cash/components/TransactionS
 export const TransactionStatus = ({
   status
 }: {
-  status: 'COMPLETED' | 'REJECTED' | 'PENDING'
+  status: 'COMPLETED' | 'Rejected' | 'PENDING'
 }) => {
   const classes = useStyles({ type: status })
   return (
