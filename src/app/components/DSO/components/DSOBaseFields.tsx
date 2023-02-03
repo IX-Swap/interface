@@ -3,7 +3,7 @@ import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHead
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
-import { Checkbox } from 'components/form/Checkbox'
+// import { Checkbox } from 'components/form/Checkbox'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
 import { TypedField } from 'components/form/TypedField'
@@ -11,7 +11,7 @@ import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { VSpacer } from 'components/VSpacer'
 import { DataroomFileType } from 'config/dataroom'
 import {
-  booleanValueExtractor,
+  //   booleanValueExtractor,
   dateTimeValueExtractor,
   integerValueExtractor
 } from 'helpers/forms'
@@ -344,7 +344,8 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             </Grid>
             <VSpacer size='small' />
           </Grid>
-          <Grid container spacing={3} mt={1}>
+          {/* Hiding this field for now as per https://investax.atlassian.net/browse/IPD1-549 */}
+          {/* <Grid container spacing={3} mt={1}>
             <Grid item xs={12}>
               <TypedField
                 customRenderer
@@ -357,7 +358,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 data-testid='is-campaign'
               />
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
     </Grid>

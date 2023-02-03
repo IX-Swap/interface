@@ -9,7 +9,7 @@ import { TransactionStatus } from './TransactionStatus'
 
 export const renderDate = (date: string) => formatDateToMMDDYY(date)
 export const renderStatus = (
-  status: 'COMPLETED' | 'REJECTED' | 'PENDING',
+  status: 'COMPLETED' | 'Rejected' | 'PENDING',
   _row: CashWithdrawal | CashDeposit
 ) => <TransactionStatus status={status} />
 
