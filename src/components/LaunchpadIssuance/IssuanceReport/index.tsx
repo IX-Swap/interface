@@ -5,6 +5,7 @@ import { ArrowLeft } from 'react-feather'
 import { useHistory, useParams } from 'react-router-dom'
 import styled, { useTheme } from 'styled-components'
 import { IssuanceDropdown } from './IssuanceDropdown'
+import { DataExtractTable } from './Table/DataExtractTable'
 import { Tabs } from './Tabs'
 
 export const IssuanceReport = () => {
@@ -29,6 +30,7 @@ export const IssuanceReport = () => {
       <TableTitle>
         <Tabs />
       </TableTitle>
+      <DataExtractTable />
     </Body>
   )
 }

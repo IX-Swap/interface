@@ -1,12 +1,14 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { whitelist } from 'services/apiUrls'
 import { WhitelistFilter } from 'services/types'
 import { AppDispatch } from 'state'
+import { useLoader } from 'state/launchpad/hooks'
+import { InvestmentStage } from 'state/launchpad/types'
 import { PaginateResponse } from 'types/pagination'
 import { deleteWhitelistedWallet, getWhitelistedWallets, saveWhitelistedWallet } from './actions'
-import { IssuanceDataExtract, WhitelistWallet, WhitelistWalletPayload } from './types'
+import { IssuanceDataExtract, IssuanceDataStatisticsDto, WhitelistWallet, WhitelistWalletPayload } from './types'
 
 export interface UseDeleteWhitelistedArgs {
   onSuccess?: () => void
@@ -58,12 +60,27 @@ export const useDeleteWhitelisted = ({ onSuccess }: UseDeleteWhitelistedArgs) =>
   }, [])
 }
 
-export const useGetOffersData = () => {
-  return React.useCallback(async (offerId: string, page: number, size = 11) => {
-    const result = await apiService
-      .get(`offers/${offerId}/data`, undefined, { page, size })
-      .then((res) => res.data as PaginateResponse<IssuanceDataExtract>)
+export const useGetOffersData = (offerId?: string) => {
+  const loader = useLoader()
+  const populateData = (data: IssuanceDataStatisticsDto) => {
+    setData({ ...data, investments: data.investments.splice(0, 11) })
+  }
+  const [data, setData] = React.useState<IssuanceDataStatisticsDto>()
+  const load = React.useCallback(() => {
+    if (!offerId) {
+      return
+    }
+    loader.start()
+    return apiService
+      .get(`offers/${offerId}/data`)
+      .then((res) => res.data as IssuanceDataStatisticsDto)
+      .then(populateData)
+      .then(loader.stop)
+  }, [offerId])
 
-    return result
-  }, [])
+  useEffect(() => {
+    load()
+  }, [offerId])
+
+  return { data, load, loading: loader.isLoading }
 }

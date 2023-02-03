@@ -32,3 +32,18 @@ export interface IssuanceDataExtract {
   dateOfBirth: string
   wishAmount: string
 }
+
+export interface IssuanceDataStatistics {
+  totalInvestmentAmount: string
+  nameCount: number
+  companyNameCount: number
+  totalTokenAmount: string
+  nationalityCount: string
+  countryCount: string
+  accreditedCount: string
+}
+
+export interface IssuanceDataStatisticsDto {
+  investments: IssuanceDataExtract[]
+  statistics: IssuanceDataStatistics
+}
