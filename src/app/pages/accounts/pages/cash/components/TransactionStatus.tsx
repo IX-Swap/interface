@@ -10,7 +10,7 @@ export const TransactionStatus = ({
 }) => {
   const classes = useStyles({ type: status })
   return (
-    <Typography className={classes.text}>
+    <Typography className={classes?.text}>
       {capitalizeFirstLetter(status)}
     </Typography>
   )
