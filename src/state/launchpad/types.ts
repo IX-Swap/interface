@@ -115,7 +115,7 @@ export interface Asset {
 export interface OfferTimeframe {
   closed: Date
   claim: Date
-  presale: Date
+  presale: Date // todo WTF BLYADI
   sale: Date
   whitelist: Date
 }
@@ -383,4 +383,38 @@ export interface ManagedOffer extends Offer {
   preSaleInvestment: number;
   saleInvestment: number;
   totalInvestment: number;
+}
+
+export interface OfferPresaleStatistics {
+  applicants: number;
+  agreedToInvest: number;
+  wishInvestmentTotal: number;
+  wishInvestmentAvg: number;
+}
+
+export interface OfferPresaleWhitelist {
+  id: number;
+  amount: number;
+  createdAt: Date;
+  name: string | null;
+}
+
+export interface ManageOfferBody {
+  approveAll?: boolean;
+  rejectAll?: boolean;
+  approveIds?: number[];
+  rejectIds?: number[];
+}
+export interface PresaleData {
+  items: OfferPresaleWhitelist[];
+  hasMore: boolean;
+  totalPages: number;
+  totalItems: number;
+}
+
+export type OrderType = 'ASC' | 'DESC' | null;
+export interface PresaleOrderConfig {
+  name?: OrderType;
+  amount?: OrderType;
+  createdAt?: OrderType;
 }

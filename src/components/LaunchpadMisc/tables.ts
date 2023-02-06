@@ -25,13 +25,13 @@ export const TableTitle = styled.div`
   color: ${props => props.theme.launchpad.colors.text.title};
 `
 
-export const IssuanceTable = styled.div`
+export const IssuanceTable = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
 
   width: 100%;
-  max-width: 1180px;
+  max-width: ${props => props.maxWidth || "1180px"};
 
   margin: auto;
 
@@ -76,7 +76,7 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-export const IssuanceRow = styled(TableHeader)<{ tab: IssuanceFilter }>`
+export const IssuanceRow = styled(TableHeader) <{ tab: IssuanceFilter }>`
 
   color: ${props => props.theme.launchpad.colors.text.title};
 

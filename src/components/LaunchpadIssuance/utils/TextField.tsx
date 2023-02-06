@@ -31,6 +31,8 @@ interface Props extends StylingProps {
 
   onChange?: (value: string) => void
   inputFilter?: (value: string) => string
+
+  endAdornment?: React.ReactNode;
 }
 
 export const IssuanceTextField: React.FC<Props> = (props) => {

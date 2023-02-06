@@ -114,6 +114,7 @@ export const OfferStatistics = ({ offer }: { offer: ManagedOffer }) => {
     }
   }, [status, hoursTillClosed, daysTillClosed]);
 
+  const Container = hasPresale ? PresaleContainer : NoPresaleContainer;
   return (
     <Container>
       {hasPresale && (
@@ -151,12 +152,11 @@ export const OfferStatistics = ({ offer }: { offer: ManagedOffer }) => {
   );
 }
 // todo theme colors
-// todo fix grid spacing too big
 const almostBlack = '#292933';
 const darkGrey = '#8F8FB2';
 const lightGrey = '#B8B8CC';
 
-const Container = styled.div`
+const PresaleContainer = styled.div`
   display: grid; 
   grid-template-columns: 1fr 1fr 1fr; 
   grid-template-rows: repeat(4, auto); 
@@ -167,10 +167,23 @@ const Container = styled.div`
     "presale-max sale-max ."
     "presale-min sale-min total-closes"
 `;
-const Title = styled.span`
+const NoPresaleContainer = styled.div`
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  grid-template-rows: repeat(4, auto); 
+  gap: 16px 65px; 
+  grid-template-areas:
+    "sale-title total-title"
+    "sale-participants total-participants"
+    "sale-max ."
+    "sale-min total-closes"
+`;
+const Title = styled.div`
   color: ${almostBlack};
   font-weight: 600;
   font-size: 15px;
+  line-height: 120%;
+  letter-spacing: -0.03em;
   margin-bottom: 16px;
 `;
 const AmountTitle = styled.span`

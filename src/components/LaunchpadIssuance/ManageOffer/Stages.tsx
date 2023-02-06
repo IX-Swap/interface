@@ -3,6 +3,7 @@ import styled, { useTheme } from 'styled-components'
 import { ChevronRight, Info } from 'react-feather'
 import { ManagedOffer, OfferStatus } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
+import { formatDates } from './utils'
 
 interface IDateItem {
   title: string;
@@ -28,23 +29,15 @@ const DateBlock = (item: IDateItem) => {
   );
 }
 
-const formatDates = (startDate: Date, endDate?: Date) => {
-  const formatDate = (date: Date) => new Date(date).toLocaleDateString('en-GB', {});
-  if (!endDate) {
-    return formatDate(startDate);
-  }
-  return `${formatDate(startDate)} - ${formatDate(endDate)}`;
-}
-
 export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
   const theme = useTheme();
-  const { timeframe } = offer;
+  const { timeframe } = offer as any; // todo fix
   // todo tooltip text
   return (
     <Container>
       <MainTitleBlock>
         <Title>Investment Stage</Title>
-        <Tooltip title="title" body="body">
+        <Tooltip title="Investments Stages" body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager.">
           <Info size="14" color={theme.launchpad.colors.text.caption} />
         </Tooltip>
       </MainTitleBlock>

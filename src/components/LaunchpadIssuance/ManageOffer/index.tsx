@@ -1,18 +1,26 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { GridItem, GridContainer } from 'components/Grid'
-import { OfferStatus } from 'state/launchpad/types'
-import { OfferStatistics } from './statistics'
-import { useGetManagedOffer } from 'state/launchpad/hooks'
+import { OfferPresaleStatistics, OfferPresaleWhitelist, OfferStatus } from 'state/launchpad/types'
+import { OfferStatistics } from './Statistics'
+import { useGetManagedOffer, useGetManagedOfferPresaleStatistics, useGetManagedOfferPresaleWhitelists } from 'state/launchpad/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { OfferStages } from './stages'
+import { OfferStages } from './Stages'
+import { PresaleBlock } from './presale'
 
 // todo 
 interface ManagedOfferPageParams {
-  offerId: string
+  offerId: string;
+}
+interface PresaleData {
+  statistics: OfferPresaleStatistics;
+  items: OfferPresaleWhitelist[];
+  hasMore: boolean;
+  totalPages: number;
+  totalItems: number;
 }
 
 export const ManageOffer = () => {
@@ -22,9 +30,10 @@ export const ManageOffer = () => {
 
   const params = useParams<ManagedOfferPageParams>()
   const { loading, data: offer } = useGetManagedOffer(params.offerId);
+  const { usersClaimed, issuerClaimed, status, hasPresale } = offer || {};
 
-  const { usersClaimed, issuerClaimed, status } = offer || {};
-  const isWhitelist = useMemo(() => status === OfferStatus.whitelist, [status]);
+
+  const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status]); // todo
   const isClaim = useMemo(() => status === OfferStatus.claim, [status]);
 
   const claimBtnTitle = useMemo(() => {
@@ -47,6 +56,7 @@ export const ManageOffer = () => {
     return <Centered>Not found</Centered>
   }
 
+  // todo fix all console errors
   return (
     <Wrapper>
 
@@ -87,23 +97,16 @@ export const ManageOffer = () => {
         </StagesBoxItem>
       </CustomGridContainer>
 
-      <GridContainer>
-        <StyledGridItem xs={12}>
-          Whitelisting for Register to invest block
-        </StyledGridItem>
-        <StyledGridItem xs={12}>
-          Approve Registration block
-        </StyledGridItem>
-        <StyledGridItem xs={12}>
-          Approve Manually  block
-        </StyledGridItem>
-      </GridContainer>
+      {showWhitelisting && (
+        <PresaleBlock offer={offer} />
+      )}
     </Wrapper>
   )
 }
 
 // todo usetheme colors
 // todo Statistics Block margin grid
+// todo remove StyledGridItem
 const BoxItem = styled.div`
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.3);
@@ -153,10 +156,10 @@ const Wrapper = styled.article`
   width: 100%;
   margin: auto;
   color: ${props => props.theme.launchpad.colors.text.title};
-  font-family: 'Inter' !important;
-  *>* {
-    font-family: 'Inter' !important;
-  }
+  // font-family: 'Inter' !important;
+  // *>* {
+  //   font-family: 'Inter' !important;
+  // }
 `;
 const BackButton = styled(FilledButton)`
   padding: 0;
