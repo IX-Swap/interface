@@ -64,7 +64,7 @@ export const OfferStage: React.FC<StageProps> = (props) => {
 
   const stageHasStarted = React.useMemo(() => ({
     whitelist: hasStarted(props.frames.whitelist),
-    preSale: hasStarted(props.frames.presale),
+    preSale: hasStarted(props.frames.preSale),
     sale: hasStarted(props.frames.sale),
     closed: hasStarted(props.frames.closed),
     claim: hasStarted(props.frames.claim),
@@ -84,7 +84,7 @@ export const OfferStage: React.FC<StageProps> = (props) => {
         </StageLabel>
       ),
       value: (
-        <Nowrap>{format(props.frames.whitelist, props.frames.presale)}</Nowrap>
+        <Nowrap>{format(props.frames.whitelist, props.frames.preSale)}</Nowrap>
       )
     },
     {
@@ -100,7 +100,7 @@ export const OfferStage: React.FC<StageProps> = (props) => {
         </StageLabel>
       ),
       value: (
-        <Nowrap>{format(props.frames.presale, props.frames.sale)}</Nowrap>
+        <Nowrap>{format(props.frames.preSale, props.frames.sale)}</Nowrap>
       )
     },
   ] : [], [])

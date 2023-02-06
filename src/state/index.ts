@@ -32,6 +32,7 @@ import whitelabel from './whitelabel/reducer'
 import payout from './payout/reducer'
 import launchpad from './launchpad/reducer'
 import tokenManager from './token-manager/reducer'
+import issuance from './issuance/reducer'
 
 const PERSISTED_KEYS: string[] = ['auth', 'lists', 'swap', 'swapHelper', 'transactions', 'user']
 
@@ -66,7 +67,8 @@ const combinedReducer = combineReducers({
   vesting,
   whitelabel,
   withdraw,
-  launchpad
+  launchpad,
+  issuance,
 })
 
 const rootReducer = (state: any, action: any) => {

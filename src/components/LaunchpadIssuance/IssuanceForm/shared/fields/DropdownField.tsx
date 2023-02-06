@@ -21,6 +21,8 @@ interface Props<T> {
   optional?: boolean
 
   span?: number
+
+  value?: T
   error?: string
 
   field: string
@@ -33,7 +35,7 @@ export function DropdownField<T>(props: Props<T>) {
 
   const container = React.useRef<HTMLDivElement>(null)
 
-  const [selectedValue, setSelectedValue] = React.useState<Option<T> | undefined>()
+  const [selectedValue, setSelectedValue] = React.useState<Option<T> | undefined>(props.options.find(x => x.value === props.value))
   const [showDropdown, setShowDropdown] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
 
@@ -82,6 +84,7 @@ export function DropdownField<T>(props: Props<T>) {
   const updateSearch = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setOptionSearch(event.target.value) 
     setSearchActive(true)
+    setShowDropdown(true)
 
     setSelectedValue(undefined)
     

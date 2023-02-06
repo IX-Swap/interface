@@ -49,7 +49,7 @@ export const ReviewSidebar: React.FC<Props> = (props) => {
         label: 'Timelines',
         isComplete: props.offer.hasPresale
           ? (props.offer.timeframe?.whitelist && 
-              props.offer.timeframe?.presale && 
+              props.offer.timeframe?.preSale && 
               props.offer.timeframe?.sale && 
               props.offer.timeframe?.closed && 
               props.offer.timeframe?.claim
@@ -95,22 +95,6 @@ export const ReviewSidebar: React.FC<Props> = (props) => {
 
   return (
     <Column gap="0.25rem">
-      {options.map((entry, idx) => (
-        <>
-          <SidebarEntry key={idx}>
-            <CheckmarkContainer>
-              {entry.isComplete && <Check color={theme.launchpad.colors.primary} size="12" />}
-            </CheckmarkContainer>
-
-            <Label disabled={entry.isDisabled}>
-              {entry.label}
-            </Label>
-          </SidebarEntry>
-
-          {idx < options.length - 1 && <Separator color={theme.launchpad.colors.accent} marginBottom="0.25rem" marginTop='0.25rem' />}
-        </>
-      ))}
-
       <Column gap="0.5rem" margin="1rem 0">
         <OutlineButton onClick={() => props.onSubmit(true)}>Save Draft</OutlineButton>
         <OutlineButton onClick={props.onClose}>Back to Form</OutlineButton>

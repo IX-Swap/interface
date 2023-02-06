@@ -1,6 +1,6 @@
-import { OfferTokenType } from "components/LaunchpadIssuance/IssuanceForm/Information/types"
-import { IssuanceStatus } from "components/LaunchpadIssuance/types"
-import { User } from "state/admin/actions"
+import { OfferTokenType } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { User } from 'state/admin/actions'
 
 export enum OfferStatus {
   draft = 'draft',
@@ -73,7 +73,7 @@ export enum OfferDistributionFrequency {
   quarterly = 'quarterly',
   semiAnnually = 'semiAnnually',
   annually = 'annually',
-  other = 'other'
+  other = 'other',
 }
 
 export enum WhitelistStatus {
@@ -101,7 +101,7 @@ export enum PaymentType {
 export enum IssunaceOfferStatus {
   pre = 'pre',
   live = 'live',
-  ended = 'ended'
+  ended = 'ended',
 }
 
 export interface Asset {
@@ -115,7 +115,7 @@ export interface Asset {
 export interface OfferTimeframe {
   closed: Date
   claim: Date
-  presale: Date // todo WTF BLYADI
+  preSale: Date
   sale: Date
   whitelist: Date
 }
@@ -141,6 +141,7 @@ export interface OfferFAQ {
 }
 
 export interface OfferFile {
+  id?: number
   type: OfferFileType
   videoUrl: string
   file: Asset
@@ -156,7 +157,7 @@ export enum OfferInvestmentStructure {
   equity = 'equity',
   debt = 'debt',
   hybrid = 'hybrid',
-  other = 'other'
+  other = 'others',
 }
 
 export interface OfferInvestment {
@@ -227,7 +228,6 @@ export interface Offer {
 
   capitalStructure: OfferCapitalStructure
 
-
   country: string
 
   socialMedia: OfferSocialMediaLinks
@@ -285,6 +285,9 @@ export interface Offer {
 
   members: OfferTeamMember[]
   faq: OfferFAQ[]
+
+  changesRequested?: string
+  reasonRequested?: string
 
   createdAt: Date
   updatedAt: Date
@@ -358,19 +361,19 @@ export interface Issuance {
 }
 
 export interface DashboardOffer {
-  id: number,
-  issuanceId: number,
-  issuanceName: string,
-  hardCap: number,
-  closeDate: Date,
-  status: OfferTimeframeType,
-  softCapReached: boolean,
-  hardCapReached: boolean,
+  id: number
+  issuanceId: number
+  issuanceName: string
+  hardCap: number
+  closeDate: Date
+  status: OfferTimeframeType
+  softCapReached: boolean
+  hardCapReached: boolean
   investingTokenSymbol: string
-  countInvestors: number,
-  commitment: number,
-  progress: number,
-  progressPercent: number,
+  countInvestors: number
+  commitment: number
+  progress: number
+  progressPercent: number
   isMine: boolean
 }
 

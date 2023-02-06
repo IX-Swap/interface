@@ -2,6 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
+import { getCode, getData, getName, getNameList } from 'country-list'
+
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, ChevronUp } from 'react-feather'
 import Portal from '@reach/portal'
@@ -25,6 +27,7 @@ import { DropdownField } from '../shared/fields/DropdownField'
 import { TextareaField } from '../shared/fields/TextareaField'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { DateRangeField } from '../shared/fields/DateRangeField'
+import { RejectInfo } from '../shared/RejectInfo'
 import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
 
 import { FAQBlock } from './sections/FAQ'
@@ -34,7 +37,7 @@ import { UploadDocuments } from './sections/UploadDocuments'
 import { RejectionReasons } from './sections/RejectionReasons'
 import { AdditionalInformation } from './sections/AdditionalInformation'
 
-import { schema } from './schema'
+import { schema, editSchema } from './schema'
 
 import { 
   initialValues,
@@ -45,9 +48,10 @@ import {
   distributionFrequencyOptions,
   investmentStructureOptions 
 } from './util'
-import { useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer, useVetting } from 'state/launchpad/hooks'
+import { useEditIssuanceOffer, useFormatOfferValue, useLoader, useOfferFormInitialValues, useSubmitOffer, useVetting } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 
 
 interface Props {
@@ -86,10 +90,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const vetting = useVetting(issuanceId)
   const offer = useOfferFormInitialValues(issuanceId)
   
+  const validationSchema = React.useMemo(() => props.edit ? editSchema : schema, [props.edit])
   const countries = React.useMemo(() => {
-    return countriesList
-      ?.map((name, index) => ({ value: name, label: name }))
-      .sort((a, b) => a.label.localeCompare(b.label))
+    return getData().map(country => ({ value: country.code, label: country.name }))
   }, [])
 
   const onConfirmationClose = React.useCallback(() => {
@@ -98,11 +101,18 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [])
 
   const submitOffer = useSubmitOffer()
+  const editOffer = useEditIssuanceOffer()
+
   const _submit = React.useCallback(async (values: InformationFormValues, draft = false) => {
     loader.start()
 
     try {
-      await submitOffer(values, initialValues, draft, vetting.data?.id)
+
+      if (props.edit && offer.data) {
+        await editOffer(offer.data.id ?? '', values, offer.data)
+      } else {
+        await submitOffer(values, offer.data ?? initialValues, draft, vetting.data?.id, offer.data?.id)
+      }
 
       addPopup({ info: { success: true, summary: 'Offer created successfully' }})
       goMain();
@@ -111,7 +121,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     } finally {
       loader.stop()
     }
-  }, [vetting.data?.id])
+  }, [vetting.data?.id, offer.data?.id, offer.data])
 
   const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
 
@@ -185,6 +195,38 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
+  React.useEffect(() => {
+    if (!offer.loading && offer.data) {
+      const status = offer.data?.status ?? IssuanceStatus.draft
+
+      switch (status) {
+        case IssuanceStatus.draft:
+        case IssuanceStatus.changesRequested:
+        case IssuanceStatus.declined:
+          if (props.edit) {
+            history.replace(`/issuance/create/information?id=${issuanceId}`)
+          }
+
+          break;
+
+        case IssuanceStatus.pendingApproval:
+          if (!props.edit) {
+            history.replace(`/issuance/edit/information?id=${issuanceId}`)
+          }
+
+          break;
+      }
+    }
+  }, [issuanceId, offer.loading, offer.data])
+
+  if (offer.loading || !offer.data) {
+    return (
+      <LoaderContainer width="100vw" height="100vh">
+        <Loader />
+      </LoaderContainer>
+    )
+  }
+
   return (
     <FormContainer>
       <ScrollToTop onClick={scrollToTop}>
@@ -199,8 +241,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         <FormTitle>Information</FormTitle>
       </FormHeader>
 
-      <Formik innerRef={form} initialValues={initialValues}  onSubmit={submit} validationSchema={schema}>
-        {({ values, errors, setFieldValue, submitForm }) => (
+      <Formik innerRef={form} initialValues={offer.data ?? initialValues}  onSubmit={submit} validationSchema={validationSchema} enableReinitialize={true}>
+        {({ values, errors, setFieldValue, submitForm, resetForm }) => (
           <>
             <ConfirmationForm
               isOpen={showConfirmDialog}
@@ -232,6 +274,15 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
             <FormSideBar>
               {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
               
+              {[IssuanceStatus.changesRequested, IssuanceStatus.declined]
+                .includes(offer.data?.status as IssuanceStatus) && (
+                <RejectInfo
+                  message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
+                  status={offer.data?.status}
+                  issuanceId={issuanceId}
+                  onClear={() => resetForm({ values: initialValues })}
+                  onSubmit={toSubmit}/>)}
+
               <FormSubmitContainer>
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
@@ -259,6 +310,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               </ImageBlock>
 
               <TextareaField 
+                value={values.shortDescription}
                 label='Short Description'
                 placeholder='A brief description on your deal card. 120-150 characters.'
                 field='shortDescription'
@@ -273,6 +325,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label="Name of Issuance"
                   placeholder='Name of Issuance'
                   disabled={props.edit}
+                  value={values.title}
                   error={errors.title}
                 />
 
@@ -282,6 +335,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label="Company Identification Number"
                   placeholder='Company Identification Number'
                   disabled={props.edit}
+                  value={values.issuerIdentificationNumber}
                   error={errors.issuerIdentificationNumber}
                 />
 
@@ -290,6 +344,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   label="Industry"
                   options={industryOptions}
+                  value={values.industry}
                   error={errors.industry}
                 />
 
@@ -298,6 +353,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   label="Investment Type"
                   options={investmentStructureOptions}
+                  value={values.investmentType}
                   error={errors.investmentType}
                 />
 
@@ -307,6 +363,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label="Deal Country"
                   options={countries}
                   searchable
+                  value={values.country}
                   error={errors.country}
                 />
 
@@ -328,6 +385,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label='Token Name'
                   placeholder='Must be the same as the issuance name'
                   disabled={props.edit}
+                  value={values.tokenName}
                   error={errors.tokenName}
                 />
                 <FormField
@@ -336,6 +394,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label='Token Ticker'
                   placeholder='2-6 alphanumeric characters'
                   disabled={props.edit}
+                  value={values.tokenTicker}
                   error={errors.tokenTicker}
                 />
                 
@@ -346,6 +405,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label='Token to Make Issuance in'
                   placeholder='Token Type'
                   disabled={props.edit}
+                  value={values.tokenType}
                   error={errors.tokenType}
                 />
                 <DropdownField
@@ -355,6 +415,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label='Blockchain Network'
                   placeholder='Blockchain Network'
                   disabled={props.edit}
+                  value={values.network}
                   error={errors.network}
                 />
                 
@@ -365,6 +426,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='Total Amount to Raise'
                   inputFilter={numberFilter}
                   disabled={props.edit}
+                  value={values.hardCap}
                   error={errors.hardCap}
                 />
                 <FormField
@@ -374,6 +436,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='Minimum Amount to Raise'
                   inputFilter={numberFilter}
                   disabled={props.edit}
+                  value={values.softCap}
                   error={errors.softCap}
                 />
                 
@@ -384,6 +447,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='Price per Token'
                   inputFilter={numberFilter}
                   disabled={props.edit}
+                  value={`${values.tokenPrice}`}
                   error={errors.tokenPrice}
                 />
                 <DropdownField
@@ -393,6 +457,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label='Token Standard'
                   placeholder='Token Standard'
                   disabled={props.edit}
+                  value={values.tokenStandart}
                   error={errors.tokenStandart}
                 />
                 
@@ -403,6 +468,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='No. of Tokens'
                   inputFilter={numberFilter}
                   disabled={props.edit}
+                  value={values.minInvestment}
                   error={errors.minInvestment}
                 />
                 <FormField
@@ -412,6 +478,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='No. of Tokens'
                   inputFilter={numberFilter}
                   disabled={props.edit}
+                  value={values.maxInvestment}
                   error={errors.maxInvestment}
                 />
 
@@ -452,6 +519,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label="Pre-Sale Allocation"
                   placeholder='Total fundraising amount allocated for Pre-Sale'
                   inputFilter={numberFilter}
+                  value={values.presaleAlocated}
                   error={errors.presaleAlocated}
                 />
 
@@ -462,6 +530,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label="Maximum Investment per Investor"
                   placeholder='No. of Tokens' 
                   inputFilter={numberFilter}
+                  value={values.presaleMaxInvestment}
                   error={errors.presaleMaxInvestment}
                 />
 
@@ -472,6 +541,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label="Minimum Investment per Investor" 
                   placeholder='No. of Tokens' 
                   inputFilter={numberFilter}
+                  value={values.presaleMinInvestment}
                   error={errors.presaleMinInvestment}
                 />
               </FormGrid>
@@ -502,27 +572,21 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 <DateRangeField 
                   mode='single'
                   label='Pre-Sale'
-                  field='timeframe.presale'
+                  field='timeframe.preSale'
                   setter={setFieldValue}
-                  value={values.timeframe.presale}
+                  value={values.timeframe.preSale}
                   disabled={props.edit || !values.hasPresale || !values.timeframe.whitelist}
                   minDate={values.timeframe.whitelist}
-                  error={errors.timeframe?.presale as string}
+                  error={errors.timeframe?.preSale as string}
                 />
-
-                {/* <div style={{ color: 'black'}}>
-                  {values.hasPresale?.toString() ?? 'not set'}
-                  {values.terms.whitelist?.toString() ?? 'not set'}
-                  {values.terms.presale?.toString() ?? 'not set'}
-                </div> */}
                 
                 <DateRangeField 
                   mode='range'
                   label='Public Sale to Closed'
                   field='timeframe.sale'
                   value={[values.timeframe.sale, values.timeframe.closed].filter(x => !!x).map(x => moment(x))}
-                  disabled={props.edit || (values.hasPresale && !values.timeframe.presale)}
-                  minDate={values.hasPresale ? values.timeframe.presale : undefined}
+                  disabled={props.edit || (values.hasPresale && !values.timeframe.preSale)}
+                  minDate={values.hasPresale ? values.timeframe.preSale : undefined}
                   onChange={([start, end]) => {
                     setFieldValue('timeframe.sale', start)
                     setFieldValue('timeframe.closed', end)
@@ -552,6 +616,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label='Investment Structure'
                   placeholder='Holding Structure'
                   disabled={props.edit}
+                  value={values.terms?.investmentStructure}
                   error={errors.terms?.investmentStructure}
                 />
                 <FormField
@@ -561,6 +626,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='In Percent'
                   optional
                   disabled={props.edit}
+                  value={values.terms?.dividentYield}
                   error={errors.terms?.dividentYield}
                   inputFilter={formatValue}
                 />
@@ -571,6 +637,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='In months'
                   optional
                   disabled={props.edit}
+                  value={values.terms?.investmentPeriod?.toString()}
                   error={errors.terms?.investmentPeriod}
                   inputFilter={formatValue}
                 />
@@ -581,6 +648,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   placeholder='In percent'
                   optional
                   disabled={props.edit}
+                  value={values.terms?.grossIrr}
                   error={errors.terms?.grossIrr}
                   inputFilter={formatValue}
                 />
@@ -596,13 +664,14 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   optional
 
                   disabled={props.edit}
+                  value={values.terms?.distributionFrequency}
                   error={errors.terms?.distributionFrequency}
                 />
               </FormGrid>
               
               <Separator />
               
-              <AdditionalInformation social={values.social} setter={setFieldValue} errors={errors} />
+              <AdditionalInformation social={values.social} setter={setFieldValue} values={values} errors={errors} />
               
               <Separator />
               
@@ -610,7 +679,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               
               <Separator />
               
-              <GalleryBlock images={values.images} videos={values.videos}  setter={setFieldValue} errors={errors} />
+              <GalleryBlock description={values.longDescription} images={values.images} videos={values.videos}  setter={setFieldValue} errors={errors} />
               
               <Separator />
 

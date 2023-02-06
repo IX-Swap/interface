@@ -41,6 +41,7 @@ export const FAQBlock: React.FC<Props> = (props) => {
                   <QuestionWrapper>
                     <QuestionInput 
                       placeholder='Question Title'
+                      value={entry.question}
                       onChange={e => props.setter(`faq[${idx}].question`, e.target.value)} 
                     />
                   </QuestionWrapper>
@@ -56,6 +57,7 @@ export const FAQBlock: React.FC<Props> = (props) => {
                   <Label>Answer</Label>
                   <AnswerInput 
                     placeholder='Answer Description'
+                    value={entry.answer}
                     onChange={e => props.setter(`faq[${idx}].answer`, e.target.value)}
                   />
                   

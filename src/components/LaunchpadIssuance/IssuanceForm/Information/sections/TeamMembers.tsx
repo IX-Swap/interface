@@ -49,6 +49,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   optional
                   span={2} 
                   showLabelInside
+                  value={member.photo}
                   error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.photo as string}
                 />
 
@@ -57,6 +58,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   label="Full Name"
                   placeholder="Team Member’s Name" 
+                  value={member.name}
                   error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.name}
                 />
 
@@ -65,6 +67,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   label="Position"
                   placeholder="Team Member’s Position"
+                  value={member.role}
                   error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.role}
                 />
 
@@ -74,6 +77,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   label="About"
                   placeholder="Short Introduction about your team member" 
+                  value={member.about}
                   error={(props.errors.members?.[idx] as FormikErrors<TeamMember> | undefined)?.about}
                 />
               </MemberEntry>
