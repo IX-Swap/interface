@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { useFormatOfferValue } from 'state/launchpad/hooks'
 import { OptionalLabel } from '../IssuanceForm/shared/styled'
+import { Column } from 'components/LaunchpadMisc/styled'
 
 interface StylingProps {
   padding?: string
@@ -41,6 +42,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     setInputValue(props.value)
+    setFocused(!!props.value)
   }, [props.value])
 
   const onChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,18 +65,20 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
   return (
     <FieldContainer disabled={props.disabled}>
       <FieldInputContainer className={props.className} height={props.height} padding={props.padding} borderless={props.borderless}>
-        {props.label && <Label>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</Label>}
-        {props.placeholder && <Placeholder active={focused} hasLabel={!!props.label}>{props.placeholder}</Placeholder>}
+        <InnerContainer>
+          {props.label && <Label>{props.label} {props.optional && <OptionalLabel>Optional</OptionalLabel>}</Label>}
+          {props.placeholder && <Placeholder active={focused} hasLabel={!!props.label}>{props.placeholder}</Placeholder>}
 
-        <Input
-          type="text"
-          fontSize={props.fontSize}
-          lineHeight={props.lineHeight}
-          disabled={props.disabled} 
-          value={inputValue}
-          onInput={onChange}
-          maxLength={props.type === 'text' ? 19 : 60}
-        />
+          <Input
+            type="text"
+            fontSize={props.fontSize}
+            lineHeight={props.lineHeight}
+            disabled={props.disabled} 
+            value={inputValue}
+            onInput={onChange}
+            maxLength={props.type === 'text' ? 19 : 60}
+          />
+        </InnerContainer>
 
         {props.trailing}
       </FieldInputContainer>
@@ -95,11 +99,15 @@ const FieldContainer = styled.div<{ disabled?: boolean }>`
   `}
 `
 
+const InnerContainer = styled(Column)`
+  flex-grow: 1;
+`
+
 const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height' | 'borderless'>>`
   position: relative;
 
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   
   gap: 0.25rem;
 

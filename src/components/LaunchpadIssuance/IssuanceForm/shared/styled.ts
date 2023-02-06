@@ -52,6 +52,7 @@ export const FormBody = styled.div`
 `
 export const ShortFormBody = styled(FormBody)`
   gap: 1rem;
+  margin-top: 1rem;
 `
 export const FormSideBar = styled.div`
   grid-area: sidebar;

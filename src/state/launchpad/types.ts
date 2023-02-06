@@ -129,6 +129,7 @@ export interface OfferTerms {
 }
 
 export interface OfferTeamMember {
+  id?: number 
   avatar: Asset
   name: string
   title: string
@@ -285,6 +286,9 @@ export interface Offer {
 
   members: OfferTeamMember[]
   faq: OfferFAQ[]
+
+  changesRequested?: string
+  reasonRequested?: string
 
   createdAt: Date
   updatedAt: Date

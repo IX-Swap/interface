@@ -14,15 +14,24 @@ interface Props {
 
   field: string
   setter: (field: string, value: string) => void
+  touch?: (field: string, touched: boolean) => void 
 }
 
 export const TextareaField: React.FC<Props> = (props) => {
+  const onChange = React.useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    props.setter(props.field, event.target.value)
+
+    if (props.touch) {
+      props.touch(props.field, true)
+    }
+  }, [])
+
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span}>
       <FieldLabel>{props.label}</FieldLabel>
       <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>
 
-      <Textarea value={props.value} onChange={v => props.setter(props.field, v.target.value)} />
+      <Textarea value={props.value} onChange={onChange} />
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
     </FormFieldWrapper>

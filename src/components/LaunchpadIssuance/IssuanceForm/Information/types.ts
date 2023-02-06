@@ -1,3 +1,4 @@
+import { IssuanceStatus } from "components/LaunchpadIssuance/types"
 import { OfferDistributionFrequency, OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
 import { DateSchema } from "yup"
 import { IssuanceFile } from "../types"
@@ -29,6 +30,7 @@ export interface VideoLink {
 
 export interface InformationFormValues {
   id?: string
+  status?: IssuanceStatus
 
   profilePicture: IssuanceFile
   cardPicture: IssuanceFile
@@ -49,7 +51,9 @@ export interface InformationFormValues {
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
   tokenPrice: number
+  
   tokenAddress?: string
+  investingTokenAddress?: string
 
   network: OfferNetwork
 
@@ -65,6 +69,9 @@ export interface InformationFormValues {
   presaleAlocated: string
   presaleMinInvestment: string
   presaleMaxInvestment: string
+
+  changesRequested?: string
+  reasonRequested?: string
 
   email: string
   website: string
@@ -108,11 +115,13 @@ export interface AdditionalDocument {
 }
 
 export interface FAQEntry {
+  id?: number
   question: string
   answer: string
 }
 
 export interface TeamMember {
+  id?: number
   photo: IssuanceFile
   name: string
   role: string

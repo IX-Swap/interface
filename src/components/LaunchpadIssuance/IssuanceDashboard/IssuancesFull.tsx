@@ -160,12 +160,9 @@ export const IssuancesFull = () => {
         </IssuanceTable>
       )}
 
-      <IssuancePagination 
-        items={issuances}
-        
+      <IssuancePagination  
         currentPage={page}
         pageSize={pageSize}
-
         totalPages={totalPages}
         totalItems={totalItems}
         onChangePage={onChangePage}

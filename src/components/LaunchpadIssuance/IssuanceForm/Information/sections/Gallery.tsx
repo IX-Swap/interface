@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { useDropzone } from 'react-dropzone'
-import { FormikErrors, FieldArray } from 'formik'
+import { FormikErrors, FieldArray, FormikTouched } from 'formik'
 import { Image, Plus, Trash } from 'react-feather'
 
 import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg'
@@ -22,8 +22,12 @@ interface Props {
   images: IssuanceFile[]
   videos: VideoLink[]
   description: string
+  
   errors: FormikErrors<InformationFormValues>
+  touched: FormikTouched<InformationFormValues>
+
   setter: (field: string, value: any) => void
+  touch?: (field: string, touched: boolean) => void 
 }
 
 export const GalleryBlock: React.FC<Props> = (props) => {
@@ -35,19 +39,23 @@ export const GalleryBlock: React.FC<Props> = (props) => {
   const onFileSelect = React.useCallback((files: File[]) => {
     props.setter('images', props.images.concat(files.map(x => ({ file: x }))))
 
+    if (props.touch) {
+      props.touch('images', true)
+    }
+
     container.current?.scrollTo({ left: container.current.scrollWidth, behavior: 'smooth' })
   }, [props.images, container])
 
   const removeImage = React.useCallback((idx: number) => {
     const images = [...props.images]
 
-    console.log(images)
-
     images.splice(idx, 1)
 
-    console.log(images)
-
     props.setter('images', images)
+
+    if (props.touch) {
+      props.touch('images', true)
+    }
   }, [props.images])
 
   const urls = React.useMemo(() => props.images.map(x => URL.createObjectURL(x.file)), [props.images])
@@ -103,8 +111,12 @@ export const GalleryBlock: React.FC<Props> = (props) => {
 
                   field={`videos[${idx}].url`}
                   setter={props.setter}
+                  touch={props.touch}
                   value={video.url}
-                  error={(props.errors.videos?.[idx] as FormikErrors<VideoLink> | undefined )?.url}
+                  error={(
+                    (props.touched.videos?.[idx] as FormikTouched<VideoLink> | undefined )?.url &&
+                    (props.errors.videos?.[idx] as FormikErrors<VideoLink> | undefined )?.url
+                  ) as string}
 
                   trailing={(props.videos.length > 1 || idx > 0) && (
                     <RemoveButton onClick={handleRemove(idx)}>
@@ -131,10 +143,11 @@ export const GalleryBlock: React.FC<Props> = (props) => {
         <TextareaField 
           field='longDescription' 
           setter={props.setter}
+          touch={props.touch}
           label=""
           placeholder=''
           value={props.description}
-          error={props.errors.longDescription}
+          error={(props.touched.longDescription && props.errors.longDescription) as string}
         />
       </DescriptionContainer>
 

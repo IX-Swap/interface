@@ -39,6 +39,8 @@ import { initialValues as informationInitialFormValues } from 'components/Launch
 import { IssuanceFile } from 'components/LaunchpadIssuance/IssuanceForm/types'
 import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
 import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
 import { PaginateResponse } from 'types/pagination'
 
@@ -186,12 +188,13 @@ export const useSubscribeToOffer = () => {
   )
 }
 
-export const useGetOffer = (id: string | number | undefined) => {
+export const useGetOffer = (id: string | number | undefined, startLoading = true) => {
   const loader = useLoader()
   const [data, setData] = React.useState<Offer>()
 
   const load = React.useCallback(() => {
     if (!id) {
+      loader.stop()
       return
     }
 
@@ -203,7 +206,9 @@ export const useGetOffer = (id: string | number | undefined) => {
   }, [id])
 
   React.useEffect(() => {
-    load()
+    if (startLoading) {
+      load()
+    }
   }, [])
 
   return { loading: loader.isLoading, load, data }
@@ -876,7 +881,7 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
   const getFile = useGetFile()
 
   const issuance = useGetIssuance()
-  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id)
+  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id, false)
 
   const [values, setValues] = React.useState<InformationFormValues>()
 
@@ -885,7 +890,6 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
   }, [issuanceId])
 
   React.useEffect(() => {
-    console.log(`Loading: ${issuance.loading}; Data: `, issuance.data)
     if (!issuance.loading && issuance.data) {
       offer.load()
     }
@@ -919,6 +923,7 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
 
     return {
       id: payload?.id,
+      status: payload?.status as unknown as IssuanceStatus,
       title: payload.title,
 
       shortDescription: payload.shortDescription,
@@ -941,6 +946,7 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       members: payload.members.map(
         (member) =>
           ({
+            id: member.id,
             name: member.name,
             role: member.title,
             about: member.description,
@@ -977,8 +983,19 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       maxInvestment: payload.maxInvestment,
       minInvestment: payload.minInvestment,
 
+      changesRequested: payload.changesRequested,
+      reasonRequested: payload.reasonRequested,
+
+      terms: {
+        distributionFrequency: payload.terms.distributionFrequency ?? '',
+        dividentYield: payload.terms.dividentYield ?? '',
+        grossIrr: payload.terms.grossIrr ?? '',
+        investmentPeriod: payload.terms.investmentPeriod ?? '',
+        investmentStructure: payload.terms.investmentStructure ?? '',
+      },
+
       network: payload.network,
-      terms: payload.terms,
+
       timeframe: payload.timeframe,
       tokenName: payload.tokenName ?? '',
       tokenPrice: Number(payload.tokenPrice),
@@ -986,6 +1003,7 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       tokenTicker: payload.tokenSymbol,
       tokenType: payload.investingTokenSymbol as OfferTokenType,
       tokenAddress: payload.tokenAddress,
+      investingTokenAddress: payload.investingTokenAddress,
     }
   }, [])
 
@@ -994,6 +1012,9 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
 
 export const useSubmitOffer = () => {
   const uploadFiles = useUploadOfferFiles()
+
+  const { tokensOptions, secTokensOptions } = useTokensList()
+  const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
 
   return React.useCallback(
     async (
@@ -1005,7 +1026,7 @@ export const useSubmitOffer = () => {
     ) => {
       const uploadedFiles = await uploadFiles(payload, initial)
 
-      const findDoc = (prefix: 'member' | 'document' | 'image', idx: number) =>
+      const findDoc = (prefix: 'member.photo' | 'document' | 'image', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
 
       let data: Record<string, any> = {
@@ -1035,7 +1056,6 @@ export const useSubmitOffer = () => {
         issuerIdentificationNumber: payload.issuerIdentificationNumber,
 
         tokenAddress: payload.tokenAddress,
-        tokenName: payload.tokenName,
         tokenSymbol: payload.tokenTicker,
         tokenPrice: payload.tokenPrice.toString(),
         tokenStandart: payload.tokenStandart,
@@ -1053,7 +1073,7 @@ export const useSubmitOffer = () => {
         presaleMaxInvestment: payload.presaleMaxInvestment,
         presaleAlocated: payload.presaleAlocated,
 
-        allowOnlyAccredited: payload.allowOnlyAccredited,
+        allowOnlyAccredited: payload.allowOnlyAccredited ?? false,
 
         terms: {
           investmentStructure: payload.terms.investmentStructure,
@@ -1074,7 +1094,7 @@ export const useSubmitOffer = () => {
         faq: payload.faq.map((x) => ({ question: x.question, answer: x.answer })),
 
         members: payload.members.map((x, idx) => ({
-          avatarId: findDoc('member', idx) ?? initial.members[idx].photo?.id,
+          avatarId: findDoc('member.photo', idx) ?? initial.members[idx].photo?.id,
           name: x.name,
           title: x.role,
           description: x.about,
@@ -1113,7 +1133,7 @@ export const useSubmitOffer = () => {
           return data.map(filter).filter((x: any) => !!x)
         }
 
-        if (typeof data !== 'object') {
+        if (typeof data !== 'object' || data instanceof Date) {
           return data
         }
 
@@ -1124,20 +1144,16 @@ export const useSubmitOffer = () => {
             (entry) =>
               !!entry.value ||
               typeof entry.value === 'boolean' ||
-              (typeof entry.value === 'object' && entry.value && Object.keys(entry.value).length > 0)
+              (typeof entry.value === 'object' &&
+                entry.value &&
+                (entry.value instanceof Date || Object.keys(entry.value).length > 0))
           )
           .reduce((acc, entry) => ({ ...acc, [entry.key]: filter(entry.value) }), {})
-
-        if (Object.keys(result).length === 0) {
-          return undefined
-        }
 
         return result
       }
 
       data = filter(data)
-
-      console.log(data)
 
       if (offerId) {
         delete data.offerId
@@ -1148,6 +1164,75 @@ export const useSubmitOffer = () => {
         return apiService.post(`/offers`, data)
       }
     },
-    [uploadFiles]
+    [uploadFiles, mixedTokens]
   )
+}
+
+export const useEditIssuanceOffer = () => {
+  const uploadFiles = useUploadOfferFiles()
+
+  return React.useCallback(async (offerId: string, payload: InformationFormValues, initial: InformationFormValues) => {
+    const files = await uploadFiles(payload, initial)
+
+    const find = (prefix: 'member.photo' | 'document' | 'image', idx: number) =>
+      files.find((x) => x.name === `${prefix}.${idx}`)?.id
+
+    const data = {
+      shortDescription: payload.shortDescription,
+      longDescription: payload.longDescription,
+
+      network: payload.network,
+      industry: payload.industry,
+      investmentType: payload.investmentType,
+      country: payload.country,
+
+      contactUsEmail: payload.email,
+      issuerWebsite: payload.website,
+      whitepaperUrl: payload.whitepaper,
+
+      profilePictureId: 123,
+      cardPictureId: 123,
+
+      faq: payload.faq.map((faq) => ({
+        id: faq.id,
+        question: faq.question,
+        answer: faq.answer,
+      })),
+
+      socialMedia: payload.social.reduce((acc, e) => ({ ...acc, [e.type]: e.url }), {}),
+
+      members: payload.members.map((member, idx) => ({
+        id: member.id && member.id >= 0 ? member.id : undefined,
+        avatarId: find('member.photo', idx) ?? initial.members[idx].photo?.id,
+        name: member.name,
+        title: member.role,
+        description: member.about,
+      })),
+
+      files: [
+        ...payload.additionalDocuments
+          .map((x, idx) => ({
+            type: OfferFileType.document,
+            fileId: find('document', idx) ?? initial.additionalDocuments[idx].file?.id,
+          }))
+          .filter((x) => x.fileId),
+
+        ...payload.images
+          .map((x, idx) => ({
+            type: OfferFileType.image,
+            fileId: find('image', idx) ?? initial.images[idx]?.id,
+          }))
+          .filter((x) => x.fileId),
+
+        ...payload.videos
+          .map((x) => ({
+            type: OfferFileType.video,
+            videoUrl: x.url,
+          }))
+          .filter((x) => x.videoUrl),
+      ],
+    }
+
+    return apiService.put(`/offers/${offerId}/minimal`, data)
+  }, [])
 }

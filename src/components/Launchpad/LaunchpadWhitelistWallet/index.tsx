@@ -8,13 +8,13 @@ import { AppDispatch } from 'state'
 import { useAppSelector } from 'state/hooks'
 import { setFilterValue } from 'state/issuance/actions'
 import { useDeleteWhitelisted, useGetWhitelisted } from 'state/issuance/hooks'
-import { Pagination } from '../Pagination'
 import { tabs } from './constants'
+import { DialogWrapper, FilterContainer, Tab, Tabs } from './styled'
 import { WhitelistForm } from './WhitelistForm'
 import { WhitelistWalletTable } from './WhitelistWalletTable'
 import { Actions } from './WhitelistWalletTable/Actions'
 import { ConfirmDeletePopup } from './WhitelistWalletTable/ConfirmDeletePopup'
-import { DialogWrapper, Tab, Tabs } from './styled'
+import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboard/IssuancePagination'
 export interface LaunchpadWhitelistWalletProps {
   offerId: string
 }
@@ -37,8 +37,7 @@ export const LaunchpadWhitelistWallet = ({ offerId }: LaunchpadWhitelistWalletPr
   const deleteWhiteListedWallet = useDeleteWhitelisted({ onSuccess: () => onSuccessDelete() })
   const { whitelisted, filter, loadingGet, getError, loadingDelete } = useAppSelector((state) => state.issuance)
   const dispatch = useDispatch<AppDispatch>()
-  const { items, ...rest } = whitelisted
-  const container = React.useRef<HTMLDivElement>(null)
+  const { items, page, offset, totalItems, totalPages } = whitelisted
   const onDiscard = useCallback(
     (walletAddress: string) => {
       deleteWhiteListedWallet(offerId, walletAddress)
@@ -62,8 +61,8 @@ export const LaunchpadWhitelistWallet = ({ offerId }: LaunchpadWhitelistWalletPr
     <IssuanceDialog show={showWhitelistPopup} title="Whitelist Wallet" onClose={toggleDialog} width="800px">
       <DialogWrapper>
         <WhitelistForm offerId={offerId} onSuccess={onSuccessCreate} />
-        <Separator marginTop="0.25rem" marginBottom="0.25rem" />
-        <>
+        <Separator marginTop="1.25rem" marginBottom="1.5rem" />
+        <FilterContainer>
           <Tabs>
             {tabs.map((tab) => (
               <Tab
@@ -79,12 +78,16 @@ export const LaunchpadWhitelistWallet = ({ offerId }: LaunchpadWhitelistWalletPr
             ))}
           </Tabs>
           <SearchFilter onFilter={({ search }) => dispatch(setFilterValue({ filter: { search } }))} />
-        </>
+        </FilterContainer>
         <WhitelistWalletTable loading={loadingGet} items={items} actions={Actions} onAction={onAction} />
         {getError && <ErrorText>{getError}</ErrorText>}
-        <Pagination
-          {...rest}
-          container={container}
+        <IssuancePagination
+          currentPage={page}
+          pageSize={offset}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          enableChangePageSize={false}
+          smallMargin
           onChangePage={(page) => dispatch(setFilterValue({ filter: { page } }))}
         />
         <ConfirmDeletePopup
