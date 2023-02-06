@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
-import { getCode, getData, getName, getNameList } from 'country-list'
+import { getData } from 'country-list'
 
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, ChevronUp } from 'react-feather'
@@ -11,8 +11,6 @@ import Portal from '@reach/portal'
 import { Formik, FormikProps } from 'formik'
 
 import { InformationFormValues } from './types'
-
-import { countriesList } from 'constants/countriesList'
 
 import { Row, Separator, Spacer, LoaderContainer } from 'components/LaunchpadMisc/styled'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
@@ -242,7 +240,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       </FormHeader>
 
       <Formik innerRef={form} initialValues={offer.data ?? initialValues}  onSubmit={submit} validationSchema={validationSchema} enableReinitialize={true}>
-        {({ values, errors, setFieldValue, submitForm, resetForm }) => (
+        {({ values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm }) => (
           <>
             <ConfirmationForm
               isOpen={showConfirmDialog}
@@ -274,14 +272,15 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
             <FormSideBar>
               {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
               
-              {[IssuanceStatus.changesRequested, IssuanceStatus.declined]
-                .includes(offer.data?.status as IssuanceStatus) && (
+              {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(offer.data?.status as IssuanceStatus) && (
                 <RejectInfo
                   message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
                   status={offer.data?.status}
                   issuanceId={issuanceId}
                   onClear={() => resetForm({ values: initialValues })}
-                  onSubmit={toSubmit}/>)}
+                  onSubmit={toSubmit}
+                />
+              )}
 
               <FormSubmitContainer>
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
@@ -297,7 +296,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   image={values.profilePicture?.file}
                   field='profilePicture'
                   setter={setFieldValue}
-                  error={errors.profilePicture as string}
+                  touch={setFieldTouched}
+                  error={(touched.profilePicture && errors.profilePicture) as string}
                 />
                 
                 <ImageField 
@@ -305,7 +305,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   image={values.cardPicture?.file}
                   field='cardPicture'
                   setter={setFieldValue}
-                  error={errors.cardPicture as string}
+                  touch={setFieldTouched}
+                  error={(touched.cardPicture && errors.cardPicture) as string}
                 />
               </ImageBlock>
 
@@ -315,56 +316,65 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 placeholder='A brief description on your deal card. 120-150 characters.'
                 field='shortDescription'
                 setter={setFieldValue}
-                error={errors.shortDescription}
+                touch={setFieldTouched}
+                error={(touched.shortDescription && errors.shortDescription) as string}
               />
 
               <FormGrid>
                 <FormField 
                   field="title"
-                  setter={setFieldValue}
+                  setter={(field, value) => {
+                    setFieldValue(field, value)
+                    setFieldValue('tokenName', value)
+                  }}
+                  touch={setFieldTouched} 
                   label="Name of Issuance"
                   placeholder='Name of Issuance'
                   disabled={props.edit}
                   value={values.title}
-                  error={errors.title}
+                  error={(touched.title && errors.title) as string}
                 />
 
                 <FormField
                   field="issuerIdentificationNumber"
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label="Company Identification Number"
                   placeholder='Company Identification Number'
                   disabled={props.edit}
                   value={values.issuerIdentificationNumber}
-                  error={errors.issuerIdentificationNumber}
+                  error={(touched.issuerIdentificationNumber && errors.issuerIdentificationNumber) as string}
                 />
 
                 <DropdownField 
                   field="industry"
                   setter={setFieldValue}
+                  touch={setFieldTouched}
                   label="Industry"
                   options={industryOptions}
                   value={values.industry}
-                  error={errors.industry}
+                  error={(touched.industry && errors.industry) as string}
                 />
 
                 <DropdownField
                   field="investmentType"
                   setter={setFieldValue}
+                  touch={setFieldTouched}
                   label="Investment Type"
                   options={investmentStructureOptions}
                   value={values.investmentType}
-                  error={errors.investmentType}
+                  error={(touched.investmentType && errors.investmentType) as string}
                 />
 
                 <DropdownField
                   field="country"
                   setter={setFieldValue}
+                  touch={setFieldTouched}
                   label="Deal Country"
                   options={countries}
                   searchable
                   value={values.country}
-                  error={errors.country}
+                  error={(touched.country && errors.country) as string}
                 />
 
                 <Row gap="1rem" alignItems="center" margin="1rem 0 2rem 0">
@@ -382,104 +392,114 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 <FormField
                   field='tokenName'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Token Name'
                   placeholder='Must be the same as the issuance name'
                   disabled={props.edit}
                   value={values.tokenName}
-                  error={errors.tokenName}
+                  error={(touched.tokenName && errors.tokenName) as string}
                 />
                 <FormField
                   field='tokenTicker'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Token Ticker'
                   placeholder='2-6 alphanumeric characters'
                   disabled={props.edit}
                   value={values.tokenTicker}
-                  error={errors.tokenTicker}
+                  error={(touched.tokenTicker && errors.tokenTicker) as string}
                 />
                 
                 <DropdownField
                   field='tokenType'
                   setter={setFieldValue}
+                  touch={setFieldTouched}
                   options={tokenTypeOptions}
                   label='Token to Make Issuance in'
                   placeholder='Token Type'
                   disabled={props.edit}
                   value={values.tokenType}
-                  error={errors.tokenType}
+                  error={(touched.tokenType && errors.tokenType) as string}
                 />
                 <DropdownField
                   field='network'
                   setter={setFieldValue}
+                  touch={setFieldTouched}
                   options={networkOptions}
                   label='Blockchain Network'
                   placeholder='Blockchain Network'
                   disabled={props.edit}
                   value={values.network}
-                  error={errors.network}
+                  error={(touched.network && errors.network) as string}
                 />
                 
                 <FormField
                   field='hardCap'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Total Amount to Raise (Amount in the selected token type)'
                   placeholder='Total Amount to Raise'
                   inputFilter={numberFilter}
                   disabled={props.edit}
                   value={values.hardCap}
-                  error={errors.hardCap}
+                  error={(touched.hardCap && errors.hardCap) as string}
                 />
                 <FormField
                   field='softCap'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Minimum Amount to Raise'
                   placeholder='Minimum Amount to Raise'
                   inputFilter={numberFilter}
                   disabled={props.edit}
                   value={values.softCap}
-                  error={errors.softCap}
+                  error={(touched.softCap && errors.softCap) as string}
                 />
                 
                 <FormField
                   field='tokenPrice'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Price per Token'
                   placeholder='Price per Token'
                   inputFilter={numberFilter}
                   disabled={props.edit}
                   value={`${values.tokenPrice}`}
-                  error={errors.tokenPrice}
+                  error={(touched.tokenPrice && errors.tokenPrice) as string}
                 />
                 <DropdownField
                   field='tokenStandart'
                   setter={setFieldValue}
+                  touch={setFieldTouched}
                   options={standardOptions}
                   label='Token Standard'
                   placeholder='Token Standard'
                   disabled={props.edit}
                   value={values.tokenStandart}
-                  error={errors.tokenStandart}
+                  error={(touched.tokenStandart && errors.tokenStandart) as string}
                 />
                 
                 <FormField
                   field='minInvestment'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Minimum Investment per Investor'
                   placeholder='No. of Tokens'
                   inputFilter={numberFilter}
                   disabled={props.edit}
                   value={values.minInvestment}
-                  error={errors.minInvestment}
+                  error={(touched.minInvestment && errors.minInvestment) as string}
                 />
                 <FormField
                   field='maxInvestment'
                   setter={setFieldValue}
-                  label='MaximumInvestment per Investor'
+                  touch={setFieldTouched} 
+                  label='Maximum Investment per Investor'
                   placeholder='No. of Tokens'
                   inputFilter={numberFilter}
                   disabled={props.edit}
                   value={values.maxInvestment}
-                  error={errors.maxInvestment}
+                  error={(touched.maxInvestment && errors.maxInvestment) as string}
                 />
 
                 <Row gap="1rem">
@@ -516,33 +536,36 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit || !values.hasPresale}
                   field="presaleAlocated" 
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label="Pre-Sale Allocation"
                   placeholder='Total fundraising amount allocated for Pre-Sale'
                   inputFilter={numberFilter}
                   value={values.presaleAlocated}
-                  error={errors.presaleAlocated}
+                  error={(touched.presaleAlocated && errors.presaleAlocated) as string}
                 />
 
                 <FormField
                   disabled={props.edit || !values.hasPresale}
                   field="presaleMaxInvestment"
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label="Maximum Investment per Investor"
                   placeholder='No. of Tokens' 
                   inputFilter={numberFilter}
                   value={values.presaleMaxInvestment}
-                  error={errors.presaleMaxInvestment}
+                  error={(touched.presaleMaxInvestment && errors.presaleMaxInvestment) as string}
                 />
 
                 <FormField 
                   disabled={props.edit || !values.hasPresale}
                   field="presaleMinInvestment"
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label="Minimum Investment per Investor" 
                   placeholder='No. of Tokens' 
                   inputFilter={numberFilter}
                   value={values.presaleMinInvestment}
-                  error={errors.presaleMinInvestment}
+                  error={(touched.presaleMinInvestment && errors.presaleMinInvestment) as string}
                 />
               </FormGrid>
 
@@ -566,7 +589,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   value={values.timeframe.whitelist}
                   disabled={props.edit || !values.hasPresale}
-                  error={errors.timeframe?.whitelist as string}
+                  error={(touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string}
                 />
 
                 <DateRangeField 
@@ -577,7 +600,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.timeframe.preSale}
                   disabled={props.edit || !values.hasPresale || !values.timeframe.whitelist}
                   minDate={values.timeframe.whitelist}
-                  error={errors.timeframe?.preSale as string}
+                  error={(touched.timeframe?.preSale && (touched.timeframe && errors.timeframe)?.preSale) as string}
                 />
                 
                 <DateRangeField 
@@ -591,7 +614,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     setFieldValue('timeframe.sale', start)
                     setFieldValue('timeframe.closed', end)
                   }}
-                  error={errors.timeframe?.sale as string}
+                  error={(touched.timeframe?.sale && (touched.timeframe && errors.timeframe)?.sale) as string}
                 />
 
                 <DateRangeField
@@ -602,7 +625,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit || !values.timeframe.closed}
                   minDate={values.timeframe.closed}
                   value={values.timeframe.claim}
-                  error={errors.timeframe?.claim as string}
+                  error={(touched.timeframe?.claim && (touched.timeframe && errors.timeframe)?.claim) as string}
                 />
 
               </FormGrid>
@@ -613,43 +636,47 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 <FormField 
                   field='terms.investmentStructure'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Investment Structure'
                   placeholder='Holding Structure'
                   disabled={props.edit}
                   value={values.terms?.investmentStructure}
-                  error={errors.terms?.investmentStructure}
+                  error={(touched.terms?.investmentStructure && (touched.terms && errors.terms)?.investmentStructure) as string}
                 />
                 <FormField
-                  field='terms.dividendYield'
+                  field='terms.dividentYield'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Dividend Yield'
                   placeholder='In Percent'
                   optional
                   disabled={props.edit}
                   value={values.terms?.dividentYield}
-                  error={errors.terms?.dividentYield}
+                  error={(touched.terms?.dividentYield && (touched.terms && errors.terms)?.dividentYield) as string}
                   inputFilter={formatValue}
                 />
                 <FormField
                   field='terms.investmentPeriod'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Investment Period'
                   placeholder='In months'
                   optional
                   disabled={props.edit}
                   value={values.terms?.investmentPeriod?.toString()}
-                  error={errors.terms?.investmentPeriod}
+                  error={(touched.terms?.investmentPeriod && (touched.terms && errors.terms)?.investmentPeriod) as string}
                   inputFilter={formatValue}
                 />
                 <FormField
                   field='terms.grossIrr'
                   setter={setFieldValue}
+                  touch={setFieldTouched} 
                   label='Gross IRR (%)'
                   placeholder='In percent'
                   optional
                   disabled={props.edit}
                   value={values.terms?.grossIrr}
-                  error={errors.terms?.grossIrr}
+                  error={(touched.terms?.grossIrr && (touched.terms && errors.terms)?.grossIrr) as string}
                   inputFilter={formatValue}
                 />
 
@@ -658,36 +685,71 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   label="Distribution Frequency"
                   placeholder='Frequency of return distribution'
                   
-                  field="distributionFrequency"
+                  field="terms.distributionFrequency"
                   setter={setFieldValue}
+                  touch={setFieldTouched}
                   options={distributionFrequencyOptions}
                   optional
 
                   disabled={props.edit}
                   value={values.terms?.distributionFrequency}
-                  error={errors.terms?.distributionFrequency}
+                  error={(touched.terms?.distributionFrequency && (touched.terms && errors.terms)?.distributionFrequency) as string}
                 />
               </FormGrid>
               
               <Separator />
               
-              <AdditionalInformation social={values.social} setter={setFieldValue} values={values} errors={errors} />
+              <AdditionalInformation social={values.social} setter={setFieldValue} touch={setFieldTouched} values={values} errors={errors} touched={touched} />
               
               <Separator />
               
-              <UploadDocuments documents={values.additionalDocuments} setter={setFieldValue} errors={errors}/>
+              <UploadDocuments
+                documents={values.additionalDocuments}
+
+                setter={setFieldValue}
+                touch={setFieldTouched}
+
+                errors={errors}
+                touched={touched}
+              />
               
               <Separator />
               
-              <GalleryBlock description={values.longDescription} images={values.images} videos={values.videos}  setter={setFieldValue} errors={errors} />
+              <GalleryBlock 
+                description={values.longDescription}
+
+                images={values.images}
+                videos={values.videos}
+
+                setter={setFieldValue}
+                touch={setFieldTouched}
+
+                errors={errors}
+                touched={touched}
+              />
               
               <Separator />
 
-              <TeamMembersBlock members={values.members} setter={setFieldValue} errors={errors} />
+              <TeamMembersBlock
+                members={values.members}
+                
+                setter={setFieldValue}
+                touch={setFieldTouched}
+
+                errors={errors}
+                touched={touched}
+              />
               
               <Separator />
               
               <FAQBlock faq={values.faq} setter={setFieldValue} errors={errors} />
+              
+              <Row justifyContent='flex-end' gap="1rem" alignItems="center">
+                {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
+
+                <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
+                <FilledButton onClick={toSubmit}>Submit</FilledButton>
+              </Row>
             </FormBody>
           </>
         )}

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import { Plus } from 'react-feather'
 import { capitalize } from 'lodash'
-import { FormikErrors } from 'formik'
+import { FormikErrors, FormikTouched } from 'formik'
 
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
@@ -17,14 +17,17 @@ import { AddButton, DeleteButton } from '../../shared/styled'
 import { DropdownField } from '../../shared/fields/DropdownField'
 
 import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
-import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers'
 
 
 interface Props {
   social: SocialMediaLink[]
+
   values: InformationFormValues
   errors: FormikErrors<InformationFormValues>
+  touched: FormikTouched<InformationFormValues>
+
   setter: (field: string, value: any) => void
+  touch?: (field: string, touched: boolean) => void 
 }
 
 export const AdditionalInformation: React.FC<Props> = (props) => {
@@ -52,7 +55,6 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
   }, [props.social])
 
   const addSocialMedia = React.useCallback(() => {
-    console.log(addedSocial, addedSocialLink)
     if (!addedSocial || !addedSocialLink) {
       return 
     }
@@ -87,8 +89,9 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='Email Address'
         field="email"
         setter={props.setter} 
+        touch={props.touch}
         value={props.values.email}
-        error={props.errors.email}
+        error={(props.touched.email && props.errors.email) as string}
       />
 
       <FormField 
@@ -96,8 +99,9 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="website"
         setter={props.setter} 
+        touch={props.touch}
         value={props.values.website}
-        error={props.errors.website}
+        error={(props.touched.website && props.errors.website) as string}
       />
       
       <FormField 
@@ -105,8 +109,9 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         placeholder='URL'
         field="whitepaper"
         setter={props.setter} 
+        touch={props.touch}
         value={props.values.whitepaper}
-        error={props.errors.whitepaper}
+        error={(props.touched.whitepaper && props.errors.whitepaper) as string}
       />
 
       {props.social.map((link, idx) => (
@@ -117,7 +122,11 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
           placeholder='URL'
           field={`social[${idx}].url`}
           setter={props.setter} 
-          error={(props.errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url}
+          touch={props.touch}
+          error={
+            ((props.touched.social?.[idx] as FormikTouched<SocialMediaLink> | undefined)?.url &&
+            (props.errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url) as string
+          }
           trailing={
             <RemoveButton onClick={() => removeSocialMedia(link)}>
               <Trash />
@@ -144,6 +153,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
           placeholder='URL'
           field={''}
           setter={(field, value) => setAddedSocialLink(value)} 
+          touch={props.touch}
         />
 
 
@@ -154,7 +164,5 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
 }
 
 const RemoveButton = styled(DeleteButton)`
-  position: absolute;
 
-  right: 1rem;
 `

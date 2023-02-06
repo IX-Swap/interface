@@ -1,4 +1,4 @@
-import { InformationFormValues, OfferTokenType, SocialMediaType } from "./types"
+import { InformationFormValues, OfferTokenType } from "./types"
 
 import {
   OfferIndustry,
@@ -16,15 +16,15 @@ export const initialValues = {
   shortDescription: '',
   longDescription: '',
 
-  name: '',
-
-  companyIdNumber: '',
   title: '',
 
-  industry: undefined,
+  companyIdNumber: '',
 
   investmentStructure: '',
   issuerIdentificationNumber: '',
+
+  industry: undefined,
+  investmentType: undefined,
 
   country: '',
 

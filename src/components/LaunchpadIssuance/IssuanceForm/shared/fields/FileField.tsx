@@ -27,6 +27,7 @@ interface Props {
 
   field: string
   setter: (field: string, value: any) => void
+  touch?: (field: string, touched: boolean) => void
 }
 
 export const FileField: React.FC<Props> = (props) => {
@@ -42,11 +43,20 @@ export const FileField: React.FC<Props> = (props) => {
 
   const onFileSelect = React.useCallback((files: File[]) => {
     props.setter(props.field, { file: files[0] })
+
+    if (props.touch) {
+      props.touch(props.field, true)
+    }
+
     setValue(files[0])
   }, [])
 
   const onFileRemove = React.useCallback(() => {
     props.setter(props.field, props.value?.id ? null : undefined)
+
+    if (props.touch) {
+      props.touch(props.field, true)
+    }
     setValue(undefined)
   }, [])
 

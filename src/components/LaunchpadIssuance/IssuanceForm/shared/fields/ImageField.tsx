@@ -6,6 +6,9 @@ import { ReactComponent as ImageIcon } from 'assets/launchpad/svg/image-icon.svg
 import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
 import { useDropzone } from 'react-dropzone'
 
+import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
+import { DeleteButton } from '../styled'
+
 interface Props {
   label: string
   placeholder?: string
@@ -16,14 +19,25 @@ interface Props {
 
   field: string
   setter: (field: string, value: any) => void
+  touch: (field: string, touched: boolean) => void 
 }
 
 export const ImageField: React.FC<Props> = (props) => {
   const onFileSelect = React.useCallback((files: File[]) => {
     if (files.length === 1) {
       props.setter(props.field, { id: null, file: files[0] })
+      props.touch(props.field, true)
     }
   }, [props.image])
+
+  const onFileRemove = React.useCallback((event: React.MouseEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+
+    props.setter(props.field, undefined)
+    props.touch(props.field, true)
+  }, [props.setter, props.field, props.field])
+
   
   const input = React.useRef<HTMLInputElement>(null)
 
@@ -54,7 +68,13 @@ export const ImageField: React.FC<Props> = (props) => {
           </>
         )}
 
-        {props.image && <ImageFileCardContainer url={url} />}
+        {props.image && (
+          <ImageFileCardContainer url={url}>
+            <RemoveButton onClick={onFileRemove}>
+              <Trash />
+            </RemoveButton>
+          </ImageFileCardContainer>
+        )}
       </FieldContainer>
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
@@ -140,6 +160,8 @@ const BrowseButton = styled.button`
   }
 `
 const ImageFileCardContainer = styled.div<{ url?: string }>`
+  position: relative;
+
   height: 100%;
   width: 100%;
 
@@ -151,4 +173,10 @@ const ImageFileCardContainer = styled.div<{ url?: string }>`
     background-size: contain;
     background-position: center;
   `}
+`
+
+const RemoveButton = styled(DeleteButton)`
+  position: absolute;
+
+  right: 0;
 `

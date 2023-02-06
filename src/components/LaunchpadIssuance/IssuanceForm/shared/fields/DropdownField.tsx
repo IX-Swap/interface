@@ -27,6 +27,7 @@ interface Props<T> {
 
   field: string
   setter?: (field: string, value?: T) => void
+  touch?: (field: string, touched: boolean) => void
   onChange?: (value?: T) => void
 }
 
@@ -74,6 +75,10 @@ export function DropdownField<T>(props: Props<T>) {
 
     if (props.field && props.setter) {
       props.setter(props.field, option.value)
+    }
+    
+    if (props.touch) {
+      props.touch(props.field, true)
     }
 
     if (props.onChange) {

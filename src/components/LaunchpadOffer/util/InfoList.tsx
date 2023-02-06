@@ -14,15 +14,18 @@ interface InfoEntry {
 
 interface Props {
   title?: React.ReactNode
+
   fontSize?: string;
   lineHeight?: string
+  titleFontWeight?: string
+
   entries: InfoEntry[]
 }
 
 export const InfoList: React.FC<Props> = (props) => {
   return (
     <Container>
-      {props.title && <Title>{props.title}</Title>}
+      {props.title && <Title fontWeight={props.titleFontWeight}>{props.title}</Title>}
 
       <Separator />
 
@@ -41,9 +44,9 @@ const Container = styled.div`
   align-items: stretch;
 `
 
-const Title = styled.div`
+const Title = styled.div<{ fontWeight?: string }>`
   font-style: normal;
-  font-weight: 800;
+  font-weight: ${props => props.fontWeight ?? '800'};
   font-size: 16px;
 
   line-height: 120%;
