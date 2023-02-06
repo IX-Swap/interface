@@ -18,8 +18,8 @@ const requriedFileSchema = limitedSizeFileSchema.required('File requried')
 const countryCodes = getCodes()
 
 export const schema = yup.object().shape({
-  shortDescription: yup.string().required().min(10, 'Short Description must be longer than or equal to 10 characters'),
-  longDescription: yup.string().required().min(10, 'Description must be longer than or equal to 10 characters'),
+  shortDescription: yup.string().required('Required').min(10, 'Short Description must be longer than or equal to 10 characters'),
+  longDescription: yup.string().required('Required').min(10, 'Description must be longer than or equal to 10 characters'),
 
   title: yup.string().required('Offer name required'),
 
@@ -32,7 +32,7 @@ export const schema = yup.object().shape({
 
   tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required('Token type required'),
   tokenName: yup.string().required('Token name required'),
-  tokenTicker: yup.string().required('Token Ticker requried').min(2, 'Token symbol should at least 2 charachters'),
+  tokenTicker: yup.string().required('Token Ticker requried').min(2, 'Token symbol should at least 2 charachters').max(6, 'Token symbol should be at most 6 charachters'),
   tokenPrice: yup.string().required('Enter token price'),
   tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required('Token standart required'),
 
@@ -97,8 +97,22 @@ export const schema = yup.object().shape({
   }),
 
   faq: yup.array(yup.object().shape({
-    question: yup.string().required().min(10, 'Question should be at least 10 charachters'),
-    answer: yup.string().required().min(10, 'Answer should be at least 10 charachters')
+    question: yup.string().optional().min(10, 'Question should be at least 10 charachters')
+      .test('questionValidation', 'Question is required', function (): boolean | yup.ValidationError {
+        if (this.parent.answer && this.parent.answer.length > 0 && (!this.parent.question || this.parent.question.length === 0)) {
+          return false
+        }
+       
+        return true
+      }),
+    answer: yup.string().optional().min(10, 'Answer should be at least 10 charachters')
+      .test('answerValidation', 'Answer is required', function (): boolean | yup.ValidationError {
+        if (this.parent.question && this.parent.question.length > 0 && (!this.parent.answer || this.parent.answer.length === 0)) {
+          return false
+        }
+       
+        return true
+      })
   })),
 
   members: yup.array(yup.object().shape({
@@ -132,7 +146,10 @@ export const schema = yup.object().shape({
   gallery: yup.array(requriedFileSchema),
 
   additionalDocuments: yup.array(yup.object().shape({
-    name: yup.string().when('file', { is: undefined, then: yup.string(), otherwise: yup.string().required() }),
+    name: yup.string().optional()
+      .test('filenameValidation', 'Document name is required', function (): boolean | yup.ValidationError {
+        return !this.parent.file || (this.parent.name && this.parent.name.length > 0)
+      }),
     file: fileSchema
   })),
 
@@ -179,8 +196,22 @@ export const editSchema = yup.object().shape({
   })),
   
   faq: yup.array(yup.object().shape({
-    question: yup.string().required().min(10, 'Question should be at least 10 charachters'),
-    answer: yup.string().required().min(10, 'Answer should be at least 10 charachters')
+    question: yup.string().optional().min(10, 'Question should be at least 10 charachters')
+      .test('questionValidation', 'Question is required', function (): boolean | yup.ValidationError {
+        if (this.parent.answer && this.parent.answer.length > 0 && (!this.parent.question || this.parent.question.length === 0)) {
+          return false
+        }
+       
+        return true
+      }),
+    answer: yup.string().optional().min(10, 'Answer should be at least 10 charachters')
+      .test('answerValidation', 'Answer is required', function (): boolean | yup.ValidationError {
+        if (this.parent.question && this.parent.question.length > 0 && (!this.parent.answer || this.parent.answer.length === 0)) {
+          return false
+        }
+       
+        return true
+      })
   })),
 
   members: yup.array(yup.object().shape({

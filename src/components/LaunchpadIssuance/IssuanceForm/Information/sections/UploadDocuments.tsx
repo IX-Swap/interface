@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Plus } from 'react-feather'
-import { FieldArray, FormikErrors } from 'formik'
+import { FieldArray, FormikErrors, FormikTouched } from 'formik'
 
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
@@ -19,8 +19,12 @@ import { AdditionalDocument, InformationFormValues } from '../types'
 
 interface Props {
   documents: AdditionalDocument[]
+
   errors: FormikErrors<InformationFormValues>
+  touched: FormikTouched<InformationFormValues>
+
   setter: (field: string, value: any) => void
+  touch: (field: string, value: boolean) => void
 }
 
 export const UploadDocuments: React.FC<Props> = (props) => {
@@ -41,10 +45,13 @@ export const UploadDocuments: React.FC<Props> = (props) => {
                   placeholder='Name'
                   field={`additionalDocuments[${idx}].name`} 
                   setter={props.setter}
+                  touch={props.touch}
                   value={document.name}
                   error={
-                    ((props.errors.additionalDocuments?.length ?? 0) > idx &&
-                    (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.name) as string
+                    (
+                      props.touched.additionalDocuments?.[idx]?.name &&
+                      (props.errors.additionalDocuments?.length ?? 0) > idx &&
+                      (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.name) as string
                   }
                   trailing={documents.length > 1 && (
                     <RemoveButton onClick={handleRemove(idx)}>
@@ -60,10 +67,13 @@ export const UploadDocuments: React.FC<Props> = (props) => {
                   label={''} 
                   field={`additionalDocuments[${idx}].file`} 
                   setter={props.setter} 
+                  touch={props.touch}
                   value={document.file}
                   error={
-                    ((props.errors.additionalDocuments?.length ?? 0) > idx &&
-                    (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.file) as string
+                    (
+                      props.touched.additionalDocuments?.[idx]?.file &&
+                      (props.errors.additionalDocuments?.length ?? 0) > idx &&
+                      (props.errors.additionalDocuments?.[idx] as FormikErrors<AdditionalDocument>)?.file) as string
                   }
                 />
               </FieldContainer>
@@ -84,6 +94,8 @@ const FieldContainer = styled(Column)`
   border-radius: 6px;
 
   grid-column: span 2;
+
+  padding: 0.25rem;
 `
 
 const RemoveButton = styled(DeleteButton)`

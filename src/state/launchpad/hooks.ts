@@ -939,6 +939,7 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       members: payload.members.map(
         (member) =>
           ({
+            id: member.id, 
             name: member.name,
             role: member.title,
             about: member.description,
