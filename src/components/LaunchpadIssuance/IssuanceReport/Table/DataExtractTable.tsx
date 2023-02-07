@@ -9,7 +9,7 @@ import { useQueryParams, useSetQueryParams } from 'hooks/useParams'
 import React, { useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Box } from 'rebass'
-import { useExtractReport, useGetIssuancesReport } from 'state/issuance/hooks'
+import { useBackLink, useExtractReport, useGetIssuancesReport } from 'state/issuance/hooks'
 import { IssuanceDataExtract } from 'state/issuance/types'
 import useDraggableScroll from 'use-draggable-scroll'
 import { DataCell } from './DataCell'
@@ -46,7 +46,7 @@ export const DataExtractTable = () => {
     result: { items, totalItems, totalPages },
     statistics,
   } = data
-
+  const goBack = useBackLink(issuanceId)
   const ref = useRef(null)
   const { onMouseDown } = useDraggableScroll(ref)
   const sendExtractData = (values: ExtractFieldsForm) => {
@@ -126,13 +126,7 @@ export const DataExtractTable = () => {
         />
       </RowCenter>
       <RowCenter style={{ gap: '1.25rem' }}>
-        <OutlineButton
-          onClick={() => {
-            console.log('back')
-          }}
-          padding="0 1.5rem"
-          width="280px"
-        >
+        <OutlineButton onClick={goBack} padding="0 1.5rem" width="280px">
           Back
         </OutlineButton>
 

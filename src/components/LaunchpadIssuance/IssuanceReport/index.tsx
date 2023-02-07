@@ -1,16 +1,17 @@
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
 import { TableTitle } from 'components/LaunchpadMisc/tables'
-import React from 'react'
 import { ArrowLeft } from 'react-feather'
-import { useHistory } from 'react-router-dom'
+import { useBackLink } from 'state/issuance/hooks'
 import styled, { useTheme } from 'styled-components'
 import { IssuanceDropdown } from './IssuanceDropdown'
 import { DataExtractTable } from './Table/DataExtractTable'
 import { Tabs } from './Tabs'
+import React from 'react'
+import { useParams } from 'react-router-dom'
 
 export const IssuanceReport = () => {
-  const history = useHistory()
-  const goBack = React.useCallback(() => history.goBack(), [history])
+  const { issuanceId } = useParams<{ issuanceId: string }>()
+  const goBack = useBackLink(issuanceId)
   const theme = useTheme()
   return (
     <Body>

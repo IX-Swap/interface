@@ -1,6 +1,7 @@
 import { ExtractedFields } from 'components/LaunchpadIssuance/IssuanceReport/Table/helpers'
 import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import apiService from 'services/apiService'
 import { whitelist } from 'services/apiUrls'
 import { IssuanceDataFilter, WhitelistFilter } from 'services/types'
@@ -112,4 +113,9 @@ export const useExtractReport = () => {
   }, [])
 
   return { extract }
+}
+
+export const useBackLink = (issuanceId: string) => {
+  const history = useHistory()
+  return () => history.push(issuanceId === 'all' ? '/issuance' : `/manage-offers/${issuanceId}`)
 }
