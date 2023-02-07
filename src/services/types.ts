@@ -45,3 +45,4 @@ export enum WhiteListType {
 }
 
 export type WhitelistFilter = Partial<Record<'search' | 'type' | 'page' | 'offset', number | string>>
+export type IssuanceDataFilter = Partial<Record<'tab' | 'issuanceId' | 'page' | 'offset', number | string>>
