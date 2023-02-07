@@ -7,8 +7,8 @@ export const useOTCPairDSO = () => {
     pairId: string
   }>()
   const { data: marketData } = useOTCMarket(pairId)
-  const dsoId = marketData?.otc.dso?._id
-  const issuer = marketData?.otc.createdBy
+  const dsoId = marketData?.otc?.dso?._id
+  const issuer = marketData?.otc?.createdBy
   const { data: dso } = useDSOById(dsoId, issuer)
   return dso
 }

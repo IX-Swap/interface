@@ -3,10 +3,10 @@ import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { isEmptyString } from 'helpers/strings'
+// import {  useLocation } from 'react-router-dom'
 
 export const useMarket = (pairId?: string) => {
   const { apiService } = useServices()
-
   const getMarket = async () => {
     return await apiService.get(exchangeApiUrl.getMarket(pairId))
   }
