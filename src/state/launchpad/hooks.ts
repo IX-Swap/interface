@@ -287,7 +287,7 @@ export const useGetIssuancePlain = (params?: { showAll: string }) => {
     loader.start()
 
     return apiService
-      .get('/issuances/plain', undefined, params)
+      .get('/issuances/plain', undefined, { ...params, forPinning: 'true' })
       .then((res) => res.data as IssuancePlain[])
       .then(setItems)
       .then(loader.stop)

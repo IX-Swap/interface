@@ -1,4 +1,5 @@
 import { InvestmentStage } from 'state/launchpad/types'
+import { PaginateResponse } from 'types/pagination'
 
 export interface WhitelistWalletPayload {
   fullName: string
@@ -18,18 +19,18 @@ export interface IssuanceDataExtract {
   issuanceName: string
   name: string
   companyName: string
-  invesmentAmount: string
+  investmentAmount: string
   tokenAmount: string
   walletAddress: string
   transactionId: number
   nationality: string
   country: string
-  accredited: string
+  accredited: number
   email: string
   occupation: string
   income: string
   stage: InvestmentStage
-  dateOfBirth: string
+  age: string
   wishAmount: string
 }
 
@@ -44,6 +45,6 @@ export interface IssuanceDataStatistics {
 }
 
 export interface IssuanceDataStatisticsDto {
-  investments: IssuanceDataExtract[]
+  result: PaginateResponse<IssuanceDataExtract>
   statistics: IssuanceDataStatistics
 }

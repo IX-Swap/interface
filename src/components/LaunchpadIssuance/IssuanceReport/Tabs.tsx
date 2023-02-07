@@ -1,30 +1,29 @@
+import { useQueryParams, useSetQueryParams } from 'hooks/useParams'
 import React, { useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { tabs } from './constants'
 import { IssuanceReportTab } from './Table/types'
 
 export const Tabs = () => {
-  const queryParams = useLocation<{ tab: IssuanceReportTab }>()
-  const params = new URLSearchParams(queryParams.search)
-  const activeTab = params.get('tab')
-  const history = useHistory()
+  const {
+    objectParams: { tab: activeTab, page: activePage },
+  } = useQueryParams<{ tab: IssuanceReportTab; page: number }>(['tab', 'page'])
+  const setQueryParams = useSetQueryParams<{ tab: IssuanceReportTab; page: string }>(['tab', 'page'])
+
+  useEffect(() => {
+    if (activeTab && (activePage === null || isNaN(activePage))) {
+      setQueryParams({ tab: activeTab, page: '1' })
+    }
+  }, [activePage, activeTab])
 
   useEffect(() => {
     if (!activeTab || !tabs.find((tab) => tab.type === activeTab)) {
-      setQueryParams({ tab: IssuanceReportTab.REGISTRATIONS })
+      setQueryParams({ tab: IssuanceReportTab.REGISTRATIONS, page: activePage ? activePage.toString() : '1' })
     }
-  }, [activeTab])
-
-  const setQueryParams = (query: { tab: string }) => {
-    history.push({
-      ...params,
-      search: `?${new URLSearchParams(query).toString()}`,
-    })
-  }
+  }, [activeTab, activePage])
 
   function handleClick(tab: IssuanceReportTab) {
-    setQueryParams({ tab })
+    setQueryParams({ tab, page: '1' })
   }
   return (
     <StyledTabs>

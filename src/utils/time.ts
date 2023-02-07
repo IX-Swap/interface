@@ -80,9 +80,3 @@ export function getDateShortTime(dateUnix: number) {
 export function getDateFullTime(dateUnix: number) {
   return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
 }
-
-export function calculateAge(dob: string): number {
-  const today = dayjs()
-  const birthdate = dayjs(dob)
-  return today.diff(birthdate, 'year')
-}
