@@ -54,6 +54,7 @@ import {
   updateUserSlippageTolerance,
   getMe,
 } from './actions'
+import { ROLES } from 'constants/roles'
 
 function serializeToken(token: Token): SerializedToken {
   // TO DO - refactor
@@ -606,4 +607,30 @@ export function useGetMe() {
     }
   }, [dispatch])
   return callback
+}
+
+export const useRole = () => {
+  const { me } = useUserState()
+  const role = me?.role
+  return useMemo(
+    () => ({
+      isAdmin: role === ROLES.ADMIN,
+      isOperator: role === ROLES.OPERATOR,
+      isTokenManager: role === ROLES.TOKEN_MANAGER,
+      isOfferManager: role === ROLES.OFFER_MANAGER,
+      isUser: role === ROLES.USER,
+    }),
+    [role]
+  )
+}
+
+export const useKyc = () => {
+  const { kyc } = useKYCState()
+  return {
+    isCorporate: Boolean(kyc?.corporate),
+    isIndividual: Boolean(kyc?.individual),
+    isApproved: kyc?.status === KYCStatuses.APPROVED,
+    isRejected: kyc?.status === KYCStatuses.REJECTED,
+    isChangeRequested: kyc?.status === KYCStatuses.CHANGES_REQUESTED,
+  }
 }

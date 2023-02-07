@@ -2,7 +2,7 @@ import { IssuanceDataStatistics } from 'state/issuance/types'
 import { formatCurrency } from 'utils/money'
 import { JoinedCell, OverflowRaw, OverflowRow, SpreadColumn } from './styled'
 import React from 'react'
-import { useFieldsByRole } from './helpers'
+import { useRole } from 'state/user/hooks'
 
 export interface StatisticsProps {
   statistics: IssuanceDataStatistics
@@ -10,7 +10,7 @@ export interface StatisticsProps {
 }
 
 export const Statistics = ({ statistics, count }: StatisticsProps) => {
-  const { isAdmin } = useFieldsByRole()
+  const { isAdmin } = useRole()
   if (!statistics) return null
 
   return (
