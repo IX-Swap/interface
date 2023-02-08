@@ -36,6 +36,15 @@ export const moneyNumberFormat: NumberFormatProps<any> = {
   allowNegative: false
 }
 
+export const quantityNumberFormat: NumberFormatProps<any> = {
+  decimalScale: 18,
+  inputMode: 'numeric',
+  thousandSeparator: true,
+  allowEmptyFormatting: true,
+  isNumericString: true,
+  allowNegative: false
+}
+
 export const leadingZerosNumberFormat: NumberFormatProps<any> = {
   ...positiveNumberFormat,
   isNumericString: true,

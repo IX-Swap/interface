@@ -4,7 +4,11 @@ import { Grid, InputAdornment } from '@mui/material'
 import { numericValueExtractor } from 'helpers/forms'
 import { TypedField } from 'components/form/TypedField'
 import { useStyles } from 'app/pages/invest/components/PlaceOrderFields/PlaceOrderFields.style'
-import { moneyNumberFormat, numberFormat } from 'config/numberFormat'
+import {
+  moneyNumberFormat,
+  // numberFormat,
+  quantityNumberFormat
+} from 'config/numberFormat'
 import { NumericInput } from 'components/form/NumericInput'
 import { PlaceOrderSlider } from 'app/pages/invest/components/PlaceOrderSlider/PlaceOrderSlider'
 
@@ -60,7 +64,8 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           label={'Quantity'}
           control={control}
           variant='outlined'
-          numberFormat={numberFormat}
+          //   numberFormat={numberFormat}
+          numberFormat={quantityNumberFormat}
           defaultValue={''}
           valueExtractor={numericValueExtractor}
           onChange={value => {
