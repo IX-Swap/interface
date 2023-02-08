@@ -21,12 +21,21 @@ interface Props {
   error?: string
 
   field: string
-  setter: (field: string, value: string) => void
+  setter: (field: string, value: string, shouldValidate?: boolean) => void
+  touch?: (field: string, touched: boolean) => void 
 
   inputFilter?: (value?: string) => string
 }
 
 export const FormField: React.FC<Props> = (props) => {
+  const onChange = React.useCallback((value: string) => {
+    props.setter(props.field, value)
+
+    if (props.touch) {
+      props.touch(props.field, true)
+    }
+  }, [])
+  
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span} className={props.className}>
       <IssuanceTextField 
@@ -38,7 +47,7 @@ export const FormField: React.FC<Props> = (props) => {
         trailing={props.trailing}
         borderless={props.borderless}
         placeholder={props.placeholder}
-        onChange={value => props.setter(props.field, value)}
+        onChange={onChange}
         inputFilter={props.inputFilter} 
       />
     </FormFieldWrapper>

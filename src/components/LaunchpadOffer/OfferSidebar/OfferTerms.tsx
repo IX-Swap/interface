@@ -15,7 +15,7 @@ export const OfferTerms: React.FC<Props> = (props) => {
     { label: 'Investment Period', value: props.terms.investmentPeriod ?? 'N/A' },
     { label: 'Gross IRR (%)', value: props.terms.grossIrr ?? 'N/A' },
     { label: 'Distribution Frequency', value: props.terms.distributionFrequency ?? 'N/A' },
-  ], [])
+  ], [props.terms.investmentPeriod, props.terms.distributionFrequency, props.terms.dividentYield, props.terms.grossIrr, props.terms.investmentStructure])
 
   return <InfoList title="Offering Terms" entries={terms} />
 }

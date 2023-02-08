@@ -6,7 +6,7 @@ import { ITEM_ROWS } from '../utils/constants'
 interface Props {
   totalItems: number
   totalPages: number
-  currentPage: number
+  currentPage: number | string
   pageSize: number
   smallMargin?: boolean
   enableChangePageSize?: boolean
@@ -29,11 +29,11 @@ export const IssuancePagination: React.FC<Props> = ({
   const container = React.useRef<HTMLDivElement>(null)
 
   const [showDropdown, setShowDropdown] = React.useState(false)
-
+  const page = Number(currentPage)
   const paginationSizes = React.useMemo(() => ITEM_ROWS, [])
   const pageCountLabel = React.useMemo(() => {
-    const start = (currentPage - 1) * pageSize + 1
-    const end = currentPage * pageSize < totalItems ? currentPage * pageSize : totalItems
+    const start = (page - 1) * pageSize + 1
+    const end = page * pageSize < totalItems ? page * pageSize : totalItems
 
     return `${start} - ${end} of ${totalItems}`
   }, [currentPage, pageSize, totalItems])
@@ -78,11 +78,11 @@ export const IssuancePagination: React.FC<Props> = ({
 
       <PageCount>{pageCountLabel}</PageCount>
 
-      <PageButton onClick={() => onChangePage(currentPage - 1)} disabled={currentPage <= 1}>
+      <PageButton onClick={() => onChangePage(page - 1)} disabled={page <= 1}>
         <ChevronLeft />
       </PageButton>
 
-      <PageButton onClick={() => onChangePage(currentPage + 1)} disabled={currentPage >= totalPages}>
+      <PageButton onClick={() => onChangePage(page + 1)} disabled={page >= totalPages}>
         <ChevronRight />
       </PageButton>
     </PaginationRow>

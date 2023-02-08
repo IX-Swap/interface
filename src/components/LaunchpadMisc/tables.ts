@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 import { IssuanceFilter } from '../LaunchpadIssuance/types'
 
@@ -20,72 +20,60 @@ export const TableTitle = styled.div`
   width: 100%;
   max-width: 1180px;
 
-  font-family: ${props => props.theme.launchpad.font};
+  font-family: ${(props) => props.theme.launchpad.font};
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 export const IssuanceTable = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
-
   width: 100%;
   max-width: ${props => props.maxWidth || "1180px"};
 
   margin: auto;
-
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-
   > :nth-child(even) {
-    background: ${props => props.theme.launchpad.colors.foreground};
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 `
 
 export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   display: grid;
-
   grid-template-rows: 60px;
-
-  ${props => props.tab === IssuanceFilter.pending && `
+  ${(props) =>
+    props.tab === IssuanceFilter.pending &&
+    `
     grid-template-columns: 4fr repeat(3, 2fr);
   `}
-  
-  ${props => props.tab !== IssuanceFilter.pending && `
+  ${(props) =>
+    props.tab !== IssuanceFilter.pending &&
+    `
     grid-template-columns: 1.5fr repeat(6,1fr) 1.5fr;
   `}
-
-  place-content: center start ;
+  place-content: center start;
   align-items: center;
-
-  gap: ${props => props.tab === IssuanceFilter.pending ? '2rem' : '1rem'};
-
+  gap: ${(props) => (props.tab === IssuanceFilter.pending ? '2rem' : '1rem')};
   height: 65px;
   width: 100%;
-
   padding: 0.25rem 1rem;
-
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-
   line-height: 1.5rem;
   letter-spacing: -0.01em;
-  
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-export const IssuanceRow = styled(TableHeader) <{ tab: IssuanceFilter }>`
-
-  color: ${props => props.theme.launchpad.colors.text.title};
-
+export const IssuanceRow = styled(TableHeader)<{ tab: IssuanceFilter }>`
+  color: ${(props) => props.theme.launchpad.colors.text.title};
   opacity: 0.8;
 `
 
 export const Raw = styled.div`
-  font-family:  ${props => props.theme.launchpad.font};
-
+  font-family: ${(props) => props.theme.launchpad.font};
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -98,24 +86,20 @@ export const DefaultRaw = styled.div`
   font-size: 14px;
   line-height: 1.25rem;
   letter-spacing: -0.01em;
-
   opacity: 0.8;
-
-  font-family:  ${props => props.theme.launchpad.font};
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
+  font-family: ${(props) => props.theme.launchpad.font};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 export const CountRow = styled.div`
   opacity: 0.8;
-  font-family:  ${props => props.theme.launchpad.font};
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt}
+  font-family: ${(props) => props.theme.launchpad.font};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 export const Title = styled.div`
   cursor: pointer;
   display: flex;
   flex-flow: row nowrap;
-  
-  font-family:  ${props => props.theme.launchpad.font};
+  font-family: ${(props) => props.theme.launchpad.font};
 `

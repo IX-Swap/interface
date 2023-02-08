@@ -18013,6 +18013,11 @@ use-count-up@^2.2.5:
   dependencies:
     use-elapsed-time "^2.1.6"
 
+use-draggable-scroll@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/use-draggable-scroll/-/use-draggable-scroll-0.1.0.tgz#ca7967eeec9d6a53f965b84f9c295c214aa43ed7"
+  integrity sha512-mX6nT3cUqOTtA+8QUH9HfdKtzI6Oquj9QIB0wALWZYmWogNQ746MaUcmqKOKCIlt2UH6egxhSKNPiSlfEqmKhA==
+
 use-elapsed-time@^2.1.6:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/use-elapsed-time/-/use-elapsed-time-2.1.8.tgz#3c830ae730e2bc204f2294b66be15580f0016ea5"

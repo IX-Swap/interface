@@ -161,19 +161,21 @@ type GeneralInfoProps = Partial<Pick<Offer, GeneralInfoFields>>
 export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
   const formatedValue = useFormatOfferValue()
   
-  const minTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.minInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [])
-  const maxTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.maxInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [])
+  const minTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.minInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [props.minInvestment, props.tokenPrice])
+  const maxTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.maxInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [props.maxInvestment, props.tokenPrice])
 
-  const offerInfo = React.useMemo(() => [
-    { label: 'Issuer', value: props.issuerName || 'N/A' },
-    { label: 'Country', value: props.country || 'N/A' },
-    { label: 'Investment Type', value: props.investmentType ?? 'N/A' },
-    { label: 'Token Price', value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}` },
-    { label: 'Max. Investment Size', value: `${props.investingTokenSymbol} ${formatedValue(props.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${props.tokenSymbol}` },
-    { label: 'Min. Investment Size', value: `${props.investingTokenSymbol}  ${formatedValue(props.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${props.tokenSymbol}` },
-  ], [minTokenInvestment, maxTokenInvestment])
-  
-  return <InfoList entries={offerInfo} />
+  return (
+    <InfoList 
+      entries={[
+        { label: 'Issuer', value: props.issuerName || 'N/A' },
+        { label: 'Country', value: props.country || 'N/A' },
+        { label: 'Investment Type', value: props.investmentType ?? 'N/A' },
+        { label: 'Token Price', value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}` },
+        { label: 'Max. Investment Size', value: `${props.investingTokenSymbol} ${formatedValue(props.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${props.tokenSymbol}` },
+        { label: 'Min. Investment Size', value: `${props.investingTokenSymbol}  ${formatedValue(props.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${props.tokenSymbol}` },
+      ]} 
+    />
+  )
 }
 
 const Container = styled.div`

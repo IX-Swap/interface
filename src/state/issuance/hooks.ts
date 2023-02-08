@@ -1,12 +1,16 @@
-import { useCallback } from 'react'
+import { ExtractedFields } from 'components/LaunchpadIssuance/IssuanceReport/Table/helpers'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import apiService from 'services/apiService'
 import { whitelist } from 'services/apiUrls'
-import { WhitelistFilter } from 'services/types'
+import { IssuanceDataFilter, WhitelistFilter } from 'services/types'
 import { AppDispatch } from 'state'
+import { useLoader } from 'state/launchpad/hooks'
 import { PaginateResponse } from 'types/pagination'
 import { deleteWhitelistedWallet, getWhitelistedWallets, saveWhitelistedWallet } from './actions'
-import { WhitelistWallet, WhitelistWalletPayload } from './types'
+import { emptyIssuanceDataStatistics } from './constants'
+import { IssuanceDataStatisticsDto, WhitelistWallet, WhitelistWalletPayload } from './types'
 
 export interface UseDeleteWhitelistedArgs {
   onSuccess?: () => void
@@ -56,4 +60,62 @@ export const useDeleteWhitelisted = ({ onSuccess }: UseDeleteWhitelistedArgs) =>
       dispatch(deleteWhitelistedWallet.rejected({ errorMessage: (e as { message: string }).message }))
     }
   }, [])
+}
+
+export const useGetIssuancesReport = ({ page = '1', tab = '', offset = '11', issuanceId = '' }: IssuanceDataFilter) => {
+  const loader = useLoader()
+  const populateData = (data: IssuanceDataStatisticsDto) => {
+    setData(data)
+  }
+  const [data, setData] = React.useState<IssuanceDataStatisticsDto>(emptyIssuanceDataStatistics)
+  const load = React.useCallback(() => {
+    loader.start()
+    return apiService
+      .get(`issuances/report`, undefined, { page: isNaN(Number(page)) ? '1' : page, tab, offset, issuanceId })
+      .then((res) => res.data as IssuanceDataStatisticsDto)
+      .then(populateData)
+      .then(loader.stop)
+  }, [issuanceId, offset, page, tab])
+
+  useEffect(() => {
+    load()
+  }, [issuanceId, page, offset, tab])
+
+  return { data, load, loading: loader.isLoading }
+}
+
+interface UseExtractReportArgs {
+  fields: ExtractedFields
+  tab: string
+  issuanceId: string
+}
+
+export const useExtractReport = () => {
+  const loader = useLoader()
+
+  const saveCsv = (csvData: any, issuanceId: string) => {
+    const blob = new Blob([csvData], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `issuance-${issuanceId}-data.csv`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+  const extract = React.useCallback(({ fields, tab, issuanceId }: UseExtractReportArgs) => {
+    loader.start()
+    return apiService
+      .post(`issuances/extract-report`, { fields, tab, issuanceId })
+      .then((res) => res.data as any)
+      .then((data) => saveCsv(data, issuanceId))
+      .then(loader.stop)
+  }, [])
+
+  return { extract }
+}
+
+export const useBackLink = (issuanceId: string) => {
+  const history = useHistory()
+  return () => history.push(issuanceId === 'all' ? '/issuance' : `/manage-offers/${issuanceId}`)
 }
