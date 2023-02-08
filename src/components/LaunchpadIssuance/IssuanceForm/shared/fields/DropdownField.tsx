@@ -71,7 +71,9 @@ export function DropdownField<T>(props: Props<T>) {
       if (props.disabled) {
         return
       }
-
+      if (props.touch) {
+        props.touch(props.field, true)
+      }
       setSelectedValue(option)
       setOptionSearch(option.label)
       setSearchActive(false)
@@ -79,11 +81,6 @@ export function DropdownField<T>(props: Props<T>) {
       if (props.field && props.setter) {
         props.setter(props.field, option.value)
       }
-
-      if (props.touch) {
-        props.touch(props.field, true)
-      }
-
       if (props.onChange) {
         props.onChange(option.value)
       }
