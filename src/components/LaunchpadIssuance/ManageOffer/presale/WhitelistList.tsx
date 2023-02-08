@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { Check, X, MoreHorizontal } from 'react-feather'
@@ -9,8 +9,8 @@ import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw } from 'compon
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
 import { formatDates } from '../utils'
-import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
-import { LaunchpadPagination } from '../common/pagination'
+import { BaseCheckbox, Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
+import { Pagination } from '../common/Pagination'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 
@@ -25,9 +25,11 @@ interface Props {
   startLoading: () => any;
   stopLoading: () => any;
   isLoading: boolean;
+  pageSize: number;
+  setPageSize: (page: number) => void;
 }
 
-export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, setOrder, page, setPage, startLoading, stopLoading, isLoading }: Props) => {
+export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, setOrder, page, setPage, startLoading, stopLoading, isLoading, pageSize, setPageSize }: Props) => {
   const { totalItems, totalPages, items } = data;
   const theme = useTheme()
   const manageWhitelists = useManagePresaleWhitelists();
@@ -63,11 +65,17 @@ export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, se
     setPage(1)
   }, [order]);
 
-  const onSelectAll = () => {
+  const onSelectAll = useCallback(() => {
     const ids = items.map(i => i.id);
-    setSelected(ids);
-  };
-  const onToggleOne = (id: number, shouldAdd: boolean) => {
+    if (ids.length === selected.length) {
+      setSelected([]);
+    } else {
+      setSelected(ids);
+    }
+  }, [items, selected]);
+
+  const onToggleOne = useCallback((id: number) => {
+    const shouldAdd = !selected.includes(id);
     const res = [...selected];
     if (shouldAdd) {
       res.push(id);
@@ -78,19 +86,16 @@ export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, se
       }
     }
     setSelected([...new Set(res)]);
-  }
+  }, [selected]);
 
   const onExtractData = () => {
     // todo redirect to extract page
     refreshWhitelists();
   }
-  // todo fix
-  const getIsSelected = (id: number) => {
+  const getIsSelected = useCallback((id: number) => {
     const isSelected = selected.includes(id);
-    console.log('avocado', { id, selected, isSelected });
     return isSelected;
-  };
-  // console.log('avocado', data);
+  }, [selected]);
 
   // todo confirmations
   // todo empty state
@@ -134,14 +139,15 @@ export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, se
               <Raw>{item.name || '<Name Uknown>'}</Raw>
               <Raw>{item.amount.toLocaleString()}</Raw>
               <Raw>{formatDates(item.createdAt)}</Raw>
-
-              <Checkbox checked={getIsSelected(item.id)} onChange={(val) => onToggleOne(item.id, val)} />
+              <CheckBoxContainer>
+                <BaseCheckbox state={getIsSelected(item.id)} toggle={() => onToggleOne(item.id)} />
+              </CheckBoxContainer>
             </IssuanceRow>
           ))}
 
         </IssuanceTable>
       )}
-      <LaunchpadPagination totalItems={totalItems} totalPages={totalPages} setPage={setPage} page={page} />
+      <Pagination totalItems={totalItems} totalPages={totalPages} setPage={setPage} page={page} pageSize={pageSize} setPageSize={setPageSize} />
     </Container>
   )
 }
@@ -206,4 +212,8 @@ const SelectAll = styled.div`
   letter-spacing: -0.01em;
   color: #6666FF;
   cursor: pointer;
+  text-align: right;
+`;
+const CheckBoxContainer = styled.div`
+  text-align: right;
 `;

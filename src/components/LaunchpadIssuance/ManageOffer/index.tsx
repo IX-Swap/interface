@@ -1,26 +1,20 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { GridItem, GridContainer } from 'components/Grid'
-import { OfferPresaleStatistics, OfferPresaleWhitelist, OfferStatus } from 'state/launchpad/types'
+import { GridItem } from 'components/Grid'
+import { OfferStatus } from 'state/launchpad/types'
 import { OfferStatistics } from './Statistics'
-import { useGetManagedOffer, useGetManagedOfferPresaleStatistics, useGetManagedOfferPresaleWhitelists } from 'state/launchpad/hooks'
+import { useGetManagedOffer } from 'state/launchpad/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OfferStages } from './Stages'
 import { PresaleBlock } from './presale'
+import { HeaderButtons } from './HeaderButtons'
+import { OFFER_STATUSES } from '../utils/constants'
 
-// todo 
 interface ManagedOfferPageParams {
   offerId: string;
-}
-interface PresaleData {
-  statistics: OfferPresaleStatistics;
-  items: OfferPresaleWhitelist[];
-  hasMore: boolean;
-  totalPages: number;
-  totalItems: number;
 }
 
 export const ManageOffer = () => {
@@ -30,8 +24,7 @@ export const ManageOffer = () => {
 
   const params = useParams<ManagedOfferPageParams>()
   const { loading, data: offer } = useGetManagedOffer(params.offerId);
-  const { usersClaimed, issuerClaimed, status, hasPresale } = offer || {};
-
+  const { usersClaimed, issuerClaimed, status } = offer || {};
 
   const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status]); // todo
   const isClaim = useMemo(() => status === OfferStatus.claim, [status]);
@@ -55,7 +48,9 @@ export const ManageOffer = () => {
   if (!offer) {
     return <Centered>Not found</Centered>
   }
-
+  if (!Object.keys(OFFER_STATUSES).includes(offer.status as any)) {
+    return <Centered>Offer not started</Centered>
+  }
   // todo fix all console errors
   return (
     <Wrapper>
@@ -79,14 +74,7 @@ export const ManageOffer = () => {
         </HeaderItem>
       </Header>
 
-      <Header>
-        <HeaderItem>
-          btns
-        </HeaderItem>
-        <HeaderItem>
-          btns
-        </HeaderItem>
-      </Header>
+      <HeaderButtons offer={offer} />
 
       <CustomGridContainer>
         <StatisticsBoxItem>
@@ -98,7 +86,7 @@ export const ManageOffer = () => {
       </CustomGridContainer>
 
       {showWhitelisting && (
-        <PresaleBlock offer={offer} />
+        <PresaleBlock offerId={offer.id} />
       )}
     </Wrapper>
   )

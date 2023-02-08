@@ -386,6 +386,7 @@ export interface ManagedOffer extends Offer {
   preSaleInvestment: number;
   saleInvestment: number;
   totalInvestment: number;
+  issuanceId: number;
 }
 
 export interface OfferPresaleStatistics {

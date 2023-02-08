@@ -4,11 +4,25 @@ import { Check, X } from 'react-feather'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { useApproveRandomPresaleWhitelists, useManagePresaleWhitelists } from 'state/launchpad/hooks'
 import { IssuanceTextField } from '../../utils/TextField'
+import { AreYouSureModal } from 'components/AreYouSureModal'
 
 interface Props {
   offerId: string;
   totalItems: number;
   refreshWhitelists: () => void;
+}
+interface ConfirmProps {
+  isOpen: boolean;
+  setOpen: (foo: boolean) => void;
+  onAccept: () => void;
+}
+
+export const ConfirmModal = ({ isOpen, setOpen, onAccept }: ConfirmProps) => {
+  const onAcceptWithClose = () => {
+    onAccept();
+    setOpen(false);
+  }
+  return <AreYouSureModal isOpen={isOpen} onDecline={() => { setOpen(false) }} onAccept={onAcceptWithClose} />;
 }
 
 export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }: Props) => {
@@ -17,12 +31,16 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
   const manageWhitelists = useManagePresaleWhitelists();
   const [count, setCount] = useState('');
 
+  const [openApproveAll, setOpenApproveAll] = useState(false);
+  const [openRejectAll, setOpenRejectAll] = useState(false);
+  const [openApproveRandom, setOpenApproveRandom] = useState(false);
+
   const refresh = () => {
     setCount('');
     refreshWhitelists();
   }
 
-  const error = useMemo(() => {
+  const randomError = useMemo(() => {
     if (approveRandom.error) {
       return approveRandom.error;
     }
@@ -34,7 +52,8 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
   const isLoading = useMemo(() => {
     return approveRandom.isLoading || manageWhitelists.isLoading;
   }, [approveRandom.isLoading, manageWhitelists.isLoading])
-  const disabledRandom = !count || !totalItems || !!error || !!isLoading;
+  const disabledRandom = !count || !totalItems || !!randomError || !!isLoading;
+  const disabledAll = !totalItems || manageWhitelists.isLoading;
 
   const integerNumberFilter = useCallback((value?: string) => {
     if (!value) {
@@ -64,13 +83,22 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
       refresh();
     });
   }
+  const onClickManage = (disabled: boolean, setMethod: (foo: boolean) => void) => {
+    if (!disabled) {
+      setMethod(true);
+    }
+  }
+
+  // todo check if manageWhitelists.error should be shown this way
   if (isLoading) {
     return <></>;
   }
-  // todo confirmations
-  // todo show error for all 
   return (
     <Container>
+      <ConfirmModal isOpen={openApproveAll} setOpen={setOpenApproveAll} onAccept={onApproveAll} />
+      <ConfirmModal isOpen={openRejectAll} setOpen={setOpenRejectAll} onAccept={onRejectAll} />
+      <ConfirmModal isOpen={openApproveRandom} setOpen={setOpenApproveRandom} onAccept={onApproveRandom} />
+
       <Title>Approve Registration</Title>
       <GridContainer>
         <GridItem>
@@ -81,29 +109,31 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
               placeholder='Approve randomly'
               inputFilter={integerNumberFilter}
               disabled={false}
-              error={error}
+              error={randomError}
             />
-            <EndAdornment disabled={disabledRandom} onClick={onApproveRandom}>Approve</EndAdornment>
+            <EndAdornment disabled={disabledRandom} onClick={() => onClickManage(disabledRandom, setOpenApproveRandom)}>Approve</EndAdornment>
           </FieldContainer>
         </GridItem>
         <GridItem>
-          <OutlineButton color={theme.launchpad.colors.success} width="165px" onClick={onApproveAll}>
-            <ButtonLabel disabled={!totalItems || manageWhitelists.isLoading}>Approve All</ButtonLabel>
+          <OutlineButton color={theme.launchpad.colors.success} width="165px" onClick={() => onClickManage(disabledAll, setOpenApproveAll)}>
+            <ButtonLabel disabled={disabledAll}>Approve All</ButtonLabel>
             <Check size={13} />
           </OutlineButton>
         </GridItem>
         <GridItem>
-          <OutlineButton color={theme.launchpad.colors.error} width="165px" onClick={onRejectAll}>
-            <ButtonLabel disabled={!totalItems || manageWhitelists.isLoading}>Reject All</ButtonLabel>
+          <OutlineButton color={theme.launchpad.colors.error} width="165px" onClick={() => onClickManage(disabledAll, setOpenRejectAll)}>
+            <ButtonLabel disabled={disabledAll}>Reject All</ButtonLabel>
             <X size={13} />
           </OutlineButton>
         </GridItem>
+        {manageWhitelists.error && (
+          <ErrorText>{manageWhitelists.error}</ErrorText>
+        )}
       </GridContainer>
     </Container>
   )
 }
 
-// todo colors
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -113,8 +143,9 @@ const GridContainer = styled.div`
   grid-template-columns: auto 155px 155px; 
   grid-template-rows: auto; 
   grid-template-areas:
-    "row1 row2 row3";
-  gap: 20px 20px; 
+    "row1 row2 row3"
+    "error error error";
+  gap: 0 20px; 
 `;
 const GridItem = styled.div`
   display: grid;  
@@ -125,7 +156,7 @@ const Title = styled.div`
   font-size: 16px;
   line-height: 120%;
   letter-spacing: -0.03em;
-  color: #292933;
+  color: ${props => props.theme.launchpad.colors.text.title};
   margin-bottom: 17px;
 `;
 const ButtonLabel = styled.span<{ disabled: boolean }>`
@@ -147,6 +178,15 @@ const EndAdornment = styled.div<{ disabled: boolean }>`
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.02em;
-  color: #6666FF;
+  color: ${props => props.theme.launchpad.colors.primary};
   opacity: ${props => props.disabled ? 0.5 : 1};
 `;
+const ErrorText = styled.div`
+  color: ${props => props.theme.launchpad.colors.error};
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  text-align: right;
+  grid-area: error;
+`

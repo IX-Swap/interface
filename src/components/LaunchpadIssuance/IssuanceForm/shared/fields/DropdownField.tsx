@@ -28,6 +28,8 @@ interface Props<T> {
   field: string
   setter?: (field: string, value?: T) => void
   onChange?: (value?: T) => void
+  wrapperStyle?: React.CSSProperties
+  containerStyle?: React.CSSProperties
 }
 
 export function DropdownField<T>(props: Props<T>) {
@@ -82,12 +84,12 @@ export function DropdownField<T>(props: Props<T>) {
   }, [props.disabled, props.onChange, props.setter])
 
   const updateSearch = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setOptionSearch(event.target.value) 
+    setOptionSearch(event.target.value)
     setSearchActive(true)
     setShowDropdown(true)
 
     setSelectedValue(undefined)
-    
+
     if (props.field && props.setter) {
       props.setter(props.field, undefined)
     }
@@ -96,7 +98,7 @@ export function DropdownField<T>(props: Props<T>) {
       props.onChange(undefined)
     }
   }, [props.setter, props.onChange])
-  
+
   React.useEffect(() => {
     function handleClickOutside(event: Event) {
       if (!container.current?.contains(event.target as Node | null)) {
@@ -114,8 +116,8 @@ export function DropdownField<T>(props: Props<T>) {
   }, [showDropdown, container])
 
   return (
-    <FormFieldWrapper gap="0.5rem" span={props.span}>
-      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled}>
+    <FormFieldWrapper gap="0.5rem" span={props.span} style={props.wrapperStyle}>
+      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled} style={props.containerStyle}>
         <FieldLabel>
           {props.label}
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}
@@ -140,7 +142,7 @@ export function DropdownField<T>(props: Props<T>) {
             ))}
           </FieldOptionList>
         )}
-        
+
         <FieldIcon isOpen={showDropdown}>
           <ChevronDown fill={theme.launchpad.colors.text.bodyAlt} size="18" />
         </FieldIcon>
@@ -183,7 +185,7 @@ const FieldIcon = styled.div<{ isOpen: boolean }>`
 
   > svg {
     transition: transofrm 0.4s;
-    ${props => props.isOpen && 'transform: rotate(180deg);' };
+    ${props => props.isOpen && 'transform: rotate(180deg);'};
   }
 `
 

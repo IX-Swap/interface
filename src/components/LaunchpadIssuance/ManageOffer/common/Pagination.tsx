@@ -1,30 +1,22 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { useHistory } from 'react-router-dom'
-import { Check, X, MoreHorizontal, ChevronDown, ChevronLeft, ChevronRight } from 'react-feather'
-import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { useManagePresaleWhitelists } from 'state/launchpad/hooks'
-import { PresaleData, PresaleOrderConfig } from 'state/launchpad/types'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
-import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
-import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
-import { formatDates } from '../utils'
-import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
-import { ITEM_ROWS, OFFER_STATUSES } from '../../utils/constants'
+import { ChevronDown, ChevronLeft, ChevronRight } from 'react-feather'
+import { ITEM_ROWS } from '../../utils/constants'
 
 interface Props {
   totalItems: number;
   totalPages: number;
   page: number;
   setPage: (page: number) => void;
+  pageSize: number;
+  setPageSize: (page: number) => void;
 }
 
-export const LaunchpadPagination = ({ totalItems, totalPages, setPage, page }: Props) => {
+export const Pagination = ({ totalItems, totalPages, setPage, page, pageSize, setPageSize }: Props) => {
   const theme = useTheme()
   const container = React.useRef<HTMLDivElement>(null)
 
   const [showDropdown, setShowDropdown] = useState(false)
-  const [pageSize, setPageSize] = useState(10)
 
   const paginationSizes = useMemo(() => ITEM_ROWS, [])
 

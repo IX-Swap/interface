@@ -31,8 +31,8 @@ const DateBlock = (item: IDateItem) => {
 
 export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
   const theme = useTheme();
-  const { timeframe } = offer as any; // todo fix
-  // todo tooltip text
+  const { timeframe } = offer;
+  // todo show Edit for admin
   return (
     <Container>
       <MainTitleBlock>

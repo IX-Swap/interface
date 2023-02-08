@@ -11,15 +11,11 @@ import { OfferWhitelistInfo } from './WhitelistInfo'
 import { OfferWhitelistApprove } from './WhitelistApprove'
 import { OfferWhitelistList } from './WhitelistList'
 
-// todo 
 interface Props {
-  offer: Offer;
+  offerId: string;
 }
 
-export const PresaleBlock = ({ offer }: Props) => {
-  const theme = useTheme()
-  const { id } = offer || {};
-
+export const PresaleBlock = ({ offerId }: Props) => {
   const getStatistics = useGetManagedOfferPresaleStatistics();
   const getWhitelists = useGetManagedOfferPresaleWhitelists();
 
@@ -27,37 +23,34 @@ export const PresaleBlock = ({ offer }: Props) => {
   const [statistics, setStatistics] = useState<OfferPresaleStatistics>();
 
   const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(8);
   const [order, setOrder] = useState<PresaleOrderConfig>({});
   const [isLoading, setLoading] = useState<boolean>(false);
   const startLoading = () => setLoading(true);
   const stopLoading = () => setLoading(false);
 
-  const refreshWhitelists = useCallback((size?: number) => {
+  const refreshWhitelists = useCallback(() => {
     startLoading();
-    getWhitelists(id, page, order, size).then((res: PresaleData) => {
+    getWhitelists(offerId, page, order, pageSize).then((res: PresaleData) => {
       setData(res);
       stopLoading();
     });
-  }, [id, page, order]);
+  }, [offerId, page, order, pageSize]);
   useEffect(() => {
     refreshWhitelists();
   }, [refreshWhitelists]);
 
   const refreshStatistics = useCallback(() => {
     startLoading();
-    getStatistics(id).then((res: OfferPresaleStatistics) => {
+    getStatistics(offerId).then((res: OfferPresaleStatistics) => {
       setStatistics(res);
       stopLoading();
     });
-  }, [id]);
+  }, [offerId]);
   useEffect(() => {
     refreshStatistics();
   }, [refreshStatistics]);
 
-  // console.log('avocado', {
-  //   statistics,
-  //   data,
-  // });
   if (!data || !statistics) {
     return (<></>);
   }
@@ -67,11 +60,11 @@ export const PresaleBlock = ({ offer }: Props) => {
         <OfferWhitelistInfo data={statistics} />
       </StyledGridItem>
       <StyledGridItem xs={12}>
-        <OfferWhitelistApprove offerId={offer.id} totalItems={data.totalItems} refreshWhitelists={refreshWhitelists} />
+        <OfferWhitelistApprove offerId={offerId} totalItems={data.totalItems} refreshWhitelists={refreshWhitelists} />
       </StyledGridItem>
       <StyledGridItem xs={12}>
         <OfferWhitelistList
-          offerId={offer.id}
+          offerId={offerId}
           data={data}
           refreshWhitelists={refreshWhitelists}
           order={order}
@@ -81,6 +74,8 @@ export const PresaleBlock = ({ offer }: Props) => {
           startLoading={startLoading}
           stopLoading={stopLoading}
           isLoading={isLoading}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
         />
       </StyledGridItem>
     </GridContainer>

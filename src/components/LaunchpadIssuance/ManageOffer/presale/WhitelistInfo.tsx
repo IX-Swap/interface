@@ -10,13 +10,11 @@ interface RowProps {
   mainValue: string;
   subValue?: string;
   small?: boolean;
-  isMiddle?: boolean;
 }
 
 const InfoRow = (item: RowProps) => {
   return (
     <FlexRows>
-      {item.isMiddle && <VerticalLine />}
       <RowTitle>{item.title}</RowTitle>
       <FlexColumns>
         <MainValue small={!!item.small}>{item.mainValue}</MainValue>
@@ -24,7 +22,6 @@ const InfoRow = (item: RowProps) => {
           <SubValue small={!!item.small}>{item.subValue}</SubValue>
         )}
       </FlexColumns>
-      {item.isMiddle && <VerticalLine />}
     </FlexRows>
   );
 }
@@ -37,21 +34,22 @@ export const OfferWhitelistInfo = ({ data }: Props) => {
     <Container>
       <Title>Whitelisting for Register to invest</Title>
       <GridContainer>
-        <GridItem>
+        <GridItem gridArea="row1">
           <InfoRow
             title="Applicants"
             mainValue={data.applicants.toLocaleString()}
           />
         </GridItem>
-        <GridItem>
+        <GridItem gridArea="separator1"><VerticalLine /></GridItem>
+        <GridItem gridArea="row2">
           <InfoRow
             title="Do you wish to invest in this investment?"
             mainValue={data.agreedToInvest.toLocaleString()}
             subValue={data.applicants.toLocaleString()}
-            isMiddle
           />
         </GridItem>
-        <GridItem>
+        <GridItem gridArea="separator2"><VerticalLine /></GridItem>
+        <GridItem gridArea="row3">
           <InfoRow
             title="How much will be your estimated investment?"
             mainValue={data.wishInvestmentAvg.toLocaleString() + ' on Average'}
@@ -64,71 +62,66 @@ export const OfferWhitelistInfo = ({ data }: Props) => {
   )
 }
 
-// todo redo as proper grid
-// todo colors
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 const GridContainer = styled.div`
   display: grid; 
-  grid-template-columns: 1fr 1fr 1fr; 
+  grid-template-columns: 1fr 1px 1fr 1px 1fr; 
   grid-template-rows: auto; 
   grid-template-areas:
-    "row1 row2 row3"
+    "row1 separator1 row2 separator2 row3";
+  gap: 32px;
 `;
-const GridItem = styled.div`
-  display: grid;  
+const GridItem = styled.div<{ gridArea: string }>`
+  grid-area: ${props => props.gridArea};
 `;
 const Title = styled.div`
   font-weight: 700;
   font-size: 16px;
   line-height: 120%;
   letter-spacing: -0.03em;
-  color: #292933;
+  color: ${props => props.theme.launchpad.colors.text.title};
   margin-bottom: 17px;
 `;
 const FlexRows = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 `;
 const VerticalLine = styled.div`
   width: 1px;
-  background: #E6E6FF;
+  background: ${props => props.theme.launchpad.colors.accent};
   opacity: 0.8;
   height: 100%;
-  margin: 0 32px;
-`; // todo this is small, fix it
+`;
 const RowTitle = styled.div`
   font-weight: 500;
   font-size: 13px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  color: #8F8FB2;
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
   opacity: 0.8;
-
-  margin-right: 24px;
+  max-width: 50%;
 `;
 const FlexColumns = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  // justify-content: center;
   justify-content: flex-start;
 `;
 const MainValue = styled.div<{ small: boolean }>`
   font-weight: 700;
   line-height: 120%;
   letter-spacing: -0.03em;
-  color: #292933;
+  color: ${props => props.theme.launchpad.colors.text.title};
   font-size: ${props => props.small ? '16px' : '32px'};
 `;
 const SubValue = styled.div<{ small: boolean }>`
   line-height: 150%;
   letter-spacing: -0.02em;
-  color: #8F8FB2;
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
   opacity: 0.8;
 
   font-size: ${props => props.small ? '16px' : '13px'};
