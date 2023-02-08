@@ -1,5 +1,5 @@
 import { IssuanceDataExtract } from 'state/issuance/types'
-import { useRole, useUserState } from 'state/user/hooks'
+import { useRole } from 'state/user/hooks'
 
 export const adminOnlyFields: (keyof IssuanceDataExtract)[] = ['occupation', 'income', 'age']
 export const adminOnlyHead = ['Occupation', 'Income', 'Age']
