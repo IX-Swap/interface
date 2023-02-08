@@ -1,18 +1,18 @@
-import { exchange as exchangeApiUrl } from 'config/apiURL'
-import { exchange as exchangeQueryKeys } from 'config/queryKeys'
+import { trading as tradingApiUrl } from 'config/apiURL'
+import { tradingQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { isEmptyString } from 'helpers/strings'
-// import {  useLocation } from 'react-router-dom'
 
-export const useMarket = (pairId?: string) => {
+export const useOTCMarket = (pairId?: string) => {
   const { apiService } = useServices()
+
   const getMarket = async () => {
-    return await apiService.get(exchangeApiUrl.getMarket(pairId))
+    return await apiService.get(tradingApiUrl.getMarket(pairId))
   }
 
   const { data, ...rest } = useQuery(
-    exchangeQueryKeys.market(pairId),
+    tradingQueryKeys.market(pairId),
     getMarket,
     { enabled: !isEmptyString(pairId) }
   )
