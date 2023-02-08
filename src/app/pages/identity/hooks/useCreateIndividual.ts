@@ -29,7 +29,9 @@ export const useCreateIndividual = () => {
       void queryCache.invalidateQueries(identityQueryKeys.getIndividual)
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      if (error.message !== 'Could not update your identity') {
+        void snackbarService.showSnackbar(error.message, 'error')
+      }
     }
   })
 }
