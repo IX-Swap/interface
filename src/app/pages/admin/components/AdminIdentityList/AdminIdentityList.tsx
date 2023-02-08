@@ -31,9 +31,9 @@ export const AdminIdentityList = () => {
           hasActions
           actions={({ item }) => (
             <ViewIdentityAction
-              identityType={item.type}
-              identityId={item._id}
-              userId={item.user._id}
+              identityType={item?.type}
+              identityId={item?._id}
+              userId={item?.user?._id}
             />
           )}
           filter={filter}
