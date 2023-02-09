@@ -41,14 +41,14 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
   const explorerLink = getExplorerLink(
     nameChainMap[props?.offer?.network],
-    props.offer.contractAddress,
+    props.offer.tokenAddress,
     ExplorerDataType.TOKEN
   )
   const { addToken } = useAddTokenByDetailsToMetamask()
   const addToMetamask = () => {
     addToken({
       symbol: props.offer.tokenSymbol,
-      address: props.offer.contractAddress,
+      address: props.offer.tokenAddress,
       decimals: props.offer.decimals,
     })
   }
@@ -154,9 +154,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
           </AdjustedExternalLink>
         </TokenInfoCard>
         <TokenInfoCard>
-          <PlainCopy toCopy={props.offer.contractAddress}>
+          <PlainCopy toCopy={props.offer.tokenAddress}>
             <Row>
-              <span>{shortenAddress(props.offer.contractAddress, 5)}</span>
+              <span>{shortenAddress(props.offer.tokenAddress, 5)}</span>
               <Copy stroke={theme.launchpad.colors.text.body} size="18" />
             </Row>
           </PlainCopy>
