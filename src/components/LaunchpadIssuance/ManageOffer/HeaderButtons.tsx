@@ -9,6 +9,8 @@ import useCopyClipboard from 'hooks/useCopyClipboard';
 import { useHistory, } from 'react-router-dom';
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
 import { ContactFormModal } from '../utils/ContactFormModal';
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink';
+import { nameChainMap } from 'constants/chains';
 
 interface Props {
   offer: ManagedOffer;
@@ -38,7 +40,11 @@ export const HeaderButtons = ({ offer }: Props) => {
     setCopied(tokenAddress);
   }
   const onExplorer = () => {
-    const address = `https://polygonscan.com/token/${tokenAddress}`;
+    const address = getExplorerLink(
+      nameChainMap[offer.network],
+      offer.tokenAddress,
+      ExplorerDataType.TOKEN
+    );
     window.open(address, '_blank', 'noreferrer');
   }
   const onEdit = () => {
