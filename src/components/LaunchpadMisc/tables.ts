@@ -25,12 +25,13 @@ export const TableTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
-export const IssuanceTable = styled.div`
+export const IssuanceTable = styled.div<{ maxWidth?: string }>`
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
   width: 100%;
-  max-width: 1180px;
+  max-width: ${props => props.maxWidth || "1180px"};
+
   margin: auto;
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;

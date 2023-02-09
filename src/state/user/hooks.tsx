@@ -626,11 +626,17 @@ export const useRole = () => {
 
 export const useKyc = () => {
   const { kyc } = useKYCState()
+  const status = kyc?.status
   return {
     isCorporate: Boolean(kyc?.corporate),
     isIndividual: Boolean(kyc?.individual),
-    isApproved: kyc?.status === KYCStatuses.APPROVED,
-    isRejected: kyc?.status === KYCStatuses.REJECTED,
-    isChangeRequested: kyc?.status === KYCStatuses.CHANGES_REQUESTED,
+    isAccredited: Boolean(kyc?.individual?.accredited || kyc?.corporate?.accredited),
+    isApproved: status === KYCStatuses.APPROVED,
+    isRejected: status === KYCStatuses.REJECTED,
+    isChangeRequested: status === KYCStatuses.CHANGES_REQUESTED,
+    isPending: status === KYCStatuses.PENDING,
+    isNotSubmitted: status === KYCStatuses.NOT_SUBMITTED,
+    isDraft: status === KYCStatuses.DRAFT,
+    isInProgress: status === KYCStatuses.IN_PROGRESS,
   }
 }

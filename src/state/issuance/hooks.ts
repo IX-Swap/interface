@@ -69,6 +69,7 @@ export const useGetIssuancesReport = ({ page = '1', tab = '', offset = '11', iss
   }
   const [data, setData] = React.useState<IssuanceDataStatisticsDto>(emptyIssuanceDataStatistics)
   const load = React.useCallback(() => {
+    if (!tab) return
     loader.start()
     return apiService
       .get(`issuances/report`, undefined, { page: isNaN(Number(page)) ? '1' : page, tab, offset, issuanceId })

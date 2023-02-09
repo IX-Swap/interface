@@ -1,12 +1,15 @@
 import React from 'react'
-
-import { Offer } from 'state/launchpad/types'
 import styled, { useTheme } from 'styled-components'
 
-interface Props {
-  offer: Offer
+interface PartialOffer {
+  totalInvestment: number;
+  hardCap: string | number;
+}
 
-  size?: number
+interface Props {
+  offer: PartialOffer;
+  size?: number;
+  textSize?: number;
 }
 
 export const OfferFundRaiseIndicator: React.FC<Props> = (props) => {
@@ -25,7 +28,7 @@ export const OfferFundRaiseIndicator: React.FC<Props> = (props) => {
       <circle cx={size / 2} cy={size / 2} r={radius} stroke={theme.launchpad.colors.text.caption} />
       <path d={arc} stroke={theme.launchpad.colors.primary} />
 
-      <Text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" fill={theme.launchpad.colors.primary}>
+      <Text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" fill={theme.launchpad.colors.primary} textSize={props.textSize}>
         {Math.round(percentage * 100)}%
       </Text>
     </svg>
@@ -34,7 +37,7 @@ export const OfferFundRaiseIndicator: React.FC<Props> = (props) => {
 
 
 function polarToCartesian(centerX: number, centerY: number, radius: number, angleInDegrees: number) {
-  const angleInRadians = (angleInDegrees-90) * Math.PI / 180.0
+  const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0
 
   return {
     x: centerX + (radius * Math.cos(angleInRadians)),
@@ -42,20 +45,20 @@ function polarToCartesian(centerX: number, centerY: number, radius: number, angl
   }
 }
 
-function describeArc(x: number, y: number, radius: number, startAngle: number, endAngle: number){
+function describeArc(x: number, y: number, radius: number, startAngle: number, endAngle: number) {
   const start = polarToCartesian(x, y, radius, endAngle);
   const end = polarToCartesian(x, y, radius, startAngle);
 
   const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
 
-  return `M ${start.x}, ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`       
+  return `M ${start.x}, ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`
 }
 
-const Text = styled.text`
+const Text = styled.text<{ textSize?: number }>`
   font-family: ${props => props.theme.launchpad.font};
   font-style: normal;
   font-weight: 600;
-  font-size: 9px;
+  font-size: ${props => props.textSize || 9}px;
 
   line-height: 160%;
   letter-spacing: -0.02em;

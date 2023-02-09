@@ -36,4 +36,5 @@ export const routes = {
   admin: (tab?: string, id?: number | null) => `/admin/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
   launchpad: '/launchpad',
   issuanceReport: `/issuance/extract-offers/:issuanceId`,
+  manageOffer: `/manage-offers/:offerId`,
 }
