@@ -1,7 +1,6 @@
 import React, { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 
-// import { SupportedChainId } from 'constants/chains'
 import { routes } from 'utils/routes'
 
 import Faucet from 'pages/Faucet'
@@ -49,7 +48,9 @@ const LaunchpadIssuanceVettingForm = lazy(() => import('pages/LaunchpadIssuance/
 const LaunchpadIssuanceInformationForm = lazy(() => import('pages/LaunchpadIssuance/InformationForm'))
 const LaunchpadIssuanceInformationEditForm = lazy(() => import('pages/LaunchpadIssuance/InformationEditForm'))
 const LaunchpadIssuanceInformationReview = lazy(() => import('pages/LaunchpadIssuance/InformationReview'))
+const ManageOffer = lazy(() => import('pages/LaunchpadIssuance/ManageOffer'))
 const LaunchpadIssuanceReport = lazy(() => import('pages/LaunchpadIssuance/Report'))
+
 export interface RouteMapEntry {
   path: string
 
@@ -156,7 +157,6 @@ export const routeConfigs: RouteMapEntry[] = [
     component: LaunchpadIssuanceVettingForm,
     ...onlyOfferManager,
   },
-
   {
     path: '/issuance/create/information',
     component: LaunchpadIssuanceInformationForm,
@@ -173,4 +173,5 @@ export const routeConfigs: RouteMapEntry[] = [
     component: LaunchpadIssuanceReport,
     ...onlyOfferManager,
   },
+  { path: routes.manageOffer, component: ManageOffer, ...onlyOfferManager },
 ]

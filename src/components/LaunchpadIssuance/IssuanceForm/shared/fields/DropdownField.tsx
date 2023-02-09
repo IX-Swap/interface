@@ -29,6 +29,8 @@ interface Props<T> {
   setter?: (field: string, value?: T) => void
   touch?: (field: string, touched: boolean) => void
   onChange?: (value?: T) => void
+  wrapperStyle?: React.CSSProperties
+  containerStyle?: React.CSSProperties
 }
 
 export function DropdownField<T>(props: Props<T>) {
@@ -127,8 +129,8 @@ export function DropdownField<T>(props: Props<T>) {
   }, [showDropdown, container])
 
   return (
-    <FormFieldWrapper gap="0.5rem" span={props.span}>
-      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled}>
+    <FormFieldWrapper gap="0.5rem" span={props.span} style={props.wrapperStyle}>
+      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled} style={props.containerStyle}>
         <FieldLabel>
           {props.label}
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}
