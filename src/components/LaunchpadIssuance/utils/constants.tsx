@@ -13,3 +13,4 @@ export enum OFFER_STATUSES {
   closed = 'Closed',
   claim = 'Token Claim',
 }
+export const KEY_OFFER_STATUSES = Object.keys(OFFER_STATUSES);

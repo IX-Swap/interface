@@ -4,7 +4,7 @@ import { ManagedOffer } from 'state/launchpad/types'
 import { DropdownField } from '../IssuanceForm/shared/fields/DropdownField';
 import { shortenAddress } from 'utils'
 import { Copy, Edit3, CheckCircle } from 'react-feather';
-import { OFFER_STATUSES } from '../utils/constants';
+import { KEY_OFFER_STATUSES, OFFER_STATUSES } from '../utils/constants';
 import useCopyClipboard from 'hooks/useCopyClipboard';
 import { useHistory, } from 'react-router-dom';
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
@@ -28,7 +28,7 @@ export const HeaderButtons = ({ offer }: Props) => {
     setStage(value);
   }
   const stageOptions = useMemo(() => {
-    const statuses = Object.keys(OFFER_STATUSES);
+    const statuses = [...KEY_OFFER_STATUSES];
     const index = statuses.findIndex((item) => item === status);
     if (index < 0) return [];
     const allowedStatuses = statuses.slice(0, index + 1);

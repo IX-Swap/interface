@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { ChevronRight, Info } from 'react-feather'
 import { ManagedOffer, OfferStatus } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { formatDates } from './utils'
-import { OFFER_STATUSES } from '../utils/constants'
+import { KEY_OFFER_STATUSES } from '../utils/constants'
 
 interface IDateItem {
   title: string;
@@ -36,7 +36,7 @@ export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
   // todo when admin: add "Edit" btn
 
   const highlightedStatuses = useMemo(() => {
-    const statuses = Object.keys(OFFER_STATUSES);
+    const statuses = [...KEY_OFFER_STATUSES];
     const index = statuses.findIndex((item) => item === status);
     if (index < 0) return [];
     const allowedStatuses = statuses.slice(0, index + 1);
