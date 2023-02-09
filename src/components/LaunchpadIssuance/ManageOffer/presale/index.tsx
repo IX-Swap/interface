@@ -6,50 +6,51 @@ import { useGetManagedOfferPresaleStatistics, useGetManagedOfferPresaleWhitelist
 import { OfferWhitelistInfo } from './WhitelistInfo'
 import { OfferWhitelistApprove } from './WhitelistApprove'
 import { OfferWhitelistList } from './WhitelistList'
+import { alpha } from '@material-ui/core/styles'
 
 interface Props {
-  offerId: string;
-  issuanceId: number;
+  offerId: string
+  issuanceId: number
 }
 
 export const PresaleBlock = ({ offerId, issuanceId }: Props) => {
-  const getStatistics = useGetManagedOfferPresaleStatistics();
-  const getWhitelists = useGetManagedOfferPresaleWhitelists();
+  const getStatistics = useGetManagedOfferPresaleStatistics()
+  const getWhitelists = useGetManagedOfferPresaleWhitelists()
 
-  const [data, setData] = useState<PresaleData>();
-  const [statistics, setStatistics] = useState<OfferPresaleStatistics>();
+  const [data, setData] = useState<PresaleData>()
+  const [statistics, setStatistics] = useState<OfferPresaleStatistics>()
 
-  const [page, setPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(8);
-  const [order, setOrder] = useState<PresaleOrderConfig>({});
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const startLoading = () => setLoading(true);
-  const stopLoading = () => setLoading(false);
+  const [page, setPage] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(8)
+  const [order, setOrder] = useState<PresaleOrderConfig>({})
+  const [isLoading, setLoading] = useState<boolean>(false)
+  const startLoading = () => setLoading(true)
+  const stopLoading = () => setLoading(false)
 
   const refreshWhitelists = useCallback(() => {
-    startLoading();
+    startLoading()
     getWhitelists(offerId, page, order, pageSize).then((res: PresaleData) => {
-      setData(res);
-      stopLoading();
-    });
-  }, [offerId, page, order, pageSize]);
+      setData(res)
+      stopLoading()
+    })
+  }, [offerId, page, order, pageSize])
   useEffect(() => {
-    refreshWhitelists();
-  }, [refreshWhitelists]);
+    refreshWhitelists()
+  }, [refreshWhitelists])
 
   const refreshStatistics = useCallback(() => {
-    startLoading();
+    startLoading()
     getStatistics(offerId).then((res: OfferPresaleStatistics) => {
-      setStatistics(res);
-      stopLoading();
-    });
-  }, [offerId]);
+      setStatistics(res)
+      stopLoading()
+    })
+  }, [offerId])
   useEffect(() => {
-    refreshStatistics();
-  }, [refreshStatistics]);
+    refreshStatistics()
+  }, [refreshStatistics])
 
   if (!data || !statistics) {
-    return (<></>);
+    return <></>
   }
   return (
     <GridContainer>
@@ -82,9 +83,9 @@ export const PresaleBlock = ({ offerId, issuanceId }: Props) => {
 
 const StyledGridItem = styled(GridItem)`
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(230, 230, 255, 0.8);
+  background: ${({ theme }) => alpha(theme.launchpad.colors.background, 0.3)};
+  border: 1px solid ${({ theme }) => alpha(theme.launchpad.colors.border.default, 0.8)};
   border-radius: 8px;
   padding: 22px !important;
-  margin-bottom: 20px;
-;`
+  margin-bottom: 20px; ;
+`

@@ -12,41 +12,46 @@ import { PresaleBlock } from './presale'
 import { HeaderButtons } from './HeaderButtons'
 import { OFFER_STATUSES } from '../utils/constants'
 import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
+import { alpha } from '@material-ui/core/styles'
 
 interface ManagedOfferPageParams {
-  offerId: string;
+  offerId: string
 }
 
 export const ManageOffer = () => {
   const theme = useTheme()
   const history = useHistory()
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
-  const [isOpenWhitelisting, setOpenWhitelisting] = useState(false);
+  const [isOpenWhitelisting, setOpenWhitelisting] = useState(false)
 
   const params = useParams<ManagedOfferPageParams>()
-  const { loading, data: offer } = useGetManagedOffer(params.offerId);
-  const { usersClaimed, issuerClaimed, status } = offer || {};
+  const { loading, data: offer } = useGetManagedOffer(params.offerId)
+  const { usersClaimed, issuerClaimed, status } = offer || {}
 
   // todo role check: offer-manager or admin only
   // todo when sale stage: depending on HeaderButtons."stage" - show different data and change showWhitelisting.
-  const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status]);
-  const isClaim = useMemo(() => status === OfferStatus.claim, [status]);
+  const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status])
+  const isClaim = useMemo(() => status === OfferStatus.claim, [status])
 
   const claimBtnTitle = useMemo(() => {
     if (loading || !isClaim) {
-      return '';
+      return ''
     }
     if (!usersClaimed) {
-      return 'Start Claim Process';
+      return 'Start Claim Process'
     }
     if (usersClaimed && !issuerClaimed) {
-      return 'Withdraw Funds';
+      return 'Withdraw Funds'
     }
-    return '';
-  }, [loading, isClaim, usersClaimed, issuerClaimed]);
+    return ''
+  }, [loading, isClaim, usersClaimed, issuerClaimed])
 
   if (loading) {
-    return <Centered><Loader /></Centered>
+    return (
+      <Centered>
+        <Loader />
+      </Centered>
+    )
   }
   if (!offer) {
     return <Centered>Not found</Centered>
@@ -89,45 +94,42 @@ export const ManageOffer = () => {
         </StagesBoxItem>
       </CustomGridContainer>
 
-      {showWhitelisting && (
-        <PresaleBlock offerId={offer.id} issuanceId={offer.issuanceId} />
-      )}
+      {showWhitelisting && <PresaleBlock offerId={offer.id} issuanceId={offer.issuanceId} />}
     </Wrapper>
   )
 }
 
 const BoxItem = styled.div`
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(230, 230, 255, 0.8);
+  background: ${({ theme }) => alpha(theme.launchpad.colors.background, 0.3)};
+  border: 1px solid ${({ theme }) => alpha(theme.launchpad.colors.border.default, 0.8)};
   border-radius: 8px;
   padding: 28px 22px 26px;
   margin-bottom: 20px;
-`;
+`
 const CustomGridContainer = styled.div`
-  display: grid; 
-  grid-template-columns: 3.13fr 1fr; 
+  display: grid;
+  grid-template-columns: 3.13fr 1fr;
   grid-auto-rows: auto;
-  gap: 16px 16px; 
-  grid-template-areas:
-    "statistics stages"
-`;
+  gap: 16px 16px;
+  grid-template-areas: 'statistics stages';
+`
 const StatisticsBoxItem = styled(BoxItem)`
-  grid-area: statistics;  
-`;
+  grid-area: statistics;
+`
 const StagesBoxItem = styled(BoxItem)`
-  grid-area: stages;  
-`;
+  grid-area: stages;
+`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 22px 0 16px;
-`;
+`
 const HeaderItem = styled.div`
   display: flex;
   align-items: center;
-`;
+`
 const ButtonLabel = styled.span`
   font-weight: 600;
 `
@@ -136,12 +138,12 @@ const Wrapper = styled.article`
   padding: 0 10%;
   width: 100%;
   margin: auto;
-  color: ${props => props.theme.launchpad.colors.text.title};
-`;
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+`
 const BackButton = styled(FilledButton)`
   padding: 0;
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.primary + '14'};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
   border-radius: 6px;
   width: 48px;
   margin-right: 16px;
@@ -154,7 +156,7 @@ const FormTitle = styled.div`
   line-height: 120%;
   letter-spacing: -0.03em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const Centered = styled(Wrapper)`
   display: grid;
