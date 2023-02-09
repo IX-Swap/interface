@@ -18,7 +18,7 @@ export const HeaderButtons = ({ offer }: Props) => {
   const { status, tokenAddress, issuanceId } = offer;
 
   const theme = useTheme()
-  const [isCopied, setCopied] = useCopyClipboard(6000)
+  const [isCopied, setCopied] = useCopyClipboard()
   const history = useHistory()
 
   const [stage, setStage] = useState<string | undefined>(status as string);
