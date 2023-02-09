@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { Check, X } from 'react-feather'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { useApproveRandomPresaleWhitelists, useManagePresaleWhitelists } from 'state/launchpad/hooks'
 import { IssuanceTextField } from '../../utils/TextField'
-import { AreYouSureModal } from 'components/AreYouSureModal'
+import { ConfirmPopup } from '../../utils/ConfirmPopup'
+import { useShowError } from 'state/application/hooks'
 
 interface Props {
   offerId: string;
@@ -22,7 +23,7 @@ export const ConfirmModal = ({ isOpen, setOpen, onAccept }: ConfirmProps) => {
     onAccept();
     setOpen(false);
   }
-  return <AreYouSureModal isOpen={isOpen} onDecline={() => { setOpen(false) }} onAccept={onAcceptWithClose} />;
+  return <ConfirmPopup isOpen={isOpen} onDecline={() => { setOpen(false) }} onAccept={onAcceptWithClose} />;
 }
 
 export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }: Props) => {
@@ -30,6 +31,7 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
   const approveRandom = useApproveRandomPresaleWhitelists();
   const manageWhitelists = useManagePresaleWhitelists();
   const [count, setCount] = useState('');
+  const showError = useShowError()
 
   const [openApproveAll, setOpenApproveAll] = useState(false);
   const [openRejectAll, setOpenRejectAll] = useState(false);
@@ -88,8 +90,12 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
       setMethod(true);
     }
   }
+  useEffect(() => {
+    if (manageWhitelists.error) {
+      showError(manageWhitelists.error);
+    }
+  }, [manageWhitelists.error])
 
-  // todo check if manageWhitelists.error should be shown this way
   if (isLoading) {
     return <></>;
   }
@@ -126,9 +132,9 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
             <X size={13} />
           </OutlineButton>
         </GridItem>
-        {manageWhitelists.error && (
+        {/* {manageWhitelists.error && (
           <ErrorText>{manageWhitelists.error}</ErrorText>
-        )}
+        )} */}
       </GridContainer>
     </Container>
   )

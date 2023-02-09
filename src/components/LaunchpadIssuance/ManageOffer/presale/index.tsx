@@ -1,21 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import styled, { useTheme } from 'styled-components'
-import { useHistory, useParams } from 'react-router-dom'
-import { ArrowLeft } from 'react-feather'
-import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
+import React, { useCallback, useEffect, useState } from 'react'
+import styled from 'styled-components'
 import { GridItem, GridContainer } from 'components/Grid'
-import { Offer, OfferPresaleStatistics, PresaleData, PresaleOrderConfig } from 'state/launchpad/types'
+import { OfferPresaleStatistics, PresaleData, PresaleOrderConfig } from 'state/launchpad/types'
 import { useGetManagedOfferPresaleStatistics, useGetManagedOfferPresaleWhitelists } from 'state/launchpad/hooks'
-import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OfferWhitelistInfo } from './WhitelistInfo'
 import { OfferWhitelistApprove } from './WhitelistApprove'
 import { OfferWhitelistList } from './WhitelistList'
 
 interface Props {
   offerId: string;
+  issuanceId: number;
 }
 
-export const PresaleBlock = ({ offerId }: Props) => {
+export const PresaleBlock = ({ offerId, issuanceId }: Props) => {
   const getStatistics = useGetManagedOfferPresaleStatistics();
   const getWhitelists = useGetManagedOfferPresaleWhitelists();
 
@@ -65,6 +62,7 @@ export const PresaleBlock = ({ offerId }: Props) => {
       <StyledGridItem xs={12}>
         <OfferWhitelistList
           offerId={offerId}
+          issuanceId={issuanceId}
           data={data}
           refreshWhitelists={refreshWhitelists}
           order={order}
@@ -82,44 +80,6 @@ export const PresaleBlock = ({ offerId }: Props) => {
   )
 }
 
-// todo usetheme colors
-// todo Statistics Block margin grid
-// todo remove StyledGridItem
-const BoxItem = styled.div`
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(230, 230, 255, 0.8);
-  border-radius: 8px;
-  padding: 28px 22px 26px;
-  margin-bottom: 20px;
-`;
-const CustomGridContainer = styled.div`
-  display: grid; 
-  grid-template-columns: 3.13fr 1fr; 
-  grid-auto-rows: auto;
-  gap: 16px 16px; 
-  grid-template-areas:
-    "statistics stages"
-`;
-const StatisticsBoxItem = styled(BoxItem)`
-  grid-area: statistics;  
-`;
-const StagesBoxItem = styled(BoxItem)`
-  grid-area: stages;  
-`;
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 22px 0 16px;
-`;
-const HeaderItem = styled.div`
-  display: flex;
-  align-items: center;
-`;
-const ButtonLabel = styled.span`
-  font-weight: 600;
-`
 const StyledGridItem = styled(GridItem)`
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.3);
@@ -128,36 +88,3 @@ const StyledGridItem = styled(GridItem)`
   padding: 22px !important;
   margin-bottom: 20px;
 ;`
-const Wrapper = styled.article`
-  min-height: 100vh;
-  padding: 0 10%;
-  width: 100%;
-  margin: auto;
-  color: ${props => props.theme.launchpad.colors.text.title};
-  // font-family: 'Inter' !important;
-  // *>* {
-  //   font-family: 'Inter' !important;
-  // }
-`;
-const BackButton = styled(FilledButton)`
-  padding: 0;
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.primary + '14'};
-  border-radius: 6px;
-  width: 48px;
-  margin-right: 16px;
-`
-const FormTitle = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-
-  line-height: 120%;
-  letter-spacing: -0.03em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
-`
-const Centered = styled(Wrapper)`
-  display: grid;
-  place-content: center;
-`

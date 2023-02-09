@@ -1288,6 +1288,7 @@ export const useApproveRandomPresaleWhitelists = () => {
   const [error, setError] = React.useState<string>()
 
   const load = React.useCallback((offerId: string, count: number) => {
+    setError('');
     return apiService.patch(`/offers/${offerId}/approve/random`, { count })
       .catch((err) => setError(err.message))
       .finally(loader.stop);
@@ -1300,6 +1301,7 @@ export const useManagePresaleWhitelists = () => {
   const [error, setError] = React.useState<string>()
 
   const load = React.useCallback((offerId: string, body: ManageOfferBody) => {
+    setError('');
     return apiService.patch(`/offers/${offerId}/whitelists`, body)
       .catch((err) => setError(err.message))
       .finally(loader.stop);

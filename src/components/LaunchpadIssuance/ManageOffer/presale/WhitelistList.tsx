@@ -2,20 +2,22 @@ import React, { useCallback, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { Check, X, MoreHorizontal } from 'react-feather'
-import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { useManagePresaleWhitelists } from 'state/launchpad/hooks'
 import { PresaleData, PresaleOrderConfig } from 'state/launchpad/types'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
 import { formatDates } from '../utils'
-import { BaseCheckbox, Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
-import { Pagination } from '../common/Pagination'
+import { BaseCheckbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
+import { EmptyTable } from 'components/LaunchpadIssuance/utils/EmptyTable'
+import { Pagination } from 'components/LaunchpadIssuance/utils/Pagination'
 
 interface Props {
   offerId: string;
+  issuanceId: number;
   data: PresaleData;
   refreshWhitelists: () => any;
   order: PresaleOrderConfig;
@@ -29,14 +31,15 @@ interface Props {
   setPageSize: (page: number) => void;
 }
 
-export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, setOrder, page, setPage, startLoading, stopLoading, isLoading, pageSize, setPageSize }: Props) => {
+export const OfferWhitelistList = ({ offerId, issuanceId, data, refreshWhitelists, order, setOrder, page, setPage, startLoading, stopLoading, isLoading, pageSize, setPageSize }: Props) => {
   const { totalItems, totalPages, items } = data;
   const theme = useTheme()
+  const history = useHistory()
   const manageWhitelists = useManagePresaleWhitelists();
   const [selected, setSelected] = useState<number[]>([]);
 
   const approveSelected = () => {
-    if (!totalItems) return;
+    if (!selected.length) return;
     startLoading()
     manageWhitelists.load(offerId, { approveIds: selected }).then(() => {
       stopLoading();
@@ -44,7 +47,7 @@ export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, se
     });
   }
   const rejectSelected = () => {
-    if (!totalItems) return;
+    if (!selected.length) return;
     startLoading()
     manageWhitelists.load(offerId, { rejectIds: selected }).then(() => {
       stopLoading();
@@ -89,19 +92,16 @@ export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, se
   }, [selected]);
 
   const onExtractData = () => {
-    // todo redirect to extract page
-    refreshWhitelists();
+    history.push(`/issuance/extract-offers/${issuanceId}?tab=registration&page=1`);
   }
   const getIsSelected = useCallback((id: number) => {
     const isSelected = selected.includes(id);
     return isSelected;
   }, [selected]);
-
-  // todo confirmations
-  // todo empty state
-  // todo handle loading
-  // IssuanceFilter - remove. fix grid.
-  // todo align checkbox to right
+  const onChangePage = (newPage: number) => {
+    setPage(newPage);
+    setSelected([]);
+  };
   return (
     <Container>
       <Header>
@@ -109,7 +109,7 @@ export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, se
         <ButtonsContainer>
           <ExtractButton onClick={onExtractData}>
             <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
-            <ExtractText disabled={!totalItems}>Extract Data</ExtractText>
+            <ExtractText>Extract Data</ExtractText>
           </ExtractButton>
           <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={approveSelected}>
             <ButtonLabel disabled={!selected.length}>Reject Selected</ButtonLabel>
@@ -147,12 +147,14 @@ export const OfferWhitelistList = ({ offerId, data, refreshWhitelists, order, se
 
         </IssuanceTable>
       )}
-      <Pagination totalItems={totalItems} totalPages={totalPages} setPage={setPage} page={page} pageSize={pageSize} setPageSize={setPageSize} />
+      {!isLoading && !totalItems && (
+        <EmptyTable title="No users" containerMaxWidth="100%" />
+      )}
+      <Pagination totalItems={totalItems} totalPages={totalPages} setPage={onChangePage} page={page} pageSize={pageSize} setPageSize={setPageSize} />
     </Container>
   )
 }
 
-// todo colors
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -167,7 +169,7 @@ const Title = styled.div`
   font-size: 16px;
   line-height: 120%;
   letter-spacing: -0.03em;
-  color: #292933;
+  color: ${props => props.theme.launchpad.colors.text.title};
 `;
 const ButtonsContainer = styled.div`
   display: grid;
@@ -182,14 +184,13 @@ const ExtractButton = styled.div`
   justify-content: center;
   cursor: pointer;
 `;
-const ExtractText = styled.div<{ disabled: boolean }>`
+const ExtractText = styled.div`
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.01em;
-  color: #6666FF;
+  color: ${props => props.theme.launchpad.colors.primary};
   margin-left: 10px;
-  opacity: ${props => props.disabled ? 0.5 : 1};
 `;
 const ButtonLabel = styled.span<{ disabled: boolean }>`
   font-weight: 600;
@@ -200,7 +201,7 @@ const HeaderLabel = styled.div`
   font-size: 13px;
   line-height: 48px;
   letter-spacing: -0.02em;
-  color: #8F8FB2;
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
 
   display: flex;
   flex-flow: row nowrap;
@@ -210,7 +211,7 @@ const SelectAll = styled.div`
   font-size: 13px;
   line-height: 48px;
   letter-spacing: -0.01em;
-  color: #6666FF;
+  color: ${props => props.theme.launchpad.colors.primary};
   cursor: pointer;
   text-align: right;
 `;

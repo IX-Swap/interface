@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { ChevronRight, Info } from 'react-feather'
 import { ManagedOffer, OfferStatus } from 'state/launchpad/types'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { formatDates } from './utils'
+import { OFFER_STATUSES } from '../utils/constants'
 
 interface IDateItem {
   title: string;
@@ -31,8 +32,17 @@ const DateBlock = (item: IDateItem) => {
 
 export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
   const theme = useTheme();
-  const { timeframe } = offer;
-  // todo show Edit for admin
+  const { timeframe, status } = offer;
+  // todo when admin: add "Edit" btn
+
+  const highlightedStatuses = useMemo(() => {
+    const statuses = Object.keys(OFFER_STATUSES);
+    const index = statuses.findIndex((item) => item === status);
+    if (index < 0) return [];
+    const allowedStatuses = statuses.slice(0, index + 1);
+    return allowedStatuses;
+  }, [status]);
+
   return (
     <Container>
       <MainTitleBlock>
@@ -45,45 +55,42 @@ export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
         <DateBlock
           title="Register to Invest"
           subtitle={formatDates(timeframe.whitelist, timeframe.preSale)}
-          isCurrent={offer.status === OfferStatus.whitelist}
+          isCurrent={highlightedStatuses.includes(OfferStatus.whitelist)}
         />
       )}
       {offer.hasPresale && (
         <DateBlock
           title="Pre-Sale"
           subtitle={formatDates(timeframe.preSale, timeframe.sale)}
-          isCurrent={offer.status === OfferStatus.preSale}
+          isCurrent={highlightedStatuses.includes(OfferStatus.preSale)}
         />
       )}
       <DateBlock
         title="Public Sale"
         subtitle={formatDates(timeframe.sale, timeframe.closed)}
-        isCurrent={offer.status === OfferStatus.sale}
+        isCurrent={highlightedStatuses.includes(OfferStatus.sale)}
       />
       <DateBlock
         title="Closed"
         subtitle={formatDates(timeframe.closed, timeframe.claim)}
-        isCurrent={offer.status === OfferStatus.closed}
+        isCurrent={highlightedStatuses.includes(OfferStatus.closed)}
       />
       <DateBlock
         title="Token Claim"
         subtitle={formatDates(timeframe.claim)}
-        isCurrent={offer.status === OfferStatus.claim}
+        isCurrent={highlightedStatuses.includes(OfferStatus.claim)}
         hideBottomBorder
       />
     </Container>
   )
 }
 
-// todo usetheme colors
-const almostBlack = '#292933';
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 const Title = styled.span`
-  color: ${almostBlack};
+  color: ${props => props.theme.launchpad.colors.text.title};
   font-weight: 600;
   font-size: 15px;
   margin-right: 8px;
@@ -101,14 +108,15 @@ const DateTitle = styled.span<{ isCurrent: boolean }>`
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.02em;
-  color: ${props => props.isCurrent ? '#6666FF' : '#666680'};
+  color: ${props => props.isCurrent ? props.theme.launchpad.colors.primary : props.theme.launchpad.colors.text.body};
 `;
 const DateSubtitle = styled.span<{ isCurrent: boolean }>`
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.02em;
   font-weight: ${props => props.isCurrent ? 500 : 400};
-  color: ${props => props.isCurrent ? almostBlack : '#666680'};
+  color: ${props => props.isCurrent ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.body};
+  margin-top: 6px;
 `;
 const CurrentTitleBlock = styled.div`
   display: flex;

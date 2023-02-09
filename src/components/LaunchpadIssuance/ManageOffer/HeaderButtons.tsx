@@ -4,10 +4,11 @@ import { ManagedOffer } from 'state/launchpad/types'
 import { DropdownField } from '../IssuanceForm/shared/fields/DropdownField';
 import { shortenAddress } from 'utils'
 import { Copy, Edit3, CheckCircle } from 'react-feather';
-import { ContactFormModal } from './common/ContactFormModal';
 import { OFFER_STATUSES } from '../utils/constants';
 import useCopyClipboard from 'hooks/useCopyClipboard';
 import { useHistory, } from 'react-router-dom';
+import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
+import { ContactFormModal } from '../utils/ContactFormModal';
 
 interface Props {
   offer: ManagedOffer;
@@ -44,7 +45,6 @@ export const HeaderButtons = ({ offer }: Props) => {
     history.push(`/issuance/create/information?id=${issuanceId}`);
   }
 
-  // todo depending on "stage" - show different data
   return (
     <Header>
       <HeaderItem>
@@ -75,13 +75,13 @@ export const HeaderButtons = ({ offer }: Props) => {
         </BtnContainer>
       </HeaderItem>
 
-      <HeaderItem>
-        <RightBtn onClick={onEdit}>
+      <HeaderItem gap="32px">
+        <RightBtn onClick={onEdit} mr="12px">
           <Edit3 size={12} color={theme.launchpad.colors.text.bodyAlt} />
           <span>Edit</span>
         </RightBtn>
-        <RightBtn onClick={() => setContactFormOpen(true)}>
-          <Edit3 size={12} color={theme.launchpad.colors.text.bodyAlt} />
+        <RightBtn onClick={() => setContactFormOpen(true)} mr="6px">
+          <HelpIcon color={theme.launchpad.colors.text.bodyAlt} />
           <span>Support</span>
         </RightBtn>
       </HeaderItem>
@@ -101,10 +101,10 @@ const Header = styled.div`
   align-items: center;
   margin: 22px 0 16px;
 `;
-const HeaderItem = styled.div`
+const HeaderItem = styled.div<{ gap?: string }>`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: ${(props) => props.gap || "16px"};
 `;
 const BtnContainer = styled.div`
   display: flex;
@@ -141,12 +141,12 @@ const BtnContainer = styled.div`
 
   position: relative;
 `
-const RightBtn = styled.div`
+const RightBtn = styled.div<{ mr: string }>`
   display: flex;
   align-items: center;
   cursor: pointer;
   > svg {
-    margin-right: 10px;
+    margin-right: ${(props) => props.mr};
   }
   > span {
     font-weight: 500;

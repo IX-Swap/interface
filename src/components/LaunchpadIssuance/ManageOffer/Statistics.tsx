@@ -151,10 +151,6 @@ export const OfferStatistics = ({ offer }: { offer: ManagedOffer }) => {
     </Container>
   );
 }
-// todo theme colors
-const almostBlack = '#292933';
-const darkGrey = '#8F8FB2';
-const lightGrey = '#B8B8CC';
 
 const PresaleContainer = styled.div`
   display: grid; 
@@ -179,7 +175,7 @@ const NoPresaleContainer = styled.div`
     "sale-min total-closes"
 `;
 const Title = styled.div`
-  color: ${almostBlack};
+  color: ${props => props.theme.launchpad.colors.text.title};
   font-weight: 600;
   font-size: 15px;
   line-height: 120%;
@@ -189,16 +185,16 @@ const Title = styled.div`
 const AmountTitle = styled.span`
   font-weight: 700;
   font-size: 16px;
-  color: ${almostBlack};
+  color: ${props => props.theme.launchpad.colors.text.title};
 `;
 const AmountSubTitle = styled.span`
-  color: ${darkGrey};
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
   opacity: 0.8;
   font-weight: 500;
   font-size: 13px;
 `;
 const GreyText = styled.span`
-  color: ${darkGrey};
+  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
   opacity: 0.8;
 `;
 const FlexVerticalCenter = styled.div`
@@ -210,7 +206,7 @@ const FlexColumn = styled.div`
   flex-direction: column;
 `;
 const Line = styled.div`
-  background: #E6E6FF;
+  background: ${props => props.theme.launchpad.colors.accent};
   opacity: 0.8;
   height: 1px;
   width: 100 %;
@@ -220,17 +216,17 @@ const BlockLabel = styled.div`
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
-  color: ${lightGrey};
+  color: ${props => props.theme.launchpad.colors.text.caption};
 `;
 const BlockValue = styled.div`
   font-weight: 700;
   font-size: 14px;
-  color: ${almostBlack};
+  color: ${props => props.theme.launchpad.colors.text.title};
 `;
 const ClosesSubtitle = styled.div`
   font-weight: 700;
   font-size: 24px;
-  color: ${almostBlack};
+  color: ${props => props.theme.launchpad.colors.text.title};
 `;
 const CustomGridArea = styled.div<{ area: string }>`
   grid-area: ${props => props.area};

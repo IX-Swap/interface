@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { ChevronDown, ChevronLeft, ChevronRight } from 'react-feather'
-import { ITEM_ROWS } from '../../utils/constants'
+import { ITEM_ROWS } from './constants'
 
 interface Props {
   totalItems: number;
@@ -28,7 +28,6 @@ export const Pagination = ({ totalItems, totalPages, setPage, page, pageSize, se
   const onChangePage = useCallback((pageNumber: number) => {
     scrollToTop()
     setPage(pageNumber)
-    // todo reset selected when moving page
   }, [])
 
   const scrollToTop = React.useCallback(() => {

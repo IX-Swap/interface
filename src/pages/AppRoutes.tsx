@@ -153,6 +153,6 @@ export const routeConfigs: RouteMapEntry[] = [
   { path: '/issuance/create/information', component: LaunchpadIssuanceInformationForm },
   { path: '/issuance/edit/information', component: LaunchpadIssuanceInformationEditForm },
   { path: '/issuance/review/information', component: LaunchpadIssuanceInformationReview },
-  { path: '/manage-offers/:offerId', component: ManageOffer }, // todo add to routes too
+  { path: routes.manageOffer, component: ManageOffer },
   { path: routes.issuanceReport, component: LaunchpadIssuanceReport },
 ]

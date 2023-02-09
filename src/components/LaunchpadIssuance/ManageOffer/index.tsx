@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { GridItem } from 'components/Grid'
 import { OfferStatus } from 'state/launchpad/types'
 import { OfferStatistics } from './Statistics'
 import { useGetManagedOffer } from 'state/launchpad/hooks'
@@ -12,6 +11,7 @@ import { OfferStages } from './Stages'
 import { PresaleBlock } from './presale'
 import { HeaderButtons } from './HeaderButtons'
 import { OFFER_STATUSES } from '../utils/constants'
+import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
 
 interface ManagedOfferPageParams {
   offerId: string;
@@ -21,12 +21,14 @@ export const ManageOffer = () => {
   const theme = useTheme()
   const history = useHistory()
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
+  const [isOpenWhitelisting, setOpenWhitelisting] = useState(false);
 
   const params = useParams<ManagedOfferPageParams>()
   const { loading, data: offer } = useGetManagedOffer(params.offerId);
   const { usersClaimed, issuerClaimed, status } = offer || {};
 
-  const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status]); // todo
+  // todo when sale stage: depending on HeaderButtons."stage" - show different data and change showWhitelisting.
+  const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status]);
   const isClaim = useMemo(() => status === OfferStatus.claim, [status]);
 
   const claimBtnTitle = useMemo(() => {
@@ -51,10 +53,11 @@ export const ManageOffer = () => {
   if (!Object.keys(OFFER_STATUSES).includes(offer.status as any)) {
     return <Centered>Offer not started</Centered>
   }
-  // todo fix all console errors
   return (
     <Wrapper>
-
+      {isOpenWhitelisting && (
+        <LaunchpadWhitelistWallet offerId={offer.id} isOpen={isOpenWhitelisting} setOpen={setOpenWhitelisting} />
+      )}
       <Header>
         <HeaderItem>
           <BackButton background={theme.launchpad.colors.background} onClick={goBack}>
@@ -63,7 +66,7 @@ export const ManageOffer = () => {
           <FormTitle>{offer.title}</FormTitle>
         </HeaderItem>
         <HeaderItem>
-          <OutlineButton>
+          <OutlineButton onClick={() => setOpenWhitelisting(true)}>
             <ButtonLabel>Whitelist Wallet</ButtonLabel>
           </OutlineButton>
           {claimBtnTitle && (
@@ -86,15 +89,12 @@ export const ManageOffer = () => {
       </CustomGridContainer>
 
       {showWhitelisting && (
-        <PresaleBlock offerId={offer.id} />
+        <PresaleBlock offerId={offer.id} issuanceId={offer.issuanceId} />
       )}
     </Wrapper>
   )
 }
 
-// todo usetheme colors
-// todo Statistics Block margin grid
-// todo remove StyledGridItem
 const BoxItem = styled.div`
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.3);
@@ -130,24 +130,12 @@ const HeaderItem = styled.div`
 const ButtonLabel = styled.span`
   font-weight: 600;
 `
-const StyledGridItem = styled(GridItem)`
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(230, 230, 255, 0.8);
-  border-radius: 8px;
-  padding: 22px !important;
-  margin-bottom: 20px;
-;`
 const Wrapper = styled.article`
   min-height: 100vh;
   padding: 0 10%;
   width: 100%;
   margin: auto;
   color: ${props => props.theme.launchpad.colors.text.title};
-  // font-family: 'Inter' !important;
-  // *>* {
-  //   font-family: 'Inter' !important;
-  // }
 `;
 const BackButton = styled(FilledButton)`
   padding: 0;
