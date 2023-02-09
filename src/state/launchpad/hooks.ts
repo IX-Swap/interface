@@ -7,10 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FilterConfig } from 'components/Launchpad/InvestmentList/Filter'
 import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/IssuanceDashboard/SearchFilter'
 
-import { KYCStatuses } from 'pages/KYC/enum'
-
 import { AppState } from 'state'
-import { useKYCState } from 'state/kyc/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 
 import {
@@ -42,6 +39,7 @@ import { initialValues as vettingInitialFormValues } from 'components/LaunchpadI
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
+import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
 
 interface OfferPagination {
@@ -96,17 +94,12 @@ export const useSetAllowOnlyAccredited = () => {
 }
 
 export const useCheckKYC = () => {
-  const { kyc } = useKYCState()
-
+  const { isApproved, isAccredited } = useKyc()
   return React.useCallback(
     (allowOnlyAccredited: boolean, isClosed: boolean) => {
-      return (
-        !!kyc &&
-        kyc.status === KYCStatuses.APPROVED &&
-        (isClosed || !allowOnlyAccredited || kyc.individual?.accredited === 1)
-      )
+      return isApproved && (isClosed || !allowOnlyAccredited || isAccredited)
     },
-    [kyc]
+    [isApproved, isAccredited]
   )
 }
 
