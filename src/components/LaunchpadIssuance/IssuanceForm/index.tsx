@@ -216,7 +216,7 @@ export const NewIssuanceForm = () => {
                 description="All information provided about the new issuance created will be displayed to the investors."
               >
                 <FilledButton
-                  // disabled={vettingStatus !== IssuanceStatus.approved}
+                  disabled={vettingStatus !== IssuanceStatus.approved}
                   width="320px"
                   color={theme.launchpad.colors.text.light}
                   background={theme.launchpad.colors.primary}
@@ -333,12 +333,8 @@ export const NewIssuanceForm = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-
   justify-content: flex-start;
-  algin-items: stretch;
-
   gap: 1rem;
-
   max-width: 1180px;
   padding: 1rem;
   margin: auto;
@@ -346,7 +342,6 @@ const Wrapper = styled.div`
 
 const FormHeader = styled.div`
   display: grid;
-
   grid-template-columns: 50px 230px 1fr 180px;
   grid-template-rows: repeat(2, 48px);
   grid-template-areas:
@@ -354,36 +349,26 @@ const FormHeader = styled.div`
     'name name . .';
 
   place-content: center stretch;
-
   gap: 1rem;
 `
 
 const FormContainer = styled.div`
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 530px;
-
   place-content: stretch;
-
   gap: 1.5rem;
-
   position: relative;
 `
 
 const IssuanceNameContainer = styled.div`
   grid-area: name;
-
   position: relative;
-
   display: flex;
   flex-flow: row nowrap;
-
   justify-content: space-between;
   align-items: center;
-
   padding: 0 1rem;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
@@ -393,7 +378,6 @@ const IssuanceName = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-
   line-height: 1.25rem;
   letter-spacing: -0.01em;
 

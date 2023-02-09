@@ -45,6 +45,7 @@ import {
   standardOptions,
   distributionFrequencyOptions,
   investmentStructureOptions,
+  tokenDecimalsOnOptions,
 } from './util'
 import {
   useEditIssuanceOffer,
@@ -427,7 +428,28 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.tokenTicker}
                   error={(touched.tokenTicker && errors.tokenTicker) as string}
                 />
-
+                <DropdownField
+                  field="decimalsOn"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  options={tokenDecimalsOnOptions}
+                  label="Decimals"
+                  // find out if editable
+                  disabled={props.edit}
+                  value={values.decimalsOn}
+                  error={(touched.decimalsOn && errors.decimalsOn) as string}
+                />
+                <FormField
+                  field="trusteeAddress"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  label="Trustee Address"
+                  placeholder="Trustee Address"
+                  // find out if editable
+                  disabled={props.edit}
+                  value={values.trusteeAddress}
+                  error={(touched.trusteeAddress && errors.trusteeAddress) as string}
+                />
                 <DropdownField
                   field="tokenType"
                   setter={setFieldValue}

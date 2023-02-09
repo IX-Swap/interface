@@ -1,13 +1,12 @@
-import { InformationFormValues, OfferTokenType } from "./types"
+import { InformationFormValues, OfferTokenType } from './types'
 
 import {
   OfferIndustry,
   OfferNetwork,
   OfferTokenStandart,
   OfferDistributionFrequency,
-  OfferInvestmentStructure
-} from "state/launchpad/types"
-
+  OfferInvestmentStructure,
+} from 'state/launchpad/types'
 
 export const initialValues = {
   profilePicture: undefined,
@@ -30,6 +29,8 @@ export const initialValues = {
 
   tokenName: '',
   tokenTicker: '',
+  decimalsOn: true,
+  trusteeAddress: '',
   tokenType: '',
 
   network: undefined,
@@ -48,7 +49,7 @@ export const initialValues = {
   presaleAlocated: '',
   presaleMinInvestment: '',
   presaleMaxInvestment: '',
-  
+
   images: [],
   videos: [{ id: 0 }],
   additionalDocuments: [{ id: 0 }],
@@ -59,7 +60,7 @@ export const initialValues = {
   allowOnlyAccredited: undefined,
 
   terms: {
-    investmentStructure: ""
+    investmentStructure: '',
   },
 
   timeframe: {
@@ -67,17 +68,14 @@ export const initialValues = {
     presale: undefined,
     sale: undefined,
     closed: undefined,
-    claim: undefined
+    claim: undefined,
   },
 
-  social: [
-    { type: '' }
-  ],
+  social: [{ type: '' }],
 
   website: '',
   whitepaper: '',
   email: '',
-
 } as unknown as InformationFormValues
 
 export const industryOptions = [
@@ -122,7 +120,10 @@ export const tokenTypeOptions = [
   { label: 'USDC', value: OfferTokenType.USDC },
   { label: 'USDT', value: OfferTokenType.USDT },
 ]
-
+export const tokenDecimalsOnOptions = [
+  { label: 'On', value: true },
+  { label: 'Off', value: false },
+]
 export const distributionFrequencyOptions = [
   { label: 'Monthly', value: OfferDistributionFrequency.monthly },
   { label: 'Quarterly', value: OfferDistributionFrequency.quarterly },

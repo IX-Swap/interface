@@ -58,8 +58,8 @@ export const schema = yup.object().shape({
   // investingTokenAddress: yup.string().matches(/0x[0-9a-fA-F]+/),
   // investingTokenSymbol: yup.string(),
 
-  // decimals: yup.number(),
-
+  decimalsOn: yup.boolean(),
+  trusteeAddress: yup.string().matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
   softCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')
