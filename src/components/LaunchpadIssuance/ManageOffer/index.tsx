@@ -27,6 +27,7 @@ export const ManageOffer = () => {
   const { loading, data: offer } = useGetManagedOffer(params.offerId);
   const { usersClaimed, issuerClaimed, status } = offer || {};
 
+  // todo role check: offer-manager or admin only
   // todo when sale stage: depending on HeaderButtons."stage" - show different data and change showWhitelisting.
   const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status]);
   const isClaim = useMemo(() => status === OfferStatus.claim, [status]);

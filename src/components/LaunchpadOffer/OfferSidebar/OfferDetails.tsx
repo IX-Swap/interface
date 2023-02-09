@@ -1,9 +1,9 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { Link } from 'react-router-dom'
+import { capitalize } from '@material-ui/core'
 import { Copy, Info } from 'react-feather'
-
+import { Link } from 'react-router-dom'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
@@ -17,11 +17,15 @@ import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 import { OfferInvestmentIndicator } from './OfferInvestmentIndicator'
 import { OfferFundRaiseIndicator } from './OfferFundRaiseIndicator'
 
+import { Column, Row, Separator } from '../../LaunchpadMisc/styled'
 import { InvestDialog } from '../InvestDialog'
-import { Row, Column, Separator } from '../../LaunchpadMisc/styled'
 
+import PlainCopy from 'components/PlainCopy/PlainCopy'
+import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { shortenAddress } from 'utils'
-
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { nameChainMap } from 'constants/chains'
+import { ExternalLink } from 'theme'
 interface Props {
   offer: Offer
 }
@@ -30,14 +34,24 @@ enum OfferStageStatus {
   disabled,
   notStarted,
   active,
-  closed
+  closed,
 }
-
-const capitalize = (value: string) => `${value[0].toUpperCase()}${value.slice(1).toLowerCase()}`
 
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
-
+  const explorerLink = getExplorerLink(
+    nameChainMap[props?.offer?.network],
+    props.offer.tokenAddress,
+    ExplorerDataType.TOKEN
+  )
+  const { addToken } = useAddTokenByDetailsToMetamask()
+  const addToMetamask = () => {
+    addToken({
+      symbol: props.offer.tokenSymbol,
+      address: props.offer.tokenAddress,
+      decimals: props.offer.decimals,
+    })
+  }
   const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { currency: 'USD' }), [])
 
   const stageStatus = React.useMemo(() => {
@@ -45,7 +59,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
       case OfferStatus.preSale:
       case OfferStatus.sale:
         return OfferStageStatus.active
-        
+
       case OfferStatus.closed:
       case OfferStatus.claim:
         return OfferStageStatus.closed
@@ -67,15 +81,15 @@ export const OfferDetails: React.FC<Props> = (props) => {
     <Container>
       <OfferSidebarSummary>
         <Column margin="0 0 1rem 0">
-          {stageStatus === OfferStageStatus.closed && 
-            <InvestmentSaleStatusInfo 
-              isClosed       
+          {stageStatus === OfferStageStatus.closed && (
+            <InvestmentSaleStatusInfo
+              isClosed
               isSuccesfull={props.offer.softCapReached}
               daysTillClosed={props.offer.daysTillSale}
               allowOnlyAccredited={props.offer.allowOnlyAccredited}
               margin="0 0 1.5rem 0"
             />
-          }
+          )}
 
           {stageStatus === OfferStageStatus.notStarted && <OfferNotStartedLabel>Not Started</OfferNotStartedLabel>}
           {stageStatus !== OfferStageStatus.notStarted && (
@@ -85,7 +99,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
               </OfferInvestmentAmount>
 
               <Row alignItems="center" gap="1rem">
-                <OfferFundRaiseIndicator offer={props.offer} size={32} /> 
+                <OfferFundRaiseIndicator offer={props.offer} size={32} />
                 <OfferFundRaiseLabel>Raised</OfferFundRaiseLabel>
               </Row>
             </>
@@ -93,8 +107,8 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </Column>
 
         <OfferInvestmentIndicator offer={props.offer} />
-        
-        <Separator marginTop="1rem" marginBottom='1rem'/>
+
+        <Separator marginTop="1rem" marginBottom="1rem" />
 
         <OfferStats>
           <Participants>
@@ -115,13 +129,13 @@ export const OfferDetails: React.FC<Props> = (props) => {
         </OfferStats>
 
         <InvestButtonContainer>
-          {stageStatus !== OfferStageStatus.disabled &&
+          {stageStatus !== OfferStageStatus.disabled && (
             <InvestButton onClick={openInvestDialog}>
               {stageStatus === OfferStageStatus.notStarted && 'Register to Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
               {stageStatus === OfferStageStatus.closed && 'Open dashboard '}
             </InvestButton>
-          }
+          )}
 
           <InvestHelpLink to="#">How does this work?</InvestHelpLink>
         </InvestButtonContainer>
@@ -130,13 +144,25 @@ export const OfferDetails: React.FC<Props> = (props) => {
       </OfferSidebarSummary>
 
       <TokenInfo>
-        <TokenInfoCard><span className='label'>Token Network: </span>{capitalize(props.offer.network)}</TokenInfoCard>
-        <TokenInfoCard>Explorer</TokenInfoCard>
         <TokenInfoCard>
-          {shortenAddress(props.offer.contractAddress, 5)}
-          <Copy stroke={theme.launchpad.colors.text.body} size="18" />
+          <span className="label">Token Network: </span>
+          {capitalize(props.offer.network)}
         </TokenInfoCard>
         <TokenInfoCard>
+          <AdjustedExternalLink href={explorerLink} style={{ fontSize: '14px' }}>
+            Explorer
+          </AdjustedExternalLink>
+        </TokenInfoCard>
+        <TokenInfoCard>
+          <PlainCopy toCopy={props.offer.tokenAddress}>
+            <Row>
+              <span>{shortenAddress(props.offer.tokenAddress, 5)}</span>
+              <Copy stroke={theme.launchpad.colors.text.body} size="18" />
+            </Row>
+          </PlainCopy>
+        </TokenInfoCard>
+
+        <TokenInfoCard onClick={addToMetamask}>
           Add to Metamask
           <img src={MetamaskIcon} width="20" />
         </TokenInfoCard>
@@ -147,33 +173,53 @@ export const OfferDetails: React.FC<Props> = (props) => {
   )
 }
 
-type GeneralInfoFields = 'issuerName'
-  | 'country' 
-  | 'maxInvestment' 
-  | 'minInvestment' 
-  | 'investmentType' 
-  | 'investingTokenSymbol' 
-  | 'tokenPrice' 
+type GeneralInfoFields =
+  | 'issuerName'
+  | 'country'
+  | 'maxInvestment'
+  | 'minInvestment'
+  | 'investmentType'
+  | 'investingTokenSymbol'
+  | 'tokenPrice'
   | 'tokenSymbol'
 
 type GeneralInfoProps = Partial<Pick<Offer, GeneralInfoFields>>
 
 export const OfferGeneralInfo: React.FC<GeneralInfoProps> = (props) => {
   const formatedValue = useFormatOfferValue()
-  
-  const minTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.minInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [props.minInvestment, props.tokenPrice])
-  const maxTokenInvestment = React.useMemo(() => formatedValue(`${Math.floor(Number(props.maxInvestment) / Number(props.tokenPrice))}`) ?? 'N/A', [props.maxInvestment, props.tokenPrice])
+
+  const minTokenInvestment = React.useMemo(
+    () => formatedValue(`${Math.floor(Number(props.minInvestment) / Number(props.tokenPrice))}`) ?? 'N/A',
+    [props.minInvestment, props.tokenPrice]
+  )
+  const maxTokenInvestment = React.useMemo(
+    () => formatedValue(`${Math.floor(Number(props.maxInvestment) / Number(props.tokenPrice))}`) ?? 'N/A',
+    [props.maxInvestment, props.tokenPrice]
+  )
 
   return (
-    <InfoList 
+    <InfoList
       entries={[
         { label: 'Issuer', value: props.issuerName || 'N/A' },
         { label: 'Country', value: props.country || 'N/A' },
         { label: 'Investment Type', value: props.investmentType ?? 'N/A' },
-        { label: 'Token Price', value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}` },
-        { label: 'Max. Investment Size', value: `${props.investingTokenSymbol} ${formatedValue(props.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${props.tokenSymbol}` },
-        { label: 'Min. Investment Size', value: `${props.investingTokenSymbol}  ${formatedValue(props.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${props.tokenSymbol}` },
-      ]} 
+        {
+          label: 'Token Price',
+          value: `${props.investingTokenSymbol}  ${formatedValue(props.tokenPrice) ?? 'N/A'} / 1 ${props.tokenSymbol}`,
+        },
+        {
+          label: 'Max. Investment Size',
+          value: `${props.investingTokenSymbol} ${
+            formatedValue(props.maxInvestment) ?? 'N/A'
+          } / ${maxTokenInvestment} ${props.tokenSymbol}`,
+        },
+        {
+          label: 'Min. Investment Size',
+          value: `${props.investingTokenSymbol}  ${
+            formatedValue(props.minInvestment) ?? 'N/A'
+          } / ${minTokenInvestment} ${props.tokenSymbol}`,
+        },
+      ]}
     />
   )
 }
@@ -191,7 +237,7 @@ const Container = styled.div`
 
 const OfferSidebarSummary = styled.div`
   display: flex;
-  
+
   flex-flow: column nowrap;
   align-items: stretch;
   gap: 1rem;
@@ -205,7 +251,7 @@ const OfferFundRaiseLabel = styled.div`
   line-height: 160%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const OfferInvestmentAmount = styled.div`
@@ -216,11 +262,11 @@ const OfferInvestmentAmount = styled.div`
   line-height: 120%;
   letter-spacing: -0.03em;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
 const OfferNotStartedLabel = styled(OfferInvestmentAmount)`
-  color: ${props => props.theme.launchpad.colors.text.caption};
+  color: ${(props) => props.theme.launchpad.colors.text.caption};
 `
 
 const OfferStats = styled.div`
@@ -228,7 +274,6 @@ const OfferStats = styled.div`
 
   flex-flow: row nowrap;
   justify-content: space-between;
-  alignt-items: flex-start;
 `
 
 const Participants = styled.div`
@@ -245,8 +290,8 @@ const Participants = styled.div`
 
     line-height: 16px;
     letter-spacing: -0.02em;
-    
-    color: ${props => props.theme.launchpad.colors.text.body};
+
+    color: ${(props) => props.theme.launchpad.colors.text.body};
   }
 
   main {
@@ -255,8 +300,8 @@ const Participants = styled.div`
 
     line-height: 120%;
     letter-spacing: -0.03em;
-    
-    color: ${props => props.theme.launchpad.colors.text.title};
+
+    color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 `
 
@@ -269,7 +314,6 @@ const InvestButtonContainer = styled.div`
 
   flex-flow: column nowrap;
   align-items: center;
-
 `
 
 const InvestHelpLink = styled(Link)`
@@ -280,7 +324,7 @@ const InvestHelpLink = styled(Link)`
   line-height: 16px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 
   text-decoration: none;
   padding: 1rem;
@@ -290,11 +334,11 @@ const InvestButton = styled.button`
   height: 60px;
   width: 100%;
 
-  color: ${props => props.theme.launchpad.colors.text.light};
-  background: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.text.light};
+  background: ${(props) => props.theme.launchpad.colors.primary};
 
   cursor: pointer;
-  
+
   border: none;
   border-radius: 6px;
 
@@ -331,17 +375,21 @@ const TokenInfoCard = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 
   .label {
-    color: ${props => props.theme.launchpad.colors.text.body};
+    color: ${(props) => props.theme.launchpad.colors.text.body};
     margin-right: 0.5rem;
   }
 
-  svg, img {
+  svg,
+  img {
     margin-left: 0.5rem;
   }
+`
+const AdjustedExternalLink = styled(ExternalLink)`
+  color: ${({ theme }) => theme.launchpad.colors.text.title};
 `

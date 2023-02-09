@@ -9,8 +9,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Header } from 'pages/Launchpad/Header'
 import { Footer } from 'pages/Launchpad/Footer'
 
-import { Offer, OfferStatus} from 'state/launchpad/types'
-import { OFFER_RELATED_TIMEFRAMES } from 'state/launchpad/constants'
+import { OfferStatus } from 'state/launchpad/types'
 import { useCheckKYC, useGetOffer } from 'state/launchpad/hooks'
 import { useSetHideHeader } from 'state/application/hooks'
 
@@ -25,8 +24,6 @@ import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 
-
-
 interface OfferPageParams {
   offerId: string
 }
@@ -34,21 +31,20 @@ interface OfferPageParams {
 export default function LaunchpadOffer() {
   const history = useHistory()
   const params = useParams<OfferPageParams>()
-  
+
   const offer = useGetOffer(params.offerId)
   const hideHeader = useSetHideHeader()
   const checkKYC = useCheckKYC()
 
   const [isAllowed, setIsAllowed] = React.useState<boolean>()
-  
-  const { library, chainId, account } = useActiveWeb3React()
+
+  const { chainId, account } = useActiveWeb3React()
 
   React.useEffect(() => {
     if (offer.data) {
       setIsAllowed(checkKYC(offer.data.allowOnlyAccredited, offer.data.status === OfferStatus.closed))
     }
   }, [offer])
-
 
   React.useEffect(() => {
     hideHeader(true)
@@ -57,14 +53,18 @@ export default function LaunchpadOffer() {
       hideHeader(false)
     }
   }, [])
-  
+
   const blurred = React.useMemo(
-    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0), 
+    () => ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0),
     [account, chainId]
   )
-  
+
   if (offer.loading) {
-    return <Centered><Loader /></Centered>
+    return (
+      <Centered>
+        <Loader />
+      </Centered>
+    )
   }
 
   if (!offer.data) {
@@ -84,7 +84,7 @@ export default function LaunchpadOffer() {
   if (!isAllowed) {
     return (
       <Portal>
-        <KYCPrompt 
+        <KYCPrompt
           offerId={offer.data.id}
           allowOnlyAccredited={offer.data.allowOnlyAccredited}
           onClose={() => history.push('/launchpad')}
@@ -123,8 +123,8 @@ export default function LaunchpadOffer() {
 const OfferBackgroundWrapper = styled.div`
   width: 100vw;
   min-height: 100vh;
-  font-family: ${props => props.theme.launchpad.font};
-  background: ${props => props.theme.launchpad.colors.background};
+  font-family: ${(props) => props.theme.launchpad.font};
+  background: ${(props) => props.theme.launchpad.colors.background};
 `
 
 const Centered = styled(OfferBackgroundWrapper)`
@@ -132,22 +132,22 @@ const Centered = styled(OfferBackgroundWrapper)`
   place-content: center;
 `
 
-
 const OfferContainer = styled.article`
   display: grid;
 
   grid-template-columns: 1fr minmax(auto, 800px) 380px 1fr;
   grid-template-rows: 80px auto auto auto;
 
-  grid-template-areas: 
-    "header header header header"
-    ". summary . ."
-    ". main sidebar ."
-    "footer footer footer footer";
+  grid-template-areas:
+    'header header header header'
+    '. summary . .'
+    '. main sidebar .'
+    'footer footer footer footer';
 
   gap: 2rem 4rem;
-  
-  > main, > aside {
+
+  > main,
+  > aside {
     display: flex;
 
     flex-flow: column nowrap;
