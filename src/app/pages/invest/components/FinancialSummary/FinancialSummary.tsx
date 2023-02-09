@@ -18,7 +18,7 @@ export const FinancialSummary = () => {
   const { data } = useFinancialSummary(pairId)
   const { data: marketData } = useMarket(pairId)
   const { data: assetData } = useAssetById(
-    marketData?.listing.markets[0].currency
+    marketData?.listing?.markets[0]?.currency
   )
 
   return (
