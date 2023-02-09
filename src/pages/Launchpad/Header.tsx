@@ -7,20 +7,18 @@ import { ReactComponent as Logo } from 'assets/launchpad/svg/logo.svg'
 import { routes } from 'utils/routes'
 import { Link } from 'react-router-dom'
 import { isDevelopment } from 'utils/isEnvMode'
-import { useUserState } from 'state/user/hooks'
-import { useKYCState } from 'state/kyc/hooks'
-import { ROLES } from 'constants/roles'
+import { useKyc, useRole } from 'state/user/hooks'
 
 export const Header = () => {
-  const { kyc } = useKYCState()
-  const { me } = useUserState()
+  const { isCorporate, isApproved } = useKyc()
+  const { isOfferManager } = useRole()
 
   return (
     <HeaderContainer>
       <TitleSection to="/launchpad">
         <Logo />
-        <span className='bold-title'>IXS </span>
-        <span className='dimmed-title'>Launchpad</span>
+        <span className="bold-title">IXS </span>
+        <span className="dimmed-title">Launchpad</span>
       </TitleSection>
 
       <HeaderLinks>
@@ -29,10 +27,12 @@ export const Header = () => {
         <HeaderLink to={routes.pool}>Liquidity Pools</HeaderLink>
         <HeaderLink to={routes.launchpad}>IXS Launchpad</HeaderLink>
         <HeaderLink to={'#'}>Farming</HeaderLink>
-        <HeaderLink to={(isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}>Charts</HeaderLink>
+        <HeaderLink to={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}>
+          Charts
+        </HeaderLink>
       </HeaderLinks>
 
-      {kyc?.corporate && me.role === ROLES.OFFER_MANAGER && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
+      {isCorporate && isApproved && isOfferManager && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
 
       <Wallet />
     </HeaderContainer>
@@ -88,7 +88,7 @@ const TitleSection = styled(Link)`
   transition: background 0.3s;
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 
   .bold-title {
@@ -99,7 +99,7 @@ const TitleSection = styled(Link)`
     line-height: 22px;
     letter-spacing: -0.03em;
 
-    color: ${props => props.theme.launchpad.colors.text.title};
+    color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 
   .dimmed-title {
@@ -110,10 +110,9 @@ const TitleSection = styled(Link)`
     line-height: 22px;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.caption};
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 `
-
 
 const HeaderLink = styled(Link)`
   font-style: normal;
@@ -125,7 +124,7 @@ const HeaderLink = styled(Link)`
   line-height: 16px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
   transition: transform 0.1s ease-in-out;
 
@@ -144,14 +143,14 @@ const IssuancesLink = styled(Link)`
 
   text-decoration: none;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.primary + '14'};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
   border-radius: 6px;
 
   transition: background 0.3s;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.primary + '10'};
+    background: ${(props) => props.theme.launchpad.colors.primary + '10'};
   }
 `

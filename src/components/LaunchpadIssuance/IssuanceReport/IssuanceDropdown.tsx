@@ -1,18 +1,18 @@
 import React, { useMemo } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useGetIssuancePlain } from 'state/launchpad/hooks'
+import { useRole } from 'state/user/hooks'
 import styled from 'styled-components'
 import { populatePath } from 'utils/params'
 import { routes } from 'utils/routes'
 import { DropdownField } from '../IssuanceForm/shared/fields/DropdownField'
 import { EMPTY_VALUE } from './constants'
-import { useFieldsByRole } from './Table/helpers'
 
 export const IssuanceDropdown = () => {
   const history = useHistory()
 
   const { issuanceId } = useParams<{ issuanceId: string }>()
-  const { isAdmin } = useFieldsByRole()
+  const { isAdmin } = useRole()
   const { items } = useGetIssuancePlain({ showAll: `${isAdmin}` })
   const chooseIssuance = (_: string, value: any) => {
     history.push(populatePath({ url: routes.issuanceReport, field: 'issuanceId', value }))

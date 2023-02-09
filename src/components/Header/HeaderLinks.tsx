@@ -14,8 +14,6 @@ import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
 import { useActiveWeb3React } from 'hooks/web3'
-import { KYCStatuses } from 'pages/KYC/enum'
-import { useKYCState } from 'state/kyc/hooks'
 import { ExternalLink, TYPE } from 'theme'
 import { isDevelopment } from 'utils/isEnvMode'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
@@ -23,6 +21,7 @@ import { routes } from 'utils/routes'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
 
 import Row, { RowFixed } from '../Row'
+import { useKyc, useRole } from 'state/user/hooks'
 
 const activeClassName = 'ACTIVE'
 
@@ -106,11 +105,11 @@ const NFTPopover = () => {
 export const HeaderLinks = () => {
   const [open, toggle] = useToggle(false)
   const [openNFT, toggleNFT] = useToggle(false)
-
+  const { isCorporate, isApproved } = useKyc()
+  const { isOfferManager } = useRole()
   const farmNode = useRef<HTMLDivElement>()
   const nftNode = useRef<HTMLDivElement>()
 
-  const { kyc } = useKYCState()
   const { config } = useWhitelabelState()
   const { chainId, account } = useActiveWeb3React()
 
@@ -118,7 +117,6 @@ export const HeaderLinks = () => {
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
   const isAllowed = useCallback(
@@ -142,7 +140,7 @@ export const HeaderLinks = () => {
 
       {isAllowed(routes.securityTokens()) && account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
-          disabled={!isKycApproved}
+          disabled={!isApproved}
           data-testid="securityTokensButton"
           id={`stake-nav-link`}
           to={routes.securityTokens('tokens')}
@@ -162,7 +160,7 @@ export const HeaderLinks = () => {
 
       {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink
-          disabled={!isKycApproved}
+          disabled={!isApproved}
           target="_self"
           href={'https://ixswap.io/fractionalized-nfts-coming-soon-on-ix-swap/'}
         >
@@ -204,7 +202,7 @@ export const HeaderLinks = () => {
 
       {isAllowed('/charts') && account && isWhitelisted && (
         <MenuExternalLink
-          disabled={!isKycApproved}
+          disabled={!isApproved}
           target="_self"
           href={config?.chartsUrl || (isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home')}
         >
@@ -213,14 +211,15 @@ export const HeaderLinks = () => {
       )}
 
       {isAllowed(routes.faucet) && account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-        <StyledNavLink disabled={!isKycApproved} id={`faucet-nav-link`} to={routes.faucet}>
+        <StyledNavLink disabled={!isApproved} id={`faucet-nav-link`} to={routes.faucet}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
-      
-      <StyledNavLink  id={`issuance-nav-link`} to={'/launchpad'}>
+
+      <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
         <Trans>Launchpad</Trans>
       </StyledNavLink>
+      {isCorporate && isApproved && isOfferManager && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
     </HeaderLinksWrap>
   )
 }

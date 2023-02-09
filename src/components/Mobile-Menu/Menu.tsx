@@ -6,14 +6,13 @@ import React, { useCallback, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { ExternalLink } from 'theme'
-import { useKYCState } from 'state/kyc/hooks'
-import { KYCStatuses } from 'pages/KYC/enum'
 import { routes } from 'utils/routes'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 import { ReactComponent as CloseIcon } from '../../assets/images/cross.svg'
 import { disabledStyle } from 'components/Header/HeaderLinks'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
+import { useKyc, useRole } from 'state/user/hooks'
 
 interface Props {
   close: () => void
@@ -36,8 +35,6 @@ export const Menu = ({ close }: Props) => {
   }, [])
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const { kyc } = useKYCState()
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
 
@@ -52,6 +49,9 @@ export const Menu = ({ close }: Props) => {
     [config]
   )
 
+  const { isCorporate, isApproved } = useKyc()
+  const { isOfferManager } = useRole()
+  
   return (
     <ModalContainer>
       <Container>
@@ -67,7 +67,7 @@ export const Menu = ({ close }: Props) => {
 
           {isAllowed(routes.securityTokens()) && chainId && chains.includes(chainId) && isWhitelisted && (
             <MenuListItem
-              disabled={!isKycApproved}
+              disabled={!isApproved}
               id={`security-nav-link`}
               to={routes.securityTokens('tokens')}
               onClick={close}
@@ -84,7 +84,7 @@ export const Menu = ({ close }: Props) => {
 
           {chainId && chains.includes(chainId) && isWhitelisted && (
             <ExternalListItem
-              disabled={!isKycApproved}
+              disabled={!isApproved}
               target="_self"
               href={'https://ixswap.io/fractionalized-nfts-coming-soon-on-ix-swap/'}
             >
@@ -117,13 +117,13 @@ export const Menu = ({ close }: Props) => {
           )}
 
           {isWhitelisted && (
-            <ExternalListItem disabled={!isKycApproved} target="_self" href={'https://info.ixswap.io/home'}>
+            <ExternalListItem disabled={!isApproved} target="_self" href={'https://info.ixswap.io/home'}>
               <Trans>Charts</Trans>
             </ExternalListItem>
           )}
 
           {isAllowed('/faucet') && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-            <MenuListItem disabled={!isKycApproved} id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
+            <MenuListItem disabled={!isApproved} id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
               <Trans>Faucet</Trans>
             </MenuListItem>
           )}
@@ -143,10 +143,20 @@ export const Menu = ({ close }: Props) => {
               <Trans>Token Manager</Trans>
             </MenuListItem>
           )}
-          
+
           <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
             <Trans>Launchpad</Trans>
           </MenuListItem>
+          {isCorporate && isApproved && isOfferManager && (
+            <MenuListItem
+              activeClassName="active-item"
+              id={`issuance-dashboard-nav-link`}
+              to="/issuance"
+              onClick={close}
+            >
+              <Trans>Issuance Dashboard</Trans>
+            </MenuListItem>
+          )}
         </MenuList>
       </Container>
     </ModalContainer>
@@ -172,7 +182,6 @@ const ModalContainer = styled.div`
 
 const Container = styled.div`
   position: relative;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
