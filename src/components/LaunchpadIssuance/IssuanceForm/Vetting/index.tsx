@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { FieldArray, Formik } from 'formik'
 
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
@@ -18,19 +18,33 @@ import { FileField } from '../shared/fields/FileField'
 import { DirectorField } from '../shared/fields/DirectorField'
 import { RejectInfo } from '../shared/RejectInfo'
 
-import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer, DeleteButton } from '../shared/styled'
+import {
+  FormContainer,
+  FormHeader,
+  FormTitle,
+  FormSideBar,
+  FormBody,
+  FormSubmitContainer,
+  DeleteButton,
+} from '../shared/styled'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { TextareaField } from '../shared/fields/TextareaField'
-import { useGetFieldArrayId, useLoader, useSaveVettingDraft, useSubmitVettingForm, useVetting, useVettingFormInitialValues } from 'state/launchpad/hooks'
+import {
+  useGetFieldArrayId,
+  useLoader,
+  useSaveVettingDraft,
+  useSubmitVettingForm,
+  useVetting,
+  useVettingFormInitialValues,
+} from 'state/launchpad/hooks'
 
 import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useAddPopup } from 'state/application/hooks'
 
-import { defaultValues } from "components/LaunchpadIssuance/IssuanceForm/Vetting/util"
-
+import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
 
 export const IssuanceVettingForm = () => {
   const theme = useTheme()
@@ -39,7 +53,7 @@ export const IssuanceVettingForm = () => {
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
-  
+  const { vettingId } = useParams<{ vettingId: string }>()
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
@@ -56,16 +70,17 @@ export const IssuanceVettingForm = () => {
     if (!isSafeToClose) {
       setShowCloseDialog(true)
     }
-    
+
     return isSafeToClose
   }, [])
 
   const issuanceId = React.useMemo(() => {
-    const value = decodeURI(history.location.search).replace('?', '').split('&')
-      .map(x => x.split('='))
+    const value = decodeURI(history.location.search)
+      .replace('?', '')
+      .split('&')
+      .map((x) => x.split('='))
       .map(([key, value]) => ({ key, value }))
-      .find(x => x.key === 'id')
-      ?.value
+      .find((x) => x.key === 'id')?.value
 
     if (!value) {
       return
@@ -83,7 +98,7 @@ export const IssuanceVettingForm = () => {
     history.push(`/issuance/create?id=${issuanceId}`)
   }, [history, issuanceId])
 
-  const goBack = React.useCallback(() =>{
+  const goBack = React.useCallback(() => {
     if (isSafeToClose) {
       goMain()
     } else {
@@ -91,49 +106,64 @@ export const IssuanceVettingForm = () => {
     }
   }, [history, issuanceId])
 
-  const textFilter = React.useCallback((value?: string) => value?.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join('') ?? '', [])
+  const textFilter = React.useCallback(
+    (value?: string) =>
+      value
+        ?.split('')
+        .filter((x) => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x))
+        .join('') ?? '',
+    []
+  )
 
   const toSubmit = React.useCallback(() => {
     setShowConfirmDialog(true)
   }, [showConfirmDialog])
 
-  const submit = React.useCallback(async (values: VettingFormValues) => {
-    setShowConfirmDialog(false)
+  const submit = React.useCallback(
+    async (values: VettingFormValues) => {
+      setShowConfirmDialog(false)
 
-    loader.start()
+      loader.start()
 
-    try {
-      await createVetting(values, initialValues.data!, initialValues.vettingId)
+      try {
+        await createVetting(values, initialValues.data!, initialValues.vettingId)
 
-      addPopup({ info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` }})
-      goMain();
-    } catch (err) {
-      addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
-    } finally {
-      loader.stop()
-    }
-  }, [initialValues.data, initialValues.vettingId])
+        addPopup({
+          info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` },
+        })
+        goMain()
+      } catch (err) {
+        addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
+      } finally {
+        loader.stop()
+      }
+    },
+    [initialValues.data, initialValues.vettingId]
+  )
 
-  const saveDraft = React.useCallback(async (values: VettingFormValues) => {
-    loader.start()
+  const saveDraft = React.useCallback(
+    async (values: VettingFormValues) => {
+      loader.start()
 
-    try {
-      await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
+      try {
+        await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
 
-      addPopup({ info: { success: true, summary: 'Draft saved successfully' }})
-      goMain();
-    } catch (err) {
-      addPopup({ info: { success: false, summary: `Error occured: ${err}` }})
-    } finally {
-      loader.stop()
-    }
-  }, [initialValues.data, initialValues.vettingId])
+        addPopup({ info: { success: true, summary: 'Draft saved successfully' } })
+        goMain()
+      } catch (err) {
+        addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
+      } finally {
+        loader.stop()
+      }
+    },
+    [initialValues.data, initialValues.vettingId]
+  )
 
   React.useEffect(() => {
     const listener = () => true
-    
+
     window.addEventListener('beforeunload', listener)
-  
+
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
@@ -155,14 +185,16 @@ export const IssuanceVettingForm = () => {
         <FormContainer>
           <ConfirmationForm
             isOpen={showConfirmDialog}
-            onClose={()=> setShowConfirmDialog(false)}
-            onSave={submitForm}/>
+            onClose={() => setShowConfirmDialog(false)}
+            onSave={submitForm}
+          />
 
           <CloseConfirmation
             isOpen={showCloseDialog}
-            onDiscard={()=> history.push(`/issuance/create?id=${issuanceId}`)}
+            onDiscard={() => history.push(`/issuance/create?id=${issuanceId}`)}
             onClose={onConfirmationClose}
-            onSave={() => saveDraft(values)}/>
+            onSave={() => saveDraft(values)}
+          />
 
           {loader.isLoading && (
             <LoaderContainer width="100vw" height="100vh">
@@ -179,15 +211,17 @@ export const IssuanceVettingForm = () => {
           </FormHeader>
 
           <FormSideBar>
-
-            {[IssuanceStatus.changesRequested, IssuanceStatus.declined]
-              .includes(initialValues?.data?.status as IssuanceStatus) && (
+            {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
+              initialValues?.data?.status as IssuanceStatus
+            ) && (
               <RejectInfo
                 message={initialValues?.data?.changesRequested}
                 status={initialValues?.data?.status}
                 issuanceId={issuanceId}
                 onClear={() => resetForm({ values: defaultValues })}
-                onSubmit={toSubmit}/>)}
+                onSubmit={toSubmit}
+              />
+            )}
 
             <FormSubmitContainer>
               <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
@@ -195,14 +229,14 @@ export const IssuanceVettingForm = () => {
               <FilledButton onClick={toSubmit}>Submit</FilledButton>
             </FormSubmitContainer>
           </FormSideBar>
-      
+
           <FormBody>
             <IssuerInfoBlock>
-              <FormField 
+              <FormField
                 label="Applicant's Full Name"
                 placeholder="Full name of the Applicant"
                 field="applicantFullName"
-                setter={setFieldValue} 
+                setter={setFieldValue}
                 value={values.applicantFullName}
                 error={errors.applicantFullName}
                 inputFilter={textFilter}
@@ -212,7 +246,7 @@ export const IssuanceVettingForm = () => {
                 label="Email Address"
                 placeholder="Email Address"
                 field="email"
-                setter={setFieldValue} 
+                setter={setFieldValue}
                 value={values.email}
                 error={errors.email}
                 inputFilter={textFilter}
@@ -250,14 +284,11 @@ export const IssuanceVettingForm = () => {
                 error={errors.document?.pitchDeck as string}
               />
 
-
               <FieldArray name="fundingDocuments">
                 {({ push, handleRemove }) => (
                   <>
                     <AdditionalFiles>
-                      <Hint>
-                        Upload additional documents relevant to the funding objective. (Optional)
-                      </Hint>
+                      <Hint>Upload additional documents relevant to the funding objective. (Optional)</Hint>
 
                       <AddDocumentButton padding="0" onClick={() => push({ id: getId() })}>
                         <Plus size="14" /> Add Document
@@ -266,11 +297,11 @@ export const IssuanceVettingForm = () => {
 
                     <FundingDocumentsGrid>
                       {values.fundingDocuments.map((entry, idx) => (
-                        <FileField 
+                        <FileField
                           key={entry.id}
                           value={entry.file}
                           field={`fundingDocuments[${idx}].file`}
-                          setter={setFieldValue} 
+                          setter={setFieldValue}
                           trailing={
                             <DeleteButton onClick={handleRemove(idx)}>
                               <Trash />
@@ -283,7 +314,7 @@ export const IssuanceVettingForm = () => {
                 )}
               </FieldArray>
 
-              <TextareaField 
+              <TextareaField
                 label="Description"
                 placeholder="Short description of the company/offering"
                 field="description"
@@ -293,11 +324,11 @@ export const IssuanceVettingForm = () => {
                 error={errors.description}
               />
             </DescriptionBlock>
-            
+
             <Separator />
 
             <FilesBlock>
-              <FileField 
+              <FileField
                 label="Certificate of Incorporation"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncorporation"
@@ -305,7 +336,7 @@ export const IssuanceVettingForm = () => {
                 error={errors.document?.certificateOfIncorporation as string}
                 setter={setFieldValue}
               />
-              <FileField 
+              <FileField
                 optional
                 label="Certificate of Incumbency"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
@@ -314,8 +345,8 @@ export const IssuanceVettingForm = () => {
                 error={errors.document?.certificateOfIncumbency as string}
                 setter={setFieldValue}
               />
-              
-              <FileField 
+
+              <FileField
                 label="Share & Director Registry"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.shareDirectorRegistry"
@@ -323,7 +354,7 @@ export const IssuanceVettingForm = () => {
                 error={errors.document?.shareDirectorRegistry as string}
                 setter={setFieldValue}
               />
-              <FileField 
+              <FileField
                 optional
                 label="Copy of Audited Financials"
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
@@ -332,8 +363,8 @@ export const IssuanceVettingForm = () => {
                 error={errors.document?.auditedFinancials as string}
                 setter={setFieldValue}
               />
-              
-              <FileField 
+
+              <FileField
                 label="Memorandum and Article of Association Company Constitution"
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.memorandumArticle"
@@ -341,7 +372,7 @@ export const IssuanceVettingForm = () => {
                 error={errors.document?.memorandumArticle as string}
                 setter={setFieldValue}
               />
-              <FileField 
+              <FileField
                 label="Ownership Structure"
                 hint={<ExampleLink>See Examples</ExampleLink>}
                 field="document.ownershipStructure"
@@ -349,8 +380,8 @@ export const IssuanceVettingForm = () => {
                 error={errors.document?.ownershipStructure as string}
                 setter={setFieldValue}
               />
-              
-              <FileField 
+
+              <FileField
                 label="Resolution of Authorized Signatory List"
                 hint="Document must include specimen signatures or equivalent"
                 field="document.resolutionAuthorizedSignatory"
@@ -362,33 +393,34 @@ export const IssuanceVettingForm = () => {
 
             <Separator />
 
-            <DirectorField 
-              directorTitle='Beneficial Owner'
+            <DirectorField
+              directorTitle="Beneficial Owner"
               directors={values.beneficialOwners}
-              setter={setFieldValue} 
+              setter={setFieldValue}
               field="beneficialOwners"
               errors={errors as { [key: string]: string }}
             />
 
-            <DirectorField 
-              directorTitle='Director'
+            <DirectorField
+              directorTitle="Director"
               directors={values.directors}
               setter={setFieldValue}
               field="directors"
               errors={errors as { [key: string]: string }}
             />
 
-            <Row justifyContent='flex-end' alignItems="center" gap="1.5rem">
+            <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
               <OutlineButton width="280px">Back</OutlineButton>
-              <FilledButton width="280px" onClick={toSubmit}>Submit</FilledButton>
+              <FilledButton width="280px" onClick={toSubmit}>
+                Submit
+              </FilledButton>
             </Row>
           </FormBody>
-      </FormContainer>
+        </FormContainer>
       )}
     </Formik>
   )
 }
-
 
 const IssuerInfoBlock = styled.div`
   display: grid;
@@ -405,8 +437,8 @@ const DescriptionBlock = styled.div`
   grid-template-rows: repeat(2, auto);
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
-    ". . ."
-    "description description";
+    '. . .'
+    'description description';
 
   gap: 2.5rem 1rem;
 
@@ -432,7 +464,7 @@ const Hint = styled.div`
 
   text-align: right;
 
-  color: #8D8DA3;
+  color: #8d8da3;
 `
 
 const FilesBlock = styled.div`
@@ -457,7 +489,7 @@ const ExampleLink = styled.a`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
 const FundingDocumentsGrid = styled(FormGrid)`
