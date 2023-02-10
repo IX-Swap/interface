@@ -24,7 +24,10 @@ import {
   OfferPresaleStatistics,
   OfferPresaleWhitelist,
   ManageOfferBody,
-  PresaleOrderConfig
+  PresaleOrderConfig,
+  ManagedOfferInvestment,
+  PaginationRes,
+  InvestmentStagesFilter
 } from "state/launchpad/types"
 
 import { toggleKYCDialog } from './actions'
@@ -943,13 +946,13 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       faq: payload.faq,
       members: payload.members.map(
         (member) =>
-          ({
-            id: member.id,
-            name: member.name,
-            role: member.title,
-            about: member.description,
-            photo: files.find((x) => x.id === member.avatar?.id),
-          } as TeamMember)
+        ({
+          id: member.id,
+          name: member.name,
+          role: member.title,
+          about: member.description,
+          photo: files.find((x) => x.id === member.avatar?.id),
+        } as TeamMember)
       ),
 
       social: Object.entries(payload.socialMedia).map(([name, link]) => ({ type: name as SocialMediaType, url: link })),
@@ -1300,4 +1303,35 @@ export const useManagePresaleWhitelists = () => {
       .finally(loader.stop);
   }, [])
   return { isLoading: loader.isLoading, load, error }
+}
+
+export const useGetManagedOfferInvestments = (id: string | undefined) => {
+  const loader = useLoader(false)
+  const [data, setData] = React.useState<PaginationRes<ManagedOfferInvestment>>()
+  const [error, setError] = React.useState<string | undefined>()
+
+  const load = React.useCallback((stage: InvestmentStagesFilter, page = 1, order?: PresaleOrderConfig, size = 8) => {
+    loader.start();
+    let query = [`page=${page}`, `offset=${size}`, `stage=${stage}`]
+    if (order) {
+      query = query.concat(Object.entries(order)
+        .filter(([_, value]) => value && value.length > 0)
+        .map(([key, value]) => `order=${key}=${value}`))
+    }
+    apiService.get(`/offers/${id}/investments?${query.join('&')}`)
+      .then(res => {
+        const formatted = {
+          hasMore: res.data.nextPage !== null,
+          items: res.data.items,
+          totalPages: res.data.totalPages,
+          totalItems: res.data.totalItems,
+        } as PaginationRes<ManagedOfferInvestment>
+        setData(formatted);
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => loader.stop())
+  }, [id])
+  // React.useEffect(() => { load() }, [load])
+
+  return { isLoading: loader.isLoading, error, load, data }
 }

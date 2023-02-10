@@ -8,96 +8,106 @@ import { ConfirmPopup } from '../../utils/ConfirmPopup'
 import { useShowError } from 'state/application/hooks'
 
 interface Props {
-  offerId: string;
-  totalItems: number;
-  refreshWhitelists: () => void;
+  offerId: string
+  totalItems: number
+  refreshWhitelists: () => void
+  disabledManage: boolean
 }
 interface ConfirmProps {
-  isOpen: boolean;
-  setOpen: (foo: boolean) => void;
-  onAccept: () => void;
+  isOpen: boolean
+  setOpen: (foo: boolean) => void
+  onAccept: () => void
 }
 
 export const ConfirmModal = ({ isOpen, setOpen, onAccept }: ConfirmProps) => {
   const onAcceptWithClose = () => {
-    onAccept();
-    setOpen(false);
+    onAccept()
+    setOpen(false)
   }
-  return <ConfirmPopup isOpen={isOpen} onDecline={() => { setOpen(false) }} onAccept={onAcceptWithClose} />;
+  return (
+    <ConfirmPopup
+      isOpen={isOpen}
+      onDecline={() => {
+        setOpen(false)
+      }}
+      onAccept={onAcceptWithClose}
+    />
+  )
 }
 
-export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }: Props) => {
+export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, disabledManage }: Props) => {
   const theme = useTheme()
-  const approveRandom = useApproveRandomPresaleWhitelists();
-  const manageWhitelists = useManagePresaleWhitelists();
-  const [count, setCount] = useState('');
+  const approveRandom = useApproveRandomPresaleWhitelists()
+  const manageWhitelists = useManagePresaleWhitelists()
+  const [count, setCount] = useState('')
   const showError = useShowError()
 
-  const [openApproveAll, setOpenApproveAll] = useState(false);
-  const [openRejectAll, setOpenRejectAll] = useState(false);
-  const [openApproveRandom, setOpenApproveRandom] = useState(false);
+  const [openApproveAll, setOpenApproveAll] = useState(false)
+  const [openRejectAll, setOpenRejectAll] = useState(false)
+  const [openApproveRandom, setOpenApproveRandom] = useState(false)
 
   const refresh = () => {
-    setCount('');
-    refreshWhitelists();
+    setCount('')
+    refreshWhitelists()
   }
 
   const randomError = useMemo(() => {
     if (approveRandom.error) {
-      return approveRandom.error;
+      return approveRandom.error
     }
     if (count && totalItems && +count > totalItems) {
-      return `You can approve maximum ${totalItems} users`;
+      return `You can approve maximum ${totalItems} users`
     }
-    return '';
-  }, [count, totalItems, approveRandom.error]);
-  const isLoading = useMemo(() => {
-    return approveRandom.isLoading || manageWhitelists.isLoading;
-  }, [approveRandom.isLoading, manageWhitelists.isLoading])
-  const disabledRandom = !count || !totalItems || !!randomError || !!isLoading;
-  const disabledAll = !totalItems || manageWhitelists.isLoading;
+    if (!totalItems) {
+      return 'There are no users to approve'
+    }
+    return ''
+  }, [count, totalItems, approveRandom.error])
+
+  const disabledRandom = disabledManage || !count || !totalItems || approveRandom.isLoading
+  const disabledAll = disabledManage || !totalItems || manageWhitelists.isLoading
 
   const integerNumberFilter = useCallback((value?: string) => {
     if (!value) {
-      return '';
+      return ''
     }
     return value
       .split('')
-      .filter(x => /[0-9]/.test(x))
-      .join('');
-  }, []);
+      .filter((x) => /[0-9]/.test(x))
+      .join('')
+  }, [])
 
   const onApproveRandom = () => {
-    if (disabledRandom) return;
+    if (disabledRandom) return
     approveRandom.load(offerId, +count).then(() => {
-      refresh();
-    });
-  };
+      refresh()
+    })
+  }
   const onApproveAll = () => {
-    if (!totalItems) return;
+    if (!totalItems) return
     manageWhitelists.load(offerId, { approveAll: true }).then(() => {
-      refresh();
-    });
+      refresh()
+    })
   }
   const onRejectAll = () => {
-    if (!totalItems) return;
+    if (!totalItems) return
     manageWhitelists.load(offerId, { rejectAll: true }).then(() => {
-      refresh();
-    });
+      refresh()
+    })
   }
   const onClickManage = (disabled: boolean, setMethod: (foo: boolean) => void) => {
     if (!disabled) {
-      setMethod(true);
+      setMethod(true)
     }
   }
   useEffect(() => {
     if (manageWhitelists.error) {
-      showError(manageWhitelists.error);
+      showError(manageWhitelists.error)
     }
   }, [manageWhitelists.error])
 
-  if (isLoading) {
-    return <></>;
+  if (approveRandom.isLoading || manageWhitelists.isLoading) {
+    return <></>
   }
   return (
     <Container>
@@ -111,23 +121,33 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
           <FieldContainer>
             <IssuanceTextField
               onChange={setCount}
-              label='Approve randomly'
-              placeholder='Approve randomly'
+              label="Approve randomly"
+              placeholder="Approve randomly"
               inputFilter={integerNumberFilter}
-              disabled={false}
+              disabled={disabledManage}
               error={randomError}
             />
-            <EndAdornment disabled={disabledRandom} onClick={() => onClickManage(disabledRandom, setOpenApproveRandom)}>Approve</EndAdornment>
+            <EndAdornment disabled={disabledRandom} onClick={() => onClickManage(disabledRandom, setOpenApproveRandom)}>
+              Approve
+            </EndAdornment>
           </FieldContainer>
         </GridItem>
         <GridItem>
-          <OutlineButton color={theme.launchpad.colors.success} width="165px" onClick={() => onClickManage(disabledAll, setOpenApproveAll)}>
+          <OutlineButton
+            color={theme.launchpad.colors.success}
+            width="165px"
+            onClick={() => onClickManage(disabledAll, setOpenApproveAll)}
+          >
             <ButtonLabel disabled={disabledAll}>Approve All</ButtonLabel>
             <Check size={13} />
           </OutlineButton>
         </GridItem>
         <GridItem>
-          <OutlineButton color={theme.launchpad.colors.error} width="165px" onClick={() => onClickManage(disabledAll, setOpenRejectAll)}>
+          <OutlineButton
+            color={theme.launchpad.colors.error}
+            width="165px"
+            onClick={() => onClickManage(disabledAll, setOpenRejectAll)}
+          >
             <ButtonLabel disabled={disabledAll}>Reject All</ButtonLabel>
             <X size={13} />
           </OutlineButton>
@@ -143,36 +163,36 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists }
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 const GridContainer = styled.div`
-  display: grid; 
-  grid-template-columns: auto 155px 155px; 
-  grid-template-rows: auto; 
+  display: grid;
+  grid-template-columns: auto 155px 155px;
+  grid-template-rows: auto;
   grid-template-areas:
-    "row1 row2 row3"
-    "error error error";
-  gap: 0 20px; 
-`;
+    'row1 row2 row3'
+    'error error error';
+  gap: 0 20px;
+`
 const GridItem = styled.div`
-  display: grid;  
+  display: grid;
   align-items: center;
-`;
+`
 const Title = styled.div`
   font-weight: 700;
   font-size: 16px;
   line-height: 120%;
   letter-spacing: -0.03em;
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-bottom: 17px;
-`;
+`
 const ButtonLabel = styled.span<{ disabled: boolean }>`
   font-weight: 600;
-  opacity: ${props => props.disabled ? 0.5 : 1};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `
 const FieldContainer = styled.div`
   position: relative;
   max-width: 759px;
-`;
+`
 const EndAdornment = styled.div<{ disabled: boolean }>`
   position: absolute;
   top: 28px;
@@ -184,11 +204,11 @@ const EndAdornment = styled.div<{ disabled: boolean }>`
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.02em;
-  color: ${props => props.theme.launchpad.colors.primary};
-  opacity: ${props => props.disabled ? 0.5 : 1};
-`;
+  color: ${(props) => props.theme.launchpad.colors.primary};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+`
 const ErrorText = styled.div`
-  color: ${props => props.theme.launchpad.colors.error};
+  color: ${(props) => props.theme.launchpad.colors.error};
 
   font-style: normal;
   font-weight: 500;

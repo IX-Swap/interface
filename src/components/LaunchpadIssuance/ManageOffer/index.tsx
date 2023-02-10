@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
@@ -13,6 +13,7 @@ import { HeaderButtons } from './HeaderButtons'
 import { OFFER_STATUSES } from '../utils/constants'
 import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
 import { alpha } from '@material-ui/core/styles'
+import { InvestmentsBlock } from './investments'
 
 interface ManagedOfferPageParams {
   offerId: string
@@ -28,9 +29,8 @@ export const ManageOffer = () => {
   const { loading, data: offer } = useGetManagedOffer(params.offerId)
   const { usersClaimed, issuerClaimed, status } = offer || {}
 
-  // todo role check: offer-manager or admin only
-  // todo when sale stage: depending on HeaderButtons."stage" - show different data and change showWhitelisting.
-  const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status])
+  const [stage, setStage] = useState<OfferStatus>()
+  const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
   const isClaim = useMemo(() => status === OfferStatus.claim, [status])
 
   const claimBtnTitle = useMemo(() => {
@@ -45,6 +45,12 @@ export const ManageOffer = () => {
     }
     return ''
   }, [loading, isClaim, usersClaimed, issuerClaimed])
+
+  useEffect(() => {
+    if (status) {
+      setStage(status)
+    }
+  }, [status])
 
   if (loading) {
     return (
@@ -83,7 +89,7 @@ export const ManageOffer = () => {
         </HeaderItem>
       </Header>
 
-      <HeaderButtons offer={offer} />
+      <HeaderButtons offer={offer} stage={stage} setStage={setStage} />
 
       <CustomGridContainer>
         <StatisticsBoxItem>
@@ -94,7 +100,8 @@ export const ManageOffer = () => {
         </StagesBoxItem>
       </CustomGridContainer>
 
-      {showWhitelisting && <PresaleBlock offerId={offer.id} issuanceId={offer.issuanceId} />}
+      {showWhitelisting && <PresaleBlock offer={offer} />}
+      {!showWhitelisting && <InvestmentsBlock offer={offer} chosenStage={stage} />}
     </Wrapper>
   )
 }

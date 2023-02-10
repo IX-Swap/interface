@@ -1,7 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { GridItem, GridContainer } from 'components/Grid'
-import { OfferPresaleStatistics, PresaleData, PresaleOrderConfig } from 'state/launchpad/types'
+import {
+  ManagedOffer,
+  OfferPresaleStatistics,
+  OfferPresaleWhitelist,
+  OfferStatus,
+  PaginationRes,
+  PresaleOrderConfig,
+} from 'state/launchpad/types'
 import { useGetManagedOfferPresaleStatistics, useGetManagedOfferPresaleWhitelists } from 'state/launchpad/hooks'
 import { OfferWhitelistInfo } from './WhitelistInfo'
 import { OfferWhitelistApprove } from './WhitelistApprove'
@@ -9,15 +16,16 @@ import { OfferWhitelistList } from './WhitelistList'
 import { alpha } from '@material-ui/core/styles'
 
 interface Props {
-  offerId: string
-  issuanceId: number
+  offer: ManagedOffer
 }
 
-export const PresaleBlock = ({ offerId, issuanceId }: Props) => {
+export const PresaleBlock = ({ offer }: Props) => {
+  const { id: offerId, issuanceId, status } = offer
+
   const getStatistics = useGetManagedOfferPresaleStatistics()
   const getWhitelists = useGetManagedOfferPresaleWhitelists()
 
-  const [data, setData] = useState<PresaleData>()
+  const [data, setData] = useState<PaginationRes<OfferPresaleWhitelist>>()
   const [statistics, setStatistics] = useState<OfferPresaleStatistics>()
 
   const [page, setPage] = useState<number>(1)
@@ -29,7 +37,7 @@ export const PresaleBlock = ({ offerId, issuanceId }: Props) => {
 
   const refreshWhitelists = useCallback(() => {
     startLoading()
-    getWhitelists(offerId, page, order, pageSize).then((res: PresaleData) => {
+    getWhitelists(offerId, page, order, pageSize).then((res: PaginationRes<OfferPresaleWhitelist>) => {
       setData(res)
       stopLoading()
     })
@@ -49,18 +57,26 @@ export const PresaleBlock = ({ offerId, issuanceId }: Props) => {
     refreshStatistics()
   }, [refreshStatistics])
 
+  const disabledManage = useMemo(() => ![OfferStatus.whitelist, OfferStatus.preSale].includes(status), [status])
+
   if (!data || !statistics) {
     return <></>
   }
+
   return (
     <GridContainer>
       <StyledGridItem xs={12}>
         <OfferWhitelistInfo data={statistics} />
       </StyledGridItem>
       <StyledGridItem xs={12}>
-        <OfferWhitelistApprove offerId={offerId} totalItems={data.totalItems} refreshWhitelists={refreshWhitelists} />
+        <OfferWhitelistApprove
+          offerId={offerId}
+          totalItems={data.totalItems}
+          refreshWhitelists={refreshWhitelists}
+          disabledManage={disabledManage}
+        />
       </StyledGridItem>
-      <StyledGridItem xs={12}>
+      <StyledGridItem xs={12} noPadding>
         <OfferWhitelistList
           offerId={offerId}
           issuanceId={issuanceId}
@@ -75,17 +91,18 @@ export const PresaleBlock = ({ offerId, issuanceId }: Props) => {
           isLoading={isLoading}
           pageSize={pageSize}
           setPageSize={setPageSize}
+          disabledManage={disabledManage}
         />
       </StyledGridItem>
     </GridContainer>
   )
 }
 
-const StyledGridItem = styled(GridItem)`
+const StyledGridItem = styled(GridItem)<{ noPadding?: boolean }>`
   box-sizing: border-box;
   background: ${({ theme }) => alpha(theme.launchpad.colors.background, 0.3)};
   border: 1px solid ${({ theme }) => alpha(theme.launchpad.colors.border.default, 0.8)};
   border-radius: 8px;
-  padding: 22px !important;
+  padding: ${(props) => (props.noPadding ? '0' : '22px !important')};
   margin-bottom: 20px; ;
 `

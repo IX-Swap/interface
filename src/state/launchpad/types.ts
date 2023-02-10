@@ -129,7 +129,7 @@ export interface OfferTerms {
 }
 
 export interface OfferTeamMember {
-  id?: number 
+  id?: number
   avatar: Asset
   name: string
   title: string
@@ -410,16 +410,37 @@ export interface ManageOfferBody {
   approveIds?: number[];
   rejectIds?: number[];
 }
-export interface PresaleData {
-  items: OfferPresaleWhitelist[];
-  hasMore: boolean;
-  totalPages: number;
-  totalItems: number;
-}
 
 export type OrderType = 'ASC' | 'DESC' | null;
 export interface PresaleOrderConfig {
   name?: OrderType;
   amount?: OrderType;
   createdAt?: OrderType;
+}
+
+export interface ManagedOfferInvestment {
+  id: number;
+  username: string | null;
+  amount: number;
+  tokenAmount: number;
+  createdAt: Date;
+}
+export interface MOInvestmentOrderConfig {
+  username?: OrderType;
+  amount?: OrderType;
+  tokenAmount?: OrderType;
+  createdAt?: OrderType;
+}
+
+export interface PaginationRes<T> {
+  items: T[];
+  hasMore: boolean;
+  totalPages: number;
+  totalItems: number;
+}
+
+export enum InvestmentStagesFilter {
+  preSale = 'preSale',
+  sale = 'sale',
+  all = 'all',
 }

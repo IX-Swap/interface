@@ -25,15 +25,15 @@ export const TableTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
-export const IssuanceTable = styled.div<{ maxWidth?: string }>`
+export const IssuanceTable = styled.div<{ maxWidth?: string; hideBorder?: boolean }>`
   display: flex;
   flex-flow: column nowrap;
   align-items: stretch;
   width: 100%;
-  max-width: ${props => props.maxWidth || "1180px"};
+  max-width: ${(props) => props.maxWidth || '1180px'};
 
   margin: auto;
-  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
+  border: ${(props) => (props.hideBorder ? 'none' : `1px solid ${props.theme.launchpad.colors.border.default}`)};
   border-radius: 8px;
   > :nth-child(even) {
     background: ${(props) => props.theme.launchpad.colors.foreground};

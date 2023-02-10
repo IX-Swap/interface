@@ -4,13 +4,14 @@ import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issua
 import { Column } from 'components/LaunchpadMisc/styled'
 
 interface Props {
-  title: string;
-  containerMaxWidth?: string;
+  title: string
+  containerMaxWidth?: string
+  hideBorder?: boolean
 }
 
-export const EmptyTable = ({ title, containerMaxWidth }: Props) => {
+export const EmptyTable = ({ title, containerMaxWidth, hideBorder }: Props) => {
   return (
-    <Container maxWidth={containerMaxWidth}>
+    <Container maxWidth={containerMaxWidth} hideBorder={hideBorder}>
       <NoIssuancesIcon />
       <Column>
         <NoItemsTitle>{title}</NoItemsTitle>
@@ -19,7 +20,7 @@ export const EmptyTable = ({ title, containerMaxWidth }: Props) => {
   )
 }
 
-const Container = styled.div<{ maxWidth?: string }>`
+const Container = styled.div<{ maxWidth?: string; hideBorder?: boolean }>`
   display: flex;
 
   flex-flow: column nowrap;
@@ -28,12 +29,12 @@ const Container = styled.div<{ maxWidth?: string }>`
 
   gap: 2rem;
 
-  width: ${(props) => props.maxWidth || "1180px"};
-  height: 460px;
+  width: ${(props) => props.maxWidth || '1180px'};
+  height: 360px;
 
   margin: auto;
 
-  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
+  border: ${(props) => (props.hideBorder ? 'none' : `1px solid ${props.theme.launchpad.colors.border.default}`)};
   border-radius: 8px;
 `
 
