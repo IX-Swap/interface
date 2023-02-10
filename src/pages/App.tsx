@@ -27,7 +27,7 @@ import DarkModeQueryParamReader from 'theme/DarkModeQueryParamReader'
 
 import { useAuthState } from 'state/auth/hooks'
 import { useHideHeader, useModalOpen } from 'state/application/hooks'
-import { useAccount, useGetMe } from 'state/user/hooks'
+import { useAccount, useGetMe, useRawRole } from 'state/user/hooks'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useGetWihitelabelConfig, useWhitelabelState } from 'state/whitelabel/hooks'
 
@@ -48,7 +48,7 @@ const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  ${props => !props.hideHeader && 'margin-top: 120px;'}
+  ${(props) => !props.hideHeader && 'margin-top: 120px;'}
   align-items: center;
   flex: 1;
   z-index: 1;
@@ -58,11 +58,11 @@ const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
   `};
 `
 
-const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean, hideHeader?: boolean }>`
+const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean; hideHeader?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
   min-height: calc(100vh - 120px);
 
-  ${props => !props.hideHeader && 'padding-bottom: 48px;'}
+  ${(props) => !props.hideHeader && 'padding-bottom: 48px;'}
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     min-height: calc(100vh - 64px);
@@ -120,7 +120,6 @@ export default function App() {
 
   const defaultPage = useMemo(() => {
     const defaultPath = pathname === routes.launchpad ? routes.launchpad : routes.kyc
-
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
       return defaultPath
     }
@@ -179,27 +178,37 @@ export default function App() {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
+  const userRole = useRawRole()
+
   const routeGenerator = useCallback(
     (route: RouteMapEntry) => {
+      const roleGuard =
+        route.conditions?.rolesSupported !== undefined &&
+        !(route.conditions?.rolesSupported.includes(userRole) && account)
       const guards = [
         !isAllowed(route),
         route.conditions?.isWhitelisted !== undefined && !isWhitelisted,
         route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
         route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
         route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
+        roleGuard,
       ]
 
       if (guards.some((guard) => guard === true)) {
+        if (roleGuard) {
+          return (
+            <Route component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />} />
+          )
+        }
         return null
       }
 
       return <Route exact strict path={route.path} component={route.component} render={route.render} />
     },
-    [isAllowed, canAccessKycForm, chainId, isWhitelisted]
+    [isAllowed, canAccessKycForm, chainId, isWhitelisted, userRole, account]
   )
 
   const useRedirect = account ? kyc !== null : true
-
   if (!config) {
     return <LoadingIndicator isLoading />
   }
@@ -213,7 +222,11 @@ export default function App() {
       <Popups />
       <AppWrapper>
         {!isAdminKyc && !hideHeader && <Header />}
-        <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })} hideHeader={hideHeader}>
+        <ToggleableBody
+          isVisible={visibleBody}
+          {...(isAdminKyc && { style: { marginTop: 26 } })}
+          hideHeader={hideHeader}
+        >
           <IXSBalanceModal />
           <Web3ReactManager>
             <Suspense
