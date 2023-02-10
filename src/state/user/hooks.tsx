@@ -609,9 +609,13 @@ export function useGetMe() {
   return callback
 }
 
-export const useRole = () => {
+export const useRawRole = () => {
   const { me } = useUserState()
-  const role = me?.role
+  return me?.role as ROLES
+}
+
+export const useRole = () => {
+  const role = useRawRole()
   return useMemo(
     () => ({
       isAdmin: role === ROLES.ADMIN,
