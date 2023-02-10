@@ -6,7 +6,7 @@ import { IssuancePageLayout } from './layout'
 export default function VettingFormView() {
   return (
     <IssuancePageLayout>
-      <IssuanceVettingForm />
+      <IssuanceVettingForm view />
     </IssuancePageLayout>
   )
 }

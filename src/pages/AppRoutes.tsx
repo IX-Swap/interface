@@ -148,7 +148,7 @@ export const routeConfigs: RouteMapEntry[] = [
 
   { path: '/issuance/create', component: LaunchpadIssuanceForm },
   { path: '/issuance/create/vetting', component: LaunchpadIssuanceVettingForm },
-  { path: '/issuance/view/vetting/:vettingId', component: LaunchpadIssuanceVettingFormView },
+  { path: '/issuance/view/vetting', component: LaunchpadIssuanceVettingFormView },
 
   { path: '/issuance/create/information', component: LaunchpadIssuanceInformationForm },
   { path: '/issuance/edit/information', component: LaunchpadIssuanceInformationEditForm },

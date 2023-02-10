@@ -21,6 +21,7 @@ import { IssuanceFormStep } from './IssuanceFormStep'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { IssuanceStatus } from '../types'
 import { useGetIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
+import { IssunaceOfferStatus } from 'state/launchpad/types'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -45,7 +46,6 @@ export const NewIssuanceForm = () => {
 
   const vettingStatus = React.useMemo(() => issuance.data?.vetting?.status, [issuance.data])
   const issuanceStatus = React.useMemo(() => issuance.data?.vetting?.offer?.status, [issuance.data])
-
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
   const selectIssuance = React.useCallback(
     (id: number) => {
@@ -146,7 +146,7 @@ export const NewIssuanceForm = () => {
 
                 <OutlineButton
                   width="320px"
-                  onClick={() => history.push(`/issuance/view/vetting/${issuance?.data?.vetting?.id}`)}
+                  onClick={() => history.push(`/issuance/view/vetting?id=${issuance.data?.id}`)}
                 >
                   View Form
                 </OutlineButton>
@@ -255,7 +255,7 @@ export const NewIssuanceForm = () => {
 
                 <OutlineButton
                   width="320px"
-                  onClick={() => history.push(`/issuance/view/vetting/${issuance?.data?.vetting?.id}`)}
+                  onClick={() => history.push(`/issuance/review/information?id=${issuance.data?.id}`)}
                 >
                   View Form
                 </OutlineButton>
@@ -345,7 +345,6 @@ const Wrapper = styled.div`
   flex-flow: column nowrap;
 
   justify-content: flex-start;
-  algin-items: stretch;
 
   gap: 1rem;
 

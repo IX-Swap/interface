@@ -46,14 +46,16 @@ import { useAddPopup } from 'state/application/hooks'
 
 import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
 
-export const IssuanceVettingForm = () => {
+export interface IssuanceVettingFormProps {
+  view?: boolean
+}
+export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) => {
   const theme = useTheme()
   const history = useHistory()
   const getId = useGetFieldArrayId()
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
-  const { vettingId } = useParams<{ vettingId: string }>()
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
@@ -99,7 +101,7 @@ export const IssuanceVettingForm = () => {
   }, [history, issuanceId])
 
   const goBack = React.useCallback(() => {
-    if (isSafeToClose) {
+    if (isSafeToClose || view) {
       goMain()
     } else {
       setShowCloseDialog(true)
@@ -224,9 +226,13 @@ export const IssuanceVettingForm = () => {
             )}
 
             <FormSubmitContainer>
-              <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>
+              <OutlineButton disabled={view} onClick={() => saveDraft(values)}>
+                Save Draft
+              </OutlineButton>
 
-              <FilledButton onClick={toSubmit}>Submit</FilledButton>
+              <FilledButton disabled={view} onClick={toSubmit}>
+                Submit
+              </FilledButton>
             </FormSubmitContainer>
           </FormSideBar>
 
@@ -237,6 +243,7 @@ export const IssuanceVettingForm = () => {
                 placeholder="Full name of the Applicant"
                 field="applicantFullName"
                 setter={setFieldValue}
+                disabled={view}
                 value={values.applicantFullName}
                 error={errors.applicantFullName}
                 inputFilter={textFilter}
@@ -246,6 +253,7 @@ export const IssuanceVettingForm = () => {
                 label="Email Address"
                 placeholder="Email Address"
                 field="email"
+                disabled={view}
                 setter={setFieldValue}
                 value={values.email}
                 error={errors.email}
@@ -257,6 +265,7 @@ export const IssuanceVettingForm = () => {
                 placeholder="Name of your company"
                 field="companyName"
                 setter={setFieldValue}
+                disabled={view}
                 value={values.companyName}
                 error={errors.companyName}
                 inputFilter={textFilter}
@@ -267,6 +276,7 @@ export const IssuanceVettingForm = () => {
                 placeholder="Company Website"
                 field="companyWebsite"
                 setter={setFieldValue}
+                disabled={view}
                 value={values.companyWebsite}
                 error={errors.companyWebsite}
                 inputFilter={textFilter}
@@ -280,6 +290,7 @@ export const IssuanceVettingForm = () => {
                 label="Upload the company’s pitch deck"
                 field="document.pitchDeck"
                 setter={setFieldValue}
+                disabled={view}
                 value={values.document.pitchDeck}
                 error={errors.document?.pitchDeck as string}
               />
@@ -290,7 +301,7 @@ export const IssuanceVettingForm = () => {
                     <AdditionalFiles>
                       <Hint>Upload additional documents relevant to the funding objective. (Optional)</Hint>
 
-                      <AddDocumentButton padding="0" onClick={() => push({ id: getId() })}>
+                      <AddDocumentButton padding="0" onClick={() => push({ id: getId() })} disabled={view}>
                         <Plus size="14" /> Add Document
                       </AddDocumentButton>
                     </AdditionalFiles>
@@ -300,6 +311,7 @@ export const IssuanceVettingForm = () => {
                         <FileField
                           key={entry.id}
                           value={entry.file}
+                          disabled={view}
                           field={`fundingDocuments[${idx}].file`}
                           setter={setFieldValue}
                           trailing={
@@ -318,6 +330,7 @@ export const IssuanceVettingForm = () => {
                 label="Description"
                 placeholder="Short description of the company/offering"
                 field="description"
+                disabled={view}
                 setter={setFieldValue}
                 span={3}
                 value={values.description}
@@ -330,6 +343,7 @@ export const IssuanceVettingForm = () => {
             <FilesBlock>
               <FileField
                 label="Certificate of Incorporation"
+                disabled={view}
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncorporation"
                 value={values.document.certificateOfIncorporation}
@@ -339,6 +353,7 @@ export const IssuanceVettingForm = () => {
               <FileField
                 optional
                 label="Certificate of Incumbency"
+                disabled={view}
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncumbency"
                 value={values.document.certificateOfIncumbency}
@@ -348,6 +363,7 @@ export const IssuanceVettingForm = () => {
 
               <FileField
                 label="Share & Director Registry"
+                disabled={view}
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.shareDirectorRegistry"
                 value={values.document.shareDirectorRegistry}
@@ -357,6 +373,7 @@ export const IssuanceVettingForm = () => {
               <FileField
                 optional
                 label="Copy of Audited Financials"
+                disabled={view}
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
                 field="document.auditedFinancials"
                 value={values.document.auditedFinancials}
@@ -366,6 +383,7 @@ export const IssuanceVettingForm = () => {
 
               <FileField
                 label="Memorandum and Article of Association Company Constitution"
+                disabled={view}
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.memorandumArticle"
                 value={values.document.memorandumArticle}
@@ -378,6 +396,7 @@ export const IssuanceVettingForm = () => {
                 field="document.ownershipStructure"
                 value={values.document.ownershipStructure}
                 error={errors.document?.ownershipStructure as string}
+                disabled={view}
                 setter={setFieldValue}
               />
 
@@ -387,6 +406,7 @@ export const IssuanceVettingForm = () => {
                 field="document.resolutionAuthorizedSignatory"
                 value={values.document.resolutionAuthorizedSignatory}
                 error={errors.document?.resolutionAuthorizedSignatory as string}
+                disabled={view}
                 setter={setFieldValue}
               />
             </FilesBlock>
@@ -397,12 +417,14 @@ export const IssuanceVettingForm = () => {
               directorTitle="Beneficial Owner"
               directors={values.beneficialOwners}
               setter={setFieldValue}
+              disabled={view}
               field="beneficialOwners"
               errors={errors as { [key: string]: string }}
             />
 
             <DirectorField
               directorTitle="Director"
+              disabled={view}
               directors={values.directors}
               setter={setFieldValue}
               field="directors"
@@ -411,7 +433,7 @@ export const IssuanceVettingForm = () => {
 
             <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
               <OutlineButton width="280px">Back</OutlineButton>
-              <FilledButton width="280px" onClick={toSubmit}>
+              <FilledButton width="280px" onClick={toSubmit} disabled={view}>
                 Submit
               </FilledButton>
             </Row>
