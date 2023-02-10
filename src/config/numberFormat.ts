@@ -37,7 +37,6 @@ export const moneyNumberFormat: NumberFormatProps<any> = {
 }
 
 export const quantityNumberFormat: NumberFormatProps<any> = {
-  decimalScale: 18,
   inputMode: 'numeric',
   thousandSeparator: true,
   allowEmptyFormatting: true,
