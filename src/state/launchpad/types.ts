@@ -129,7 +129,7 @@ export interface OfferTerms {
 }
 
 export interface OfferTeamMember {
-  id?: number 
+  id?: number
   avatar: Asset
   name: string
   title: string
@@ -243,7 +243,8 @@ export interface Offer {
   investingTokenSymbol: string
 
   decimals: number
-
+  // decimalsOn: boolean
+  trusteeAddress: string
   softCap: string
   hardCap: string
 
@@ -279,9 +280,9 @@ export interface Offer {
   timeframe: OfferTimeframe
   terms: OfferTerms
 
-  daysTillSale?: number
-  daysTillClosed?: number
-  hoursTillClosed?: number
+  daysTillSale: number
+  daysTillClosed: number
+  hoursTillClosed: number
   totalInvestment: number
 
   members: OfferTeamMember[]
@@ -299,6 +300,9 @@ export interface Offer {
   payments: OfferPayment[]
   subscriptions: OfferSubscription[]
   whitelists: OfferWhitelist[]
+
+  usersClaimed: boolean
+  issuerClaimed: boolean
 }
 
 export interface IssuanceVettingDocuments {
@@ -376,3 +380,47 @@ export interface DashboardOffer {
 }
 
 export type IssuancePlain = Pick<Issuance, 'name' | 'id'>
+
+export interface ManagedOffer extends Offer {
+  preSaleParticipants: number
+  saleParticipants: number
+  totalParticipants: number
+  preSaleInvestment: number
+  saleInvestment: number
+  totalInvestment: number
+  issuanceId: number
+}
+
+export interface OfferPresaleStatistics {
+  applicants: number
+  agreedToInvest: number
+  wishInvestmentTotal: number
+  wishInvestmentAvg: number
+}
+
+export interface OfferPresaleWhitelist {
+  id: number
+  amount: number
+  createdAt: Date
+  name: string | null
+}
+
+export interface ManageOfferBody {
+  approveAll?: boolean
+  rejectAll?: boolean
+  approveIds?: number[]
+  rejectIds?: number[]
+}
+export interface PresaleData {
+  items: OfferPresaleWhitelist[]
+  hasMore: boolean
+  totalPages: number
+  totalItems: number
+}
+
+export type OrderType = 'ASC' | 'DESC' | null
+export interface PresaleOrderConfig {
+  name?: OrderType
+  amount?: OrderType
+  createdAt?: OrderType
+}

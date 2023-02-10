@@ -14,8 +14,8 @@ import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/In
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 
-import { OfferFundRaiseIndicator } from './OfferFundRaiseIndicatpor'
 import { OfferInvestmentIndicator } from './OfferInvestmentIndicator'
+import { OfferFundRaiseIndicator } from './OfferFundRaiseIndicator'
 
 import { Column, Row, Separator } from '../../LaunchpadMisc/styled'
 import { InvestDialog } from '../InvestDialog'

@@ -29,6 +29,8 @@ interface Props<T> {
   setter?: (field: string, value?: T) => void
   touch?: (field: string, touched: boolean) => void
   onChange?: (value?: T) => void
+  wrapperStyle?: React.CSSProperties
+  containerStyle?: React.CSSProperties
 }
 
 export function DropdownField<T>(props: Props<T>) {
@@ -71,7 +73,9 @@ export function DropdownField<T>(props: Props<T>) {
       if (props.disabled) {
         return
       }
-
+      if (props.touch) {
+        props.touch(props.field, true)
+      }
       setSelectedValue(option)
       setOptionSearch(option.label)
       setSearchActive(false)
@@ -79,11 +83,6 @@ export function DropdownField<T>(props: Props<T>) {
       if (props.field && props.setter) {
         props.setter(props.field, option.value)
       }
-
-      if (props.touch) {
-        props.touch(props.field, true)
-      }
-
       if (props.onChange) {
         props.onChange(option.value)
       }
@@ -127,8 +126,8 @@ export function DropdownField<T>(props: Props<T>) {
   }, [showDropdown, container])
 
   return (
-    <FormFieldWrapper gap="0.5rem" span={props.span}>
-      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled}>
+    <FormFieldWrapper gap="0.5rem" span={props.span} style={props.wrapperStyle}>
+      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled} style={props.containerStyle}>
         <FieldLabel>
           {props.label}
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}

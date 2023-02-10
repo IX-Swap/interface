@@ -17,14 +17,15 @@ import { ConfirmDeletePopup } from './WhitelistWalletTable/ConfirmDeletePopup'
 import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboard/IssuancePagination'
 export interface LaunchpadWhitelistWalletProps {
   offerId: string
+  isOpen: boolean
+  setOpen: any
 }
 export interface WhitelistWalletFormValues {
   walletAddress: string
   fullName: string
 }
-export const LaunchpadWhitelistWallet = ({ offerId }: LaunchpadWhitelistWalletProps) => {
-  const [showWhitelistPopup, setShowWhitelistPopup] = useState(true)
-  const toggleDialog = React.useCallback(() => setShowWhitelistPopup((state) => !state), [])
+export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: LaunchpadWhitelistWalletProps) => {
+  const toggleDialog = React.useCallback(() => setOpen((state: boolean) => !state), [])
 
   const getWhitelistedWallets = useGetWhitelisted()
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
@@ -58,7 +59,7 @@ export const LaunchpadWhitelistWallet = ({ offerId }: LaunchpadWhitelistWalletPr
 
   const [activeTab, setActiveTab] = useState(0)
   return (
-    <IssuanceDialog show={showWhitelistPopup} title="Whitelist Wallet" onClose={toggleDialog} width="800px">
+    <IssuanceDialog show={isOpen} title="Whitelist Wallet" onClose={toggleDialog} width="800px">
       <DialogWrapper>
         <WhitelistForm offerId={offerId} onSuccess={onSuccessCreate} />
         <Separator marginTop="1.25rem" marginBottom="1.5rem" />

@@ -20,6 +20,11 @@ import {
   OfferFileType,
   OfferStatus,
   WhitelistStatus,
+  ManagedOffer,
+  OfferPresaleStatistics,
+  OfferPresaleWhitelist,
+  ManageOfferBody,
+  PresaleOrderConfig,
 } from 'state/launchpad/types'
 
 import { toggleKYCDialog } from './actions'
@@ -991,6 +996,9 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
 
       timeframe: payload.timeframe,
       tokenName: payload.tokenName ?? '',
+      // decimalsOn: payload.decimalsOn,
+      decimals: Number(payload.decimals),
+      trusteeAddress: payload.trusteeAddress,
       tokenPrice: Number(payload.tokenPrice),
       tokenStandart: payload.tokenStandart,
       tokenTicker: payload.tokenSymbol,
@@ -1051,6 +1059,8 @@ export const useSubmitOffer = () => {
         tokenAddress: payload.tokenAddress,
         tokenSymbol: payload.tokenTicker,
         tokenPrice: payload.tokenPrice.toString(),
+        decimals: payload.decimals,
+        // decimalsOn: payload.decimalsOn,
         tokenStandart: payload.tokenStandart,
 
         investingTokenSymbol: payload.tokenType,
@@ -1228,4 +1238,83 @@ export const useEditIssuanceOffer = () => {
 
     return apiService.put(`/offers/${offerId}/minimal`, data)
   }, [])
+}
+
+export const useGetManagedOffer = (id: string | undefined) => {
+  const loader = useLoader()
+  const [data, setData] = React.useState<ManagedOffer>()
+
+  const load = React.useCallback(() => {
+    apiService
+      .get(`/offers/me/${id}`)
+      .then((res) => res.data as ManagedOffer)
+      .then(setData)
+      .finally(loader.stop)
+  }, [id])
+  React.useEffect(() => {
+    load()
+  }, [load])
+
+  return { loading: loader.isLoading, load, data }
+}
+
+export const useGetManagedOfferPresaleStatistics = () => {
+  return React.useCallback(async (offerId: string) => {
+    const result = await apiService
+      .get(`/offers/me/${offerId}/presale-statistics`)
+      .then((res) => res.data as OfferPresaleStatistics)
+    return result
+  }, [])
+}
+
+export const useGetManagedOfferPresaleWhitelists = () => {
+  return React.useCallback(async (offerId: string, page: number, order?: PresaleOrderConfig, size = 8) => {
+    let query = [`page=${page}`, `offset=${size}`]
+    if (order) {
+      query = query.concat(
+        Object.entries(order)
+          .filter(([_, value]) => value && value.length > 0)
+          .map(([key, value]) => `order=${key}=${value}`)
+      )
+    }
+    const result = await apiService
+      .get(`/offers/${offerId}/whitelists?${query.join('&')}`)
+      .then((res) => res.data as PaginateResponse<OfferPresaleWhitelist>)
+
+    return {
+      hasMore: result.nextPage !== null,
+      items: result.items,
+
+      totalPages: result.totalPages,
+      totalItems: result.totalItems,
+    }
+  }, [])
+}
+
+export const useApproveRandomPresaleWhitelists = () => {
+  const loader = useLoader(false)
+  const [error, setError] = React.useState<string>()
+
+  const load = React.useCallback((offerId: string, count: number) => {
+    setError('')
+    return apiService
+      .patch(`/offers/${offerId}/approve/random`, { count })
+      .catch((err) => setError(err.message))
+      .finally(loader.stop)
+  }, [])
+  return { isLoading: loader.isLoading, load, error }
+}
+
+export const useManagePresaleWhitelists = () => {
+  const loader = useLoader(false)
+  const [error, setError] = React.useState<string>()
+
+  const load = React.useCallback((offerId: string, body: ManageOfferBody) => {
+    setError('')
+    return apiService
+      .patch(`/offers/${offerId}/whitelists`, body)
+      .catch((err) => setError(err.message))
+      .finally(loader.stop)
+  }, [])
+  return { isLoading: loader.isLoading, load, error }
 }

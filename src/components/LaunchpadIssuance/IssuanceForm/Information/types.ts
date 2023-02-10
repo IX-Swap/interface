@@ -1,7 +1,13 @@
-import { IssuanceStatus } from "components/LaunchpadIssuance/types"
-import { OfferDistributionFrequency, OfferIndustry, OfferInvestmentStructure, OfferNetwork, OfferTokenStandart } from "state/launchpad/types"
-import { DateSchema } from "yup"
-import { IssuanceFile } from "../types"
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import {
+  OfferDistributionFrequency,
+  OfferIndustry,
+  OfferInvestmentStructure,
+  OfferNetwork,
+  OfferTokenStandart,
+} from 'state/launchpad/types'
+import { DateSchema } from 'yup'
+import { IssuanceFile } from '../types'
 
 export enum OfferTokenType {
   WIXS = 'WIXS',
@@ -9,7 +15,7 @@ export enum OfferTokenType {
   WETH = 'WETH',
   MATIC = 'MATIC',
   USDC = 'USDC',
-  USDT = 'USDT'
+  USDT = 'USDT',
 }
 
 export enum SocialMediaType {
@@ -20,7 +26,7 @@ export enum SocialMediaType {
   reddit = 'reddit',
   youTube = 'youtube',
   coinMarketCap = 'coinmarketcap',
-  coinGecko = 'coingecko'
+  coinGecko = 'coingecko',
 }
 
 export interface VideoLink {
@@ -48,10 +54,13 @@ export interface InformationFormValues {
 
   tokenName: string
   tokenTicker: string
+  // decimalsOn: boolean
+  decimals: number
+  trusteeAddress: string
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
   tokenPrice: number
-  
+
   tokenAddress?: string
   investingTokenAddress?: string
 
