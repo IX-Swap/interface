@@ -45,7 +45,6 @@ import {
   standardOptions,
   distributionFrequencyOptions,
   investmentStructureOptions,
-  tokenDecimalsOnOptions,
 } from './util'
 import {
   useEditIssuanceOffer,
@@ -137,7 +136,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     setShowConfirmDialog(true)
   }, [showConfirmDialog])
 
-  const submit = React.useCallback((values: InformationFormValues) => _submit(values, false), [_submit])
+  const submit = React.useCallback(
+    (values: InformationFormValues) => {
+      _submit(values, false)
+    },
+    [_submit]
+  )
 
   const goMain = React.useCallback(() => {
     history.push(`/issuance/create?id=${issuanceId}`)
@@ -240,6 +244,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       </LoaderContainer>
     )
   }
+
   return (
     <FormContainer>
       <ScrollToTop onClick={scrollToTop}>
@@ -406,7 +411,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               </FormGrid>
 
               <Separator />
-              <FormTitle>{`(${values.industry}, ${touched?.industry}, ${errors?.industry})`}</FormTitle>
               <FormGrid title="Tokenomics">
                 <FormField
                   field="tokenName"
@@ -428,7 +432,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.tokenTicker}
                   error={(touched.tokenTicker && errors.tokenTicker) as string}
                 />
-                <DropdownField
+                {/* <DropdownField
                   field="decimalsOn"
                   setter={setFieldValue}
                   touch={setFieldTouched}
@@ -438,6 +442,17 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit}
                   value={values.decimalsOn}
                   error={(touched.decimalsOn && errors.decimalsOn) as string}
+                /> */}
+                <FormField
+                  field="decimals"
+                  setter={(field, value) => setFieldValue(field, Number(value))}
+                  touch={setFieldTouched}
+                  label="Decimals"
+                  placeholder="18"
+                  inputFilter={numberFilter}
+                  disabled={props.edit}
+                  value={values.decimals.toString()}
+                  error={(touched.decimals && errors.decimals) as string}
                 />
                 <FormField
                   field="trusteeAddress"

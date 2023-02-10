@@ -54,7 +54,8 @@ export interface InformationFormValues {
 
   tokenName: string
   tokenTicker: string
-  decimalsOn: boolean
+  // decimalsOn: boolean
+  decimals: number
   trusteeAddress: string
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart

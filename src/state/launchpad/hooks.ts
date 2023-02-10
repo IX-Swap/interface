@@ -996,7 +996,8 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
 
       timeframe: payload.timeframe,
       tokenName: payload.tokenName ?? '',
-      decimalsOn: payload.decimalsOn,
+      // decimalsOn: payload.decimalsOn,
+      decimals: Number(payload.decimals),
       trusteeAddress: payload.trusteeAddress,
       tokenPrice: Number(payload.tokenPrice),
       tokenStandart: payload.tokenStandart,
@@ -1058,6 +1059,8 @@ export const useSubmitOffer = () => {
         tokenAddress: payload.tokenAddress,
         tokenSymbol: payload.tokenTicker,
         tokenPrice: payload.tokenPrice.toString(),
+        decimals: payload.decimals,
+        // decimalsOn: payload.decimalsOn,
         tokenStandart: payload.tokenStandart,
 
         investingTokenSymbol: payload.tokenType,

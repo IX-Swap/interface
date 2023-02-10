@@ -29,7 +29,8 @@ export const initialValues = {
 
   tokenName: '',
   tokenTicker: '',
-  decimalsOn: true,
+  decimals: 0,
+  // decimalsOn: true,
   trusteeAddress: '',
   tokenType: '',
 

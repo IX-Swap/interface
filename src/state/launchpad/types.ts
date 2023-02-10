@@ -243,7 +243,7 @@ export interface Offer {
   investingTokenSymbol: string
 
   decimals: number
-  decimalsOn: boolean
+  // decimalsOn: boolean
   trusteeAddress: string
   softCap: string
   hardCap: string
