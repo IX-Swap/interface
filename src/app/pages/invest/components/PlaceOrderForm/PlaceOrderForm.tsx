@@ -16,7 +16,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { OrderSide } from 'types/order'
 import { PlaceOrderFormSubmitButton } from './PlaceOrderFormSubmitButton'
-
+// import { PairName } from '../PairListDropdown/PairName'
 export type ActiveTabName = 'BUY' | 'SELL'
 
 export interface PlaceOrderFormProps {
@@ -50,6 +50,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
+  const pairName = localStorage.getItem('pairName')
   const handleSubmit = async (values: PlaceOrderFormValues) => {
     if (isEmptyString(pairId)) {
       return
@@ -63,7 +64,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
       )
     )
   }
-
+  // console.log(PairName, 'PairNamePairName');
   return (
     <Form onSubmit={handleSubmit} resetAfterSubmit>
       <Grid container direction={'column'} className={classes.container}>
@@ -99,14 +100,14 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         >
           <Grid item>
             <LabelledValue
-              value={formatMoney(currencyBalance, currencyLabel)}
+              value={formatMoney(currencyBalance, pairName?.split('/')[0])}
               label='Balance:'
             />
           </Grid>
 
           <Grid item>
             <LabelledValue
-              value={formatTokenBalance(tokenBalance, tokenLabel)}
+              value={formatTokenBalance(tokenBalance, pairName?.split('/')[1])}
               label=''
             />
           </Grid>

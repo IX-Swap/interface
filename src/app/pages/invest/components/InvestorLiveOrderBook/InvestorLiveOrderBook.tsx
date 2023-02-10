@@ -40,7 +40,7 @@ export const InvestorLiveOrderBook = () => {
           <Table>
             <OrderBookHeader
               tokenSymbol={tradingPair?.listing.tokenSymbol}
-              currency={tradingPair?.listing.markets[0].currency}
+              currency={tradingPair?.listing?.markets[0]?.currency}
             />
           </Table>
         </Grid>
@@ -64,7 +64,7 @@ export const InvestorLiveOrderBook = () => {
           >
             <OrderBook
               data={asks.slice(0, 15)}
-              currency={tradingPair?.listing.markets[0].currency}
+              currency={tradingPair?.listing?.markets[0]?.currency}
               tokenSymbol={tradingPair?.listing.tokenSymbol}
               transaction='sell'
               showHeader={isMiniLaptop}
@@ -86,7 +86,7 @@ export const InvestorLiveOrderBook = () => {
           >
             <OrderBook
               data={bids.slice(0, 15)}
-              currency={tradingPair?.listing.markets[0].currency}
+              currency={tradingPair?.listing?.markets[0]?.currency}
               tokenSymbol={tradingPair?.listing.tokenSymbol}
               transaction='buy'
               barOrigin={isMiniLaptop ? 'left' : 'right'}
