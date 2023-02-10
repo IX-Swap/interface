@@ -9,7 +9,7 @@ export const IdentityTypeFilter = () => {
     let res = ''
     switch (value) {
       case 'issuer_corporate':
-        res = 'issuer and corporate'
+        res = 'Issuer and Corporate'
         break
       case 'individual':
         res = 'Individual Identity'
