@@ -58,7 +58,7 @@ export const OfferInvestmentsList = ({
   )
 
   const onExtractData = () => {
-    history.push(`/issuance/extract-offers/${issuanceId}?tab=registration&page=1`)
+    history.push(`/issuance/extract-offers/${issuanceId}?tab=investment&page=1`)
   }
   return (
     <Container>

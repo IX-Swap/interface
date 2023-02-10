@@ -27,8 +27,8 @@ import {
   PresaleOrderConfig,
   ManagedOfferInvestment,
   PaginationRes,
-  InvestmentStagesFilter
-} from "state/launchpad/types"
+  InvestmentStagesFilter,
+} from 'state/launchpad/types'
 
 import { toggleKYCDialog } from './actions'
 
@@ -946,13 +946,13 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
       faq: payload.faq,
       members: payload.members.map(
         (member) =>
-        ({
-          id: member.id,
-          name: member.name,
-          role: member.title,
-          about: member.description,
-          photo: files.find((x) => x.id === member.avatar?.id),
-        } as TeamMember)
+          ({
+            id: member.id,
+            name: member.name,
+            role: member.title,
+            about: member.description,
+            photo: files.find((x) => x.id === member.avatar?.id),
+          } as TeamMember)
       ),
 
       social: Object.entries(payload.socialMedia).map(([name, link]) => ({ type: name as SocialMediaType, url: link })),
@@ -1243,31 +1243,41 @@ export const useGetManagedOffer = (id: string | undefined) => {
   const [data, setData] = React.useState<ManagedOffer>()
 
   const load = React.useCallback(() => {
-    apiService.get(`/offers/me/${id}`)
-      .then(res => res.data as ManagedOffer).then(setData)
+    apiService
+      .get(`/offers/me/${id}`)
+      .then((res) => res.data as ManagedOffer)
+      .then(setData)
       .finally(loader.stop)
   }, [id])
-  React.useEffect(() => { load() }, [load])
+  React.useEffect(() => {
+    load()
+  }, [load])
 
   return { loading: loader.isLoading, load, data }
 }
 
 export const useGetManagedOfferPresaleStatistics = () => {
   return React.useCallback(async (offerId: string) => {
-    const result = await apiService.get(`/offers/me/${offerId}/presale-statistics`).then(res => res.data as OfferPresaleStatistics);
-    return result;
-  }, []);
+    const result = await apiService
+      .get(`/offers/me/${offerId}/presale-statistics`)
+      .then((res) => res.data as OfferPresaleStatistics)
+    return result
+  }, [])
 }
 
 export const useGetManagedOfferPresaleWhitelists = () => {
   return React.useCallback(async (offerId: string, page: number, order?: PresaleOrderConfig, size = 8) => {
     let query = [`page=${page}`, `offset=${size}`]
     if (order) {
-      query = query.concat(Object.entries(order)
-        .filter(([_, value]) => value && value.length > 0)
-        .map(([key, value]) => `order=${key}=${value}`))
+      query = query.concat(
+        Object.entries(order)
+          .filter(([_, value]) => value && value.length > 0)
+          .map(([key, value]) => `order=${key}=${value}`)
+      )
     }
-    const result = await apiService.get(`/offers/${offerId}/whitelists?${query.join('&')}`).then(res => res.data as PaginateResponse<OfferPresaleWhitelist>)
+    const result = await apiService
+      .get(`/offers/${offerId}/whitelists?${query.join('&')}`)
+      .then((res) => res.data as PaginateResponse<OfferPresaleWhitelist>)
 
     return {
       hasMore: result.nextPage !== null,
@@ -1284,10 +1294,11 @@ export const useApproveRandomPresaleWhitelists = () => {
   const [error, setError] = React.useState<string>()
 
   const load = React.useCallback((offerId: string, count: number) => {
-    setError('');
-    return apiService.patch(`/offers/${offerId}/approve/random`, { count })
+    setError('')
+    return apiService
+      .patch(`/offers/${offerId}/approve/random`, { count })
       .catch((err) => setError(err.message))
-      .finally(loader.stop);
+      .finally(loader.stop)
   }, [])
   return { isLoading: loader.isLoading, load, error }
 }
@@ -1297,10 +1308,11 @@ export const useManagePresaleWhitelists = () => {
   const [error, setError] = React.useState<string>()
 
   const load = React.useCallback((offerId: string, body: ManageOfferBody) => {
-    setError('');
-    return apiService.patch(`/offers/${offerId}/whitelists`, body)
+    setError('')
+    return apiService
+      .patch(`/offers/${offerId}/whitelists`, body)
       .catch((err) => setError(err.message))
-      .finally(loader.stop);
+      .finally(loader.stop)
   }, [])
   return { isLoading: loader.isLoading, load, error }
 }
@@ -1310,28 +1322,33 @@ export const useGetManagedOfferInvestments = (id: string | undefined) => {
   const [data, setData] = React.useState<PaginationRes<ManagedOfferInvestment>>()
   const [error, setError] = React.useState<string | undefined>()
 
-  const load = React.useCallback((stage: InvestmentStagesFilter, page = 1, order?: PresaleOrderConfig, size = 8) => {
-    loader.start();
-    let query = [`page=${page}`, `offset=${size}`, `stage=${stage}`]
-    if (order) {
-      query = query.concat(Object.entries(order)
-        .filter(([_, value]) => value && value.length > 0)
-        .map(([key, value]) => `order=${key}=${value}`))
-    }
-    apiService.get(`/offers/${id}/investments?${query.join('&')}`)
-      .then(res => {
-        const formatted = {
-          hasMore: res.data.nextPage !== null,
-          items: res.data.items,
-          totalPages: res.data.totalPages,
-          totalItems: res.data.totalItems,
-        } as PaginationRes<ManagedOfferInvestment>
-        setData(formatted);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => loader.stop())
-  }, [id])
-  // React.useEffect(() => { load() }, [load])
+  const load = React.useCallback(
+    (stage: InvestmentStagesFilter, page = 1, order?: PresaleOrderConfig, size = 8) => {
+      loader.start()
+      let query = [`page=${page}`, `offset=${size}`, `stage=${stage}`]
+      if (order) {
+        query = query.concat(
+          Object.entries(order)
+            .filter(([_, value]) => value && value.length > 0)
+            .map(([key, value]) => `order=${key}=${value}`)
+        )
+      }
+      apiService
+        .get(`/offers/${id}/investments?${query.join('&')}`)
+        .then((res) => {
+          const formatted = {
+            hasMore: res.data.nextPage !== null,
+            items: res.data.items,
+            totalPages: res.data.totalPages,
+            totalItems: res.data.totalItems,
+          } as PaginationRes<ManagedOfferInvestment>
+          setData(formatted)
+        })
+        .catch((err) => setError(err.message))
+        .finally(() => loader.stop())
+    },
+    [id]
+  )
 
   return { isLoading: loader.isLoading, error, load, data }
 }

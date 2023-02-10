@@ -65,6 +65,7 @@ export const ManageOffer = () => {
   if (!Object.keys(OFFER_STATUSES).includes(offer.status as any)) {
     return <Centered>Offer not started</Centered>
   }
+  // todo add button redirect to this page
   return (
     <Wrapper>
       {isOpenWhitelisting && (

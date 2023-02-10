@@ -294,14 +294,14 @@ export interface Offer {
   updatedAt: Date
   deletedAt?: Date
 
-  files: OfferFile[];
-  investments: OfferInvestment[];
-  payments: OfferPayment[];
-  subscriptions: OfferSubscription[];
-  whitelists: OfferWhitelist[];
+  files: OfferFile[]
+  investments: OfferInvestment[]
+  payments: OfferPayment[]
+  subscriptions: OfferSubscription[]
+  whitelists: OfferWhitelist[]
 
-  usersClaimed: boolean;
-  issuerClaimed: boolean;
+  usersClaimed: boolean
+  issuerClaimed: boolean
 }
 
 export interface IssuanceVettingDocuments {
@@ -381,62 +381,62 @@ export interface DashboardOffer {
 export type IssuancePlain = Pick<Issuance, 'name' | 'id'>
 
 export interface ManagedOffer extends Offer {
-  preSaleParticipants: number;
-  saleParticipants: number;
-  totalParticipants: number;
-  preSaleInvestment: number;
-  saleInvestment: number;
-  totalInvestment: number;
-  issuanceId: number;
+  preSaleParticipants: number
+  saleParticipants: number
+  totalParticipants: number
+  preSaleInvestment: number
+  saleInvestment: number
+  totalInvestment: number
+  issuanceId: number
 }
 
 export interface OfferPresaleStatistics {
-  applicants: number;
-  agreedToInvest: number;
-  wishInvestmentTotal: number;
-  wishInvestmentAvg: number;
+  applicants: number
+  agreedToInvest: number
+  wishInvestmentTotal: number
+  wishInvestmentAvg: number
 }
 
 export interface OfferPresaleWhitelist {
-  id: number;
-  amount: number;
-  createdAt: Date;
-  name: string | null;
+  id: number
+  amount: number
+  createdAt: Date
+  name: string | null
 }
 
 export interface ManageOfferBody {
-  approveAll?: boolean;
-  rejectAll?: boolean;
-  approveIds?: number[];
-  rejectIds?: number[];
+  approveAll?: boolean
+  rejectAll?: boolean
+  approveIds?: number[]
+  rejectIds?: number[]
 }
 
-export type OrderType = 'ASC' | 'DESC' | null;
+export type OrderType = 'ASC' | 'DESC' | null
 export interface PresaleOrderConfig {
-  name?: OrderType;
-  amount?: OrderType;
-  createdAt?: OrderType;
+  name?: OrderType
+  amount?: OrderType
+  createdAt?: OrderType
 }
 
 export interface ManagedOfferInvestment {
-  id: number;
-  username: string | null;
-  amount: number;
-  tokenAmount: number;
-  createdAt: Date;
+  id: number
+  username: string | null
+  amount: number
+  tokenAmount: number
+  createdAt: Date
 }
 export interface MOInvestmentOrderConfig {
-  username?: OrderType;
-  amount?: OrderType;
-  tokenAmount?: OrderType;
-  createdAt?: OrderType;
+  username?: OrderType
+  amount?: OrderType
+  tokenAmount?: OrderType
+  createdAt?: OrderType
 }
 
 export interface PaginationRes<T> {
-  items: T[];
-  hasMore: boolean;
-  totalPages: number;
-  totalItems: number;
+  items: T[]
+  hasMore: boolean
+  totalPages: number
+  totalItems: number
 }
 
 export enum InvestmentStagesFilter {
