@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { useHistory } from 'react-router-dom'
 import { MoreHorizontal } from 'react-feather'
-import { ManagedOfferInvestment, MOInvestmentOrderConfig, PaginationRes } from 'state/launchpad/types'
+import { ManagedOfferInvestment, PaginationRes, MOInvestmentOrderConfig, AbstractOrder } from 'state/launchpad/types'
 import { IssuanceTable, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
@@ -12,6 +11,8 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { EmptyTable } from 'components/LaunchpadIssuance/utils/EmptyTable'
 import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboard/IssuancePagination'
 import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/styled'
+import { DiscreteInternalLink } from 'theme'
+import { useOnChangeOrder } from 'state/launchpad/hooks'
 
 interface Props {
   issuanceId: number
@@ -23,7 +24,15 @@ interface Props {
   isLoading: boolean
   pageSize: number
   setPageSize: (page: number) => void
+  investingTokenSymbol: string
 }
+
+const HEADERS = [
+  { key: 'username', label: 'Name' },
+  { key: 'amount', label: 'Investment Amount' },
+  { key: 'tokenAmount', label: 'Amount of tokens' },
+  { key: 'createdAt', label: 'Purchase Date' },
+]
 
 export const OfferInvestmentsList = ({
   issuanceId,
@@ -35,37 +44,19 @@ export const OfferInvestmentsList = ({
   isLoading,
   pageSize,
   setPageSize,
+  investingTokenSymbol,
 }: Props) => {
   const { totalItems, totalPages, items } = data
   const theme = useTheme()
-  const history = useHistory()
+  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
+  const extractLink = useMemo(() => `/issuance/extract-offers/${issuanceId}?tab=investment&page=1`, [issuanceId])
 
-  const onChangeOrder = React.useCallback(
-    (key: string) => {
-      const current = Object.keys(order)[0]
-      if (!current || current !== key) {
-        setOrder({ [key]: 'ASC' })
-      }
-      if (current === key) {
-        const value = Object.values(order)[0]
-        const manner = !value ? 'ASC' : value === 'ASC' ? 'DESC' : null
-
-        setOrder({ [current]: manner })
-      }
-      setPage(1)
-    },
-    [order]
-  )
-
-  const onExtractData = () => {
-    history.push(`/issuance/extract-offers/${issuanceId}?tab=investment&page=1`)
-  }
   return (
     <Container>
       <Header>
         <TableTitle>Investor Information</TableTitle>
         <ButtonsContainer>
-          <ExtractButton onClick={onExtractData}>
+          <ExtractButton as={DiscreteInternalLink} to={extractLink}>
             <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
             <ExtractText>Extract Data</ExtractText>
           </ExtractButton>
@@ -74,22 +65,12 @@ export const OfferInvestmentsList = ({
       {items.length > 0 && (
         <IssuanceTable maxWidth="100%" hideBorder>
           <TableHeader tab={IssuanceFilter.pending}>
-            <HeaderLabel onClick={() => onChangeOrder('username')}>
-              <SortIcon type={order.username} />
-              Name
-            </HeaderLabel>
-            <HeaderLabel onClick={() => onChangeOrder('amount')}>
-              <SortIcon type={order.amount} />
-              Investment Amount
-            </HeaderLabel>
-            <HeaderLabel onClick={() => onChangeOrder('tokenAmount')}>
-              <SortIcon type={order.tokenAmount} />
-              Amount of tokens
-            </HeaderLabel>
-            <HeaderLabel onClick={() => onChangeOrder('createdAt')}>
-              <SortIcon type={order.createdAt} />
-              Purchase Date
-            </HeaderLabel>
+            {HEADERS.map((header) => (
+              <HeaderLabel onClick={() => onChangeOrder(header.key)} key={header.key}>
+                <SortIcon type={order[header.key as keyof MOInvestmentOrderConfig]} />
+                {header.label}
+              </HeaderLabel>
+            ))}
           </TableHeader>
           {isLoading && (
             <Centered>
@@ -101,7 +82,7 @@ export const OfferInvestmentsList = ({
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <Raw>{item.username || '<Name Uknown>'}</Raw>
                 <Raw>{item.amount.toLocaleString()}</Raw>
-                <Raw>{item.tokenAmount.toLocaleString()}</Raw>
+                <Raw>{item.tokenAmount.toLocaleString() + ' ' + investingTokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
               </IssuanceRow>
             ))}
@@ -115,7 +96,6 @@ export const OfferInvestmentsList = ({
         pageSize={pageSize}
         onChangePageSize={setPageSize}
         onChangePage={setPage}
-        smallMargin={false}
       />
     </Container>
   )

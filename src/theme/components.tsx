@@ -250,6 +250,17 @@ export function ExternalLink({
   return <StyledLink target={target} rel={rel} href={href} onClick={handleClickExternalLink} {...rest} />
 }
 
+export const DiscreteExternalLink = styled(ExternalLink)`
+  :hover {
+    text-decoration: none;
+  }
+
+  :focus {
+    outline: none;
+    text-decoration: none;
+  }
+`
+
 export function ExternalLinkIcon({
   target = '_blank',
   href,

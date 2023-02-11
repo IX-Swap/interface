@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { Check, X } from 'react-feather'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
@@ -6,6 +6,7 @@ import { useApproveRandomPresaleWhitelists, useManagePresaleWhitelists } from 's
 import { IssuanceTextField } from '../../utils/TextField'
 import { ConfirmPopup } from '../../utils/ConfirmPopup'
 import { useShowError } from 'state/application/hooks'
+import { integerNumberFilter } from '../utils'
 
 interface Props {
   offerId: string
@@ -66,16 +67,6 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
 
   const disabledRandom = disabledManage || !count || !totalItems || approveRandom.isLoading
   const disabledAll = disabledManage || !totalItems || manageWhitelists.isLoading
-
-  const integerNumberFilter = useCallback((value?: string) => {
-    if (!value) {
-      return ''
-    }
-    return value
-      .split('')
-      .filter((x) => /[0-9]/.test(x))
-      .join('')
-  }, [])
 
   const onApproveRandom = () => {
     if (disabledRandom) return

@@ -7,7 +7,7 @@ import { Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
 
-import { Issuance } from 'state/launchpad/types'
+import { AbstractOrder, Issuance } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
@@ -19,7 +19,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
 
-import { useGetIssuances } from 'state/launchpad/hooks'
+import { useGetIssuances, useOnChangeOrder } from 'state/launchpad/hooks'
 import { IssuancePagination } from './IssuancePagination'
 
 
@@ -62,21 +62,7 @@ export const IssuancesFull = () => {
 
   const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
 
-  const onChangeOrder = React.useCallback((key: string) => {
-    const current = Object.keys(order)[0]
-    if (!current || current !== key) {
-      setOrder({ [key]: 'ASC' })
-    }
-
-    if (current === key) {
-      const value = Object.values(order)[0]
-      const manner = !value ? 'ASC' : value === 'ASC' ? 'DESC' : null
-
-      setOrder({ [current]: manner })
-    }
-
-    setPage(1)
-  }, [order])
+  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
   const scrollToTop = React.useCallback(() => {
     //window.scrollTo({ top: 0, behavior: 'smooth' })

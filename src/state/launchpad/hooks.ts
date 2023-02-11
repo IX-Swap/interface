@@ -9,6 +9,7 @@ import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/Issuance
 
 import { AppState } from 'state'
 import { tryParseAmount } from 'state/swap/helpers'
+import { OrderType, OrderTypes } from './types'
 
 import {
   Asset,
@@ -28,6 +29,7 @@ import {
   ManagedOfferInvestment,
   PaginationRes,
   InvestmentStagesFilter,
+  AbstractOrder,
 } from 'state/launchpad/types'
 
 import { toggleKYCDialog } from './actions'
@@ -1272,16 +1274,13 @@ export const useGetManagedOfferPresaleStatistics = () => {
 
 export const useGetManagedOfferPresaleWhitelists = () => {
   return React.useCallback(async (offerId: string, page: number, order?: PresaleOrderConfig, size = 8) => {
-    let query = [`page=${page}`, `offset=${size}`]
-    if (order) {
-      query = query.concat(
-        Object.entries(order)
-          .filter(([_, value]) => value && value.length > 0)
-          .map(([key, value]) => `order=${key}=${value}`)
-      )
-    }
+    const query = {
+      page,
+      offset: size,
+      order,
+    } as { [key: string]: any }
     const result = await apiService
-      .get(`/offers/${offerId}/whitelists?${query.join('&')}`)
+      .get(`/offers/${offerId}/whitelists`, { paramsSerializer }, query)
       .then((res) => res.data as PaginateResponse<OfferPresaleWhitelist>)
 
     return {
@@ -1322,6 +1321,26 @@ export const useManagePresaleWhitelists = () => {
   return { isLoading: loader.isLoading, load, error }
 }
 
+/* This method is used to parse params when order might be present, as axios format it with brackets */
+const paramsSerializer = (params: { [key: string]: any }) => {
+  if (!Object.keys(params).length) {
+    return ''
+  }
+  const { order, ...rest } = params
+  let query = Object.entries(rest)
+    .filter(([_, value]) => !!value)
+    .map(([key, value]) => `${key}=${value}`)
+  if (order) {
+    const allowedValues = Object.values(OrderTypes)
+    query = query.concat(
+      Object.entries(order as { [key: string]: any })
+        .filter(([_, value]) => allowedValues.includes(value))
+        .map(([key, value]) => `order=${key}=${value}`)
+    )
+  }
+  return query.join('&')
+}
+
 export const useGetManagedOfferInvestments = (id: string | undefined) => {
   const loader = useLoader(false)
   const [data, setData] = React.useState<PaginationRes<ManagedOfferInvestment>>()
@@ -1330,16 +1349,15 @@ export const useGetManagedOfferInvestments = (id: string | undefined) => {
   const load = React.useCallback(
     (stage: InvestmentStagesFilter, page = 1, order?: PresaleOrderConfig, size = 8) => {
       loader.start()
-      let query = [`page=${page}`, `offset=${size}`, `stage=${stage}`]
-      if (order) {
-        query = query.concat(
-          Object.entries(order)
-            .filter(([_, value]) => value && value.length > 0)
-            .map(([key, value]) => `order=${key}=${value}`)
-        )
-      }
+      const query = {
+        page,
+        offset: size,
+        stage,
+        order,
+      } as { [key: string]: any }
+
       apiService
-        .get(`/offers/${id}/investments?${query.join('&')}`)
+        .get(`/offers/${id}/investments`, { paramsSerializer }, query)
         .then((res) => {
           const formatted = {
             hasMore: res.data.nextPage !== null,
@@ -1356,4 +1374,29 @@ export const useGetManagedOfferInvestments = (id: string | undefined) => {
   )
 
   return { isLoading: loader.isLoading, error, load, data }
+}
+
+export const useOnChangeOrder = (
+  order: AbstractOrder,
+  setOrder: (foo: AbstractOrder) => void,
+  setPage: (foo: number) => void
+) => {
+  const onChangeOrder = React.useCallback(
+    (key: string) => {
+      const current = Object.keys(order)[0]
+      if (!current || current !== key) {
+        setOrder({ [key]: 'ASC' })
+      }
+      if (current === key) {
+        const value = Object.values(order)[0]
+        const manner = !value ? 'ASC' : value === 'ASC' ? 'DESC' : null
+
+        setOrder({ [current]: manner })
+      }
+      setPage(1)
+    },
+    [order, setOrder, setPage]
+  )
+
+  return onChangeOrder
 }

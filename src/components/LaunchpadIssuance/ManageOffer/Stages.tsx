@@ -36,10 +36,9 @@ export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
   // todo when admin: add "Edit" btn
 
   const highlightedStatuses = useMemo(() => {
-    const statuses = [...KEY_OFFER_STATUSES];
-    const index = statuses.findIndex((item) => item === status);
+    const index = KEY_OFFER_STATUSES.findIndex((item) => item === status);
     if (index < 0) return [];
-    const allowedStatuses = statuses.slice(0, index + 1);
+    const allowedStatuses = KEY_OFFER_STATUSES.slice(0, index + 1);
     return allowedStatuses;
   }, [status]);
 

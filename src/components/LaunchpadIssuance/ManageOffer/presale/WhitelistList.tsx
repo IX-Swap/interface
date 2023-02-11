@@ -1,10 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
-import { useHistory } from 'react-router-dom'
 import { Check, X, MoreHorizontal } from 'react-feather'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { useManagePresaleWhitelists } from 'state/launchpad/hooks'
-import { OfferPresaleWhitelist, PaginationRes, PresaleOrderConfig } from 'state/launchpad/types'
+import { useManagePresaleWhitelists, useOnChangeOrder } from 'state/launchpad/hooks'
+import { AbstractOrder, OfferPresaleWhitelist, PaginationRes, PresaleOrderConfig } from 'state/launchpad/types'
 import { IssuanceTable, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
@@ -15,6 +14,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { EmptyTable } from 'components/LaunchpadIssuance/utils/EmptyTable'
 import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboard/IssuancePagination'
 import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/styled'
+import { DiscreteInternalLink } from 'theme'
 
 interface Props {
   offerId: string
@@ -51,8 +51,8 @@ export const OfferWhitelistList = ({
 }: Props) => {
   const { totalItems, totalPages, items } = data
   const theme = useTheme()
-  const history = useHistory()
   const manageWhitelists = useManagePresaleWhitelists()
+  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
   const [selected, setSelected] = useState<number[]>([])
   const actionsDisabled = useMemo(() => disabledManage || !selected.length, [disabledManage, selected])
 
@@ -72,22 +72,6 @@ export const OfferWhitelistList = ({
       refreshWhitelists()
     })
   }
-  const onChangeOrder = React.useCallback(
-    (key: string) => {
-      const current = Object.keys(order)[0]
-      if (!current || current !== key) {
-        setOrder({ [key]: 'ASC' })
-      }
-      if (current === key) {
-        const value = Object.values(order)[0]
-        const manner = !value ? 'ASC' : value === 'ASC' ? 'DESC' : null
-
-        setOrder({ [current]: manner })
-      }
-      setPage(1)
-    },
-    [order]
-  )
 
   const onSelectAll = useCallback(() => {
     if (disabledManage) return
@@ -116,10 +100,6 @@ export const OfferWhitelistList = ({
     },
     [disabledManage, selected]
   )
-
-  const onExtractData = () => {
-    history.push(`/issuance/extract-offers/${issuanceId}?tab=registration&page=1`)
-  }
   const getIsSelected = useCallback(
     (id: number) => {
       const isSelected = selected.includes(id)
@@ -131,12 +111,14 @@ export const OfferWhitelistList = ({
     setPage(newPage)
     setSelected([])
   }
+  const extractLink = useMemo(() => `/issuance/extract-offers/${issuanceId}?tab=registration&page=1`, [issuanceId])
+
   return (
     <Container>
       <Header>
         <TableTitle>Approve Manually</TableTitle>
         <ButtonsContainer>
-          <ExtractButton onClick={onExtractData}>
+          <ExtractButton as={DiscreteInternalLink} to={extractLink}>
             <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
             <ExtractText>Extract Data</ExtractText>
           </ExtractButton>
@@ -195,7 +177,6 @@ export const OfferWhitelistList = ({
         pageSize={pageSize}
         onChangePageSize={setPageSize}
         onChangePage={onChangePage}
-        smallMargin={false}
       />
     </Container>
   )

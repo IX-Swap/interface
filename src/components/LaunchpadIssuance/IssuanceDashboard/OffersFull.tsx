@@ -9,7 +9,7 @@ import { SortIcon } from '../utils/SortIcon'
 import { ReactComponent as ListingIcon } from 'assets/launchpad/svg/listing-icon.svg'
 import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
 
-import { DashboardOffer } from 'state/launchpad/types'
+import { AbstractOrder, DashboardOffer } from 'state/launchpad/types'
 import { IssuanceFilter } from '../types'
 
 import { SearchFilter, SearchConfig, OrderConfig } from './SearchFilter'
@@ -20,7 +20,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, DefaultRaw, CountRow, Title } from 'components/LaunchpadMisc/tables'
 
-import { useGetOffersFull, useFormatOfferValue } from 'state/launchpad/hooks'
+import { useGetOffersFull, useFormatOfferValue, useOnChangeOrder } from 'state/launchpad/hooks'
 
 import { ITEM_ROWS, OFFER_STATUSES } from '../utils/constants'
 
@@ -53,21 +53,7 @@ export const OffersFull: React.FC<Props> = (props) => {
 
   const veiwItem = React.useCallback((id: number) => history.push(`/offers/${id}`), [history])
 
-  const onChangeOrder = React.useCallback((key: string) => {
-    const current = Object.keys(order)[0]
-    if (!current || current !== key) {
-      setOrder({ [key]: 'ASC' })
-    }
-
-    if (current === key) {
-      const value = Object.values(order)[0]
-      const manner = !value ? 'ASC' : value === 'ASC' ? 'DESC' : null
-
-      setOrder({ [current]: manner })
-    }
-
-    setPage(1)
-  }, [order])
+  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
   const onChangePageSize = React.useCallback((size: number) => {
     setPageSize(size)

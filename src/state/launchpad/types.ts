@@ -412,6 +412,10 @@ export interface ManageOfferBody {
   rejectIds?: number[]
 }
 
+export enum OrderTypes {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
 export type OrderType = 'ASC' | 'DESC' | null
 export interface PresaleOrderConfig {
   name?: OrderType
@@ -444,4 +448,8 @@ export enum InvestmentStagesFilter {
   preSale = 'preSale',
   sale = 'sale',
   all = 'all',
+}
+
+export interface AbstractOrder {
+  [key: string]: OrderType
 }

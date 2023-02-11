@@ -16,7 +16,7 @@ import { alpha } from '@material-ui/core/styles'
 import { InvestmentsBlock } from './investments'
 
 interface ManagedOfferPageParams {
-  offerId: string
+  issuanceId: string
 }
 
 export const ManageOffer = () => {
@@ -26,7 +26,7 @@ export const ManageOffer = () => {
   const [isOpenWhitelisting, setOpenWhitelisting] = useState(false)
 
   const params = useParams<ManagedOfferPageParams>()
-  const { loading, data: offer } = useGetManagedOffer(params.offerId)
+  const { loading, data: offer } = useGetManagedOffer(params.issuanceId)
   const { usersClaimed, issuerClaimed, status } = offer || {}
 
   const [stage, setStage] = useState<OfferStatus>()
