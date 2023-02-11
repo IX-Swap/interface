@@ -111,7 +111,7 @@ export const OfferWhitelistList = ({
     setPage(newPage)
     setSelected([])
   }
-  const extractLink = useMemo(() => `/issuance/extract-offers/${issuanceId}?tab=registration&page=1`, [issuanceId])
+  const extractLink = useMemo(() => `/issuance/extract/${issuanceId}?tab=registration&page=1`, [issuanceId])
 
   return (
     <Container>

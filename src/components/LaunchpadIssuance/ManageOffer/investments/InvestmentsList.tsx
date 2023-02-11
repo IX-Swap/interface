@@ -49,7 +49,7 @@ export const OfferInvestmentsList = ({
   const { totalItems, totalPages, items } = data
   const theme = useTheme()
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
-  const extractLink = useMemo(() => `/issuance/extract-offers/${issuanceId}?tab=investment&page=1`, [issuanceId])
+  const extractLink = useMemo(() => `/issuance/extract/${issuanceId}?tab=investment&page=1`, [issuanceId])
 
   return (
     <Container>
