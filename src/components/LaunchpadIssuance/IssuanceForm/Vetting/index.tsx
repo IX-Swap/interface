@@ -45,6 +45,8 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useAddPopup } from 'state/application/hooks'
 
 import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
+import { useQueryParams } from 'hooks/useParams'
+import { textFilter } from 'utils/input'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -65,32 +67,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     setShowCloseDialog(false)
   }, [])
 
-  const alertUser = React.useCallback((event: BeforeUnloadEvent) => {
-    event.preventDefault()
-    event.returnValue = true
-
-    if (!isSafeToClose) {
-      setShowCloseDialog(true)
-    }
-
-    return isSafeToClose
-  }, [])
-
-  const issuanceId = React.useMemo(() => {
-    const value = decodeURI(history.location.search)
-      .replace('?', '')
-      .split('&')
-      .map((x) => x.split('='))
-      .map(([key, value]) => ({ key, value }))
-      .find((x) => x.key === 'id')?.value
-
-    if (!value) {
-      return
-    }
-
-    return Number(value)
-  }, [history.location.search])
-
+  const {
+    objectParams: { id: issuanceId },
+  } = useQueryParams<{ id: number }>(['id'])
   const initialValues = useVettingFormInitialValues(issuanceId)
 
   const createVetting = useSubmitVettingForm(issuanceId)
@@ -107,15 +86,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       setShowCloseDialog(true)
     }
   }, [history, issuanceId])
-
-  const textFilter = React.useCallback(
-    (value?: string) =>
-      value
-        ?.split('')
-        .filter((x) => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x))
-        .join('') ?? '',
-    []
-  )
 
   const toSubmit = React.useCallback(() => {
     setShowConfirmDialog(true)

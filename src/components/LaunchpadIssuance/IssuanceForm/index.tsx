@@ -21,6 +21,9 @@ import { IssuanceFormStep } from './IssuanceFormStep'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { IssuanceStatus } from '../types'
 import { useGetIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
+import { routes } from 'utils/routes'
+import { DiscreteInternalLink } from 'theme'
+import { useQueryParams } from 'hooks/useParams'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -33,19 +36,12 @@ export const NewIssuanceForm = () => {
   const [contactFormOpen, setContactForm] = React.useState<boolean>(false)
 
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
-
-  const issuanceId = React.useMemo(() => {
-    return decodeURI(history.location.search)
-      .replace('?', '')
-      .split('&')
-      .map((x) => x.split('='))
-      .map(([key, value]) => ({ key, value }))
-      .find((x) => x.key === 'id')?.value
-  }, [history.location.search])
+  const {
+    objectParams: { id: issuanceId },
+  } = useQueryParams<{ id: number }>(['id'])
 
   const vettingStatus = React.useMemo(() => issuance.data?.vetting?.status, [issuance.data])
   const issuanceStatus = React.useMemo(() => issuance.data?.vetting?.offer?.status, [issuance.data])
-  const goBack = React.useCallback(() => history.push('/issuance'), [history])
   const selectIssuance = React.useCallback(
     (id: number) => {
       if (window.history.pushState) {
@@ -66,7 +62,7 @@ export const NewIssuanceForm = () => {
   return (
     <Wrapper>
       <FormHeader>
-        <BackButton background={theme.launchpad.colors.background} onClick={goBack}>
+        <BackButton as={DiscreteInternalLink} to={routes.issuance} background={theme.launchpad.colors.background}>
           <ArrowLeft color={theme.launchpad.colors.primary} />
         </BackButton>
 

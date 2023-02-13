@@ -325,7 +325,7 @@ export const useGetIssuance = () => {
 
   const [data, setData] = React.useState<Issuance>()
 
-  const load = React.useCallback((id?: number) => {
+  const load = React.useCallback((id?: number | string) => {
     if (!id) {
       return
     }
@@ -342,7 +342,7 @@ export const useGetIssuance = () => {
   return { data, load, loading: loader.isLoading }
 }
 
-export const useVetting = (issuanceId?: number) => {
+export const useVetting = (issuanceId?: number | string) => {
   const loader = useLoader()
   const [vetting, setVettings] = React.useState<IssuanceVetting>()
 
@@ -371,7 +371,7 @@ export const useGetFile = () => {
   }, [])
 }
 
-export const useVettingFormInitialValues = (issuanceId?: number) => {
+export const useVettingFormInitialValues = (issuanceId?: number | string) => {
   const loader = useLoader()
   const getFile = useGetFile()
   const vetting = useVetting(issuanceId)
@@ -704,7 +704,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
   )
 }
 
-export const useSubmitVettingForm = (issuanceId?: number) => {
+export const useSubmitVettingForm = (issuanceId?: number | string) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(
@@ -874,7 +874,7 @@ const useUploadOfferFiles = () => {
   )
 }
 
-export const useOfferFormInitialValues = (issuanceId?: number) => {
+export const useOfferFormInitialValues = (issuanceId?: number | string) => {
   const loader = useLoader()
   const getFile = useGetFile()
 
