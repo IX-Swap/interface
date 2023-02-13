@@ -4,36 +4,15 @@ import { Check, X } from 'react-feather'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { useApproveRandomPresaleWhitelists, useManagePresaleWhitelists } from 'state/launchpad/hooks'
 import { IssuanceTextField } from '../../utils/TextField'
-import { ConfirmPopup } from '../../utils/ConfirmPopup'
 import { useShowError } from 'state/application/hooks'
 import { integerNumberFilter } from '../utils'
+import { ConfirmModal } from '../shared/ConfirmModal'
 
 interface Props {
   offerId: string
   totalItems: number
   refreshWhitelists: () => void
   disabledManage: boolean
-}
-interface ConfirmProps {
-  isOpen: boolean
-  setOpen: (foo: boolean) => void
-  onAccept: () => void
-}
-
-export const ConfirmModal = ({ isOpen, setOpen, onAccept }: ConfirmProps) => {
-  const onAcceptWithClose = () => {
-    onAccept()
-    setOpen(false)
-  }
-  return (
-    <ConfirmPopup
-      isOpen={isOpen}
-      onDecline={() => {
-        setOpen(false)
-      }}
-      onAccept={onAcceptWithClose}
-    />
-  )
 }
 
 export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, disabledManage }: Props) => {
@@ -143,9 +122,6 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
             <X size={13} />
           </OutlineButton>
         </GridItem>
-        {/* {manageWhitelists.error && (
-          <ErrorText>{manageWhitelists.error}</ErrorText>
-        )} */}
       </GridContainer>
     </Container>
   )
@@ -197,13 +173,4 @@ const EndAdornment = styled.div<{ disabled: boolean }>`
   letter-spacing: -0.02em;
   color: ${(props) => props.theme.launchpad.colors.primary};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-`
-const ErrorText = styled.div`
-  color: ${(props) => props.theme.launchpad.colors.error};
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  text-align: right;
-  grid-area: error;
 `
