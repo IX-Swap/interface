@@ -634,7 +634,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
   return React.useCallback(
     async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
       let data: Record<string, any> = {
-        issuanceId,
+        issuanceId: Number(issuanceId),
 
         toSubmit: false,
 
@@ -713,14 +713,14 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(
-    async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
+    async (payload: VettingFormValues, initialValues: VettingFormValues, vettingId?: number) => {
       const uploadedFiles = await uploadFiles(payload, initialValues)
 
       const findDoc = (key: keyof VettingFormValues['document']) =>
         uploadedFiles.find((x) => x.name === `document.${key}Id`)?.id ?? initialValues.document[key]?.id
 
       const data: Record<string, any> = {
-        issuanceId,
+        issuanceId: Number(issuanceId),
 
         toSubmit: true,
 
@@ -795,9 +795,9 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
         ...uploadedFiles.filter((x) => x.name.startsWith('fundingDocuments')).map((x) => x.id),
       ]
 
-      if (vettindId) {
+      if (vettingId) {
         delete data.issuanceId
-        return apiService.put(`/vettings/${vettindId}`, data)
+        return apiService.put(`/vettings/${vettingId}`, data)
       } else {
         return apiService.post(`/vettings`, data)
       }
