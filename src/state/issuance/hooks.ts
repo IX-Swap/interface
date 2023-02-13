@@ -118,5 +118,5 @@ export const useExtractReport = () => {
 
 export const useBackLink = (issuanceId: string) => {
   const history = useHistory()
-  return () => history.push(issuanceId === 'all' ? '/issuance' : `/manage-offers/${issuanceId}`)
+  return () => history.push(issuanceId === 'all' ? '/issuance' : `/issuance/manage/${issuanceId}`)
 }

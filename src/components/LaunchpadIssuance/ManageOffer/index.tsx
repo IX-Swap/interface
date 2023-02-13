@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
@@ -13,38 +13,62 @@ import { HeaderButtons } from './HeaderButtons'
 import { OFFER_STATUSES } from '../utils/constants'
 import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
 import { alpha } from '@material-ui/core/styles'
+import { InvestmentsBlock } from './investments'
+import { useRole } from 'state/user/hooks'
 
 interface ManagedOfferPageParams {
-  offerId: string
+  issuanceId: string
 }
 
 export const ManageOffer = () => {
   const theme = useTheme()
   const history = useHistory()
+  const { isOfferManager } = useRole()
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
   const [isOpenWhitelisting, setOpenWhitelisting] = useState(false)
 
   const params = useParams<ManagedOfferPageParams>()
-  const { loading, data: offer } = useGetManagedOffer(params.offerId)
+  const { loading, data: offer } = useGetManagedOffer(params.issuanceId)
   const { usersClaimed, issuerClaimed, status } = offer || {}
 
-  // todo role check: offer-manager or admin only
-  // todo when sale stage: depending on HeaderButtons."stage" - show different data and change showWhitelisting.
-  const showWhitelisting = useMemo(() => status && [OfferStatus.whitelist].includes(status), [status])
-  const isClaim = useMemo(() => status === OfferStatus.claim, [status])
+  const [stage, setStage] = useState<OfferStatus>()
+  const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
 
   const claimBtnTitle = useMemo(() => {
-    if (loading || !isClaim) {
+    if (status && status !== OfferStatus.claim) {
       return ''
     }
     if (!usersClaimed) {
+      // admin and offer manager can do
       return 'Start Claim Process'
     }
-    if (usersClaimed && !issuerClaimed) {
+    if (isOfferManager && usersClaimed && !issuerClaimed) {
+      // offer manager can do
       return 'Withdraw Funds'
     }
     return ''
-  }, [loading, isClaim, usersClaimed, issuerClaimed])
+  }, [isOfferManager, status, usersClaimed, issuerClaimed])
+
+  const onClaimForIssuer = useCallback(() => {
+    // todo when claim
+  }, [offer])
+  const onClaimForUsers = useCallback(() => {
+    // todo when claim
+  }, [offer])
+
+  const onClaim = useCallback(() => {
+    if (!usersClaimed) {
+      return onClaimForUsers()
+    } else if (isOfferManager && usersClaimed && !issuerClaimed) {
+      return onClaimForIssuer()
+    }
+  }, [usersClaimed, isOfferManager, issuerClaimed, onClaimForUsers, onClaimForIssuer])
+
+  useEffect(() => {
+    if (status) {
+      setStage(status)
+    }
+  }, [status])
 
   if (loading) {
     return (
@@ -76,14 +100,14 @@ export const ManageOffer = () => {
             <ButtonLabel>Whitelist Wallet</ButtonLabel>
           </OutlineButton>
           {claimBtnTitle && (
-            <FilledButton style={{ marginLeft: '13px' }}>
+            <FilledButton style={{ marginLeft: '13px' }} onClick={onClaim}>
               <ButtonLabel>{claimBtnTitle}</ButtonLabel>
             </FilledButton>
           )}
         </HeaderItem>
       </Header>
 
-      <HeaderButtons offer={offer} />
+      <HeaderButtons offer={offer} stage={stage} setStage={setStage} />
 
       <CustomGridContainer>
         <StatisticsBoxItem>
@@ -94,7 +118,8 @@ export const ManageOffer = () => {
         </StagesBoxItem>
       </CustomGridContainer>
 
-      {showWhitelisting && <PresaleBlock offerId={offer.id} issuanceId={offer.issuanceId} />}
+      {showWhitelisting && <PresaleBlock offer={offer} />}
+      {!showWhitelisting && <InvestmentsBlock offer={offer} chosenStage={stage} />}
     </Wrapper>
   )
 }

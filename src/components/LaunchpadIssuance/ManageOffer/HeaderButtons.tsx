@@ -1,55 +1,50 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { ManagedOffer } from 'state/launchpad/types'
-import { DropdownField } from '../IssuanceForm/shared/fields/DropdownField';
+import { DropdownField } from '../IssuanceForm/shared/fields/DropdownField'
 import { shortenAddress } from 'utils'
-import { Copy, Edit3, CheckCircle } from 'react-feather';
-import { KEY_OFFER_STATUSES, OFFER_STATUSES } from '../utils/constants';
-import useCopyClipboard from 'hooks/useCopyClipboard';
-import { useHistory, } from 'react-router-dom';
+import { Copy, Edit3, CheckCircle } from 'react-feather'
+import { KEY_OFFER_STATUSES, OFFER_STATUSES } from '../utils/constants'
+import useCopyClipboard from 'hooks/useCopyClipboard'
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
-import { ContactFormModal } from '../utils/ContactFormModal';
-import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink';
-import { nameChainMap } from 'constants/chains';
+import { ContactFormModal } from '../utils/ContactFormModal'
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { nameChainMap } from 'constants/chains'
+import { DiscreteInternalLink, DiscreteExternalLink } from 'theme'
 
 interface Props {
-  offer: ManagedOffer;
+  offer: ManagedOffer
+  stage?: string
+  setStage: any
 }
 
-export const HeaderButtons = ({ offer }: Props) => {
-  const { status, tokenAddress, issuanceId } = offer;
+export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
+  const { status, tokenAddress, issuanceId, network } = offer
 
   const theme = useTheme()
   const [isCopied, setCopied] = useCopyClipboard()
-  const history = useHistory()
-
-  const [stage, setStage] = useState<string | undefined>(status as string);
   const [contactFormOpen, setContactFormOpen] = React.useState<boolean>(false)
 
   const onChooseStage = (_: string, value?: string) => {
-    setStage(value);
+    setStage(value)
   }
   const stageOptions = useMemo(() => {
-    const statuses = [...KEY_OFFER_STATUSES];
-    const index = statuses.findIndex((item) => item === status);
-    if (index < 0) return [];
-    const allowedStatuses = statuses.slice(0, index + 1);
-    return allowedStatuses.map((status: string) => ({ value: status, label: OFFER_STATUSES[status as keyof typeof OFFER_STATUSES] as string }));
-  }, [status]);
+    const index = KEY_OFFER_STATUSES.findIndex((item) => item === status)
+    if (index < 0) return []
+    const allowedStatuses = KEY_OFFER_STATUSES.slice(0, index + 1)
+    return allowedStatuses.map((status: string) => ({
+      value: status,
+      label: OFFER_STATUSES[status as keyof typeof OFFER_STATUSES] as string,
+    }))
+  }, [status])
   const onCopy = () => {
-    setCopied(tokenAddress);
+    setCopied(tokenAddress)
   }
-  const onExplorer = () => {
-    const address = getExplorerLink(
-      nameChainMap[offer.network],
-      offer.tokenAddress,
-      ExplorerDataType.TOKEN
-    );
-    window.open(address, '_blank', 'noreferrer');
-  }
-  const onEdit = () => {
-    history.push(`/issuance/create/information?id=${issuanceId}`);
-  }
+  const explorerLink = useMemo(
+    () => getExplorerLink(nameChainMap[network], tokenAddress, ExplorerDataType.TOKEN),
+    [network, tokenAddress]
+  )
+  const editLink = useMemo(() => `/issuance/edit/information?id=${issuanceId}`, [issuanceId])
 
   return (
     <Header>
@@ -76,13 +71,13 @@ export const HeaderButtons = ({ offer }: Props) => {
           {!isCopied && <Copy stroke={theme.launchpad.colors.text.body} size="18" />}
           {isCopied && <CheckCircle stroke={theme.launchpad.colors.text.body} size="18" />}
         </BtnContainer>
-        <BtnContainer onClick={onExplorer}>
+        <BtnContainer as={DiscreteExternalLink} href={explorerLink}>
           Explorer
         </BtnContainer>
       </HeaderItem>
 
       <HeaderItem gap="32px">
-        <RightBtn onClick={onEdit} mr="12px">
+        <RightBtn mr="12px" as={DiscreteInternalLink} to={editLink}>
           <Edit3 size={12} color={theme.launchpad.colors.text.bodyAlt} />
           <span>Edit</span>
         </RightBtn>
@@ -92,11 +87,7 @@ export const HeaderButtons = ({ offer }: Props) => {
         </RightBtn>
       </HeaderItem>
 
-      <ContactFormModal
-        open={contactFormOpen}
-        closeForm={() => setContactFormOpen(false)}
-        offerId={offer.id}
-      />
+      <ContactFormModal open={contactFormOpen} closeForm={() => setContactFormOpen(false)} offerId={offer.id} />
     </Header>
   )
 }
@@ -106,12 +97,12 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 22px 0 16px;
-`;
+`
 const HeaderItem = styled.div<{ gap?: string }>`
   display: flex;
   align-items: center;
-  gap: ${(props) => props.gap || "16px"};
-`;
+  gap: ${(props) => props.gap || '16px'};
+`
 const BtnContainer = styled.div`
   display: flex;
 
@@ -126,17 +117,18 @@ const BtnContainer = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 
   .label {
-    color: ${props => props.theme.launchpad.colors.text.body};
+    color: ${(props) => props.theme.launchpad.colors.text.body};
     margin-right: 0.5rem;
   }
 
-  svg, img {
+  svg,
+  img {
     margin-left: 0.5rem;
   }
 
@@ -160,6 +152,6 @@ const RightBtn = styled.div<{ mr: string }>`
     line-height: 16px;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+    color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
   }
-`;
+`
