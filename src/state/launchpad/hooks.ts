@@ -120,7 +120,7 @@ export const useGetOffers = () => {
     if (filter) {
       query = query.concat(
         Object.entries(filter)
-          .filter(([_, value]) => value.length > 0)
+          .filter(([, value]) => value.length > 0)
           .map(
             ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
           )
@@ -449,7 +449,7 @@ export const useVettingFormInitialValues = (issuanceId?: number | string) => {
       setValues(vettingInitialFormValues)
       loader.stop()
     } else if (!vetting.loading && vetting.data) {
-      transform(vetting.data!).then(setValues).then(loader.stop)
+      transform(vetting.data).then(setValues).then(loader.stop)
     }
   }, [vetting.loading])
 
@@ -463,7 +463,7 @@ export const useGetIssuances = () => {
     if (filter) {
       query = query.concat(
         Object.entries(filter)
-          .filter(([_, value]) => value.length > 0)
+          .filter(([, value]) => value.length > 0)
           .map(
             ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
           )
@@ -473,7 +473,7 @@ export const useGetIssuances = () => {
     if (order) {
       query = query.concat(
         Object.entries(order)
-          .filter(([_, value]) => value && value.length > 0)
+          .filter(([, value]) => value && value.length > 0)
           .map(([key, value]) => `order=${key}=${value}`)
       )
     }
@@ -500,7 +500,7 @@ export const useGetOffersFull = () => {
       if (filter) {
         query = query.concat(
           Object.entries(filter)
-            .filter(([_, value]) => value.length > 0)
+            .filter(([, value]) => value.length > 0)
             .map(
               ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
             )
@@ -510,7 +510,7 @@ export const useGetOffersFull = () => {
       if (order) {
         query = query.concat(
           Object.entries(order)
-            .filter(([_, value]) => value && value.length > 0)
+            .filter(([, value]) => value && value.length > 0)
             .map(([key, value]) => `order=${key}=${value}`)
         )
       }
@@ -689,13 +689,13 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
       data.document = uploadedFiles
         .filter((x) => x.name.startsWith('document'))
-        .map((x) => ({ ...x, name: x.name.split('.').pop()! }))
+        .map((x) => ({ ...x, name: x.name.split('.').pop() ?? '' }))
         .reduce((acc, e) => ({ ...acc, [e.name]: e.id }), {})
 
       data.fundingDocuments = uploadedFiles.filter((x) => x.name.startsWith('fundingDocuments')).map((x) => x.id)
 
       data = Object.entries(data)
-        .filter(([key, value]) => typeof value === 'boolean' || value)
+        .filter(([, value]) => typeof value === 'boolean' || value)
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
       if (vettindId) {
@@ -909,7 +909,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       setValues(informationInitialFormValues)
       loader.stop()
     } else if (!offer.loading && offer.data) {
-      transform(offer.data!).then(setValues).then(loader.stop)
+      transform(offer.data).then(setValues).then(loader.stop)
     }
   }, [offer.loading])
 
@@ -1327,13 +1327,13 @@ const paramsSerializer = (params: { [key: string]: any }) => {
   }
   const { order, ...rest } = params
   let query = Object.entries(rest)
-    .filter(([_, value]) => !!value)
+    .filter(([, value]) => !!value)
     .map(([key, value]) => `${key}=${value}`)
   if (order) {
     const allowedValues = Object.values(OrderTypes)
     query = query.concat(
       Object.entries(order as { [key: string]: any })
-        .filter(([_, value]) => allowedValues.includes(value))
+        .filter(([, value]) => allowedValues.includes(value))
         .map(([key, value]) => `order=${key}=${value}`)
     )
   }

@@ -129,8 +129,8 @@ const MorePayoutEvents = ({ payoutId }: { payoutId: number }) => {
     element.scrollBy({ left: 600, behavior: 'smooth' })
 
     window.requestAnimationFrame(() => {
-      const child = element.lastElementChild!
-
+      const child = element.lastElementChild
+      if (!child) return
       const boxElement = element.getBoundingClientRect()
       const boxChild = child.getBoundingClientRect()
 
@@ -152,8 +152,8 @@ const MorePayoutEvents = ({ payoutId }: { payoutId: number }) => {
     element.scrollBy({ left: -600, behavior: 'smooth' })
 
     window.requestAnimationFrame(() => {
-      const child = element.firstElementChild!
-
+      const child = element.firstElementChild
+      if (!child) return
       const boxElement = element.getBoundingClientRect()
       const boxChild = child.getBoundingClientRect()
 

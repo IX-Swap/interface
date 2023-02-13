@@ -87,11 +87,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const submit = React.useCallback(
     async (values: VettingFormValues) => {
       setShowConfirmDialog(false)
+      if (!initialValues.data) return
 
       loader.start()
-
       try {
-        await createVetting(values, initialValues.data!, initialValues.vettingId)
+        await createVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({
           info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` },
@@ -108,10 +108,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
   const saveDraft = React.useCallback(
     async (values: VettingFormValues) => {
+      if (!initialValues.data) return
       loader.start()
 
       try {
-        await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
+        await saveDraftVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({ info: { success: true, summary: 'Draft saved successfully' } })
         goMain()

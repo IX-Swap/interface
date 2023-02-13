@@ -141,9 +141,9 @@ export default function IndividualKycForm() {
       }
     }
 
-    if ([KYCStatuses.CHANGES_REQUESTED, KYCStatuses.DRAFT].some((s) => s === kyc?.status)) {
+    if (kyc && [KYCStatuses.CHANGES_REQUESTED, KYCStatuses.DRAFT].includes(kyc.status)) {
       getProgress()
-      setUpdateKycId(kyc!.id)
+      setUpdateKycId(kyc.id)
     } else {
       setFormData(individualFormInitialValues)
     }
@@ -173,8 +173,8 @@ export default function IndividualKycForm() {
       let root = { [key]: value }
 
       if (key.startsWith('taxDeclarations[')) {
-        const match = /taxDeclarations\[([0-9]+)\]\.(\w+)/.exec(key)!
-
+        const match = /taxDeclarations\[([0-9]+)\]\.(\w+)/.exec(key)
+        if (!match) return
         const index = match[1]
         const field = match[2]
 
