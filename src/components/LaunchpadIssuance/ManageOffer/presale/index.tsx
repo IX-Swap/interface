@@ -20,7 +20,7 @@ interface Props {
 }
 
 export const PresaleBlock = ({ offer }: Props) => {
-  const { id: offerId, issuanceId, status } = offer
+  const { id: offerId, status } = offer
 
   const getStatistics = useGetManagedOfferPresaleStatistics()
   const getWhitelists = useGetManagedOfferPresaleWhitelists()
@@ -78,8 +78,6 @@ export const PresaleBlock = ({ offer }: Props) => {
       </StyledGridItem>
       <StyledGridItem xs={12} noPadding>
         <OfferWhitelistList
-          offerId={offerId}
-          issuanceId={issuanceId}
           data={data}
           refreshWhitelists={refreshWhitelists}
           order={order}
@@ -92,6 +90,7 @@ export const PresaleBlock = ({ offer }: Props) => {
           pageSize={pageSize}
           setPageSize={setPageSize}
           disabledManage={disabledManage}
+          offer={offer}
         />
       </StyledGridItem>
     </GridContainer>

@@ -13,9 +13,7 @@ interface Props {
 }
 
 export const InvestmentsBlock = ({ offer, chosenStage }: Props) => {
-  const { id: offerId, issuanceId, investingTokenSymbol } = offer
-
-  const { load, error, isLoading, data } = useGetManagedOfferInvestments(offerId)
+  const { load, error, isLoading, data } = useGetManagedOfferInvestments(offer.id)
   const showError = useShowError()
 
   const [page, setPage] = useState<number>(1)
@@ -49,7 +47,6 @@ export const InvestmentsBlock = ({ offer, chosenStage }: Props) => {
     <GridContainer>
       <StyledGridItem xs={12}>
         <OfferInvestmentsList
-          issuanceId={issuanceId}
           data={data}
           order={order}
           setOrder={setOrder}
@@ -58,7 +55,7 @@ export const InvestmentsBlock = ({ offer, chosenStage }: Props) => {
           isLoading={isLoading}
           pageSize={pageSize}
           setPageSize={setPageSize}
-          investingTokenSymbol={investingTokenSymbol}
+          offer={offer}
         />
       </StyledGridItem>
     </GridContainer>

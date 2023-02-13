@@ -3,7 +3,13 @@ import styled, { useTheme } from 'styled-components'
 import { Check, X, MoreHorizontal } from 'react-feather'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { useManagePresaleWhitelists, useOnChangeOrder } from 'state/launchpad/hooks'
-import { AbstractOrder, OfferPresaleWhitelist, PaginationRes, PresaleOrderConfig } from 'state/launchpad/types'
+import {
+  AbstractOrder,
+  ManagedOffer,
+  OfferPresaleWhitelist,
+  PaginationRes,
+  PresaleOrderConfig,
+} from 'state/launchpad/types'
 import { IssuanceTable, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
@@ -17,8 +23,6 @@ import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/s
 import { DiscreteInternalLink } from 'theme'
 
 interface Props {
-  offerId: string
-  issuanceId: number
   data: PaginationRes<OfferPresaleWhitelist>
   refreshWhitelists: () => any
   order: PresaleOrderConfig
@@ -31,11 +35,10 @@ interface Props {
   pageSize: number
   setPageSize: (page: number) => void
   disabledManage: boolean
+  offer: ManagedOffer
 }
 
 export const OfferWhitelistList = ({
-  offerId,
-  issuanceId,
   data,
   refreshWhitelists,
   order,
@@ -48,7 +51,9 @@ export const OfferWhitelistList = ({
   pageSize,
   setPageSize,
   disabledManage,
+  offer,
 }: Props) => {
+  const { id: offerId, investingTokenSymbol, issuanceId } = offer
   const { totalItems, totalPages, items } = data
   const theme = useTheme()
   const manageWhitelists = useManagePresaleWhitelists()
@@ -160,7 +165,7 @@ export const OfferWhitelistList = ({
             items.map((item, idx) => (
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <Raw>{item.name || '<Name Uknown>'}</Raw>
-                <Raw>{item.amount.toLocaleString()}</Raw>
+                <Raw>{item.amount.toLocaleString() + ' ' + investingTokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
                 <CheckBoxContainer>
                   <BaseCheckbox state={getIsSelected(item.id)} toggle={() => onToggleOne(item.id)} />

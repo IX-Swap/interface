@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
@@ -49,9 +49,20 @@ export const ManageOffer = () => {
     return ''
   }, [isOfferManager, status, usersClaimed, issuerClaimed])
 
-  const onClaim = () => {
-    // todo do, callback.
-  }
+  const onClaimForIssuer = useCallback(() => {
+    // todo when claim
+  }, [offer])
+  const onClaimForUsers = useCallback(() => {
+    // todo when claim
+  }, [offer])
+
+  const onClaim = useCallback(() => {
+    if (!usersClaimed) {
+      return onClaimForUsers()
+    } else if (isOfferManager && usersClaimed && !issuerClaimed) {
+      return onClaimForIssuer()
+    }
+  }, [usersClaimed, isOfferManager, issuerClaimed, onClaimForUsers, onClaimForIssuer])
 
   useEffect(() => {
     if (status) {

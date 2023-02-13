@@ -1,7 +1,13 @@
 import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { MoreHorizontal } from 'react-feather'
-import { ManagedOfferInvestment, PaginationRes, MOInvestmentOrderConfig, AbstractOrder } from 'state/launchpad/types'
+import {
+  ManagedOfferInvestment,
+  PaginationRes,
+  MOInvestmentOrderConfig,
+  AbstractOrder,
+  ManagedOffer,
+} from 'state/launchpad/types'
 import { IssuanceTable, TableHeader, IssuanceRow, Raw } from 'components/LaunchpadMisc/tables'
 import { SortIcon } from 'components/LaunchpadIssuance/utils/SortIcon'
 import { IssuanceFilter } from 'components/LaunchpadIssuance/types'
@@ -15,7 +21,6 @@ import { DiscreteInternalLink } from 'theme'
 import { useOnChangeOrder } from 'state/launchpad/hooks'
 
 interface Props {
-  issuanceId: number
   data: PaginationRes<ManagedOfferInvestment>
   order: MOInvestmentOrderConfig
   setOrder: (order: MOInvestmentOrderConfig) => void
@@ -24,7 +29,7 @@ interface Props {
   isLoading: boolean
   pageSize: number
   setPageSize: (page: number) => void
-  investingTokenSymbol: string
+  offer: ManagedOffer
 }
 
 const HEADERS = [
@@ -35,7 +40,6 @@ const HEADERS = [
 ]
 
 export const OfferInvestmentsList = ({
-  issuanceId,
   data,
   order,
   setOrder,
@@ -44,8 +48,9 @@ export const OfferInvestmentsList = ({
   isLoading,
   pageSize,
   setPageSize,
-  investingTokenSymbol,
+  offer,
 }: Props) => {
+  const { issuanceId, investingTokenSymbol, tokenSymbol } = offer
   const { totalItems, totalPages, items } = data
   const theme = useTheme()
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
@@ -81,8 +86,8 @@ export const OfferInvestmentsList = ({
             items.map((item, idx) => (
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <Raw>{item.username || '<Name Uknown>'}</Raw>
-                <Raw>{item.amount.toLocaleString()}</Raw>
-                <Raw>{item.tokenAmount.toLocaleString() + ' ' + investingTokenSymbol}</Raw>
+                <Raw>{item.amount.toLocaleString() + ' ' + investingTokenSymbol}</Raw>
+                <Raw>{item.tokenAmount.toLocaleString() + ' ' + tokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
               </IssuanceRow>
             ))}
