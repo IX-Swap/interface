@@ -44,7 +44,7 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
     () => getExplorerLink(nameChainMap[network], tokenAddress, ExplorerDataType.TOKEN),
     [network, tokenAddress]
   )
-  const editLink = useMemo(() => `/issuance/create/information?id=${issuanceId}`, [issuanceId])
+  const editLink = useMemo(() => `/issuance/edit/information?id=${issuanceId}`, [issuanceId])
 
   return (
     <Header>

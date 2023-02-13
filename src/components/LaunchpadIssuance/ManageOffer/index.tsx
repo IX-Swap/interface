@@ -14,6 +14,7 @@ import { OFFER_STATUSES } from '../utils/constants'
 import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
 import { alpha } from '@material-ui/core/styles'
 import { InvestmentsBlock } from './investments'
+import { useRole } from 'state/user/hooks'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -22,6 +23,7 @@ interface ManagedOfferPageParams {
 export const ManageOffer = () => {
   const theme = useTheme()
   const history = useHistory()
+  const { isOfferManager } = useRole()
   const goBack = React.useCallback(() => history.push('/issuance'), [history])
   const [isOpenWhitelisting, setOpenWhitelisting] = useState(false)
 
@@ -31,20 +33,25 @@ export const ManageOffer = () => {
 
   const [stage, setStage] = useState<OfferStatus>()
   const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
-  const isClaim = useMemo(() => status === OfferStatus.claim, [status])
 
   const claimBtnTitle = useMemo(() => {
-    if (loading || !isClaim) {
+    if (status && status !== OfferStatus.claim) {
       return ''
     }
     if (!usersClaimed) {
+      // admin and offer manager can do
       return 'Start Claim Process'
     }
-    if (usersClaimed && !issuerClaimed) {
+    if (isOfferManager && usersClaimed && !issuerClaimed) {
+      // offer manager can do
       return 'Withdraw Funds'
     }
     return ''
-  }, [loading, isClaim, usersClaimed, issuerClaimed])
+  }, [isOfferManager, status, usersClaimed, issuerClaimed])
+
+  const onClaim = () => {
+    // todo do, callback.
+  }
 
   useEffect(() => {
     if (status) {
@@ -65,7 +72,6 @@ export const ManageOffer = () => {
   if (!Object.keys(OFFER_STATUSES).includes(offer.status as any)) {
     return <Centered>Offer not started</Centered>
   }
-  // todo add button redirect to this page
   return (
     <Wrapper>
       {isOpenWhitelisting && (
@@ -83,7 +89,7 @@ export const ManageOffer = () => {
             <ButtonLabel>Whitelist Wallet</ButtonLabel>
           </OutlineButton>
           {claimBtnTitle && (
-            <FilledButton style={{ marginLeft: '13px' }}>
+            <FilledButton style={{ marginLeft: '13px' }} onClick={onClaim}>
               <ButtonLabel>{claimBtnTitle}</ButtonLabel>
             </FilledButton>
           )}
