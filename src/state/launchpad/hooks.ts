@@ -26,9 +26,7 @@ import {
   OfferPresaleWhitelist,
   ManageOfferBody,
   PresaleOrderConfig,
-  ManagedOfferInvestment,
   PaginationRes,
-  InvestmentStagesFilter,
   AbstractOrder,
 } from 'state/launchpad/types'
 
@@ -1297,6 +1295,7 @@ export const useApproveRandomPresaleWhitelists = () => {
   const [error, setError] = React.useState<string>()
 
   const load = React.useCallback((offerId: string, count: number) => {
+    loader.start()
     setError('')
     return apiService
       .patch(`/offers/${offerId}/approve/random`, { count })
@@ -1311,6 +1310,7 @@ export const useManagePresaleWhitelists = () => {
   const [error, setError] = React.useState<string>()
 
   const load = React.useCallback((offerId: string, body: ManageOfferBody) => {
+    loader.start()
     setError('')
     return apiService
       .patch(`/offers/${offerId}/whitelists`, body)
@@ -1340,39 +1340,38 @@ const paramsSerializer = (params: { [key: string]: any }) => {
   return query.join('&')
 }
 
-export const useGetManagedOfferInvestments = (id: string | undefined) => {
+export const useGenericPaginationFetch = (url: string) => {
   const loader = useLoader(false)
-  const [data, setData] = React.useState<PaginationRes<ManagedOfferInvestment>>()
+  const [data, setData] = React.useState<PaginationRes<any>>()
   const [error, setError] = React.useState<string | undefined>()
 
   const load = React.useCallback(
-    (stage: InvestmentStagesFilter, page = 1, order?: PresaleOrderConfig, size = 8) => {
+    (query: { [key: string]: any }) => {
       loader.start()
-      const query = {
-        page,
-        offset: size,
-        stage,
-        order,
-      } as { [key: string]: any }
 
+      const params = query.order ? { paramsSerializer } : undefined
       apiService
-        .get(`/offers/${id}/investments`, { paramsSerializer }, query)
+        .get(url, params, query)
         .then((res) => {
           const formatted = {
             hasMore: res.data.nextPage !== null,
             items: res.data.items,
             totalPages: res.data.totalPages,
             totalItems: res.data.totalItems,
-          } as PaginationRes<ManagedOfferInvestment>
+          } as PaginationRes<any>
           setData(formatted)
         })
         .catch((err) => setError(err.message))
         .finally(() => loader.stop())
     },
-    [id]
+    [url]
   )
 
   return { isLoading: loader.isLoading, error, load, data }
+}
+
+export const useGetManagedOfferInvestments = (id: string | undefined) => {
+  return useGenericPaginationFetch(`/offers/${id}/investments`)
 }
 
 export const useOnChangeOrder = (
@@ -1398,4 +1397,33 @@ export const useOnChangeOrder = (
   )
 
   return onChangeOrder
+}
+
+export const useGenericPost = (url: string) => {
+  const loader = useLoader(false)
+  const [error, setError] = React.useState<string>()
+
+  const load = React.useCallback(
+    (body?: any, callback?: () => void) => {
+      loader.start()
+      setError('')
+      return apiService
+        .post(url, body)
+        .catch((err) => setError(err.message))
+        .finally(() => {
+          loader.stop()
+          if (callback) callback()
+        })
+    },
+    [url]
+  )
+  return { isLoading: loader.isLoading, load, error }
+}
+
+export const useTriggerUserClaim = (offerId?: string) => {
+  return useGenericPost(`/offers/${offerId}/trigger-claim`)
+}
+
+export const useTriggerIssuerClaim = (offerId?: string) => {
+  return useGenericPost(`/offers/${offerId}/issuer-claim`)
 }

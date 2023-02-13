@@ -5,7 +5,7 @@ import { ArrowLeft } from 'react-feather'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { OfferStatus } from 'state/launchpad/types'
 import { OfferStatistics } from './Statistics'
-import { useGetManagedOffer } from 'state/launchpad/hooks'
+import { useGetManagedOffer, useTriggerIssuerClaim, useTriggerUserClaim } from 'state/launchpad/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OfferStages } from './Stages'
 import { PresaleBlock } from './presale'
@@ -15,6 +15,8 @@ import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelis
 import { alpha } from '@material-ui/core/styles'
 import { InvestmentsBlock } from './investments'
 import { useRole } from 'state/user/hooks'
+import { ConfirmModal } from './shared/ConfirmModal'
+import { useAddPopup } from 'state/application/hooks'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -24,45 +26,63 @@ export const ManageOffer = () => {
   const theme = useTheme()
   const history = useHistory()
   const { isOfferManager } = useRole()
-  const goBack = React.useCallback(() => history.push('/issuance'), [history])
+  const goBack = useCallback(() => history.push('/issuance'), [history])
+  const addPopup = useAddPopup()
+
   const [isOpenWhitelisting, setOpenWhitelisting] = useState(false)
+  const [stage, setStage] = useState<OfferStatus>()
+  const [confirmClaim, setConfirmClaim] = useState(false)
 
   const params = useParams<ManagedOfferPageParams>()
-  const { loading, data: offer } = useGetManagedOffer(params.issuanceId)
+  const { loading, data: offer, load } = useGetManagedOffer(params.issuanceId)
   const { usersClaimed, issuerClaimed, status } = offer || {}
 
-  const [stage, setStage] = useState<OfferStatus>()
-  const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
+  const triggerUserClaim = useTriggerUserClaim(offer?.id)
+  const triggerIssuerClaim = useTriggerIssuerClaim(offer?.id)
 
+  const showWhitelisting = useMemo(() => stage === OfferStatus.whitelist, [stage])
+  const canWithdraw = useMemo(
+    () => isOfferManager && usersClaimed && !issuerClaimed,
+    [isOfferManager, usersClaimed, issuerClaimed]
+  )
   const claimBtnTitle = useMemo(() => {
     if (status && status !== OfferStatus.claim) {
       return ''
-    }
-    if (!usersClaimed) {
+    } else if (!usersClaimed) {
       // admin and offer manager can do
       return 'Start Claim Process'
-    }
-    if (isOfferManager && usersClaimed && !issuerClaimed) {
+    } else if (canWithdraw) {
       // offer manager can do
       return 'Withdraw Funds'
     }
     return ''
-  }, [isOfferManager, status, usersClaimed, issuerClaimed])
+  }, [status, usersClaimed, canWithdraw])
+
+  const onClaimForUsers = useCallback(() => {
+    // todo add blockchain
+    if (triggerUserClaim.isLoading) return
+    triggerUserClaim.load(undefined, () => {
+      addPopup({ info: { success: true, summary: 'User claim has been triggered succesfully!' } })
+      load()
+    })
+  }, [triggerUserClaim.isLoading, triggerUserClaim.load, load])
 
   const onClaimForIssuer = useCallback(() => {
-    // todo when claim
-  }, [offer])
-  const onClaimForUsers = useCallback(() => {
-    // todo when claim
-  }, [offer])
+    // todo add blockchain
+    if (triggerIssuerClaim.isLoading) return
+    triggerIssuerClaim.load(undefined, () => {
+      addPopup({ info: { success: true, summary: 'Funds have been withdrawn succesfully!' } })
+      load()
+    })
+  }, [triggerIssuerClaim.isLoading, triggerIssuerClaim.load, load])
 
   const onClaim = useCallback(() => {
     if (!usersClaimed) {
       return onClaimForUsers()
-    } else if (isOfferManager && usersClaimed && !issuerClaimed) {
+    } else if (canWithdraw) {
       return onClaimForIssuer()
     }
-  }, [usersClaimed, isOfferManager, issuerClaimed, onClaimForUsers, onClaimForIssuer])
+  }, [usersClaimed, canWithdraw, onClaimForUsers, onClaimForIssuer])
 
   useEffect(() => {
     if (status) {
@@ -85,6 +105,8 @@ export const ManageOffer = () => {
   }
   return (
     <Wrapper>
+      <ConfirmModal isOpen={confirmClaim} setOpen={setConfirmClaim} onAccept={onClaim} />
+
       {isOpenWhitelisting && (
         <LaunchpadWhitelistWallet offerId={offer.id} isOpen={isOpenWhitelisting} setOpen={setOpenWhitelisting} />
       )}
@@ -100,7 +122,7 @@ export const ManageOffer = () => {
             <ButtonLabel>Whitelist Wallet</ButtonLabel>
           </OutlineButton>
           {claimBtnTitle && (
-            <FilledButton style={{ marginLeft: '13px' }} onClick={onClaim}>
+            <FilledButton style={{ marginLeft: '13px' }} onClick={() => setConfirmClaim(true)}>
               <ButtonLabel>{claimBtnTitle}</ButtonLabel>
             </FilledButton>
           )}

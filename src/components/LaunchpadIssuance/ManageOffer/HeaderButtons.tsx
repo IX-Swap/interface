@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
-  const { status, tokenAddress, issuanceId, network } = offer
+  const { status, tokenAddress, issuanceId, network, hasPresale } = offer
 
   const theme = useTheme()
   const [isCopied, setCopied] = useCopyClipboard()
@@ -29,14 +29,15 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
     setStage(value)
   }
   const stageOptions = useMemo(() => {
-    const index = KEY_OFFER_STATUSES.findIndex((item) => item === status)
+    const statuses = hasPresale ? KEY_OFFER_STATUSES : KEY_OFFER_STATUSES.slice(2)
+    const index = statuses.findIndex((item) => item === status)
     if (index < 0) return []
-    const allowedStatuses = KEY_OFFER_STATUSES.slice(0, index + 1)
+    const allowedStatuses = statuses.slice(0, index + 1)
     return allowedStatuses.map((status: string) => ({
       value: status,
       label: OFFER_STATUSES[status as keyof typeof OFFER_STATUSES] as string,
     }))
-  }, [status])
+  }, [status, hasPresale])
   const onCopy = () => {
     setCopied(tokenAddress)
   }
