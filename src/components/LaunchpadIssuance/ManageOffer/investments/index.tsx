@@ -32,7 +32,12 @@ export const InvestmentsBlock = ({ offer, chosenStage }: Props) => {
   }, [chosenStage])
 
   useEffect(() => {
-    load(stage, page, order, pageSize)
+    load({
+      stage,
+      page,
+      order,
+      offset: pageSize,
+    })
   }, [stage, page, order, pageSize])
   useEffect(() => {
     if (error) {
