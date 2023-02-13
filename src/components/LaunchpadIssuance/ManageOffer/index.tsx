@@ -16,6 +16,7 @@ import { alpha } from '@material-ui/core/styles'
 import { InvestmentsBlock } from './investments'
 import { useRole } from 'state/user/hooks'
 import { ConfirmModal } from './shared/ConfirmModal'
+import { useAddPopup } from 'state/application/hooks'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -26,6 +27,7 @@ export const ManageOffer = () => {
   const history = useHistory()
   const { isOfferManager } = useRole()
   const goBack = useCallback(() => history.push('/issuance'), [history])
+  const addPopup = useAddPopup()
 
   const [isOpenWhitelisting, setOpenWhitelisting] = useState(false)
   const [stage, setStage] = useState<OfferStatus>()
@@ -59,13 +61,19 @@ export const ManageOffer = () => {
   const onClaimForUsers = useCallback(() => {
     // todo add blockchain
     if (triggerUserClaim.isLoading) return
-    triggerUserClaim.load(undefined, load)
+    triggerUserClaim.load(undefined, () => {
+      addPopup({ info: { success: true, summary: 'User claim has been triggered succesfully!' } })
+      load()
+    })
   }, [triggerUserClaim.isLoading, triggerUserClaim.load, load])
 
   const onClaimForIssuer = useCallback(() => {
     // todo add blockchain
     if (triggerIssuerClaim.isLoading) return
-    triggerIssuerClaim.load(undefined, load)
+    triggerIssuerClaim.load(undefined, () => {
+      addPopup({ info: { success: true, summary: 'Funds have been withdrawn succesfully!' } })
+      load()
+    })
   }, [triggerIssuerClaim.isLoading, triggerIssuerClaim.load, load])
 
   const onClaim = useCallback(() => {
