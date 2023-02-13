@@ -3,13 +3,13 @@ import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
 import { useHistory } from 'react-router-dom'
-import { ChevronDown, ChevronLeft, ChevronRight, Eye } from 'react-feather'
+import { ChevronDown, ChevronLeft, ChevronRight } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
 import { ReactComponent as ListingIcon } from 'assets/launchpad/svg/listing-icon.svg'
 import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
 
-import { DashboardOffer } from 'state/launchpad/types'
+import { AbstractOrder, DashboardOffer } from 'state/launchpad/types'
 import { IssuanceFilter } from '../types'
 
 import { SearchFilter, SearchConfig, OrderConfig } from './SearchFilter'
@@ -18,16 +18,35 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, DefaultRaw, CountRow, Title } from 'components/LaunchpadMisc/tables'
+import {
+  IssuanceTable,
+  TableTitle,
+  TableHeader,
+  IssuanceRow,
+  Raw,
+  DefaultRaw,
+  CountRow,
+  Title,
+} from 'components/LaunchpadMisc/tables'
 
-import { useGetOffersFull, useFormatOfferValue } from 'state/launchpad/hooks'
+import { useGetOffersFull, useFormatOfferValue, useOnChangeOrder } from 'state/launchpad/hooks'
 
 import { ITEM_ROWS, OFFER_STATUSES } from '../utils/constants'
-
+import { DiscreteInternalLink } from 'theme'
 
 interface Props {
   type: string
 }
+
+const HEADERS = [
+  { key: 'issuanceName', label: 'Issuances' },
+  { key: 'countInvestors', label: 'Investors' },
+  { key: 'commitment', label: 'Commitment' },
+  { key: 'progress', label: 'Progress' },
+  { key: 'softCapReached', label: 'Total Funding' },
+  { key: 'closeDate', label: 'Close Date' },
+  { key: 'status', label: 'Stage' },
+]
 
 export const OffersFull: React.FC<Props> = (props) => {
   const theme = useTheme()
@@ -42,7 +61,7 @@ export const OffersFull: React.FC<Props> = (props) => {
 
   const [loading, setLoading] = React.useState<boolean>(true)
   const [offers, setOffers] = React.useState<DashboardOffer[]>([])
-  
+
   const [page, setPage] = React.useState(1)
   const [totalPages, setTotalPages] = React.useState(0)
   const [totalItems, setTotalItems] = React.useState(0)
@@ -50,24 +69,9 @@ export const OffersFull: React.FC<Props> = (props) => {
   const [filter, setFilter] = React.useState<SearchConfig | undefined>()
   const [order, setOrder] = React.useState<OrderConfig>({})
 
+  const viewItem = React.useCallback((id: number) => history.push(`/offers/${id}`), [history])
 
-  const veiwItem = React.useCallback((id: number) => history.push(`/offers/${id}`), [history])
-
-  const onChangeOrder = React.useCallback((key: string) => {
-    const current = Object.keys(order)[0]
-    if (!current || current !== key) {
-      setOrder({ [key]: 'ASC' })
-    }
-
-    if (current === key) {
-      const value = Object.values(order)[0]
-      const manner = !value ? 'ASC' : value === 'ASC' ? 'DESC' : null
-
-      setOrder({ [current]: manner })
-    }
-
-    setPage(1)
-  }, [order])
+  const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
   const onChangePageSize = React.useCallback((size: number) => {
     setPageSize(size)
@@ -83,10 +87,10 @@ export const OffersFull: React.FC<Props> = (props) => {
 
   const scrollToTop = React.useCallback(() => {
     //window.scrollTo({ top: 0, behavior: 'smooth' })
-    const yOffset = document.documentElement.scrollTop || document.body.scrollTop;
+    const yOffset = document.documentElement.scrollTop || document.body.scrollTop
     if (yOffset > 0) {
-      window.requestAnimationFrame(scrollToTop);
-      window.scrollTo(0, yOffset - yOffset / 1.75);
+      window.requestAnimationFrame(scrollToTop)
+      window.scrollTo(0, yOffset - yOffset / 1.75)
     }
   }, [])
 
@@ -94,11 +98,11 @@ export const OffersFull: React.FC<Props> = (props) => {
     setLoading(true)
 
     getOffers(page, filter, order, props.type, pageSize)
-      .then(page => {
+      .then((page) => {
         setOffers(page.items)
         setTotalItems(page.totalItems)
         setTotalPages(page.totalPages)
-      })      
+      })
       .finally(() => setLoading(false))
   }, [filter, order, page, pageSize])
 
@@ -121,21 +125,22 @@ export const OffersFull: React.FC<Props> = (props) => {
   return (
     <Container>
       <TableTitle>{props.type}</TableTitle>
-      <SearchFilter onFilter={setFilter}/>
+      <SearchFilter onFilter={setFilter} />
 
-      {!loading && offers?.length === 0 && (<EmptyTable />)}
+      {!loading && offers?.length === 0 && <EmptyTable />}
 
       {offers?.length > 0 && (
         <IssuanceTable>
           <TableHeader tab={IssuanceFilter.live}>
-            <Title onClick={() => onChangeOrder('issuanceName')}> <SortIcon type={order.issuanceName}/> Issuances</Title>
-            <Title onClick={() => onChangeOrder('countInvestors')}> <SortIcon type={order.countInvestors}/> Investors</Title>
-            <Title onClick={() => onChangeOrder('commitment')}> <SortIcon type={order.commitment}/> Commitment</Title>
-            <Title onClick={() => onChangeOrder('progress')}> <SortIcon type={order.progress}/> Progress</Title>
-            <Title onClick={() => onChangeOrder('softCapReached')}> <SortIcon type={order.softCapReached}/> Total Funding</Title>
-            <Title onClick={() => onChangeOrder('closeDate')}> <SortIcon type={order.closeDate}/> Close Date</Title>
-            <Title onClick={() => onChangeOrder('status')}> <SortIcon type={order.status}/> Stage</Title>
-            <div>  Action</div>
+            <>
+              {HEADERS.map((header) => (
+                <Title key={header.key} onClick={() => onChangeOrder(header.key)}>
+                  {' '}
+                  <SortIcon type={order[header.key as keyof OrderConfig]} /> {header.label}
+                </Title>
+              ))}
+            </>
+            <div> Action</div>
           </TableHeader>
 
           {loading && (
@@ -144,70 +149,75 @@ export const OffersFull: React.FC<Props> = (props) => {
             </Centered>
           )}
 
-          {!loading && offers.map((offer, idx) => (
-            <IssuanceRow key={idx} tab={IssuanceFilter.live}>
-              <Raw>{offer.issuanceName}</Raw>
-              <Raw>{offer.countInvestors}</Raw>
-              <Raw>{formatedValue(`${offer.commitment}`)}</Raw>
-              <CountRow>{offer.progressPercent}% - {formatedValue(`${offer.progress}`)}</CountRow>
-              <div>{formatedValue(`${offer.softCapReached}`) || '0.00'} {offer.investingTokenSymbol}</div>
+          {!loading &&
+            offers.map((offer, idx) => (
+              <IssuanceRow key={idx} tab={IssuanceFilter.live}>
+                <Raw>{offer.issuanceName}</Raw>
+                <Raw>{offer.countInvestors}</Raw>
+                <Raw>{formatedValue(`${offer.commitment}`)}</Raw>
+                <CountRow>
+                  {offer.progressPercent}% - {formatedValue(`${offer.progress}`)}
+                </CountRow>
+                <div>
+                  {formatedValue(`${offer.softCapReached}`) || '0.00'} {offer.investingTokenSymbol}
+                </div>
 
-              <CountRow>
-                {(offer?.closeDate)
-                  ? moment(offer?.closeDate).format('DD/MM/YYYY')
-                  : ''}
-              </CountRow>
+                <CountRow>{offer?.closeDate ? moment(offer?.closeDate).format('DD/MM/YYYY') : ''}</CountRow>
 
-              <DefaultRaw>{OFFER_STATUSES[offer.status]}</DefaultRaw>
+                <DefaultRaw>{OFFER_STATUSES[offer.status]}</DefaultRaw>
 
-              <ActionButtons>
-              <OutlineButton
-                color={theme.launchpad.colors.primary + '80'}
-                borderType="tiny"
-                height="34px"
-                onClick={() => veiwItem(offer.id)}>
-                Listing <ListingIcon />
-              </OutlineButton>
+                <ActionButtons>
+                  <OutlineButton
+                    color={theme.launchpad.colors.primary + '80'}
+                    borderType="tiny"
+                    height="34px"
+                    onClick={() => viewItem(offer.id)}
+                  >
+                    Listing <ListingIcon />
+                  </OutlineButton>
 
-              <OutlineButton
-                color={theme.launchpad.colors.primary + '80'}
-                borderType="tiny"
-                height="34px">
-                <GearIcon />
-              </OutlineButton>
-              </ActionButtons>
-              
-            </IssuanceRow>
-          ))}
-  
+                  <OutlineButton
+                    color={theme.launchpad.colors.primary + '80'}
+                    borderType="tiny"
+                    height="34px"
+                    as={DiscreteInternalLink}
+                    to={`/issuance/manage/${offer.issuanceId}`}
+                  >
+                    <GearIcon />
+                  </OutlineButton>
+                </ActionButtons>
+              </IssuanceRow>
+            ))}
         </IssuanceTable>
       )}
 
       <PaginationRow>
-        <PageSizeDropdown ref={container} onClick={() => setShowDropdown(state => !state)}>
+        <PageSizeDropdown ref={container} onClick={() => setShowDropdown((state) => !state)}>
           <PageSizeLabel>{pageSize}</PageSizeLabel>
-          
+
           <PageSizeIcon isOpen={showDropdown}>
             <ChevronDown fill={theme.launchpad.colors.text.bodyAlt} size="18" />
           </PageSizeIcon>
-          
+
           {showDropdown && (
             <PageSizeOptions>
               {paginationSizes.map((option, idx) => (
-                <PageSizeOption key={idx} onClick={() => onChangePageSize(option.value)}>{option.label}</PageSizeOption>
+                <PageSizeOption key={idx} onClick={() => onChangePageSize(option.value)}>
+                  {option.label}
+                </PageSizeOption>
               ))}
             </PageSizeOptions>
           )}
         </PageSizeDropdown>
 
         <PageCount>
-          {((page - 1) * pageSize) + 1} - {page * pageSize < totalItems ? page * pageSize : totalItems} of {totalItems}
+          {(page - 1) * pageSize + 1} - {page * pageSize < totalItems ? page * pageSize : totalItems} of {totalItems}
         </PageCount>
 
         <PageButton onClick={() => onChangePage(page - 1)} disabled={page <= 1}>
           <ChevronLeft />
         </PageButton>
-        
+
         <PageButton onClick={() => onChangePage(page + 1)} disabled={page >= totalPages}>
           <ChevronRight />
         </PageButton>
@@ -249,7 +259,7 @@ const PageCount = styled.div`
   line-height: 48px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const PageButton = styled.button`
@@ -267,15 +277,19 @@ const PageButton = styled.button`
   line-height: 27px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 
-  ${props => props.disabled && `
+  ${(props) =>
+    props.disabled &&
+    `
     background: ${props.theme.launchpad.colors.disabled};
   `}
 
-  ${props => !props.disabled && `
+  ${(props) =>
+    !props.disabled &&
+    `
     cursor: pointer;
 
     transition: all 0.3s;
@@ -297,7 +311,7 @@ const PageSizeDropdown = styled.div`
   gap: 0.25rem;
   padding: 0.5rem;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
@@ -309,7 +323,7 @@ const PageSizeLabel = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const PageSizeIcon = styled.div<{ isOpen: boolean }>`
@@ -320,7 +334,7 @@ const PageSizeIcon = styled.div<{ isOpen: boolean }>`
 
   > svg {
     transition: transofrm 0.4s;
-    ${props => props.isOpen && 'transform: rotate(180deg);' };
+    ${(props) => props.isOpen && 'transform: rotate(180deg);'};
   }
 `
 
@@ -343,7 +357,7 @@ const PageSizeOptions = styled.div`
   max-height: 300px;
   overflow-y: auto;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
@@ -359,10 +373,10 @@ const PageSizeOption = styled.div`
 
   cursor: pointer;
 
-  background: ${props => props.theme.launchpad.colors.background};
-  color: ${props => props.theme.launchpad.colors.text.title};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 `
