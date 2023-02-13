@@ -15,15 +15,16 @@ import { ReactComponent as YoutubeLogo } from 'assets/launchpad/svg/social/youtu
 import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/linkedin.svg'
 import { useSubscribeToOffer } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
+import { DiscreteExternalLink } from 'theme'
 
 type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
 
 const initialValues = {
-  email: ''
+  email: '',
 }
 
 const schema = object().shape({
-  email: string().required('Please write your email').email('Please enter a valid email')
+  email: string().required('Please write your email').email('Please enter a valid email'),
 })
 
 interface Props {
@@ -36,20 +37,17 @@ export const Footer: React.FC<Props> = (props) => {
 
   const [active, setActive] = React.useState(false)
 
-  const handleEmailInput = React.useCallback(
-    (text: string, setFieldValue: ValueSetter) => {
-      setActive(text !== '')
-      setFieldValue('email', text)
-    },
-    []
-  )
+  const handleEmailInput = React.useCallback((text: string, setFieldValue: ValueSetter) => {
+    setActive(text !== '')
+    setFieldValue('email', text)
+  }, [])
 
   const submit = React.useCallback(async (values: { email: string }) => {
     try {
       await subscribe(values.email, props.offerId)
 
       addPopup({ info: { success: true, summary: `You have subscribed successfully` } })
-    } catch (err: any)  {
+    } catch (err: any) {
       addPopup({ info: { success: false, summary: err.message } })
     }
   }, [])
@@ -57,9 +55,7 @@ export const Footer: React.FC<Props> = (props) => {
   return (
     <FooterContainer>
       <SubscriptionFormContainer>
-        <SubscriptionFormTitle>
-          Subscribe for {props.offerId ? "the Deal's" : ''} Updates
-        </SubscriptionFormTitle>
+        <SubscriptionFormTitle>Subscribe for {props.offerId ? "the Deal's" : ''} Updates</SubscriptionFormTitle>
 
         <SubscriptionFormSubtitle>
           Keep up to date on all the news, events, developments and our Public Sale.
@@ -69,19 +65,14 @@ export const Footer: React.FC<Props> = (props) => {
           {({ errors, setFieldValue, submitForm }) => (
             <SubscriptionFormFieldContainer>
               <SubscriptionFormEmailField>
-                <SubscriptionFormEmailFieldInput onChange={(e) => handleEmailInput(e.target.value, setFieldValue)}/>
+                <SubscriptionFormEmailFieldInput onChange={(e) => handleEmailInput(e.target.value, setFieldValue)} />
 
-                <SubscriptionFormEmailFieldLabel active={active}>
-                  Email Address
-                </SubscriptionFormEmailFieldLabel>
+                <SubscriptionFormEmailFieldLabel active={active}>Email Address</SubscriptionFormEmailFieldLabel>
 
                 {errors.email && <ErrorText>{errors.email}</ErrorText>}
               </SubscriptionFormEmailField>
 
-
-              <SubscriptionFormSubmitButton onClick={submitForm}>
-                Submit
-              </SubscriptionFormSubmitButton>
+              <SubscriptionFormSubmitButton onClick={submitForm}>Submit</SubscriptionFormSubmitButton>
             </SubscriptionFormFieldContainer>
           )}
         </Formik>
@@ -99,14 +90,17 @@ export const Footer: React.FC<Props> = (props) => {
           <SocialMediaLink href="https://discord.com/invite/KXrGyZQx4t" target="_blank" rel="noreferrer">
             <DiscordLogo />
           </SocialMediaLink>
-          <SocialMediaLink href="https://www.youtube.com/channel/UCaYPNR-eLs9iuB5ZVKRx-fw" target="_blank" rel="noreferrer">
+          <SocialMediaLink
+            href="https://www.youtube.com/channel/UCaYPNR-eLs9iuB5ZVKRx-fw"
+            target="_blank"
+            rel="noreferrer"
+          >
             <YoutubeLogo />
           </SocialMediaLink>
           <SocialMediaLink href="https://www.linkedin.com/company/ixswap" target="_blank" rel="noreferrer">
             <LinkedInLogo />
           </SocialMediaLink>
         </SocialMediaLinks>
-        
       </SubscriptionFormContainer>
 
       <FooterSeparator />
@@ -117,20 +111,19 @@ export const Footer: React.FC<Props> = (props) => {
             <Logo /> <div>IXSwap</div>
           </header>
           <main>
-            IX Swap is built by a global team of capital markets, 
-            legal and blockchain experts, bringing you the next 
+            IX Swap is built by a global team of capital markets, legal and blockchain experts, bringing you the next
             generation of trading for Security tokens and tokenized stocks
           </main>
         </About>
         <Copyright>
           Copyright © IX Swap 2022
-
           <br />
-
           <div>
-            <a>Terms & Conditions</a> 
+            <DiscreteExternalLink href="https://ixswap.io/terms-and-conditions/">
+              Terms & Conditions
+            </DiscreteExternalLink>
             <DotSeparator />
-            <a>Privacy Policy</a> 
+            <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">Privacy Policy</DiscreteExternalLink>
             <DotSeparator />
             <a>Cookie Settings</a>
           </div>
@@ -139,26 +132,27 @@ export const Footer: React.FC<Props> = (props) => {
           <div>
             <header>Explore</header>
 
-            <a>Blog</a>
-            <a>Community</a>
-            <a>Litepaper</a>
-            <a>Pitchpaper</a>
+            <DiscreteExternalLink href="https://ixswap.io/blog/">Blog</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/community/">Community</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/app/uploads/2022/07/IX-Swap-Litepaper.pdf">
+              Litepaper
+            </DiscreteExternalLink>
           </div>
 
           <div>
             <header>General</header>
 
-            <a>About</a>
-            <a>Team</a>
-            <a>Careers</a>
+            <DiscreteExternalLink href="https://ixswap.io/about/">About</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/team/">Team</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://ixswap.io/careers/">Careers</DiscreteExternalLink>
           </div>
 
           <div>
             <header>Support</header>
 
-            <a>Contact Us</a>
-            <a>FAQ</a>
-            <a>Tutorials</a>
+            <DiscreteExternalLink href="https://ixswap.io/contact-us/">Contact Us</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixswap.io/faq/">FAQ</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://academy.ixswap.io/tutorials">Tutorials</DiscreteExternalLink>
           </div>
         </Links>
       </FooterInfoContainer>
@@ -168,19 +162,18 @@ export const Footer: React.FC<Props> = (props) => {
 
 const FooterContainer = styled.div`
   margin: 5rem auto;
-  
-  max-width: ${props => props.theme.launchpad.content.maxWidth};
-`
 
+  max-width: ${(props) => props.theme.launchpad.content.maxWidth};
+`
 
 const FooterInfoContainer = styled.div`
   display: grid;
 
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr auto;
-  grid-template-areas: 
-    "about links"
-    "copyright .";
+  grid-template-areas:
+    'about links'
+    'copyright .';
 
   place-content: start;
   gap: 2rem;
@@ -211,7 +204,7 @@ const SocialMediaLink = styled.a`
 
   padding: 1.5rem;
 
-  background: ${props => props.theme.launchpad.colors.foreground};
+  background: ${(props) => props.theme.launchpad.colors.foreground};
 
   border-radius: 50%;
 `
@@ -220,7 +213,7 @@ const Copyright = styled.div`
   grid-area: copyright;
 
   place-self: start;
-  
+
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -228,8 +221,7 @@ const Copyright = styled.div`
   line-height: 140%;
   letter-spacing: -0.02em;
 
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
   div {
     margin-top: 0.5rem;
@@ -250,7 +242,7 @@ const Copyright = styled.div`
     line-height: 140%;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.caption};
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 `
 const About = styled.div`
@@ -258,10 +250,10 @@ const About = styled.div`
 
   header {
     display: flex;
-    
+
     flex-flow: row nowrap;
     align-items: center;
-    
+
     gap: 0.5rem;
 
     margin-bottom: 1rem;
@@ -273,9 +265,9 @@ const About = styled.div`
     line-height: 22px;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.title};
-  } 
-  
+    color: ${(props) => props.theme.launchpad.colors.text.title};
+  }
+
   main {
     font-style: normal;
     font-weight: 400;
@@ -284,16 +276,15 @@ const About = styled.div`
     line-height: 140%;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.caption};
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 `
 const Links = styled.div`
   display: flex;
-  
+
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: flex-start;
-
 
   header {
     font-style: normal;
@@ -303,7 +294,7 @@ const Links = styled.div`
     line-height: 32px;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.caption};
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 
   a {
@@ -316,12 +307,12 @@ const Links = styled.div`
     line-height: 32px;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.title};
+    color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 `
 
 const FooterSeparator = styled.hr`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
 `
 
 const SubscriptionFormContainer = styled.div`
@@ -346,7 +337,7 @@ const SubscriptionFormTitle = styled.div`
 
   max-width: 550px;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const SubscriptionFormSubtitle = styled.div`
   font-style: normal;
@@ -357,12 +348,12 @@ const SubscriptionFormSubtitle = styled.div`
 
   line-height: 140%;
   letter-spacing: -0.02em;
-  
+
   max-width: 350px;
 
   margin: 2rem 0;
 
-  color: ${props => props.theme.launchpad.colors.text.caption};
+  color: ${(props) => props.theme.launchpad.colors.text.caption};
 `
 
 const SubscriptionFormFieldContainer = styled.div`
@@ -375,7 +366,7 @@ const SubscriptionFormFieldContainer = styled.div`
 const SubscriptionFormEmailField = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   width: 480px;
 
   position: relative;
@@ -389,7 +380,7 @@ const SubscriptionFormEmailFieldLabel = styled.label<{ active: boolean }>`
   position: absolute;
 
   transform: translate(1.5rem, 24px) scale(1);
-  ${props => props.active && 'transform: translate(0.5rem, 6px) scale(0.75);'}
+  ${(props) => props.active && 'transform: translate(0.5rem, 6px) scale(0.75);'}
 
   pointer-events: none;
 
@@ -400,15 +391,15 @@ const SubscriptionFormEmailFieldLabel = styled.label<{ active: boolean }>`
   line-height: 16px;
   letter-spacing: -0.02em;
 
-  color: #B8B8CC; 
+  color: #b8b8cc;
 
   transform-origin: top left;
   transition: all 0.2s ease-out;
 `
 
 const SubscriptionFormEmailFieldInput = styled.input`
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 
   padding: 1rem 1.5rem;
@@ -419,8 +410,8 @@ const SubscriptionFormEmailFieldInput = styled.input`
 `
 
 const SubscriptionFormSubmitButton = styled.button`
-  background: ${props => props.theme.launchpad.colors.primary};
-  color: ${props => props.theme.launchpad.colors.text.light};
+  background: ${(props) => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.text.light};
 
   font-style: normal;
   font-weight: 600;
@@ -434,13 +425,13 @@ const SubscriptionFormSubmitButton = styled.button`
   height: 60px;
 
   cursor: pointer;
-  
+
   border: none;
   border-radius: 6px;
 `
 
 const ErrorText = styled.div`
-  color: #FF6060;
+  color: #ff6060;
 
   font-style: normal;
   font-weight: 500;
