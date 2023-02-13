@@ -334,10 +334,8 @@ export const ButtonWhite = styled(Base)`
 const ButtonConfirmedStyle = styled(Base)`
   background-color: ${({ theme }) => theme.bg3};
   color: ${({ theme }) => theme.text1};
-  /* border: 1px solid ${({ theme }) => theme.green1}; */
 
   &:disabled {
-    /* opacity: 50%; */
     background-color: ${({ theme }) => theme.bg2};
     color: ${({ theme }) => theme.text2};
     cursor: auto;

@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 import { ChevronDown } from 'react-feather'
-import { Checkbox } from 'components/Checkbox'
 
 import { ReactComponent as Checked } from 'assets/images/checked_solid.svg'
 import { ReactComponent as NotChecked } from 'assets/images/not_checked_solid.svg'

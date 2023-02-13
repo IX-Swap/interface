@@ -1,9 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import { Mail } from 'react-feather'
-
-import { Offer } from 'state/launchpad/types'
 import { InfoList } from '../util/InfoList'
 
 interface Props {

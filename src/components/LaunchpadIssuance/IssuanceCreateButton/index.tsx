@@ -13,6 +13,7 @@ import { IssuanceTextField } from '../utils/TextField'
 import { object, string } from 'yup'
 import { Formik } from 'formik'
 import { useCreateIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
+import { textFilter } from 'utils/input'
 
 interface Props {
   background?: string
@@ -24,11 +25,11 @@ interface IssuanceNameFormValues {
 }
 
 const initialValues: IssuanceNameFormValues = {
-  name: ''
+  name: '',
 }
 
 const schema = object().shape({
-  name: string().required('Please enter name of your issuance')
+  name: string().required('Please enter name of your issuance'),
 })
 
 export const IssuanceCreateButton: React.FC<Props> = (props) => {
@@ -41,29 +42,30 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
   const [showIssuanceDialog, setShowIssuanceDialog] = React.useState(false)
 
   const toggleNewIssuanceDialog = React.useCallback(() => {
-    setShowIssuanceDialog(state => !state)
+    setShowIssuanceDialog((state) => !state)
   }, [])
 
-  const openIssuanceForm = React.useCallback(async (values: IssuanceNameFormValues) => {
-    if (!issuances.items) {
-      return 
-    }
+  const openIssuanceForm = React.useCallback(
+    async (values: IssuanceNameFormValues) => {
+      if (!issuances.items) {
+        return
+      }
 
-    if (issuances.items?.some(x => x.name === values.name)) {
-      throw new Error('Issuance with that name already exists')
-    }
+      if (issuances.items?.some((x) => x.name === values.name)) {
+        throw new Error('Issuance with that name already exists')
+      }
 
-    const result = await createIssunace(values.name)
+      const result = await createIssunace(values.name)
 
-    setShowIssuanceDialog(false)
-    history.push(`/issuance/create?id=${result.id}`)
-  }, [history])
-
-  const textFilter = React.useCallback((value: string) => value.split('').filter(x => /[a-zA-Z0-9 .,!?"'/\[\]+\-#$%&@:;]/.test(x)).join(''), [])
+      setShowIssuanceDialog(false)
+      history.push(`/issuance/create?id=${result.id}`)
+    },
+    [history]
+  )
 
   return (
     <>
-      <OutlineButton 
+      <OutlineButton
         onClick={toggleNewIssuanceDialog}
         background={props.background}
         color={props.color}
@@ -71,24 +73,28 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
       >
         <Plus size="15" color={props.color ?? theme.launchpad.colors.primary} /> New Issuance
       </OutlineButton>
-      
-      <IssuanceDialog title="New Issuance" show={showIssuanceDialog} onClose={toggleNewIssuanceDialog} width='480px'>
+
+      <IssuanceDialog title="New Issuance" show={showIssuanceDialog} onClose={toggleNewIssuanceDialog} width="480px">
         <Formik initialValues={initialValues} validationSchema={schema} onSubmit={openIssuanceForm}>
           {({ values, errors, submitForm, setFieldValue }) => (
             <>
-              <IssuanceTextField 
+              <IssuanceTextField
                 label="Name"
                 placeholder="Name of Asset"
                 value={values.name}
-                onChange={v => setFieldValue('name', v)} 
+                onChange={(v) => setFieldValue('name', v)}
                 inputFilter={textFilter}
               />
 
               {errors.name && <ErrorText>{errors.name}</ErrorText>}
-              
-              <Row gap="1rem" justifyContent='spaced-evenly' width='100%'>
-                <OutlineButton grow={1} onClick={toggleNewIssuanceDialog}>Cancel</OutlineButton>
-                <FilledButton grow={1} onClick={submitForm}>Submit</FilledButton>
+
+              <Row gap="1rem" justifyContent="spaced-evenly" width="100%">
+                <OutlineButton grow={1} onClick={toggleNewIssuanceDialog}>
+                  Cancel
+                </OutlineButton>
+                <FilledButton grow={1} onClick={submitForm}>
+                  Submit
+                </FilledButton>
               </Row>
             </>
           )}

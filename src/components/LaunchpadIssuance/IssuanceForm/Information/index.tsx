@@ -57,6 +57,7 @@ import {
 import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { useQueryParams } from 'hooks/useParams'
 
 interface Props {
   edit?: boolean
@@ -76,21 +77,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
-
-  const issuanceId = React.useMemo(() => {
-    const value = decodeURI(history.location.search)
-      .replace('?', '')
-      .split('&')
-      .map((x) => x.split('='))
-      .map(([key, value]) => ({ key, value }))
-      .find((x) => x.key === 'id')?.value
-
-    if (!value) {
-      return
-    }
-
-    return Number(value)
-  }, [])
+  const {
+    objectParams: { id: issuanceId },
+  } = useQueryParams<{ id: number }>(['id'])
 
   const vetting = useVetting(issuanceId)
   const offer = useOfferFormInitialValues(issuanceId)
@@ -156,8 +145,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [history])
 
   const alertUser = React.useCallback((event: BeforeUnloadEvent) => {
-    console.log(event)
-
     event.preventDefault()
     event.returnValue = true
 
@@ -168,15 +155,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     return isSafeToClose
   }, [])
 
-  const textFilter =
-    React.useCallback(
-      (value?: string) =>
-        value
-          ?.split('')
-          .filter((x) => /[a-zA-Z .,!?"'/\[\]+\-#$%&]/.test(x))
-          .join(''),
-      []
-    ) ?? ''
   const numberFilter = React.useCallback((value?: string) => {
     if (!value) {
       return ''

@@ -8,7 +8,7 @@ import { ButtonGradientBorder, ButtonPrimary, ButtonText } from 'components/Butt
 import CurrencyLogo from 'components/CurrencyLogo'
 import { ReadMore } from 'components/ReadMore'
 import Column from 'components/Column'
-import { ellipsisText, MEDIA_WIDTHS, TYPE } from 'theme'
+import { MEDIA_WIDTHS, TYPE } from 'theme'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { PAYOUT_STATUS } from 'constants/enums'
 import { routes } from 'utils/routes'

@@ -328,7 +328,7 @@ export const useGetIssuance = () => {
 
   const [data, setData] = React.useState<Issuance>()
 
-  const load = React.useCallback((id?: number) => {
+  const load = React.useCallback((id?: number | string) => {
     if (!id) {
       return
     }
@@ -345,7 +345,7 @@ export const useGetIssuance = () => {
   return { data, load, loading: loader.isLoading }
 }
 
-export const useVetting = (issuanceId?: number) => {
+export const useVetting = (issuanceId?: number | string) => {
   const loader = useLoader()
   const [vetting, setVettings] = React.useState<IssuanceVetting>()
 
@@ -374,7 +374,7 @@ export const useGetFile = () => {
   }, [])
 }
 
-export const useVettingFormInitialValues = (issuanceId?: number) => {
+export const useVettingFormInitialValues = (issuanceId?: number | string) => {
   const loader = useLoader()
   const getFile = useGetFile()
   const vetting = useVetting(issuanceId)
@@ -707,7 +707,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
   )
 }
 
-export const useSubmitVettingForm = (issuanceId?: number) => {
+export const useSubmitVettingForm = (issuanceId?: number | string) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(
@@ -877,7 +877,7 @@ const useUploadOfferFiles = () => {
   )
 }
 
-export const useOfferFormInitialValues = (issuanceId?: number) => {
+export const useOfferFormInitialValues = (issuanceId?: number | string) => {
   const loader = useLoader()
   const getFile = useGetFile()
 
@@ -999,11 +999,11 @@ export const useOfferFormInitialValues = (issuanceId?: number) => {
 
       timeframe: payload.timeframe,
       tokenName: payload.tokenName ?? '',
-      // decimalsOn: payload.decimalsOn,
       decimals: Number(payload.decimals),
       trusteeAddress: payload.trusteeAddress,
       tokenPrice: Number(payload.tokenPrice),
       tokenStandart: payload.tokenStandart,
+      // mapping: tokenTicker, tokenType. server to frontend fields
       tokenTicker: payload.tokenSymbol,
       tokenType: payload.investingTokenSymbol as OfferTokenType,
       tokenAddress: payload.tokenAddress,
@@ -1060,13 +1060,12 @@ export const useSubmitOffer = () => {
         issuerIdentificationNumber: payload.issuerIdentificationNumber,
 
         tokenAddress: payload.tokenAddress,
+        // mapping : tokenSymbol, investingTokenSymbol frontend to server
         tokenSymbol: payload.tokenTicker,
+        investingTokenSymbol: payload.tokenType,
         tokenPrice: payload.tokenPrice.toString(),
         decimals: payload.decimals,
-        // decimalsOn: payload.decimalsOn,
         tokenStandart: payload.tokenStandart,
-
-        investingTokenSymbol: payload.tokenType,
 
         softCap: payload.softCap,
         hardCap: payload.hardCap,

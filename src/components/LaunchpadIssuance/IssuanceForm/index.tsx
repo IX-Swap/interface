@@ -21,6 +21,9 @@ import { IssuanceFormStep } from './IssuanceFormStep'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { IssuanceStatus } from '../types'
 import { useGetIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
+import { routes } from 'utils/routes'
+import { DiscreteInternalLink } from 'theme'
+import { useQueryParams } from 'hooks/useParams'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -33,20 +36,12 @@ export const NewIssuanceForm = () => {
   const [contactFormOpen, setContactForm] = React.useState<boolean>(false)
 
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
-
-  const issuanceId = React.useMemo(() => {
-    return decodeURI(history.location.search)
-      .replace('?', '')
-      .split('&')
-      .map((x) => x.split('='))
-      .map(([key, value]) => ({ key, value }))
-      .find((x) => x.key === 'id')?.value
-  }, [history.location.search])
+  const {
+    objectParams: { id: issuanceId },
+  } = useQueryParams<{ id: number }>(['id'])
 
   const vettingStatus = React.useMemo(() => issuance.data?.vetting?.status, [issuance.data])
   const issuanceStatus = React.useMemo(() => issuance.data?.vetting?.offer?.status, [issuance.data])
-
-  const goBack = React.useCallback(() => history.push('/issuance'), [history])
   const selectIssuance = React.useCallback(
     (id: number) => {
       if (window.history.pushState) {
@@ -67,7 +62,7 @@ export const NewIssuanceForm = () => {
   return (
     <Wrapper>
       <FormHeader>
-        <BackButton background={theme.launchpad.colors.background} onClick={goBack}>
+        <BackButton as={DiscreteInternalLink} to={routes.issuance} background={theme.launchpad.colors.background}>
           <ArrowLeft color={theme.launchpad.colors.primary} />
         </BackButton>
 
@@ -144,7 +139,12 @@ export const NewIssuanceForm = () => {
                   Approved <Check color={theme.launchpad.colors.success} size="12" />
                 </OutlineButton>
 
-                <OutlineButton width="320px">View Form</OutlineButton>
+                <OutlineButton
+                  width="320px"
+                  onClick={() => history.push(`/issuance/view/vetting?id=${issuance.data?.id}`)}
+                >
+                  View Form
+                </OutlineButton>
               </IssuanceFormStep>
             )}
 
@@ -248,7 +248,12 @@ export const NewIssuanceForm = () => {
                   Approved <Check color={theme.launchpad.colors.success} size="12" />
                 </OutlineButton>
 
-                <OutlineButton width="320px">View Form</OutlineButton>
+                <OutlineButton
+                  width="320px"
+                  onClick={() => history.push(`/issuance/review/information?id=${issuance.data?.id}`)}
+                >
+                  View Form
+                </OutlineButton>
               </IssuanceFormStep>
             )}
 
@@ -334,6 +339,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
+
   gap: 1rem;
   max-width: 1180px;
   padding: 1rem;
@@ -358,17 +364,20 @@ const FormContainer = styled.div`
   grid-template-rows: 530px;
   place-content: stretch;
   gap: 1.5rem;
+
   position: relative;
 `
 
 const IssuanceNameContainer = styled.div`
   grid-area: name;
   position: relative;
+
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
+
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;

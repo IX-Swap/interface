@@ -1,20 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
+import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper } from '../styled'
 
 interface Props {
   label: string
   placeholder?: string
-
+  disabled?: boolean
   span?: number
   value?: string
   error?: string
 
   field: string
   setter: (field: string, value: string) => void
-  touch?: (field: string, touched: boolean) => void 
+  touch?: (field: string, touched: boolean) => void
 }
 
 export const TextareaField: React.FC<Props> = (props) => {
@@ -31,28 +31,12 @@ export const TextareaField: React.FC<Props> = (props) => {
       <FieldLabel>{props.label}</FieldLabel>
       <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>
 
-      <Textarea value={props.value} onChange={onChange} />
+      <Textarea value={props.value} onChange={onChange} disabled={props.disabled} />
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
     </FormFieldWrapper>
   )
 }
-
-const FieldContainer = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-
-  justify-content: center;
-  align-items: center;
-
-  gap: 0.25rem;
-
-  flex-grow: 1;
-
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
-  border-radius: 6px;
-`
 
 const FieldLabel = styled.div`
   font-style: normal;
@@ -62,7 +46,7 @@ const FieldLabel = styled.div`
   line-height: 18px;
   letter-spacing: -0.01em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const FieldPlaceholder = styled.div`
@@ -72,8 +56,8 @@ const FieldPlaceholder = styled.div`
 
   line-height: 18px;
   letter-spacing: -0.02em;
-  
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const Textarea = styled.textarea`
@@ -85,7 +69,7 @@ const Textarea = styled.textarea`
   outline: none;
   resize: none;
 
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `

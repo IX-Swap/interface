@@ -23,7 +23,9 @@ export const BaseCheckbox = ({ toggle, state }: BaseProps) => {
           fill={state ? theme.launchpad.colors.primary : theme.launchpad.colors.border.default}
         />
 
-        {state && <path d="M5 8L7 10L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />}
+        {state && (
+          <path d="M5 8L7 10L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        )}
       </svg>
     </ButtonWrapper>
   )
@@ -42,19 +44,14 @@ export const Checkbox: React.FC<Props> = (props) => {
     }
   }, [state])
 
-  return (
-    <BaseCheckbox toggle={toggle} state={state} />
-  )
+  return <BaseCheckbox toggle={toggle} state={state} />
 }
 
 const ButtonWrapper = styled.button`
   border: none;
   background: none;
-
   width: fit-content;
   height: fit-content;
-
   padding: 0;
-
   cursor: pointer;
 `

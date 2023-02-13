@@ -1,11 +1,10 @@
-import React, { Component }  from 'react';
+import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issuances.svg'
 
 import { Column } from 'components/LaunchpadMisc/styled'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
-
 
 export const EmptyTable = () => {
   const theme = useTheme()
@@ -19,29 +18,21 @@ export const EmptyTable = () => {
         <NoItemsSubtitle>Please add new issuences.</NoItemsSubtitle>
       </Column>
 
-      <IssuanceCreateButton 
-        background={theme.launchpad.colors.primary}
-        color={theme.launchpad.colors.text.light}
-      />
+      <IssuanceCreateButton background={theme.launchpad.colors.primary} color={theme.launchpad.colors.text.light} />
     </Container>
   )
 }
 
 const Container = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-
   gap: 2rem;
-
   width: 1180px;
   height: 460px;
-
   margin: auto;
-
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 `
 
@@ -51,21 +42,16 @@ const NoItemsTitle = styled.div`
   font-size: 18px;
   line-height: 130%;
   letter-spacing: -0.03em;
-  
   text-align: center;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const NoItemsSubtitle = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-  
   text-align: center;
-
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `
