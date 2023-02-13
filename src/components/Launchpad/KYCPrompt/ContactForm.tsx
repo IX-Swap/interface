@@ -1,11 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
-
 import { object, string } from 'yup'
-
 import { TextField, TextAreaField } from './TextField'
 import { KYCPromptIconContainer, KYCPromptTitle, Caption, KYCButton } from './styled'
-
 import { ReactComponent as ContactUsIcon } from 'assets/launchpad/svg/contact-us-icon.svg'
 import { useRequestSupport } from 'state/launchpad/hooks'
 import { Formik } from 'formik'

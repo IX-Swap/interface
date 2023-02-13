@@ -9,7 +9,7 @@ import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/Issuance
 
 import { AppState } from 'state'
 import { tryParseAmount } from 'state/swap/helpers'
-import { OrderType, OrderTypes } from './types'
+import { OrderTypes } from './types'
 
 import {
   Asset,
@@ -1001,11 +1001,11 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
 
       timeframe: payload.timeframe,
       tokenName: payload.tokenName ?? '',
-      // decimalsOn: payload.decimalsOn,
       decimals: Number(payload.decimals),
       trusteeAddress: payload.trusteeAddress,
       tokenPrice: Number(payload.tokenPrice),
       tokenStandart: payload.tokenStandart,
+      // mapping: tokenTicker, tokenType. server to frontend fields
       tokenTicker: payload.tokenSymbol,
       tokenType: payload.investingTokenSymbol as OfferTokenType,
       tokenAddress: payload.tokenAddress,
@@ -1062,13 +1062,12 @@ export const useSubmitOffer = () => {
         issuerIdentificationNumber: payload.issuerIdentificationNumber,
 
         tokenAddress: payload.tokenAddress,
+        // mapping : tokenSymbol, investingTokenSymbol frontend to server
         tokenSymbol: payload.tokenTicker,
+        investingTokenSymbol: payload.tokenType,
         tokenPrice: payload.tokenPrice.toString(),
         decimals: payload.decimals,
-        // decimalsOn: payload.decimalsOn,
         tokenStandart: payload.tokenStandart,
-
-        investingTokenSymbol: payload.tokenType,
 
         softCap: payload.softCap,
         hardCap: payload.hardCap,

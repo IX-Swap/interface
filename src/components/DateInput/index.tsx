@@ -3,7 +3,6 @@ import { MobileDatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
 
-import { Label } from 'components/Label'
 import { Input } from 'components/Input'
 import { ReactComponent as CalendarIcon } from 'assets/images/calendar.svg'
 import { Props as LabelProps } from 'components/Label'
@@ -58,7 +57,13 @@ export const DateInput = ({
           disableCloseOnSelect={false}
           renderInput={({ inputProps }: Record<string, any>) => (
             <TextFieldContainer className="dateInput">
-              <TextField {...inputProps} data-testid={id} placeholder={placeholder} disabled={isDisabled} error={error} />
+              <TextField
+                {...inputProps}
+                data-testid={id}
+                placeholder={placeholder}
+                disabled={isDisabled}
+                error={error}
+              />
               <StyledCalendarIcon />
             </TextFieldContainer>
           )}
@@ -93,7 +98,7 @@ const TextField = styled(Input)<{ maxHeight?: number; error?: any }>`
   padding: 11px 66px 9px 21px;
   font-weight: normal;
   font-size: 16px;
-  border: ${({ error, theme }) => error ? 'solid 1px' + theme.error : 'none'};
+  border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'none')};
   background-color: ${({ theme: { bg19 } }) => bg19};
 `
 

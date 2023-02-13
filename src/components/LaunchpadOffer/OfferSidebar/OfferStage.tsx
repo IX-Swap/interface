@@ -6,14 +6,9 @@ import { ChevronRight, Info } from 'react-feather'
 
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
 
-import { Offer, OfferTimeframe, OfferTimeframeType } from 'state/launchpad/types'
-import { OFFER_TIMEFRAME_TYPE_LABELS } from 'state/launchpad/constants'
+import { OfferTimeframe, OfferTimeframeType } from 'state/launchpad/types'
 
 import { InfoList } from '../util/InfoList'
-
-interface Props {
-  offer: Offer
-}
 
 const getTooltip = (type: OfferTimeframeType) => {
   switch (type) {

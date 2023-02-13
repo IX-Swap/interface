@@ -206,10 +206,3 @@ const AddDirectorButton = styled.button`
     grid-area: icon;
   }
 `
-
-const RemoveButton = styled(DeleteButton)`
-  position: absolute;
-
-  top: -1rem;
-  right: 0;
-`

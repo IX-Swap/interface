@@ -21,10 +21,10 @@ interface Props {
 export const OfferLinks: React.FC<Props> = (props) => {
   const theme = useTheme()
   const addPopup = useAddPopup()
-  
+
   const networkLogoUrl = React.useMemo(() => {
     const network = props.offer.network
-    const networkId = Object.entries(NETWORK_NAMES).find(([id, name]) => name === network)?.[0]
+    const networkId = Object.entries(NETWORK_NAMES).find(([, name]) => name === network)?.[0]
 
     if (!networkId) {
       return null
@@ -41,9 +41,7 @@ export const OfferLinks: React.FC<Props> = (props) => {
 
   return (
     <Row alignItems="stretch" gap="1rem" height="36px">
-      <OfferLink>
-        {networkLogoUrl && <img src={networkLogoUrl} width="20" />}
-      </OfferLink>
+      <OfferLink>{networkLogoUrl && <img src={networkLogoUrl} width="20" />}</OfferLink>
 
       <OfferLink>
         <Search size="18" color={theme.launchpad.colors.text.bodyAlt} />
@@ -72,14 +70,13 @@ const OfferLink = styled.div<{ grow?: boolean }>`
   justify-content: center;
   align-items: center;
 
-  ${props => props.grow ? 'flex-grow: 1;' : 'width: 60px;'}
+  ${(props) => (props.grow ? 'flex-grow: 1;' : 'width: 60px;')}
 
   gap: 0.5rem;
 
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-
 
   font-style: normal;
   font-weight: 500;
@@ -88,5 +85,5 @@ const OfferLink = styled.div<{ grow?: boolean }>`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `

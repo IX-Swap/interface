@@ -19,20 +19,10 @@ import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
 import { Checkbox } from '../utils/Checkbox'
 import { useInvest } from 'state/launchpad/hooks'
-import { number, object } from 'yup'
-
 
 interface Props {
   offer: Offer
 }
-
-interface FormValues {
-  amount: string
-}
-
-const schema = object().shape({
-  amount: number().required()
-})
 
 export const SaleStage: React.FC<Props> = (props) => {
   const theme = useTheme()

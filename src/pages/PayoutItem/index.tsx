@@ -29,8 +29,6 @@ import { PayoutHistory } from './History'
 import { PayoutHeader } from './PayoutHeader'
 import { PayoutActionBlock } from './ActionBlock'
 import { PayoutTimeline } from './Timeline/PayoutTimeline'
-import dayjs from 'dayjs'
-import { useAccount } from 'state/user/hooks'
 
 export interface MyAmounts {
   poolTokens: number
@@ -56,25 +54,19 @@ export default function PayoutItemForUser({
 
   const [myAmount, handleMyAmount] = useState(0)
 
-  const getPayoutItem = useCallback(
-    async () => {
-      const data = await getPayoutItemById(+payoutId)
-      if (data?.id) {
-        setPayout(data)
-      }
-    },
-    [payoutId]
-  )
+  const getPayoutItem = useCallback(async () => {
+    const data = await getPayoutItemById(+payoutId)
+    if (data?.id) {
+      setPayout(data)
+    }
+  }, [payoutId])
 
-  const getMyAmount = useCallback(
-    async () => {
-      const data = await getMyPayoutAmount(+payoutId)
-      if (data) {
-        handleMyAmount(+data.poolTokens + +data.walletTokens)
-      }
-    },
-    [payoutId]
-  )
+  const getMyAmount = useCallback(async () => {
+    const data = await getMyPayoutAmount(+payoutId)
+    if (data) {
+      handleMyAmount(+data.poolTokens + +data.walletTokens)
+    }
+  }, [payoutId])
 
   useEffect(() => {
     getPayoutItem()

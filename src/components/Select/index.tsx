@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import ReactSelect, { StylesConfig, components } from 'react-select'
 import styled, { css } from 'styled-components'
 
@@ -38,9 +38,6 @@ const colourStyles = {
       backgroundColor: isSelected && !isMulti ? 'bg11' : 'transparend',
       color: isSelected && !isMulti ? 'text1' : 'text9',
       fontWeight: isSelected && !isMulti ? '700' : '400',
-      // backgroundColor: isSelected && !isMulti ? '#272046' : 'transparent',
-      // color: isSelected && !isMulti ? 'white' : 'rgba(237, 206, 255, 0.5)',
-      // fontWeight: isSelected && !isMulti ? '700' : '400',
     }
   },
   singleValue: (styles: Record<string, any>) => {

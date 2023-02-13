@@ -8,7 +8,7 @@ import { OfferDetails } from './OfferDetails'
 import { OfferSaleAllocation, OfferPreSaleInfo } from './OfferSaleAllocation'
 import { OfferStage } from './OfferStage'
 import { OfferTerms } from './OfferTerms'
-import { OfferVesting } from './OfferVesting'
+// import { OfferVesting } from './OfferVesting'
 
 interface Props {
   offer: Offer

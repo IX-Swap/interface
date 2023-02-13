@@ -3,7 +3,6 @@ import moment from 'moment'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 
-
 import { CheckCircle, Clock, Info } from 'react-feather'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
@@ -30,9 +29,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
   const addPopup = useAddPopup()
   const claim = useClaimOffer(props.offer.id)
-  
+
   const [contactFormOpen, setContactForm] = React.useState(false)
-  const toggleContactForm = React.useCallback(() => setContactForm(state => !state), [])
+  const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
 
   const canClaim = React.useMemo(() => props.offer.status === OfferStatus.claim, [])
 
@@ -50,20 +49,30 @@ export const ClosedStage: React.FC<Props> = (props) => {
   }, [claim])
 
   return (
-    <InvestFormContainer gap="1rem" padding='0 0 3rem 0'>
+    <InvestFormContainer gap="1rem" padding="0 0 3rem 0">
       <Title>{canClaim ? 'Token Claim' : 'Closed'}</Title>
 
-      <InvestInfoMessage  state={isSuccessfull ? InvestSubmitState.success : InvestSubmitState.error}>
-        {isSuccessfull && <>This deal has been successfully funded <CheckCircle size="15" color={theme.launchpad.colors.success} /></>}
-        {!isSuccessfull && <>This deal has been unsuccessfully funded <Info size="15" color={theme.launchpad.colors.error} /></>}
+      <InvestInfoMessage state={isSuccessfull ? InvestSubmitState.success : InvestSubmitState.error}>
+        {isSuccessfull && (
+          <>
+            This deal has been successfully funded <CheckCircle size="15" color={theme.launchpad.colors.success} />
+          </>
+        )}
+        {!isSuccessfull && (
+          <>
+            This deal has been unsuccessfully funded <Info size="15" color={theme.launchpad.colors.error} />
+          </>
+        )}
       </InvestInfoMessage>
 
       <Separator />
-      
-      <Row justifyContent='space-between' alignItems='center'>
+
+      <Row justifyContent="space-between" alignItems="center">
         <Column>
           <MyInvestmentLabel>My Investment</MyInvestmentLabel>
-          <MyInvestmentAmount>{amountToClaim} {isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}</MyInvestmentAmount>
+          <MyInvestmentAmount>
+            {amountToClaim} {isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
+          </MyInvestmentAmount>
         </Column>
 
         {!isSuccessfull && (
@@ -71,27 +80,25 @@ export const ClosedStage: React.FC<Props> = (props) => {
             Claim
           </ClaimButton>
         )}
-        
       </Row>
 
       <Separator />
 
       {!canClaim && (
-         <Row alignItems='center' gap="1rem">
-            <Clock color={theme.launchpad.colors.primary} size="50" />
-            <CantClaimNotice>
-              You cannot claim any tokens yet. 
-              Please come back <b>{moment(props.offer.timeframe.claim).format('DD/MM/YYYY')}</b>, 
-              on the token claim date.
-            </CantClaimNotice>
-         </Row>
+        <Row alignItems="center" gap="1rem">
+          <Clock color={theme.launchpad.colors.primary} size="50" />
+          <CantClaimNotice>
+            You cannot claim any tokens yet. Please come back{' '}
+            <b>{moment(props.offer.timeframe.claim).format('DD/MM/YYYY')}</b>, on the token claim date.
+          </CantClaimNotice>
+        </Row>
       )}
 
       {canClaim && (
         <Column gap="0.5rem">
           <CanClaimNotice>
-            Once claimed, you can find your tokens in your wallet. 
-            Please make sure to add the token address to your wallet to see the token on your wallet feed.
+            Once claimed, you can find your tokens in your wallet. Please make sure to add the token address to your
+            wallet to see the token on your wallet feed.
           </CanClaimNotice>
 
           <OfferLinks offer={props.offer} />
@@ -102,7 +109,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
       <HelpLabel>Need help?</HelpLabel>
       <HelpButton onClick={toggleContactForm}>Contact Us</HelpButton>
-      
+
       {contactFormOpen && (
         <Portal>
           <ModalWrapper>
@@ -127,10 +134,10 @@ const Title = styled.div`
 
   line-height: 29px;
   letter-spacing: -0.04em;
-  
+
   text-align: center;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const CanClaimNotice = styled.div`
   font-style: normal;
@@ -140,24 +147,11 @@ const CanClaimNotice = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
   opacity: 0.8;
 
   max-width: 85%;
-`
-const UnsuccessfulFundNotice = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  /* identical to box height, or 20px */
-
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.error};
-
-  opacity: 0.8;
 `
 const CantClaimNotice = styled.div`
   font-style: normal;
@@ -167,13 +161,13 @@ const CantClaimNotice = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title + 'cc'};
-  
+  color: ${(props) => props.theme.launchpad.colors.text.title + 'cc'};
+
   max-width: 70%;
 
   b {
     font-weight: 700;
-    color: ${props => props.theme.launchpad.colors.text.title};
+    color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 `
 
@@ -185,15 +179,15 @@ const HelpLabel = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const HelpButton = styled.div`
   display: grid;
   place-content: center;
 
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.primary};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
 
   cursor: pointer;
@@ -206,15 +200,15 @@ const HelpButton = styled.div`
   letter-spacing: -0.02em;
 
   height: 60px;
-  
+
   text-align: center;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 
   transition: background 0.4s;
 
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground + 'b1'};
+    background: ${(props) => props.theme.launchpad.colors.foreground + 'b1'};
   }
 `
 
@@ -226,7 +220,7 @@ const MyInvestmentLabel = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const MyInvestmentAmount = styled.div`
@@ -237,7 +231,7 @@ const MyInvestmentAmount = styled.div`
   line-height: 24px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const ClaimButton = styled.button<{ hasInvestments: boolean }>`
@@ -251,29 +245,39 @@ const ClaimButton = styled.button<{ hasInvestments: boolean }>`
   height: 50px;
 
   cursor: pointer;
-  
+
   border-radius: 6px;
 
   padding: 0.25rem 3rem;
 
-  ${props => !props.disabled && props.hasInvestments && `
+  ${(props) =>
+    !props.disabled &&
+    props.hasInvestments &&
+    `
     color: ${props.theme.launchpad.colors.text.light};
     background: ${props.theme.launchpad.colors.primary};
   `}
 
-  ${props => !props.disabled && !props.hasInvestments && `
+  ${(props) =>
+    !props.disabled &&
+    !props.hasInvestments &&
+    `
     color: ${props.theme.launchpad.colors.primary};
     background: ${props.theme.launchpad.colors.background};
     border: 1px solid ${props.theme.launchpad.colors.border.default};
   `}
 
-  ${props => props.disabled && `
+  ${(props) =>
+    props.disabled &&
+    `
     color: ${props.theme.launchpad.colors.text.light};
     background: ${props.theme.launchpad.colors.disabled};
     border: none;
   `}
 
-  ${props => !props.disabled && `
+  ${(props) =>
+    !props.disabled &&
+    `
     border: none;
 
     position: relative;
@@ -308,7 +312,7 @@ const ModalWrapper = styled.div`
 
   width: 100vw;
   height: 100vh;
- 
+
   z-index: 50;
 
   backdrop-filter: blur(20px);
@@ -321,12 +325,12 @@ const ContactFormWrapper = styled.div`
   align-items: center;
 
   gap: 1rem;
- 
+
   position: relative;
 
   width: 480px;
 
-  background: ${props => props.theme.launchpad.colors.background};
+  background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 8px;
   padding: 2rem;
 `

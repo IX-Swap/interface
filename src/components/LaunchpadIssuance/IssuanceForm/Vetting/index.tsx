@@ -1,23 +1,17 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import { FieldArray, Formik } from 'formik'
-
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
-
 import { VettingFormValues } from './types'
-
 import { FormField } from '../shared/fields/FormField'
 import { FileField } from '../shared/fields/FileField'
 import { DirectorField } from '../shared/fields/DirectorField'
 import { RejectInfo } from '../shared/RejectInfo'
-
 import {
   FormContainer,
   FormHeader,
@@ -35,7 +29,6 @@ import {
   useLoader,
   useSaveVettingDraft,
   useSubmitVettingForm,
-  useVetting,
   useVettingFormInitialValues,
 } from 'state/launchpad/hooks'
 
