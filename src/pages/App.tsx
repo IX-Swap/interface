@@ -41,7 +41,6 @@ const AppWrapper = styled.div`
   flex-flow: column;
   align-items: flex-start;
   position: relative;
-  /* overflow-x: hidden; */
 `
 
 const BodyWrapper = styled.div<{ hideHeader?: boolean }>`
@@ -119,7 +118,7 @@ export default function App() {
   )
 
   const defaultPage = useMemo(() => {
-    const defaultPath = pathname === routes.launchpad ? routes.launchpad : routes.kyc
+    const defaultPath = [routes.launchpad, routes.issuance].includes(pathname) ? routes.launchpad : routes.kyc
     if (isAllowed({ path: routes.kyc }) && (kyc?.status !== KYCStatuses.APPROVED || !account)) {
       return defaultPath
     }

@@ -35,6 +35,7 @@ export const routes = {
     `/token-manager/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
   admin: (tab?: string, id?: number | null) => `/admin/${tab || ':tab'}${id !== null ? `/${id || ':id?'}` : ''}`,
   launchpad: '/launchpad',
+  issuance: '/issuance',
   issuanceReport: `/issuance/extract/:issuanceId`,
   manageOffer: `/issuance/manage/:issuanceId`,
 }

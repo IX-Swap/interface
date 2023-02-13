@@ -1,35 +1,20 @@
 import React from 'react'
 import { Trans, t } from '@lingui/macro'
 import { useLocation } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
-
 import ethereumIcon from 'assets/images/ethereum-clear-logo.svg'
 import polygonIcon from 'assets/images/polygon.svg'
 import { useActiveWeb3React } from 'hooks/web3'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 import { SupportedChainId } from 'constants/chains'
-import { ButtonIXSGradient } from 'components/Button'
-import { useWalletModalToggle } from 'state/application/hooks'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useWhitelabelState } from 'state/whitelabel/hooks'
-
-import {
-  Container,
-  Title,
-  Info,
-  NetworksRow,
-  NetworkCard,
-  InfoRows,
-  PlaygroundBadge,
-  ConnectWalletContainer,
-} from './styled'
+import { Container, Title, Info, NetworksRow, NetworkCard, InfoRows, PlaygroundBadge } from './styled'
 
 export const NetworkNotAvailable = () => {
-  const { chainId, library, account } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const { pathname } = useLocation()
-  const [cookies] = useCookies(['annoucementsSeen'])
+
   const { config } = useWhitelabelState()
-  const toggleWalletModal = useWalletModalToggle()
 
   const farming = ['/vesting', '/staking'].includes(pathname)
 

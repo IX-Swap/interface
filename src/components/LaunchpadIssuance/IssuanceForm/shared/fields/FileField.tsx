@@ -60,12 +60,11 @@ export const FileField: React.FC<Props> = (props) => {
     setValue(undefined)
   }, [])
 
-  React.useEffect(()=> {
+  React.useEffect(() => {
     setValue(props.value?.file)
   }, [props.value])
-  
-  const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
 
+  const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
 
   return (
     <FormFieldWrapper gap="1rem" span={props.span} error={props.error}>
@@ -84,20 +83,16 @@ export const FileField: React.FC<Props> = (props) => {
 
           {!value && <Prompt>{props.showLabelInside ? props.label : 'Upload File'}</Prompt>}
           {value && <Prompt>{value.name}</Prompt>}
-          
 
-          <input 
-            {...getInputProps()}
-            ref={input}
-            multiple={false} 
-            disabled={props.disabled} 
-          />
+          <input {...getInputProps()} ref={input} multiple={false} disabled={props.disabled} />
 
-          {value && <CancelIcon onClick={onFileRemove} title="remove" cursor="pointer" />}
+          {value && !props.disabled && <CancelIcon onClick={onFileRemove} title="remove" cursor="pointer" />}
 
           <Spacer />
 
-          <BrowseButton onClick={openFileBrowser}>Browse</BrowseButton>
+          <BrowseButton onClick={openFileBrowser} disabled={props.disabled}>
+            Browse
+          </BrowseButton>
         </Row>
 
         {props.trailing}
@@ -116,7 +111,7 @@ const FieldLabel = styled.div`
   line-height: 17px;
   letter-spacing: -0.01em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const FieldHint = styled.div`
   font-style: normal;
@@ -126,7 +121,7 @@ const FieldHint = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldWrapper = styled.div<{ borderless?: boolean }>`
@@ -138,7 +133,7 @@ const FieldWrapper = styled.div<{ borderless?: boolean }>`
   gap: 0.5rem;
   padding: 1.5rem 2rem;
 
-  ${props => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
+  ${(props) => !props.borderless && `border: 1px solid ${props.theme.launchpad.colors.border.default};`}
   border-radius: 6px;
 
   > *:first-child {
@@ -159,7 +154,7 @@ const Prompt = styled.div`
   text-overflow: ellipsis;
   max-width: 200px;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 const BrowseButton = styled.button`
   border: none;
@@ -169,5 +164,5 @@ const BrowseButton = styled.button`
 
   font-weight: 600;
 
-  color: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.primary};
 `

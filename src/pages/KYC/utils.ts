@@ -241,7 +241,7 @@ export const individualTransformKycDto = (values: any) => {
   }
 
   return Object.entries(result)
-    .filter(([key, value]) =>
+    .filter(([, value]) =>
       value !== '' && 
       value !== null &&
       value !== undefined

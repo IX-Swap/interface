@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from "styled-components"
+import styled from 'styled-components'
 import axios from 'axios'
 
 import { Separator } from '../../LaunchpadMisc/styled'
@@ -14,7 +14,7 @@ interface InfoEntry {
 }
 
 interface Props {
-  fontSize?: string;
+  fontSize?: string
   lineHeight?: string
   entry: InfoEntry
   idx?: number
@@ -48,7 +48,6 @@ const isDownload = (docName: string) => {
 
   return ['docx', 'doc'].includes(docType)
 }
-
 
 export const Attachment: React.FC<Props> = (props) => {
   const [openPreviewModal, setPreviewModal] = React.useState(false)
@@ -89,35 +88,14 @@ export const Attachment: React.FC<Props> = (props) => {
       )}
 
       <Entry key={`entry-${props.idx}`} fontSize={props.fontSize} lineHeight={props.lineHeight}>
-        <Label>{props.entry.label}</Label>
-          {props.entry.value && <Value onClick={() => handlePreviewClick(props.entry.file)}>{props.entry.value}</Value>}
+        <Label>{props.entry?.label}</Label>
+        {props.entry?.value && <Value onClick={() => handlePreviewClick(props.entry?.file)}>{props.entry.value}</Value>}
       </Entry>
 
-      <Separator key={`separator-${props.idx}`}/>
+      <Separator key={`separator-${props.idx}`} />
     </>
   )
 }
-
-const Container = styled.div`
-  display: flex;
-
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-items: stretch;
-`
-
-const Title = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 16px;
-
-  line-height: 120%;
-  letter-spacing: -0.03em;
-
-  margin-bottom: 0.5rem;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
-`
 
 interface TextProps {
   fontSize?: string
@@ -133,26 +111,25 @@ const Entry = styled.div<TextProps>`
 
   max-width: 100%;
   contain: content;
-  
-  font-style: normal;
-  font-size: ${props => props.fontSize ?? '14px'};
 
-  line-height: ${props => props.lineHeight ?? '40px'};
+  font-style: normal;
+  font-size: ${(props) => props.fontSize ?? '14px'};
+
+  line-height: ${(props) => props.lineHeight ?? '40px'};
   letter-spacing: -0.02em;
 `
-
 
 const Label = styled.div`
   font-weight: 400;
 
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 const Value = styled.div`
   font-weight: 600;
-  
+
   text-align: right;
 
   cursor: pointer;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `

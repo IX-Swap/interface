@@ -3,10 +3,10 @@ import React from 'react'
 
 import { IssuancePageLayout } from './layout'
 
-export default function VettingFormPage() {
+export default function VettingFormView() {
   return (
     <IssuancePageLayout>
-      <IssuanceVettingForm />
+      <IssuanceVettingForm view />
     </IssuancePageLayout>
   )
 }
