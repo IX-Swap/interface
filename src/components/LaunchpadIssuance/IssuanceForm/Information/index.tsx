@@ -202,10 +202,17 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     }
   }, [issuanceId, offer.loading, offer.data])
 
-  if (offer.loading || !offer.data) {
+  if (offer.loading) {
     return (
       <LoaderContainer width="100vw" height="100vh">
         <Loader />
+      </LoaderContainer>
+    )
+  }
+  if (!offer.data || vetting.error || offer.error) {
+    return (
+      <LoaderContainer width="100vw" height="100vh">
+        <FormTitle>{offer.error || 'Issuance not found'}</FormTitle>
       </LoaderContainer>
     )
   }

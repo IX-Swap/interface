@@ -192,27 +192,29 @@ export const useSubscribeToOffer = () => {
 export const useGetOffer = (id: string | number | undefined, startLoading = true) => {
   const loader = useLoader()
   const [data, setData] = React.useState<Offer>()
-
+  const [error, setError] = React.useState('')
   const load = React.useCallback(() => {
     if (!id) {
       loader.stop()
       return
     }
-
+    setError('')
     apiService
       .get(`/offers/${id}`)
       .then((res) => res.data as Offer)
       .then(setData)
+      .catch((e: any) => setError(e?.message))
       .finally(loader.stop)
   }, [id])
 
   React.useEffect(() => {
     if (startLoading) {
       load()
+    } else {
+      loader.stop()
     }
   }, [])
-
-  return { loading: loader.isLoading, load, data }
+  return { loading: loader.isLoading, load, data, error }
 }
 
 export const useGetWhitelistStatus = (id: string) => {
@@ -327,22 +329,22 @@ export const useGetIssuance = () => {
   const loader = useLoader()
 
   const [data, setData] = React.useState<Issuance>()
-
+  const [error, setError] = React.useState('')
   const load = React.useCallback((id?: number | string) => {
     if (!id) {
       return
     }
-
+    setError('')
     loader.start()
-
     return apiService
       .get(`/issuances/${id}/full`)
       .then((res) => res.data as Issuance)
       .then(setData)
-      .then(loader.stop)
+      .catch((e: any) => setError(e.message))
+      .finally(loader.stop)
   }, [])
 
-  return { data, load, loading: loader.isLoading }
+  return { data, load, loading: loader.isLoading, error }
 }
 
 export const useVetting = (issuanceId?: number | string) => {
@@ -885,8 +887,13 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
 
   const issuance = useGetIssuance()
   const offer = useGetOffer(issuance?.data?.vetting?.offer?.id, false)
-
   const [values, setValues] = React.useState<InformationFormValues>()
+
+  React.useEffect(() => {
+    if (issuance.error) {
+      loader.stop()
+    }
+  }, [issuance.error])
 
   React.useEffect(() => {
     issuance.load(issuanceId)
@@ -1012,8 +1019,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       investingTokenAddress: payload.investingTokenAddress,
     }
   }, [])
-
-  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id }
+  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id, error: issuance.error }
 }
 
 export const useSubmitOffer = () => {
