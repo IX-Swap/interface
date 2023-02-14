@@ -92,22 +92,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               defaultValue={null}
             />
           </Grid>
-          <Grid item xs={12} md={6}>
-            <TypedField
-              component={DateTimePicker}
-              customRenderer
-              withIcon
-              label='Release Date'
-              name='releaseDate'
-              control={control}
-              disabled={
-                !isNew || (isDataFromDSO && watch('releaseDate') !== null)
-              }
-              valueExtractor={dateTimeValueExtractor}
-              defaultValue={null}
-            />
-          </Grid>
-
         </Grid>
         <Grid item container spacing={{ xs: 5, md: 3 }}>
           <Grid item xs={12} md={6}>
