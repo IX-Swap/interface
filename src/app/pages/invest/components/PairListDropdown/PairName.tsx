@@ -18,6 +18,7 @@ export const PairName = ({
   const { theme } = useAppTheme()
   localStorage.setItem('pairName', pairName)
   // console.log(pairName, 'pairName')
+
   return (
     <Typography
       data-testid={'pairName'}
