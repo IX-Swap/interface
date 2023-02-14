@@ -54,8 +54,8 @@ export const InvestmentListFilter: React.FC<Props> = (props) => {
       </FilterSearchField>
 
       <Spacer />
-
-      <FilterDropdown label="Type" options={OFFER_TYPE_LABELS} onSelect={onTypeSelect} />
+      {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
+      <FilterDropdown label="Type" options={OFFER_TYPE_LABELS} onSelect={onTypeSelect} disabled={true} />
 
       <FilterButton type="button" onClick={() => props.onFilter(filter)}>
         <FilterIcon /> Filter
