@@ -69,6 +69,7 @@ describe('steps', () => {
       investmentPeriod: formVal.investmentPeriod,
       minimumInvestment: formVal.minimumInvestment,
       launchDate: formVal.launchDate ?? null,
+      releaseDate: formVal.releaseDate ?? null,
       completionDate: formVal.completionDate ?? null,
       step: 1,
       decimalPlaces: formVal.decimalPlaces

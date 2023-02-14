@@ -121,6 +121,7 @@ export const transformDSOToFormValuesStep1 = (
       issuerName: '',
       uniqueIdentifierCode: '',
       minimumInvestment: '',
+      releaseDate: '',
       totalFundraisingAmount: '',
       pricePerUnit: '',
       equityMultiple: '',
@@ -159,6 +160,7 @@ export const transformDSOToFormValuesStep1 = (
     investmentPeriod: dso.investmentPeriod,
     minimumInvestment: dso.minimumInvestment,
     launchDate: dso.launchDate ?? null,
+    releaseDate: dso?.releaseDate ?? null,
     completionDate: dso.completionDate ?? null,
     isCampaign: dso.isCampaign,
     decimalPlaces: dso.decimalPlaces
@@ -214,6 +216,7 @@ export const transformDSOToFormValues = (
     logo: dso.logo,
     investmentPeriod: dso.investmentPeriod,
     launchDate: dso.launchDate ?? null,
+    releaseDate: dso.releaseDate ?? null,
     completionDate: dso.completionDate ?? null,
     introduction: dso.introduction,
     businessModel: dso.businessModel,
