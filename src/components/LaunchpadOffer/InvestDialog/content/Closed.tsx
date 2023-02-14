@@ -2,19 +2,14 @@ import React from 'react'
 import moment from 'moment'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
-
 import { CheckCircle, Clock, Info } from 'react-feather'
-
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-
 import { useClaimOffer } from 'state/launchpad/hooks'
 import { Offer, OfferStatus } from 'state/launchpad/types'
-
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
-
 import { InvestInfoMessage, InvestSubmitState } from '../utils/InvestSubmitButton'
 import { OfferLinks } from '../utils/OfferLinks'
 import { useAddPopup } from 'state/application/hooks'
@@ -101,7 +96,12 @@ export const ClosedStage: React.FC<Props> = (props) => {
             wallet to see the token on your wallet feed.
           </CanClaimNotice>
 
-          <OfferLinks offer={props.offer} />
+          <OfferLinks
+            network={props.offer.network}
+            address={isSuccessfull ? props.offer.tokenAddress : props.offer.investingTokenAddress}
+            symbol={isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
+            decimals={props.offer.decimals}
+          />
         </Column>
       )}
 
@@ -131,38 +131,28 @@ const Title = styled.div`
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
-
   line-height: 29px;
   letter-spacing: -0.04em;
-
   text-align: center;
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const CanClaimNotice = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
-
   opacity: 0.8;
-
   max-width: 85%;
 `
 const CantClaimNotice = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.title + 'cc'};
-
   max-width: 70%;
 
   b {
@@ -175,36 +165,26 @@ const HelpLabel = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const HelpButton = styled.div`
   display: grid;
   place-content: center;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
-
   cursor: pointer;
-
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-
   line-height: 19px;
   letter-spacing: -0.02em;
-
   height: 60px;
-
   text-align: center;
-
   color: ${(props) => props.theme.launchpad.colors.primary};
-
   transition: background 0.4s;
 
   :hover {
@@ -216,10 +196,8 @@ const MyInvestmentLabel = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -227,10 +205,8 @@ const MyInvestmentAmount = styled.div`
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
-
   line-height: 24px;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -238,16 +214,11 @@ const ClaimButton = styled.button<{ hasInvestments: boolean }>`
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
-
   line-height: 18px;
   letter-spacing: -0.02em;
-
   height: 50px;
-
   cursor: pointer;
-
   border-radius: 6px;
-
   padding: 0.25rem 3rem;
 
   ${(props) =>
@@ -305,31 +276,22 @@ const ClaimButton = styled.button<{ hasInvestments: boolean }>`
 const ModalWrapper = styled.div`
   display: grid;
   place-content: center;
-
   position: fixed;
   top: 0;
   left: 0;
-
   width: 100vw;
   height: 100vh;
-
   z-index: 50;
-
   backdrop-filter: blur(20px);
 `
 
 const ContactFormWrapper = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   align-items: center;
-
   gap: 1rem;
-
   position: relative;
-
   width: 480px;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 8px;
   padding: 2rem;
