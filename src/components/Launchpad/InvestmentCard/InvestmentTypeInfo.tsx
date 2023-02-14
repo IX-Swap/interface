@@ -8,11 +8,11 @@ import { ReactComponent as InvestmentApprovedIcon } from 'assets/launchpad/svg/i
 import { ReactComponent as InvestmentMetaSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
 
 const getTypeLabel = (type: OfferType) => {
-  return OFFER_TYPE_LABELS.find((x) => x.value === type)!.label
+  return OFFER_TYPE_LABELS.find((x) => x.value === type)?.label
 }
 
 const getIndustryLabel = (industry: OfferIndustry) => {
-  return OFFER_INDUSTRY_LABELS.find((x) => x.value === industry)!.label
+  return OFFER_INDUSTRY_LABELS.find((x) => x.value === industry)?.label
 }
 
 interface Props {
@@ -41,13 +41,10 @@ export const InvestmentTypeInfo: React.FC<Props> = (props) => {
 
 const InvestmentCardMetaContainer = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-
   gap: 0.5rem;
-
   margin-bottom: 1rem;
 `
 
@@ -55,11 +52,8 @@ const InvestmentCardMetaEntry = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
-
   line-height: 16px;
   letter-spacing: -0.02em;
-
   font-family: ${(props) => props.theme.launchpad.font};
-
   color: ${(props) => props.theme.launchpad.colors.text.caption};
 `

@@ -71,20 +71,20 @@ interface KycInputLabelProps {
   style?: string
 }
 
-export const KycInputLabel: FC<KycInputLabelProps> = ({label, error, name, tooltipText}) => {
+export const KycInputLabel: FC<KycInputLabelProps> = ({ label, error, name, tooltipText }) => {
   if (!label) {
     return null
   }
 
   return (
-    <Row alignItems='center'>
+    <Row alignItems="center">
       {error && (
         <div>
-          <InvalidFormInputIcon style={{ margin: '0 0.5rem'}} />
+          <InvalidFormInputIcon style={{ margin: '0 0.5rem' }} />
         </div>
       )}
       <div>
-        <Label label={label} htmlFor={name || ''}  tooltipText={tooltipText} color={error && "#FF007F"}  />
+        <Label label={label} htmlFor={name || ''} tooltipText={tooltipText} color={error && '#FF007F'} />
       </div>
     </Row>
   )
@@ -263,7 +263,6 @@ export const KycTextInput: FC<TextInputProps> = ({
 export const TextareaInput: FC<TextInputProps> = ({
   label,
   value,
-  id,
   onChange,
   placeholder,
   style,
@@ -467,7 +466,7 @@ const StyledInput = styled(Input)`
   border-radius: 36px;
   font-weight: normal;
   font-size: 16px;
-  border: ${({ error, theme }) => error ? 'solid 1px' + theme.error : 'none'};
+  border: ${({ error, theme }) => (error ? 'solid 1px' + theme.error : 'none')};
   background-color: ${({ theme: { bg19 } }) => bg19};
   :focus {
     background-color: ${({ theme: { bg7, config, bg19 } }) => (config.background ? bg19 : bg7)};

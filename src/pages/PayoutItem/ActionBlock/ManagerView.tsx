@@ -25,7 +25,6 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { UserClaim } from './dto'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { FetchingBalance } from './FetchingBalance'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 

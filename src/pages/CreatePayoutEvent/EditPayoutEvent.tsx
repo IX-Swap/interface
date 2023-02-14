@@ -82,7 +82,7 @@ const EditPayoutEventPage: FC = () => {
       setPayoutFormData({
         id: payout.id.toString(),
         description: payout.description,
-        endDate: payout.endDate!,
+        endDate: payout.endDate ?? '',
         startDate: payout.startDate,
         files: payout.attachments,
         recordDate: payout.recordDate,
