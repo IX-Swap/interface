@@ -292,7 +292,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 />
 
                 <ImageField
-                  label="Deal Cards Image"
+                  label="Deal Card's Image"
                   image={values.cardPicture?.file}
                   field="cardPicture"
                   setter={setFieldValue}
