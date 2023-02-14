@@ -96,7 +96,11 @@ export const NewIssuanceForm = () => {
           </LoaderContainer>
         )}
 
-        {!issuance.loading && !issuance.data && <FormTitle>Issuance not found</FormTitle>}
+        {!issuance.loading && !issuance.data && (
+          <LoaderContainer>
+            <FormTitle>Issuance not found</FormTitle>
+          </LoaderContainer>
+        )}
 
         {!issuance.loading && issuance.data && (
           <>

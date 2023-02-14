@@ -348,18 +348,20 @@ export const useGetIssuance = () => {
 export const useVetting = (issuanceId?: number | string) => {
   const loader = useLoader()
   const [vetting, setVettings] = React.useState<IssuanceVetting>()
-
+  const [error, setError] = React.useState<string>()
   React.useEffect(() => {
     if (issuanceId) {
+      setError('')
       apiService
         .get(`/vettings/by-issuance/${issuanceId}`)
         .then((res) => res.data as IssuanceVetting)
         .then(setVettings)
-        .then(loader.stop)
+        .catch((e: any) => setError(e?.message))
+        .finally(loader.stop)
     }
   }, [issuanceId])
 
-  return { data: vetting, loading: loader.isLoading }
+  return { data: vetting, loading: loader.isLoading, error }
 }
 
 export const useGetFile = () => {
@@ -451,7 +453,7 @@ export const useVettingFormInitialValues = (issuanceId?: number | string) => {
     }
   }, [vetting.loading])
 
-  return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id }
+  return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id, error: vetting.error }
 }
 
 export const useGetIssuances = () => {
