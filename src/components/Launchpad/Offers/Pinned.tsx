@@ -16,7 +16,7 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
 
 const getStageLabel = (stage: OfferStatus) => {
-  return OFFER_STAGE_LABELS.find((x) => x.value === stage)!.label
+  return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
 }
 
 export const Pinned: React.FC = () => {
@@ -40,7 +40,7 @@ export const Pinned: React.FC = () => {
     const canOpen = checkKYC(offer?.allowOnlyAccredited || false, offer?.status === OfferStatus.closed)
 
     if (canOpen) {
-      history.push(`/offers/${offer!.id}`)
+      history.push(`/offers/${offer?.id ?? ''}`)
     } else {
       toggleKYCModal()
     }

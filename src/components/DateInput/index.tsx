@@ -34,7 +34,6 @@ export const DateInput = ({
   error,
   maxDate,
   tooltipText,
-  required,
   placeholder,
   isDisabled = false,
   format,

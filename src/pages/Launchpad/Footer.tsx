@@ -124,8 +124,6 @@ export const Footer: React.FC<Props> = (props) => {
             </DiscreteExternalLink>
             <DotSeparator />
             <DiscreteExternalLink href="https://ixswap.io/privacy-policy/">Privacy Policy</DiscreteExternalLink>
-            <DotSeparator />
-            <a>Cookie Settings</a>
           </div>
         </Copyright>
         <Links>
@@ -134,9 +132,6 @@ export const Footer: React.FC<Props> = (props) => {
 
             <DiscreteExternalLink href="https://ixswap.io/blog/">Blog</DiscreteExternalLink>
             <DiscreteExternalLink href="https://ixswap.io/community/">Community</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://ixswap.io/app/uploads/2022/07/IX-Swap-Litepaper.pdf">
-              Litepaper
-            </DiscreteExternalLink>
           </div>
 
           <div>
@@ -152,7 +147,7 @@ export const Footer: React.FC<Props> = (props) => {
 
             <DiscreteExternalLink href="https://ixswap.io/contact-us/">Contact Us</DiscreteExternalLink>
             <DiscreteExternalLink href="https://www.ixswap.io/faq/">FAQ</DiscreteExternalLink>
-            <DiscreteExternalLink href="https://academy.ixswap.io/tutorials">Tutorials</DiscreteExternalLink>
+            <DiscreteExternalLink href="https://www.ixswap.io/academy/tutorials">Tutorials</DiscreteExternalLink>
           </div>
         </Links>
       </FooterInfoContainer>
