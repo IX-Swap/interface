@@ -92,15 +92,15 @@ export const PayoutForm: FC<PayoutFormProps> = ({ payoutData, paid = false, stat
       }
       return acc
     }, {})
-    
+
     const body = transformPayoutDraftDTO(formattedValues)
 
     let data: any
 
     if (payoutData && status === PAYOUT_STATUS.DRAFT) {
-      data = await updateDraft(+payoutData.id!, body, payoutData)
+      data = await updateDraft(Number(payoutData?.id), body, payoutData)
     } else if (payoutData) {
-      data = await updatePayout(+payoutData.id!, body, payoutData)
+      data = await updatePayout(Number(payoutData?.id), body, payoutData)
     } else {
       data = await createDraft(body)
     }

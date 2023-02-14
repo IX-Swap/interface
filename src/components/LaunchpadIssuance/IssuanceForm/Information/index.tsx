@@ -74,7 +74,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const form = React.useRef<FormikProps<InformationFormValues>>(null)
 
   const [showReview, setShowReview] = React.useState(false)
-  const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
   const {
@@ -90,7 +89,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [])
 
   const onConfirmationClose = React.useCallback(() => {
-    setIsSafeToClose(true)
     setShowCloseDialog(false)
   }, [])
 
@@ -137,23 +135,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [history, issuanceId])
 
   const goBack = React.useCallback(() => {
-    if (isSafeToClose) {
+    if (JSON.stringify(form?.current?.values) === JSON.stringify(form?.current?.initialValues)) {
       history.push('/issuance/create')
     } else {
       setShowCloseDialog(true)
     }
   }, [history])
-
-  const alertUser = React.useCallback((event: BeforeUnloadEvent) => {
-    event.preventDefault()
-    event.returnValue = true
-
-    if (!isSafeToClose) {
-      setShowCloseDialog(true)
-    }
-
-    return isSafeToClose
-  }, [])
 
   const numberFilter = React.useCallback((value?: string) => {
     if (!value) {
@@ -799,12 +786,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
 const ImageBlock = styled.div`
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 240px;
-
   gap: 1.5rem;
-
   place-content: stretch;
 `
 
@@ -812,25 +796,19 @@ const TokenAgreementText = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const PresalveFieldContainer = styled.div<{ disabled?: boolean }>`
   display: flex;
-
   flex-flow: row nowrap;
   align-items: center;
-
   gap: 0.5rem;
   padding: 1rem;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-
   ${(props) =>
     props.disabled &&
     `
@@ -842,10 +820,8 @@ const PresaleFieldLabel = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-
   line-height: 140%;
   letter-spacing: -0.01em;
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -853,16 +829,12 @@ const PresaleButton = styled.button<{ isSelected: boolean; disabled?: boolean }>
   padding: 0.75rem 1.5rem;
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '33'};
   border-radius: 6px;
-
   cursor: pointer;
-
   font-style: normal;
   font-weight: 600;
   font-size: 13px;
-
   line-height: 16px;
   letter-spacing: -0.02em;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.primary};
 
@@ -887,21 +859,14 @@ const AccreditedInvestorsLabel = styled(TokenAgreementText)`
 
 const ScrollToTop = styled.button`
   position: fixed;
-
   bottom: 1rem;
   right: 10rem;
-
   background: ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 50%;
-
   display: grid;
-
   place-content: center;
-
   border: none;
   outline: none;
-
   cursor: pointer;
-
   padding: 0.75rem;
 `

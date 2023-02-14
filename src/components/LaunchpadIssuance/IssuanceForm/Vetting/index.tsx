@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { FieldArray, Formik } from 'formik'
+import { FieldArray, Formik, FormikProps } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
@@ -71,9 +71,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const goMain = React.useCallback(() => {
     history.push(`/issuance/create?id=${issuanceId}`)
   }, [history, issuanceId])
-
+  const form = React.useRef<FormikProps<VettingFormValues>>(null)
   const goBack = React.useCallback(() => {
-    if (isSafeToClose || view) {
+    if (JSON.stringify(form?.current?.values) === JSON.stringify(form?.current?.initialValues)) {
       goMain()
     } else {
       setShowCloseDialog(true)
@@ -87,11 +87,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const submit = React.useCallback(
     async (values: VettingFormValues) => {
       setShowConfirmDialog(false)
+      if (!initialValues.data) return
 
       loader.start()
-
       try {
-        await createVetting(values, initialValues.data!, initialValues.vettingId)
+        await createVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({
           info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` },
@@ -108,10 +108,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
   const saveDraft = React.useCallback(
     async (values: VettingFormValues) => {
+      if (!initialValues.data) return
       loader.start()
 
       try {
-        await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
+        await saveDraftVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({ info: { success: true, summary: 'Draft saved successfully' } })
         goMain()
@@ -145,7 +146,13 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   }
 
   return (
-    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} enableReinitialize={true}>
+    <Formik
+      initialValues={initialValues.data!}
+      onSubmit={submit}
+      validationSchema={schema}
+      enableReinitialize={true}
+      innerRef={form}
+    >
       {({ submitForm, setFieldValue, values, errors, resetForm }) => (
         <FormContainer>
           <ConfirmationForm

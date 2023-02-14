@@ -50,7 +50,7 @@ const EditPayoutEventPage: FC = () => {
         history.push('/kyc')
       }
 
-      const data: PayoutEvent = await getPayoutItem(+id!)
+      const data: PayoutEvent = await getPayoutItem(Number(id))
 
       if (data) {
         setStatus(data.status)
