@@ -1,12 +1,8 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import moment from 'moment'
-
 import { Calendar, ChevronLeft, ChevronRight } from 'react-feather'
-
 import { CalendarPicker } from '../Calendar'
-
 import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 
@@ -40,32 +36,45 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
   const toggle = React.useCallback(() => {
     if (!props.disabled) {
-      setShowPicker(state => !state)
+      setShowPicker((state) => !state)
     }
   }, [props.disabled])
 
-  const onSelect = React.useCallback((value: moment.Moment) => {
-    let selectedRange: DateRange
+  const onSelect = React.useCallback(
+    (value: moment.Moment) => {
+      let selectedRange: DateRange
 
-    if (props.mode === 'single') {
-      selectedRange = [value]
-    } else if (range.length < 2) {
-      selectedRange = [...range, value]
-    } else {
-      selectedRange = [value]
-    }
+      if (props.mode === 'single') {
+        selectedRange = [value]
+      } else if (range.length === 1) {
+        const first = range[0]
+        selectedRange = first.isBefore(value) ? [first, value] : [value, first]
+      } else {
+        selectedRange = [value]
+      }
 
-    if (props.field && props.setter) {
-      props.setter(props.field, props.mode === 'single' ? selectedRange[0].toDate() : selectedRange.map(x => x.toDate()))
-    }
+      if (props.field && props.setter) {
+        props.setter(
+          props.field,
+          props.mode === 'single' ? selectedRange[0].toDate() : selectedRange.map((x) => x.toDate())
+        )
+      }
 
-    if (props.onChange) {
-      props.onChange(selectedRange.map(x => x.toDate()))
-    }
-  }, [range])
+      if (props.onChange) {
+        props.onChange(selectedRange.map((x) => x.toDate()))
+      }
+    },
+    [range]
+  )
 
-  const moveMonthBack = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') - 1)), [])
-  const moveMonthForward = React.useCallback(() => setCurrentMonth(state => state.clone().month(state.get('month') + 1)), [])
+  const moveMonthBack = React.useCallback(
+    () => setCurrentMonth((state) => state.clone().month(state.get('month') - 1)),
+    []
+  )
+  const moveMonthForward = React.useCallback(
+    () => setCurrentMonth((state) => state.clone().month(state.get('month') + 1)),
+    []
+  )
 
   React.useEffect(() => {
     if (props.value !== undefined) {
@@ -82,26 +91,23 @@ export const DateRangeField: React.FC<Props> = (props) => {
   return (
     <Column>
       <FieldContainer disabled={props.disabled} onClick={toggle}>
-        <FieldIcon><Calendar color={theme.launchpad.colors.text.caption} /></FieldIcon>
+        <FieldIcon>
+          <Calendar color={theme.launchpad.colors.text.caption} />
+        </FieldIcon>
         <FieldLabel>{props.label}</FieldLabel>
-        
+
         {range.length === 0 && (
-          <FieldPlaceholder>
-            mm/dd/yyyy {props.mode === 'range' && ' - mm/dd/yyyy'}
-          </FieldPlaceholder>
+          <FieldPlaceholder>mm/dd/yyyy {props.mode === 'range' && ' - mm/dd/yyyy'}</FieldPlaceholder>
         )}
-        
+
         {range.length > 0 && (
-          <FieldSelectedValue>
-            {range.map(date => date.format('MM/DD/YYYY')).join(' - ')}
-          </FieldSelectedValue>
+          <FieldSelectedValue>{range.map((date) => date.format('MM/DD/YYYY')).join(' - ')}</FieldSelectedValue>
         )}
       </FieldContainer>
 
-      
       <IssuanceDialog show={showPicker} onClose={toggle}>
         <DatePicker>
-          <DatePickerHeader area='current-header'>
+          <DatePickerHeader area="current-header">
             <ChangeMonthButton onClick={moveMonthBack}>
               <ChevronLeft color={theme.launchpad.colors.primary} />
             </ChangeMonthButton>
@@ -109,8 +115,8 @@ export const DateRangeField: React.FC<Props> = (props) => {
           </DatePickerHeader>
 
           <CalendarPicker minDate={props.minDate} current={currentMonth} selectedRange={range} onSelect={onSelect} />
-          
-          <DatePickerHeader area='next-header'>
+
+          <DatePickerHeader area="next-header">
             <DatePickerTitle>{nextMonth.format('MMMM YYYY')}</DatePickerTitle>
             <ChangeMonthButton onClick={moveMonthForward}>
               <ChevronRight color={theme.launchpad.colors.primary} />
@@ -128,84 +134,71 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
 const FieldContainer = styled.div<{ disabled?: boolean }>`
   position: relative;
-
   display: grid;
-
   grid-template-rows: repeat(2, auto);
   grid-template-columns: 1fr 10px;
   grid-template-areas:
-    "label icon"
-    "value icon";
+    'label icon'
+    'value icon';
 
   place-content: start center;
 
   gap: 0.25rem;
   padding: 1rem;
 
-  ${props => !props.disabled && `cursor: pointer;`}
+  ${(props) => !props.disabled && `cursor: pointer;`}
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-  
-  ${props => props.disabled && `
+
+  ${(props) =>
+    props.disabled &&
+    `
     background: ${props.theme.launchpad.colors.foreground};
   `}
 `
 
 const FieldIcon = styled.div`
   grid-area: icon;
-
   display: grid;
   place-content: center;
 `
 
 const FieldLabel = styled.div`
   grid-area: label;
-
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldPlaceholder = styled.div`
   grid-area: value;
-  
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-
   line-height: 17px;
   letter-spacing: -0.01em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldSelectedValue = styled.div`
   grid-area: value;
-
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-
   line-height: 17px;
   letter-spacing: -0.01em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
-
 
 const DatePicker = styled.div`
   display: grid;
-  
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
-  grid-template-areas:
-    "current-header next-header";
+  grid-template-areas: 'current-header next-header';
 
   gap: 1rem;
 `
@@ -214,41 +207,30 @@ const DatePickerHeader = styled.div<{ area: 'current-header' | 'next-header' }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-
-  grid-area: ${props => props.area};
+  grid-area: ${(props) => props.area};
 `
-
 
 const DatePickerTitle = styled.div`
   display: grid;
   place-content: center;
-
   flex-grow: 1;
-  
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-
   line-height: 17px;
   letter-spacing: -0.01em;
-  
   text-align: right;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const ChangeMonthButton = styled.button`
   display: grid;
   place-content: center;
-
   cursor: pointer;
-
   background: none;
   border: none;
-
   border-radius: 6px;
-
   :hover {
-    background: ${props => props.theme.launchpad.colors.foreground};
+    background: ${(props) => props.theme.launchpad.colors.foreground};
   }
 `

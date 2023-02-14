@@ -1,6 +1,6 @@
-import React from "react"
-import Portal from "@reach/portal"
-import styled from "styled-components"
+import React from 'react'
+import Portal from '@reach/portal'
+import styled from 'styled-components'
 
 interface Props {
   title: React.ReactNode
@@ -11,7 +11,6 @@ interface Position {
   x: number
   y: number
 }
-
 
 export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
   const timeout = React.useRef<NodeJS.Timeout>()
@@ -35,12 +34,12 @@ export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
       return
     }
 
-    clearTimeout(timeout.current!)
+    clearTimeout(timeout.current)
   }, [timeout])
 
   React.useEffect(() => {
-    const rect = container.current?.getBoundingClientRect();
-    
+    const rect = container.current?.getBoundingClientRect()
+    if (!rect) return
     function handleClickOutside(event: Event) {
       if (!container.current?.contains(event.target as Node | null)) {
         setShowTooltip(false)
@@ -50,10 +49,10 @@ export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
 
     if (showTooltip) {
       setPosition({
-        x: rect!.x + window.scrollX + (rect!.width / 2) - 160, 
-        y: rect!.y + window.scrollY
+        x: rect.x + window.scrollX + rect.width / 2 - 160,
+        y: rect.y + window.scrollY,
       })
-      
+
       document?.addEventListener('click', handleClickOutside)
 
       return () => {
@@ -72,7 +71,12 @@ export const Tooltip: React.FC<Props & React.PropsWithChildren> = (props) => {
 
       {showTooltip && position && (
         <Portal>
-          <TooltipContainer x={position.x} y={position.y} onMouseEnter={clearTooltipTimer} onMouseLeave={startTooltipTimer}>
+          <TooltipContainer
+            x={position.x}
+            y={position.y}
+            onMouseEnter={clearTooltipTimer}
+            onMouseLeave={startTooltipTimer}
+          >
             <header>{props.title}</header>
             <main>{props.body}</main>
           </TooltipContainer>
@@ -100,13 +104,13 @@ const TooltipContainer = styled.article<{ x: number; y: number }>`
 
   z-index: 20;
 
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
+  left: ${(props) => props.x}px;
+  top: ${(props) => props.y}px;
 
   transform: translate(0, -100%);
 
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   box-shadow: 0px 4px 4px rgba(138, 138, 164, 0.1);
   border-radius: 4px;
 
@@ -120,7 +124,7 @@ const TooltipContainer = styled.article<{ x: number; y: number }>`
     line-height: 40px;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.title};
+    color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 
   main {
@@ -131,10 +135,10 @@ const TooltipContainer = styled.article<{ x: number; y: number }>`
     line-height: 160%;
     letter-spacing: -0.02em;
 
-    color: ${props => props.theme.launchpad.colors.text.body};
+    color: ${(props) => props.theme.launchpad.colors.text.body};
   }
 
   a {
-    color: ${props => props.theme.launchpad.colors.primary}
+    color: ${(props) => props.theme.launchpad.colors.primary};
   }
 `
