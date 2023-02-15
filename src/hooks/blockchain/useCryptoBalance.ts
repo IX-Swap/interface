@@ -12,7 +12,8 @@ export const useCryptoBalance = (tokenAddress?: string) => {
       return
     }
     const rawBalance = await contract?.balanceOf(account)
-    const value = parseFloat(ethers.utils.formatUnits(rawBalance ?? 0, 0))
+    // const value = parseFloat(ethers.utils.formatUnits(rawBalance ?? 0, 0))
+    const value = parseFloat(ethers.utils.formatEther(rawBalance ?? 0))
     setBalance(value)
   }, [contract, account])
 
@@ -25,6 +26,11 @@ export const useCryptoBalance = (tokenAddress?: string) => {
     }, 5000)
     return () => clearInterval(interval)
   }, [fetchBalance])
+
+  //   console.log('tokenAddress', tokenAddress)
+  //   console.log('contract', contract)
+  //   console.log('account', account)
+  //   console.log('balance', balance)
 
   return balance
 }
