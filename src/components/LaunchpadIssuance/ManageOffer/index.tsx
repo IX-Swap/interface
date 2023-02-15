@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
+import { alpha } from '@material-ui/core/styles'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { OfferStatus } from 'state/launchpad/types'
 import { OfferStatistics } from './Statistics'
@@ -12,11 +13,10 @@ import { PresaleBlock } from './presale'
 import { HeaderButtons } from './HeaderButtons'
 import { OFFER_STATUSES } from '../utils/constants'
 import { LaunchpadWhitelistWallet } from 'components/Launchpad/LaunchpadWhitelistWallet'
-import { alpha } from '@material-ui/core/styles'
 import { InvestmentsBlock } from './investments'
 import { useRole } from 'state/user/hooks'
 import { ConfirmModal } from './shared/ConfirmModal'
-import { useAddPopup } from 'state/application/hooks'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -35,7 +35,8 @@ export const ManageOffer = () => {
 
   const params = useParams<ManagedOfferPageParams>()
   const { loading, data: offer, load } = useGetManagedOffer(params.issuanceId)
-  const { usersClaimed, issuerClaimed, status } = offer || {}
+  const { usersClaimed, issuerClaimed, status, softCapReached } = offer || {}
+  const showError = useShowError()
 
   const triggerUserClaim = useTriggerUserClaim(offer?.id)
   const triggerIssuerClaim = useTriggerIssuerClaim(offer?.id)
@@ -46,7 +47,7 @@ export const ManageOffer = () => {
     [isOfferManager, usersClaimed, issuerClaimed]
   )
   const claimBtnTitle = useMemo(() => {
-    if (status && status !== OfferStatus.claim) {
+    if (!softCapReached || (status && status !== OfferStatus.claim)) {
       return ''
     } else if (!usersClaimed) {
       // admin and offer manager can do
@@ -90,6 +91,17 @@ export const ManageOffer = () => {
     }
   }, [status])
 
+  useEffect(() => {
+    if (triggerUserClaim.error) {
+      showError(triggerUserClaim.error)
+    }
+  }, [triggerUserClaim.error])
+  useEffect(() => {
+    if (triggerIssuerClaim.error) {
+      showError(triggerIssuerClaim.error)
+    }
+  }, [triggerIssuerClaim.error])
+
   if (loading) {
     return (
       <Centered>
@@ -102,6 +114,13 @@ export const ManageOffer = () => {
   }
   if (!Object.keys(OFFER_STATUSES).includes(offer.status as any)) {
     return <Centered>Offer not started</Centered>
+  }
+
+  const miniOffer = {
+    id: offer.id,
+    status: offer.status,
+    hasPresale: offer.hasPresale,
+    timeframe: offer.timeframe,
   }
   return (
     <Wrapper>
@@ -136,7 +155,7 @@ export const ManageOffer = () => {
           <OfferStatistics offer={offer} />
         </StatisticsBoxItem>
         <StagesBoxItem>
-          <OfferStages offer={offer} />
+          <OfferStages offer={miniOffer} refreshOffer={load} />
         </StagesBoxItem>
       </CustomGridContainer>
 
