@@ -141,6 +141,13 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       </LoaderContainer>
     )
   }
+  if (!initialValues.loading && initialValues.error) {
+    return (
+      <LoaderContainer width="100vw" height="100vh">
+        <FormTitle>{initialValues.error}</FormTitle>
+      </LoaderContainer>
+    )
+  }
 
   return (
     <Formik
