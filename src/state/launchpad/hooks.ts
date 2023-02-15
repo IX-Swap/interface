@@ -118,7 +118,7 @@ export const useGetOffers = () => {
     if (filter) {
       query = query.concat(
         Object.entries(filter)
-          .filter(([_, value]) => value.length > 0)
+          .filter(([, value]) => value.length > 0)
           .map(
             ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
           )
@@ -192,27 +192,29 @@ export const useSubscribeToOffer = () => {
 export const useGetOffer = (id: string | number | undefined, startLoading = true) => {
   const loader = useLoader()
   const [data, setData] = React.useState<Offer>()
-
+  const [error, setError] = React.useState('')
   const load = React.useCallback(() => {
     if (!id) {
       loader.stop()
       return
     }
-
+    setError('')
     apiService
       .get(`/offers/${id}`)
       .then((res) => res.data as Offer)
       .then(setData)
+      .catch((e: any) => setError(e?.message))
       .finally(loader.stop)
   }, [id])
 
   React.useEffect(() => {
     if (startLoading) {
       load()
+    } else {
+      loader.stop()
     }
   }, [])
-
-  return { loading: loader.isLoading, load, data }
+  return { loading: loader.isLoading, load, data, error }
 }
 
 export const useGetWhitelistStatus = (id: string) => {
@@ -327,39 +329,41 @@ export const useGetIssuance = () => {
   const loader = useLoader()
 
   const [data, setData] = React.useState<Issuance>()
-
+  const [error, setError] = React.useState('')
   const load = React.useCallback((id?: number | string) => {
     if (!id) {
       return
     }
-
+    setError('')
     loader.start()
-
     return apiService
       .get(`/issuances/${id}/full`)
       .then((res) => res.data as Issuance)
       .then(setData)
-      .then(loader.stop)
+      .catch((e: any) => setError(e.message))
+      .finally(loader.stop)
   }, [])
 
-  return { data, load, loading: loader.isLoading }
+  return { data, load, loading: loader.isLoading, error }
 }
 
 export const useVetting = (issuanceId?: number | string) => {
   const loader = useLoader()
   const [vetting, setVettings] = React.useState<IssuanceVetting>()
-
+  const [error, setError] = React.useState<string>()
   React.useEffect(() => {
     if (issuanceId) {
+      setError('')
       apiService
         .get(`/vettings/by-issuance/${issuanceId}`)
         .then((res) => res.data as IssuanceVetting)
         .then(setVettings)
-        .then(loader.stop)
+        .catch((e: any) => setError(e?.message))
+        .finally(loader.stop)
     }
   }, [issuanceId])
 
-  return { data: vetting, loading: loader.isLoading }
+  return { data: vetting, loading: loader.isLoading, error }
 }
 
 export const useGetFile = () => {
@@ -447,11 +451,11 @@ export const useVettingFormInitialValues = (issuanceId?: number | string) => {
       setValues(vettingInitialFormValues)
       loader.stop()
     } else if (!vetting.loading && vetting.data) {
-      transform(vetting.data!).then(setValues).then(loader.stop)
+      transform(vetting.data).then(setValues).then(loader.stop)
     }
   }, [vetting.loading])
 
-  return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id }
+  return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id, error: vetting.error }
 }
 
 export const useGetIssuances = () => {
@@ -461,7 +465,7 @@ export const useGetIssuances = () => {
     if (filter) {
       query = query.concat(
         Object.entries(filter)
-          .filter(([_, value]) => value.length > 0)
+          .filter(([, value]) => value.length > 0)
           .map(
             ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
           )
@@ -471,7 +475,7 @@ export const useGetIssuances = () => {
     if (order) {
       query = query.concat(
         Object.entries(order)
-          .filter(([_, value]) => value && value.length > 0)
+          .filter(([, value]) => value && value.length > 0)
           .map(([key, value]) => `order=${key}=${value}`)
       )
     }
@@ -498,7 +502,7 @@ export const useGetOffersFull = () => {
       if (filter) {
         query = query.concat(
           Object.entries(filter)
-            .filter(([_, value]) => value.length > 0)
+            .filter(([, value]) => value.length > 0)
             .map(
               ([key, value]) => `${key}=${typeof value === 'string' ? value : value.map((x: any) => x.value).join(',')}`
             )
@@ -508,7 +512,7 @@ export const useGetOffersFull = () => {
       if (order) {
         query = query.concat(
           Object.entries(order)
-            .filter(([_, value]) => value && value.length > 0)
+            .filter(([, value]) => value && value.length > 0)
             .map(([key, value]) => `order=${key}=${value}`)
         )
       }
@@ -632,7 +636,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
   return React.useCallback(
     async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
       let data: Record<string, any> = {
-        issuanceId,
+        issuanceId: Number(issuanceId),
 
         toSubmit: false,
 
@@ -687,13 +691,13 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
       data.document = uploadedFiles
         .filter((x) => x.name.startsWith('document'))
-        .map((x) => ({ ...x, name: x.name.split('.').pop()! }))
+        .map((x) => ({ ...x, name: x.name.split('.').pop() ?? '' }))
         .reduce((acc, e) => ({ ...acc, [e.name]: e.id }), {})
 
       data.fundingDocuments = uploadedFiles.filter((x) => x.name.startsWith('fundingDocuments')).map((x) => x.id)
 
       data = Object.entries(data)
-        .filter(([key, value]) => typeof value === 'boolean' || value)
+        .filter(([, value]) => typeof value === 'boolean' || value)
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
       if (vettindId) {
@@ -711,14 +715,14 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(
-    async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
+    async (payload: VettingFormValues, initialValues: VettingFormValues, vettingId?: number) => {
       const uploadedFiles = await uploadFiles(payload, initialValues)
 
       const findDoc = (key: keyof VettingFormValues['document']) =>
         uploadedFiles.find((x) => x.name === `document.${key}Id`)?.id ?? initialValues.document[key]?.id
 
       const data: Record<string, any> = {
-        issuanceId,
+        issuanceId: Number(issuanceId),
 
         toSubmit: true,
 
@@ -793,9 +797,9 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
         ...uploadedFiles.filter((x) => x.name.startsWith('fundingDocuments')).map((x) => x.id),
       ]
 
-      if (vettindId) {
+      if (vettingId) {
         delete data.issuanceId
-        return apiService.put(`/vettings/${vettindId}`, data)
+        return apiService.put(`/vettings/${vettingId}`, data)
       } else {
         return apiService.post(`/vettings`, data)
       }
@@ -883,8 +887,13 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
 
   const issuance = useGetIssuance()
   const offer = useGetOffer(issuance?.data?.vetting?.offer?.id, false)
-
   const [values, setValues] = React.useState<InformationFormValues>()
+
+  React.useEffect(() => {
+    if (issuance.error) {
+      loader.stop()
+    }
+  }, [issuance.error])
 
   React.useEffect(() => {
     issuance.load(issuanceId)
@@ -907,7 +916,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       setValues(informationInitialFormValues)
       loader.stop()
     } else if (!offer.loading && offer.data) {
-      transform(offer.data!).then(setValues).then(loader.stop)
+      transform(offer.data).then(setValues).then(loader.stop)
     }
   }, [offer.loading])
 
@@ -1010,8 +1019,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       investingTokenAddress: payload.investingTokenAddress,
     }
   }, [])
-
-  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id }
+  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id, error: issuance.error }
 }
 
 export const useSubmitOffer = () => {
@@ -1327,13 +1335,13 @@ const paramsSerializer = (params: { [key: string]: any }) => {
   }
   const { order, ...rest } = params
   let query = Object.entries(rest)
-    .filter(([_, value]) => !!value)
+    .filter(([, value]) => !!value)
     .map(([key, value]) => `${key}=${value}`)
   if (order) {
     const allowedValues = Object.values(OrderTypes)
     query = query.concat(
       Object.entries(order as { [key: string]: any })
-        .filter(([_, value]) => allowedValues.includes(value))
+        .filter(([, value]) => allowedValues.includes(value))
         .map(([key, value]) => `order=${key}=${value}`)
     )
   }

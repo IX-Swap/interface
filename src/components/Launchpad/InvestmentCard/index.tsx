@@ -23,7 +23,7 @@ interface Props {
 }
 
 const getStageLabel = (stage: OfferStatus) => {
-  return OFFER_STAGE_LABELS.find((x) => x.value === stage)!.label
+  return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
 }
 
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { FieldArray, Formik } from 'formik'
+import { FieldArray, Formik, FormikProps } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
@@ -36,7 +36,6 @@ import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { useAddPopup } from 'state/application/hooks'
-
 import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
 import { useQueryParams } from 'hooks/useParams'
 import { textFilter } from 'utils/input'
@@ -51,12 +50,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
   const loader = useLoader(false)
   const addPopup = useAddPopup()
-  const [isSafeToClose, setIsSafeToClose] = React.useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
   const onConfirmationClose = React.useCallback(() => {
-    setIsSafeToClose(true)
     setShowCloseDialog(false)
   }, [])
 
@@ -71,9 +68,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const goMain = React.useCallback(() => {
     history.push(`/issuance/create?id=${issuanceId}`)
   }, [history, issuanceId])
-
+  const form = React.useRef<FormikProps<VettingFormValues>>(null)
   const goBack = React.useCallback(() => {
-    if (isSafeToClose || view) {
+    if (JSON.stringify(form?.current?.values) === JSON.stringify(form?.current?.initialValues)) {
       goMain()
     } else {
       setShowCloseDialog(true)
@@ -87,11 +84,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const submit = React.useCallback(
     async (values: VettingFormValues) => {
       setShowConfirmDialog(false)
+      if (!initialValues.data) return
 
       loader.start()
-
       try {
-        await createVetting(values, initialValues.data!, initialValues.vettingId)
+        await createVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({
           info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` },
@@ -108,10 +105,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
   const saveDraft = React.useCallback(
     async (values: VettingFormValues) => {
+      if (!initialValues.data) return
       loader.start()
 
       try {
-        await saveDraftVetting(values, initialValues.data!, initialValues.vettingId)
+        await saveDraftVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({ info: { success: true, summary: 'Draft saved successfully' } })
         goMain()
@@ -143,9 +141,22 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       </LoaderContainer>
     )
   }
+  if (!initialValues.loading && initialValues.error) {
+    return (
+      <LoaderContainer width="100vw" height="100vh">
+        <FormTitle>{initialValues.error}</FormTitle>
+      </LoaderContainer>
+    )
+  }
 
   return (
-    <Formik initialValues={initialValues.data!} onSubmit={submit} validationSchema={schema} enableReinitialize={true}>
+    <Formik
+      initialValues={initialValues.data!}
+      onSubmit={submit}
+      validationSchema={schema}
+      enableReinitialize={true}
+      innerRef={form}
+    >
       {({ submitForm, setFieldValue, values, errors, resetForm }) => (
         <FormContainer>
           <ConfirmationForm
@@ -409,24 +420,19 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
 const IssuerInfoBlock = styled.div`
   display: grid;
-
   grid-template-rows: repeat(2, auto);
   grid-template-columns: repeat(2, 1fr);
-
   gap: 1.25rem;
 `
 
 const DescriptionBlock = styled.div`
   display: grid;
-
   grid-template-rows: repeat(2, auto);
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     '. . .'
     'description description';
-
   gap: 2.5rem 1rem;
-
   align-items: end;
 `
 
@@ -443,42 +449,32 @@ const Hint = styled.div`
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   text-align: right;
-
   color: #8d8da3;
 `
 
 const FilesBlock = styled.div`
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(4, auto);
-
   align-items: end;
-
   gap: 2rem;
 `
 
 const ExampleLink = styled.a`
   text-decoration: none;
   cursor: pointer;
-
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
 const FundingDocumentsGrid = styled(FormGrid)`
   grid-column: span 3;
-
   gap: 0.5rem 2rem;
 `

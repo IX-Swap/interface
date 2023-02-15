@@ -1,12 +1,8 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import moment from 'moment'
-
 import { Calendar, ChevronLeft, ChevronRight } from 'react-feather'
-
 import { CalendarPicker } from '../Calendar'
-
 import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 
@@ -50,8 +46,9 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
       if (props.mode === 'single') {
         selectedRange = [value]
-      } else if (range.length < 2) {
-        selectedRange = [...range, value]
+      } else if (range.length === 1) {
+        const first = range[0]
+        selectedRange = first.isBefore(value) ? [first, value] : [value, first]
       } else {
         selectedRange = [value]
       }
@@ -137,9 +134,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
 const FieldContainer = styled.div<{ disabled?: boolean }>`
   position: relative;
-
   display: grid;
-
   grid-template-rows: repeat(2, auto);
   grid-template-columns: 1fr 10px;
   grid-template-areas:
@@ -165,53 +160,42 @@ const FieldContainer = styled.div<{ disabled?: boolean }>`
 
 const FieldIcon = styled.div`
   grid-area: icon;
-
   display: grid;
   place-content: center;
 `
 
 const FieldLabel = styled.div`
   grid-area: label;
-
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-
   line-height: 150%;
   letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldPlaceholder = styled.div`
   grid-area: value;
-
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-
   line-height: 17px;
   letter-spacing: -0.01em;
-
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldSelectedValue = styled.div`
   grid-area: value;
-
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-
   line-height: 17px;
   letter-spacing: -0.01em;
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const DatePicker = styled.div`
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
   grid-template-areas: 'current-header next-header';
@@ -223,39 +207,29 @@ const DatePickerHeader = styled.div<{ area: 'current-header' | 'next-header' }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-
   grid-area: ${(props) => props.area};
 `
 
 const DatePickerTitle = styled.div`
   display: grid;
   place-content: center;
-
   flex-grow: 1;
-
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
-
   line-height: 17px;
   letter-spacing: -0.01em;
-
   text-align: right;
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const ChangeMonthButton = styled.button`
   display: grid;
   place-content: center;
-
   cursor: pointer;
-
   background: none;
   border: none;
-
   border-radius: 6px;
-
   :hover {
     background: ${(props) => props.theme.launchpad.colors.foreground};
   }
