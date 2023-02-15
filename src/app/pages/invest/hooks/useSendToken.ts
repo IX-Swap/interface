@@ -6,7 +6,6 @@ import { useErc20Contract } from 'hooks/blockchain/useContract'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useServices } from 'hooks/useServices'
 import { useCallback } from 'react'
-const provider = ethers.getDefaultProvider()
 export interface SendTokenArgs {
   address?: string
   amount: number
@@ -17,8 +16,6 @@ export interface SendTokenArgs {
 export const estimateGas = async (chainId?: number) => {
   try {
     const result = await axios.get(CHAIN_INFO[chainId ?? 137].gasTrackerUrl)
-    const resultA = await provider.getGasPrice()
-    console.log(resultA, 'resultA')
     const innerResult = result?.data?.result
 
     const value =
