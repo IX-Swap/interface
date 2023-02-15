@@ -11,6 +11,7 @@ export interface BasicOverviewProps {
   completionDate: string
   decimals: string
   tokenAddress: string
+  releaseDate: string
 }
 
 export const BasicOverview = ({
@@ -19,7 +20,8 @@ export const BasicOverview = ({
   launchDate,
   completionDate,
   decimals,
-  tokenAddress
+  tokenAddress,
+  releaseDate
 }: BasicOverviewProps) => {
   return (
     <Grid container spacing={2}>
@@ -39,6 +41,12 @@ export const BasicOverview = ({
         <LabelledValue
           label='Completion Date'
           value={formatDateToMMDDYY(completionDate)}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={8}>
+        <LabelledValue
+          label='Release Date'
+          value={formatDateToMMDDYY(releaseDate)}
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>

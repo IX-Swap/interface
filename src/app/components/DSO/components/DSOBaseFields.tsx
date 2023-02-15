@@ -1,4 +1,4 @@
-import { Grid, IconButton, InputAdornment } from '@mui/material'
+import { Grid, IconButton, InputAdornment, Tooltip, Icon } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
@@ -20,14 +20,14 @@ import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
-import { Icon } from 'ui/Icons/Icon'
 import useStyles from './DSODecimalButton.styles'
 import { NumericInput } from 'components/form/NumericInput'
 import { numberFormat } from 'config/numberFormat'
 import _ from 'lodash'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
-
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
+import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined'
 export interface DSOBaseFieldsProps {
   isNew: boolean
   // isLive: boolean
@@ -213,7 +213,9 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                             : false
                         }
                       >
-                        <Icon name='minus' />
+                        <Icon>
+                          <RemoveOutlinedIcon color='disabled' />
+                        </Icon>
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -236,7 +238,9 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                             : false
                         }
                       >
-                        <Icon name='plus' />
+                        <Icon>
+                          <AddOutlinedIcon color='disabled' />
+                        </Icon>
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -342,6 +346,37 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 onAccept={async () => await trigger('launchDate')}
               />
             </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={DateTimePicker}
+                customRenderer
+                label='Release Date'
+                name='releaseDate'
+                control={control}
+                valueExtractor={dateTimeValueExtractor}
+                // @ts-expect-error
+                defaultValue={null}
+                helperText='mm/dd/yyyy'
+                inputVariant='outlined'
+                withIcon
+                disablePast
+                isOptional
+                optionalText='(Securities will be locked for n days)'
+                // onAccept={async () => await trigger('launchDate')}
+              />
+              {/* <span>
+              <Tooltip
+                title='No. of units that will be deployed.'
+                placement='right'
+                arrow
+              >
+                <Icon >
+                  <ErrorOutlineRoundedIcon color='disabled' />
+                </Icon>
+              </Tooltip>
+              </span> */}
+  
+            </Grid>
             <VSpacer size='small' />
           </Grid>
           {/* Hiding this field for now as per https://investax.atlassian.net/browse/IPD1-549 */}
@@ -358,6 +393,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 data-testid='is-campaign'
               />
             </Grid>
+
           </Grid> */}
         </Grid>
       </Grid>

@@ -5,6 +5,30 @@ import { IdentityTypeSelect } from 'components/form/IdentityTypeSelect'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 
 export const IdentityTypeFilter = () => {
+  const getValue = (value: any) => {
+    let res = ''
+    switch (value) {
+      case 'issuer_corporate':
+        res = 'Issuer and Corporate'
+        break
+      case 'individual':
+        res = 'Individual Identity'
+        break
+      case 'issuer':
+        res = 'Issuer Identity'
+        break
+      case 'corporate':
+        res = 'Corporate Identity'
+        break
+      case '':
+        res = 'All'
+        break
+      default:
+        res = 'All'
+        break
+    }
+    return res
+  }
   return (
     <SearchQueryFilter<'identityType'> name='identityType' defaultValue=''>
       {({ value, onChange }) => (
@@ -14,13 +38,7 @@ export const IdentityTypeFilter = () => {
             withAll
             displayEmpty
             // value={value ?? ''}
-            value={
-              value === 'issuer_corporate'
-                ? 'issuer and corporate'
-                : value === ''
-                ? 'All'
-                : value
-            }
+            value={getValue(value)}
             onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}

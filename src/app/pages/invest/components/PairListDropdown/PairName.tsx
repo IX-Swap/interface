@@ -16,6 +16,7 @@ export const PairName = ({
 }: PairNameProps) => {
   const classes = useStyles()
   const { theme } = useAppTheme()
+
   return (
     <Typography
       data-testid={'pairName'}

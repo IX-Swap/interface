@@ -7,7 +7,8 @@ import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/Tradin
 import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { useCreateOTCOrder } from 'app/pages/invest/hooks/useCreateOTCOrder'
-import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
+// import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
+import { useSelectedPairNames } from 'app/pages/invest/hooks/useSelectedPairNames'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
@@ -26,7 +27,8 @@ export const TradingBody = () => {
     accountState,
     isWhitelisted: { found }
   } = useMetamaskConnectionManager()
-  const { currencyName, tokenName } = useFeaturedPairNames()
+  //   const { currencyName, tokenName } = useFeaturedPairNames()
+  const { currencyName, tokenName } = useSelectedPairNames()
   const { currencyBalance } = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
