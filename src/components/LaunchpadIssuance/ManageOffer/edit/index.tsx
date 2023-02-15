@@ -28,6 +28,12 @@ interface DateRange {
 
 type RangeMode = 'single' | 'range'
 
+const getNextStage = (stage: string) => {
+  const currentIndex = KEY_OFFER_STATUSES.findIndex((item) => item === stage)
+  const nextStatus = KEY_OFFER_STATUSES[currentIndex + 1]
+  return nextStatus
+}
+
 const getDaysAhead = (daysAhead: number): Date => {
   const date = new Date()
   date.setDate(date.getDate() + daysAhead)
@@ -64,9 +70,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
   const isSingle = useMemo(() => stage === OfferStatus.claim, [stage])
   const nextStage = useMemo(() => {
     if (!stage || isSingle) return ''
-    const currentIndex = KEY_OFFER_STATUSES.findIndex((item) => item === stage)
-    const nextStatus = KEY_OFFER_STATUSES[currentIndex + 1]
-    return nextStatus
+    return getNextStage(stage)
   }, [stage, isSingle])
   const stageOptions = useMemo(() => {
     const index = KEY_OFFER_STATUSES.findIndex((item) => item === status)
@@ -83,7 +87,11 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
       if (dates.startDate && dates.endDate) {
         const wrongRange = moment(dates.startDate).isAfter(dates.endDate)
         if (wrongRange) {
-          return 'Invalid Range - end date start before start date'
+          return 'Invalid Range - end date starts before start date'
+        }
+        const isSame = moment(dates.startDate).isSame(dates.endDate)
+        if (isSame) {
+          return 'Invalid Range - end date should come after start date(min 1 day)'
         }
       } else {
         return 'Invalid Range - start and end dates required'
@@ -107,18 +115,18 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
 
   /* callbacks */
   const setRange = useCallback(
-    (stage: string) => {
-      const startDate = timeframe[stage as keyof OfferTimeframe]
+    (newStage: string) => {
+      const startDate = timeframe[newStage as keyof OfferTimeframe]
       let endDate: Date | undefined
       if (!isSingle) {
-        endDate = timeframe[nextStage as keyof OfferTimeframe]
+        endDate = timeframe[getNextStage(newStage) as keyof OfferTimeframe]
       }
       setDates({
         startDate,
         endDate,
       })
     },
-    [stage, nextStage, timeframe, isSingle]
+    [timeframe, isSingle]
   )
 
   /* methods */
