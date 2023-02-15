@@ -7,13 +7,13 @@ import { formatDates } from './utils'
 import { KEY_OFFER_STATUSES } from '../utils/constants'
 
 interface IDateItem {
-  title: string;
-  subtitle: string;
-  isCurrent: boolean;
-  hideBottomBorder?: boolean;
+  title: string
+  subtitle: string
+  isCurrent: boolean
+  hideBottomBorder?: boolean
 }
 const DateBlock = (item: IDateItem) => {
-  const theme = useTheme();
+  const theme = useTheme()
   return (
     <DateBox hideBottomBorder={!!item.hideBottomBorder}>
       {item.isCurrent && (
@@ -22,31 +22,32 @@ const DateBlock = (item: IDateItem) => {
           <DateTitle isCurrent={true}>{item.title}</DateTitle>
         </CurrentTitleBlock>
       )}
-      {!item.isCurrent && (
-        <DateTitle isCurrent={false}>{item.title}</DateTitle>
-      )}
+      {!item.isCurrent && <DateTitle isCurrent={false}>{item.title}</DateTitle>}
       <DateSubtitle isCurrent={item.isCurrent}>{item.subtitle}</DateSubtitle>
     </DateBox>
-  );
+  )
 }
 
 export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
-  const theme = useTheme();
-  const { timeframe, status } = offer;
+  const theme = useTheme()
+  const { timeframe, status } = offer
   // todo when admin: add "Edit" btn
 
   const highlightedStatuses = useMemo(() => {
-    const index = KEY_OFFER_STATUSES.findIndex((item) => item === status);
-    if (index < 0) return [];
-    const allowedStatuses = KEY_OFFER_STATUSES.slice(0, index + 1);
-    return allowedStatuses;
-  }, [status]);
+    const index = KEY_OFFER_STATUSES.findIndex((item) => item === status)
+    if (index < 0) return []
+    const allowedStatuses = KEY_OFFER_STATUSES.slice(0, index + 1)
+    return allowedStatuses
+  }, [status])
 
   return (
     <Container>
       <MainTitleBlock>
         <Title>Investment Stage</Title>
-        <Tooltip title="Investments Stages" body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager.">
+        <Tooltip
+          title="Investments Stages"
+          body="Stages are in chronological order. One step has to be done before the deal will move on to the next step. For further clarification, please reach out to your account manager."
+        >
           <Info size="14" color={theme.launchpad.colors.text.caption} />
         </Tooltip>
       </MainTitleBlock>
@@ -87,42 +88,44 @@ export const OfferStages = ({ offer }: { offer: ManagedOffer }) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 const Title = styled.span`
-  color: ${props => props.theme.launchpad.colors.text.title};
-  font-weight: 600;
-  font-size: 15px;
+  color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-right: 8px;
 
+  font-weight: 600;
+  font-size: 15px;
   line-height: 120%;
   letter-spacing: -0.03em;
-`;
+`
 const DateBox = styled.div<{ hideBottomBorder: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 11px 0;
-  border-bottom: ${props => props.hideBottomBorder ? 'none' : '1px solid #E6E6FF'};
-`;
+  border-bottom: ${(props) => (props.hideBottomBorder ? 'none' : '1px solid #E6E6FF')};
+`
 const DateTitle = styled.span<{ isCurrent: boolean }>`
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.02em;
-  color: ${props => props.isCurrent ? props.theme.launchpad.colors.primary : props.theme.launchpad.colors.text.body};
-`;
+  color: ${(props) =>
+    props.isCurrent ? props.theme.launchpad.colors.primary : props.theme.launchpad.colors.text.body};
+`
 const DateSubtitle = styled.span<{ isCurrent: boolean }>`
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.02em;
-  font-weight: ${props => props.isCurrent ? 500 : 400};
-  color: ${props => props.isCurrent ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.body};
+  font-weight: ${(props) => (props.isCurrent ? 500 : 400)};
+  color: ${(props) =>
+    props.isCurrent ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.body};
   margin-top: 6px;
-`;
+`
 const CurrentTitleBlock = styled.div`
   display: flex;
   align-items: center;
-`;
+`
 const MainTitleBlock = styled.div`
   display: flex;
   align-items: center;
   padding-bottom: 5px;
-`;
+`

@@ -16,6 +16,7 @@ import { ReviewSidebar } from './Sidebar'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { text2, text5 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   values: InformationFormValues
@@ -256,17 +257,14 @@ const ReviewModalContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-
   z-index: 40;
 
   background: ${(props) => props.theme.launchpad.colors.background};
-
   overflow: auto;
 `
 
 const ReviewContainer = styled.div`
   display: grid;
-
   grid-template-columns: 3fr 3fr 2fr;
   grid-template-rows: repeat(6, auto);
   grid-template-areas:
@@ -278,7 +276,6 @@ const ReviewContainer = styled.div`
     'buttons buttons .';
 
   gap: 1.25rem;
-
   max-width: 1180px;
   margin: 3rem auto;
 `
@@ -289,7 +286,6 @@ const BottomControls = styled(Row)`
 
 const Title = styled.div`
   grid-area: title;
-
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -297,7 +293,6 @@ const Title = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 
@@ -306,18 +301,14 @@ const Title = styled.div`
 
 const Sidebar = styled.aside`
   grid-area: sidebar;
-
   padding: 1.5rem 2rem;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
 const Container = styled.div<{ area: string }>`
   grid-area: ${(props) => props.area};
-
   padding: 1.5rem 2rem;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
@@ -328,11 +319,9 @@ const Nowrap = styled.div`
 
 const StageLabel = styled(Nowrap)`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-
   gap: 0.25rem;
 
   color: ${(props) => props.theme.launchpad.colors.text.body};
@@ -345,7 +334,6 @@ const SaleAllocationTitle = styled.div`
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 
@@ -354,18 +342,11 @@ const SaleAllocationTitle = styled.div`
 
 const SaleAllocationEntry = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
+  ${text2}
   color: ${(props) => props.theme.launchpad.colors.text.caption};
 
   .bold {
@@ -374,13 +355,7 @@ const SaleAllocationEntry = styled.div`
 `
 
 const EntryLabel = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
+  ${text5}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -393,20 +368,16 @@ const FileName = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-
   max-width: 200px;
 `
 
 const ContactLine = styled.a`
   display: flex;
   align-items: center;
-
   color: ${(props) => props.theme.launchpad.colors.text.body};
-
   text-decoration: none;
 
   svg {

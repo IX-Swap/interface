@@ -1,3 +1,4 @@
+import { text17, text18, text19, text43 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import { ChevronDown, ChevronLeft, ChevronRight } from 'react-feather'
 import styled, { useTheme } from 'styled-components'
@@ -101,11 +102,7 @@ const PaginationRow = styled.div<{ smallMargin?: boolean }>`
 `
 
 const PageCount = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 48px;
-  letter-spacing: -0.02em;
+  ${text17}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -114,11 +111,9 @@ const PageButton = styled.button`
   place-content: center;
   width: 30px;
   height: 30px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 27px;
-  letter-spacing: -0.02em;
+
+  ${text18}
+
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
@@ -154,11 +149,8 @@ const PageSizeDropdown = styled.div`
 `
 
 const PageSizeLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text19}
+
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -190,11 +182,7 @@ const PageSizeOptions = styled.div`
 
 const PageSizeOption = styled.div`
   padding: 0.5rem 1rem;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: -0.01em;
+  ${text43}
   cursor: pointer;
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.text.title};

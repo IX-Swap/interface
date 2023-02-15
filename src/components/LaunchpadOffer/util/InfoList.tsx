@@ -49,7 +49,6 @@ const Title = styled.div<{ fontWeight?: string }>`
   font-style: normal;
   font-weight: ${(props) => props.fontWeight ?? '800'};
   font-size: 16px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 

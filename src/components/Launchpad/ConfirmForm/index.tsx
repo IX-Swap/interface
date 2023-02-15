@@ -5,6 +5,7 @@ import { Check } from 'react-feather'
 
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
+import { text3 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   isOpen: boolean
@@ -24,17 +25,13 @@ export const ConfirmationForm: React.FC<Props> = (props) => {
     <IssuanceDialog show={props.isOpen} onClose={props.onClose}>
       <Container>
         <Icon>
-          <Check color={theme.launchpad.colors.success} size="42" strokeWidth={1}/>
+          <Check color={theme.launchpad.colors.success} size="42" strokeWidth={1} />
         </Icon>
 
         <Message>
-          <MessageTitle>
-            Are you sure
-          </MessageTitle>
+          <MessageTitle>Are you sure</MessageTitle>
 
-          <MessageSubtitle>
-            Would you like to submit this form?
-          </MessageSubtitle>
+          <MessageSubtitle>Would you like to submit this form?</MessageSubtitle>
         </Message>
 
         <OutlineButton onClick={props.onClose}>Cancel</OutlineButton>
@@ -50,10 +47,10 @@ const Container = styled.div`
 
   grid-template-rows: auto auto 48px;
   grid-template-columns: repeat(2, 210px);
-  grid-template-areas: 
-    "icon icon icon"
-    "message message message"
-    ". . .";
+  grid-template-areas:
+    'icon icon icon'
+    'message message message'
+    '. . .';
 
   place-content: center;
 
@@ -74,7 +71,7 @@ const Icon = styled.div`
   width: 100px;
   height: 100px;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.success + '33'};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.success + '33'};
   border-radius: 50%;
 `
 
@@ -92,26 +89,17 @@ const MessageTitle = styled.div`
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-
   line-height: 130%;
   letter-spacing: -0.03em;
-  
+
   text-align: center;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const MessageSubtitle = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text3}
   text-align: center;
-
   max-width: 80%;
-
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `

@@ -17,6 +17,7 @@ import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
 
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
+import { text1, text2, text4, text5 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -261,7 +262,6 @@ const InvestmentCardTitle = styled.div`
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
-
   line-height: 140%;
   letter-spacing: -0.03em;
 
@@ -270,15 +270,8 @@ const InvestmentCardTitle = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const InvestmentCardDescription = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text4}
   font-family: ${(props) => props.theme.launchpad.font};
-
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
@@ -302,66 +295,38 @@ const InvestmentCardDetailsEntry = styled.div`
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-
   padding: 0 1.5rem;
 `
 const InvestmentCardDetailsSeparator = styled.hr`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   opacity: 0.8;
-
   margin: 0;
 `
 
 const InvestmentCardDetailsEntryLabel = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
+  ${text5}
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const InvestmentCardDetailsEntryValue = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
+  ${text2}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const InvestButton = styled.button`
   display: flex;
   flex-flow: row nowrap;
-
   justify-content: center;
   align-items: center;
-
   gap: 0.5rem;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.primary};
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
-
   padding: 0.75rem;
-
   cursor: pointer;
-
   width: 100%;
-
   text-align: center;
-
   font-family: ${(props) => props.theme.launchpad.font};
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text1}
 `

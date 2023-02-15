@@ -4,6 +4,7 @@ import styled, { useTheme } from 'styled-components'
 import { ChevronDown } from 'react-feather'
 
 import { OfferFAQ } from 'state/launchpad/types'
+import { text34, text7 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   faq: OfferFAQ[]
@@ -59,6 +60,7 @@ const FAQListTitle = styled.div`
   font-size: 20px;
   line-height: 120%;
   letter-spacing: -0.03em;
+
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -77,22 +79,16 @@ const FAQEntry = styled.div`
 
 const Question = styled.div`
   grid-area: question;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: -0.02em;
+
+  ${text34}
   cursor: pointer;
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const Answer = styled.div`
   grid-area: answer;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 160%;
-  letter-spacing: -0.02em;
+
+  ${text7}
   margin-top: 1rem;
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `

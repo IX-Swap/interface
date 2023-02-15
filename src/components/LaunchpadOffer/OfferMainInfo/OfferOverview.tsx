@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Offer } from 'state/launchpad/types'
+import { text33 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -19,7 +20,6 @@ export const OfferOverview: React.FC<Props> = (props) => {
 const OverviewContainer = styled.div`
   display: flex;
   flex-flow: column nowrap;
-
   gap: 2rem;
   margin: 2rem 0;
 `
@@ -28,20 +28,14 @@ const OverviewTitle = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const OverviewContent = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
+  ${text33}
 
-  line-height: 160%;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `

@@ -5,6 +5,7 @@ import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issua
 
 import { Column } from 'components/LaunchpadMisc/styled'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
+import { text3 } from 'components/LaunchpadMisc/typography'
 
 export const EmptyTable = () => {
   const theme = useTheme()
@@ -42,16 +43,14 @@ const NoItemsTitle = styled.div`
   font-size: 18px;
   line-height: 130%;
   letter-spacing: -0.03em;
+
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const NoItemsSubtitle = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text3}
+
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `

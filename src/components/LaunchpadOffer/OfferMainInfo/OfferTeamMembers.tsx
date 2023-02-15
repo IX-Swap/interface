@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { OfferTeamMember } from 'state/launchpad/types'
+import { text34, text7 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   team: OfferTeamMember[]
@@ -38,11 +39,10 @@ const TeamMemberListTitle = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 20px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const TeamMemberCard = styled.div`
@@ -51,22 +51,22 @@ const TeamMemberCard = styled.div`
   grid-template-columns: 48px 1fr;
   grid-template-rows: repeat(4, auto);
   grid-template-areas:
-    "photo name"
-    "photo role"
-    ". summary";
+    'photo name'
+    'photo role'
+    '. summary';
 
   place-content: start center;
 
   gap: 0 1rem;
   padding: 2rem;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 `
 
 const TeamMemberPhoto = styled.img`
   grid-area: photo;
-  
+
   width: 48px;
   height: 48px;
 
@@ -75,38 +75,19 @@ const TeamMemberPhoto = styled.img`
 
 const TeamMemberName = styled.div`
   grid-area: name;
+  ${text34}
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const TeamMemberRole = styled.div`
   grid-area: role;
-  
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.caption};
+  ${text34}
+  color: ${(props) => props.theme.launchpad.colors.text.caption};
 `
 
 const TeamMemberSummary = styled.div`
   grid-area: summary;
+  ${text7}
 
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-
-  line-height: 160%;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `

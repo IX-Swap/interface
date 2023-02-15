@@ -20,6 +20,7 @@ import {
   KYCPromptTitle,
 } from './styled'
 import { useKyc } from 'state/user/hooks'
+import { text9 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offerId: string
@@ -154,21 +155,13 @@ const KYCLoadingIconContainer = styled(KYCPromptIconContainer)`
 
 const VerifyButton = styled(Link)`
   display: grid;
-
   place-content: center;
-
   height: 60px;
   width: 100%;
-
   text-align: center;
   text-decoration: none;
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-
-  line-height: 19px;
-  letter-spacing: -0.02em;
+  ${text9}
 
   color: ${(props) => props.theme.launchpad.colors.text.light};
   background: ${(props) => props.theme.launchpad.colors.primary};
@@ -177,24 +170,15 @@ const VerifyButton = styled(Link)`
 
 const ContactUsTextButton = styled.button`
   display: grid;
-
   place-content: center;
-
   height: 60px;
   width: 100%;
-
   text-align: center;
   text-decoration: none;
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-
-  line-height: 19px;
-  letter-spacing: -0.02em;
+  ${text9}
 
   cursor: pointer;
-
   color: ${(props) => props.theme.launchpad.colors.primary};
   background: ${(props) => props.theme.launchpad.colors.text.light};
   border-radius: 6px;

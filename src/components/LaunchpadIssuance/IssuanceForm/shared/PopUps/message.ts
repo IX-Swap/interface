@@ -1,3 +1,4 @@
+import { text3 } from 'components/LaunchpadMisc/typography'
 import styled from 'styled-components'
 
 export const Message = styled.div`
@@ -18,11 +19,7 @@ export const MessageTitle = styled.div`
 `
 
 export const MessageSubtitle = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text3}
   text-align: center;
   max-width: 80%;
   color: ${(props) => props.theme.launchpad.colors.text.body};

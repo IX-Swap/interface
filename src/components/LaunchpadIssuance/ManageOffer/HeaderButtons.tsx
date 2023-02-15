@@ -11,6 +11,7 @@ import { ContactFormModal } from '../utils/ContactFormModal'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { nameChainMap } from 'constants/chains'
 import { DiscreteInternalLink, DiscreteExternalLink } from 'theme'
+import { text10, text8 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: ManagedOffer
@@ -106,18 +107,11 @@ const HeaderItem = styled.div<{ gap?: string }>`
 `
 const BtnContainer = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
@@ -137,7 +131,6 @@ const BtnContainer = styled.div`
   width: 180px;
   height: 40px;
   cursor: pointer;
-
   position: relative;
 `
 const RightBtn = styled.div<{ mr: string }>`
@@ -148,11 +141,7 @@ const RightBtn = styled.div<{ mr: string }>`
     margin-right: ${(props) => props.mr};
   }
   > span {
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 16px;
-    letter-spacing: -0.02em;
-
+    ${text8}
     color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
   }
 `

@@ -18,6 +18,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { switchToNetwork } from 'hooks/switchToNetwork'
 
 import { ChevronDown } from 'react-feather'
+import { text10, text16, text8 } from 'components/LaunchpadMisc/typography'
 
 export const WalletInformation = () => {
   const { chainId, library, account } = useActiveWeb3React()
@@ -84,11 +85,8 @@ const WalletInfoContainer = styled.div`
 `
 
 const WalletBalance = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text8}
+
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -96,11 +94,9 @@ const WalletAddress = styled.div`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 4px;
   padding: 0.25rem 0.75rem;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+
+  ${text10}
+
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -142,12 +138,10 @@ const NetworkMenu = styled.div`
   width: 200px;
 `
 const NetworkMenuHeader = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 15px;
   text-align: center;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text16}
+
   color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-bottom: 1rem;
 `
@@ -158,11 +152,9 @@ const NetworkOption = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text8}
+
   padding: 1rem;
   cursor: pointer;
   color: ${(props) => props.theme.launchpad.colors.text.title};

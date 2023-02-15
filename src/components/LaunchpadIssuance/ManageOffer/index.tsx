@@ -199,7 +199,6 @@ const FormTitle = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 

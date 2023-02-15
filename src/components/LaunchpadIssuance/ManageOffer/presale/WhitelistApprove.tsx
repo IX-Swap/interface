@@ -7,6 +7,7 @@ import { IssuanceTextField } from '../../utils/TextField'
 import { useShowError } from 'state/application/hooks'
 import { integerNumberFilter } from '../utils'
 import { ConfirmModal } from '../shared/ConfirmModal'
+import { text1 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offerId: string
@@ -166,11 +167,7 @@ const EndAdornment = styled.div<{ disabled: boolean }>`
   right: 32px;
   cursor: pointer;
   z-index: 20;
-
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text1}
   color: ${(props) => props.theme.launchpad.colors.primary};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `

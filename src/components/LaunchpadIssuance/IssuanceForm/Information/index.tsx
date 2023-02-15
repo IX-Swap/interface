@@ -58,6 +58,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
+import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   edit?: boolean
@@ -800,11 +801,8 @@ const ImageBlock = styled.div`
 `
 
 const TokenAgreementText = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text11}
+
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -824,11 +822,7 @@ const PresalveFieldContainer = styled.div<{ disabled?: boolean }>`
 `
 
 const PresaleFieldLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 140%;
-  letter-spacing: -0.01em;
+  ${text44}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -837,11 +831,9 @@ const PresaleButton = styled.button<{ isSelected: boolean; disabled?: boolean }>
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '33'};
   border-radius: 6px;
   cursor: pointer;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text1}
+
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.primary};
 

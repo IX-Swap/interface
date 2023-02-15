@@ -14,6 +14,7 @@ import { InvestmentStatusBadge } from 'components/Launchpad/InvestmentCard/Inves
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { InvestmentTypeInfo } from '../InvestmentCard/InvestmentTypeInfo'
+import { text12 } from 'components/LaunchpadMisc/typography'
 
 const getStageLabel = (stage: OfferStatus) => {
   return OFFER_STAGE_LABELS.find((x) => x.value === stage)?.label ?? ''
@@ -144,15 +145,13 @@ const PinnedContentTitle = styled.div`
   font-size: 40px;
   line-height: 110%;
   letter-spacing: -0.03em;
+
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const PinnedContentBody = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 140%;
-  letter-spacing: -0.02em;
+  ${text12}
+
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `

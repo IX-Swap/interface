@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import { Column } from 'components/LaunchpadMisc/styled'
+import { text1, text41 } from 'components/LaunchpadMisc/typography'
 
 export const FormContainer = styled.div`
   display: grid;
@@ -34,7 +35,6 @@ export const FormTitle = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 32px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 
@@ -87,31 +87,19 @@ export const FormFieldWrapper = styled(Column)<{ span?: number; error?: string }
 `
 
 export const OptionalLabel = styled.span`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 8px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text41}
   text-transform: uppercase;
-
   margin: 0 0.5rem;
-
   color: ${(props) => props.theme.launchpad.colors.text.caption};
 `
 
 export const DeleteButton = styled.button`
   border: none;
   background: none;
-
   border-radius: 50%;
-
   display: grid;
   place-content: center;
-
   cursor: pointer;
-
   width: 36px;
   height: 36px;
 
@@ -122,25 +110,16 @@ export const DeleteButton = styled.button`
 export const AddButton = styled.button`
   display: flex;
   flex-flow: row nowrap;
-
   justify-content: flex-start;
   align-items: center;
-
   gap: 0.5rem;
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
+  ${text1}
   cursor: pointer;
 
   color: ${(props) => props.theme.launchpad.colors.primary};
 
   padding: 0.25rem;
-
   border: none;
   border-radius: 6px;
   background: none;
