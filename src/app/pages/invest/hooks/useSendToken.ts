@@ -6,6 +6,9 @@ import { useErc20Contract } from 'hooks/blockchain/useContract'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useServices } from 'hooks/useServices'
 import { useCallback } from 'react'
+import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
+import { useParams } from 'react-router-dom'
+
 export interface SendTokenArgs {
   address?: string
   amount: number
@@ -13,6 +16,7 @@ export interface SendTokenArgs {
   recipient?: string
   callback: () => Promise<void>
 }
+
 export const estimateGas = async (chainId?: number) => {
   try {
     const result = await axios.get(CHAIN_INFO[chainId ?? 137].gasTrackerUrl)
@@ -27,6 +31,7 @@ export const estimateGas = async (chainId?: number) => {
     return null
   }
 }
+
 export const getTransferProps = async (chainId?: number) => {
   const props: ethers.Overrides = { gasLimit: BigNumber.from(50000) }
   const estimatedGas = await estimateGas(chainId)
@@ -36,6 +41,7 @@ export const getTransferProps = async (chainId?: number) => {
   }
   return props
 }
+
 export const useSendToken = ({
   address,
   tokenChainId,
@@ -46,6 +52,13 @@ export const useSendToken = ({
   const { account, chainId } = useActiveWeb3React()
   const tokenContract = useErc20Contract(address, true)
   const { snackbarService } = useServices()
+
+  const { pairId } = useParams<{
+    pairId: string
+  }>()
+
+  const { data } = useOTCMarket(pairId)
+  const { decimalPlaces } = data?.otc?.dso
 
   return useCallback(async () => {
     if (
@@ -71,7 +84,8 @@ export const useSendToken = ({
       const props = await getTransferProps(chainId)
       const result = await tokenContract.transfer(
         recipient,
-        BigNumber.from(amount),
+        // BigNumber.from(amount),
+        ethers.utils.parseUnits(amount.toString(), decimalPlaces),
         { ...props }
       )
       await callback()
@@ -86,6 +100,7 @@ export const useSendToken = ({
   }, [
     account,
     chainId,
+    decimalPlaces,
     tokenChainId,
     tokenContract,
     snackbarService,
