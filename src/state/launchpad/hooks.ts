@@ -28,6 +28,7 @@ import {
   PresaleOrderConfig,
   PaginationRes,
   AbstractOrder,
+  PinnedOffer,
 } from 'state/launchpad/types'
 
 import { toggleKYCDialog } from './actions'
@@ -135,7 +136,7 @@ export const useGetOffers = () => {
 }
 
 export const useGetPinnedOffer = () => {
-  return React.useCallback(() => apiService.get('/offers/main').then((res) => res.data as Offer), [])
+  return React.useCallback(() => apiService.get('/offers/main').then((res) => res.data as PinnedOffer), [])
 }
 
 export const useFormatOfferValue = (addComa = true) => {
@@ -1413,7 +1414,7 @@ enum GenericMethods {
   patch = 'patch',
 }
 
-export const useGenericPost = (url: string, method: GenericMethods = GenericMethods.post) => {
+export const useGenericPost = (url: string | ((foo: any) => string), method: GenericMethods = GenericMethods.post) => {
   const loader = useLoader(false)
   const [error, setError] = React.useState<string>()
 
@@ -1421,7 +1422,8 @@ export const useGenericPost = (url: string, method: GenericMethods = GenericMeth
     (body?: any, successCallback?: () => void) => {
       loader.start()
       setError('')
-      return apiService[method](url, body)
+      const apiUrl = typeof url === 'string' ? url : url(body)
+      return apiService[method](apiUrl, body)
         .then(() => {
           if (successCallback) successCallback()
         })
@@ -1445,4 +1447,9 @@ export const useTriggerIssuerClaim = (offerId?: string) => {
 
 export const useEditTimeframe = (offerId?: string) => {
   return useGenericPost(`/offers/${offerId}/timeframe`, GenericMethods.put)
+}
+
+export const usePinOffer = () => {
+  const getUrl = (issuanceId: number) => `/offers/${issuanceId}/pin`
+  return useGenericPost(getUrl, GenericMethods.patch)
 }

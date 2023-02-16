@@ -391,7 +391,7 @@ export interface ManagedOffer extends Offer {
   issuanceId: number
 }
 
-export type MiniOffer = Pick<Offer,  'id' | 'status' | 'timeframe' | 'hasPresale'>
+export type MiniOffer = Pick<Offer, 'id' | 'status' | 'timeframe' | 'hasPresale'>
 
 export interface OfferPresaleStatistics {
   applicants: number
@@ -454,4 +454,8 @@ export enum InvestmentStagesFilter {
 
 export interface AbstractOrder {
   [key: string]: OrderType
+}
+
+export interface PinnedOffer extends Offer {
+  issuanceId: number
 }

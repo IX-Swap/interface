@@ -86,8 +86,8 @@ export const OfferInvestmentsList = ({
             items.map((item, idx) => (
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <Raw>{item.username || '<Name Uknown>'}</Raw>
-                <Raw>{item.amount.toLocaleString() + ' ' + investingTokenSymbol}</Raw>
-                <Raw>{item.tokenAmount.toLocaleString() + ' ' + tokenSymbol}</Raw>
+                <Raw>{(+item.amount).toLocaleString() + ' ' + investingTokenSymbol}</Raw>
+                <Raw>{(+item.tokenAmount).toLocaleString() + ' ' + tokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
               </IssuanceRow>
             ))}

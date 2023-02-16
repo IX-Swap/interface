@@ -165,7 +165,7 @@ export const OfferWhitelistList = ({
             items.map((item, idx) => (
               <IssuanceRow key={idx} tab={IssuanceFilter.pending}>
                 <Raw>{item.name || '<Name Uknown>'}</Raw>
-                <Raw>{item.amount.toLocaleString() + ' ' + investingTokenSymbol}</Raw>
+                <Raw>{(+item.amount).toLocaleString() + ' ' + investingTokenSymbol}</Raw>
                 <Raw>{formatDates(item.createdAt)}</Raw>
                 <CheckBoxContainer>
                   <BaseCheckbox state={getIsSelected(item.id)} toggle={() => onToggleOne(item.id)} />

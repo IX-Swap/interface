@@ -58,7 +58,7 @@ export function DropdownField<T>(props: Props<T>) {
     const query = optionSearch.toLowerCase()
 
     return props.options.filter((x) => x.label.toLowerCase().startsWith(query))
-  }, [optionSearch, searchActive])
+  }, [props.options, optionSearch, searchActive])
 
   const toggle = React.useCallback(() => {
     if (props.disabled) {
@@ -124,6 +124,16 @@ export function DropdownField<T>(props: Props<T>) {
       }
     }
   }, [showDropdown, container])
+  React.useEffect(() => {
+    if (props.value && !selectedValue) {
+      // handle case for select done outside the component
+      const newSelectedValue = options.find((opt) => opt.value === props.value)
+      if (newSelectedValue) {
+        setSelectedValue(newSelectedValue)
+        setOptionSearch(newSelectedValue.label)
+      }
+    }
+  }, [props.value, selectedValue, options])
 
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span} style={props.wrapperStyle}>
