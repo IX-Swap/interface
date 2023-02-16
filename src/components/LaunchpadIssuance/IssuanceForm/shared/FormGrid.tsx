@@ -1,4 +1,4 @@
-import { text10 } from 'components/LaunchpadMisc/typography'
+import { text10, text48 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -35,12 +35,7 @@ const TitleSection = styled.div`
 `
 
 const Title = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
-
+  ${text48}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 

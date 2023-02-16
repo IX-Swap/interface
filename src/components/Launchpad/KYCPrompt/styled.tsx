@@ -1,4 +1,4 @@
-import { text11, text9 } from 'components/LaunchpadMisc/typography'
+import { text11, text59, text9 } from 'components/LaunchpadMisc/typography'
 import styled from 'styled-components'
 
 export const KYCPromptContainer = styled.div`
@@ -26,12 +26,8 @@ export const KYCPromptIconContainer = styled.div`
 `
 
 export const KYCPromptTitle = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
+  ${text59}
   text-align: center;
-  line-height: 29px;
-  letter-spacing: -0.04em;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

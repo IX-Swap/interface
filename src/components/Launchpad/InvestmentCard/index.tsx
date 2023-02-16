@@ -17,7 +17,7 @@ import { ReactComponent as LockIcon } from 'assets/launchpad/svg/lock-icon.svg'
 
 import { KYCPrompt } from '../KYCPrompt'
 import { InvestmentTypeInfo } from './InvestmentTypeInfo'
-import { text1, text2, text4, text5 } from 'components/LaunchpadMisc/typography'
+import { text1, text2, text4, text5, text58 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -169,17 +169,13 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
 
 const InvestmentCardContainer = styled.article`
   position: relative;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
   width: 380px;
-
   overflow: hidden;
 `
 
@@ -193,13 +189,10 @@ const InvestmentCardFooter = styled.footer`
 
 const InvestmentCardImage = styled.img`
   position: absolute;
-
   top: 0;
   left: 0;
-
   width: 380px;
   overflow-x: hidden;
-
   border-radius: 6px;
 `
 
@@ -207,50 +200,38 @@ const InvestmentCardTagsContainer = styled.header`
   position: absolute;
   top: 1rem;
   left: 1rem;
-
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-
   gap: 0.5rem;
 `
 
 const InvestmentCardInfoWrapper = styled.main`
   position: relative;
-
   margin-top: 295px;
   min-height: 270px;
 `
 
 const InvestmentCardInfoContainer = styled.div<{ expanded: boolean }>`
   position: absolute;
-
   bottom: 0;
-
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
   padding: 1rem 1.5rem;
   padding-top: 3rem;
-
   width: 100%;
   background: ${(props) => props.theme.launchpad.colors.background};
 `
 
 const InvestmentCardIcon = styled.img`
   position: absolute;
-
   top: -32px;
   left: 1rem;
-
   width: 64px;
   height: 64px;
-
   border-radius: 6px;
 `
 
@@ -259,12 +240,7 @@ const InvestmentCardDescriptionContainer = styled.div`
 `
 
 const InvestmentCardTitle = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 140%;
-  letter-spacing: -0.03em;
-
+  ${text58}
   font-family: ${(props) => props.theme.launchpad.font};
 
   color: ${(props) => props.theme.launchpad.colors.text.title};

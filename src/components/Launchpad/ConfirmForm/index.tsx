@@ -5,7 +5,7 @@ import { Check } from 'react-feather'
 
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { text3 } from 'components/LaunchpadMisc/typography'
+import { text3, text50 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   isOpen: boolean
@@ -86,12 +86,7 @@ const Message = styled.div`
 `
 
 const MessageTitle = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
-
+  ${text50}
   text-align: center;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};

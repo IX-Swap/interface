@@ -6,6 +6,7 @@ import { FilterConfig, InvestmentListFilter } from './Filter'
 import { PaginationTrigger } from './PaginationTrigger'
 
 import { Offer } from 'state/launchpad/types'
+import { text53 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offers: Offer[]
@@ -49,12 +50,7 @@ const InvestmentListContainer = styled.div`
 `
 
 const InvestmentTitle = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
-
+  ${text53}
   font-family: ${(props) => props.theme.launchpad.font};
 
   color: ${(props) => props.theme.launchpad.colors.text.title};

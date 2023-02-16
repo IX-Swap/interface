@@ -3,6 +3,7 @@ import React from 'react-dom'
 import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issuances.svg'
 
 import { Column } from 'components/LaunchpadMisc/styled'
+import { text50 } from 'components/LaunchpadMisc/typography'
 
 export const EmptyTable = () => {
   return (
@@ -17,16 +18,12 @@ export const EmptyTable = () => {
 
 const Container = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-
   gap: 2rem;
-
   width: 1180px;
   height: 460px;
-
   margin: auto;
 
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
@@ -34,11 +31,7 @@ const Container = styled.div`
 `
 
 const NoItemsTitle = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
+  ${text50}
 
   text-align: center;
 

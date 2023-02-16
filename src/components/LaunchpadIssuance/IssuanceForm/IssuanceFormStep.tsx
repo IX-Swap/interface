@@ -1,4 +1,4 @@
-import { text13, text3 } from 'components/LaunchpadMisc/typography'
+import { text13, text3, text50 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -56,11 +56,7 @@ const StepInfo = styled(_CenteredColumn)`
 `
 
 const StepInfoTitle = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
+  ${text50}
 
   text-align: center;
 

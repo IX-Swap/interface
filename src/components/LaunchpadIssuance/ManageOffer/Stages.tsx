@@ -8,6 +8,7 @@ import { KEY_OFFER_STATUSES } from '../utils/constants'
 import { useRole } from 'state/user/hooks'
 import { EditTimeframeModal } from './edit'
 import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
+import { text49, text55, text8 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: MiniOffer
@@ -117,10 +118,7 @@ const Title = styled.span`
   color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-right: 8px;
 
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text55}
 `
 const DateBox = styled.div<{ hideBottomBorder: boolean }>`
   display: flex;
@@ -129,9 +127,7 @@ const DateBox = styled.div<{ hideBottomBorder: boolean }>`
   border-bottom: ${(props) => (props.hideBottomBorder ? 'none' : `1px solid ${props.theme.launchpad.colors.accent}`)};
 `
 const DateTitle = styled.span<{ isCurrent: boolean }>`
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: -0.02em;
+  ${text49}
   color: ${(props) =>
     props.isCurrent ? props.theme.launchpad.colors.primary : props.theme.launchpad.colors.text.body};
 `
@@ -149,10 +145,7 @@ const MainTitleBlock = styled(FlexVerticalCenter)`
   padding-bottom: 5px;
 `
 const EditBox = styled(FlexVerticalCenter)`
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text8}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 
   cursor: pointer;

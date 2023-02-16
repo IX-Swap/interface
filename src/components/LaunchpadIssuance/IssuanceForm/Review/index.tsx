@@ -16,7 +16,7 @@ import { ReviewSidebar } from './Sidebar'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
-import { text2, text5 } from 'components/LaunchpadMisc/typography'
+import { text2, text5, text53 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   values: InformationFormValues
@@ -290,12 +290,7 @@ const Title = styled.div`
   align-items: center;
   gap: 1rem;
 
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
-
+  ${text53}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 

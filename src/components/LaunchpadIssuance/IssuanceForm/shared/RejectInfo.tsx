@@ -135,7 +135,7 @@ const HelpButton = styled.div`
 
   ${text1}
 
-  color: #ff8282;
+  color: ${(props) => props.theme.launchpad.colors.error};
   flex: none;
   order: 0;
   flex-grow: 0;

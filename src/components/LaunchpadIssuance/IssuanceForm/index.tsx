@@ -24,7 +24,7 @@ import { useGetIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
 import { routes } from 'utils/routes'
 import { DiscreteInternalLink } from 'theme'
 import { useQueryParams } from 'hooks/useParams'
-import { text30, text42 } from 'components/LaunchpadMisc/typography'
+import { text30, text42, text53 } from 'components/LaunchpadMisc/typography'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -400,11 +400,7 @@ const FormTitle = styled.div`
   grid-area: title;
   place-self: center start;
 
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text53}
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

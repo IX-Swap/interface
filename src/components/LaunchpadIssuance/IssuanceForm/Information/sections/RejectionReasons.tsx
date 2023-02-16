@@ -61,7 +61,7 @@ const Description = styled.div`
 
   ${text19}
 
-  color: #ff8282;
+  color: ${(props) => props.theme.launchpad.colors.error};
 `
 
 const Reasons = styled.ul`
