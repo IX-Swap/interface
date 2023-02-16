@@ -23,7 +23,7 @@ interface Props {
 
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
-  console.log(props.offer)
+
   const addPopup = useAddPopup()
   const claim = useClaimOffer(props.offer.id)
 
