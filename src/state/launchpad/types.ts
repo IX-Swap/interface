@@ -391,6 +391,8 @@ export interface ManagedOffer extends Offer {
   issuanceId: number
 }
 
+export type MiniOffer = Pick<Offer,  'id' | 'status' | 'timeframe' | 'hasPresale'>
+
 export interface OfferPresaleStatistics {
   applicants: number
   agreedToInvest: number

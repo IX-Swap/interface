@@ -80,3 +80,10 @@ export function getDateShortTime(dateUnix: number) {
 export function getDateFullTime(dateUnix: number) {
   return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
 }
+
+export const getDaysAhead = (daysAhead: number): Date => {
+  const date = new Date()
+  date.setDate(date.getDate() + daysAhead)
+  date.setUTCHours(0, 0, 0)
+  return date
+}

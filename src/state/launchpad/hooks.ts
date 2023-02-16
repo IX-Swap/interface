@@ -1407,20 +1407,27 @@ export const useOnChangeOrder = (
   return onChangeOrder
 }
 
-export const useGenericPost = (url: string) => {
+enum GenericMethods {
+  post = 'post',
+  put = 'put',
+  patch = 'patch',
+}
+
+export const useGenericPost = (url: string, method: GenericMethods = GenericMethods.post) => {
   const loader = useLoader(false)
   const [error, setError] = React.useState<string>()
 
   const load = React.useCallback(
-    (body?: any, callback?: () => void) => {
+    (body?: any, successCallback?: () => void) => {
       loader.start()
       setError('')
-      return apiService
-        .post(url, body)
+      return apiService[method](url, body)
+        .then(() => {
+          if (successCallback) successCallback()
+        })
         .catch((err) => setError(err.message))
         .finally(() => {
           loader.stop()
-          if (callback) callback()
         })
     },
     [url]
@@ -1434,4 +1441,8 @@ export const useTriggerUserClaim = (offerId?: string) => {
 
 export const useTriggerIssuerClaim = (offerId?: string) => {
   return useGenericPost(`/offers/${offerId}/issuer-claim`)
+}
+
+export const useEditTimeframe = (offerId?: string) => {
+  return useGenericPost(`/offers/${offerId}/timeframe`, GenericMethods.put)
 }
