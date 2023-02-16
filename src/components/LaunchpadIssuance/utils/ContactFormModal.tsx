@@ -32,21 +32,6 @@ export const ContactFormModal = ({ open, closeForm, issuanceId, offerId }: Props
   )
 }
 
-export const Container = styled.div<{ isRejected?: boolean }>`
-  display: flex;
-
-  flex-flow: column nowrap;
-  align-items: stretch;
-
-  gap: 0.5rem;
-  padding: 1.5rem;
-
-  max-height: 10%;
-  border: 1px solid ${props => props.isRejected
-    ? props.theme.launchpad.colors.border.error
-    : props.theme.launchpad.colors.border.success};
-  border-radius: 6px;
-`
 const ModalWrapper = styled.div`
   display: grid;
   place-content: center;
