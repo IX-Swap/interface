@@ -12,7 +12,7 @@ import { InvestTextField } from '../utils/InvestTextField'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
-import { text28, text9 } from 'components/LaunchpadMisc/typography'
+import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -218,12 +218,8 @@ const CurrencyLabel = styled.div`
 `
 
 const WhitelistMessage = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: -0.04em;
-
+  ${text59}
+  
   text-align: center;
   max-width: 80%;
   color: ${(props) => props.theme.launchpad.colors.text.title};

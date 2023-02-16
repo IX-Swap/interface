@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Offer } from 'state/launchpad/types'
 
 import { InvestmentTypeInfo } from 'components/Launchpad/InvestmentCard/InvestmentTypeInfo'
-import { text12 } from 'components/LaunchpadMisc/typography'
+import { text12, text52 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -32,12 +32,7 @@ const SummaryContainer = styled.div`
 `
 
 const SummaryTitle = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 64px;
-  line-height: 110%;
-  letter-spacing: -0.03em;
-
+  ${text52}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 

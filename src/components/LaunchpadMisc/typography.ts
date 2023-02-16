@@ -4,6 +4,19 @@ const text002 = css`
   font-style: normal;
   letter-spacing: -0.02em;
 `
+const text001 = css`
+  font-style: normal;
+  letter-spacing: -0.01em;
+`
+const text003 = css`
+  font-style: normal;
+  letter-spacing: -0.03em;
+`
+const text004 = css`
+  font-style: normal;
+  letter-spacing: -0.04em;
+`
+
 export const text1 = css`
   ${text002}
   font-weight: 600;
@@ -258,11 +271,10 @@ export const text41 = css`
   line-height: 150%;
 `
 export const text42 = css`
-  ${text002}
+  ${text001}
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
-  letter-spacing: -0.01em;
 `
 export const text43 = css`
   ${text42}
@@ -270,11 +282,10 @@ export const text43 = css`
 `
 
 export const text44 = css`
-  font-style: normal;
+  ${text001}
   font-weight: 500;
   font-size: 12px;
   line-height: 140%;
-  letter-spacing: -0.01em;
 `
 export const text45 = css`
   ${text8}
@@ -285,9 +296,91 @@ export const text46 = css`
   letter-spacing: -0.01em;
 `
 export const text47 = css`
-  font-style: normal;
+  ${text001}
   font-weight: 500;
   font-size: 14px;
   line-height: 24px;
-  letter-spacing: -0.01em;
+`
+
+export const text49 = css`
+  ${text002}
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+`
+
+// -0.03em styles
+export const text48 = css`
+  ${text003}
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 130%;
+`
+export const text50 = css`
+  ${text003}
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 130%;
+`
+export const text51 = css`
+  ${text003}
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 120%;
+`
+
+export const text52 = css`
+  ${text003}
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 110%;
+`
+
+export const text53 = css`
+  ${text003}
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 120%;
+`
+
+export const text54 = css`
+  ${text003}
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 110%;
+`
+
+export const text55 = css`
+  ${text003}
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+`
+export const text56 = css`
+  ${text003}
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 120%;
+`
+
+export const text57 = css`
+  ${text003}
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+`
+export const text58 = css`
+  ${text003}
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 140%;
+`
+
+// -0.04em styles
+
+export const text59 = css`
+  ${text004}
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
 `

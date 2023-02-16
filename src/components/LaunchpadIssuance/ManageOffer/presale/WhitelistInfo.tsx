@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { OfferPresaleStatistics } from 'state/launchpad/types'
-import { text10 } from 'components/LaunchpadMisc/typography'
+import { text10, text51 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   data: OfferPresaleStatistics
@@ -77,10 +77,7 @@ const GridItem = styled.div<{ gridArea: string }>`
   grid-area: ${(props) => props.gridArea};
 `
 const Title = styled.div`
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text51}
   color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-bottom: 17px;
 `

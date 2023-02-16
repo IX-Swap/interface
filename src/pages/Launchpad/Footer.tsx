@@ -271,9 +271,9 @@ const SubscriptionFormTitle = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 64px;
-  text-align: center;
   line-height: 110%;
   letter-spacing: -0.05em;
+  text-align: center;
   max-width: 550px;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};

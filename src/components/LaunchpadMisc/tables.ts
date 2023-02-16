@@ -1,17 +1,13 @@
 import styled from 'styled-components'
 
 import { IssuanceFilter } from '../LaunchpadIssuance/types'
-import { text42 } from './typography'
+import { text42, text53 } from './typography'
 
 export const TableTitle = styled.div`
   grid-area: title;
   place-self: center start;
 
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text53}
 
   margin: auto;
   padding: 0 0 1.25rem;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
@@ -37,20 +37,46 @@ const getTokenInfo = (address: string, options: Option[]) => {
   } as TokenOption
 }
 
+const useGetWarning = (offer: Offer) => {
+  const { account } = useActiveWeb3React()
+  const inputCurrency = useCurrency(offer.investingTokenAddress)
+  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
+  const isSufficientBalance = useDerivedBalanceInfo(offer.id)
+  return useCallback(
+    (value: string) => {
+      const realValue = value ? Number(value.replace(/,/g, '')) : 0
+
+      const symbol = offer.investingTokenSymbol
+      const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
+      const isMinError = Number(offer.presaleMinInvestment) > realValue
+      const isMaxError = Number(offer.presaleMaxInvestment) < realValue
+      const isAvailableError = 9000 < realValue
+      let warning = ''
+      if (isMinError) {
+        warning = `Min.investment size ${offer.presaleMinInvestment} ${symbol}`
+      }
+      if (isMaxError) {
+        warning = `Max.investment size ${offer.presaleMaxInvestment} ${symbol}`
+      }
+      if (isInsufficientBalance) {
+        warning = `Insufficient balance`
+      }
+      if (isAvailableError) {
+        warning = `Available to invest 9,000 ${symbol}`
+      }
+      return warning
+    },
+    [offer]
+  )
+}
+
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const { account } = useActiveWeb3React()
-
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
-
+  const getWarning = useGetWarning(props.offer)
   const formatedValue = useFormatOfferValue()
-
-  const inputCurrency = useCurrency(props.offer.investingTokenAddress)
-  const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
-
-  const isSufficientBalance = useDerivedBalanceInfo(props.offer.id)
 
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
@@ -58,28 +84,10 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const changeValue = React.useCallback((value: string) => {
     setInputValue(value)
 
-    const realValue = value ? +value.replace(/,/g, '') : 0
+    const warning = getWarning(value)
+    setWarning(getWarning(value))
+    props.setDisabled(Boolean(warning))
 
-    const symbol = props.offer.investingTokenSymbol
-
-    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
-    const isMinError = +props.offer.presaleMinInvestment > realValue
-    const isMaxError = +props.offer.presaleMaxInvestment < realValue
-    const isAvailableError = 9000 < realValue
-
-    setWarning(
-      isMinError
-        ? `Min.investment size ${props.offer.presaleMinInvestment} ${symbol}`
-        : isMaxError
-        ? `Max.investment size ${props.offer.presaleMaxInvestment} ${symbol}`
-        : isInsufficientBalance
-        ? `Insufficient balance`
-        : isAvailableError
-        ? `Available to invest 9,000 ${symbol}`
-        : ''
-    )
-
-    props.setDisabled(isMinError || isMaxError || isAvailableError || isInsufficientBalance)
     props.onChange(
       value
         .split('')
@@ -144,28 +152,21 @@ export const ConvertationField: React.FC<Props> = (props) => {
 
 const ConvertationContainer = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   align-items: stretch;
-
   gap: 1rem;
-
   position: relative;
 `
 
 const ConvertationArrow = styled.div`
   position: absolute;
-
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
   display: grid;
   place-content: center;
-
   width: 48px;
   height: 48px;
-
   background: ${(props) => props.theme.launchpad.colors.foreground};
   border: 8px solid ${(props) => props.theme.launchpad.colors.background};
   border-radius: 16px;

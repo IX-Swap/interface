@@ -4,6 +4,7 @@ import { Info } from 'react-feather'
 import { OfferStatus, ManagedOffer } from 'state/launchpad/types'
 import { OfferFundRaiseIndicator } from 'components/LaunchpadOffer/OfferSidebar/OfferFundRaiseIndicator'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
+import { text55 } from 'components/LaunchpadMisc/typography'
 
 interface ClosesIn {
   title?: string
@@ -198,10 +199,7 @@ const NoPresaleContainer = styled.div`
 `
 const Title = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text55}
   margin-bottom: 16px;
 `
 const AmountTitle = styled.span`

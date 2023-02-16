@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Offer } from 'state/launchpad/types'
-import { text33 } from 'components/LaunchpadMisc/typography'
+import { text33, text53 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -25,11 +25,7 @@ const OverviewContainer = styled.div`
 `
 
 const OverviewTitle = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text53}
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

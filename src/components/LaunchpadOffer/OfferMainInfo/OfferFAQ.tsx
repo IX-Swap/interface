@@ -4,7 +4,7 @@ import styled, { useTheme } from 'styled-components'
 import { ChevronDown } from 'react-feather'
 
 import { OfferFAQ } from 'state/launchpad/types'
-import { text34, text7 } from 'components/LaunchpadMisc/typography'
+import { text34, text56, text7 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   faq: OfferFAQ[]
@@ -55,12 +55,7 @@ const FAQList = styled.div`
 `
 
 const FAQListTitle = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
-
+  ${text56}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 

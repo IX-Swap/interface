@@ -17,6 +17,7 @@ import { InvestmentsBlock } from './investments'
 import { useRole } from 'state/user/hooks'
 import { ConfirmModal } from './shared/ConfirmModal'
 import { useAddPopup, useShowError } from 'state/application/hooks'
+import { text53 } from 'components/LaunchpadMisc/typography'
 
 interface ManagedOfferPageParams {
   issuanceId: string
@@ -211,11 +212,7 @@ const BackButton = styled(FilledButton)`
   margin-right: 16px;
 `
 const FormTitle = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text53}
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

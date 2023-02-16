@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { OfferTeamMember } from 'state/launchpad/types'
-import { text34, text7 } from 'components/LaunchpadMisc/typography'
+import { text34, text56, text7 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   team: OfferTeamMember[]
@@ -27,20 +27,14 @@ export const OfferTeamMembers: React.FC<Props> = (props) => {
 
 const TeamMemberList = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
-
   gap: 1rem;
 `
 
 const TeamMemberListTitle = styled.div`
-  font-style: normal;
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text56}
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
@@ -56,7 +50,6 @@ const TeamMemberCard = styled.div`
     '. summary';
 
   place-content: start center;
-
   gap: 0 1rem;
   padding: 2rem;
 
@@ -66,10 +59,8 @@ const TeamMemberCard = styled.div`
 
 const TeamMemberPhoto = styled.img`
   grid-area: photo;
-
   width: 48px;
   height: 48px;
-
   border-radius: 50%;
 `
 

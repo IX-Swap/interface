@@ -39,7 +39,6 @@ export const InfoList: React.FC<Props> = (props) => {
 
 const Container = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
@@ -51,7 +50,6 @@ const Title = styled.div<{ fontWeight?: string }>`
   font-size: 16px;
   line-height: 120%;
   letter-spacing: -0.03em;
-
   margin-bottom: 0.5rem;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};

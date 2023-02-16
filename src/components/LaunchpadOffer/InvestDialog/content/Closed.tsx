@@ -14,7 +14,7 @@ import { InvestInfoMessage, InvestSubmitState } from '../utils/InvestSubmitButto
 import { OfferLinks } from '../utils/OfferLinks'
 import { useAddPopup } from 'state/application/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { text10, text14, text27, text9 } from 'components/LaunchpadMisc/typography'
+import { text10, text14, text27, text59, text9 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -136,12 +136,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
 }
 
 const Title = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: -0.04em;
-
+  ${text59}
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

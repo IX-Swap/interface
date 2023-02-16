@@ -1,11 +1,8 @@
+import { text59 } from 'components/LaunchpadMisc/typography'
 import styled from 'styled-components'
 
 export const Title = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: -0.04em;
+  ${text59}
 
   text-align: center;
   margin: 0 20%;
