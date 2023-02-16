@@ -243,7 +243,7 @@ export interface Offer {
   investingTokenSymbol: string
 
   decimals: number
-  // decimalsOn: boolean
+  investingTokenDecimals: number
   trusteeAddress: string
   softCap: string
   hardCap: string
@@ -391,7 +391,7 @@ export interface ManagedOffer extends Offer {
   issuanceId: number
 }
 
-export type MiniOffer = Pick<Offer,  'id' | 'status' | 'timeframe' | 'hasPresale'>
+export type MiniOffer = Pick<Offer, 'id' | 'status' | 'timeframe' | 'hasPresale'>
 
 export interface OfferPresaleStatistics {
   applicants: number

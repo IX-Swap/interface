@@ -23,7 +23,7 @@ interface Props {
 
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
-
+  console.log(props.offer)
   const addPopup = useAddPopup()
   const claim = useClaimOffer(props.offer.id)
 
@@ -108,7 +108,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
             network={props.offer.network}
             address={isSuccessfull ? props.offer.tokenAddress : props.offer.investingTokenAddress}
             symbol={isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
-            decimals={props.offer.decimals}
+            decimals={isSuccessfull ? props.offer.decimals : props.offer.investingTokenDecimals}
           />
         </Column>
       )}
