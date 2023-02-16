@@ -612,6 +612,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               >
                 <DateRangeField
                   mode="single"
+                  showButton
                   label="Register to Invest"
                   field="timeframe.whitelist"
                   setter={setFieldValue}
@@ -622,6 +623,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
                 <DateRangeField
                   mode="single"
+                  showButton
                   label="Pre-Sale"
                   field="timeframe.preSale"
                   setter={setFieldValue}
@@ -633,6 +635,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
                 <DateRangeField
                   mode="range"
+                  showButton
                   label="Public Sale to Closed"
                   field="timeframe.sale"
                   value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
@@ -647,6 +650,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
                 <DateRangeField
                   mode="single"
+                  showButton
                   label="Token Claim"
                   field="timeframe.claim"
                   setter={setFieldValue}
