@@ -28,7 +28,7 @@ export const estimateGas = async (chainId?: number) => {
   }
 }
 export const getTransferProps = async (chainId?: number) => {
-  const props: ethers.Overrides = { gasLimit: BigNumber.from(50000) }
+  const props: ethers.Overrides = { gasLimit: BigNumber.from(100000) }
   const estimatedGas = await estimateGas(chainId)
 
   if (estimatedGas !== null && estimatedGas !== undefined) {
