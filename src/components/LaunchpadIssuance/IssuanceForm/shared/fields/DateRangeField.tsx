@@ -24,6 +24,8 @@ interface Props {
   field?: string
   setter?: (field: string, value: any) => void
   onChange?: (range: DateRangeValue) => void
+
+  dateFormat?: string
 }
 
 export const DateRangeField: React.FC<Props> = (props) => {
@@ -89,6 +91,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }, [props.value])
 
+  const dateFormat = props.dateFormat || 'MM/DD/YYYY'
   return (
     <Column>
       <FieldContainer disabled={props.disabled} onClick={toggle}>
@@ -98,11 +101,11 @@ export const DateRangeField: React.FC<Props> = (props) => {
         <FieldLabel>{props.label}</FieldLabel>
 
         {range.length === 0 && (
-          <FieldPlaceholder>mm/dd/yyyy {props.mode === 'range' && ' - mm/dd/yyyy'}</FieldPlaceholder>
+          <FieldPlaceholder>mm/dd/yyyy {props.mode === 'range' && ` - ${dateFormat.toLowerCase()}`}</FieldPlaceholder>
         )}
 
         {range.length > 0 && (
-          <FieldSelectedValue>{range.map((date) => date.format('MM/DD/YYYY')).join(' - ')}</FieldSelectedValue>
+          <FieldSelectedValue>{range.map((date) => date.format(dateFormat)).join(' - ')}</FieldSelectedValue>
         )}
       </FieldContainer>
 
