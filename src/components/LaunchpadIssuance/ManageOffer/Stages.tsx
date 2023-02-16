@@ -7,6 +7,7 @@ import { formatDates } from './utils'
 import { KEY_OFFER_STATUSES } from '../utils/constants'
 import { useRole } from 'state/user/hooks'
 import { EditTimeframeModal } from './edit'
+import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
 
 interface Props {
   offer: MiniOffer
@@ -125,7 +126,7 @@ const DateBox = styled.div<{ hideBottomBorder: boolean }>`
   display: flex;
   flex-direction: column;
   padding: 11px 0;
-  border-bottom: ${(props) => (props.hideBottomBorder ? 'none' : '1px solid #E6E6FF')};
+  border-bottom: ${(props) => (props.hideBottomBorder ? 'none' : `1px solid ${props.theme.launchpad.colors.accent}`)};
 `
 const DateTitle = styled.span<{ isCurrent: boolean }>`
   font-size: 14px;
@@ -142,10 +143,6 @@ const DateSubtitle = styled.span<{ isCurrent: boolean }>`
   color: ${(props) =>
     props.isCurrent ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.body};
   margin-top: 6px;
-`
-const FlexVerticalCenter = styled.div`
-  display: flex;
-  align-items: center;
 `
 const MainTitleBlock = styled(FlexVerticalCenter)`
   justify-content: space-between;

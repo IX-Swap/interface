@@ -13,6 +13,7 @@ import { useEditTimeframe } from 'state/launchpad/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { useShowError } from 'state/application/hooks'
+import { getDaysAhead } from 'utils/time'
 
 interface Props {
   open: boolean
@@ -34,12 +35,6 @@ const getNextStage = (stage: string) => {
   return nextStatus
 }
 
-const getDaysAhead = (daysAhead: number): Date => {
-  const date = new Date()
-  date.setDate(date.getDate() + daysAhead)
-  date.setUTCHours(0, 0, 0)
-  return date
-}
 const getTomorrow = () => getDaysAhead(1)
 const getTwoDaysAhead = () => getDaysAhead(2)
 
@@ -68,10 +63,12 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
 
   /* memos */
   const isSingle = useMemo(() => stage === OfferStatus.claim, [stage])
+
   const nextStage = useMemo(() => {
     if (!stage || isSingle) return ''
     return getNextStage(stage)
   }, [stage, isSingle])
+
   const stageOptions = useMemo(() => {
     const index = KEY_OFFER_STATUSES.findIndex((item) => item === status)
     if (index < 0) return []
@@ -81,14 +78,11 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
       label: OFFER_STATUSES[status as keyof typeof OFFER_STATUSES] as string,
     }))
   }, [status])
+
   const rangeError = useMemo(() => {
     if (!stage) return ''
     if (!isSingle) {
       if (dates.startDate && dates.endDate) {
-        const wrongRange = moment(dates.startDate).isAfter(dates.endDate)
-        if (wrongRange) {
-          return 'Invalid Range - end date starts before start date'
-        }
         const isSame = moment(dates.startDate).isSame(dates.endDate)
         if (isSame) {
           return 'Invalid Range - end date should come after start date(min 1 day)'
@@ -99,9 +93,11 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
     }
     return ''
   }, [isSingle, stage, dates])
+
   const rangeValue = useMemo(() => {
     return isSingle ? dates.startDate : [dates.startDate, dates.endDate].filter((x) => !!x).map((x) => moment(x))
   }, [isSingle, dates])
+
   const label = useMemo(() => {
     if (!stage) return 'Select stage first'
     if (stage === OfferStatus.claim) {
@@ -118,7 +114,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
     (newStage: string) => {
       const startDate = timeframe[newStage as keyof OfferTimeframe]
       let endDate: Date | undefined
-      if (!isSingle) {
+      if (newStage !== OfferStatus.claim) {
         endDate = timeframe[getNextStage(newStage) as keyof OfferTimeframe]
       }
       setDates({
@@ -126,7 +122,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
         endDate,
       })
     },
-    [timeframe, isSingle]
+    [timeframe]
   )
 
   /* methods */
@@ -192,6 +188,7 @@ export const EditTimeframeModal = ({ open, setOpen, offer, refreshOffer }: Props
               onChange={onChangeRange}
               disabled={!stage}
               error={rangeError}
+              dateFormat="DD/MM/YYYY"
             />
             <FilledButton
               onClick={() => setOpenConfirm(true)}

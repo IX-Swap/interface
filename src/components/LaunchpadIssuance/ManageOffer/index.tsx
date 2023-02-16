@@ -92,15 +92,11 @@ export const ManageOffer = () => {
   }, [status])
 
   useEffect(() => {
-    if (triggerUserClaim.error) {
-      showError(triggerUserClaim.error)
+    const triggerError = triggerUserClaim.error || triggerIssuerClaim.error
+    if (triggerError) {
+      showError(triggerError)
     }
-  }, [triggerUserClaim.error])
-  useEffect(() => {
-    if (triggerIssuerClaim.error) {
-      showError(triggerIssuerClaim.error)
-    }
-  }, [triggerIssuerClaim.error])
+  }, [triggerUserClaim.error, triggerIssuerClaim.error])
 
   if (loading) {
     return (
