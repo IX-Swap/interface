@@ -1000,7 +1000,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
         distributionFrequency: payload.terms.distributionFrequency ?? '',
         dividentYield: payload.terms.dividentYield ?? '',
         grossIrr: payload.terms.grossIrr ?? '',
-        investmentPeriod: payload.terms.investmentPeriod ?? '',
+        investmentPeriod: String(payload.terms.investmentPeriod) ?? '',
         investmentStructure: payload.terms.investmentStructure ?? '',
       },
 
@@ -1089,9 +1089,9 @@ export const useSubmitOffer = () => {
         allowOnlyAccredited: payload.allowOnlyAccredited ?? false,
 
         terms: {
-          investmentStructure: payload.terms.investmentStructure,
+          investmentStructure: String(payload.terms.investmentStructure),
           dividentYield: payload.terms.dividentYield,
-          investmentPeriod: payload.terms.investmentPeriod,
+          investmentPeriod: payload.terms.investmentPeriod ? Number(payload.terms.investmentPeriod) : 0,
           grossIrr: payload.terms.grossIrr,
           distributionFrequency: payload.terms.distributionFrequency,
         },
@@ -1165,7 +1165,7 @@ export const useSubmitOffer = () => {
 
         return result
       }
-
+      
       data = filter(data)
 
       if (offerId) {
@@ -1203,8 +1203,8 @@ export const useEditIssuanceOffer = () => {
       issuerWebsite: payload.website,
       whitepaperUrl: payload.whitepaper,
 
-      profilePictureId: 123,
-      cardPictureId: 123,
+      profilePictureId: 123, // why 123?
+      cardPictureId: 123, // why 123?
 
       faq: payload.faq.map((faq) => ({
         id: faq.id,

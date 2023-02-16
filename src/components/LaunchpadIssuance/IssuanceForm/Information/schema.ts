@@ -19,9 +19,33 @@ const limitedSizeFileSchema = fileSchema.test('fileSize', 'File is too large', (
   return value[0].size <= 5 * 1024 * 1024
 })
 
-const requriedFileSchema = limitedSizeFileSchema.required('File required')
+const requiredFileSchema = limitedSizeFileSchema.required('File required')
 
 const countryCodes = getCodes()
+
+const checkMaxGreaterThanMinimum = function (minimum: string, maximum: string) {
+  if (!maximum || !minimum) {
+    return true
+  }
+
+  if (Number(maximum) <= Number(minimum)) {
+    return false
+  }
+
+  return true
+}
+
+const checkMinSmallerThanMaximum = function (minimum: string, maximum: string) {
+  if (!maximum || !minimum) {
+    return true
+  }
+
+  if (Number(minimum) >= Number(maximum)) {
+    return false
+  }
+
+  return true
+}
 
 export const schema = yup.object().shape({
   shortDescription: yup
@@ -63,54 +87,70 @@ export const schema = yup.object().shape({
   softCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')
-    .required('Required'),
+    .required('Required')
+    .test('softCapConstraint', 'Minimum amount to raise should be smaller than total amolunt', function ():
+      | boolean
+      | yup.ValidationError {
+      return checkMaxGreaterThanMinimum(this.parent.softCap, this.parent.hardCap)
+    }),
   hardCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')
-    .required('Required'),
+    .required('Required')
+    .test('hardCapConstraint', 'Total amount to raise should be greater than minimum amount', function ():
+      | boolean
+      | yup.ValidationError {
+      return checkMinSmallerThanMaximum(this.parent.softCap, this.parent.hardCap)
+    }),
 
   minInvestment: yup
     .string()
     .required('Required')
-    .test('minInvestmentConstraint', 'Mininimal investment should smaller than maximal investment', function ():
+    .test('minInvestmentConstraint', 'Mininimal investment should be smaller than maximal investment', function ():
       | boolean
       | yup.ValidationError {
-      if (!this.parent.maxInvestment || !this.parent.minInvestment) {
-        return true
-      }
-
-      if (Number(this.parent.minInvestment) >= Number(this.parent.maxInvestment)) {
-        return false
-      }
-
-      return true
+      return checkMinSmallerThanMaximum(this.parent.minInvestment, this.parent.maxInvestment)
     }),
 
   maxInvestment: yup
     .string()
     .required('Required')
-    .test('maxInvestmentConstraint', 'Maximal investment should bigger than minimal investment', function (maximal):
+    .test('maxInvestmentConstraint', 'Maximal investment should be greater than minimal investment', function ():
       | boolean
       | yup.ValidationError {
-      if (!this.parent.maxInvestment || !this.parent.minInvestment) {
-        return true
-      }
-
-      if (Number(this.parent.maxInvestment) <= Number(this.parent.minInvestment)) {
-        return false
-      }
-
-      return true
+      return checkMaxGreaterThanMinimum(this.parent.minInvestment, this.parent.maxInvestment)
     }),
 
   hasPresale: yup.boolean().required('Required'),
 
-  presaleMaxInvestment: yup
-    .string()
-    .when('hasPresale', { is: true, then: yup.string().required('Required'), otherwise: yup.string() }),
-  presaleMinInvestment: yup
-    .string()
-    .when('hasPresale', { is: true, then: yup.string().required('Required'), otherwise: yup.string() }),
+  presaleMaxInvestment: yup.string().when('hasPresale', {
+    is: true,
+    then: yup
+      .string()
+      .required('Required')
+      .test(
+        'presaleMaxInvestmentConstraint',
+        'Maximal investment should be greater than minimal investment',
+        function (): boolean | yup.ValidationError {
+          return checkMaxGreaterThanMinimum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
+        }
+      ),
+    otherwise: yup.string(),
+  }),
+  presaleMinInvestment: yup.string().when('hasPresale', {
+    is: true,
+    then: yup
+      .string()
+      .required('Required')
+      .test(
+        'presaleMinInvestmentConstraint',
+        'Mininimal investment should be smaller than maximal investment',
+        function (): boolean | yup.ValidationError {
+          return checkMinSmallerThanMaximum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
+        }
+      ),
+    otherwise: yup.string(),
+  }),
 
   presaleAlocated: yup
     .string()
@@ -122,11 +162,14 @@ export const schema = yup.object().shape({
 
   allowOnlyAccredited: yup.boolean(),
 
-  profilePicture: requriedFileSchema,
-  cardPicture: requriedFileSchema,
+  profilePicture: requiredFileSchema,
+  cardPicture: requiredFileSchema,
 
   terms: yup.object().shape({
-    investmentStructure: yup.string().required('Investment Structure required'),
+    investmentStructure: yup
+      .string()
+      .min(2, 'Must be longer than or equal to 2 characters')
+      .required('Investment Structure required'),
     dividentYield: yup.string(),
     investmentPeriod: yup.number(),
     grossIrr: yup.string(),
@@ -170,7 +213,7 @@ export const schema = yup.object().shape({
 
   members: yup.array(
     yup.object().shape({
-      photo: requriedFileSchema,
+      photo: limitedSizeFileSchema,
       name: yup.string().required('Required'),
       role: yup.string().required('Required'),
       about: yup.string().required('Required'),
@@ -196,7 +239,7 @@ export const schema = yup.object().shape({
       claim: yup.date().required('Required'),
     }),
   }),
-  gallery: yup.array(requriedFileSchema),
+  gallery: yup.array(requiredFileSchema),
 
   additionalDocuments: yup.array(
     yup.object().shape({
@@ -216,16 +259,18 @@ export const schema = yup.object().shape({
     })
   ),
 
-  social: yup.array(
-    yup.object().shape({
-      url: yup.string().url('Enter a valid URL'),
-    })
-  ),
+  social: yup
+    .array(
+      yup.object().shape({
+        url: yup.string().url('Enter a valid URL'),
+      })
+    )
+    .min(1, 'Add at least one social link'),
 })
 
 export const editSchema = yup.object().shape({
-  profilePicture: requriedFileSchema,
-  cardPicture: requriedFileSchema,
+  profilePicture: requiredFileSchema,
+  cardPicture: requiredFileSchema,
 
   shortDescription: yup.string().required().min(10, 'Short Description must be longer than or equal to 10 characters'),
   longDescription: yup.string().required().min(10, 'Description must be longer than or equal to 10 characters'),
@@ -241,13 +286,15 @@ export const editSchema = yup.object().shape({
 
   allowOnlyAccredited: yup.boolean(),
 
-  social: yup.array(
-    yup.object().shape({
-      url: yup.string().url('Enter a valid URL'),
-    })
-  ),
+  social: yup
+    .array(
+      yup.object().shape({
+        url: yup.string().url('Enter a valid URL'),
+      })
+    )
+    .min(1, 'Add at least one social link'),
 
-  gallery: yup.array(requriedFileSchema),
+  gallery: yup.array(requiredFileSchema),
 
   additionalDocuments: yup.array(
     yup.object().shape({
@@ -299,7 +346,7 @@ export const editSchema = yup.object().shape({
 
   members: yup.array(
     yup.object().shape({
-      photo: requriedFileSchema,
+      photo: limitedSizeFileSchema,
       name: yup.string().required('Required'),
       role: yup.string().required('Required'),
       about: yup.string().required('Required'),

@@ -72,7 +72,8 @@ export const initialValues = {
     claim: undefined,
   },
 
-  social: [{ type: '' }],
+  // social: [{ type: '' }],
+  social: [],
 
   website: '',
   whitepaper: '',

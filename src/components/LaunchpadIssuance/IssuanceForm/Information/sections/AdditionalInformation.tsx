@@ -10,6 +10,7 @@ import { FormField } from '../../shared/fields/FormField'
 import { AddButton, DeleteButton } from '../../shared/styled'
 import { DropdownField } from '../../shared/fields/DropdownField'
 import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
+import { ErrorText } from 'components/LaunchpadMisc/styled'
 
 interface Props {
   social: SocialMediaLink[]
@@ -138,6 +139,9 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
 
       <AddButton onClick={toggleDialog}>
         <Plus /> Add Social
+        {props.social.length === 0 && props.errors.social && (
+          <ErrorText>{JSON.stringify(props.errors.social).slice(1, -1)}</ErrorText>
+        )}
       </AddButton>
 
       <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px">

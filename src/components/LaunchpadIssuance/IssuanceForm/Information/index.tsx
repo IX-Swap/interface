@@ -58,6 +58,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
+import { getDaysAfter } from 'utils/time'
 
 interface Props {
   edit?: boolean
@@ -404,17 +405,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.tokenTicker}
                   error={(touched.tokenTicker && errors.tokenTicker) as string}
                 />
-                {/* <DropdownField
-                  field="decimalsOn"
-                  setter={setFieldValue}
-                  touch={setFieldTouched}
-                  options={tokenDecimalsOnOptions}
-                  label="Decimals"
-                  // find out if editable
-                  disabled={props.edit}
-                  value={values.decimalsOn}
-                  error={(touched.decimalsOn && errors.decimalsOn) as string}
-                /> */}
                 <FormField
                   field="decimals"
                   setter={(field, value) => setFieldValue(field, Number(value))}
@@ -627,7 +617,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   value={values.timeframe.preSale}
                   disabled={props.edit || !values.hasPresale || !values.timeframe.whitelist}
-                  minDate={values.timeframe.whitelist}
+                  minDate={getDaysAfter(values?.timeframe?.whitelist, 1)}
                   error={(touched.timeframe?.preSale && (touched.timeframe && errors.timeframe)?.preSale) as string}
                 />
 
@@ -637,7 +627,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   field="timeframe.sale"
                   value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
                   disabled={props.edit || (values.hasPresale && !values.timeframe.preSale)}
-                  minDate={values.hasPresale ? values.timeframe.preSale : undefined}
+                  minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : undefined}
                   onChange={([start, end]) => {
                     setFieldValue('timeframe.sale', start)
                     setFieldValue('timeframe.closed', end)
@@ -651,7 +641,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   field="timeframe.claim"
                   setter={setFieldValue}
                   disabled={props.edit || !values.timeframe.closed}
-                  minDate={values.timeframe.closed}
+                  minDate={getDaysAfter(values.timeframe.closed, 1)}
                   value={values.timeframe.claim}
                   error={(touched.timeframe?.claim && (touched.timeframe && errors.timeframe)?.claim) as string}
                 />
@@ -781,7 +771,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
                 <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                <FilledButton onClick={toSubmit}>Submit</FilledButton>
+                <FilledButton onClick={toSubmit} disabled={Boolean(Object.keys(errors).length)}>
+                  Submit
+                </FilledButton>
               </Row>
             </FormBody>
           </>
