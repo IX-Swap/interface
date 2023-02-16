@@ -85,7 +85,7 @@ export const useSendToken = ({
       const result = await tokenContract.transfer(
         recipient,
         // BigNumber.from(amount),
-        ethers.utils.parseUnits(amount.toString(), decimalPlaces),
+        ethers.utils.parseUnits(amount.toString(), decimalPlaces ?? 0),
         { ...props }
       )
       await callback()
