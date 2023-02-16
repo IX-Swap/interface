@@ -158,7 +158,16 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
           </Grid>
 
           <Grid item container spacing={3}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Release Date'
+                value={dso?.releaseDate}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
               <LabelledValue
                 label='Unique Identifier Code'
                 value={dso?.uniqueIdentifierCode}

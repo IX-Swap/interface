@@ -50,7 +50,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
-  const pairName = localStorage.getItem('pairName')
+  //   const pairName = localStorage.getItem('pairName')
   const handleSubmit = async (values: PlaceOrderFormValues) => {
     if (isEmptyString(pairId)) {
       return
@@ -100,14 +100,14 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         >
           <Grid item>
             <LabelledValue
-              value={formatMoney(currencyBalance, pairName?.split('/')[0])}
+              value={formatMoney(currencyBalance, currencyLabel)}
               label='Balance:'
             />
           </Grid>
 
           <Grid item>
             <LabelledValue
-              value={formatTokenBalance(tokenBalance, pairName?.split('/')[1])}
+              value={formatTokenBalance(tokenBalance, tokenLabel)}
               label=''
             />
           </Grid>
