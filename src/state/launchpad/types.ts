@@ -455,3 +455,7 @@ export enum InvestmentStagesFilter {
 export interface AbstractOrder {
   [key: string]: OrderType
 }
+
+export interface PinnedOffer extends Offer {
+  issuanceId: number
+}
