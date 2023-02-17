@@ -95,6 +95,5 @@ const DialogTitle = styled.div`
   ${text48}
   /* identical to box height, or 26px */
 
-  text-transform: capitalize;
   color: #292933;
 `
