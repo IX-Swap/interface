@@ -59,6 +59,7 @@ import { OfferReview } from '../Review'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
 import { getDaysAfter } from 'utils/time'
+import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   edit?: boolean
@@ -602,6 +603,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               >
                 <DateRangeField
                   mode="single"
+                  showButton
                   label="Register to Invest"
                   field="timeframe.whitelist"
                   setter={setFieldValue}
@@ -612,6 +614,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
                 <DateRangeField
                   mode="single"
+                  showButton
                   label="Pre-Sale"
                   field="timeframe.preSale"
                   setter={setFieldValue}
@@ -623,6 +626,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
                 <DateRangeField
                   mode="range"
+                  showButton
                   label="Public Sale to Closed"
                   field="timeframe.sale"
                   value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
@@ -637,6 +641,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
                 <DateRangeField
                   mode="single"
+                  showButton
                   label="Token Claim"
                   field="timeframe.claim"
                   setter={setFieldValue}
@@ -792,11 +797,8 @@ const ImageBlock = styled.div`
 `
 
 const TokenAgreementText = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text11}
+
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -816,11 +818,7 @@ const PresalveFieldContainer = styled.div<{ disabled?: boolean }>`
 `
 
 const PresaleFieldLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 140%;
-  letter-spacing: -0.01em;
+  ${text44}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -829,11 +827,9 @@ const PresaleButton = styled.button<{ isSelected: boolean; disabled?: boolean }>
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '33'};
   border-radius: 6px;
   cursor: pointer;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text1}
+
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.primary};
 

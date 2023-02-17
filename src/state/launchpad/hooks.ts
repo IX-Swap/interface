@@ -274,6 +274,28 @@ export const useClaimOffer = (id: string) => {
   )
 }
 
+export const useInvestedAmount = (offerId: string) => {
+  const loader = useLoader()
+
+  const [amount, setAmount] = React.useState<number | null>(null)
+  const [error, setError] = React.useState('')
+  const load = React.useCallback(() => {
+    loader.start()
+    return apiService
+      .get(`offers/${offerId}/invested`)
+      .then((res) => res.data as number)
+      .then(setAmount)
+      .catch((e: any) => setError(e?.message))
+      .finally(loader.stop)
+  }, [offerId])
+
+  React.useEffect(() => {
+    load()
+  }, [offerId])
+
+  return { amount, error, loading: loader.isLoading }
+}
+
 export const useCreateIssuance = () => {
   return React.useCallback(
     (name: string) => apiService.post('/issuances', { name }).then((res) => res.data as Issuance),
@@ -281,7 +303,7 @@ export const useCreateIssuance = () => {
   )
 }
 
-export const useGetIssuancePlain = (params?: { showAll: string }) => {
+export const useGetIssuancePlain = (params?: { showAll?: string; forPinning?: string }) => {
   const loader = useLoader()
 
   const [items, setItems] = React.useState<IssuancePlain[]>([])
@@ -290,7 +312,7 @@ export const useGetIssuancePlain = (params?: { showAll: string }) => {
     loader.start()
 
     return apiService
-      .get('/issuances/plain', undefined, { ...params, forPinning: 'true' })
+      .get('/issuances/plain', undefined, params)
       .then((res) => res.data as IssuancePlain[])
       .then(setItems)
       .then(loader.stop)

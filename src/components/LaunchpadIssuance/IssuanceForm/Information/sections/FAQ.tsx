@@ -15,6 +15,7 @@ import { FormGrid } from '../../shared/FormGrid'
 import { useGetFieldArrayId } from 'state/launchpad/hooks'
 
 import { FAQEntry, InformationFormValues } from '../types'
+import { text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   faq: OfferFAQ[]
@@ -25,7 +26,7 @@ interface Props {
 export const FAQBlock: React.FC<Props> = (props) => {
   const theme = useTheme()
   const getId = useGetFieldArrayId()
-  
+
   const faq = React.useMemo(() => props.faq as (OfferFAQ & { id: number })[], [props.faq])
 
   return (
@@ -39,14 +40,18 @@ export const FAQBlock: React.FC<Props> = (props) => {
                   <Label>Question</Label>
 
                   <QuestionWrapper>
-                    <QuestionInput 
-                      placeholder='Question Title'
+                    <QuestionInput
+                      placeholder="Question Title"
                       value={entry.question}
-                      onChange={e => props.setter(`faq[${idx}].question`, e.target.value)} 
+                      onChange={(e) => props.setter(`faq[${idx}].question`, e.target.value)}
                     />
                   </QuestionWrapper>
-                  
-                  {(faq.length > 1 || idx > 0) && <RemoveButton onClick={handleRemove(idx)}><Trash /></RemoveButton>}
+
+                  {(faq.length > 1 || idx > 0) && (
+                    <RemoveButton onClick={handleRemove(idx)}>
+                      <Trash />
+                    </RemoveButton>
+                  )}
 
                   <ErrorMessage>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.question}</ErrorMessage>
                 </Question>
@@ -55,17 +60,17 @@ export const FAQBlock: React.FC<Props> = (props) => {
 
                 <AnswerWrapper>
                   <Label>Answer</Label>
-                  <AnswerInput 
-                    placeholder='Answer Description'
+                  <AnswerInput
+                    placeholder="Answer Description"
                     value={entry.answer}
-                    onChange={e => props.setter(`faq[${idx}].answer`, e.target.value)}
+                    onChange={(e) => props.setter(`faq[${idx}].answer`, e.target.value)}
                   />
-                  
+
                   <ErrorText>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.answer}</ErrorText>
                 </AnswerWrapper>
               </FieldWrapper>
             ))}
-            
+
             <AddButton onClick={() => push({ id: getId() })}>
               <Plus color={theme.launchpad.colors.primary} /> Add FAQ
             </AddButton>
@@ -77,71 +82,50 @@ export const FAQBlock: React.FC<Props> = (props) => {
 }
 
 const FieldWrapper = styled(Column)`
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-
   grid-column: span 2;
-
   padding: 1rem;
 `
 
 const Question = styled.div`
   display: grid;
-
   grid-template-columns: 1fr 25px;
   grid-template-rows: minmax(auto, 20px) repeat(2, auto);
   grid-template-areas:
-    "label remove"
-    "input remove"
-    "error error";
+    'label remove'
+    'input remove'
+    'error error';
 
   gap: 0.25rem;
-
   margin: 1rem;
 `
 
 const QuestionWrapper = styled.div`
   grid-area: input;
-  
   display: flex;
-
   flex-flow: row nowrap;
   align-items: center;
   gap: 0.5rem;
-
 `
 const Label = styled.div`
   grid-area: label;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
+  ${text19}
 
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const QuestionInput = styled.input`
   flex-grow: 1;
-
   border: none;
   background: none;
   outline: none;
-
   height: 100%;
-
   align-self: flex-end;
-  
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
 
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  ${text30}
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const AnswerWrapper = styled.div`
@@ -153,7 +137,6 @@ const AnswerInput = styled.textarea`
   background: none;
   outline: none;
   resize: none;
-
   width: 100%;
   min-height: 120px;
 `

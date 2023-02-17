@@ -1,11 +1,12 @@
-import React from "react"
-import styled from "styled-components"
+import { text9 } from 'components/LaunchpadMisc/typography'
+import React from 'react'
+import styled from 'styled-components'
 
 export enum InvestSubmitState {
-  default="default",
-  loading="loading",
-  success="success",
-  error="error"
+  default = 'default',
+  loading = 'loading',
+  success = 'success',
+  error = 'error',
 }
 
 interface Props {
@@ -34,96 +35,96 @@ export const InvestFormSubmitButton: React.FC<React.PropsWithChildren<Props>> = 
   )
 }
 
-const SubmitButton = styled.button<{ state: InvestSubmitState, disabled?: boolean }>`
+const SubmitButton = styled.button<{ state: InvestSubmitState; disabled?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-
   gap: 0.5rem;
 
-  ${props => props.state === InvestSubmitState.default && `
+  ${(props) =>
+    props.state === InvestSubmitState.default &&
+    `
     background: ${props.theme.launchpad.colors.primary};
     color: ${props.theme.launchpad.colors.text.light};
     border: none;
   `}
 
-  ${props => props.state === InvestSubmitState.loading && `
+  ${(props) =>
+    props.state === InvestSubmitState.loading &&
+    `
     background: ${props.theme.launchpad.colors.primary + '1a'};
     color: ${props.theme.launchpad.colors.primary};
     border: 1px solid ${props.theme.launchpad.colors.primary};
   `}
 
-  ${props => props.state === InvestSubmitState.success && `
+  ${(props) =>
+    props.state === InvestSubmitState.success &&
+    `
     background: ${props.theme.launchpad.colors.success + '1a'};
     color: ${props.theme.launchpad.colors.success};
     border: 1px solid ${props.theme.launchpad.colors.success};
   `}
 
-  ${props => props.state === InvestSubmitState.error && `
+  ${(props) =>
+    props.state === InvestSubmitState.error &&
+    `
     background: ${props.theme.launchpad.colors.error + '1a'};
     color: ${props.theme.launchpad.colors.error};
     border: 1px solid ${props.theme.launchpad.colors.error};
   `}
   
-  ${props => !props.disabled && 'cursor: pointer;'}
-  ${props => props.disabled && `
+  ${(props) => !props.disabled && 'cursor: pointer;'}
+  ${(props) =>
+    props.disabled &&
+    `
     background: ${props.theme.launchpad.colors.text.bodyAlt};
   `}
 
   border-radius: 6px;
-
-
   height: 60px;
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-
-  line-height: 19px;
-  letter-spacing: -0.02em;
+  ${text9}
 `
 
-
-export const InvestInfoMessage = styled.div<{ state: InvestSubmitState, disabled?: boolean }>`
+export const InvestInfoMessage = styled.div<{ state: InvestSubmitState; disabled?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-
   gap: 0.5rem;
 
-  ${props => props.state === InvestSubmitState.default && `
+  ${(props) =>
+    props.state === InvestSubmitState.default &&
+    `
     background: ${props.theme.launchpad.colors.primary};
     color: ${props.theme.launchpad.colors.text.light};
     border: none;
   `}
 
-  ${props => props.state === InvestSubmitState.loading && `
+  ${(props) =>
+    props.state === InvestSubmitState.loading &&
+    `
     background: ${props.theme.launchpad.colors.primary + '1a'};
     color: ${props.theme.launchpad.colors.primary};
     border: 1px solid ${props.theme.launchpad.colors.primary};
   `}
 
-  ${props => props.state === InvestSubmitState.success && `
+  ${(props) =>
+    props.state === InvestSubmitState.success &&
+    `
     background: ${props.theme.launchpad.colors.success + '1a'};
     color: ${props.theme.launchpad.colors.success};
     border: 1px solid ${props.theme.launchpad.colors.success};
   `}
 
-  ${props => props.state === InvestSubmitState.error && `
+  ${(props) =>
+    props.state === InvestSubmitState.error &&
+    `
     background: ${props.theme.launchpad.colors.error + '1a'};
     color: ${props.theme.launchpad.colors.error};
     border: 1px solid ${props.theme.launchpad.colors.error};
   `}
 
   border-radius: 6px;
-
-
   height: 60px;
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-
-  line-height: 19px;
-  letter-spacing: -0.02em;
+  ${text9}
 `

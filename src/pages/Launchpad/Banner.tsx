@@ -2,13 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 import LearnMoreIcon from 'assets/launchpad/icons/learn-more.png'
+import { text31, text52, text6 } from 'components/LaunchpadMisc/typography'
 
 export const Banner = () => {
   return (
     <BannerContainer>
-      <BannerTitle>
-        Invest in Startups and Other Unicorn-Like Opportunites 
-      </BannerTitle>
+      <BannerTitle>Invest in Startups and Other Unicorn-Like Opportunites</BannerTitle>
 
       <BannerInfoRedirect>
         <BannerInfoRedirectImage src={LearnMoreIcon} />
@@ -22,39 +21,28 @@ export const Banner = () => {
 }
 
 const BannerContainer = styled.div`
-  max-width: ${props => props.theme.launchpad.content.maxWidth};
+  max-width: ${(props) => props.theme.launchpad.content.maxWidth};
   margin: 4rem auto;
 `
 
 const BannerTitle = styled.div`
-  color: ${props => props.theme.launchpad.colors.text.title};
-
+  color: ${(props) => props.theme.launchpad.colors.text.title};
   max-width: 640px;
 
-  font-family: ${props => props.theme.launchpad.font};
-  font-style: normal;
-  font-weight: 800;
-  font-size: 64px;
+  font-family: ${(props) => props.theme.launchpad.font};
 
-  line-height: 110%;
-  letter-spacing: -0.03em;
-
+  ${text52}
   margin-bottom: 2rem;
 `
 
 const BannerInfoRedirect = styled.a`
-  border: 1px solid #E6E6FF;
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-
   padding: 1rem;
-
   display: grid;
-
   grid-template-columns: 80px 1fr;
   grid-template-rows: 80px;
-
   gap: 2rem;
-
   width: 375px;
 `
 
@@ -63,35 +51,22 @@ const BannerInfoRedirectImage = styled.img`
 `
 const BannerInfoRedirectLabel = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: center;
-
   max-width: 60%;
 `
 
 const BannerInfoRedirectTitle = styled.div`
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 
-  font-family: ${props => props.theme.launchpad.font};
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-
-  line-height: 130%;
-  letter-spacing: -0.02em;
+  font-family: ${(props) => props.theme.launchpad.font};
+  ${text31}
 `
 
 const BannerInfoRedirectSubtitle = styled.a`
-  color: ${props => props.theme.launchpad.colors.primary};
-  
-  font-family: ${props => props.theme.launchpad.font};
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
+  color: ${(props) => props.theme.launchpad.colors.primary};
 
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
+  font-family: ${(props) => props.theme.launchpad.font};
+  ${text6}
   text-decoration: none;
 `

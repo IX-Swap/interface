@@ -1,27 +1,19 @@
 import styled from 'styled-components'
 
 import { IssuanceFilter } from '../LaunchpadIssuance/types'
+import { text42, text53 } from './typography'
 
 export const TableTitle = styled.div`
   grid-area: title;
-
   place-self: center start;
 
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text53}
 
   margin: auto;
   padding: 0 0 1.25rem;
-
   width: 100%;
   max-width: 1180px;
-
   font-family: ${(props) => props.theme.launchpad.font};
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -62,7 +54,7 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  line-height: 1.5rem;
+  line-height: 24px;
   letter-spacing: -0.01em;
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
@@ -81,11 +73,7 @@ export const Raw = styled.div`
 `
 
 export const DefaultRaw = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.25rem;
-  letter-spacing: -0.01em;
+  ${text42}
   opacity: 0.8;
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};

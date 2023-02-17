@@ -1,3 +1,4 @@
+import { text1 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -7,29 +8,19 @@ interface Props {
 }
 
 export const InvestmentStatusBadge: React.FC<Props> = (props) => {
-
-  return (
-    <Container color={props.color}>{props.label}</Container>
-  )
+  return <Container color={props.color}>{props.label}</Container>
 }
 
 const Container = styled.div<{ color: string }>`
   padding: 0.75rem 1rem;
 
-  color: ${props => props.color === '#FFFFFF' 
-    ? props.theme.launchpad.colors.text.title
-    : props.theme.launchpad.colors.text.light};
+  color: ${(props) =>
+    props.color === '#FFFFFF' ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.light};
 
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
+  font-family: ${(props) => props.theme.launchpad.font};
 
-  font-family: ${props => props.theme.launchpad.font};
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text1}
 
   backdrop-filter: blur(20px);
   border-radius: 6px;

@@ -1,10 +1,8 @@
+import { text17, text45, text51 } from 'components/LaunchpadMisc/typography'
 import styled from 'styled-components'
 
 export const HeaderLabel = styled.div`
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 48px;
-  letter-spacing: -0.02em;
+  ${text17}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 
   display: flex;
@@ -18,17 +16,11 @@ export const ExtractButton = styled.div`
   cursor: pointer;
 `
 export const ExtractText = styled.div`
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.01em;
+  ${text45}
   color: ${(props) => props.theme.launchpad.colors.primary};
   margin-left: 10px;
 `
 export const TableTitle = styled.div`
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text51}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

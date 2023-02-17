@@ -14,6 +14,7 @@ import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { useShowError } from 'state/application/hooks'
 import { getDaysAhead } from 'utils/time'
+import { text1, text48 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   open: boolean
@@ -210,18 +211,11 @@ const Container = styled.div`
   flex-direction: column;
 `
 const Title = styled.div`
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
+  ${text48}
   color: ${(props) => props.theme.launchpad.colors.text.title};
-
   margin-bottom: 34px;
 `
 const ButtonLabel = styled.div`
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text1}
   color: ${(props) => props.theme.launchpad.colors.text.light};
 `

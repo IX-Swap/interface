@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { text9 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   isLoading?: boolean
@@ -31,35 +32,23 @@ const LoaderWrapper = styled(Centered)`
 
 const LoadMoreButton = styled.button`
   display: grid;
-
   place-content: center;
-
   height: 60px;
   width: 100%;
-
   text-align: center;
   text-decoration: none;
 
-  font-family: ${props => props.theme.launchpad.font};
+  font-family: ${(props) => props.theme.launchpad.font};
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-
-  line-height: 19px;
-  letter-spacing: -0.02em;
+  ${text9}
 
   cursor: pointer;
-
   margin: 1rem auto;
   padding: 0.25rem 3rem;
-
   width: max-content;
 
-
-
-  color: ${props => props.theme.launchpad.colors.text.light};
-  background: ${props => props.theme.launchpad.colors.primary};
+  color: ${(props) => props.theme.launchpad.colors.text.light};
+  background: ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
   border: none;
   outline: 0;
