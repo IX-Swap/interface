@@ -62,10 +62,6 @@ const PinForm = ({ onClose }: PinProps) => {
       }
     })
   }, [getPinnedOffer])
-  const onSelectIssuance = (_: string, value?: string) => {
-    if (!value) return
-    setSelected(value)
-  }
   const issuanceOptions = useMemo(() => {
     if (!items) return []
     return items.map(({ id, name }) => ({
@@ -91,7 +87,7 @@ const PinForm = ({ onClose }: PinProps) => {
     <PinContainer>
       <DropdownField
         field="issuance"
-        setter={onSelectIssuance}
+        onChange={setSelected}
         label="Choose issuance"
         options={issuanceOptions}
         value={selected}
