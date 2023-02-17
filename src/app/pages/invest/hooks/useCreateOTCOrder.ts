@@ -14,8 +14,10 @@ export const orderPayloadtoOTCAdapt = ({
   account?: string | null
 }): CreateOTCOrderArgs => {
   return {
-    amount: Number(values.amount),
-    price: Number(values.price),
+    // amount: Number(values.amount),
+    // price: Number(values.price),
+    amount: String(values.amount),
+    price: String(values.price),
     ethAddress: account ?? '',
     orderType: values.side === 'BID' ? 'BUY' : 'SELL',
     pair: values.pair

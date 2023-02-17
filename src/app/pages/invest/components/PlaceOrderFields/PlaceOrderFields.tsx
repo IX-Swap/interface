@@ -33,6 +33,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
   }>()
 
   const { data } = useOTCMarket(pairId)
+  const decimalPlaces = data?.otc?.dso?.decimalPlaces ?? 0
 
   // TODO Uncomment after testing
   // const price = watch('price')
@@ -74,7 +75,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           variant='outlined'
           //   numberFormat={numberFormat}
           numberFormat={{
-            decimalScale: data?.otc?.dso?.decimalPlaces,
+            decimalScale: decimalPlaces < 4 ? decimalPlaces : 4,
             ...quantityNumberFormat
           }}
           defaultValue={''}

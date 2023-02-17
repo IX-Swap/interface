@@ -70,8 +70,8 @@ export interface OTCParticipant {
 
 export interface CreateOTCOrderArgs {
   orderType: 'SELL' | 'BUY'
-  price: number
-  amount: number
+  price: string | number
+  amount: string | number
   ethAddress: string
   pair: string
 }
