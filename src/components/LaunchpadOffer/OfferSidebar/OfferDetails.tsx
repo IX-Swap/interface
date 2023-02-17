@@ -137,8 +137,8 @@ export const OfferDetails: React.FC<Props> = (props) => {
               {stageStatus === OfferStageStatus.closed && 'Open dashboard '}
             </InvestButton>
           )}
-
-          <InvestHelpLink to="#">How does this work?</InvestHelpLink>
+          {/* Hide for now https://app.clickup.com/t/4733323/IXS-2512 */}
+          {/* <InvestHelpLink to="#">How does this work?</InvestHelpLink> */}
         </InvestButtonContainer>
 
         {showInvestDialog && <InvestDialog offer={props.offer} onClose={closeInvestDialog} />}
