@@ -110,7 +110,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
   const history = useHistory()
   const { isAdmin } = useRole()
 
-  const issuances = useGetIssuancePlain()
+  const issuances = useGetIssuancePlain({ forPinning: 'true' })
   const createIssunace = useCreateIssuance()
 
   const [showIssuanceDialog, setShowIssuanceDialog] = useState(false)
