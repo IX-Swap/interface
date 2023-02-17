@@ -16,6 +16,7 @@ import { ReactComponent as LinkedInLogo } from 'assets/launchpad/svg/social/link
 import { useSubscribeToOffer } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { DiscreteExternalLink } from 'theme'
+import { text1, text12, text23, text24, text25, text26, text8 } from 'components/LaunchpadMisc/typography'
 
 type ValueSetter = (field: string, value: any, shouldValidate?: boolean | undefined) => void
 
@@ -157,13 +158,11 @@ export const Footer: React.FC<Props> = (props) => {
 
 const FooterContainer = styled.div`
   margin: 5rem auto;
-
   max-width: ${(props) => props.theme.launchpad.content.maxWidth};
 `
 
 const FooterInfoContainer = styled.div`
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr auto;
   grid-template-areas:
@@ -172,70 +171,47 @@ const FooterInfoContainer = styled.div`
 
   place-content: start;
   gap: 2rem;
-
   margin-top: 4rem;
   padding-right: 4rem;
 `
 
 const SocialMediaLinks = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-
   margin-top: 2rem;
-
   gap: 3rem;
 `
 
 const SocialMediaLink = styled.a`
   display: grid;
-
   place-content: center;
-
   width: 40px;
   height: 40px;
-
   padding: 1.5rem;
-
   background: ${(props) => props.theme.launchpad.colors.foreground};
-
   border-radius: 50%;
 `
 
 const Copyright = styled.div`
   grid-area: copyright;
-
   place-self: start;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 140%;
-  letter-spacing: -0.02em;
+  ${text23}
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 
   div {
     margin-top: 0.5rem;
-
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     gap: 0.5rem;
   }
 
   a {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-
-    line-height: 140%;
-    letter-spacing: -0.02em;
+    ${text24}
 
     color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
@@ -245,63 +221,36 @@ const About = styled.div`
 
   header {
     display: flex;
-
     flex-flow: row nowrap;
     align-items: center;
-
     gap: 0.5rem;
-
     margin-bottom: 1rem;
 
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-
-    line-height: 22px;
-    letter-spacing: -0.02em;
+    ${text25}
 
     color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 
   main {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-
-    line-height: 140%;
-    letter-spacing: -0.02em;
+    ${text12}
 
     color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 `
 const Links = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: flex-start;
 
   header {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-
-    line-height: 32px;
-    letter-spacing: -0.02em;
-
+    ${text26}
     color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 
   a {
     display: block;
-
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-
-    line-height: 32px;
-    letter-spacing: -0.02em;
-
+    ${text26}
     color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 `
@@ -312,11 +261,9 @@ const FooterSeparator = styled.hr`
 
 const SubscriptionFormContainer = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-
   padding: 5rem;
   padding-bottom: 10rem;
 `
@@ -324,36 +271,23 @@ const SubscriptionFormTitle = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 64px;
-
-  text-align: center;
-
   line-height: 110%;
   letter-spacing: -0.05em;
-
+  text-align: center;
   max-width: 550px;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const SubscriptionFormSubtitle = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-
+  ${text12}
   text-align: center;
-
-  line-height: 140%;
-  letter-spacing: -0.02em;
-
   max-width: 350px;
-
   margin: 2rem 0;
-
   color: ${(props) => props.theme.launchpad.colors.text.caption};
 `
 
 const SubscriptionFormFieldContainer = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   gap: 1rem;
 `
@@ -361,9 +295,7 @@ const SubscriptionFormFieldContainer = styled.div`
 const SubscriptionFormEmailField = styled.div`
   display: flex;
   flex-direction: column;
-
   width: 480px;
-
   position: relative;
 
   :focus-within label {
@@ -373,21 +305,13 @@ const SubscriptionFormEmailField = styled.div`
 
 const SubscriptionFormEmailFieldLabel = styled.label<{ active: boolean }>`
   position: absolute;
-
   transform: translate(1.5rem, 24px) scale(1);
   ${(props) => props.active && 'transform: translate(0.5rem, 6px) scale(0.75);'}
 
   pointer-events: none;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
+  ${text8}
   color: #b8b8cc;
-
   transform-origin: top left;
   transition: all 0.2s ease-out;
 `
@@ -396,11 +320,8 @@ const SubscriptionFormEmailFieldInput = styled.input`
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-
   padding: 1rem 1.5rem;
-
   height: 60px;
-
   outline: 0;
 `
 
@@ -408,26 +329,16 @@ const SubscriptionFormSubmitButton = styled.button`
   background: ${(props) => props.theme.launchpad.colors.primary};
   color: ${(props) => props.theme.launchpad.colors.text.light};
 
-  font-style: normal;
-  font-weight: 600;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
+  ${text1}
   padding: 1rem 3rem;
-
   height: 60px;
-
   cursor: pointer;
-
   border: none;
   border-radius: 6px;
 `
 
 const ErrorText = styled.div`
   color: #ff6060;
-
   font-style: normal;
   font-weight: 500;
   font-size: 10px;

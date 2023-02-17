@@ -13,6 +13,7 @@ import { FileField } from './FileField'
 import { DeleteButton } from '../styled'
 import { DirectorInfo } from '../../Vetting/types'
 import { textFilter } from 'utils/input'
+import { text1, text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   directorTitle: string
@@ -110,13 +111,10 @@ export const DirectorField: React.FC<Props> = (props) => {
 
 const FilesRow = styled.div`
   position: relative;
-
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-
   gap: 1.5rem;
   margin-top: 1rem;
-
   grid-column: span 2;
 
   > * {
@@ -125,49 +123,30 @@ const FilesRow = styled.div`
 `
 
 const FullnameLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
+  ${text30}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const FullnameHint = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text19}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const AddDirectorButton = styled.button`
   display: grid;
-
   grid-template-rows: 10px auto;
   grid-template-columns: 10px auto;
   grid-template-areas:
     'icon title'
     'icon subtitle';
-
   place-content: start;
   place-items: start;
-
   width: max-content;
-
   background: none;
   border: none;
   border-radius: 6px;
-
   gap: 0.125rem;
   padding: 0.5rem;
-
   cursor: pointer;
-
   transition: background 0.3s;
 
   :hover {
@@ -176,27 +155,13 @@ const AddDirectorButton = styled.button`
 
   header {
     grid-area: title;
-
-    font-style: normal;
-    font-weight: 600;
-    font-size: 13px;
-
-    line-height: 16px;
-    letter-spacing: -0.02em;
-
+    ${text1}
     color: ${(props) => props.theme.launchpad.colors.primary};
   }
 
   main {
     grid-area: subtitle;
-
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-
-    line-height: 150%;
-    letter-spacing: -0.02em;
-
+    ${text19}
     text-align: left;
 
     color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};

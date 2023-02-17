@@ -4,7 +4,7 @@ import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useClaimOffer } from 'state/launchpad/hooks'
+import { useClaimOffer, useInvestedAmount } from 'state/launchpad/hooks'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
@@ -13,6 +13,8 @@ import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
 import { InvestInfoMessage, InvestSubmitState } from '../utils/InvestSubmitButton'
 import { OfferLinks } from '../utils/OfferLinks'
 import { useAddPopup } from 'state/application/hooks'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
+import { text10, text14, text27, text59, text9 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -31,10 +33,12 @@ export const ClosedStage: React.FC<Props> = (props) => {
   const canClaim = React.useMemo(() => props.offer.status === OfferStatus.claim, [])
 
   const isSuccessfull = React.useMemo(() => props.offer.softCapReached, [])
-  const amountToClaim = React.useMemo(() => Math.floor(Math.random() * Number(props.offer.maxInvestment)), [])
+
+  const { amount: amountToClaim, loading: amountLoading, error: amountError } = useInvestedAmount(props.offer.id)
 
   const onSubmit = React.useCallback(async () => {
     try {
+      // TODO: blockchain part
       await claim(isSuccessfull)
 
       addPopup({ info: { success: true, summary: 'Claimed successfully' } })
@@ -65,13 +69,17 @@ export const ClosedStage: React.FC<Props> = (props) => {
       <Row justifyContent="space-between" alignItems="center">
         <Column>
           <MyInvestmentLabel>My Investment</MyInvestmentLabel>
-          <MyInvestmentAmount>
-            {amountToClaim} {isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
-          </MyInvestmentAmount>
+          {amountLoading && <Loader />}
+          {!amountLoading && !amountError && (
+            <MyInvestmentAmount>
+              {amountToClaim ?? 0} {isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
+            </MyInvestmentAmount>
+          )}
+          {amountError}
         </Column>
 
         {!isSuccessfull && (
-          <ClaimButton disabled={!canClaim} hasInvestments={amountToClaim > 0}>
+          <ClaimButton onClick={onSubmit} disabled={!canClaim || (amountToClaim ?? 0) <= 0}>
             Claim
           </ClaimButton>
         )}
@@ -100,7 +108,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
             network={props.offer.network}
             address={isSuccessfull ? props.offer.tokenAddress : props.offer.investingTokenAddress}
             symbol={isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
-            decimals={props.offer.decimals}
+            decimals={isSuccessfull ? props.offer.decimals : props.offer.investingTokenDecimals}
           />
         </Column>
       )}
@@ -128,30 +136,18 @@ export const ClosedStage: React.FC<Props> = (props) => {
 }
 
 const Title = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: -0.04em;
+  ${text59}
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const CanClaimNotice = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
   opacity: 0.8;
   max-width: 85%;
 `
 const CantClaimNotice = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title + 'cc'};
   max-width: 70%;
 
@@ -162,11 +158,7 @@ const CantClaimNotice = styled.div`
 `
 
 const HelpLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -177,11 +169,7 @@ const HelpButton = styled.div`
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 6px;
   cursor: pointer;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: -0.02em;
+  ${text9}
   height: 60px;
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.primary};
@@ -193,29 +181,17 @@ const HelpButton = styled.div`
 `
 
 const MyInvestmentLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const MyInvestmentAmount = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: -0.02em;
+  ${text14}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
-const ClaimButton = styled.button<{ hasInvestments: boolean }>`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 18px;
-  letter-spacing: -0.02em;
+const ClaimButton = styled.button`
+  ${text27}
   height: 50px;
   cursor: pointer;
   border-radius: 6px;
@@ -223,15 +199,6 @@ const ClaimButton = styled.button<{ hasInvestments: boolean }>`
 
   ${(props) =>
     !props.disabled &&
-    props.hasInvestments &&
-    `
-    color: ${props.theme.launchpad.colors.text.light};
-    background: ${props.theme.launchpad.colors.primary};
-  `}
-
-  ${(props) =>
-    !props.disabled &&
-    !props.hasInvestments &&
     `
     color: ${props.theme.launchpad.colors.primary};
     background: ${props.theme.launchpad.colors.background};
@@ -250,23 +217,17 @@ const ClaimButton = styled.button<{ hasInvestments: boolean }>`
     !props.disabled &&
     `
     border: none;
-
     position: relative;
-
     ::before {
       position: absolute;
       top: 0;
       left: 0;
-
       width: 100%;
       height: 100%;
-
       content: '';
       opacity: 0.2;
-    
       transition: background 0.3s;
     }
-
     :hover::before {
       background: ${props.theme.launchpad.colors.text.bodyAlt};
     }

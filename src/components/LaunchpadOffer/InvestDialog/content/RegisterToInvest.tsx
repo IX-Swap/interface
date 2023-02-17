@@ -12,6 +12,7 @@ import { InvestTextField } from '../utils/InvestTextField'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
+import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -201,11 +202,8 @@ const ParticipationInterest = styled.div`
 `
 const ParticipationInterestButton = styled.button<{ active: boolean }>`
   flex-grow: 1;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
-  letter-spacing: -0.02em;
+
+  ${text9}
   border: 1px solid ${(props) => props.theme.launchpad.colors.primary};
   cursor: pointer;
   color: ${(props) => (props.active ? props.theme.launchpad.colors.text.light : props.theme.launchpad.colors.primary)};
@@ -215,20 +213,13 @@ const ParticipationInterestButton = styled.button<{ active: boolean }>`
 `
 
 const CurrencyLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: -0.02em;
+  ${text28}
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const WhitelistMessage = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: -0.04em;
+  ${text59}
+  
   text-align: center;
   max-width: 80%;
   color: ${(props) => props.theme.launchpad.colors.text.title};

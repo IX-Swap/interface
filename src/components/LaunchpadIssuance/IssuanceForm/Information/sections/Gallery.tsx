@@ -12,6 +12,7 @@ import { FormField } from '../../shared/fields/FormField'
 import { FormGrid } from '../../shared/FormGrid'
 import { IssuanceFile } from '../../types'
 import { TextareaField } from '../../shared/fields/TextareaField'
+import { text19, text20, text21, text48 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   images: IssuanceFile[]
@@ -158,6 +159,7 @@ const Title = styled.div`
   font-size: 16px;
   line-height: 130%;
   letter-spacing: -0.03em;
+
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -241,21 +243,13 @@ const ImageFieldPromptContainer = styled(ImageFileCardContainer)`
   }
 
   header {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 15px;
-    letter-spacing: -0.01em;
+    ${text21}
     text-align: center;
     color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 
   main {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 11px;
-    line-height: 15px;
-    letter-spacing: -0.02em;
+    ${text20}
     text-align: center;
     color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
   }
@@ -275,19 +269,11 @@ const DescriptionContainer = styled.div`
   grid-column: span 2;
 `
 const DescriptionLabel = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
+  ${text48}
   color: #292933;
 `
 
 const DescriptionHint = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text19}
   color: #8d8da3;
 `

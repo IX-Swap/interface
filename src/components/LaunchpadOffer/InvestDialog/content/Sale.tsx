@@ -12,6 +12,7 @@ import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
 import { Checkbox } from '../utils/Checkbox'
 import { useInvest } from 'state/launchpad/hooks'
+import { text10, text11 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -129,11 +130,7 @@ export const SaleStage: React.FC<Props> = (props) => {
 }
 
 const InfoListTitle = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -147,21 +144,13 @@ const Agreement = styled.div`
 
 const AgreementText = styled.div`
   flex-grow: 1;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text11}
   max-width: 250px;
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const AgreementTerms = styled.a`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text11}
   text-decoration: none;
   color: ${(props) => props.theme.launchpad.colors.primary};
 `

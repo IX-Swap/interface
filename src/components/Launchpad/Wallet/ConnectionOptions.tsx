@@ -1,12 +1,12 @@
-import React from "react"
-import styled, { useTheme } from "styled-components"
+import React from 'react'
+import styled, { useTheme } from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { injected } from 'connectors'
 import { useWeb3React } from '@web3-react/core'
 import { SUPPORTED_WALLETS, WalletInfo } from 'constants/wallet'
 import { ExternalLink } from 'theme'
 import MetamaskIcon from 'assets/images/metamask.png'
-
+import { text14, text8 } from 'components/LaunchpadMisc/typography'
 
 interface ConnectionOptionsProps {
   onSelect: (option: WalletInfo) => void
@@ -27,31 +27,35 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
             return null
           }
 
-          return <Option
-            key={key}
-            id={`connect-${key}`}
-            active={option.connector && option.connector === connector}
-            onClick={() => option.connector !== connector && !option.href && props.onSelect(option)}
-            color={option.color}
-            link={option.href}
-            header={option.name}
-            subheader={null}
-            icon={option.iconURL}
-          />
+          return (
+            <Option
+              key={key}
+              id={`connect-${key}`}
+              active={option.connector && option.connector === connector}
+              onClick={() => option.connector !== connector && !option.href && props.onSelect(option)}
+              color={option.color}
+              link={option.href}
+              header={option.name}
+              subheader={null}
+              icon={option.iconURL}
+            />
+          )
         }
 
         if (option.connector === injected) {
           if (!(window.web3 || window.ethereum)) {
             if (option.name === 'MetaMask') {
-              return <Option 
-                id={`connect-${key}`}
-                key={key}
-                header="Install Metamask"
-                link={'https://metamask.io/'}
-                icon={MetamaskIcon}
-                color={theme.launchpad.colors.primary} 
-                subheader={null} 
-              />
+              return (
+                <Option
+                  id={`connect-${key}`}
+                  key={key}
+                  header="Install Metamask"
+                  link={'https://metamask.io/'}
+                  icon={MetamaskIcon}
+                  color={theme.launchpad.colors.primary}
+                  subheader={null}
+                />
+              )
             } else {
               return null //dont want to return install twice
             }
@@ -60,29 +64,31 @@ export const ConnectionOptions: React.FC<ConnectionOptionsProps> = (props) => {
           }
         }
 
-        return !isMobile && !option.mobileOnly && (
-          <Option
-            id={`connect-${key}`}
-            onClick={() => {
-              props.onSelect(option)
-              // option.connector === connector
-              //   ? setWalletView(WALLET_VIEWS.ACCOUNT)
-              //   : !option.href && tryActivation(option.connector)
-            }}
-            key={key}
-            active={option.connector === connector}
-            color={option.color}
-            link={option.href}
-            header={option.name}
-            subheader={null} //use option.descriptio to bring back multi-line
-            icon={option.iconURL}
-          />
-        )}
-      )}
+        return (
+          !isMobile &&
+          !option.mobileOnly && (
+            <Option
+              id={`connect-${key}`}
+              onClick={() => {
+                props.onSelect(option)
+                // option.connector === connector
+                //   ? setWalletView(WALLET_VIEWS.ACCOUNT)
+                //   : !option.href && tryActivation(option.connector)
+              }}
+              key={key}
+              active={option.connector === connector}
+              color={option.color}
+              link={option.href}
+              header={option.name}
+              subheader={null} //use option.descriptio to bring back multi-line
+              icon={option.iconURL}
+            />
+          )
+        )
+      })}
     </OptionList>
   )
 }
-
 
 interface OptionsProps {
   link?: string | null
@@ -105,12 +111,16 @@ const Option: React.FC<OptionsProps> = (props: OptionsProps) => {
   }, [])
 
   const optionButton = (
-    <OptionContainer id={props.id} onClick={onClick} clickable={props.clickable && !props.active}> 
+    <OptionContainer id={props.id} onClick={onClick} clickable={props.clickable && !props.active}>
       <OptionLabel>
-        {props.active && (<CircleWrapper><GreenCircle /></CircleWrapper>)}
+        {props.active && (
+          <CircleWrapper>
+            <GreenCircle />
+          </CircleWrapper>
+        )}
         {props.header}
       </OptionLabel>
-      
+
       <IconWrapper size={props.size}>
         <img src={props.icon} alt={'Icon'} />
       </IconWrapper>
@@ -125,13 +135,9 @@ const Option: React.FC<OptionsProps> = (props: OptionsProps) => {
 }
 
 const PromptTitle = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 20px;
   text-align: center;
-  line-height: 24px;
-  letter-spacing: -0.02em;
-  color: ${props => props.theme.launchpad.colors.text.title};
+  ${text14}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const OptionList = styled.div`
@@ -152,11 +158,11 @@ const OptionContainer = styled.button<{ clickable?: boolean }>`
   height: 40px;
   width: 100%;
   cursor: pointer;
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
   opacity: ${({ disabled }) => (disabled ? '0.5' : '1')};
-  
+
   &:hover {
     cursor: ${({ clickable }) => (clickable ? 'pointer' : '')};
   }
@@ -164,12 +170,10 @@ const OptionContainer = styled.button<{ clickable?: boolean }>`
 
 const OptionLabel = styled.div`
   display: flex;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
-  color: ${props => props.theme.launchpad.colors.primary};
+
+  ${text8}
+
+  color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
 const GreenCircle = styled.div`
@@ -197,7 +201,8 @@ const CircleWrapper = styled.div`
 const IconWrapper = styled.div<{ size?: number | null }>`
   display: grid;
   place-content: center;
-  & > img, span {
+  & > img,
+  span {
     height: ${({ size }) => (size ? size + 'px' : '15px')};
     width: ${({ size }) => (size ? size + 'px' : '15px')};
   }

@@ -7,6 +7,7 @@ import { ReactComponent as FilterIcon } from 'assets/launchpad/svg/filter-icon.s
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
 
 import { OFFER_INDUSTRY_LABELS, OFFER_STAGE_LABELS, OFFER_TYPE_LABELS } from 'state/launchpad/constants'
+import { text8 } from 'components/LaunchpadMisc/typography'
 
 export interface FilterConfig {
   search: string
@@ -108,10 +109,7 @@ const FilterButton = styled.button`
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   font-family: ${(props) => props.theme.launchpad.font};
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text8}
+
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `

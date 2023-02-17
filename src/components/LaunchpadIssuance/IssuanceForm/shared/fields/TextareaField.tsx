@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper } from '../styled'
+import { text37, text38 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   label: string
@@ -39,36 +40,21 @@ export const TextareaField: React.FC<Props> = (props) => {
 }
 
 const FieldLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 18px;
-  letter-spacing: -0.01em;
-
+  ${text38}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const FieldPlaceholder = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 18px;
-  letter-spacing: -0.02em;
-
+  ${text37}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const Textarea = styled.textarea`
   min-height: 160px;
   max-width: 100%;
-
   padding: 1rem;
-
   outline: none;
   resize: none;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;

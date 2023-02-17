@@ -10,6 +10,7 @@ import { ContactForm } from 'components/Launchpad/KYCPrompt/ContactForm'
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
 import { ReactComponent as InfoIcon } from 'assets/launchpad/svg/req-icon.svg'
 import { ReactComponent as WarningIcon } from 'assets/launchpad/svg/warn-icon.svg'
+import { text1, text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   message?: string
@@ -101,11 +102,9 @@ const Title = styled.div<{ isRejected?: boolean }>`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: -0.01em;
+
+  ${text30}
+
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -116,11 +115,7 @@ const Title = styled.div<{ isRejected?: boolean }>`
 `
 
 export const Message = styled.div<{ isRejected?: boolean }>`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text19}
   flex: none;
   flex-grow: 0;
   margin: 0.5rem 0 0.75rem 0;
@@ -135,14 +130,12 @@ const HelpButton = styled.div`
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.error};
   border-radius: 6px;
   cursor: pointer;
-  font-style: normal;
   height: 60px;
   text-align: center;
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
-  color: #ff8282;
+
+  ${text1}
+
+  color: ${(props) => props.theme.launchpad.colors.error};
   flex: none;
   order: 0;
   flex-grow: 0;

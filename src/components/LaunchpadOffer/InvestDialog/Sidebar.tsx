@@ -6,6 +6,7 @@ import { OfferStatus } from 'state/launchpad/types'
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
 
 import { Separator, Spacer } from '../../LaunchpadMisc/styled'
+import { text10, text36 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   stage: OfferStatus
@@ -55,12 +56,7 @@ const StageList = styled.div`
 `
 
 const Stage = styled.div<{ active: boolean }>`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
+  ${text36}
 
   color: ${(props) =>
     props.active ? props.theme.launchpad.colors.primary : props.theme.launchpad.colors.text.bodyAlt};
@@ -71,20 +67,12 @@ const Help = styled.div`
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
-
   gap: 0.25rem;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
-
   padding: 0.5rem 1rem;
 `

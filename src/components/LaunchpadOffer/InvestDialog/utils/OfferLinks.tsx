@@ -10,6 +10,7 @@ import { NETWORK_NAMES, CHAIN_INFO, SupportedChainId } from 'constants/chains'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { DiscreteExternalLink } from 'theme'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { text10 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   network: OfferNetwork
@@ -79,10 +80,7 @@ const OfferLink = styled.div<{ grow?: boolean }>`
   background: ${(props) => props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
