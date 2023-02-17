@@ -21,6 +21,7 @@ import { DropdownField } from '../IssuanceForm/shared/fields/DropdownField'
 import { ConfirmPopup } from '../utils/ConfirmPopup'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
+import { text1 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   background?: string
@@ -210,9 +211,6 @@ const PinContainer = styled.div`
   flex-direction: column;
 `
 const ButtonLabel = styled.div`
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text1}
   color: ${(props) => props.theme.launchpad.colors.text.light};
 `
