@@ -1,7 +1,7 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
-  formatRoundedAmount,
+  //   formatRoundedAmount,
   getOrderCurrency,
   getRoundedPercentage,
   renderTotal
@@ -37,7 +37,8 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
     key: 'availableAmount',
     label: 'Quantity',
     align: 'center',
-    render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    // render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    render: (_, row) => row?.amount ?? 0
   },
   {
     key: 'amount',
@@ -76,7 +77,8 @@ export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
     key: 'matchedAmount',
     label: 'Quantity',
     align: 'center',
-    render: (_, row) => formatRoundedAmount(row?.matchedAmount ?? 0)
+    // render: (_, row) => formatRoundedAmount(row?.matchedAmount ?? 0)
+    render: (_, row) => row?.matchedAmount ?? 0
   },
   {
     key: 'user',
@@ -103,7 +105,8 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'amount',
     label: 'Quantity',
-    render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    // render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    render: (_, row) => row?.amount ?? 0
   },
   {
     key: 'orderType',

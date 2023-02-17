@@ -1,6 +1,6 @@
 import {
   formatMoney,
-  formatRoundedAmount,
+  //   formatRoundedAmount,
   getOrderCurrency,
   renderTotal
 } from 'helpers/numbers'
@@ -34,7 +34,8 @@ export const getColumns = (side: OrderType): Array<TableColumn<OTCOrder>> => [
   {
     key: 'availableAmount',
     label: 'Amount',
-    render: (value, row) => formatRoundedAmount(value),
+    // render: (value, row) => formatRoundedAmount(value),
+    render: (value, row) => value,
     align: 'center'
   },
   {
