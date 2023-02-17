@@ -32,12 +32,11 @@ export const InvestDialogSidebar: React.FC<Props> = (props) => {
           {idx < labels.length - 1 && <Separator key={`separator-${idx}`} />}
         </>
       ))}
-
       <Spacer />
-
-      <Help>
+      {/* Hide for now https://app.clickup.com/t/4733323/IXS-2508 */}
+      {/* <Help>
         <HelpIcon /> Help and Tips
-      </Help>
+      </Help> */}
     </StageList>
   )
 }
