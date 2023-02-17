@@ -1,3 +1,4 @@
+import { text13, text3, text50 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -11,9 +12,7 @@ interface Props {
 export const IssuanceFormStep: React.FC<React.PropsWithChildren<Props>> = (props) => {
   return (
     <StepContainer>
-      <StepNumberLabel>
-        STEP {props.stepNumber}
-      </StepNumberLabel>
+      <StepNumberLabel>STEP {props.stepNumber}</StepNumberLabel>
 
       <StepIcon>{props.icon}</StepIcon>
 
@@ -22,9 +21,7 @@ export const IssuanceFormStep: React.FC<React.PropsWithChildren<Props>> = (props
         <StepInfoDescription>{props.description}</StepInfoDescription>
       </StepInfo>
 
-      <StepAction>
-        {props.children}
-      </StepAction>
+      <StepAction>{props.children}</StepAction>
     </StepContainer>
   )
 }
@@ -32,63 +29,44 @@ export const IssuanceFormStep: React.FC<React.PropsWithChildren<Props>> = (props
 const _CenteredColumn = styled.div`
   display: flex;
   flex-flow: column nowrap;
-
   justify-content: center;
   align-items: center;
 `
 
 const StepContainer = styled(_CenteredColumn)`
-
   position: relative;
-
   gap: 2rem;
-
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default + 'cc'};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default + 'cc'};
   border-radius: 8px;
 `
 
 const StepIcon = styled.div`
   display: grid;
   place-content: center;
-
   padding: 2rem;
-
-  background: ${props => props.theme.launchpad.colors.background};
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 50%;
 `
 
 const StepInfo = styled(_CenteredColumn)`
   gap: 0.5rem;
-
   max-width: 60%;
 `
 
 const StepInfoTitle = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-
-  line-height: 130%;
-  letter-spacing: -0.03em;
+  ${text50}
 
   text-align: center;
 
-  color: ${props => props.theme.launchpad.colors.text.title};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const StepInfoDescription = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-  
+  ${text3}
   text-align: center;
-
-  color: ${props => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const StepAction = styled(_CenteredColumn)`
@@ -97,16 +75,10 @@ const StepAction = styled(_CenteredColumn)`
 
 const StepNumberLabel = styled.div`
   position: absolute;
-
   top: 2rem;
   left: 2rem;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
+  ${text13}
 
-  line-height: 13px;
-  letter-spacing: -0.02em;
-
-  color: #8F8FB2;
+  color: #8f8fb2;
 `

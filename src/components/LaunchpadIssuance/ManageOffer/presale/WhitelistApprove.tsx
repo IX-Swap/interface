@@ -7,6 +7,7 @@ import { IssuanceTextField } from '../../utils/TextField'
 import { useShowError } from 'state/application/hooks'
 import { integerNumberFilter } from '../utils'
 import { ConfirmModal } from '../shared/ConfirmModal'
+import { text1, text51 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offerId: string
@@ -145,10 +146,7 @@ const GridItem = styled.div`
   align-items: center;
 `
 const Title = styled.div`
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text51}
   color: ${(props) => props.theme.launchpad.colors.text.title};
   margin-bottom: 17px;
 `
@@ -166,11 +164,7 @@ const EndAdornment = styled.div<{ disabled: boolean }>`
   right: 32px;
   cursor: pointer;
   z-index: 20;
-
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text1}
   color: ${(props) => props.theme.launchpad.colors.primary};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `

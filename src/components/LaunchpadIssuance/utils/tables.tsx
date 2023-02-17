@@ -1,14 +1,11 @@
+import { text47 } from 'components/LaunchpadMisc/typography'
 import styled, { css } from 'styled-components'
 export const tableHeaderStyles = css`
   height: 60px;
   width: 100%;
   padding: 0.25rem 1rem;
   font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.5rem;
-  letter-spacing: -0.01em;
+  ${text47}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 export const TableHeader = styled.div`

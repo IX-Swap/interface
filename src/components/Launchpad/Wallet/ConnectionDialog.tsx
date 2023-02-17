@@ -13,6 +13,7 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
+import { text13 } from 'components/LaunchpadMisc/typography'
 
 export enum PromptView {
   options,
@@ -114,11 +115,8 @@ const AgreementNotice = styled.div`
   border-radius: 6px;
   border: 1px solid rgba(102, 102, 255, 0.3);
   padding: 1rem;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 11px;
-  line-height: 13px;
-  letter-spacing: -0.02em;
+
+  ${text13}
 
   a {
     text-decoration: underline;

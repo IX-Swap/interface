@@ -4,6 +4,7 @@ import styled, { useTheme } from 'styled-components'
 import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { ChevronDown } from 'react-feather'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
+import { text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Option<T> {
   value: T
@@ -171,9 +172,7 @@ export function DropdownField<T>(props: Props<T>) {
 
 const FieldContainer = styled.div<{ disabled?: boolean }>`
   position: relative;
-
   display: grid;
-
   grid-template-rows: repeat(2, auto);
   grid-template-columns: 1fr 10px;
   grid-template-areas:
@@ -181,10 +180,8 @@ const FieldContainer = styled.div<{ disabled?: boolean }>`
     'value icon';
 
   place-content: start center;
-
   gap: 0.25rem;
   padding: 1rem;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 
@@ -212,38 +209,20 @@ const OptionSearch = styled.input`
   background: none;
   outline: none;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
+  ${text30}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldLabel = styled.div`
   grid-area: label;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text19}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldPlaceholder = styled.div`
   grid-area: value;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
+  ${text30}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
@@ -251,51 +230,33 @@ const FieldPlaceholder = styled.div`
 const FieldSelectedValue = styled.div`
   grid-area: value;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
+  ${text30}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldOptionList = styled.div`
   position: absolute;
-
   bottom: -0.5rem;
   left: 0;
   right: 0;
-
   transform: translate(0, 100%);
-
   z-index: 30;
-
   display: flex;
-
   flex-flow: column nowrap;
   align-items: stretch;
-
   max-height: 300px;
   overflow-y: auto;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
 const FieldOption = styled.div`
   padding: 0.5rem 1rem;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
+  
+  ${text30}
+ 
   cursor: pointer;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.text.title};
 

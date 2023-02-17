@@ -6,6 +6,7 @@ import { OfferType, OfferIndustry, OfferStatus } from 'state/launchpad/types'
 
 import { ReactComponent as InvestmentApprovedIcon } from 'assets/launchpad/svg/investment-approved-icon.svg'
 import { ReactComponent as InvestmentMetaSeparator } from 'assets/launchpad/svg/investment-meta-separator.svg'
+import { text6 } from 'components/LaunchpadMisc/typography'
 
 const getTypeLabel = (type: OfferType) => {
   return OFFER_TYPE_LABELS.find((x) => x.value === type)?.label
@@ -49,11 +50,7 @@ const InvestmentCardMetaContainer = styled.div`
 `
 
 const InvestmentCardMetaEntry = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text6}
   font-family: ${(props) => props.theme.launchpad.font};
   color: ${(props) => props.theme.launchpad.colors.text.caption};
 `

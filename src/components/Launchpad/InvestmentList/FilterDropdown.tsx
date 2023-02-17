@@ -5,6 +5,7 @@ import { ChevronDown } from 'react-feather'
 
 import { ReactComponent as Checked } from 'assets/images/checked_solid.svg'
 import { ReactComponent as NotChecked } from 'assets/images/not_checked_solid.svg'
+import { text8 } from 'components/LaunchpadMisc/typography'
 
 export interface FilterOption<T> {
   label: React.ReactNode
@@ -103,11 +104,8 @@ const DropdownButton = styled.button`
   align-items: center;
   padding: 0.5rem 0.75rem;
   height: 40px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text8}
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
@@ -134,11 +132,9 @@ const DropdownOption = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text8}
+
   padding: 0.75rem 0.75rem;
   width: 100%;
   cursor: pointer;

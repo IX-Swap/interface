@@ -33,6 +33,7 @@ import { useGetOffersFull, useFormatOfferValue, useOnChangeOrder } from 'state/l
 
 import { ITEM_ROWS, OFFER_STATUSES } from '../utils/constants'
 import { DiscreteInternalLink } from 'theme'
+import { text17, text18, text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   type: string
@@ -237,45 +238,28 @@ const ActionButtons = styled.div`
 
 const PaginationRow = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
-
   justify-content: flex-end;
   align-items: center;
-
   gap: 0.5rem;
-
   height: 40px;
   max-width: 1180px;
-
   margin: 1rem auto;
 `
 
 const PageCount = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 48px;
-  letter-spacing: -0.02em;
+  ${text17}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const PageButton = styled.button`
   display: grid;
-
   place-content: center;
-
   width: 30px;
   height: 30px;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 27px;
-  letter-spacing: -0.02em;
+  ${text18}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
@@ -291,9 +275,7 @@ const PageButton = styled.button`
     !props.disabled &&
     `
     cursor: pointer;
-
     transition: all 0.3s;
-
     :hover {
       background: ${props.theme.launchpad.colors.foreground};
       transform: scale(1.1);
@@ -303,32 +285,22 @@ const PageButton = styled.button`
 
 const PageSizeDropdown = styled.div`
   position: relative;
-
   display: flex;
-
   flex-flow: row nowrap;
-
   gap: 0.25rem;
   padding: 0.5rem;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
 const PageSizeLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text19}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const PageSizeIcon = styled.div<{ isOpen: boolean }>`
   grid-area: icon;
-
   display: grid;
   place-content: center;
 
@@ -340,37 +312,23 @@ const PageSizeIcon = styled.div<{ isOpen: boolean }>`
 
 const PageSizeOptions = styled.div`
   position: absolute;
-
   bottom: -0.5rem;
   left: 0;
   right: 0;
-
   transform: translate(0, 100%);
-
   z-index: 30;
-
   display: flex;
-
   flex-flow: column nowrap;
   align-items: stretch;
-
   max-height: 300px;
   overflow-y: auto;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
 const PageSizeOption = styled.div`
   padding: 0.5rem 1rem;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
+  ${text30}
   cursor: pointer;
 
   background: ${(props) => props.theme.launchpad.colors.background};

@@ -1,3 +1,4 @@
+import { text2, text5 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -13,11 +14,12 @@ interface Props {
   margin?: string
 }
 
-
 export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
   const info = props.hoursTillClosed
-    ? `${props.hoursTillClosed > 1 ? `${props.hoursTillClosed} Hours` : 'Less than 1 Hour'}` : props.daysTillClosed
-    ? `${props.daysTillClosed} ${props.daysTillClosed > 1 ? 'Days' : 'Day'}` : null
+    ? `${props.hoursTillClosed > 1 ? `${props.hoursTillClosed} Hours` : 'Less than 1 Hour'}`
+    : props.daysTillClosed
+    ? `${props.daysTillClosed} ${props.daysTillClosed > 1 ? 'Days' : 'Day'}`
+    : null
 
   if (props.isClosed) {
     return (
@@ -25,13 +27,19 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
         <ClosedLabel>Closed</ClosedLabel>
 
         {props.isSuccesfull && (
-          <Tooltip title="Successful" body="This deal was successfully funded and reached above it’s soft cap funding goal.">
+          <Tooltip
+            title="Successful"
+            body="This deal was successfully funded and reached above it’s soft cap funding goal."
+          >
             <ClosedSuccessullyLabel>Successful</ClosedSuccessullyLabel>
           </Tooltip>
         )}
 
         {!props.isSuccesfull && (
-          <Tooltip title="Unsuccessful" body="This deal was unsuccessfully funded and did not reach above it’s soft cap funding goal.">
+          <Tooltip
+            title="Unsuccessful"
+            body="This deal was unsuccessfully funded and did not reach above it’s soft cap funding goal."
+          >
             <ClosedUnsuccessfullyLabel>Unsuccessful</ClosedUnsuccessfullyLabel>
           </Tooltip>
         )}
@@ -50,13 +58,12 @@ export const InvestmentSaleStatusInfo: React.FC<Props> = (props) => {
   return null
 }
 
-
 const BaseContainer = styled.div<{ margin?: string }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 
-  margin: ${props => props.margin ?? '1rem 0'};
+  margin: ${(props) => props.margin ?? '1rem 0'};
   padding: 0 1rem;
   height: 40px;
 
@@ -64,21 +71,12 @@ const BaseContainer = styled.div<{ margin?: string }>`
 `
 
 const ActiveContainer = styled(BaseContainer)`
-  color: #1FBA66;
+  color: #1fba66;
   background: rgba(31, 186, 102, 0.05);
   border: 1px solid rgba(31, 186, 102, 0.2);
-
   justify-content: center;
-
-  font-family: ${props => props.theme.launchpad.font};
-
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
+  font-family: ${(props) => props.theme.launchpad.font};
+  ${text5}
   .bold {
     font-weight: bold;
     padding: 0 0.25rem;
@@ -92,33 +90,20 @@ const ClosedContainer = styled(BaseContainer)`
   justify-content: space-between;
 `
 
-
 const ClosedLabel = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.caption};
+  ${text2}
+  color: ${(props) => props.theme.launchpad.colors.text.caption};
 `
 
 const ClosedStatusLabel = styled.div`
-  font-family: ${props => props.theme.launchpad.font};  
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-
-  line-height: 40px;
-  letter-spacing: -0.02em;
+  font-family: ${(props) => props.theme.launchpad.font};
+  ${text2}
 `
 
 const ClosedSuccessullyLabel = styled(ClosedStatusLabel)`
-  color: #1FBA66;
+  color: #1fba66;
 `
 
 const ClosedUnsuccessfullyLabel = styled(ClosedStatusLabel)`
-  color: #FF6060;
+  color: #ff6060;
 `

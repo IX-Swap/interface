@@ -39,6 +39,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
 import { useQueryParams } from 'hooks/useParams'
 import { textFilter } from 'utils/input'
+import { text19 } from 'components/LaunchpadMisc/typography'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -446,11 +447,7 @@ const AddDocumentButton = styled(OutlineButton)`
 `
 
 const Hint = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text19}
   text-align: right;
   color: #8d8da3;
 `
@@ -466,11 +463,7 @@ const FilesBlock = styled.div`
 const ExampleLink = styled.a`
   text-decoration: none;
   cursor: pointer;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text19}
   color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
