@@ -111,7 +111,6 @@ const DialogTitle = styled.div`
   /* identical to box height, or 26px */
 
   letter-spacing: -0.03em;
-  text-transform: capitalize;
 
   color: #292933;
 `

@@ -8,6 +8,12 @@ import { IssuanceCreateButton } from '../IssuanceCreateButton'
 
 import { Footer } from 'pages/Launchpad/Footer'
 
+const tabs = [
+  { title: 'Live', value: IssuanceFilter.live },
+  { title: 'Issuances', value: IssuanceFilter.pending },
+  { title: 'Old', value: IssuanceFilter.old },
+]
+
 interface TabsProps {
   current: IssuanceFilter
   options: { title: string; value: IssuanceFilter }[]
@@ -33,15 +39,6 @@ const IssuanceTabs: React.FC<TabsProps> = (props) => {
 
 export const IssuanceDashboard = () => {
   const [activeTab, setActiveTab] = React.useState(IssuanceFilter.pending)
-
-  const tabs = React.useMemo(
-    () => [
-      { title: 'Live', value: IssuanceFilter.live },
-      { title: 'Issuances', value: IssuanceFilter.pending },
-      { title: 'Old', value: IssuanceFilter.old },
-    ],
-    []
-  )
 
   return (
     <Container>
