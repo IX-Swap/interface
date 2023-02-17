@@ -1,7 +1,7 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
-  formatRoundedAmount,
+  //   formatRoundedAmount,
   getFilledRoundedPercentage,
   getOrderCurrency,
   renderTotal
@@ -57,7 +57,8 @@ export const columns: Array<TableColumn<OTCOrder>> = [
   {
     key: 'availableAmount',
     label: 'Amount',
-    render: (_, row) => formatRoundedAmount(row?.matches?.matchedAmount ?? 0),
+    render: (_, row) => row?.matches?.matchedAmount ?? 0,
+    // render: (_, row) => formatRoundedAmount(row?.matches?.matchedAmount ?? 0),
     align: 'center'
   },
   {

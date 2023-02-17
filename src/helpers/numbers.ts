@@ -31,12 +31,16 @@ export const addSymbol = (
 export const formatAmount = (value: number) => {
   if (value === undefined || value === null) return ''
 
-  return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  return String(Number(value).toFixed(2)).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
-export const formatRoundedAmount = (value: number) => {
+
+export const formatRoundedAmount = (value: number | string) => {
+  value = Number(value)
+
   if (value === undefined || value === null) {
     return ''
   }
+
   return Math.round(Number(value.toFixed(2)))
 }
 
