@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { useFormatOfferValue } from 'state/launchpad/hooks'
+import { text10, text8 } from 'components/LaunchpadMisc/typography'
 
 interface StylingProps {
   padding?: string
@@ -123,11 +124,7 @@ const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height'> 
 `
 
 const Label = styled.label`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
@@ -150,11 +147,9 @@ const Trailing = styled.div`
 
 const Caption = styled.div`
   grid-area: caption;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  letter-spacing: -0.02em;
+
+  ${text8}
+
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 

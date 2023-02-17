@@ -8,6 +8,7 @@ import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
 import { useDropzone } from 'react-dropzone'
 import { IssuanceFile } from '../../types'
+import { text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   label?: React.ReactNode
@@ -104,32 +105,19 @@ export const FileField: React.FC<Props> = (props) => {
 }
 
 const FieldLabel = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
+  ${text30}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const FieldHint = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
+  ${text19}
 
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const FieldWrapper = styled.div<{ borderless?: boolean }>`
   display: flex;
-
   flex-flow: row nowrap;
   align-items: center;
-
   gap: 0.5rem;
   padding: 1.5rem 2rem;
 
@@ -142,13 +130,7 @@ const FieldWrapper = styled.div<{ borderless?: boolean }>`
 `
 
 const Prompt = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
+  ${text30}
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -24,6 +24,7 @@ import { useGetIssuance, useGetIssuancePlain } from 'state/launchpad/hooks'
 import { routes } from 'utils/routes'
 import { DiscreteInternalLink } from 'theme'
 import { useQueryParams } from 'hooks/useParams'
+import { text30, text42, text53 } from 'components/LaunchpadMisc/typography'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -343,7 +344,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
-
   gap: 1rem;
   max-width: 1180px;
   padding: 1rem;
@@ -375,7 +375,6 @@ const FormContainer = styled.div`
 const IssuanceNameContainer = styled.div`
   grid-area: name;
   position: relative;
-
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -388,12 +387,7 @@ const IssuanceNameContainer = styled.div`
 `
 
 const IssuanceName = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.25rem;
-  letter-spacing: -0.01em;
-
+  ${text42}
   width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -404,22 +398,15 @@ const IssuanceName = styled.div`
 
 const FormTitle = styled.div`
   grid-area: title;
-
   place-self: center start;
 
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-
-  line-height: 120%;
-  letter-spacing: -0.03em;
+  ${text53}
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const BackButton = styled(FilledButton)`
   grid-area: back;
-
   padding: 0;
 
   background: ${(props) => props.theme.launchpad.colors.background};
@@ -452,20 +439,14 @@ const ContactEmail = styled.a`
 
 const IssuanceList = styled.div`
   position: absolute;
-
   bottom: -0.5rem;
   left: 0;
   right: 0;
-
   transform: translate(0, 100%);
-
   z-index: 30;
-
   display: flex;
-
   flex-flow: column nowrap;
   align-items: stretch;
-
   max-height: 300px;
   overflow-y: auto;
 
@@ -475,14 +456,7 @@ const IssuanceList = styled.div`
 
 const IssuanceEntry = styled.div`
   padding: 0.5rem 1rem;
-
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 17px;
-  letter-spacing: -0.01em;
-
+  ${text30}
   cursor: pointer;
 
   background: ${(props) => props.theme.launchpad.colors.background};
@@ -495,45 +469,33 @@ const IssuanceEntry = styled.div`
 
 const LoaderContainer = styled.div`
   position: absolute;
-
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
   display: grid;
-
   place-content: center;
 `
 
 const ModalWrapper = styled.div`
   display: grid;
   place-content: center;
-
   position: fixed;
   top: 0;
   left: 0;
-
   width: 100vw;
   height: 100vh;
-
   z-index: 50;
-
   backdrop-filter: blur(20px);
 `
 
 const ContactFormWrapper = styled.div`
   display: flex;
-
   flex-flow: column nowrap;
   align-items: center;
-
   gap: 1rem;
-
   position: relative;
-
   width: 480px;
-
   background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 8px;
   padding: 2rem;

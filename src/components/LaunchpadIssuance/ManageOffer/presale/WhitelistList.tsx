@@ -21,6 +21,7 @@ import { EmptyTable } from 'components/LaunchpadIssuance/utils/EmptyTable'
 import { IssuancePagination } from 'components/LaunchpadIssuance/IssuanceDashboard/IssuancePagination'
 import { ExtractButton, ExtractText, HeaderLabel, TableTitle } from '../shared/styled'
 import { DiscreteInternalLink } from 'theme'
+import { text46 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   data: PaginationRes<OfferPresaleWhitelist>
@@ -208,10 +209,7 @@ const ButtonLabel = styled.span<{ disabled: boolean }>`
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `
 const SelectAll = styled.div<{ disabled: boolean }>`
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 48px;
-  letter-spacing: -0.01em;
+  ${text46}
   color: ${(props) => props.theme.launchpad.colors.primary};
   cursor: pointer;
   text-align: right;

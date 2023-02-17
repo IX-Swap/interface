@@ -8,6 +8,7 @@ import { routes } from 'utils/routes'
 import { Link } from 'react-router-dom'
 import { isDevelopment } from 'utils/isEnvMode'
 import { useKyc, useRole } from 'state/user/hooks'
+import { text29, text57, text8 } from 'components/LaunchpadMisc/typography'
 
 export const Header = () => {
   const { isCorporate, isApproved } = useKyc()
@@ -92,38 +93,19 @@ const TitleSection = styled(Link)`
   }
 
   .bold-title {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 18px;
-
-    line-height: 22px;
-    letter-spacing: -0.03em;
-
+    ${text57}
     color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 
   .dimmed-title {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-
-    line-height: 22px;
-    letter-spacing: -0.02em;
-
+    ${text29}
     color: ${(props) => props.theme.launchpad.colors.text.caption};
   }
 `
 
 const HeaderLink = styled(Link)`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
+  ${text8}
   text-decoration: none;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
   color: ${(props) => props.theme.launchpad.colors.text.title};
 
   transition: transform 0.1s ease-in-out;

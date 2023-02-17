@@ -7,6 +7,13 @@ import { OffersFull } from './OffersFull'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 
 import { Footer } from 'pages/Launchpad/Footer'
+import { text8 } from 'components/LaunchpadMisc/typography'
+
+const tabs = [
+  { title: 'Live', value: IssuanceFilter.live },
+  { title: 'Issuances', value: IssuanceFilter.pending },
+  { title: 'Old', value: IssuanceFilter.old },
+]
 
 interface TabsProps {
   current: IssuanceFilter
@@ -33,15 +40,6 @@ const IssuanceTabs: React.FC<TabsProps> = (props) => {
 
 export const IssuanceDashboard = () => {
   const [activeTab, setActiveTab] = React.useState(IssuanceFilter.pending)
-
-  const tabs = React.useMemo(
-    () => [
-      { title: 'Live', value: IssuanceFilter.live },
-      { title: 'Issuances', value: IssuanceFilter.pending },
-      { title: 'Old', value: IssuanceFilter.old },
-    ],
-    []
-  )
 
   return (
     <Container>
@@ -72,20 +70,16 @@ const Container = styled.article`
 
 const Header = styled.header`
   height: 80px;
-
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `
 
 const TabRow = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-
   height: 100%;
-
   max-width: 1180px;
   margin: auto;
 `
@@ -93,32 +87,24 @@ const TabRow = styled.div`
 const Body = styled.main`
   display: flex;
   flex-flow: column nowrap;
-
   gap: 1rem;
-
   margin: 2rem;
 `
 
 const Tabs = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-
   gap: 1rem;
-
   height: 100%;
 `
 
 const Tab = styled.div<{ active: boolean }>`
   display: grid;
   place-content: center;
-
   padding: 0.25rem 1rem;
-
   height: 100%;
-
   cursor: pointer;
 
   ${(props) =>
@@ -129,12 +115,7 @@ const Tab = styled.div<{ active: boolean }>`
 
   font-family:  ${(props) => props.theme.launchpad.font};
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
+  ${text8}
 
   color: ${(props) =>
     props.active ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.bodyAlt};
