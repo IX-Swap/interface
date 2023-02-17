@@ -31,23 +31,22 @@ export const InvestDialogSidebar: React.FC<Props> = (props) => {
           {idx < labels.length - 1 && <Separator key={`separator-${idx}`} />}
         </>
       ))}
-
       <Spacer />
-
-      <Help>
+      {/* Hide for now https://app.clickup.com/t/4733323/IXS-2508 */}
+      {/* <Help>
         <HelpIcon /> Help and Tips
-      </Help>
+      </Help> */}
     </StageList>
   )
 }
 
 const StageList = styled.div`
   display: flex;
-  
+
   flex-flow: column nowrap;
   align-items: stretch;
 
-  background: ${props => props.theme.launchpad.colors.foreground};
+  background: ${(props) => props.theme.launchpad.colors.foreground};
   border-radius: 16px 0 0 16px;
 
   height: 100%;
@@ -63,9 +62,8 @@ const Stage = styled.div<{ active: boolean }>`
   line-height: 40px;
   letter-spacing: -0.02em;
 
-  color: ${props => props.active 
-    ? props.theme.launchpad.colors.primary 
-    : props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) =>
+    props.active ? props.theme.launchpad.colors.primary : props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const Help = styled.div`
@@ -83,9 +81,9 @@ const Help = styled.div`
   line-height: 150%;
   letter-spacing: -0.02em;
 
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 
   padding: 0.5rem 1rem;
