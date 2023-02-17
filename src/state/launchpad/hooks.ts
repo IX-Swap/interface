@@ -303,7 +303,7 @@ export const useCreateIssuance = () => {
   )
 }
 
-export const useGetIssuancePlain = (params?: { showAll: string }) => {
+export const useGetIssuancePlain = (params?: { showAll?: string; forPinning?: string }) => {
   const loader = useLoader()
 
   const [items, setItems] = React.useState<IssuancePlain[]>([])
@@ -312,7 +312,7 @@ export const useGetIssuancePlain = (params?: { showAll: string }) => {
     loader.start()
 
     return apiService
-      .get('/issuances/plain', undefined, { ...params, forPinning: 'true' })
+      .get('/issuances/plain', undefined, params)
       .then((res) => res.data as IssuancePlain[])
       .then(setItems)
       .then(loader.stop)

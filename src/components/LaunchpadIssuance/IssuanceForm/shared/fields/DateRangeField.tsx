@@ -6,25 +6,23 @@ import { CalendarPicker } from '../Calendar'
 import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { text19, text30, text40 } from 'components/LaunchpadMisc/typography'
+import { FilledButton } from 'components/LaunchpadMisc/buttons'
+import { RowEnd } from 'components/Row'
 
 type DateRange = moment.Moment[]
 type DateRangeValue = Date[]
 
 interface Props {
   mode: 'single' | 'range'
-
   label: string
   error?: string
-
   value?: Date | DateRange
   disabled?: boolean
-
   minDate?: Date
-
   field?: string
   setter?: (field: string, value: any) => void
   onChange?: (range: DateRangeValue) => void
-
+  showButton?: boolean
   dateFormat?: string
 }
 
@@ -129,6 +127,11 @@ export const DateRangeField: React.FC<Props> = (props) => {
 
           <CalendarPicker minDate={props.minDate} current={nextMonth} selectedRange={range} onSelect={onSelect} />
         </DatePicker>
+        {props.showButton && (
+          <RowEnd>
+            <FilledButton onClick={toggle}>Confirm</FilledButton>
+          </RowEnd>
+        )}
       </IssuanceDialog>
 
       {props.error && <ErrorText>{props.error}</ErrorText>}
