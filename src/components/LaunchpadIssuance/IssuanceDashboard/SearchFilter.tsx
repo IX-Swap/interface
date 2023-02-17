@@ -6,6 +6,7 @@ import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.s
 
 export interface SearchConfig {
   search: string
+  onlyMine?: string
 }
 
 export interface OrderConfig {

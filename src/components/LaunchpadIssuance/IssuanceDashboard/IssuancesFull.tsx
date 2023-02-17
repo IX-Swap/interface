@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
@@ -17,20 +17,25 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
 
 import { useGetIssuances, useOnChangeOrder } from 'state/launchpad/hooks'
 import { IssuancePagination } from './IssuancePagination'
 import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
 import { DiscreteInternalLink } from 'theme'
+import { useRole } from 'state/user/hooks'
+import { BaseCheckbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
+import { text1, text53 } from 'components/LaunchpadMisc/typography'
 
 export const IssuancesFull = () => {
   const theme = useTheme()
   const history = useHistory()
   const getIssuances = useGetIssuances()
+  const { isAdmin } = useRole()
 
   const [loading, setLoading] = React.useState<boolean>(true)
   const [issuances, setIssuances] = React.useState<Issuance[]>([])
+  const [showMine, setShowMine] = React.useState<boolean>(false)
 
   const [page, setPage] = React.useState(1)
   const [totalPages, setTotalPages] = React.useState(0)
@@ -59,7 +64,7 @@ export const IssuancesFull = () => {
       : IssuanceStatus.inProgress
   }, [])
 
-  const veiwItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
+  const viewItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
 
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
@@ -95,16 +100,36 @@ export const IssuancesFull = () => {
       .finally(() => setLoading(false))
   }, [filter, order, page, pageSize])
 
-  if (issuances) {
-    // disabled={!issuance.isMine}
-    console.log(
-      'avocado issuances',
-      issuances.map((item) => item.isMine)
-    )
-  }
+  const getManageUrl = useCallback(
+    (issuance: Issuance) => {
+      if (!isAdmin || !issuance.isMine) return ''
+      const showOffer = issuance.vetting && issuance.vetting.status === IssuanceStatus.approved
+      return showOffer ? `issuance/create/information?id=${issuance.id}` : `issuance/create/vetting?id=${issuance.id}`
+    },
+    [isAdmin]
+  )
+
+  const toggle = () => setShowMine((state) => !state)
+
+  useEffect(() => {
+    setFilter({
+      search: filter?.search || '',
+      onlyMine: showMine ? 'true' : 'false',
+    })
+  }, [showMine])
+
   return (
     <Container>
-      <TableTitle>Issuances</TableTitle>
+      <TitleBox>
+        <TableTitle>Issuances</TableTitle>
+        {isAdmin && (
+          <CheckBoxContainer onClick={toggle}>
+            <BaseCheckbox state={showMine} toggle={() => null} />
+            <CheckBoxLabel>Show only mine</CheckBoxLabel>
+          </CheckBoxContainer>
+        )}
+      </TitleBox>
+
       <SearchFilter onFilter={setFilter} />
 
       {!loading && issuances?.length === 0 && <EmptyTable />}
@@ -147,20 +172,22 @@ export const IssuancesFull = () => {
                   <OutlineButton
                     color={theme.launchpad.colors.primary + '80'}
                     height="34px"
-                    onClick={() => veiwItem(issuance.id)}
+                    onClick={() => viewItem(issuance.id)}
                   >
                     View Application <Eye size="15" color={theme.launchpad.colors.primary} />
                   </OutlineButton>
 
-                  <OutlineButton
-                    color={theme.launchpad.colors.primary + '80'}
-                    borderType="tiny"
-                    height="34px"
-                    as={DiscreteInternalLink}
-                    to={`/issuance/manage/${issuance.id}`}
-                  >
-                    <GearIcon />
-                  </OutlineButton>
+                  {isAdmin && !!issuance.isMine && (
+                    <OutlineButton
+                      color={theme.launchpad.colors.primary + '80'}
+                      borderType="tiny"
+                      height="34px"
+                      as={DiscreteInternalLink}
+                      to={getManageUrl(issuance)}
+                    >
+                      <GearIcon />
+                    </OutlineButton>
+                  )}
                 </ActionButtons>
               </IssuanceRow>
             ))}
@@ -184,5 +211,33 @@ const Container = styled.article`
 `
 const ActionButtons = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+`
+
+const TitleBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: auto;
+  max-width: 1180px;
+`
+
+export const TableTitle = styled.div`
+  ${text53}
+
+  padding: 0 0 1.25rem;
+  font-family: ${(props) => props.theme.launchpad.font};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+`
+
+const CheckBoxContainer = styled.div`
+  display: flex;
+  gap: 6px;
+  cursor: pointer;
+`
+const CheckBoxLabel = styled.div`
+  ${text1}
+  color: ${(props) => props.theme.launchpad.colors.primary};
 `
