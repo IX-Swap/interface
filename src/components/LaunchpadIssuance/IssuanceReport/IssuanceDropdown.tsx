@@ -13,7 +13,7 @@ export const IssuanceDropdown = () => {
 
   const { issuanceId } = useParams<{ issuanceId: string }>()
   const { isAdmin } = useRole()
-  const { items } = useGetIssuancePlain({ showAll: `${isAdmin}` })
+  const { items } = useGetIssuancePlain({ showAll: `${isAdmin}`, forPinning: 'true' })
   const chooseIssuance = (_: string, value: any) => {
     history.push(populatePath({ url: routes.issuanceReport, field: 'issuanceId', value }))
   }
