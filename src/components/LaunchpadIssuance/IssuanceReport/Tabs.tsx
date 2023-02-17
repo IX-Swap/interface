@@ -1,3 +1,4 @@
+import { text8 } from 'components/LaunchpadMisc/typography'
 import { useQueryParams, useSetQueryParams } from 'hooks/useParams'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
@@ -63,12 +64,9 @@ export const Tab = styled.div<{ active: boolean }>`
       : `
     border-bottom: 1px solid ${props.theme.launchpad.colors.border.default};
   `}
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
+
+  ${text8}
   width: 50%;
-  line-height: 16px;
-  letter-spacing: -0.02em;
   color: ${(props) =>
     props.active ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.bodyAlt};
 `

@@ -11,6 +11,7 @@ import { SaleStage } from './content/Sale'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 
 import { InvestDialogSidebar } from './Sidebar'
+import { text26 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   offer: Offer
@@ -20,7 +21,7 @@ interface Props {
 enum StageForm {
   register,
   sale,
-  closed
+  closed,
 }
 
 export const InvestDialog: React.FC<Props> = (props) => {
@@ -30,11 +31,11 @@ export const InvestDialog: React.FC<Props> = (props) => {
     switch (props.offer.status) {
       case OfferStatus.whitelist:
         return StageForm.register
-        
+
       case OfferStatus.preSale:
       case OfferStatus.sale:
         return StageForm.sale
-        
+
       case OfferStatus.closed:
       case OfferStatus.claim:
         return StageForm.closed
@@ -75,15 +76,11 @@ export const InvestDialog: React.FC<Props> = (props) => {
 const ModalWrapper = styled.div`
   display: grid;
   place-content: center;
-  
   position: fixed;
-
   top: 0;
   left: 0;
-
   width: 100vw;
   height: 100vh;
-
   z-index: 30;
 
   background: rgba(6, 6, 40, 0.6);
@@ -95,11 +92,11 @@ const DialogContainer = styled.article`
 
   grid-template-columns: 200px 500px;
   grid-template-rows: 60px 1fr;
-  grid-template-areas: 
-    "sidebar header"
-    "sidebar content";
+  grid-template-areas:
+    'sidebar header'
+    'sidebar content';
 
-  background: ${props => props.theme.launchpad.colors.background};
+  background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 16px;
 
   max-width: 700px;
@@ -129,7 +126,6 @@ const DialogContainer = styled.article`
 
 const DialogHeader = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: flex-around;
   align-items: center;
@@ -137,31 +133,19 @@ const DialogHeader = styled.div`
 
 const DialogHeaderTitle = styled.div`
   flex-grow: 1;
-
   text-align: center;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-
-  line-height: 32px;
-  letter-spacing: -0.02em;
-
-  color: ${props => props.theme.launchpad.colors.text.bodyAlt};
+  ${text26}
+  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 const DialogHeaderExit = styled.button`
   display: grid;
   place-content: center;
-
   flex-shrink: 1;
-
   border: none;
   background: none;
-
   cursor: pointer;
-
   max-height: fit-content;
-
   padding: 0;
   margin: 0;
 `

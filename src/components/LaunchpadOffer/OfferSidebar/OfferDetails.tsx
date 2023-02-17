@@ -26,6 +26,7 @@ import { shortenAddress } from 'utils'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { nameChainMap } from 'constants/chains'
 import { ExternalLink } from 'theme'
+import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 interface Props {
   offer: Offer
 }
@@ -244,13 +245,7 @@ const OfferSidebarSummary = styled.div`
 `
 
 const OfferFundRaiseLabel = styled.div`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-
-  line-height: 160%;
-  letter-spacing: -0.02em;
-
+  ${text33}
   color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
@@ -258,7 +253,6 @@ const OfferInvestmentAmount = styled.div`
   font-style: normal;
   font-weight: 800;
   font-size: 48px;
-
   line-height: 120%;
   letter-spacing: -0.03em;
 
@@ -285,19 +279,13 @@ const Participants = styled.div`
     align-items: center;
     gap: 0.5rem;
 
-    font-weight: 400;
-    font-size: 13px;
-
-    line-height: 16px;
-    letter-spacing: -0.02em;
-
+    ${text6}
     color: ${(props) => props.theme.launchpad.colors.text.body};
   }
 
   main {
     font-weight: 800;
     font-size: 32px;
-
     line-height: 120%;
     letter-spacing: -0.03em;
 
@@ -317,13 +305,7 @@ const InvestButtonContainer = styled.div`
 `
 
 const InvestHelpLink = styled(Link)`
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
+  ${text6}
   color: ${(props) => props.theme.launchpad.colors.primary};
 
   text-decoration: none;
@@ -338,43 +320,26 @@ const InvestButton = styled.button`
   background: ${(props) => props.theme.launchpad.colors.primary};
 
   cursor: pointer;
-
   border: none;
   border-radius: 6px;
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-
-  line-height: 19px;
-  letter-spacing: -0.02em;
+  ${text9}
 `
 
 const TokenInfo = styled.div`
   display: grid;
-
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-
   gap: 1rem;
 `
 
 const TokenInfoCard = styled.div`
   display: flex;
-
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-
   height: 36px;
 
-  font-style: normal;
-  font-weight: 500;
-  font-size: 13px;
-
-  line-height: 150%;
-  letter-spacing: -0.02em;
-
+  ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};

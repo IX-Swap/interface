@@ -1,6 +1,7 @@
 import React from 'react'
 import Portal from '@reach/portal'
 import styled from 'styled-components'
+import { text2, text7 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   title: React.ReactNode
@@ -117,23 +118,12 @@ const TooltipContainer = styled.article<{ x: number; y: number }>`
   padding: 1.5rem;
 
   header {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-
-    line-height: 40px;
-    letter-spacing: -0.02em;
-
+    ${text2}
     color: ${(props) => props.theme.launchpad.colors.text.title};
   }
 
   main {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-
-    line-height: 160%;
-    letter-spacing: -0.02em;
+    ${text7}
 
     color: ${(props) => props.theme.launchpad.colors.text.body};
   }

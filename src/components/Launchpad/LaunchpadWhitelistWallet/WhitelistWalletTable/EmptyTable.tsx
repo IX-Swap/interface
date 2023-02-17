@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issuances.svg'
 
 import { Column } from 'components/LaunchpadMisc/styled'
+import { text50 } from 'components/LaunchpadMisc/typography'
 
 export const EmptyTable = () => {
   return (
@@ -31,12 +32,7 @@ const Container = styled.div`
 `
 
 const NoItemsTitle = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
-
+  ${text50}
   text-align: center;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
