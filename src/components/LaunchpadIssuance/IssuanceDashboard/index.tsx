@@ -117,9 +117,6 @@ const Tab = styled.div<{ active: boolean }>`
 
   ${text8}
 
-  line-height: 16px;
-  letter-spacing: -0.02em;
-
   color: ${(props) =>
     props.active ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.bodyAlt};
 `
