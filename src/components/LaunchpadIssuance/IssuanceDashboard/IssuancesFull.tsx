@@ -7,7 +7,7 @@ import { Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
 
-import { AbstractOrder, Issuance } from 'state/launchpad/types'
+import { AbstractOrder, Issuance, OfferStatus } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
@@ -25,6 +25,19 @@ import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
 import { DiscreteInternalLink } from 'theme'
 import { useRole } from 'state/user/hooks'
 import { TitleBox } from './TitleBox'
+import { routes } from 'utils/routes'
+
+const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
+  if (!isMine) return ''
+  const query = `?id=${id}`
+  if (!vetting || vetting.status !== IssuanceStatus.approved) {
+    return `${routes.createVetting}${query}`
+  }
+  if (!vetting.offer || vetting.offer.status !== IssuanceStatus.pendingApproval) {
+    return `${routes.createOffer}${query}`
+  }
+  return `${routes.editOffer}${query}`
+}
 
 export const IssuancesFull = () => {
   const theme = useTheme()
@@ -100,9 +113,8 @@ export const IssuancesFull = () => {
 
   const getManageUrl = useCallback(
     (issuance: Issuance) => {
-      if (!isAdmin || !issuance.isMine) return ''
-      const showOffer = issuance.vetting && issuance.vetting.status === IssuanceStatus.approved
-      return showOffer ? `issuance/create/information?id=${issuance.id}` : `issuance/create/vetting?id=${issuance.id}`
+      if (!isAdmin) return ''
+      return getIssuanceManageUrl(issuance)
     },
     [isAdmin]
   )
