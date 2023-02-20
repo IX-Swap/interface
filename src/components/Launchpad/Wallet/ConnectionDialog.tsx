@@ -73,8 +73,9 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
 
   return (
     <ModalContainer>
-      <ExitIconContainer onClick={props.onClose}></ExitIconContainer>
-      <CrossIcon />
+      <ExitIconContainer onClick={props.onClose}>
+        <CrossIcon />
+      </ExitIconContainer>
       {walletView === PromptView.options && (
         <>
           <ConnectionOptions onSelect={onSelect} />
