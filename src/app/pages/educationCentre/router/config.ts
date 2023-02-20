@@ -8,16 +8,16 @@ export const EducationCentreRoute = {
 }
 
 export const educationCentreLinks: InternalRouteProps[] = [
-  {
-    label: 'News',
-    path: EducationCentreRoute.news
-  },
+  //   {
+  //     label: 'News',
+  //     path: EducationCentreRoute.news
+  //   },
   {
     label: 'Reports',
     path: EducationCentreRoute.reports
-  },
-  {
-    label: 'Research Terminal',
-    path: EducationCentreRoute.securitiesMarkets
   }
+  //   {
+  //     label: 'Research Terminal',
+  //     path: EducationCentreRoute.securitiesMarkets
+  //   }
 ]
