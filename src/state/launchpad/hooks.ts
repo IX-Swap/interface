@@ -941,7 +941,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
     } else if (!offer.loading && offer.data) {
       transform(offer.data).then(setValues).then(loader.stop)
     }
-  }, [offer.loading])
+  }, [offer.loading, offer.data])
 
   const transform = React.useCallback(async (payload: Offer): Promise<InformationFormValues> => {
     const files = await Promise.all([
@@ -1188,7 +1188,7 @@ export const useSubmitOffer = () => {
 
         return result
       }
-      
+
       data = filter(data)
 
       if (offerId) {

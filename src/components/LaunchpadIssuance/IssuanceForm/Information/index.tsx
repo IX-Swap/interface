@@ -60,6 +60,7 @@ import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
 import { getDaysAfter } from 'utils/time'
 import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
+import { numberFilter, uppercaseFilter } from 'utils/input'
 
 interface Props {
   edit?: boolean
@@ -143,20 +144,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       setShowCloseDialog(true)
     }
   }, [history])
-
-  const numberFilter = React.useCallback((value?: string) => {
-    if (!value) {
-      return ''
-    }
-
-    const [whole, ...decimals] = value
-      .split('')
-      .filter((x) => /[0-9.]/.test(x))
-      .join('')
-      .split('.')
-
-    return whole + (decimals.length > 0 ? `.${decimals.join('')}` : '')
-  }, [])
 
   const setPresale = React.useCallback((value: boolean, setter: (field: string, value: any) => void) => {
     setter('timeframe.whitelist', undefined)
@@ -391,7 +378,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   touch={setFieldTouched}
                   label="Token Name"
-                  placeholder="Must be the same as the issuance name"
+                  placeholder="Is usually the same as the issuance name"
                   disabled={props.edit}
                   value={values.tokenName}
                   error={(touched.tokenName && errors.tokenName) as string}
@@ -401,8 +388,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   touch={setFieldTouched}
                   label="Token Ticker"
-                  placeholder="2-6 alphanumeric characters"
+                  placeholder="2-6 letters"
                   disabled={props.edit}
+                  inputFilter={uppercaseFilter}
                   value={values.tokenTicker}
                   error={(touched.tokenTicker && errors.tokenTicker) as string}
                 />

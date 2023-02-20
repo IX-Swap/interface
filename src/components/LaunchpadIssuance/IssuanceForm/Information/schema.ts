@@ -10,8 +10,19 @@ import {
   OfferTokenStandart,
 } from 'state/launchpad/types'
 import { OfferTokenType } from './types'
+import { isEthChainAddress } from 'utils'
 
 const fileSchema = yup.mixed()
+const REQUIRED = 'Required'
+
+//String sizes
+const STRING_HUGE = 65535
+const STRING_BIG = 1000
+const STRING_NORMAL = 255
+const STRING_SMALL = 10
+
+const getLongerThanOrEqual = (field: string, chars: number) => `${field} should have at least ${chars} characters`
+const getHaveAtMost = (field: string, chars: number) => `${field} should have at most ${chars} characters`
 
 const limitedSizeFileSchema = fileSchema.test('fileSize', 'File is too large', (value) => {
   if (!value?.length) return true
@@ -19,7 +30,7 @@ const limitedSizeFileSchema = fileSchema.test('fileSize', 'File is too large', (
   return value[0].size <= 5 * 1024 * 1024
 })
 
-const requiredFileSchema = limitedSizeFileSchema.required('File required')
+const requiredFileSchema = limitedSizeFileSchema.required(REQUIRED)
 
 const countryCodes = getCodes()
 
@@ -28,7 +39,7 @@ const checkMaxGreaterThanMinimum = function (minimum: string, maximum: string) {
     return true
   }
 
-  if (Number(maximum) <= Number(minimum)) {
+  if (Number(maximum) < Number(minimum)) {
     return false
   }
 
@@ -40,7 +51,7 @@ const checkMinSmallerThanMaximum = function (minimum: string, maximum: string) {
     return true
   }
 
-  if (Number(minimum) >= Number(maximum)) {
+  if (Number(minimum) > Number(maximum)) {
     return false
   }
 
@@ -50,44 +61,51 @@ const checkMinSmallerThanMaximum = function (minimum: string, maximum: string) {
 export const schema = yup.object().shape({
   shortDescription: yup
     .string()
-    .required('Required')
-    .min(10, 'Short Description must be longer than or equal to 10 characters'),
+    .required(REQUIRED)
+    .min(STRING_SMALL, getLongerThanOrEqual('Short Description', STRING_SMALL)),
+
   longDescription: yup
     .string()
-    .required('Required')
-    .min(10, 'Description must be longer than or equal to 10 characters'),
+    .required(REQUIRED)
+    .min(STRING_SMALL, getLongerThanOrEqual('Description', STRING_SMALL))
+    .max(STRING_HUGE, getHaveAtMost('Description', STRING_HUGE)),
 
-  title: yup.string().required('Offer name required'),
-
-  network: yup.string().oneOf(Object.values(OfferNetwork)).required('Network required'),
-  industry: yup.string().oneOf(Object.values(OfferIndustry)).required('Industry required'),
-  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required('Investment Type required'),
-  country: yup.string().required('Country required').oneOf(countryCodes, 'Select a country from the list'),
-
-  issuerIdentificationNumber: yup
+  title: yup
     .string()
-    .required('Enter company identification number')
-    .min(8, 'Identification number should be at least 8 characters'),
+    .min(2, getLongerThanOrEqual('Name of issuance', 2))
+    .max(STRING_NORMAL, getHaveAtMost('Name of issuance', STRING_NORMAL))
+    .required(REQUIRED),
 
-  tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required('Token type required'),
-  tokenName: yup.string().required('Token name required'),
+  network: yup.string().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
+  industry: yup.string().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
+  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
+  country: yup.string().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
+
+  issuerIdentificationNumber: yup.string().required(REQUIRED).min(8, getLongerThanOrEqual('Identification number', 8)),
+
+  tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
+  tokenName: yup.string().required(REQUIRED),
   tokenTicker: yup
     .string()
-    .required('Token Ticker required')
-    .min(2, 'Token symbol should at least 2 charachters')
-    .max(6, 'Token symbol should be at most 6 charachters'),
-  tokenPrice: yup.string().required('Enter token price'),
-  tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required('Token standart required'),
+    .required(REQUIRED)
+    .min(2, getLongerThanOrEqual('Token symbol', 2))
+    .max(6, 'Token symbol should be at most 6 charachters')
+    .matches(/^[a-zA-Z]+$/, { message: 'Please enter only letters' }),
+  tokenPrice: yup.string().required(REQUIRED),
+  tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
-  // investingTokenAddress: yup.string().matches(/0x[0-9a-fA-F]+/),
-  // investingTokenSymbol: yup.string(),
 
   decimals: yup.number().min(0).max(50),
-  trusteeAddress: yup.string().matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
+  trusteeAddress: yup
+    .string()
+    .test('addressConstraint', 'Please enter a valid address', function () {
+      return Boolean(isEthChainAddress(this.parent.trusteeAddress))
+    })
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
   softCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')
-    .required('Required')
+    .required(REQUIRED)
     .test('softCapConstraint', 'Minimum amount to raise should be smaller than total amolunt', function ():
       | boolean
       | yup.ValidationError {
@@ -96,7 +114,7 @@ export const schema = yup.object().shape({
   hardCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')
-    .required('Required')
+    .required(REQUIRED)
     .test('hardCapConstraint', 'Total amount to raise should be greater than minimum amount', function ():
       | boolean
       | yup.ValidationError {
@@ -105,7 +123,7 @@ export const schema = yup.object().shape({
 
   minInvestment: yup
     .string()
-    .required('Required')
+    .required(REQUIRED)
     .test('minInvestmentConstraint', 'Mininimal investment should be smaller than maximal investment', function ():
       | boolean
       | yup.ValidationError {
@@ -114,20 +132,20 @@ export const schema = yup.object().shape({
 
   maxInvestment: yup
     .string()
-    .required('Required')
+    .required(REQUIRED)
     .test('maxInvestmentConstraint', 'Maximal investment should be greater than minimal investment', function ():
       | boolean
       | yup.ValidationError {
       return checkMaxGreaterThanMinimum(this.parent.minInvestment, this.parent.maxInvestment)
     }),
 
-  hasPresale: yup.boolean().required('Required'),
+  hasPresale: yup.boolean().required(REQUIRED),
 
   presaleMaxInvestment: yup.string().when('hasPresale', {
     is: true,
     then: yup
       .string()
-      .required('Required')
+      .required(REQUIRED)
       .test(
         'presaleMaxInvestmentConstraint',
         'Maximal investment should be greater than minimal investment',
@@ -141,7 +159,7 @@ export const schema = yup.object().shape({
     is: true,
     then: yup
       .string()
-      .required('Required')
+      .required(REQUIRED)
       .test(
         'presaleMinInvestmentConstraint',
         'Mininimal investment should be smaller than maximal investment',
@@ -154,11 +172,11 @@ export const schema = yup.object().shape({
 
   presaleAlocated: yup
     .string()
-    .when('hasPresale', { is: true, then: yup.string().required('Required'), otherwise: yup.string() }),
+    .when('hasPresale', { is: true, then: yup.string().required(REQUIRED), otherwise: yup.string() }),
 
-  email: yup.string().required('Email required').email('Enter a valid email'),
-  website: yup.string().required('Website URL required').url('Enter a valid URL'),
-  whitepaper: yup.string().required('Whitepaper URL required').url('Enter a valid URL'),
+  email: yup.string().required(REQUIRED).email('Enter a valid email'),
+  website: yup.string().required(REQUIRED).url('Enter a valid URL'),
+  whitepaper: yup.string().required(REQUIRED).url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
 
@@ -166,10 +184,7 @@ export const schema = yup.object().shape({
   cardPicture: requiredFileSchema,
 
   terms: yup.object().shape({
-    investmentStructure: yup
-      .string()
-      .min(2, 'Must be longer than or equal to 2 characters')
-      .required('Investment Structure required'),
+    investmentStructure: yup.string().min(2, getLongerThanOrEqual('Investment Structure', 2)).required(REQUIRED),
     dividentYield: yup.string(),
     investmentPeriod: yup.number(),
     grossIrr: yup.string(),
@@ -181,7 +196,8 @@ export const schema = yup.object().shape({
       question: yup
         .string()
         .optional()
-        .min(10, 'Question should be at least 10 charachters')
+        .min(STRING_SMALL, getLongerThanOrEqual('Question', STRING_SMALL))
+        .max(STRING_BIG, getHaveAtMost('Question', STRING_BIG))
         .test('questionValidation', 'Question is required', function (): boolean | yup.ValidationError {
           if (
             this.parent.answer &&
@@ -196,7 +212,8 @@ export const schema = yup.object().shape({
       answer: yup
         .string()
         .optional()
-        .min(10, 'Answer should be at least 10 charachters')
+        .min(STRING_SMALL, getLongerThanOrEqual('Answer', STRING_SMALL))
+        .max(STRING_HUGE, getHaveAtMost('Answer', STRING_HUGE))
         .test('answerValidation', 'Answer is required', function (): boolean | yup.ValidationError {
           if (
             this.parent.question &&
@@ -214,29 +231,37 @@ export const schema = yup.object().shape({
   members: yup.array(
     yup.object().shape({
       photo: limitedSizeFileSchema,
-      name: yup.string().required('Required'),
-      role: yup.string().required('Required'),
-      about: yup.string().required('Required'),
+      name: yup.string().required(REQUIRED),
+      role: yup
+        .string()
+        .min(2, getLongerThanOrEqual('Team member position', 2))
+        .max(STRING_NORMAL, getHaveAtMost('Team member position', STRING_NORMAL))
+        .required(REQUIRED),
+      about: yup
+        .string()
+        .min(2, getLongerThanOrEqual('Team member description', 2))
+        .max(STRING_BIG, getHaveAtMost('Team member description', STRING_BIG))
+        .required(REQUIRED),
     })
   ),
 
   timeframe: yup.object().when('hasPresale', {
     is: true,
     then: yup.object().shape({
-      whitelist: yup.date().required('Required'),
-      preSale: yup.date().required('Required'),
+      whitelist: yup.date().required(REQUIRED),
+      preSale: yup.date().required(REQUIRED),
 
-      sale: yup.date().required('Required'),
-      closed: yup.date().required('Required'),
-      claim: yup.date().required('Required'),
+      sale: yup.date().required(REQUIRED),
+      closed: yup.date().required(REQUIRED),
+      claim: yup.date().required(REQUIRED),
     }),
     otherwise: yup.object().shape({
       whitelist: yup.date(),
       preSale: yup.date(),
 
-      sale: yup.date().required('Required'),
-      closed: yup.date().required('Required'),
-      claim: yup.date().required('Required'),
+      sale: yup.date().required(REQUIRED),
+      closed: yup.date().required(REQUIRED),
+      claim: yup.date().required(REQUIRED),
     }),
   }),
   gallery: yup.array(requiredFileSchema),
@@ -246,7 +271,7 @@ export const schema = yup.object().shape({
       name: yup
         .string()
         .optional()
-        .test('filenameValidation', 'Document name is required', function (): boolean | yup.ValidationError {
+        .test('filenameValidation', REQUIRED, function (): boolean | yup.ValidationError {
           return !this.parent.file || (this.parent.name && this.parent.name.length > 0)
         }),
       file: fileSchema,
@@ -271,18 +296,25 @@ export const schema = yup.object().shape({
 export const editSchema = yup.object().shape({
   profilePicture: requiredFileSchema,
   cardPicture: requiredFileSchema,
+  shortDescription: yup
+    .string()
+    .required(REQUIRED)
+    .min(STRING_SMALL, getLongerThanOrEqual('Short Description', STRING_SMALL))
+    .max(STRING_BIG, getHaveAtMost('Short Description', STRING_BIG)),
+  longDescription: yup
+    .string()
+    .required(REQUIRED)
+    .min(STRING_SMALL, getLongerThanOrEqual('Description', STRING_SMALL))
+    .max(STRING_HUGE, getHaveAtMost('Description', STRING_HUGE)),
 
-  shortDescription: yup.string().required().min(10, 'Short Description must be longer than or equal to 10 characters'),
-  longDescription: yup.string().required().min(10, 'Description must be longer than or equal to 10 characters'),
+  network: yup.string().oneOf(Object.values(OfferNetwork)).required(REQUIRED),
+  industry: yup.string().oneOf(Object.values(OfferIndustry)).required(REQUIRED),
+  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
+  country: yup.string().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
 
-  network: yup.string().oneOf(Object.values(OfferNetwork)).required('Network required'),
-  industry: yup.string().oneOf(Object.values(OfferIndustry)).required('Industry required'),
-  investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required('Investment Type required'),
-  country: yup.string().required('Country required').oneOf(countryCodes, 'Select a country from the list'),
-
-  email: yup.string().required('Email required').email('Enter a valid email'),
-  website: yup.string().required('Website URL required').url('Enter a valid URL'),
-  whitepaper: yup.string().required('Whitepaper URL required').url('Enter a valid URL'),
+  email: yup.string().required(REQUIRED).email('Enter a valid email'),
+  website: yup.string().required(REQUIRED).url('Enter a valid URL'),
+  whitepaper: yup.string().required(REQUIRED).url('Enter a valid URL'),
 
   allowOnlyAccredited: yup.boolean(),
 
@@ -298,7 +330,9 @@ export const editSchema = yup.object().shape({
 
   additionalDocuments: yup.array(
     yup.object().shape({
-      name: yup.string().when('file', { is: undefined, then: yup.string(), otherwise: yup.string().required() }),
+      name: yup
+        .string()
+        .when('file', { is: undefined, then: yup.string(), otherwise: yup.string().required(REQUIRED) }),
       file: fileSchema,
     })
   ),
@@ -314,7 +348,8 @@ export const editSchema = yup.object().shape({
       question: yup
         .string()
         .optional()
-        .min(10, 'Question should be at least 10 charachters')
+        .min(STRING_SMALL, getLongerThanOrEqual('Question', STRING_SMALL))
+        .max(STRING_BIG, getHaveAtMost('Question', STRING_BIG))
         .test('questionValidation', 'Question is required', function (): boolean | yup.ValidationError {
           if (
             this.parent.answer &&
@@ -329,7 +364,8 @@ export const editSchema = yup.object().shape({
       answer: yup
         .string()
         .optional()
-        .min(10, 'Answer should be at least 10 charachters')
+        .min(STRING_SMALL, getLongerThanOrEqual('Answer', STRING_SMALL))
+        .max(STRING_HUGE, getHaveAtMost('Answer', STRING_HUGE))
         .test('answerValidation', 'Answer is required', function (): boolean | yup.ValidationError {
           if (
             this.parent.question &&
@@ -347,9 +383,17 @@ export const editSchema = yup.object().shape({
   members: yup.array(
     yup.object().shape({
       photo: limitedSizeFileSchema,
-      name: yup.string().required('Required'),
-      role: yup.string().required('Required'),
-      about: yup.string().required('Required'),
+      name: yup.string().required(REQUIRED),
+      role: yup
+        .string()
+        .min(2, getLongerThanOrEqual('Team member position', 2))
+        .max(STRING_NORMAL, getHaveAtMost('Team member position', STRING_NORMAL))
+        .required(REQUIRED),
+      about: yup
+        .string()
+        .min(2, getLongerThanOrEqual('Team member description', 2))
+        .max(STRING_BIG, getHaveAtMost('Team member description', STRING_BIG))
+        .required(REQUIRED),
     })
   ),
 })
