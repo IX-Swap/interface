@@ -81,7 +81,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         return
       }
 
-      return errors[index]
+      return errors?.[index]
     },
     [props.errors]
   )

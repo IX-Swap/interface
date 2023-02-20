@@ -76,6 +76,14 @@ export const DateRangeField: React.FC<Props> = (props) => {
     () => setCurrentMonth((state) => state.clone().month(state.get('month') + 1)),
     []
   )
+  const formattedDate = React.useMemo(() => {
+    const dateFormat = props.dateFormat || 'MM/DD/YYYY'
+    const hasEmptyState = range.length === 0 || range.some((date) => !date.isValid())
+    if (hasEmptyState) {
+      return `mm/dd/yyyy ${props.mode === 'range' ? ` - ${dateFormat.toLowerCase()}` : ''}`
+    }
+    return range.map((date) => date.format(dateFormat)).join(' - ')
+  }, [range, props.mode, props.dateFormat])
 
   React.useEffect(() => {
     if (props.value !== undefined) {
@@ -89,7 +97,6 @@ export const DateRangeField: React.FC<Props> = (props) => {
     }
   }, [props.value])
 
-  const dateFormat = props.dateFormat || 'MM/DD/YYYY'
   return (
     <Column>
       <FieldContainer disabled={props.disabled} onClick={toggle}>
@@ -98,13 +105,7 @@ export const DateRangeField: React.FC<Props> = (props) => {
         </FieldIcon>
         <FieldLabel>{props.label}</FieldLabel>
 
-        {range.length === 0 && (
-          <FieldPlaceholder>mm/dd/yyyy {props.mode === 'range' && ` - ${dateFormat.toLowerCase()}`}</FieldPlaceholder>
-        )}
-
-        {range.length > 0 && (
-          <FieldSelectedValue>{range.map((date) => date.format(dateFormat)).join(' - ')}</FieldSelectedValue>
-        )}
+        <FieldValue isPlaceholder={formattedDate.startsWith('m')}>{formattedDate}</FieldValue>
       </FieldContainer>
 
       <IssuanceDialog show={showPicker} onClose={toggle}>
@@ -176,16 +177,11 @@ const FieldLabel = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-const FieldPlaceholder = styled.div`
+const FieldValue = styled.div<{ isPlaceholder: boolean }>`
   grid-area: value;
   ${text30}
-  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
-`
-
-const FieldSelectedValue = styled.div`
-  grid-area: value;
-  ${text30}
-  color: ${(props) => props.theme.launchpad.colors.text.title};
+  color: ${(props) =>
+    props.isPlaceholder ? props.theme.launchpad.colors.text.bodyAlt : props.theme.launchpad.colors.text.title};
 `
 
 const DatePicker = styled.div`
