@@ -155,12 +155,14 @@ export const OffersFull: React.FC<Props> = (props) => {
               <IssuanceRow key={idx} tab={IssuanceFilter.live}>
                 <Raw>{offer.issuanceName}</Raw>
                 <Raw>{offer.countInvestors}</Raw>
-                <Raw>{formatedValue(`${offer.commitment}`)}</Raw>
+                <Raw>
+                  {formatedValue(offer.commitment.toString())} {offer.investingTokenSymbol}
+                </Raw>
                 <CountRow>
-                  {offer.progressPercent}% - {formatedValue(`${offer.progress}`)}
+                  {offer.progressPercent}% - {formatedValue(offer.progress.toString())} {offer.investingTokenSymbol}
                 </CountRow>
                 <div>
-                  {formatedValue(`${offer.softCapReached}`) || '0.00'} {offer.investingTokenSymbol}
+                  {formatedValue(`${offer.hardCap}`) || '0.00'} {offer.investingTokenSymbol}
                 </div>
 
                 <CountRow>{offer?.closeDate ? moment(offer?.closeDate).format('DD/MM/YYYY') : ''}</CountRow>
