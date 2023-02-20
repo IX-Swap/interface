@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
@@ -24,8 +24,7 @@ import { IssuancePagination } from './IssuancePagination'
 import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
 import { DiscreteInternalLink } from 'theme'
 import { useRole } from 'state/user/hooks'
-import { BaseCheckbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
-import { text1, text53 } from 'components/LaunchpadMisc/typography'
+import { TitleBox } from './TitleBox'
 
 export const IssuancesFull = () => {
   const theme = useTheme()
@@ -35,7 +34,6 @@ export const IssuancesFull = () => {
 
   const [loading, setLoading] = React.useState<boolean>(true)
   const [issuances, setIssuances] = React.useState<Issuance[]>([])
-  const [showMine, setShowMine] = React.useState<boolean>(false)
 
   const [page, setPage] = React.useState(1)
   const [totalPages, setTotalPages] = React.useState(0)
@@ -109,28 +107,11 @@ export const IssuancesFull = () => {
     [isAdmin]
   )
 
-  const toggle = () => setShowMine((state) => !state)
-
-  useEffect(() => {
-    setFilter({
-      search: filter?.search || '',
-      onlyMine: showMine ? 'true' : 'false',
-    })
-  }, [showMine])
-
   return (
     <Container>
-      <TitleBox>
-        <TableTitle>Issuances</TableTitle>
-        {isAdmin && (
-          <CheckBoxContainer onClick={toggle}>
-            <BaseCheckbox state={showMine} toggle={() => null} />
-            <CheckBoxLabel>Show only mine</CheckBoxLabel>
-          </CheckBoxContainer>
-        )}
-      </TitleBox>
+      <TitleBox title="Issuances" setFilter={setFilter} />
 
-      <SearchFilter onFilter={setFilter} />
+      <SearchFilter setFilter={setFilter} />
 
       {!loading && issuances?.length === 0 && <EmptyTable />}
 
@@ -213,31 +194,4 @@ const ActionButtons = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`
-
-const TitleBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin: auto;
-  max-width: 1180px;
-`
-
-export const TableTitle = styled.div`
-  ${text53}
-
-  padding: 0 0 1.25rem;
-  font-family: ${(props) => props.theme.launchpad.font};
-  color: ${(props) => props.theme.launchpad.colors.text.title};
-`
-
-const CheckBoxContainer = styled.div`
-  display: flex;
-  gap: 6px;
-  cursor: pointer;
-`
-const CheckBoxLabel = styled.div`
-  ${text1}
-  color: ${(props) => props.theme.launchpad.colors.primary};
 `

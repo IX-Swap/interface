@@ -20,7 +20,6 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import {
   IssuanceTable,
-  TableTitle,
   TableHeader,
   IssuanceRow,
   Raw,
@@ -34,6 +33,7 @@ import { useGetOffersFull, useFormatOfferValue, useOnChangeOrder } from 'state/l
 import { ITEM_ROWS, OFFER_STATUSES } from '../utils/constants'
 import { DiscreteInternalLink } from 'theme'
 import { text17, text18, text19, text30 } from 'components/LaunchpadMisc/typography'
+import { TitleBox } from './TitleBox'
 
 interface Props {
   type: string
@@ -125,8 +125,8 @@ export const OffersFull: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <TableTitle>{props.type}</TableTitle>
-      <SearchFilter onFilter={setFilter} />
+      <TitleBox title={props.type} setFilter={setFilter} />
+      <SearchFilter setFilter={setFilter} />
 
       {!loading && offers?.length === 0 && <EmptyTable />}
 
