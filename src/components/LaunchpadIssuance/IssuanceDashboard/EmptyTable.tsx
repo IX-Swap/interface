@@ -19,11 +19,7 @@ export const EmptyTable = () => {
         <NoItemsSubtitle>Please add new issuences.</NoItemsSubtitle>
       </Column>
 
-      <IssuanceCreateButton
-        background={theme.launchpad.colors.primary}
-        color={theme.launchpad.colors.text.light}
-        showPin
-      />
+      <IssuanceCreateButton background={theme.launchpad.colors.primary} color={theme.launchpad.colors.text.light} />
     </Container>
   )
 }

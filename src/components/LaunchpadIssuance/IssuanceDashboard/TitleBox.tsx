@@ -19,7 +19,7 @@ export const TitleBox = ({ title, setFilter }: Props) => {
   useEffect(() => {
     setFilter((state: SearchConfig | undefined) => ({
       search: state?.search || '',
-      onlyMine: showMine ? 'true' : 'false',
+      onlyMine: showMine.toString(),
     }))
   }, [showMine])
 
