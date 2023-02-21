@@ -37,6 +37,10 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const toggleShowDetails = React.useCallback(() => setShowDetails((state) => !state), [])
   const toggleKYCModal = React.useCallback(() => setShowKYCModal((state) => !state), [])
 
+  const canOpen = React.useMemo(() => {
+    return checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
+  }, [offer?.status, offer?.allowOnlyAccredited])
+
   const isClosed = React.useMemo(() => [OfferStatus.closed, OfferStatus.claim].includes(offer.status), [offer])
 
   const stage = React.useMemo(() => {
@@ -52,14 +56,12 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   }, [offer])
 
   const onClick = React.useCallback(() => {
-    const canOpen = checkKYC(offer.allowOnlyAccredited, offer.status === OfferStatus.closed)
-
     if (canOpen) {
       history.push(`/offers/${offer.id}`)
     } else {
       toggleKYCModal()
     }
-  }, [checkKYC, toggleKYCModal])
+  }, [canOpen, toggleKYCModal])
 
   return (
     <>
@@ -157,7 +159,6 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
           </InvestmentCardFooter>
         </InvestmentCardInfoContainer>
       </InvestmentCardContainer>
-
       {showKYCModal && (
         <Portal>
           <KYCPrompt offerId={offer.id} allowOnlyAccredited={offer.allowOnlyAccredited} />

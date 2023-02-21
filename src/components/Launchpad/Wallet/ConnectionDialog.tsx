@@ -29,7 +29,6 @@ interface Props {
 
 export const ConnectionDialog: React.FC<Props> = (props) => {
   const { activate } = useWeb3React()
-
   const [walletView, setWalletView] = React.useState(PromptView.options)
   const [pendingWallet, setPendingWallet] = React.useState<AbstractConnector | undefined>()
   const [pendingError, setPendingError] = React.useState<boolean>()
@@ -77,15 +76,12 @@ export const ConnectionDialog: React.FC<Props> = (props) => {
       <ExitIconContainer onClick={props.onClose}>
         <CrossIcon />
       </ExitIconContainer>
-
       {walletView === PromptView.options && (
         <>
           <ConnectionOptions onSelect={onSelect} />
         </>
       )}
-
       {walletView === PromptView.pending && <ConnectionLoader />}
-
       <AgreementNotice>
         By connecting a wallet, you agree to IX Swap’s
         <a href="https://ixswap.io/terms-and-conditions/" target="_blank" rel="noreferrer">

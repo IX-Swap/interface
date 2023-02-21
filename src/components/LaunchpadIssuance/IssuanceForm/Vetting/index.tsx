@@ -407,7 +407,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
             />
 
             <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
-              <OutlineButton width="280px">Back</OutlineButton>
+              <OutlineButton width="280px" onClick={goBack}>
+                Back
+              </OutlineButton>
               <FilledButton width="280px" onClick={toSubmit} disabled={view}>
                 Submit
               </FilledButton>

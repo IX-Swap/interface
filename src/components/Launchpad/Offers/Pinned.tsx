@@ -36,10 +36,8 @@ export const Pinned: React.FC = () => {
       .then(setOffer)
       .finally(() => setLoading(false))
   }, [])
-
   const onClick = React.useCallback(() => {
     const canOpen = checkKYC(offer?.allowOnlyAccredited || false, offer?.status === OfferStatus.closed)
-
     if (canOpen) {
       history.push(`/offers/${offer?.id ?? ''}`)
     } else {

@@ -143,34 +143,33 @@ export const routeConfigs: RouteMapEntry[] = [
 
   { path: routes.staking, component: StakingTab },
   { path: routes.vesting, component: VestingTab },
-  { path: '/launchpad', component: Launchpad },
-  { path: '/offers/:offerId', component: LaunchpadOffer },
 
+  /* Launchpad routes */
+  { path: routes.launchpad, component: Launchpad },
+  { path: routes.offerPage, component: LaunchpadOffer },
   {
-    path: '/issuance',
+    path: routes.issuance,
     component: LaunchpadIssuanceDashboard,
     ...onlyOfferManager,
   },
-
-  { path: '/issuance/view/vetting', component: LaunchpadIssuanceVettingFormView, ...onlyOfferManager },
-
-  { path: '/issuance/create', component: LaunchpadIssuanceForm, ...onlyOfferManager },
+  { path: routes.viewVetting, component: LaunchpadIssuanceVettingFormView, ...onlyOfferManager },
+  { path: routes.issuanceCreate, component: LaunchpadIssuanceForm, ...onlyOfferManager },
   {
-    path: '/issuance/create/vetting',
+    path: routes.createVetting,
     component: LaunchpadIssuanceVettingForm,
     ...onlyOfferManager,
   },
   {
-    path: '/issuance/create/information',
+    path: routes.createOffer,
     component: LaunchpadIssuanceInformationForm,
     ...onlyOfferManager,
   },
   {
-    path: '/issuance/edit/information',
+    path: routes.editOffer,
     component: LaunchpadIssuanceInformationEditForm,
     ...onlyOfferManager,
   },
-  { path: '/issuance/review/information', component: LaunchpadIssuanceInformationReview, ...onlyOfferManager },
+  { path: routes.reviewOffer, component: LaunchpadIssuanceInformationReview, ...onlyOfferManager },
   {
     path: routes.issuanceReport,
     component: LaunchpadIssuanceReport,

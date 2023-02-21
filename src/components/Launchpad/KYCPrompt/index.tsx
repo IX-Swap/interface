@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { useWeb3React } from '@web3-react/core'
 import { Link } from 'react-router-dom'
@@ -25,7 +25,6 @@ import { text9 } from 'components/LaunchpadMisc/typography'
 interface Props {
   offerId: string
   allowOnlyAccredited: boolean
-
   onClose?: () => void
 }
 
@@ -51,10 +50,28 @@ export const KYCPrompt: React.FC<Props> = (props) => {
     [kyc]
   )
 
+  useEffect(() => {
+    if (
+      account &&
+      !!kyc &&
+      !isChangeRequested &&
+      !(isPending || isInProgress) &&
+      !isRejected &&
+      !(props.allowOnlyAccredited && !isAccredited)
+    ) {
+      toggleModal(false)
+    }
+  }, [account, !!kyc, isChangeRequested, isPending, isInProgress, isRejected, isAccredited])
   return (
     <Modal isOpen={isOpen} onDismiss={() => toggleModal(false)}>
-      {!account && <ConnectionDialog onConnect={() => toggleModal(true)} onClose={() => toggleModal(false)} />}
-
+      {!account && (
+        <ConnectionDialog
+          onConnect={() => {
+            toggleModal(true)
+          }}
+          onClose={() => toggleModal(false)}
+        />
+      )}
       {account && (
         <KYCPromptContainer>
           <ExitIconContainer onClick={() => toggleModal(false)}>

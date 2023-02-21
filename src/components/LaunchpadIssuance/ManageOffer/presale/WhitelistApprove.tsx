@@ -45,7 +45,7 @@ export const OfferWhitelistApprove = ({ offerId, totalItems, refreshWhitelists, 
     return ''
   }, [count, totalItems, approveRandom.error])
 
-  const disabledRandom = disabledManage || !count || !totalItems || approveRandom.isLoading
+  const disabledRandom = disabledManage || !count || !totalItems || approveRandom.isLoading || !!randomError
   const disabledAll = disabledManage || !totalItems || manageWhitelists.isLoading
 
   const onApproveRandom = () => {

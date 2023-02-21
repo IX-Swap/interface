@@ -25,23 +25,23 @@ export const OfferGallery: React.FC<Props> = (props) => {
 
   const socialMedialLinks = React.useMemo(
     () => [
-      { url: props.offer.socialMedia.twitter, logo: <TwitterLogo /> },
-      { url: props.offer.socialMedia.telegram, logo: <TelegramLogo /> },
-      { url: props.offer.socialMedia.linkedin, logo: <LinkedInLogo /> },
-      { url: props.offer.socialMedia.youtube, logo: <YoutubeLogo /> },
-      { url: props.offer.socialMedia.coinmarketcap, logo: <MLogo /> },
-      { url: props.offer.socialMedia.coingecko, logo: <CoingeckoLogo /> },
-      { url: props.offer.socialMedia.discord, logo: <DiscordLogo /> },
-      { url: props.offer.socialMedia.reddit, logo: <RedditLogo /> },
+      { url: props.offer?.socialMedia?.twitter, logo: <TwitterLogo /> },
+      { url: props.offer?.socialMedia?.telegram, logo: <TelegramLogo /> },
+      { url: props.offer?.socialMedia?.linkedin, logo: <LinkedInLogo /> },
+      { url: props.offer?.socialMedia?.youtube, logo: <YoutubeLogo /> },
+      { url: props.offer?.socialMedia?.coinmarketcap, logo: <MLogo /> },
+      { url: props.offer?.socialMedia?.coingecko, logo: <CoingeckoLogo /> },
+      { url: props.offer?.socialMedia?.discord, logo: <DiscordLogo /> },
+      { url: props.offer?.socialMedia?.reddit, logo: <RedditLogo /> },
     ],
     []
   )
 
   const cardImage = React.useMemo(
-    () => ({ file: props.offer.cardPicture, type: OfferFileType.image, videoUrl: '' }),
+    () => ({ file: props.offer?.cardPicture, type: OfferFileType.image, videoUrl: '' }),
     []
   )
-  const gallery = React.useMemo(() => props.offer.files.filter((x) => x.type !== OfferFileType.document), [])
+  const gallery = React.useMemo(() => props.offer?.files.filter((x) => x.type !== OfferFileType.document), [])
 
   const openViewer = React.useCallback((file?: OfferFile) => {
     setShowViewer(true)
@@ -52,7 +52,7 @@ export const OfferGallery: React.FC<Props> = (props) => {
     <div>
       <GalleryCarousel>
         <GalleryCarouselMainImage onClick={() => openViewer(cardImage)}>
-          <GalleryCarouselImage src={props.offer.cardPicture.public} />
+          <GalleryCarouselImage src={props.offer?.cardPicture.public} />
         </GalleryCarouselMainImage>
 
         <GalleryCarouselExtraMediaList>
@@ -77,8 +77,8 @@ export const OfferGallery: React.FC<Props> = (props) => {
       )}
 
       <SocialMediaLinks>
-        <SocialMediaLink href={props.offer.issuerWebsite}>Website</SocialMediaLink>
-        <SocialMediaLink href={props.offer.whitepaperUrl}>Whitepapar</SocialMediaLink>
+        <SocialMediaLink href={props.offer?.issuerWebsite}>Website</SocialMediaLink>
+        <SocialMediaLink href={props.offer?.whitepaperUrl}>Whitepapar</SocialMediaLink>
 
         {socialMedialLinks
           .filter((link) => link.url)

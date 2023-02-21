@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
@@ -6,7 +6,7 @@ import { Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
 
-import { AbstractOrder, Issuance } from 'state/launchpad/types'
+import { AbstractOrder, Issuance, OfferStatus } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
@@ -16,15 +16,32 @@ import { EmptyTable } from './EmptyTable'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceTable, TableTitle, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
+import { IssuanceTable, TableHeader, IssuanceRow, Raw, Title } from 'components/LaunchpadMisc/tables'
 
 import { useGetIssuances, useOnChangeOrder } from 'state/launchpad/hooks'
 import { IssuancePagination } from './IssuancePagination'
+import { ReactComponent as GearIcon } from 'assets/launchpad/svg/gear-icon.svg'
 import { DiscreteInternalLink } from 'theme'
+import { useRole } from 'state/user/hooks'
+import { TitleBox } from './TitleBox'
+import { routes } from 'utils/routes'
+
+const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
+  if (!isMine) return ''
+  const query = `?id=${id}`
+  if (!vetting || vetting.status !== IssuanceStatus.approved) {
+    return `${routes.createVetting}${query}`
+  }
+  if (!vetting.offer || vetting.offer.status !== IssuanceStatus.pendingApproval) {
+    return `${routes.createOffer}${query}`
+  }
+  return `${routes.editOffer}${query}`
+}
 
 export const IssuancesFull = () => {
   const theme = useTheme()
   const getIssuances = useGetIssuances()
+  const { isAdmin } = useRole()
 
   const [loading, setLoading] = React.useState<boolean>(true)
   const [issuances, setIssuances] = React.useState<Issuance[]>([])
@@ -90,10 +107,19 @@ export const IssuancesFull = () => {
       .finally(() => setLoading(false))
   }, [filter, order, page, pageSize])
 
+  const getManageUrl = useCallback(
+    (issuance: Issuance) => {
+      if (!isAdmin) return ''
+      return getIssuanceManageUrl(issuance)
+    },
+    [isAdmin]
+  )
+
   return (
     <Container>
-      <TableTitle>Issuances</TableTitle>
-      <SearchFilter onFilter={setFilter} />
+      <TitleBox title="Issuances" setFilter={setFilter} />
+
+      <SearchFilter setFilter={setFilter} />
 
       {!loading && issuances?.length === 0 && <EmptyTable />}
 
@@ -101,15 +127,12 @@ export const IssuancesFull = () => {
         <IssuanceTable>
           <TableHeader tab={IssuanceFilter.pending}>
             <Title onClick={() => onChangeOrder('name')}>
-              {' '}
               <SortIcon type={order.name} /> Issuances
             </Title>
             <Title onClick={() => onChangeOrder('startDate')}>
-              {' '}
               <SortIcon type={order.startDate} /> Start Date
             </Title>
             <Title onClick={() => onChangeOrder('status')}>
-              {' '}
               <SortIcon type={order.status} /> Status
             </Title>
             <div> Action</div>
@@ -134,15 +157,29 @@ export const IssuancesFull = () => {
 
                 <IssuanceStatusBadge status={status(issuance)} />
 
-                <OutlineButton
-                  color={theme.launchpad.colors.primary + '80'}
-                  height="34px"
-                  as={DiscreteInternalLink}
-                  target="_blank"
-                  to={`/issuance/create?id=${issuance.id}`}
-                >
-                  View Application <Eye size="15" color={theme.launchpad.colors.primary} />
-                </OutlineButton>
+                <ActionButtons>
+                  <OutlineButton
+                    color={theme.launchpad.colors.primary + '80'}
+                    height="34px"
+                    as={DiscreteInternalLink}
+                    target="_blank"
+                    to={`/issuance/create?id=${issuance.id}`}
+                  >
+                    View Application <Eye size="15" color={theme.launchpad.colors.primary} />
+                  </OutlineButton>
+
+                  {isAdmin && !!issuance.isMine && (
+                    <OutlineButton
+                      color={theme.launchpad.colors.primary + '80'}
+                      borderType="tiny"
+                      height="34px"
+                      as={DiscreteInternalLink}
+                      to={getManageUrl(issuance)}
+                    >
+                      <GearIcon />
+                    </OutlineButton>
+                  )}
+                </ActionButtons>
               </IssuanceRow>
             ))}
         </IssuanceTable>
@@ -162,4 +199,9 @@ export const IssuancesFull = () => {
 
 const Container = styled.article`
   min-height: 100vh;
+`
+const ActionButtons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `

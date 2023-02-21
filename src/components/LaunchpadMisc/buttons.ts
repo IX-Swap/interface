@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const BaseButton = styled.button<{ grow?: number; height?: string; width?: string; padding?: string }>`
+export const BaseButton = styled.button<{ grow?: number; height?: string; width?: string; padding?: string }>`
   display: flex;
   flex-flow: row nowrap;
 
