@@ -53,6 +53,7 @@ export const initialValues = {
 
   images: [],
   videos: [{ id: 0 }],
+
   additionalDocuments: [{ id: 0 }],
 
   members: [{ id: 0 }],

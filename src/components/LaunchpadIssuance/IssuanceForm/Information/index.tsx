@@ -272,7 +272,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
                 <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                <FilledButton onClick={toSubmit}>Submit</FilledButton>
+                <FilledButton onClick={toSubmit} disabled={Boolean(Object.keys(errors).length)}>
+                  Submit
+                </FilledButton>
               </FormSubmitContainer>
             </FormSideBar>
             <FormBody>
