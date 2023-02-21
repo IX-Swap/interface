@@ -23,6 +23,7 @@ import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
+import { BackToTopButton } from 'components/LaunchpadMisc/BackToTopButton'
 
 interface OfferPageParams {
   offerId: string
@@ -106,6 +107,7 @@ export default function LaunchpadOffer() {
 
         <main>
           <OfferMainInfo offer={offer.data} />
+          <BackToTopButton />
         </main>
 
         <aside>
