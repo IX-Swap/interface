@@ -34,8 +34,7 @@ export function isExternalAddress(value: any, network?: string): string | false 
   } catch {
     if (network) {
       return manualValidation(value, network) ? value : false
-    }
-    else if (walletValidator.validate(value, 'Tezos') || walletValidator.validate(value, 'Algorand')) {
+    } else if (walletValidator.validate(value, 'Tezos') || walletValidator.validate(value, 'Algorand')) {
       return value
     }
     return false
@@ -80,6 +79,9 @@ export const isValidAddress = (value: string): string | false => {
 
 // shorten the checksummed version of the input address to have 0x + 4 characters at start and end
 export function shortenAddress(address: string, chars = 4, network?: string): string {
+  if (!address) {
+    return ''
+  }
   const parsed = network ? isExternalAddress(address, network) : isAddress(address)
   if (!parsed) {
     throw Error(`Invalid 'address' '${address}'`)

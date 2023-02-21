@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
 
-
 export interface SearchConfig {
   search: string
+  onlyMine?: string
 }
 
 export interface OrderConfig {
@@ -22,31 +22,38 @@ export interface OrderConfig {
 }
 
 interface Props {
-  onFilter: (filter: SearchConfig) => void
+  onFilter?: (filter: SearchConfig) => void
+  setFilter?: (filter: SearchConfig | ((prevState: SearchConfig | undefined) => SearchConfig)) => void
 }
 
 export const SearchFilter: React.FC<Props> = (props) => {
-  const [filter, setFilter] = React.useState<SearchConfig>({ search: ''})
+  const [filter, setFilter] = React.useState<SearchConfig>({ search: '' })
 
   const onSearchChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => 
-      setFilter(state => ({ ...state, search: event.target.value })), 
-    [])
+    (event: React.ChangeEvent<HTMLInputElement>) => setFilter((state) => ({ ...state, search: event.target.value })),
+    []
+  )
 
   React.useEffect(() => {
-    props.onFilter(filter)
+    if (props.setFilter) {
+      props.setFilter((state: SearchConfig | undefined) => ({
+        ...(state || {}),
+        search: filter.search,
+      }))
+    } else if (props.onFilter) {
+      props.onFilter(filter)
+    }
   }, [filter])
 
   return (
     <FilterContainer>
       <FilterSearchField>
         <SearchIcon />
-        <FilterSearchInput placeholder='Search' onChange={onSearchChange} />        
+        <FilterSearchInput placeholder="Search" onChange={onSearchChange} />
       </FilterSearchField>
 
       <Spacer />
     </FilterContainer>
-    
   )
 }
 
@@ -78,7 +85,7 @@ const FilterSearchField = styled.div`
 
   padding: 0.25rem 0.75rem;
 
-  border: 1px solid ${props => props.theme.launchpad.colors.border.default};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 8px;
 
   height: 40px;

@@ -20,7 +20,6 @@ import { Centered } from 'components/LaunchpadMisc/styled'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import {
   IssuanceTable,
-  TableTitle,
   TableHeader,
   IssuanceRow,
   Raw,
@@ -34,6 +33,7 @@ import { useGetOffersFull, useFormatOfferValue, useOnChangeOrder } from 'state/l
 import { ITEM_ROWS, OFFER_STATUSES } from '../utils/constants'
 import { DiscreteInternalLink } from 'theme'
 import { text17, text18, text19, text30 } from 'components/LaunchpadMisc/typography'
+import { TitleBox } from './TitleBox'
 
 interface Props {
   type: string
@@ -125,8 +125,8 @@ export const OffersFull: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <TableTitle>{props.type}</TableTitle>
-      <SearchFilter onFilter={setFilter} />
+      <TitleBox title={props.type} setFilter={setFilter} />
+      <SearchFilter setFilter={setFilter} />
 
       {!loading && offers?.length === 0 && <EmptyTable />}
 
@@ -155,12 +155,14 @@ export const OffersFull: React.FC<Props> = (props) => {
               <IssuanceRow key={idx} tab={IssuanceFilter.live}>
                 <Raw>{offer.issuanceName}</Raw>
                 <Raw>{offer.countInvestors}</Raw>
-                <Raw>{formatedValue(`${offer.commitment}`)}</Raw>
+                <Raw>
+                  {formatedValue(offer.commitment.toString())} {offer.investingTokenSymbol}
+                </Raw>
                 <CountRow>
-                  {offer.progressPercent}% - {formatedValue(`${offer.progress}`)}
+                  {offer.progressPercent}% - {formatedValue(offer.progress.toString())} {offer.investingTokenSymbol}
                 </CountRow>
                 <div>
-                  {formatedValue(`${offer.softCapReached}`) || '0.00'} {offer.investingTokenSymbol}
+                  {formatedValue(`${offer.hardCap}`) || '0.00'} {offer.investingTokenSymbol}
                 </div>
 
                 <CountRow>{offer?.closeDate ? moment(offer?.closeDate).format('DD/MM/YYYY') : ''}</CountRow>

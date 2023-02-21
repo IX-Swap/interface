@@ -360,6 +360,7 @@ export interface Issuance {
   name: string
 
   vetting?: IssuanceVetting
+  isMine?: boolean
 }
 
 export interface DashboardOffer {

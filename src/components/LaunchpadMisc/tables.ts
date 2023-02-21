@@ -38,7 +38,7 @@ export const TableHeader = styled.div<{ tab: IssuanceFilter }>`
   ${(props) =>
     props.tab === IssuanceFilter.pending &&
     `
-    grid-template-columns: 4fr repeat(3, 2fr);
+    grid-template-columns: repeat(4, 1fr);
   `}
   ${(props) =>
     props.tab !== IssuanceFilter.pending &&
