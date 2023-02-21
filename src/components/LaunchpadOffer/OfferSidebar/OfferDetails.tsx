@@ -49,7 +49,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const addToMetamask = () => {
     addToken({
       symbol: props.offer.tokenSymbol,
-      address: props.offer.tokenAddress,
+      address: props?.offer?.tokenAddress,
       decimals: props.offer.decimals,
     })
   }
@@ -155,9 +155,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
           </AdjustedExternalLink>
         </TokenInfoCard>
         <TokenInfoCard>
-          <PlainCopy toCopy={props.offer.tokenAddress}>
+          <PlainCopy toCopy={props?.offer?.tokenAddress}>
             <Row>
-              <span>{shortenAddress(props.offer.tokenAddress, 5)}</span>
+              <span>{shortenAddress(props?.offer?.tokenAddress ?? '', 5)}</span>
               <Copy stroke={theme.launchpad.colors.text.body} size="18" />
             </Row>
           </PlainCopy>
