@@ -97,7 +97,7 @@ export interface InformationFormValues {
   terms: {
     investmentStructure: string
     dividentYield: string
-    investmentPeriod: number
+    investmentPeriod: string
     grossIrr: string
     distributionFrequency: OfferDistributionFrequency
   }

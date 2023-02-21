@@ -10,6 +10,8 @@ import { FormField } from '../../shared/fields/FormField'
 import { AddButton, DeleteButton } from '../../shared/styled'
 import { DropdownField } from '../../shared/fields/DropdownField'
 import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
+import { ErrorText } from 'components/LaunchpadMisc/styled'
+import { Flex } from 'rebass'
 
 interface Props {
   social: SocialMediaLink[]
@@ -70,15 +72,16 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
   )
 
   const getError = React.useCallback(
-    (link: SocialMediaLink) => {
+    (link?: SocialMediaLink) => {
+      if (!link) return
       const index = props.social.findIndex((x) => x.type === link.type)
       const errors = props.errors.social as FormikErrors<SocialMediaLink>[]
 
-      if (index < 0 || errors.length < index) {
+      if (index < 0 || errors?.length < index) {
         return
       }
 
-      return errors[index]
+      return errors?.[index]
     },
     [props.errors]
   )
@@ -116,28 +119,34 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
       />
 
       {props.social.map((link, idx) => (
-        <FormField
-          key={link.type}
-          label={`${capitalize(link.type)}`}
-          value={link.url}
-          placeholder="URL"
-          field={`social[${idx}].url`}
-          setter={props.setter}
-          touch={props.touch}
-          error={
-            ((props.touched.social?.[idx] as FormikTouched<SocialMediaLink> | undefined)?.url &&
-              (props.errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url) as string
-          }
-          trailing={
-            <DeleteButton onClick={() => removeSocialMedia(link)}>
-              <Trash />
-            </DeleteButton>
-          }
-        />
+        <Flex flexDirection={'column'} key={idx}>
+          <FormField
+            key={link.type}
+            label={`${capitalize(link.type)}`}
+            value={link.url}
+            placeholder="URL"
+            field={`social[${idx}].url`}
+            setter={props.setter}
+            touch={props.touch}
+            error={
+              ((props.touched.social?.[idx] as FormikTouched<SocialMediaLink> | undefined)?.url &&
+                (props.errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url) as string
+            }
+            trailing={
+              <DeleteButton onClick={() => removeSocialMedia(link)}>
+                <Trash />
+              </DeleteButton>
+            }
+          />
+          <ErrorText>{getError(link)?.url}</ErrorText>
+        </Flex>
       ))}
 
       <AddButton onClick={toggleDialog}>
         <Plus /> Add Social
+        {props.social.length === 0 && props.errors.social && (
+          <ErrorText>{JSON.stringify(props.errors.social).slice(1, -1)}</ErrorText>
+        )}
       </AddButton>
 
       <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px">

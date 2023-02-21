@@ -81,9 +81,14 @@ export function getDateFullTime(dateUnix: number) {
   return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
 }
 
-export const getDaysAhead = (daysAhead: number): Date => {
+export const getDaysAhead = (daysAhead: number): Date | undefined => {
   const date = new Date()
-  date.setDate(date.getDate() + daysAhead)
-  date.setUTCHours(0, 0, 0)
-  return date
+  return getDaysAfter(date, daysAhead)
+}
+
+export const getDaysAfter = (date: Date | undefined, daysAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).add(dayjs.duration({ days: daysAhead }))
+  newMoment.set('hour', 0)
+  return newMoment.toDate()
 }

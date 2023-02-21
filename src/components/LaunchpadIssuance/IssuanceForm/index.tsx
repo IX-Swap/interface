@@ -69,7 +69,14 @@ export const NewIssuanceForm = () => {
 
         <FormTitle>New Issuance</FormTitle>
 
-        <IssuanceNameContainer onClick={() => setShowDropdown((state) => !state)}>
+        <IssuanceNameContainer
+          disabled={issuances.items!.length === 0}
+          onClick={() => {
+            if (issuances.items!.length > 0) {
+              setShowDropdown((state) => !state)
+            }
+          }}
+        >
           <IssuanceName>{issuance.data?.name}</IssuanceName>
 
           {issuances.items!.length > 1 && <ChevronDown fill={theme.launchpad.colors.text.title} />}
@@ -372,7 +379,7 @@ const FormContainer = styled.div`
   position: relative;
 `
 
-const IssuanceNameContainer = styled.div`
+const IssuanceNameContainer = styled.div<{ disabled: boolean }>`
   grid-area: name;
   position: relative;
   display: flex;
@@ -380,8 +387,8 @@ const IssuanceNameContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-
-  background: ${(props) => props.theme.launchpad.colors.background};
+  background: ${(props) =>
+    props.disabled ? props.theme.launchpad.colors.disabled : props.theme.launchpad.colors.background};
   border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
   border-radius: 6px;
 `

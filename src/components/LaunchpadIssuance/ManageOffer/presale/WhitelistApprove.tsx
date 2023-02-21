@@ -5,9 +5,9 @@ import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { useApproveRandomPresaleWhitelists, useManagePresaleWhitelists } from 'state/launchpad/hooks'
 import { IssuanceTextField } from '../../utils/TextField'
 import { useShowError } from 'state/application/hooks'
-import { integerNumberFilter } from '../utils'
 import { ConfirmModal } from '../shared/ConfirmModal'
 import { text1, text51 } from 'components/LaunchpadMisc/typography'
+import { integerNumberFilter } from 'utils/input'
 
 interface Props {
   offerId: string

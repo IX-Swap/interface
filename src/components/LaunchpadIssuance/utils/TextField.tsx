@@ -42,25 +42,26 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
   const [focused, setFocused] = React.useState(!!inputValue)
 
   React.useEffect(() => {
-    setInputValue(props.value)
     setFocused(!!props.value)
+  }, [props.value])
+
+  React.useEffect(() => {
+    setInputValue(props.value)
   }, [props.value])
 
   const onChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value
+    setFocused(value !== '')
 
     if (props.type === 'number') {
       value = formatedValue(value)
     } else if (props.inputFilter) {
       value = props.inputFilter(value)
     }
-
-    setInputValue(value)
-    setFocused(value !== '')
-
     if (props.onChange) {
       props.onChange(value)
     }
+    setInputValue(value)
   }, [])
 
   return (

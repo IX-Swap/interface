@@ -48,7 +48,6 @@ import {
 } from './util'
 import {
   useEditIssuanceOffer,
-  useFormatOfferValue,
   useLoader,
   useOfferFormInitialValues,
   useSubmitOffer,
@@ -58,7 +57,10 @@ import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
+import { getDaysAfter } from 'utils/time'
 import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
+import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
+import { errors } from 'ethers'
 
 interface Props {
   edit?: boolean
@@ -70,7 +72,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const addPopup = useAddPopup()
 
   const loader = useLoader(false)
-  const formatValue = useFormatOfferValue(false)
 
   const form = React.useRef<FormikProps<InformationFormValues>>(null)
 
@@ -142,20 +143,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       setShowCloseDialog(true)
     }
   }, [history])
-
-  const numberFilter = React.useCallback((value?: string) => {
-    if (!value) {
-      return ''
-    }
-
-    const [whole, ...decimals] = value
-      .split('')
-      .filter((x) => /[0-9.]/.test(x))
-      .join('')
-      .split('.')
-
-    return whole + (decimals.length > 0 ? `.${decimals.join('')}` : '')
-  }, [])
 
   const setPresale = React.useCallback((value: boolean, setter: (field: string, value: any) => void) => {
     setter('timeframe.whitelist', undefined)
@@ -285,7 +272,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
                 <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                <FilledButton onClick={toSubmit}>Submit</FilledButton>
+                <FilledButton onClick={toSubmit} disabled={Boolean(Object.keys(errors).length)}>
+                  Submit
+                </FilledButton>
               </FormSubmitContainer>
             </FormSideBar>
             <FormBody>
@@ -390,7 +379,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   touch={setFieldTouched}
                   label="Token Name"
-                  placeholder="Must be the same as the issuance name"
+                  placeholder="Is usually the same as the issuance name"
                   disabled={props.edit}
                   value={values.tokenName}
                   error={(touched.tokenName && errors.tokenName) as string}
@@ -400,22 +389,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   touch={setFieldTouched}
                   label="Token Ticker"
-                  placeholder="2-6 alphanumeric characters"
+                  placeholder="2-6 letters"
                   disabled={props.edit}
+                  inputFilter={uppercaseFilter}
                   value={values.tokenTicker}
                   error={(touched.tokenTicker && errors.tokenTicker) as string}
                 />
-                {/* <DropdownField
-                  field="decimalsOn"
-                  setter={setFieldValue}
-                  touch={setFieldTouched}
-                  options={tokenDecimalsOnOptions}
-                  label="Decimals"
-                  // find out if editable
-                  disabled={props.edit}
-                  value={values.decimalsOn}
-                  error={(touched.decimalsOn && errors.decimalsOn) as string}
-                /> */}
                 <FormField
                   field="decimals"
                   setter={(field, value) => setFieldValue(field, Number(value))}
@@ -630,7 +609,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   setter={setFieldValue}
                   value={values.timeframe.preSale}
                   disabled={props.edit || !values.hasPresale || !values.timeframe.whitelist}
-                  minDate={values.timeframe.whitelist}
+                  minDate={getDaysAfter(values?.timeframe?.whitelist, 1)}
                   error={(touched.timeframe?.preSale && (touched.timeframe && errors.timeframe)?.preSale) as string}
                 />
 
@@ -641,12 +620,15 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   field="timeframe.sale"
                   value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
                   disabled={props.edit || (values.hasPresale && !values.timeframe.preSale)}
-                  minDate={values.hasPresale ? values.timeframe.preSale : undefined}
+                  minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : undefined}
                   onChange={([start, end]) => {
+                    setFieldTouched('timeframe.sale')
+                    setFieldTouched('timeframe.closed')
                     setFieldValue('timeframe.sale', start)
                     setFieldValue('timeframe.closed', end)
                   }}
-                  error={(touched.timeframe?.sale && (touched.timeframe && errors.timeframe)?.sale) as string}
+                  error={`${(touched.timeframe?.sale ? errors?.timeframe?.sale ?? '' : '') as string}
+                     ${(touched.timeframe?.closed ? errors?.timeframe?.closed ?? '' : '') as string}`}
                 />
 
                 <DateRangeField
@@ -656,14 +638,13 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   field="timeframe.claim"
                   setter={setFieldValue}
                   disabled={props.edit || !values.timeframe.closed}
-                  minDate={values.timeframe.closed}
+                  minDate={getDaysAfter(values.timeframe.closed, 1)}
                   value={values.timeframe.claim}
                   error={(touched.timeframe?.claim && (touched.timeframe && errors.timeframe)?.claim) as string}
                 />
               </FormGrid>
 
               <Separator />
-
               <FormGrid title="Offering Terms">
                 <FormField
                   field="terms.investmentStructure"
@@ -688,7 +669,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit}
                   value={values.terms?.dividentYield}
                   error={(touched.terms?.dividentYield && (touched.terms && errors.terms)?.dividentYield) as string}
-                  inputFilter={formatValue}
+                  inputFilter={filterNumberWithDecimals}
                 />
                 <FormField
                   field="terms.investmentPeriod"
@@ -702,7 +683,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   error={
                     (touched.terms?.investmentPeriod && (touched.terms && errors.terms)?.investmentPeriod) as string
                   }
-                  inputFilter={formatValue}
+                  inputFilter={integerNumberFilter}
                 />
                 <FormField
                   field="terms.grossIrr"
@@ -714,7 +695,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit}
                   value={values.terms?.grossIrr}
                   error={(touched.terms?.grossIrr && (touched.terms && errors.terms)?.grossIrr) as string}
-                  inputFilter={formatValue}
+                  inputFilter={filterNumberWithDecimals}
                 />
 
                 <DropdownField
@@ -786,7 +767,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
                 <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                <FilledButton onClick={toSubmit}>Submit</FilledButton>
+                <FilledButton onClick={toSubmit} disabled={Boolean(Object.keys(errors).length)}>
+                  Submit
+                </FilledButton>
               </Row>
             </FormBody>
           </>

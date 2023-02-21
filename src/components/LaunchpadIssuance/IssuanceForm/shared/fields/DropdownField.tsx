@@ -36,7 +36,7 @@ interface Props<T> {
 
 export function DropdownField<T>(props: Props<T>) {
   const theme = useTheme()
-
+  const disabled = props.disabled || !props.options || props.options.length === 0
   const container = React.useRef<HTMLDivElement>(null)
 
   const [selectedValue, setSelectedValue] = React.useState<Option<T> | undefined>(
@@ -62,16 +62,16 @@ export function DropdownField<T>(props: Props<T>) {
   }, [props.options, optionSearch, searchActive])
 
   const toggle = React.useCallback(() => {
-    if (props.disabled) {
+    if (disabled) {
       return
     }
 
     setShowDropdown((state) => !state)
-  }, [props.disabled])
+  }, [disabled])
 
   const select = React.useCallback(
     (option: Option<T>) => {
-      if (props.disabled) {
+      if (disabled) {
         return
       }
       if (props.touch) {
@@ -88,7 +88,7 @@ export function DropdownField<T>(props: Props<T>) {
         props.onChange(option.value)
       }
     },
-    [props.disabled, props.onChange, props.setter]
+    [disabled, props.onChange, props.setter]
   )
 
   const updateSearch = React.useCallback(
@@ -138,7 +138,7 @@ export function DropdownField<T>(props: Props<T>) {
 
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span} style={props.wrapperStyle}>
-      <FieldContainer ref={container} onClick={toggle} disabled={props.disabled} style={props.containerStyle}>
+      <FieldContainer ref={container} onClick={toggle} disabled={disabled} style={props.containerStyle}>
         <FieldLabel>
           {props.label}
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}
@@ -263,9 +263,9 @@ const FieldOptionList = styled.div`
 
 const FieldOption = styled.div`
   padding: 0.5rem 1rem;
-  
+
   ${text30}
- 
+
   cursor: pointer;
   background: ${(props) => props.theme.launchpad.colors.background};
   color: ${(props) => props.theme.launchpad.colors.text.title};

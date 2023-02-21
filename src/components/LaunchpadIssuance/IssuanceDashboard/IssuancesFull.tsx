@@ -2,7 +2,6 @@ import React, { useCallback } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
-import { useHistory } from 'react-router-dom'
 import { Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
@@ -41,7 +40,6 @@ const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
 
 export const IssuancesFull = () => {
   const theme = useTheme()
-  const history = useHistory()
   const getIssuances = useGetIssuances()
   const { isAdmin } = useRole()
 
@@ -74,8 +72,6 @@ export const IssuancesFull = () => {
       ? issuance.vetting.status
       : IssuanceStatus.inProgress
   }, [])
-
-  const viewItem = React.useCallback((id: number) => history.push(`/issuance/create?id=${id}`), [history])
 
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
@@ -165,7 +161,9 @@ export const IssuancesFull = () => {
                   <OutlineButton
                     color={theme.launchpad.colors.primary + '80'}
                     height="34px"
-                    onClick={() => viewItem(issuance.id)}
+                    as={DiscreteInternalLink}
+                    target="_blank"
+                    to={`/issuance/create?id=${issuance.id}`}
                   >
                     View Application <Eye size="15" color={theme.launchpad.colors.primary} />
                   </OutlineButton>

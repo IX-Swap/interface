@@ -124,7 +124,7 @@ export interface OfferTerms {
   grossIrr: string
   dividentYield: string
   investmentStructure: string
-  investmentPeriod: number
+  investmentPeriod: number | string
   distributionFrequency: OfferDistributionFrequency
 }
 

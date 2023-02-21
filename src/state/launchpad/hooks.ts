@@ -941,7 +941,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
     } else if (!offer.loading && offer.data) {
       transform(offer.data).then(setValues).then(loader.stop)
     }
-  }, [offer.loading])
+  }, [offer.loading, offer.data])
 
   const transform = React.useCallback(async (payload: Offer): Promise<InformationFormValues> => {
     const files = await Promise.all([
@@ -1023,7 +1023,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
         distributionFrequency: payload.terms.distributionFrequency ?? '',
         dividentYield: payload.terms.dividentYield ?? '',
         grossIrr: payload.terms.grossIrr ?? '',
-        investmentPeriod: payload.terms.investmentPeriod ?? '',
+        investmentPeriod: String(payload.terms.investmentPeriod) ?? '',
         investmentStructure: payload.terms.investmentStructure ?? '',
       },
 
@@ -1112,9 +1112,9 @@ export const useSubmitOffer = () => {
         allowOnlyAccredited: payload.allowOnlyAccredited ?? false,
 
         terms: {
-          investmentStructure: payload.terms.investmentStructure,
+          investmentStructure: String(payload.terms.investmentStructure),
           dividentYield: payload.terms.dividentYield,
-          investmentPeriod: payload.terms.investmentPeriod,
+          investmentPeriod: payload.terms.investmentPeriod ? Number(payload.terms.investmentPeriod) : 0,
           grossIrr: payload.terms.grossIrr,
           distributionFrequency: payload.terms.distributionFrequency,
         },
@@ -1165,6 +1165,10 @@ export const useSubmitOffer = () => {
           return data
         }
 
+        if (Array.isArray(data) && data.length === 1 && Object.keys(data[0]).length === 0) {
+          return []
+        }
+
         if (typeof data === 'object' && data.length !== undefined) {
           return data.map(filter).filter((x: any) => !!x)
         }
@@ -1190,11 +1194,20 @@ export const useSubmitOffer = () => {
       }
 
       data = filter(data)
-
+      if (Object.keys(data.terms).length === 0) {
+        delete data.terms
+      }
+      if (Object.keys(data.socialMedia).length === 0) {
+        delete data.socialMedia
+      }
+      if (Object.keys(data.timeframe).length === 0) {
+        delete data.timeframe
+      }
       if (offerId) {
         delete data.offerId
         delete data.vettingId
         delete data.tokenName
+        delete data.tokenAddress
         return apiService.put(`/offers/${offerId}/full`, data)
       } else {
         return apiService.post(`/offers`, data)
@@ -1226,8 +1239,8 @@ export const useEditIssuanceOffer = () => {
       issuerWebsite: payload.website,
       whitepaperUrl: payload.whitepaper,
 
-      profilePictureId: 123,
-      cardPictureId: 123,
+      profilePictureId: 123, // why 123?
+      cardPictureId: 123, // why 123?
 
       faq: payload.faq.map((faq) => ({
         id: faq.id,
