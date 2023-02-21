@@ -620,10 +620,13 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit || (values.hasPresale && !values.timeframe.preSale)}
                   minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : undefined}
                   onChange={([start, end]) => {
+                    setFieldTouched('timeframe.sale')
+                    setFieldTouched('timeframe.closed')
                     setFieldValue('timeframe.sale', start)
                     setFieldValue('timeframe.closed', end)
                   }}
-                  error={(touched.timeframe?.sale && (touched.timeframe && errors.timeframe)?.sale) as string}
+                  error={`${(touched.timeframe?.sale ? errors?.timeframe?.sale ?? '' : '') as string}
+                     ${(touched.timeframe?.closed ? errors?.timeframe?.closed ?? '' : '') as string}`}
                 />
 
                 <DateRangeField

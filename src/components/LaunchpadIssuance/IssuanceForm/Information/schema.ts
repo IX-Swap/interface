@@ -283,15 +283,15 @@ export const schema = yup.object().shape({
       preSale: yup.date().required(REQUIRED),
       // using custom messages because we have two fields in one
       sale: yup.date().required('Public sale date required'),
-      closed: yup.date().required('Close date required'),
+      closed: yup.date().required('Closed date required'),
       claim: yup.date().required(REQUIRED),
     }),
     otherwise: yup.object().shape({
       whitelist: yup.date(),
       preSale: yup.date(),
 
-      sale: yup.date().required(REQUIRED),
-      closed: yup.date().required(REQUIRED),
+      sale: yup.date().required('Public sale date required'),
+      closed: yup.date().required('Closed date required'),
       claim: yup.date().required(REQUIRED),
     }),
   }),
