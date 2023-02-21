@@ -34,3 +34,13 @@ export const uppercaseFilter = (value?: string) => {
   }
   return value?.toLocaleUpperCase()
 }
+
+export const filterNumberWithDecimals = (value?: string) => {
+  if (!value) return ''
+  const regex = /^[0-9]+(\.[0-9]{0,2})?$/
+
+  if (!regex.test(value)) {
+    value = value.slice(0, -1)
+  }
+  return value
+}

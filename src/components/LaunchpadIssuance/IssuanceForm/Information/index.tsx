@@ -48,7 +48,6 @@ import {
 } from './util'
 import {
   useEditIssuanceOffer,
-  useFormatOfferValue,
   useLoader,
   useOfferFormInitialValues,
   useSubmitOffer,
@@ -60,7 +59,8 @@ import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
 import { getDaysAfter } from 'utils/time'
 import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
-import { numberFilter, uppercaseFilter } from 'utils/input'
+import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
+import { errors } from 'ethers'
 
 interface Props {
   edit?: boolean
@@ -72,7 +72,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const addPopup = useAddPopup()
 
   const loader = useLoader(false)
-  const formatValue = useFormatOfferValue(false)
 
   const form = React.useRef<FormikProps<InformationFormValues>>(null)
 
@@ -641,7 +640,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               </FormGrid>
 
               <Separator />
-
               <FormGrid title="Offering Terms">
                 <FormField
                   field="terms.investmentStructure"
@@ -666,7 +664,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit}
                   value={values.terms?.dividentYield}
                   error={(touched.terms?.dividentYield && (touched.terms && errors.terms)?.dividentYield) as string}
-                  inputFilter={formatValue}
+                  inputFilter={filterNumberWithDecimals}
                 />
                 <FormField
                   field="terms.investmentPeriod"
@@ -680,7 +678,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   error={
                     (touched.terms?.investmentPeriod && (touched.terms && errors.terms)?.investmentPeriod) as string
                   }
-                  inputFilter={formatValue}
+                  inputFilter={integerNumberFilter}
                 />
                 <FormField
                   field="terms.grossIrr"
@@ -692,7 +690,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit}
                   value={values.terms?.grossIrr}
                   error={(touched.terms?.grossIrr && (touched.terms && errors.terms)?.grossIrr) as string}
-                  inputFilter={formatValue}
+                  inputFilter={filterNumberWithDecimals}
                 />
 
                 <DropdownField

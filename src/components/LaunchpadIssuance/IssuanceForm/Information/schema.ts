@@ -81,7 +81,11 @@ export const schema = yup.object().shape({
   investmentType: yup.string().oneOf(Object.values(OfferInvestmentStructure)).required(REQUIRED),
   country: yup.string().required(REQUIRED).oneOf(countryCodes, 'Select a country from the list'),
 
-  issuerIdentificationNumber: yup.string().required(REQUIRED).min(8, getLongerThanOrEqual('Identification number', 8)),
+  issuerIdentificationNumber: yup
+    .string()
+    .required(REQUIRED)
+    .min(8, getLongerThanOrEqual('Identification number', 8))
+    .max(64, getHaveAtMost('Identification number', 64)),
 
   tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
   tokenName: yup.string().required(REQUIRED),
@@ -93,7 +97,6 @@ export const schema = yup.object().shape({
     .matches(/^[a-zA-Z]+$/, { message: 'Please enter only letters' }),
   tokenPrice: yup.string().required(REQUIRED),
   tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
-
 
   decimals: yup.number().min(0).max(50),
   trusteeAddress: yup
@@ -137,8 +140,14 @@ export const schema = yup.object().shape({
       | boolean
       | yup.ValidationError {
       return checkMaxGreaterThanMinimum(this.parent.minInvestment, this.parent.maxInvestment)
-    }),
-
+    })
+    .test(
+      'maxInvestmentHardCapConstraint',
+      'Maximal investment should be smaller than total amount to raise',
+      function (): boolean | yup.ValidationError {
+        return checkMinSmallerThanMaximum(this.parent.maxInvestment, this.parent.hardCap)
+      }
+    ),
   hasPresale: yup.boolean().required(REQUIRED),
 
   presaleMaxInvestment: yup.string().when('hasPresale', {
@@ -151,6 +160,13 @@ export const schema = yup.object().shape({
         'Maximal investment should be greater than minimal investment',
         function (): boolean | yup.ValidationError {
           return checkMaxGreaterThanMinimum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
+        }
+      )
+      .test(
+        'presaleMaxInvestmentAllocation',
+        'Maximal investment should be smaller or equal to pre-sale allocation',
+        function () {
+          return checkMinSmallerThanMaximum(this.parent.presaleMaxInvestment, this.parent.presaleAlocated)
         }
       ),
     otherwise: yup.string(),
@@ -170,9 +186,20 @@ export const schema = yup.object().shape({
     otherwise: yup.string(),
   }),
 
-  presaleAlocated: yup
-    .string()
-    .when('hasPresale', { is: true, then: yup.string().required(REQUIRED), otherwise: yup.string() }),
+  presaleAlocated: yup.string().when('hasPresale', {
+    is: true,
+    then: yup
+      .string()
+      .required(REQUIRED)
+      .test(
+        'presaleAlocatedMax',
+        'Pre-sale allocated should be smaller or equal to total amount to raise',
+        function () {
+          return checkMinSmallerThanMaximum(this.parent.presaleAlocated, this.parent.hardCap)
+        }
+      ),
+    otherwise: yup.string(),
+  }),
 
   email: yup.string().required(REQUIRED).email('Enter a valid email'),
   website: yup.string().required(REQUIRED).url('Enter a valid URL'),
@@ -184,7 +211,11 @@ export const schema = yup.object().shape({
   cardPicture: requiredFileSchema,
 
   terms: yup.object().shape({
-    investmentStructure: yup.string().min(2, getLongerThanOrEqual('Investment Structure', 2)).required(REQUIRED),
+    investmentStructure: yup
+      .string()
+      .min(2, getLongerThanOrEqual('Investment Structure', 2))
+      .max(STRING_NORMAL, getHaveAtMost('Investment Structure', STRING_NORMAL))
+      .required(REQUIRED),
     dividentYield: yup.string(),
     investmentPeriod: yup.number(),
     grossIrr: yup.string(),
@@ -250,9 +281,9 @@ export const schema = yup.object().shape({
     then: yup.object().shape({
       whitelist: yup.date().required(REQUIRED),
       preSale: yup.date().required(REQUIRED),
-
-      sale: yup.date().required(REQUIRED),
-      closed: yup.date().required(REQUIRED),
+      // using custom messages because we have two fields in one
+      sale: yup.date().required('Public sale date required'),
+      closed: yup.date().required('Close date required'),
       claim: yup.date().required(REQUIRED),
     }),
     otherwise: yup.object().shape({
