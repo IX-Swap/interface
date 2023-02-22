@@ -64,7 +64,8 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) => getFilledPercentageFromMatches({ row })
+    // render: (_, row) => getFilledPercentageFromMatches({ row })
+    render: (_, row) => '0'
   },
   {
     key: 'status',
