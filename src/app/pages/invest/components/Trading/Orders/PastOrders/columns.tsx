@@ -18,6 +18,7 @@ const SimpleStatus = ({ status }: { status: string }) => {
   const { theme } = useAppTheme()
   return (
     <Typography
+      fontSize={13}
       color={
         status === OTCOrderStatus.CANCELLED
           ? theme.palette.error.main
@@ -28,6 +29,24 @@ const SimpleStatus = ({ status }: { status: string }) => {
     </Typography>
   )
 }
+
+const BlockchainExplorerLink = ({ status }: { status: string }) => {
+  const { theme } = useAppTheme()
+  return (
+    <Typography
+      fontSize={13}
+      noWrap
+      color={
+        status === OTCOrderStatus.CANCELLED
+          ? theme.palette.error.main
+          : 'initial'
+      }
+    >
+      View on blockchain explorer.
+    </Typography>
+  )
+}
+
 export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'createdAt',
@@ -64,12 +83,18 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) => getFilledPercentageFromMatches({ row })
+    render: (_, row) => '0'
+    //   render: (_, row) => getFilledPercentageFromMatches({ row })
   },
   {
     key: 'status',
     label: 'Status',
     render: (value, _) => <SimpleStatus status={value} />
+  },
+  {
+    key: 'link',
+    label: '',
+    render: (value, _) => <BlockchainExplorerLink status={value} />
   }
 ]
 
