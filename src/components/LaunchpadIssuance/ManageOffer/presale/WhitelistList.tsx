@@ -128,11 +128,11 @@ export const OfferWhitelistList = ({
             <MoreHorizontal color={theme.launchpad.colors.primary} size={13} />
             <ExtractText>Extract Data</ExtractText>
           </ExtractButton>
-          <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={approveSelected}>
+          <OutlineButton color={theme.launchpad.colors.error} width="180px" onClick={rejectSelected}>
             <ButtonLabel disabled={actionsDisabled}>Reject Selected</ButtonLabel>
             <X size={13} />
           </OutlineButton>
-          <OutlineButton color={theme.launchpad.colors.primary} width="180px" onClick={rejectSelected}>
+          <OutlineButton color={theme.launchpad.colors.primary} width="180px" onClick={approveSelected}>
             <ButtonLabel disabled={actionsDisabled}>Approve selected</ButtonLabel>
             <Check size={13} />
           </OutlineButton>
