@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
-  formatRoundedAmount,
+  //   formatRoundedAmount,
   getFilledPercentageFromMatches,
   getOrderCurrency,
   renderTotal
@@ -52,7 +52,8 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'amount',
     label: 'Quantity',
-    render: (value, _) => formatRoundedAmount(value)
+    // render: (value, _) => formatRoundedAmount(value)
+    render: (value, _) => value
   },
   {
     key: 'amount',
@@ -63,7 +64,8 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) => getFilledPercentageFromMatches({ row })
+    // render: (_, row) => getFilledPercentageFromMatches({ row })
+    render: (_, row) => '0'
   },
   {
     key: 'status',
@@ -86,7 +88,8 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'amount',
     label: 'Quantity',
-    render: (value, _) => formatRoundedAmount(value)
+    // render: (value, _) => formatRoundedAmount(value)
+    render: (value, _) => value
   },
   {
     key: 'orderType',
