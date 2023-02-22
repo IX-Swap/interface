@@ -21,6 +21,9 @@ interface Props {
 }
 
 const getTokenInfo = (address: string, options: Option[]) => {
+  if (!address) {
+    return
+  }
   const token = options.find(
     (x) =>
       address.toLowerCase() === x.address?.toLowerCase() || address.toLowerCase() === x.value.toString().toLowerCase()
