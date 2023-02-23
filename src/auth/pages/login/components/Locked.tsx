@@ -50,6 +50,7 @@ export const Locked = ({ email }: LockedProps) => {
         >
           Resend Link
         </Button>
+
         {timer > 0 && (
           <Typography variant='body1' align='center'>
             Resend link again in 00:{timer}s
