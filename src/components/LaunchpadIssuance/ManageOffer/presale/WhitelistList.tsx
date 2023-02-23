@@ -67,6 +67,7 @@ export const OfferWhitelistList = ({
     startLoading()
     manageWhitelists.load(offerId, { approveIds: selected }).then(() => {
       stopLoading()
+      setSelected([])
       refreshWhitelists()
     })
   }
@@ -75,6 +76,7 @@ export const OfferWhitelistList = ({
     startLoading()
     manageWhitelists.load(offerId, { rejectIds: selected }).then(() => {
       stopLoading()
+      setSelected([])
       refreshWhitelists()
     })
   }
@@ -133,7 +135,7 @@ export const OfferWhitelistList = ({
             <X size={13} />
           </OutlineButton>
           <OutlineButton color={theme.launchpad.colors.primary} width="180px" onClick={approveSelected}>
-            <ButtonLabel disabled={actionsDisabled}>Approve selected</ButtonLabel>
+            <ButtonLabel disabled={actionsDisabled}>Approve Selected</ButtonLabel>
             <Check size={13} />
           </OutlineButton>
         </ButtonsContainer>

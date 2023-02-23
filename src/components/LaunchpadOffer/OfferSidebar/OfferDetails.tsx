@@ -4,11 +4,11 @@ import styled, { useTheme } from 'styled-components'
 import { capitalize } from '@material-ui/core'
 import { Copy, Info } from 'react-feather'
 import { Link } from 'react-router-dom'
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import { Offer, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
-import { useFormatOfferValue, useInvestedAmount } from 'state/launchpad/hooks'
+import { useFormatOfferValue, useGetWhitelistStatus, useInvestedAmount } from 'state/launchpad/hooks'
 
 import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/InvestmentSaleStatusInfo'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
@@ -41,6 +41,7 @@ enum OfferStageStatus {
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
   const { amount: amountToClaim } = useInvestedAmount(props.offer.id)
+  const { status: whitelistedStatus } = useGetWhitelistStatus(props.offer.id)
   const explorerLink = getExplorerLink(
     nameChainMap[props?.offer?.network],
     props.offer.tokenAddress,
@@ -59,6 +60,10 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const stageStatus = React.useMemo(() => {
     switch (props.offer.status) {
       case OfferStatus.preSale:
+        return whitelistedStatus && whitelistedStatus === WhitelistStatus.accepted
+          ? OfferStageStatus.active
+          : OfferStageStatus.disabled
+
       case OfferStatus.sale:
         return OfferStageStatus.active
 
@@ -72,7 +77,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
       default:
         return OfferStageStatus.notStarted
     }
-  }, [amountToClaim, props.offer.status])
+  }, [whitelistedStatus, amountToClaim, props.offer.status])
 
   const [showInvestDialog, setShowInvestDialog] = React.useState(false)
 
