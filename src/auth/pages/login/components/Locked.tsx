@@ -9,6 +9,7 @@ export interface LockedProps {
 export const Locked = ({ email }: LockedProps) => {
   const timerStartValue = 30
   const [timer, setTimer] = useState(timerStartValue)
+  const websiteUrl = process.env.WEBSITE_URL ?? 'https://investax.io'
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -58,7 +59,7 @@ export const Locked = ({ email }: LockedProps) => {
       <Grid item xs={12}>
         <Typography variant='body1' align='center' style={{ marginTop: 120 }}>
           Did not receive link? Reach out to{' '}
-          <Link href='https://investax.io/contact/'>Support</Link>
+          <Link href={`${websiteUrl}/contact/`}>Support</Link>
         </Typography>
       </Grid>
     </Grid>
