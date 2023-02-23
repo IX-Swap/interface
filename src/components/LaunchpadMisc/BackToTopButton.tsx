@@ -13,7 +13,7 @@ export const BackToTopButton = () => {
 
   useEffect(() => {
     function showScroll() {
-      const wrappedElement = document.getElementsByTagName('footer')?.[0]
+      const wrappedElement = document.getElementsByTagName('main')?.[0]
       if (isBottom(wrappedElement)) {
         setShowTopBtn(true)
       } else {
@@ -48,10 +48,13 @@ export const BackToTopButton = () => {
 const BackToTop = styled(BaseButton)`
   background: ${(props) => props.theme.launchpad.colors.disabled};
   color: ${(props) => props.theme.launchpad.colors.text.light};
-  position: fixed;
-  top: 10%;
-  right: 25px;
+  position: relative;
+  bottom: 160%;
+  left: 160%;
   z-index: 20;
+  @media (max-width: 1690px) {
+    left: 135%;
+  }
   cursor: pointer;
   transition: all 0.5s ease-in-out;
   ${text34}
