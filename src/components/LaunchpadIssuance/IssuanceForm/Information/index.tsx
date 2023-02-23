@@ -138,7 +138,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   const goBack = React.useCallback(() => {
     if (JSON.stringify(form?.current?.values) === JSON.stringify(form?.current?.initialValues)) {
-      history.push('/issuance/create')
+      history.push(`/issuance/create?id=${issuanceId}`)
     } else {
       setShowCloseDialog(true)
     }
