@@ -1,9 +1,11 @@
-import { Typography } from '@mui/material'
+import { Typography, IconButton, Tooltip } from '@mui/material'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
   //   formatRoundedAmount,
-  getFilledPercentageFromMatches,
+  //   getFilledPercentageFromMatches,
   getOrderCurrency,
   renderTotal
 } from 'helpers/numbers'
@@ -30,20 +32,21 @@ const SimpleStatus = ({ status }: { status: string }) => {
   )
 }
 
-const BlockchainExplorerLink = ({ status }: { status: string }) => {
+const BlockchainExplorerLink = ({ txHash }: { txHash: string }) => {
   const { theme } = useAppTheme()
+  console.log(theme)
   return (
-    <Typography
-      fontSize={13}
-      noWrap
-      color={
-        status === OTCOrderStatus.CANCELLED
-          ? theme.palette.error.main
-          : 'initial'
-      }
+    <IconButton
+      component={props => (
+        <Tooltip title='View on blockchain explorer.'>
+          <AppRouterLinkComponent {...props} target='_blank' />
+        </Tooltip>
+      )}
+      size='small'
+      to={'/home'}
     >
-      View on blockchain explorer.
-    </Typography>
+      <LaunchIcon color='disabled' />
+    </IconButton>
   )
 }
 
@@ -80,12 +83,11 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })
   },
-  {
-    key: '_id',
-    label: 'Filled',
-    render: (_, row) => '0'
-    //   render: (_, row) => getFilledPercentageFromMatches({ row })
-  },
+  //   {
+  //     key: '_id',
+  //     label: 'Filled',
+  //       render: (_, row) => getFilledPercentageFromMatches({ row })
+  //   },
   {
     key: 'status',
     label: 'Status',
@@ -132,11 +134,11 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })
   },
-  {
-    key: '_id',
-    label: 'Filled',
-    render: (_, row) => getFilledPercentageFromMatches({ row })
-  },
+  //   {
+  //     key: '_id',
+  //     label: 'Filled',
+  //     render: (_, row) => getFilledPercentageFromMatches({ row })
+  //   },
   {
     key: 'createdAt',
     label: 'Date',
