@@ -6,13 +6,13 @@ import { Check } from 'react-feather'
 import { IssuanceStatus } from '../types'
 
 interface BadgeProps {
-  status: IssuanceStatus
+  status?: IssuanceStatus
 }
 
-export const IssuanceStatusBadge: React.FC<BadgeProps> = (props) => {
+export const IssuanceStatusBadge: React.FC<BadgeProps> = ({ status }) => {
   const theme = useTheme()
 
-  switch (props.status) {
+  switch (status) {
     case IssuanceStatus.approved:
       return (
         <IssuanceStatusBadgeWrapper color={theme.launchpad.colors.success}>
@@ -28,9 +28,10 @@ export const IssuanceStatusBadge: React.FC<BadgeProps> = (props) => {
     case IssuanceStatus.pendingApproval:
       return <IssuanceStatusBadgeWrapper color="#FFC632">Pending Approval</IssuanceStatusBadgeWrapper>
     case IssuanceStatus.draft:
+    case undefined:
       return <div></div>
     default:
-      return props.status
+      return status
   }
 }
 

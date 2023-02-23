@@ -209,12 +209,12 @@ export const useGetOffer = (id: string | number | undefined, startLoading = true
   }, [id])
 
   React.useEffect(() => {
-    if (startLoading) {
+    if (startLoading && id) {
       load()
     } else {
       loader.stop()
     }
-  }, [])
+  }, [id])
   return { loading: loader.isLoading, load, data, error }
 }
 
@@ -905,41 +905,21 @@ const useUploadOfferFiles = () => {
 }
 
 export const useOfferFormInitialValues = (issuanceId?: number | string) => {
-  const loader = useLoader()
   const getFile = useGetFile()
 
   const issuance = useGetIssuance()
-  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id, false)
+  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id)
   const [values, setValues] = React.useState<InformationFormValues>()
-
-  React.useEffect(() => {
-    if (issuance.error) {
-      loader.stop()
-    }
-  }, [issuance.error])
 
   React.useEffect(() => {
     issuance.load(issuanceId)
   }, [issuanceId])
 
   React.useEffect(() => {
-    if (!issuance.loading && issuance.data) {
-      offer.load()
-    }
-  }, [issuance.loading])
-
-  React.useEffect(() => {
-    if (!issuance.loading && offer.data) {
-      loader.stop()
-    }
-  }, [offer.loading])
-
-  React.useEffect(() => {
     if (!offer.loading && !offer.data) {
       setValues(informationInitialFormValues)
-      loader.stop()
     } else if (!offer.loading && offer.data) {
-      transform(offer.data).then(setValues).then(loader.stop)
+      transform(offer.data).then(setValues)
     }
   }, [offer.loading, offer.data])
 
@@ -1042,7 +1022,12 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       investingTokenAddress: payload.investingTokenAddress,
     }
   }, [])
-  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id, error: issuance.error }
+  return {
+    data: values,
+    loading: issuance.loading || offer.loading,
+    vettingId: issuance.data?.id,
+    error: issuance.error,
+  }
 }
 
 export const useSubmitOffer = () => {

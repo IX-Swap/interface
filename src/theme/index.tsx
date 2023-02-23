@@ -25,7 +25,7 @@ export const MEDIA_WIDTHS = {
 
 const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } = Object.keys(MEDIA_WIDTHS).reduce(
   (accumulator, size) => {
-    ; (accumulator as any)[size] = (a: any, b: any, c: any) => css`
+    ;(accumulator as any)[size] = (a: any, b: any, c: any) => css`
       @media (max-width: ${(MEDIA_WIDTHS as any)[size]}px) {
         ${css(a, b, c)}
       }
@@ -217,7 +217,7 @@ export function theme(darkMode: boolean, config: Whitelabel | null): DefaultThem
       flex-flow: row nowrap;
     `,
 
-    launchpad: launchpadTheme()
+    launchpad: launchpadTheme(),
   }
 }
 
@@ -226,7 +226,7 @@ export function launchpadTheme() {
     font: 'Inter',
 
     content: {
-      maxWidth: '1180px'
+      maxWidth: '1180px',
     },
 
     colors: {
@@ -246,7 +246,7 @@ export function launchpadTheme() {
       border: {
         default: '#E6E6FF',
         success: '#0EC080',
-        error: '#FF8282'
+        error: '#FF8282',
       },
 
       text: {
@@ -256,7 +256,8 @@ export function launchpadTheme() {
         caption: '#B8B8CC',
         success: '#0EC080',
         warning: '#FF8282',
-        light: '#FFFFFF'
+        light: '#FFFFFF',
+        hint: '#8d8da3',
       },
     },
   }
@@ -271,7 +272,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
   return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
 }
 
-const TextWrapper = styled(Text) <{ color: keyof Colors }>`
+const TextWrapper = styled(Text)<{ color: keyof Colors }>`
   color: ${({ color, theme }) => (theme as any)[color]};
 `
 
@@ -443,8 +444,8 @@ export const ThemedGlobalStyle = createGlobalStyle`
 
   /* svg{
     ${({ theme }) =>
-    theme.config.elements &&
-    css`
+      theme.config.elements &&
+      css`
         stroke: ${({ theme }) => theme.config.elements.main};
       `};
   } */

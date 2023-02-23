@@ -93,7 +93,5 @@ const Content = styled.div`
 
 const DialogTitle = styled.div`
   ${text48}
-  /* identical to box height, or 26px */
-
-  color: #292933;
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `

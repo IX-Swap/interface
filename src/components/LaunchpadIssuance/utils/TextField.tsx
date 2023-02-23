@@ -140,7 +140,7 @@ const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height' |
   }
 `
 
-const Label = styled.div`
+export const Label = styled.div`
   ${text19}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
