@@ -43,14 +43,14 @@ export const InvestDialog: React.FC<Props> = (props) => {
       default:
         return null
     }
-  }, [])
+  }, [props.offer.status])
 
   return (
     <Portal>
       <ModalWrapper>
         <DialogContainer>
           <aside>
-            <InvestDialogSidebar stage={props.offer.status} />
+            <InvestDialogSidebar stage={props.offer.status} hasPresale={props.offer.hasPresale} />
           </aside>
 
           <header>

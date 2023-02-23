@@ -19,7 +19,7 @@ export const OfferSidebar: React.FC<Props> = (props) => {
     <>
       <OfferDetails offer={props.offer} />
       <OfferSaleAllocation {...props.offer} />
-      <OfferPreSaleInfo {...props.offer} />
+      {props.offer.hasPresale && <OfferPreSaleInfo {...props.offer} />}
       <OfferStage frames={props.offer.timeframe} />
       <OfferTerms terms={props.offer.terms} />
       {/* <OfferVesting offer={props.offer} /> */}

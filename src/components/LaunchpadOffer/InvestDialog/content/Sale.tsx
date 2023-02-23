@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useState, useMemo, useCallback } from 'react'
 import styled, { useTheme } from 'styled-components'
 import Row from 'components/Row'
 import { CheckCircle, Info } from 'react-feather'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { Offer } from 'state/launchpad/types'
+import { Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
 import { ConvertationField } from '../utils/ConvertationField'
 import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
-import { Checkbox } from '../utils/Checkbox'
+import { BaseCheckbox } from '../utils/Checkbox'
 import { useInvest } from 'state/launchpad/hooks'
 import { text10, text11 } from 'components/LaunchpadMisc/typography'
 
@@ -18,41 +18,61 @@ interface Props {
   offer: Offer
 }
 
-export const SaleStage: React.FC<Props> = (props) => {
+export const SaleStage: React.FC<Props> = ({ offer }) => {
+  const {
+    minInvestment,
+    maxInvestment,
+    presaleMinInvestment,
+    presaleMaxInvestment,
+    investingTokenSymbol,
+    status,
+    id,
+    network,
+    tokenAddress,
+    tokenSymbol,
+    decimals,
+    totalInvestment,
+    presaleAlocated,
+    hardCap,
+  } = offer
   const theme = useTheme()
-  const invest = useInvest(props.offer.id)
+  const invest = useInvest(id)
 
-  const [amount, setAmount] = React.useState<string>()
+  const [amount, setAmount] = useState<string>()
 
-  const [isDisabled, setDisabled] = React.useState(true)
-  const formatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
+  const [isDisabled, setDisabled] = useState(true)
+  const [agreed, setAgreed] = useState(false)
+  const formatter = useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
+  const isPresale = useMemo(() => status === OfferStatus.preSale, [status])
 
-  const presaleCondition = React.useMemo(
+  const conditions = useMemo(
     () => [
       {
         label: 'Min. Investment Size',
-        value: `${formatter.format(Number(props.offer.presaleMinInvestment))} ${props.offer.investingTokenSymbol}`,
+        value: `${formatter.format(Number(isPresale ? presaleMinInvestment : minInvestment))} ${investingTokenSymbol}`,
       },
       {
         label: 'Max. Investment Size',
-        value: `${formatter.format(Number(props.offer.presaleMaxInvestment))} ${props.offer.investingTokenSymbol}`,
+        value: `${formatter.format(Number(isPresale ? presaleMaxInvestment : maxInvestment))} ${investingTokenSymbol}`,
       },
     ],
-    []
+    [isPresale, presaleMaxInvestment, presaleMinInvestment, maxInvestment, minInvestment, investingTokenSymbol]
   )
 
-  const investmentAllowance = React.useMemo(() => {
+  const investmentAllowance = useMemo(() => {
+    const max = isPresale ? +presaleAlocated : +hardCap
+    const available = max - totalInvestment
     const items = [
-      { label: 'Available to invest', value: `9,000.00 ${props.offer.investingTokenSymbol}` },
-      { label: 'Already invested', value: `1,000.00 ${props.offer.investingTokenSymbol}` },
+      { label: 'Available to invest', value: `${formatter.format(available)} ${investingTokenSymbol}` },
+      { label: 'Already invested', value: `${formatter.format(totalInvestment)} ${investingTokenSymbol}` },
     ]
 
     return items.filter((x) => !!x)
-  }, [])
+  }, [isPresale, presaleAlocated, hardCap, investingTokenSymbol])
 
   const submitState = useInvestSubmitState()
 
-  const submit = React.useCallback(async () => {
+  const submit = useCallback(async () => {
     if (!amount) {
       return
     }
@@ -60,7 +80,7 @@ export const SaleStage: React.FC<Props> = (props) => {
     try {
       submitState.setLoading()
 
-      await invest(props.offer.status, {
+      await invest(status, {
         amount,
         txHash: '0x0730e3a6da14a38d8d43899f572d4c221318e3a70461db1c23d6dc8091e5db30',
       })
@@ -73,37 +93,32 @@ export const SaleStage: React.FC<Props> = (props) => {
 
   return (
     <InvestFormContainer padding="0 0 2rem 0">
-      <OfferLinks
-        network={props.offer.network}
-        address={props.offer.tokenAddress}
-        symbol={props.offer.tokenSymbol}
-        decimals={props.offer.decimals}
-      />
+      <OfferLinks network={network} address={tokenAddress} symbol={tokenSymbol} decimals={decimals} />
 
       <InfoList
-        title={<InfoListTitle>Pre-Sale Conditions</InfoListTitle>}
+        title={<InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>}
         fontSize="13px"
         lineHeight="32px"
-        entries={presaleCondition}
+        entries={conditions}
       />
       <InfoList
-        title={<InfoListTitle>Pre-Sale Conditions</InfoListTitle>}
+        title={<InfoListTitle>My investment allowance</InfoListTitle>}
         fontSize="13px"
         lineHeight="32px"
         entries={investmentAllowance}
       />
 
-      <ConvertationField offer={props.offer} onChange={setAmount} setDisabled={setDisabled} />
+      <ConvertationField offer={offer} onChange={setAmount} setDisabled={setDisabled} />
 
       <Agreement>
-        <AgreementCheckbox checked />
+        <AgreementCheckbox state={agreed} toggle={() => setAgreed((state) => !state)} />
         <AgreementText>
           I have read, fully understood, and agree to be bound by the terms of this{' '}
           <AgreementTerms href="#">subscription form.</AgreementTerms>
         </AgreementText>
       </Agreement>
 
-      <InvestFormSubmitButton state={submitState.current} disabled={isDisabled} onSubmit={submit}>
+      <InvestFormSubmitButton state={submitState.current} disabled={isDisabled || !agreed} onSubmit={submit}>
         {submitState.current === InvestSubmitState.success && (
           <>
             Submitted <CheckCircle size="15" color={theme.launchpad.colors.success} />
@@ -155,6 +170,6 @@ const AgreementTerms = styled.a`
   color: ${(props) => props.theme.launchpad.colors.primary};
 `
 
-const AgreementCheckbox = styled(Checkbox)`
+const AgreementCheckbox = styled(BaseCheckbox)`
   background: ${(props) => props.theme.launchpad.colors.primary};
 `

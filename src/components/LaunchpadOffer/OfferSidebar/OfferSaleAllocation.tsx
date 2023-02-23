@@ -13,7 +13,7 @@ interface Props {
   borderless?: boolean
 }
 
-type SaleProps = Props & Pick<Offer, 'hardCap' | 'softCap' | 'investingTokenSymbol' | 'presaleAlocated'>
+type SaleProps = Props & Pick<Offer, 'hardCap' | 'softCap' | 'investingTokenSymbol' | 'presaleAlocated' | 'hasPresale'>
 
 export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
   const formatedValue = useFormatOfferValue()
@@ -44,16 +44,19 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
 
       <Separator />
 
-      <SaleAllocationEntry>
-        <div>
-          <span className="bold">
-            {props.investingTokenSymbol} {formatedValue(props.presaleAlocated)}
-          </span>{' '}
-          Allocated for Pre-Sale
-        </div>
-      </SaleAllocationEntry>
-
-      <Separator />
+      {props.hasPresale && (
+        <>
+          <SaleAllocationEntry>
+            <div>
+              <span className="bold">
+                {props.investingTokenSymbol} {formatedValue(props.presaleAlocated)}
+              </span>
+              Allocated for Pre-Sale
+            </div>
+          </SaleAllocationEntry>
+          <Separator />
+        </>
+      )}
 
       <SaleAllocationEntry>
         <div>

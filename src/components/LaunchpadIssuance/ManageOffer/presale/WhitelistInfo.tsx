@@ -31,7 +31,7 @@ export const OfferWhitelistInfo = ({ data }: Props) => {
   }
   return (
     <Container>
-      <Title>Whitelisting for Register to invest</Title>
+      <Title>Whitelisting for Register To invest</Title>
       <GridContainer>
         <GridItem gridArea="row1">
           <InfoRow title="Applicants" mainValue={data.applicants.toLocaleString()} />

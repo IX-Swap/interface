@@ -303,6 +303,8 @@ export interface Offer {
 
   usersClaimed: boolean
   issuerClaimed: boolean
+
+  countParticipants: number
 }
 
 export interface IssuanceVettingDocuments {

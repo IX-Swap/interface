@@ -3,7 +3,7 @@ import styled, { useTheme } from 'styled-components'
 
 import { ArrowDown, ChevronDown } from 'react-feather'
 
-import { Offer } from 'state/launchpad/types'
+import { Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestTextField } from './InvestTextField'
 
 import { useActiveWeb3React } from 'hooks/web3'
@@ -40,32 +40,30 @@ const getTokenInfo = (address: string, options: Option[]) => {
   } as TokenOption
 }
 
-const useGetWarning = (offer: Offer) => {
+export const useGetWarning = (offer: Offer) => {
   const { account } = useActiveWeb3React()
   const inputCurrency = useCurrency(offer.investingTokenAddress)
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   const isSufficientBalance = useDerivedBalanceInfo(offer.id)
   return useCallback(
     (value: string) => {
+      const isPresale = offer.status !== OfferStatus.sale
       const realValue = value ? Number(value.replace(/,/g, '')) : 0
+      const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
+      const max = isPresale ? offer.presaleMaxInvestment : offer.maxInvestment
+      const total = isPresale ? offer.presaleAlocated : offer.hardCap
+      const available = +total - offer.totalInvestment
 
-      const symbol = offer.investingTokenSymbol
       const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
-      const isMinError = Number(offer.presaleMinInvestment) > realValue
-      const isMaxError = Number(offer.presaleMaxInvestment) < realValue
-      const isAvailableError = 9000 < realValue
       let warning = ''
-      if (isMinError) {
-        warning = `Min.investment size ${offer.presaleMinInvestment} ${symbol}`
-      }
-      if (isMaxError) {
-        warning = `Max.investment size ${offer.presaleMaxInvestment} ${symbol}`
-      }
       if (isInsufficientBalance) {
         warning = `Insufficient balance`
-      }
-      if (isAvailableError) {
-        warning = `Available to invest 9,000 ${symbol}`
+      } else if (Number(min) > realValue) {
+        warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
+      } else if (Number(max) < realValue) {
+        warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
+      } else if (available < realValue) {
+        warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
       }
       return warning
     },
