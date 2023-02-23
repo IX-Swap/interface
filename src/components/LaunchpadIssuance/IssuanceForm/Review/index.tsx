@@ -67,7 +67,7 @@ export const OfferReview: React.FC<Props> = (props) => {
             titleFontWeight="600"
             entries={[
               props.values.timeframe.whitelist && {
-                label: <StageLabel>Register to Invest</StageLabel>,
+                label: <StageLabel>Register To Invest</StageLabel>,
                 value: (
                   <Nowrap>{formatDateRange(props.values.timeframe.whitelist, props.values.timeframe.preSale)}</Nowrap>
                 ),

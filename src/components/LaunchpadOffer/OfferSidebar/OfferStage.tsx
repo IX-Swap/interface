@@ -14,7 +14,7 @@ const getTooltip = (type: OfferTimeframeType) => {
   switch (type) {
     case OfferTimeframeType.whitelist:
       return { 
-        title: 'Register to invest', 
+        title: 'Register To invest', 
         body: 'You need to register to invest in order to participate in the pre-sale round. This stage does not apply for the Public Sale.'  
       }
       
@@ -71,7 +71,7 @@ export const OfferStage: React.FC<StageProps> = (props) => {
         <StageLabel hasStarted={stageHasStarted.whitelist}>
           {stageHasStarted.whitelist && <ChevronRight fill={theme.launchpad.colors.primary} size="10" />}
 
-          <div>Register to invest</div>
+          <div>Register To invest</div>
 
           <Tooltip {...getTooltip(OfferTimeframeType.whitelist)}>
             <Info size="14" color={theme.launchpad.colors.text.caption}/>

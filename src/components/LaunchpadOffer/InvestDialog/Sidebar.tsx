@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { OfferStatus } from 'state/launchpad/types'
@@ -10,9 +10,10 @@ import { text10, text36 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   stage: OfferStatus
+  hasPresale: boolean
 }
 
-const labels = [
+const allLabels = [
   { label: 'Register To Invest', value: OfferStatus.whitelist },
   { label: 'Pre-Sale', value: OfferStatus.preSale },
   { label: 'Public Sale', value: OfferStatus.sale },
@@ -21,6 +22,14 @@ const labels = [
 ]
 
 export const InvestDialogSidebar: React.FC<Props> = (props) => {
+  const labels = useMemo(() => {
+    if (props.hasPresale) {
+      return allLabels
+    } else {
+      return allLabels.slice(2)
+    }
+  }, [props.hasPresale])
+
   return (
     <StageList>
       {labels.map((entry, idx) => (

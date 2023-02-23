@@ -6,13 +6,14 @@ import { boolean, number, object, string } from 'yup'
 import { CheckCircle, Info, Clock, Check } from 'react-feather'
 import { Offer, WhitelistStatus } from 'state/launchpad/types'
 import { useGetWhitelistStatus, useRequestWhitelist } from 'state/launchpad/hooks'
-import { Centered, Column, ErrorText, FormFieldContaienr, Row } from 'components/LaunchpadMisc/styled'
+import { Centered, Column, ErrorText, FormFieldContainer, Row } from 'components/LaunchpadMisc/styled'
 import { InvestFormContainer, Title } from './styled'
 import { InvestTextField } from '../utils/InvestTextField'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { KYCPromptIconContainer } from 'components/Launchpad/KYCPrompt/styled'
 import { text28, text59, text9 } from 'components/LaunchpadMisc/typography'
+import { useGetWarning } from '../utils/ConvertationField'
 
 interface Props {
   offer: Offer
@@ -52,6 +53,8 @@ const cleanAmount = (value: string) =>
   )
 
 export const RegisterToInvestStage: React.FC<Props> = (props) => {
+  const [warning, setWarning] = React.useState('')
+  const getWarning = useGetWarning(props.offer)
   const theme = useTheme()
   const submitState = useInvestSubmitState()
   const whitelist = useGetWhitelistStatus(props.offer.id)
@@ -71,12 +74,24 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     [submitState]
   )
 
-  const onChange = React.useCallback((field: string, value: any, setValue: ValueSetter) => {
+  const onChangeInterested = React.useCallback((value: any, setValue: ValueSetter) => {
     if (disableForm) {
       return
     }
 
-    setValue(field, value)
+    setValue('isInterested', value)
+  }, [])
+
+  const onChangeAmount = React.useCallback((value: any, setValue: ValueSetter) => {
+    if (disableForm) {
+      return
+    }
+
+    const warningText = getWarning(value)
+    if (warningText) {
+      setWarning(warningText)
+    }
+    setValue('amount', cleanAmount(value))
   }, [])
 
   return (
@@ -93,36 +108,37 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
             <>
               <Title>Are you interested to participate in this deal?</Title>
 
-              <FormFieldContaienr>
+              <FormFieldContainer>
                 <ParticipationInterest>
                   <ParticipationInterestButton
                     active={values.isInterested === true}
-                    onClick={() => onChange('isInterested', true, setFieldValue)}
+                    onClick={() => onChangeInterested(true, setFieldValue)}
                   >
                     Yes
                   </ParticipationInterestButton>
 
                   <ParticipationInterestButton
                     active={values.isInterested === false}
-                    onClick={() => onChange('isInterested', false, setFieldValue)}
+                    onClick={() => onChangeInterested(false, setFieldValue)}
                   >
                     No
                   </ParticipationInterestButton>
                 </ParticipationInterest>
 
                 {errors.isInterested && <ErrorText>{errors.isInterested}</ErrorText>}
-              </FormFieldContaienr>
+              </FormFieldContainer>
 
-              <FormFieldContaienr>
+              <FormFieldContainer>
                 <InvestTextField
                   type="number"
                   label="How much will be your estimated investment?"
                   trailing={<CurrencyLabel>{props.offer.investingTokenSymbol}</CurrencyLabel>}
-                  onChange={(value) => setFieldValue('amount', cleanAmount(value))}
+                  onChange={(value) => onChangeAmount(value, setFieldValue)}
                 />
 
                 {errors.amount && <ErrorText>{errors.amount}</ErrorText>}
-              </FormFieldContaienr>
+                {warning && <ErrorText>{warning}</ErrorText>}
+              </FormFieldContainer>
 
               <InvestFormSubmitButton state={submitState.current} onSubmit={submitForm}>
                 {submitState.current === InvestSubmitState.default && 'Submit'}
@@ -219,7 +235,7 @@ const CurrencyLabel = styled.div`
 
 const WhitelistMessage = styled.div`
   ${text59}
-  
+
   text-align: center;
   max-width: 80%;
   color: ${(props) => props.theme.launchpad.colors.text.title};
