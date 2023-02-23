@@ -16,6 +16,7 @@ export const SuccessPage = () => {
   const data = useAuth()
   const { isMobile } = useAppBreakpoints()
   const name = data.user?.name
+  const websiteUrl = process.env.WEBSITE_URL ?? 'https://investax.io'
 
   return (
     <Grid container>
@@ -37,7 +38,7 @@ export const SuccessPage = () => {
             </Typography>
             <Typography className={classes.text} mt={2}>
               If you have any further questions, you can always contact our{' '}
-              <a href=' https://investax.io/contact/ '>support department</a>
+              <a href={`${websiteUrl}/contact/`}>support department</a>
             </Typography>
             <Button
               component={AppRouterLinkComponent}

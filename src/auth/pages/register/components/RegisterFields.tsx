@@ -25,12 +25,13 @@ export interface CheckboxLabelProps {
 
 const CheckboxLabel = ({ isError }: CheckboxLabelProps) => {
   const { label, link } = useStyles({ isError })
+  const websiteUrl = process.env.WEBSITE_URL ?? 'https://investax.io'
 
   return (
     <Typography component='span' variant='body2' className={label}>
       I have read and agree to the{' '}
       <Link
-        href='https://investax.io/terms-of-use/'
+        href={`${websiteUrl}/terms-of-use/`}
         target='_blank'
         className={link}
       >
@@ -38,16 +39,12 @@ const CheckboxLabel = ({ isError }: CheckboxLabelProps) => {
         Terms &amp; Conditions
       </Link>
       ,{' '}
-      <Link
-        href='https://investax.io/privacy/'
-        target='_blank'
-        className={link}
-      >
+      <Link href={`${websiteUrl}/privacy/`} target='_blank' className={link}>
         Privacy Policy
       </Link>{' '}
       and{' '}
       <Link
-        href='https://investax.io/disclosures/'
+        href={`${websiteUrl}/disclosures/`}
         target='_blank'
         className={link}
       >
