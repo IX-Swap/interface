@@ -138,7 +138,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   const goBack = React.useCallback(() => {
     if (JSON.stringify(form?.current?.values) === JSON.stringify(form?.current?.initialValues)) {
-      history.push('/issuance/create')
+      history.push(`/issuance/create?id=${issuanceId}`)
     } else {
       setShowCloseDialog(true)
     }
@@ -585,7 +585,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 title="Timeline"
                 description={
                   <>
-                    The timeline will be in the following order: Register to Invest {'>'} Pre-Sale {'>'} Public Sale{' '}
+                    The timeline will be in the following order: Register To Invest {'>'} Pre-Sale {'>'} Public Sale{' '}
                     {'>'} Token Claim. Exclude the Pre-Sale stage if you decide to not include this.
                   </>
                 }
@@ -593,7 +593,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 <DateRangeField
                   mode="single"
                   showButton
-                  label="Register to Invest"
+                  label="Register To Invest"
                   field="timeframe.whitelist"
                   setter={setFieldValue}
                   value={values.timeframe.whitelist}

@@ -4,11 +4,11 @@ import styled, { useTheme } from 'styled-components'
 import { capitalize } from '@material-ui/core'
 import { Copy, Info } from 'react-feather'
 import { Link } from 'react-router-dom'
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import { Offer, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
-import { useFormatOfferValue } from 'state/launchpad/hooks'
+import { useFormatOfferValue, useGetWhitelistStatus, useInvestedAmount } from 'state/launchpad/hooks'
 
 import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/InvestmentSaleStatusInfo'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
@@ -40,6 +40,8 @@ enum OfferStageStatus {
 
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const { amount: amountToClaim } = useInvestedAmount(props.offer.id)
+  const { status: whitelistedStatus } = useGetWhitelistStatus(props.offer.id)
   const explorerLink = getExplorerLink(
     nameChainMap[props?.offer?.network],
     props.offer.tokenAddress,
@@ -58,12 +60,16 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const stageStatus = React.useMemo(() => {
     switch (props.offer.status) {
       case OfferStatus.preSale:
+        return whitelistedStatus && whitelistedStatus === WhitelistStatus.accepted
+          ? OfferStageStatus.active
+          : OfferStageStatus.disabled
+
       case OfferStatus.sale:
         return OfferStageStatus.active
 
       case OfferStatus.closed:
       case OfferStatus.claim:
-        return OfferStageStatus.closed
+        return amountToClaim && amountToClaim > 0 ? OfferStageStatus.closed : OfferStageStatus.disabled
 
       case OfferStatus.approved:
         return OfferStageStatus.disabled
@@ -71,7 +77,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
       default:
         return OfferStageStatus.notStarted
     }
-  }, [])
+  }, [whitelistedStatus, amountToClaim, props.offer.status])
 
   const [showInvestDialog, setShowInvestDialog] = React.useState(false)
 
@@ -120,7 +126,7 @@ export const OfferDetails: React.FC<Props> = (props) => {
               </Tooltip>
             </header>
 
-            <main>0</main>
+            <main>{props.offer.countParticipants ?? 0}</main>
           </Participants>
 
           <DayCount>
@@ -132,9 +138,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
         <InvestButtonContainer>
           {stageStatus !== OfferStageStatus.disabled && (
             <InvestButton onClick={openInvestDialog}>
-              {stageStatus === OfferStageStatus.notStarted && 'Register to Invest'}
+              {stageStatus === OfferStageStatus.notStarted && 'Register To Invest'}
               {stageStatus === OfferStageStatus.active && 'Invest'}
-              {stageStatus === OfferStageStatus.closed && 'Open dashboard '}
+              {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
             </InvestButton>
           )}
           {/* Hide for now https://app.clickup.com/t/4733323/IXS-2512 */}

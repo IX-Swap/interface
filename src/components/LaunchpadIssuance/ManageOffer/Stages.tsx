@@ -78,7 +78,7 @@ export const OfferStages = ({ offer, refreshOffer }: Props) => {
       </MainTitleBlock>
       {hasPresale && (
         <DateBlock
-          title="Register to Invest"
+          title="Register To Invest"
           subtitle={formatDates(timeframe.whitelist, timeframe.preSale)}
           isCurrent={highlightedStatuses.includes(OfferStatus.whitelist)}
         />

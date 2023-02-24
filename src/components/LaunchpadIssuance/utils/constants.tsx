@@ -7,7 +7,7 @@ export const ITEM_ROWS = [
 ]
 
 export enum OFFER_STATUSES {
-  whitelist = 'Register to Invest',
+  whitelist = 'Register To Invest',
   preSale = 'Pre-Sale',
   sale = 'Public Sale',
   closed = 'Closed',

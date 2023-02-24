@@ -114,7 +114,7 @@ export const IconButton = styled.button`
   }
 `
 
-export const FormFieldContaienr = styled(Column)`
+export const FormFieldContainer = styled(Column)`
   gap: 0.125rem;
 `
 
