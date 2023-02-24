@@ -45,7 +45,7 @@ const schema = object().shape({
 })
 
 const PinForm = ({ onClose }: PinProps) => {
-  const { items } = useGetIssuancePlain({ showAll: 'true' })
+  const { items } = useGetIssuancePlain({ forPinning: 'true' })
   const getPinnedOffer = useGetPinnedOffer()
   const { load: pinOffer, isLoading } = usePinOffer()
 
