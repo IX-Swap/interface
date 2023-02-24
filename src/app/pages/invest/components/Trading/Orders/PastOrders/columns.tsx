@@ -3,7 +3,7 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
   //   formatRoundedAmount,
-  getFilledPercentageFromMatches,
+  //   getFilledPercentageFromMatches,
   getOrderCurrency,
   renderTotal
 } from 'helpers/numbers'
@@ -111,7 +111,8 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: '_id',
     label: 'Filled',
-    render: (_, row) => getFilledPercentageFromMatches({ row })
+    // render: (_, row) => getFilledPercentageFromMatches({ row })
+    render: (_, row) => '0'
   },
   {
     key: 'createdAt',
