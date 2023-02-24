@@ -25,7 +25,7 @@ import { DiscreteInternalLink } from 'theme'
 import { useRole } from 'state/user/hooks'
 import { TitleBox } from './TitleBox'
 import { routes } from 'utils/routes'
-import { ListingApplicationPopup } from './ListingApplicationPopup'
+import { IssuanceApplicationPopup } from './IssuanceInformationPopup'
 import { useHistory } from 'react-router-dom'
 
 const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
@@ -131,7 +131,7 @@ export const IssuancesFull = () => {
 
   return (
     <Container>
-      <ListingApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />
+      <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />
       <TitleBox title="Issuances" setFilter={setFilter} />
 
       <SearchFilter setFilter={setFilter} />

@@ -15,8 +15,10 @@ import { FormField } from '../IssuanceForm/shared/fields/FormField'
 import { IssuanceStatus } from '../types'
 import { Label } from '../utils/TextField'
 import { MiniStatusBadge } from './MiniStatusBadge'
+import { ConfirmPopup } from '../utils/ConfirmPopup'
+import { useDeployOffer } from 'state/issuance/hooks'
 
-export interface ListingApplicationPopupProps {
+export interface IsssuanceApplicationPopupProps {
   issuance: Issuance | null
   isOpen: boolean
   setOpen: any
@@ -42,12 +44,13 @@ const StatusBlock = ({ label, status }: { label: string; status?: IssuanceStatus
   )
 }
 
-export const ListingApplicationPopup = ({ issuance, isOpen, setOpen }: ListingApplicationPopupProps) => {
+export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: IsssuanceApplicationPopupProps) => {
   const toggleDialog = React.useCallback(() => setOpen((state: boolean) => !state), [])
-  const [listingFee, setListingFee] = useState('0')
+  const [issuanceFee, setIssuanceFee] = useState('0')
   const { data: offer } = useGetOffer(issuance?.vetting?.offer?.id)
   const { data: vetting } = useVetting(issuance?.id)
-
+  const deploy = useDeployOffer(offer?.id)
+  const [showConfirm, setShowConfirm] = useState(false)
   const getVettingLink = React.useCallback(
     (status?: IssuanceStatus) => {
       if (status === IssuanceStatus.approved) {
@@ -85,7 +88,7 @@ export const ListingApplicationPopup = ({ issuance, isOpen, setOpen }: ListingAp
   }
 
   return (
-    <IssuanceDialog show={isOpen} title="Listing Application" onClose={toggleDialog} width="600px">
+    <IssuanceDialog show={isOpen} title="Issuance Information" onClose={toggleDialog} width="600px">
       <PopupWrapper>
         <Column></Column>
         <Column>
@@ -98,29 +101,40 @@ export const ListingApplicationPopup = ({ issuance, isOpen, setOpen }: ListingAp
           <StatusBlock label="Status" status={vetting?.status} />
         </RowBetween>
         <RowBetween>
-          <ButtonBlock label="Listing application" link={getInformationLink(offer?.status)} />
+          <ButtonBlock label="Issuance Information" link={getInformationLink(offer?.status)} />
           <StatusBlock label="Status" status={offer?.status} />
         </RowBetween>
         <Separator />
         <FeeRow>
           <Column style={{ gap: '25px', flex: '1 1' }}>
-            <FieldLabel>Listing Fee</FieldLabel>
+            <FieldLabel>Issuance Fee</FieldLabel>
             <FormField
               placeholder="5%"
-              field="listingFee"
-              setter={(field, value) => setListingFee(value)}
-              value={`${listingFee}%`}
+              field="issuanceFee"
+              setter={(field, value) => setIssuanceFee(value)}
+              value={`${issuanceFee}%`}
               inputFilter={filterNumberWithDecimals}
             />
           </Column>
           <FilledButton style={{ alignSelf: 'flex-end', marginBottom: '10px' }}>Confirm</FilledButton>
         </FeeRow>
         <Separator />
-        <FilledButton>Deploy</FilledButton>
+        <FilledButton disabled={offer?.status !== OfferStatus.approved} onClick={() => setShowConfirm(true)}>
+          Deploy
+        </FilledButton>
         <RowCenter>
           <SubmitHint>Confirm that all steps has been done and start the issuance</SubmitHint>
         </RowCenter>
       </PopupWrapper>
+      <ConfirmPopup
+        isOpen={showConfirm}
+        onAccept={() => {
+          deploy(issuanceFee)
+          setShowConfirm(false)
+        }}
+        onDecline={() => setShowConfirm(false)}
+        title="Are you sure you want to deploy this offer?"
+      />
     </IssuanceDialog>
   )
 }

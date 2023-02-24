@@ -120,3 +120,15 @@ export const useBackLink = (issuanceId: string) => {
   const history = useHistory()
   return () => history.push(issuanceId === 'all' ? '/issuance' : `/issuance/manage/${issuanceId}`)
 }
+
+export const useDeployOffer = (offerId?: string) => {
+  return React.useCallback(
+    (feeRate?: string | number) => {
+      if (!offerId) {
+        return
+      }
+      return apiService.post(`offers/blockchain/deploy/${offerId}`, { feeRate: Number(feeRate) })
+    },
+    [offerId]
+  )
+}
