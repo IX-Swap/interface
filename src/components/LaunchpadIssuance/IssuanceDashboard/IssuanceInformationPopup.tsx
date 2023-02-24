@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Issuance, OfferStatus } from 'state/launchpad/types'
 
 import Column from 'components/Column'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { Separator } from 'components/LaunchpadMisc/styled'
+import { ErrorText, Separator } from 'components/LaunchpadMisc/styled'
 import { text1, text11, text19, text43, text60 } from 'components/LaunchpadMisc/typography'
 import { RowBetween, RowCenter } from 'components/Row'
 import { useGetOffer, useVetting } from 'state/launchpad/hooks'
@@ -17,6 +17,7 @@ import { Label } from '../utils/TextField'
 import { MiniStatusBadge } from './MiniStatusBadge'
 import { ConfirmPopup } from '../utils/ConfirmPopup'
 import { useDeployOffer } from 'state/issuance/hooks'
+import { useShowError, useShowSuccess } from 'state/application/hooks'
 
 export interface IsssuanceApplicationPopupProps {
   issuance: Issuance | null
@@ -46,9 +47,12 @@ const StatusBlock = ({ label, status }: { label: string; status?: IssuanceStatus
 
 export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: IsssuanceApplicationPopupProps) => {
   const toggleDialog = React.useCallback(() => setOpen((state: boolean) => !state), [])
-  const [issuanceFee, setIssuanceFee] = useState('0')
-  const { data: offer } = useGetOffer(issuance?.vetting?.offer?.id)
-  const { data: vetting } = useVetting(issuance?.id)
+  const [issuanceFee, setIssuanceFee] = useState<number>(0)
+  const [issuanceError, setIssuanceError] = useState('')
+  const showError = useShowError()
+  const showSuccess = useShowSuccess()
+  const { data: offer, loading: offerLoading } = useGetOffer(issuance?.vetting?.offer?.id)
+  const { data: vetting, loading: vettingLoading } = useVetting(issuance?.id)
   const deploy = useDeployOffer(offer?.id)
   const [showConfirm, setShowConfirm] = useState(false)
   const getVettingLink = React.useCallback(
@@ -60,6 +64,16 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     },
     [issuance?.id]
   )
+
+  useEffect(() => {
+    if (issuanceFee > 100 && !issuanceError) {
+      setIssuanceError('Maximum fee is 100%')
+    }
+    if (issuanceFee <= 100 && issuanceError) {
+      setIssuanceError('')
+    }
+    return
+  }, [issuanceFee])
 
   const getInformationLink = React.useCallback(
     (status?: OfferStatus) => {
@@ -87,6 +101,16 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     return null
   }
 
+  const onSubmit = async () => {
+    setShowConfirm(false)
+    try {
+      await deploy(issuanceFee)
+      showSuccess(`Offer #${offer?.id} - ${offer?.title} deployed successfully`)
+    } catch (e: any) {
+      showError(e?.message ?? '')
+    }
+  }
+
   return (
     <IssuanceDialog show={isOpen} title="Issuance Information" onClose={toggleDialog} width="600px">
       <PopupWrapper>
@@ -96,30 +120,40 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
           <IssuanceName>{issuance.name}</IssuanceName>
         </Column>
         <Separator />
-        <RowBetween>
-          <ButtonBlock label="Vetting" link={getVettingLink(vetting?.status)} />
-          <StatusBlock label="Status" status={vetting?.status} />
-        </RowBetween>
-        <RowBetween>
-          <ButtonBlock label="Issuance Information" link={getInformationLink(offer?.status)} />
-          <StatusBlock label="Status" status={offer?.status} />
-        </RowBetween>
+        {!vettingLoading && (
+          <RowBetween>
+            <ButtonBlock label="Vetting" link={getVettingLink(vetting?.status)} />
+            <StatusBlock label="Status" status={vetting?.status} />
+          </RowBetween>
+        )}
+        {!offerLoading && (
+          <RowBetween>
+            <ButtonBlock label="Issuance Information" link={getInformationLink(offer?.status)} />
+            <StatusBlock label="Status" status={offer?.status} />
+          </RowBetween>
+        )}
         <Separator />
-        <FeeRow>
-          <Column style={{ gap: '25px', flex: '1 1' }}>
-            <FieldLabel>Issuance Fee</FieldLabel>
-            <FormField
-              placeholder="5%"
-              field="issuanceFee"
-              setter={(field, value) => setIssuanceFee(value)}
-              value={`${issuanceFee}%`}
-              inputFilter={filterNumberWithDecimals}
-            />
-          </Column>
-          <FilledButton style={{ alignSelf: 'flex-end', marginBottom: '10px' }}>Confirm</FilledButton>
-        </FeeRow>
+        <Column>
+          <FeeRow>
+            <Column style={{ gap: '25px', flex: '1 1' }}>
+              <FieldLabel>Issuance Fee</FieldLabel>
+              <FormField
+                placeholder="5%"
+                field="issuanceFee"
+                setter={(field, value) => setIssuanceFee(Number(value))}
+                value={`${issuanceFee}`}
+                inputFilter={filterNumberWithDecimals}
+              />
+            </Column>
+            <FilledButton style={{ alignSelf: 'flex-end', marginBottom: '10px' }}>Confirm</FilledButton>
+          </FeeRow>
+          {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
+        </Column>
         <Separator />
-        <FilledButton disabled={offer?.status !== OfferStatus.approved} onClick={() => setShowConfirm(true)}>
+        <FilledButton
+          disabled={offer?.status !== OfferStatus.approved || Boolean(issuanceError)}
+          onClick={() => setShowConfirm(true)}
+        >
           Deploy
         </FilledButton>
         <RowCenter>
@@ -128,10 +162,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
       </PopupWrapper>
       <ConfirmPopup
         isOpen={showConfirm}
-        onAccept={() => {
-          deploy(issuanceFee)
-          setShowConfirm(false)
-        }}
+        onAccept={onSubmit}
         onDecline={() => setShowConfirm(false)}
         title="Are you sure you want to deploy this offer?"
       />

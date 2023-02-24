@@ -153,6 +153,21 @@ export function useShowError() {
   )
 }
 
+export function useShowSuccess() {
+  const addPopup = useAddPopup()
+  return useCallback(
+    async (message: string) => {
+      addPopup({
+        info: {
+          success: true,
+          summary: message,
+        },
+      })
+    },
+    [addPopup]
+  )
+}
+
 export const usePendingSignState = (): boolean => {
   return useSelector<AppState, boolean>((state) => state.application.pendingSign)
 }

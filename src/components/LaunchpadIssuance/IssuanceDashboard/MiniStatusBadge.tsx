@@ -35,7 +35,8 @@ export const MiniStatusBadge: React.FC<BadgeProps> = ({ status }) => {
     case OfferStatus.draft:
       return <MiniStatusBadgeWrapper color={theme.launchpad.colors.disabled}>Draft</MiniStatusBadgeWrapper>
     case undefined:
-      return <div></div>
+      return <MiniStatusBadgeWrapper color={theme.launchpad.colors.disabled}>Not started</MiniStatusBadgeWrapper>
+
     default:
       return status
   }
