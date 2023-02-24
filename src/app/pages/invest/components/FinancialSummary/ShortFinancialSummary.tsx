@@ -5,13 +5,13 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { PairListDropdown } from 'app/pages/invest/components/PairListDropdown/PairListDropdown'
 import { InvestRoute as path } from 'app/pages/invest/router/config'
-import { usePairDSO } from 'app/pages/invest/hooks/usePairDSO'
+import { useOTCPairDSO } from 'app/pages/invest/hooks/useOTCPairDSO'
 export const ShortFinancialSummary = () => {
   const { pairId } = useParams<{
     pairId: string
   }>()
   const { data } = useFinancialSummary(pairId)
-  const dso = usePairDSO()
+  const dso = useOTCPairDSO()
   return (
     <Grid container>
       <Grid item xs={5}>

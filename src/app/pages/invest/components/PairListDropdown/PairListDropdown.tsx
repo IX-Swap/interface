@@ -3,7 +3,7 @@ import { PairList } from 'app/pages/invest/components/PairList/PairList'
 import useStyles from 'app/pages/invest/components/PairListDropdown/PairListDropdown.styles'
 import { PairName } from 'app/pages/invest/components/PairListDropdown/PairName'
 import { PairTableFilter } from 'app/pages/invest/components/PairTable/PairTableFilter/PairTableFilter'
-import { useMarket } from 'app/pages/invest/hooks/useMarket'
+import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
@@ -24,7 +24,7 @@ export const PairListDropdown = ({
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const { pairId } = useParams<{ pairId: string }>()
-  const { data: marketData } = useMarket(pairId)
+  const { data: marketData } = useOTCMarket(pairId)
   const paramsIsDefined =
     params.userId !== undefined || params.issuerId !== undefined
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

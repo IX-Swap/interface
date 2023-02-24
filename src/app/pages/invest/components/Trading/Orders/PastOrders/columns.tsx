@@ -15,6 +15,7 @@ import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
 import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
 
 const SimpleStatus = ({ status }: { status: string }) => {
   const { theme } = useAppTheme()
@@ -32,21 +33,38 @@ const SimpleStatus = ({ status }: { status: string }) => {
   )
 }
 
-const BlockchainExplorerLink = ({ txHash }: { txHash: string }) => {
-  const { theme } = useAppTheme()
-  console.log(theme)
+const BlockchainExplorerLink = ({
+  status,
+  txHash,
+  pairId
+}: {
+  status: string
+  txHash: string
+  pairId: string
+}) => {
+  const { data } = useOTCMarket(pairId)
+
+  console.log(data?.otc.dso.network.explorer.urls.transaction)
+
   return (
-    <IconButton
-      component={props => (
-        <Tooltip title='View on blockchain explorer.'>
-          <AppRouterLinkComponent {...props} target='_blank' />
-        </Tooltip>
+    <>
+      {status === OTCOrderStatus.COMPLETED && (
+        <IconButton
+          component={props => (
+            <Tooltip title='View on blockchain explorer.'>
+              <AppRouterLinkComponent {...props} target='_blank' />
+            </Tooltip>
+          )}
+          size='small'
+          to={data?.otc.dso.network.explorer.urls.transaction.replace(
+            '%s',
+            txHash
+          )}
+        >
+          <LaunchIcon color='disabled' />
+        </IconButton>
       )}
-      size='small'
-      to={'/home'}
-    >
-      <LaunchIcon color='disabled' />
-    </IconButton>
+    </>
   )
 }
 
@@ -96,7 +114,13 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'link',
     label: '',
-    render: (value, _) => <BlockchainExplorerLink status={value} />
+    render: (_, row) => (
+      <BlockchainExplorerLink
+        status={row.status}
+        txHash={row.status}
+        pairId={row.pair._id}
+      />
+    )
   }
 ]
 
