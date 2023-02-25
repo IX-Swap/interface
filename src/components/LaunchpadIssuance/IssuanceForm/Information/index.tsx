@@ -60,7 +60,6 @@ import { useQueryParams } from 'hooks/useParams'
 import { getDaysAfter } from 'utils/time'
 import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
 import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
-import { errors } from 'ethers'
 
 interface Props {
   edit?: boolean
@@ -315,7 +314,10 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     setFieldValue(field, value)
                     setFieldValue('tokenName', value)
                   }}
-                  touch={setFieldTouched}
+                  touch={(field, touched) => {
+                    setFieldTouched(field, touched)
+                    setFieldTouched('tokenName', touched)
+                  }}
                   label="Name of Issuance"
                   placeholder="Name of Issuance"
                   disabled={props.edit}

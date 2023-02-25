@@ -50,6 +50,7 @@ import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
+import { initialValues } from 'pages/CreatePayoutEvent/mock'
 
 interface OfferPagination {
   page: number
@@ -1045,7 +1046,6 @@ export const useSubmitOffer = () => {
       offerId?: string
     ) => {
       const uploadedFiles = await uploadFiles(payload, initial)
-
       const findDoc = (prefix: 'member.photo' | 'document' | 'image', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
 
@@ -1085,7 +1085,7 @@ export const useSubmitOffer = () => {
 
         softCap: payload.softCap,
         hardCap: payload.hardCap,
-
+        tokenName: payload.tokenName,
         minInvestment: payload.minInvestment,
         maxInvestment: payload.maxInvestment,
 
@@ -1191,8 +1191,12 @@ export const useSubmitOffer = () => {
       if (offerId) {
         delete data.offerId
         delete data.vettingId
-        delete data.tokenName
-        delete data.tokenAddress
+        if (initial.tokenName) {
+          delete data.tokenName
+        }
+        if (initial.tokenAddress) {
+          delete data.tokenAddress
+        }
         return apiService.put(`/offers/${offerId}/full`, data)
       } else {
         return apiService.post(`/offers`, data)

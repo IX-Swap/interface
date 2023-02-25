@@ -25,13 +25,24 @@ export interface IsssuanceApplicationPopupProps {
   setOpen: any
 }
 
-const ButtonBlock = ({ label, link }: { label: string; link: string }) => {
+const ButtonBlock = ({ label, link, disabled = false }: { label: string; link: string; disabled?: boolean }) => {
   return (
     <CustomColumn>
-      <FieldLabel>{label}</FieldLabel>
-      <OutlineButton as={DiscreteInternalLink} to={link} width="250px" height="48px">
+      <FieldLabel disabled={disabled}>{label}</FieldLabel>
+      <DisablableButton
+        onClick={(event: any) => {
+          if (disabled) {
+            event.preventDefault()
+          }
+        }}
+        disabled={disabled}
+        as={DiscreteInternalLink}
+        to={link}
+        width="250px"
+        height="48px"
+      >
         <ButtonText>Open Application</ButtonText>
-      </OutlineButton>
+      </DisablableButton>
     </CustomColumn>
   )
 }
@@ -47,7 +58,7 @@ const StatusBlock = ({ label, status }: { label: string; status?: IssuanceStatus
 
 export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: IsssuanceApplicationPopupProps) => {
   const toggleDialog = React.useCallback(() => setOpen((state: boolean) => !state), [])
-  const [issuanceFee, setIssuanceFee] = useState<number>(0)
+  const [issuanceFee, setIssuanceFee] = useState<number>(5)
   const [issuanceError, setIssuanceError] = useState('')
   const showError = useShowError()
   const showSuccess = useShowSuccess()
@@ -55,6 +66,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const { data: vetting, loading: vettingLoading } = useVetting(issuance?.id)
   const deploy = useDeployOffer(offer?.id)
   const [showConfirm, setShowConfirm] = useState(false)
+
   const getVettingLink = React.useCallback(
     (status?: IssuanceStatus) => {
       if (status === IssuanceStatus.approved) {
@@ -68,8 +80,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   useEffect(() => {
     if (issuanceFee > 100 && !issuanceError) {
       setIssuanceError('Maximum fee is 100%')
-    }
-    if (issuanceFee <= 100 && issuanceError) {
+    } else if (issuanceFee <= 100 && issuanceError) {
       setIssuanceError('')
     }
     return
@@ -128,7 +139,11 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
         )}
         {!offerLoading && (
           <RowBetween>
-            <ButtonBlock label="Issuance Information" link={getInformationLink(offer?.status)} />
+            <ButtonBlock
+              label="Issuance Information"
+              link={getInformationLink(offer?.status)}
+              disabled={vetting?.status !== IssuanceStatus.approved}
+            />
             <StatusBlock label="Status" status={offer?.status} />
           </RowBetween>
         )}
@@ -174,8 +189,9 @@ const IssuanceName = styled.span`
   ${text43}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
-const FieldLabel = styled.span`
+const FieldLabel = styled.span<{ disabled?: boolean }>`
   ${text60}
+  opacity: ${(props) => (props.disabled === true ? 0.5 : 1)};
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 const StatusLabel = styled.span`
@@ -198,4 +214,8 @@ const ButtonText = styled.span`
 const FeeRow = styled(RowBetween)`
   align-items: center;
   gap: 17px;
+`
+const DisablableButton = styled(OutlineButton)`
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 `

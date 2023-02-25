@@ -123,11 +123,11 @@ export const useBackLink = (issuanceId: string) => {
 
 export const useDeployOffer = (offerId?: string) => {
   return React.useCallback(
-    async (feeRate?: string | number) => {
+    (feeRate?: string | number) => {
       if (!offerId) {
         return
       }
-      return await apiService.post(`offers/blockchain/deploy/${offerId}`, { feeRate: Number(feeRate) })
+      return apiService.post(`offers/blockchain/deploy/${offerId}`, { feeRate: Number(feeRate) })
     },
     [offerId]
   )
