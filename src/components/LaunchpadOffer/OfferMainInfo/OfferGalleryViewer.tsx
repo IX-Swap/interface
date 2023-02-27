@@ -234,7 +234,7 @@ const ViewerMediaEntry = styled.div<{ active: boolean }>`
 
 const Image = styled.img`
   max-width: 100%;
-  max-height: 100%;
+  max-height: 60vh;
   border-radius: 8px;
 `
 
