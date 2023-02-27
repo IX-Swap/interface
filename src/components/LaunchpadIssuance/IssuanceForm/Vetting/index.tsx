@@ -12,25 +12,11 @@ import { FormField } from '../shared/fields/FormField'
 import { FileField } from '../shared/fields/FileField'
 import { DirectorField } from '../shared/fields/DirectorField'
 import { RejectInfo } from '../shared/RejectInfo'
-import {
-  FormContainer,
-  FormHeader,
-  FormTitle,
-  FormSideBar,
-  FormBody,
-  FormSubmitContainer,
-  DeleteButton,
-} from '../shared/styled'
+import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, DeleteButton } from '../shared/styled'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { TextareaField } from '../shared/fields/TextareaField'
-import {
-  useGetFieldArrayId,
-  useLoader,
-  useSaveVettingDraft,
-  useSubmitVettingForm,
-  useVettingFormInitialValues,
-} from 'state/launchpad/hooks'
+import { useGetFieldArrayId, useLoader, useSubmitVettingForm, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
 import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
@@ -40,6 +26,9 @@ import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting
 import { useQueryParams } from 'hooks/useParams'
 import { textFilter } from 'utils/input'
 import { text19 } from 'components/LaunchpadMisc/typography'
+import { useRole } from 'state/user/hooks'
+import { useSaveDraftVetting } from './useSaveDraftVetting'
+import { VettingActionButtons } from './VettingActionButtons'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -48,7 +37,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const theme = useTheme()
   const history = useHistory()
   const getId = useGetFieldArrayId()
-
+  const { isOfferManager } = useRole()
   const loader = useLoader(false)
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
@@ -64,7 +53,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const initialValues = useVettingFormInitialValues(issuanceId)
 
   const createVetting = useSubmitVettingForm(issuanceId)
-  const saveDraftVetting = useSaveVettingDraft(issuanceId)
 
   const goMain = React.useCallback(() => {
     history.push(`/issuance/create?id=${issuanceId}`)
@@ -77,6 +65,13 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       setShowCloseDialog(true)
     }
   }, [history, issuanceId])
+
+  const saveDraft = useSaveDraftVetting({
+    issuanceId,
+    vettingId: initialValues.vettingId,
+    goMain,
+    initialData: initialValues.data,
+  })
 
   const toSubmit = React.useCallback(() => {
     setShowConfirmDialog(true)
@@ -94,25 +89,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
         addPopup({
           info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` },
         })
-        goMain()
-      } catch (err) {
-        addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
-      } finally {
-        loader.stop()
-      }
-    },
-    [initialValues.data, initialValues.vettingId]
-  )
-
-  const saveDraft = React.useCallback(
-    async (values: VettingFormValues) => {
-      if (!initialValues.data) return
-      loader.start()
-
-      try {
-        await saveDraftVetting(values, initialValues.data, initialValues.vettingId)
-
-        addPopup({ info: { success: true, summary: 'Draft saved successfully' } })
         goMain()
       } catch (err) {
         addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
@@ -199,16 +175,12 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 onSubmit={toSubmit}
               />
             )}
-
-            <FormSubmitContainer>
-              <OutlineButton disabled={view} onClick={() => saveDraft(values)}>
-                Save Draft
-              </OutlineButton>
-
-              <FilledButton disabled={view} onClick={toSubmit}>
-                Submit
-              </FilledButton>
-            </FormSubmitContainer>
+            <VettingActionButtons
+              onSaveDraft={() => saveDraft(values)}
+              onSubmit={toSubmit}
+              disabled={view}
+              vettingId={String(initialValues.vettingId)}
+            />
           </FormSideBar>
 
           <FormBody>
@@ -406,14 +378,16 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               errors={errors as { [key: string]: string }}
             />
 
-            <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
-              <OutlineButton width="280px" onClick={goBack}>
-                Back
-              </OutlineButton>
-              <FilledButton width="280px" onClick={toSubmit} disabled={view}>
-                Submit
-              </FilledButton>
-            </Row>
+            {isOfferManager && (
+              <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
+                <OutlineButton width="280px" onClick={goBack}>
+                  Back
+                </OutlineButton>
+                <FilledButton width="280px" onClick={toSubmit} disabled={view}>
+                  Submit
+                </FilledButton>
+              </Row>
+            )}
           </FormBody>
         </FormContainer>
       )}
