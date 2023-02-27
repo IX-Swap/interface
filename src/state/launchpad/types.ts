@@ -12,7 +12,6 @@ export enum OfferStatus {
   sale = 'sale',
   closed = 'closed',
   claim = 'claim',
-  changesRequested = 'changesRequested',
 }
 
 export enum OfferNetwork {
