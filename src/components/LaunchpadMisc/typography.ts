@@ -1,4 +1,5 @@
 import { css } from 'styled-components'
+// CURRENT last text60
 
 const text002 = css`
   font-style: normal;
@@ -16,7 +17,7 @@ const text004 = css`
   font-style: normal;
   letter-spacing: -0.04em;
 `
-
+// -0.02em styles
 export const text1 = css`
   ${text002}
   font-weight: 600;
@@ -136,7 +137,7 @@ export const text19 = css`
   ${text002}
   font-weight: 500;
   font-size: 12px;
-  line-height: 150%;
+  line-height: 18px;
 `
 
 export const text20 = css`
@@ -197,11 +198,6 @@ export const text29 = css`
   font-size: 18px;
   line-height: 22px;
 `
-export const text30 = css`
-  ${text28}
-  letter-spacing: -0.01em;
-`
-
 export const text31 = css`
   ${text002}
   font-weight: 600;
@@ -249,57 +245,17 @@ export const text37 = css`
   font-size: 13px;
   line-height: 18px;
 `
-export const text38 = css`
-  ${text37}
-  letter-spacing: -0.01em;
-`
 export const text39 = css`
   ${text002}
   font-weight: 600;
   font-size: 13px;
   line-height: 18px;
 `
-export const text40 = css`
-  ${text34}
-  letter-spacing: -0.01em;
-`
-
 export const text41 = css`
   ${text002}
   font-weight: 500;
   font-size: 8px;
   line-height: 150%;
-`
-export const text42 = css`
-  ${text001}
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-`
-export const text43 = css`
-  ${text42}
-  line-height: 17px;
-`
-
-export const text44 = css`
-  ${text001}
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 140%;
-`
-export const text45 = css`
-  ${text8}
-  letter-spacing: -0.01em;
-`
-export const text46 = css`
-  ${text17}
-  letter-spacing: -0.01em;
-`
-export const text47 = css`
-  ${text001}
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
 `
 
 export const text49 = css`
@@ -309,6 +265,51 @@ export const text49 = css`
   line-height: 17px;
 `
 
+// -0.01em styles
+export const text47 = css`
+  ${text001}
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+`
+export const text45 = css`
+  ${text8}
+  letter-spacing: -0.01em;
+`
+export const text46 = css`
+  ${text17}
+  letter-spacing: -0.01em;
+`
+export const text44 = css`
+  ${text001}
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+`
+export const text42 = css`
+  ${text001}
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+`
+export const text43 = css`
+  ${text001}
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+`
+export const text40 = css`
+  ${text34}
+  letter-spacing: -0.01em;
+`
+export const text38 = css`
+  ${text37}
+  letter-spacing: -0.01em;
+`
+export const text30 = css`
+  ${text28}
+  letter-spacing: -0.01em;
+`
 // -0.03em styles
 export const text48 = css`
   ${text003}
@@ -374,6 +375,13 @@ export const text58 = css`
   font-weight: 700;
   font-size: 20px;
   line-height: 140%;
+`
+
+export const text60 = css`
+  ${text003}
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 130%;
 `
 
 // -0.04em styles

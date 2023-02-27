@@ -133,23 +133,24 @@ export interface LaunchpadTheme {
 
     disabled: string
 
-    background: string,
-    foreground: string,
+    background: string
+    foreground: string
 
     border: {
-      default: string,
-      success: string,
+      default: string
+      success: string
       error: string
-    },
+    }
 
     text: {
-      title: string,
-      body: string,
-      bodyAlt: string,
-      caption: string,
-      success: string,
-      warning: string,
+      title: string
+      body: string
+      bodyAlt: string
+      caption: string
+      success: string
+      warning: string
       light: string
+      hint: string
     }
   }
 }

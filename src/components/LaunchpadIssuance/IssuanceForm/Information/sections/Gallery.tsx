@@ -12,7 +12,7 @@ import { FormField } from '../../shared/fields/FormField'
 import { FormGrid } from '../../shared/FormGrid'
 import { IssuanceFile } from '../../types'
 import { TextareaField } from '../../shared/fields/TextareaField'
-import { text19, text20, text21, text48 } from 'components/LaunchpadMisc/typography'
+import { text19, text20, text21, text48, text60 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   images: IssuanceFile[]
@@ -154,12 +154,7 @@ const TitledContainer = styled(Column)`
 `
 
 const Title = styled.div`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 130%;
-  letter-spacing: -0.03em;
-
+  ${text60}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
@@ -270,10 +265,10 @@ const DescriptionContainer = styled.div`
 `
 const DescriptionLabel = styled.div`
   ${text48}
-  color: #292933;
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const DescriptionHint = styled.div`
   ${text19}
-  color: #8d8da3;
+  color: ${(props) => props.theme.launchpad.colors.text.hint};
 `
