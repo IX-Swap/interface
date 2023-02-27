@@ -451,7 +451,7 @@ const AddDocumentButton = styled(OutlineButton)`
 const Hint = styled.div`
   ${text19}
   text-align: right;
-  color: #8d8da3;
+  color: ${(props) => props.theme.launchpad.colors.text.hint};
 `
 
 const FilesBlock = styled.div`

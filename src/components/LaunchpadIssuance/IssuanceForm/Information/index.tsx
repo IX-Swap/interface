@@ -326,7 +326,10 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     setFieldValue(field, value)
                     setFieldValue('tokenName', value)
                   }}
-                  touch={setFieldTouched}
+                  touch={(field, touched) => {
+                    setFieldTouched(field, touched)
+                    setFieldTouched('tokenName', touched)
+                  }}
                   label="Name of Issuance"
                   placeholder="Name of Issuance"
                   disabled={props.edit}

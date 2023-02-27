@@ -25,6 +25,8 @@ import { DiscreteInternalLink } from 'theme'
 import { useRole } from 'state/user/hooks'
 import { TitleBox } from './TitleBox'
 import { routes } from 'utils/routes'
+import { IssuanceApplicationPopup } from './IssuanceInformationPopup'
+import { useHistory } from 'react-router-dom'
 
 const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
   if (!isMine) return ''
@@ -41,8 +43,6 @@ const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
 export const IssuancesFull = () => {
   const theme = useTheme()
   const getIssuances = useGetIssuances()
-  const { isAdmin } = useRole()
-
   const [loading, setLoading] = React.useState<boolean>(true)
   const [issuances, setIssuances] = React.useState<Issuance[]>([])
 
@@ -52,6 +52,10 @@ export const IssuancesFull = () => {
   const [pageSize, setPageSize] = React.useState(10)
   const [filter, setFilter] = React.useState<SearchConfig | undefined>()
   const [order, setOrder] = React.useState<OrderConfig>({})
+  const [issuance, setIssuance] = React.useState<Issuance | null>(null)
+  const [popUpOpen, setPopUpOpen] = React.useState(false)
+  const { isAdmin, isOfferManager } = useRole()
+  const history = useHistory()
 
   const status = React.useCallback((issuance: Issuance) => {
     if (!issuance.vetting) {
@@ -73,10 +77,20 @@ export const IssuancesFull = () => {
       : IssuanceStatus.inProgress
   }, [])
 
+  const selectIssuance = useCallback(
+    (issuance: Issuance) => {
+      if (isAdmin) {
+        setIssuance(issuance)
+        setPopUpOpen(true)
+      } else if (isOfferManager) {
+        history.push(`/issuance/create?id=${issuance.id}`)
+      }
+    },
+    [isAdmin, isOfferManager]
+  )
   const onChangeOrder = useOnChangeOrder(order as AbstractOrder, setOrder, setPage)
 
   const scrollToTop = React.useCallback(() => {
-    //window.scrollTo({ top: 0, behavior: 'smooth' })
     const yOffset = document.documentElement.scrollTop || document.body.scrollTop
     if (yOffset > 0) {
       window.requestAnimationFrame(scrollToTop)
@@ -117,6 +131,7 @@ export const IssuancesFull = () => {
 
   return (
     <Container>
+      <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />
       <TitleBox title="Issuances" setFilter={setFilter} />
 
       <SearchFilter setFilter={setFilter} />
@@ -161,9 +176,7 @@ export const IssuancesFull = () => {
                   <OutlineButton
                     color={theme.launchpad.colors.primary + '80'}
                     height="34px"
-                    as={DiscreteInternalLink}
-                    target="_blank"
-                    to={`/issuance/create?id=${issuance.id}`}
+                    onClick={() => selectIssuance(issuance)}
                   >
                     View Application <Eye size="15" color={theme.launchpad.colors.primary} />
                   </OutlineButton>

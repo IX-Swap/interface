@@ -50,6 +50,7 @@ import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
+import { initialValues } from 'pages/CreatePayoutEvent/mock'
 
 interface OfferPagination {
   page: number
@@ -209,12 +210,12 @@ export const useGetOffer = (id: string | number | undefined, startLoading = true
   }, [id])
 
   React.useEffect(() => {
-    if (startLoading) {
+    if (startLoading && id) {
       load()
     } else {
       loader.stop()
     }
-  }, [])
+  }, [id])
   return { loading: loader.isLoading, load, data, error }
 }
 
@@ -905,41 +906,21 @@ const useUploadOfferFiles = () => {
 }
 
 export const useOfferFormInitialValues = (issuanceId?: number | string) => {
-  const loader = useLoader()
   const getFile = useGetFile()
 
   const issuance = useGetIssuance()
-  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id, false)
+  const offer = useGetOffer(issuance?.data?.vetting?.offer?.id)
   const [values, setValues] = React.useState<InformationFormValues>()
-
-  React.useEffect(() => {
-    if (issuance.error) {
-      loader.stop()
-    }
-  }, [issuance.error])
 
   React.useEffect(() => {
     issuance.load(issuanceId)
   }, [issuanceId])
 
   React.useEffect(() => {
-    if (!issuance.loading && issuance.data) {
-      offer.load()
-    }
-  }, [issuance.loading])
-
-  React.useEffect(() => {
-    if (!issuance.loading && offer.data) {
-      loader.stop()
-    }
-  }, [offer.loading])
-
-  React.useEffect(() => {
     if (!offer.loading && !offer.data) {
       setValues(informationInitialFormValues)
-      loader.stop()
     } else if (!offer.loading && offer.data) {
-      transform(offer.data).then(setValues).then(loader.stop)
+      transform(offer.data).then(setValues)
     }
   }, [offer.loading, offer.data])
 
@@ -1042,7 +1023,12 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       investingTokenAddress: payload.investingTokenAddress,
     }
   }, [])
-  return { data: values, loading: loader.isLoading, vettingId: issuance.data?.id, error: issuance.error }
+  return {
+    data: values,
+    loading: issuance.loading || offer.loading,
+    vettingId: issuance.data?.id,
+    error: issuance.error,
+  }
 }
 
 export const useSubmitOffer = () => {
@@ -1060,7 +1046,6 @@ export const useSubmitOffer = () => {
       offerId?: string
     ) => {
       const uploadedFiles = await uploadFiles(payload, initial)
-
       const findDoc = (prefix: 'member.photo' | 'document' | 'image', idx: number) =>
         uploadedFiles.find((x) => x.name === `${prefix}.${idx}`)?.id
 
@@ -1100,7 +1085,7 @@ export const useSubmitOffer = () => {
 
         softCap: payload.softCap,
         hardCap: payload.hardCap,
-
+        tokenName: payload.tokenName,
         minInvestment: payload.minInvestment,
         maxInvestment: payload.maxInvestment,
 
@@ -1206,8 +1191,12 @@ export const useSubmitOffer = () => {
       if (offerId) {
         delete data.offerId
         delete data.vettingId
-        delete data.tokenName
-        delete data.tokenAddress
+        if (initial.tokenName) {
+          delete data.tokenName
+        }
+        if (initial.tokenAddress) {
+          delete data.tokenAddress
+        }
         return apiService.put(`/offers/${offerId}/full`, data)
       } else {
         return apiService.post(`/offers`, data)
