@@ -48,3 +48,8 @@ export interface IssuanceDataStatisticsDto {
   result: PaginateResponse<IssuanceDataExtract>
   statistics: IssuanceDataStatistics
 }
+
+export interface ChangesRequestedValues {
+  changesRequested: string
+  reasonRequested: string
+}

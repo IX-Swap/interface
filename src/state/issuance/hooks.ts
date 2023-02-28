@@ -1,4 +1,5 @@
 import { ExtractedFields } from 'components/LaunchpadIssuance/IssuanceReport/Table/helpers'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
@@ -10,7 +11,7 @@ import { useLoader } from 'state/launchpad/hooks'
 import { PaginateResponse } from 'types/pagination'
 import { deleteWhitelistedWallet, getWhitelistedWallets, saveWhitelistedWallet } from './actions'
 import { emptyIssuanceDataStatistics } from './constants'
-import { IssuanceDataStatisticsDto, WhitelistWallet, WhitelistWalletPayload } from './types'
+import { ChangesRequestedValues, IssuanceDataStatisticsDto, WhitelistWallet, WhitelistWalletPayload } from './types'
 
 export interface UseDeleteWhitelistedArgs {
   onSuccess?: () => void
@@ -131,4 +132,44 @@ export const useDeployOffer = (offerId?: string) => {
     },
     [offerId]
   )
+}
+
+export const useManageVetting = (vettingId?: string) => {
+  return React.useCallback(
+    (status: IssuanceStatus, reasons?: ChangesRequestedValues) => {
+      if (!vettingId) {
+        return
+      }
+      return apiService.patch(`vettings/${vettingId}/review`, { status, ...reasons })
+    },
+    [vettingId]
+  )
+}
+
+export const useApproveVetting = (vettingId?: string) => {
+  const manageVetting = useManageVetting(vettingId)
+  return useCallback(() => manageVetting(IssuanceStatus.approved), [manageVetting])
+}
+
+export const useRejectVetting = (vettingId?: string) => {
+  const manageVetting = useManageVetting(vettingId)
+  return useCallback(
+    (reasons: ChangesRequestedValues) => manageVetting(IssuanceStatus.declined, reasons),
+    [manageVetting]
+  )
+}
+
+export const useRequestChanges = (vettingId?: string) => {
+  const manageVetting = useManageVetting(vettingId)
+  return useCallback(
+    (reasons: ChangesRequestedValues) => manageVetting(IssuanceStatus.changesRequested, reasons),
+    [manageVetting]
+  )
+}
+
+export const useReviewVetting = (vettingId?: string) => {
+  const approve = useApproveVetting(vettingId)
+  const reject = useRejectVetting(vettingId)
+  const requestChanges = useRequestChanges(vettingId)
+  return { approve, reject, requestChanges }
 }
