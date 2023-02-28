@@ -8,7 +8,7 @@ export const DSDeposit: React.FC = () => {
   return (
     <Grid container direction='column' spacing={3} style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Digital Security Deposit' />
+        <PageHeader title='Security Token Deposit' />
       </Grid>
 
       <RootContainer>

@@ -21,7 +21,7 @@ export const DSWithdrawalPreview = (props: DSWithdrawalPreviewProps) => {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <LabelledValue
-            label='Digital Security'
+            label='Security Token'
             value={`${data.asset.name} (${data.asset.symbol})`}
           />
         </Grid>

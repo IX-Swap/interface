@@ -20,7 +20,7 @@ export const columns: Array<TableColumn<DSWithdrawal>> = [
   },
   {
     key: 'asset',
-    label: 'Digital Security',
+    label: 'Security Token',
     render: renderAssetName
   },
   {

@@ -35,7 +35,7 @@ export const textDev = {
     'Company Name',
     'Issued By',
     'Issued Date',
-    'Digital Security',
+    'Security Token',
     'Price Per Unit',
     'Total Amount',
     'Number Of Units'

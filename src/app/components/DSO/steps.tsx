@@ -18,7 +18,7 @@ import { isEqual } from 'lodash'
 
 export const dsoFormSteps = [
   {
-    label: 'DSO Information',
+    label: 'STO Information',
     getFormValues: getDSOInformationFormValues,
     getRequestPayload: getDSOInformationRequestPayload,
     validationSchema: getDSOInformationSchema,

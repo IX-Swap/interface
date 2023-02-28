@@ -117,7 +117,7 @@ export const ListingDetails = ({
               <DSOSelect
                 style={{ height: 50 }}
                 fullWidth
-                label='My DSO'
+                label='My STO'
                 placeholder='Select item'
                 displayEmpty={!isLoading}
                 value={selectedDSOValue}
