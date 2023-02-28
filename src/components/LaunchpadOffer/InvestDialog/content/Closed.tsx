@@ -15,6 +15,7 @@ import { OfferLinks } from '../utils/OfferLinks'
 import { useAddPopup } from 'state/application/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { text10, text14, text27, text59, text9 } from 'components/LaunchpadMisc/typography'
+import { FilledButton } from 'components/LaunchpadMisc/buttons'
 
 interface Props {
   offer: Offer
@@ -47,6 +48,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
     }
   }, [claim])
 
+  // todo add check was claimed already when backend is ready
   return (
     <InvestFormContainer gap="1rem" padding="0 0 3rem 0">
       <Title>{canClaim ? 'Token Claim' : 'Closed'}</Title>
@@ -79,9 +81,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
         </Column>
 
         {!isSuccessfull && (
-          <ClaimButton onClick={onSubmit} disabled={!canClaim || (amountToClaim ?? 0) <= 0}>
+          <ClaimedFilledButton onClick={onSubmit} disabled={!canClaim || (amountToClaim ?? 0) <= 0}>
             Claim
-          </ClaimButton>
+          </ClaimedFilledButton>
         )}
       </Row>
 
@@ -190,50 +192,6 @@ const MyInvestmentAmount = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
-const ClaimButton = styled.button`
-  ${text27}
-  height: 50px;
-  cursor: pointer;
-  border-radius: 6px;
-  padding: 0.25rem 3rem;
-
-  ${(props) =>
-    !props.disabled &&
-    `
-    color: ${props.theme.launchpad.colors.primary};
-    background: ${props.theme.launchpad.colors.background};
-    border: 1px solid ${props.theme.launchpad.colors.border.default};
-  `}
-
-  ${(props) =>
-    props.disabled &&
-    `
-    color: ${props.theme.launchpad.colors.text.light};
-    background: ${props.theme.launchpad.colors.disabled};
-    border: none;
-  `}
-
-  ${(props) =>
-    !props.disabled &&
-    `
-    border: none;
-    position: relative;
-    ::before {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      content: '';
-      opacity: 0.2;
-      transition: background 0.3s;
-    }
-    :hover::before {
-      background: ${props.theme.launchpad.colors.text.bodyAlt};
-    }
-  `}
-`
-
 const ModalWrapper = styled.div`
   display: grid;
   place-content: center;
@@ -256,4 +214,9 @@ const ContactFormWrapper = styled.div`
   background: ${(props) => props.theme.launchpad.colors.background};
   border-radius: 8px;
   padding: 2rem;
+`
+
+const ClaimedFilledButton = styled(FilledButton)`
+  ${text27}
+  width: 173px;
 `

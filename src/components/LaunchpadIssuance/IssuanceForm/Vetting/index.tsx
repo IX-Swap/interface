@@ -234,7 +234,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
             <DescriptionBlock>
               <FileField
-                label="Upload the company’s pitch deck"
+                label="Upload the company's pitch deck"
                 field="document.pitchDeck"
                 setter={setFieldValue}
                 disabled={view}

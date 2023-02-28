@@ -271,7 +271,11 @@ export const useDerivedBalanceInfo = (id: string) => {
 
 export const useClaimOffer = (id: string) => {
   return React.useCallback(
-    (isSuccessful: boolean) => apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, null),
+    (isSuccessful: boolean) =>
+      apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, {
+        amount: '123',
+        txHash: '0x123',
+      }),
     [id]
   )
 }
@@ -562,7 +566,10 @@ export const useGetOffersFull = () => {
 export const useGetFieldArrayId = () => {
   let counter = 0
 
-  return React.useCallback(() => ++counter, [])
+  return React.useCallback(() => {
+    ++counter
+    return `MN-${counter}`
+  }, [])
 }
 
 interface FileUpload {
@@ -636,19 +643,10 @@ const useUploadVettingFiles = () => {
 
       Object.keys(payload.document).map((key) => addDocument(key as keyof VettingFormValues['document']))
 
-      const updatedFundingDocuments = new Set(payload.fundingDocuments.map((x) => x.id))
-      const removedFundingDocuments = initial.fundingDocuments.filter((x) => !updatedFundingDocuments.has(x.id))
-
       const filesToUpload = files.filter((x) => !!x.file)
-
       const uploadedFiles = filesToUpload.length === 0 ? [] : await uploadFiles(filesToUpload)
 
       return [...uploadedFiles, ...filesToRemove]
-
-      /*if (filesToUpload.length === 0 && filesToRemove.length === 0) {
-      return []
-    }
-    return uploadFiles(filesToUpload)*/
     },
     [uploadFiles]
   )
@@ -718,7 +716,9 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
         .map((x) => ({ ...x, name: x.name.split('.').pop() ?? '' }))
         .reduce((acc, e) => ({ ...acc, [e.name]: e.id }), {})
 
-      data.fundingDocuments = uploadedFiles.filter((x) => x.name.startsWith('fundingDocuments')).map((x) => x.id)
+      const existingFunding = payload.fundingDocuments.filter((i) => typeof i.id === 'number').map((i) => i.id)
+      const uploadedFunding = uploadedFiles.filter((x) => x.name.startsWith('fundingDocuments')).map((x) => x.id)
+      data.fundingDocuments = [...existingFunding, ...uploadedFunding]
 
       data = Object.entries(data)
         .filter(([, value]) => typeof value === 'boolean' || value)

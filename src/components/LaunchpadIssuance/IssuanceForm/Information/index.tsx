@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
@@ -32,7 +32,7 @@ import { FAQBlock } from './sections/FAQ'
 import { GalleryBlock } from './sections/Gallery'
 import { TeamMembersBlock } from './sections/TeamMembers'
 import { UploadDocuments } from './sections/UploadDocuments'
-import { RejectionReasons } from './sections/RejectionReasons'
+// import { RejectionReasons } from './sections/RejectionReasons'
 import { AdditionalInformation } from './sections/AdditionalInformation'
 
 import { schema, editSchema } from './schema'
@@ -60,6 +60,7 @@ import { useQueryParams } from 'hooks/useParams'
 import { getDaysAfter } from 'utils/time'
 import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
 import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
+import { useRole } from 'state/user/hooks'
 
 interface Props {
   edit?: boolean
@@ -69,6 +70,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const theme = useTheme()
   const history = useHistory()
   const addPopup = useAddPopup()
+  const { isAdmin } = useRole()
 
   const loader = useLoader(false)
 
@@ -96,12 +98,22 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const submitOffer = useSubmitOffer()
   const editOffer = useEditIssuanceOffer()
 
+  const isFullEdit = useMemo(() => {
+    let res = false
+    if (offer.data?.status) {
+      res =
+        [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(offer.data.status) ||
+        (isAdmin && offer.data.status === IssuanceStatus.pendingApproval)
+    }
+    return res
+  }, [offer.data?.status, isAdmin])
+
   const _submit = React.useCallback(
     async (values: InformationFormValues, draft = false) => {
       loader.start()
 
       try {
-        if (props.edit && offer.data) {
+        if (offer.data && !isFullEdit) {
           await editOffer(offer.data.id ?? '', values, offer.data)
         } else {
           await submitOffer(values, offer.data ?? initialValues, draft, vetting.data?.id, offer.data?.id)
@@ -115,7 +127,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         loader.stop()
       }
     },
-    [vetting.data?.id, offer.data?.id, offer.data]
+    [vetting.data?.id, offer.data, isFullEdit]
   )
 
   const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
