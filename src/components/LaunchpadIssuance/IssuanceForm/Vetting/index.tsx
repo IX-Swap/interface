@@ -108,7 +108,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     async (values: VettingFormValues) => {
       if (!initialValues.data) return
       loader.start()
-
+ 
       try {
         await saveDraftVetting(values, initialValues.data, initialValues.vettingId)
 
@@ -262,7 +262,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
             <DescriptionBlock>
               <FileField
-                label="Upload the company’s pitch deck"
+                label="Upload the company's pitch deck"
                 field="document.pitchDeck"
                 setter={setFieldValue}
                 disabled={view}
