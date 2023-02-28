@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import { useAppTheme } from 'hooks/useAppTheme'
+// import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
 import useStyles from './PairListDropdown.styles'
@@ -15,14 +15,14 @@ export const PairName = ({
   hideDropdown = false
 }: PairNameProps) => {
   const classes = useStyles()
-  const { theme } = useAppTheme()
+  //   const { theme } = useAppTheme()
 
   return (
     <Typography
       data-testid={'pairName'}
-      variant='subtitle1'
+      variant='h5'
       className={classes.pairName}
-      color='primary'
+      //   color='primary'
       onClick={handleClick}
     >
       {pairName}
@@ -30,7 +30,7 @@ export const PairName = ({
         <Icon
           name='switch-down'
           size={22}
-          color={theme.palette.primary.main}
+          //   color={theme.palette.primary.main}
           className={classes.icon}
         />
       )}

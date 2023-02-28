@@ -55,12 +55,12 @@ export const TradingBody = () => {
       columnSpacing={2}
       ml={0}
     >
-      <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={8}>
+      <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={9}>
         <TradingOrders />
       </Grid>
 
       {!isMiniLaptop && (
-        <Grid item container xs={12} lg={4}>
+        <Grid item container xs={12} lg={3}>
           <PlaceOrderForm
             createOrderStatus={createOrderStatus}
             isFetching={isFetching}

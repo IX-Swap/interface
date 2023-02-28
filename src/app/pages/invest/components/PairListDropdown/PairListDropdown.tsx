@@ -1,9 +1,15 @@
-import { ClickAwayListener, Grid, Paper, Popper } from '@mui/material'
+import {
+  ClickAwayListener,
+  Grid,
+  Paper,
+  Popper,
+  Typography
+} from '@mui/material'
 import { PairList } from 'app/pages/invest/components/PairList/PairList'
 import useStyles from 'app/pages/invest/components/PairListDropdown/PairListDropdown.styles'
 import { PairName } from 'app/pages/invest/components/PairListDropdown/PairName'
 import { PairTableFilter } from 'app/pages/invest/components/PairTable/PairTableFilter/PairTableFilter'
-import { useMarket } from 'app/pages/invest/hooks/useMarket'
+import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React, { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
@@ -24,7 +30,7 @@ export const PairListDropdown = ({
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const { pairId } = useParams<{ pairId: string }>()
-  const { data: marketData } = useMarket(pairId)
+  const { data: marketData } = useOTCMarket(pairId)
   const paramsIsDefined =
     params.userId !== undefined || params.issuerId !== undefined
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -67,10 +73,13 @@ export const PairListDropdown = ({
   }
 
   return (
-    <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
+    <Grid container spacing={1} justifyContent='flex-start' alignItems='end'>
       <Grid item>
         <Grid container direction='column' justifyContent='flex-start'>
           <Grid item>
+            <Typography sx={{ color: '#778194', marginBottom: '5px' }}>
+              Pair
+            </Typography>
             <PairName
               handleClick={handleClick}
               hideDropdown={hideDropdown}
@@ -86,11 +95,19 @@ export const PairListDropdown = ({
           )}
         </Grid>
       </Grid>
+
       {marketData !== undefined && paramsIsDefined ? (
-        <Grid item>
-          <AppRouterLink to={path} params={params}>
-            View Details
-          </AppRouterLink>
+        <Grid
+          item
+          sx={{
+            paddingBottom: '3px'
+          }}
+        >
+          <Typography variant='body2'>
+            <AppRouterLink to={path} params={params} variant='inherit'>
+              View Details
+            </AppRouterLink>
+          </Typography>
         </Grid>
       ) : null}
     </Grid>
