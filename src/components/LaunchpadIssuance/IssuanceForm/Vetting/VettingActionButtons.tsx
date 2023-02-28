@@ -7,6 +7,7 @@ import { ConfirmPopup } from 'components/LaunchpadIssuance/utils/ConfirmPopup'
 import { RequestChangesPopup } from './RequestChangesPopup'
 import { useReviewVetting } from 'state/issuance/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
+import Column from 'components/Column'
 
 export interface VettingActionButtonsProps {
   onSaveDraft: () => void
@@ -61,7 +62,7 @@ export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingI
     }
   }
   return (
-    <FormSubmitContainer>
+    <Column style={{ gap: '1rem' }}>
       <ConfirmPopup
         isOpen={showApprove}
         onAccept={onApprove}
@@ -116,25 +117,29 @@ export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingI
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {isOfferManager && (
-        <>
-          <OutlineButton disabled={disabled} onClick={onSaveDraft}>
-            Save Draft
-          </OutlineButton>
+      {(isOfferManager || isAdmin) && (
+        <FormSubmitContainer>
+          <>
+            <OutlineButton disabled={disabled} onClick={onSaveDraft}>
+              Save Draft
+            </OutlineButton>
 
-          <FilledButton disabled={disabled} onClick={onSubmit}>
-            Submit
-          </FilledButton>
-        </>
+            <FilledButton disabled={disabled} onClick={onSubmit}>
+              Submit
+            </FilledButton>
+          </>
+        </FormSubmitContainer>
       )}
       {isAdmin && (
-        <AdminButtons
-          disabled={disabled}
-          onApprove={() => setShowApprove(true)}
-          onUpdate={() => setShowUpdate(true)}
-          onReject={() => setShowReject(true)}
-        />
+        <FormSubmitContainer>
+          <AdminButtons
+            disabled={disabled}
+            onApprove={() => setShowApprove(true)}
+            onUpdate={() => setShowUpdate(true)}
+            onReject={() => setShowReject(true)}
+          />
+        </FormSubmitContainer>
       )}
-    </FormSubmitContainer>
+    </Column>
   )
 }
