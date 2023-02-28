@@ -8,7 +8,7 @@ import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { ButtonRow } from 'components/Row'
 import { textFilter } from 'utils/input'
 import { FormField } from '../shared/fields/FormField'
-import React from 'react'
+import React, { useState } from 'react'
 
 interface Props {
   isOpen: boolean
@@ -38,6 +38,8 @@ export const RequestChangesPopup = ({
   setMessage,
 }: Props) => {
   const theme = useTheme()
+  const [reasonError, setReasonError] = useState('')
+  const [messageError, setMessageError] = useState('')
   return (
     <IssuanceDialog show={isOpen} onClose={onDecline} width="480px">
       <Container>
@@ -49,18 +51,24 @@ export const RequestChangesPopup = ({
           label="Reason"
           placeholder="Write here"
           field="reason"
-          setter={(field, value) => setReason(value)}
+          setter={(field, value) => {
+            setReason(value)
+            setReasonError(value ? '' : 'Required')
+          }}
           value={reason}
-          error={!reason ? 'Required' : ''}
+          error={reasonError}
           inputFilter={textFilter}
         />
         <TextAreaInner
           label="Message"
           field="message"
-          setter={(field, value) => setMessage(value)}
+          setter={(field, value) => {
+            setMessage(value)
+            setMessageError(value ? '' : 'Required')
+          }}
           span={3}
           value={message}
-          error={!message ? 'Required' : ''}
+          error={messageError}
         />
         <ButtonRow>
           <OutlineButton width="200px" onClick={onDecline}>{t`${declineText || 'No'}`}</OutlineButton>

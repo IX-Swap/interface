@@ -23,7 +23,7 @@ export const AdminButtons = ({ disabled, onReject, onUpdate, onApprove }: AdminB
         <Delete color={theme.launchpad.colors.error} size="19" strokeWidth={2} />
       </OutlineButton>
       <OutlineButton disabled={disabled} onClick={onUpdate}>
-        Update
+        Request Update
       </OutlineButton>
       <FilledButton disabled={disabled} onClick={onApprove} background={theme.launchpad.colors.success}>
         Approve
