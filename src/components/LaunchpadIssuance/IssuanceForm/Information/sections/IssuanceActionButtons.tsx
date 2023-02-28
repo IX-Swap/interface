@@ -1,38 +1,48 @@
-import React, { useState } from 'react'
-import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { FormSubmitContainer } from '../shared/styled'
-import { useRole } from 'state/user/hooks'
-import { AdminButtons } from 'components/LaunchpadMisc/AdminButtons'
-import { ConfirmPopup } from 'components/LaunchpadIssuance/utils/ConfirmPopup'
-import { RequestChangesPopup } from '../../utils/RequestChangesPopup'
-import { useReviewVetting } from 'state/issuance/hooks'
-import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Column from 'components/Column'
+import { ConfirmPopup } from 'components/LaunchpadIssuance/utils/ConfirmPopup'
+import { AdminButtons } from 'components/LaunchpadMisc/AdminButtons'
+import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
+import React, { useState } from 'react'
+import { useShowError, useShowSuccess } from 'state/application/hooks'
+import { useReviewOffer } from 'state/issuance/hooks'
+import { useRole } from 'state/user/hooks'
+import { FormSubmitContainer } from '../../shared/styled'
+import { RequestChangesPopup } from '../../../utils/RequestChangesPopup'
 
-export interface VettingActionButtonsProps {
+interface IssuanceButtoonsProps {
   onSaveDraft: () => void
+  showDraft: boolean
+  onReview: () => void
   onSubmit: () => void
-  disabled: boolean
-  vettingId: string
+  submitDisabled: boolean
+  offerId?: string
 }
-export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingId }: VettingActionButtonsProps) => {
-  const { isOfferManager, isAdmin } = useRole()
+
+export const IssuanceActionButtons = ({
+  onSaveDraft,
+  showDraft,
+  onReview,
+  onSubmit,
+  submitDisabled,
+  offerId,
+}: IssuanceButtoonsProps) => {
+  const { isAdmin } = useRole()
   const [showApprove, setShowApprove] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
   const [showReject, setShowReject] = useState(false)
   const [showConfirmUpdate, setShowConfirmUpdate] = useState(false)
   const [showConfirmReject, setShowConfirmReject] = useState(false)
-  const { approve, reject, requestChanges } = useReviewVetting(vettingId)
   const [reasonRequested, setReasonRequested] = useState('')
   const [reasonRejected, setReasonRejected] = useState('')
   const [changesRequested, setChangesRequested] = useState('')
   const [changesRejected, setChangesRejected] = useState('')
   const showError = useShowError()
+  const { approve, reject, requestChanges } = useReviewOffer(offerId)
   const showSuccess = useShowSuccess()
   const onApprove = async () => {
     try {
       await approve()
-      showSuccess('Vetting approved successfully')
+      showSuccess('Offer approved successfully')
       setShowApprove(false)
       window.location.reload()
     } catch (e: any) {
@@ -42,7 +52,7 @@ export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingI
   const onReject = async () => {
     try {
       await reject({ reasonRequested: reasonRejected, changesRequested: changesRejected })
-      showSuccess('Vetting rejected successfully')
+      showSuccess('Offer rejected successfully')
       setShowConfirmReject(false)
       setShowReject(false)
       window.location.reload()
@@ -53,7 +63,7 @@ export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingI
   const onRequestChanges = async () => {
     try {
       await requestChanges({ reasonRequested, changesRequested })
-      showSuccess('Requested changes for vetting successfully')
+      showSuccess('Requested changes for offer successfully')
       setShowConfirmUpdate(false)
       setShowUpdate(false)
       window.location.reload()
@@ -117,23 +127,19 @@ export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingI
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {(isOfferManager || isAdmin) && (
-        <FormSubmitContainer>
-          <>
-            <OutlineButton disabled={disabled} onClick={onSaveDraft}>
-              Save Draft
-            </OutlineButton>
+      <FormSubmitContainer>
+        {showDraft && <OutlineButton onClick={onSaveDraft}>Save Draft</OutlineButton>}
 
-            <FilledButton disabled={disabled} onClick={onSubmit}>
-              Submit
-            </FilledButton>
-          </>
-        </FormSubmitContainer>
-      )}
+        <OutlineButton onClick={onReview}>Review</OutlineButton>
+        <FilledButton onClick={onSubmit} disabled={submitDisabled}>
+          Submit
+        </FilledButton>
+      </FormSubmitContainer>
       {isAdmin && (
         <FormSubmitContainer>
           <AdminButtons
-            disabled={disabled}
+            // not sure in which case we should disable them
+            disabled={!offerId}
             onApprove={() => setShowApprove(true)}
             onUpdate={() => setShowUpdate(true)}
             onReject={() => setShowReject(true)}

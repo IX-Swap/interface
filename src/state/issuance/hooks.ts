@@ -173,3 +173,40 @@ export const useReviewVetting = (vettingId?: string) => {
   const requestChanges = useRequestChanges(vettingId)
   return { approve, reject, requestChanges }
 }
+
+export const useManageOffer = (offerId?: string) => {
+  return React.useCallback(
+    (status: IssuanceStatus, reasons?: ChangesRequestedValues) => {
+      if (!offerId) {
+        return
+      }
+      return apiService.patch(`vettings/${offerId}/review`, { status, ...reasons })
+    },
+    [offerId]
+  )
+}
+
+export const useApproveOffer = (offerId?: string) => {
+  const manageOffer = useManageOffer(offerId)
+  return useCallback(() => manageOffer(IssuanceStatus.approved), [manageOffer])
+}
+
+export const useRejectOffer = (offerId?: string) => {
+  const manageOffer = useManageOffer(offerId)
+  return useCallback((reasons: ChangesRequestedValues) => manageOffer(IssuanceStatus.declined, reasons), [manageOffer])
+}
+
+export const useRequestOfferChanges = (offerId?: string) => {
+  const manageOffer = useManageOffer(offerId)
+  return useCallback(
+    (reasons: ChangesRequestedValues) => manageOffer(IssuanceStatus.changesRequested, reasons),
+    [manageOffer]
+  )
+}
+
+export const useReviewOffer = (vettingId?: string) => {
+  const approve = useApproveOffer(vettingId)
+  const reject = useRejectOffer(vettingId)
+  const requestChanges = useRequestOfferChanges(vettingId)
+  return { approve, reject, requestChanges }
+}
