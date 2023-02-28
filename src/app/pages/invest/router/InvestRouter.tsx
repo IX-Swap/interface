@@ -20,7 +20,7 @@ export const InvestRouter = () => {
         </RootContainer>
       </AppRoute>
 
-      <AppRoute breadcrumb='Digital Security Offering' path={InvestRoute.view}>
+      <AppRoute breadcrumb='Security Token Offering' path={InvestRoute.view}>
         <InvestDSORouter />
       </AppRoute>
 

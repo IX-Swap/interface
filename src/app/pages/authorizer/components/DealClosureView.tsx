@@ -28,12 +28,15 @@ export const DealClosureView = ({ data }: DealClosureViewProps) => {
         />
       </Grid>
       <Grid item xs={12} md={4}>
-        <LabelledValue label='Digital Security' value={data?.dso?.tokenName} />
+        <LabelledValue label='Security Token' value={data?.dso?.tokenName} />
       </Grid>
       <Grid item xs={12} md={4}>
         <LabelledValue
           label='Price Per Unit'
-          value={formatMoney(data?.dso?.pricePerUnit, data?.dso?.currency?.symbol)}
+          value={formatMoney(
+            data?.dso?.pricePerUnit,
+            data?.dso?.currency?.symbol
+          )}
         />
       </Grid>
       <Grid item xs={12} md={4}>

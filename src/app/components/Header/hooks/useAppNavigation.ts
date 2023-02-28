@@ -34,8 +34,8 @@ export const useAppNavigation = () => {
   const isSuperUser = isAuthorizer || isAdmin
   const educationCenterLabel = 'Education Centre'
   const issuanceLandingLinks: InternalRouteProps[] = [
-    { label: 'Create New DSO', path: IssuanceRoute.createNew },
-    { label: 'View DSO Listings', path: IssuanceRoute.list },
+    { label: 'Create New STO', path: IssuanceRoute.createNew },
+    { label: 'View STO Listings', path: IssuanceRoute.list },
     { label: 'Create Secondary Listing', path: IssuanceRoute.createListing },
     { label: 'View Secondary Listings', path: IssuanceRoute.secondaryListings },
     { label: 'Financial Reports', path: IssuanceRoute.financialReports }

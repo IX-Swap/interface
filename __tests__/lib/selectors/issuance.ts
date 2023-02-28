@@ -46,7 +46,7 @@ export const issuance = {
       SAVE: 'button >> text="Save"',
       SUBMIT: 'button >> text="Submit"',
       TOKEN_DEPLOY: 'button >> text=Deploy',
-      CREATE_DSO: "//a[text()='Create New DSO']",
+      CREATE_DSO: "//a[text()='Create New STO']",
       REMOVE_FAQ: '[name="dso-faqs"] >> text="Remove"',
       REMOVE: 'button >> text=Remove',
       ADD_NEW_VIDEO: 'text="ADD NEW VIDEO"',
@@ -56,9 +56,9 @@ export const issuance = {
       DATA_ROOM_FILE: '[id="dataroom-upload-and-append"]',
       CAPITAL_CALL: 'button >> text="Capital Call"',
       FINISH_LATER: 'text=/Save\\s*draft/i',
-      VIEW_THIS_DSO: 'text=View this DSO',
-      VIEW_MY_DSO: 'text=View My DSOs',
-      EDIT_DSO: 'text=Edit DSO'
+      VIEW_THIS_DSO: 'text=View this STO',
+      VIEW_MY_DSO: 'text=View My STOs',
+      EDIT_DSO: 'text=Edit STO'
     },
     fields: {
       FAQ_1: '[id="faqs[0].question"]',

@@ -42,7 +42,7 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     icon: DSWithdrawalIcon
   },
   {
-    label: 'Digital Securities',
+    label: 'Security Tokens',
     path: AccountsRoute.digitalSecurities,
     color: '#8b3dff',
     icon: DSWithdrawalIcon

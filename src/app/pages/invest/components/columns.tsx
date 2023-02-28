@@ -37,7 +37,7 @@ export const columns: Array<TableColumn<Commitment>> = [
   },
   {
     key: 'numberOfUnits',
-    label: 'Number of Digital Securities',
+    label: 'Number of Security Tokens',
     align: 'right',
     headAlign: 'right',
     render: formatAmount

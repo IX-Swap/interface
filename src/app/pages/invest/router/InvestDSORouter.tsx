@@ -12,7 +12,7 @@ export const InvestDSORouter = () => {
         <MakeCommitmentPage />
       </AppRoute>
 
-      <AppRoute breadcrumb='Digital Security Offering' path={InvestRoute.view}>
+      <AppRoute breadcrumb='Security Token Offering' path={InvestRoute.view}>
         <ViewDSO />
       </AppRoute>
     </Switch>

@@ -10,7 +10,7 @@ export const DSOList = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='My DSOs' />
+        <PageHeader title='My STOs' />
       </Grid>
       <RootContainer>
         <Grid item container justifyContent='flex-end'>
