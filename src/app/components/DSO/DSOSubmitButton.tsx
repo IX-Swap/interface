@@ -82,7 +82,6 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   }
 
   useEffect(() => {
-    console.log(props,isSubmitted,isApproved,isDrafts,isLoading, !shouldEnableSubmit(),isEmpty(errors), 'proprprprp')
     const disable =
       !shouldEnableSubmit() ||
       isApproved ||
