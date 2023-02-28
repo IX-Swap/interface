@@ -50,6 +50,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   const c0 = localStorage.getItem('conditions_0')
   const c1 = localStorage.getItem('conditions_1')
   const c2 = localStorage.getItem('conditions_2')
+  const isEdit = location.pathname.includes('/edit')
   const shouldEnableSubmit = (): boolean => {
     if (c0 !== null && c1 !== null && c2 !== null) {
       const cond0: ConditionProps = JSON.parse(c0)
@@ -66,6 +67,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   }
   const isSubmitted = rawData?.status === 'Submitted'
   const isApproved = rawData?.status === 'Approved'
+  const isDrafts= rawData?.status === "Draft"
   const values = watch()
   const getButtonText = () => {
     if (isApproved) {
@@ -80,6 +82,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   }
 
   useEffect(() => {
+    console.log(props,isSubmitted,isApproved,isDrafts,isLoading, !shouldEnableSubmit(),isEmpty(errors), 'proprprprp')
     const disable =
       !shouldEnableSubmit() ||
       isApproved ||
@@ -153,11 +156,11 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
           variant='contained'
           color='primary'
           onClick={async () => {
-            if (!disabled) {
+            if (!disabled || isEdit) {
               return await handleSave()
             }
           }}
-          disabled={disabled}
+          disabled={disabled && !isEdit} //draft mode dso button enable
           disableElevation
           fullWidth={fullWidth}
           size={size}
