@@ -18,21 +18,35 @@ interface Props {
   fontSize?: string
   lineHeight?: string
   titleFontWeight?: string
+  placeholderText?: string
 
   entries: InfoEntry[]
 }
 
-export const InfoList: React.FC<Props> = (props) => {
-  console.log({ entries: props.entries })
+export const InfoList: React.FC<Props> = ({
+  title,
+  fontSize,
+  lineHeight,
+  titleFontWeight,
+  entries,
+  placeholderText = 'There are no information to display',
+}) => {
   return (
     <Container>
-      {props.title && <Title fontWeight={props.titleFontWeight}>{props.title}</Title>}
+      {title && <Title fontWeight={titleFontWeight}>{title}</Title>}
 
       <Separator />
 
-      {props.entries.map((entry, idx) => (
-        <Attachment key={idx} entry={entry} idx={idx} fontSize={props.fontSize} lineHeight={props.lineHeight} />
-      ))}
+      {entries.length < 1 ? (
+        <div>
+          <Placeholder>{placeholderText}</Placeholder>
+          <Separator />
+        </div>
+      ) : (
+        entries.map((entry, idx) => (
+          <Attachment key={idx} entry={entry} idx={idx} fontSize={fontSize} lineHeight={lineHeight} />
+        ))
+      )}
     </Container>
   )
 }
@@ -42,6 +56,7 @@ const Container = styled.div`
   flex-flow: column nowrap;
   justify-content: flex-start;
   align-items: stretch;
+  color: ${(props) => props.theme.launchpad.colors.text.body};
 `
 
 const Title = styled.div<{ fontWeight?: string }>`
@@ -53,4 +68,9 @@ const Title = styled.div<{ fontWeight?: string }>`
   margin-bottom: 0.5rem;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
+`
+
+const Placeholder = styled.div`
+  font-size: 14px;
+  padding: 8px 0;
 `
