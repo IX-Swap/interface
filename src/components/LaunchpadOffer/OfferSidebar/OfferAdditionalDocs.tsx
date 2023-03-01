@@ -31,7 +31,7 @@ export const OfferAdditionalDocs: React.FC<Props> = (props) => {
 
   }, [])
   
-  return <InfoList title='Additional Document' entries={entries} />
+  return <InfoList title='Additional Document' entries={entries} placeholderText="There are no Documents to display"/>
 }
 
 const FileName = styled.div`
