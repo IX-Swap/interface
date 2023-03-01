@@ -7,7 +7,7 @@ import { TextAreaInner } from 'components/LaunchpadIssuance/utils/TextAreaInner'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { ButtonRow } from 'components/Row'
 import { textFilter } from 'utils/input'
-import { FormField } from '../shared/fields/FormField'
+import { FormField } from '../IssuanceForm/shared/fields/FormField'
 import React, { useState } from 'react'
 
 interface Props {

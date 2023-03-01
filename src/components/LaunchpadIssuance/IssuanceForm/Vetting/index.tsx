@@ -26,7 +26,6 @@ import { defaultValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting
 import { useQueryParams } from 'hooks/useParams'
 import { textFilter } from 'utils/input'
 import { text19 } from 'components/LaunchpadMisc/typography'
-import { useRole } from 'state/user/hooks'
 import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
 
@@ -37,7 +36,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const theme = useTheme()
   const history = useHistory()
   const getId = useGetFieldArrayId(false)
-  const { isOfferManager } = useRole()
   const loader = useLoader(false)
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
@@ -377,17 +375,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               field="directors"
               errors={errors as { [key: string]: string }}
             />
-
-            {isOfferManager && (
-              <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
-                <OutlineButton width="280px" onClick={goBack}>
-                  Back
-                </OutlineButton>
-                <FilledButton width="280px" onClick={toSubmit} disabled={view}>
-                  Submit
-                </FilledButton>
-              </Row>
-            )}
+            <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
+              <OutlineButton width="280px" onClick={goBack}>
+                Back
+              </OutlineButton>
+              <FilledButton width="280px" onClick={toSubmit} disabled={view}>
+                Submit
+              </FilledButton>
+            </Row>
           </FormBody>
         </FormContainer>
       )}
