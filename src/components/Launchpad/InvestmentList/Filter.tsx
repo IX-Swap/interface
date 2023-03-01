@@ -58,7 +58,7 @@ export const InvestmentListFilter: React.FC<Props> = (props) => {
       {/* Disabled for version 2 https://app.clickup.com/t/4733323/IXS-2662 */}
       <FilterDropdown label="Type" options={OFFER_TYPE_LABELS} onSelect={onTypeSelect} disabled={true} />
 
-      <FilterButton type="button" onClick={() => props.onFilter(filter)}>
+      <FilterButton type="button" onClick={() => props.onFilter(filter)} disabled={true}>
         <FilterIcon /> Filter
       </FilterButton>
     </FilterContainer>
@@ -102,14 +102,16 @@ const FilterButton = styled.button`
   flex-flow: row nowrap;
   align-items: center;
   gap: 0.75rem;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   padding: 0.5rem 0.75rem;
   height: 40px;
-  background: #ffffff;
+  background: ${(props) =>
+    props.disabled ? props.theme.launchpad.colors.disabled : props.theme.launchpad.colors.background};
+    border: 1px solid ${(props) => props.theme.launchpad.colors.border.default};
+  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   border: 1px solid #e6e6ff;
   border-radius: 6px;
   font-family: ${(props) => props.theme.launchpad.font};
   ${text8}
-
-  color: ${(props) => props.theme.launchpad.colors.text.body};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
