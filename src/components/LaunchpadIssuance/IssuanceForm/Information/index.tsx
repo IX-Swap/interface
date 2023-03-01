@@ -61,6 +61,7 @@ import { getDaysAfter } from 'utils/time'
 import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
 import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
 import { useRole } from 'state/user/hooks'
+import { IssuanceActionButtons } from './sections/IssuanceActionButtons'
 
 interface Props {
   edit?: boolean
@@ -278,15 +279,14 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   onSubmit={toSubmit}
                 />
               )}
-
-              <FormSubmitContainer>
-                {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
-
-                <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                <FilledButton onClick={toSubmit} disabled={Boolean(Object.keys(errors).length)}>
-                  Submit
-                </FilledButton>
-              </FormSubmitContainer>
+              <IssuanceActionButtons
+                onSaveDraft={() => saveDraft(values)}
+                showDraft={!props.edit}
+                onReview={() => setShowReview(true)}
+                onSubmit={toSubmit}
+                submitDisabled={Boolean(Object.keys(errors).length)}
+                offerId={offer?.data?.id}
+              />
             </FormSideBar>
             <FormBody>
               <ImageBlock>
