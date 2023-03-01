@@ -161,17 +161,21 @@ export const OfferDetails: React.FC<Props> = (props) => {
           </AdjustedExternalLink>
         </TokenInfoCard>
         <TokenInfoCard>
-          <PlainCopy toCopy={props?.offer?.tokenAddress}>
-            <Row>
-              <span>{shortenAddress(props?.offer?.tokenAddress ?? '', 5)}</span>
-              <Copy stroke={theme.launchpad.colors.text.body} size="18" />
-            </Row>
-          </PlainCopy>
+          <TokenInfoButton>
+            <PlainCopy toCopy={props?.offer?.tokenAddress}>
+              <Row>
+                <span>{shortenAddress(props?.offer?.tokenAddress ?? '', 5)}</span>
+                <Copy stroke={theme.launchpad.colors.text.body} size="18" />
+              </Row>
+            </PlainCopy>
+          </TokenInfoButton>
         </TokenInfoCard>
 
-        <TokenInfoCard onClick={addToMetamask}>
-          Add to Metamask
-          <img src={MetamaskIcon} width="20" />
+        <TokenInfoCard>
+          <TokenInfoButton onClick={addToMetamask}>
+            Add to Metamask
+            <img src={MetamaskIcon} width="20" />
+          </TokenInfoButton>
         </TokenInfoCard>
       </TokenInfo>
 
@@ -310,13 +314,13 @@ const InvestButtonContainer = styled.div`
   align-items: center;
 `
 
-const InvestHelpLink = styled(Link)`
-  ${text6}
-  color: ${(props) => props.theme.launchpad.colors.primary};
+// const InvestHelpLink = styled(Link)`
+//   ${text6}
+//   color: ${(props) => props.theme.launchpad.colors.primary};
 
-  text-decoration: none;
-  padding: 1rem;
-`
+//   text-decoration: none;
+//   padding: 1rem;
+// `
 
 const InvestButton = styled.button`
   height: 60px;
@@ -361,6 +365,21 @@ const TokenInfoCard = styled.div`
     margin-left: 0.5rem;
   }
 `
+
+const TokenInfoButton = styled.button`
+  background: none;
+  border: 0;
+  color: #292933;
+  font-weight: 450;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`
+
 const AdjustedExternalLink = styled(ExternalLink)`
   color: ${({ theme }) => theme.launchpad.colors.text.title};
 `
