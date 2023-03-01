@@ -63,7 +63,7 @@ export const OfferReview: React.FC<Props> = (props) => {
 
         <Container area="stages">
           <InfoList
-            title="Investment Stage"
+            title="Investment Stages"
             titleFontWeight="600"
             entries={[
               props.values.timeframe.whitelist && {
