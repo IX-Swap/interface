@@ -143,8 +143,6 @@ export const OfferDetails: React.FC<Props> = (props) => {
               {stageStatus === OfferStageStatus.closed && 'Open Dashboard '}
             </InvestButton>
           )}
-          {/* Hide for now https://app.clickup.com/t/4733323/IXS-2512 */}
-          {/* <InvestHelpLink to="#">How does this work?</InvestHelpLink> */}
         </InvestButtonContainer>
 
         {showInvestDialog && <InvestDialog offer={props.offer} onClose={closeInvestDialog} />}
@@ -314,14 +312,6 @@ const InvestButtonContainer = styled.div`
   align-items: center;
 `
 
-// const InvestHelpLink = styled(Link)`
-//   ${text6}
-//   color: ${(props) => props.theme.launchpad.colors.primary};
-
-//   text-decoration: none;
-//   padding: 1rem;
-// `
-
 const InvestButton = styled.button`
   height: 60px;
   width: 100%;
@@ -369,7 +359,7 @@ const TokenInfoCard = styled.div`
 const TokenInfoButton = styled.button`
   background: none;
   border: 0;
-  color: #292933;
+  color: ${(props) => props.theme.launchpad.colors.text.title};
   font-weight: 450;
   display: flex;
   align-items: center;
