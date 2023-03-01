@@ -563,13 +563,14 @@ export const useGetOffersFull = () => {
   )
 }
 
-export const useGetFieldArrayId = () => {
+export const useGetFieldArrayId = (numeric = true) => {
   let counter = 0
 
   return React.useCallback(() => {
     ++counter
-    return `MN-${counter}`
-  }, [])
+
+    return numeric ? counter : `MN-${counter}`
+  }, [numeric])
 }
 
 interface FileUpload {

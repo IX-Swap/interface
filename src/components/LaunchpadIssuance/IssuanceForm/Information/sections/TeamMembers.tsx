@@ -26,7 +26,6 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
   const getId = useGetFieldArrayId()
 
   const members = React.useMemo(() => props.members as (TeamMember & { id: number })[], [props.members])
-
   return (
     <FormGrid title="Team Members">
       <FieldArray name="members">
@@ -61,7 +60,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   touch={props.touch}
                   label="Full Name"
-                  placeholder="Team Member’s Name"
+                  placeholder="Team Member's Name"
                   value={member.name}
                   error={
                     ((props.touched.members?.[idx] as FormikTouched<TeamMember> | undefined)?.name &&
@@ -74,7 +73,7 @@ export const TeamMembersBlock: React.FC<Props> = (props) => {
                   setter={props.setter}
                   touch={props.touch}
                   label="Position"
-                  placeholder="Team Member’s Position"
+                  placeholder="Team Member's Position"
                   value={member.role}
                   error={
                     ((props.touched.members?.[idx] as FormikTouched<TeamMember> | undefined)?.role &&

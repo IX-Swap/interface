@@ -36,7 +36,7 @@ export interface IssuanceVettingFormProps {
 export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) => {
   const theme = useTheme()
   const history = useHistory()
-  const getId = useGetFieldArrayId()
+  const getId = useGetFieldArrayId(false)
   const { isOfferManager } = useRole()
   const loader = useLoader(false)
   const addPopup = useAddPopup()
