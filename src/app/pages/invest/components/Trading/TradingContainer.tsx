@@ -5,27 +5,30 @@ import { WalletModalContextWrapper } from 'components/WalletModal/WalletModalCon
 import React from 'react'
 import { TradingBody } from './TradingBody'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { RootContainer } from 'ui/RootContainer'
 
 export const TradingContainer = () => {
   const classes = useStyles()
 
   return (
     <WalletModalContextWrapper>
-      <Grid container direction='column' style={{ display: 'table' }}>
+      <Grid
+        item
+        xs={12}
+        container
+        direction='column'
+        style={{ display: 'table' }}
+      >
         <Grid item>
           <PageHeader title='OTC Trading Market' />
         </Grid>
-        <RootContainer>
-          <Box className={classes.contentWrapper}>
-            <Grid item xs={12}>
-              <ShortFinancialSummary />
-            </Grid>
-            <Grid item xs={12}>
-              <TradingBody />
-            </Grid>
-          </Box>
-        </RootContainer>
+        <Box sx={{ m: 2 }}>
+          <Grid item xs={12} className={classes.colorGrid} mb={2}>
+            <ShortFinancialSummary />
+          </Grid>
+          <Grid item xs={12}>
+            <TradingBody />
+          </Grid>
+        </Box>
       </Grid>
     </WalletModalContextWrapper>
   )
