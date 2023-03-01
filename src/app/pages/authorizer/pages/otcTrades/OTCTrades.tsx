@@ -7,13 +7,14 @@ import { UnmatchedOrders } from './unmatched/UnmatchedOrders'
 
 export const OTCTrades = () => {
   return (
-    <WideContainer>
-      <Grid container direction='column'>
-        <Grid item>
-          <PageHeader styled={false} title='Authorize OTC Trades' />
-        </Grid>
+    <Grid container direction='column' style={{ display: 'table' }}>
+      <Grid item>
+        <PageHeader title='Authorize OTC Trades' />
+      </Grid>
+
+      <WideContainer>
         <Grid item container direction='column' gap={6}>
-          <Grid item container direction='column' gap={2} mt={2}>
+          <Grid item container direction='column' gap={2}>
             <Typography variant='h4' fontWeight={600}>
               Matched Orders
             </Typography>
@@ -24,7 +25,7 @@ export const OTCTrades = () => {
             <UnmatchedOrders side='SELL' title={'Unmatched Sell Orders'} />
           </Grid>
         </Grid>
-      </Grid>
-    </WideContainer>
+      </WideContainer>
+    </Grid>
   )
 }

@@ -329,6 +329,13 @@ export const trading = {
     orderId: string
     matchedOrderId: string
   }) => `/otc/order/confirm/${orderId}/${matchedOrderId}`,
+  rejectOTCOrder: ({
+    orderId,
+    matchedOrderId
+  }: {
+    orderId: string
+    matchedOrderId: string
+  }) => `/otc/order/reject/${orderId}/${matchedOrderId}`,
   confirmMyOrder: ({
     orderId,
     matchedOrderId
