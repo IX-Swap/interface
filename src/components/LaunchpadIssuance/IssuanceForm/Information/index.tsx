@@ -26,7 +26,7 @@ import { TextareaField } from '../shared/fields/TextareaField'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { DateRangeField } from '../shared/fields/DateRangeField'
 import { RejectInfo } from '../shared/RejectInfo'
-import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
+import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody } from '../shared/styled'
 
 import { FAQBlock } from './sections/FAQ'
 import { GalleryBlock } from './sections/Gallery'
@@ -524,7 +524,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 />
 
                 <Row gap="1rem">
-                  <Checkbox checked />
+                  <Checkbox checked={false} />
 
                   <TokenAgreementText>
                     I understand and agree that once I submit this form and it is approved, IX Swap will mint and
