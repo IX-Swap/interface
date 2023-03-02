@@ -1,5 +1,4 @@
 import { Box, Grid, Typography, Table, Hidden } from '@mui/material'
-import { LiveTrackingPrice } from 'app/pages/invest/components/LiveTrackingPrice/LiveTrackingPrice'
 import { OrderBook } from 'app/pages/invest/components/OrderBook/OrderBook'
 import React from 'react'
 import { useParams } from 'react-router-dom'
@@ -9,6 +8,7 @@ import { OrderBookHeader } from 'app/pages/invest/components/OrderBook/OrderBook
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { useOTCMarket } from '../../hooks/useOTCMarket'
 import { useOTCOrderBook } from '../../hooks/useOTCOrderBook'
+import { OtcLiveTrackingPrice } from '../LiveTrackingPrice/OtcLiveTrackingPrice'
 
 export const OtcLiveOrderBook = () => {
   const { pairId } = useParams<{ pairId: string }>()
@@ -24,6 +24,7 @@ export const OtcLiveOrderBook = () => {
 
   const buys = otcOrderBookData?.buys
   const sells = otcOrderBookData?.sells
+  const lastTrade: any = otcOrderBookData?.lastTrade
   console.log(marketData, tradingPair, otcOrderBookData, ',marketData')
   return (
     <Grid
@@ -77,7 +78,7 @@ export const OtcLiveOrderBook = () => {
 
           <Hidden lgDown>
             <Box py={2}>
-              <LiveTrackingPrice />
+              <OtcLiveTrackingPrice lastTrade={lastTrade} />
             </Box>
           </Hidden>
 
