@@ -178,7 +178,9 @@ export const OfferReview: React.FC<Props> = (props) => {
               <EntryLabel>Max. Investment Size</EntryLabel>
               <EntryValue>
                 {props.values.tokenType}{' '}
-                {formatedValue(numberFormatter.format(Number(props.values.presaleMaxInvestment)))}
+                {props.values.hasPresale
+                  ? formatedValue(numberFormatter.format(Number(props.values.presaleMaxInvestment)))
+                  : 'N/A'}
               </EntryValue>
             </SaleAllocationEntry>
 
@@ -188,7 +190,9 @@ export const OfferReview: React.FC<Props> = (props) => {
               <EntryLabel>Min. Investment Size</EntryLabel>
               <EntryValue>
                 {props.values.tokenType}{' '}
-                {formatedValue(numberFormatter.format(Number(props.values.presaleMinInvestment)))}
+                {props.values.hasPresale
+                  ? formatedValue(numberFormatter.format(Number(props.values.presaleMinInvestment)))
+                  : 'N/A'}
               </EntryValue>
             </SaleAllocationEntry>
           </Column>
