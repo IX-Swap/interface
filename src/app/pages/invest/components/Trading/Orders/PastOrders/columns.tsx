@@ -16,11 +16,19 @@ import { TableColumn } from 'types/util'
 
 const SimpleStatus = ({ status }: { status: string }) => {
   const { theme } = useAppTheme()
+
+  const statusColors = {
+    [OTCOrderStatus.CANCELLED.toString()]: theme.palette.error.main,
+    [OTCOrderStatus.COMPLETED.toString()]: '#8DCA82',
+    [OTCOrderStatus.REJECTED.toString()]: '#D20000'
+  }
+
   return (
     <Typography
+      variant='body2'
       color={
-        status === OTCOrderStatus.CANCELLED
-          ? theme.palette.error.main
+        Object.prototype.hasOwnProperty.call(statusColors, status)
+          ? statusColors[status]
           : 'initial'
       }
     >
