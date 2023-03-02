@@ -34,6 +34,7 @@ export const DialogWrapper = styled.div`
   display: flex;
   flex-direction: column;
   max-height: 90vh;
+  overflow-y: auto;
 `
 export const FilterContainer = styled.div`
   display: flex;

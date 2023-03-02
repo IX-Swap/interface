@@ -70,6 +70,11 @@ const DialogCloseButton = styled.div`
   :hover {
     transform: scale(1.1);
   }
+
+  @media screen and (max-height: 830px) {
+    top: 0;
+    right: -2.7rem;
+  }
 `
 
 const DialogContainer = styled.div<{ height?: string; width?: string; padding?: string }>`
@@ -82,6 +87,8 @@ const DialogContainer = styled.div<{ height?: string; width?: string; padding?: 
 
   ${(props) => props.width && `width: ${props.width};`}
   ${(props) => props.height && `height: ${props.height};`}
+
+  max-height: 100vh;
 `
 
 const Content = styled.div`
