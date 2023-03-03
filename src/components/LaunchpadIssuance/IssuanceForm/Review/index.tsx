@@ -168,35 +168,33 @@ export const OfferReview: React.FC<Props> = (props) => {
           </Column>
         </Container>
 
-        <Container area="presale-size">
-          <Column>
-            <SaleAllocationTitle>Pre-Sale Investment Sizes</SaleAllocationTitle>
+        {props.values.hasPresale && (
+          <Container area="presale-size">
+            <Column>
+              <SaleAllocationTitle>Pre-Sale Investment Sizes</SaleAllocationTitle>
 
-            <Separator />
+              <Separator />
 
-            <SaleAllocationEntry>
-              <EntryLabel>Max. Investment Size</EntryLabel>
-              <EntryValue>
-                {props.values.tokenType}{' '}
-                {props.values.hasPresale
-                  ? formatedValue(numberFormatter.format(Number(props.values.presaleMaxInvestment)))
-                  : 'N/A'}
-              </EntryValue>
-            </SaleAllocationEntry>
+              <SaleAllocationEntry>
+                <EntryLabel>Max. Investment Size</EntryLabel>
+                <EntryValue>
+                  {props.values.tokenType}{' '}
+                  {formatedValue(numberFormatter.format(Number(props.values.presaleMaxInvestment)))}
+                </EntryValue>
+              </SaleAllocationEntry>
 
-            <Separator />
+              <Separator />
 
-            <SaleAllocationEntry>
-              <EntryLabel>Min. Investment Size</EntryLabel>
-              <EntryValue>
-                {props.values.tokenType}{' '}
-                {props.values.hasPresale
-                  ? formatedValue(numberFormatter.format(Number(props.values.presaleMinInvestment)))
-                  : 'N/A'}
-              </EntryValue>
-            </SaleAllocationEntry>
-          </Column>
-        </Container>
+              <SaleAllocationEntry>
+                <EntryLabel>Min. Investment Size</EntryLabel>
+                <EntryValue>
+                  {props.values.tokenType}{' '}
+                  {formatedValue(numberFormatter.format(Number(props.values.presaleMinInvestment)))}
+                </EntryValue>
+              </SaleAllocationEntry>
+            </Column>
+          </Container>
+        )}
 
         <Container area="terms">
           <OfferTerms terms={props.values.terms} />
