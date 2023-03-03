@@ -329,6 +329,13 @@ export const trading = {
     orderId: string
     matchedOrderId: string
   }) => `/otc/order/confirm/${orderId}/${matchedOrderId}`,
+  rejectOTCOrder: ({
+    orderId,
+    matchedOrderId
+  }: {
+    orderId: string
+    matchedOrderId: string
+  }) => `/otc/order/reject/${orderId}/${matchedOrderId}`,
   confirmMyOrder: ({
     orderId,
     matchedOrderId
@@ -341,7 +348,8 @@ export const trading = {
   getMatchedOrders: '/otc/order/list/match',
   getFeaturedPair: '/otc/config/featured-pair',
   createOrder: '/otc/order',
-  getMarket: (pairId?: string) => `/otc/pair/${pairId}`
+  getMarket: (pairId?: string) => `/otc/pair/${pairId}`,
+  getOtcOrderBook: (pairId?: string) => `/otc/orderbook/${pairId}`
 }
 export const listings = {
   getCombinedList: (userId: string) => `/exchange/combinedListing/${userId}`,

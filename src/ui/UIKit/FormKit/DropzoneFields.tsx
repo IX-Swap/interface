@@ -21,7 +21,7 @@ export const DropzoneFields = () => {
           valueExtractor={documentValueExtractor}
           accept={DataroomFileType.image}
           documentInfo={{
-            type: 'DSO Logo'
+            type: 'STO Logo'
           }}
         />
       </Grid>

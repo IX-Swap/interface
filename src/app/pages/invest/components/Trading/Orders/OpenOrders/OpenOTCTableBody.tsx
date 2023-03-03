@@ -97,9 +97,11 @@ export const OpenOTCTableBody = (
                 />
               )}
             </TableRow>
+
             {context?.isIndexOpen(row._id) === true &&
               row?.matches &&
               row?.matches?.length > 0 && <>{renderMatches(row)}</>}
+
             {needsConfirmation(row) && hasApprovedMatches(row) && (
               <TableRow
                 key={`${row?._id ?? ''}-timeout`}

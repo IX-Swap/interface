@@ -23,7 +23,7 @@ export const AccountsRouter = () => {
         <CommitmentsRouter />
       </AppRoute>
       <AppRoute
-        breadcrumb='Digital Securities'
+        breadcrumb='Security Tokens'
         path={AccountsRoute.digitalSecurities}
       >
         <DigitalSecuritiesRouter />

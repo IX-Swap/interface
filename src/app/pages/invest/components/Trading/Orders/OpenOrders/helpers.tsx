@@ -1,3 +1,4 @@
+import React from 'react'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { TableViewRendererProps } from 'components/TableWithPagination/TableView'
@@ -11,6 +12,7 @@ import {
   OTCMatch,
   OTCOrderStatus
 } from 'types/otcOrder'
+import StatusBar from './OTCOrderStatus'
 
 export const needsConfirmation = (item: OpenOTCOrder) => {
   return item.orderType === 'SELL'
@@ -92,11 +94,17 @@ export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
       0
     ) ?? 0
   return matchedAmount === 0
-    ? '0'
+    ? '0%'
     : getRoundedPercentage({
         amount: row.amount,
         matchedAmount
       })
+}
+
+export const renderOpenOrderStatus = (row: OpenOTCOrder) => {
+  const percentageFilled = renderOpenOrderPercentage(row)
+
+  return <StatusBar percentageFilled={percentageFilled} />
 }
 
 export const showCancelButton = ({ item }: { item: OpenOTCOrder }) => {

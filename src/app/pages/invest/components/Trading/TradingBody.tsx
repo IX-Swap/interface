@@ -16,6 +16,7 @@ import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
+import { OtcLiveOrderBook } from '../OtcLiveOrderBook/OtcLiveOrderBook'
 
 export const TradingBody = () => {
   const classes = useStyles()
@@ -53,14 +54,16 @@ export const TradingBody = () => {
       alignItems={'flex-start'}
       justifyContent='space-between'
       columnSpacing={2}
-      ml={0}
     >
+      <Grid item xs={12} lg={2}>
+        <OtcLiveOrderBook />
+      </Grid>
       <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={8}>
         <TradingOrders />
       </Grid>
 
       {!isMiniLaptop && (
-        <Grid item container xs={12} lg={4}>
+        <Grid item container xs={12} lg={2}>
           <PlaceOrderForm
             createOrderStatus={createOrderStatus}
             isFetching={isFetching}

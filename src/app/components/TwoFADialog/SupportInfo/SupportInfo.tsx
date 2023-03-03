@@ -4,10 +4,12 @@ import { useStyles } from 'app/components/TwoFADialog/SupportInfo/SupportInfo.st
 
 export const SupportInfo = () => {
   const classes = useStyles()
+  const websiteUrl = process.env.WEBSITE_URL ?? 'https://investax.io'
+
   return (
     <Typography variant={'body1'}>
       If you have any further questions, you can always contact our{' '}
-      <a className={classes.link} href={'https://investax.io/contact/'}>
+      <a className={classes.link} href={`${websiteUrl}/contact/`}>
         support department
       </a>
     </Typography>

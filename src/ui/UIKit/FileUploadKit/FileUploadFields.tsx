@@ -74,7 +74,7 @@ export const FileUploadFields = () => {
             accept={DataroomFileType.image}
             maxSize={1}
             documentInfo={{
-              type: 'DSO Logo'
+              type: 'STO Logo'
             }}
           />
         </Grid>

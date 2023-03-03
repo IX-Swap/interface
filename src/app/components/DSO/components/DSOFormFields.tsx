@@ -21,7 +21,7 @@ export const DSOFormFields = (props: DSOFormFieldsProps) => {
 
   return (
     <Fragment>
-      <Element name={DSOFormSection['DSO Information']}>
+      <Element name={DSOFormSection['STO Information']}>
         <DSOBaseFields isNew={isNew} isLive={isLive} />
       </Element>
 

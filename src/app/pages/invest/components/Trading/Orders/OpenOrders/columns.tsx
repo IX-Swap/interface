@@ -10,7 +10,7 @@ import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderTicker } from 'helpers/tables'
 import { ColumnOTCMatch, OpenOTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
-import { renderOpenOrderPercentage } from './helpers'
+import { renderOpenOrderStatus } from './helpers'
 
 export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
@@ -48,8 +48,8 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   },
   {
     key: '_id',
-    label: 'Filled',
-    render: (_, row) => renderOpenOrderPercentage(row)
+    label: 'Status',
+    render: (_, row) => renderOpenOrderStatus(row)
   }
 ]
 export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
@@ -88,7 +88,7 @@ export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
   },
   {
     key: '_id',
-    label: 'Filled',
+    label: 'Status',
     render: (_, row) =>
       getRoundedPercentage({
         amount: row.parentAmount,
@@ -126,8 +126,8 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   },
   {
     key: '_id',
-    label: 'Filled',
-    render: (_, row) => renderOpenOrderPercentage(row)
+    label: 'Status',
+    render: (_, row) => renderOpenOrderStatus(row)
   },
   {
     key: 'createdAt',

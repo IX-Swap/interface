@@ -11,7 +11,7 @@ export const CreateDSO = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { isLoading } = useDSOById(dsoId, issuerId)
   const breadcrumbCtx = useBreadcrumbs()
-  breadcrumbCtx.rename('Create DSO')
+  breadcrumbCtx.rename('Create STO')
   if (isLoading) {
     return null
   }
@@ -19,7 +19,7 @@ export const CreateDSO = () => {
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
       <Grid item>
-        <PageHeader title='Create Digital Security Offering' />
+        <PageHeader title='Create Security Token Offering' />
       </Grid>
       <RootContainer>
         <Grid item>

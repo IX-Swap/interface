@@ -19,12 +19,19 @@ import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
 
 const SimpleStatus = ({ status }: { status: string }) => {
   const { theme } = useAppTheme()
+
+  const statusColors = {
+    [OTCOrderStatus.CANCELLED.toString()]: theme.palette.error.main,
+    [OTCOrderStatus.COMPLETED.toString()]: '#8DCA82',
+    [OTCOrderStatus.REJECTED.toString()]: '#D20000'
+  }
+
   return (
     <Typography
-      fontSize={13}
+      variant='body2'
       color={
-        status === OTCOrderStatus.CANCELLED
-          ? theme.palette.error.main
+        Object.prototype.hasOwnProperty.call(statusColors, status)
+          ? statusColors[status]
           : 'initial'
       }
     >
@@ -93,7 +100,7 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   //   {
   //     key: '_id',
   //     label: 'Filled',
-  //       render: (_, row) => getFilledPercentageFromMatches({ row })
+  //     render: (_, row) => getFilledPercentageFromMatches({ row })
   //   },
   {
     key: 'status',

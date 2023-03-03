@@ -23,7 +23,7 @@ export const DSOCards = () => {
     <Grid container spacing={3}>
       <DSOCardWrapper isLoading={isLoading}>
         <DSOCard
-          title={'Total DSOs'}
+          title={'Total STOs'}
           value={data?.totalDSOs}
           icon={<LabelIcon bgColor='#F2F2FE' icon={<TokenIcon />} />}
         />
