@@ -34,37 +34,26 @@ const SimpleStatus = ({ status }: { status: string }) => {
 }
 
 const BlockchainExplorerLink = ({
-  status,
   txHash,
   pairId
 }: {
-  status: string
   txHash: string
   pairId: string
 }) => {
   const { data } = useOTCMarket(pairId)
 
-  console.log(data?.otc.dso.network.explorer.urls.transaction)
-
   return (
-    <>
-      {status === OTCOrderStatus.COMPLETED && (
-        <IconButton
-          component={props => (
-            <Tooltip title='View on blockchain explorer.'>
-              <AppRouterLinkComponent {...props} target='_blank' />
-            </Tooltip>
-          )}
-          size='small'
-          to={data?.otc.dso.network.explorer.urls.transaction.replace(
-            '%s',
-            txHash
-          )}
-        >
-          <LaunchIcon color='disabled' />
-        </IconButton>
+    <IconButton
+      component={props => (
+        <Tooltip title='View on blockchain explorer.'>
+          <AppRouterLinkComponent {...props} target='_blank' />
+        </Tooltip>
       )}
-    </>
+      size='small'
+      to={data?.otc.dso.network.explorer.urls.transaction.replace('%s', txHash)}
+    >
+      <LaunchIcon color='disabled' />
+    </IconButton>
   )
 }
 
@@ -114,13 +103,13 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'link',
     label: '',
-    render: (_, row) => (
-      <BlockchainExplorerLink
-        status={row.status}
-        txHash={row.status}
-        pairId={row.pair._id}
-      />
-    )
+    render: (_, row) =>
+      row.status === 'COMPLETED' && (
+        <BlockchainExplorerLink
+          txHash={row?.matches?.txHash}
+          pairId={row.pair._id}
+        />
+      )
   }
 ]
 
