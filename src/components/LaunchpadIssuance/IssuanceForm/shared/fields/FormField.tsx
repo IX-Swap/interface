@@ -38,6 +38,7 @@ export const FormField: React.FC<Props> = (props) => {
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span} className={props.className}>
       <IssuanceTextField
+        name={props.field}
         optional={props.optional}
         value={props.value}
         disabled={props.disabled}
