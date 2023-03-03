@@ -5,6 +5,7 @@ import differenceInMinutes from 'date-fns/differenceInMinutes'
 import format from 'date-fns/format'
 import formatDistance from 'date-fns/formatDistance'
 import toDate from 'date-fns/toDate'
+import { isEmptyString } from 'helpers/strings'
 
 export const convertISOToDate = (
   date: string | null | undefined
@@ -32,12 +33,12 @@ export const convertDateToISO = (
   return date.toISOString()
 }
 
-export const formatDateToMMDDYY = (s?: string): string => {
-  if (s === undefined) {
+export const formatDateToMMDDYY = (s: string): string => {
+  if (isEmptyString(s)) {
     return ''
   }
 
-  return s.length > 0 ? format(new Date(s), 'MM/dd/yyyy') : s
+  return format(new Date(s), 'MM/dd/yyyy')
 }
 
 export const formatDateToDDMonYYYY = (
