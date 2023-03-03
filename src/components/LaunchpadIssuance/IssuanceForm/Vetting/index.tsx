@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { FieldArray, Formik, FormikProps } from 'formik'
+import { FieldArray, FieldProps, Formik, FormikProps, Field } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
@@ -16,7 +16,7 @@ import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, DeleteButt
 import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
 import { TextareaField } from '../shared/fields/TextareaField'
-import { useGetFieldArrayId, useLoader, useSubmitVettingForm, useVettingFormInitialValues } from 'state/launchpad/hooks'
+import { useLoader, useSubmitVettingForm, useVettingFormInitialValues } from 'state/launchpad/hooks'
 
 import { schema } from './schema'
 import { FormGrid } from '../shared/FormGrid'
@@ -35,7 +35,6 @@ export interface IssuanceVettingFormProps {
 export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) => {
   const theme = useTheme()
   const history = useHistory()
-  const getId = useGetFieldArrayId(false)
   const loader = useLoader(false)
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
@@ -246,25 +245,35 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                     <AdditionalFiles>
                       <Hint>Upload additional documents relevant to the funding objective. (Optional)</Hint>
 
-                      <AddDocumentButton padding="0" onClick={() => push({ id: getId() })} disabled={view}>
+                      <AddDocumentButton padding="0" onClick={() => push({ file: null })} disabled={view}>
                         <Plus size="14" /> Add Document
                       </AddDocumentButton>
                     </AdditionalFiles>
 
                     <FundingDocumentsGrid>
                       {values.fundingDocuments.map((entry, idx) => (
-                        <FileField
-                          key={entry.id}
-                          value={entry.file}
-                          disabled={view}
-                          field={`fundingDocuments[${idx}].file`}
-                          setter={setFieldValue}
-                          trailing={
-                            <DeleteButton onClick={handleRemove(idx)}>
-                              <Trash />
-                            </DeleteButton>
-                          }
-                        />
+                        <Field name={`fundingDocuments[${idx}].file`} key={idx}>
+                          {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                            <FileField
+                              error={meta.touched ? meta.error : ''}
+                              value={value}
+                              disabled={view}
+                              field={name}
+                              setter={(name: string, value: any) =>
+                                onChange({
+                                  target: { name, value },
+                                })
+                              }
+                              trailing={
+                                !view && (
+                                  <DeleteButton onClick={handleRemove(idx)}>
+                                    <Trash />
+                                  </DeleteButton>
+                                )
+                              }
+                            />
+                          )}
+                        </Field>
                       ))}
                     </FundingDocumentsGrid>
                   </>
@@ -364,7 +373,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               setter={setFieldValue}
               disabled={view}
               field="beneficialOwners"
-              errors={errors as { [key: string]: string }}
             />
 
             <DirectorField
@@ -373,7 +381,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               directors={values.directors}
               setter={setFieldValue}
               field="directors"
-              errors={errors as { [key: string]: string }}
             />
             <Row justifyContent="flex-end" alignItems="center" gap="1.5rem">
               <OutlineButton width="280px" onClick={goBack}>

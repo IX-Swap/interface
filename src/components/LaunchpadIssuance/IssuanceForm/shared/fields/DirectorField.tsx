@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Plus } from 'react-feather'
-import { FieldArray } from 'formik'
+import { FieldArray, Field, FieldProps } from 'formik'
 
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 
@@ -19,28 +19,21 @@ interface Props {
   directorTitle: string
   directors: DirectorInfo[]
 
-  errors?: { [key: string]: any }
   disabled?: boolean
   field: string
   setter: (field: string, value: string) => void
 }
 
-let counter = 0
-const getId = () => ++counter
-
 export const DirectorField: React.FC<Props> = (props) => {
+  const { directors } = props
   const theme = useTheme()
 
-  const directors = React.useMemo(
-    () =>
-      props.directors.length > 0
-        ? (props.directors as (DirectorInfo & { id: number })[])
-        : ([{ id: getId() }] as (DirectorInfo & { id: number })[]),
-    [props.directors]
-  )
-
-  const errors = React.useMemo(() => props.errors?.[props.field], [props.errors, props.field])
-  const errorsLength = React.useMemo(() => errors?.length ?? 0, [errors])
+  const getSetter = (onChange: (e: Partial<React.ChangeEvent<any>>) => void) => {
+    return (name: string, value: any) =>
+      onChange({
+        target: { name, value },
+      })
+  }
 
   return (
     <Column gap="2rem" alignItems="stretch">
@@ -48,21 +41,25 @@ export const DirectorField: React.FC<Props> = (props) => {
         {({ push, handleRemove }) => (
           <>
             {directors.map((entry, idx) => (
-              <Column gap="1rem" key={entry.id}>
+              <Column gap="1rem" key={idx}>
                 <Row justifyContent="space-between">
                   <Column gap="0.25rem" width="50%" padding=" 0 0.75rem 0 0">
                     <FullnameLabel>{`Name of ${props.directorTitle}`}</FullnameLabel>
                     <FullnameHint>{`Full name of ${props.directorTitle}`}</FullnameHint>
 
-                    <FormField
-                      placeholder="Full Name"
-                      setter={props.setter}
-                      disabled={props.disabled}
-                      field={`${props.field}[${idx}].fullName`}
-                      value={entry.fullName}
-                      error={errorsLength > idx && errors[idx]?.fullName}
-                      inputFilter={textFilter}
-                    />
+                    <Field name={`${props.field}[${idx}].fullName`}>
+                      {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                        <FormField
+                          placeholder="Full Name"
+                          setter={getSetter(onChange)}
+                          disabled={props.disabled}
+                          field={name}
+                          value={value}
+                          error={meta.touched ? meta.error : ''}
+                          inputFilter={textFilter}
+                        />
+                      )}
+                    </Field>
                   </Column>
 
                   {(directors.length > 1 || idx > 0) && (
@@ -73,29 +70,40 @@ export const DirectorField: React.FC<Props> = (props) => {
                 </Row>
 
                 <FilesRow>
-                  <FileField
-                    label={`Proof of Identity (${props.directorTitle})`}
-                    hint="Certified true copy of passport and other official forms of identification"
-                    field={`${props.field}[${idx}].proofOfIdentity`}
-                    setter={props.setter}
-                    disabled={props.disabled}
-                    value={entry.proofOfIdentity}
-                    error={errorsLength > idx && errors[idx]?.proofOfIdentity}
-                  />
-                  <FileField
-                    label={`Proof of Address (${props.directorTitle})`}
-                    hint={`Proof of Address for ${props.directorTitle}`}
-                    field={`${props.field}[${idx}].proofOfAddress`}
-                    setter={props.setter}
-                    disabled={props.disabled}
-                    value={entry.proofOfAddress}
-                    error={errorsLength > idx && errors[idx]?.proofOfAddress}
-                  />
+                  <Field name={`${props.field}[${idx}].proofOfIdentity`}>
+                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                      <FileField
+                        label={`Proof of Identity (${props.directorTitle})`}
+                        hint="Certified true copy of passport and other official forms of identification"
+                        field={name}
+                        setter={getSetter(onChange)}
+                        disabled={props.disabled}
+                        value={value}
+                        error={meta.touched ? meta.error : ''}
+                      />
+                    )}
+                  </Field>
+                  <Field name={`${props.field}[${idx}].proofOfIdentity`}>
+                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                      <FileField
+                        label={`Proof of Address (${props.directorTitle})`}
+                        hint={`Proof of Address for ${props.directorTitle}`}
+                        field={name}
+                        setter={getSetter(onChange)}
+                        disabled={props.disabled}
+                        value={value}
+                        error={meta.touched ? meta.error : ''}
+                      />
+                    )}
+                  </Field>
                 </FilesRow>
               </Column>
             ))}
 
-            <AddDirectorButton onClick={() => push({ id: getId() })} disabled={props.disabled}>
+            <AddDirectorButton
+              onClick={() => push({ fullName: '', proofOfIdentity: null, proofOfAddress: null })}
+              disabled={props.disabled}
+            >
               <header>Add {props.directorTitle}</header>
               <main>Must include all {props.directorTitle}s</main>
               <aside>
