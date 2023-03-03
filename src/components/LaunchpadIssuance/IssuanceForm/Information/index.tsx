@@ -12,7 +12,7 @@ import { Formik, FormikProps } from 'formik'
 
 import { InformationFormValues } from './types'
 
-import { Row, Separator, Spacer, LoaderContainer } from 'components/LaunchpadMisc/styled'
+import { Column, Row, Separator, Spacer, LoaderContainer } from 'components/LaunchpadMisc/styled'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
 import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
@@ -26,7 +26,7 @@ import { TextareaField } from '../shared/fields/TextareaField'
 import { CloseConfirmation } from '../shared/CloseConfirmation'
 import { DateRangeField } from '../shared/fields/DateRangeField'
 import { RejectInfo } from '../shared/RejectInfo'
-import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody, FormSubmitContainer } from '../shared/styled'
+import { FormContainer, FormHeader, FormTitle, FormSideBar, FormBody } from '../shared/styled'
 
 import { FAQBlock } from './sections/FAQ'
 import { GalleryBlock } from './sections/Gallery'
@@ -453,7 +453,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.network}
                   error={(touched.network && errors.network) as string}
                 />
-
                 <FormField
                   field="hardCap"
                   setter={setFieldValue}
@@ -476,7 +475,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.softCap}
                   error={(touched.softCap && errors.softCap) as string}
                 />
-
                 <FormField
                   field="tokenPrice"
                   setter={setFieldValue}
@@ -499,7 +497,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.tokenStandart}
                   error={(touched.tokenStandart && errors.tokenStandart) as string}
                 />
-
                 <FormField
                   field="minInvestment"
                   setter={setFieldValue}
@@ -522,15 +519,17 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.maxInvestment}
                   error={(touched.maxInvestment && errors.maxInvestment) as string}
                 />
+                <Column gap="1rem">
+                  <Row gap="1rem">
+                    <Checkbox checked={values.tokenomicsAgreement} />
 
-                <Row gap="1rem">
-                  <Checkbox checked />
-
-                  <TokenAgreementText>
-                    I understand and agree that once I submit this form and it is approved, IX Swap will mint and
-                    deposit the tokens into a smart contract based on the information provided.
-                  </TokenAgreementText>
-                </Row>
+                    <TokenAgreementText>
+                      I understand and agree that once I submit this form and it is approved, IX Swap will mint and
+                      deposit the tokens into a smart contract based on the information provided.
+                    </TokenAgreementText>
+                  </Row>
+                  {errors.tokenomicsAgreement && <ErrorText>{errors.tokenomicsAgreement}</ErrorText>}
+                </Column>
               </FormGrid>
 
               <Separator />
@@ -869,4 +868,12 @@ const ScrollToTop = styled.button`
   outline: none;
   cursor: pointer;
   padding: 0.75rem;
+`
+
+const ErrorText = styled.div`
+  color: ${(props) => props.theme.launchpad.colors.error};
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
 `

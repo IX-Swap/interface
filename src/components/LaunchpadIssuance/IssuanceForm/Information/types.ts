@@ -70,6 +70,7 @@ export interface InformationFormValues {
   softCap: string
 
   allowOnlyAccredited: boolean
+  tokenomicsAgreement: boolean
 
   minInvestment: string
   maxInvestment: string
