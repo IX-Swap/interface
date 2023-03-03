@@ -33,6 +33,7 @@ interface Props extends StylingProps {
 
   onChange?: (value: string) => void
   inputFilter?: (value: string) => string
+  name?: string
 }
 
 export const IssuanceTextField: React.FC<Props> = (props) => {
@@ -85,6 +86,7 @@ export const IssuanceTextField: React.FC<Props> = (props) => {
           )}
 
           <Input
+            name={props.name}
             type="text"
             fontSize={props.fontSize}
             lineHeight={props.lineHeight}

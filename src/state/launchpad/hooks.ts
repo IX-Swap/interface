@@ -563,13 +563,13 @@ export const useGetOffersFull = () => {
   )
 }
 
-export const useGetFieldArrayId = () => {
+export const useGetFieldArrayId = (numeric = true) => {
   let counter = 0
 
   return React.useCallback(() => {
     ++counter
-    return `MN-${counter}`
-  }, [])
+    return numeric ? counter : `MN-${counter}`
+  }, [numeric])
 }
 
 interface FileUpload {
@@ -1178,6 +1178,7 @@ export const useSubmitOffer = () => {
         return result
       }
 
+      // todo all this needs to be filtered for minimal, not full
       data = filter(data)
       if (Object.keys(data.terms).length === 0) {
         delete data.terms
@@ -1239,13 +1240,15 @@ export const useEditIssuanceOffer = () => {
 
       socialMedia: payload.social.reduce((acc, e) => ({ ...acc, [e.type]: e.url }), {}),
 
-      members: payload.members.map((member, idx) => ({
-        id: member.id && member.id >= 0 ? member.id : undefined,
-        avatarId: find('member.photo', idx) ?? initial.members[idx].photo?.id,
-        name: member.name,
-        title: member.role,
-        description: member.about,
-      })),
+      members: payload.members
+        .filter((m) => Object.entries(m).some(([key, value]) => !!value && key !== 'id'))
+        .map((member, idx) => ({
+          id: member.id && member.id >= 0 ? member.id : undefined,
+          avatarId: find('member.photo', idx) ?? initial.members[idx].photo?.id,
+          name: member.name,
+          title: member.role,
+          description: member.about,
+        })),
 
       files: [
         ...payload.additionalDocuments
