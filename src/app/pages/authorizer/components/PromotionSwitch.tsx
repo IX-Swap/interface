@@ -28,7 +28,7 @@ export const PromotionSwitch = (props: PromotionSwitchProps) => {
         <Tooltip
           title={
             <Typography>
-              When promoted (switched on), this DSO will be shown in the "Top
+              When promoted (switched on), this STO will be shown in the "Top
               Offers" carousel on the invest page
             </Typography>
           }

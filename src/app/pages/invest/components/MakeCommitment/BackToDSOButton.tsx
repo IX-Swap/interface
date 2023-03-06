@@ -23,7 +23,7 @@ export const BackToDSOButton = (props: ButtonProps) => {
           }
         }}
       >
-        Back to DSO page
+        Back to STO page
       </Button>
     </Box>
   )
