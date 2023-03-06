@@ -1,4 +1,6 @@
-import { Typography } from '@mui/material'
+import { Typography, IconButton, Tooltip } from '@mui/material'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
@@ -13,8 +15,17 @@ import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
 import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
 
-const SimpleStatus = ({ status }: { status: string }) => {
+const SimpleStatus = ({
+  status,
+  txHash,
+  pairId
+}: {
+  status: string
+  txHash: string
+  pairId: string
+}) => {
   const { theme } = useAppTheme()
 
   const statusColors = {
@@ -33,9 +44,38 @@ const SimpleStatus = ({ status }: { status: string }) => {
       }
     >
       {capitalizeFirstLetter(status)}
+
+      {status === 'COMPLETED' && (
+        <BlockchainExplorerLink txHash={txHash} pairId={pairId} />
+      )}
     </Typography>
   )
 }
+
+const BlockchainExplorerLink = ({
+  txHash,
+  pairId
+}: {
+  txHash: string
+  pairId: string
+}) => {
+  const { data } = useOTCMarket(pairId)
+
+  return (
+    <IconButton
+      component={props => (
+        <Tooltip title='View on blockchain explorer.'>
+          <AppRouterLinkComponent {...props} target='_blank' />
+        </Tooltip>
+      )}
+      size='small'
+      to={data?.otc.dso.network.explorer.urls.transaction.replace('%s', txHash)}
+    >
+      <LaunchIcon color='disabled' />
+    </IconButton>
+  )
+}
+
 export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'createdAt',
@@ -77,7 +117,13 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'status',
     label: 'Status',
-    render: (value, _) => <SimpleStatus status={value} />
+    render: (_, row) => (
+      <SimpleStatus
+        status={row.status}
+        txHash={row?.matches?.txHash}
+        pairId={row.pair._id}
+      />
+    )
   }
 ]
 
@@ -90,7 +136,13 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'status',
     label: 'Status',
-    render: (value, _) => <SimpleStatus status={value} />
+    render: (_, row) => (
+      <SimpleStatus
+        status={row.status}
+        txHash={row?.matches?.txHash}
+        pairId={row.pair._id}
+      />
+    )
   },
   {
     key: 'amount',
