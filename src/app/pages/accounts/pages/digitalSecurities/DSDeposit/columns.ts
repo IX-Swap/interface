@@ -4,7 +4,7 @@ import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView
 
 export const columns = [
   {
-    label: 'Digital Security',
+    label: 'Security Token',
     key: 'asset.symbol'
   },
   {

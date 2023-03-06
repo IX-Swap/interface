@@ -18,7 +18,7 @@ export const ViewDSO = () => {
     <Box width='100%'>
       <Grid container spacing={0}>
         <Grid item xs={12}>
-          <PageHeader title='Digital Security Offering' />
+          <PageHeader title='Security Token Offering' />
         </Grid>
         <Grid item xs={12}>
           <RootContainer>

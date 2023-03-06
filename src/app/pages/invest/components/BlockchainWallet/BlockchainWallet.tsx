@@ -1,7 +1,12 @@
-import { Box, Button, Hidden, Typography } from '@mui/material'
+import {
+  Box,
+  Button
+  // Hidden,
+  // Typography
+} from '@mui/material'
 import { useWithdrawalAddressAdded } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressAdded'
 import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
-import { useStyles } from 'app/pages/invest/components/BlockchainWallet/BlockchainWallet.styles'
+// import { useStyles } from 'app/pages/invest/components/BlockchainWallet/BlockchainWallet.styles'
 import { WalletModalContext } from 'components/WalletModal/WalletModalContextWrapper'
 import { isEmptyString } from 'helpers/strings'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
@@ -9,10 +14,13 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { BlockchainAddress } from './BlockchainAddress'
 export const BlockchainWallet = () => {
-  const classes = useStyles()
+  //   const classes = useStyles()
   const context = useContext(WalletModalContext)
   const { account, chainId, active } = useActiveWeb3React()
-  const { found, label } = useWithdrawalAddressAdded(account)
+  const {
+    found
+    // label
+  } = useWithdrawalAddressAdded(account)
   return (
     <>
       <>
@@ -40,15 +48,15 @@ export const BlockchainWallet = () => {
             )}
             {found && active && (
               <Box display='flex' gap={1}>
-                <Hidden lgDown>
+                {/* <Hidden lgDown>
                   <Typography className={classes.label} variant='subtitle1'>
                     Your Wallet:
                   </Typography>
-                </Hidden>
+                </Hidden> */}
                 <BlockchainAddress
                   chainId={chainId}
                   account={account}
-                  labelName={label}
+                  //   labelName={label}
                 />
               </Box>
             )}

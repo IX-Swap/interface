@@ -15,7 +15,7 @@ export const columns: Array<TableColumn<Commitment>> = [
   },
   {
     key: 'dso.tokenName',
-    label: 'Digital Security'
+    label: 'Security Token'
   },
   {
     key: 'dso.capitalStructure',
@@ -23,7 +23,7 @@ export const columns: Array<TableColumn<Commitment>> = [
   },
   {
     key: 'dso.dealStatus',
-    label: 'DSO Status',
+    label: 'STO Status',
     render: renderDealStatus
   },
   {

@@ -1,9 +1,11 @@
-import { Typography } from '@mui/material'
+import { Typography, IconButton, Tooltip } from '@mui/material'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
   //   formatRoundedAmount,
-  getFilledPercentageFromMatches,
+  //   getFilledPercentageFromMatches,
   getOrderCurrency,
   renderTotal
 } from 'helpers/numbers'
@@ -13,21 +15,67 @@ import { useAppTheme } from 'hooks/useAppTheme'
 import React from 'react'
 import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
+import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
 
-const SimpleStatus = ({ status }: { status: string }) => {
+const SimpleStatus = ({
+  status,
+  txHash,
+  pairId
+}: {
+  status: string
+  txHash: string
+  pairId: string
+}) => {
   const { theme } = useAppTheme()
+
+  const statusColors = {
+    [OTCOrderStatus.CANCELLED.toString()]: theme.palette.error.main,
+    [OTCOrderStatus.COMPLETED.toString()]: '#8DCA82',
+    [OTCOrderStatus.REJECTED.toString()]: '#D20000'
+  }
+
   return (
     <Typography
+      variant='body2'
       color={
-        status === OTCOrderStatus.CANCELLED
-          ? theme.palette.error.main
+        Object.prototype.hasOwnProperty.call(statusColors, status)
+          ? statusColors[status]
           : 'initial'
       }
     >
       {capitalizeFirstLetter(status)}
+
+      {status === 'COMPLETED' && (
+        <BlockchainExplorerLink txHash={txHash} pairId={pairId} />
+      )}
     </Typography>
   )
 }
+
+const BlockchainExplorerLink = ({
+  txHash,
+  pairId
+}: {
+  txHash: string
+  pairId: string
+}) => {
+  const { data } = useOTCMarket(pairId)
+
+  return (
+    <IconButton
+      component={props => (
+        <Tooltip title='View on blockchain explorer.'>
+          <AppRouterLinkComponent {...props} target='_blank' />
+        </Tooltip>
+      )}
+      size='small'
+      to={data?.otc.dso.network.explorer.urls.transaction.replace('%s', txHash)}
+    >
+      <LaunchIcon color='disabled' />
+    </IconButton>
+  )
+}
+
 export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'createdAt',
@@ -61,16 +109,21 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })
   },
-  {
-    key: '_id',
-    label: 'Filled',
-    // render: (_, row) => getFilledPercentageFromMatches({ row })
-    render: (_, row) => '0'
-  },
+  //   {
+  //     key: '_id',
+  //     label: 'Filled',
+  //     render: (_, row) => getFilledPercentageFromMatches({ row })
+  //   },
   {
     key: 'status',
     label: 'Status',
-    render: (value, _) => <SimpleStatus status={value} />
+    render: (_, row) => (
+      <SimpleStatus
+        status={row.status}
+        txHash={row?.matches?.txHash}
+        pairId={row.pair._id}
+      />
+    )
   }
 ]
 
@@ -83,7 +136,13 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'status',
     label: 'Status',
-    render: (value, _) => <SimpleStatus status={value} />
+    render: (_, row) => (
+      <SimpleStatus
+        status={row.status}
+        txHash={row?.matches?.txHash}
+        pairId={row.pair._id}
+      />
+    )
   },
   {
     key: 'amount',
@@ -108,11 +167,11 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
     render: (_, row) =>
       renderTotal({ amount: row.amount, price: row.price, row })
   },
-  {
-    key: '_id',
-    label: 'Filled',
-    render: (_, row) => getFilledPercentageFromMatches({ row })
-  },
+  //   {
+  //     key: '_id',
+  //     label: 'Filled',
+  //     render: (_, row) => getFilledPercentageFromMatches({ row })
+  //   },
   {
     key: 'createdAt',
     label: 'Date',

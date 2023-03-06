@@ -10,7 +10,7 @@ export const DSList: React.FC = () => {
   return (
     <Grid container spacing={3} style={{ display: 'table' }}>
       <Grid item xs={12}>
-        <PageHeader title='Digital Securities' />
+        <PageHeader title='Security Tokens' />
       </Grid>
       <RootContainer>
         <Grid

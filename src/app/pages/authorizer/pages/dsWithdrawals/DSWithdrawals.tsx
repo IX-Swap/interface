@@ -5,7 +5,7 @@ import { authorizerQueryKeys } from 'config/queryKeys'
 
 export const DSWithdrawals: React.FC = () => (
   <AuthorizerList
-    title='Authorize Digital Security Withdrawal'
+    title='Authorize Security Token Withdrawal'
     uri='/accounts/security/withdrawals'
     name={authorizerQueryKeys.getSecurityWithdrawals}
     columns={columns}

@@ -81,7 +81,7 @@ export const InvestorDeclarationView: React.FC<
       'Trading in digital securities on the InvestaX private exchange',
     primaryOfferingServices:
       'Use of Primary Offering Services for the purpose of fundraising',
-    digitalSecuritiesIssuance: 'Issuance of Digital Securities by the Issuers',
+    digitalSecuritiesIssuance: 'Issuance of Security Tokens by the Issuers',
     allServices: 'Any/all Services/Products offered by InvestaX'
   }
 

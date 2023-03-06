@@ -1,4 +1,4 @@
-import { Grid, IconButton, InputAdornment, Tooltip, Icon } from '@mui/material'
+import { Grid, IconButton, InputAdornment, Icon } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
@@ -90,7 +90,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         <Grid item>
           <FormSectionHeader
             hasBorderBottom={false}
-            title='DSO Information'
+            title='STO Information'
             variant='h5'
           />
         </Grid>
@@ -105,7 +105,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             valueExtractor={documentValueExtractor}
             accept={DataroomFileType.image}
             documentInfo={{
-              type: 'DSO Logo'
+              type: 'STO Logo'
             }}
             isOptional
             optionalText=' '
@@ -375,7 +375,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 </Icon>
               </Tooltip>
               </span> */}
-  
             </Grid>
             <VSpacer size='small' />
           </Grid>

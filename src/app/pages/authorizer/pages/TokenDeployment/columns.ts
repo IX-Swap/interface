@@ -12,7 +12,7 @@ export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   },
   {
     key: 'tokenName',
-    label: 'Digital Security'
+    label: 'Security Token'
   },
   {
     key: 'capitalStructure',
