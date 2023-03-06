@@ -36,7 +36,7 @@ export const NoData = () => {
                   to={IssuanceRoute.createNew}
                   color='primary'
                 >
-                  Create your first DSO
+                  Create your first STO
                 </Button>
               </Grid>
             )}
