@@ -18,7 +18,7 @@ export const DSOFilter = () => {
 
   return (
     <Box py={3} maxWidth={300}>
-      <Typography variant='h5'>My DSO(s)</Typography>
+      <Typography variant='h5'>My STO(s)</Typography>
       <VSpacer size='small' />
       <Grid container xs={12}>
         <DSOSelect

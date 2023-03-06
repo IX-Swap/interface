@@ -45,7 +45,7 @@ export const VisibilitySwitch = (props: VisibilitySwitchProps) => {
         <Tooltip
           title={
             <Typography>
-              When disabled (switched on), this DSO will not be listed on the
+              When disabled (switched on), this STO will not be listed on the
               invest page
             </Typography>
           }

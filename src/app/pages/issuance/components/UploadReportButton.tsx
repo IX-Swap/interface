@@ -11,7 +11,7 @@ export const UploadReportButton = () => {
   const disabled = data.list.length < 1
   const tooltipMessage = (
     <>
-      To create a report it is <br /> necessary to have a DSO
+      To create a report it is <br /> necessary to have an STO
     </>
   )
 
