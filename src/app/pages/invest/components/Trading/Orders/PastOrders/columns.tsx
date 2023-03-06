@@ -17,7 +17,15 @@ import { OpenOTCOrder, OTCOrderStatus } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
 import { useOTCMarket } from 'app/pages/invest/hooks/useOTCMarket'
 
-const SimpleStatus = ({ status }: { status: string }) => {
+const SimpleStatus = ({
+  status,
+  txHash,
+  pairId
+}: {
+  status: string
+  txHash: string
+  pairId: string
+}) => {
   const { theme } = useAppTheme()
 
   const statusColors = {
@@ -36,6 +44,10 @@ const SimpleStatus = ({ status }: { status: string }) => {
       }
     >
       {capitalizeFirstLetter(status)}
+
+      {status === 'COMPLETED' && (
+        <BlockchainExplorerLink txHash={txHash} pairId={pairId} />
+      )}
     </Typography>
   )
 }
@@ -105,18 +117,13 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'status',
     label: 'Status',
-    render: (value, _) => <SimpleStatus status={value} />
-  },
-  {
-    key: 'link',
-    label: '',
-    render: (_, row) =>
-      row.status === 'COMPLETED' && (
-        <BlockchainExplorerLink
-          txHash={row?.matches?.txHash}
-          pairId={row.pair._id}
-        />
-      )
+    render: (_, row) => (
+      <SimpleStatus
+        status={row.status}
+        txHash={row?.matches?.txHash}
+        pairId={row.pair._id}
+      />
+    )
   }
 ]
 
@@ -129,7 +136,13 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'status',
     label: 'Status',
-    render: (value, _) => <SimpleStatus status={value} />
+    render: (_, row) => (
+      <SimpleStatus
+        status={row.status}
+        txHash={row?.matches?.txHash}
+        pairId={row.pair._id}
+      />
+    )
   },
   {
     key: 'amount',
