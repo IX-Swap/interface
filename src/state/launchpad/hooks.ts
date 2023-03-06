@@ -947,6 +947,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       profilePicture: files.find((x) => x.id === payload.profilePicture?.id) as IssuanceFile,
 
       allowOnlyAccredited: payload.allowOnlyAccredited,
+      tokenomicsAgreement: payload.tokenomicsAgreement,
 
       country: payload.country,
       email: payload.contactUsEmail,

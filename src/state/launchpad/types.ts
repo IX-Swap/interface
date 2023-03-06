@@ -263,6 +263,7 @@ export interface Offer {
 
   isMain: boolean
   allowOnlyAccredited: boolean
+  tokenomicsAgreement: boolean
   closesSoon: boolean
   softCapReached: boolean
   hardCapReached: boolean
