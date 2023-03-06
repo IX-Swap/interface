@@ -29,7 +29,7 @@ export const MakeCommitmentFormFields = ({
       <Grid item xs={12} md={5}>
         <Button
           variant='outlined'
-          href={AccountsRoute.withdrawalAddressesCreate}
+          href={AccountsRoute.withdrawalAddresses}
           target='_blank'
           size='large'
           fullWidth
