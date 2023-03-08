@@ -31,9 +31,9 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
             {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
           </SelectItem>
         )}
-        {!includeAll && (
+        {/* {!includeAll && (
           <SelectItem value={undefined}>Capital Structure</SelectItem>
-        )}
+        )} */}
         {renderSelectItems(
           capitalStructures.map(option => ({ label: option, value: option }))
         )}
