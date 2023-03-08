@@ -68,7 +68,7 @@ export const OtcLiveOrderBook = () => {
               data={sells?.slice(0, 15)}
               currency={marketData?.otc?.markets[0]?.currency}
               tokenSymbol={marketData?.otc?.tokenSymbol}
-              transaction='buy'
+              transaction='sell'
               barOrigin={isMiniLaptop ? 'left' : 'right'}
               showHeader={isMiniLaptop}
             />
@@ -91,7 +91,8 @@ export const OtcLiveOrderBook = () => {
               data={buys?.slice(0, 15)}
               currency={marketData?.otc?.markets[0]?.currency}
               tokenSymbol={marketData?.otc?.tokenSymbol}
-              transaction='sell'
+              
+              transaction='buy'
               showHeader={isMiniLaptop}
             />
           </Box>
