@@ -2,34 +2,21 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import { Plus, Image } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-import { FieldArray, FormikErrors, FormikTouched, Field, FieldProps } from 'formik'
+import { FieldArray, Field, FieldProps } from 'formik'
 import { FormGrid } from '../../shared/FormGrid'
 import { FileField } from '../../shared/fields/FileField'
 import { FormField } from '../../shared/fields/FormField'
 import { AddButton, DeleteButton } from '../../shared/styled'
 import { TextareaField } from '../../shared/fields/TextareaField'
-import { InformationFormValues, TeamMember } from '../types'
+import { TeamMember } from '../types'
+import { getSetter } from '../util'
 
 interface Props {
   members: TeamMember[]
-
-  errors: FormikErrors<InformationFormValues>
-  touched: FormikTouched<InformationFormValues>
-
-  setter: (field: string, value: any) => void
-  touch: (field: string, touched: boolean) => void
 }
 
-export const TeamMembersBlock: React.FC<Props> = (props) => {
+export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
   const theme = useTheme()
-  const members = props.members
-
-  const getSetter = (onChange: (e: Partial<React.ChangeEvent<any>>) => void) => {
-    return (name: string, value: any) =>
-      onChange({
-        target: { name, value },
-      })
-  }
 
   return (
     <FormGrid title="Team Members">

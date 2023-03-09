@@ -1,33 +1,22 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-
 import { Plus } from 'react-feather'
-import { FieldArray, FormikErrors } from 'formik'
+import { Field, FieldArray, FieldProps } from 'formik'
 
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-
 import { Column, ErrorText, Separator } from 'components/LaunchpadMisc/styled'
-
+import { text19, text30 } from 'components/LaunchpadMisc/typography'
 import { OfferFAQ } from 'state/launchpad/types'
-
 import { AddButton } from '../../shared/styled'
 import { FormGrid } from '../../shared/FormGrid'
-import { useGetFieldArrayId } from 'state/launchpad/hooks'
-
-import { FAQEntry, InformationFormValues } from '../types'
-import { text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   faq: OfferFAQ[]
-  errors: FormikErrors<InformationFormValues>
-  setter: (field: string, value: any) => void
 }
 
-export const FAQBlock: React.FC<Props> = (props) => {
+export const FAQBlock: React.FC<Props> = ({ faq }) => {
   const theme = useTheme()
-  const getId = useGetFieldArrayId()
-
-  const faq = React.useMemo(() => props.faq as (OfferFAQ & { id: number })[], [props.faq])
+  const getTarget = (name: string, value: any) => ({ target: { name, value } })
 
   return (
     <FormGrid title="FAQ">
@@ -35,43 +24,51 @@ export const FAQBlock: React.FC<Props> = (props) => {
         {({ push, handleRemove }) => (
           <>
             {faq.map((entry, idx) => (
-              <FieldWrapper key={`faq-${entry.id}`}>
-                <Question>
-                  <Label>Question</Label>
+              <FieldWrapper key={idx}>
+                <Field name={`faq[${idx}].question`}>
+                  {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    <Question>
+                      <Label>Question</Label>
 
-                  <QuestionWrapper>
-                    <QuestionInput
-                      placeholder="Question Title"
-                      value={entry.question}
-                      onChange={(e) => props.setter(`faq[${idx}].question`, e.target.value)}
-                    />
-                  </QuestionWrapper>
+                      <QuestionWrapper>
+                        <QuestionInput
+                          placeholder="Question Title"
+                          value={value}
+                          onChange={(e) => onChange(getTarget(name, e.target.value))}
+                        />
+                      </QuestionWrapper>
 
-                  {(faq.length > 1 || idx > 0) && (
-                    <RemoveButton onClick={handleRemove(idx)}>
-                      <Trash />
-                    </RemoveButton>
+                      {(faq.length > 1 || idx > 0) && (
+                        <RemoveButton onClick={handleRemove(idx)}>
+                          <Trash />
+                        </RemoveButton>
+                      )}
+
+                      {meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
+                    </Question>
                   )}
-
-                  <ErrorMessage>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.question}</ErrorMessage>
-                </Question>
+                </Field>
 
                 <Separator />
 
-                <AnswerWrapper>
-                  <Label>Answer</Label>
-                  <AnswerInput
-                    placeholder="Answer Description"
-                    value={entry.answer}
-                    onChange={(e) => props.setter(`faq[${idx}].answer`, e.target.value)}
-                  />
+                <Field name={`faq[${idx}].answer`}>
+                  {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    <AnswerWrapper>
+                      <Label>Answer</Label>
+                      <AnswerInput
+                        placeholder="Answer Description"
+                        value={value}
+                        onChange={(e) => onChange(getTarget(name, e.target.value))}
+                      />
 
-                  <ErrorText>{(props.errors.faq as FormikErrors<FAQEntry>[])?.[idx]?.answer}</ErrorText>
-                </AnswerWrapper>
+                      {meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
+                    </AnswerWrapper>
+                  )}
+                </Field>
               </FieldWrapper>
             ))}
 
-            <AddButton onClick={() => push({ id: getId() })}>
+            <AddButton onClick={() => push({ question: '', answer: '' })}>
               <Plus color={theme.launchpad.colors.primary} /> Add FAQ
             </AddButton>
           </>

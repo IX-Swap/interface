@@ -14,6 +14,7 @@ import { DeleteButton } from '../styled'
 import { DirectorInfo } from '../../Vetting/types'
 import { textFilter } from 'utils/input'
 import { text1, text19, text30 } from 'components/LaunchpadMisc/typography'
+import { getSetter } from '../../Information/util'
 
 interface Props {
   directorTitle: string
@@ -27,13 +28,6 @@ interface Props {
 export const DirectorField: React.FC<Props> = (props) => {
   const { directors } = props
   const theme = useTheme()
-
-  const getSetter = (onChange: (e: Partial<React.ChangeEvent<any>>) => void) => {
-    return (name: string, value: any) =>
-      onChange({
-        target: { name, value },
-      })
-  }
 
   return (
     <Column gap="2rem" alignItems="stretch">
