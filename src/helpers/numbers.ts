@@ -158,11 +158,11 @@ export const getFilledPercentageFromMatches = ({
     match => match.status === OTCOrderStatus.SETTLED
   )
   const settledAmount = settledOrders?.reduce(
-    (acc, current) => acc + current.matchedAmount,
+    (acc, current) => +acc + +current.matchedAmount,
     0
   )
   return getRoundedPercentage({
-    amount: row.amount,
+    amount: +row.amount,
     matchedAmount: settledAmount ?? 0
   })
 }
@@ -184,11 +184,11 @@ export const renderTotal = ({
   amount,
   row
 }: {
-  price: number
-  amount: number
+  price: string
+  amount: string
   row: OTCOrder | OpenOTCOrder | ColumnOTCMatch
 }) => {
-  return formatMoney(amount * price, getOrderCurrency(row), false)
+  return formatMoney(+amount * +price, getOrderCurrency(row), false)
 }
 
 export const getOrderCurrency = (
