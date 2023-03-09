@@ -97,7 +97,7 @@ export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
     ? '0%'
     : getRoundedPercentage({
         amount: +row.amount,
-        matchedAmount: matchedAmount
+        matchedAmount
       })
 }
 
