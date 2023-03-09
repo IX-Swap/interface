@@ -935,7 +935,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       .then((res) => res.filter((x) => !!x))
       .then((res) => res as { id: number; file: File }[])
 
-    return {
+    const res = {
       id: payload?.id,
       status: payload?.status as unknown as IssuanceStatus,
       title: payload.title,
@@ -969,7 +969,10 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
           } as TeamMember)
       ),
 
-      social: Object.entries(payload.socialMedia).map(([name, link]) => ({ type: name as SocialMediaType, url: link })),
+      social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
+        type: name as SocialMediaType,
+        url: link,
+      })),
 
       images: payload.files
         .filter((x) => x.type === OfferFileType.image)
@@ -1023,12 +1026,14 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
       tokenAddress: payload.tokenAddress,
       investingTokenAddress: payload.investingTokenAddress,
     }
+    return res
   }, [])
   return {
     data: values,
     loading: issuance.loading || offer.loading,
-    vettingId: issuance.data?.id,
+    vettingId: issuance.data?.vetting?.id,
     error: issuance.error,
+    issuance: issuance.data,
   }
 }
 
@@ -1208,7 +1213,7 @@ export const useSubmitOffer = () => {
   )
 }
 
-export const useEditIssuanceOffer = () => {
+export const useMinimalOfferEdit = () => {
   const uploadFiles = useUploadOfferFiles()
 
   return React.useCallback(async (offerId: string, payload: InformationFormValues, initial: InformationFormValues) => {

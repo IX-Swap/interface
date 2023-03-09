@@ -47,7 +47,7 @@ import {
   investmentStructureOptions,
 } from './util'
 import {
-  useEditIssuanceOffer,
+  useMinimalOfferEdit,
   useLoader,
   useOfferFormInitialValues,
   useSubmitOffer,
@@ -97,7 +97,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   }, [])
 
   const submitOffer = useSubmitOffer()
-  const editOffer = useEditIssuanceOffer()
+  const editOffer = useMinimalOfferEdit()
 
   const isFullEdit = useMemo(() => {
     let res = false
@@ -112,12 +112,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const _submit = React.useCallback(
     async (values: InformationFormValues, draft = false) => {
       loader.start()
-
+      const noOffer = !offer.issuance?.vetting?.offer
       try {
-        if (offer.data && offer.data.id && !isFullEdit) {
-          await editOffer(offer.data.id ?? '', values, offer.data)
-        } else {
+        if (noOffer || isFullEdit) {
           await submitOffer(values, offer.data ?? initialValues, draft, vetting.data?.id, offer.data?.id)
+        } else if (offer.data) {
+          await editOffer(offer.data.id ?? '', values, offer.data)
         }
 
         addPopup({ info: { success: true, summary: 'Offer created successfully' } })
