@@ -743,13 +743,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
               <Separator />
 
-              <UploadDocuments
-                documents={values.additionalDocuments}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                errors={errors}
-                touched={touched}
-              />
+              <UploadDocuments documents={values.additionalDocuments} />
 
               <Separator />
 
@@ -765,17 +759,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
               <Separator />
 
-              <TeamMembersBlock
-                members={values.members}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-                errors={errors}
-                touched={touched}
-              />
+              <TeamMembersBlock members={values.members} />
 
               <Separator />
 
-              <FAQBlock faq={values.faq} setter={setFieldValue} errors={errors} />
+              <FAQBlock faq={values.faq} />
 
               <Row justifyContent="flex-end" gap="1rem" alignItems="center">
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}

@@ -1,3 +1,4 @@
+import React from 'react'
 import { InformationFormValues, OfferTokenType } from './types'
 
 import {
@@ -135,3 +136,10 @@ export const distributionFrequencyOptions = [
   { label: 'N/A', value: OfferDistributionFrequency.notApplicable },
   { label: 'Other', value: OfferDistributionFrequency.other },
 ]
+
+export const getSetter = (onChange: (e: Partial<React.ChangeEvent<any>>) => void) => {
+  return (name: string, value: any) =>
+    onChange({
+      target: { name, value },
+    })
+}

@@ -1,10 +1,9 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import { useDropzone } from 'react-dropzone'
-import { FormikErrors, FieldArray, FormikTouched } from 'formik'
+import { FormikErrors, FieldArray, FormikTouched, Field, FieldProps } from 'formik'
 import { Image, Plus, Trash } from 'react-feather'
 import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg'
-import { useGetFieldArrayId } from 'state/launchpad/hooks'
 import { Column } from 'components/LaunchpadMisc/styled'
 import { InformationFormValues, VideoLink } from '../types'
 import { AddButton, DeleteButton } from '../../shared/styled'
@@ -13,6 +12,7 @@ import { FormGrid } from '../../shared/FormGrid'
 import { IssuanceFile } from '../../types'
 import { TextareaField } from '../../shared/fields/TextareaField'
 import { text19, text20, text21, text48, text60 } from 'components/LaunchpadMisc/typography'
+import { getSetter } from '../util'
 
 interface Props {
   images: IssuanceFile[]
@@ -29,7 +29,6 @@ interface Props {
 export const GalleryBlock: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const getId = useGetFieldArrayId()
   const container = React.useRef<HTMLDivElement>(null)
 
   const onFileSelect = React.useCallback(
@@ -100,29 +99,28 @@ export const GalleryBlock: React.FC<Props> = (props) => {
           {({ push, handleRemove }) => (
             <>
               {videos.map((video, idx) => (
-                <FormField
-                  key={video.id}
-                  label="Link Source"
-                  placeholder="URL"
-                  field={`videos[${idx}].url`}
-                  setter={props.setter}
-                  touch={props.touch}
-                  value={video.url}
-                  error={
-                    ((props.touched.videos?.[idx] as FormikTouched<VideoLink> | undefined)?.url &&
-                      (props.errors.videos?.[idx] as FormikErrors<VideoLink> | undefined)?.url) as string
-                  }
-                  trailing={
-                    (props.videos.length > 1 || idx > 0) && (
-                      <RemoveButton onClick={handleRemove(idx)}>
-                        <TrashIcon />
-                      </RemoveButton>
-                    )
-                  }
-                />
+                <Field name={`videos[${idx}].url`} key={idx}>
+                  {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    <FormField
+                      label="Link Source"
+                      placeholder="URL"
+                      field={name}
+                      setter={getSetter(onChange)}
+                      value={value}
+                      error={meta.error}
+                      trailing={
+                        (props.videos.length > 1 || idx > 0) && (
+                          <RemoveButton onClick={handleRemove(idx)}>
+                            <TrashIcon />
+                          </RemoveButton>
+                        )
+                      }
+                    />
+                  )}
+                </Field>
               ))}
 
-              <AddButton onClick={() => push({ id: getId() })}>
+              <AddButton onClick={() => push({ url: '' })}>
                 <Plus /> Add Video
               </AddButton>
             </>
