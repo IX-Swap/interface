@@ -60,6 +60,7 @@ export const NewIssuanceForm = () => {
     issuance.load(Number(issuanceId))
   }, [issuanceId])
 
+  const approvedVetting = vettingStatus === IssuanceStatus.approved
   return (
     <Wrapper>
       <FormHeader>
@@ -131,7 +132,7 @@ export const NewIssuanceForm = () => {
               </IssuanceFormStep>
             )}
 
-            {vettingStatus === IssuanceStatus.approved && (
+            {approvedVetting && (
               <IssuanceFormStep
                 stepNumber={1}
                 icon={<VettingApprovedIcon />}
@@ -232,12 +233,12 @@ export const NewIssuanceForm = () => {
                 description="All information provided about the new issuance created will be displayed to the investors."
               >
                 <FilledButton
-                  disabled={vettingStatus !== IssuanceStatus.approved}
+                  disabled={!approvedVetting}
                   width="320px"
                   color={theme.launchpad.colors.text.light}
                   background={theme.launchpad.colors.primary}
                   as={DiscreteInternalLink}
-                  to={`/issuance/create/information?id=${issuance.data?.id}`}
+                  to={approvedVetting ? `/issuance/create/information?id=${issuance.data?.id}` : null}
                 >
                   Proceed
                 </FilledButton>
