@@ -114,7 +114,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       loader.start()
 
       try {
-        if (offer.data && !isFullEdit) {
+        if (offer.data && offer.data.id && !isFullEdit) {
           await editOffer(offer.data.id ?? '', values, offer.data)
         } else {
           await submitOffer(values, offer.data ?? initialValues, draft, vetting.data?.id, offer.data?.id)
