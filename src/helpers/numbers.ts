@@ -162,8 +162,8 @@ export const getFilledPercentageFromMatches = ({
     0
   )
   return getRoundedPercentage({
-    amount: row.amount,
-    matchedAmount: (+(settledAmount ?? 0)).toString()
+    amount: +row.amount,
+    matchedAmount: settledAmount ?? 0
   })
 }
 
@@ -171,10 +171,10 @@ export const getRoundedPercentage = ({
   amount,
   matchedAmount
 }: {
-  amount: string
-  matchedAmount: string
+  amount: number
+  matchedAmount: number
 }) => {
-  const percentAmount = (+matchedAmount / +amount) * 100
+  const percentAmount = (matchedAmount / amount) * 100
   return `${Math.round(Number(percentAmount.toFixed(2)))}%`
 }
 

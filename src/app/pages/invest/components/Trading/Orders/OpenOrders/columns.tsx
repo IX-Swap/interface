@@ -91,8 +91,8 @@ export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
     label: 'Status',
     render: (_, row) =>
       getRoundedPercentage({
-        amount: row.parentAmount,
-        matchedAmount: row.matchedAmount ?? 0
+        amount: +row.parentAmount,
+        matchedAmount: +row.matchedAmount ?? 0
       })
   }
 ]
