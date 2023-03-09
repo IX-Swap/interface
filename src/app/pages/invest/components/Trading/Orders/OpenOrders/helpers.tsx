@@ -77,7 +77,7 @@ export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
   if (row.orderType === 'SELL') {
     return getRoundedPercentage({
       amount: row.amount,
-      matchedAmount: row.amount - row.availableAmount ?? 0
+      matchedAmount: (+row.amount - +row.availableAmount ?? 0).toString()
     })
   }
   const statusesWhereToShowFilled = [
@@ -90,14 +90,14 @@ export const renderOpenOrderPercentage = (row: OpenOTCOrder) => {
     .map(matched => matched.matchedAmount)
   const matchedAmount =
     matchedAmounts?.reduce(
-      (previous, currentAmount) => previous + currentAmount,
+      (previous, currentAmount) => +previous + +currentAmount,
       0
     ) ?? 0
   return matchedAmount === 0
     ? '0%'
     : getRoundedPercentage({
         amount: row.amount,
-        matchedAmount
+        matchedAmount: matchedAmount.toString()
       })
 }
 
