@@ -68,7 +68,6 @@ export const OfferWhitelistList = ({
     manageWhitelists.load(offerId, { approveIds: selected }).then(() => {
       stopLoading()
       setSelected([])
-      setPage(1)
       refreshWhitelists()
     })
   }
@@ -78,7 +77,6 @@ export const OfferWhitelistList = ({
     manageWhitelists.load(offerId, { rejectIds: selected }).then(() => {
       stopLoading()
       setSelected([])
-      setPage(1)
       refreshWhitelists()
     })
   }
