@@ -116,6 +116,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
 
   const [showIssuanceDialog, setShowIssuanceDialog] = useState(false)
   const [openPin, setOpenPin] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const toggleNewIssuanceDialog = useCallback(() => {
     setShowIssuanceDialog((state) => !state)
@@ -131,7 +132,9 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
         throw new Error('Issuance with that name already exists')
       }
 
+      setLoading(true)
       const result = await createIssunace(values.name)
+      setLoading(false)
 
       setShowIssuanceDialog(false)
       history.push(`/issuance/create?id=${result.id}`)
@@ -183,7 +186,7 @@ export const IssuanceCreateButton: React.FC<Props> = (props) => {
                 <OutlineButton grow={1} onClick={toggleNewIssuanceDialog}>
                   Cancel
                 </OutlineButton>
-                <FilledButton grow={1} onClick={submitForm}>
+                <FilledButton grow={1} onClick={submitForm} disabled={loading}>
                   Submit
                 </FilledButton>
               </Row>
