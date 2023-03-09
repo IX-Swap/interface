@@ -521,7 +521,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 />
                 <Column gap="1rem">
                   <Row gap="1rem">
-                    <Checkbox checked={values.tokenomicsAgreement} />
+                    <Checkbox checked={values.tokenomicsAgreement ?? false} />
 
                     <TokenAgreementText>
                       I understand and agree that once I submit this form and it is approved, IX Swap will mint and
