@@ -72,14 +72,20 @@ export const PresaleBlock = ({ offer }: Props) => {
         <OfferWhitelistApprove
           offerId={offerId}
           totalItems={data.totalItems}
-          refreshWhitelists={refreshWhitelists}
+          refreshWhitelists={() => {
+            refreshWhitelists()
+            setPage(1)
+          }}
           disabledManage={disabledManage}
         />
       </StyledGridItem>
       <StyledGridItem xs={12} noPadding>
         <OfferWhitelistList
           data={data}
-          refreshWhitelists={refreshWhitelists}
+          refreshWhitelists={() => {
+            refreshWhitelists()
+            setPage(1)
+          }}
           order={order}
           setOrder={setOrder}
           page={page}
