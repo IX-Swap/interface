@@ -62,7 +62,8 @@ export const schema = yup.object().shape({
   shortDescription: yup
     .string()
     .required(REQUIRED)
-    .min(STRING_SMALL, getLongerThanOrEqual('Short Description', STRING_SMALL)),
+    .min(STRING_SMALL, getLongerThanOrEqual('Short Description', STRING_SMALL))
+    .max(150, getHaveAtMost('Short Description', 150)),
 
   longDescription: yup
     .string()
@@ -332,7 +333,7 @@ export const editSchema = yup.object().shape({
     .string()
     .required(REQUIRED)
     .min(STRING_SMALL, getLongerThanOrEqual('Short Description', STRING_SMALL))
-    .max(STRING_BIG, getHaveAtMost('Short Description', STRING_BIG)),
+    .max(150, getHaveAtMost('Short Description', 150)),
   longDescription: yup
     .string()
     .required(REQUIRED)
