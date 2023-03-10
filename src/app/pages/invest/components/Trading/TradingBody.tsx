@@ -7,7 +7,8 @@ import { TradingOrders } from 'app/pages/invest/components/Trading/Orders/Tradin
 import { PlaceOrderSuffix } from 'app/pages/invest/components/Trading/PlaceOrderSuffix'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { useCreateOTCOrder } from 'app/pages/invest/hooks/useCreateOTCOrder'
-import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
+// import { useFeaturedPairNames } from 'app/pages/invest/hooks/useFeaturedPairNames'
+import { useSelectedPairNames } from 'app/pages/invest/hooks/useSelectedPairNames'
 import { useMetamaskConnectionManager } from 'app/pages/invest/hooks/useMetamaskConnectionManager'
 import { AccountState } from 'app/pages/invest/hooks/useMetamaskWalletState'
 import { usePairTokenAddressNetwork } from 'app/pages/invest/hooks/usePairTokenAddressNetwork'
@@ -15,6 +16,7 @@ import { useCryptoBalance } from 'hooks/blockchain/useCryptoBalance'
 import { useActiveWeb3React } from 'hooks/blockchain/web3'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
+import { OtcLiveOrderBook } from '../OtcLiveOrderBook/OtcLiveOrderBook'
 
 export const TradingBody = () => {
   const classes = useStyles()
@@ -26,7 +28,8 @@ export const TradingBody = () => {
     accountState,
     isWhitelisted: { found }
   } = useMetamaskConnectionManager()
-  const { currencyName, tokenName } = useFeaturedPairNames()
+  //   const { currencyName, tokenName } = useFeaturedPairNames()
+  const { currencyName, tokenName } = useSelectedPairNames()
   const { currencyBalance } = useCurrencyBalance(currencyName)
   const [create, { isLoading }] = useCreateOTCOrder()
   const submitForm = async (values: PlaceOrderArgs) => {
@@ -51,14 +54,16 @@ export const TradingBody = () => {
       alignItems={'flex-start'}
       justifyContent='space-between'
       columnSpacing={2}
-      ml={0}
     >
+      <Grid item xs={12} lg={2}>
+        <OtcLiveOrderBook />
+      </Grid>
       <Grid item className={classes.colorGrid} minHeight={325} xs={12} lg={8}>
         <TradingOrders />
       </Grid>
 
       {!isMiniLaptop && (
-        <Grid item container xs={12} lg={4}>
+        <Grid item container xs={12} lg={2}>
           <PlaceOrderForm
             createOrderStatus={createOrderStatus}
             isFetching={isFetching}

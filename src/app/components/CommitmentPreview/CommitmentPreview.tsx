@@ -54,7 +54,7 @@ export const CommitmentPreview: React.FC<CommitmentPreviewProps> = (
       <Grid item container spacing={4}>
         <Grid item xs={12} sm={6} md={4}>
           <LabelledValue
-            label='Digital Security'
+            label='Security Token'
             value={<DSOLink dso={data.dso} />}
           />
         </Grid>

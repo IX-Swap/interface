@@ -14,7 +14,7 @@ export const columns: Array<TableColumn<Closure>> = [
   },
   {
     key: 'dso.tokenName',
-    label: 'Digital Security'
+    label: 'Security Token'
   },
   {
     key: 'dso.capitalStructure',

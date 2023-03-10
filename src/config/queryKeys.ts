@@ -229,7 +229,9 @@ export const tradingQueryKeys = {
   getUnmatchedOrders: (side: OrderType) => `unmatched-orders-${side}`,
   getMatchedOrders: `matched-orders`,
   featuredPair: 'featured-pair',
-  pastOrders: 'past-orders'
+  pastOrders: 'past-orders',
+  market: (pairId?: string) => generateQueryKey('trading-market', pairId),
+  orderBook: (pairId?: string) => generateQueryKey('order-book', pairId)
 }
 
 export const listingsQueryKeys = {

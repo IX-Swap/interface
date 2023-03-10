@@ -5,6 +5,7 @@ import { ButtonProps } from '@mui/material/Button'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { isEmpty } from 'lodash'
 import { useFormContext } from 'react-hook-form'
+import { useLocation } from 'react-router-dom'
 export interface ConditionProps {
   completed: boolean
   active: boolean
@@ -42,6 +43,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
     rawData
   } = props
 
+  const location = useLocation()
   const [save, { isLoading }] = mutation
   const [disabled, setDisabled] = useState(true)
   const { trigger, errors, watch } = useFormContext()
@@ -50,6 +52,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   const c0 = localStorage.getItem('conditions_0')
   const c1 = localStorage.getItem('conditions_1')
   const c2 = localStorage.getItem('conditions_2')
+  const isEdit = location.pathname.includes('/edit')
   const shouldEnableSubmit = (): boolean => {
     if (c0 !== null && c1 !== null && c2 !== null) {
       const cond0: ConditionProps = JSON.parse(c0)
@@ -66,6 +69,7 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
   }
   const isSubmitted = rawData?.status === 'Submitted'
   const isApproved = rawData?.status === 'Approved'
+  //   const isDrafts= rawData?.status === "Draft"
   const values = watch()
   const getButtonText = () => {
     if (isApproved) {
@@ -153,11 +157,11 @@ export const DSOSubmitButton = (props: SubmitButtonProps) => {
           variant='contained'
           color='primary'
           onClick={async () => {
-            if (!disabled) {
+            if (!disabled || isEdit) {
               return await handleSave()
             }
           }}
-          disabled={disabled}
+          disabled={disabled && !isEdit} // draft mode dso button enable
           disableElevation
           fullWidth={fullWidth}
           size={size}

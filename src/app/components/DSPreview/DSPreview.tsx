@@ -17,7 +17,7 @@ export const DSPreview = () => {
   return (
     <Grid container spacing={4}>
       <Grid item xs={4}>
-        <LabelledValue label='Digital Security Name' value={balance.name} />
+        <LabelledValue label='Security Token Name' value={balance.name} />
       </Grid>
 
       <Grid item xs={4}>

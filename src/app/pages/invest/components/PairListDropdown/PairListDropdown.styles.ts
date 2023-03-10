@@ -8,8 +8,10 @@ export default makeStyles(theme => ({
     }
   },
   icon: {
-    marginLeft: theme.spacing(1.5),
-    marginBottom: theme.spacing(-0.5)
+    marginBottom: theme.spacing(-0.5),
+    marginRight: theme.spacing(1),
+    borderRight: '1px solid #DBE2EC',
+    width: '35px'
   },
   path: {
     fill: theme.palette.primary.main

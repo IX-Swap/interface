@@ -10,7 +10,7 @@ export const AuthorizerDSWithdrwalsRouter = () => {
     <Switch>
       <AppRoute
         exact
-        breadcrumb='Digital Security Withdrawals'
+        breadcrumb='Security Token Withdrawals'
         path='/app/authorizer/digital-security-withdrawals/:userId/:dsWithdrawalId/view'
       >
         <DSWithdrawalAuthorization />

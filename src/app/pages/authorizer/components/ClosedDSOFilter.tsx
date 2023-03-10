@@ -24,7 +24,7 @@ export const ClosedDSOsFilter = () => {
       <ClosedDSOSelect
         value={value}
         onChange={handleChange}
-        label={'Closed DSO'}
+        label={'Closed STO'}
       />
     </FormControl>
   )

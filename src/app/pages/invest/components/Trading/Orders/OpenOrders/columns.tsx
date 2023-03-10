@@ -1,7 +1,7 @@
 import { formatDateToMMDDYY } from 'helpers/dates'
 import {
   formatMoney,
-  formatRoundedAmount,
+  //   formatRoundedAmount,
   getOrderCurrency,
   getRoundedPercentage,
   renderTotal
@@ -10,7 +10,7 @@ import { capitalizeFirstLetter } from 'helpers/strings'
 import { renderTicker } from 'helpers/tables'
 import { ColumnOTCMatch, OpenOTCOrder } from 'types/otcOrder'
 import { TableColumn } from 'types/util'
-import { renderOpenOrderPercentage } from './helpers'
+import { renderOpenOrderStatus } from './helpers'
 
 export const columns: Array<TableColumn<OpenOTCOrder>> = [
   {
@@ -37,7 +37,8 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
     key: 'availableAmount',
     label: 'Quantity',
     align: 'center',
-    render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    // render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    render: (_, row) => row?.amount ?? 0
   },
   {
     key: 'amount',
@@ -47,8 +48,8 @@ export const columns: Array<TableColumn<OpenOTCOrder>> = [
   },
   {
     key: '_id',
-    label: 'Filled',
-    render: (_, row) => renderOpenOrderPercentage(row)
+    label: 'Status',
+    render: (_, row) => renderOpenOrderStatus(row)
   }
 ]
 export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
@@ -76,7 +77,8 @@ export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
     key: 'matchedAmount',
     label: 'Quantity',
     align: 'center',
-    render: (_, row) => formatRoundedAmount(row?.matchedAmount ?? 0)
+    // render: (_, row) => formatRoundedAmount(row?.matchedAmount ?? 0)
+    render: (_, row) => row?.matchedAmount ?? 0
   },
   {
     key: 'user',
@@ -86,7 +88,7 @@ export const nestedcolumns: Array<TableColumn<ColumnOTCMatch>> = [
   },
   {
     key: '_id',
-    label: 'Filled',
+    label: 'Status',
     render: (_, row) =>
       getRoundedPercentage({
         amount: row.parentAmount,
@@ -103,7 +105,8 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   {
     key: 'amount',
     label: 'Quantity',
-    render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    // render: (_, row) => formatRoundedAmount(row?.amount ?? 0)
+    render: (_, row) => row?.amount ?? 0
   },
   {
     key: 'orderType',
@@ -123,8 +126,8 @@ export const compactColumns: Array<TableColumn<OpenOTCOrder>> = [
   },
   {
     key: '_id',
-    label: 'Filled',
-    render: (_, row) => renderOpenOrderPercentage(row)
+    label: 'Status',
+    render: (_, row) => renderOpenOrderStatus(row)
   },
   {
     key: 'createdAt',

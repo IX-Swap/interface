@@ -38,7 +38,7 @@ export const MoreOptions = () => {
           className={link}
           variant='body1'
         >
-          View this DSO
+          View this STO
         </AppRouterLink>
 
         <AppRouterLink
@@ -62,7 +62,7 @@ export const MoreOptions = () => {
           className={link}
           variant='body1'
         >
-          View My DSOs
+          View My STOs
         </AppRouterLink>
 
         <AppRouterLink
@@ -72,7 +72,7 @@ export const MoreOptions = () => {
           className={link}
           variant='body1'
         >
-          Create New DSO
+          Create New STO
         </AppRouterLink>
 
         <AppRouterLink
@@ -86,7 +86,7 @@ export const MoreOptions = () => {
           variant='body1'
           className={link}
         >
-          Edit DSO
+          Edit STO
         </AppRouterLink>
       </Grid>
     </Grid>

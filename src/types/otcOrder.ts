@@ -7,7 +7,8 @@ export enum OTCOrderStatus {
   CONFIRMED = 'CONFIRMED', // after the authorizer confirmed the match
   PENDING = 'PENDING',
   SETTLED = 'SETTLED',
-  COMPLETED = 'COMPLETED' //  complete status - tokens sent complete
+  COMPLETED = 'COMPLETED', //  complete status - tokens sent complete
+  REJECTED = 'REJECTED' //  rejected by authorizer
 }
 
 export type OrderType = 'SELL' | 'BUY'
@@ -70,8 +71,8 @@ export interface OTCParticipant {
 
 export interface CreateOTCOrderArgs {
   orderType: 'SELL' | 'BUY'
-  price: number
-  amount: number
+  price: string | number
+  amount: string | number
   ethAddress: string
   pair: string
 }

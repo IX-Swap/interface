@@ -13,7 +13,7 @@ export const optOutRequirements = [
   },
   {
     name: 'digitalSecuritiesIssuance',
-    label: 'Issuance of Digital Securities by the Issuers'
+    label: 'Issuance of Security Tokens by the Issuers'
   },
   {
     name: 'allServices',

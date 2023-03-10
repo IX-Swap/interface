@@ -38,9 +38,12 @@ export const commitmentIssuanceValidationSchema = yup
 
 export const validateOTCOrder = (values: CreateOTCOrderArgs) => {
   let message = ''
-  if (!Number.isInteger(values.amount)) {
-    message = 'Floating point quantity is not allowed'
-  }
+
+  // * Uncomment to disallow decimals in quanity
+  //   if (!Number.isInteger(values.amount)) {
+  //     message = 'Floating point quantity is not allowed'
+  //   }
+
   if (values.amount <= 0 || values.price <= 0) {
     message = 'Quantity and price must be greater than 0'
   }

@@ -20,7 +20,7 @@ export const useListing = () => {
   const getListing = async () => {
     if (location.pathname.includes('OTC')) {
       return await apiService.get<ListingView>(
-        exchangeApiUrl.getOtcListing(_userId, listingId)
+        listingsURL.getOTCListing(_userId, listingId)
       )
     } else {
       return await apiService.get<ListingView>(

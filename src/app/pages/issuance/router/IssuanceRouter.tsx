@@ -27,7 +27,7 @@ export const IssuanceRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Create Digital Security Offering'
+        breadcrumb='Create Security Token Offering'
         exact
         path={IssuanceRoute.create}
       >
@@ -35,7 +35,7 @@ export const IssuanceRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Create Digital Security Offering'
+        breadcrumb='Create Security Token Offering'
         exact
         path={IssuanceRoute.createNew}
       >
@@ -43,7 +43,7 @@ export const IssuanceRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='View Digital Security Offering'
+        breadcrumb='View Security Token Offering'
         exact
         path={IssuanceRoute.view}
       >
@@ -51,7 +51,7 @@ export const IssuanceRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Edit Digital Security Offering'
+        breadcrumb='Edit Security Token Offering'
         exact
         path={IssuanceRoute.edit}
       >
@@ -59,7 +59,7 @@ export const IssuanceRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Preview Digital Security Offering'
+        breadcrumb='Preview Security Token Offering'
         exact
         path={IssuanceRoute.preview}
       >
@@ -77,7 +77,7 @@ export const IssuanceRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='My Digital Security Offerings'
+        breadcrumb='My Security Token Offerings'
         exact
         path={IssuanceRoute.list}
       >

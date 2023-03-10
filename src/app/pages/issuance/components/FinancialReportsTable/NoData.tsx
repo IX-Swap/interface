@@ -26,7 +26,7 @@ export const NoData = () => {
             <Grid item xs={12}>
               <Typography variant='body1'>
                 There is no reports at the moment.
-                {noDSO && ' To create a report it is necessary to have a DSO'}
+                {noDSO && ' To create a report it is necessary to have an STO'}
               </Typography>
             </Grid>
             {noDSO && (
@@ -36,7 +36,7 @@ export const NoData = () => {
                   to={IssuanceRoute.createNew}
                   color='primary'
                 >
-                  Create your first DSO
+                  Create your first STO
                 </Button>
               </Grid>
             )}

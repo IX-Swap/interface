@@ -50,8 +50,8 @@ export const ListingMarketInfo = (props: any) => {
       <Grid item container direction={'column'} spacing={1.5}>
         <Grid item>
           <Typography>
-            Select the currency you would like this Digital Security to be
-            traded against
+            Select the currency you would like this Security Token to be traded
+            against
           </Typography>
         </Grid>
 

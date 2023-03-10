@@ -6,10 +6,11 @@ export const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   container: {
-    backgroundColor:
-      theme.palette.mode === 'light'
-        ? 'rgb(250, 250, 250)'
-        : theme.palette.background.paper,
+    // backgroundColor:
+    //   theme.palette.mode === 'light'
+    //     ? 'rgb(250, 250, 250)'
+    //     : theme.palette.background.paper,
+    backgroundColor: theme?.palette?.backgrounds.default,
     width: '100%',
     display: 'flex',
     justifyContent: 'center',

@@ -36,7 +36,7 @@ export const AuthorizerRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Digital Security Withdrawals'
+        breadcrumb='Security Token Withdrawals'
         path={AuthorizerRoute.dsWithdrawals}
       >
         <AuthorizerDSWithdrwalsRouter />

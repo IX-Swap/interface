@@ -1,15 +1,15 @@
 import makeStyles from '@mui/styles/makeStyles'
 
 export interface Props {
-  type: 'COMPLETED' | 'REJECTED' | 'PENDING'
+  type: 'COMPLETED' | 'Rejected' | 'PENDING'
 }
 
 export const useStyles = makeStyles(theme => {
-  const getColor = (type: 'COMPLETED' | 'REJECTED' | 'PENDING') => {
+  const getColor = (type: 'COMPLETED' | 'Rejected' | 'PENDING') => {
     switch (type) {
       case 'COMPLETED':
         return theme.palette.success.main
-      case 'REJECTED':
+      case 'Rejected':
         return theme.palette.error.dark
       case 'PENDING':
         return theme.palette.warning.main

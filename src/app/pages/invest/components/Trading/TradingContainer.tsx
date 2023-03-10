@@ -1,32 +1,35 @@
-import { Box, Grid, Typography } from '@mui/material'
-import { WideContainer } from 'app/components/WideContainer/WideContainer'
+import { Box, Grid } from '@mui/material'
 import { ShortFinancialSummary } from 'app/pages/invest/components/FinancialSummary/ShortFinancialSummary'
 import { useStyles } from 'app/pages/invest/components/Trading/TradingContainer.styles'
 import { WalletModalContextWrapper } from 'components/WalletModal/WalletModalContextWrapper'
 import React from 'react'
 import { TradingBody } from './TradingBody'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const TradingContainer = () => {
   const classes = useStyles()
+
   return (
     <WalletModalContextWrapper>
-      <WideContainer>
-        <Grid item xs={12}>
-          <Typography variant='h2' sx={{ mb: 3 }}>
-            OTC Trading Market
-          </Typography>
+      <Grid
+        item
+        xs={12}
+        container
+        direction='column'
+        style={{ display: 'table' }}
+      >
+        <Grid item>
+          <PageHeader title='OTC Trading Market' />
         </Grid>
-        <Box>
-          <Box className={classes.contentWrapper}>
-            <Grid item xs={12} className={classes.colorGrid}>
-              <ShortFinancialSummary />
-            </Grid>
-            <Grid item xs={12}>
-              <TradingBody />
-            </Grid>
-          </Box>
+        <Box sx={{ m: 2 }}>
+          <Grid item xs={12} className={classes.colorGrid} mb={2}>
+            <ShortFinancialSummary />
+          </Grid>
+          <Grid item xs={12}>
+            <TradingBody />
+          </Grid>
         </Box>
-      </WideContainer>
+      </Grid>
     </WalletModalContextWrapper>
   )
 }
