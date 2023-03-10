@@ -13,9 +13,8 @@ import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 import { InformationFormValues } from '../Information/types'
 import { ReviewSidebar } from './Sidebar'
 
-import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
-import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { Column, Separator } from 'components/LaunchpadMisc/styled'
+import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { text2, text5, text53 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
@@ -51,7 +50,7 @@ export const OfferReview: React.FC<Props> = (props) => {
     <ReviewModalContainer>
       <ReviewContainer>
         <Sidebar>
-          <ReviewSidebar offer={props.values} onSubmit={props.onClose} onClose={props.onClose} />
+          <ReviewSidebar offer={props.values} onSubmit={props.onSubmit} onClose={props.onClose} />
         </Sidebar>
 
         <Title>
@@ -238,16 +237,6 @@ export const OfferReview: React.FC<Props> = (props) => {
             ]}
           />
         </Container>
-
-        <BottomControls gap="1rem" margin="1rem 0" justifyContent="flex-end">
-          {props.values.status !== IssuanceStatus.approved && (
-            <OutlineButton onClick={() => props.onSubmit(true)}>Save Draft</OutlineButton>
-          )}
-          <OutlineButton onClick={props.onClose}>Back to Form</OutlineButton>
-          {props.values.status !== IssuanceStatus.approved && (
-            <FilledButton onClick={() => props.onSubmit(false)}>Submit</FilledButton>
-          )}
-        </BottomControls>
       </ReviewContainer>
     </ReviewModalContainer>
   )
@@ -268,22 +257,17 @@ const ReviewModalContainer = styled.div`
 const ReviewContainer = styled.div`
   display: grid;
   grid-template-columns: 3fr 3fr 2fr;
-  grid-template-rows: repeat(6, auto);
+  grid-template-rows: repeat(5, auto);
   grid-template-areas:
     'title title title'
     'stages company-information sidebar'
     'total-funding-size presale-size .'
     'terms additional-documents .'
-    'terms contact .'
-    'buttons buttons .';
+    'terms contact .';
 
   gap: 1.25rem;
   max-width: 1180px;
   margin: 3rem auto;
-`
-
-const BottomControls = styled(Row)`
-  grid-area: buttons;
 `
 
 const Title = styled.div`

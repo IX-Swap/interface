@@ -128,7 +128,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
         loader.stop()
       }
     },
-    [vetting.data?.id, offer.data, isFullEdit]
+    [initialValues, vetting.data, offer.data, offer.issuance, isFullEdit]
   )
 
   const saveDraft = React.useCallback((values: InformationFormValues) => _submit(values, true), [_submit])
@@ -256,7 +256,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 <OfferReview
                   values={values}
                   onClose={() => setShowReview(false)}
-                  onSubmit={(draft: boolean) => (draft ? toSubmit() : _submit(values, draft))}
+                  onSubmit={(draft: boolean) => _submit(values, draft)}
                 />
               </Portal>
             )}
