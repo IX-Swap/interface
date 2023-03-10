@@ -154,6 +154,7 @@ export const getFilledPercentageFromMatches = ({
 }: {
   row: OpenOTCOrder
 }) => {
+  console.log(row, 'rowrowrow')
   const settledOrders = row.matches?.filter(
     match => match.status === OTCOrderStatus.SETTLED
   )
