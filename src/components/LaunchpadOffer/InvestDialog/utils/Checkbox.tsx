@@ -9,12 +9,18 @@ interface Props {
 interface BaseProps {
   state: boolean
   toggle: () => void
+  disabled?: boolean
 }
 
-export const BaseCheckbox = ({ toggle, state }: BaseProps) => {
+export const BaseCheckbox = ({ toggle, state, disabled = false }: BaseProps) => {
   const theme = useTheme()
+  const onClick = () => {
+    if (!disabled) {
+      toggle()
+    }
+  }
   return (
-    <ButtonWrapper onClick={toggle}>
+    <ButtonWrapper onClick={onClick}>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect
           width="16"

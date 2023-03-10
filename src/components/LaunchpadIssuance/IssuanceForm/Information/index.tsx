@@ -16,7 +16,7 @@ import { Column, Row, Separator, Spacer, LoaderContainer } from 'components/Laun
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
 import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
-import { Checkbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
+import { BaseCheckbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
 import { FormGrid } from '../shared/FormGrid'
 import { FormField } from '../shared/fields/FormField'
@@ -180,27 +180,36 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   React.useEffect(() => {
     if (!offer.loading && offer.data) {
-      const status = offer.data?.status ?? IssuanceStatus.draft
+      const status = offer.data?.status
 
-      switch (status) {
-        case IssuanceStatus.draft:
-        case IssuanceStatus.changesRequested:
-        case IssuanceStatus.declined:
-          if (props.edit) {
-            history.replace(`/issuance/create/information?id=${issuanceId}`)
-          }
+      if (status) {
+        switch (status) {
+          case IssuanceStatus.draft:
+          case IssuanceStatus.changesRequested:
+          case IssuanceStatus.declined:
+            if (props.edit) {
+              history.replace(`/issuance/create/information?id=${issuanceId}`)
+            }
 
-          break
+            break
 
-        case IssuanceStatus.pendingApproval:
-          if (!props.edit) {
-            history.replace(`/issuance/edit/information?id=${issuanceId}`)
-          }
+          case IssuanceStatus.pendingApproval:
+            if (props.edit && isAdmin) {
+              history.replace(`/issuance/create/information?id=${issuanceId}`)
+            } else if (!isAdmin) {
+              history.replace(`/issuance`)
+            }
 
-          break
+            break
+          default:
+            if (!props.edit) {
+              history.replace(`/issuance/edit/information?id=${issuanceId}`)
+            }
+            break
+        }
       }
     }
-  }, [issuanceId, offer.loading, offer.data])
+  }, [issuanceId, offer.loading, offer.data, isAdmin])
 
   if (offer.loading) {
     return (
@@ -284,7 +293,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 showDraft={!props.edit}
                 onReview={() => setShowReview(true)}
                 onSubmit={toSubmit}
-                submitDisabled={Boolean(Object.keys(errors).length)}
+                submitDisabled={Boolean(Object.keys(errors).length) || !values.tokenomicsAgreement}
                 offerId={offer?.data?.id}
               />
             </FormSideBar>
@@ -380,7 +389,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 />
 
                 <Row gap="1rem" alignItems="center" margin="1rem 0 2rem 0">
-                  <Checkbox checked={values.allowOnlyAccredited} />
+                  <BaseCheckbox
+                    state={Boolean(values.allowOnlyAccredited)}
+                    toggle={() => setFieldValue('allowOnlyAccredited', !values.allowOnlyAccredited)}
+                    disabled={props.edit}
+                  />
 
                   <AccreditedInvestorsLabel>Accredited investors only</AccreditedInvestorsLabel>
                 </Row>
@@ -521,7 +534,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 />
                 <Column gap="1rem">
                   <Row gap="1rem">
-                    <Checkbox checked={values.tokenomicsAgreement ?? false} />
+                    <BaseCheckbox
+                      state={Boolean(values.tokenomicsAgreement)}
+                      toggle={() => setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)}
+                      disabled={props.edit}
+                    />
 
                     <TokenAgreementText>
                       I understand and agree that once I submit this form and it is approved, IX Swap will mint and
@@ -535,7 +552,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               <Separator />
 
               <FormGrid title="Pre-Sale">
-                <PresalveFieldContainer disabled={props.edit}>
+                <PresaleFieldContainer disabled={props.edit}>
                   <PresaleFieldLabel>Do you wish to apply a {'"Pre-Sale"'} stage to this deal?</PresaleFieldLabel>
 
                   <Spacer />
@@ -543,6 +560,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   <PresaleButton
                     isSelected={values.hasPresale === true}
                     onClick={() => setPresale(true, setFieldValue)}
+                    disabled={props.edit}
                   >
                     Yes
                   </PresaleButton>
@@ -550,10 +568,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   <PresaleButton
                     isSelected={values.hasPresale === false}
                     onClick={() => setPresale(false, setFieldValue)}
+                    disabled={props.edit}
                   >
                     No
                   </PresaleButton>
-                </PresalveFieldContainer>
+                </PresaleFieldContainer>
 
                 <FormField
                   disabled={props.edit || !values.hasPresale}
@@ -768,7 +787,10 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
 
                 <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                <FilledButton onClick={toSubmit} disabled={Boolean(Object.keys(errors).length)}>
+                <FilledButton
+                  onClick={toSubmit}
+                  disabled={Boolean(Object.keys(errors).length) || !values.tokenomicsAgreement}
+                >
                   Submit
                 </FilledButton>
               </Row>
@@ -794,7 +816,7 @@ const TokenAgreementText = styled.div`
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
-const PresalveFieldContainer = styled.div<{ disabled?: boolean }>`
+const PresaleFieldContainer = styled.div<{ disabled?: boolean }>`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -835,7 +857,6 @@ const PresaleButton = styled.button<{ isSelected: boolean; disabled?: boolean }>
   ${(props) =>
     props.disabled &&
     `
-    background: ${props.theme.launchpad.colors.foreground};
     cursor: default;
   `}
 `

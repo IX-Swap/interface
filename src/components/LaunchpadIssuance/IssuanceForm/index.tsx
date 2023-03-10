@@ -25,10 +25,12 @@ import { routes } from 'utils/routes'
 import { DiscreteInternalLink } from 'theme'
 import { useQueryParams } from 'hooks/useParams'
 import { text30, text42, text53 } from 'components/LaunchpadMisc/typography'
+import { useRole } from 'state/user/hooks'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
   const history = useHistory()
+  const { isAdmin } = useRole()
 
   const issuance = useGetIssuance()
   const issuances = useGetIssuancePlain()
@@ -330,7 +332,7 @@ export const NewIssuanceForm = () => {
                   borderColor={theme.launchpad.colors.warn + '4d'}
                   width="320px"
                   as={DiscreteInternalLink}
-                  to={`/issuance/edit/information?id=${issuance.data?.id}`}
+                  to={isAdmin ? `/issuance/edit/information?id=${issuance.data?.id}` : null}
                 >
                   Pending approval
                 </OutlineButton>
