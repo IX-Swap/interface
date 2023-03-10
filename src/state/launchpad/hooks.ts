@@ -50,7 +50,6 @@ import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
 import { PaginateResponse } from 'types/pagination'
-import { initialValues } from 'pages/CreatePayoutEvent/mock'
 
 interface OfferPagination {
   page: number
@@ -924,110 +923,115 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
     }
   }, [offer.loading, offer.data])
 
-  const transform = React.useCallback(async (payload: Offer): Promise<InformationFormValues> => {
-    const files = await Promise.all([
-      ...payload.members.map((x) => getFile(x.avatar)),
-      ...payload.files.filter((x) => x.type !== OfferFileType.video).map((x) => getFile(x.file)),
+  const transform = React.useCallback(
+    async (payload: Offer): Promise<InformationFormValues> => {
+      const files = await Promise.all([
+        ...payload.members.map((x) => getFile(x.avatar)),
+        ...payload.files.filter((x) => x.type !== OfferFileType.video).map((x) => getFile(x.file)),
 
-      getFile(payload.cardPicture),
-      getFile(payload.profilePicture),
-    ])
-      .then((res) => res.filter((x) => !!x))
-      .then((res) => res as { id: number; file: File }[])
+        getFile(payload.cardPicture),
+        getFile(payload.profilePicture),
+      ])
+        .then((res) => res.filter((x) => !!x))
+        .then((res) => res as { id: number; file: File }[])
 
-    const res = {
-      id: payload?.id,
-      status: payload?.status as unknown as IssuanceStatus,
-      title: payload.title,
+      const isDraft = offer.data?.status && offer.data.status === OfferStatus.draft
 
-      shortDescription: payload.shortDescription,
-      longDescription: payload.longDescription,
+      const res = {
+        id: payload?.id,
+        status: payload?.status as unknown as IssuanceStatus,
+        title: payload.title,
 
-      cardPicture: files.find((x) => x.id === payload.cardPicture?.id) as IssuanceFile,
-      profilePicture: files.find((x) => x.id === payload.profilePicture?.id) as IssuanceFile,
+        shortDescription: payload.shortDescription,
+        longDescription: payload.longDescription,
 
-      allowOnlyAccredited: payload.allowOnlyAccredited,
-      tokenomicsAgreement: payload.tokenomicsAgreement,
+        cardPicture: files.find((x) => x.id === payload.cardPicture?.id) as IssuanceFile,
+        profilePicture: files.find((x) => x.id === payload.profilePicture?.id) as IssuanceFile,
 
-      country: payload.country,
-      email: payload.contactUsEmail,
-      website: payload.issuerWebsite,
-      whitepaper: payload.whitepaperUrl,
+        allowOnlyAccredited: payload.allowOnlyAccredited,
+        tokenomicsAgreement: !isDraft,
 
-      hardCap: payload.hardCap,
-      softCap: payload.softCap,
+        country: payload.country,
+        email: payload.contactUsEmail,
+        website: payload.issuerWebsite,
+        whitepaper: payload.whitepaperUrl,
 
-      faq: payload.faq,
-      members: payload.members.map(
-        (member) =>
-          ({
-            id: member.id,
-            name: member.name,
-            role: member.title,
-            about: member.description,
-            photo: files.find((x) => x.id === member.avatar?.id),
-          } as TeamMember)
-      ),
+        hardCap: payload.hardCap,
+        softCap: payload.softCap,
 
-      social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
-        type: name as SocialMediaType,
-        url: link,
-      })),
+        faq: payload.faq,
+        members: payload.members.map(
+          (member) =>
+            ({
+              id: member.id,
+              name: member.name,
+              role: member.title,
+              about: member.description,
+              photo: files.find((x) => x.id === member.avatar?.id),
+            } as TeamMember)
+        ),
 
-      images: payload.files
-        .filter((x) => x.type === OfferFileType.image)
-        .map((image) => files.find((x) => x.id === image.file?.id) as IssuanceFile),
+        social: Object.entries(payload.socialMedia || {}).map(([name, link]) => ({
+          type: name as SocialMediaType,
+          url: link,
+        })),
 
-      videos: payload.files
-        .filter((x) => x.type === OfferFileType.video)
-        .map((video) => ({ url: video.videoUrl, id: video.id } as VideoLink)),
+        images: payload.files
+          .filter((x) => x.type === OfferFileType.image)
+          .map((image) => files.find((x) => x.id === image.file?.id) as IssuanceFile),
 
-      additionalDocuments: payload.files
-        .filter((x) => x.type === OfferFileType.document)
-        .map((document) => {
-          const file = files.find((x) => x.id === document.file?.id)
+        videos: payload.files
+          .filter((x) => x.type === OfferFileType.video)
+          .map((video) => ({ url: video.videoUrl, id: video.id } as VideoLink)),
 
-          return { name: file?.file.name, file: file } as AdditionalDocument
-        }),
+        additionalDocuments: payload.files
+          .filter((x) => x.type === OfferFileType.document)
+          .map((document) => {
+            const file = files.find((x) => x.id === document.file?.id)
 
-      hasPresale: payload.hasPresale,
-      presaleAlocated: payload.presaleAlocated,
-      presaleMaxInvestment: payload.presaleMaxInvestment,
-      presaleMinInvestment: payload.presaleMinInvestment,
+            return { name: file?.file.name, file: file } as AdditionalDocument
+          }),
 
-      industry: payload.industry,
-      investmentType: payload.investmentType,
-      issuerIdentificationNumber: payload.issuerIdentificationNumber,
-      maxInvestment: payload.maxInvestment,
-      minInvestment: payload.minInvestment,
+        hasPresale: payload.hasPresale,
+        presaleAlocated: payload.presaleAlocated,
+        presaleMaxInvestment: payload.presaleMaxInvestment,
+        presaleMinInvestment: payload.presaleMinInvestment,
 
-      changesRequested: payload.changesRequested,
-      reasonRequested: payload.reasonRequested,
+        industry: payload.industry,
+        investmentType: payload.investmentType,
+        issuerIdentificationNumber: payload.issuerIdentificationNumber,
+        maxInvestment: payload.maxInvestment,
+        minInvestment: payload.minInvestment,
 
-      terms: {
-        distributionFrequency: payload.terms.distributionFrequency ?? '',
-        dividentYield: payload.terms.dividentYield ?? '',
-        grossIrr: payload.terms.grossIrr ?? '',
-        investmentPeriod: String(payload.terms.investmentPeriod) ?? '',
-        investmentStructure: payload.terms.investmentStructure ?? '',
-      },
+        changesRequested: payload.changesRequested,
+        reasonRequested: payload.reasonRequested,
 
-      network: payload.network,
+        terms: {
+          distributionFrequency: payload.terms.distributionFrequency ?? '',
+          dividentYield: payload.terms.dividentYield ?? '',
+          grossIrr: payload.terms.grossIrr ?? '',
+          investmentPeriod: String(payload.terms.investmentPeriod) ?? '',
+          investmentStructure: payload.terms.investmentStructure ?? '',
+        },
 
-      timeframe: payload.timeframe,
-      tokenName: payload.tokenName ?? '',
-      decimals: Number(payload.decimals),
-      trusteeAddress: payload.trusteeAddress,
-      tokenPrice: Number(payload.tokenPrice),
-      tokenStandart: payload.tokenStandart,
-      // mapping: tokenTicker, tokenType. server to frontend fields
-      tokenTicker: payload.tokenSymbol,
-      tokenType: payload.investingTokenSymbol as OfferTokenType,
-      tokenAddress: payload.tokenAddress,
-      investingTokenAddress: payload.investingTokenAddress,
-    }
-    return res
-  }, [])
+        network: payload.network,
+
+        timeframe: payload.timeframe,
+        tokenName: payload.tokenName ?? '',
+        decimals: Number(payload.decimals),
+        trusteeAddress: payload.trusteeAddress,
+        tokenPrice: Number(payload.tokenPrice),
+        tokenStandart: payload.tokenStandart,
+        // mapping: tokenTicker, tokenType. server to frontend fields
+        tokenTicker: payload.tokenSymbol,
+        tokenType: payload.investingTokenSymbol as OfferTokenType,
+        tokenAddress: payload.tokenAddress,
+        investingTokenAddress: payload.investingTokenAddress,
+      }
+      return res
+    },
+    [offer.data?.status]
+  )
   return {
     data: values,
     loading: issuance.loading || offer.loading,

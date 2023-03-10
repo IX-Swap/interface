@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { Column } from 'components/LaunchpadMisc/styled'
 import { InformationFormValues } from '../Information/types'
@@ -12,14 +12,17 @@ interface Props {
 }
 
 export const ReviewSidebar: React.FC<Props> = (props) => {
+  const { status } = props.offer
+  const canDraft = useMemo(
+    () => status && [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(status),
+    [status]
+  )
   return (
     <Column gap="0.25rem">
       <Column gap="0.5rem" margin="1rem 0">
-        {props.offer.status !== IssuanceStatus.approved && (
-          <OutlineButton onClick={() => props.onSubmit(true)}>Save Draft</OutlineButton>
-        )}
+        {canDraft && <OutlineButton onClick={() => props.onSubmit(true)}>Save Draft</OutlineButton>}
         <OutlineButton onClick={props.onClose}>Back to Form</OutlineButton>
-        {props.offer.status !== IssuanceStatus.approved && (
+        {status !== IssuanceStatus.approved && (
           <FilledButton onClick={() => props.onSubmit(false)}>Submit</FilledButton>
         )}
       </Column>
