@@ -31,7 +31,7 @@ export const FilledButton = styled(BaseButton)<{ background?: string; color?: st
     props.disabled &&
     `
     background: ${props.theme.launchpad.colors.disabled};
-    cursor: default;
+    cursor: not-allowed;
   `}
 `
 
@@ -46,4 +46,10 @@ export const OutlineButton = styled(BaseButton)<{
   font-family: ${(props) => props.theme.launchpad.font};
   ${(props) => props.background && `background: ${props.background}`};
   ${(props) => props.borderType && `padding: 0 0.75rem;`}
+  ${(props) =>
+    props.disabled &&
+    `
+    cursor: not-allowed;
+    opacity: 0.5;
+  `}
 `
