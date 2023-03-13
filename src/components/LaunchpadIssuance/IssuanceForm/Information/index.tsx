@@ -211,12 +211,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     }
   }, [issuanceId, offer.loading, offer.data, isAdmin])
 
-  const reviewDisabled = useMemo(() => {
+  const formIsLoading = useMemo(() => {
     const exists = Boolean(offer.issuance?.vetting?.offer)
     return exists ? !offer.data?.id : false
   }, [offer])
 
-  if (offer.loading) {
+  if (offer.loading || formIsLoading) {
     return (
       <LoaderContainer width="100vw" height="100vh">
         <Loader />
@@ -299,7 +299,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 onReview={() => setShowReview(true)}
                 onSubmit={toSubmit}
                 submitDisabled={Boolean(Object.keys(errors).length) || !values.tokenomicsAgreement}
-                reviewDisabled={reviewDisabled}
+                reviewDisabled={formIsLoading}
                 offerId={offer?.data?.id}
               />
             </FormSideBar>
