@@ -4,11 +4,13 @@ import styled from 'styled-components'
 import { ReactComponent as ImageIcon } from 'assets/launchpad/svg/image-icon.svg'
 
 import { Column, ErrorText } from 'components/LaunchpadMisc/styled'
-import { useDropzone } from 'react-dropzone'
+import { FileRejection, useDropzone } from 'react-dropzone'
 
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 import { DeleteButton } from '../styled'
 import { text37, text38, text39 } from 'components/LaunchpadMisc/typography'
+import { useShowError } from 'state/application/hooks'
+import { imageTypes, MBinBytes } from '../constants'
 
 interface Props {
   label: string
@@ -24,6 +26,7 @@ interface Props {
 }
 
 export const ImageField: React.FC<Props> = (props) => {
+  const showError = useShowError()
   const onFileSelect = React.useCallback(
     (files: File[]) => {
       if (files.length === 1) {
@@ -51,7 +54,18 @@ export const ImageField: React.FC<Props> = (props) => {
     input.current?.click()
   }, [input.current])
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: onFileSelect,
+    multiple: false,
+    accept: imageTypes,
+    maxSize: 10 * MBinBytes,
+    onDropRejected: (fileRejections: FileRejection[]) => {
+      const error = fileRejections[0]?.errors[0]?.message
+      if (error) {
+        showError(error)
+      }
+    },
+  })
 
   const url = React.useMemo(() => props.image && URL.createObjectURL(props.image), [props.image])
 

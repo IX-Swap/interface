@@ -56,6 +56,7 @@ export const UploadDocuments: React.FC<Props> = ({ documents }) => {
                       setter={getSetter(onChange)}
                       value={value}
                       error={meta.error}
+                      isDocument
                     />
                   )}
                 </Field>

@@ -6,9 +6,11 @@ import { Paperclip } from 'react-feather'
 import { ReactComponent as CancelIcon } from 'assets/launchpad/svg/cancel-vector.svg'
 import { Column, ErrorText, Row, Spacer } from 'components/LaunchpadMisc/styled'
 import { FormFieldWrapper, OptionalLabel } from '../styled'
-import { useDropzone } from 'react-dropzone'
+import { FileRejection, useDropzone } from 'react-dropzone'
 import { IssuanceFile } from '../../types'
 import { text19, text30 } from 'components/LaunchpadMisc/typography'
+import { useShowError } from 'state/application/hooks'
+import { documentTypes, imageTypes, MBinBytes, photoTypes } from '../constants'
 
 interface Props {
   label?: React.ReactNode
@@ -29,10 +31,14 @@ interface Props {
   field: string
   setter: (field: string, value: any) => void
   touch?: (field: string, touched: boolean) => void
+  isImage?: boolean
+  isPhoto?: boolean
+  isDocument?: boolean
 }
 
 export const FileField: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const showError = useShowError()
 
   const input = React.useRef<HTMLInputElement>(null)
 
@@ -65,7 +71,28 @@ export const FileField: React.FC<Props> = (props) => {
     setValue(props.value?.file)
   }, [props.value])
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop: onFileSelect, multiple: false })
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop: onFileSelect,
+    multiple: false,
+    onDropRejected: (fileRejections: FileRejection[]) => {
+      const error = fileRejections[0]?.errors[0]?.message
+      if (error) {
+        showError(error)
+      }
+    },
+    ...(props.isPhoto && {
+      accept: photoTypes,
+      maxSize: 10 * MBinBytes,
+    }),
+    ...(props.isImage && {
+      accept: imageTypes,
+      maxSize: 10 * MBinBytes,
+    }),
+    ...(props.isDocument && {
+      accept: documentTypes,
+      maxSize: 5 * MBinBytes,
+    }),
+  })
 
   return (
     <FormFieldWrapper gap="1rem" span={props.span} error={props.error}>

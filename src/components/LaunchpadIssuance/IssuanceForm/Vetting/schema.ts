@@ -8,14 +8,14 @@ const limitedSizeFileSchema = fileSchema.test('fileSize', 'File is too large', (
   return value[0].size <= 5 * 1024 * 1024
 })
 
-const requriedFileSchema = limitedSizeFileSchema.required('File required')
+const requiredFileSchema = limitedSizeFileSchema.required('File required')
 
 const directorSchema = yup.array(
   yup.object().shape({
     fullName: yup.string().required('Full name required').min(2, 'Full name should be at least 2 characters long'),
 
-    proofOfIdentity: requriedFileSchema,
-    proofOfAddress: requriedFileSchema,
+    proofOfIdentity: requiredFileSchema,
+    proofOfAddress: requiredFileSchema,
   })
 )
 
@@ -38,19 +38,19 @@ export const schema = yup.object().shape({
     .min(10, 'Description should be at least 10 characters long'),
 
   document: yup.object().shape({
-    pitchDeck: requriedFileSchema,
+    pitchDeck: requiredFileSchema,
     fundingDocuments: yup.array(fileSchema),
 
-    certificateOfIncorporation: requriedFileSchema,
+    certificateOfIncorporation: requiredFileSchema,
     certificateOfIncumbency: limitedSizeFileSchema,
 
-    shareDirectorRegistry: requriedFileSchema,
+    shareDirectorRegistry: requiredFileSchema,
     auditedFinancials: limitedSizeFileSchema,
 
-    memorandumArticle: requriedFileSchema,
-    ownershipStructure: requriedFileSchema,
+    memorandumArticle: requiredFileSchema,
+    ownershipStructure: requiredFileSchema,
 
-    resolutionAuthorizedSignatory: requriedFileSchema,
+    resolutionAuthorizedSignatory: requiredFileSchema,
   }),
 
   beneficialOwners: directorSchema,

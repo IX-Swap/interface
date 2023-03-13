@@ -44,6 +44,7 @@ export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
                         optional
                         span={2}
                         showLabelInside
+                        isPhoto
                       />
                     )}
                   </Field>

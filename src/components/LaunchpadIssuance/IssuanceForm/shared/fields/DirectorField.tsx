@@ -74,6 +74,7 @@ export const DirectorField: React.FC<Props> = (props) => {
                         disabled={props.disabled}
                         value={value}
                         error={meta.touched ? meta.error : ''}
+                        isPhoto
                       />
                     )}
                   </Field>
@@ -87,6 +88,7 @@ export const DirectorField: React.FC<Props> = (props) => {
                         disabled={props.disabled}
                         value={value}
                         error={meta.touched ? meta.error : ''}
+                        isPhoto
                       />
                     )}
                   </Field>
