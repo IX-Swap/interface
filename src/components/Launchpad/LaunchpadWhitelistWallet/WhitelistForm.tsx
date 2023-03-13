@@ -1,18 +1,18 @@
 import React from 'react'
+import { Formik, FormikProps } from 'formik'
+import { Plus } from 'react-feather'
+import { Box } from 'rebass'
+import { useTheme } from 'styled-components'
 
 import { ShortFormBody } from 'components/LaunchpadIssuance/IssuanceForm/shared/styled'
 import { IssuanceTextField } from 'components/LaunchpadIssuance/utils/TextField'
 import { OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { Centered, ErrorText, Row } from 'components/LaunchpadMisc/styled'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { Formik, FormikProps } from 'formik'
-import { Plus } from 'react-feather'
-import { Box } from 'rebass'
 import { useAppSelector } from 'state/hooks'
 import { useWhitelistWallet } from 'state/issuance/hooks'
 import { initialValues, placeholders } from './constants'
 import { schema } from './validationSchema'
-import { useTheme } from 'styled-components'
 
 export interface WhitelistWalletFormValues {
   walletAddress: string

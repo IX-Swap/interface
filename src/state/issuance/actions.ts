@@ -34,3 +34,4 @@ export const deleteWhitelistedWallet: Readonly<{
 }
 
 export const setFilterValue = createAction<{ filter?: WhitelistFilter }>('issuance/setFilterValue')
+export const resetWhitelistWalletErrors = createAction('issuance/resetWhitelistWalletErrors')
