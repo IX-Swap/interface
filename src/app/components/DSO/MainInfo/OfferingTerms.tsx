@@ -16,6 +16,7 @@ export const OfferingTerms = ({ dso }: OfferingTermsProps) => {
   const interestRate =
     dso.interestRate !== undefined ? `${dso.interestRate}%` : undefined
   const grossIRR = dso.grossIRR !== undefined ? `${dso.grossIRR}%` : undefined
+  const leverage = dso.leverage !== undefined ? `${dso.leverage}%` : undefined
 
   const equityMultiple =
     dso.equityMultiple !== undefined ? `${dso.equityMultiple}%` : undefined
@@ -45,7 +46,7 @@ export const OfferingTerms = ({ dso }: OfferingTermsProps) => {
         <Info label='Gross IRR' value={grossIRR} />
       </Grid>
       <Grid item xs={12}>
-        <Info label='Leverage' value={dso.leverage} />
+        <Info label='Leverage' value={leverage} />
       </Grid>
       <Grid item xs={12}>
         <Info label='Equity Multiple' value={equityMultiple} />
