@@ -1,7 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { WhitelistFilter, WhiteListType } from 'services/types'
 import { getDefaultPaginatedResponse, PaginateResponse } from 'types/pagination'
-import { deleteWhitelistedWallet, getWhitelistedWallets, saveWhitelistedWallet, setFilterValue } from './actions'
+import {
+  deleteWhitelistedWallet,
+  getWhitelistedWallets,
+  resetWhitelistWalletErrors,
+  saveWhitelistedWallet,
+  setFilterValue,
+} from './actions'
 import { WhitelistWallet } from './types'
 
 const defaultFilter = {
@@ -39,6 +45,7 @@ export default createReducer<WhitelistWalletStatusState>(initialState, (builder)
     })
     .addCase(getWhitelistedWallets.fulfilled, (state, { payload }) => {
       state.loadingGet = false
+      state.getError = null
       state.whitelisted = payload.data
     })
     .addCase(getWhitelistedWallets.rejected, (state, { payload: { errorMessage } }) => {
@@ -52,6 +59,7 @@ export default createReducer<WhitelistWalletStatusState>(initialState, (builder)
     })
     .addCase(saveWhitelistedWallet.fulfilled, (state) => {
       state.loadingSave = false
+      state.saveError = null
     })
     .addCase(saveWhitelistedWallet.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingSave = false
@@ -73,5 +81,9 @@ export default createReducer<WhitelistWalletStatusState>(initialState, (builder)
         state.filter = defaultFilter
       }
       state.filter = { ...state.filter, ...payload.filter }
+    })
+    .addCase(resetWhitelistWalletErrors, (state) => {
+      state.getError = null
+      state.saveError = null
     })
 )

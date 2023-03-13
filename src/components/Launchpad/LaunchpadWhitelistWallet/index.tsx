@@ -6,7 +6,7 @@ import { ErrorText, Separator } from 'components/LaunchpadMisc/styled'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
 import { useAppSelector } from 'state/hooks'
-import { setFilterValue } from 'state/issuance/actions'
+import { resetWhitelistWalletErrors, setFilterValue } from 'state/issuance/actions'
 import { useDeleteWhitelisted, useGetWhitelisted } from 'state/issuance/hooks'
 import { tabs } from './constants'
 import { DialogWrapper, FilterContainer, Tab, Tabs } from './styled'
@@ -25,7 +25,10 @@ export interface WhitelistWalletFormValues {
   fullName: string
 }
 export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: LaunchpadWhitelistWalletProps) => {
-  const toggleDialog = React.useCallback(() => setOpen((state: boolean) => !state), [])
+  const onCloseDialog = () => {
+    setOpen(false)
+    dispatch(resetWhitelistWalletErrors())
+  }
 
   const getWhitelistedWallets = useGetWhitelisted()
   const [isConfirmOpen, setIsConfirmOpen] = useState(false)
@@ -45,7 +48,9 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
     },
     [offerId]
   )
-  const onClose = () => setIsConfirmOpen(false)
+  const onClose = () => {
+    setIsConfirmOpen(false)
+  }
 
   const [walletToDelete, setWalletToDelete] = useState('')
   const onAction = (walletAddress: string) => {
@@ -59,7 +64,7 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
 
   const [activeTab, setActiveTab] = useState(0)
   return (
-    <IssuanceDialog show={isOpen} title="Whitelist Wallet" onClose={toggleDialog} width="800px">
+    <IssuanceDialog show={isOpen} title="Whitelist Wallet" onClose={onCloseDialog} width="800px">
       <DialogWrapper>
         <WhitelistForm offerId={offerId} onSuccess={onSuccessCreate} />
         <Separator marginTop="1.25rem" marginBottom="1.5rem" />
