@@ -237,6 +237,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 disabled={view}
                 value={values.document.pitchDeck}
                 error={errors.document?.pitchDeck as string}
+                isImage
               />
 
               <FieldArray name="fundingDocuments">
@@ -271,6 +272,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                                   </DeleteButton>
                                 )
                               }
+                              isDocument
                             />
                           )}
                         </Field>
@@ -303,6 +305,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 value={values.document.certificateOfIncorporation}
                 error={errors.document?.certificateOfIncorporation as string}
                 setter={setFieldValue}
+                isDocument
               />
               <FileField
                 optional
@@ -313,6 +316,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 value={values.document.certificateOfIncumbency}
                 error={errors.document?.certificateOfIncumbency as string}
                 setter={setFieldValue}
+                isDocument
               />
 
               <FileField
@@ -323,6 +327,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 value={values.document.shareDirectorRegistry}
                 error={errors.document?.shareDirectorRegistry as string}
                 setter={setFieldValue}
+                isDocument
               />
               <FileField
                 optional
@@ -333,6 +338,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 value={values.document.auditedFinancials}
                 error={errors.document?.auditedFinancials as string}
                 setter={setFieldValue}
+                isDocument
               />
 
               <FileField
@@ -343,6 +349,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 value={values.document.memorandumArticle}
                 error={errors.document?.memorandumArticle as string}
                 setter={setFieldValue}
+                isDocument
               />
               <FileField
                 label="Ownership Structure"
@@ -352,6 +359,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 error={errors.document?.ownershipStructure as string}
                 disabled={view}
                 setter={setFieldValue}
+                isDocument
               />
 
               <FileField
@@ -362,6 +370,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 error={errors.document?.resolutionAuthorizedSignatory as string}
                 disabled={view}
                 setter={setFieldValue}
+                isDocument
               />
             </FilesBlock>
 

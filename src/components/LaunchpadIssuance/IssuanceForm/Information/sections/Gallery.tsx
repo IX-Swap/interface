@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { useDropzone } from 'react-dropzone'
+import { FileRejection, useDropzone } from 'react-dropzone'
 import { FormikErrors, FieldArray, FormikTouched, Field, FieldProps } from 'formik'
 import { Image, Plus, Trash } from 'react-feather'
 import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg'
@@ -13,6 +13,8 @@ import { IssuanceFile } from '../../types'
 import { TextareaField } from '../../shared/fields/TextareaField'
 import { text19, text20, text21, text48, text60 } from 'components/LaunchpadMisc/typography'
 import { getSetter } from '../util'
+import { useShowError } from 'state/application/hooks'
+import { imageTypes, MBinBytes } from '../../shared/constants'
 
 interface Props {
   images: IssuanceFile[]
@@ -28,6 +30,7 @@ interface Props {
 
 export const GalleryBlock: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const showError = useShowError()
 
   const container = React.useRef<HTMLDivElement>(null)
 
@@ -65,6 +68,17 @@ export const GalleryBlock: React.FC<Props> = (props) => {
   const { getRootProps, getInputProps } = useDropzone({
     multiple: true,
     onDrop: onFileSelect,
+    accept: imageTypes,
+    maxSize: 10 * MBinBytes,
+    onDropRejected: (fileRejections: FileRejection[]) => {
+      fileRejections.forEach((rj) => {
+        rj.errors.forEach((err) => {
+          if (err.message) {
+            showError(err.message)
+          }
+        })
+      })
+    },
   })
 
   return (
