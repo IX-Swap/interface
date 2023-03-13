@@ -15,6 +15,7 @@ interface IssuanceButtoonsProps {
   onReview: () => void
   onSubmit: () => void
   submitDisabled: boolean
+  reviewDisabled: boolean
   offerId?: string
 }
 
@@ -24,6 +25,7 @@ export const IssuanceActionButtons = ({
   onReview,
   onSubmit,
   submitDisabled,
+  reviewDisabled,
   offerId,
 }: IssuanceButtoonsProps) => {
   const { isAdmin } = useRole()
@@ -130,7 +132,9 @@ export const IssuanceActionButtons = ({
       <FormSubmitContainer>
         {showDraft && <OutlineButton onClick={onSaveDraft}>Save Draft</OutlineButton>}
 
-        <OutlineButton onClick={onReview}>Review</OutlineButton>
+        <OutlineButton onClick={onReview} disabled={reviewDisabled}>
+          Review
+        </OutlineButton>
         <FilledButton onClick={onSubmit} disabled={submitDisabled}>
           Submit
         </FilledButton>
