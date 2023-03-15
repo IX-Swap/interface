@@ -26,7 +26,7 @@ export const NotificationGoToItem = (props: NotificationGoToItemProps) => {
   if (
     data.feature === AppFeature.Deposits ||
     data.feature === AppFeature.Withdrawals ||
-    data.feature === AppFeature.DigitalSecurityWithdrawals ||
+    data.feature === AppFeature.SecurityTokenWithdrawals ||
     data.feature === AppFeature.Authentication ||
     (data?.service?.toUpperCase() === 'EXCHANGE' &&
       data?.subject?.toUpperCase() === 'ORDER CREATED')

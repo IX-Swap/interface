@@ -11,7 +11,7 @@ export const AuthorizerWithdrawalAddressesRouter = () => {
       <AppRoute
         exact
         breadcrumb='Blockchain Address Details'
-        path='/app/authorizer/withdrawal-addresses/:userId/:addressId/view'
+        path='/app/authorizer/blockchain-addresses/:userId/:addressId/view'
       >
         <WithdrawalAddressAuthorization />
       </AppRoute>

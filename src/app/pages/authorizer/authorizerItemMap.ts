@@ -21,7 +21,7 @@ export const authorizerItemMap: Record<AuthorizerCategory, AuthorizerMapItem> =
       uri: '/issuance/closure/list',
       listRoute: AuthorizerRoute.dealClosure
     },
-    [AppFeature.DigitalSecurityWithdrawals]: {
+    [AppFeature.SecurityTokenWithdrawals]: {
       uri: '/accounts/security/withdrawals',
       listRoute: AuthorizerRoute.dsWithdrawals
     },

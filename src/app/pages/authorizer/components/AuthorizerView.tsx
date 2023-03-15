@@ -27,7 +27,7 @@ export interface AuthorizerViewProps<T> {
 
 const transactionalCategories = [
   AuthorizerCategory.CashWithdrawals,
-  AuthorizerCategory.DigitalSecurityWithdrawals,
+  AuthorizerCategory.SecurityTokenWithdrawals,
   AuthorizerCategory.Commitments,
   AuthorizerCategory.Offerings,
   AuthorizerCategory.WithdrawalAddresses
