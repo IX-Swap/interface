@@ -7,7 +7,7 @@ const categoryMap = {
   [AuthorizerCategory.Commitments]: '/issuance/commitments/list',
   [AuthorizerCategory.Corporates]: '/identity/corporates/list',
   [AuthorizerCategory.DealClosure]: '/issuance/closure/list',
-  [AuthorizerCategory.DigitalSecurityWithdrawals]:
+  [AuthorizerCategory.SecurityTokenWithdrawals]:
     '/accounts/security/withdrawals',
   [AuthorizerCategory.Individuals]: '/identity/individuals/list',
   [AuthorizerCategory.IssuanceDetails]: '/identity/issuance-detail/list',

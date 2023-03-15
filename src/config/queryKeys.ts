@@ -59,7 +59,7 @@ export const authorizerQueryKeys = {
   [AppFeature.Commitments]: 'issuance-commitments-list',
   [AppFeature.Corporates]: 'identity-corporates-list',
   [AppFeature.Individuals]: 'identity-individuals-list',
-  [AppFeature.DigitalSecurityWithdrawals]: 'accounts-security-withdrawals',
+  [AppFeature.SecurityTokenWithdrawals]: 'accounts-security-withdrawals',
   [AppFeature.Offerings]: 'issuance-dso-list',
   authorizerFilter: 'authorizer-filter',
   getBankList: 'authorizer-banks-list',

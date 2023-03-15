@@ -46,7 +46,7 @@ export const DSWithdrawalAuthorization = () => {
     <AuthorizerView
       title={dsWithdrawal._id}
       data={dsWithdrawal}
-      feature={AppFeature.DigitalSecurityWithdrawals}
+      feature={AppFeature.SecurityTokenWithdrawals}
     >
       <DSWithdrawalPreview data={dsWithdrawal} />
     </AuthorizerView>
