@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useStyles } from '../FormStepper/FormStepper.styles'
 import { Stepper } from 'ui/Stepper/Stepper'
-import { Grid, Paper, Step } from '@mui/material'
+import { Grid, Paper, Step, Box } from '@mui/material'
 import { TwoFANotice } from '../FormStepper/TwoFANotice'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { SaveDraftButton } from './DSODraftButton'
@@ -184,110 +184,112 @@ export const DSOStepperProgress = (props: DSOStepperProgressProps) => {
   }
 
   return (
-    <Grid item container className={classes.rightBlock}>
-      <Grid item className={classes.stepperBlock}>
-        <Paper className={classes.stepperBlockWrapper}>
-          <Stepper
-            nonLinear={nonLinear}
-            orientation={matches ? 'horizontal' : 'vertical'}
-            activeStep={activeStep}
-            title={matches ? formTitle : 'Progress'}
-            stepInfo={{
-              label: steps[activeStep].label,
-              activeStep: activeStep + 1,
-              totalSteps: steps.length
-            }}
-            actions={
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <DSOSubmitButton
-                    rawData={rawData}
-                    mainConditions={mainConditions}
-                    setStepValues={setStepValues}
-                    stepValues={stepValues}
-                    activeStep={activeStep}
-                    removeComplete={removeComplete}
-                    mutation={submitMutation}
-                    data={getSubmitDSOPayload(data)}
-                    customSchema={dsoFormBaseValidationSchema}
-                    step={steps[steps.length - 1]}
-                    fullWidth
-                    size='medium'
-                    submitText={submitText}
-                    completed={completed}
-                  />
+    <Box position='sticky' top={90}>
+      <Grid item container className={classes.rightBlock}>
+        <Grid item className={classes.stepperBlock}>
+          <Paper className={classes.stepperBlockWrapper}>
+            <Stepper
+              nonLinear={nonLinear}
+              orientation={matches ? 'horizontal' : 'vertical'}
+              activeStep={activeStep}
+              title={matches ? formTitle : 'Progress'}
+              stepInfo={{
+                label: steps[activeStep].label,
+                activeStep: activeStep + 1,
+                totalSteps: steps.length
+              }}
+              actions={
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <DSOSubmitButton
+                      rawData={rawData}
+                      mainConditions={mainConditions}
+                      setStepValues={setStepValues}
+                      stepValues={stepValues}
+                      activeStep={activeStep}
+                      removeComplete={removeComplete}
+                      mutation={submitMutation}
+                      data={getSubmitDSOPayload(data)}
+                      customSchema={dsoFormBaseValidationSchema}
+                      step={steps[steps.length - 1]}
+                      fullWidth
+                      size='medium'
+                      submitText={submitText}
+                      completed={completed}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <SaveDraftButton
+                      isLastStep={activeStep === steps.length - 1}
+                      formId={`${
+                        steps[activeStep].formId ?? 'form'
+                      }-${activeStep}`}
+                      disabled={
+                        data?.status === 'Submitted' ||
+                        data?.status === 'Approved'
+                      }
+                      steps={steps}
+                      activeStep={activeStep}
+                      mutation={mutation}
+                      transformData={steps[activeStep].getRequestPayload}
+                      redirectFunction={redirectFunction}
+                      search={
+                        '?step=' + steps[activeStep].label.replace(' ', '+')
+                      }
+                      setCompleted={setCompleted}
+                      removeComplete={removeComplete}
+                      completed={completed}
+                      setCreateComplete={setCreateComplete}
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <SaveDraftButton
-                    isLastStep={activeStep === steps.length - 1}
-                    formId={`${
-                      steps[activeStep].formId ?? 'form'
-                    }-${activeStep}`}
-                    disabled={
-                      data?.status === 'Submitted' ||
-                      data?.status === 'Approved'
-                    }
-                    steps={steps}
-                    activeStep={activeStep}
-                    mutation={mutation}
-                    transformData={steps[activeStep].getRequestPayload}
-                    redirectFunction={redirectFunction}
-                    search={
-                      '?step=' + steps[activeStep].label.replace(' ', '+')
-                    }
-                    setCompleted={setCompleted}
-                    removeComplete={removeComplete}
-                    completed={completed}
-                    setCreateComplete={setCreateComplete}
-                  />
-                </Grid>
-              </Grid>
-            }
-          >
-            {steps.map((formStep: any, index: number) => {
-              const step = index + 1
-              return (
-                <Step key={formStep.label}>
-                  <DSOStepButton
-                    mainConditions={mainConditions}
-                    setMainConditions={setMainConditions}
-                    stepConditions={stepConditions}
-                    setStepConditions={setStepConditions}
-                    step={step}
-                    createComplete={createComplete}
-                    variantsConditions={getStepStatus(
-                      formStep,
-                      index,
-                      activeStep
-                    )}
-                    rawData={data}
-                    index={index}
-                    data={data}
-                    stepData={{
-                      step: steps[index],
-                      formData: stepValues,
-                      isLast: index === steps.length - 1,
-                      shouldValidate: completed.includes(index)
-                    }}
-                    onClick={() => {
-                      void handleSave(index)
-                      nextCallback(index)
-                      setCreateComplete()
-                    }}
-                  >
-                    {formStep.label}
-                  </DSOStepButton>
-                </Step>
-              )
-            })}
-          </Stepper>
-        </Paper>
-      </Grid>
-      {!isMobile && (
-        <Grid item xs={12}>
-          <TwoFANotice />
+              }
+            >
+              {steps.map((formStep: any, index: number) => {
+                const step = index + 1
+                return (
+                  <Step key={formStep.label}>
+                    <DSOStepButton
+                      mainConditions={mainConditions}
+                      setMainConditions={setMainConditions}
+                      stepConditions={stepConditions}
+                      setStepConditions={setStepConditions}
+                      step={step}
+                      createComplete={createComplete}
+                      variantsConditions={getStepStatus(
+                        formStep,
+                        index,
+                        activeStep
+                      )}
+                      rawData={data}
+                      index={index}
+                      data={data}
+                      stepData={{
+                        step: steps[index],
+                        formData: stepValues,
+                        isLast: index === steps.length - 1,
+                        shouldValidate: completed.includes(index)
+                      }}
+                      onClick={() => {
+                        void handleSave(index)
+                        nextCallback(index)
+                        setCreateComplete()
+                      }}
+                    >
+                      {formStep.label}
+                    </DSOStepButton>
+                  </Step>
+                )
+              })}
+            </Stepper>
+          </Paper>
         </Grid>
-      )}
-    </Grid>
+        {!isMobile && (
+          <Grid item xs={12}>
+            <TwoFANotice />
+          </Grid>
+        )}
+      </Grid>
+    </Box>
   )
 }
