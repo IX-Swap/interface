@@ -93,8 +93,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
         <Row alignItems="center" gap="1rem">
           <Clock color={theme.launchpad.colors.primary} size="50" />
           <CantClaimNotice>
-            You cannot claim any tokens yet. Please come back{' '}
-            <b>{moment(props.offer.timeframe.claim).format('DD/MM/YYYY')}</b>, on the token claim date.
+            Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim 
+            process for the tokens. The tokens will be automatically distributed to the investor&apos;s wallets 
+            as a consequence of this process
           </CantClaimNotice>
         </Row>
       )}
