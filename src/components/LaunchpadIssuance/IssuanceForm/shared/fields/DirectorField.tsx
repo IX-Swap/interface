@@ -57,7 +57,7 @@ export const DirectorField: React.FC<Props> = (props) => {
                     </Field>
                   </Column>
 
-                  {(directors.length > 1 || idx > 0) && (
+                  {!props.disabled && (directors.length > 1 || idx > 0) && (
                     <DeleteButton onClick={handleRemove(idx)} disabled={props.disabled}>
                       <Trash />
                     </DeleteButton>

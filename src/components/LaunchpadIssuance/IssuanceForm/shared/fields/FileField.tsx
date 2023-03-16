@@ -52,7 +52,9 @@ export const FileField: React.FC<Props> = (props) => {
     props.setter(props.field, { file: files[0] })
 
     if (props.touch) {
-      props.touch(props.field, true)
+      setTimeout(() => {
+        if (props.touch) props.touch(props.field, true)
+      })
     }
 
     setValue(files[0])
@@ -62,7 +64,9 @@ export const FileField: React.FC<Props> = (props) => {
     props.setter(props.field, props.value?.id ? null : undefined)
 
     if (props.touch) {
-      props.touch(props.field, true)
+      setTimeout(() => {
+        if (props.touch) props.touch(props.field, true)
+      })
     }
     setValue(undefined)
   }, [])
