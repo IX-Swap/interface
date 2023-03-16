@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { FieldArray, FieldProps, Formik, FormikProps, Field } from 'formik'
 import { useHistory } from 'react-router-dom'
@@ -40,7 +40,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
-  const onConfirmationClose = React.useCallback(() => {
+  const onConfirmationClose = useCallback(() => {
     setShowCloseDialog(false)
   }, [])
 
@@ -51,11 +51,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
   const createVetting = useSubmitVettingForm(issuanceId)
 
-  const goMain = React.useCallback(() => {
+  const goMain = useCallback(() => {
     history.push(`/issuance/create?id=${issuanceId}`)
   }, [history, issuanceId])
   const form = React.useRef<FormikProps<VettingFormValues>>(null)
-  const goBack = React.useCallback(() => {
+  const goBack = useCallback(() => {
     if (JSON.stringify(form?.current?.values) === JSON.stringify(form?.current?.initialValues)) {
       goMain()
     } else {
@@ -70,11 +70,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     initialData: initialValues.data,
   })
 
-  const toSubmit = React.useCallback(() => {
+  const toSubmit = useCallback(() => {
     setShowConfirmDialog(true)
   }, [showConfirmDialog])
 
-  const submit = React.useCallback(
+  const submit = useCallback(
     async (values: VettingFormValues) => {
       setShowConfirmDialog(false)
       if (!initialValues.data) return
@@ -104,6 +104,17 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
+  const isSubmitDisabled = useCallback(
+    (errors: any, touched: any) => {
+      if (view) return true
+      const hasErrors = Object.keys(errors).length > 0
+      const notTouched = !Object.keys(touched).length
+
+      return notTouched || hasErrors
+    },
+    [view]
+  )
+
   if (!issuanceId) {
     return null
   }
@@ -131,7 +142,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       enableReinitialize={true}
       innerRef={form}
     >
-      {({ submitForm, setFieldValue, values, errors, resetForm }) => (
+      {({ submitForm, setFieldValue, values, errors, resetForm, touched, setFieldTouched }) => (
         <FormContainer>
           <ConfirmationForm
             isOpen={showConfirmDialog}
@@ -176,6 +187,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               onSaveDraft={() => saveDraft(values)}
               onSubmit={toSubmit}
               disabled={view}
+              submitDisabled={isSubmitDisabled(errors, touched)}
               vettingId={String(initialValues.vettingId)}
             />
           </FormSideBar>
@@ -187,9 +199,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 placeholder="Full name of the Applicant"
                 field="applicantFullName"
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 disabled={view}
                 value={values.applicantFullName}
-                error={errors.applicantFullName}
+                error={touched.applicantFullName ? errors.applicantFullName : ''}
                 inputFilter={textFilter}
               />
 
@@ -199,8 +212,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 field="email"
                 disabled={view}
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 value={values.email}
-                error={errors.email}
+                error={touched.email ? errors.email : ''}
                 inputFilter={textFilter}
               />
 
@@ -209,9 +223,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 placeholder="Name of your company"
                 field="companyName"
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 disabled={view}
                 value={values.companyName}
-                error={errors.companyName}
+                error={touched.companyName ? errors.companyName : ''}
                 inputFilter={textFilter}
               />
 
@@ -220,9 +235,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 placeholder="Company Website"
                 field="companyWebsite"
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 disabled={view}
                 value={values.companyWebsite}
-                error={errors.companyWebsite}
+                error={touched.companyWebsite ? errors.companyWebsite : ''}
                 inputFilter={textFilter}
               />
             </IssuerInfoBlock>
@@ -234,9 +250,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 label="Upload the company's pitch deck"
                 field="document.pitchDeck"
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 disabled={view}
                 value={values.document.pitchDeck}
-                error={errors.document?.pitchDeck as string}
+                error={(touched.document?.pitchDeck && errors.document?.pitchDeck) as string}
                 isImage
               />
 
@@ -265,6 +282,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                                   target: { name, value },
                                 })
                               }
+                              touch={setFieldTouched}
                               trailing={
                                 !view && (
                                   <DeleteButton onClick={handleRemove(idx)}>
@@ -288,9 +306,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 field="description"
                 disabled={view}
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 span={3}
                 value={values.description}
-                error={errors.description}
+                error={touched.description ? errors.description : ''}
               />
             </DescriptionBlock>
 
@@ -303,8 +322,12 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncorporation"
                 value={values.document.certificateOfIncorporation}
-                error={errors.document?.certificateOfIncorporation as string}
+                error={
+                  (touched.document?.certificateOfIncorporation &&
+                    errors.document?.certificateOfIncorporation) as string
+                }
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 isDocument
               />
               <FileField
@@ -314,8 +337,11 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncumbency"
                 value={values.document.certificateOfIncumbency}
-                error={errors.document?.certificateOfIncumbency as string}
+                error={
+                  (touched.document?.certificateOfIncumbency && errors.document?.certificateOfIncumbency) as string
+                }
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 isDocument
               />
 
@@ -325,8 +351,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.shareDirectorRegistry"
                 value={values.document.shareDirectorRegistry}
-                error={errors.document?.shareDirectorRegistry as string}
+                error={(touched.document?.shareDirectorRegistry && errors.document?.shareDirectorRegistry) as string}
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 isDocument
               />
               <FileField
@@ -336,8 +363,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. Not applicable to licensed entities"
                 field="document.auditedFinancials"
                 value={values.document.auditedFinancials}
-                error={errors.document?.auditedFinancials as string}
+                error={(touched.document?.auditedFinancials && errors.document?.auditedFinancials) as string}
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 isDocument
               />
 
@@ -347,8 +375,9 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
                 field="document.memorandumArticle"
                 value={values.document.memorandumArticle}
-                error={errors.document?.memorandumArticle as string}
+                error={(touched.document?.memorandumArticle && errors.document?.memorandumArticle) as string}
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 isDocument
               />
               <FileField
@@ -356,9 +385,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 hint={<ExampleLink>See Examples</ExampleLink>}
                 field="document.ownershipStructure"
                 value={values.document.ownershipStructure}
-                error={errors.document?.ownershipStructure as string}
+                error={(touched.document?.ownershipStructure && errors.document?.ownershipStructure) as string}
                 disabled={view}
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 isDocument
               />
 
@@ -367,9 +397,13 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 hint="Document must include specimen signatures or equivalent"
                 field="document.resolutionAuthorizedSignatory"
                 value={values.document.resolutionAuthorizedSignatory}
-                error={errors.document?.resolutionAuthorizedSignatory as string}
+                error={
+                  (touched.document?.resolutionAuthorizedSignatory &&
+                    errors.document?.resolutionAuthorizedSignatory) as string
+                }
                 disabled={view}
                 setter={setFieldValue}
+                touch={setFieldTouched}
                 isDocument
               />
             </FilesBlock>
@@ -395,7 +429,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               <OutlineButton width="280px" onClick={goBack}>
                 Back
               </OutlineButton>
-              <FilledButton width="280px" onClick={toSubmit} disabled={view}>
+              <FilledButton width="280px" onClick={toSubmit} disabled={isSubmitDisabled(errors, touched)}>
                 Submit
               </FilledButton>
             </Row>
