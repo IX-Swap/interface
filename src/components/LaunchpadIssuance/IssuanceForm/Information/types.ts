@@ -6,7 +6,6 @@ import {
   OfferNetwork,
   OfferTokenStandart,
 } from 'state/launchpad/types'
-import { DateSchema } from 'yup'
 import { IssuanceFile } from '../types'
 
 export enum OfferTokenType {

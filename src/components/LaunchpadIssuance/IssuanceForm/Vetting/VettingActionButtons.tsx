@@ -13,9 +13,16 @@ export interface VettingActionButtonsProps {
   onSaveDraft: () => void
   onSubmit: () => void
   disabled: boolean
+  submitDisabled: boolean
   vettingId: string
 }
-export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingId }: VettingActionButtonsProps) => {
+export const VettingActionButtons = ({
+  onSaveDraft,
+  onSubmit,
+  disabled,
+  submitDisabled,
+  vettingId,
+}: VettingActionButtonsProps) => {
   const { isOfferManager, isAdmin } = useRole()
   const [showApprove, setShowApprove] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
@@ -124,7 +131,7 @@ export const VettingActionButtons = ({ onSaveDraft, onSubmit, disabled, vettingI
               Save Draft
             </OutlineButton>
 
-            <FilledButton disabled={disabled} onClick={onSubmit}>
+            <FilledButton disabled={submitDisabled} onClick={onSubmit}>
               Submit
             </FilledButton>
           </>
