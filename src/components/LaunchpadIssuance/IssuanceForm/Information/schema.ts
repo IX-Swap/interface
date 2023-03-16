@@ -301,12 +301,6 @@ export const schema = yup.object().shape({
 
   additionalDocuments: yup.array(
     yup.object().shape({
-      name: yup
-        .string()
-        .optional()
-        .test('filenameValidation', REQUIRED, function (): boolean | yup.ValidationError {
-          return !this.parent.file || (this.parent.name && this.parent.name.length > 0)
-        }),
       file: fileSchema,
     })
   ),
@@ -364,9 +358,6 @@ export const editSchema = yup.object().shape({
 
   additionalDocuments: yup.array(
     yup.object().shape({
-      name: yup
-        .string()
-        .when('file', { is: undefined, then: yup.string(), otherwise: yup.string().required(REQUIRED) }),
       file: fileSchema,
     })
   ),

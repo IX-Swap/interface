@@ -39,7 +39,9 @@ export const GalleryBlock: React.FC<Props> = (props) => {
       props.setter('images', props.images.concat(files.map((x) => ({ file: x }))))
 
       if (props.touch) {
-        props.touch('images', true)
+        setTimeout(() => {
+          if (props.touch) props.touch('images', true)
+        })
       }
 
       container.current?.scrollTo({ left: container.current.scrollWidth, behavior: 'smooth' })
@@ -56,7 +58,9 @@ export const GalleryBlock: React.FC<Props> = (props) => {
       props.setter('images', images)
 
       if (props.touch) {
-        props.touch('images', true)
+        setTimeout(() => {
+          if (props.touch) props.touch('images', true)
+        })
       }
     },
     [props.images]

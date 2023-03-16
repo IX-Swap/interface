@@ -35,7 +35,9 @@ export const TextAreaInner: React.FC<Props> = (props) => {
     props.setter(props.field, event.target.value)
 
     if (props.touch) {
-      props.touch(props.field, true)
+      setTimeout(() => {
+        if (props.touch) props.touch(props.field, true)
+      })
     }
   }, [])
 
