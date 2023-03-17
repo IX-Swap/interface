@@ -46,6 +46,32 @@ export const OfferReview: React.FC<Props> = (props) => {
     [props.values.maxInvestment, props.values.tokenPrice]
   )
 
+  const stageEntries = React.useMemo(() => {
+    const entries = [
+      props.values.timeframe.whitelist && {
+        label: <StageLabel>Register To Invest</StageLabel>,
+        value: <Nowrap>{formatDateRange(props.values.timeframe.whitelist, props.values.timeframe.preSale)}</Nowrap>,
+      },
+      props.values.timeframe.preSale && {
+        label: <StageLabel>Pre-sale</StageLabel>,
+        value: <Nowrap>{formatDateRange(props.values.timeframe.preSale, props.values.timeframe.sale)}</Nowrap>,
+      },
+      props.values.timeframe.sale && {
+        label: <StageLabel>Public Sale</StageLabel>,
+        value: <Nowrap>{formatDateRange(props.values.timeframe.sale, props.values.timeframe.closed)}</Nowrap>,
+      },
+      props.values.timeframe.sale && {
+        label: <StageLabel>Closed</StageLabel>,
+        value: <Nowrap>{formatDateRange(props.values.timeframe.closed, props.values.timeframe.claim)}</Nowrap>,
+      },
+      props.values.timeframe.sale && {
+        label: <StageLabel>Token Claim</StageLabel>,
+        value: <Nowrap>{formatDateRange(props.values.timeframe.claim)}</Nowrap>,
+      },
+    ]
+    return entries.filter((i) => Boolean(i))
+  }, [props.values.timeframe])
+
   return (
     <ReviewModalContainer>
       <ReviewContainer>
@@ -61,34 +87,7 @@ export const OfferReview: React.FC<Props> = (props) => {
         </Title>
 
         <Container area="stages">
-          <InfoList
-            title="Investment Stages"
-            titleFontWeight="600"
-            entries={[
-              props.values.timeframe.whitelist && {
-                label: <StageLabel>Register To Invest</StageLabel>,
-                value: (
-                  <Nowrap>{formatDateRange(props.values.timeframe.whitelist, props.values.timeframe.preSale)}</Nowrap>
-                ),
-              },
-              props.values.timeframe.preSale && {
-                label: <StageLabel>Pre-sale</StageLabel>,
-                value: <Nowrap>{formatDateRange(props.values.timeframe.preSale, props.values.timeframe.sale)}</Nowrap>,
-              },
-              props.values.timeframe.sale && {
-                label: <StageLabel>Public Sale</StageLabel>,
-                value: <Nowrap>{formatDateRange(props.values.timeframe.sale, props.values.timeframe.closed)}</Nowrap>,
-              },
-              props.values.timeframe.sale && {
-                label: <StageLabel>Closed</StageLabel>,
-                value: <Nowrap>{formatDateRange(props.values.timeframe.closed, props.values.timeframe.claim)}</Nowrap>,
-              },
-              props.values.timeframe.sale && {
-                label: <StageLabel>Token Claim</StageLabel>,
-                value: <Nowrap>{formatDateRange(props.values.timeframe.claim)}</Nowrap>,
-              },
-            ]}
-          />
+          <InfoList title="Investment Stages" titleFontWeight="600" entries={stageEntries} />
         </Container>
 
         <Container area="company-information">
@@ -252,6 +251,9 @@ const ReviewModalContainer = styled.div`
 
   background: ${(props) => props.theme.launchpad.colors.background};
   overflow: auto;
+  * {
+    font-family: 'Inter' !important;
+  }
 `
 
 const ReviewContainer = styled.div`
@@ -314,7 +316,8 @@ const SaleAllocationTitle = styled.div`
 
   font-style: normal;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 16px;
   line-height: 120%;
   letter-spacing: -0.03em;
 
