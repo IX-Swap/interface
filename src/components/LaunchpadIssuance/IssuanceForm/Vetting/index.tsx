@@ -28,6 +28,7 @@ import { textFilter } from 'utils/input'
 import { text19 } from 'components/LaunchpadMisc/typography'
 import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
+import { OfferingCard } from './OfferingCard'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -39,6 +40,23 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+  const offeringData = [
+    {
+      option: "option1",
+      text: "IX Swap Originated \n Primary Offering",
+      tooltipContent: "The smart contract was created by IX Swap and grants complete accessibility to the smart contract."
+    },
+    {
+      option: "option2",
+      text: "Non-IXS Originated Primary Offering with Smart Contract Minting & Whitelisting Access",
+      tooltipContent: "The smart contract was created by an external party and grants partial accessibility to the smart contract to whitelist and to mint tokens."
+    },
+    {
+      option: "option3",
+      text: "Non-IXS Originated Primary Offering with NO access to Token Smart Contract",
+      tooltipContent: "The smart contract was created by an external party and does NOT grant. accessibility to the smart contract."
+    }
+  ]
 
   const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
@@ -123,6 +141,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     )
   }
 
+
   return (
     <Formik
       initialValues={initialValues.data!}
@@ -181,6 +200,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
           </FormSideBar>
 
           <FormBody>
+            <OfferInfoBlock>
+              {offeringData.map((offer, idx) => 
+                <OfferingCard key={offer.text + idx} option={offer.option} text={offer.text} tooltipContent={offer.tooltipContent}/>)}
+              
+            </OfferInfoBlock>
+
+            <Separator />
+
             <IssuerInfoBlock>
               <FormField
                 label="Applicant's Full Name"
@@ -405,6 +432,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     </Formik>
   )
 }
+
+
+
+const OfferInfoBlock = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+`
 
 const IssuerInfoBlock = styled.div`
   display: grid;
