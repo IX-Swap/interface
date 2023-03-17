@@ -8,6 +8,7 @@ export const USDC: { [chainId: number]: Token } = {
   [1]: new Token(1, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'USDC', 'USD//C'),
   [42]: new Token(42, '0xe22da380ee6B445bb8273C81944ADEB6E8450422', 6, 'USDC', 'USD//C'),
   [137]: new Token(137, '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', 6, 'USDC', 'USD//C'),
+  [80001]: new Token(80001, '0xe6b8a5CF854791412c1f6EFC7CAf629f5Df1c747', 6, 'USDC', 'USD//C'),
 }
 
 // Mirror Protocol compat.
@@ -91,11 +92,13 @@ export const TOKEN_SHORTHANDS: { [shorthand: string]: Record<any, any> } = {
     [SupportedChainId.MAINNET]: USDC[1],
     [SupportedChainId.KOVAN]: USDC[42],
     [SupportedChainId.MATIC]: USDC[137],
+    [SupportedChainId.MUMBAI]: USDC[80001],
     // [SupportedChainId.MUMBAI]: '0xe11a86849d99f524cac3e7a0ec1241828e332c62',
   },
   IXS: {
     [SupportedChainId.MAINNET]: IXS[1],
     [SupportedChainId.KOVAN]: IXS[42],
     [SupportedChainId.MATIC]: IXS[137],
+    [SupportedChainId.MUMBAI]: IXS[80001],
   },
 }
