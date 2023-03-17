@@ -50,6 +50,9 @@ const DialogWrapper = styled.div`
   background: ${(props) => props.theme.launchpad.colors.text.title + '1e'};
 
   z-index: 30;
+  * {
+    font-family: 'Inter' !important;
+  }
 `
 
 const DialogCloseButton = styled.div`

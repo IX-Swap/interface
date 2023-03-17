@@ -244,7 +244,7 @@ const FieldSelectedValue = styled.div`
 
   ${text30}
 
-  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const FieldOptionList = styled.div`

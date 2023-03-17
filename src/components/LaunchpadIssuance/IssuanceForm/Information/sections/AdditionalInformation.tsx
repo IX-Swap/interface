@@ -149,18 +149,21 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         )}
       </AddButton>
 
-      <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px">
+      <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px" title="Add Social Link">
         <DropdownField
-          label={'SocialMedia'}
-          placeholder="URL"
+          label={'Social Media'}
+          placeholder="Choose Social Media"
           options={socialOptions}
           field={''}
           onChange={setAddedSocial}
+          wrapperStyle={{
+            marginTop: '16px',
+          }}
         />
 
         <FormField
           label={`${capitalize(addedSocial)} Link`}
-          placeholder="URL"
+          placeholder="Social Media Link"
           field={''}
           setter={(field, value) => setAddedSocialLink(value)}
           touch={props.touch}
