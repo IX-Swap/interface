@@ -18,6 +18,7 @@ interface Props {
   lineHeight?: string
   entry: InfoEntry
   idx?: number
+  isLast?: boolean
 }
 
 const extractDocType = (docName: any) => docName?.substring(docName.lastIndexOf('.')).split('.')[1]
@@ -62,11 +63,14 @@ export const Attachment: React.FC<Props> = (props) => {
   })
 
   const handlePreviewClick = (file?: Asset) => {
-    if (file && isPreview(file.name)) {
+    if (!file) {
+      return
+    }
+    if (isPreview(file.name)) {
       openModal()
     }
 
-    if (file && isDownload(file.name)) {
+    if (isDownload(file.name)) {
       const { name, public: publicUrl, mimeType } = file
 
       downloadFile(publicUrl, name, mimeType)
@@ -92,7 +96,7 @@ export const Attachment: React.FC<Props> = (props) => {
         {props.entry?.value && <Value onClick={() => handlePreviewClick(props.entry?.file)}>{props.entry.value}</Value>}
       </Entry>
 
-      <Separator key={`separator-${props.idx}`} />
+      {!props.isLast && <Separator key={`separator-${props.idx}`} />}
     </>
   )
 }
