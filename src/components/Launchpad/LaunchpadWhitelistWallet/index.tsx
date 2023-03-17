@@ -64,7 +64,7 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
 
   const [activeTab, setActiveTab] = useState(0)
   return (
-    <IssuanceDialog show={isOpen} title="Whitelist Wallet" onClose={onCloseDialog} width="800px">
+    <IssuanceDialog show={isOpen} title="Whitelist Wallet" onClose={onCloseDialog} width="800px" padding="48px">
       <DialogWrapper>
         <WhitelistForm offerId={offerId} onSuccess={onSuccessCreate} />
         <Separator marginTop="1.25rem" marginBottom="1.5rem" />
@@ -87,15 +87,17 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
         </FilterContainer>
         <WhitelistWalletTable loading={loadingGet} items={items} actions={Actions} onAction={onAction} />
         {getError && <ErrorText>{getError}</ErrorText>}
-        <IssuancePagination
-          currentPage={page}
-          pageSize={offset}
-          totalPages={totalPages}
-          totalItems={totalItems}
-          enableChangePageSize={false}
-          smallMargin
-          onChangePage={(page) => dispatch(setFilterValue({ filter: { page } }))}
-        />
+        {totalPages > 1 && (
+          <IssuancePagination
+            currentPage={page}
+            pageSize={offset}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            enableChangePageSize={false}
+            smallMargin
+            onChangePage={(page) => dispatch(setFilterValue({ filter: { page } }))}
+          />
+        )}
         <ConfirmDeletePopup
           isOpen={isConfirmOpen}
           onDiscard={() => onDiscard(walletToDelete)}

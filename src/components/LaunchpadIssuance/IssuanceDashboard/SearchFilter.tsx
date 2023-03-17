@@ -90,6 +90,13 @@ const FilterSearchField = styled.div`
 
   height: 40px;
   min-width: 100%;
+
+  svg {
+    margin-right: 4px;
+  }
+  input::placeholder {
+    color: ${(props) => props.theme.launchpad.colors.text.caption};
+  }
 `
 
 const FilterSearchInput = styled.input`
