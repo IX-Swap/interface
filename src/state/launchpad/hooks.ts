@@ -787,6 +787,7 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
         })),
 
         fundingDocuments: payload.fundingDocuments,
+        smartContractStrategy: payload.smartContractStrategy,
       }
 
       const updateDirectors = (key: 'directors' | 'beneficialOwners') => {

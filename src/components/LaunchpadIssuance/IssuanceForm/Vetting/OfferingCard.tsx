@@ -2,22 +2,24 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ReactComponent as InfoSvg } from 'assets/launchpad/svg/info-icon.svg'
 import { IconWrapper, MouseoverLightTooltip, MouseoverTooltip } from 'components/Tooltip'
+import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
 interface OfferingProps {
-    name: string,
+    name: SMART_CONTRACT_STRATEGIES,
     id: string,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     option: string,
     text: string,
     tooltipContent: string,
     checked: boolean,
+    disabled: boolean
 }
 
-export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent, checked }: OfferingProps) => {
+export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent, checked, disabled }: OfferingProps) => {
 
     return <Card htmlFor={option} checked={checked}>
         <DisplayFlexRow>
-            <RadioButton name={name} id={id} type="radio" value={option} onChange={onChange} checked={checked} />
+            <RadioButton name={name} id={id} type="radio" value={option} disabled={disabled} onChange={onChange} checked={checked} />
 
             <MouseoverLightTooltip text={tooltipContent} placement={'top-start'}
                 style={{

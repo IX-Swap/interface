@@ -4,7 +4,7 @@ import { FieldArray, FieldProps, Formik, FormikProps, Field } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { VettingFormValues } from './types'
@@ -40,29 +40,29 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
-  
+
   const offeringData = [
     {
-      option: "option1",
+      option: SMART_CONTRACT_STRATEGIES.original,
       text: "IX Swap Originated \n Primary Offering",
       tooltipContent: "The smart contract was created by IX Swap and grants complete accessibility to the smart contract."
     },
     {
-      option: "option2",
+      option: SMART_CONTRACT_STRATEGIES.nonOriginalWithAccess,
       text: "Non-IXS Originated Primary Offering with Smart Contract Minting & Whitelisting Access",
       tooltipContent: "The smart contract was created by an external party and grants partial accessibility to the smart contract to whitelist and to mint tokens."
     },
     {
-      option: "option3",
+      option: SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess,
       text: "Non-IXS Originated Primary Offering with NO access to Token Smart Contract",
       tooltipContent: "The smart contract was created by an external party and does NOT grant. accessibility to the smart contract."
     }
   ];
-  const [selectedOption, setSelectedOption] = React.useState("option1");
+  const [selectedOption, setSelectedOption] = React.useState(SMART_CONTRACT_STRATEGIES.original);
 
   const onChangeRadioButton = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { name } = e.target;
-    setSelectedOption(name); 
+    const name = e.target.name as SMART_CONTRACT_STRATEGIES;
+    setSelectedOption(name);
   }
 
   const onConfirmationClose = React.useCallback(() => {
@@ -106,6 +106,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
       loader.start()
       try {
+        values.smartContractStrategy = selectedOption
         await createVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({
@@ -190,14 +191,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
             {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
               initialValues?.data?.status as IssuanceStatus
             ) && (
-              <RejectInfo
-                message={initialValues?.data?.changesRequested}
-                status={initialValues?.data?.status}
-                issuanceId={issuanceId}
-                onClear={() => resetForm({ values: defaultValues })}
-                onSubmit={toSubmit}
-              />
-            )}
+                <RejectInfo
+                  message={initialValues?.data?.changesRequested}
+                  status={initialValues?.data?.status}
+                  issuanceId={issuanceId}
+                  onClear={() => resetForm({ values: defaultValues })}
+                  onSubmit={toSubmit}
+                />
+              )}
             <VettingActionButtons
               onSaveDraft={() => saveDraft(values)}
               onSubmit={toSubmit}
@@ -208,16 +209,17 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
           <FormBody>
             <OfferInfoBlock>
-              {offeringData.map((offer, idx) => 
-                <OfferingCard key={offer.text + idx} 
-                name={offer.option}
-                id={offer.option}
-                checked={offer.option === selectedOption}
-                option={offer.option} text={offer.text} 
-                tooltipContent={offer.tooltipContent}
-                onChange={onChangeRadioButton}
+              {offeringData.map((offer, idx) =>
+                <OfferingCard key={offer.text + idx}
+                  name={offer.option}
+                  id={offer.option}
+                  checked={offer.option === selectedOption}
+                  option={offer.option} text={offer.text}
+                  tooltipContent={offer.tooltipContent}
+                  disabled={view}
+                  onChange={onChangeRadioButton}
                 />)}
-              
+
             </OfferInfoBlock>
 
             <Separator />

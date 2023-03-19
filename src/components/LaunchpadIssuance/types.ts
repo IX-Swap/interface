@@ -35,3 +35,8 @@ export const statuses = [
   IssuanceStatus.pendingApproval,
 ]
 
+export enum SMART_CONTRACT_STRATEGIES {
+  original = 'original', //  IX Swap Originated Primary Offering
+  nonOriginalWithAccess = 'nonOriginalWithAccess', // Non-IXS Originated Primary Offering with Smart Contract Minting & Whitelisting Access
+  nonOriginalWithNoAccess = 'nonOriginalWithNoAccess', // Non-IXS Originated Primary Offering with NO access to Token Smart Contract
+}
