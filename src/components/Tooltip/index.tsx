@@ -4,6 +4,7 @@ import styled from 'styled-components/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 import Popover, { PopoverProps } from '../Popover'
+import { TOOLTIP_ARROW_TYPE } from 'constants/enums'
 
 export const IconWrapper = styled.div<{ size?: number, strokeColor?: string }>`
   ${({ theme }) => theme.flexColumnNoWrap};
@@ -75,7 +76,7 @@ export function TooltipLight({ text, ...rest }: TooltipProps) {
 
 export function TooltipVetting({ text, ...rest }: TooltipProps) {
   return (
-    <Popover offset={[-20, 15]} content={<TooltipContainerVetting>{text}</TooltipContainerVetting>} hideShadow {...rest} />
+    <Popover offset={[-20, 10]} customArrowType={TOOLTIP_ARROW_TYPE.VETTING} content={<TooltipContainerVetting>{text}</TooltipContainerVetting>} hideShadow {...rest} />
   )
 }
 

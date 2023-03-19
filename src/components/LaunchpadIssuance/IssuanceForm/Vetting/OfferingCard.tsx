@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+
+import React from 'react'
 import styled, { useTheme } from 'styled-components'
+
 import { ReactComponent as InfoSvg } from 'assets/launchpad/svg/info-icon.svg'
 import { IconWrapper, MouseoverVettingTooltip } from 'components/Tooltip'
 
@@ -11,7 +13,7 @@ interface OfferingProps {
     text: string,
     tooltipContent: string,
     checked: boolean,
-    disabled: boolean
+    disabled: boolean,
 }
 
 export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent, checked, disabled }: OfferingProps) => {
@@ -19,7 +21,6 @@ export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent,
     return <Card htmlFor={option} checked={checked}>
         <DisplayFlexRow>
             <RadioButton name={name} id={id} type="radio" value={option} disabled={disabled} onChange={onChange} checked={checked} />
-
             <MouseoverVettingTooltip text={tooltipContent} placement={'top-start'}
                 style={{
                     backgroundColor: `${theme.white}`, color: `${theme.launchpad.colors.text.hint}`,
