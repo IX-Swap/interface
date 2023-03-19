@@ -40,6 +40,16 @@ const TooltipContainerFit = styled(TooltipContainer)`
   font-size: 16px;
   line-height: 24px;
 `
+
+const TooltipContainerVetting = styled.div`
+  font-size: 12px;
+  font-weight: 500; 
+  line-height: 150%;
+  width: 245px;
+  padding: 0.8rem 1.2rem;
+  word-break: break-word;
+`
+
 interface TooltipProps extends Omit<PopoverProps, 'content'> {
   text: ReactNode
   width?: number
@@ -57,6 +67,12 @@ export default function Tooltip({ text, width, ...rest }: TooltipProps) {
 export function TooltipLight({ text, ...rest }: TooltipProps) {
   return (
     <Popover offset={[-180, 10]} content={<TooltipContainerFit>{text}</TooltipContainerFit>} hideShadow {...rest} />
+  )
+}
+
+export function TooltipVetting({ text, ...rest }: TooltipProps) {
+  return (
+    <Popover offset={[-20, 15]} content={<TooltipContainerVetting>{text}</TooltipContainerVetting>} hideShadow {...rest} />
   )
 }
 
@@ -96,6 +112,19 @@ export function MouseoverLightTooltip({ children, ...rest }: Omit<TooltipProps, 
         {children}
       </div>
     </TooltipLight>
+  )
+}
+
+export function MouseoverVettingTooltip({ children, ...rest }: Omit<TooltipProps, 'show'>) {
+  const [show, setShow] = useState(false)
+  const open = useCallback(() => setShow(true), [setShow])
+  const close = useCallback(() => setShow(false), [setShow])
+  return (
+    <TooltipVetting {...rest} show={show}>
+      <div onMouseEnter={open} onMouseLeave={close}>
+        {children}
+      </div>
+    </TooltipVetting>
   )
 }
 
