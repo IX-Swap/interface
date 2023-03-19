@@ -5,7 +5,7 @@ import { IconWrapper, MouseoverLightTooltip, MouseoverTooltip } from 'components
 import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
 interface OfferingProps {
-    name: SMART_CONTRACT_STRATEGIES,
+    name: string,
     id: string,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     option: string,

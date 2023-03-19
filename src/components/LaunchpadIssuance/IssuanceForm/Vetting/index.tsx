@@ -61,8 +61,8 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const [selectedOption, setSelectedOption] = React.useState(SMART_CONTRACT_STRATEGIES.original);
 
   const onChangeRadioButton = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const name = e.target.name as SMART_CONTRACT_STRATEGIES;
-    setSelectedOption(name);
+    const value = e.target.value as SMART_CONTRACT_STRATEGIES;
+    setSelectedOption(value);
   }
 
   const onConfirmationClose = React.useCallback(() => {
@@ -92,7 +92,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     issuanceId,
     vettingId: initialValues.vettingId,
     goMain,
-    initialData: initialValues.data,
+    initialData: initialValues.data
   })
 
   const toSubmit = React.useCallback(() => {
@@ -129,6 +129,10 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
+
+  React.useEffect(() => {
+    setSelectedOption(initialValues.data?.smartContractStrategy ?? SMART_CONTRACT_STRATEGIES.original)
+  }, [initialValues.data?.smartContractStrategy])
 
   if (!issuanceId) {
     return null
@@ -209,16 +213,20 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
           <FormBody>
             <OfferInfoBlock>
-              {offeringData.map((offer, idx) =>
-                <OfferingCard key={offer.text + idx}
-                  name={offer.option}
-                  id={offer.option}
-                  checked={offer.option === selectedOption}
-                  option={offer.option} text={offer.text}
-                  tooltipContent={offer.tooltipContent}
-                  disabled={view}
-                  onChange={onChangeRadioButton}
-                />)}
+              {offeringData.map((offer, idx) => <OfferingCard key={offer.text + idx}
+                name="smartContractStrategy"
+                id={offer.option}
+                checked={offer.option === selectedOption}
+                option={offer.option} text={offer.text}
+                tooltipContent={offer.tooltipContent}
+                disabled={view}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+                  const value = e.target.value as SMART_CONTRACT_STRATEGIES;
+                  setSelectedOption(value);
+                  setFieldValue("smartContractStrategy", value)
+                }}
+              />
+              )}
 
             </OfferInfoBlock>
 
