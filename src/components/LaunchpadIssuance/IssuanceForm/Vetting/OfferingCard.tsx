@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ReactComponent as InfoSvg } from 'assets/launchpad/svg/info-icon.svg'
-import { IconWrapper, MouseoverLightTooltip, MouseoverTooltip } from 'components/Tooltip'
 import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
+import { IconWrapper, MouseoverVettingTooltip } from 'components/Tooltip'
 
 interface OfferingProps {
     name: string,
@@ -21,15 +21,15 @@ export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent,
         <DisplayFlexRow>
             <RadioButton name={name} id={id} type="radio" value={option} disabled={disabled} onChange={onChange} checked={checked} />
 
-            <MouseoverLightTooltip text={tooltipContent} placement={'top-start'}
+            <MouseoverVettingTooltip text={tooltipContent} placement={'top-start'}
                 style={{
                     backgroundColor: "#fff", width: "300px", color: "#8D8DA3",
-                    fontSize: "12px", fontWeight: 500, lineHeight: "150%", border: "1px solid #E6E6FF"
+                     border: "1px solid #E6E6FF"
                 }}>
                 <IconWrapper size={20}>
                     <InfoSvg />
                 </IconWrapper>
-            </MouseoverLightTooltip>
+            </MouseoverVettingTooltip>
 
         </DisplayFlexRow>
         <OfferingText checked={checked}>{text}</OfferingText>
@@ -63,6 +63,7 @@ const Card = styled.label<{ htmlFor: string, checked: boolean }>`
     border: 1px solid;
     border-color: ${({ theme, checked }) => checked ? theme.launchpad.colors.primary : theme.launchpad.colors.border.default};
     border-radius: 10px;
+    cursor: pointer;
 `
 
 const RadioButton = styled.input`
