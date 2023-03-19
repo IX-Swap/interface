@@ -5,7 +5,7 @@ import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 import Popover, { PopoverProps } from '../Popover'
 
-export const IconWrapper = styled.div<{ size?: number }>`
+export const IconWrapper = styled.div<{ size?: number, strokeColor?: string }>`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
   justify-content: center;
@@ -18,6 +18,9 @@ export const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     align-items: flex-end;
   `};
+  & > svg:hover > path {
+    stroke: ${({ strokeColor }) => (strokeColor ? strokeColor : '')}
+  }
 `
 
 const TooltipContainer = styled.div<{ width?: number }>`
@@ -94,7 +97,7 @@ export function MouseoverTooltip({ children, style, ...rest }: Omit<TooltipProps
   }, [])
 
   return (
-    <Tooltip {...rest} style={ rest?.textStyle || {}} show={show}>
+    <Tooltip {...rest} style={rest?.textStyle || {}} show={show}>
       <div onMouseEnter={open} onMouseLeave={close} onClick={toggle} style={style}>
         {children}
       </div>

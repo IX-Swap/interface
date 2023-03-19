@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { ReactComponent as InfoSvg } from 'assets/launchpad/svg/info-icon.svg'
-import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { IconWrapper, MouseoverVettingTooltip } from 'components/Tooltip'
 
 interface OfferingProps {
@@ -16,17 +15,17 @@ interface OfferingProps {
 }
 
 export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent, checked, disabled }: OfferingProps) => {
-
+    const theme = useTheme()
     return <Card htmlFor={option} checked={checked}>
         <DisplayFlexRow>
             <RadioButton name={name} id={id} type="radio" value={option} disabled={disabled} onChange={onChange} checked={checked} />
 
             <MouseoverVettingTooltip text={tooltipContent} placement={'top-start'}
                 style={{
-                    backgroundColor: "#fff", width: "300px", color: "#8D8DA3",
-                     border: "1px solid #E6E6FF"
+                    backgroundColor: `${theme.white}`, color: `${theme.launchpad.colors.text.hint}`,
+                    border: `1px solid ${theme.launchpad.colors.border.default}`
                 }}>
-                <IconWrapper size={20}>
+                <IconWrapper size={20} strokeColor={theme.launchpad.colors.primary}>
                     <InfoSvg />
                 </IconWrapper>
             </MouseoverVettingTooltip>
