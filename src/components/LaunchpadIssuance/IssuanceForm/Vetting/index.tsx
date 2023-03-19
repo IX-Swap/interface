@@ -40,6 +40,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+  
   const offeringData = [
     {
       option: "option1",
@@ -56,7 +57,13 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       text: "Non-IXS Originated Primary Offering with NO access to Token Smart Contract",
       tooltipContent: "The smart contract was created by an external party and does NOT grant. accessibility to the smart contract."
     }
-  ]
+  ];
+  const [selectedOption, setSelectedOption] = React.useState("option1");
+
+  const onChangeRadioButton = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name } = e.target;
+    setSelectedOption(name); 
+  }
 
   const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
@@ -202,7 +209,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
           <FormBody>
             <OfferInfoBlock>
               {offeringData.map((offer, idx) => 
-                <OfferingCard key={offer.text + idx} option={offer.option} text={offer.text} tooltipContent={offer.tooltipContent}/>)}
+                <OfferingCard key={offer.text + idx} 
+                name={offer.option}
+                id={offer.option}
+                checked={offer.option === selectedOption}
+                option={offer.option} text={offer.text} 
+                tooltipContent={offer.tooltipContent}
+                onChange={onChangeRadioButton}
+                />)}
               
             </OfferInfoBlock>
 

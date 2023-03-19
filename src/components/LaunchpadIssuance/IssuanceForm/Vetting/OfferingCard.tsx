@@ -1,50 +1,47 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { ReactComponent as InfoIcon } from 'assets/launchpad/svg/info-icon.svg'
+import { ReactComponent as InfoSvg } from 'assets/launchpad/svg/info-icon.svg'
 import { IconWrapper, MouseoverLightTooltip, MouseoverTooltip } from 'components/Tooltip'
 
 interface OfferingProps {
+    name: string,
+    id: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     option: string,
     text: string,
-    tooltipContent: string
+    tooltipContent: string,
+    checked: boolean,
 }
 
-export const OfferingCard = ({option, text, tooltipContent} : OfferingProps) => {
-    const [selectedOption, setSelectedOption] = useState("");
+export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent, checked }: OfferingProps) => {
 
-    const iconStyles = {
-        stroke: 'blue',
-        strokeWidth: 1,
-        transition: 'stroke 0.2s ease-out',
-            ':hover': {
-            stroke: 'red',
-        },
-    }
-
-    return <Card className={selectedOption === option ? "selected" : ""} onClick={() => setSelectedOption(option)}>
+    return <Card htmlFor={option} checked={checked}>
         <DisplayFlexRow>
-            <RadioButton name="primary-offer" type="radio" value={option}/>
-            <MouseoverLightTooltip text={tooltipContent} placement={'top-start'} 
-                style={{backgroundColor: "#fff", width: "300px", color: "#8D8DA3", 
-                fontSize: "12px", fontWeight: 500, lineHeight: "150%", border: "1px solid #E6E6FF" }}>
+            <RadioButton name={name} id={id} type="radio" value={option} onChange={onChange} checked={checked} />
+
+            <MouseoverLightTooltip text={tooltipContent} placement={'top-start'}
+                style={{
+                    backgroundColor: "#fff", width: "300px", color: "#8D8DA3",
+                    fontSize: "12px", fontWeight: 500, lineHeight: "150%", border: "1px solid #E6E6FF"
+                }}>
                 <IconWrapper size={20}>
-                    <InfoIcon style={iconStyles}/>
+                    <InfoSvg />
                 </IconWrapper>
             </MouseoverLightTooltip>
+
         </DisplayFlexRow>
-        <OfferingText>{text}</OfferingText>
+        <OfferingText checked={checked}>{text}</OfferingText>
     </Card>
 }
 
 
-
-const OfferingText = styled.text`
+const OfferingText = styled.text<{ checked: boolean }>`
     font-size: 14px;
     margin-top: 20px;
     margin-left: 6px;
     line-height: 160%;
     font-weight: 500;
-    color: ${props => props.theme.launchpad.colors.text.hint};
+    color: ${props => props.checked ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.hint};
 `
 
 const DisplayFlexRow = styled.div`
@@ -52,7 +49,7 @@ const DisplayFlexRow = styled.div`
     justify-content: space-between;
 `
 
-const Card = styled.p`
+const Card = styled.label<{ htmlFor: string, checked: boolean }>`
     display: flex;
     align-items: stretch;
     flex-direction: column;
@@ -62,7 +59,7 @@ const Card = styled.p`
     height: 151px;
     color: #000;
     border: 1px solid;
-    border-color: ${props => props.theme.launchpad.colors.border.default};
+    border-color: ${({ theme, checked }) => checked ? theme.launchpad.colors.primary : theme.launchpad.colors.border.default};
     border-radius: 10px;
 `
 
@@ -77,7 +74,7 @@ const RadioButton = styled.input`
     width: 16px;
     border-radius: 50%;
     cursor: pointer;
-    transition: background 0.2s ease-out, border-color 0.2s ease-out;
+    transition: all 0.2s ease-out;
 
     &:checked::before {
         content: '';
