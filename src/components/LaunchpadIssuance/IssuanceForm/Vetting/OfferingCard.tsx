@@ -2,10 +2,10 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
-import { ReactComponent as InfoSvg } from 'assets/launchpad/svg/info-icon.svg'
-import { IconWrapper, MouseoverVettingTooltip } from 'components/Tooltip'
+import { Info } from 'react-feather'
+import { MouseoverVettingTooltip } from 'components/Tooltip'
 
-interface OfferingProps {
+interface StrategyCardProps {
     name: string,
     id: string,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -16,7 +16,7 @@ interface OfferingProps {
     disabled: boolean,
 }
 
-export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent, checked, disabled }: OfferingProps) => {
+export const StrategyCardCard = ({ name, id, onChange, option, text, tooltipContent, checked, disabled }: StrategyCardProps) => {
     const theme = useTheme()
     return <Card htmlFor={option} checked={checked}>
         <DisplayFlexRow>
@@ -26,9 +26,7 @@ export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent,
                     backgroundColor: `${theme.white}`, color: `${theme.launchpad.colors.text.hint}`,
                     border: `1px solid ${theme.launchpad.colors.border.default}`
                 }}>
-                <IconWrapper size={20} strokeColor={theme.launchpad.colors.primary}>
-                    <InfoSvg />
-                </IconWrapper>
+                <InfoIcon />
             </MouseoverVettingTooltip>
 
         </DisplayFlexRow>
@@ -36,6 +34,15 @@ export const OfferingCard = ({ name, id, onChange, option, text, tooltipContent,
     </Card>
 }
 
+const InfoIcon = styled(Info)`
+    height: 15px;
+    width: 15px;
+    stroke: 1.5;
+    color: ${props => props.theme.launchpad.colors.text.caption};
+    &:hover {
+        color: ${props => props.theme.launchpad.colors.primary};
+    }
+`
 
 const OfferingText = styled.text<{ checked: boolean }>`
     font-size: 14px;

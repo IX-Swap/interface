@@ -28,8 +28,8 @@ import { textFilter } from 'utils/input'
 import { text19 } from 'components/LaunchpadMisc/typography'
 import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
-import { OfferingCard } from './OfferingCard'
-import { offeringData } from './constants'
+import { StrategyCardCard as StrategyCard } from './OfferingCard'
+import { strategyOptions } from './constants'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -202,8 +202,8 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
           </FormSideBar>
 
           <FormBody>
-            <OfferInfoBlock>
-              {offeringData.map((offer, idx) => <OfferingCard key={offer.option + idx}
+            <StrategyInfoBlock>
+              {strategyOptions.map((offer, idx) => <StrategyCard key={offer.option + idx}
                 name="smartContractStrategy"
                 id={offer.option}
                 checked={offer.option === selectedOption}
@@ -219,7 +219,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               />
               )}
 
-            </OfferInfoBlock>
+            </StrategyInfoBlock>
 
             <Separator />
 
@@ -472,7 +472,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
 
 
-const OfferInfoBlock = styled.div`
+const StrategyInfoBlock = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;

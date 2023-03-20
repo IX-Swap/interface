@@ -1,6 +1,6 @@
 import { SMART_CONTRACT_STRATEGIES } from "components/LaunchpadIssuance/types";
 
-export const offeringData = [
+export const strategyOptions = [
     {
       option: SMART_CONTRACT_STRATEGIES.original,
       text: "IX Swap Originated \n Primary Offering",
