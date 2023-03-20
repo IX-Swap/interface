@@ -39,7 +39,7 @@ const schema = object().shape({
   isInterested: boolean().nullable(false).required('Please, specify if you are interested in this deal'),
   amount: number().when('isInterested', {
     is: true,
-    then: number().required('Please, enter amount of your estimated investment'),
+    then: number().required('Please enter amount of your estimated investment'),
     otherwise: number(),
   }),
 })
