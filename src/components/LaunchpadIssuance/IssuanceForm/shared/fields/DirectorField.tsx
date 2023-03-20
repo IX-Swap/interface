@@ -78,7 +78,7 @@ export const DirectorField: React.FC<Props> = (props) => {
                       />
                     )}
                   </Field>
-                  <Field name={`${props.field}[${idx}].proofOfIdentity`}>
+                  <Field name={`${props.field}[${idx}].proofOfAddress`}>
                     {({ field: { name, value, onChange }, meta }: FieldProps) => (
                       <FileField
                         label={`Proof of Address (${props.directorTitle})`}
