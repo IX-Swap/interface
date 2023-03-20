@@ -60,11 +60,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   ];
   const [selectedOption, setSelectedOption] = React.useState(SMART_CONTRACT_STRATEGIES.original);
 
-  const onChangeRadioButton = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = e.target.value as SMART_CONTRACT_STRATEGIES;
-    setSelectedOption(value);
-  }
-
   const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
   }, [])
@@ -213,7 +208,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
           <FormBody>
             <OfferInfoBlock>
-              {offeringData.map((offer, idx) => <OfferingCard key={offer.text + idx}
+              {offeringData.map((offer, idx) => <OfferingCard key={offer.option + idx}
                 name="smartContractStrategy"
                 id={offer.option}
                 checked={offer.option === selectedOption}

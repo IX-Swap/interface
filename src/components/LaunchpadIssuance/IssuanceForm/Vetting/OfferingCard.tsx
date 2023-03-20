@@ -43,7 +43,7 @@ const OfferingText = styled.text<{ checked: boolean }>`
     margin-left: 6px;
     line-height: 160%;
     font-weight: 500;
-    color: ${props => props.checked ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.hint};
+    color: ${({ theme, checked }) => checked ? theme.launchpad.colors.text.title : theme.launchpad.colors.text.hint};
 `
 
 const DisplayFlexRow = styled.div`
