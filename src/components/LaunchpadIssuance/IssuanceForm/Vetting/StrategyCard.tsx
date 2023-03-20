@@ -6,9 +6,10 @@ import { Info } from 'react-feather'
 import { MouseoverVettingTooltip } from 'components/Tooltip'
 
 interface StrategyCardProps {
-    name: string,
+    field: string,
     id: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    setter: (field: string, value: string) => void
+    touch?: (field: string, touched: boolean) => void
     option: string,
     text: string,
     tooltipContent: string,
@@ -16,11 +17,22 @@ interface StrategyCardProps {
     disabled: boolean,
 }
 
-export const StrategyCardCard = ({ name, id, onChange, option, text, tooltipContent, checked, disabled }: StrategyCardProps) => {
+export const StrategyCard = ({ field, id, setter, touch, option, text, tooltipContent, checked, disabled }: StrategyCardProps) => {
     const theme = useTheme()
+    const onChange = React.useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setter(field, e.target.value)
+            if (touch) {
+                setTimeout(() => {
+                    if (touch) touch(field, true)
+                })
+            }
+        },
+        [setter, touch, field]
+    )
     return <Card htmlFor={option} checked={checked}>
         <DisplayFlexRow>
-            <RadioButton name={name} id={id} type="radio" value={option} disabled={disabled} onChange={onChange} checked={checked} />
+            <RadioButton name={field} id={id} type="radio" value={option} onChange={onChange} disabled={disabled} checked={checked} />
             <MouseoverVettingTooltip text={tooltipContent} placement={'top-start'}
                 style={{
                     backgroundColor: `${theme.white}`, color: `${theme.launchpad.colors.text.hint}`,

@@ -4,7 +4,7 @@ import { FieldArray, FieldProps, Formik, FormikProps, Field } from 'formik'
 import { useHistory } from 'react-router-dom'
 import { ArrowLeft, Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
-import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { LoaderContainer, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { VettingFormValues } from './types'
@@ -28,7 +28,7 @@ import { textFilter } from 'utils/input'
 import { text19 } from 'components/LaunchpadMisc/typography'
 import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
-import { StrategyCardCard as StrategyCard } from './OfferingCard'
+import { StrategyCard } from './StrategyCard'
 import { strategyOptions } from './constants'
 
 export interface IssuanceVettingFormProps {
@@ -41,7 +41,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
-  const [selectedOption, setSelectedOption] = React.useState(SMART_CONTRACT_STRATEGIES.original);
 
   const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
@@ -84,7 +83,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
       loader.start()
       try {
-        values.smartContractStrategy = selectedOption
         await createVetting(values, initialValues.data, initialValues.vettingId)
 
         addPopup({
@@ -108,10 +106,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
-  React.useEffect(() => {
-    setSelectedOption(initialValues.data?.smartContractStrategy ?? SMART_CONTRACT_STRATEGIES.original)
-  }, [initialValues.data?.smartContractStrategy])
-  
+
   const isSubmitDisabled = useCallback(
     (errors: any, touched: any) => {
       if (view) return true
@@ -204,18 +199,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
           <FormBody>
             <StrategyInfoBlock>
               {strategyOptions.map((offer, idx) => <StrategyCard key={offer.option + idx}
-                name="smartContractStrategy"
+                field="smartContractStrategy"
                 id={offer.option}
-                checked={offer.option === selectedOption}
+                checked={offer.option === (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)}
                 option={offer.option} text={offer.text}
                 tooltipContent={offer.tooltipContent}
                 disabled={view}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-                  const value = e.target.value as SMART_CONTRACT_STRATEGIES;
-                  setSelectedOption(value);
-                  setFieldValue("smartContractStrategy", value);
-                  setFieldTouched("smartContractStrategy", true);
-                }}
+                setter={setFieldValue}
+                touch={setFieldTouched}
               />
               )}
 
