@@ -29,6 +29,7 @@ import { text19 } from 'components/LaunchpadMisc/typography'
 import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
 import { OfferingCard } from './OfferingCard'
+import { offeringData } from './constants'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -40,24 +41,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
-
-  const offeringData = [
-    {
-      option: SMART_CONTRACT_STRATEGIES.original,
-      text: "IX Swap Originated \n Primary Offering",
-      tooltipContent: "The smart contract was created by IX Swap and grants complete accessibility to the smart contract."
-    },
-    {
-      option: SMART_CONTRACT_STRATEGIES.nonOriginalWithAccess,
-      text: "Non-IXS Originated Primary Offering with Smart Contract Minting & Whitelisting Access",
-      tooltipContent: "The smart contract was created by an external party and grants partial accessibility to the smart contract to whitelist and to mint tokens."
-    },
-    {
-      option: SMART_CONTRACT_STRATEGIES.nonOriginalWithNoAccess,
-      text: "Non-IXS Originated Primary Offering with NO access to Token Smart Contract",
-      tooltipContent: "The smart contract was created by an external party and does NOT grant. accessibility to the smart contract."
-    }
-  ];
   const [selectedOption, setSelectedOption] = React.useState(SMART_CONTRACT_STRATEGIES.original);
 
   const onConfirmationClose = React.useCallback(() => {
