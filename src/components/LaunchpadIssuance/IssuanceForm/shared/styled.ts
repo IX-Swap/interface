@@ -97,6 +97,8 @@ export const AddButton = styled.button`
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
+  max-height: 36px;
+  margin: auto 0;
 
   ${text1}
   cursor: pointer;

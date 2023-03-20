@@ -42,10 +42,11 @@ export const DirectorField: React.FC<Props> = (props) => {
                     <FullnameHint>{`Full name of ${props.directorTitle}`}</FullnameHint>
 
                     <Field name={`${props.field}[${idx}].fullName`}>
-                      {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                      {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                         <FormField
                           placeholder="Full Name"
                           setter={getSetter(onChange)}
+                          touch={getSetter(onBlur)}
                           disabled={props.disabled}
                           field={name}
                           value={value}
@@ -56,7 +57,7 @@ export const DirectorField: React.FC<Props> = (props) => {
                     </Field>
                   </Column>
 
-                  {(directors.length > 1 || idx > 0) && (
+                  {!props.disabled && (directors.length > 1 || idx > 0) && (
                     <DeleteButton onClick={handleRemove(idx)} disabled={props.disabled}>
                       <Trash />
                     </DeleteButton>
@@ -65,12 +66,13 @@ export const DirectorField: React.FC<Props> = (props) => {
 
                 <FilesRow>
                   <Field name={`${props.field}[${idx}].proofOfIdentity`}>
-                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                       <FileField
                         label={`Proof of Identity (${props.directorTitle})`}
                         hint="Certified true copy of passport and other official forms of identification"
                         field={name}
                         setter={getSetter(onChange)}
+                        touch={getSetter(onBlur)}
                         disabled={props.disabled}
                         value={value}
                         error={meta.touched ? meta.error : ''}
@@ -79,12 +81,13 @@ export const DirectorField: React.FC<Props> = (props) => {
                     )}
                   </Field>
                   <Field name={`${props.field}[${idx}].proofOfAddress`}>
-                    {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                    {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                       <FileField
                         label={`Proof of Address (${props.directorTitle})`}
                         hint={`Proof of Address for ${props.directorTitle}`}
                         field={name}
                         setter={getSetter(onChange)}
+                        touch={getSetter(onBlur)}
                         disabled={props.disabled}
                         value={value}
                         error={meta.touched ? meta.error : ''}

@@ -21,19 +21,24 @@ interface Props {
   error?: string
 
   field: string
-  setter: (field: string, value: string, shouldValidate?: boolean) => void
+  setter: (field: string, value: string) => void
   touch?: (field: string, touched: boolean) => void
 
   inputFilter?: (value?: string) => string
 }
 
 export const FormField: React.FC<Props> = (props) => {
-  const onChange = React.useCallback((value: string) => {
-    if (props.touch) {
-      props.touch(props.field, true)
-    }
-    props.setter(props.field, value)
-  }, [])
+  const onChange = React.useCallback(
+    (value: string) => {
+      props.setter(props.field, value)
+      if (props.touch) {
+        setTimeout(() => {
+          if (props.touch) props.touch(props.field, true)
+        })
+      }
+    },
+    [props.setter, props.touch, props.field]
+  )
 
   return (
     <FormFieldWrapper gap="0.5rem" span={props.span} className={props.className}>
