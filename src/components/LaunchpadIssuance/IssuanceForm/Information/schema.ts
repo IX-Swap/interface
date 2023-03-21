@@ -106,6 +106,13 @@ export const schema = yup.object().shape({
       return Boolean(isEthChainAddress(this.parent.trusteeAddress))
     })
     .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
+
+  tokenAddress: yup
+    .string()
+    .test('addressConstraint', 'Please enter a valid address', function () {
+      return Boolean(isEthChainAddress(this.parent.tokenAddress))
+    })
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
   softCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')
