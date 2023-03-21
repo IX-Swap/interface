@@ -55,7 +55,7 @@ import {
 } from 'state/launchpad/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
 import { getDaysAfter } from 'utils/time'
 import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
@@ -85,6 +85,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   } = useQueryParams<{ id: number }>(['id'])
 
   const vetting = useVetting(issuanceId)
+  const smartContractStrategy = vetting.data?.smartContractStrategy
   const offer = useOfferFormInitialValues(issuanceId)
 
   const validationSchema = React.useMemo(() => (props.edit ? editSchema : schema), [props.edit])
@@ -285,14 +286,14 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
                 offer.data?.status as IssuanceStatus
               ) && (
-                <RejectInfo
-                  message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
-                  status={offer.data?.status}
-                  issuanceId={issuanceId}
-                  onClear={() => resetForm({ values: initialValues })}
-                  onSubmit={toSubmit}
-                />
-              )}
+                  <RejectInfo
+                    message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
+                    status={offer.data?.status}
+                    issuanceId={issuanceId}
+                    onClear={() => resetForm({ values: initialValues })}
+                    onSubmit={toSubmit}
+                  />
+                )}
               <IssuanceActionButtons
                 onSaveDraft={() => saveDraft(values)}
                 showDraft={!props.edit}
@@ -439,7 +440,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.decimals.toString()}
                   error={(touched.decimals && errors.decimals) as string}
                 />
-                <FormField
+                {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original ? <FormField
                   field="trusteeAddress"
                   setter={setFieldValue}
                   touch={setFieldTouched}
@@ -449,7 +450,16 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit}
                   value={values.trusteeAddress}
                   error={(touched.trusteeAddress && errors.trusteeAddress) as string}
-                />
+                /> : <FormField
+                  field="tokenAddress"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  label="Token Address"
+                  placeholder="Token Address"
+                  disabled={props.edit}
+                  value={values.tokenAddress}
+                  error={(touched.tokenAddress && errors.tokenAddress) as string}
+                />}
                 <DropdownField
                   field="tokenType"
                   setter={setFieldValue}
