@@ -481,7 +481,7 @@ export const useVettingFormInitialValues = (issuanceId?: number | string) => {
       transform(vetting.data).then(setValues).then(loader.stop)
     }
   }, [vetting.loading])
-
+  
   return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id, error: vetting.error }
 }
 
@@ -685,6 +685,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
         })),
 
         fundingDocuments: payload.fundingDocuments,
+        smartContractStrategy: payload.smartContractStrategy,
       }
 
       const uploadedFiles = await uploadFiles(payload, initialValues)
@@ -787,6 +788,7 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
         })),
 
         fundingDocuments: payload.fundingDocuments,
+        smartContractStrategy: payload.smartContractStrategy,
       }
 
       const updateDirectors = (key: 'directors' | 'beneficialOwners') => {

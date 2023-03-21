@@ -1,3 +1,4 @@
+import { SMART_CONTRACT_STRATEGIES } from "components/LaunchpadIssuance/types";
 import { VettingFormValues } from "./types";
 
 export const initialValues = {
@@ -13,15 +14,15 @@ export const defaultValues = {
 
   companyName: '',
   companyWebsite: '',
-  
+
   createdAt: new Date(),
   description: '',
 
   directors: [],
-  
+
   document: {
     pitchDeck: null,
-    
+
     certificateOfIncorporation: null,
     certificateOfIncumbency: null,
 
@@ -34,7 +35,8 @@ export const defaultValues = {
     resolutionAuthorizedSignatory: null,
   },
   fundingDocuments: [],
-  
+
   email: '',
   reasonRequested: '',
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES.original,
 } as unknown as VettingFormValues

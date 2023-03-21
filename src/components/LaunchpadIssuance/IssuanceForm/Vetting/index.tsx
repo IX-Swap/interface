@@ -28,6 +28,8 @@ import { textFilter } from 'utils/input'
 import { text19 } from 'components/LaunchpadMisc/typography'
 import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
+import { StrategyCard } from './StrategyCard'
+import { strategyOptions } from './constants'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -40,7 +42,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
-  const onConfirmationClose = useCallback(() => {
+  const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
   }, [])
 
@@ -67,7 +69,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     issuanceId,
     vettingId: initialValues.vettingId,
     goMain,
-    initialData: initialValues.data,
+    initialData: initialValues.data
   })
 
   const toSubmit = useCallback(() => {
@@ -104,6 +106,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
+
   const isSubmitDisabled = useCallback(
     (errors: any, touched: any) => {
       if (view) return true
@@ -133,6 +136,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       </LoaderContainer>
     )
   }
+
 
   return (
     <Formik
@@ -175,14 +179,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
             {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
               initialValues?.data?.status as IssuanceStatus
             ) && (
-              <RejectInfo
-                message={initialValues?.data?.changesRequested}
-                status={initialValues?.data?.status}
-                issuanceId={issuanceId}
-                onClear={() => resetForm({ values: defaultValues })}
-                onSubmit={toSubmit}
-              />
-            )}
+                <RejectInfo
+                  message={initialValues?.data?.changesRequested}
+                  status={initialValues?.data?.status}
+                  issuanceId={issuanceId}
+                  onClear={() => resetForm({ values: defaultValues })}
+                  onSubmit={toSubmit}
+                />
+              )}
             <VettingActionButtons
               onSaveDraft={() => saveDraft(values)}
               onSubmit={toSubmit}
@@ -193,6 +197,23 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
           </FormSideBar>
 
           <FormBody>
+            <StrategyInfoBlock>
+              {strategyOptions.map((strategy, idx) => <StrategyCard key={strategy.option + idx}
+                field="smartContractStrategy"
+                id={strategy.option}
+                checked={strategy.option === (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)}
+                option={strategy.option} text={strategy.text}
+                tooltipContent={strategy.tooltipContent}
+                disabled={view}
+                setter={setFieldValue}
+                touch={setFieldTouched}
+              />
+              )}
+
+            </StrategyInfoBlock>
+
+            <Separator />
+
             <IssuerInfoBlock>
               <FormField
                 label="Applicant's Full Name"
@@ -439,6 +460,14 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     </Formik>
   )
 }
+
+
+
+const StrategyInfoBlock = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+`
 
 const IssuerInfoBlock = styled.div`
   display: grid;

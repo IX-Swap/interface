@@ -12,3 +12,7 @@ export enum PAYOUT_STATUS {
   ENDED = 'ended',
   DELAYED = 'delayed',
 }
+
+export enum TOOLTIP_ARROW_TYPE {
+  VETTING = "vetting"
+}
