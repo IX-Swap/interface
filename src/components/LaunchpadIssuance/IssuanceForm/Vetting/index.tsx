@@ -198,12 +198,12 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
           <FormBody>
             <StrategyInfoBlock>
-              {strategyOptions.map((offer, idx) => <StrategyCard key={offer.option + idx}
+              {strategyOptions.map((strategy, idx) => <StrategyCard key={strategy.option + idx}
                 field="smartContractStrategy"
-                id={offer.option}
-                checked={offer.option === (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)}
-                option={offer.option} text={offer.text}
-                tooltipContent={offer.tooltipContent}
+                id={strategy.option}
+                checked={strategy.option === (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)}
+                option={strategy.option} text={strategy.text}
+                tooltipContent={strategy.tooltipContent}
                 disabled={view}
                 setter={setFieldValue}
                 touch={setFieldTouched}
