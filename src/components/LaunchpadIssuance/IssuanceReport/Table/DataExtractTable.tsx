@@ -62,56 +62,70 @@ export const DataExtractTable = () => {
   })
   const { values } = formik
   const columnCount = header.length
+
+  const [gradientClass, setGradientClass] = useState('overlay-gradient')
+  const handleScroll = (elem: any) => {
+    const scrollLeft = elem.target.scrollLeft
+    const scrollWidth = elem.target.scrollWidth
+    const clientWidth = elem.target.clientWidth
+    const isScrolledRight = scrollLeft + clientWidth === scrollWidth
+    const newClass = isScrolledRight ? 'hidden' : 'overlay-gradient'
+    if (gradientClass !== newClass) setGradientClass(newClass)
+  }
+
   return (
     <>
-      <Container ref={ref} onMouseDown={onMouseDown}>
-        {loading && (
-          <Centered>
-            <Loader />
-          </Centered>
-        )}
-        {!loading && items?.length === 0 && <EmptyTable />}
-        {items && items?.length > 0 && (
-          <TablesParent>
-            <UnpaddedOverflowIssuanceTable>
-              <Header header={header} />
-              <Statistics statistics={statistics} count={columnCount} />
-              <FormikProvider value={formik}>
-                <OverflowRow count={columnCount}>
-                  <SpreadColumn key="extract">
-                    <span>Extract</span>
-                    <JoinedCell>
-                      <Box marginLeft="-13px">
+      <Container>
+        <div className={gradientClass} />
+        <div className="wrap" ref={ref} onMouseDown={onMouseDown} onScroll={handleScroll}>
+          {loading && (
+            <Centered>
+              <Loader />
+            </Centered>
+          )}
+          {!loading && items?.length === 0 && <EmptyTable />}
+          {items && items?.length > 0 && (
+            <TablesParent>
+              <UnpaddedOverflowIssuanceTable>
+                <Header header={header} />
+                <Statistics statistics={statistics} count={columnCount} />
+                <FormikProvider value={formik}>
+                  <OverflowRow count={columnCount}>
+                    <SpreadColumn key="extract">
+                      <span>Extract</span>
+                      <JoinedCell>
+                        <Box marginLeft="-13px">
+                          <Checkbox
+                            checked={values[fields[0]]}
+                            onChange={(value: boolean) => formik.setFieldValue(fields[0], value)}
+                          />
+                        </Box>
+                      </JoinedCell>
+                    </SpreadColumn>
+                    {fields.slice(1).map((field) => (
+                      <OverflowRaw key={field}>
                         <Checkbox
-                          checked={values[fields[0]]}
-                          onChange={(value: boolean) => formik.setFieldValue(fields[0], value)}
+                          checked={values[field]}
+                          onChange={(value: boolean) => formik.setFieldValue(field, value)}
                         />
-                      </Box>
-                    </JoinedCell>
-                  </SpreadColumn>
-                  {fields.slice(1).map((field) => (
-                    <OverflowRaw key={field}>
-                      <Checkbox
-                        checked={values[field]}
-                        onChange={(value: boolean) => formik.setFieldValue(field, value)}
-                      />
-                    </OverflowRaw>
-                  ))}
-                </OverflowRow>
-              </FormikProvider>
-            </UnpaddedOverflowIssuanceTable>
-            <OverflowIssuanceTable>
-              <OverflowRow count={columnCount}></OverflowRow>
-              {items?.map((investment: IssuanceDataExtract) => (
-                <OverflowRow count={columnCount} key={investment.offerId + investment.offerInvestmentId}>
-                  {fields.map((field) => (
-                    <DataCell key={field} field={field} investment={investment} />
-                  ))}
-                </OverflowRow>
-              ))}
-            </OverflowIssuanceTable>
-          </TablesParent>
-        )}
+                      </OverflowRaw>
+                    ))}
+                  </OverflowRow>
+                </FormikProvider>
+              </UnpaddedOverflowIssuanceTable>
+              <OverflowIssuanceTable>
+                <OverflowRow count={columnCount}></OverflowRow>
+                {items?.map((investment: IssuanceDataExtract) => (
+                  <OverflowRow count={columnCount} key={investment.offerId + investment.offerInvestmentId}>
+                    {fields.map((field) => (
+                      <DataCell key={field} field={field} investment={investment} />
+                    ))}
+                  </OverflowRow>
+                ))}
+              </OverflowIssuanceTable>
+            </TablesParent>
+          )}
+        </div>
       </Container>
 
       <RowCenter>
