@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 export const tableHeaderStyles = css`
   height: 60px;
   width: 100%;
-  padding: 0.25rem 1rem;
+  padding: 0.25rem 1.5rem;
   font-family: 'Inter';
   ${text47}
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
