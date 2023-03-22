@@ -279,6 +279,16 @@ export const useClaimOffer = (id: string) => {
   )
 }
 
+export const useCheckClaimed = (offerId: string) => {
+  const [hasClaimed, setHasClaimed] = React.useState<boolean>(false)
+  
+  apiService.get(`/offers/${offerId}/claim/refund/check-has-claimed`)
+  .then(res => res.data as boolean)
+  .then(setHasClaimed)
+  
+  return { setHasClaimed, hasClaimed }
+}
+
 export const useInvestedAmount = (offerId: string) => {
   const loader = useLoader()
 
