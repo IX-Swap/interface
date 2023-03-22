@@ -122,7 +122,10 @@ const QuestionInput = styled.input`
   align-self: flex-end;
 
   ${text30}
-  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+  ::placeholder {
+    color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  }
 `
 
 const AnswerWrapper = styled.div`
@@ -136,6 +139,11 @@ const AnswerInput = styled.textarea`
   resize: none;
   width: 100%;
   min-height: 120px;
+  ${text30}
+  color: ${(props) => props.theme.launchpad.colors.text.title};
+  ::placeholder {
+    color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  }
 `
 
 const RemoveButton = styled(AddButton)`
