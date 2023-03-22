@@ -66,6 +66,7 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
             alignItems: 'center',
             height: '40px',
             width: '180px',
+            paddingLeft: '12px'
           }}
         />
         <BtnContainer onClick={onCopy}>
