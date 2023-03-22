@@ -206,6 +206,7 @@ const AmountTitle = styled.span`
   font-weight: 700;
   font-size: 16px;
   color: ${(props) => props.theme.launchpad.colors.text.title};
+  margin: 4px 0;
 `
 const AmountSubTitle = styled.span`
   color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
