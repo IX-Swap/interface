@@ -88,9 +88,7 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     }
 
     const warningText = getWarning(value)
-    if (warningText) {
-      setWarning(warningText)
-    }
+    setWarning(warningText)
     setValue('amount', cleanAmount(value))
   }, [])
 

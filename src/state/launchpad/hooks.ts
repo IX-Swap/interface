@@ -45,7 +45,7 @@ import { initialValues as informationInitialFormValues } from 'components/Launch
 import { IssuanceFile } from 'components/LaunchpadIssuance/IssuanceForm/types'
 import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
 import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
@@ -685,7 +685,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
         })),
 
         fundingDocuments: payload.fundingDocuments,
-        smartContractStrategy: payload.smartContractStrategy,
+        smartContractStrategy: payload.smartContractStrategy || SMART_CONTRACT_STRATEGIES.original,
       }
 
       const uploadedFiles = await uploadFiles(payload, initialValues)
@@ -788,7 +788,7 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
         })),
 
         fundingDocuments: payload.fundingDocuments,
-        smartContractStrategy: payload.smartContractStrategy,
+        smartContractStrategy: payload.smartContractStrategy || SMART_CONTRACT_STRATEGIES.original,
       }
 
       const updateDirectors = (key: 'directors' | 'beneficialOwners') => {
