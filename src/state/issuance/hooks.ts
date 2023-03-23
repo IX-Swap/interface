@@ -180,7 +180,7 @@ export const useManageOffer = (offerId?: string) => {
       if (!offerId) {
         return
       }
-      return apiService.patch(`vettings/${offerId}/review`, { status, ...reasons })
+      return apiService.patch(`offers/${offerId}/review`, { status, ...reasons })
     },
     [offerId]
   )
@@ -204,9 +204,9 @@ export const useRequestOfferChanges = (offerId?: string) => {
   )
 }
 
-export const useReviewOffer = (vettingId?: string) => {
-  const approve = useApproveOffer(vettingId)
-  const reject = useRejectOffer(vettingId)
-  const requestChanges = useRequestOfferChanges(vettingId)
+export const useReviewOffer = (offerId?: string) => {
+  const approve = useApproveOffer(offerId)
+  const reject = useRejectOffer(offerId)
+  const requestChanges = useRequestOfferChanges(offerId)
   return { approve, reject, requestChanges }
 }
