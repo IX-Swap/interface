@@ -9,7 +9,6 @@ import { TextInput } from 'ui/TextInput/TextInput'
 
 export const OwnershipStructureFields = () => {
   const { control, formState } = useFormContext()
-
   return (
     <>
       <Grid container spacing={5}>
@@ -23,6 +22,9 @@ export const OwnershipStructureFields = () => {
             name='numberOfBusinessOwners'
             label='Number of Business Owners'
             variant='outlined'
+            defaultValue={
+              control?.defaultValuesRef?.current?.otherLegalEntityStatus
+            }
           />
         </Grid>
         <Grid item xs={12} md={6}>
