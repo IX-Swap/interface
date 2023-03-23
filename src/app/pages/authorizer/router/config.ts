@@ -4,7 +4,7 @@ import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.s
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
-import { ReactComponent as IssuanceDetailsIcon } from 'assets/icons/navigation/issuance-details.svg'
+// import { ReactComponent as IssuanceDetailsIcon } from 'assets/icons/navigation/issuance-details.svg'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
 import { ReactComponent as OfferingIcon } from 'assets/icons/navigation/offering.svg'
@@ -68,12 +68,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     color: '#11BB93',
     icon: OfferingIcon
   },
-  {
-    label: 'Deal Closure',
-    path: AuthorizerRoute.dealClosure,
-    color: '#11BB93',
-    icon: CommitmentIcon
-  },
+  // {
+  //   label: 'Deal Closure',
+  //   path: AuthorizerRoute.dealClosure,
+  //   color: '#11BB93',
+  //   icon: CommitmentIcon
+  // },
   {
     label: 'OTC Trades',
     path: AuthorizerRoute.otcTrades,
@@ -92,12 +92,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     color: '#e6d200',
     icon: WithdrawalAddressIcon
   },
-  {
-    label: 'Proposed Fundraising Details',
-    path: AuthorizerRoute.issuanceDetails,
-    color: '#11BB93',
-    icon: IssuanceDetailsIcon
-  },
+  // {
+  //   label: 'Proposed Fundraising Details',
+  //   path: AuthorizerRoute.issuanceDetails,
+  //   color: '#11BB93',
+  //   icon: IssuanceDetailsIcon
+  // },
   {
     label: 'Listings',
     path: AuthorizerRoute.listings,
