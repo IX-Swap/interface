@@ -112,7 +112,7 @@ export const useToast = (): ToastService => {
       if (
         notification.feature === AppFeature.Deposits ||
         notification.feature === AppFeature.Withdrawals ||
-        notification.feature === AppFeature.DigitalSecurityWithdrawals ||
+        notification.feature === AppFeature.SecurityTokenWithdrawals ||
         notification.feature === AppFeature.Authentication ||
         (notification?.service?.toUpperCase() === 'EXCHANGE' &&
           notification?.subject?.toUpperCase() === 'ORDER CREATED')

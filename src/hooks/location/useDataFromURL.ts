@@ -54,7 +54,7 @@ export const useDataFromURL = () => {
 
         case 'cash-deposits':
         case 'cash-withdrawals':
-        case 'digital-security-withdrawals': {
+        case 'security-token-withdrawals': {
           const [balanceId, action] = params
           state[stripColonFromURLParam(urlParams.balanceId)] = balanceId
           break
@@ -74,7 +74,7 @@ export const useDataFromURL = () => {
           break
         }
 
-        case 'withdrawal-addresses': {
+        case 'blockchain-addresses': {
           const [withdrawalAddressId, action] = params
           state[stripColonFromURLParam(urlParams.withdrawalAddressId)] =
             withdrawalAddressId

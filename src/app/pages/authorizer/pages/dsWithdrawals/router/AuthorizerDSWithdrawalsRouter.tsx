@@ -11,7 +11,7 @@ export const AuthorizerDSWithdrwalsRouter = () => {
       <AppRoute
         exact
         breadcrumb='Security Token Withdrawals'
-        path='/app/authorizer/digital-security-withdrawals/:userId/:dsWithdrawalId/view'
+        path='/app/authorizer/security-token-withdrawals/:userId/:dsWithdrawalId/view'
       >
         <DSWithdrawalAuthorization />
       </AppRoute>

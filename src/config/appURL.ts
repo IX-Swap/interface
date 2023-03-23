@@ -80,7 +80,7 @@ export const appURL = {
   cashDeposit: `${AppFeature.CashDeposits}`,
   cashWithdrawal: `${AppFeature.CashWithdrawals}`,
   dsDeposit: `${AppFeature.DigitalSecurityDeposits}`,
-  dsWithdrawal: `${AppFeature.DigitalSecurityWithdrawals}`
+  dsWithdrawal: `${AppFeature.SecurityTokenWithdrawals}`
 }
 
 export const makeURL = (paths: Array<keyof typeof appURL>) => {

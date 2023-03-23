@@ -56,8 +56,8 @@ export const dsoFormSteps = [
       return {
         subscriptionDocument: data.subscriptionDocument,
         documents: data.documents,
-        videos: videos.length > 0 ? [...videos, {}] : [{}, {}],
-        faqs: faqs.length > 0 ? [...faqs, {}] : [{}, {}],
+        videos: videos.length > 0 ? [...videos] : [{}, {}],
+        faqs: faqs.length > 0 ? [...faqs] : [{}, {}],
         step: 3
       }
     },

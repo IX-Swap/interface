@@ -6,7 +6,7 @@ export const Note = () => {
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Typography color='#0E1E3F'>
-          Your details will NOT be auto-saved signing up using MyInfo
+          Your details will NOT be auto-saved signing up using Myinfo
         </Typography>
       </Grid>
       <Grid item xs={12}>

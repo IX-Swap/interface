@@ -17,9 +17,9 @@ export const getCorporateInfoFormValues = (
     LEGAL_ENTITY_STATUS_LIST.every(
       ({ value }) => value !== data.legalEntityStatus
     )
-  const otherLegalEntityStatus = isCustomLegalEntityStatus
-    ? data?.legalEntityStatus
-    : undefined
+  // const otherLegalEntityStatus = isCustomLegalEntityStatus
+  //   ? data?.legalEntityStatus
+  //   : undefined
 
   const legalEntityStatus = isCustomLegalEntityStatus
     ? last(LEGAL_ENTITY_STATUS_LIST)?.value
@@ -39,7 +39,7 @@ export const getCorporateInfoFormValues = (
     companyLegalName: data?.companyLegalName,
     registrationNumber: data?.registrationNumber,
     legalEntityStatus,
-    otherLegalEntityStatus,
+    otherLegalEntityStatus: data?.numberOfBusinessOwners,
     countryOfFormation: data?.countryOfFormation,
     companyAddress: data?.companyAddress,
     representatives: representatives,

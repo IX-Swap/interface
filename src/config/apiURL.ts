@@ -21,7 +21,7 @@ export const authorizerURL = {
   [AppFeature.Commitments]: '/issuance/commitments/list',
   [AppFeature.Corporates]: '/identity/corporates/list',
   [AppFeature.Individuals]: '/identity/individuals/list',
-  [AppFeature.DigitalSecurityWithdrawals]: '/accounts/security/withdrawals',
+  [AppFeature.SecurityTokenWithdrawals]: '/accounts/security/withdrawals',
   [AppFeature.Offerings]: '/issuance/dso/list',
   bulkAuthorizeCommitments: (action: 'approve' | 'reject') =>
     `/issuance/commitments/${action}`
