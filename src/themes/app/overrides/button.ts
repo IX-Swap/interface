@@ -2,7 +2,7 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const button = (theme: Theme) => {
-  const buttonPalette = theme.palette.button
+  const { button: buttonPalette, primary } = theme.palette
 
   return {
     styleOverrides: {
@@ -15,7 +15,7 @@ export const button = (theme: Theme) => {
         textTransform: 'none' as any,
         svg: {
           backgroundColor: 'transparent',
-          fill: '#4C88FF'
+          fill: primary.main
         },
         '&.MuiButton-sizeLarge': {
           padding: '16px 40px'
@@ -33,7 +33,7 @@ export const button = (theme: Theme) => {
           border: '1px solid transparent'
         },
         ':hover': {
-          backgroundColor: '#78A5FF',
+          backgroundColor: buttonPalette.bgContainedHover,
           color: '#FFFFFF',
           svg: {
             fill: '#FFF'
@@ -41,7 +41,7 @@ export const button = (theme: Theme) => {
         }
       },
       contained: {
-        backgroundColor: '#4C88FF',
+        backgroundColor: buttonPalette.bgContained,
         svg: {
           backgroundColor: 'transparent',
           fill: '#FFFFFF'
@@ -50,7 +50,7 @@ export const button = (theme: Theme) => {
       outlined: {
         backgroundColor: buttonPalette.bgOutlined,
         border: `1px solid ${buttonPalette.borderOutlined}`,
-        color: '#4C88FF',
+        color: primary.main,
         '&:hover': {
           border: `1px solid ${alpha('#4c88ff', 0.3)}`
         }
@@ -58,9 +58,9 @@ export const button = (theme: Theme) => {
       text: {
         ':hover': {
           backgroundColor: buttonPalette.bgTextHover,
-          color: '#4C88FF',
+          color: primary.main,
           svg: {
-            fill: '#4C88FF'
+            fill: primary.main
           }
         },
         ':disabled': {

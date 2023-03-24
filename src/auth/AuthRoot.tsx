@@ -15,6 +15,13 @@ export const AuthRoot: React.FC = () => {
     logo
   } = useStyles()
 
+  const Logo =
+    localStorage.getItem('logoUrl') !== 'undefined' ? (
+      <img src={JSON.parse(localStorage.getItem('logoUrl') ?? '')} alt='Logo' />
+    ) : (
+      <AppLogo />
+    )
+
   return (
     <Grid className={container} container>
       <Grid item className={wrapper}>
@@ -24,9 +31,7 @@ export const AuthRoot: React.FC = () => {
           direction={'column'}
           alignItems={'stretch'}
         >
-          <Box className={logo}>
-            <AppLogo />
-          </Box>
+          <Box className={logo}>{Logo}</Box>
           <Grid item className={formContainer}>
             <AuthRouter />
           </Grid>

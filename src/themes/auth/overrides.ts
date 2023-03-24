@@ -88,7 +88,7 @@ export const getThemeOverrides = (
         paddingLeft: 24,
         paddingRight: 24,
         '&:-webkit-autofill, &:-webkit-autofill:focus': {
-          WebkitBoxShadow: '0 0 0 100px #1a397c inset !important',
+          WebkitBoxShadow: theme.palette.input.boxShadowOutline,
           borderRadius: 4,
           backgroundClip: 'padding-box',
           WebkitTextFillColor: `#ffffff`
@@ -123,9 +123,9 @@ export const getThemeOverrides = (
         boxSizing: 'border-box',
         color: '#ffffff',
         fontSize: 16,
-        WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
+        WebkitBoxShadow: theme.palette.input.boxShadowBase,
         '&:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
+          WebkitBoxShadow: theme.palette.input.boxShadowBase,
           WebkitTextFillColor: '#ffffff',
           transition: 'background-color 5000s ease-in-out 0s'
         },
@@ -136,8 +136,8 @@ export const getThemeOverrides = (
           transition: 'none'
         },
         '&:-internal-autofill-selected': {
-          WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
-          backgroundColor: '#1a397c40!important'
+          WebkitBoxShadow: theme.palette.input.boxShadowBase,
+          backgroundColor: `${theme.palette.input.bgBase ?? ''}!important`
         },
         '.Mui-focused &': {
           backgroundColor: '#ffffff',
@@ -153,7 +153,7 @@ export const getThemeOverrides = (
       adornedEnd: {
         paddingRight: 8,
         '&.Mui-error': {
-          backgroundColor: '#1a397c40'
+          backgroundColor: theme.palette.input.bgBase
         },
         '&.Mui-focused': {
           backgroundColor: '#ffffff',
@@ -182,14 +182,13 @@ export const getThemeOverrides = (
       contained: {
         fontSize: 14,
         borderRadius: 8,
-        backgroundColor: '#0055FF',
+        backgroundColor: theme.palette.button.bgContained,
         color: '#ffffff',
         '&:hover': {
-          backgroundColor: '#4080ff!important'
+          backgroundColor: theme.palette.button.bgContainedHover
         },
-
         '&.Mui-disabled': {
-          backgroundColor: '#0055FF20'
+          backgroundColor: theme.palette.button.bgContainedDisabled
         }
       }
     }

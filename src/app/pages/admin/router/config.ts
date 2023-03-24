@@ -29,7 +29,8 @@ export const AdminRoute = {
   virtualAccountAudit: '/app/admin/virtualAccountAudit',
   virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
   blockchainSettings: '/app/admin/blockchainSettings',
-  custodyManagement: '/app/admin/custody-management'
+  custodyManagement: '/app/admin/custody-management',
+  tenants: '/app/admin/tenants'
 }
 
 export const CustodyManagementRoute = {
@@ -97,5 +98,11 @@ export const adminLandingLinks: InternalRouteProps[] = [
     path: AdminRoute.custodyManagement,
     color: '#90A30F',
     icon: CustodyManagementIcon
+  },
+  {
+    label: 'Tenants',
+    path: AdminRoute.tenants,
+    color: '#0FA3A3',
+    icon: MasDisclosureIcon
   }
 ]
