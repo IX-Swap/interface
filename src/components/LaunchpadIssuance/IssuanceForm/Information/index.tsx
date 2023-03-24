@@ -763,7 +763,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               <Separator />
 
               <AdditionalInformation
-                social={values.social}
                 setter={setFieldValue}
                 touch={setFieldTouched}
                 values={values}
