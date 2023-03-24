@@ -34,7 +34,7 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
       : 'default'
 
   const theme = createTheme({
-    ...baseTheme[tenantThemeName],
+    ...baseTheme[tenantThemeName in baseTheme ? tenantThemeName : 'default'],
     typography,
     breakpoints
   })
