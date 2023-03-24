@@ -28,13 +28,14 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
       ? darkTheme
       : lightTheme
 
-  const tenantThemeName =
-    localStorage.getItem('tenantThemeName') !== 'undefined'
-      ? JSON.parse(localStorage.getItem('tenantThemeName'))
+  const tenantThemeName = localStorage.getItem('tenantThemeName')
+  const themeName =
+    tenantThemeName !== 'undefined' && JSON.parse(tenantThemeName) in darkTheme
+      ? JSON.parse(tenantThemeName)
       : 'default'
 
   const theme = createTheme({
-    ...baseTheme[tenantThemeName in baseTheme ? tenantThemeName : 'default'],
+    ...baseTheme[themeName],
     typography,
     breakpoints
   })

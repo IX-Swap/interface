@@ -9,15 +9,14 @@ export enum AppTheme {
 }
 
 export const getAppTheme = () => {
-  const tenantThemeName =
-    localStorage.getItem('tenantThemeName') !== 'undefined'
-      ? JSON.parse(localStorage.getItem('tenantThemeName'))
+  const tenantThemeName = localStorage.getItem('tenantThemeName')
+  const themeName =
+    tenantThemeName !== 'undefined' && JSON.parse(tenantThemeName) in darkTheme
+      ? JSON.parse(tenantThemeName)
       : 'default'
 
-  console.log(tenantThemeName in darkTheme)
-
   const theme = createTheme({
-    ...darkTheme[tenantThemeName in darkTheme ? tenantThemeName : 'default'],
+    ...darkTheme[themeName],
     typography
   })
 
