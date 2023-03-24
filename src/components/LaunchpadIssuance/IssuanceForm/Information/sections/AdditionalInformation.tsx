@@ -14,17 +14,15 @@ import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { Flex } from 'rebass'
 
 interface Props {
-  social: SocialMediaLink[]
-
   values: InformationFormValues
   errors: FormikErrors<InformationFormValues>
   touched: FormikTouched<InformationFormValues>
 
   setter: (field: string, value: any) => void
-  touch?: (field: string, touched: boolean) => void
+  touch: (field: string, touched: boolean) => void
 }
 
-export const AdditionalInformation: React.FC<Props> = (props) => {
+export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, errors, touched }) => {
   const [showAddSocial, setShowAddSocial] = React.useState(false)
   const toggleDialog = React.useCallback(() => setShowAddSocial((state) => !state), [])
 
@@ -43,17 +41,21 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
       { label: 'CoinGecko', value: SocialMediaType.coinGecko },
     ]
 
-    const selectedLinks = new Set(props.social.map((x) => x.type))
+    const selectedLinks = new Set(values.social.map((x) => x.type))
 
     return defaultLinks.filter((x) => !selectedLinks.has(x.value))
-  }, [props.social])
+  }, [values.social])
 
   const addSocialMedia = React.useCallback(() => {
     if (!addedSocial || !addedSocialLink) {
       return
     }
 
-    props.setter('social', props.social.concat({ type: addedSocial, url: addedSocialLink }))
+    const newIndex = values.social.length
+    setter('social', values.social.concat({ type: addedSocial, url: addedSocialLink }))
+    setTimeout(() => {
+      if (touch) touch(`social[${newIndex}]`, true)
+    })
 
     setAddedSocial(undefined)
     setAddedSocialLink(undefined)
@@ -63,27 +65,12 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
 
   const removeSocialMedia = React.useCallback(
     (link: SocialMediaLink) => {
-      props.setter(
+      setter(
         'social',
-        props.social.filter((x) => x.type !== link.type)
+        values.social.filter((x) => x.type !== link.type)
       )
     },
-    [props.social]
-  )
-
-  const getError = React.useCallback(
-    (link?: SocialMediaLink) => {
-      if (!link) return
-      const index = props.social.findIndex((x) => x.type === link.type)
-      const errors = props.errors.social as FormikErrors<SocialMediaLink>[]
-
-      if (index < 0 || errors?.length < index) {
-        return
-      }
-
-      return errors?.[index]
-    },
-    [props.errors]
+    [values.social]
   )
 
   return (
@@ -92,33 +79,33 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
         label="Email Address (contact information for investors)"
         placeholder="Email Address"
         field="email"
-        setter={props.setter}
-        touch={props.touch}
-        value={props.values.email}
-        error={(props.touched.email && props.errors.email) as string}
+        setter={setter}
+        touch={touch}
+        value={values.email}
+        error={(touched.email && errors.email) as string}
       />
 
       <FormField
         label="Official Website"
         placeholder="URL"
         field="website"
-        setter={props.setter}
-        touch={props.touch}
-        value={props.values.website}
-        error={(props.touched.website && props.errors.website) as string}
+        setter={setter}
+        touch={touch}
+        value={values.website}
+        error={(touched.website && errors.website) as string}
       />
 
       <FormField
         label="Whitepaper"
         placeholder="URL"
         field="whitepaper"
-        setter={props.setter}
-        touch={props.touch}
-        value={props.values.whitepaper}
-        error={(props.touched.whitepaper && props.errors.whitepaper) as string}
+        setter={setter}
+        touch={touch}
+        value={values.whitepaper}
+        error={(touched.whitepaper && errors.whitepaper) as string}
       />
 
-      {props.social.map((link, idx) => (
+      {values.social.map((link, idx) => (
         <Flex flexDirection={'column'} key={idx}>
           <FormField
             key={link.type}
@@ -126,11 +113,11 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
             value={link.url}
             placeholder="URL"
             field={`social[${idx}].url`}
-            setter={props.setter}
-            touch={props.touch}
+            setter={setter}
+            touch={touch}
             error={
-              ((props.touched.social?.[idx] as FormikTouched<SocialMediaLink> | undefined)?.url &&
-                (props.errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url) as string
+              ((touched.social?.[idx] as FormikTouched<SocialMediaLink> | undefined) &&
+                (errors.social?.[idx] as FormikErrors<SocialMediaLink> | undefined)?.url) as string
             }
             trailing={
               <DeleteButton onClick={() => removeSocialMedia(link)}>
@@ -138,14 +125,13 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
               </DeleteButton>
             }
           />
-          <ErrorText>{getError(link)?.url}</ErrorText>
         </Flex>
       ))}
 
       <AddButton onClick={toggleDialog}>
         <Plus /> Add Social
-        {props.social.length === 0 && props.errors.social && (
-          <ErrorText>{JSON.stringify(props.errors.social).slice(1, -1)}</ErrorText>
+        {values.social.length === 0 && errors.social && (
+          <ErrorText>{JSON.stringify(errors.social).slice(1, -1)}</ErrorText>
         )}
       </AddButton>
 
@@ -166,7 +152,7 @@ export const AdditionalInformation: React.FC<Props> = (props) => {
           placeholder="Social Media Link"
           field={''}
           setter={(field, value) => setAddedSocialLink(value)}
-          touch={props.touch}
+          touch={touch}
         />
 
         <FilledButton onClick={addSocialMedia}>Submit</FilledButton>
