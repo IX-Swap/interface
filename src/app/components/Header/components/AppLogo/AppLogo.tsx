@@ -10,9 +10,22 @@ export const AppLogo = () => {
   const theme = useTheme()
   const classes = useStyles()
 
+  const Logo =
+    localStorage.getItem('logoUrl') !== 'undefined' ? (
+      <img
+        src={JSON.parse(localStorage.getItem('logoUrl') ?? '')}
+        alt='Logo'
+        style={{ filter: `invert(${theme.palette.mode === 'light' ? 1 : 0})` }}
+      />
+    ) : theme.palette.mode === 'light' ? (
+      <InvestaXLight />
+    ) : (
+      <InvestaXDark />
+    )
+
   return (
     <Link to={AppRoute.home} className={classes.wrapper}>
-      {theme.palette.mode === 'light' ? <InvestaXLight /> : <InvestaXDark />}
+      {Logo}
     </Link>
   )
 }
