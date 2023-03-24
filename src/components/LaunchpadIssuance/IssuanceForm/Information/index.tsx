@@ -16,7 +16,7 @@ import { Column, Row, Separator, Spacer, LoaderContainer } from 'components/Laun
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
 import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
-import { BaseCheckbox, BaseCheckboxWithLabel } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
+import { BaseCheckboxWithLabel } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
 import { FormGrid } from '../shared/FormGrid'
 import { FormField } from '../shared/fields/FormField'
