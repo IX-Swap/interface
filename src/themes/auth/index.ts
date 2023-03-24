@@ -13,7 +13,13 @@ export const getAppTheme = () => {
     localStorage.getItem('tenantThemeName') !== 'undefined'
       ? JSON.parse(localStorage.getItem('tenantThemeName'))
       : 'default'
-  const theme = createTheme({ ...darkTheme[tenantThemeName], typography })
+
+  console.log(tenantThemeName in darkTheme)
+
+  const theme = createTheme({
+    ...darkTheme[tenantThemeName in darkTheme ? tenantThemeName : 'default'],
+    typography
+  })
 
   theme.components = getThemeOverrides(theme)
 
