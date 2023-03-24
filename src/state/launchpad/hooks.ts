@@ -281,11 +281,12 @@ export const useClaimOffer = (id: string) => {
 
 export const useCheckClaimed = (offerId: string) => {
   const [hasClaimed, setHasClaimed] = React.useState<boolean>(false)
-  
-  apiService.get(`/offers/${offerId}/claim/refund/check-has-claimed`)
-  .then(res => res.data as boolean)
-  .then(setHasClaimed)
-  
+
+  apiService
+    .get(`/offers/${offerId}/claim/refund/check-has-claimed`)
+    .then((res) => res.data as boolean)
+    .then(setHasClaimed)
+
   return { setHasClaimed, hasClaimed }
 }
 
@@ -491,7 +492,7 @@ export const useVettingFormInitialValues = (issuanceId?: number | string) => {
       transform(vetting.data).then(setValues).then(loader.stop)
     }
   }, [vetting.loading])
-  
+
   return { data: values, loading: loader.isLoading, vettingId: vetting.data?.id, error: vetting.error }
 }
 
@@ -1001,7 +1002,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
           .map((document) => {
             const file = files.find((x) => x.id === document.file?.id)
 
-            return { name: file?.file.name, file: file } as AdditionalDocument
+            return { file: file, asset: document?.file } as AdditionalDocument
           }),
 
         hasPresale: payload.hasPresale,

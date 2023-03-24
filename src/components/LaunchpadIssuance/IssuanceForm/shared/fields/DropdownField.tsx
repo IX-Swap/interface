@@ -45,7 +45,9 @@ export function DropdownField<T>(props: Props<T>) {
   const [showDropdown, setShowDropdown] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
 
-  const [optionSearch, setOptionSearch] = React.useState<string>()
+  const [optionSearch, setOptionSearch] = React.useState<string>(
+    props.options.find((x) => x.value === props.value)?.label || ''
+  )
 
   const options = React.useMemo(() => {
     if (!props.searchable) {
