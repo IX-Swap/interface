@@ -83,7 +83,7 @@ export const StyledDocPreviewButton = styled(ButtonGradient)`
   max-width: 34px;
   padding: 4px 8px;
   font-size: 14px;
-  background:  ${props => props.theme.launchpad.colors.primary};
+  background: ${(props) => props.theme.launchpad.colors.primary};
 `
 
 const Wrapper = styled.div`
@@ -94,11 +94,11 @@ const Wrapper = styled.div`
 const FileContainer = styled.div`
   #border: solid;
   border-width: 0.005rem;
-  border-color: ${props => props.theme.launchpad.colors.primary};
+  border-color: ${(props) => props.theme.launchpad.colors.primary};
   border-radius: 35px;
 
   padding: 0.75rem;
-` 
+`
 
 const Body = styled.div`
   display: grid;
@@ -141,8 +141,8 @@ const TitleContainer = styled.div`
 const ModalContent = styled(ModalContentWrapper)`
   padding: 29px 38px 20px 42px;
   border-radius: 20px;
-  color: ${props => props.theme.launchpad.colors.text.body};
-  background-color: ${props => props.theme.launchpad.colors.background};
+  color: ${(props) => props.theme.launchpad.colors.text.body};
+  background-color: ${(props) => props.theme.launchpad.colors.background};
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 16px;
   }

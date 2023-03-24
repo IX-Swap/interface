@@ -1,5 +1,6 @@
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import {
+  Asset,
   OfferDistributionFrequency,
   OfferIndustry,
   OfferInvestmentStructure,
@@ -119,8 +120,8 @@ export interface SocialMediaLink {
 }
 
 export interface AdditionalDocument {
-  name: string
   file: IssuanceFile
+  asset?: Asset
 }
 
 export interface FAQEntry {
