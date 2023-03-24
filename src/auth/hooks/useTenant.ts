@@ -31,9 +31,8 @@ export const TENANT_QUERY_KEY = 'tenant'
 export const useTenant = () => {
   const { storageService } = useServices()
   const subdomain = window.location.host.split('.')[0]
-  console.log(subdomain)
 
-  const tenant = tenants.find(t => t._id === 'tenant1')
+  const tenant = tenants.find(t => t._id === subdomain)
 
   storageService.set('name', tenant?.name)
   storageService.set('logoUrl', tenant?.logoUrl)
