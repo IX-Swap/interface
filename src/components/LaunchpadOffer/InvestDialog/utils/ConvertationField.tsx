@@ -45,7 +45,7 @@ export const useGetWarning = (offer: Offer) => {
   const inputCurrency = useCurrency(offer.investingTokenAddress)
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   const isSufficientBalance = useDerivedBalanceInfo(offer.id)
-  return (value: string) => {
+  return useCallback((value: string) => {
     const isPresale = offer.status !== OfferStatus.sale
     const realValue = value ? Number(value.replace(/,/g, '')) : 0
     const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
@@ -67,7 +67,7 @@ export const useGetWarning = (offer: Offer) => {
       warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
     }
     return warning
-  }
+  }, [offer, balance, inputCurrency])
 
 }
 
