@@ -198,7 +198,7 @@ const ViewerContainer = styled.div`
 const ViewerActiveMedia = styled.div`
   grid-area: main-media;
   place-self: center;
-  max-height: 60vh;
+  height: 60vh;
 `
 
 const ViewerMediaSelector = styled.div`
@@ -234,7 +234,7 @@ const ViewerMediaEntry = styled.div<{ active: boolean }>`
 
 const Image = styled.img`
   max-width: 100%;
-  max-height: 60vh;
+  max-height: 100%;
   border-radius: 8px;
 `
 
