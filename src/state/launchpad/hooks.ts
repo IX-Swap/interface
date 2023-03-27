@@ -667,6 +667,8 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
   return React.useCallback(
     async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
+      const filterEmptyPeople = (item: any) => Object.values(item).some((v) => Boolean(v))
+
       let data: Record<string, any> = {
         issuanceId: Number(issuanceId),
 
@@ -681,18 +683,18 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
         description: payload.description,
 
         document: payload.document,
-        directors: payload.directors.map((x: any) => ({
-          id: x.id,
+        directors: payload.directors.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
-        beneficialOwners: payload.beneficialOwners.map((x: any) => ({
-          id: x.id,
+        beneficialOwners: payload.beneficialOwners.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
         fundingDocuments: payload.fundingDocuments,
@@ -708,14 +710,6 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
         fileUpdates.forEach((x) => {
           data[key][x.index][x.name] = x.id
-        })
-
-        const existingIds = new Set(initialValues[key].map((x) => x.id))
-
-        payload[key].forEach((x, idx) => {
-          if (!existingIds.has(x.id)) {
-            delete data[key][idx].id
-          }
         })
       }
 
@@ -751,10 +745,12 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
 
   return React.useCallback(
     async (payload: VettingFormValues, initialValues: VettingFormValues, vettingId?: number) => {
+      const filterEmptyPeople = (item: any) => Object.values(item).some((v) => Boolean(v))
       const uploadedFiles = await uploadFiles(payload, initialValues)
 
       const findDoc = (key: keyof VettingFormValues['document']) =>
         uploadedFiles.find((x) => x.name === `document.${key}Id`)?.id ?? initialValues.document[key]?.id
+      // todo
 
       const data: Record<string, any> = {
         issuanceId: Number(issuanceId),
@@ -784,18 +780,18 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
           resolutionAuthorizedSignatoryId: findDoc('resolutionAuthorizedSignatory'),
         },
 
-        directors: payload.directors.map((x: any) => ({
-          id: x.id,
+        directors: payload.directors.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
-        beneficialOwners: payload.beneficialOwners.map((x: any) => ({
-          id: x.id,
+        beneficialOwners: payload.beneficialOwners.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
         fundingDocuments: payload.fundingDocuments,
@@ -809,14 +805,6 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
 
         fileUpdates.forEach((x) => {
           data[key][x.index][x.name] = x.id
-        })
-
-        const existingIds = new Set(initialValues[key].map((x) => x.id))
-
-        payload[key].forEach((x, idx) => {
-          if (!existingIds.has(x.id)) {
-            delete data[key][idx].id
-          }
         })
       }
 
@@ -1202,7 +1190,6 @@ export const useSubmitOffer = () => {
         return result
       }
 
-      // todo all this needs to be filtered for minimal, not full
       data = filter(data)
       if (Object.keys(data.terms).length === 0) {
         delete data.terms

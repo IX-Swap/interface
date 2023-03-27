@@ -13,6 +13,7 @@ export interface VettingActionButtonsProps {
   onSaveDraft: () => void
   onSubmit: () => void
   disabled: boolean
+  draftDisabled: boolean
   submitDisabled: boolean
   vettingId: string
 }
@@ -20,6 +21,7 @@ export const VettingActionButtons = ({
   onSaveDraft,
   onSubmit,
   disabled,
+  draftDisabled,
   submitDisabled,
   vettingId,
 }: VettingActionButtonsProps) => {
@@ -127,7 +129,7 @@ export const VettingActionButtons = ({
       {(isOfferManager || isAdmin) && (
         <FormSubmitContainer>
           <>
-            <OutlineButton disabled={disabled} onClick={onSaveDraft}>
+            <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
               Save Draft
             </OutlineButton>
 

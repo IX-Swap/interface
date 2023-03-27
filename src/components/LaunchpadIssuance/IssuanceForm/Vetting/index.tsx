@@ -30,6 +30,7 @@ import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
 import { StrategyCard } from './StrategyCard'
 import { strategyOptions } from './constants'
+import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -69,7 +70,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     issuanceId,
     vettingId: initialValues.vettingId,
     goMain,
-    initialData: initialValues.data
+    initialData: initialValues.data,
   })
 
   const toSubmit = useCallback(() => {
@@ -106,18 +107,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
 
-
-  const isSubmitDisabled = useCallback(
-    (errors: any, touched: any) => {
-      if (view) return true
-      const hasErrors = Object.keys(errors).length > 0
-      const notTouched = !Object.keys(touched).length
-
-      return notTouched || hasErrors
-    },
-    [view]
-  )
-
   if (!issuanceId) {
     return null
   }
@@ -136,7 +125,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
       </LoaderContainer>
     )
   }
-
 
   return (
     <Formik
@@ -179,37 +167,43 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
             {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
               initialValues?.data?.status as IssuanceStatus
             ) && (
-                <RejectInfo
-                  message={initialValues?.data?.changesRequested}
-                  status={initialValues?.data?.status}
-                  issuanceId={issuanceId}
-                  onClear={() => resetForm({ values: defaultValues })}
-                  onSubmit={toSubmit}
-                />
-              )}
+              <RejectInfo
+                message={initialValues?.data?.changesRequested}
+                status={initialValues?.data?.status}
+                issuanceId={issuanceId}
+                onClear={() => resetForm({ values: defaultValues })}
+                onSubmit={toSubmit}
+              />
+            )}
             <VettingActionButtons
               onSaveDraft={() => saveDraft(values)}
               onSubmit={toSubmit}
               disabled={view}
-              submitDisabled={isSubmitDisabled(errors, touched)}
+              draftDisabled={view || isDraftDisabled(errors, touched)}
+              submitDisabled={view || isSubmitDisabled(errors, touched)}
               vettingId={String(initialValues.vettingId)}
             />
           </FormSideBar>
 
           <FormBody>
             <StrategyInfoBlock>
-              {strategyOptions.map((strategy, idx) => <StrategyCard key={strategy.option + idx}
-                field="smartContractStrategy"
-                id={strategy.option}
-                checked={strategy.option === (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)}
-                option={strategy.option} text={strategy.text}
-                tooltipContent={strategy.tooltipContent}
-                disabled={view}
-                setter={setFieldValue}
-                touch={setFieldTouched}
-              />
-              )}
-
+              {strategyOptions.map((strategy, idx) => (
+                <StrategyCard
+                  key={strategy.option + idx}
+                  field="smartContractStrategy"
+                  id={strategy.option}
+                  checked={
+                    strategy.option ===
+                    (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)
+                  }
+                  option={strategy.option}
+                  text={strategy.text}
+                  tooltipContent={strategy.tooltipContent}
+                  disabled={view}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                />
+              ))}
             </StrategyInfoBlock>
 
             <Separator />
@@ -450,7 +444,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               <OutlineButton width="280px" onClick={goBack}>
                 Back
               </OutlineButton>
-              <FilledButton width="280px" onClick={toSubmit} disabled={isSubmitDisabled(errors, touched)}>
+              <FilledButton width="280px" onClick={toSubmit} disabled={view || isSubmitDisabled(errors, touched)}>
                 Submit
               </FilledButton>
             </Row>
@@ -460,8 +454,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     </Formik>
   )
 }
-
-
 
 const StrategyInfoBlock = styled.div`
   display: grid;
