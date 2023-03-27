@@ -1087,6 +1087,7 @@ export const useSubmitOffer = () => {
         issuerIdentificationNumber: payload.issuerIdentificationNumber,
 
         tokenAddress: payload.tokenAddress,
+        trusteeAddress: payload.trusteeAddress,
         // mapping : tokenSymbol, investingTokenSymbol frontend to server
         tokenSymbol: payload.tokenTicker,
         investingTokenSymbol: payload.tokenType,
@@ -1202,12 +1203,6 @@ export const useSubmitOffer = () => {
       if (offerId) {
         delete data.offerId
         delete data.vettingId
-        if (initial.tokenName) {
-          delete data.tokenName
-        }
-        if (initial.tokenAddress) {
-          delete data.tokenAddress
-        }
         return apiService.put(`/offers/${offerId}/full`, data)
       } else {
         return apiService.post(`/offers`, data)
