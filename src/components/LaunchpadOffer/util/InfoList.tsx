@@ -6,10 +6,11 @@ import { Attachment } from './Attachment'
 
 import { Asset } from 'state/launchpad/types'
 
-interface InfoEntry {
+export interface InfoEntry {
   label: React.ReactNode
   value?: React.ReactNode
-  file?: Asset
+  file?: Asset | File
+  hasAsset?: boolean
 }
 
 interface Props {

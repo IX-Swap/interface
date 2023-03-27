@@ -1,3 +1,4 @@
+import { text11 } from 'components/LaunchpadMisc/typography'
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
@@ -10,6 +11,10 @@ interface BaseProps {
   state: boolean
   toggle: () => void
   disabled?: boolean
+}
+interface BasePropsWithLabel extends BaseProps {
+  label: string
+  labelStyle?: React.CSSProperties
 }
 
 export const BaseCheckbox = ({ toggle, state, disabled = false }: BaseProps) => {
@@ -26,7 +31,10 @@ export const BaseCheckbox = ({ toggle, state, disabled = false }: BaseProps) => 
           width="16"
           height="16"
           rx="2"
-          fill={state ? theme.launchpad.colors.primary : theme.launchpad.colors.border.default}
+          ry="2"
+          fill={state ? theme.launchpad.colors.primary : theme.launchpad.colors.background}
+          strokeWidth="2px"
+          stroke={theme.launchpad.colors.border.default}
         />
 
         {state && (
@@ -53,6 +61,20 @@ export const Checkbox: React.FC<Props> = (props) => {
   return <BaseCheckbox toggle={toggle} state={state} />
 }
 
+export const BaseCheckboxWithLabel = ({ toggle, state, disabled, label, labelStyle }: BasePropsWithLabel) => {
+  const onClick = () => {
+    if (!disabled) {
+      toggle()
+    }
+  }
+  return (
+    <CheckboxContainer onClick={onClick}>
+      <BaseCheckbox toggle={() => null} state={state} disabled={disabled} />
+      <Label style={labelStyle}>{label}</Label>
+    </CheckboxContainer>
+  )
+}
+
 const ButtonWrapper = styled.button`
   border: none;
   background: none;
@@ -60,4 +82,16 @@ const ButtonWrapper = styled.button`
   height: fit-content;
   padding: 0;
   cursor: pointer;
+`
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 19px;
+
+  cursor: pointer;
+`
+const Label = styled.div`
+  ${text11}
+  color: ${(props) => props.theme.launchpad.colors.text.hint};
 `

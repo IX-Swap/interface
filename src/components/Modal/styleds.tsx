@@ -11,7 +11,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
   flexcolumn?: string
 }>`
   &[data-reach-dialog-overlay] {
-    z-index: 12;
+    z-index: 50;
     background-color: transparent;
     overflow: hidden;
     overflow-y: hidden;
@@ -54,7 +54,7 @@ export const StyledLightDialogOverlay = styled(AnimatedDialogOverlay)<{
   flexcolumn?: string
 }>`
   &[data-reach-dialog-overlay] {
-    z-index: 12;
+    z-index: 50;
     overflow: hidden;
     overflow-y: hidden;
     ${({ scrollable }) =>

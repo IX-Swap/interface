@@ -3,15 +3,8 @@ import styled from 'styled-components'
 import axios from 'axios'
 
 import { Separator } from '../../LaunchpadMisc/styled'
-
-import { Asset } from 'state/launchpad/types'
 import { KycLightDocPreviewModal } from 'components/KycLightDocPreviewModal'
-
-interface InfoEntry {
-  label: React.ReactNode
-  value?: React.ReactNode
-  file?: Asset
-}
+import { InfoEntry } from './InfoList'
 
 interface Props {
   fontSize?: string
@@ -25,7 +18,6 @@ const extractDocType = (docName: any) => docName?.substring(docName.lastIndexOf(
 
 const downloadFile = async (url: string, name: string, type: string) => {
   const link = document.createElement('a')
-
   const { data } = (await axios(url, {
     responseType: 'blob',
   })) as any
@@ -33,6 +25,17 @@ const downloadFile = async (url: string, name: string, type: string) => {
   const blob = new Blob([data], { type })
 
   link.download = name
+  link.href = URL.createObjectURL(blob)
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+const downloadLocalFile = async (file: File) => {
+  const link = document.createElement('a')
+  const blob = new Blob([file], { type: file.type })
+
+  link.download = file.name
   link.href = URL.createObjectURL(blob)
   document.body.appendChild(link)
   link.click()
@@ -62,17 +65,16 @@ export const Attachment: React.FC<Props> = (props) => {
     }
   })
 
-  const handlePreviewClick = (file?: Asset) => {
+  const handlePreviewClick = ({ file, hasAsset }: any) => {
     if (!file) {
       return
     }
-    if (isPreview(file.name)) {
+    if (!hasAsset) {
+      downloadLocalFile(file)
+    } else if (isPreview(file.name)) {
       openModal()
-    }
-
-    if (isDownload(file.name)) {
+    } else if (isDownload(file.name)) {
       const { name, public: publicUrl, mimeType } = file
-
       downloadFile(publicUrl, name, mimeType)
     }
   }
@@ -93,7 +95,7 @@ export const Attachment: React.FC<Props> = (props) => {
 
       <Entry key={`entry-${props.idx}`} fontSize={props.fontSize} lineHeight={props.lineHeight}>
         <Label>{props.entry?.label}</Label>
-        {props.entry?.value && <Value onClick={() => handlePreviewClick(props.entry?.file)}>{props.entry.value}</Value>}
+        {props.entry?.value && <Value onClick={() => handlePreviewClick(props.entry)}>{props.entry.value}</Value>}
       </Entry>
 
       {!props.isLast && <Separator key={`separator-${props.idx}`} />}
