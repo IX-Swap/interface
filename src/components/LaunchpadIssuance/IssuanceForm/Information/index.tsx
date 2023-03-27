@@ -62,6 +62,7 @@ import { text1, text11, text44 } from 'components/LaunchpadMisc/typography'
 import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
 import { useRole } from 'state/user/hooks'
 import { IssuanceActionButtons } from './sections/IssuanceActionButtons'
+import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
 
 interface Props {
   edit?: boolean
@@ -299,8 +300,8 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 showDraft={!props.edit}
                 onReview={() => setShowReview(true)}
                 onSubmit={toSubmit}
-                submitDisabled={Boolean(Object.keys(errors).length) || !values.tokenomicsAgreement}
-                reviewDisabled={formIsLoading}
+                submitDisabled={!values.tokenomicsAgreement || isSubmitDisabled(errors, touched)}
+                draftDisabled={isDraftDisabled(errors, touched)}
                 offerId={offer?.data?.id}
               />
             </FormSideBar>
