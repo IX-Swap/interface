@@ -16,7 +16,7 @@ import { Column, Row, Separator, Spacer, LoaderContainer } from 'components/Laun
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { OutlineButton, FilledButton } from 'components/LaunchpadMisc/buttons'
 import { ConfirmationForm } from 'components/Launchpad/ConfirmForm'
-import { BaseCheckbox } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
+import { BaseCheckboxWithLabel } from 'components/LaunchpadOffer/InvestDialog/utils/Checkbox'
 
 import { FormGrid } from '../shared/FormGrid'
 import { FormField } from '../shared/fields/FormField'
@@ -286,14 +286,14 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
                 offer.data?.status as IssuanceStatus
               ) && (
-                  <RejectInfo
-                    message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
-                    status={offer.data?.status}
-                    issuanceId={issuanceId}
-                    onClear={() => resetForm({ values: initialValues })}
-                    onSubmit={toSubmit}
-                  />
-                )}
+                <RejectInfo
+                  message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
+                  status={offer.data?.status}
+                  issuanceId={issuanceId}
+                  onClear={() => resetForm({ values: initialValues })}
+                  onSubmit={toSubmit}
+                />
+              )}
               <IssuanceActionButtons
                 onSaveDraft={() => saveDraft(values)}
                 showDraft={!props.edit}
@@ -395,15 +395,14 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   error={(touched.country && errors.country) as string}
                 />
 
-                <Row gap="1rem" alignItems="center" margin="1rem 0 2rem 0">
-                  <BaseCheckbox
-                    state={Boolean(values.allowOnlyAccredited)}
-                    toggle={() => setFieldValue('allowOnlyAccredited', !values.allowOnlyAccredited)}
-                    disabled={props.edit}
-                  />
-
-                  <AccreditedInvestorsLabel>Accredited investors only</AccreditedInvestorsLabel>
-                </Row>
+                <div id="empty-row" />
+                <BaseCheckboxWithLabel
+                  state={Boolean(values.allowOnlyAccredited)}
+                  toggle={() => setFieldValue('allowOnlyAccredited', !values.allowOnlyAccredited)}
+                  disabled={props.edit}
+                  label="Accredited investors only"
+                  labelStyle={{ fontSize: '14px' }}
+                />
               </FormGrid>
 
               <Separator />
@@ -440,26 +439,29 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   value={values.decimals.toString()}
                   error={(touched.decimals && errors.decimals) as string}
                 />
-                {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original ? <FormField
-                  field="trusteeAddress"
-                  setter={setFieldValue}
-                  touch={setFieldTouched}
-                  label="Trustee Address"
-                  placeholder="Trustee Address"
-                  // find out if editable
-                  disabled={props.edit}
-                  value={values.trusteeAddress}
-                  error={(touched.trusteeAddress && errors.trusteeAddress) as string}
-                /> : <FormField
-                  field="tokenAddress"
-                  setter={setFieldValue}
-                  touch={setFieldTouched}
-                  label="Token Address"
-                  placeholder="Token Address"
-                  disabled={props.edit}
-                  value={values.tokenAddress}
-                  error={(touched.tokenAddress && errors.tokenAddress) as string}
-                />}
+                {smartContractStrategy === SMART_CONTRACT_STRATEGIES.original ? (
+                  <FormField
+                    field="trusteeAddress"
+                    setter={setFieldValue}
+                    touch={setFieldTouched}
+                    label="Trustee Address"
+                    placeholder="Trustee Address"
+                    disabled={props.edit}
+                    value={values.trusteeAddress}
+                    error={(touched.trusteeAddress && errors.trusteeAddress) as string}
+                  />
+                ) : (
+                  <FormField
+                    field="tokenAddress"
+                    setter={setFieldValue}
+                    touch={setFieldTouched}
+                    label="Token Address"
+                    placeholder="Token Address"
+                    disabled={props.edit}
+                    value={values.tokenAddress}
+                    error={(touched.tokenAddress && errors.tokenAddress) as string}
+                  />
+                )}
                 <DropdownField
                   field="tokenType"
                   setter={setFieldValue}
@@ -549,18 +551,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   error={(touched.maxInvestment && errors.maxInvestment) as string}
                 />
                 <Column gap="1rem">
-                  <Row gap="1rem">
-                    <BaseCheckbox
-                      state={Boolean(values.tokenomicsAgreement)}
-                      toggle={() => setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)}
-                      disabled={props.edit}
-                    />
-
-                    <TokenAgreementText>
-                      I understand and agree that once I submit this form and it is approved, IX Swap will mint and
-                      deposit the tokens into a smart contract based on the information provided.
-                    </TokenAgreementText>
-                  </Row>
+                  <BaseCheckboxWithLabel
+                    state={Boolean(values.tokenomicsAgreement)}
+                    toggle={() => setFieldValue('tokenomicsAgreement', !values.tokenomicsAgreement)}
+                    disabled={props.edit}
+                    label="I understand and agree that once I submit this form and it is approved, IX Swap will mint and deposit the tokens into a smart contract based on the information provided."
+                  />
                   {errors.tokenomicsAgreement && <ErrorText>{errors.tokenomicsAgreement}</ErrorText>}
                 </Column>
               </FormGrid>
@@ -767,7 +763,6 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               <Separator />
 
               <AdditionalInformation
-                social={values.social}
                 setter={setFieldValue}
                 touch={setFieldTouched}
                 values={values}
@@ -875,10 +870,6 @@ const PresaleButton = styled.button<{ isSelected: boolean; disabled?: boolean }>
     `
     cursor: default;
   `}
-`
-
-const AccreditedInvestorsLabel = styled(TokenAgreementText)`
-  font-size: 14px;
 `
 
 const ScrollToTop = styled.button`
