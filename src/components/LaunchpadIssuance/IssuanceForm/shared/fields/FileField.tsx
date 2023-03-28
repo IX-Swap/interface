@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { Paperclip } from 'react-feather'
@@ -75,27 +75,38 @@ export const FileField: React.FC<Props> = (props) => {
     setValue(props.value?.file)
   }, [props.value])
 
+  const dropzoneOpts = useMemo(() => {
+    return {
+      ...(props.isPhoto && {
+        accept: photoTypes,
+        maxSize: 10 * MBinBytes,
+      }),
+      ...(props.isImage && {
+        accept: imageTypes,
+        maxSize: 10 * MBinBytes,
+      }),
+      ...(props.isDocument && {
+        accept: documentTypes,
+        maxSize: 5 * MBinBytes,
+      }),
+    }
+  }, [props.isPhoto, props.isDocument, props.isImage])
+
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: onFileSelect,
     multiple: false,
     onDropRejected: (fileRejections: FileRejection[]) => {
-      const error = fileRejections[0]?.errors[0]?.message
+      const error = fileRejections[0]?.errors[0]
       if (error) {
-        showError(error)
+        let message = error.message
+        if (error.code === 'file-too-large' && dropzoneOpts.maxSize) {
+          const MB = dropzoneOpts.maxSize / MBinBytes
+          message = `File is larger than ${MB} MB`
+        }
+        showError(message)
       }
     },
-    ...(props.isPhoto && {
-      accept: photoTypes,
-      maxSize: 10 * MBinBytes,
-    }),
-    ...(props.isImage && {
-      accept: imageTypes,
-      maxSize: 10 * MBinBytes,
-    }),
-    ...(props.isDocument && {
-      accept: documentTypes,
-      maxSize: 5 * MBinBytes,
-    }),
+    ...dropzoneOpts,
   })
 
   return (
