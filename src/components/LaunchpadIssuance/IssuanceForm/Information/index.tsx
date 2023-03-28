@@ -303,6 +303,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 submitDisabled={!values.tokenomicsAgreement || isSubmitDisabled(errors, touched)}
                 draftDisabled={isDraftDisabled(errors, touched)}
                 offerId={offer?.data?.id}
+                status={offer.data?.status as any}
               />
             </FormSideBar>
             <FormBody>

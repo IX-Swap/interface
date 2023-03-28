@@ -182,6 +182,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               draftDisabled={view || isDraftDisabled(errors, touched)}
               submitDisabled={view || isSubmitDisabled(errors, touched)}
               vettingId={String(initialValues.vettingId)}
+              isApproved={initialValues?.data?.status === IssuanceStatus.approved}
             />
           </FormSideBar>
 
