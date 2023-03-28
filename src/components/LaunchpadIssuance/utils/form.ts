@@ -4,6 +4,7 @@ export const isSubmitDisabled = (errors: any, touched: any) => {
   return notTouched || hasErrors
 }
 
+const getIsDisabled = (message?: string) => (message ? !message.includes('required') : false)
 export const isDraftDisabled = (errors: any, touched: any) => {
   const hasError = Object.entries(touched).some(([fieldName, value]: any) => {
     if (Array.isArray(value)) {
@@ -11,15 +12,19 @@ export const isDraftDisabled = (errors: any, touched: any) => {
         if (!arrayItem) {
           return false
         }
-        return Object.keys(arrayItem).some((arrayItemKey) =>
-          Boolean(errors[fieldName] && errors[fieldName][index] && errors[fieldName][index][arrayItemKey])
-        )
+        return Object.keys(arrayItem).some((arrayItemKey) => {
+          const error = errors[fieldName] && errors[fieldName][index] && errors[fieldName][index][arrayItemKey]
+          return getIsDisabled(error)
+        })
       })
     }
     if (typeof value === 'object') {
-      return Object.keys(value).some((objectItemKey) => Boolean(errors[fieldName] && errors[fieldName][objectItemKey]))
+      return Object.keys(value).some((objectItemKey) => {
+        const error = errors[fieldName] && errors[fieldName][objectItemKey]
+        return getIsDisabled(error)
+      })
     }
-    return Boolean(errors[fieldName])
+    return getIsDisabled(errors[fieldName])
   })
   return hasError
 }
