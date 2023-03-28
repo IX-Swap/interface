@@ -8,13 +8,14 @@ export interface Props {
 export const useStyles = makeStyles(theme => {
   const getColor = (type: StatusType) => {
     switch (type.toLowerCase()) {
+      case 'approved':
+        return theme.palette.success.main
       case 'submitted':
         return theme.palette.warning.dark
       case 'rejected':
         return theme.palette.error.dark
       case 'draft':
         return theme.palette.info.light
-      case 'approved':
       default:
         return '#ffffff'
     }
@@ -23,7 +24,7 @@ export const useStyles = makeStyles(theme => {
   const getBg = (type: StatusType) => {
     switch (type.toLowerCase()) {
       case 'approved':
-        return theme.palette.success.main
+        return theme.palette.success.light
       case 'submitted':
         return theme.palette.warning.light
       case 'rejected':
@@ -34,7 +35,7 @@ export const useStyles = makeStyles(theme => {
   }
 
   const getBorderColor = (type: StatusType) => {
-    return type !== 'approved' ? getColor(type) : theme.palette.success.main
+    return getColor(type)
   }
 
   return {

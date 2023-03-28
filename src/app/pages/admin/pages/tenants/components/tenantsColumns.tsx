@@ -1,47 +1,57 @@
 import React from 'react'
 import { HeadCellWithSort } from 'ui/UIKit/TablesKit/components/HeadCellWithSort/HeadCellWithSort'
 import { Status } from 'ui/Status/Status'
-import { Button } from '@mui/material'
+import { Link, Box } from '@mui/material'
 
 export const columns: any[] = [
   {
-    key: 'company',
-    label: <HeadCellWithSort label={'Company'} field={'company'} />,
-    render: () => <p>Company</p>
-  },
-  {
-    key: 'name',
-    label: <HeadCellWithSort label={'Name'} field={'name'} />,
-    render: () => <p>Marvin McKnight</p>
+    key: 'companyName',
+    label: <HeadCellWithSort label={'Company Name'} field={'companyName'} />
   },
   {
     key: 'email',
-    label: <HeadCellWithSort label={'Email'} field={'email'} />,
-    render: () => <p>marvin.mcknight@investax.io</p>
+    label: <HeadCellWithSort label={'Email'} field={'email'} />
   },
   {
     key: 'url',
     label: <HeadCellWithSort label={'URL'} field={'url'} />,
-    render: () => <p>tenant1.investax.io</p>
-  },
-  {
-    key: 'offers',
-    label: <HeadCellWithSort label={'No. of Offers'} field={'offers'} />,
-    render: () => <p>999</p>
-  },
-  {
-    key: 'status',
-    label: <HeadCellWithSort label={'Status'} field={'status'} />,
-    render: () => <Status type={'draft'} label={'Incomplete'} />
-  },
-  {
-    key: 'action',
-    label: <HeadCellWithSort label={'Action'} field={'action'} />,
-    render: () => (
-      <Button color='primary' variant='text'>
-        Customize
-      </Button>
+    render: (url: string) => (
+      <Link href={url} target='_blank' rel='noopener noreferrer'>
+        {url}
+      </Link>
     )
+  },
+  {
+    key: 'theme',
+    label: 'Theme',
+    render: (theme: string) => (
+      <Box
+        fontSize={'sm'}
+        sx={{
+          width: 30,
+          height: 30,
+          backgroundColor: theme,
+          borderRadius: '5px'
+        }}
+        title={theme}
+      />
+    )
+  },
+  {
+    key: 'active',
+    label: 'Status',
+    render: (row: boolean) => {
+      return (
+        <Status
+          type={row ? 'approved' : 'submitted'}
+          label={row ? 'Active' : 'Inactive'}
+        />
+      )
+    }
+  },
+  {
+    key: 'actions',
+    label: 'Actions'
   }
 ]
 
