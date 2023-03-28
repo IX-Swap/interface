@@ -136,7 +136,7 @@ export const IssuancesFull = () => {
 
       <SearchFilter setFilter={setFilter} />
 
-      {!loading && issuances?.length === 0 && <EmptyTable />}
+      {!loading && issuances?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
 
       {issuances?.length > 0 && (
         <IssuanceTable>
