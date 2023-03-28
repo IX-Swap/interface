@@ -101,7 +101,7 @@ export const FileField: React.FC<Props> = (props) => {
         let message = error.message
         if (error.code === 'file-too-large' && dropzoneOpts.maxSize) {
           const MB = dropzoneOpts.maxSize / MBinBytes
-          message = `File is larger than ${MB} MB`
+          message = `File size should not exceed ${MB} MB`
         }
         showError(message)
       }
