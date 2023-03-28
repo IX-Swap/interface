@@ -1023,6 +1023,8 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
         trusteeAddress: payload.trusteeAddress,
         tokenPrice: Number(payload.tokenPrice),
         tokenStandart: payload.tokenStandart,
+        totalSupply: payload.totalSupply ?? '',
+        tokenReceiverAddress: payload.tokenReceiverAddress ?? '',
         // mapping: tokenTicker, tokenType. server to frontend fields
         tokenTicker: payload.tokenSymbol,
         tokenType: payload.investingTokenSymbol as OfferTokenType,
@@ -1094,6 +1096,9 @@ export const useSubmitOffer = () => {
         tokenPrice: payload.tokenPrice.toString(),
         decimals: payload.decimals,
         tokenStandart: payload.tokenStandart,
+
+        totalSupply: payload.totalSupply,
+        tokenReceiverAddress: payload.tokenReceiverAddress,
 
         softCap: payload.softCap,
         hardCap: payload.hardCap,

@@ -239,6 +239,9 @@ export interface Offer {
   tokenStandart: OfferTokenStandart
   tokenType: OfferTokenType
 
+  totalSupply: string
+  tokenReceiverAddress: string
+
   investingTokenAddress: string
   investingTokenSymbol: string
 

@@ -99,6 +99,18 @@ export const schema = yup.object().shape({
   tokenPrice: yup.string().required(REQUIRED),
   tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
+  tokenReceiverAddress: yup
+    .string()
+    .test('addressConstraint', 'Please enter a valid address', function () {
+      return Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
+    })
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
+    .nullable(),
+
+  totalSupply: yup
+    .string()
+    .matches(/[0-9]+/, 'Invalid value'),
+
   decimals: yup.number().min(0).max(50),
   trusteeAddress: yup
     .string()
@@ -115,6 +127,7 @@ export const schema = yup.object().shape({
     })
     .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
     .nullable(),
+
   softCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')

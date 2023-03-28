@@ -63,6 +63,7 @@ import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseF
 import { useRole } from 'state/user/hooks'
 import { IssuanceActionButtons } from './sections/IssuanceActionButtons'
 import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
+import { OfferTokenStandart } from 'state/launchpad/types'
 
 interface Props {
   edit?: boolean
@@ -528,6 +529,27 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit}
                   value={values.tokenStandart}
                   error={(touched.tokenStandart && errors.tokenStandart) as string}
+                />
+                <FormField
+                  field="totalSupply"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  label="Total supply"
+                  placeholder="No. of Tokens"
+                  inputFilter={numberFilter}
+                  disabled={props.edit || values.tokenStandart !== OfferTokenStandart.erc20}
+                  value={`${values.totalSupply}`}
+                  error={(touched.totalSupply && errors.totalSupply) as string}
+                />
+                <FormField
+                  field="tokenReceiverAddress"
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                  label="Token receiver address"
+                  placeholder="Token receiver address"
+                  disabled={props.edit || values.tokenStandart !== OfferTokenStandart.erc20}
+                  value={`${values.tokenReceiverAddress}`}
+                  error={(touched.tokenReceiverAddress && errors.tokenReceiverAddress) as string}
                 />
                 <FormField
                   field="minInvestment"
