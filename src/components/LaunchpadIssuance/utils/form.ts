@@ -7,12 +7,17 @@ export const isSubmitDisabled = (errors: any, touched: any) => {
 export const isDraftDisabled = (errors: any, touched: any) => {
   const hasError = Object.entries(touched).some(([fieldName, value]: any) => {
     if (Array.isArray(value)) {
-      return value.some((arrayItem, index) =>
-        Object.keys(arrayItem).some((arrayItemKey) => Boolean(errors[fieldName][index][arrayItemKey]))
-      )
+      return value.some((arrayItem, index) => {
+        if (!arrayItem) {
+          return false
+        }
+        return Object.keys(arrayItem).some((arrayItemKey) =>
+          Boolean(errors[fieldName] && errors[fieldName][index] && errors[fieldName][index][arrayItemKey])
+        )
+      })
     }
     if (typeof value === 'object') {
-      return Object.keys(value).some((objectItemKey) => Boolean(errors[fieldName][objectItemKey]))
+      return Object.keys(value).some((objectItemKey) => Boolean(errors[fieldName] && errors[fieldName][objectItemKey]))
     }
     return Boolean(errors[fieldName])
   })

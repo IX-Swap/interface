@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { ReactComponent as NoIssuancesIcon } from 'assets/launchpad/svg/no-issuances.svg'
@@ -7,19 +7,26 @@ import { Column } from 'components/LaunchpadMisc/styled'
 import { IssuanceCreateButton } from '../IssuanceCreateButton'
 import { text3, text50 } from 'components/LaunchpadMisc/typography'
 
-export const EmptyTable = () => {
+interface Props {
+  isSearch: boolean
+}
+
+export const EmptyTable = ({ isSearch }: Props) => {
   const theme = useTheme()
 
+  const title = useMemo(() => (isSearch ? 'No search results' : 'No Issuances yet'), [isSearch])
   return (
     <Container>
       <NoIssuancesIcon />
 
       <Column>
-        <NoItemsTitle>No Issuances yet</NoItemsTitle>
-        <NoItemsSubtitle>Please add new issuences.</NoItemsSubtitle>
+        <NoItemsTitle>{title}</NoItemsTitle>
+        {!isSearch && <NoItemsSubtitle>Please add new issuances.</NoItemsSubtitle>}
       </Column>
 
-      <IssuanceCreateButton background={theme.launchpad.colors.primary} color={theme.launchpad.colors.text.light} />
+      {!isSearch && (
+        <IssuanceCreateButton background={theme.launchpad.colors.primary} color={theme.launchpad.colors.text.light} />
+      )}
     </Container>
   )
 }

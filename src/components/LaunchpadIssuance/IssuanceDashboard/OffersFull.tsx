@@ -128,7 +128,7 @@ export const OffersFull: React.FC<Props> = (props) => {
       <TitleBox title={props.type} setFilter={setFilter} />
       <SearchFilter setFilter={setFilter} />
 
-      {!loading && offers?.length === 0 && <EmptyTable />}
+      {!loading && offers?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
 
       {offers?.length > 0 && (
         <IssuanceTable>
