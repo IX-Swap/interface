@@ -4,7 +4,14 @@ export const isSubmitDisabled = (errors: any, touched: any) => {
   return notTouched || hasErrors
 }
 
-const getIsDisabled = (message?: string) => (message ? !message.includes('required') : false)
+const getIsDisabled = (message?: string) => {
+  if (message) {
+    const requiredKeys = ['required', 'Required', 'enter', 'Enter', 'Add at least']
+    return !requiredKeys.some((requiredKey) => message.includes(requiredKey))
+  } else {
+    return false
+  }
+}
 export const isDraftDisabled = (errors: any, touched: any) => {
   const hasError = Object.entries(touched).some(([fieldName, value]: any) => {
     if (Array.isArray(value)) {
