@@ -10,7 +10,7 @@ import { SuccessfulSignup } from 'auth/pages/successful-signup/SuccessfulSignup'
 import { SuccessfulReset } from 'auth/pages/successful-reset/SuccessfulReset'
 import { InvitationDeclie } from 'auth/pages/invitation/InvitationDecline'
 import { MyInfo } from 'auth/pages/myinfo/MyInfo'
-import { SingPassPage } from 'auth/pages/sing-pass-data/SingPass'
+// import { SingPassPage } from 'auth/pages/sing-pass-data/SingPass'
 
 export const AuthRouter = () => {
   return (
