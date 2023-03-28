@@ -177,44 +177,50 @@ export const SingPassPage: React.FC = observer(() => {
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>NRIC/FIN : </p>
-              <p style={{ margin: '6px', color: 'red' }}> kapil</p>
+              <p style={{ margin: '6px', color: 'red' }}> </p>
             </div>
 
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Name: </p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' , color: 'red'}}>{data?.name}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Nationality/Citizenship </p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' , color: 'red' }}>{data?.nationality}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Date of Birth </p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' , color: 'red' }}>{data?.dob}</p>
             </div>
 
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Email: </p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' , color: 'red' }}>{data?.email}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Mobile Number</p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' , color: 'red'}}>{data?.mobileno}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Registered Address</p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' , color: 'red' }}>
+                {data?.regadd?.line1}
+                {data?.regadd?.line2}
+                {data?.regadd?.city}
+                {data?.regadd?.country}
+                {data?.regadd?.postalCode}
+              </p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Employment Sector</p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' , color: 'red' }}>{data?.employmentsector}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
