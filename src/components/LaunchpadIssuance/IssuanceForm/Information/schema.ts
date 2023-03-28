@@ -101,14 +101,21 @@ export const schema = yup.object().shape({
 
   tokenReceiverAddress: yup
     .string()
+    .when('tokenStandart', {
+      is: OfferTokenStandart.erc20,
+      then: yup.string().required(REQUIRED)
+    })
     .test('addressConstraint', 'Please enter a valid address', function () {
       return Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
     })
-    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
-    .nullable(),
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
 
   totalSupply: yup
     .string()
+    .when('tokenStandart', {
+      is: OfferTokenStandart.erc20,
+      then: yup.string().required(REQUIRED)
+    })
     .matches(/[0-9]+/, 'Invalid value'),
 
   decimals: yup.number().min(0).max(50),
