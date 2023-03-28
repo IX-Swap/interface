@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import { Check } from 'react-feather'
+import { useTheme } from 'styled-components'
+
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
 import { FormSubmitContainer } from '../shared/styled'
 import { useRole } from 'state/user/hooks'
@@ -15,6 +18,7 @@ export interface VettingActionButtonsProps {
   disabled: boolean
   draftDisabled: boolean
   submitDisabled: boolean
+  isApproved: boolean
   vettingId: string
 }
 export const VettingActionButtons = ({
@@ -23,9 +27,11 @@ export const VettingActionButtons = ({
   disabled,
   draftDisabled,
   submitDisabled,
+  isApproved,
   vettingId,
 }: VettingActionButtonsProps) => {
-  const { isOfferManager, isAdmin } = useRole()
+  const theme = useTheme()
+  const { isAdmin } = useRole()
   const [showApprove, setShowApprove] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
   const [showReject, setShowReject] = useState(false)
@@ -70,6 +76,7 @@ export const VettingActionButtons = ({
       showError(e?.message)
     }
   }
+
   return (
     <Column style={{ gap: '1rem' }}>
       <ConfirmPopup
@@ -126,7 +133,7 @@ export const VettingActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {(isOfferManager || isAdmin) && (
+      {(!isApproved || isAdmin) && (
         <FormSubmitContainer>
           <>
             <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
@@ -139,7 +146,7 @@ export const VettingActionButtons = ({
           </>
         </FormSubmitContainer>
       )}
-      {isAdmin && (
+      {isAdmin && !isApproved && (
         <FormSubmitContainer>
           <AdminButtons
             disabled={disabled}
@@ -147,6 +154,14 @@ export const VettingActionButtons = ({
             onUpdate={() => setShowUpdate(true)}
             onReject={() => setShowReject(true)}
           />
+        </FormSubmitContainer>
+      )}
+      {isAdmin && isApproved && (
+        <FormSubmitContainer>
+          <FilledButton onClick={() => null} background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
+            Approved
+            <Check color={theme.launchpad.colors.background} size="19" strokeWidth={2} />
+          </FilledButton>
         </FormSubmitContainer>
       )}
     </Column>

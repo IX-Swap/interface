@@ -1,13 +1,17 @@
+import React, { useMemo, useState } from 'react'
+import { useTheme } from 'styled-components'
+import { Check } from 'react-feather'
+
 import Column from 'components/Column'
 import { ConfirmPopup } from 'components/LaunchpadIssuance/utils/ConfirmPopup'
 import { AdminButtons } from 'components/LaunchpadMisc/AdminButtons'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import React, { useState } from 'react'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import { useReviewOffer } from 'state/issuance/hooks'
 import { useRole } from 'state/user/hooks'
 import { FormSubmitContainer } from '../../shared/styled'
 import { RequestChangesPopup } from '../../../utils/RequestChangesPopup'
+import { OfferStatus } from 'state/launchpad/types'
 
 interface IssuanceButtoonsProps {
   onSaveDraft: () => void
@@ -17,6 +21,7 @@ interface IssuanceButtoonsProps {
   submitDisabled: boolean
   draftDisabled: boolean
   offerId?: string
+  status: OfferStatus
 }
 
 export const IssuanceActionButtons = ({
@@ -26,8 +31,10 @@ export const IssuanceActionButtons = ({
   onSubmit,
   submitDisabled,
   draftDisabled,
+  status,
   offerId,
 }: IssuanceButtoonsProps) => {
+  const theme = useTheme()
   const { isAdmin } = useRole()
   const [showApprove, setShowApprove] = useState(false)
   const [showUpdate, setShowUpdate] = useState(false)
@@ -73,6 +80,22 @@ export const IssuanceActionButtons = ({
       showError(e?.message)
     }
   }
+
+  const { isApproved, showReviewButtons } = useMemo(
+    () => ({
+      isApproved: status === OfferStatus.approved,
+      showReviewButtons: ![
+        OfferStatus.approved,
+        OfferStatus.whitelist,
+        OfferStatus.preSale,
+        OfferStatus.sale,
+        OfferStatus.closed,
+        OfferStatus.claim,
+      ].includes(status),
+    }),
+    [status]
+  )
+
   return (
     <Column style={{ gap: '1rem' }}>
       <ConfirmPopup
@@ -129,27 +152,36 @@ export const IssuanceActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      <FormSubmitContainer>
-        {showDraft && (
-          <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
-            Save Draft
-          </OutlineButton>
-        )}
+      {(!isApproved || isAdmin) && (
+        <FormSubmitContainer>
+          {showDraft && (
+            <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
+              Save Draft
+            </OutlineButton>
+          )}
 
-        <OutlineButton onClick={onReview}>Review</OutlineButton>
-        <FilledButton onClick={onSubmit} disabled={submitDisabled}>
-          Submit
-        </FilledButton>
-      </FormSubmitContainer>
-      {isAdmin && (
+          <OutlineButton onClick={onReview}>Review</OutlineButton>
+          <FilledButton onClick={onSubmit} disabled={submitDisabled}>
+            Submit
+          </FilledButton>
+        </FormSubmitContainer>
+      )}
+      {isAdmin && showReviewButtons && (
         <FormSubmitContainer>
           <AdminButtons
-            // not sure in which case we should disable them
             disabled={!offerId}
             onApprove={() => setShowApprove(true)}
             onUpdate={() => setShowUpdate(true)}
             onReject={() => setShowReject(true)}
           />
+        </FormSubmitContainer>
+      )}
+      {isAdmin && !showReviewButtons && (
+        <FormSubmitContainer>
+          <FilledButton onClick={() => null} background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
+            Approved
+            <Check color={theme.launchpad.colors.background} size="19" strokeWidth={2} />
+          </FilledButton>
         </FormSubmitContainer>
       )}
     </Column>
