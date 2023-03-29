@@ -253,6 +253,9 @@ export const useInvest = (id: string) => {
   )
 }
 
+export const usePresaleProof = (id: string) =>
+  React.useCallback(() => apiService.get(`/offers/${id}/presale/proof`), [id])
+
 export const useDerivedBalanceInfo = (id: string) => {
   return React.useCallback(
     (amount: string, inputCurrency: Currency | null | undefined, balance?: CurrencyAmount<Currency>) => {

@@ -11,8 +11,15 @@ import { ConvertationField } from '../utils/ConvertationField'
 import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
 import { BaseCheckbox } from '../utils/Checkbox'
-import { useInvest } from 'state/launchpad/hooks'
+import { useInvest, usePresaleProof } from 'state/launchpad/hooks'
 import { text10, text11 } from 'components/LaunchpadMisc/typography'
+import { useLaunchpadInvestmentContract } from 'hooks/useContract'
+import { ethers } from 'ethers'
+import { useApproveCallback } from 'hooks/useApproveCallback'
+import { useCurrency } from 'hooks/Tokens'
+import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { LAUNCHPAD_INVESTMENT_ADDRESS } from 'constants/addresses'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface Props {
   offer: Offer
@@ -34,9 +41,12 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
     totalInvestment,
     presaleAlocated,
     hardCap,
+    contractSaleId,
+    investingTokenDecimals,
   } = offer
   const theme = useTheme()
   const invest = useInvest(id)
+  const getPresaleProof = usePresaleProof(id)
 
   const [amount, setAmount] = useState<string>()
 
@@ -70,6 +80,18 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
     return items.filter((x) => !!x)
   }, [isPresale, presaleAlocated, hardCap, investingTokenSymbol])
 
+  const launchpadContract = useLaunchpadInvestmentContract()
+  const tokenCurrency = useCurrency(offer.investingTokenAddress)
+  const { chainId = 137 } = useActiveWeb3React()
+  const [approval, approveCallback] = useApproveCallback(
+    tokenCurrency
+      ? CurrencyAmount.fromRawAmount(
+          tokenCurrency,
+          ethers.utils.parseUnits(amount || '0', investingTokenDecimals) as any
+        )
+      : undefined,
+    LAUNCHPAD_INVESTMENT_ADDRESS[chainId]
+  )
   const submitState = useInvestSubmitState()
 
   const submit = useCallback(async () => {
@@ -80,13 +102,24 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
     try {
       submitState.setLoading()
 
-      await invest(status, {
-        amount,
-        txHash: '0x0730e3a6da14a38d8d43899f572d4c221318e3a70461db1c23d6dc8091e5db30',
-      })
+      const { data: proof } = await getPresaleProof()
+      const parsedAmount = ethers.utils.parseUnits(amount, investingTokenDecimals)
+
+      if (approval !== 'APPROVED') {
+        await approveCallback()
+      }
+
+      const data = await launchpadContract?.investPreSale(contractSaleId, parsedAmount, proof)
+
+      if (data.hash)
+        await invest(status, {
+          amount,
+          txHash: data.hash,
+        })
 
       submitState.setSuccess()
-    } catch {
+    } catch (e) {
+      console.log(e)
       submitState.setError()
     }
   }, [invest, submitState])

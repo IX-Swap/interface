@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'

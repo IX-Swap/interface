@@ -242,6 +242,8 @@ export interface Offer {
   investingTokenAddress: string
   investingTokenSymbol: string
 
+  contractSaleId: number
+
   decimals: number
   investingTokenDecimals: number
   trusteeAddress: string

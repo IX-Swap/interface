@@ -24,6 +24,7 @@ import MULTICALL_ABI from 'abis/multicall2.json'
 import NFT_ABI from 'abis/nft-contract.json'
 import WETH_ABI from 'abis/weth.json'
 import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
+import LAUNCHPAD_INVESTMENT_ABI from 'abis/launchpad-investment.json'
 import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
@@ -35,6 +36,7 @@ import {
   MULTICALL2_ADDRESSES,
   PAYOUT_ADDRESS,
   SWAP_ROUTER_ADDRESS,
+  LAUNCHPAD_INVESTMENT_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
@@ -176,4 +178,8 @@ export function useIXSFaucetContract(tokenAddress: string) {
 
 export function usePayoutContract(): Contract | null {
   return useContract(PAYOUT_ADDRESS, PAYOUT_ABI, true)
+}
+
+export function useLaunchpadInvestmentContract() {
+  return useContract(LAUNCHPAD_INVESTMENT_ADDRESS, LAUNCHPAD_INVESTMENT_ABI, true)
 }
