@@ -21,11 +21,14 @@ export const SingPassPage = (props: SingPassProps) => {
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
   console.log(data, 'datataat')
   console.log(props, 'datataatprp')
-
+  localStorage.setItem('singpassPage', 'true')
   const onCancel = (_: any) => {
     window.location.href = AuthRoute.login
   }
-
+  const onAgree = (_: any) => {
+    window.location.href = AuthRoute.signup
+  }
+  
   return (
     <>
       <Card
@@ -100,34 +103,47 @@ export const SingPassPage = (props: SingPassProps) => {
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>NRIC/FIN : </p>
-              <p style={{ margin: '6px', color: 'red' }}> {data?.uinfin ? data?.uinfin : '-'}</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {' '}
+                {data?.uinfin ? data?.uinfin : '-'}
+              </p>
             </div>
 
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Name: </p>
-              <p style={{ margin: '6px', color: 'red' }}>{data?.name ? data?.name : '-'}</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {data?.name ? data?.name : '-'}
+              </p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Nationality/Citizenship: </p>
-              <p style={{ margin: '6px', color: 'red' }}>{data?.nationality ? data?.nationality : ''}</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {data?.nationality ? data?.nationality : ''}
+              </p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Date of Birth: </p>
-              <p style={{ margin: '6px', color: 'red' }}>{data?.dob ? data?.dob : '-'}</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {data?.dob ? data?.dob : '-'}
+              </p>
             </div>
 
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Email: </p>
-              <p style={{ margin: '6px', color: 'red' }}>{data?.email ? data?.email : '-'}</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {data?.email ? data?.email : '-'}
+              </p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Mobile Number:</p>
-              <p style={{ margin: '6px', color: 'red' }}>{data?.mobileno ? data?.mobileno : '-'}</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {data?.mobileno ? data?.mobileno : '-'}
+              </p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
@@ -144,7 +160,7 @@ export const SingPassPage = (props: SingPassProps) => {
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Employment Sector:</p>
               <p style={{ margin: '6px', color: 'red' }}>
-                {data?.employmentsector ? data?.employmentsector : '-' }
+                {data?.employmentsector ? data?.employmentsector : '-'}
               </p>
             </div>
             <div style={{ display: 'flex' }}>
@@ -203,6 +219,7 @@ export const SingPassPage = (props: SingPassProps) => {
         </button>
 
         <button
+         onClick={onAgree}
           // <AppRouterLink to={AuthRoute.signup}>        </AppRouterLink>
           style={{
             color: '#FFFFFF',
@@ -214,7 +231,8 @@ export const SingPassPage = (props: SingPassProps) => {
             textAlign: 'center',
             letterSpacing: '0px',
             fontSize: '16px',
-            borderRadius: '4px'
+            borderRadius: '4px',
+            cursor: 'pointer'
           }}
         >
           I Agree
