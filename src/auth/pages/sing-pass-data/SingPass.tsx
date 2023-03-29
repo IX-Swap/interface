@@ -1,18 +1,7 @@
 import React, { useEffect } from 'react'
-// import {
-//   registerFormValidationSchema,
-//   singpassFormValidationSchema
-// } from 'validation/auth'
-import { SignupArgs } from 'types/auth'
-import { observer } from 'mobx-react'
-import { useSignup } from 'auth/hooks/useSignup'
+
 import { Box, Grid } from '@mui/material'
-// import { Form } from 'components/form/Form'
-// import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
-// import { Submit } from 'components/form/Submit'
-// import { AppRouterLink } from 'components/AppRouterLink'
-import { AuthRoute } from 'auth/router/config'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+
 import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
@@ -22,85 +11,16 @@ import { Icon } from 'ui/Icons/Icon'
 
 import { ReactComponent as SingpassLogo } from 'assets/singpass-logo-color.svg'
 
-export const registerFormInitialValues = {
-  isMyInfo: false,
-  name: '',
-  email: '',
-  password: '',
-  agree: false
-}
-
-export const SingPassPage: React.FC = observer(() => {
-  const [signup, { isLoading }] = useSignup()
-  const { updateFilter, getFilterValue } = useQueryFilter()
-  const identity = getFilterValue('identityType')
-  const isIndividual = identity === 'individual'
-
-  useEffect(() => {
-    if (identity === undefined || identity === '') {
-      updateFilter('identityType', 'individual')
-    }
-  }, [identity, updateFilter])
-
-  const handleIdentityChange = () => {
-    if (isIndividual) {
-      updateFilter('identityType', 'corporate')
-      return
-    }
-
-    updateFilter('identityType', 'individual')
+export interface SingPassProps {
+    data?: any
   }
+
+
+export const SingPassPage = (props: SingPassProps)=> {
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
-  const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
   console.log(data, 'datataat')
-  const defaultFormValues = isMyInfo
-    ? {
-        isMyInfo: true,
-        email: data?.email,
-        phoneNumber: data?.mobileno,
-        password: '',
-        agree: true
-      }
-    : registerFormInitialValues
-
-  const handleSubmit = async (values: SignupArgs) => {
-    await signup(
-      {
-        name: values.name ?? 'Singpass User',
-        email: values.email,
-        singPassLogin: isMyInfo,
-        mobileNo: values.phoneNumber,
-        password: values.password,
-        accountType: identity?.toLocaleUpperCase(),
-        uinfin: data?.uinfin
-      },
-      isMyInfo
-        ? {
-            onError: (error: any) => {
-              if (
-                error?.message ===
-                'Sorry but this email address is already taken'
-              ) {
-                history.push(`${AuthRoute.myinfoError}?errorType=email`)
-              }
-            }
-          }
-        : undefined
-    )
-  }
-
-  if (authorizeLoading) {
-    return <LoadingFullScreen />
-  }
-
-  if (data?.emailExists === true) {
-    return <Redirect to={`${AuthRoute.myinfoError}?errorType=email`} />
-  }
-
-  if (isError) {
-    return <Redirect to={`${AuthRoute.myinfoError}?errorType=connection`} />
-  }
+  console.log(props, 'datataatprp')
 
   return (
     <>
@@ -112,8 +32,8 @@ export const SingPassPage: React.FC = observer(() => {
           borderRadius: 8,
           marginTop: 50,
           boxShadow: 'none',
-          marginLeft: '25%',
-          marginRight: '25%'
+        //   marginLeft: '25%',
+        //   marginRight: '25%'
         }}
       >
         <CardContent style={{ padding: 0 }}>
@@ -167,8 +87,9 @@ export const SingPassPage: React.FC = observer(() => {
               fontSize: '16px',
               lineHeight: '22px',
               color: '#201E25',
-              margin: '20px',
-              paddingLeft: '6px'
+              padding: '20px',
+            //   paddingLeft: '6px',
+              background: '#FFFFFF',
               // clear: 'both',
               // float: 'left'
               // display: 'flex'
@@ -234,11 +155,11 @@ export const SingPassPage: React.FC = observer(() => {
       </Card>
       <p
         style={{
-          marginLeft: '25%',
-          marginRight: '25%',
+        //   marginLeft: '25%',
+        //   marginRight: '25%',
           fontSize: '14px',
           textAlign: 'left',
-          color: '#504E56',
+          color: 'white',
           marginTop: '40px',
           marginBottom: '40px'
         }}
@@ -257,7 +178,9 @@ export const SingPassPage: React.FC = observer(() => {
           style={{
             // marginRight: '10%',
             // marginLeft: 500,
-            marginRight: '100px',
+            // marginRight: '100px',
+            marginRight: '10%',
+            marginLeft: '16%',
             color: '#7A787F',
             boxShadow: 'none',
             background: '#FFFFFF',
@@ -291,4 +214,4 @@ export const SingPassPage: React.FC = observer(() => {
       </div>
     </>
   )
-})
+}
