@@ -18,6 +18,7 @@ import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
+import { SingPassPage } from '../sing-pass-data/SingPass'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -52,6 +53,9 @@ export const Register: React.FC = observer(() => {
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
   const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
   console.log(data, 'dataat')
+  if(data){
+    return <SingPassPage {...data}  />
+  }
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
