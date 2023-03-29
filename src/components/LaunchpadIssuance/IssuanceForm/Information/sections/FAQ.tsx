@@ -16,7 +16,11 @@ interface Props {
 
 export const FAQBlock: React.FC<Props> = ({ faq }) => {
   const theme = useTheme()
-  const getTarget = (name: string, value: any) => ({ target: { name, value } })
+
+  const onChangeTouch = (name: string, e: Partial<React.ChangeEvent<any>>, onChange: any, onBlur: any) => {
+    onChange({ target: { name: name, value: e.target.value } })
+    onBlur({ target: { name: name, value: true } })
+  }
 
   return (
     <FormGrid title="FAQ">
@@ -26,7 +30,7 @@ export const FAQBlock: React.FC<Props> = ({ faq }) => {
             {faq.map((entry, idx) => (
               <FieldWrapper key={idx}>
                 <Field name={`faq[${idx}].question`}>
-                  {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                  {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                     <Question>
                       <Label>Question</Label>
 
@@ -34,7 +38,7 @@ export const FAQBlock: React.FC<Props> = ({ faq }) => {
                         <QuestionInput
                           placeholder="Question Title"
                           value={value}
-                          onChange={(e) => onChange(getTarget(name, e.target.value))}
+                          onChange={(e) => onChangeTouch(name, e, onChange, onBlur)}
                         />
                       </QuestionWrapper>
 
@@ -44,7 +48,7 @@ export const FAQBlock: React.FC<Props> = ({ faq }) => {
                         </RemoveButton>
                       )}
 
-                      {meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
+                      {meta.touched && meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
                     </Question>
                   )}
                 </Field>
@@ -52,16 +56,16 @@ export const FAQBlock: React.FC<Props> = ({ faq }) => {
                 <Separator />
 
                 <Field name={`faq[${idx}].answer`}>
-                  {({ field: { name, value, onChange }, meta }: FieldProps) => (
+                  {({ field: { name, value, onChange, onBlur }, meta }: FieldProps) => (
                     <AnswerWrapper>
                       <Label>Answer</Label>
                       <AnswerInput
                         placeholder="Answer Description"
                         value={value}
-                        onChange={(e) => onChange(getTarget(name, e.target.value))}
+                        onChange={(e) => onChangeTouch(name, e, onChange, onBlur)}
                       />
 
-                      {meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
+                      {meta.touched && meta.error && <ErrorMessage>{meta.error}</ErrorMessage>}
                     </AnswerWrapper>
                   )}
                 </Field>
