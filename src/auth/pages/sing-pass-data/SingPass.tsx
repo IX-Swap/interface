@@ -21,12 +21,13 @@ export const SingPassPage = (props: SingPassProps) => {
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
   console.log(data, 'datataat')
   console.log(props, 'datataatprp')
-  localStorage.setItem('singpassPage', 'true')
   const onCancel = (_: any) => {
     window.location.href = AuthRoute.login
+    localStorage.setItem('singpassPage', 'true')
   }
   const onAgree = (_: any) => {
     window.location.href = AuthRoute.signup
+    localStorage.setItem('singpassPage', 'true')
   }
   
   return (
