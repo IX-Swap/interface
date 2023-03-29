@@ -137,6 +137,12 @@ export const accountsURL = {
   }
 }
 
+export const tenantsURL = {
+  getTenantInfo: (tenantCode: string) =>
+    `/tenant/tenant-info?tenantCode=${tenantCode}`,
+  getAll: '/tenant/list'
+}
+
 export const issuanceURL = {
   commitments: {
     overrideById: (commitmentId?: string) =>

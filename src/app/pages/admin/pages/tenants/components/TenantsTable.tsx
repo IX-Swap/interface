@@ -1,6 +1,5 @@
 import { columns, compactColumns } from './tenantsColumns'
-import { accountsURL } from 'config/apiURL'
-import { useAuth } from 'hooks/auth/useAuth'
+import { tenantsURL } from 'config/apiURL'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React from 'react'
 import { CompactTable } from 'ui/CompactTable/CompactTable'
@@ -8,24 +7,34 @@ import {
   TableView,
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const TenantsTable: React.FC = () => {
-  const { user } = useAuth()
   const { isTablet } = useAppBreakpoints()
-  const userId = user?._id
-  if (userId === undefined) {
-    return null
+
+  const { getFilterValue } = useQueryFilter()
+  const filter = {
+    search: getFilterValue('search')
+    // sortField: getFilterValue('sortBy'),
+    // sortOrder: getFilterValue('orderBy') === 'ASC' ? 1 : -1
   }
 
   return (
     <TableView
-      uri={accountsURL.virtualAccounts.getUserTransactions(userId)}
+      uri={tenantsURL.getAll}
       columns={columns}
       noHeader={isTablet}
+      actionHeader={'Actions'}
+      filter={
+        {
+          ...filter
+        } as any
+      }
+      defaultRowsPerPage={5}
       paginationPlacement={isTablet ? 'both' : 'bottom'}
     >
       {isTablet
-        ? (props: TableViewRendererProps<any[]>) => (
+        ? (props: TableViewRendererProps<any>) => (
             <CompactTable
               {...props}
               columns={compactColumns}

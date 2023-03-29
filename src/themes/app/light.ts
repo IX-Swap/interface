@@ -8,7 +8,7 @@ const { palette } = createTheme()
 
 interface ThemesSet {
   default: DeprecatedThemeOptions
-  purple: DeprecatedThemeOptions
+  violet: DeprecatedThemeOptions
 }
 
 const defaultPalette = {
@@ -237,7 +237,8 @@ const defaultPalette = {
     boxShadow: tinycolor('#3b4251').setAlpha(0.04).toRgbString()
   },
   success: {
-    main: '#7DD320'
+    main: '#7DD320',
+    light: tinycolor('#7DD320').setAlpha(0.16).toRgbString()
   },
   warning: {
     main: '#FFC900',
@@ -281,7 +282,7 @@ export const lightTheme: ThemesSet = {
   default: {
     palette: defaultPalette
   },
-  purple: {
+  violet: {
     palette: {
       ...defaultPalette,
       primary: {

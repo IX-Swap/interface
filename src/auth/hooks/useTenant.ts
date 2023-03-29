@@ -1,5 +1,6 @@
+import { useQuery } from 'react-query'
 import { useServices } from 'hooks/useServices'
-
+import { tenantsURL } from 'config/apiURL'
 interface Tenant {
   _id: string
   name: string
@@ -28,16 +29,38 @@ const tenants: Tenant[] = [
 
 export const TENANT_QUERY_KEY = 'tenant'
 
-export const useTenant = () => {
-  const { storageService } = useServices()
-  const subdomain = window.location.host.split('.')[0]
+export const useTenant = async () => {
+  const { apiService, storageService } = useServices()
+  const subdomain = 'tenant1'
+
+  const url = tenantsURL.getTenantInfo(subdomain)
+  const getInfo = async () => await apiService.get(url)
+
+  const { data: result } = await useQuery(TENANT_QUERY_KEY, getInfo)
+
+  console.log(result)
+
+  let companyName = ''
+  let theme = ''
+  //   let logoLight = ''
+  //   let logoDark = ''
+  //   let backgroundUrl = ''
+
+  if (typeof result !== 'undefined') {
+    companyName = result?.data?.companyName
+    theme = result?.data?.theme
+    // logoLight = result?.data?.logoLight
+    // logoDark = result?.data?.logoDark
+    // backgroundUrl = result?.data?.backgroundUrl
+  }
+
+  storageService.set('companyName', companyName)
+  storageService.set('tenantThemeName', theme)
 
   const tenant = tenants.find(t => t._id === subdomain)
 
-  storageService.set('name', tenant?.name)
   storageService.set('logoUrl', tenant?.logoUrl)
   storageService.set('backgroundUrl', tenant?.backgroundUrl)
-  storageService.set('tenantThemeName', tenant?.tenantThemeName)
 
   return null
 }
