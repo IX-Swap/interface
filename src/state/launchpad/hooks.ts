@@ -666,7 +666,7 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(
-    async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
+    async (payload: VettingFormValues, initialValues: VettingFormValues, vettingId?: number) => {
       const filterEmptyPeople = (item: any) => Object.values(item).some((v) => Boolean(v))
 
       let data: Record<string, any> = {
@@ -726,12 +726,37 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
       data.fundingDocuments = [...existingFunding, ...uploadedFunding]
 
       data = Object.entries(data)
-        .filter(([, value]) => typeof value === 'boolean' || value)
+        .filter(([, value]) => typeof value === 'boolean' || value !== undefined)
+        .map(([key, value]) => {
+          if (value === '') {
+            return [key, null]
+          }
+          if (Array.isArray(value)) {
+            const newValue = value.map((valueItem) => {
+              // for directors and "beneficialOwners"
+              if (typeof valueItem === 'object') {
+                return Object.entries(valueItem)
+                  .map(([valueItemKey, valueItemValue]) => [
+                    valueItemKey,
+                    valueItemValue === '' ? null : valueItemValue,
+                  ])
+                  .reduce(
+                    (acc, [valueItemKey, valueItemValue]: any) => ({ ...acc, [valueItemKey]: valueItemValue }),
+                    {}
+                  )
+              }
+              return valueItem
+            })
+            return [key, newValue]
+          }
+          return [key, value]
+        })
+
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
-      if (vettindId) {
+      if (vettingId) {
         delete data.issuanceId
-        return apiService.put(`/vettings/${vettindId}`, data)
+        return apiService.put(`/vettings/${vettingId}`, data)
       } else {
         return apiService.post(`/vettings`, data)
       }
