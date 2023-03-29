@@ -64,6 +64,7 @@ import { useRole } from 'state/user/hooks'
 import { IssuanceActionButtons } from './sections/IssuanceActionButtons'
 import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
 import { OfferTokenStandart } from 'state/launchpad/types'
+import { IssuanceTooltip } from '../shared/fields/IssuanceTooltip'
 
 interface Props {
   edit?: boolean
@@ -551,6 +552,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   disabled={props.edit || values.tokenStandart !== OfferTokenStandart.erc20}
                   value={`${values.tokenReceiverAddress}`}
                   error={(touched.tokenReceiverAddress && errors.tokenReceiverAddress) as string}
+                  trailing={
+                    <IssuanceTooltip tooltipContent={"It's a wallet address that will receive remaining tokens"} />
+                  }
                 />
                 <FormField
                   field="minInvestment"

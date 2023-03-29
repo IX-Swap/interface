@@ -1,9 +1,8 @@
 
 import React from 'react'
-import styled, { useTheme } from 'styled-components'
+import styled from 'styled-components'
 
-import { Info } from 'react-feather'
-import { MouseoverVettingTooltip } from 'components/Tooltip'
+import { IssuanceTooltip } from '../shared/fields/IssuanceTooltip'
 
 interface StrategyCardProps {
     field: string,
@@ -18,7 +17,6 @@ interface StrategyCardProps {
 }
 
 export const StrategyCard = ({ field, id, setter, touch, option, text, tooltipContent, checked, disabled }: StrategyCardProps) => {
-    const theme = useTheme()
     const onChange = React.useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setter(field, e.target.value)
@@ -33,28 +31,12 @@ export const StrategyCard = ({ field, id, setter, touch, option, text, tooltipCo
     return <Card htmlFor={option} checked={checked}>
         <DisplayFlexRow>
             <RadioButton name={field} id={id} type="radio" value={option} onChange={onChange} disabled={disabled} checked={checked} />
-            <MouseoverVettingTooltip text={tooltipContent} placement={'top-start'}
-                style={{
-                    backgroundColor: `${theme.white}`, color: `${theme.launchpad.colors.text.hint}`,
-                    border: `1px solid ${theme.launchpad.colors.border.default}`
-                }}>
-                <InfoIcon />
-            </MouseoverVettingTooltip>
+            <IssuanceTooltip tooltipContent={tooltipContent}/>
 
         </DisplayFlexRow>
         <OfferingText checked={checked}>{text}</OfferingText>
     </Card>
 }
-
-const InfoIcon = styled(Info)`
-    height: 15px;
-    width: 15px;
-    stroke: 1.5;
-    color: ${props => props.theme.launchpad.colors.text.caption};
-    &:hover {
-        color: ${props => props.theme.launchpad.colors.primary};
-    }
-`
 
 const OfferingText = styled.text<{ checked: boolean }>`
     font-size: 14px;
