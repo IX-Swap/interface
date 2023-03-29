@@ -130,7 +130,7 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
 
       <AddButton onClick={toggleDialog}>
         <Plus /> Add Social
-        {values.social.length === 0 && errors.social && (
+        {touched.social && values.social.length === 0 && errors.social && (
           <ErrorText>{JSON.stringify(errors.social).slice(1, -1)}</ErrorText>
         )}
       </AddButton>
