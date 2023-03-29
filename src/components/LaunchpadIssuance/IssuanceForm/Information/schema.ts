@@ -39,7 +39,7 @@ const checkMaxGreaterThanMinimum = function (minimum: string, maximum: string) {
     return true
   }
 
-  if (Number(maximum) < Number(minimum)) {
+  if (Number(maximum) <= Number(minimum)) {
     return false
   }
 
@@ -51,7 +51,7 @@ const checkMinSmallerThanMaximum = function (minimum: string, maximum: string) {
     return true
   }
 
-  if (Number(minimum) > Number(maximum)) {
+  if (Number(minimum) >= Number(maximum)) {
     return false
   }
 

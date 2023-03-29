@@ -81,7 +81,7 @@ export const ImageField: React.FC<Props> = (props) => {
             </FieldIcon>
             <FieldLabel>{props.label}</FieldLabel>
 
-            <FieldPlaceholder>{props.placeholder ?? 'PNG, JPG, and SVG files only.'}</FieldPlaceholder>
+            <FieldPlaceholder>{props.placeholder ?? 'PNG, JPG, JPEG and SVG files only.'}</FieldPlaceholder>
 
             <BrowseButton>Browse</BrowseButton>
           </>
