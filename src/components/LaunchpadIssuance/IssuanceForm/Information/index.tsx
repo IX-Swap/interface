@@ -823,7 +823,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               <FAQBlock faq={values.faq} />
 
               <Row justifyContent="flex-end" gap="1rem" alignItems="center">
-                {!props.edit && <OutlineButton onClick={() => saveDraft(values)}>Save Draft</OutlineButton>}
+                {!props.edit && (
+                  <OutlineButton disabled={isDraftDisabled(errors, touched)} onClick={() => saveDraft(values)}>
+                    Save Draft
+                  </OutlineButton>
+                )}
 
                 <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
                 <FilledButton
@@ -847,12 +851,6 @@ const ImageBlock = styled.div`
   grid-template-rows: 240px;
   gap: 1.5rem;
   place-content: stretch;
-`
-
-const TokenAgreementText = styled.div`
-  ${text11}
-
-  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
 `
 
 const PresaleFieldContainer = styled.div<{ disabled?: boolean }>`
