@@ -169,7 +169,7 @@ export const SingPassPage = (props: SingPassProps) => {
               <p style={{ margin: '6px' }}>
                 IRAS Notice of Assessment (Last 2 Years):
               </p>
-              <p style={{ margin: '6px' }}>kapil</p>
+              <p style={{ margin: '6px' }}>-</p>
             </div>
           </div>
         </CardContent>
