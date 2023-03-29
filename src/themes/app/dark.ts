@@ -7,7 +7,7 @@ const { palette } = createTheme()
 
 interface ThemesSet {
   default: DeprecatedThemeOptions
-  purple: DeprecatedThemeOptions
+  violet: DeprecatedThemeOptions
 }
 
 const defaultPalette = {
@@ -277,7 +277,7 @@ export const darkTheme: ThemesSet = {
   default: {
     palette: defaultPalette
   },
-  purple: {
+  violet: {
     palette: {
       ...defaultPalette,
       primary: {

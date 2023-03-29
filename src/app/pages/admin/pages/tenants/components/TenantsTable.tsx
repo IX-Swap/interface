@@ -34,7 +34,7 @@ export const TenantsTable: React.FC = () => {
       paginationPlacement={isTablet ? 'both' : 'bottom'}
     >
       {isTablet
-        ? (props: TableViewRendererProps<any[]>) => (
+        ? (props: TableViewRendererProps<any>) => (
             <CompactTable
               {...props}
               columns={compactColumns}
