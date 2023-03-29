@@ -10,17 +10,21 @@ import { Card, CardContent } from '@mui/material'
 import { Icon } from 'ui/Icons/Icon'
 
 import { ReactComponent as SingpassLogo } from 'assets/singpass-logo-color.svg'
+import { AppRouterLink } from 'components/AppRouterLink'
+import { AuthRoute } from 'auth/router/config'
 
 export interface SingPassProps {
-    data?: any
-  }
+  data?: any
+}
 
-
-export const SingPassPage = (props: SingPassProps)=> {
-
+export const SingPassPage = (props: SingPassProps) => {
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
   console.log(data, 'datataat')
   console.log(props, 'datataatprp')
+
+  const onCancel = (_: any) => {
+    window.location.href = AuthRoute.login
+  }
 
   return (
     <>
@@ -31,9 +35,7 @@ export const SingPassPage = (props: SingPassProps)=> {
           width: '100%',
           borderRadius: 8,
           marginTop: 50,
-          boxShadow: 'none',
-        //   marginLeft: '25%',
-        //   marginRight: '25%'
+          boxShadow: 'none'
         }}
       >
         <CardContent style={{ padding: 0 }}>
@@ -88,8 +90,8 @@ export const SingPassPage = (props: SingPassProps)=> {
               lineHeight: '22px',
               color: '#201E25',
               padding: '20px',
-            //   paddingLeft: '6px',
-              background: '#FFFFFF',
+              //   paddingLeft: '6px',
+              background: '#FFFFFF'
               // clear: 'both',
               // float: 'left'
               // display: 'flex'
@@ -98,39 +100,39 @@ export const SingPassPage = (props: SingPassProps)=> {
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>NRIC/FIN : </p>
-              <p style={{ margin: '6px', color: 'red' }}> </p>
+              <p style={{ margin: '6px', color: 'red' }}> {data?.uinfin ? data?.uinfin : '-'}</p>
             </div>
 
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Name: </p>
-              <p style={{ margin: '6px' , color: 'red'}}>{data?.name}</p>
+              <p style={{ margin: '6px', color: 'red' }}>{data?.name ? data?.name : '-'}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Nationality/Citizenship </p>
-              <p style={{ margin: '6px' , color: 'red' }}>{data?.nationality}</p>
+              <p style={{ margin: '6px' }}>Nationality/Citizenship: </p>
+              <p style={{ margin: '6px', color: 'red' }}>{data?.nationality ? data?.nationality : ''}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Date of Birth </p>
-              <p style={{ margin: '6px' , color: 'red' }}>{data?.dob}</p>
+              <p style={{ margin: '6px' }}>Date of Birth: </p>
+              <p style={{ margin: '6px', color: 'red' }}>{data?.dob ? data?.dob : '-'}</p>
             </div>
 
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>Email: </p>
-              <p style={{ margin: '6px' , color: 'red' }}>{data?.email}</p>
+              <p style={{ margin: '6px', color: 'red' }}>{data?.email ? data?.email : '-'}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Mobile Number</p>
-              <p style={{ margin: '6px' , color: 'red'}}>{data?.mobileno}</p>
+              <p style={{ margin: '6px' }}>Mobile Number:</p>
+              <p style={{ margin: '6px', color: 'red' }}>{data?.mobileno ? data?.mobileno : '-'}</p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Registered Address</p>
-              <p style={{ margin: '6px' , color: 'red' }}>
+              <p style={{ margin: '6px' }}>Registered Address:</p>
+              <p style={{ margin: '6px', color: 'red' }}>
                 {data?.regadd?.line1}
                 {data?.regadd?.line2}
                 {data?.regadd?.city}
@@ -140,13 +142,15 @@ export const SingPassPage = (props: SingPassProps)=> {
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Employment Sector</p>
-              <p style={{ margin: '6px' , color: 'red' }}>{data?.employmentsector}</p>
+              <p style={{ margin: '6px' }}>Employment Sector:</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {data?.employmentsector ? data?.employmentsector : '-' }
+              </p>
             </div>
             <div style={{ display: 'flex' }}>
               <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
               <p style={{ margin: '6px' }}>
-                IRAS Notice of Assessment (Last 2 Years)
+                IRAS Notice of Assessment (Last 2 Years):
               </p>
               <p style={{ margin: '6px' }}>kapil</p>
             </div>
@@ -155,8 +159,8 @@ export const SingPassPage = (props: SingPassProps)=> {
       </Card>
       <p
         style={{
-        //   marginLeft: '25%',
-        //   marginRight: '25%',
+          //   marginLeft: '25%',
+          //   marginRight: '25%',
           fontSize: '14px',
           textAlign: 'left',
           color: 'white',
@@ -175,6 +179,7 @@ export const SingPassPage = (props: SingPassProps)=> {
       </p>
       <div style={{ display: 'flex', margin: '0 auto', marginBottom: '40px' }}>
         <button
+          onClick={onCancel}
           style={{
             // marginRight: '10%',
             // marginLeft: 500,
@@ -190,12 +195,15 @@ export const SingPassPage = (props: SingPassProps)=> {
             textAlign: 'center',
             letterSpacing: '0px',
             fontSize: '16px',
-            borderRadius: '4px'
+            borderRadius: '4px',
+            cursor: 'pointer'
           }}
         >
           Cancel
         </button>
+
         <button
+          // <AppRouterLink to={AuthRoute.signup}>        </AppRouterLink>
           style={{
             color: '#FFFFFF',
             boxShadow: 'none',
