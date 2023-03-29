@@ -108,7 +108,8 @@ export const schema = yup.object().shape({
     .test('addressConstraint', 'Please enter a valid address', function () {
       return Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
     })
-    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
+    .nullable(),
 
   totalSupply: yup
     .string()
@@ -116,7 +117,8 @@ export const schema = yup.object().shape({
       is: OfferTokenStandart.erc20,
       then: yup.string().required(REQUIRED)
     })
-    .matches(/[0-9]+/, 'Invalid value'),
+    .matches(/[0-9]+/, 'Invalid value')
+    .nullable(),
 
   decimals: yup.number().min(0).max(50),
   trusteeAddress: yup
