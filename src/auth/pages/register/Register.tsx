@@ -63,6 +63,7 @@ export const Register: React.FC = observer(() => {
     : registerFormInitialValues
 
   const handleSubmit = async (values: SignupArgs) => {
+    console.log(values, 'valueuueuue')
     await signup(
       {
         name: values.name ?? 'Singpass User',
@@ -89,6 +90,7 @@ export const Register: React.FC = observer(() => {
   }
 
   if (authorizeLoading) {
+    
     return <LoadingFullScreen />
   }
 
