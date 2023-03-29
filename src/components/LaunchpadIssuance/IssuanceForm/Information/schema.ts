@@ -73,7 +73,7 @@ export const schema = yup.object().shape({
 
   title: yup
     .string()
-    .min(2, getLongerThanOrEqual('Name of issuance', 2))
+    .min(3, getLongerThanOrEqual('Name of issuance', 3))
     .max(STRING_NORMAL, getHaveAtMost('Name of issuance', STRING_NORMAL))
     .required(REQUIRED),
 
@@ -89,7 +89,7 @@ export const schema = yup.object().shape({
     .max(64, getHaveAtMost('Identification number', 64)),
 
   tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
-  tokenName: yup.string().required(REQUIRED),
+  tokenName: yup.string().min(3, getLongerThanOrEqual('Token name', 3)).required(REQUIRED),
   tokenTicker: yup
     .string()
     .required(REQUIRED)
