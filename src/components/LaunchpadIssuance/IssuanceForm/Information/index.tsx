@@ -124,7 +124,9 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
           await editOffer(offer.data.id ?? '', values, offer.data)
         }
 
-        addPopup({ info: { success: true, summary: 'Offer created successfully' } })
+        const summary = draft ? 'Draft saved successfully' : 'Offer created successfully';
+        addPopup({ info: { success: true, summary } })
+        
         goMain()
       } catch (err) {
         addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
