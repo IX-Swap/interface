@@ -69,9 +69,11 @@ export default function LaunchpadOffer() {
   }
 
   if (!offer.data) {
-    return <Centered>
+    return (
+      <Centered>
         <ErrorTitle>{offer.error || 'Offer not found'}</ErrorTitle>
       </Centered>
+    )
   }
 
   if (blurred) {
@@ -109,7 +111,6 @@ export default function LaunchpadOffer() {
 
         <main>
           <OfferMainInfo offer={offer.data} />
-          <BackToTopButton />
         </main>
 
         <aside>
@@ -117,6 +118,7 @@ export default function LaunchpadOffer() {
         </aside>
 
         <footer>
+          <BackToTopButton />
           <Footer offerId={params.offerId} />
         </footer>
       </OfferContainer>
