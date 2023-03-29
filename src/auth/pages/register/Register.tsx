@@ -51,7 +51,7 @@ export const Register: React.FC = observer(() => {
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
   const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
-
+  console.log(data, 'dataat')
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
@@ -95,10 +95,12 @@ export const Register: React.FC = observer(() => {
   }
 
   if (data?.emailExists === true) {
+    console.log(data, 'dataatat1')
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=email`} />
   }
 
   if (isError) {
+    console.log(data, 'dataatat2')
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=connection`} />
   }
 
