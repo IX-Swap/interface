@@ -6,7 +6,7 @@ export const useMyInfoAuthorize = () => {
   const { apiService } = useServices()
   const { getFilterValue } = useQueryFilter()
   const code = getFilterValue('code')
-
+  console.log(code, 'code')
   const authorize = async () => {
     return await apiService.post('sing-pass/authorize', {
       code: code
