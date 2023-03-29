@@ -169,6 +169,7 @@ const FieldIcon = styled.div`
   grid-area: icon;
   display: grid;
   place-content: center;
+  margin-right: 8px;
 `
 
 const FieldLabel = styled.div`

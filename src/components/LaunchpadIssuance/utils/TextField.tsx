@@ -120,6 +120,7 @@ const FieldContainer = styled.div<{ disabled?: boolean }>`
 
 const InnerContainer = styled(Column)`
   flex-grow: 1;
+  gap: 0.25rem;
 `
 
 const FieldInputContainer = styled.div<Pick<StylingProps, 'padding' | 'height' | 'borderless'>>`

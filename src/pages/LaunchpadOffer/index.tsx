@@ -69,7 +69,9 @@ export default function LaunchpadOffer() {
   }
 
   if (!offer.data) {
-    return <Centered>Not found</Centered>
+    return <Centered>
+        <ErrorTitle>{offer.error || 'Offer not found'}</ErrorTitle>
+      </Centered>
   }
 
   if (blurred) {
@@ -132,6 +134,14 @@ const OfferBackgroundWrapper = styled.div`
 const Centered = styled(OfferBackgroundWrapper)`
   display: grid;
   place-content: center;
+`
+
+const ErrorTitle = styled.div`
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 120%;
+
+  color: ${(props) => props.theme.launchpad.colors.text.title};
 `
 
 const OfferContainer = styled.article`

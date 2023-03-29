@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { ExternalLink } from 'theme'
@@ -50,8 +50,11 @@ export const Menu = ({ close }: Props) => {
   )
 
   const { isCorporate, isApproved } = useKyc()
-  const { isOfferManager } = useRole()
-  
+  const { isOfferManager, isAdmin } = useRole()
+  const showIssuance = useMemo(
+    () => isAdmin || (isCorporate && isApproved && isOfferManager),
+    [isAdmin, isCorporate, isApproved, isOfferManager]
+  )
   return (
     <ModalContainer>
       <Container>
@@ -147,7 +150,7 @@ export const Menu = ({ close }: Props) => {
           <MenuListItem activeClassName="active-item" id={`issuance-nav-link`} to={'/launchpad'} onClick={close}>
             <Trans>Launchpad</Trans>
           </MenuListItem>
-          {isCorporate && isApproved && isOfferManager && (
+          {showIssuance && (
             <MenuListItem
               activeClassName="active-item"
               id={`issuance-dashboard-nav-link`}

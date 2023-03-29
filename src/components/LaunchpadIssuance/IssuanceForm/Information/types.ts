@@ -1,5 +1,6 @@
 import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 import {
+  Asset,
   OfferDistributionFrequency,
   OfferIndustry,
   OfferInvestmentStructure,
@@ -59,6 +60,8 @@ export interface InformationFormValues {
   tokenType: OfferTokenType
   tokenStandart: OfferTokenStandart
   tokenPrice: number
+  totalSupply: string
+  tokenReceiverAddress: string
 
   tokenAddress?: string
   investingTokenAddress?: string
@@ -119,8 +122,8 @@ export interface SocialMediaLink {
 }
 
 export interface AdditionalDocument {
-  name: string
   file: IssuanceFile
+  asset?: Asset
 }
 
 export interface FAQEntry {

@@ -4,8 +4,9 @@ import styled from 'styled-components/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 import Popover, { PopoverProps } from '../Popover'
+import { TOOLTIP_ARROW_TYPE } from 'constants/enums'
 
-export const IconWrapper = styled.div<{ size?: number }>`
+export const IconWrapper = styled.div<{ size?: number, strokeColor?: string }>`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
   justify-content: center;
@@ -18,6 +19,9 @@ export const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     align-items: flex-end;
   `};
+  & > svg:hover > path {
+    stroke: ${({ strokeColor }) => (strokeColor ? strokeColor : '')}
+  }
 `
 
 const TooltipContainer = styled.div<{ width?: number }>`
@@ -40,6 +44,16 @@ const TooltipContainerFit = styled(TooltipContainer)`
   font-size: 16px;
   line-height: 24px;
 `
+
+const TooltipContainerVetting = styled.div`
+  font-size: 12px;
+  font-weight: 500; 
+  line-height: 150%;
+  width: 245px;
+  padding: 0.8rem 1.2rem;
+  word-break: break-word;
+`
+
 interface TooltipProps extends Omit<PopoverProps, 'content'> {
   text: ReactNode
   width?: number
@@ -57,6 +71,12 @@ export default function Tooltip({ text, width, ...rest }: TooltipProps) {
 export function TooltipLight({ text, ...rest }: TooltipProps) {
   return (
     <Popover offset={[-180, 10]} content={<TooltipContainerFit>{text}</TooltipContainerFit>} hideShadow {...rest} />
+  )
+}
+
+export function TooltipVetting({ text, ...rest }: TooltipProps) {
+  return (
+    <Popover offset={[-20, 10]} customArrowType={TOOLTIP_ARROW_TYPE.VETTING} content={<TooltipContainerVetting>{text}</TooltipContainerVetting>} hideShadow {...rest} />
   )
 }
 
@@ -78,7 +98,7 @@ export function MouseoverTooltip({ children, style, ...rest }: Omit<TooltipProps
   }, [])
 
   return (
-    <Tooltip {...rest} style={ rest?.textStyle || {}} show={show}>
+    <Tooltip {...rest} style={rest?.textStyle || {}} show={show}>
       <div onMouseEnter={open} onMouseLeave={close} onClick={toggle} style={style}>
         {children}
       </div>
@@ -96,6 +116,19 @@ export function MouseoverLightTooltip({ children, ...rest }: Omit<TooltipProps, 
         {children}
       </div>
     </TooltipLight>
+  )
+}
+
+export function MouseoverVettingTooltip({ children, ...rest }: Omit<TooltipProps, 'show'>) {
+  const [show, setShow] = useState(false)
+  const open = useCallback(() => setShow(true), [setShow])
+  const close = useCallback(() => setShow(false), [setShow])
+  return (
+    <TooltipVetting {...rest} show={show}>
+      <div onMouseEnter={open} onMouseLeave={close}>
+        {children}
+      </div>
+    </TooltipVetting>
   )
 }
 
