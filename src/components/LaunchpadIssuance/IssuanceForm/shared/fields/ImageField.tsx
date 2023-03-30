@@ -137,7 +137,7 @@ const BrowseButton = styled.button`
   ${text39}
   text-align: center;
   color: ${(props) => props.theme.launchpad.colors.primary};
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   padding: 0.5rem;
   border: none;
   border-radius: 6px;
