@@ -153,7 +153,7 @@ export const SingPassPage = () => {
 
               {data?.noahistory?.noas?.map((data: any) => {
                 return Object.keys(data)?.map(dataItem => {
-                //   ;<br />
+                  <br />
                   //   console.log(dataItem, data[dataItem].value, 'dataIte')
                   return (
                     <>
