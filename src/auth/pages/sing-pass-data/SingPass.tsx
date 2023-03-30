@@ -156,7 +156,11 @@ export const SingPassPage = () => {
                   : '-'}
               </p> */}
               {data?.noahistory?.noas?.map(([key, value]: any) => {
-                <p style={{ margin: '6px', color: 'red' }}>{key}-{value}</p>
+                return (
+                  <p style={{ margin: '6px', color: 'red' }}>
+                    {key}-{value}
+                  </p>
+                )
               })}
             </div>
           </div>
