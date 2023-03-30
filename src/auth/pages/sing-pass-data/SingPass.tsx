@@ -152,7 +152,7 @@ export const SingPassPage = () => {
               </p>
               {data?.noahistory?.noas?.map((data: any) => {
                 return Object.keys(data).forEach(dataItem => {
-                  console.log(dataItem, data[dataItem].value, 'dataItem')
+                  console.log(dataItem, data[dataItem].value, 'dataIte')
                   return (
                     <p style={{ margin: '6px', color: 'red' }}>
                       {dataItem}: {data[dataItem].value}
