@@ -2,6 +2,7 @@ import { Button, FormControlLabel, Grid, Typography } from '@mui/material'
 import { generateSingPassAuthorizeUrl } from 'hooks/utils'
 import React, { useState } from 'react'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+import { border } from '@mui/system'
 
 export interface RetrieveButtonProps {
   hideCheckBox?: boolean
@@ -47,7 +48,14 @@ export const RetrieveButton = ({
               bgcolor: '#F0F2F7',
               color: '#A2ACBF'
             },
-            textTransform: 'uppercase'
+            bgcolor: '#CF0B15',
+            textTransform: 'uppercase',
+            '&:hover': {
+              bgcolor: '#CF0B15',
+              ':hover': {
+                backgroundColor: '#CF0B15 !important',
+              }
+            }
           }}
           fullWidth
           disabled={!checked && !hideCheckBox}
