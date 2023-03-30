@@ -18,6 +18,7 @@ interface Props {
   onSubmit: (draft: boolean) => void
   onClose: () => void
   draftDisabled: boolean
+  submitDisabled: boolean
 }
 
 const formatDateRange = (from: Date, to?: Date) =>
@@ -25,7 +26,7 @@ const formatDateRange = (from: Date, to?: Date) =>
 
 const crop = (value?: string) => ((value?.length ?? 0) > 20 ? value?.substring(0, 20) + '...' : value)
 
-export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftDisabled }) => {
+export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftDisabled, submitDisabled }) => {
   const theme = useTheme()
   const formatedValue = useFormatOfferValue()
   const numberFormatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
@@ -90,7 +91,13 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
     <ReviewModalContainer>
       <ReviewContainer>
         <Sidebar>
-          <ReviewSidebar offer={values} onSubmit={onSubmit} onClose={onClose} draftDisabled={draftDisabled} />
+          <ReviewSidebar
+            offer={values}
+            onSubmit={onSubmit}
+            onClose={onClose}
+            draftDisabled={draftDisabled}
+            submitDisabled={submitDisabled}
+          />
         </Sidebar>
 
         <Title>

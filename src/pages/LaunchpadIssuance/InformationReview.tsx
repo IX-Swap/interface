@@ -33,6 +33,7 @@ export default function InformationReviewPage() {
             history.push(`/issuance/create?id=${issuanceId}`)
           }}
           draftDisabled={false}
+          submitDisabled={false}
         />
       )}
     </IssuancePageLayout>

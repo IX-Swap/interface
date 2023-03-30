@@ -10,6 +10,7 @@ interface Props {
   onSubmit: (isDraft: boolean) => void
   onClose: () => void
   draftDisabled: boolean
+  submitDisabled: boolean
 }
 
 export const ReviewSidebar: React.FC<Props> = (props) => {
@@ -28,7 +29,9 @@ export const ReviewSidebar: React.FC<Props> = (props) => {
         )}
         <OutlineButton onClick={props.onClose}>Back to Form</OutlineButton>
         {status !== IssuanceStatus.approved && (
-          <FilledButton onClick={() => props.onSubmit(false)}>Submit</FilledButton>
+          <FilledButton disabled={props.submitDisabled} onClick={() => props.onSubmit(false)}>
+            Submit
+          </FilledButton>
         )}
       </Column>
     </Column>
