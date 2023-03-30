@@ -105,6 +105,13 @@ export const FACTORY_ROUTER_ADDRESS: { [key: number]: string } = {
   [137]: '0xc2D0e0bc81494adB71Ce9Aa350cC875DaE12D81D',
 }
 
+export const LAUNCHPAD_INVESTMENT_ADDRESS: { [key: number]: string } = {
+  [1]: '',
+  [42]: '',
+  [80001]: '0xda751B464ba3DD9b2e4e8c797Df1af05a7510a1F',
+  [137]: '0x5b5d2DF10180D6084Cd388292717BDebf7Af17A6',
+}
+
 export const PAYOUT_ADDRESS = {
   [42]: '0xBf432B246e20afa1E26170932b8aD067F2dD52B2',
   [137]: '0xd1B888b6fe05d9737ad0a0800253CD706254DB64',

@@ -84,6 +84,8 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const openInvestDialog = React.useCallback(() => setShowInvestDialog(true), [])
   const closeInvestDialog = React.useCallback(() => setShowInvestDialog(false), [])
 
+  const daysTillClosed = props.offer.daysTillClosed ?? 0
+
   return (
     <Container>
       <OfferSidebarSummary>
@@ -131,7 +133,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
 
           <DayCount>
             <header>The deal closes in</header>
-            <main>{props.offer.daysTillClosed ?? 0} Days</main>
+            <main>
+              {daysTillClosed} {daysTillClosed === 1 ? 'Day' : 'Days'}
+            </main>
           </DayCount>
         </OfferStats>
 

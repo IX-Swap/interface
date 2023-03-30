@@ -45,6 +45,7 @@ export const useGetWarning = (offer: Offer) => {
   const inputCurrency = useCurrency(offer.investingTokenAddress)
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   const isSufficientBalance = useDerivedBalanceInfo(offer.id)
+  
   return useCallback((value: string) => {
     const isPresale = offer.status !== OfferStatus.sale
     const realValue = value ? Number(value.replace(/,/g, '')) : 0
@@ -68,7 +69,6 @@ export const useGetWarning = (offer: Offer) => {
     }
     return warning
   }, [offer, balance, inputCurrency])
-
 }
 
 export const ConvertationField: React.FC<Props> = (props) => {
@@ -82,7 +82,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
 
-  const changeValue = React.useCallback((value: string) => {
+  const changeValue = useCallback((value: string) => {
     setInputValue(value)
 
     const warning = getWarning(value)
@@ -190,7 +190,7 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
   const [selected, setSelected] = React.useState<TokenOption | undefined>(props.value)
   const [showTokens, setShowTokens] = React.useState(false)
 
-  const onSelect = React.useCallback((token: TokenOption) => {
+  const onSelect = useCallback((token: TokenOption) => {
     setSelected(token)
     setShowTokens(false)
   }, [])
@@ -208,7 +208,7 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     [tokensOptions]
   )
 
-  const toggleShowTokens = React.useCallback(() => {
+  const toggleShowTokens = useCallback(() => {
     if (props.disabled) {
       return
     }
