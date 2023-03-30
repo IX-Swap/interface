@@ -156,20 +156,9 @@ export const SingPassPage = () => {
                   //   console.log(dataItem, data[dataItem].value, 'dataIte')
                   return (
                     <>
-                      <span
-                        style={{
-                          margin: '6px',
-                          color: 'red',
-                          whiteSpace: 'pre'
-                        }}
-                        key={dataItem}
-                      >
-                        {data[dataItem].value + '\n'}
-                      </span>
-
-                      {/* <p style={{ margin: '6px', color: 'red' }}>
+                      <p style={{ margin: '6px', color: 'red' }}>
                         {dataItem}:{data[dataItem].value}
-                      </p> */}
+                      </p>
                     </>
                   )
                 })
