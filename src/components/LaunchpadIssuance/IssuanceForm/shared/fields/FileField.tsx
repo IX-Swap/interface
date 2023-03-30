@@ -184,7 +184,7 @@ const BrowseButton = styled.button`
   border: none;
   background: none;
 
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
   font-weight: 600;
 

@@ -80,7 +80,11 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
               <File size="18" /> {crop(doc.asset?.name || doc.file.file.name)}
             </FileName>
           ),
-          value: <Eye size="14" stroke={theme.launchpad.colors.text.body} />,
+          value: (
+            <span style={{ cursor: 'pointer' }}>
+              <Eye size="14" stroke={theme.launchpad.colors.text.body} />
+            </span>
+          ),
           file: doc.asset || doc.file.file,
           hasAsset: !!doc.asset,
         }
