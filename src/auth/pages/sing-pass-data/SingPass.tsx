@@ -6,9 +6,8 @@ import { Icon } from 'ui/Icons/Icon'
 import { ReactComponent as SingpassLogo } from 'assets/singpass-logo-color.svg'
 import { AuthRoute } from 'auth/router/config'
 
-
 export const SingPassPage = () => {
-  const { data, isLoading: authorizeLoading } = useMyInfoAuthorize()
+  const { data } = useMyInfoAuthorize()
   const onCancel = (_: any) => {
     window.location.href = AuthRoute.login
     localStorage.setItem('singpassPage', 'true')
@@ -47,7 +46,6 @@ export const SingPassPage = () => {
             </Grid>
             <div
               style={{
-                // textAlign: 'center',
                 fontWeight: 400,
                 fontSize: '16px',
                 lineHeight: '22px',
@@ -76,17 +74,12 @@ export const SingPassPage = () => {
           </div>
           <div
             style={{
-              // textAlign: 'center',
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '22px',
               color: '#201E25',
               padding: '20px',
-              //   paddingLeft: '6px',
               background: '#FFFFFF'
-              // clear: 'both',
-              // float: 'left'
-              // display: 'flex'
             }}
           >
             <div style={{ display: 'flex' }}>
@@ -157,17 +150,20 @@ export const SingPassPage = () => {
               <p style={{ margin: '6px' }}>
                 IRAS Notice of Assessment (Last 2 Years):
               </p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.noahistory?.noas?.length ? data?.noahistory?.noas?.length : '-'}
-              </p>
+              {/* <p style={{ margin: '6px', color: 'red' }}>
+                {data?.noahistory?.noas?.length
+                  ? data?.noahistory?.noas?.length
+                  : '-'}
+              </p> */}
+              {data?.noahistory?.noas?.map(([key, value]: any) => {
+                <p style={{ margin: '6px', color: 'red' }}>{key}-{value}</p>
+              })}
             </div>
           </div>
         </CardContent>
       </Card>
       <p
         style={{
-          //   marginLeft: '25%',
-          //   marginRight: '25%',
           fontSize: '14px',
           textAlign: 'left',
           color: 'white',
@@ -188,9 +184,6 @@ export const SingPassPage = () => {
         <button
           onClick={onCancel}
           style={{
-            // marginRight: '10%',
-            // marginLeft: 500,
-            // marginRight: '100px',
             marginRight: '10%',
             marginLeft: '16%',
             color: '#7A787F',
@@ -211,7 +204,6 @@ export const SingPassPage = () => {
 
         <button
           onClick={onAgree}
-          // <AppRouterLink to={AuthRoute.signup}>        </AppRouterLink>
           style={{
             color: '#FFFFFF',
             boxShadow: 'none',
