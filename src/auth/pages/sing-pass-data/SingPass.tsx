@@ -150,17 +150,15 @@ export const SingPassPage = () => {
               <p style={{ margin: '6px' }}>
                 IRAS Notice of Assessment (Last 2 Years):
               </p>
-              {/* <p style={{ margin: '6px', color: 'red' }}>
-                {data?.noahistory?.noas?.length
-                  ? data?.noahistory?.noas?.length
-                  : '-'}
-              </p> */}
-              {data?.noahistory?.noas?.map(([key, value]: any) => {
-                return (
-                  <p style={{ margin: '6px', color: 'red' }}>
-                    {key}-{value}
-                  </p>
-                )
+              {data?.noahistory?.noas?.noas.map((data: any) => {
+                Object.keys(data).forEach(dataItem => {
+                  return (
+                    <p style={{ margin: '6px', color: 'red' }}>
+                      {dataItem ? dataItem : '-'}:{' '}
+                      {data[dataItem].value ? data[dataItem].value : '-'}
+                    </p>
+                  )
+                })
               })}
             </div>
           </div>
