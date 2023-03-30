@@ -124,12 +124,12 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
           await editOffer(offer.data.id ?? '', values, offer.data)
         }
 
-        const summary = draft ? 'Draft saved successfully' : 'Offer created successfully';
+        const summary = draft ? 'Draft saved successfully' : 'Offer created successfully'
         addPopup({ info: { success: true, summary } })
-        
+
         goMain()
-      } catch (err) {
-        addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
+      } catch (err: any) {
+        addPopup({ info: { success: false, summary: err?.toString() } })
       } finally {
         loader.stop()
       }
@@ -260,6 +260,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       >
         {({ values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm }) => {
           const draftDisabled = isDraftDisabled(errors, touched)
+          const submitDisabled = !values.tokenomicsAgreement || isSubmitDisabled(errors, touched)
           return (
             <>
               <ConfirmationForm
@@ -280,6 +281,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     onClose={() => setShowReview(false)}
                     onSubmit={(draft: boolean) => _submit(values, draft)}
                     draftDisabled={draftDisabled}
+                    submitDisabled={submitDisabled}
                   />
                 </Portal>
               )}
@@ -307,7 +309,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   showDraft={!props.edit}
                   onReview={() => setShowReview(true)}
                   onSubmit={toSubmit}
-                  submitDisabled={!values.tokenomicsAgreement || isSubmitDisabled(errors, touched)}
+                  submitDisabled={submitDisabled}
                   draftDisabled={draftDisabled}
                   offerId={offer?.data?.id}
                   status={offer.data?.status as any}
@@ -837,10 +839,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   )}
 
                   <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                  <FilledButton
-                    onClick={toSubmit}
-                    disabled={Boolean(Object.keys(errors).length) || !values.tokenomicsAgreement}
-                  >
+                  <FilledButton onClick={toSubmit} disabled={submitDisabled}>
                     Submit
                   </FilledButton>
                 </Row>

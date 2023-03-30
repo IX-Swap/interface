@@ -27,7 +27,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
   const addPopup = useAddPopup()
   const claim = useClaimOffer(props.offer.id)
-  const { setHasClaimed, hasClaimed } = useCheckClaimed(props.offer.id);
+  const { setHasClaimed, hasClaimed } = useCheckClaimed(props.offer.id)
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
@@ -43,10 +43,10 @@ export const ClosedStage: React.FC<Props> = (props) => {
       // TODO: blockchain part
       await claim(isSuccessfull)
 
-      setHasClaimed(true);
+      setHasClaimed(true)
       addPopup({ info: { success: true, summary: 'Claimed successfully' } })
-    } catch (err) {
-      addPopup({ info: { success: false, summary: `Error occured during claim: ${err}` } })
+    } catch (err: any) {
+      addPopup({ info: { success: false, summary: err?.toString() } })
     }
   }, [claim])
 
@@ -95,9 +95,9 @@ export const ClosedStage: React.FC<Props> = (props) => {
         <Row alignItems="center" gap="1rem">
           <Clock color={theme.launchpad.colors.primary} size="50" />
           <CantClaimNotice>
-            Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim 
-            process for the tokens. The tokens will be automatically distributed to the investor&apos;s wallets 
-            as a consequence of this process
+            Upon the commencement of the token claim deal stage, the issuer will initiate a batch claim process for the
+            tokens. The tokens will be automatically distributed to the investor&apos;s wallets as a consequence of this
+            process
           </CantClaimNotice>
         </Row>
       )}

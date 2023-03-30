@@ -161,7 +161,7 @@ export const IssuanceActionButtons = ({
           )}
 
           <OutlineButton onClick={onReview}>Review</OutlineButton>
-          <FilledButton onClick={onSubmit} disabled={submitDisabled}>
+          <FilledButton disabled={submitDisabled} onClick={onSubmit}>
             Submit
           </FilledButton>
         </FormSubmitContainer>
