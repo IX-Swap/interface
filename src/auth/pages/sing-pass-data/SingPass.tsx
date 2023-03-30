@@ -1,26 +1,14 @@
-import React, { useEffect } from 'react'
-
+import React from 'react'
 import { Box, Grid } from '@mui/material'
-
 import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
-import { Redirect } from 'react-router-dom'
-import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
-import { history } from 'config/history'
 import { Card, CardContent } from '@mui/material'
 import { Icon } from 'ui/Icons/Icon'
-
 import { ReactComponent as SingpassLogo } from 'assets/singpass-logo-color.svg'
-import { AppRouterLink } from 'components/AppRouterLink'
 import { AuthRoute } from 'auth/router/config'
 
-export interface SingPassProps {
-  data?: any
-}
 
-export const SingPassPage = (props: SingPassProps) => {
-  const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
-  console.log(data, 'datataat')
-  console.log(props, 'datataatprp')
+export const SingPassPage = () => {
+  const { data, isLoading: authorizeLoading } = useMyInfoAuthorize()
   const onCancel = (_: any) => {
     window.location.href = AuthRoute.login
     localStorage.setItem('singpassPage', 'true')
@@ -170,7 +158,7 @@ export const SingPassPage = (props: SingPassProps) => {
                 IRAS Notice of Assessment (Last 2 Years):
               </p>
               <p style={{ margin: '6px', color: 'red' }}>
-                {data?.noas?.length ? data?.noas?.length : '-'}
+                {data?.noahistory?.noas?.length ? data?.noahistory?.noas?.length : '-'}
               </p>
             </div>
           </div>
