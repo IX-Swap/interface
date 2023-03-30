@@ -109,17 +109,19 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
         await approveCallback()
       }
 
-      const data = await launchpadContract?.investPreSale(contractSaleId, parsedAmount, proof)
+      if (launchpadContract) {
+        const data = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
 
-      if (data.hash)
-        await invest(status, {
-          amount,
-          txHash: data.hash,
-        })
+        if (data.hash)
+          await invest(status, {
+            amount,
+            txHash: data.hash,
+          })
 
-      submitState.setSuccess()
+        submitState.setSuccess()
+      }
     } catch (e) {
-      console.log(e)
+      console.error(e)
       submitState.setError()
     }
   }, [invest, submitState])
