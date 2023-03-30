@@ -32,7 +32,8 @@ export const isDraftDisabled = (errors: any, touched: any) => {
         return getIsDisabled(error)
       })
     }
-    return getIsDisabled(errors[fieldName])
+
+    return value ? getIsDisabled(errors[fieldName]) : false
   })
   return hasError
 }

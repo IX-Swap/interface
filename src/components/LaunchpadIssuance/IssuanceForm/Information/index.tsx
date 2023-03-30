@@ -217,6 +217,21 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
     }
   }, [issuanceId, offer.loading, offer.data, isAdmin])
 
+  const onChangeTokenStandart = (
+    value: OfferTokenStandart,
+    setFieldValue: (field: string, value: any) => void,
+    setFieldTouched: (field: string, touched: boolean) => void
+  ) => {
+    setFieldValue('tokenStandart', value)
+    if (value === OfferTokenStandart.xtokenlite) {
+      setFieldValue('totalSupply', '')
+      setFieldTouched('totalSupply', false)
+
+      setFieldValue('tokenReceiverAddress', '')
+      setFieldTouched('tokenReceiverAddress', false)
+    }
+  }
+
   const formIsLoading = useMemo(() => {
     const exists = Boolean(offer.issuance?.vetting?.offer)
     return exists ? !offer.data?.id : false
@@ -530,7 +545,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   />
                   <DropdownField
                     field="tokenStandart"
-                    setter={setFieldValue}
+                    setter={(_, value: any) => onChangeTokenStandart(value, setFieldValue, setFieldTouched)}
                     touch={setFieldTouched}
                     options={standardOptions}
                     label="Token Standard"
