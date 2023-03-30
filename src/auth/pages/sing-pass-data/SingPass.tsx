@@ -159,7 +159,7 @@ export const SingPassPage = () => {
                     <>
                       <br />
                       <p style={{ margin: '6px', color: 'red' }}>
-                        {dataItem}: {data[dataItem].value}
+                        {dataItem}: <br/>{data[dataItem].value}
                         <br />
                       </p>
                     </>
