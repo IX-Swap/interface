@@ -29,7 +29,7 @@ export const SingPassPage = (props: SingPassProps) => {
     window.location.href = `${AuthRoute.signup}?email=${data?.email}&mobile=${data?.mobileno}`
     localStorage.setItem('singpassPage', 'true')
   }
-  
+
   return (
     <>
       <Card
@@ -169,7 +169,9 @@ export const SingPassPage = (props: SingPassProps) => {
               <p style={{ margin: '6px' }}>
                 IRAS Notice of Assessment (Last 2 Years):
               </p>
-              <p style={{ margin: '6px' }}>-</p>
+              <p style={{ margin: '6px', color: 'red' }}>
+                {data?.noas?.length ? data?.noas?.length : '-'}
+              </p>
             </div>
           </div>
         </CardContent>
@@ -220,7 +222,7 @@ export const SingPassPage = (props: SingPassProps) => {
         </button>
 
         <button
-         onClick={onAgree}
+          onClick={onAgree}
           // <AppRouterLink to={AuthRoute.signup}>        </AppRouterLink>
           style={{
             color: '#FFFFFF',
