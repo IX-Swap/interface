@@ -151,12 +151,12 @@ export const SingPassPage = () => {
                 IRAS Notice of Assessment (Last 2 Years):
               </p>
               {data?.noahistory?.noas?.map((data: any) => {
-                Object.keys(data).forEach(dataItem => {
-                  console.log(dataItem, 'dataItem')
+                return Object.keys(data).forEach(dataItem => {
+                  console.log(dataItem, data[dataItem].value, 'dataIte')
                   return (
                     <p style={{ margin: '6px', color: 'red' }}>
-                      {dataItem ? dataItem : '-'}:{' '}
-                      {data[dataItem].value ? data[dataItem].value : '-'}
+                      {dataItem}: {data[dataItem].value}
+                      <br />
                     </p>
                   )
                 })
