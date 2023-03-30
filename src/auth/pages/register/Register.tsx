@@ -33,6 +33,8 @@ export const Register: React.FC = observer(() => {
   const { title, question, link } = useStyles({})
   const { updateFilter, getFilterValue } = useQueryFilter()
   const identity = getFilterValue('identityType')
+  const email = getFilterValue('email')
+  const mobile = getFilterValue('mobile')
   const isIndividual = identity === 'individual'
 
   useEffect(() => {
@@ -51,7 +53,7 @@ export const Register: React.FC = observer(() => {
   }
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
-  const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
+  const isMyInfo = data !== undefined && getFilterValue('email') !== undefined
   console.log(data, 'dataa')
   if (data !== undefined && localStorage.getItem('singpassPage') === null) {
     return <SingPassPage />
@@ -59,8 +61,8 @@ export const Register: React.FC = observer(() => {
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
-        email: data?.email,
-        phoneNumber: data?.mobileno,
+        email: data?.email || email,
+        phoneNumber: data?.mobileno || mobile,
         password: '',
         agree: true
       }
