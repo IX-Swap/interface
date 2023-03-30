@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback, useMemo, useRef } from 'react'
 import { Trans } from '@lingui/macro'
 import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
@@ -106,7 +106,7 @@ export const HeaderLinks = () => {
   const [open, toggle] = useToggle(false)
   const [openNFT, toggleNFT] = useToggle(false)
   const { isCorporate, isApproved } = useKyc()
-  const { isOfferManager } = useRole()
+  const { isOfferManager, isAdmin } = useRole()
   const farmNode = useRef<HTMLDivElement>()
   const nftNode = useRef<HTMLDivElement>()
 
@@ -128,6 +128,11 @@ export const HeaderLinks = () => {
       return config.pages.includes(path)
     },
     [config]
+  )
+
+  const showIssuance = useMemo(
+    () => isAdmin || (isCorporate && isApproved && isOfferManager),
+    [isAdmin, isCorporate, isApproved, isOfferManager]
   )
 
   return (
@@ -219,7 +224,7 @@ export const HeaderLinks = () => {
       <StyledNavLink id={`issuance-nav-link`} to={'/launchpad'}>
         <Trans>Launchpad</Trans>
       </StyledNavLink>
-      {isCorporate && isApproved && isOfferManager && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
+      {showIssuance && <StyledNavLink to="/issuance">Issuance Dashboard</StyledNavLink>}
     </HeaderLinksWrap>
   )
 }

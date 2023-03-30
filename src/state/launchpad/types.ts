@@ -1,5 +1,5 @@
 import { OfferTokenType } from 'components/LaunchpadIssuance/IssuanceForm/Information/types'
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { User } from 'state/admin/actions'
 
 export enum OfferStatus {
@@ -239,6 +239,9 @@ export interface Offer {
   tokenStandart: OfferTokenStandart
   tokenType: OfferTokenType
 
+  totalSupply: string
+  tokenReceiverAddress: string
+
   investingTokenAddress: string
   investingTokenSymbol: string
 
@@ -358,6 +361,7 @@ export interface IssuanceVetting {
   offer?: IssuanceOffer
 
   changesRequested?: string
+  smartContractStrategy: SMART_CONTRACT_STRATEGIES
 }
 
 export interface Issuance {

@@ -38,7 +38,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
     setInputValue(props.value)
   }, [props.value])
 
-  const onChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value
 
     if (props.type === 'number') {
@@ -51,7 +51,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
     if (props.onChange) {
       props.onChange(value)
     }
-  }, [])
+  }
 
   return (
     <FieldContainer>

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
-import { Plus, Image } from 'react-feather'
+import { ReactComponent as ImageIcon } from 'assets/launchpad/svg/image-icon.svg'
+import { Plus } from 'react-feather'
 import { ReactComponent as Trash } from 'assets/launchpad/svg/trash-icon.svg'
 import { FieldArray, Field, FieldProps } from 'formik'
 import { FormGrid } from '../../shared/FormGrid'
@@ -40,7 +41,7 @@ export const TeamMembersBlock: React.FC<Props> = ({ members }) => {
                         value={value}
                         error={meta.touched ? meta.error : ''}
                         label="Upload Photo"
-                        icon={<Image color={theme.launchpad.colors.text.bodyAlt} size="22" />}
+                        icon={<ImageIcon width={16} height={16} />}
                         optional
                         span={2}
                         showLabelInside

@@ -45,7 +45,7 @@ import { initialValues as informationInitialFormValues } from 'components/Launch
 import { IssuanceFile } from 'components/LaunchpadIssuance/IssuanceForm/types'
 import { DirectorInfo, VettingFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/types'
 import { initialValues as vettingInitialFormValues } from 'components/LaunchpadIssuance/IssuanceForm/Vetting/util'
-import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
+import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { useTokensList } from 'hooks/useTokensList'
 import apiService from 'services/apiService'
 import { useKyc } from 'state/user/hooks'
@@ -280,6 +280,17 @@ export const useClaimOffer = (id: string) => {
       }),
     [id]
   )
+}
+
+export const useCheckClaimed = (offerId: string) => {
+  const [hasClaimed, setHasClaimed] = React.useState<boolean>(false)
+
+  apiService
+    .get(`/offers/${offerId}/claim/refund/check-has-claimed`)
+    .then((res) => res.data as boolean)
+    .then(setHasClaimed)
+
+  return { setHasClaimed, hasClaimed }
 }
 
 export const useInvestedAmount = (offerId: string) => {
@@ -658,7 +669,9 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
   const uploadFiles = useUploadVettingFiles()
 
   return React.useCallback(
-    async (payload: VettingFormValues, initialValues: VettingFormValues, vettindId?: number) => {
+    async (payload: VettingFormValues, initialValues: VettingFormValues, vettingId?: number) => {
+      const filterEmptyPeople = (item: any) => Object.values(item).some((v) => Boolean(v))
+
       let data: Record<string, any> = {
         issuanceId: Number(issuanceId),
 
@@ -673,21 +686,22 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
         description: payload.description,
 
         document: payload.document,
-        directors: payload.directors.map((x: any) => ({
-          id: x.id,
+        directors: payload.directors.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
-        beneficialOwners: payload.beneficialOwners.map((x: any) => ({
-          id: x.id,
+        beneficialOwners: payload.beneficialOwners.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
         fundingDocuments: payload.fundingDocuments,
+        smartContractStrategy: payload.smartContractStrategy || SMART_CONTRACT_STRATEGIES.original,
       }
 
       const uploadedFiles = await uploadFiles(payload, initialValues)
@@ -699,14 +713,6 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
 
         fileUpdates.forEach((x) => {
           data[key][x.index][x.name] = x.id
-        })
-
-        const existingIds = new Set(initialValues[key].map((x) => x.id))
-
-        payload[key].forEach((x, idx) => {
-          if (!existingIds.has(x.id)) {
-            delete data[key][idx].id
-          }
         })
       }
 
@@ -723,12 +729,37 @@ export const useSaveVettingDraft = (issuanceId?: number) => {
       data.fundingDocuments = [...existingFunding, ...uploadedFunding]
 
       data = Object.entries(data)
-        .filter(([, value]) => typeof value === 'boolean' || value)
+        .filter(([, value]) => typeof value === 'boolean' || value !== undefined)
+        .map(([key, value]) => {
+          if (value === '') {
+            return [key, null]
+          }
+          if (Array.isArray(value)) {
+            const newValue = value.map((valueItem) => {
+              // for directors and "beneficialOwners"
+              if (typeof valueItem === 'object') {
+                return Object.entries(valueItem)
+                  .map(([valueItemKey, valueItemValue]) => [
+                    valueItemKey,
+                    valueItemValue === '' ? null : valueItemValue,
+                  ])
+                  .reduce(
+                    (acc, [valueItemKey, valueItemValue]: any) => ({ ...acc, [valueItemKey]: valueItemValue }),
+                    {}
+                  )
+              }
+              return valueItem
+            })
+            return [key, newValue]
+          }
+          return [key, value]
+        })
+
         .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {})
 
-      if (vettindId) {
+      if (vettingId) {
         delete data.issuanceId
-        return apiService.put(`/vettings/${vettindId}`, data)
+        return apiService.put(`/vettings/${vettingId}`, data)
       } else {
         return apiService.post(`/vettings`, data)
       }
@@ -742,10 +773,12 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
 
   return React.useCallback(
     async (payload: VettingFormValues, initialValues: VettingFormValues, vettingId?: number) => {
+      const filterEmptyPeople = (item: any) => Object.values(item).some((v) => Boolean(v))
       const uploadedFiles = await uploadFiles(payload, initialValues)
 
       const findDoc = (key: keyof VettingFormValues['document']) =>
         uploadedFiles.find((x) => x.name === `document.${key}Id`)?.id ?? initialValues.document[key]?.id
+      // todo
 
       const data: Record<string, any> = {
         issuanceId: Number(issuanceId),
@@ -775,21 +808,22 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
           resolutionAuthorizedSignatoryId: findDoc('resolutionAuthorizedSignatory'),
         },
 
-        directors: payload.directors.map((x: any) => ({
-          id: x.id,
+        directors: payload.directors.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
-        beneficialOwners: payload.beneficialOwners.map((x: any) => ({
-          id: x.id,
+        beneficialOwners: payload.beneficialOwners.filter(filterEmptyPeople).map((x: any) => ({
           fullName: x.fullName,
           proofOfIdentityId: x.proofOfIdentityId,
           proofOfAddressId: x.proofOfAddressId,
+          ...(x.id && { id: x.id }),
         })),
 
         fundingDocuments: payload.fundingDocuments,
+        smartContractStrategy: payload.smartContractStrategy || SMART_CONTRACT_STRATEGIES.original,
       }
 
       const updateDirectors = (key: 'directors' | 'beneficialOwners') => {
@@ -799,14 +833,6 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
 
         fileUpdates.forEach((x) => {
           data[key][x.index][x.name] = x.id
-        })
-
-        const existingIds = new Set(initialValues[key].map((x) => x.id))
-
-        payload[key].forEach((x, idx) => {
-          if (!existingIds.has(x.id)) {
-            delete data[key][idx].id
-          }
         })
       }
 
@@ -992,7 +1018,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
           .map((document) => {
             const file = files.find((x) => x.id === document.file?.id)
 
-            return { name: file?.file.name, file: file } as AdditionalDocument
+            return { file: file, asset: document?.file } as AdditionalDocument
           }),
 
         hasPresale: payload.hasPresale,
@@ -1025,6 +1051,8 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
         trusteeAddress: payload.trusteeAddress,
         tokenPrice: Number(payload.tokenPrice),
         tokenStandart: payload.tokenStandart,
+        totalSupply: payload.totalSupply ?? '',
+        tokenReceiverAddress: payload.tokenReceiverAddress ?? '',
         // mapping: tokenTicker, tokenType. server to frontend fields
         tokenTicker: payload.tokenSymbol,
         tokenType: payload.investingTokenSymbol as OfferTokenType,
@@ -1089,12 +1117,16 @@ export const useSubmitOffer = () => {
         issuerIdentificationNumber: payload.issuerIdentificationNumber,
 
         tokenAddress: payload.tokenAddress,
+        trusteeAddress: payload.trusteeAddress,
         // mapping : tokenSymbol, investingTokenSymbol frontend to server
         tokenSymbol: payload.tokenTicker,
         investingTokenSymbol: payload.tokenType,
         tokenPrice: payload.tokenPrice.toString(),
         decimals: payload.decimals,
         tokenStandart: payload.tokenStandart,
+
+        totalSupply: payload.totalSupply,
+        tokenReceiverAddress: payload.tokenReceiverAddress,
 
         softCap: payload.softCap,
         hardCap: payload.hardCap,
@@ -1191,7 +1223,6 @@ export const useSubmitOffer = () => {
         return result
       }
 
-      // todo all this needs to be filtered for minimal, not full
       data = filter(data)
       if (Object.keys(data.terms).length === 0) {
         delete data.terms
@@ -1205,12 +1236,6 @@ export const useSubmitOffer = () => {
       if (offerId) {
         delete data.offerId
         delete data.vettingId
-        if (initial.tokenName) {
-          delete data.tokenName
-        }
-        if (initial.tokenAddress) {
-          delete data.tokenAddress
-        }
         return apiService.put(`/offers/${offerId}/full`, data)
       } else {
         return apiService.post(`/offers`, data)

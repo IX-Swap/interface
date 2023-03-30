@@ -28,6 +28,9 @@ import { textFilter } from 'utils/input'
 import { text19 } from 'components/LaunchpadMisc/typography'
 import { useSaveDraftVetting } from './useSaveDraftVetting'
 import { VettingActionButtons } from './VettingActionButtons'
+import { StrategyCard } from './StrategyCard'
+import { strategyOptions } from './constants'
+import { isDraftDisabled, isSubmitDisabled } from 'components/LaunchpadIssuance/utils/form'
 
 export interface IssuanceVettingFormProps {
   view?: boolean
@@ -40,7 +43,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
 
-  const onConfirmationClose = useCallback(() => {
+  const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
   }, [])
 
@@ -103,17 +106,6 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
     return () => window.removeEventListener('beforeunload', listener)
   }, [])
-
-  const isSubmitDisabled = useCallback(
-    (errors: any, touched: any) => {
-      if (view) return true
-      const hasErrors = Object.keys(errors).length > 0
-      const notTouched = !Object.keys(touched).length
-
-      return notTouched || hasErrors
-    },
-    [view]
-  )
 
   if (!issuanceId) {
     return null
@@ -187,12 +179,36 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               onSaveDraft={() => saveDraft(values)}
               onSubmit={toSubmit}
               disabled={view}
-              submitDisabled={isSubmitDisabled(errors, touched)}
+              draftDisabled={view || isDraftDisabled(errors, touched)}
+              submitDisabled={view || isSubmitDisabled(errors, touched)}
               vettingId={String(initialValues.vettingId)}
+              isApproved={initialValues?.data?.status === IssuanceStatus.approved}
             />
           </FormSideBar>
 
           <FormBody>
+            <StrategyInfoBlock>
+              {strategyOptions.map((strategy, idx) => (
+                <StrategyCard
+                  key={strategy.option + idx}
+                  field="smartContractStrategy"
+                  id={strategy.option}
+                  checked={
+                    strategy.option ===
+                    (values.smartContractStrategy ? values.smartContractStrategy : defaultValues.smartContractStrategy)
+                  }
+                  option={strategy.option}
+                  text={strategy.text}
+                  tooltipContent={strategy.tooltipContent}
+                  disabled={view}
+                  setter={setFieldValue}
+                  touch={setFieldTouched}
+                />
+              ))}
+            </StrategyInfoBlock>
+
+            <Separator />
+
             <IssuerInfoBlock>
               <FormField
                 label="Applicant's Full Name"
@@ -429,7 +445,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               <OutlineButton width="280px" onClick={goBack}>
                 Back
               </OutlineButton>
-              <FilledButton width="280px" onClick={toSubmit} disabled={isSubmitDisabled(errors, touched)}>
+              <FilledButton width="280px" onClick={toSubmit} disabled={view || isSubmitDisabled(errors, touched)}>
                 Submit
               </FilledButton>
             </Row>
@@ -439,6 +455,12 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
     </Formik>
   )
 }
+
+const StrategyInfoBlock = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+`
 
 const IssuerInfoBlock = styled.div`
   display: grid;

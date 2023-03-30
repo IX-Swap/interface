@@ -73,7 +73,7 @@ export const schema = yup.object().shape({
 
   title: yup
     .string()
-    .min(2, getLongerThanOrEqual('Name of issuance', 2))
+    .min(3, getLongerThanOrEqual('Name of issuance', 3))
     .max(STRING_NORMAL, getHaveAtMost('Name of issuance', STRING_NORMAL))
     .required(REQUIRED),
 
@@ -89,7 +89,7 @@ export const schema = yup.object().shape({
     .max(64, getHaveAtMost('Identification number', 64)),
 
   tokenType: yup.string().oneOf(Object.values(OfferTokenType)).required(REQUIRED),
-  tokenName: yup.string().required(REQUIRED),
+  tokenName: yup.string().min(3, getLongerThanOrEqual('Token name', 3)).required(REQUIRED),
   tokenTicker: yup
     .string()
     .required(REQUIRED)
@@ -99,13 +99,44 @@ export const schema = yup.object().shape({
   tokenPrice: yup.string().required(REQUIRED),
   tokenStandart: yup.string().oneOf(Object.values(OfferTokenStandart)).required(REQUIRED),
 
+  tokenReceiverAddress: yup
+    .string()
+    .when('tokenStandart', {
+      is: OfferTokenStandart.erc20,
+      then: yup.string().required(REQUIRED)
+    })
+    .test('addressConstraint', 'Please enter a valid address', function () {
+      return Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
+    })
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
+    .nullable(),
+
+  totalSupply: yup
+    .string()
+    .when('tokenStandart', {
+      is: OfferTokenStandart.erc20,
+      then: yup.string().required(REQUIRED)
+    })
+    .matches(/[0-9]+/, 'Invalid value')
+    .nullable(),
+
   decimals: yup.number().min(0).max(50),
   trusteeAddress: yup
     .string()
     .test('addressConstraint', 'Please enter a valid address', function () {
       return Boolean(isEthChainAddress(this.parent.trusteeAddress))
     })
-    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' }),
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
+    .nullable(),
+
+  tokenAddress: yup
+    .string()
+    .test('addressConstraint', 'Please enter a valid address', function () {
+      return Boolean(isEthChainAddress(this.parent.tokenAddress))
+    })
+    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
+    .nullable(),
+
   softCap: yup
     .string()
     .matches(/[0-9]+/, 'Invalid value')
@@ -151,56 +182,68 @@ export const schema = yup.object().shape({
     ),
   hasPresale: yup.boolean().required(REQUIRED),
 
-  presaleMaxInvestment: yup.string().when('hasPresale', {
-    is: true,
-    then: yup
-      .string()
-      .required(REQUIRED)
-      .test(
-        'presaleMaxInvestmentConstraint',
-        'Maximal investment should be greater than minimal investment',
-        function (): boolean | yup.ValidationError {
-          return checkMaxGreaterThanMinimum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
-        }
-      )
-      .test(
-        'presaleMaxInvestmentAllocation',
-        'Maximal investment should be smaller or equal to pre-sale allocation',
-        function () {
-          return checkMinSmallerThanMaximum(this.parent.presaleMaxInvestment, this.parent.presaleAlocated)
-        }
-      ),
-    otherwise: yup.string(),
-  }),
-  presaleMinInvestment: yup.string().when('hasPresale', {
-    is: true,
-    then: yup
-      .string()
-      .required(REQUIRED)
-      .test(
-        'presaleMinInvestmentConstraint',
-        'Mininimal investment should be smaller than maximal investment',
-        function (): boolean | yup.ValidationError {
-          return checkMinSmallerThanMaximum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
-        }
-      ),
-    otherwise: yup.string(),
-  }),
+  presaleMaxInvestment: yup
+    .string()
+    .nullable()
+    .when('hasPresale', {
+      is: true,
+      then: yup
+        .string()
+        .nullable()
+        .required(REQUIRED)
+        .test(
+          'presaleMaxInvestmentConstraint',
+          'Maximal investment should be greater than minimal investment',
+          function (): boolean | yup.ValidationError {
+            return checkMaxGreaterThanMinimum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
+          }
+        )
+        .test(
+          'presaleMaxInvestmentAllocation',
+          'Maximal investment should be smaller or equal to pre-sale allocation',
+          function () {
+            return checkMinSmallerThanMaximum(this.parent.presaleMaxInvestment, this.parent.presaleAlocated)
+          }
+        ),
+      otherwise: yup.string().nullable(),
+    }),
+  presaleMinInvestment: yup
+    .string()
+    .nullable()
+    .when('hasPresale', {
+      is: true,
+      then: yup
+        .string()
+        .nullable()
+        .required(REQUIRED)
+        .test(
+          'presaleMinInvestmentConstraint',
+          'Mininimal investment should be smaller than maximal investment',
+          function (): boolean | yup.ValidationError {
+            return checkMinSmallerThanMaximum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
+          }
+        ),
+      otherwise: yup.string().nullable(),
+    }),
 
-  presaleAlocated: yup.string().when('hasPresale', {
-    is: true,
-    then: yup
-      .string()
-      .required(REQUIRED)
-      .test(
-        'presaleAlocatedMax',
-        'Pre-sale allocated should be smaller or equal to total amount to raise',
-        function () {
-          return checkMinSmallerThanMaximum(this.parent.presaleAlocated, this.parent.hardCap)
-        }
-      ),
-    otherwise: yup.string(),
-  }),
+  presaleAlocated: yup
+    .string()
+    .nullable()
+    .when('hasPresale', {
+      is: true,
+      then: yup
+        .string()
+        .nullable()
+        .required(REQUIRED)
+        .test(
+          'presaleAlocatedMax',
+          'Pre-sale allocated should be smaller or equal to total amount to raise',
+          function () {
+            return checkMinSmallerThanMaximum(this.parent.presaleAlocated, this.parent.hardCap)
+          }
+        ),
+      otherwise: yup.string().nullable(),
+    }),
 
   email: yup.string().required(REQUIRED).email('Enter a valid email'),
   website: yup.string().required(REQUIRED).url('Enter a valid URL'),
@@ -281,20 +324,20 @@ export const schema = yup.object().shape({
   timeframe: yup.object().when('hasPresale', {
     is: true,
     then: yup.object().shape({
-      whitelist: yup.date().required(REQUIRED),
-      preSale: yup.date().required(REQUIRED),
+      whitelist: yup.date().nullable().required(REQUIRED),
+      preSale: yup.date().nullable().required(REQUIRED),
       // using custom messages because we have two fields in one
-      sale: yup.date().required('Public sale date required'),
-      closed: yup.date().required('Closed date required'),
-      claim: yup.date().required(REQUIRED),
+      sale: yup.date().nullable().required('Public sale date required'),
+      closed: yup.date().nullable().required('Closed date required'),
+      claim: yup.date().nullable().required(REQUIRED),
     }),
     otherwise: yup.object().shape({
-      whitelist: yup.date(),
-      preSale: yup.date(),
+      whitelist: yup.date().nullable(),
+      preSale: yup.date().nullable(),
 
-      sale: yup.date().required('Public sale date required'),
-      closed: yup.date().required('Closed date required'),
-      claim: yup.date().required(REQUIRED),
+      sale: yup.date().nullable().required('Public sale date required'),
+      closed: yup.date().nullable().required('Closed date required'),
+      claim: yup.date().nullable().required(REQUIRED),
     }),
   }),
   gallery: yup.array(requiredFileSchema),

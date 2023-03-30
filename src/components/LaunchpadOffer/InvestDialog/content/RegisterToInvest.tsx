@@ -82,17 +82,15 @@ export const RegisterToInvestStage: React.FC<Props> = (props) => {
     setValue('isInterested', value)
   }, [])
 
-  const onChangeAmount = React.useCallback((value: any, setValue: ValueSetter) => {
+  const onChangeAmount = (value: any, setValue: ValueSetter) => {
     if (disableForm) {
       return
     }
 
     const warningText = getWarning(value)
-    if (warningText) {
-      setWarning(warningText)
-    }
+    setWarning(warningText)
     setValue('amount', cleanAmount(value))
-  }, [])
+  }
 
   return (
     <Formik initialValues={initialValues} validationSchema={schema} onSubmit={submit}>

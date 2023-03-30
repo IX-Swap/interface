@@ -43,6 +43,8 @@ export const initialValues = {
   pricePerToken: 0,
   tokenPrice: 0,
   tokenStandart: undefined,
+  totalSupply: '',
+  tokenReceiverAddress: '',
 
   minInvestment: '',
   maxInvestment: '',

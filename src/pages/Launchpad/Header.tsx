@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 
 import { Wallet } from 'components/Launchpad/Wallet'
@@ -12,7 +12,12 @@ import { text29, text57, text8 } from 'components/LaunchpadMisc/typography'
 
 export const Header = () => {
   const { isCorporate, isApproved } = useKyc()
-  const { isOfferManager } = useRole()
+  const { isOfferManager, isAdmin } = useRole()
+
+  const showIssuance = useMemo(
+    () => isAdmin || (isCorporate && isApproved && isOfferManager),
+    [isAdmin, isCorporate, isApproved, isOfferManager]
+  )
 
   return (
     <HeaderContainer>
@@ -33,7 +38,7 @@ export const Header = () => {
         </HeaderLink>
       </HeaderLinks>
 
-      {isCorporate && isApproved && isOfferManager && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
+      {showIssuance && <IssuancesLink to="/issuance">Issuance Dashboard</IssuancesLink>}
 
       <Wallet />
     </HeaderContainer>

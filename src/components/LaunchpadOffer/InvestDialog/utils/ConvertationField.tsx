@@ -45,33 +45,30 @@ export const useGetWarning = (offer: Offer) => {
   const inputCurrency = useCurrency(offer.investingTokenAddress)
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
   const isSufficientBalance = useDerivedBalanceInfo(offer.id)
+  
+  return useCallback((value: string) => {
+    const isPresale = offer.status !== OfferStatus.sale
+    const realValue = value ? Number(value.replace(/,/g, '')) : 0
+    const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
+    const max = isPresale ? offer.presaleMaxInvestment : offer.maxInvestment
+    const total = isPresale ? offer.presaleAlocated : offer.hardCap
+    const available = +total - offer.totalInvestment
 
-  return useCallback(
-    (value: string) => {
-      const isPresale = offer.status !== OfferStatus.sale
-      const realValue = value ? Number(value.replace(/,/g, '')) : 0
-      const min = isPresale ? offer.presaleMinInvestment : offer.minInvestment
-      const max = isPresale ? offer.presaleMaxInvestment : offer.maxInvestment
-      const total = isPresale ? offer.presaleAlocated : offer.hardCap
-      const available = +total - offer.totalInvestment
-
-      const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
-      let warning = ''
-      if (isInsufficientBalance) {
-        warning = `Insufficient balance`
-      } else if (value === '') {
-        warning = `Please enter amount of your estimated investment`
-      } else if (Number(min) > realValue) {
-        warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
-      } else if (Number(max) < realValue) {
-        warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
-      } else if (available < realValue) {
-        warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
-      }
-      return warning
-    },
-    [offer]
-  )
+    const isInsufficientBalance = !isSufficientBalance(value, inputCurrency, balance)
+    let warning = ''
+    if (isInsufficientBalance) {
+      warning = `Insufficient balance`
+    } else if (value === '') {
+      warning = `Please enter amount of your estimated investment`
+    } else if (Number(min) > realValue) {
+      warning = `Min. investment size ${min} ${offer.investingTokenSymbol}`
+    } else if (Number(max) < realValue) {
+      warning = `Max. investment size ${max} ${offer.investingTokenSymbol}`
+    } else if (available < realValue) {
+      warning = `Available to invest ${available} ${offer.investingTokenSymbol}`
+    }
+    return warning
+  }, [offer, balance, inputCurrency])
 }
 
 export const ConvertationField: React.FC<Props> = (props) => {
@@ -202,11 +199,11 @@ const CurrencyDropdown: React.FC<DropdownProps> = (props) => {
     () =>
       tokensOptions.map(
         (token) =>
-          ({
-            name: token.label,
-            address: token.address,
-            icon: token.icon,
-          } as TokenOption)
+        ({
+          name: token.label,
+          address: token.address,
+          icon: token.icon,
+        } as TokenOption)
       ),
     [tokensOptions]
   )

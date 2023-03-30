@@ -3,7 +3,7 @@ import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useClaimOffer, useInvestedAmount } from 'state/launchpad/hooks'
+import { useCheckClaimed, useClaimOffer, useInvestedAmount } from 'state/launchpad/hooks'
 import { Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
@@ -26,6 +26,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
   const addPopup = useAddPopup()
   const claim = useClaimOffer(props.offer.id)
+  const { setHasClaimed, hasClaimed } = useCheckClaimed(props.offer.id);
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
@@ -41,6 +42,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
       // TODO: blockchain part
       await claim(isSuccessfull)
 
+      setHasClaimed(true);
       addPopup({ info: { success: true, summary: 'Claimed successfully' } })
     } catch (err) {
       addPopup({ info: { success: false, summary: `Error occured during claim: ${err}` } })
@@ -80,7 +82,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
         </Column>
 
         {!isSuccessfull && (
-          <ClaimedFilledButton onClick={onSubmit} disabled={!canClaim || (amountToClaim ?? 0) <= 0}>
+          <ClaimedFilledButton onClick={onSubmit} disabled={!canClaim || (amountToClaim ?? 0) <= 0 || hasClaimed}>
             Claim
           </ClaimedFilledButton>
         )}

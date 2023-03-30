@@ -2,7 +2,8 @@ import React from 'react'
 import styled, { useTheme } from 'styled-components'
 import { FileRejection, useDropzone } from 'react-dropzone'
 import { FormikErrors, FieldArray, FormikTouched, Field, FieldProps } from 'formik'
-import { Image, Plus, Trash } from 'react-feather'
+import { ReactComponent as ImageIcon } from 'assets/launchpad/svg/image-icon.svg'
+import { Plus, Trash } from 'react-feather'
 import { ReactComponent as TrashIcon } from 'assets/launchpad/svg/trash-icon.svg'
 import { Column } from 'components/LaunchpadMisc/styled'
 import { InformationFormValues, VideoLink } from '../types'
@@ -101,7 +102,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
           <ImageFieldPromptContainer {...getRootProps()}>
             <input {...getInputProps()} />
 
-            <Image color={theme.launchpad.colors.text.bodyAlt} />
+            <ImageIcon width={16} height={16} />
 
             <header>Add More Images</header>
 

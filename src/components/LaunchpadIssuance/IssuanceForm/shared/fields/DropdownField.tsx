@@ -45,7 +45,9 @@ export function DropdownField<T>(props: Props<T>) {
   const [showDropdown, setShowDropdown] = React.useState(false)
   const [searchActive, setSearchActive] = React.useState(false)
 
-  const [optionSearch, setOptionSearch] = React.useState<string>()
+  const [optionSearch, setOptionSearch] = React.useState<string>(
+    props.options.find((x) => x.value === props.value)?.label || ''
+  )
 
   const options = React.useMemo(() => {
     if (!props.searchable) {
@@ -116,6 +118,7 @@ export function DropdownField<T>(props: Props<T>) {
     function handleClickOutside(event: Event) {
       if (!container.current?.contains(event.target as Node | null)) {
         setShowDropdown(false)
+        setOptionSearch('')
       }
     }
 
@@ -155,7 +158,12 @@ export function DropdownField<T>(props: Props<T>) {
         )}
 
         {props.searchable && (
-          <OptionSearch placeholder={props.placeholder ?? 'Select'} value={optionSearch} onChange={updateSearch} />
+          <OptionSearch
+            placeholder={props.placeholder ?? 'Select'}
+            value={optionSearch}
+            onChange={updateSearch}
+            isActive={!searchActive}
+          />
         )}
         {showDropdown && (
           <FieldOptionList>
@@ -216,14 +224,18 @@ const FieldIcon = styled.div<{ isOpen: boolean }>`
   }
 `
 
-const OptionSearch = styled.input`
+const OptionSearch = styled.input<{ isActive?: boolean }>`
   border: none;
   background: none;
   outline: none;
 
   ${text30}
 
-  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) =>
+    props.isActive ? props.theme.launchpad.colors.text.title : props.theme.launchpad.colors.text.bodyAlt};
+  ::placeholder {
+    color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  }
 `
 
 const FieldLabel = styled.div`

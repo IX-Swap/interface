@@ -20,22 +20,24 @@ const directorSchema = yup.array(
 )
 
 export const schema = yup.object().shape({
-  applicantFullName: yup.string().required("Enter applicant's name"),
-  email: yup.string().email('Enter a valid email').required('Email required'),
+  applicantFullName: yup.string().nullable().required("Enter applicant's name"),
+  email: yup.string().email('Enter a valid email').nullable().required('Email required'),
 
-  companyName: yup.string().required('Enter company name'),
+  companyName: yup.string().nullable().required('Enter company name'),
   companyWebsite: yup
     .string()
     .matches(
       /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
       'Enter valid URL'
     )
+    .nullable()
     .required('Enter company website URL'),
 
   description: yup
     .string()
-    .required('Description required')
-    .min(10, 'Description should be at least 10 characters long'),
+    .min(10, 'Description should be at least 10 characters long')
+    .nullable()
+    .required('Description required'),
 
   document: yup.object().shape({
     pitchDeck: requiredFileSchema,
