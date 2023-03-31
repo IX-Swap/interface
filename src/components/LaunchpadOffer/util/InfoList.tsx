@@ -30,7 +30,7 @@ export const InfoList: React.FC<Props> = ({
   lineHeight,
   titleFontWeight,
   entries,
-  placeholderText = 'There are no information to display',
+  placeholderText = 'There is no information to display',
 }) => {
   const getIsLast = useCallback((idx: number) => entries.length === idx + 1, [entries])
 
@@ -43,7 +43,6 @@ export const InfoList: React.FC<Props> = ({
       {entries.length < 1 ? (
         <div>
           <Placeholder>{placeholderText}</Placeholder>
-          <Separator />
         </div>
       ) : (
         entries.map((entry, idx) => (

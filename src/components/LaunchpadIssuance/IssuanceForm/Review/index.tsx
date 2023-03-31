@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 import { File, Eye, ArrowLeft, Mail } from 'react-feather'
@@ -31,10 +31,13 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
   const formatedValue = useFormatOfferValue()
   const numberFormatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
 
-  const allocatedPublicSale = React.useMemo(
-    () => formatedValue(`${Number(values.hardCap) - Number(values.presaleAlocated)}`),
-    []
-  )
+  const allocatedPublicSale = React.useMemo(() => {
+    if (!values.hasPresale || !values.hardCap) {
+      return formatedValue(values.hardCap)
+    }
+    return formatedValue(`${Number(values.hardCap) - Number(values.presaleAlocated)}`)
+  }, [values.hardCap, values.presaleAlocated, values.hasPresale])
+
   const minTokenInvestment = React.useMemo(
     () => formatedValue(`${Math.floor(Number(values.minInvestment) / Number(values.tokenPrice))}`) ?? 'N/A',
     [values.minInvestment, values.tokenPrice]
@@ -46,14 +49,16 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
 
   const stageEntries = React.useMemo(() => {
     const entries = [
-      values.timeframe.whitelist && {
-        label: <StageLabel>Register To Invest</StageLabel>,
-        value: <Nowrap>{formatDateRange(values.timeframe.whitelist, values.timeframe.preSale)}</Nowrap>,
-      },
-      values.timeframe.preSale && {
-        label: <StageLabel>Pre-sale</StageLabel>,
-        value: <Nowrap>{formatDateRange(values.timeframe.preSale, values.timeframe.sale)}</Nowrap>,
-      },
+      values.hasPresale &&
+        values.timeframe.whitelist && {
+          label: <StageLabel>Register To Invest</StageLabel>,
+          value: <Nowrap>{formatDateRange(values.timeframe.whitelist, values.timeframe.preSale)}</Nowrap>,
+        },
+      values.hasPresale &&
+        values.timeframe.preSale && {
+          label: <StageLabel>Pre-sale</StageLabel>,
+          value: <Nowrap>{formatDateRange(values.timeframe.preSale, values.timeframe.sale)}</Nowrap>,
+        },
       values.timeframe.sale && {
         label: <StageLabel>Public Sale</StageLabel>,
         value: <Nowrap>{formatDateRange(values.timeframe.sale, values.timeframe.closed)}</Nowrap>,
@@ -66,9 +71,9 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
         label: <StageLabel>Token Claim</StageLabel>,
         value: <Nowrap>{formatDateRange(values.timeframe.claim)}</Nowrap>,
       },
-    ]
-    return entries.filter((i) => Boolean(i))
-  }, [values.timeframe])
+    ] as any
+    return entries.filter((i: any) => Boolean(i))
+  }, [values.hasPresale, values.timeframe])
 
   const additionalDocsEntries = useMemo(() => {
     return values.additionalDocuments
@@ -90,6 +95,40 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
         }
       })
   }, [theme, values.additionalDocuments])
+
+  const contactEntries = useMemo(() => {
+    const entries = []
+    if (values.email) {
+      entries.push({
+        label: (
+          <ContactLine href={values.email ? `mailto:${values.email}` : '#'}>
+            <Mail size="18" /> {values.email}
+          </ContactLine>
+        ),
+      })
+    }
+    return entries
+  }, [values.email])
+
+  const formatInfo = useCallback(
+    (text1?: string, number1?: string | number, number2?: string | number, text2?: string) => {
+      const NA = 'N/A'
+      if (!text1 && !number1 && !text2 && !number2) {
+        return NA
+      }
+      let part1 = NA
+      let part2 = NA
+      const getNumber = (nb?: string | number) => (nb ? (typeof nb === 'string' ? nb : formatedValue(`${nb}`)) : NA)
+      if (text1 || number1) {
+        part1 = `${text1 || NA} ${getNumber(number1)}`
+      }
+      if (text2 || number2) {
+        part2 = `${getNumber(number2)} ${text2 || NA}`
+      }
+      return `${part1} / ${part2}`
+    },
+    [formatedValue]
+  )
 
   return (
     <ReviewModalContainer>
@@ -126,23 +165,22 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
 
               {
                 label: 'Token Price',
-                value: `${values.tokenType}  ${formatedValue(values.tokenPrice?.toString()) ?? 'N/A'} / 1 ${
+                value: formatInfo(
+                  values.tokenType,
+                  values.tokenPrice,
+                  values.tokenTicker ? '1' : undefined,
                   values.tokenTicker
-                }`,
+                ),
               },
 
               {
                 label: 'Max. Investment Size',
-                value: `${values.tokenType} ${formatedValue(values.maxInvestment) ?? 'N/A'} / ${maxTokenInvestment} ${
-                  values.tokenTicker
-                }`,
+                value: formatInfo(values.tokenType, +values.maxInvestment, maxTokenInvestment, values.tokenTicker),
               },
 
               {
                 label: 'Min. Investment Size',
-                value: `${values.tokenType}  ${formatedValue(values.minInvestment) ?? 'N/A'} / ${minTokenInvestment} ${
-                  values.tokenTicker
-                }`,
+                value: formatInfo(values.tokenType, +values.minInvestment, minTokenInvestment, values.tokenTicker),
               },
             ]}
           />
@@ -157,11 +195,11 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
             <SaleAllocationEntry>
               <div>
                 <span className="bold">
-                  {values.tokenType} {formatedValue(values.softCap) ?? 'N/A'}
+                  {values.softCap ? `${values.tokenType} ${formatedValue(values.softCap)}` : 'N/A'}
                 </span>{' '}
                 Soft Cap /
                 <span className="bold">
-                  {values.tokenType} {formatedValue(values.hardCap) ?? 'N/A'}
+                  {values.hardCap ? ` ${values.tokenType} ${formatedValue(values.hardCap)}` : ' N/A'}
                 </span>{' '}
                 Hard Cap
               </div>
@@ -169,21 +207,25 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
 
             <Separator />
 
+            {values.hasPresale && (
+              <>
+                <SaleAllocationEntry>
+                  <div>
+                    <span className="bold">
+                      {values.presaleAlocated ? `${values.tokenType} ${formatedValue(values.presaleAlocated)}` : 'N/A'}
+                    </span>{' '}
+                    Allocated for Pre-Sale
+                  </div>
+                </SaleAllocationEntry>
+
+                <Separator />
+              </>
+            )}
+
             <SaleAllocationEntry>
               <div>
                 <span className="bold">
-                  {values.tokenType} {formatedValue(values.presaleAlocated)}
-                </span>{' '}
-                Allocated for Pre-Sale
-              </div>
-            </SaleAllocationEntry>
-
-            <Separator />
-
-            <SaleAllocationEntry>
-              <div>
-                <span className="bold">
-                  {values.tokenType} {allocatedPublicSale}
+                  {allocatedPublicSale ? `${values.tokenType} ${allocatedPublicSale}` : 'N/A'}
                 </span>{' '}
                 Allocated for Public Sale
               </div>
@@ -201,7 +243,11 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
               <SaleAllocationEntry>
                 <EntryLabel>Max. Investment Size</EntryLabel>
                 <EntryValue>
-                  {values.tokenType} {formatedValue(numberFormatter.format(Number(values.presaleMaxInvestment)))}
+                  {values.presaleMaxInvestment
+                    ? `${values.tokenType} ${formatedValue(
+                        numberFormatter.format(Number(values.presaleMaxInvestment))
+                      )}`
+                    : 'N/A'}
                 </EntryValue>
               </SaleAllocationEntry>
 
@@ -210,7 +256,11 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
               <SaleAllocationEntry>
                 <EntryLabel>Min. Investment Size</EntryLabel>
                 <EntryValue>
-                  {values.tokenType} {formatedValue(numberFormatter.format(Number(values.presaleMinInvestment)))}
+                  {values.presaleMinInvestment
+                    ? `${values.tokenType} ${formatedValue(
+                        numberFormatter.format(Number(values.presaleMinInvestment))
+                      )}`
+                    : 'N/A'}
                 </EntryValue>
               </SaleAllocationEntry>
             </Column>
@@ -226,19 +276,7 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
         </Container>
 
         <Container area="contact">
-          <InfoList
-            title="Contact Us"
-            titleFontWeight="600"
-            entries={[
-              {
-                label: (
-                  <ContactLine href={values.email ? `mailto:${values.email}` : '#'}>
-                    <Mail size="18" /> {values.email}
-                  </ContactLine>
-                ),
-              },
-            ]}
-          />
+          <InfoList title="Contact Us" titleFontWeight="600" entries={contactEntries} />
         </Container>
       </ReviewContainer>
     </ReviewModalContainer>

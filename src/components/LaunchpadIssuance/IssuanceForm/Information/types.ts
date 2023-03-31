@@ -65,6 +65,8 @@ export interface InformationFormValues {
 
   tokenAddress?: string
   investingTokenAddress?: string
+  investingTokenSymbol?: string
+  investingTokenDecimals?: number
 
   network: OfferNetwork
 
