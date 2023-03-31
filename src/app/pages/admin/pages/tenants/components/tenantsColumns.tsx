@@ -48,10 +48,6 @@ export const columns: any[] = [
         />
       )
     }
-  },
-  {
-    key: 'actions',
-    label: 'Actions'
   }
 ]
 

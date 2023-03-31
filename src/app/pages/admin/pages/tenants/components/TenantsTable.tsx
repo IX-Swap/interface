@@ -8,6 +8,8 @@ import {
   TableViewRendererProps
 } from 'ui/UIKit/TablesKit/components/TableView/TableView'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { Actions } from './Actions'
+import { tenantsQueryKeys } from 'config/queryKeys'
 
 export const TenantsTable: React.FC = () => {
   const { isTablet } = useAppBreakpoints()
@@ -21,10 +23,12 @@ export const TenantsTable: React.FC = () => {
 
   return (
     <TableView
+      name={tenantsQueryKeys.getTenantsList}
       uri={tenantsURL.getAll}
       columns={columns}
       noHeader={isTablet}
       actionHeader={'Actions'}
+      actions={Actions}
       filter={
         {
           ...filter
