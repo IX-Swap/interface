@@ -19,6 +19,7 @@ import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
 import { SingPassPage } from '../sing-pass-data/SingPass'
+import storageService from 'services/storage'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -33,6 +34,8 @@ export const Register: React.FC = observer(() => {
   const { title, question, link } = useStyles({})
   const { updateFilter, getFilterValue } = useQueryFilter()
   const identity = getFilterValue('identityType')
+  const email = getFilterValue('email')
+  const mobile = getFilterValue('mobile')
   const isIndividual = identity === 'individual'
 
   useEffect(() => {
@@ -51,25 +54,26 @@ export const Register: React.FC = observer(() => {
   }
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
-  const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
-  console.log(data, 'dataa')
-  if(data !== undefined){
-    return <SingPassPage {...data}  />
+  const isMyInfo = getFilterValue('email') !== undefined
+
+  if (data !== undefined && localStorage.getItem('singpassPage') === null) {
+    return <SingPassPage />
   }
+
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
-        email: data?.email,
-        phoneNumber: data?.mobileno,
+        email: data?.mobileno !== '' ? data.email : email,
+        phoneNumber: data?.mobileno !== '' ? data.mobileno : mobile,
         password: '',
         agree: true
       }
     : registerFormInitialValues
 
   const handleSubmit = async (values: SignupArgs) => {
-    console.log(values, 'valueuueuue')
     await signup(
       {
+        tenantId: storageService.get('tenantId'),
         name: values.name ?? 'Singpass User',
         email: values.email,
         singPassLogin: isMyInfo,
@@ -94,17 +98,14 @@ export const Register: React.FC = observer(() => {
   }
 
   if (authorizeLoading) {
-    
     return <LoadingFullScreen />
   }
 
   if (data?.emailExists === true) {
-    console.log(data, 'dataatat1')
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=email`} />
   }
 
   if (isError) {
-    console.log(data, 'dataatat2')
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=connection`} />
   }
 
