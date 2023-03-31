@@ -284,11 +284,8 @@ export const useDerivedBalanceInfo = (id: string) => {
 
 export const useClaimOffer = (id: string) => {
   return React.useCallback(
-    (isSuccessful: boolean) =>
-      apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, {
-        amount: '123',
-        txHash: '0x123',
-      }),
+    (isSuccessful: boolean, payload: {amount: string, txHash: string}) =>
+      apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, payload),
     [id]
   )
 }
