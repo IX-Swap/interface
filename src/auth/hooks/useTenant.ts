@@ -48,7 +48,7 @@ export const useTenant = async () => {
   //   let backgroundUrl = ''
 
   if (typeof result !== 'undefined') {
-    tenantId = result?.data?.tenantId
+    tenantId = result?.data?._id
     companyName = result?.data?.companyName
     theme = result?.data?.theme
     // logoLight = result?.data?.logoLight
