@@ -90,8 +90,8 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
           info: { success: true, summary: `Vetting ${initialValues.vettingId ? 'updated' : 'created'} successfully` },
         })
         goMain()
-      } catch (err) {
-        addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
+      } catch (err: any) {
+        addPopup({ info: { success: false, summary: err?.toString() } })
       } finally {
         loader.stop()
       }

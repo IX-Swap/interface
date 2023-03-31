@@ -789,7 +789,6 @@ export const useSubmitVettingForm = (issuanceId?: number | string) => {
 
       const findDoc = (key: keyof VettingFormValues['document']) =>
         uploadedFiles.find((x) => x.name === `document.${key}Id`)?.id ?? initialValues.document[key]?.id
-      // todo
 
       const data: Record<string, any> = {
         issuanceId: Number(issuanceId),
@@ -935,7 +934,7 @@ const useUploadOfferFiles = () => {
       }
 
       if (payload.profilePicture?.id !== initial.profilePicture?.id) {
-        files.push({ name: 'profile', file: payload.cardPicture?.file })
+        files.push({ name: 'profile', file: payload.profilePicture?.file })
       }
 
       return uploadFiles(files.filter((x) => x.file))
@@ -1121,8 +1120,8 @@ export const useSubmitOffer = () => {
         issuerWebsite: payload.website,
         whitepaperUrl: payload.whitepaper,
 
-        profilePictureId: uploadedFiles.find((x) => x.name === 'profile')?.id ?? initial.profilePicture?.id,
-        cardPictureId: uploadedFiles.find((x) => x.name === 'card')?.id ?? initial.cardPicture?.id,
+        profilePictureId: uploadedFiles.find((x) => x.name === 'profile')?.id || payload.profilePicture?.id || null,
+        cardPictureId: uploadedFiles.find((x) => x.name === 'card')?.id || payload.cardPicture?.id || null,
 
         title: payload.title,
         issuerIdentificationNumber: payload.issuerIdentificationNumber,
@@ -1201,29 +1200,32 @@ export const useSubmitOffer = () => {
         ],
       }
 
-      function filter(data: any): any {
-        if (data === undefined || data === null) {
-          return data
+      function filter(filterData: any): any {
+        if (filterData === undefined || filterData === null) {
+          return filterData
+        }
+        if (filterData === '') {
+          return null
         }
 
-        if (Array.isArray(data) && data.length === 1 && Object.keys(data[0]).length === 0) {
+        if (Array.isArray(filterData) && filterData.length === 1 && Object.keys(filterData[0]).length === 0) {
           return []
         }
 
-        if (typeof data === 'object' && data.length !== undefined) {
-          return data.map(filter).filter((x: any) => !!x)
+        if (typeof filterData === 'object' && filterData.length !== undefined) {
+          return filterData.map(filter).filter((x: any) => !!x)
         }
 
-        if (typeof data !== 'object' || data instanceof Date) {
-          return data
+        if (typeof filterData !== 'object' || filterData instanceof Date) {
+          return filterData
         }
 
-        const result = Object.entries(data)
+        const result = Object.entries(filterData)
           .map(([key, value]) => ({ key, value }))
           .map((entry) => ({ ...entry, value: filter(entry.value) }))
           .filter(
             (entry) =>
-              !!entry.value ||
+              entry.value !== undefined ||
               typeof entry.value === 'boolean' ||
               (typeof entry.value === 'object' &&
                 entry.value &&

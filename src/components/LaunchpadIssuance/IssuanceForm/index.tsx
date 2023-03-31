@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 
@@ -26,6 +26,7 @@ import { DiscreteInternalLink } from 'theme'
 import { useQueryParams } from 'hooks/useParams'
 import { text30, text42, text53 } from 'components/LaunchpadMisc/typography'
 import { useRole } from 'state/user/hooks'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -35,8 +36,10 @@ export const NewIssuanceForm = () => {
   const issuance = useGetIssuance()
   const issuances = useGetIssuancePlain()
 
-  const [showDropdown, setShowDropdown] = React.useState(false)
   const [contactFormOpen, setContactForm] = React.useState<boolean>(false)
+  const [showDropdown, setShowDropdown] = React.useState(false)
+  const ref = useRef<HTMLDivElement>()
+  useOnClickOutside(ref, showDropdown ? () => setShowDropdown(false) : undefined)
 
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
   const {
@@ -73,9 +76,10 @@ export const NewIssuanceForm = () => {
         <FormTitle>New Issuance</FormTitle>
 
         <IssuanceNameContainer
-          disabled={issuances.items!.length === 0}
+          ref={ref as any}
+          disabled={issuances.items?.length === 0}
           onClick={() => {
-            if (issuances.items!.length > 0) {
+            if (issuances.items?.length > 0) {
               setShowDropdown((state) => !state)
             }
           }}

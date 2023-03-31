@@ -132,10 +132,7 @@ const Label = styled.div`
 `
 const Value = styled.div`
   font-weight: 600;
-
   text-align: right;
-
-  cursor: pointer;
 
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `

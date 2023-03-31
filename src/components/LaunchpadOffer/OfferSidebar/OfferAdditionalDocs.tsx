@@ -11,27 +11,30 @@ interface Props {
   files: OfferFile[]
 }
 
-const crop = (value?: string) =>  (value?.length ?? 0) > 20 ? value?.substring(0, 20) + '...' : value
+const crop = (value?: string) => ((value?.length ?? 0) > 20 ? value?.substring(0, 20) + '...' : value)
 
 export const OfferAdditionalDocs: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const entries = React.useMemo(() => {
     return props.files
-      .filter(file => file.type === OfferFileType.document)
-      .map(file => ({
+      .filter((file) => file.type === OfferFileType.document)
+      .map((file) => ({
         label: (
-          <FileName >
-            <File size="18"/> {crop(file.file.name)}
+          <FileName>
+            <File size="18" /> {crop(file.file.name)}
           </FileName>
         ),
-        value: <Eye size="14" stroke={theme.launchpad.colors.text.body} />,
-        file: file.file
+        value: (
+          <span style={{ cursor: 'pointer' }}>
+            <Eye size="14" stroke={theme.launchpad.colors.text.body} />
+          </span>
+        ),
+        file: file.file,
       }))
-
   }, [])
-  
-  return <InfoList title='Additional Document' entries={entries} placeholderText="There are no Documents to display"/>
+
+  return <InfoList title="Additional Document" entries={entries} placeholderText="There are no Documents to display" />
 }
 
 const FileName = styled.div`

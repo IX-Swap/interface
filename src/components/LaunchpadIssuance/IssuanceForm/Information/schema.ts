@@ -39,7 +39,7 @@ const checkMaxGreaterThanMinimum = function (minimum: string, maximum: string) {
     return true
   }
 
-  if (Number(maximum) < Number(minimum)) {
+  if (Number(maximum) <= Number(minimum)) {
     return false
   }
 
@@ -51,7 +51,7 @@ const checkMinSmallerThanMaximum = function (minimum: string, maximum: string) {
     return true
   }
 
-  if (Number(minimum) > Number(maximum)) {
+  if (Number(minimum) >= Number(maximum)) {
     return false
   }
 
@@ -159,7 +159,7 @@ export const schema = yup.object().shape({
   minInvestment: yup
     .string()
     .required(REQUIRED)
-    .test('minInvestmentConstraint', 'Mininimal investment should be smaller than maximal investment', function ():
+    .test('minInvestmentConstraint', 'Minimum investment should be smaller than maximum investment', function ():
       | boolean
       | yup.ValidationError {
       return checkMinSmallerThanMaximum(this.parent.minInvestment, this.parent.maxInvestment)
@@ -168,7 +168,7 @@ export const schema = yup.object().shape({
   maxInvestment: yup
     .string()
     .required(REQUIRED)
-    .test('maxInvestmentConstraint', 'Maximal investment should be greater than minimal investment', function ():
+    .test('maxInvestmentConstraint', 'Maximum investment should be greater than minimum investment', function ():
       | boolean
       | yup.ValidationError {
       return checkMaxGreaterThanMinimum(this.parent.minInvestment, this.parent.maxInvestment)
@@ -193,7 +193,7 @@ export const schema = yup.object().shape({
         .required(REQUIRED)
         .test(
           'presaleMaxInvestmentConstraint',
-          'Maximal investment should be greater than minimal investment',
+          'Maximum investment should be greater than minimum investment',
           function (): boolean | yup.ValidationError {
             return checkMaxGreaterThanMinimum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
           }
@@ -218,7 +218,7 @@ export const schema = yup.object().shape({
         .required(REQUIRED)
         .test(
           'presaleMinInvestmentConstraint',
-          'Mininimal investment should be smaller than maximal investment',
+          'Minimum investment should be smaller than maximum investment',
           function (): boolean | yup.ValidationError {
             return checkMinSmallerThanMaximum(this.parent.presaleMinInvestment, this.parent.presaleMaxInvestment)
           }

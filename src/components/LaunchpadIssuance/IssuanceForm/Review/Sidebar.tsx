@@ -9,6 +9,8 @@ interface Props {
   offer: Partial<InformationFormValues>
   onSubmit: (isDraft: boolean) => void
   onClose: () => void
+  draftDisabled: boolean
+  submitDisabled: boolean
 }
 
 export const ReviewSidebar: React.FC<Props> = (props) => {
@@ -20,10 +22,16 @@ export const ReviewSidebar: React.FC<Props> = (props) => {
   return (
     <Column gap="0.25rem">
       <Column gap="0.5rem" margin="1rem 0">
-        {canDraft && <OutlineButton onClick={() => props.onSubmit(true)}>Save Draft</OutlineButton>}
+        {canDraft && (
+          <OutlineButton disabled={props.draftDisabled} onClick={() => props.onSubmit(true)}>
+            Save Draft
+          </OutlineButton>
+        )}
         <OutlineButton onClick={props.onClose}>Back to Form</OutlineButton>
         {status !== IssuanceStatus.approved && (
-          <FilledButton onClick={() => props.onSubmit(false)}>Submit</FilledButton>
+          <FilledButton disabled={props.submitDisabled} onClick={() => props.onSubmit(false)}>
+            Submit
+          </FilledButton>
         )}
       </Column>
     </Column>

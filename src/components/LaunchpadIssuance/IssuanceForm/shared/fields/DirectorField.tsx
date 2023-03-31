@@ -153,11 +153,11 @@ const AddDirectorButton = styled.button`
   border-radius: 6px;
   gap: 0.125rem;
   padding: 0.5rem;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition: background 0.3s;
 
   :hover {
-    background: ${(props) => props.theme.launchpad.colors.foreground};
+    background: ${({ theme, disabled }) => (disabled ? 'none' : theme.launchpad.colors.foreground)};
   }
 
   header {

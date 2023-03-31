@@ -17,6 +17,8 @@ interface Props {
   values: InformationFormValues
   onSubmit: (draft: boolean) => void
   onClose: () => void
+  draftDisabled: boolean
+  submitDisabled: boolean
 }
 
 const formatDateRange = (from: Date, to?: Date) =>
@@ -24,7 +26,7 @@ const formatDateRange = (from: Date, to?: Date) =>
 
 const crop = (value?: string) => ((value?.length ?? 0) > 20 ? value?.substring(0, 20) + '...' : value)
 
-export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose }) => {
+export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftDisabled, submitDisabled }) => {
   const theme = useTheme()
   const formatedValue = useFormatOfferValue()
   const numberFormatter = React.useMemo(() => new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }), [])
@@ -78,7 +80,11 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose }) => {
               <File size="18" /> {crop(doc.asset?.name || doc.file.file.name)}
             </FileName>
           ),
-          value: <Eye size="14" stroke={theme.launchpad.colors.text.body} />,
+          value: (
+            <span style={{ cursor: 'pointer' }}>
+              <Eye size="14" stroke={theme.launchpad.colors.text.body} />
+            </span>
+          ),
           file: doc.asset || doc.file.file,
           hasAsset: !!doc.asset,
         }
@@ -89,7 +95,13 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose }) => {
     <ReviewModalContainer>
       <ReviewContainer>
         <Sidebar>
-          <ReviewSidebar offer={values} onSubmit={onSubmit} onClose={onClose} />
+          <ReviewSidebar
+            offer={values}
+            onSubmit={onSubmit}
+            onClose={onClose}
+            draftDisabled={draftDisabled}
+            submitDisabled={submitDisabled}
+          />
         </Sidebar>
 
         <Title>

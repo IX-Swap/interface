@@ -32,6 +32,8 @@ export default function InformationReviewPage() {
           onSubmit={() => {
             history.push(`/issuance/create?id=${issuanceId}`)
           }}
+          draftDisabled={false}
+          submitDisabled={false}
         />
       )}
     </IssuancePageLayout>

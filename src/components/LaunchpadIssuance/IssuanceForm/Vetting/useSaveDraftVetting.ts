@@ -25,8 +25,8 @@ export const useSaveDraftVetting = ({ issuanceId, vettingId, goMain, initialData
 
         addPopup({ info: { success: true, summary: 'Draft saved successfully' } })
         goMain()
-      } catch (err) {
-        addPopup({ info: { success: false, summary: `Error occured: ${err}` } })
+      } catch (err: any) {
+        addPopup({ info: { success: false, summary: err?.toString() } })
       } finally {
         loader.stop()
       }
