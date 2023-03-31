@@ -4,7 +4,7 @@ import { ReactComponent as LaunchIcon } from 'app/pages/issuance/components/Seco
 import { IconButton } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actios.styles'
+import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions.styles'
 
 export interface ActionsProps {
   item: DigitalSecurityOffering
