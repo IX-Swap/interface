@@ -38,7 +38,7 @@ export const useTenant = async () => {
 
   const { data: result } = await useQuery(TENANT_QUERY_KEY, getInfo)
 
-  console.log(result)
+  //   console.log(result)
 
   let companyName = ''
   let theme = ''

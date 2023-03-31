@@ -17,7 +17,6 @@ export interface ListingFormActionsProps {
 export const ListingFormActions = (props: ListingFormActionsProps) => {
   const { listing, isDataFromDSO, listingType } = props
   const { push } = useHistory()
-  console.log(listing, 'prprprprprprp')
   // TODO Needs to do refactoring this component for edit listing page
   return (
     <>

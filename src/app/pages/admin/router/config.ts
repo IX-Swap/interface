@@ -30,7 +30,8 @@ export const AdminRoute = {
   virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
   blockchainSettings: '/app/admin/blockchainSettings',
   custodyManagement: '/app/admin/custody-management',
-  tenants: '/app/admin/tenants'
+  tenants: '/app/admin/tenants',
+  createTenants: '/app/admin/tenants/create'
 }
 
 export const CustodyManagementRoute = {

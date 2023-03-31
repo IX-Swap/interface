@@ -9,9 +9,7 @@ export const useCreateDSO = () => {
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
   const url = issuanceURL.dso.create(getIdFromObj(user))
-  // const createDSO = async (args = {}) => {
-  //   return await apiService.post(url, args)
-  // }
+
   const createDSO = async (args: DSORequestArgsStep1) => {
     return await apiService.post(url, args)
   }
