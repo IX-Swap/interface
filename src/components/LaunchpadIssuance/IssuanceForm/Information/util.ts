@@ -31,7 +31,6 @@ export const initialValues = {
   tokenName: '',
   tokenTicker: '',
   decimals: 0,
-  // decimalsOn: true,
   trusteeAddress: '',
   tokenType: '',
 
@@ -40,7 +39,6 @@ export const initialValues = {
   hardCap: '',
   softCap: '',
 
-  pricePerToken: 0,
   tokenPrice: 0,
   tokenStandart: undefined,
   totalSupply: '',
