@@ -40,6 +40,7 @@ export const useTenant = async () => {
 
   console.log(result)
 
+  let tenantId = ''
   let companyName = ''
   let theme = ''
   //   let logoLight = ''
@@ -47,6 +48,7 @@ export const useTenant = async () => {
   //   let backgroundUrl = ''
 
   if (typeof result !== 'undefined') {
+    tenantId = result?.data?.tenantId
     companyName = result?.data?.companyName
     theme = result?.data?.theme
     // logoLight = result?.data?.logoLight
@@ -54,6 +56,7 @@ export const useTenant = async () => {
     // backgroundUrl = result?.data?.backgroundUrl
   }
 
+  storageService.set('tenantId', tenantId)
   storageService.set('companyName', companyName)
   storageService.set('tenantThemeName', theme)
 

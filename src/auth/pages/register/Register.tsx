@@ -19,6 +19,7 @@ import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
 import { SingPassPage } from '../sing-pass-data/SingPass'
+import storageService from 'services/storage'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -73,6 +74,7 @@ export const Register: React.FC = observer(() => {
     console.log(values, 'valueuueuue')
     await signup(
       {
+        tenantId: storageService.get('tenantId'),
         name: values.name ?? 'Singpass User',
         email: values.email,
         singPassLogin: isMyInfo,
