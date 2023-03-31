@@ -11,7 +11,7 @@ import { ConvertationField } from '../utils/ConvertationField'
 import { TokenClaimMessage } from '../utils/TokenClaimMessage'
 import { OfferLinks } from '../utils/OfferLinks'
 import { BaseCheckbox } from '../utils/Checkbox'
-import { useInvest, usePresaleProof } from 'state/launchpad/hooks'
+import { useInvest, useInvestPublicSaleStructData, usePresaleProof } from 'state/launchpad/hooks'
 import { text10, text11 } from 'components/LaunchpadMisc/typography'
 import { useLaunchpadInvestmentContract } from 'hooks/useContract'
 import { ethers } from 'ethers'
@@ -47,6 +47,7 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
   const theme = useTheme()
   const invest = useInvest(id)
   const getPresaleProof = usePresaleProof(id)
+  const getInvestPublicSaleStructData = useInvestPublicSaleStructData(id)
 
   const [amount, setAmount] = useState<string>()
 
@@ -82,7 +83,8 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
 
   const launchpadContract = useLaunchpadInvestmentContract()
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
-  const { chainId = 137 } = useActiveWeb3React()
+  const { chainId = 137, account } = useActiveWeb3React()
+  
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
@@ -101,8 +103,6 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
 
     try {
       submitState.setLoading()
-
-      const { data: proof } = await getPresaleProof()
       const parsedAmount = ethers.utils.parseUnits(amount, investingTokenDecimals)
 
       if (approval !== 'APPROVED') {
@@ -110,7 +110,14 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
       }
 
       if (launchpadContract) {
-        const data = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
+        let data;
+        if(status === OfferStatus.preSale) {
+          const { data: proof } = await getPresaleProof()
+          data = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
+        } else if(status === OfferStatus.sale) {
+          const { data : investStructData } = await getInvestPublicSaleStructData(amount, account)
+          data = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
+        }
 
         if (data.hash)
           await invest(status, {
