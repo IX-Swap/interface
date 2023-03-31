@@ -32,7 +32,7 @@ export const AuthRoot: React.FC = () => {
           alignItems={'stretch'}
         >
           <Box className={logo}>{Logo}</Box>
-          <Grid item className={formContainer}>
+          <Grid item className={formContainer} style={{ width: '100%' }}>
             <AuthRouter />
           </Grid>
         </Grid>

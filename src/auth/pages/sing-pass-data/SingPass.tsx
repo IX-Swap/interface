@@ -1,24 +1,50 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Card, CardContent } from '@mui/material'
 import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
-import { Card, CardContent } from '@mui/material'
 import { Icon } from 'ui/Icons/Icon'
 import { ReactComponent as SingpassLogo } from 'assets/singpass-logo-color.svg'
 import { AuthRoute } from 'auth/router/config'
 
 export const SingPassPage = () => {
   const { data } = useMyInfoAuthorize()
-  const onCancel = (_: any) => {
+
+  const onCancel = () => {
     window.location.href = AuthRoute.login
     localStorage.setItem('singpassPage', 'true')
   }
-  const onAgree = (_: any) => {
-    window.location.href = `${AuthRoute.signup}?email=${data?.email}&mobile=${data?.mobileno}`
+  const onAgree = (email: string, mobileno: string) => {
+    window.location.href = `${AuthRoute.signup}?email=${email}&mobile=${mobileno}`
     localStorage.setItem('singpassPage', 'true')
   }
 
+  const ChevronIcon = () => (
+    <Icon
+      name={'chevron-right'}
+      color={'#201E25'}
+      size={10}
+      style={{ minWidth: '10px' }}
+    />
+  )
+
+  const InfoItem = ({
+    label,
+    value = ''
+  }: {
+    label: string
+    value: string
+  }) => (
+    <div style={{ padding: '3px' }}>
+      <ChevronIcon />
+      <span>{label} : </span>
+      <span style={{ lineHeight: '30px', color: 'red' }}>
+        {value.length > 0 ? value : '-'}
+      </span>
+    </div>
+  )
+
   return (
-    <>
+    <div style={{ padding: '5px' }}>
       <Card
         variant='elevation'
         style={{
@@ -29,7 +55,7 @@ export const SingPassPage = () => {
           boxShadow: 'none'
         }}
       >
-        <CardContent style={{ padding: 0 }}>
+        <CardContent style={{ padding: 0, width: '100%' }}>
           <div
             style={{
               height: '100%',
@@ -59,7 +85,6 @@ export const SingPassPage = () => {
             </div>
             <div
               style={{
-                // textAlign: 'center',
                 fontWeight: 600,
                 fontSize: '16px',
                 lineHeight: '22px',
@@ -82,88 +107,39 @@ export const SingPassPage = () => {
               background: '#FFFFFF'
             }}
           >
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>NRIC/FIN : </p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {' '}
-                {data?.uinfin ? data?.uinfin : '-'}
-              </p>
-            </div>
-
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Name: </p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.name ? data?.name : '-'}
-              </p>
-            </div>
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Nationality/Citizenship: </p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.nationality ? data?.nationality : ''}
-              </p>
-            </div>
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Date of Birth: </p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.dob ? data?.dob : '-'}
-              </p>
-            </div>
-
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Email: </p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.email ? data?.email : '-'}
-              </p>
-            </div>
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Mobile Number:</p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.mobileno ? data?.mobileno : '-'}
-              </p>
-            </div>
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Registered Address:</p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.regadd?.line1}
-                {data?.regadd?.line2}
-                {data?.regadd?.city}
-                {data?.regadd?.country}
-                {data?.regadd?.postalCode}
-              </p>
-            </div>
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>Employment Sector:</p>
-              <p style={{ margin: '6px', color: 'red' }}>
-                {data?.employmentsector ? data?.employmentsector : '-'}
-              </p>
-            </div>
-            <div style={{ display: 'flex' }}>
-              <Icon name={'chevron-right'} style={{ color: '#201E25' }} />
-              <p style={{ margin: '6px' }}>
-                IRAS Notice of Assessment (Last 2 Years):
-              </p>
-
-              {data?.noahistory?.noas?.map((data: any) => {
-                return Object.keys(data)?.map(dataItem => {
-                  //   console.log(dataItem, data[dataItem].value, 'dataIte')
-                  return (
-                    <>
-                      <p style={{ margin: '6px', color: 'red' }}>
-                        {dataItem}:{data[dataItem].value}
-                      </p>
-                    </>
-                  )
-                })
-              })}
-            </div>
+            <InfoItem label='NRIC/FIN' value={data?.uinfin} />
+            <InfoItem label='Name' value={data?.name} />
+            <InfoItem
+              label='Nationality/Citizenship'
+              value={data?.nationality}
+            />
+            <InfoItem label='Date of Birth' value={data?.dob} />
+            <InfoItem label='Email' value={data?.email} />
+            <InfoItem label='Mobile Number' value={data?.mobileno} />
+            <InfoItem
+              label='Registered Address'
+              value={`
+                ${data?.regadd?.line1}
+                ${data?.regadd?.line2}
+                ${data?.regadd?.city}
+                ${data?.regadd?.country}
+                ${data?.regadd?.postalCode}
+            `}
+            />
+            <InfoItem
+              label='Employment Sector'
+              value={data?.employmentsector}
+            />
+            <InfoItem
+              label='IRAS Notice of Assessment (Last 2 Years)'
+              value={data?.noahistory?.noas
+                ?.map((data: any) =>
+                  Object.keys(data)?.map(dataItem => {
+                    return ` ${dataItem}:${data[dataItem].value}`
+                  })
+                )
+                .join()}
+            />
           </div>
         </CardContent>
       </Card>
@@ -179,13 +155,24 @@ export const SingPassPage = () => {
         Clicking the “I Agree” button permits this digital service to retrieve
         your data based on the{' '}
         <a
-          style={{ color: '#CF0B15', cursor: 'hover', textDecoration: 'none' }}
+          style={{
+            color: '#CF0B15',
+            cursor: 'hover',
+            textDecoration: 'none'
+          }}
           href='https://www.singpass.gov.sg/home/ui/terms-of-use'
         >
           Terms of Use.
         </a>
       </p>
-      <div style={{ display: 'flex', margin: '0 auto', marginBottom: '40px' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          margin: '0 auto',
+          marginBottom: '40px'
+        }}
+      >
         <button
           onClick={onCancel}
           style={{
@@ -208,13 +195,13 @@ export const SingPassPage = () => {
         </button>
 
         <button
-          onClick={onAgree}
+          onClick={() => onAgree(data?.email, data?.mobileno)}
           style={{
             color: '#FFFFFF',
             boxShadow: 'none',
             background: '#CF0B15',
             boxSizing: 'border-box',
-            border: 'transparent',
+            border: '2px solid #CF0B15',
             padding: '16px 32px',
             textAlign: 'center',
             letterSpacing: '0px',
@@ -226,6 +213,6 @@ export const SingPassPage = () => {
           I Agree
         </button>
       </div>
-    </>
+    </div>
   )
 }
