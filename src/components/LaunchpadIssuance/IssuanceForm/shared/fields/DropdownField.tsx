@@ -35,6 +35,7 @@ interface Props<T> {
 }
 
 export function DropdownField<T>(props: Props<T>) {
+  const { placeholder = 'Select' } = props
   const theme = useTheme()
   const disabled = props.disabled || !props.options || props.options.length === 0
   const container = React.useRef<HTMLDivElement>(null)
@@ -149,17 +150,15 @@ export function DropdownField<T>(props: Props<T>) {
           {props.optional && <OptionalLabel>Optional</OptionalLabel>}
         </FieldLabel>
 
-        {!props.searchable && props.placeholder && !selectedValue && (
-          <FieldPlaceholder>{props.placeholder}</FieldPlaceholder>
-        )}
+        {!props.searchable && !selectedValue && <FieldPlaceholder>{placeholder}</FieldPlaceholder>}
 
-        {!props.searchable && (!props.placeholder || selectedValue) && (
+        {!props.searchable && selectedValue && (
           <FieldSelectedValue>{selectedValue?.label ?? 'Select'}</FieldSelectedValue>
         )}
 
         {props.searchable && (
           <OptionSearch
-            placeholder={props.placeholder ?? 'Select'}
+            placeholder={placeholder}
             value={optionSearch}
             onChange={updateSearch}
             isActive={!searchActive}
