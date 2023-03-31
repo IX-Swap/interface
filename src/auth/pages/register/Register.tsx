@@ -71,7 +71,6 @@ export const Register: React.FC = observer(() => {
     : registerFormInitialValues
 
   const handleSubmit = async (values: SignupArgs) => {
-    console.log(values, 'valueuueuue')
     await signup(
       {
         tenantId: storageService.get('tenantId'),
@@ -103,12 +102,10 @@ export const Register: React.FC = observer(() => {
   }
 
   if (data?.emailExists === true) {
-    console.log(data, 'dataatat1')
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=email`} />
   }
 
   if (isError) {
-    console.log(data, 'dataatat2')
     return <Redirect to={`${AuthRoute.myinfoError}?errorType=connection`} />
   }
 

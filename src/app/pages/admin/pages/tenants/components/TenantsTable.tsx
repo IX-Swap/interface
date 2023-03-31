@@ -14,9 +14,9 @@ export const TenantsTable: React.FC = () => {
 
   const { getFilterValue } = useQueryFilter()
   const filter = {
-    search: getFilterValue('search')
-    // sortField: getFilterValue('sortBy'),
-    // sortOrder: getFilterValue('orderBy') === 'ASC' ? 1 : -1
+    search: getFilterValue('search'),
+    sortField: getFilterValue('sortBy'),
+    sortOrder: getFilterValue('orderBy') === 'ASC' ? 1 : -1
   }
 
   return (
