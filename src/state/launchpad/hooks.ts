@@ -1038,7 +1038,7 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
           distributionFrequency: payload.terms.distributionFrequency ?? '',
           dividentYield: payload.terms.dividentYield ?? '',
           grossIrr: payload.terms.grossIrr ?? '',
-          investmentPeriod: String(payload.terms.investmentPeriod) ?? '',
+          investmentPeriod: payload.terms.investmentPeriod ? String(payload.terms.investmentPeriod) : '',
           investmentStructure: payload.terms.investmentStructure ?? '',
         },
 
@@ -1143,7 +1143,7 @@ export const useSubmitOffer = () => {
         terms: {
           investmentStructure: String(payload.terms.investmentStructure),
           dividentYield: payload.terms.dividentYield,
-          investmentPeriod: payload.terms.investmentPeriod ? Number(payload.terms.investmentPeriod) : 0,
+          investmentPeriod: payload.terms.investmentPeriod ? Number(payload.terms.investmentPeriod) : null,
           grossIrr: payload.terms.grossIrr,
           distributionFrequency: payload.terms.distributionFrequency,
         },

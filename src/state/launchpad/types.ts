@@ -75,6 +75,14 @@ export enum OfferDistributionFrequency {
   annually = 'annually',
   other = 'other',
 }
+export const OfferDistributionFrequencyLabel = {
+  [OfferDistributionFrequency.notApplicable]: 'Not Applicable',
+  [OfferDistributionFrequency.monthly]: 'Monthly',
+  [OfferDistributionFrequency.quarterly]: 'Quarterly',
+  [OfferDistributionFrequency.semiAnnually]: 'Semi Annually',
+  [OfferDistributionFrequency.annually]: 'Annually',
+  [OfferDistributionFrequency.other]: 'Other',
+}
 
 export enum WhitelistStatus {
   pending = 'pending',
