@@ -13,7 +13,7 @@ export const Banner = () => {
         <BannerInfoRedirectImage src={LearnMoreIcon} />
         <BannerInfoRedirectLabel>
           <BannerInfoRedirectTitle>How does IXS Launchpad work?</BannerInfoRedirectTitle>
-          <BannerInfoRedirectSubtitle href="https://academy.ixswap.io/">Learn more</BannerInfoRedirectSubtitle>
+          <BannerInfoRedirectSubtitle href="https://www.ixswap.io/academy">Learn more</BannerInfoRedirectSubtitle>
         </BannerInfoRedirectLabel>
       </BannerInfoRedirect>
     </BannerContainer>
