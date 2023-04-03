@@ -14,6 +14,15 @@ export const capitalStructures = [
   'Fund - Standalone',
   'Fund - Feeder/Sub-Fund'
 ]
+export const tenantThemes = [
+  'red',
+  'orange',
+  'yellow',
+  'green',
+  'blue',
+  'indigo',
+  'violet'
+]
 export const fundStatuses = ['Not Funded', 'Funds on Hold', 'Funds Transferred']
 export const transferDirections = ['VA to VA', 'Inbound', 'Outbound']
 export const idleWarningTime = 1000 * 60 * 15

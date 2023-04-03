@@ -22,7 +22,8 @@ export const bannersQueryKeys = {
 }
 
 export const tenantsQueryKeys = {
-  getTenantsList: 'tenants'
+  getTenantsList: 'tenants',
+  getTenantById: 'tenant-by-id'
 }
 
 export const assetsQueryKeys = {

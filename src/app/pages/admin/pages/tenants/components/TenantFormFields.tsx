@@ -2,49 +2,176 @@ import React from 'react'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { TypedField } from 'components/form/TypedField'
 import { FileUpload } from 'ui/FileUpload/FileUpload'
-// import { TextInput } from 'ui/TextInput/TextInput'
+import { TextInput } from 'ui/TextInput/TextInput'
 import { useFormContext } from 'react-hook-form'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DataroomFileType } from 'config/dataroom'
 import { TenantFormValues } from 'types/tenants'
+import { Grid } from '@mui/material'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { TenantThemeSelect } from 'components/form/TenantThemeSelect'
+import { RichTextEditor } from 'components/form/RichTextEditor'
+import { wysiwygValueExtractor } from 'helpers/forms'
+import { DSOContainer as RteContainer } from 'app/components/DSO/components/DSOContainer'
 
 export const TenantFormFields = () => {
   const { control } = useFormContext<TenantFormValues>()
 
   return (
-    <FieldContainer>
-      <TypedField
-        customRenderer
-        component={FileUpload}
-        name='logoLight'
-        label='Upload Logo (Light)'
-        placeHolder='Upload Photo'
-        control={control}
-        valueExtractor={documentValueExtractor}
-        accept={DataroomFileType.image}
-        documentInfo={{
-          type: 'Logo Light'
-        }}
-        isOptional
-        optionalText=' '
-        helperText='Upload Photo'
-      />
-      <TypedField
-        customRenderer
-        component={FileUpload}
-        name='logoDark'
-        label='Upload Logo (Dark)'
-        placeHolder='Upload Photo'
-        control={control}
-        valueExtractor={documentValueExtractor}
-        accept={DataroomFileType.image}
-        documentInfo={{
-          type: 'Logo Dark'
-        }}
-        isOptional
-        optionalText=' '
-        helperText='Upload Photo'
-      />
-    </FieldContainer>
+    <Grid container direction='column' spacing={3}>
+      <Grid item>
+        <FieldContainer>
+          <Grid item>
+            <Grid container direction='column' spacing={5}>
+              <Grid item>
+                <FormSectionHeader title='Tenant Information' />
+              </Grid>
+              <Grid item container spacing={{ xs: 5, md: 3 }}>
+                <Grid item xs={12} md={6}>
+                  <TypedField
+                    component={TextInput}
+                    label='Company Name'
+                    helperText='Company Name'
+                    name='companyName'
+                    control={control}
+                    variant='outlined'
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TypedField
+                    component={TextInput}
+                    label='Tenant Code'
+                    helperText='Tenant Code'
+                    name='tenantCode'
+                    control={control}
+                    variant='outlined'
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid item container spacing={{ xs: 5, md: 3 }}>
+                <Grid item xs={12} md={6}>
+                  <TypedField
+                    component={TextInput}
+                    label='Company Email'
+                    helperText='Company Email'
+                    name='email'
+                    control={control}
+                    variant='outlined'
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TypedField
+                    component={TextInput}
+                    label='Platform URL'
+                    helperText='Platform URL'
+                    name='url'
+                    control={control}
+                    variant='outlined'
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid item container spacing={{ xs: 5, md: 3 }}>
+                <Grid item xs={12}>
+                  <RteContainer
+                    title='Company Description'
+                    subtitle='A short description of the company helps investors know more about your company'
+                    item
+                    xs={12}
+                    md={12}
+                  >
+                    <TypedField
+                      component={RichTextEditor}
+                      label='Description'
+                      helperText='Description'
+                      name='description'
+                      control={control}
+                      customRenderer
+                      valueExtractor={wysiwygValueExtractor}
+                    />
+                  </RteContainer>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </FieldContainer>
+      </Grid>
+      <Grid item>
+        <FieldContainer>
+          <Grid item>
+            <Grid container direction='column' spacing={5}>
+              <Grid item>
+                <FormSectionHeader title='Platform Theme' />
+              </Grid>
+
+              <Grid item container spacing={{ xs: 5, md: 3 }}>
+                <Grid item xs={12}>
+                  <TypedField
+                    component={TenantThemeSelect}
+                    label='Theme'
+                    name='theme'
+                    control={control}
+                    variant='outlined'
+                    helperText='Select Tenant Theme'
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid item container spacing={{ xs: 5, md: 3 }}>
+                <Grid item xs={12} md={4}>
+                  <TypedField
+                    customRenderer
+                    component={FileUpload}
+                    name='logoLight'
+                    label='Logo (Light)'
+                    helperText='Logo (Light)'
+                    placeHolder='Upload Photo'
+                    control={control}
+                    valueExtractor={documentValueExtractor}
+                    accept={DataroomFileType.image}
+                    documentInfo={{
+                      type: 'Logo Light'
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TypedField
+                    customRenderer
+                    component={FileUpload}
+                    name='logoDark'
+                    label='Logo (Dark)'
+                    helperText='Logo (Dark)'
+                    placeHolder='Upload Photo'
+                    control={control}
+                    valueExtractor={documentValueExtractor}
+                    accept={DataroomFileType.image}
+                    documentInfo={{
+                      type: 'Logo Dark'
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <TypedField
+                    customRenderer
+                    component={FileUpload}
+                    name='backgroundImage'
+                    label='Background Image'
+                    helperText='Background Image'
+                    placeHolder='Upload Photo'
+                    control={control}
+                    valueExtractor={documentValueExtractor}
+                    accept={DataroomFileType.image}
+                    documentInfo={{
+                      type: 'Background Image'
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </FieldContainer>
+      </Grid>
+    </Grid>
   )
 }

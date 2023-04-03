@@ -24,8 +24,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
   const { isNew, isDataFromDSO } = props
   const { control, watch } = useFormContext()
 
-  console.log(control)
-
   return (
     <Grid item>
       <Grid container direction='column' spacing={5}>

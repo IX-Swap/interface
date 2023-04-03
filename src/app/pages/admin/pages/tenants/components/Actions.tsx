@@ -16,7 +16,7 @@ export const Actions = ({ item }: any) => {
       <IconButton
         component={AppRouterLinkComponent}
         size='medium'
-        to={AdminRoute.viewTenant}
+        to={AdminRoute.editTenant}
         params={{ tenantId: item._id }}
         className={classes.button}
       >
@@ -25,7 +25,7 @@ export const Actions = ({ item }: any) => {
       <IconButton
         component={AppRouterLinkComponent}
         size='medium'
-        to={AdminRoute.editTenant}
+        to={AdminRoute.viewTenant}
         params={{ tenantId: item._id }}
         className={classes.button}
       >

@@ -29,7 +29,7 @@ export const Tenants = () => {
                   size='large'
                   color='primary'
                   variant='contained'
-                  to={AdminRoute.createTenants}
+                  to={AdminRoute.createTenant}
                 >
                   Create New Tenant
                 </Button>
