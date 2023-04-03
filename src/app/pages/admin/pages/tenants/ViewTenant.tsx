@@ -47,7 +47,9 @@ export const ViewTenant = () => {
     logoDark,
     logoLight,
     backgroundImage
-  } = result.data
+  } = result?.data
+
+  const selectedTheme = tenantThemes.find(t => t.name === themeName)
 
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
@@ -78,9 +80,10 @@ export const ViewTenant = () => {
                     style={{
                       width: 30,
                       height: 30,
-                      backgroundColor: tenantThemes
-                        .filter(t => t.name === themeName)
-                        .map(t => t.hex),
+                      backgroundColor:
+                        selectedTheme !== undefined
+                          ? selectedTheme.hex
+                          : '#000',
                       borderRadius: '5px'
                     }}
                   ></div>

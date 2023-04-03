@@ -25,20 +25,23 @@ export const columns: any[] = [
   {
     key: 'theme',
     label: 'Theme',
-    render: (theme: string) => (
-      <Box
-        fontSize={'sm'}
-        sx={{
-          width: 30,
-          height: 30,
-          backgroundColor: tenantThemes
-            .filter(t => t.name === theme)
-            .map(t => t.hex),
-          borderRadius: '5px'
-        }}
-        title={theme}
-      />
-    )
+    render: (theme: string) => {
+      const selectedTheme = tenantThemes.find(t => t.name === theme)
+
+      return (
+        <Box
+          fontSize={'sm'}
+          sx={{
+            width: 30,
+            height: 30,
+            backgroundColor:
+              selectedTheme !== undefined ? selectedTheme.hex : '#000',
+            borderRadius: '5px'
+          }}
+          title={theme}
+        />
+      )
+    }
   },
   {
     key: 'active',
