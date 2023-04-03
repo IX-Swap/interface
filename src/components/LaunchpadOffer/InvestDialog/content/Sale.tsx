@@ -131,7 +131,7 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
       console.error(e)
       submitState.setError()
     }
-  }, [invest, submitState])
+  }, [invest, submitState, status])
 
   return (
     <InvestFormContainer padding="0 0 2rem 0">
