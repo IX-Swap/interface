@@ -32,8 +32,9 @@ export const TENANT_QUERY_KEY = 'tenant'
 export const useTenant = async () => {
   const { apiService, storageService } = useServices()
   const subdomain = window.location.host.split('.')[0]
+  const tenantCode = subdomain.includes(':') ? 'dev' : subdomain
 
-  const url = tenantsURL.getTenantInfo(subdomain)
+  const url = tenantsURL.getTenantInfo(tenantCode)
   const getInfo = async () => await apiService.get(url)
 
   const { data: result } = await useQuery(TENANT_QUERY_KEY, getInfo)
