@@ -1,17 +1,9 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
-import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-// import { TypedField } from 'components/form/TypedField'
-// import { FileUpload } from 'ui/FileUpload/FileUpload'
-// // import { TextInput } from 'ui/TextInput/TextInput'
-// import { useFormContext } from 'react-hook-form'
-// import { documentValueExtractor } from 'app/components/DSO/utils'
-// import { DataroomFileType } from 'config/dataroom'
-// import { TenantFormValues, createDSOInformationSchema } from 'types/tenants'
-
-import { ListingForm } from 'app/pages/issuance/components/ListingForm/ListingForm'
+import { createDSOInformationSchema } from 'types/tenants'
+import { TenantFormFields } from './TenantFormFields'
 
 export const TenantForm = () => {
   const { isTablet } = useAppBreakpoints()
@@ -20,7 +12,7 @@ export const TenantForm = () => {
 
   return (
     <Form
-      data-testid='listing-form'
+      data-testid='tenant-form'
       defaultValues={{
         logoLight: 'undefined',
         logoDark: 'undefined',
@@ -31,33 +23,15 @@ export const TenantForm = () => {
         email: 'undefined',
         description: 'undefined'
       }}
-      //   validationSchema={createDSOInformationSchema}
-      // onSubmit={submitHandler}
-      //   allowInvalid
-      //   id={`tenantForm`}
+      validationSchema={createDSOInformationSchema}
+      //   onSubmit={submitHandler}
+      allowInvalid
+      id={`tenantForm`}
       //   errors={stepValues[index]?.errors}
     >
       <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
         <Grid item xs={9}>
-          <FieldContainer>
-            <ListingForm />
-            {/* <TypedField
-              customRenderer
-              component={FileUpload}
-              name='logoLight'
-              label='Upload Photo'
-              placeHolder='Upload File'
-              control={control}
-              valueExtractor={documentValueExtractor}
-              accept={DataroomFileType.image}
-              documentInfo={{
-                type: 'Logo Light'
-              }}
-              isOptional
-              optionalText=' '
-              helperText='Upload Photo'
-            /> */}
-          </FieldContainer>
+          <TenantFormFields />
         </Grid>
       </Grid>
     </Form>
