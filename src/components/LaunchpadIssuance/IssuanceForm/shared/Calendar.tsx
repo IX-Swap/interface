@@ -8,6 +8,7 @@ interface Props {
   selectedRange: moment.Moment[]
 
   minDate?: Date
+  maxDate?: Date
 
   onSelect: (value: moment.Moment) => void
 }
@@ -15,7 +16,9 @@ interface Props {
 export const CalendarPicker: React.FC<Props> = (props) => {
   const [selectedRange, setSelectedRange] = React.useState<moment.Moment[]>([])
 
-  const minDate = React.useMemo(() => moment(props.minDate), [])
+  const minDate = React.useMemo(() => (props.minDate ? moment(props.minDate) : null), [props.minDate])
+  const maxDate = React.useMemo(() => (props.maxDate ? moment(props.maxDate) : null), [props.maxDate])
+
   const firstDayOfMonth = React.useMemo(
     () => Number(moment(props.current).startOf('month').format('d')),
     [props.current]
@@ -42,13 +45,16 @@ export const CalendarPicker: React.FC<Props> = (props) => {
     (day: number) => {
       const selectedDate = props.current.clone().date(day)
 
-      if (selectedDate < minDate) {
+      if (minDate && selectedDate < minDate) {
+        return
+      }
+      if (maxDate && selectedDate > maxDate) {
         return
       }
 
       props.onSelect(selectedDate)
     },
-    [props.current, minDate, props.onSelect]
+    [props.current, minDate, maxDate, props.onSelect]
   )
 
   const isSelected = React.useCallback(
@@ -95,7 +101,9 @@ export const CalendarPicker: React.FC<Props> = (props) => {
           onClick={() => select(day)}
           isSelected={isSelected(day)}
           isWithinRange={isWithinRange(day)}
-          isDisabled={props.current.clone().date(day).isBefore(minDate)}
+          isDisabled={
+            props.current.clone().date(day).isBefore(minDate) || props.current.clone().date(day).isAfter(maxDate)
+          }
         >
           {day}
         </Day>
