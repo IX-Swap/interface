@@ -1,31 +1,6 @@
 import { useQuery } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { tenantsURL } from 'config/apiURL'
-interface Tenant {
-  _id: string
-  name: string
-  logoUrl: string
-  backgroundUrl: string
-  tenantThemeName: string
-}
-
-const tenants: Tenant[] = [
-  {
-    _id: 'tenant1',
-    name: 'Tenant 1',
-    logoUrl: 'https://app.ixswap.io/static/media/logo-white.f35ac2af.svg',
-    backgroundUrl:
-      'https://files.123freevectors.com/wp-content/original/144591-indigo-background-illustration.jpg',
-    tenantThemeName: 'purple'
-  },
-  {
-    _id: 'tenant2',
-    name: 'Tenant 2',
-    logoUrl: 'https://app.ixswap.io/static/media/logo-white.f35ac2af.svg',
-    backgroundUrl: 'https://wallpapercave.com/wp/wp8823059.jpg',
-    tenantThemeName: 'orange'
-  }
-]
 
 export const TENANT_QUERY_KEY = 'tenant'
 
@@ -34,37 +9,33 @@ export const useTenant = async () => {
   const subdomain = window.location.host.split('.')[0]
   const tenantCode = subdomain.includes(':') ? 'dev' : subdomain
 
-  const url = tenantsURL.getTenantInfo(tenantCode)
+  const url = tenantsURL.getTenantInfoByCode(tenantCode)
   const getInfo = async () => await apiService.get(url)
 
   const { data: result } = await useQuery(TENANT_QUERY_KEY, getInfo)
 
-  console.log(result)
-
   let tenantId = ''
   let companyName = ''
   let theme = ''
-  //   let logoLight = ''
-  //   let logoDark = ''
-  //   let backgroundUrl = ''
+  let logoLight = ''
+  let logoDark = ''
+  let backgroundImage = ''
 
   if (typeof result !== 'undefined') {
     tenantId = result?.data?._id
     companyName = result?.data?.companyName
     theme = result?.data?.theme
-    // logoLight = result?.data?.logoLight
-    // logoDark = result?.data?.logoDark
-    // backgroundUrl = result?.data?.backgroundUrl
+    logoLight = result?.data?.logoLight
+    logoDark = result?.data?.logoDark
+    backgroundImage = result?.data?.backgroundImage
   }
 
   storageService.set('tenantId', tenantId)
   storageService.set('companyName', companyName)
   storageService.set('tenantThemeName', theme)
-
-  const tenant = tenants.find(t => t._id === subdomain)
-
-  storageService.set('logoUrl', tenant?.logoUrl)
-  storageService.set('backgroundUrl', tenant?.backgroundUrl)
+  storageService.set('logoLight', logoLight)
+  storageService.set('logoDark', logoDark)
+  storageService.set('backgroundImage', backgroundImage)
 
   return null
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid, CardContent, Card, GridProps, Typography } from '@mui/material'
-
 export interface DSOContainerProps extends GridProps {
   children: React.ReactNode
   title: string
@@ -14,7 +13,7 @@ export const DSOContainer = (props: DSOContainerProps) => {
     <Grid {...rest}>
       <Grid item>
         <Typography
-          sx={{ opacity: 0.7 }}
+          //   sx={{ opacity: 0.7 }}
           variant='h6'
           mb={1.5}
           color={'dialog.color'}

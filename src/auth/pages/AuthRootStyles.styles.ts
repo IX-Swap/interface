@@ -1,14 +1,14 @@
 import makeStyles from '@mui/styles/makeStyles'
 import EarthImage from 'assets/images/digital_earth.png'
-import DotsImage from 'assets/images/background_dots.png'
+// import DotsImage from 'assets/images/background_dots.png'
 
-const backgroundImage =
-  localStorage.getItem('backgroundUrl') !== 'undefined'
-    ? localStorage?.getItem('backgroundUrl')
-    : DotsImage
+// const backgroundImage =
+//   localStorage.getItem('backgroundImage') !== 'undefined'
+//     ? localStorage?.getItem('backgroundImage')
+//     : DotsImage
 
 const overlayImage =
-  localStorage.getItem('backgroundUrl') !== 'undefined' ? '' : EarthImage
+  localStorage.getItem('backgroundImage') !== 'undefined' ? '' : EarthImage
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -56,7 +56,7 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(7.5),
     backgroundColor: '#0E1F42',
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    backgroundImage: `url(${backgroundImage})`,
+    // backgroundImage: `url(${backgroundImage})`,
     backgroundPosition: 'right center',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
