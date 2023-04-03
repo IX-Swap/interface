@@ -2,6 +2,7 @@ import React from 'react'
 import { HeadCellWithSort } from 'ui/UIKit/TablesKit/components/HeadCellWithSort/HeadCellWithSort'
 import { Status } from 'ui/Status/Status'
 import { Link, Box } from '@mui/material'
+import { tenantThemes } from 'config/defaults'
 
 export const columns: any[] = [
   {
@@ -30,7 +31,9 @@ export const columns: any[] = [
         sx={{
           width: 30,
           height: 30,
-          backgroundColor: theme,
+          backgroundColor: tenantThemes
+            .filter(t => t.name === theme)
+            .map(t => t.hex),
           borderRadius: '5px'
         }}
         title={theme}

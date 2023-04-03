@@ -14,6 +14,7 @@ import { FieldContainer } from 'app/pages/identity/components/FieldContainer/Fie
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { DataroomImage } from 'ui/DataRoomImage'
 import { useAppTheme } from 'hooks/useAppTheme'
+import { tenantThemes } from 'config/defaults'
 
 export const ViewTenant = () => {
   const { tenantId } = useParams<{ tenantId: string; issuerId: string }>()
@@ -77,7 +78,9 @@ export const ViewTenant = () => {
                     style={{
                       width: 30,
                       height: 30,
-                      backgroundColor: themeName,
+                      backgroundColor: tenantThemes
+                        .filter(t => t.name === themeName)
+                        .map(t => t.hex),
                       borderRadius: '5px'
                     }}
                   ></div>

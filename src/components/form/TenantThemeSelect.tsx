@@ -1,32 +1,60 @@
-import { SelectProps } from '@mui/material'
-import { tenantThemes } from 'config/defaults'
-import { renderSelectItems } from 'helpers/rendering'
 import React from 'react'
-import { TypedSelectProps } from 'types/util'
-import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
-import { Select } from 'ui/Select/Select'
-
-export interface TenantThemeSelectProps extends TypedSelectProps {
-  labelBetweenAll?: string
-  showLabel?: boolean
+import {
+  FormControlLabel,
+  Box,
+  RadioGroup,
+  RadioGroupProps,
+  Typography
+} from '@mui/material'
+import { UIRadio } from 'components/UIRadio/UIRadio'
+import { useStyles } from './TenantThemeSelectStyles.styles.ts'
+import classnames from 'classnames'
+import { tenantThemes } from 'config/defaults'
+export interface TenantThemeSelectProps extends RadioGroupProps {
+  onButtonClick?: (value: string) => void
 }
 
-export const TenantThemeSelect = (props: TenantThemeSelectProps) => {
-  const { showLabel = true, label, labelBetweenAll, ...rest } = props
+export const TenantThemeSelect = ({
+  onButtonClick = () => {},
+  ...props
+}: TenantThemeSelectProps) => {
+  const classes = useStyles()
+
+  const initialValue = props.defaultValue
+  const onChangeValue = (value: string) => {
+    onButtonClick?.(value)
+  }
 
   return (
-    <>
-      {showLabel && <InputLabel>{label}</InputLabel>}
+    <RadioGroup defaultValue={initialValue} value={props.value}>
+      <Typography>Theme</Typography>
+      <Box className={classes.wrapper}>
+        {tenantThemes.map(item => {
+          const isActive =
+            item.name === props.value || item.name === initialValue
 
-      <Select {...(rest as SelectProps)} label={undefined} displayEmpty>
-        {renderSelectItems(
-          tenantThemes.map(option => ({
-            label: option.charAt(0).toUpperCase() + option.slice(1),
-            value: option
-          }))
-        )}
-      </Select>
-    </>
+          return (
+            <Box
+              key={item.name}
+              sx={{ backgroundColor: item.hex }}
+              className={classnames(classes.button, {
+                [classes.active]: isActive
+              })}
+              onClick={() => onChangeValue(item.name)}
+              title={item.name}
+            >
+              <FormControlLabel
+                label={''}
+                value={item.name}
+                checked={
+                  item.name === props.value || item.name === initialValue
+                }
+                control={<UIRadio />}
+              />
+            </Box>
+          )
+        })}
+      </Box>
+    </RadioGroup>
   )
 }
-TenantThemeSelect.displayName = 'Select_TenantThemeSelect'

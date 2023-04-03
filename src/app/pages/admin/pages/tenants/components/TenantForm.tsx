@@ -29,7 +29,7 @@ export const TenantForm = ({
         <Grid item xs={9}>
           <TenantFormFields />
           <Grid item container justifyContent={'flex-end'}>
-            <Grid item>
+            <Grid item sx={{ marginTop: '15px' }}>
               <SaveTenantButton tenant={tenant} schema={createTenantSchema} />
             </Grid>
           </Grid>

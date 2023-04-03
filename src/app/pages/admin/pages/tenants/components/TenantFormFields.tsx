@@ -15,7 +15,7 @@ import { wysiwygValueExtractor } from 'helpers/forms'
 import { DSOContainer as RteContainer } from 'app/components/DSO/components/DSOContainer'
 
 export const TenantFormFields = () => {
-  const { control } = useFormContext<TenantFormValues>()
+  const { control, setValue } = useFormContext<TenantFormValues>()
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -112,7 +112,7 @@ export const TenantFormFields = () => {
                     label='Theme'
                     name='theme'
                     control={control}
-                    variant='outlined'
+                    onButtonClick={(data: string) => setValue('theme', data)}
                     helperText='Select Tenant Theme'
                   />
                 </Grid>
