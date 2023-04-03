@@ -19,6 +19,8 @@ export const ReviewSidebar: React.FC<Props> = (props) => {
     () => status && [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(status),
     [status]
   )
+  const backText = useMemo(() => (status === IssuanceStatus.approved ? 'Back' : 'Back to Form'), [status])
+
   return (
     <Column gap="0.25rem">
       <Column gap="0.5rem" margin="1rem 0">
@@ -27,7 +29,7 @@ export const ReviewSidebar: React.FC<Props> = (props) => {
             Save Draft
           </OutlineButton>
         )}
-        <OutlineButton onClick={props.onClose}>Back to Form</OutlineButton>
+        <OutlineButton onClick={props.onClose}>{backText}</OutlineButton>
         {status !== IssuanceStatus.approved && (
           <FilledButton disabled={props.submitDisabled} onClick={() => props.onSubmit(false)}>
             Submit
