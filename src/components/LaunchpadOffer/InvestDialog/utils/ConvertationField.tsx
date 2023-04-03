@@ -82,7 +82,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const [inputValue, setInputValue] = React.useState('')
   const [warning, setWarning] = React.useState('')
 
-  const changeValue = useCallback((value: string) => {
+  const changeValue = (value: string) => {
     setInputValue(value)
 
     const warning = getWarning(value)
@@ -95,7 +95,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         .filter((x) => /[0-9.]/.test(x))
         .join('')
     )
-  }, [])
+  }
 
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
