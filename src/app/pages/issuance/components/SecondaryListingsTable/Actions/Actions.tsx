@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Box, IconButton } from '@mui/material'
-import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actios.styles'
+import useStyles from 'app/pages/issuance/components/SecondaryListingsTable/Actions/Actions.styles'
 import { ReactComponent as EditIcon } from 'app/pages/issuance/components/SecondaryListingsTable/icons/edit.svg'
 import { ReactComponent as LaunchIcon } from 'app/pages/issuance/components/SecondaryListingsTable/icons/view.svg'
 import { IssuanceRoute as paths } from 'app/pages/issuance/router/config'
