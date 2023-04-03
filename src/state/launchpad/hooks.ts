@@ -256,6 +256,17 @@ export const useInvest = (id: string) => {
 export const usePresaleProof = (id: string) =>
   React.useCallback(() => apiService.get(`/offers/${id}/presale/proof`), [id])
 
+export const useInvestPublicSaleStructData = (id: string) => {
+  return React.useCallback(
+    (amount: string, ethAddress: string | undefined | null) =>
+      apiService.post(`/offers/${id}/request/invest-sale-struct`, {
+        amount,
+        ethAddress,
+      }),
+    [id]
+  )
+}
+
 export const useDerivedBalanceInfo = (id: string) => {
   return React.useCallback(
     (amount: string, inputCurrency: Currency | null | undefined, balance?: CurrencyAmount<Currency>) => {
@@ -273,11 +284,8 @@ export const useDerivedBalanceInfo = (id: string) => {
 
 export const useClaimOffer = (id: string) => {
   return React.useCallback(
-    (isSuccessful: boolean) =>
-      apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, {
-        amount: '123',
-        txHash: '0x123',
-      }),
+    (isSuccessful: boolean, payload: {amount: string, txHash: string}) =>
+      apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, payload),
     [id]
   )
 }
