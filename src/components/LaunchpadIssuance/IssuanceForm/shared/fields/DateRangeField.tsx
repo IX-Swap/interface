@@ -19,6 +19,7 @@ interface Props {
   value?: Date | DateRange
   disabled?: boolean
   minDate?: Date
+  maxDate?: Date
   field?: string
   setter?: (field: string, value: any) => void
   onChange?: (range: DateRangeValue) => void
@@ -117,7 +118,13 @@ export const DateRangeField: React.FC<Props> = (props) => {
             <DatePickerTitle>{currentMonth.format('MMMM YYYY')}</DatePickerTitle>
           </DatePickerHeader>
 
-          <CalendarPicker minDate={props.minDate} current={currentMonth} selectedRange={range} onSelect={onSelect} />
+          <CalendarPicker
+            current={currentMonth}
+            selectedRange={range}
+            onSelect={onSelect}
+            {...(props.minDate && { minDate: props.minDate })}
+            {...(props.maxDate && { maxDate: props.maxDate })}
+          />
 
           <DatePickerHeader area="next-header">
             <DatePickerTitle>{nextMonth.format('MMMM YYYY')}</DatePickerTitle>
@@ -126,7 +133,13 @@ export const DateRangeField: React.FC<Props> = (props) => {
             </ChangeMonthButton>
           </DatePickerHeader>
 
-          <CalendarPicker minDate={props.minDate} current={nextMonth} selectedRange={range} onSelect={onSelect} />
+          <CalendarPicker
+            current={nextMonth}
+            selectedRange={range}
+            onSelect={onSelect}
+            {...(props.minDate && { minDate: props.minDate })}
+            {...(props.maxDate && { maxDate: props.maxDate })}
+          />
         </DatePicker>
         {props.showButton && (
           <RowEnd>

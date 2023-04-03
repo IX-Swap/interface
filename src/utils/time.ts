@@ -92,3 +92,10 @@ export const getDaysAfter = (date: Date | undefined, daysAhead: number): Date | 
   newMoment.set('hour', 0)
   return newMoment.toDate()
 }
+
+export const getDaysBefore = (date: Date | undefined, daysAhead: number): Date | undefined => {
+  if (!date) return undefined
+  const newMoment = dayjs(date).subtract(dayjs.duration({ days: daysAhead }))
+  newMoment.set('hour', 0)
+  return newMoment.toDate()
+}

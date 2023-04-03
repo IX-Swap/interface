@@ -57,7 +57,7 @@ import { useAddPopup } from 'state/application/hooks'
 import { OfferReview } from '../Review'
 import { IssuanceStatus, SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 import { useQueryParams } from 'hooks/useParams'
-import { getDaysAfter } from 'utils/time'
+import { getDaysAfter, getDaysBefore } from 'utils/time'
 import { text1, text44 } from 'components/LaunchpadMisc/typography'
 import { filterNumberWithDecimals, integerNumberFilter, numberFilter, uppercaseFilter } from 'utils/input'
 import { useRole } from 'state/user/hooks'
@@ -692,6 +692,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     setter={setFieldValue}
                     value={values.timeframe.whitelist}
                     disabled={props.edit || !values.hasPresale}
+                    maxDate={values?.timeframe?.preSale ? getDaysBefore(values?.timeframe?.preSale, 1) : undefined}
                     error={
                       (touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string
                     }
@@ -706,6 +707,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={values.timeframe.preSale}
                     disabled={props.edit || !values.hasPresale || !values.timeframe.whitelist}
                     minDate={getDaysAfter(values?.timeframe?.whitelist, 1)}
+                    maxDate={values?.timeframe?.sale ? getDaysBefore(values?.timeframe?.sale, 1) : undefined}
                     error={(touched.timeframe?.preSale && (touched.timeframe && errors.timeframe)?.preSale) as string}
                   />
 
@@ -717,6 +719,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
                     disabled={props.edit || (values.hasPresale && !values.timeframe.preSale)}
                     minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : undefined}
+                    maxDate={values?.timeframe?.claim ? getDaysBefore(values?.timeframe?.claim, 1) : undefined}
                     onChange={([start, end]) => {
                       setFieldTouched('timeframe.sale')
                       setFieldTouched('timeframe.closed')
