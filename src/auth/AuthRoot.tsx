@@ -3,7 +3,7 @@ import { ReactComponent as AppLogo } from 'assets/icons/new_app_logo.svg'
 import { useStyles } from 'auth/pages/AuthRootStyles.styles'
 import { AuthRouter } from 'auth/router/AuthRouter'
 import { Box, Grid } from '@mui/material'
-import { DataroomImage } from 'ui/DataRoomImage'
+import { DataroomImage } from 'ui/DataroomImage'
 import DotsImage from 'assets/images/background_dots.png'
 import { useRawDataroomFile } from 'hooks/useRawFile'
 
