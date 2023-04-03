@@ -15,6 +15,13 @@ import { useAddPopup } from 'state/application/hooks'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
 import { text10, text14, text27, text59, text9 } from 'components/LaunchpadMisc/typography'
 import { FilledButton } from 'components/LaunchpadMisc/buttons'
+import { useLaunchpadInvestmentContract } from 'hooks/useContract'
+import { useActiveWeb3React } from 'hooks/web3'
+import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
+import { useCurrency } from 'hooks/Tokens'
+import { CurrencyAmount } from '@ixswap1/sdk-core'
+import { ethers } from 'ethers'
+import { LAUNCHPAD_INVESTMENT_ADDRESS } from 'constants/addresses'
 
 interface Props {
   offer: Offer
@@ -23,31 +30,68 @@ interface Props {
 
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
+  const { 
+    id, 
+    status, 
+    softCapReached, 
+    investingTokenAddress, 
+    network, 
+    tokenSymbol, 
+    tokenAddress, 
+    decimals, 
+    investingTokenDecimals, 
+    investingTokenSymbol, 
+    contractSaleId 
+  } = props.offer
 
   const addPopup = useAddPopup()
-  const claim = useClaimOffer(props.offer.id)
-  const { setHasClaimed, hasClaimed } = useCheckClaimed(props.offer.id)
+  const claim = useClaimOffer(id)
+  const { setHasClaimed, hasClaimed } = useCheckClaimed(id)
 
   const [contactFormOpen, setContactForm] = React.useState(false)
   const toggleContactForm = React.useCallback(() => setContactForm((state) => !state), [])
 
-  const canClaim = React.useMemo(() => props.offer.status === OfferStatus.claim, [])
+  const canClaim = React.useMemo(() => status === OfferStatus.claim, [])
 
-  const isSuccessfull = React.useMemo(() => props.offer.softCapReached, [])
+  const isSuccessfull = React.useMemo(() => softCapReached, [])
 
-  const { amount: amountToClaim, loading: amountLoading, error: amountError } = useInvestedAmount(props.offer.id)
+  const { amount: amountToClaim, loading: amountLoading, error: amountError } = useInvestedAmount(id)
+  const launchpadContract = useLaunchpadInvestmentContract()
+  const { chainId = 137, account } = useActiveWeb3React()
+  const tokenCurrency = useCurrency(investingTokenAddress)
+
+  const [approval, approveCallback] = useApproveCallback(
+    tokenCurrency
+      ? CurrencyAmount.fromRawAmount(
+          tokenCurrency,
+          ethers.utils.parseUnits(amountToClaim?.toString() || '0', investingTokenDecimals) as any
+        )
+      : undefined,
+    LAUNCHPAD_INVESTMENT_ADDRESS[chainId]
+  )
 
   const onSubmit = React.useCallback(async () => {
     try {
-      // TODO: blockchain part
-      await claim(isSuccessfull)
+      if (approval !== ApprovalState.APPROVED) {
+        await approveCallback()
+      }
 
-      setHasClaimed(true)
-      addPopup({ info: { success: true, summary: 'Claimed successfully' } })
+      if(launchpadContract) {
+        const data = await launchpadContract.claim(contractSaleId, account)
+        
+        if (data.hash)
+          await claim(isSuccessfull, {
+            amount : amountToClaim?.toString() ?? '0',
+            txHash: data.hash,
+          })
+
+        setHasClaimed(true)
+        addPopup({ info: { success: true, summary: 'Claimed successfully' } })
+      }
     } catch (err: any) {
       addPopup({ info: { success: false, summary: err?.toString() } })
     }
-  }, [claim])
+  }, [claim, amountToClaim])
 
   // todo add check was claimed already when backend is ready
   return (
@@ -75,7 +119,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
           {amountLoading && <Loader />}
           {!amountLoading && !amountError && (
             <MyInvestmentAmount>
-              {amountToClaim ?? 0} {isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
+              {amountToClaim ?? 0} {isSuccessfull ? tokenSymbol : investingTokenSymbol}
             </MyInvestmentAmount>
           )}
           {amountError}
@@ -109,10 +153,10 @@ export const ClosedStage: React.FC<Props> = (props) => {
           </CanClaimNotice>
 
           <OfferLinks
-            network={props.offer.network}
-            address={isSuccessfull ? props.offer.tokenAddress : props.offer.investingTokenAddress}
-            symbol={isSuccessfull ? props.offer.tokenSymbol : props.offer.investingTokenSymbol}
-            decimals={isSuccessfull ? props.offer.decimals : props.offer.investingTokenDecimals}
+            network={network}
+            address={isSuccessfull ? tokenAddress : investingTokenAddress}
+            symbol={isSuccessfull ? tokenSymbol : investingTokenSymbol}
+            decimals={isSuccessfull ? decimals : investingTokenDecimals}
           />
         </Column>
       )}
@@ -130,7 +174,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
                 <CrossIcon />
               </ExitIconContainer>
 
-              <ContactForm offerId={props.offer.id} onSubmit={props.onClose} />
+              <ContactForm offerId={id} onSubmit={props.onClose} />
             </ContactFormWrapper>
           </ModalWrapper>
         </Portal>
