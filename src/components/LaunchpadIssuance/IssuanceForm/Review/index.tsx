@@ -134,15 +134,13 @@ export const OfferReview: React.FC<Props> = ({ values, onSubmit, onClose, draftD
     <ReviewModalContainer>
       <ReviewContainer>
         <Sidebar>
-          {values.status && (
-            <ReviewSidebar
-              offer={values}
-              onSubmit={onSubmit}
-              onClose={onClose}
-              draftDisabled={draftDisabled}
-              submitDisabled={submitDisabled}
-            />
-          )}
+          <ReviewSidebar
+            offer={values}
+            onSubmit={onSubmit}
+            onClose={onClose}
+            draftDisabled={draftDisabled}
+            submitDisabled={submitDisabled}
+          />
         </Sidebar>
 
         <Title>
