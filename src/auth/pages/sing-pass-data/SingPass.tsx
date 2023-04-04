@@ -37,7 +37,7 @@ export const SingPassPage = () => {
     <div style={{ padding: '3px' }}>
       <ChevronIcon />
       <span>{label} : </span>
-      <span style={{ lineHeight: '30px', color: 'red' }}>
+      <span style={{ lineHeight: '30px', color: '#595E60' }}>
         {value.length > 0 ? value : '-'}
       </span>
     </div>
@@ -61,8 +61,8 @@ export const SingPassPage = () => {
               height: '100%',
               padding: '10px',
               width: '100%',
-              background: '#E6E5E8',
-              borderTop: '5px solid red'
+              background: '#FFFFFF',
+              borderTop: '5px solid #151B25'
             }}
           >
             <Grid style={{ textAlign: 'center' }}>
@@ -75,7 +75,7 @@ export const SingPassPage = () => {
                 fontWeight: 400,
                 fontSize: '16px',
                 lineHeight: '22px',
-                color: '#504E56',
+                color: '#4E545C',
                 margin: '20px'
               }}
             >
@@ -88,7 +88,7 @@ export const SingPassPage = () => {
                 fontWeight: 600,
                 fontSize: '16px',
                 lineHeight: '22px',
-                color: '#201E25',
+                color: '#595E60',
                 margin: '20px'
               }}
             >
@@ -102,7 +102,7 @@ export const SingPassPage = () => {
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '22px',
-              color: '#201E25',
+              color: '#4E545C',
               padding: '20px',
               background: '#FFFFFF'
             }}
@@ -114,6 +114,7 @@ export const SingPassPage = () => {
               value={data?.nationality}
             />
             <InfoItem label='Date of Birth' value={data?.dob} />
+            <InfoItem label='Sex' value={data?.sex} />
             <InfoItem label='Email' value={data?.email} />
             <InfoItem label='Mobile Number' value={data?.mobileno} />
             <InfoItem
@@ -156,7 +157,7 @@ export const SingPassPage = () => {
         your data based on the{' '}
         <a
           style={{
-            color: '#CF0B15',
+            color: '#98042D',
             cursor: 'hover',
             textDecoration: 'none'
           }}
@@ -197,11 +198,11 @@ export const SingPassPage = () => {
         <button
           onClick={() => onAgree(data?.email, data?.mobileno)}
           style={{
-            color: '#FFFFFF',
+            color: '#7A787F',
             boxShadow: 'none',
-            background: '#CF0B15',
+            background: '#FFFFFF',
             boxSizing: 'border-box',
-            border: '2px solid #CF0B15',
+            border: '2px solid #E6E5E8',
             padding: '16px 32px',
             textAlign: 'center',
             letterSpacing: '0px',
