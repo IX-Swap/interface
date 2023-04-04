@@ -84,7 +84,7 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
               </Tab>
             ))}
           </Tabs>
-          <SearchFilter onFilter={({ search }) => dispatch(setFilterValue({ filter: { search } }))} />
+          <SearchFilter onFilter={(search) => dispatch(setFilterValue({ filter: { search, page: 1 } }))} />
         </FilterContainer>
         <WhitelistWalletTable loading={loadingGet} items={items} actions={Actions} onAction={onAction} />
         {getError && <ErrorText>{getError}</ErrorText>}
@@ -96,7 +96,7 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
             totalItems={totalItems}
             enableChangePageSize={false}
             smallMargin
-            onChangePage={(page) => dispatch(setFilterValue({ filter: { page } }))}
+            onChangePage={(page) => dispatch(setFilterValue({ filter: { page, search: filter.search } }))}
           />
         )}
         <ConfirmDeletePopup
