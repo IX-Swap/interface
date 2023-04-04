@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, rgbToHex } from '@mui/material/styles'
 import { Chart } from 'react-google-charts'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { useCommitmentStats } from '../hooks/useCommitmentStats'
@@ -45,7 +45,9 @@ export const CommitmentStatsChart = () => {
         color: gridColor
       },
       textStyle: {
-        color: theme.palette.getContrastText(theme.palette.backgrounds.default)
+        color: rgbToHex(
+          theme.palette.getContrastText(theme.palette.backgrounds.default)
+        )
       }
     },
     vAxis: {
