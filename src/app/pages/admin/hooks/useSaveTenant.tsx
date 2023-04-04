@@ -15,14 +15,26 @@ export const useSaveTenant = ({ tenant, schema }: TenantFormActionsProps) => {
   const onSubmit = useCallback(async () => {
     try {
       const values = getValues()
-      console.log(values)
+
       await schema.validate(values, { abortEarly: false })
 
       if (tenant === undefined) {
         await createTenant(values)
       } else {
-        delete values.tenantCode
-        await updateTenant(values)
+        const updatedValues: Partial<TenantFormValues> = {}
+        const diff = Object.keys(values).filter(
+          k =>
+            values[k as keyof typeof values] !==
+            tenant[k as keyof typeof tenant]
+        )
+
+        diff.forEach(
+          prop =>
+            (updatedValues[prop as keyof typeof updatedValues] =
+              values[prop as keyof typeof values])
+        )
+
+        await updateTenant(updatedValues)
       }
     } catch (e: any) {
       const errors = e.inner

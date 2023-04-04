@@ -14,7 +14,11 @@ import { RichTextEditor } from 'components/form/RichTextEditor'
 import { wysiwygValueExtractor } from 'helpers/forms'
 import { DSOContainer as RteContainer } from 'app/components/DSO/components/DSOContainer'
 
-export const TenantFormFields = () => {
+export const TenantFormFields = ({
+  tenant
+}: {
+  tenant: TenantFormValues | undefined
+}) => {
   const { control, setValue } = useFormContext<TenantFormValues>()
 
   return (
@@ -45,6 +49,7 @@ export const TenantFormFields = () => {
                     name='tenantCode'
                     control={control}
                     variant='outlined'
+                    disabled={tenant !== undefined}
                   />
                 </Grid>
               </Grid>

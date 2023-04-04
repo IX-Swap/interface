@@ -9,6 +9,7 @@ import apiService from 'services/api'
 import { tenantsQueryKeys } from 'config/queryKeys'
 import { useQuery } from 'react-query'
 import { AdminRoute } from '../../router/config'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const EditTenant = () => {
   const { tenantId } = useParams<{ tenantId: string; issuerId: string }>()
@@ -17,15 +18,14 @@ export const EditTenant = () => {
   const { replace } = useHistory()
 
   const { data: result, isLoading } = useQuery(
-    tenantsQueryKeys.getTenantById,
-    getInfo
+    tenantsQueryKeys.getTenantById + tenantId,
+    getInfo,
+    {
+      enabled: tenantId
+    }
   )
 
-  if (isLoading) {
-    return null
-  }
-
-  if (result === undefined) {
+  if (!isLoading && result === undefined) {
     replace(AdminRoute.tenants)
   }
 
@@ -36,7 +36,11 @@ export const EditTenant = () => {
       </Grid>
       <RootContainer>
         <Grid item>
-          <TenantForm tenant={result?.data} />
+          {isLoading ? (
+            <LoadingIndicator />
+          ) : (
+            <TenantForm tenant={result?.data} />
+          )}
         </Grid>
       </RootContainer>
     </Grid>

@@ -9,7 +9,7 @@ export const useUpdateTenant = (tenantId: string) => {
   const queryCache = useQueryCache()
 
   const url = tenantsURL.updateTenant(tenantId)
-  const updateTenant = async (args: TenantFormValues) => {
+  const updateTenant = async (args: Partial<TenantFormValues>) => {
     return await apiService.put<TenantFormValues>(url, args)
   }
 

@@ -27,7 +27,7 @@ export const TenantForm = ({
     >
       <Grid container direction={isTablet ? 'column-reverse' : 'row'}>
         <Grid item xs={9}>
-          <TenantFormFields />
+          <TenantFormFields tenant={tenant} />
           <Grid item container justifyContent={'flex-end'}>
             <Grid item sx={{ marginTop: '15px' }}>
               <SaveTenantButton tenant={tenant} schema={createTenantSchema} />
