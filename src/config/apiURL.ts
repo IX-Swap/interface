@@ -138,9 +138,13 @@ export const accountsURL = {
 }
 
 export const tenantsURL = {
-  getTenantInfo: (tenantCode: string) =>
+  getTenantInfoByCode: (tenantCode: string) =>
     `/tenant/tenant-info?tenantCode=${tenantCode}`,
-  getAll: '/tenant/list',
+  getTenantInfoById: (tenantId: string) =>
+    `/tenant/tenant-info?_id=${tenantId}`,
+  getAll: `/tenant/list`,
+  createTenant: `/tenant/`,
+  updateTenant: (tenantId?: string) => `/tenant/${tenantId}`,
   deleteTenant: (tenantId?: string) => `/tenant/${tenantId}`
 }
 

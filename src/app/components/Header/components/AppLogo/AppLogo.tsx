@@ -5,19 +5,23 @@ import { ReactComponent as InvestaXLight } from 'assets/icons/new_logo-light_the
 import { ReactComponent as InvestaXDark } from 'assets/icons/new_logo-dark_theme.svg'
 import { useStyles } from 'app/components/Header/components/AppLogo/AppLogo.styles'
 import { AppRoute } from 'app/router/config'
+import { DataroomImage } from 'ui/DataRoomImage'
 
 export const AppLogo = () => {
   const theme = useTheme()
   const classes = useStyles()
+  const isLightTheme = theme.palette.mode === 'light'
+  const logoTheme = isLightTheme ? 'logoLight' : 'logoDark'
 
   const Logo =
-    localStorage.getItem('logoUrl') !== 'undefined' ? (
-      <img
-        src={JSON.parse(localStorage.getItem('logoUrl') ?? '')}
+    localStorage.getItem(logoTheme) !== 'undefined' ? (
+      <DataroomImage
+        photoId={JSON.parse(localStorage.getItem(logoTheme) ?? '') ?? ''}
         alt='Logo'
-        style={{ filter: `invert(${theme.palette.mode === 'light' ? 1 : 0})` }}
+        // width={60}
+        // height={60}
       />
-    ) : theme.palette.mode === 'light' ? (
+    ) : isLightTheme ? (
       <InvestaXLight />
     ) : (
       <InvestaXDark />

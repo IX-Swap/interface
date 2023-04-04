@@ -31,6 +31,7 @@ export const AdminRoute = {
   blockchainSettings: '/app/admin/blockchainSettings',
   custodyManagement: '/app/admin/custody-management',
   tenants: '/app/admin/tenants',
+  createTenant: '/app/admin/tenants/create',
   viewTenant: '/app/admin/tenants/:tenantId/view',
   editTenant: '/app/admin/tenants/:tenantId/edit'
 }

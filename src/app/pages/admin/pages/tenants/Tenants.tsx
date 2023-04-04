@@ -4,6 +4,8 @@ import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
 import { TenantsTable } from './components/TenantsTable'
 import { TextInputSearchFilter } from 'app/components/TextInputSearchFilter'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { AdminRoute } from 'app/pages/admin/router/config'
 
 export const Tenants = () => {
   return (
@@ -22,7 +24,13 @@ export const Tenants = () => {
                 />
               </Grid>
               <Grid item width={'100%'}>
-                <Button size='large' color='primary' variant='contained'>
+                <Button
+                  component={AppRouterLinkComponent}
+                  size='large'
+                  color='primary'
+                  variant='contained'
+                  to={AdminRoute.createTenant}
+                >
                   Create New Tenant
                 </Button>
               </Grid>
