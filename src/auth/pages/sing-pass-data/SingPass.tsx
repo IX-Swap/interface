@@ -198,11 +198,11 @@ export const SingPassPage = () => {
         <button
           onClick={() => onAgree(data?.email, data?.mobileno)}
           style={{
-            color: '#7A787F',
+            color: '#FFFFFF',
             boxShadow: 'none',
-            background: '#FFFFFF',
+            background: '#0000FF',
             boxSizing: 'border-box',
-            border: '2px solid #E6E5E8',
+            border: '2px solid #0000FF',
             padding: '16px 32px',
             textAlign: 'center',
             letterSpacing: '0px',
