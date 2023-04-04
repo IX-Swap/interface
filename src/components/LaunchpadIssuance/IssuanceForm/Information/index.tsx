@@ -83,6 +83,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
   const [showReview, setShowReview] = React.useState(false)
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+  const [isReset, setReset] = React.useState(false)
   const {
     objectParams: { id: issuanceId },
   } = useQueryParams<{ id: number }>(['id'])
@@ -308,17 +309,21 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
               <FormSideBar>
                 {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
 
-                {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
-                  offer.data?.status as IssuanceStatus
-                ) && (
-                  <RejectInfo
-                    message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
-                    status={offer.data?.status}
-                    issuanceId={issuanceId}
-                    onClear={() => resetForm({ values: initialValues })}
-                    onSubmit={toSubmit}
-                  />
-                )}
+                {!isReset &&
+                  [IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
+                    offer.data?.status as IssuanceStatus
+                  ) && (
+                    <RejectInfo
+                      message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
+                      status={offer.data?.status}
+                      issuanceId={issuanceId}
+                      onClear={() => {
+                        resetForm({ values: initialValues })
+                        setReset(true)
+                      }}
+                      onSubmit={toSubmit}
+                    />
+                  )}
                 <IssuanceActionButtons
                   onSaveDraft={() => saveDraft(values)}
                   showDraft={!props.edit}
