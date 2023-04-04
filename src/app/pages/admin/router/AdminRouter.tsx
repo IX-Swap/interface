@@ -15,10 +15,7 @@ import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
 import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
 import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
-import { CreateNewTenant } from 'app/pages/admin/pages/tenants/CreateNewTenant'
-import { EditTenant } from 'app/pages/admin/pages/tenants/EditTenant'
-import { ViewTenant } from 'app/pages/admin/pages/tenants/ViewTenant'
-import { Tenants } from 'app/pages/admin/pages/tenants/Tenants'
+import { TenantRouter } from './TenantRouter'
 
 export const AdminRouter = () => {
   return (
@@ -104,24 +101,8 @@ export const AdminRouter = () => {
         <CustodyManagementRouter />
       </AppRoute>
 
-      <AppRoute
-        exact
-        path={AdminRoute.createTenant}
-        breadcrumb='Create New Tenant'
-      >
-        <CreateNewTenant />
-      </AppRoute>
-
-      <AppRoute exact path={AdminRoute.editTenant} breadcrumb='Edit Tenant'>
-        <EditTenant />
-      </AppRoute>
-
-      <AppRoute exact path={AdminRoute.viewTenant} breadcrumb='View Tenant'>
-        <ViewTenant />
-      </AppRoute>
-
-      <AppRoute path={AdminRoute.tenants} breadcrumb='Tenants'>
-        <Tenants />
+      <AppRoute breadcrumb='Tenants' path={AdminRoute.tenants}>
+        <TenantRouter />
       </AppRoute>
 
       <AppRoute path={AdminRoute.landing}>
