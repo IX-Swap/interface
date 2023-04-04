@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import moment from 'moment'
 import styled, { useTheme } from 'styled-components'
 
@@ -123,10 +123,23 @@ export const OffersFull: React.FC<Props> = (props) => {
     }
   }, [showDropdown, container])
 
+  const onSearch = useCallback(
+    (search: string) => {
+      setFilter((state: SearchConfig | undefined) => ({
+        ...(state || {}),
+        search,
+      }))
+      if (page !== 1) {
+        setPage(1)
+      }
+    },
+    [setFilter, page, setPage]
+  )
+
   return (
     <Container>
       <TitleBox title={props.type} setFilter={setFilter} />
-      <SearchFilter setFilter={setFilter} />
+      <SearchFilter onFilter={onSearch} />
 
       {!loading && offers?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
 

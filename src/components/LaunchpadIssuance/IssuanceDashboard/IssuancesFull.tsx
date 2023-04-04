@@ -6,7 +6,7 @@ import { Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
 
-import { AbstractOrder, Issuance, OfferStatus } from 'state/launchpad/types'
+import { AbstractOrder, Issuance } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
@@ -129,12 +129,25 @@ export const IssuancesFull = () => {
     [isAdmin]
   )
 
+  const onSearch = useCallback(
+    (search: string) => {
+      setFilter((state: SearchConfig | undefined) => ({
+        ...(state || {}),
+        search,
+      }))
+      if (page !== 1) {
+        setPage(1)
+      }
+    },
+    [setFilter, page, setPage]
+  )
+
   return (
     <Container>
       <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />
       <TitleBox title="Issuances" setFilter={setFilter} />
 
-      <SearchFilter setFilter={setFilter} />
+      <SearchFilter onFilter={onSearch} />
 
       {!loading && issuances?.length === 0 && <EmptyTable isSearch={Boolean(filter?.search)} />}
 

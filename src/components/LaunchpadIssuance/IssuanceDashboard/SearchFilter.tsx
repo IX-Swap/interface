@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 import { ReactComponent as SearchIcon } from 'assets/launchpad/svg/search-icon.svg'
@@ -22,34 +22,22 @@ export interface OrderConfig {
 }
 
 interface Props {
-  onFilter?: (filter: SearchConfig) => void
-  setFilter?: (filter: SearchConfig | ((prevState: SearchConfig | undefined) => SearchConfig)) => void
+  onFilter: (search: string) => void
 }
 
 export const SearchFilter: React.FC<Props> = (props) => {
-  const [filter, setFilter] = React.useState<SearchConfig>({ search: '' })
-
-  const onSearchChange = React.useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => setFilter((state) => ({ ...state, search: event.target.value })),
-    []
+  const onChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      props.onFilter(event.target.value || '')
+    },
+    [props.onFilter]
   )
-
-  React.useEffect(() => {
-    if (props.setFilter) {
-      props.setFilter((state: SearchConfig | undefined) => ({
-        ...(state || {}),
-        search: filter.search,
-      }))
-    } else if (props.onFilter) {
-      props.onFilter(filter)
-    }
-  }, [filter])
 
   return (
     <FilterContainer>
       <FilterSearchField>
         <SearchIcon />
-        <FilterSearchInput placeholder="Search" onChange={onSearchChange} />
+        <FilterSearchInput placeholder="Search" onChange={onChange} />
       </FilterSearchField>
 
       <Spacer />
