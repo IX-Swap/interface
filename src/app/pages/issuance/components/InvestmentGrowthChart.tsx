@@ -1,6 +1,6 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
-import { useTheme } from '@mui/material/styles'
+import { useTheme, rgbToHex } from '@mui/material/styles'
 import { Box } from '@mui/material'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { NoChartData } from './NoChartData'
@@ -17,7 +17,9 @@ export const InvestmentGrowthChart = () => {
   const dateTicks = hasData ? getWeekDays(data.slice(1)) : undefined
 
   const textStyle = {
-    color: theme.palette.getContrastText(theme.palette.backgrounds.default)
+    color: rgbToHex(
+      theme.palette.getContrastText(theme.palette.backgrounds.default)
+    )
   }
   const options = {
     chart: {
