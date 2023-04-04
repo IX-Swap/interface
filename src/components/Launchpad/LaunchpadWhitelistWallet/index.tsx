@@ -62,7 +62,11 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
     getWhitelistedWallets(offerId, filter)
   }, [filter?.search, filter?.type, filter?.page])
 
-  const [activeTab, setActiveTab] = useState(0)
+  const [activeTab, setActiveTab] = useState(tabs[0])
+  useEffect(() => {
+    dispatch(setFilterValue({ filter: { type: activeTab.type } }))
+  }, [activeTab])
+
   return (
     <IssuanceDialog show={isOpen} title="Whitelist Wallet" onClose={onCloseDialog} width="800px" padding="48px">
       <DialogWrapper>
@@ -73,11 +77,8 @@ export const LaunchpadWhitelistWallet = ({ offerId, isOpen, setOpen }: Launchpad
             {tabs.map((tab) => (
               <Tab
                 key={`whitelist-wallet-tab-${tab.name}`}
-                active={activeTab === tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id)
-                  dispatch(setFilterValue({ filter: { type: tab.type } }))
-                }}
+                active={activeTab.id === tab.id}
+                onClick={() => setActiveTab(tab)}
               >
                 {tab.name}
               </Tab>
