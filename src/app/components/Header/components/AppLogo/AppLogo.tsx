@@ -5,7 +5,7 @@ import { ReactComponent as InvestaXLight } from 'assets/icons/new_logo-light_the
 import { ReactComponent as InvestaXDark } from 'assets/icons/new_logo-dark_theme.svg'
 import { useStyles } from 'app/components/Header/components/AppLogo/AppLogo.styles'
 import { AppRoute } from 'app/router/config'
-import { DataroomImage } from 'ui/DataRoomImage'
+import { DataroomImage } from 'ui/DataroomImage'
 
 export const AppLogo = () => {
   const theme = useTheme()

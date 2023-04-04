@@ -12,7 +12,7 @@ import { AdminRoute } from '../../router/config'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { FieldContainer } from 'app/pages/identity/components/FieldContainer/FieldContainer'
 import { renderStringToHTML } from 'app/components/DSO/utils'
-import { DataroomImage } from 'ui/DataRoomImage'
+import { DataroomImage } from 'ui/DataroomImage'
 import { useAppTheme } from 'hooks/useAppTheme'
 import { tenantThemes } from 'config/defaults'
 
@@ -47,7 +47,9 @@ export const ViewTenant = () => {
     logoDark,
     logoLight,
     backgroundImage
-  } = result.data
+  } = result?.data
+
+  const selectedTheme = tenantThemes.find(t => t.name === themeName)
 
   return (
     <Grid container direction='column' style={{ display: 'table' }}>
@@ -78,9 +80,10 @@ export const ViewTenant = () => {
                     style={{
                       width: 30,
                       height: 30,
-                      backgroundColor: tenantThemes
-                        .filter(t => t.name === themeName)
-                        .map(t => t.hex),
+                      backgroundColor:
+                        selectedTheme !== undefined
+                          ? selectedTheme.hex
+                          : '#000',
                       borderRadius: '5px'
                     }}
                   ></div>

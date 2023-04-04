@@ -7,7 +7,7 @@ import {
   Typography
 } from '@mui/material'
 import { UIRadio } from 'components/UIRadio/UIRadio'
-import { useStyles } from './TenantThemeSelectStyles.styles.ts'
+import { useStyles } from './TenantThemeSelectStyles.styles'
 import classnames from 'classnames'
 import { tenantThemes } from 'config/defaults'
 export interface TenantThemeSelectProps extends RadioGroupProps {
