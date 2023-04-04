@@ -42,6 +42,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
   const addPopup = useAddPopup()
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false)
   const [showCloseDialog, setShowCloseDialog] = React.useState(false)
+  const [isReset, setReset] = React.useState(false)
 
   const onConfirmationClose = React.useCallback(() => {
     setShowCloseDialog(false)
@@ -164,17 +165,21 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
           </FormHeader>
 
           <FormSideBar>
-            {[IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
-              initialValues?.data?.status as IssuanceStatus
-            ) && (
-              <RejectInfo
-                message={initialValues?.data?.changesRequested}
-                status={initialValues?.data?.status}
-                issuanceId={issuanceId}
-                onClear={() => resetForm({ values: defaultValues })}
-                onSubmit={toSubmit}
-              />
-            )}
+            {!isReset &&
+              [IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
+                initialValues?.data?.status as IssuanceStatus
+              ) && (
+                <RejectInfo
+                  message={initialValues?.data?.changesRequested}
+                  status={initialValues?.data?.status}
+                  issuanceId={issuanceId}
+                  onClear={() => {
+                    resetForm({ values: defaultValues })
+                    setReset(true)
+                  }}
+                  onSubmit={toSubmit}
+                />
+              )}
             <VettingActionButtons
               onSaveDraft={() => saveDraft(values)}
               onSubmit={toSubmit}
