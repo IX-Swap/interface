@@ -24,9 +24,11 @@ export const AuthRoot: React.FC = () => {
   const tenantBgImage: string = sessionService.get('backgroundImage') ?? ''
   const tenantLogoDark: string = sessionService.get('logoDark') ?? ''
 
-  const { data = '' } = useRawDataroomFile(`dataroom/raw/${tenantBgImage}`)
+  const { data = '' }: { data: string } = useRawDataroomFile(
+    `dataroom/raw/${tenantBgImage}`
+  )
 
-  const bg = tenantBgImage !== '' ? data : DotsImage
+  const bg = data !== '' ? data : DotsImage
 
   const Logo =
     tenantLogoDark !== '' ? (
@@ -36,7 +38,9 @@ export const AuthRoot: React.FC = () => {
         width={112}
         height={18}
         variant={'square'}
-      />
+      >
+        <AppLogo />
+      </DataroomImage>
     ) : (
       <AppLogo />
     )
