@@ -38,7 +38,7 @@ export const MiniStatusBadge: React.FC<BadgeProps> = ({ status }) => {
       return <MiniStatusBadgeWrapper color={theme.launchpad.colors.disabled}>Not started</MiniStatusBadgeWrapper>
 
     default:
-      return status
+      return <div>status</div>
   }
 }
 

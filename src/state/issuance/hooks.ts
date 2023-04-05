@@ -133,6 +133,17 @@ export const useDeployOffer = (offerId?: string) => {
     [offerId]
   )
 }
+export const useConfirmFee = (offerId?: string) => {
+  return React.useCallback(
+    (feeRate?: string | number) => {
+      if (!offerId) {
+        return
+      }
+      return apiService.put(`offers/${offerId}/set-fee-rate`, { feeRate: Number(feeRate) })
+    },
+    [offerId]
+  )
+}
 
 export const useManageVetting = (vettingId?: string) => {
   return React.useCallback(

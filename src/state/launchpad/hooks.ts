@@ -192,11 +192,12 @@ export const useSubscribeToOffer = () => {
 
 export const useGetOffer = (id: string | number | undefined, startLoading = true) => {
   const loader = useLoader()
-  const [data, setData] = React.useState<Offer>()
+  const [data, setData] = React.useState<Offer | undefined>()
   const [error, setError] = React.useState('')
   const load = React.useCallback(() => {
     if (!id) {
       loader.stop()
+      setData(undefined)
       return
     }
     setError('')
