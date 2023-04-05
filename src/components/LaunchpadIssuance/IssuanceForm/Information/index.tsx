@@ -90,7 +90,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   const vetting = useVetting(issuanceId)
   const smartContractStrategy = vetting.data?.smartContractStrategy
-  const offer = useOfferFormInitialValues(issuanceId)
+  const offer = useOfferFormInitialValues(issuanceId, smartContractStrategy)
 
   const validationSchema = React.useMemo(() => (props.edit ? editSchema : schema), [props.edit])
   const countries = React.useMemo(() => {

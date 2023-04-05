@@ -284,7 +284,7 @@ export const useDerivedBalanceInfo = (id: string) => {
 
 export const useClaimOffer = (id: string) => {
   return React.useCallback(
-    (isSuccessful: boolean, payload: {amount: string, txHash: string}) =>
+    (isSuccessful: boolean, payload: { amount: string; txHash: string }) =>
       apiService.post(`/offers/${id}/claim/${isSuccessful ? 'tokens' : 'refund'}`, payload),
     [id]
   )
@@ -940,7 +940,10 @@ const useUploadOfferFiles = () => {
   )
 }
 
-export const useOfferFormInitialValues = (issuanceId?: number | string) => {
+export const useOfferFormInitialValues = (
+  issuanceId?: number | string,
+  smartContractStrategy?: SMART_CONTRACT_STRATEGIES
+) => {
   const getFile = useGetFile()
 
   const issuance = useGetIssuance()
@@ -1065,11 +1068,13 @@ export const useOfferFormInitialValues = (issuanceId?: number | string) => {
         tokenType: payload.investingTokenSymbol as OfferTokenType,
         tokenAddress: payload.tokenAddress,
         investingTokenAddress: payload.investingTokenAddress,
+        smartContractStrategy: smartContractStrategy, // hidden field
       }
       return res
     },
-    [offer.data?.status]
+    [offer.data?.status, smartContractStrategy]
   )
+
   return {
     data: values,
     loading: issuance.loading || offer.loading,

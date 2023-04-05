@@ -11,6 +11,7 @@ import {
 } from 'state/launchpad/types'
 import { OfferTokenType } from './types'
 import { isEthChainAddress } from 'utils'
+import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
 
 const fileSchema = yup.mixed()
 const REQUIRED = 'Required'
@@ -103,38 +104,51 @@ export const schema = yup.object().shape({
     .string()
     .when('tokenStandart', {
       is: OfferTokenStandart.erc20,
-      then: yup.string().required(REQUIRED)
+      then: yup
+        .string()
+        .test('addressConstraint', 'Please enter a valid address', function () {
+          return Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
+        })
+        .required(REQUIRED),
     })
-    .test('addressConstraint', 'Please enter a valid address', function () {
-      return Boolean(isEthChainAddress(this.parent.tokenReceiverAddress))
-    })
-    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
     .nullable(),
 
   totalSupply: yup
     .string()
     .when('tokenStandart', {
       is: OfferTokenStandart.erc20,
-      then: yup.string().required(REQUIRED)
+      then: yup
+        .string()
+        .matches(/[0-9]+/, 'Invalid value')
+        .required(REQUIRED),
     })
-    .matches(/[0-9]+/, 'Invalid value')
     .nullable(),
 
   decimals: yup.number().min(0).max(50),
   trusteeAddress: yup
     .string()
-    .test('addressConstraint', 'Please enter a valid address', function () {
-      return Boolean(isEthChainAddress(this.parent.trusteeAddress))
+    .when('smartContractStrategy', {
+      is: SMART_CONTRACT_STRATEGIES.original,
+      then: yup
+        .string()
+        .test('addressConstraint', 'Please enter a valid address', function () {
+          return Boolean(isEthChainAddress(this.parent.trusteeAddress))
+        })
+        .required(REQUIRED),
     })
-    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
     .nullable(),
 
   tokenAddress: yup
     .string()
-    .test('addressConstraint', 'Please enter a valid address', function () {
-      return Boolean(isEthChainAddress(this.parent.tokenAddress))
+    .when('smartContractStrategy', {
+      is: (str?: SMART_CONTRACT_STRATEGIES) => str !== SMART_CONTRACT_STRATEGIES.original,
+      then: yup
+        .string()
+        .test('addressConstraint', 'Please enter a valid address', function () {
+          return Boolean(isEthChainAddress(this.parent.tokenAddress))
+        })
+        .required(REQUIRED),
     })
-    .matches(/0x[0-9a-fA-F]+/, { message: 'Enter a valid address' })
     .nullable(),
 
   softCap: yup
