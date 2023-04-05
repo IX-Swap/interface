@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import Portal from '@reach/portal'
 
 import { useHistory, useParams } from 'react-router-dom'
@@ -24,12 +24,17 @@ import { NetworkNotAvailable } from 'components/Launchpad/NetworkNotAvailable'
 import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { KYCPrompt } from 'components/Launchpad/KYCPrompt'
 import { BackToTopButton } from 'components/LaunchpadMisc/BackToTopButton'
+import { FilledButton } from 'components/LaunchpadMisc/buttons'
+import { DiscreteInternalLink } from 'theme'
+import { ArrowLeft } from 'react-feather'
+import { routes } from 'utils/routes'
 
 interface OfferPageParams {
   offerId: string
 }
 
 export default function LaunchpadOffer() {
+  const theme = useTheme()
   const history = useHistory()
   const params = useParams<OfferPageParams>()
 
@@ -92,7 +97,7 @@ export default function LaunchpadOffer() {
         <KYCPrompt
           offerId={offer.data.id}
           allowOnlyAccredited={offer.data.allowOnlyAccredited}
-          onClose={() => history.push('/launchpad')}
+          onClose={() => history.push(routes.launchpad)}
         />
       </Portal>
     )
@@ -101,6 +106,11 @@ export default function LaunchpadOffer() {
   return (
     <OfferBackgroundWrapper>
       <OfferContainer>
+        <div className="back-button">
+          <BackButton as={DiscreteInternalLink} to={routes.launchpad}>
+            <ArrowLeft color={theme.launchpad.colors.primary} />
+          </BackButton>
+        </div>
         <header>
           <Header />
         </header>
@@ -154,7 +164,7 @@ const OfferContainer = styled.article`
 
   grid-template-areas:
     'header header header header'
-    '. summary . .'
+    'back summary . .'
     '. main sidebar .'
     'footer footer footer footer';
 
@@ -190,4 +200,19 @@ const OfferContainer = styled.article`
   > footer {
     grid-area: footer;
   }
+
+  .back-button {
+    grid-area: back;
+    display: flex;
+    justify-content: flex-end;
+  }
+`
+
+const BackButton = styled(FilledButton)`
+  padding: 0;
+  width: 48px;
+
+  background: ${(props) => props.theme.launchpad.colors.background};
+  border: 1px solid ${(props) => props.theme.launchpad.colors.primary + '14'};
+  border-radius: 6px;
 `
