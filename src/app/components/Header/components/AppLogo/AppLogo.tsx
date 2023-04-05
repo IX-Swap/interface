@@ -17,6 +17,7 @@ export const AppLogo = () => {
   const { sessionService } = useServices()
 
   const tenantLogo: string = sessionService.get(logoTheme) ?? ''
+  const defaultLogo = isLightTheme ? <InvestaXLight /> : <InvestaXDark />
 
   const Logo =
     tenantLogo !== '' ? (
@@ -26,11 +27,11 @@ export const AppLogo = () => {
         width={80}
         height={14}
         variant={'square'}
-      />
-    ) : isLightTheme ? (
-      <InvestaXLight />
+      >
+        {defaultLogo}
+      </DataroomImage>
     ) : (
-      <InvestaXDark />
+      defaultLogo
     )
 
   return (
