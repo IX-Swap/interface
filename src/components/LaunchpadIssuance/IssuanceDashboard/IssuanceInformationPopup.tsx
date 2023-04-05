@@ -160,7 +160,8 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
                 inputFilter={filterNumberWithDecimals}
               />
             </Column>
-            <FilledButton style={{ alignSelf: 'flex-end', marginBottom: '10px' }}>Confirm</FilledButton>
+            <FilledButton disabled={offer?.status !== OfferStatus.approved || Boolean(issuanceError)}
+              style={{ alignSelf: 'flex-end', marginBottom: '10px' }}>Confirm</FilledButton>
           </FeeRow>
           {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
         </Column>
