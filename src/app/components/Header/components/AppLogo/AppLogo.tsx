@@ -18,8 +18,10 @@ export const AppLogo = () => {
       <DataroomImage
         photoId={JSON.parse(localStorage.getItem(logoTheme) ?? '') ?? ''}
         alt='Logo'
-        // width={60}
-        // height={60}
+        width={80}
+        height={14}
+        variant={'square'}
+        sx={{ objectFit: 'contain' }}
       />
     ) : isLightTheme ? (
       <InvestaXLight />

@@ -37,8 +37,10 @@ export const AuthRoot: React.FC = () => {
       <DataroomImage
         photoId={JSON.parse(localStorage.getItem('logoDark') ?? '') ?? ''}
         alt='Logo'
-        // width={60}
-        // height={60}
+        width={112}
+        height={18}
+        variant={'square'}
+        sx={{ objectFit: 'contain' }}
       />
     ) : (
       <AppLogo />
