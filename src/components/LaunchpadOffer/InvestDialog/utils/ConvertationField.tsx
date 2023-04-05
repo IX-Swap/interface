@@ -13,6 +13,8 @@ import { useCurrency } from 'hooks/Tokens'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useFormatOfferValue, useDerivedBalanceInfo } from 'state/launchpad/hooks'
 import { text35 } from 'components/LaunchpadMisc/typography'
+import CurrencyLogo from 'components/CurrencyLogo'
+import { Currency } from '@ixswap1/sdk-core'
 
 interface Props {
   offer: Offer
@@ -20,7 +22,7 @@ interface Props {
   onChange: (value: string) => void
 }
 
-const getTokenInfo = (address: string, options: Option[]) => {
+const getTokenInfo = (address: string, symbol: string, currency: Currency | null | undefined, options: Option[]) => {
   if (!address) {
     return
   }
@@ -30,7 +32,11 @@ const getTokenInfo = (address: string, options: Option[]) => {
   )
 
   if (!token) {
-    return
+    return {
+      name: symbol,
+      address,
+      icon: <CurrencyLogo currency={currency} /> 
+    } as TokenOption
   }
 
   return {
@@ -74,6 +80,9 @@ export const useGetWarning = (offer: Offer) => {
 export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
+  const { tokenPrice, tokenAddress, tokenSymbol, investingTokenAddress, 
+    investingTokenSymbol } = props.offer
+
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
   const getWarning = useGetWarning(props.offer)
@@ -100,7 +109,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const convertedValue = React.useMemo(() => {
     if (inputValue) {
       const realValue = +inputValue.replace(/,/g, '')
-      const multiplier = (1 / +props.offer.tokenPrice).toFixed(4)
+      const multiplier = (1 / +tokenPrice).toFixed(4)
 
       let result = `${realValue * +multiplier}`
 
@@ -114,9 +123,12 @@ export const ConvertationField: React.FC<Props> = (props) => {
     return inputValue
   }, [inputValue])
 
-  const offerToken = React.useMemo(() => getTokenInfo(props.offer.tokenAddress, mixedTokens), [mixedTokens])
+  const offerTokenCurrency = useCurrency(tokenAddress)
+  const offerInvestmentTokenCurrency = useCurrency(investingTokenAddress)
+
+  const offerToken = React.useMemo(() => getTokenInfo(tokenAddress, tokenSymbol, offerTokenCurrency, mixedTokens), [mixedTokens])
   const offerInvestmentToken = React.useMemo(
-    () => getTokenInfo(props.offer.investingTokenAddress, mixedTokens),
+    () => getTokenInfo(investingTokenAddress, investingTokenSymbol, offerInvestmentTokenCurrency, mixedTokens),
     [mixedTokens]
   )
 
@@ -138,7 +150,6 @@ export const ConvertationField: React.FC<Props> = (props) => {
         value={convertedValue}
         onChange={() => null}
         trailing={<CurrencyDropdown disabled value={offerToken} />}
-        // padding="2rem 1.5rem"
         height="90px"
         fontSize="24px"
         lineHeight="29px"
@@ -259,6 +270,7 @@ const DropdownButton = styled.button`
 `
 
 const SelectedCurrency = styled.div`
+  font-weight: bold;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
