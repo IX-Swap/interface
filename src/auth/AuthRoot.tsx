@@ -40,7 +40,6 @@ export const AuthRoot: React.FC = () => {
         width={112}
         height={18}
         variant={'square'}
-        sx={{ objectFit: 'contain' }}
       />
     ) : (
       <AppLogo />

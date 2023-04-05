@@ -16,7 +16,6 @@ export const isImage = (filename: string) => {
   return (
     filename.endsWith('.png') ||
     filename.endsWith('.jpg') ||
-    filename.endsWith('.svg') ||
     filename.endsWith('.jpeg')
   )
 }

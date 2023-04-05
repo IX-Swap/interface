@@ -21,7 +21,6 @@ export const AppLogo = () => {
         width={80}
         height={14}
         variant={'square'}
-        sx={{ objectFit: 'contain' }}
       />
     ) : isLightTheme ? (
       <InvestaXLight />
