@@ -16,7 +16,9 @@ export const useUpdateTenant = (tenantId: string) => {
   return useMutation(updateTenant, {
     onSuccess: data => {
       void snackbarService.showSnackbar('Success', 'success')
-      void queryCache.invalidateQueries(tenantsQueryKeys.getTenantById)
+      void queryCache.invalidateQueries(
+        tenantsQueryKeys.getTenantById + tenantId
+      )
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
