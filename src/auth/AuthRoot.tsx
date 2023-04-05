@@ -6,6 +6,7 @@ import { Box, Grid } from '@mui/material'
 import { DataroomImage } from 'ui/DataroomImage'
 import DotsImage from 'assets/images/background_dots.png'
 import { useRawDataroomFile } from 'hooks/useRawFile'
+import { useServices } from 'hooks/useServices'
 
 export const AuthRoot: React.FC = () => {
   const {
@@ -18,24 +19,19 @@ export const AuthRoot: React.FC = () => {
     logo
   } = useStyles()
 
-  const { data = '' } = useRawDataroomFile(
-    `dataroom/raw/${
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      localStorage.getItem('backgroundImage') !== 'undefined'
-        ? JSON.parse(localStorage.getItem('backgroundImage') ?? '')
-        : ''
-    }`
-  )
+  const { sessionService } = useServices()
 
-  console.log(data)
+  const tenantBgImage: string = sessionService.get('backgroundImage') ?? ''
+  const tenantLogoDark: string = sessionService.get('logoDark') ?? ''
 
-  const bg =
-    localStorage.getItem('backgroundImage') !== 'undefined' ? data : DotsImage
+  const { data = '' } = useRawDataroomFile(`dataroom/raw/${tenantBgImage}`)
+
+  const bg = tenantBgImage !== '' ? data : DotsImage
 
   const Logo =
-    localStorage.getItem('logoDark') !== 'undefined' ? (
+    tenantLogoDark !== '' ? (
       <DataroomImage
-        photoId={JSON.parse(localStorage.getItem('logoDark') ?? '') ?? ''}
+        photoId={tenantLogoDark}
         alt='Logo'
         width={112}
         height={18}

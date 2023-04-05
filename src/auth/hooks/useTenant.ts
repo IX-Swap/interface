@@ -5,16 +5,17 @@ import { tenantsURL } from 'config/apiURL'
 export const TENANT_QUERY_KEY = 'tenant'
 
 export const useTenant = async () => {
-  const { apiService, storageService } = useServices()
+  const { apiService, sessionService } = useServices()
   const subdomain = window.location.host.split('.')[0]
-  const tenantCode = subdomain.includes(':') ? 'dev' : subdomain
+  const code = subdomain.includes(':') ? 'dev' : subdomain
 
-  const url = tenantsURL.getTenantInfoByCode(tenantCode)
+  const url = tenantsURL.getTenantInfoByCode(code)
   const getInfo = async () => await apiService.get(url)
 
   const { data: result } = await useQuery(TENANT_QUERY_KEY, getInfo)
 
   let tenantId = ''
+  let tenantCode = ''
   let companyName = ''
   let theme = ''
   let logoLight = ''
@@ -23,6 +24,7 @@ export const useTenant = async () => {
 
   if (typeof result !== 'undefined') {
     tenantId = result?.data?._id
+    tenantCode = result?.data?.tenantCode
     companyName = result?.data?.companyName
     theme = result?.data?.theme
     logoLight = result?.data?.logoLight
@@ -30,12 +32,13 @@ export const useTenant = async () => {
     backgroundImage = result?.data?.backgroundImage
   }
 
-  storageService.set('tenantId', tenantId)
-  storageService.set('companyName', companyName)
-  storageService.set('tenantThemeName', theme)
-  storageService.set('logoLight', logoLight)
-  storageService.set('logoDark', logoDark)
-  storageService.set('backgroundImage', backgroundImage)
+  sessionService.set('tenantId', tenantId)
+  sessionService.set('tenantCode', tenantCode)
+  sessionService.set('companyName', companyName)
+  sessionService.set('tenantThemeName', theme)
+  sessionService.set('logoLight', logoLight)
+  sessionService.set('logoDark', logoDark)
+  sessionService.set('backgroundImage', backgroundImage)
 
   return null
 }
