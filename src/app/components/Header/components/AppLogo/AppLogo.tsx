@@ -6,6 +6,7 @@ import { ReactComponent as InvestaXDark } from 'assets/icons/new_logo-dark_theme
 import { useStyles } from 'app/components/Header/components/AppLogo/AppLogo.styles'
 import { AppRoute } from 'app/router/config'
 import { DataroomImage } from 'ui/DataroomImage'
+import { useServices } from 'hooks/useServices'
 
 export const AppLogo = () => {
   const theme = useTheme()
@@ -13,10 +14,14 @@ export const AppLogo = () => {
   const isLightTheme = theme.palette.mode === 'light'
   const logoTheme = isLightTheme ? 'logoLight' : 'logoDark'
 
+  const { sessionService } = useServices()
+
+  const tenantLogo: string = sessionService.get(logoTheme) ?? ''
+
   const Logo =
-    localStorage.getItem(logoTheme) !== 'undefined' ? (
+    tenantLogo !== '' ? (
       <DataroomImage
-        photoId={JSON.parse(localStorage.getItem(logoTheme) ?? '') ?? ''}
+        photoId={tenantLogo}
         alt='Logo'
         width={80}
         height={14}

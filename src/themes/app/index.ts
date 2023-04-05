@@ -28,7 +28,7 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
       ? darkTheme
       : lightTheme
 
-  const tenantThemeName = localStorage.getItem('tenantThemeName')
+  const tenantThemeName = sessionStorage.getItem('tenantThemeName')
   const themeName =
     tenantThemeName !== 'undefined' && JSON.parse(tenantThemeName) in darkTheme
       ? JSON.parse(tenantThemeName)
