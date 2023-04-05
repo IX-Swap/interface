@@ -27,6 +27,7 @@ import { useQueryParams } from 'hooks/useParams'
 import { text30, text42, text53 } from 'components/LaunchpadMisc/typography'
 import { useRole } from 'state/user/hooks'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import { OfferStatus } from 'state/launchpad/types'
 
 export const NewIssuanceForm = () => {
   const theme = useTheme()
@@ -231,7 +232,7 @@ export const NewIssuanceForm = () => {
               </IssuanceFormStep>
             )}
 
-            {(issuanceStatus === undefined || issuanceStatus === IssuanceStatus.draft) && (
+            {(issuanceStatus === undefined || issuanceStatus === OfferStatus.draft) && (
               <IssuanceFormStep
                 stepNumber={2}
                 icon={<IssuanceInformationIcon />}
@@ -251,7 +252,7 @@ export const NewIssuanceForm = () => {
               </IssuanceFormStep>
             )}
 
-            {issuanceStatus === IssuanceStatus.approved && (
+            {issuanceStatus === OfferStatus.approved && (
               <IssuanceFormStep
                 stepNumber={2}
                 icon={<IssuanceApprovedIcon />}
@@ -282,7 +283,7 @@ export const NewIssuanceForm = () => {
               </IssuanceFormStep>
             )}
 
-            {issuanceStatus === IssuanceStatus.declined && (
+            {issuanceStatus === OfferStatus.declined && (
               <IssuanceFormStep
                 stepNumber={2}
                 icon={<IssuanceRejectedIcon />}
@@ -304,7 +305,7 @@ export const NewIssuanceForm = () => {
               </IssuanceFormStep>
             )}
 
-            {issuanceStatus === IssuanceStatus.changesRequested && (
+            {issuanceStatus === OfferStatus.changesRequested && (
               <IssuanceFormStep
                 stepNumber={2}
                 icon={<IssuanceRequestedChangesIcon />}
@@ -323,7 +324,7 @@ export const NewIssuanceForm = () => {
                 </OutlineButton>
               </IssuanceFormStep>
             )}
-            {issuanceStatus === IssuanceStatus.pendingApproval && (
+            {issuanceStatus === OfferStatus.pendingApproval && (
               <IssuanceFormStep
                 stepNumber={2}
                 icon={<Loader color={theme.launchpad.colors.warn} />}

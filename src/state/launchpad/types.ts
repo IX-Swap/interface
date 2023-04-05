@@ -4,8 +4,9 @@ import { User } from 'state/admin/actions'
 
 export enum OfferStatus {
   draft = 'draft',
-  pendingApproval = 'pendingApproval',
+  changesRequested = 'changesRequested',
   declined = 'declined',
+  pendingApproval = 'pendingApproval',
   approved = 'approved',
   whitelist = 'whitelist',
   preSale = 'preSale',
@@ -319,6 +320,7 @@ export interface Offer {
   issuerClaimed: boolean
 
   countParticipants: number
+  feeRate?: number
 }
 
 export interface IssuanceVettingDocuments {
@@ -346,7 +348,7 @@ export interface IssuanceFundingDocument {
 
 export interface IssuanceOffer {
   id: number
-  status: IssuanceStatus
+  status: OfferStatus
   startDate: Date
 }
 

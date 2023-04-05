@@ -6,7 +6,7 @@ import { Eye } from 'react-feather'
 
 import { SortIcon } from '../utils/SortIcon'
 
-import { AbstractOrder, Issuance } from 'state/launchpad/types'
+import { AbstractOrder, Issuance, OfferStatus } from 'state/launchpad/types'
 import { IssuanceFilter, IssuanceStatus } from '../types'
 
 import { IssuanceStatusBadge } from './IssuanceStatusBadge'
@@ -34,7 +34,7 @@ const getIssuanceManageUrl = ({ id, isMine, vetting }: Issuance) => {
   if (!vetting || vetting.status !== IssuanceStatus.approved) {
     return `${routes.createVetting}${query}`
   }
-  if (!vetting.offer || vetting.offer.status !== IssuanceStatus.pendingApproval) {
+  if (!vetting.offer || vetting.offer.status !== OfferStatus.pendingApproval) {
     return `${routes.createOffer}${query}`
   }
   return `${routes.editOffer}${query}`
@@ -65,7 +65,7 @@ export const IssuancesFull = () => {
     if (
       issuance.vetting &&
       issuance.vetting.status === IssuanceStatus.approved &&
-      issuance.vetting.offer?.status !== IssuanceStatus.approved
+      issuance.vetting.offer?.status !== OfferStatus.approved
     ) {
       return IssuanceStatus.inProgress
     }
@@ -144,7 +144,7 @@ export const IssuancesFull = () => {
 
   return (
     <Container>
-      <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />
+      {popUpOpen && <IssuanceApplicationPopup issuance={issuance} isOpen={popUpOpen} setOpen={setPopUpOpen} />}
       <TitleBox title="Issuances" setFilter={setFilter} />
 
       <SearchFilter onFilter={onSearch} />
@@ -183,7 +183,7 @@ export const IssuancesFull = () => {
                     : ''}
                 </Raw>
 
-                <IssuanceStatusBadge status={status(issuance)} />
+                <IssuanceStatusBadge status={status(issuance) as any} />
 
                 <ActionButtons>
                   <OutlineButton

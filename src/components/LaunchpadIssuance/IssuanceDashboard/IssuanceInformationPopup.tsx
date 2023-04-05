@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Issuance, OfferStatus } from 'state/launchpad/types'
 
 import Column from 'components/Column'
 import { IssuanceDialog } from 'components/LaunchpadIssuance/utils/Dialog'
 import { FilledButton, OutlineButton } from 'components/LaunchpadMisc/buttons'
-import { ErrorText, Separator } from 'components/LaunchpadMisc/styled'
+import { ErrorText, LoaderContainer, Separator } from 'components/LaunchpadMisc/styled'
 import { text1, text11, text19, text43, text60 } from 'components/LaunchpadMisc/typography'
 import { RowBetween, RowCenter } from 'components/Row'
-import { useGetOffer, useVetting } from 'state/launchpad/hooks'
+import { useGetOffer } from 'state/launchpad/hooks'
 import styled from 'styled-components'
 import { DiscreteInternalLink } from 'theme'
 import { filterNumberWithDecimals } from 'utils/input'
@@ -16,8 +16,9 @@ import { IssuanceStatus } from '../types'
 import { Label } from '../utils/TextField'
 import { MiniStatusBadge } from './MiniStatusBadge'
 import { ConfirmPopup } from '../utils/ConfirmPopup'
-import { useDeployOffer } from 'state/issuance/hooks'
+import { useConfirmFee, useDeployOffer } from 'state/issuance/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
+import { Loader } from 'components/LaunchpadOffer/util/Loader'
 
 export interface IsssuanceApplicationPopupProps {
   issuance: Issuance | null
@@ -29,7 +30,7 @@ const ButtonBlock = ({ label, link, disabled = false }: { label: string; link: s
   return (
     <CustomColumn>
       <FieldLabel disabled={disabled}>{label}</FieldLabel>
-      <DisablableButton
+      <OutlineButton
         onClick={(event: any) => {
           if (disabled) {
             event.preventDefault()
@@ -42,7 +43,7 @@ const ButtonBlock = ({ label, link, disabled = false }: { label: string; link: s
         height="48px"
       >
         <ButtonText>Open Application</ButtonText>
-      </DisablableButton>
+      </OutlineButton>
     </CustomColumn>
   )
 }
@@ -57,73 +58,118 @@ const StatusBlock = ({ label, status }: { label: string; status?: IssuanceStatus
 }
 
 export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: IsssuanceApplicationPopupProps) => {
-  const toggleDialog = React.useCallback(() => setOpen((state: boolean) => !state), [])
-  const [issuanceFee, setIssuanceFee] = useState<number>(5)
-  const [issuanceError, setIssuanceError] = useState('')
+  const { data: offer, loading: offerLoading, load: loadOffer } = useGetOffer(issuance?.vetting?.offer?.id)
+
   const showError = useShowError()
   const showSuccess = useShowSuccess()
-  const { data: offer, loading: offerLoading } = useGetOffer(issuance?.vetting?.offer?.id)
-  const { data: vetting, loading: vettingLoading } = useVetting(issuance?.id)
+
   const deploy = useDeployOffer(offer?.id)
+  const confirmFee = useConfirmFee(offer?.id)
+
+  const [issuanceFee, setIssuanceFee] = useState<number | undefined>()
   const [showConfirm, setShowConfirm] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const getVettingLink = React.useCallback(
-    (status?: IssuanceStatus) => {
-      if (status === IssuanceStatus.approved) {
-        return `/issuance/view/vetting?id=${issuance?.id}`
-      }
-      return `/issuance/create/vetting?id=${issuance?.id}`
-    },
-    [issuance?.id]
-  )
+  const vettingStatus = useMemo(() => issuance?.vetting?.status, [issuance])
+  const offerStatus = useMemo(() => issuance?.vetting?.offer?.status as any, [issuance])
 
-  useEffect(() => {
-    if (issuanceFee > 100 && !issuanceError) {
-      setIssuanceError('Maximum fee is 100%')
-    } else if (issuanceFee <= 100 && issuanceError) {
-      setIssuanceError('')
+  const feeDisabled = useMemo(() => {
+    if (!offerStatus || offerLoading) return true
+    return ![OfferStatus.draft, OfferStatus.changesRequested, OfferStatus.declined, OfferStatus.approved].includes(
+      offerStatus
+    )
+  }, [offerStatus, offerLoading])
+
+  const issuanceError = useMemo(() => {
+    if (feeDisabled) {
+      return ''
+    } else if (issuanceFee === undefined) {
+      return 'Fee is required!'
+    } else if (issuanceFee === 0) {
+      return 'Fee cannot be 0!'
+    } else if (issuanceFee >= 100) {
+      return 'Fee should be less than 100%!'
     }
-    return
-  }, [issuanceFee])
+    return ''
+  }, [feeDisabled, issuanceFee])
+  const confirmFeeDisabled = useMemo(() => {
+    return Boolean(issuanceError) || feeDisabled || !issuanceFee || isLoading || Number(offer?.feeRate) === issuanceFee
+  }, [issuanceError, feeDisabled, offer, issuanceFee, isLoading])
 
-  const getInformationLink = React.useCallback(
-    (status?: OfferStatus) => {
-      if (
-        [
-          OfferStatus.approved,
-          OfferStatus.whitelist,
-          OfferStatus.preSale,
-          OfferStatus.sale,
-          OfferStatus.claim,
-          OfferStatus.closed,
-        ].includes(status as OfferStatus)
-      ) {
-        return `/issuance/review/information?id=${issuance?.id}`
-      }
-      if (status === OfferStatus.pendingApproval) {
-        return `/issuance/edit/information?id=${issuance?.id}`
-      }
-      return `/issuance/create/information?id=${issuance?.id}`
-    },
-    [issuance?.id]
-  )
+  const vettingLink = useMemo(() => {
+    if (
+      vettingStatus &&
+      [IssuanceStatus.draft, IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(vettingStatus)
+    ) {
+      return `/issuance/create/vetting?id=${issuance?.id}`
+    }
+    return `/issuance/view/vetting?id=${issuance?.id}`
+  }, [issuance?.id, vettingStatus])
 
-  if (issuance === null) {
-    return null
-  }
+  const informationLink = useMemo(() => {
+    if (
+      !offerStatus ||
+      [
+        OfferStatus.approved,
+        OfferStatus.whitelist,
+        OfferStatus.preSale,
+        OfferStatus.sale,
+        OfferStatus.claim,
+        OfferStatus.closed,
+      ].includes(offerStatus)
+    ) {
+      return `/issuance/review/information?id=${issuance?.id}`
+    }
+    if (offerStatus === OfferStatus.pendingApproval) {
+      return `/issuance/edit/information?id=${issuance?.id}`
+    }
+    return `/issuance/create/information?id=${issuance?.id}`
+  }, [issuance?.id, offerStatus])
 
   const onSubmit = async () => {
     setShowConfirm(false)
+    setIsLoading(true)
     try {
       await deploy(issuanceFee)
       showSuccess(`Offer #${offer?.id} - ${offer?.title} deployed successfully`)
     } catch (e: any) {
       showError(e?.message ?? '')
     }
+    loadOffer()
+    setIsLoading(false)
+  }
+
+  const submitFee = async () => {
+    setIsLoading(true)
+    try {
+      await confirmFee(issuanceFee)
+      showSuccess('Fee changed successfully')
+    } catch (e: any) {
+      showError(e?.message ?? '')
+    }
+    loadOffer()
+    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    if (offer) {
+      setIssuanceFee(offer.feeRate === null ? undefined : Number(offer.feeRate))
+    }
+  }, [offer])
+
+  if (issuance === null) {
+    return null
+  }
+  if (isLoading) {
+    return (
+      <LoaderContainer width="100vw" height="100vh">
+        <Loader />
+      </LoaderContainer>
+    )
   }
 
   return (
-    <IssuanceDialog show={isOpen} title="Issuance Information" onClose={toggleDialog} width="600px">
+    <IssuanceDialog show={isOpen} title="Issuance Information" onClose={() => setOpen(false)} width="600px">
       <PopupWrapper>
         <Column></Column>
         <Column>
@@ -131,20 +177,20 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
           <IssuanceName>{issuance.name}</IssuanceName>
         </Column>
         <Separator />
-        {!vettingLoading && (
+        {vettingStatus && (
           <RowBetween>
-            <ButtonBlock label="Vetting" link={getVettingLink(vetting?.status)} />
-            <StatusBlock label="Status" status={vetting?.status} />
+            <ButtonBlock label="Vetting" link={vettingLink} />
+            <StatusBlock label="Status" status={vettingStatus} />
           </RowBetween>
         )}
-        {!offerLoading && (
+        {offerStatus && (
           <RowBetween>
             <ButtonBlock
               label="Issuance Information"
-              link={getInformationLink(offer?.status)}
-              disabled={vetting?.status !== IssuanceStatus.approved}
+              link={informationLink}
+              disabled={vettingStatus !== IssuanceStatus.approved}
             />
-            <StatusBlock label="Status" status={offer?.status} />
+            <StatusBlock label="Status" status={offerStatus} />
           </RowBetween>
         )}
         <Separator />
@@ -155,13 +201,19 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
               <FormField
                 placeholder="5%"
                 field="issuanceFee"
-                setter={(field, value) => setIssuanceFee(Number(value))}
-                value={`${issuanceFee}`}
+                setter={(field, value) => setIssuanceFee(value === '' ? undefined : Number(value))}
+                value={`${issuanceFee === undefined ? '' : issuanceFee}`}
                 inputFilter={filterNumberWithDecimals}
+                disabled={feeDisabled}
               />
             </Column>
-            <FilledButton disabled={offer?.status !== OfferStatus.approved || Boolean(issuanceError)}
-              style={{ alignSelf: 'flex-end', marginBottom: '10px' }}>Confirm</FilledButton>
+            <FilledButton
+              disabled={confirmFeeDisabled}
+              style={{ alignSelf: 'flex-end', marginBottom: '10px' }}
+              onClick={submitFee}
+            >
+              Confirm
+            </FilledButton>
           </FeeRow>
           {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
         </Column>
@@ -215,8 +267,4 @@ const ButtonText = styled.span`
 const FeeRow = styled(RowBetween)`
   align-items: center;
   gap: 17px;
-`
-const DisablableButton = styled(OutlineButton)`
-  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 `
