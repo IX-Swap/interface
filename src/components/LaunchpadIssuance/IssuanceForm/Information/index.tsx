@@ -701,6 +701,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     setter={setFieldValue}
                     value={values.timeframe.whitelist}
                     disabled={props.edit || !values.hasPresale}
+                    minDate={new Date()}
                     maxDate={values?.timeframe?.preSale ? getDaysBefore(values?.timeframe?.preSale, 1) : undefined}
                     error={
                       (touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string
@@ -727,7 +728,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="timeframe.sale"
                     value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
                     disabled={props.edit || (values.hasPresale && !values.timeframe.preSale)}
-                    minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : undefined}
+                    minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : new Date()}
                     maxDate={values?.timeframe?.claim ? getDaysBefore(values?.timeframe?.claim, 1) : undefined}
                     onChange={([start, end]) => {
                       setFieldTouched('timeframe.sale')
