@@ -12,6 +12,7 @@ import { DropdownField } from '../../shared/fields/DropdownField'
 import { InformationFormValues, SocialMediaLink, SocialMediaType } from '../types'
 import { ErrorText } from 'components/LaunchpadMisc/styled'
 import { Flex } from 'rebass'
+import styled from 'styled-components'
 
 interface Props {
   values: InformationFormValues
@@ -136,27 +137,36 @@ export const AdditionalInformation: React.FC<Props> = ({ values, setter, touch, 
       </AddButton>
 
       <IssuanceDialog show={showAddSocial} onClose={toggleDialog} width="480px" title="Add Social Link">
-        <DropdownField
-          label={'Social Media'}
-          placeholder="Choose Social Media"
-          options={socialOptions}
-          field={''}
-          onChange={setAddedSocial}
-          wrapperStyle={{
-            marginTop: '16px',
-          }}
-        />
+        <SocialMediaContainer>
+          <DropdownField
+            label={'Social Media'}
+            placeholder="Choose Social Media"
+            options={socialOptions}
+            field={''}
+            onChange={setAddedSocial}
+            wrapperStyle={{
+              marginTop: '16px',
+            }}
+          />
 
-        <FormField
-          label={`${capitalize(addedSocial)} Link`}
-          placeholder="Social Media Link"
-          field={''}
-          setter={(field, value) => setAddedSocialLink(value)}
-          touch={touch}
-        />
+          <FormField
+            label={`${capitalize(addedSocial)} Link`}
+            placeholder="Social Media Link"
+            field={''}
+            setter={(field, value) => setAddedSocialLink(value)}
+            touch={touch}
+          />
 
-        <FilledButton onClick={addSocialMedia}>Submit</FilledButton>
+          <FilledButton onClick={addSocialMedia}>Submit</FilledButton>
+        </SocialMediaContainer>
       </IssuanceDialog>
     </FormGrid>
   )
 }
+
+const SocialMediaContainer = styled.div`
+  gap: 0.5rem;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+`
