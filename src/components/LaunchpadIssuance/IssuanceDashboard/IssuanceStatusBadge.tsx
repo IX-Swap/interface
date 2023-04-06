@@ -22,13 +22,13 @@ export const IssuanceStatusBadge: React.FC<BadgeProps> = ({ status, isDeployed }
       )
     case IssuanceStatus.declined:
       return <IssuanceStatusBadgeWrapper color={theme.launchpad.colors.error}>Rejected</IssuanceStatusBadgeWrapper>
+    case IssuanceStatus.draft:
     case IssuanceStatus.inProgress:
       return <IssuanceStatusBadgeWrapper color="#BFBFD2">Application in Progress</IssuanceStatusBadgeWrapper>
     case IssuanceStatus.changesRequested:
       return <IssuanceStatusBadgeWrapper color="#4C88FF">Update Requested</IssuanceStatusBadgeWrapper>
     case IssuanceStatus.pendingApproval:
       return <IssuanceStatusBadgeWrapper color="#FFC632">Pending Approval</IssuanceStatusBadgeWrapper>
-    case IssuanceStatus.draft:
     case undefined:
       return <div></div>
     default:
