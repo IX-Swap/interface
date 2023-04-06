@@ -170,6 +170,10 @@ const OfferContainer = styled.article`
 
   gap: 2rem 4rem;
 
+  @media (max-width: 1440px) {
+    grid-template-columns: 100px minmax(auto, 800px) 380px 8px;
+  }
+
   > main,
   > aside {
     display: flex;
