@@ -7,16 +7,17 @@ import { IssuanceStatus } from '../types'
 
 interface BadgeProps {
   status?: IssuanceStatus
+  isDeployed?: boolean
 }
 
-export const IssuanceStatusBadge: React.FC<BadgeProps> = ({ status }) => {
+export const IssuanceStatusBadge: React.FC<BadgeProps> = ({ status, isDeployed }) => {
   const theme = useTheme()
 
   switch (status) {
     case IssuanceStatus.approved:
       return (
         <IssuanceStatusBadgeWrapper color={theme.launchpad.colors.success}>
-          Approved <Check size="15" />
+          {isDeployed ? 'Deployed' : 'Approved'} <Check size="15" />
         </IssuanceStatusBadgeWrapper>
       )
     case IssuanceStatus.declined:
