@@ -12,6 +12,7 @@ export interface VettingFormValues {
 
   status: IssuanceStatus
 
+  reasonRequested?: string
   changesRequested?: string
 
   fundingDocuments: FundingDocument[]

@@ -71,7 +71,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const [isLoading, setIsLoading] = useState(false)
 
   const vettingStatus = useMemo(() => issuance?.vetting?.status, [issuance])
-  const offerStatus = useMemo(() => issuance?.vetting?.offer?.status as any, [issuance])
+  const offerStatus = useMemo(() => issuance?.vetting?.offer?.status, [issuance])
 
   const feeDisabled = useMemo(() => {
     if (!offerStatus || offerLoading) return true

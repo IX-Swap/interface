@@ -14,6 +14,7 @@ import { text1, text19, text30 } from 'components/LaunchpadMisc/typography'
 
 interface Props {
   message?: string
+  longMessage?: string
   issuanceId?: number | string
   status?: IssuanceStatus
 
@@ -36,7 +37,10 @@ export const RejectInfo: React.FC<Props> = (props) => {
         {isRejected ? <WarningIcon /> : <InfoIcon />}
       </Title>
 
-      <Message isRejected={isRejected}>{props.message}</Message>
+      <MessagesContainer>
+        <Message isRejected={isRejected}>{props.message}</Message>
+        <Message isRejected={isRejected}>{props.longMessage}</Message>
+      </MessagesContainer>
 
       {isRejected && (
         <ButtonsContainer>
@@ -83,7 +87,6 @@ export const Container = styled.div<{ isRejected?: boolean }>`
   align-items: stretch;
   gap: 0.5rem;
   padding: 1.5rem;
-  max-height: 10%;
   border: 1px solid
     ${(props) =>
       props.isRejected ? props.theme.launchpad.colors.border.error : props.theme.launchpad.colors.border.success};
@@ -114,11 +117,20 @@ const Title = styled.div<{ isRejected?: boolean }>`
     props.isRejected ? props.theme.launchpad.colors.text.warning : props.theme.launchpad.colors.text.title};
 `
 
+const MessagesContainer = styled.div`
+  margin: 0.5rem 0 0.75rem 0;
+  > div {
+    margin-bottom: 0.25rem;
+  }
+  > div:last-child {
+    margin-bottom: 0;
+  }
+`
+
 export const Message = styled.div<{ isRejected?: boolean }>`
   ${text19}
   flex: none;
   flex-grow: 0;
-  margin: 0.5rem 0 0.75rem 0;
   color: ${(props) =>
     props.isRejected ? props.theme.launchpad.colors.text.warning : props.theme.launchpad.colors.text.body};
 `

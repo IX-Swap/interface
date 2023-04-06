@@ -32,7 +32,6 @@ import { FAQBlock } from './sections/FAQ'
 import { GalleryBlock } from './sections/Gallery'
 import { TeamMembersBlock } from './sections/TeamMembers'
 import { UploadDocuments } from './sections/UploadDocuments'
-// import { RejectionReasons } from './sections/RejectionReasons'
 import { AdditionalInformation } from './sections/AdditionalInformation'
 
 import { schema, editSchema } from './schema'
@@ -313,14 +312,13 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 </LoaderContainer>
               )}
               <FormSideBar>
-                {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
-
                 {!isReset &&
                   [IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
                     offer.data?.status as IssuanceStatus
                   ) && (
                     <RejectInfo
-                      message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
+                      message={offer.data?.reasonRequested}
+                      longMessage={offer.data?.changesRequested}
                       status={offer.data?.status}
                       issuanceId={issuanceId}
                       onClear={() => {

@@ -170,7 +170,8 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 initialValues?.data?.status as IssuanceStatus
               ) && (
                 <RejectInfo
-                  message={initialValues?.data?.changesRequested}
+                  message={initialValues?.data?.reasonRequested}
+                  longMessage={initialValues?.data?.changesRequested}
                   status={initialValues?.data?.status}
                   issuanceId={issuanceId}
                   onClear={() => {
