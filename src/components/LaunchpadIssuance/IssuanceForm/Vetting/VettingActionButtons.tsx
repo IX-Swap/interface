@@ -15,7 +15,7 @@ import Column from 'components/Column'
 export interface VettingActionButtonsProps {
   onSaveDraft: () => void
   onSubmit: () => void
-  disabled: boolean
+  isView: boolean
   draftDisabled: boolean
   submitDisabled: boolean
   isApproved: boolean
@@ -24,7 +24,7 @@ export interface VettingActionButtonsProps {
 export const VettingActionButtons = ({
   onSaveDraft,
   onSubmit,
-  disabled,
+  isView,
   draftDisabled,
   submitDisabled,
   isApproved,
@@ -133,7 +133,7 @@ export const VettingActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {(!isApproved || isAdmin) && (
+      {!isView && (!isApproved || isAdmin) && (
         <FormSubmitContainer>
           <>
             <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
@@ -149,7 +149,7 @@ export const VettingActionButtons = ({
       {isAdmin && !isApproved && (
         <FormSubmitContainer>
           <AdminButtons
-            disabled={disabled}
+            disabled={isView}
             onApprove={() => setShowApprove(true)}
             onUpdate={() => setShowUpdate(true)}
             onReject={() => setShowReject(true)}
