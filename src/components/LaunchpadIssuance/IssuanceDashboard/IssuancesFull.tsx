@@ -183,7 +183,10 @@ export const IssuancesFull = () => {
                     : ''}
                 </Raw>
 
-                <IssuanceStatusBadge status={status(issuance) as any} />
+                <IssuanceStatusBadge
+                  status={status(issuance) as any}
+                  isDeployed={Boolean(issuance?.vetting?.offer?.contractSaleId)}
+                />
 
                 <ActionButtons>
                   <OutlineButton
