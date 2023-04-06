@@ -1,11 +1,11 @@
-import { SMART_CONTRACT_STRATEGIES } from "components/LaunchpadIssuance/types";
-import { VettingFormValues } from "./types";
+import { SMART_CONTRACT_STRATEGIES } from 'components/LaunchpadIssuance/types'
+import { VettingFormValues } from './types'
 
 export const initialValues = {
   document: {},
-  beneficialOwners: [],
-  directors: [],
-  fundingDocuments: []
+  beneficialOwners: [{}],
+  directors: [{}],
+  fundingDocuments: [],
 } as unknown as VettingFormValues
 
 export const defaultValues = {
