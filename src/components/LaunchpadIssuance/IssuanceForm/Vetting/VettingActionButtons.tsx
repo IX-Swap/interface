@@ -11,6 +11,7 @@ import { RequestChangesPopup } from '../../utils/RequestChangesPopup'
 import { useReviewVetting } from 'state/issuance/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Column from 'components/Column'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 
 export interface VettingActionButtonsProps {
   onSaveDraft: () => void
@@ -18,8 +19,8 @@ export interface VettingActionButtonsProps {
   isView: boolean
   draftDisabled: boolean
   submitDisabled: boolean
-  isApproved: boolean
   vettingId: string
+  status?: IssuanceStatus
 }
 export const VettingActionButtons = ({
   onSaveDraft,
@@ -27,8 +28,8 @@ export const VettingActionButtons = ({
   isView,
   draftDisabled,
   submitDisabled,
-  isApproved,
   vettingId,
+  status,
 }: VettingActionButtonsProps) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
@@ -76,6 +77,9 @@ export const VettingActionButtons = ({
       showError(e?.message)
     }
   }
+
+  const isApproved = status === IssuanceStatus.approved
+  const isRejected = status === IssuanceStatus.declined
 
   return (
     <Column style={{ gap: '1rem' }}>
@@ -140,9 +144,11 @@ export const VettingActionButtons = ({
               Save Draft
             </OutlineButton>
 
-            <FilledButton disabled={submitDisabled} onClick={onSubmit}>
-              Submit
-            </FilledButton>
+            {!isRejected && (
+              <FilledButton disabled={submitDisabled} onClick={onSubmit}>
+                Submit
+              </FilledButton>
+            )}
           </>
         </FormSubmitContainer>
       )}

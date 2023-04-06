@@ -861,9 +861,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   )}
 
                   <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                  <FilledButton onClick={toSubmit} disabled={submitDisabled}>
-                    Submit
-                  </FilledButton>
+                  {offer.data?.status !== IssuanceStatus.declined && (
+                    <FilledButton onClick={toSubmit} disabled={submitDisabled}>
+                      Submit
+                    </FilledButton>
+                  )}
                 </Row>
               </FormBody>
             </>

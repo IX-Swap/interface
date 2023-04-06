@@ -13,7 +13,7 @@ import { FormSubmitContainer } from '../../shared/styled'
 import { RequestChangesPopup } from '../../../utils/RequestChangesPopup'
 import { OfferStatus } from 'state/launchpad/types'
 
-interface IssuanceButtoonsProps {
+interface IssuanceButtonsProps {
   onSaveDraft: () => void
   showDraft: boolean
   onReview: () => void
@@ -33,7 +33,7 @@ export const IssuanceActionButtons = ({
   draftDisabled,
   status,
   offerId,
-}: IssuanceButtoonsProps) => {
+}: IssuanceButtonsProps) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
   const [showApprove, setShowApprove] = useState(false)
@@ -81,9 +81,10 @@ export const IssuanceActionButtons = ({
     }
   }
 
-  const { isApproved, showReviewButtons } = useMemo(
+  const { isApproved, isRejected, showReviewButtons } = useMemo(
     () => ({
       isApproved: status === OfferStatus.approved,
+      isRejected: status === OfferStatus.declined,
       showReviewButtons: ![
         OfferStatus.approved,
         OfferStatus.whitelist,
@@ -161,9 +162,11 @@ export const IssuanceActionButtons = ({
           )}
 
           <OutlineButton onClick={onReview}>Review</OutlineButton>
-          <FilledButton disabled={submitDisabled} onClick={onSubmit}>
-            Submit
-          </FilledButton>
+          {!isRejected && (
+            <FilledButton disabled={submitDisabled} onClick={onSubmit}>
+              Submit
+            </FilledButton>
+          )}
         </FormSubmitContainer>
       )}
       {isAdmin && showReviewButtons && (
