@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Issuance, OfferStatus } from 'state/launchpad/types'
 
 import Column from 'components/Column'
@@ -68,6 +68,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const confirmFee = useConfirmFee(offer?.id)
 
   const [issuanceFee, setIssuanceFee] = useState<number | undefined>()
+  const [touchedFee, touchFee] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -83,7 +84,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   }, [offerStatus, offerLoading])
 
   const issuanceError = useMemo(() => {
-    if (feeDisabled) {
+    if (feeDisabled || !touchedFee) {
       return ''
     } else if (issuanceFee === undefined) {
       return 'Fee is required!'
@@ -93,7 +94,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
       return 'Fee should be less than 100%!'
     }
     return ''
-  }, [feeDisabled, issuanceFee])
+  }, [feeDisabled, issuanceFee, touchedFee])
   const confirmFeeDisabled = useMemo(() => {
     return Boolean(issuanceError) || feeDisabled || !issuanceFee || isLoading || Number(offer?.feeRate) === issuanceFee
   }, [issuanceError, feeDisabled, offer, issuanceFee, isLoading])
@@ -159,6 +160,14 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     }
   }, [offer])
 
+  const onChangeFee = useCallback(
+    (field: string, value: string) => {
+      setIssuanceFee(value === '' ? undefined : Number(value))
+      if (!touchedFee) touchFee(true)
+    },
+    [touchedFee, touchFee, setIssuanceFee]
+  )
+
   if (issuance === null) {
     return null
   }
@@ -214,7 +223,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
                 <FormField
                   placeholder="5%"
                   field="issuanceFee"
-                  setter={(field, value) => setIssuanceFee(value === '' ? undefined : Number(value))}
+                  setter={onChangeFee}
                   value={`${issuanceFee === undefined ? '' : issuanceFee}`}
                   inputFilter={filterNumberWithDecimals}
                   disabled={feeDisabled}
