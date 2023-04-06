@@ -165,10 +165,16 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   const setPresale = React.useCallback((value: boolean, setter: (field: string, value: any) => void) => {
     setter('timeframe.whitelist', undefined)
-    setter('timeframe.presale', undefined)
+    setter('timeframe.preSale', undefined)
     setter('timeframe.sale', undefined)
     setter('timeframe.closed', undefined)
     setter('timeframe.claim', undefined)
+
+    if(!value) {
+      setter('presaleAlocated', '')
+      setter('presaleMaxInvestment', '')
+      setter('presaleMinInvestment', '')
+    }
 
     setter('hasPresale', value)
   }, [])
