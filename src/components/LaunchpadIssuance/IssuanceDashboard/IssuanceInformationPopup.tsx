@@ -170,7 +170,6 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     )
   }
 
-  console.log('avocado isOfferDeployed', isOfferDeployed)
   return (
     <IssuanceDialog show={isOpen} title="Issuance Information" onClose={() => setOpen(false)} width="600px">
       <PopupWrapper>
