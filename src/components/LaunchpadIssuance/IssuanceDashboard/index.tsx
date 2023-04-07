@@ -39,13 +39,21 @@ const IssuanceTabs: React.FC<TabsProps> = (props) => {
 }
 
 export const IssuanceDashboard = () => {
-  const [activeTab, setActiveTab] = React.useState(IssuanceFilter.pending)
+  const [activeTab, setActiveTab] = React.useState<IssuanceFilter>(() => {
+    const issuanceTab = localStorage.getItem('issuanceTab')
+    return issuanceTab as IssuanceFilter ?? IssuanceFilter.pending
+  })
+
+  const handleTabChange = (tab: IssuanceFilter) => {
+    setActiveTab(tab)
+    localStorage.setItem('issuanceTab', tab)
+  }
 
   return (
     <Container>
       <Header>
         <TabRow>
-          <IssuanceTabs current={activeTab} options={tabs} onSelect={setActiveTab} />
+          <IssuanceTabs current={activeTab} options={tabs} onSelect={handleTabChange} />
           <IssuanceCreateButton showPin />
         </TabRow>
       </Header>
