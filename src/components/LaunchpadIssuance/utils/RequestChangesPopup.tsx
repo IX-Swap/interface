@@ -40,6 +40,14 @@ export const RequestChangesPopup = ({
   const theme = useTheme()
   const [reasonError, setReasonError] = useState('')
   const [messageError, setMessageError] = useState('')
+
+  const onChangeMessage = (value: string) => {
+    setMessage(value)
+    if(!value) setMessageError('Required')
+    else if(value.length > 1000) setMessageError('Message must be shorter than or equal to 1000 characters')
+    else setMessageError('')
+  }
+
   return (
     <IssuanceDialog show={isOpen} onClose={onDecline} width="480px">
       <Container>
@@ -62,12 +70,7 @@ export const RequestChangesPopup = ({
         <TextAreaInner
           label="Message"
           field="message"
-          setter={(field, value) => {
-            setMessage(value)
-            if(!value) setMessageError('Required')
-            else if(value.length > 1000) setMessageError('Message must be shorter than or equal to 1000 characters')
-            else setMessageError('')
-          }}
+          setter={(field, value) => {onChangeMessage(value)}}
           span={3}
           value={message}
           error={messageError}
