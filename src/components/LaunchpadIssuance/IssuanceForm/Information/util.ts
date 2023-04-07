@@ -61,6 +61,7 @@ export const initialValues = {
   faq: [{ id: 0 }],
 
   allowOnlyAccredited: undefined,
+  tokenomicsAgreement: undefined,
 
   terms: {
     investmentStructure: '',

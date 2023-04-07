@@ -989,7 +989,7 @@ export const useOfferFormInitialValues = (
         profilePicture: files.find((x) => x.id === payload.profilePicture?.id) as IssuanceFile,
 
         allowOnlyAccredited: payload.allowOnlyAccredited,
-        tokenomicsAgreement: !isDraft,
+        tokenomicsAgreement: payload.tokenomicsAgreement,
 
         country: payload.country,
         email: payload.contactUsEmail,
@@ -1153,6 +1153,7 @@ export const useSubmitOffer = () => {
         presaleAlocated: payload.presaleAlocated,
 
         allowOnlyAccredited: payload.allowOnlyAccredited ?? false,
+        tokenomicsAgreement: payload.tokenomicsAgreement,
 
         terms: {
           investmentStructure: String(payload.terms.investmentStructure),
