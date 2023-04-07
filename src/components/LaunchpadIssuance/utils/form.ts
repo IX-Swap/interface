@@ -1,6 +1,7 @@
-export const isSubmitDisabled = (errors: any) => {
+export const isSubmitDisabled = (errors: any, touched: any) => {
   const hasErrors = Object.keys(errors).length > 0
-  return hasErrors
+  const notTouched = !Object.keys(touched).length
+  return notTouched || hasErrors
 }
 
 const getIsDisabled = (message?: string) => {
