@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Check } from 'react-feather'
 import { useTheme } from 'styled-components'
 
@@ -78,8 +78,13 @@ export const VettingActionButtons = ({
     }
   }
 
-  const isApproved = status === IssuanceStatus.approved
-  const isRejected = status === IssuanceStatus.declined
+  const { isDraft, isApproved, isRejected } = useMemo(() => {
+    return {
+      isDraft: status === IssuanceStatus.draft,
+      isApproved: status === IssuanceStatus.approved,
+      isRejected: status === IssuanceStatus.declined,
+    }
+  }, [status])
 
   return (
     <Column style={{ gap: '1rem' }}>
@@ -155,7 +160,7 @@ export const VettingActionButtons = ({
       {isAdmin && !isApproved && (
         <FormSubmitContainer>
           <AdminButtons
-            disabled={isView}
+            disabled={isDraft}
             onApprove={() => setShowApprove(true)}
             onUpdate={() => setShowUpdate(true)}
             onReject={() => setShowReject(true)}
