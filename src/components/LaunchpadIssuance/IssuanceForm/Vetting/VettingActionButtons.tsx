@@ -11,24 +11,25 @@ import { RequestChangesPopup } from '../../utils/RequestChangesPopup'
 import { useReviewVetting } from 'state/issuance/hooks'
 import { useShowError, useShowSuccess } from 'state/application/hooks'
 import Column from 'components/Column'
+import { IssuanceStatus } from 'components/LaunchpadIssuance/types'
 
 export interface VettingActionButtonsProps {
   onSaveDraft: () => void
   onSubmit: () => void
-  disabled: boolean
+  isView: boolean
   draftDisabled: boolean
   submitDisabled: boolean
-  isApproved: boolean
   vettingId: string
+  status?: IssuanceStatus
 }
 export const VettingActionButtons = ({
   onSaveDraft,
   onSubmit,
-  disabled,
+  isView,
   draftDisabled,
   submitDisabled,
-  isApproved,
   vettingId,
+  status,
 }: VettingActionButtonsProps) => {
   const theme = useTheme()
   const { isAdmin } = useRole()
@@ -76,6 +77,9 @@ export const VettingActionButtons = ({
       showError(e?.message)
     }
   }
+
+  const isApproved = status === IssuanceStatus.approved
+  const isRejected = status === IssuanceStatus.declined
 
   return (
     <Column style={{ gap: '1rem' }}>
@@ -133,23 +137,25 @@ export const VettingActionButtons = ({
         setMessage={setChangesRejected}
         setReason={setReasonRejected}
       />
-      {(!isApproved || isAdmin) && (
+      {!isView && (!isApproved || isAdmin) && (
         <FormSubmitContainer>
           <>
             <OutlineButton disabled={draftDisabled} onClick={onSaveDraft}>
               Save Draft
             </OutlineButton>
 
-            <FilledButton disabled={submitDisabled} onClick={onSubmit}>
-              Submit
-            </FilledButton>
+            {!isRejected && (
+              <FilledButton disabled={submitDisabled} onClick={onSubmit}>
+                Submit
+              </FilledButton>
+            )}
           </>
         </FormSubmitContainer>
       )}
       {isAdmin && !isApproved && (
         <FormSubmitContainer>
           <AdminButtons
-            disabled={disabled}
+            disabled={isView}
             onApprove={() => setShowApprove(true)}
             onUpdate={() => setShowUpdate(true)}
             onReject={() => setShowReject(true)}

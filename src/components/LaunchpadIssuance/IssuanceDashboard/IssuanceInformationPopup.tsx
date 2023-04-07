@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Issuance, OfferStatus } from 'state/launchpad/types'
 
 import Column from 'components/Column'
@@ -8,7 +8,7 @@ import { ErrorText, LoaderContainer, Separator } from 'components/LaunchpadMisc/
 import { text1, text11, text19, text43, text60 } from 'components/LaunchpadMisc/typography'
 import { RowBetween, RowCenter } from 'components/Row'
 import { useGetOffer } from 'state/launchpad/hooks'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { DiscreteInternalLink } from 'theme'
 import { filterNumberWithDecimals } from 'utils/input'
 import { FormField } from '../IssuanceForm/shared/fields/FormField'
@@ -60,6 +60,7 @@ const StatusBlock = ({ label, status }: { label: string; status?: IssuanceStatus
 export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: IsssuanceApplicationPopupProps) => {
   const { data: offer, loading: offerLoading, load: loadOffer } = useGetOffer(issuance?.vetting?.offer?.id)
 
+  const theme = useTheme()
   const showError = useShowError()
   const showSuccess = useShowSuccess()
 
@@ -67,21 +68,23 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
   const confirmFee = useConfirmFee(offer?.id)
 
   const [issuanceFee, setIssuanceFee] = useState<number | undefined>()
+  const [touchedFee, touchFee] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const vettingStatus = useMemo(() => issuance?.vetting?.status, [issuance])
-  const offerStatus = useMemo(() => issuance?.vetting?.offer?.status as any, [issuance])
+  const offerStatus = useMemo(() => issuance?.vetting?.offer?.status, [issuance])
+  const isOfferDeployed = useMemo(() => offer && Boolean(offer.contractSaleId), [offer])
 
   const feeDisabled = useMemo(() => {
-    if (!offerStatus || offerLoading) return true
+    if (!offerStatus || offerLoading || isOfferDeployed) return true
     return ![OfferStatus.draft, OfferStatus.changesRequested, OfferStatus.declined, OfferStatus.approved].includes(
       offerStatus
     )
   }, [offerStatus, offerLoading])
 
   const issuanceError = useMemo(() => {
-    if (feeDisabled) {
+    if (feeDisabled || !touchedFee) {
       return ''
     } else if (issuanceFee === undefined) {
       return 'Fee is required!'
@@ -91,7 +94,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
       return 'Fee should be less than 100%!'
     }
     return ''
-  }, [feeDisabled, issuanceFee])
+  }, [feeDisabled, issuanceFee, touchedFee])
   const confirmFeeDisabled = useMemo(() => {
     return Boolean(issuanceError) || feeDisabled || !issuanceFee || isLoading || Number(offer?.feeRate) === issuanceFee
   }, [issuanceError, feeDisabled, offer, issuanceFee, isLoading])
@@ -157,6 +160,14 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
     }
   }, [offer])
 
+  const onChangeFee = useCallback(
+    (field: string, value: string) => {
+      setIssuanceFee(value === '' ? undefined : Number(value))
+      if (!touchedFee) touchFee(true)
+    },
+    [touchedFee, touchFee, setIssuanceFee]
+  )
+
   if (issuance === null) {
     return null
   }
@@ -194,39 +205,60 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
           </RowBetween>
         )}
         <Separator />
-        <Column>
-          <FeeRow>
-            <Column style={{ gap: '25px', flex: '1 1' }}>
-              <FieldLabel>Issuance Fee</FieldLabel>
-              <FormField
-                placeholder="5%"
-                field="issuanceFee"
-                setter={(field, value) => setIssuanceFee(value === '' ? undefined : Number(value))}
-                value={`${issuanceFee === undefined ? '' : issuanceFee}`}
-                inputFilter={filterNumberWithDecimals}
-                disabled={feeDisabled}
-              />
-            </Column>
-            <FilledButton
-              disabled={confirmFeeDisabled}
-              style={{ alignSelf: 'flex-end', marginBottom: '10px' }}
-              onClick={submitFee}
-            >
-              Confirm
-            </FilledButton>
-          </FeeRow>
-          {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
-        </Column>
+        {isOfferDeployed ? (
+          <Column>
+            <FeeRow>
+              <Column style={{ gap: '25px', flex: '1 1' }}>
+                <FieldLabel>
+                  Issuance Fee: <span style={{ color: theme.launchpad.colors.primary }}>{issuanceFee}%</span>
+                </FieldLabel>
+              </Column>
+            </FeeRow>
+          </Column>
+        ) : (
+          <Column>
+            <FeeRow>
+              <Column style={{ gap: '25px', flex: '1 1' }}>
+                <FieldLabel>Issuance Fee, %</FieldLabel>
+                <FormField
+                  placeholder="5%"
+                  field="issuanceFee"
+                  setter={onChangeFee}
+                  value={`${issuanceFee === undefined ? '' : issuanceFee}`}
+                  inputFilter={filterNumberWithDecimals}
+                  disabled={feeDisabled}
+                />
+              </Column>
+              <FilledButton
+                disabled={confirmFeeDisabled}
+                style={{ alignSelf: 'flex-end', marginBottom: '10px' }}
+                onClick={submitFee}
+              >
+                Confirm
+              </FilledButton>
+            </FeeRow>
+            {issuanceError && <ErrorText>{issuanceError}</ErrorText>}
+          </Column>
+        )}
         <Separator />
-        <FilledButton
-          disabled={offer?.status !== OfferStatus.approved || Boolean(issuanceError)}
-          onClick={() => setShowConfirm(true)}
-        >
-          Deploy
-        </FilledButton>
-        <RowCenter>
-          <SubmitHint>Confirm that all steps has been done and start the issuance</SubmitHint>
-        </RowCenter>
+        <Column>
+          {isOfferDeployed ? (
+            <FilledButton background={theme.launchpad.colors.success} style={{ cursor: 'default' }}>
+              Deployed
+            </FilledButton>
+          ) : (
+            <FilledButton
+              disabled={offer?.status !== OfferStatus.approved || Boolean(issuanceError)}
+              onClick={() => setShowConfirm(true)}
+            >
+              Deploy
+            </FilledButton>
+          )}
+
+          <RowCenter style={{ marginTop: '13px' }}>
+            <SubmitHint>Confirm that all steps has been done and start the issuance</SubmitHint>
+          </RowCenter>
+        </Column>
       </PopupWrapper>
       <ConfirmPopup
         isOpen={showConfirm}

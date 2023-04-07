@@ -350,6 +350,7 @@ export interface IssuanceOffer {
   id: number
   status: OfferStatus
   startDate: Date
+  contractSaleId: string
 }
 
 export interface IssuanceVetting {

@@ -61,20 +61,10 @@ export const IssuancesFull = () => {
     if (!issuance.vetting) {
       return IssuanceStatus.inProgress
     }
-
-    if (
-      issuance.vetting &&
-      issuance.vetting.status === IssuanceStatus.approved &&
-      issuance.vetting.offer?.status !== OfferStatus.approved
-    ) {
+    if (issuance.vetting.status === IssuanceStatus.approved && !issuance.vetting.offer) {
       return IssuanceStatus.inProgress
     }
-
-    return issuance.vetting && issuance.vetting?.offer
-      ? issuance.vetting?.offer.status
-      : issuance.vetting && issuance.vetting?.status !== IssuanceStatus.draft
-      ? issuance.vetting.status
-      : IssuanceStatus.inProgress
+    return issuance.vetting?.offer?.status || issuance.vetting?.status || IssuanceStatus.inProgress
   }, [])
 
   const selectIssuance = useCallback(
@@ -183,7 +173,10 @@ export const IssuancesFull = () => {
                     : ''}
                 </Raw>
 
-                <IssuanceStatusBadge status={status(issuance) as any} />
+                <IssuanceStatusBadge
+                  status={status(issuance) as any}
+                  isDeployed={Boolean(issuance?.vetting?.offer?.contractSaleId)}
+                />
 
                 <ActionButtons>
                   <OutlineButton

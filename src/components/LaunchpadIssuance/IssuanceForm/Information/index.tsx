@@ -32,7 +32,6 @@ import { FAQBlock } from './sections/FAQ'
 import { GalleryBlock } from './sections/Gallery'
 import { TeamMembersBlock } from './sections/TeamMembers'
 import { UploadDocuments } from './sections/UploadDocuments'
-// import { RejectionReasons } from './sections/RejectionReasons'
 import { AdditionalInformation } from './sections/AdditionalInformation'
 
 import { schema, editSchema } from './schema'
@@ -165,10 +164,16 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
 
   const setPresale = React.useCallback((value: boolean, setter: (field: string, value: any) => void) => {
     setter('timeframe.whitelist', undefined)
-    setter('timeframe.presale', undefined)
+    setter('timeframe.preSale', undefined)
     setter('timeframe.sale', undefined)
     setter('timeframe.closed', undefined)
     setter('timeframe.claim', undefined)
+
+    if(!value) {
+      setter('presaleAlocated', '')
+      setter('presaleMaxInvestment', '')
+      setter('presaleMinInvestment', '')
+    }
 
     setter('hasPresale', value)
   }, [])
@@ -307,14 +312,13 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                 </LoaderContainer>
               )}
               <FormSideBar>
-                {/* {Object.keys(errors).length > 0 && <RejectionReasons />} */}
-
                 {!isReset &&
                   [IssuanceStatus.changesRequested, IssuanceStatus.declined].includes(
                     offer.data?.status as IssuanceStatus
                   ) && (
                     <RejectInfo
-                      message={offer.data?.changesRequested ?? offer.data?.reasonRequested}
+                      message={offer.data?.reasonRequested}
+                      longMessage={offer.data?.changesRequested}
                       status={offer.data?.status}
                       issuanceId={issuanceId}
                       onClear={() => {
@@ -697,6 +701,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     setter={setFieldValue}
                     value={values.timeframe.whitelist}
                     disabled={props.edit || !values.hasPresale}
+                    minDate={new Date()}
                     maxDate={values?.timeframe?.preSale ? getDaysBefore(values?.timeframe?.preSale, 1) : undefined}
                     error={
                       (touched.timeframe?.whitelist && (touched.timeframe && errors.timeframe)?.whitelist) as string
@@ -723,7 +728,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                     field="timeframe.sale"
                     value={[values.timeframe.sale, values.timeframe.closed].filter((x) => !!x).map((x) => moment(x))}
                     disabled={props.edit || (values.hasPresale && !values.timeframe.preSale)}
-                    minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : undefined}
+                    minDate={values.hasPresale ? getDaysAfter(values.timeframe.preSale, 1) : new Date()}
                     maxDate={values?.timeframe?.claim ? getDaysBefore(values?.timeframe?.claim, 1) : undefined}
                     onChange={([start, end]) => {
                       setFieldTouched('timeframe.sale')
@@ -862,9 +867,11 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
                   )}
 
                   <OutlineButton onClick={() => setShowReview(true)}>Review</OutlineButton>
-                  <FilledButton onClick={toSubmit} disabled={submitDisabled}>
-                    Submit
-                  </FilledButton>
+                  {offer.data?.status !== IssuanceStatus.declined && (
+                    <FilledButton onClick={toSubmit} disabled={submitDisabled}>
+                      Submit
+                    </FilledButton>
+                  )}
                 </Row>
               </FormBody>
             </>
