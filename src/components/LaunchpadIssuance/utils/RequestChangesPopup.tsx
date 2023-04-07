@@ -64,7 +64,9 @@ export const RequestChangesPopup = ({
           field="message"
           setter={(field, value) => {
             setMessage(value)
-            setMessageError(value ? '' : 'Required')
+            if(!value) setMessageError('Required')
+            else if(value.length > 1000) setMessageError('Message must be shorter than or equal to 1000 characters')
+            else setMessageError('')
           }}
           span={3}
           value={message}
@@ -76,7 +78,7 @@ export const RequestChangesPopup = ({
           <FilledButton
             width="200px"
             background={theme.launchpad.colors.primary}
-            disabled={!message || !reason}
+            disabled={!message || !reason || !!messageError}
             onClick={onAccept}
           >
             {t`${acceptText || 'Yes'}`}
