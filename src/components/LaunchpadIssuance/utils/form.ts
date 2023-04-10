@@ -3,7 +3,7 @@ export const isSubmitDisabled = (errors: any, touched: any) => {
 }
 
 const getIsDisabled = (message?: string, isDraft?: boolean) => {
-  if (isDraft) return true;
+  if (!isDraft) return true;
   if (message) {
     const includesString = (keys: string[]) => keys.some((key: string) => message.includes(key))
     const invalidKeys = ['valid', 'Valid']
