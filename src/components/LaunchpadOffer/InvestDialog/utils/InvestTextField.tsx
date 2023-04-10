@@ -150,7 +150,7 @@ const Caption = styled.div`
 
   ${text8}
 
-  color: ${(props) => props.theme.launchpad.colors.text.bodyAlt};
+  color: ${(props) => props.theme.launchpad.colors.text.error};
 `
 
 const Input = styled.input<Pick<StylingProps, 'fontSize' | 'lineHeight'>>`

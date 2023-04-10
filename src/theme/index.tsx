@@ -258,6 +258,7 @@ export function launchpadTheme() {
         warning: '#FF8282',
         light: '#FFFFFF',
         hint: '#8d8da3',
+        error: '#ff6060',
       },
     },
   }

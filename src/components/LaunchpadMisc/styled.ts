@@ -119,7 +119,7 @@ export const FormFieldContainer = styled(Column)`
 `
 
 export const ErrorText = styled.div<{ padding?: string }>`
-  color: #ff6060;
+  color: ${(props) => props.theme.launchpad.colors.text.error};;
 
   font-style: normal;
   font-weight: 500;
