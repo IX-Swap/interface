@@ -186,7 +186,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               onSubmit={toSubmit}
               isView={view}
               draftDisabled={view || isDraftDisabled(errors, touched)}
-              submitDisabled={view || isSubmitDisabled(errors, touched)}
+              submitDisabled={view || isSubmitDisabled(errors)}
               vettingId={String(initialValues.vettingId)}
               status={initialValues?.data?.status}
             />
@@ -455,7 +455,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 (![IssuanceStatus.approved, IssuanceStatus.declined].includes(
                   initialValues?.data?.status as IssuanceStatus
                 ) && (
-                  <FilledButton width="280px" onClick={toSubmit} disabled={view || isSubmitDisabled(errors, touched)}>
+                  <FilledButton width="280px" onClick={toSubmit} disabled={view || isSubmitDisabled(errors)}>
                     Submit
                   </FilledButton>
                 ))}
