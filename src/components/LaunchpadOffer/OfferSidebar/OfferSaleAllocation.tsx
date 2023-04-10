@@ -50,7 +50,7 @@ export const OfferSaleAllocation: React.FC<SaleProps> = (props) => {
             <div>
               <span className="bold">
                 {props.investingTokenSymbol} {formatedValue(props.presaleAlocated)}
-              </span>
+              </span>{' '}
               Allocated for Pre-Sale
             </div>
           </SaleAllocationEntry>

@@ -204,7 +204,7 @@ export const IssuanceApplicationPopup = ({ issuance, isOpen, setOpen }: Isssuanc
             <StatusBlock label="Status" status={offerStatus} />
           </RowBetween>
         )}
-        <Separator />
+        {(vettingStatus || offerStatus) && <Separator />}
         {isOfferDeployed ? (
           <Column>
             <FeeRow>
