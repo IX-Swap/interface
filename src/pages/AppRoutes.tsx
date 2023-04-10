@@ -64,9 +64,15 @@ export interface RouteMapEntry {
     rolesSupported?: ROLES[]
     isWhitelisted?: boolean
     kycFormAccess?: string
+    isKycApproved?: boolean
   }
 }
-const onlyOfferManager = { conditions: { rolesSupported: [ROLES.OFFER_MANAGER, ROLES.ADMIN] } }
+const onlyOfferManager = {
+  conditions: {
+    rolesSupported: [ROLES.OFFER_MANAGER, ROLES.ADMIN],
+    isKycApproved: true,
+  },
+}
 export const routeConfigs: RouteMapEntry[] = [
   { path: '/admin', render: () => <Redirect to={routes.admin('accreditation', null)} /> },
   { path: routes.admin(), component: Admin },
@@ -147,6 +153,7 @@ export const routeConfigs: RouteMapEntry[] = [
   /* Launchpad routes */
   { path: routes.launchpad, component: Launchpad },
   { path: routes.offerPage, component: LaunchpadOffer },
+  /* Issuance routes */
   {
     path: routes.issuance,
     component: LaunchpadIssuanceDashboard,

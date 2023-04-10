@@ -35,6 +35,7 @@ import { ApplicationModal, clearStore } from 'state/application/actions'
 
 import { routeConfigs, RouteMapEntry } from './AppRoutes'
 import { routes } from 'utils/routes'
+import { ROLES } from 'constants/roles'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -190,6 +191,7 @@ export default function App() {
         route.conditions?.chainId !== undefined && chainId !== route.conditions.chainId,
         route.conditions?.chainIsSupported !== undefined && (!chainId || !chains.includes(chainId)),
         route.conditions?.kycFormAccess !== undefined && !canAccessKycForm(route.conditions.kycFormAccess),
+        route.conditions?.isKycApproved === true && kyc?.status !== KYCStatuses.APPROVED && userRole !== ROLES.ADMIN,
         roleGuard,
       ]
 
