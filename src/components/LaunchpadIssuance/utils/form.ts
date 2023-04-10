@@ -3,8 +3,8 @@ export const isSubmitDisabled = (errors: any, touched: any) => {
 }
 
 const getIsDisabled = (message?: string, isDraft?: boolean) => {
-  if (!isDraft) return true;
   if (message) {
+    if (!isDraft) return true
     const includesString = (keys: string[]) => keys.some((key: string) => message.includes(key))
     const invalidKeys = ['valid', 'Valid']
     const requiredKeys = ['required', 'Required', 'enter', 'Enter', 'Add at least']
@@ -14,6 +14,10 @@ const getIsDisabled = (message?: string, isDraft?: boolean) => {
 }
 
 const getError = (errors: any, touched: any, isDraft: boolean) => {
+  const notTouched = !Object.keys(touched).length
+  if (notTouched) {
+    return true
+  }
   const hasError = Object.entries(touched).some(([fieldName, value]: any) => {
     if (Array.isArray(value)) {
       return value.some((arrayItem, index) => {
