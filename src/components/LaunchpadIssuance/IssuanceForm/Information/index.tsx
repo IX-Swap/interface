@@ -281,7 +281,7 @@ export const IssuanceInformationForm: React.FC<Props> = (props) => {
       >
         {({ values, errors, touched, setFieldValue, setFieldTouched, submitForm, resetForm }) => {
           const draftDisabled = isDraftDisabled(errors, touched)
-          const submitDisabled = !values.tokenomicsAgreement || isSubmitDisabled(errors)
+          const submitDisabled = !values.tokenomicsAgreement || isSubmitDisabled(errors, touched)
           return (
             <>
               <ConfirmationForm
