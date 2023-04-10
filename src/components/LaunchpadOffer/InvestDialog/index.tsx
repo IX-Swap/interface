@@ -1,17 +1,15 @@
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
-
 import { X } from 'react-feather'
 
 import { RegisterToInvestStage } from './content/RegisterToInvest'
 import { ClosedStage } from './content/Closed'
 import { SaleStage } from './content/Sale'
-
 import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
-
 import { InvestDialogSidebar } from './Sidebar'
 import { text26 } from 'components/LaunchpadMisc/typography'
+import useInterval from 'hooks/useInterval'
 
 interface Props {
   offer: Offer
@@ -28,7 +26,7 @@ enum StageForm {
 export const InvestDialog: React.FC<Props> = (props) => {
   const theme = useTheme()
 
-  const stage = React.useMemo(() => {
+  const stage = useMemo(() => {
     switch (props.offer.status) {
       case OfferStatus.whitelist:
         return StageForm.register
@@ -45,6 +43,11 @@ export const InvestDialog: React.FC<Props> = (props) => {
         return null
     }
   }, [props.offer.status])
+
+  const updateCallback = useCallback(() => {
+    props.investedData.load()
+  }, [props.investedData.load])
+  useInterval(updateCallback, 30 * 1000)
 
   return (
     <Portal>

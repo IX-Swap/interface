@@ -501,4 +501,5 @@ export interface InvestedData {
 export interface InvestedDataRes extends InvestedData {
   error?: string
   loading: boolean
+  load: () => void
 }
