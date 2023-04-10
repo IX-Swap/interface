@@ -151,6 +151,7 @@ export interface LaunchpadTheme {
       warning: string
       light: string
       hint: string
+      error: string
     }
   }
 }

@@ -105,5 +105,5 @@ const ClosedSuccessullyLabel = styled(ClosedStatusLabel)`
 `
 
 const ClosedUnsuccessfullyLabel = styled(ClosedStatusLabel)`
-  color: #ff6060;
+  color: ${(props) => props.theme.launchpad.colors.text.error};
 `

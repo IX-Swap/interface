@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import Portal from '@reach/portal'
 
@@ -24,6 +24,7 @@ export const Pinned: React.FC = () => {
   const history = useHistory()
   const getPinnedOffer = useGetPinnedOffer()
   const checkKYC = useCheckKYC()
+  const theme = useTheme()
 
   const [offer, setOffer] = React.useState<Offer>()
   const [loading, setLoading] = React.useState(true)
@@ -51,7 +52,7 @@ export const Pinned: React.FC = () => {
     }
 
     if (offer?.closesSoon) {
-      return { label: 'Closes soon', color: '#FF6060' }
+      return { label: 'Closes soon', color: theme.launchpad.colors.text.error }
     }
 
     return null

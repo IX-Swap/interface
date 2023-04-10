@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import Portal from '@reach/portal'
 
@@ -30,6 +30,7 @@ const getStageLabel = (stage: OfferStatus) => {
 export const InvestmentCard: React.FC<Props> = ({ offer }) => {
   const checkKYC = useCheckKYC()
   const history = useHistory()
+  const theme = useTheme()
 
   const [showDetails, setShowDetails] = React.useState(false)
   const [showKYCModal, setShowKYCModal] = React.useState(false)
@@ -49,7 +50,7 @@ export const InvestmentCard: React.FC<Props> = ({ offer }) => {
     }
 
     if (offer?.closesSoon) {
-      return { label: 'Closes soon', color: '#FF6060' }
+      return { label: 'Closes soon', color: theme.launchpad.colors.text.error }
     }
 
     return null
