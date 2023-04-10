@@ -4,7 +4,13 @@ import Row from 'components/Row'
 import { CheckCircle, Info } from 'react-feather'
 import { InfoList } from 'components/LaunchpadOffer/util/InfoList'
 import { Loader } from 'components/LaunchpadOffer/util/Loader'
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import {
+  INVESTMENT_STATUSES,
+  InvestedDataRes,
+  InvestmentStatusesLabels,
+  Offer,
+  OfferStatus,
+} from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { InvestFormSubmitButton, InvestSubmitState, useInvestSubmitState } from '../utils/InvestSubmitButton'
 import { ConvertationField } from '../utils/ConvertationField'
@@ -23,9 +29,10 @@ import { useActiveWeb3React } from 'hooks/web3'
 
 interface Props {
   offer: Offer
+  investedData: InvestedDataRes
 }
 
-export const SaleStage: React.FC<Props> = ({ offer }) => {
+export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
   const {
     minInvestment,
     maxInvestment,
@@ -38,12 +45,12 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
     tokenAddress,
     tokenSymbol,
     decimals,
-    totalInvestment,
     presaleAlocated,
     hardCap,
     contractSaleId,
     investingTokenDecimals,
   } = offer
+  const { amountPresale, amountSale, lastStatus } = investedData
   const theme = useTheme()
   const invest = useInvest(id)
   const getPresaleProof = usePresaleProof(id)
@@ -71,20 +78,48 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
   )
 
   const investmentAllowance = useMemo(() => {
-    const max = isPresale ? +presaleAlocated : +hardCap
-    const available = max - totalInvestment
+    const max = isPresale ? +presaleMaxInvestment : +maxInvestment
+    const alreadyInvested = isPresale ? amountPresale : amountSale
+    const available = max - alreadyInvested
+    const getColor = (status: INVESTMENT_STATUSES | null) => {
+      switch (status) {
+        case INVESTMENT_STATUSES.done:
+          return theme.launchpad.colors.success
+        case INVESTMENT_STATUSES.pending:
+          return theme.launchpad.colors.warn
+        case INVESTMENT_STATUSES.failed:
+          return theme.launchpad.colors.error
+        default:
+          return 'inherit'
+      }
+    }
     const items = [
       { label: 'Available to invest', value: `${formatter.format(available)} ${investingTokenSymbol}` },
-      { label: 'Already invested', value: `${formatter.format(totalInvestment)} ${investingTokenSymbol}` },
+      { label: 'Already invested', value: `${formatter.format(alreadyInvested)} ${investingTokenSymbol}` },
+      {
+        label: 'Last investment transaction status',
+        value: (
+          <span style={{ color: getColor(lastStatus) }}>{lastStatus ? InvestmentStatusesLabels[lastStatus] : '-'}</span>
+        ),
+      },
     ]
 
     return items.filter((x) => !!x)
-  }, [isPresale, presaleAlocated, hardCap, investingTokenSymbol])
+  }, [
+    isPresale,
+    presaleMaxInvestment,
+    maxInvestment,
+    amountPresale,
+    amountSale,
+    investingTokenSymbol,
+    formatter,
+    lastStatus,
+  ])
 
   const launchpadContract = useLaunchpadInvestmentContract()
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
   const { chainId = 137, account } = useActiveWeb3React()
-  
+
   const [approval, approveCallback] = useApproveCallback(
     tokenCurrency
       ? CurrencyAmount.fromRawAmount(
@@ -110,12 +145,12 @@ export const SaleStage: React.FC<Props> = ({ offer }) => {
       }
 
       if (launchpadContract) {
-        let data;
-        if(status === OfferStatus.preSale) {
+        let data
+        if (status === OfferStatus.preSale) {
           const { data: proof } = await getPresaleProof()
           data = await launchpadContract.investPreSale(contractSaleId, parsedAmount, proof)
-        } else if(status === OfferStatus.sale) {
-          const { data : investStructData } = await getInvestPublicSaleStructData(amount, account)
+        } else if (status === OfferStatus.sale) {
+          const { data: investStructData } = await getInvestPublicSaleStructData(amount, account)
           data = await launchpadContract.investPublicSale(contractSaleId, parsedAmount, investStructData)
         }
 

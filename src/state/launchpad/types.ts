@@ -480,3 +480,25 @@ export interface AbstractOrder {
 export interface PinnedOffer extends Offer {
   issuanceId: number
 }
+
+export enum INVESTMENT_STATUSES {
+  pending = 'pending',
+  done = 'done',
+  failed = 'failed',
+}
+export const InvestmentStatusesLabels = {
+  [INVESTMENT_STATUSES.pending]: 'Pending',
+  [INVESTMENT_STATUSES.done]: 'Done',
+  [INVESTMENT_STATUSES.failed]: 'Failed',
+}
+export interface InvestedData {
+  amount: number
+  amountPresale: number
+  amountSale: number
+  lastStatus: INVESTMENT_STATUSES | null
+}
+
+export interface InvestedDataRes extends InvestedData {
+  error?: string
+  loading: boolean
+}

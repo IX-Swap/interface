@@ -8,7 +8,7 @@ import { Offer, OfferStatus, WhitelistStatus } from 'state/launchpad/types'
 
 import MetamaskIcon from 'assets/images/metamask.png'
 
-import { useFormatOfferValue, useGetWhitelistStatus, useInvestedAmount } from 'state/launchpad/hooks'
+import { useFormatOfferValue, useGetWhitelistStatus, useInvestedData } from 'state/launchpad/hooks'
 
 import { InvestmentSaleStatusInfo } from 'components/Launchpad/InvestmentCard/InvestmentSaleStatusInfo'
 import { Tooltip } from 'components/Launchpad/InvestmentCard/Tooltip'
@@ -40,7 +40,8 @@ enum OfferStageStatus {
 
 export const OfferDetails: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const { amount: amountToClaim } = useInvestedAmount(props.offer.id)
+  const investedData = useInvestedData(props.offer.id)
+  const { amount: amountToClaim } = investedData
   const { status: whitelistedStatus } = useGetWhitelistStatus(props.offer.id)
   const explorerLink = getExplorerLink(
     nameChainMap[props?.offer?.network],
@@ -149,7 +150,9 @@ export const OfferDetails: React.FC<Props> = (props) => {
           )}
         </InvestButtonContainer>
 
-        {showInvestDialog && <InvestDialog offer={props.offer} onClose={closeInvestDialog} />}
+        {showInvestDialog && (
+          <InvestDialog offer={props.offer} onClose={closeInvestDialog} investedData={investedData} />
+        )}
       </OfferSidebarSummary>
 
       <TokenInfo>

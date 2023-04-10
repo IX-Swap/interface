@@ -3,8 +3,8 @@ import Portal from '@reach/portal'
 import styled, { useTheme } from 'styled-components'
 import { CheckCircle, Clock, Info } from 'react-feather'
 import { ReactComponent as CrossIcon } from 'assets/launchpad/svg/close.svg'
-import { useCheckClaimed, useClaimOffer, useInvestedAmount } from 'state/launchpad/hooks'
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import { useCheckClaimed, useClaimOffer, useInvestedData } from 'state/launchpad/hooks'
+import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 import { InvestFormContainer } from './styled'
 import { Column, Row, Separator } from 'components/LaunchpadMisc/styled'
 import { ExitIconContainer } from 'components/Launchpad/KYCPrompt/styled'
@@ -26,22 +26,23 @@ import { LAUNCHPAD_INVESTMENT_ADDRESS } from 'constants/addresses'
 interface Props {
   offer: Offer
   onClose: () => void
+  investedData: InvestedDataRes
 }
 
 export const ClosedStage: React.FC<Props> = (props) => {
   const theme = useTheme()
-  const { 
-    id, 
-    status, 
-    softCapReached, 
-    investingTokenAddress, 
-    network, 
-    tokenSymbol, 
-    tokenAddress, 
-    decimals, 
-    investingTokenDecimals, 
-    investingTokenSymbol, 
-    contractSaleId 
+  const {
+    id,
+    status,
+    softCapReached,
+    investingTokenAddress,
+    network,
+    tokenSymbol,
+    tokenAddress,
+    decimals,
+    investingTokenDecimals,
+    investingTokenSymbol,
+    contractSaleId,
   } = props.offer
 
   const addPopup = useAddPopup()
@@ -55,7 +56,7 @@ export const ClosedStage: React.FC<Props> = (props) => {
 
   const isSuccessfull = React.useMemo(() => softCapReached, [])
 
-  const { amount: amountToClaim, loading: amountLoading, error: amountError } = useInvestedAmount(id)
+  const { amount: amountToClaim, loading: amountLoading, error: amountError } = props.investedData
   const launchpadContract = useLaunchpadInvestmentContract()
   const { chainId = 137, account } = useActiveWeb3React()
   const tokenCurrency = useCurrency(investingTokenAddress)
@@ -76,12 +77,12 @@ export const ClosedStage: React.FC<Props> = (props) => {
         await approveCallback()
       }
 
-      if(launchpadContract) {
+      if (launchpadContract) {
         const data = await launchpadContract.claim(contractSaleId, account)
-        
+
         if (data.hash)
           await claim(isSuccessfull, {
-            amount : amountToClaim?.toString() ?? '0',
+            amount: amountToClaim?.toString() ?? '0',
             txHash: data.hash,
           })
 

@@ -9,7 +9,7 @@ import { OrderConfig, SearchConfig } from 'components/LaunchpadIssuance/Issuance
 
 import { AppState } from 'state'
 import { tryParseAmount } from 'state/swap/helpers'
-import { OrderTypes } from './types'
+import { InvestedData, OrderTypes } from './types'
 
 import {
   Asset,
@@ -302,17 +302,22 @@ export const useCheckClaimed = (offerId: string) => {
   return { setHasClaimed, hasClaimed }
 }
 
-export const useInvestedAmount = (offerId: string) => {
+export const useInvestedData = (offerId: string) => {
   const loader = useLoader()
 
-  const [amount, setAmount] = React.useState<number | null>(null)
+  const [data, setData] = React.useState<InvestedData>({
+    amount: 0,
+    amountPresale: 0,
+    amountSale: 0,
+    lastStatus: null,
+  })
   const [error, setError] = React.useState('')
   const load = React.useCallback(() => {
     loader.start()
     return apiService
       .get(`offers/${offerId}/invested`)
-      .then((res) => res.data as number)
-      .then(setAmount)
+      .then((res) => res.data as InvestedData)
+      .then(setData)
       .catch((e: any) => setError(e?.message))
       .finally(loader.stop)
   }, [offerId])
@@ -321,7 +326,7 @@ export const useInvestedAmount = (offerId: string) => {
     load()
   }, [offerId])
 
-  return { amount, error, loading: loader.isLoading }
+  return { ...data, load, error, loading: loader.isLoading }
 }
 
 export const useCreateIssuance = () => {

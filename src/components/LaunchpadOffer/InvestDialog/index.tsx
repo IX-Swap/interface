@@ -8,7 +8,7 @@ import { RegisterToInvestStage } from './content/RegisterToInvest'
 import { ClosedStage } from './content/Closed'
 import { SaleStage } from './content/Sale'
 
-import { Offer, OfferStatus } from 'state/launchpad/types'
+import { InvestedDataRes, Offer, OfferStatus } from 'state/launchpad/types'
 
 import { InvestDialogSidebar } from './Sidebar'
 import { text26 } from 'components/LaunchpadMisc/typography'
@@ -16,6 +16,7 @@ import { text26 } from 'components/LaunchpadMisc/typography'
 interface Props {
   offer: Offer
   onClose: () => void
+  investedData: InvestedDataRes
 }
 
 enum StageForm {
