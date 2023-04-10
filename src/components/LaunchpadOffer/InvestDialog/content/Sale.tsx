@@ -93,7 +93,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
           return 'inherit'
       }
     }
-    const items = [
+    return [
       { label: 'Available to invest', value: `${formatter.format(available)} ${investingTokenSymbol}` },
       { label: 'Already invested', value: `${formatter.format(alreadyInvested)} ${investingTokenSymbol}` },
       {
@@ -103,8 +103,6 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
         ),
       },
     ]
-
-    return items.filter((x) => !!x)
   }, [
     isPresale,
     presaleMaxInvestment,
