@@ -118,7 +118,17 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3} pt={2}>
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={STOClassificationSelect}
+                label='Classification'
+                name='classification'
+                control={control}
+                placeHolder='Select Classification'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
               <TypedField
                 control={control}
                 component={CapitalStructureSelect}
@@ -347,7 +357,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 onAccept={async () => await trigger('launchDate')}
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12}>
               <TypedField
                 component={DateTimePicker}
                 customRenderer
@@ -364,16 +374,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 isOptional
                 optionalText='(Securities will be locked for n days)'
                 // onAccept={async () => await trigger('launchDate')}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <TypedField
-                component={STOClassificationSelect}
-                label='Classification'
-                name='classification'
-                control={control}
-                placeHolder='Select Classification'
-                variant='outlined'
               />
             </Grid>
             <VSpacer size='small' />
