@@ -66,9 +66,10 @@ export const ViewTenant = () => {
                     photoId={
                       theme.palette.mode === 'light' ? logoLight : logoDark
                     }
-                    width={60}
-                    height={60}
-                    sx={{ borderRadius: '100%' }}
+                    alt='Logo'
+                    width={80}
+                    height={14}
+                    variant={'square'}
                   />
                 </Grid>
                 <Grid item>
