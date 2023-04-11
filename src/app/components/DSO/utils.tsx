@@ -122,6 +122,7 @@ export const transformDSOToFormValuesStep1 = (
       uniqueIdentifierCode: '',
       minimumInvestment: '',
       releaseDate: '',
+      classification: '',
       totalFundraisingAmount: '',
       pricePerUnit: '',
       equityMultiple: '',
@@ -161,6 +162,7 @@ export const transformDSOToFormValuesStep1 = (
     minimumInvestment: dso.minimumInvestment,
     launchDate: dso.launchDate ?? null,
     releaseDate: dso?.releaseDate ?? null,
+    classification: dso?.classification ?? null,
     completionDate: dso.completionDate ?? null,
     isCampaign: dso.isCampaign,
     decimalPlaces: dso.decimalPlaces
@@ -203,6 +205,8 @@ export const transformDSOToFormValues = (
       decimalPlaces: 18,
       step: 0,
       launchDate: '',
+      releaseDate: '',
+      classification: '',
       completionDate: '',
       subscriptionDocument: undefined
     } as any
@@ -217,6 +221,7 @@ export const transformDSOToFormValues = (
     investmentPeriod: dso.investmentPeriod,
     launchDate: dso.launchDate ?? null,
     releaseDate: dso.releaseDate ?? null,
+    classification: dso.classification ?? null,
     completionDate: dso.completionDate ?? null,
     introduction: dso.introduction,
     businessModel: dso.businessModel,
@@ -270,6 +275,8 @@ export const getDSOInformationFormValues = (data: any) => {
     investmentPeriod: data.investmentPeriod,
     minimumInvestment: data.minimumInvestment,
     launchDate: data.launchDate ?? null,
+    releaseDate: data.releaseDate ?? null,
+    classification: data.classification ?? null,
     completionDate: data.completionDate ?? null,
     step: 1,
     decimalPlaces: data.decimalPlaces

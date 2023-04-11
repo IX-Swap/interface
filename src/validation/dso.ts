@@ -94,6 +94,7 @@ export const dsoFormBaseValidationSchema = {
       }
     )
     .test('pastDate', 'Launch Date must be future date', pastDateValidator),
+  classification: string().required('Classification is required'),
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
@@ -162,6 +163,7 @@ export const dsoInformationValidationSchemaStep1: any = {
       }
     )
     .test('pastDate', 'Launch Date must be future date', pastDateValidator),
+  classification: string().required('Classification is required'),
   completionDate: dateSchema
     .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),

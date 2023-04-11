@@ -5,6 +5,7 @@ import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { LabelledValue } from 'components/LabelledValue'
 import { useStyles } from 'app/components/DSO/components/DSOInvestorViewHeader.styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { stoClassifications } from 'components/form/STOClassificationSelect'
 
 export interface DSOBaseFieldsViewProps {
   dso: DigitalSecurityOffering
@@ -15,6 +16,16 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
   const isLightThemeActive = theme.palette.mode === 'light'
   const { container, logoContainer, tokenName, corporateName, boxContainer } =
     useStyles()
+
+  const classification = dso.classification ?? ''
+  const classificationObj = stoClassifications.find(
+    v => v.value === classification
+  )
+  const stoClassification =
+    typeof classificationObj !== 'undefined'
+      ? classificationObj?.label
+      : classification
+
   return (
     <Box className={boxContainer}>
       <Grid
@@ -139,6 +150,27 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
             </Grid>
             <Grid item xs={12} md={4}>
               <LabelledValue
+                label='Classification'
+                value={stoClassification}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Unique Identifier Code'
+                value={dso?.uniqueIdentifierCode}
+                labelColor={!isLightThemeActive ? 'dark' : 'default'}
+                isNewThemeOn={isLightThemeActive}
+                valueColor='rgb(255,255,255)'
+              />
+            </Grid>
+          </Grid>
+
+          <Grid item container spacing={3}>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
                 label='Launch Date'
                 value={dso?.launchDate}
                 labelColor={!isLightThemeActive ? 'dark' : 'default'}
@@ -155,22 +187,10 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
                 valueColor='rgb(255,255,255)'
               />
             </Grid>
-          </Grid>
-
-          <Grid item container spacing={3}>
             <Grid item xs={12} md={4}>
               <LabelledValue
                 label='Release Date'
                 value={dso?.releaseDate}
-                labelColor={!isLightThemeActive ? 'dark' : 'default'}
-                isNewThemeOn={isLightThemeActive}
-                valueColor='rgb(255,255,255)'
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <LabelledValue
-                label='Unique Identifier Code'
-                value={dso?.uniqueIdentifierCode}
                 labelColor={!isLightThemeActive ? 'dark' : 'default'}
                 isNewThemeOn={isLightThemeActive}
                 valueColor='rgb(255,255,255)'
