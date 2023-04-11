@@ -205,7 +205,6 @@ export const transformDSOToFormValues = (
       decimalPlaces: 18,
       step: 0,
       launchDate: '',
-      releaseDate: '',
       classification: '',
       completionDate: '',
       subscriptionDocument: undefined
