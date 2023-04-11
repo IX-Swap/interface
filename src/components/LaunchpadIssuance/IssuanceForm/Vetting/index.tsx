@@ -341,7 +341,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               <FileField
                 label="Certificate of Incorporation"
                 disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
+                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncorporation"
                 value={values.document.certificateOfIncorporation}
                 error={
@@ -356,7 +356,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 optional
                 label="Certificate of Incumbency"
                 disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
+                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
                 field="document.certificateOfIncumbency"
                 value={values.document.certificateOfIncumbency}
                 error={
@@ -370,7 +370,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               <FileField
                 label="Share & Director Registry"
                 disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
+                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
                 field="document.shareDirectorRegistry"
                 value={values.document.shareDirectorRegistry}
                 error={(touched.document?.shareDirectorRegistry && errors.document?.shareDirectorRegistry) as string}
@@ -384,7 +384,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
                 disabled={view}
                 hint="Document must cover the last 3 years or the most recent financials dated within the last 12 months. 
                       Not applicable to licensed entities. 
-                      Supported file formats are Docx, PNG, JPG, JPEG and PDF"
+                      Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
                 field="document.auditedFinancials"
                 value={values.document.auditedFinancials}
                 error={(touched.document?.auditedFinancials && errors.document?.auditedFinancials) as string}
@@ -396,7 +396,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               <FileField
                 label="Memorandum and Article of Association Company Constitution"
                 disabled={view}
-                hint="File size should not exceed 5.0 MB. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
+                hint="File size should not exceed 5.0 MB. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
                 field="document.memorandumArticle"
                 value={values.document.memorandumArticle}
                 error={(touched.document?.memorandumArticle && errors.document?.memorandumArticle) as string}
@@ -407,7 +407,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
               <FileField
                 label="Ownership Structure"
                 hint={<div>
-                  <text>Supported file formats are Docx, PNG, JPG, JPEG and PDF.</text>
+                  <text>Supported file formats are doc, docx, PNG, JPG, JPEG and PDF.</text>
                   <br/>
                   <ExampleLink>See Examples</ExampleLink>
                 </div>}
@@ -422,7 +422,7 @@ export const IssuanceVettingForm = ({ view = false }: IssuanceVettingFormProps) 
 
               <FileField
                 label="Resolution of Authorized Signatory List"
-                hint="Document must include specimen signatures or equivalent. Supported file formats are Docx, PNG, JPG, JPEG and PDF"
+                hint="Document must include specimen signatures or equivalent. Supported file formats are doc, docx, PNG, JPG, JPEG and PDF"
                 field="document.resolutionAuthorizedSignatory"
                 value={values.document.resolutionAuthorizedSignatory}
                 error={
