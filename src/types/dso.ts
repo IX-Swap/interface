@@ -62,6 +62,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   issuerName: string
   launchDate: string
   releaseDate: string
+  classification: string
   completionDate: string
   corporate: CorporateIdentity
   logo: string
@@ -119,6 +120,7 @@ export interface NewBaseDigitalSecurityOffering
   minimumInvestment: number | null
   launchDate: string
   releaseDate: string
+  classification: string
   completionDate: string
   pricePerUnit: number
   totalFundraisingAmount: number | null

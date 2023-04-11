@@ -28,6 +28,7 @@ import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined'
 import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined'
+import { STOClassificationSelect } from 'components/form/STOClassificationSelect'
 export interface DSOBaseFieldsProps {
   isNew: boolean
   // isLive: boolean
@@ -364,17 +365,16 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 optionalText='(Securities will be locked for n days)'
                 // onAccept={async () => await trigger('launchDate')}
               />
-              {/* <span>
-              <Tooltip
-                title='No. of units that will be deployed.'
-                placement='right'
-                arrow
-              >
-                <Icon >
-                  <ErrorOutlineRoundedIcon color='disabled' />
-                </Icon>
-              </Tooltip>
-              </span> */}
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={STOClassificationSelect}
+                label='Classification'
+                name='classification'
+                control={control}
+                placeHolder='Select Classification'
+                variant='outlined'
+              />
             </Grid>
             <VSpacer size='small' />
           </Grid>
