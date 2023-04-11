@@ -9,14 +9,16 @@ import { Link } from 'react-router-dom'
 import { isDevelopment } from 'utils/isEnvMode'
 import { useKyc, useRole } from 'state/user/hooks'
 import { text29, text57, text8 } from 'components/LaunchpadMisc/typography'
+import { useWeb3React } from '@web3-react/core'
 
 export const Header = () => {
   const { isCorporate, isApproved } = useKyc()
   const { isOfferManager, isAdmin } = useRole()
+  const { account } = useWeb3React()
 
   const showIssuance = useMemo(
-    () => isAdmin || (isCorporate && isApproved && isOfferManager),
-    [isAdmin, isCorporate, isApproved, isOfferManager]
+    () => account && (isAdmin || (isCorporate && isApproved && isOfferManager)),
+    [account, isAdmin, isCorporate, isApproved, isOfferManager]
   )
 
   return (
