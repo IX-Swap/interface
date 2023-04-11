@@ -26,13 +26,16 @@ import { useCurrency } from 'hooks/Tokens'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { LAUNCHPAD_INVESTMENT_ADDRESS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
+import { IssuanceTooltip } from 'components/LaunchpadIssuance/IssuanceForm/shared/fields/IssuanceTooltip'
+import { FlexVerticalCenter } from 'components/LaunchpadMisc/styled'
 
 interface Props {
   offer: Offer
   investedData: InvestedDataRes
+  openSuccess: () => void
 }
 
-export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
+export const SaleStage: React.FC<Props> = ({ offer, investedData, openSuccess }) => {
   const {
     minInvestment,
     maxInvestment,
@@ -45,12 +48,10 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
     tokenAddress,
     tokenSymbol,
     decimals,
-    presaleAlocated,
-    hardCap,
     contractSaleId,
     investingTokenDecimals,
   } = offer
-  const { amountPresale, amountSale, lastStatus } = investedData
+  const { amount: amountInvested, availableToInvest, lastStatus } = investedData
   const theme = useTheme()
   const invest = useInvest(id)
   const getPresaleProof = usePresaleProof(id)
@@ -78,9 +79,6 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
   )
 
   const investmentAllowance = useMemo(() => {
-    const max = isPresale ? +presaleMaxInvestment : +maxInvestment
-    const alreadyInvested = isPresale ? amountPresale : amountSale
-    const available = max - alreadyInvested
     const getColor = (status: INVESTMENT_STATUSES | null) => {
       switch (status) {
         case INVESTMENT_STATUSES.done:
@@ -94,25 +92,21 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
       }
     }
     return [
-      { label: 'Available to invest', value: `${formatter.format(available)} ${investingTokenSymbol}` },
-      { label: 'Already invested', value: `${formatter.format(alreadyInvested)} ${investingTokenSymbol}` },
+      { label: 'Available to invest', value: `${formatter.format(availableToInvest)} ${investingTokenSymbol}` },
+      { label: 'Already invested', value: `${formatter.format(amountInvested)} ${investingTokenSymbol}` },
       {
-        label: 'Last investment transaction status',
+        label: (
+          <FlexVerticalCenter>
+            <span style={{ paddingRight: '0.25rem' }}>Last investment transaction status</span>
+            <IssuanceTooltip tooltipContent="Last saved transaction status, please wait for the data to sync" />
+          </FlexVerticalCenter>
+        ),
         value: (
           <span style={{ color: getColor(lastStatus) }}>{lastStatus ? InvestmentStatusesLabels[lastStatus] : '-'}</span>
         ),
       },
     ]
-  }, [
-    isPresale,
-    presaleMaxInvestment,
-    maxInvestment,
-    amountPresale,
-    amountSale,
-    investingTokenSymbol,
-    formatter,
-    lastStatus,
-  ])
+  }, [availableToInvest, amountInvested, investingTokenSymbol, formatter, lastStatus])
 
   const launchpadContract = useLaunchpadInvestmentContract()
   const tokenCurrency = useCurrency(offer.investingTokenAddress)
@@ -159,6 +153,7 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
           })
 
         submitState.setSuccess()
+        openSuccess()
       }
     } catch (e) {
       console.error(e)
@@ -193,7 +188,11 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
         </AgreementText>
       </Agreement>
 
-      <InvestFormSubmitButton state={submitState.current} disabled={isDisabled || !agreed} onSubmit={submit}>
+      <InvestFormSubmitButton
+        state={submitState.current}
+        disabled={isDisabled || !agreed || submitState.current !== InvestSubmitState.default}
+        onSubmit={submit}
+      >
         {submitState.current === InvestSubmitState.success && (
           <>
             Submitted <CheckCircle size="15" color={theme.launchpad.colors.success} />

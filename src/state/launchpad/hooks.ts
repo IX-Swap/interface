@@ -307,8 +307,7 @@ export const useInvestedData = (offerId: string) => {
 
   const [data, setData] = React.useState<InvestedData>({
     amount: 0,
-    amountPresale: 0,
-    amountSale: 0,
+    availableToInvest: 0,
     lastStatus: null,
   })
   const [error, setError] = React.useState('')

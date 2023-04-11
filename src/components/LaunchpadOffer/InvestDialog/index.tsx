@@ -14,6 +14,7 @@ import useInterval from 'hooks/useInterval'
 interface Props {
   offer: Offer
   onClose: () => void
+  openSuccess: () => void
   investedData: InvestedDataRes
 }
 
