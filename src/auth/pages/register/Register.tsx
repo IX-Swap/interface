@@ -18,6 +18,8 @@ import { useMyInfoAuthorize } from 'hooks/auth/useMyInfoAuthorize'
 import { Redirect } from 'react-router-dom'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import { history } from 'config/history'
+import { SingPassPage } from '../sing-pass-data/SingPass'
+import storageService from 'services/storage'
 
 export const registerFormInitialValues = {
   isMyInfo: false,
@@ -32,6 +34,8 @@ export const Register: React.FC = observer(() => {
   const { title, question, link } = useStyles({})
   const { updateFilter, getFilterValue } = useQueryFilter()
   const identity = getFilterValue('identityType')
+  const email = getFilterValue('email')
+  const mobile = getFilterValue('mobile')
   const isIndividual = identity === 'individual'
 
   useEffect(() => {
@@ -50,13 +54,18 @@ export const Register: React.FC = observer(() => {
   }
 
   const { data, isError, isLoading: authorizeLoading } = useMyInfoAuthorize()
-  const isMyInfo = data !== undefined && getFilterValue('code') !== undefined
+  const isMyInfo = getFilterValue('email') !== undefined
+
+  if (data !== undefined && localStorage.getItem('singpassPage') === null) {
+    return <SingPassPage />
+  }
 
   const defaultFormValues = isMyInfo
     ? {
         isMyInfo: true,
-        email: data?.email,
-        phoneNumber: data?.mobileno,
+        email: data !== undefined && data.email !== '' ? data.email : email,
+        phoneNumber:
+          data !== undefined && data.mobileno !== '' ? data.mobileno : mobile,
         password: '',
         agree: true
       }
@@ -65,6 +74,7 @@ export const Register: React.FC = observer(() => {
   const handleSubmit = async (values: SignupArgs) => {
     await signup(
       {
+        tenantId: storageService.get('tenantId'),
         name: values.name ?? 'Singpass User',
         email: values.email,
         singPassLogin: isMyInfo,

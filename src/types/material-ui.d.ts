@@ -44,8 +44,19 @@ export interface BreadCrumbsPaletteOptions {
   color: CSSProperties['color']
 }
 
+export interface InputPaletteOptions {
+  placeholder: CSSProperties['color']
+  border: string
+  disabledBg: string
+  bgBase?: string
+  boxShadowBase?: string
+  boxShadowOutline?: string
+}
+
 export interface ButtonPaletteOptions {
-  bgContainedDisabled: CSSProperties['color']
+  bgContained?: CSSProperties['color']
+  bgContainedHover?: CSSProperties['color']
+  bgContainedDisabled?: CSSProperties['color']
   colorContainedDisabled: CSSProperties['color']
   bgOutlined: CSSProperties['color']
   borderOutlined: string
@@ -247,11 +258,7 @@ declare module '@mui/material/styles' {
     alerts: Alerts
     stepIcon: StepIcon
     navigationLink: NavigationLink
-    input: {
-      placeholder: CSSProperties['color']
-      border: string
-      disabledBg: string
-    }
+    input: InputPaletteOptions
     select: SelectPalette
     dropdownLink: DropdownLink
     notificationsDropdown: NotificationsDropdown
@@ -295,11 +302,7 @@ declare module '@mui/material/styles' {
     alerts: Alerts
     stepIcon: StepIcon
     navigationLink: NavigationLink
-    input: {
-      placeholder: CSSProperties['color']
-      border: string
-      disabledBg: string
-    }
+    input: InputPaletteOptions
     select: SelectPalette
     dropdownLink: DropdownLink
     notificationsDropdown: NotificationsDropdown

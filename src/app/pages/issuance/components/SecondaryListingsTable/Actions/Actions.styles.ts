@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles'
 const useStyles = makeStyles(() => ({
   button: {
     '& svg': {
-      fill: 'transparent'
+      fill: 'none !important'
     }
   }
 }))

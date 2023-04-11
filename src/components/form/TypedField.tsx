@@ -140,7 +140,7 @@ export const TypedField = <
                 </span>
               </div>
             ) : (
-              label
+              <div>{label}</div>
             ),
             helperText,
             value: controllerProps.value,

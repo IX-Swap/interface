@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createTheme } from '@mui/material/styles'
 import { darkTheme } from 'themes/auth/dark'
 import { getThemeOverrides } from 'themes/auth/overrides'
@@ -8,7 +9,16 @@ export enum AppTheme {
 }
 
 export const getAppTheme = () => {
-  const theme = createTheme({ ...darkTheme, typography })
+  const tenantThemeName = sessionStorage.getItem('tenantThemeName')
+  const themeName =
+    tenantThemeName !== 'undefined' && JSON.parse(tenantThemeName) in darkTheme
+      ? JSON.parse(tenantThemeName)
+      : 'default'
+
+  const theme = createTheme({
+    ...darkTheme[themeName],
+    typography
+  })
 
   theme.components = getThemeOverrides(theme)
 

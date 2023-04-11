@@ -143,6 +143,7 @@ export const FileUpload = (props: FileUploadProps) => {
     if (multiple) {
       return label
     }
+
     if (hasValue) {
       return (value as DataroomFile).originalFileName
     }
