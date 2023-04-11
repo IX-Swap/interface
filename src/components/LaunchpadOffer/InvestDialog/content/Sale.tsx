@@ -171,7 +171,10 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
       <OfferLinks network={network} address={tokenAddress} symbol={tokenSymbol} decimals={decimals} />
 
       <InfoList
-        title={<InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>}
+        title={<InfoContainer>
+                <InfoListTitle>{isPresale ? 'Pre-Sale Conditions' : 'Public Sale Conditions'}</InfoListTitle>
+                <Info size="13" color={theme.launchpad.colors.text.caption} />
+              </InfoContainer>}
         fontSize="13px"
         lineHeight="32px"
         entries={conditions}
@@ -219,7 +222,14 @@ export const SaleStage: React.FC<Props> = ({ offer, investedData }) => {
   )
 }
 
-const InfoListTitle = styled.div`
+const InfoContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 7px;
+`
+
+const InfoListTitle = styled.text`
   ${text10}
   color: ${(props) => props.theme.launchpad.colors.text.title};
 `
