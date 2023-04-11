@@ -6,7 +6,7 @@ import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import Popover, { PopoverProps } from '../Popover'
 import { TOOLTIP_ARROW_TYPE } from 'constants/enums'
 
-export const IconWrapper = styled.div<{ size?: number, strokeColor?: string }>`
+export const IconWrapper = styled.div<{ size?: number; strokeColor?: string }>`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
   justify-content: center;
@@ -20,7 +20,7 @@ export const IconWrapper = styled.div<{ size?: number, strokeColor?: string }>`
     align-items: flex-end;
   `};
   & > svg:hover > path {
-    stroke: ${({ strokeColor }) => (strokeColor ? strokeColor : '')}
+    stroke: ${({ strokeColor }) => (strokeColor ? strokeColor : '')};
   }
 `
 
@@ -47,7 +47,7 @@ const TooltipContainerFit = styled(TooltipContainer)`
 
 const TooltipContainerVetting = styled.div`
   font-size: 12px;
-  font-weight: 500; 
+  font-weight: 500;
   line-height: 150%;
   width: 245px;
   padding: 0.8rem 1.2rem;
@@ -76,7 +76,13 @@ export function TooltipLight({ text, ...rest }: TooltipProps) {
 
 export function TooltipVetting({ text, ...rest }: TooltipProps) {
   return (
-    <Popover offset={[-20, 10]} customArrowType={TOOLTIP_ARROW_TYPE.VETTING} content={<TooltipContainerVetting>{text}</TooltipContainerVetting>} hideShadow {...rest} />
+    <Popover
+      offset={[-20, 10]}
+      customArrowType={TOOLTIP_ARROW_TYPE.VETTING}
+      content={<TooltipContainerVetting>{text}</TooltipContainerVetting>}
+      hideShadow
+      {...rest}
+    />
   )
 }
 
