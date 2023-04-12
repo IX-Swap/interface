@@ -108,7 +108,7 @@ export const FACTORY_ROUTER_ADDRESS: { [key: number]: string } = {
 export const LAUNCHPAD_INVESTMENT_ADDRESS: { [key: number]: string } = {
   [1]: '',
   [42]: '',
-  [80001]: '0xda751B464ba3DD9b2e4e8c797Df1af05a7510a1F',
+  [80001]: '0xd61dF4073BBa1A9b44C4faF4924D721D8e4cff62',
   [137]: '0x5b5d2DF10180D6084Cd388292717BDebf7Af17A6',
 }
 
