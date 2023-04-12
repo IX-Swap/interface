@@ -9,9 +9,10 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { ReactComponent as HelpIcon } from 'assets/launchpad/svg/help-icon.svg'
 import { ContactFormModal } from '../utils/ContactFormModal'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { nameChainMap } from 'constants/chains'
+import { nameChainMap, SupportedChainId } from 'constants/chains'
 import { DiscreteInternalLink, DiscreteExternalLink } from 'theme'
 import { text10, text8 } from 'components/LaunchpadMisc/typography'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface Props {
   offer: ManagedOffer
@@ -42,8 +43,13 @@ export const HeaderButtons = ({ offer, stage, setStage }: Props) => {
   const onCopy = () => {
     setCopied(tokenAddress)
   }
+  const { chainId } = useActiveWeb3React()
   const explorerLink = useMemo(
-    () => getExplorerLink(nameChainMap[network], tokenAddress, ExplorerDataType.TOKEN),
+    () => {
+      const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[network]
+      return getExplorerLink(nameChainMapNetwork, tokenAddress, ExplorerDataType.TOKEN)
+    },
+    
     [network, tokenAddress]
   )
   const editLink = useMemo(() => `/issuance/edit/information?id=${issuanceId}`, [issuanceId])

@@ -18,10 +18,11 @@ import PlainCopy from 'components/PlainCopy/PlainCopy'
 import useAddTokenByDetailsToMetamask from 'hooks/useAddTokenByDetailsToMetamask'
 import { shortenAddress } from 'utils'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
-import { nameChainMap } from 'constants/chains'
+import { nameChainMap, SupportedChainId } from 'constants/chains'
 import { ExternalLink } from 'theme'
 import { text10, text33, text6, text9 } from 'components/LaunchpadMisc/typography'
 import { InvestSuccessModal } from '../InvestDialog/utils/InvestSuccessModal'
+import { useActiveWeb3React } from 'hooks/web3'
 interface Props {
   offer: Offer
 }
@@ -38,8 +39,10 @@ export const OfferDetails: React.FC<Props> = (props) => {
   const investedData = useInvestedData(props.offer.id)
   const { amount: amountToClaim } = investedData
   const { status: whitelistedStatus } = useGetWhitelistStatus(props.offer.id)
+  const { chainId } = useActiveWeb3React()
+  const nameChainMapNetwork = chainId === SupportedChainId.MUMBAI ? SupportedChainId.MUMBAI : nameChainMap[props?.offer?.network]
   const explorerLink = getExplorerLink(
-    nameChainMap[props?.offer?.network],
+    nameChainMapNetwork,
     props.offer.tokenAddress,
     ExplorerDataType.TOKEN
   )
