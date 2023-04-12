@@ -84,7 +84,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
   const theme = useTheme()
 
   const { tokenPrice, tokenAddress, tokenSymbol, investingTokenAddress, 
-    investingTokenSymbol } = props.offer
+    investingTokenSymbol, investingTokenDecimals, decimals } = props.offer
 
   const { tokensOptions, secTokensOptions } = useTokensList()
   const mixedTokens = React.useMemo(() => [...tokensOptions, ...secTokensOptions], [tokensOptions, secTokensOptions])
@@ -120,7 +120,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         result = (+result).toFixed(4)
       }
 
-      return formatedValue(result)
+      return formatedValue(result, decimals)
     }
 
     return inputValue
@@ -145,6 +145,7 @@ export const ConvertationField: React.FC<Props> = (props) => {
         height="90px"
         fontSize="24px"
         lineHeight="29px"
+        decimalsLimit={investingTokenDecimals}
       />
 
       <InvestTextField

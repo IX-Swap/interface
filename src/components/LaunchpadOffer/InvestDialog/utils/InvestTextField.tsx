@@ -25,6 +25,7 @@ interface Props extends StylingProps {
   error?: string
 
   value?: string
+  decimalsLimit?: number
   onChange?: (value: string) => void
 }
 
@@ -42,7 +43,7 @@ export const InvestTextField: React.FC<Props> = (props) => {
     let value = event.target.value
 
     if (props.type === 'number') {
-      value = formatedValue(value)
+      value = formatedValue(value, props.decimalsLimit)
     }
 
     setInputValue(value)
