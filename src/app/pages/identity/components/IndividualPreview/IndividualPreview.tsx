@@ -62,7 +62,7 @@ export const IndividualPreview = ({ data }: IndividualPreviewProps) => {
 
       <Grid item className={privateClassNames()}>
         <FieldContainer>
-          <Grid item container direction={'column'} spacing={5}>
+          <Grid item container direction={'column'}  spacing={5}>
             <Grid item>
               <FormSectionHeader title='Address' />
             </Grid>
